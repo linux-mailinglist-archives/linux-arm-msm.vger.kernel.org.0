@@ -1,135 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-29773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A848A9628AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:31:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B1B19628C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:36:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BE591F245CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:31:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E85E8280DB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:36:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D19CD187879;
-	Wed, 28 Aug 2024 13:31:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBAE8178CEC;
+	Wed, 28 Aug 2024 13:36:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FhQyBlfB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A6Tddr40"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC1411C69C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 13:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235091D554;
+	Wed, 28 Aug 2024 13:36:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724851901; cv=none; b=q1sA1WstOQisYVRBjXXSSE7BzuILVxYqkDuIeHXbdCYZ1tI0fkF30/N/Edq5YZlejO9GJ2CozcTlllAc6gfMF+GFAxMzWu4UTQuSWOv9kw7yUvm+6L1QVBn/HXi3OnaKC2bp2/8WqIv6lVRkFw7b2FY8RHGW3zRke5kzvQzJCR4=
+	t=1724852193; cv=none; b=Gnr4Iqk5M61PO7PamozZoRjMtrR2GPSZ8DxhCg5eZxwH9TCYlQC1kr4fHJQhVo4FkBPuZWnogj8IdOWeCIjKmGwf3oLWY5YyBEBbFSn7ekfVcRaaooIXqynfw1jULsB/dY0ugOvHX40otMuUbAKwthZZYY2G1FUg31ULjMBdWJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724851901; c=relaxed/simple;
-	bh=aFunOdE2IWWGEtEGitXEh2j1fwzDFTJ8EAELatQZE60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b729qrdXHuP3mj8NqoWeVI93QU12FZNELTlzIpXwsmIjySDaFCDI1hwQwkB6/fVS/SheOZoEyVG/90TkZ5K6LSxeckdmT28MVRIgm1qV13GoSXFBsXpV8YcfB2+OLzV0FfVjZCxTWK5mK9/yAbbvpIBjj7xCqoVpb5l3e/rIbfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FhQyBlfB; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7142a93ea9cso4861152b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 06:31:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724851898; x=1725456698; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ooxQLoKfDn6EQlD0rIDPMhXYCiCug8IilBfMsi5Lan0=;
-        b=FhQyBlfBWoSppDFD4YNSBTqpYsxopU57NUtDNrrc5MzqPoECOvN1Tjx6Yx0QKsEhma
-         Y39nhL9aLi76Tw44SV0mqUJpZ+GB0PM7lfxA90gGqz8V2L6+XbCYSlRJ5yw99PdYm+Rq
-         f7peM0Mtu0A8GMXHkRjDAgayUQsSZltK2AfPZ7daeedAz9rp36IeXSHdhpVZECpISX/A
-         OLW2PoXpOaoJbqsGyiqkEPEDOC0yPKjPNen88GU8LoZLYsLINOy9B0cOWHguqUmhJu10
-         aZTVkmgvKj0pezUIVFvpr2uKeyX8Co7+fID4YMW3HHZGj2SSz6LqpeWEequH2N/cSmc1
-         1IOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724851898; x=1725456698;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ooxQLoKfDn6EQlD0rIDPMhXYCiCug8IilBfMsi5Lan0=;
-        b=a3h2GernxbB1M0g4gzt5fF7+G09DCEcTSaNgqVf0ANeI+Fli5+ELL7NUtt4GpRJDU4
-         nOYJHSwP2FMV3ROMprtFG2iGgN2vMW/UBivqYgDgINFDiHu/WbhHe27S4stqxV42IzH5
-         55nIa6iXXrszFhmETSAjslehDHSs7QjuxtBqUfwic7ByetX+ADPtHkTSm+9aC+2yVb/l
-         jgpYA93H45fOsU5WtooFlrEIa1jKatusoHTkqy5UYarhGxaQSzA5wumJEnh8ZIz7X2n8
-         9Pan08Jw6vTphHWcI2rlbKo5mcf+Wsk+jr4Wg+Gl1xFTnhk9Ycd364P2unumvJ3pbxir
-         jPkw==
-X-Forwarded-Encrypted: i=1; AJvYcCUnXFpXo85l6d0dwDyud5i3p8BAc08kEVzSD78/ictu/iI6aJJlMgUfiiGM++SZuHCE7Q6JDqzM3BUFVsPW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXoe5KvFrhOVM99GGA/payf9hufoXw71RNy5PLHw96Q7c9Tg94
-	U712ZC3H6d4kV8hsGVp7bF4YgyLjV1bHedOu2r+SBRkRRbNBAqb7+Nu/qw2EYCnILNbqVnkIRck
-	=
-X-Google-Smtp-Source: AGHT+IEINpO4o8xwOCNrCh0RMflT1QvZim19vykwVlDpRWD2mxcSv4yYUaeulVY/t40l8zuo0u5EGg==
-X-Received: by 2002:a05:6a00:92a4:b0:710:7fd2:c91 with SMTP id d2e1a72fcca58-714458b4330mr18935675b3a.26.1724851898012;
-        Wed, 28 Aug 2024 06:31:38 -0700 (PDT)
-Received: from thinkpad ([120.56.198.191])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71434316405sm10101761b3a.162.2024.08.28.06.31.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 06:31:37 -0700 (PDT)
-Date: Wed, 28 Aug 2024 19:01:32 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Manish Pandey <quic_mapa@quicinc.com>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com,
-	quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
-	quic_rampraka@quicinc.com, quic_cang@quicinc.com,
-	quic_nguyenb@quicinc.com
-Subject: Re: [PATCH V2] scsi: ufs: qcom: update MODE_MAX cfg_bw value
-Message-ID: <20240828133132.zqozjegmbnwa7byb@thinkpad>
-References: <20240828132526.25719-1-quic_mapa@quicinc.com>
+	s=arc-20240116; t=1724852193; c=relaxed/simple;
+	bh=9fzLya9Z18UR1pa7lmP5OFxOvXJCmnWTnjiZloK71g8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=cS7/1oBtNrJTiMwCGBx0YqObf7Rl26x7CgMNm5Kyh1z/JVFgr9RqAAbUg+rBzcLMEuCY1ND7suTGF/or2+FNVBQz0/j+W/Ay9pbHg/PS0BSaO2SFIdGrEbuSAIWD09tuFHxnL6kHKLV3lZmQQAsbxPm0vX3tEe2IklHA78hYO+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A6Tddr40; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SBCC0U021403;
+	Wed, 28 Aug 2024 13:36:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cQ7/3Ropv1Nl9QK4196zcJdjGoBOVhoCU+BCUWzK6p8=; b=A6Tddr40hWSIn9DS
+	oN3F44NwoEfJvRUkLEiVJXjyk0CUF6TOGd5m2nIqjblracaCXITyayznpa1E/M4u
+	OYAgHW26yHH7Qu2N9ncfLgVXlCukwft4sgrqItjzfCTS7OOAmDdzBobDVRmlpQSR
+	sW2sg1DBLqMvJK42cxVxswO4668ET2PfbKys3S4xwJuT7+VZUteBtqVkyf9Bhh2S
+	Q/XyXepF8AQk/B4vkW5yd01kxUNm7g22Jri1M6hnhnFGaqd9Iuo4n+V7yloRuRGe
+	rAcxae4s87ZrAWMoywYeDEG8M9giJiQq+nLs/oEnNhGrDPtisz2afBjQa3mZpu+2
+	JnX80g==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv09vmd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 13:36:10 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SDa9HP017213
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 13:36:09 GMT
+Received: from [10.253.39.71] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
+ 2024 06:36:03 -0700
+Message-ID: <ffbeb834-c56a-40b2-b9d6-f03149a1a37b@quicinc.com>
+Date: Wed, 28 Aug 2024 21:36:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240828132526.25719-1-quic_mapa@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/8] arm64: dts: qcom: x1e80100: Add support for PCIe3 on
+ x1e80100
+To: Konrad Dybcio <konradybcio@kernel.org>, <manivannan.sadhasivam@linaro.org>,
+        <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+        <andersson@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <abel.vesa@linaro.org>,
+        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>
+CC: <dmitry.baryshkov@linaro.org>, <kw@linux.com>, <lpieralisi@kernel.org>,
+        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+ <20240827063631.3932971-5-quic_qianyu@quicinc.com>
+ <41d4bc67-e47c-4b6e-a620-b83f48f43103@kernel.org>
+Content-Language: en-US
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <41d4bc67-e47c-4b6e-a620-b83f48f43103@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JKOU2cBt8uWVtRrpXqJMDQ2DBAV-R2Gy
+X-Proofpoint-ORIG-GUID: JKOU2cBt8uWVtRrpXqJMDQ2DBAV-R2Gy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-28_05,2024-08-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 suspectscore=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 mlxlogscore=999 mlxscore=0 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408280097
 
-On Wed, Aug 28, 2024 at 06:55:26PM +0530, Manish Pandey wrote:
-> The cfg_bw value for max mode was incorrect for the Qualcomm SoC.
 
-What do you mean by 'incorrect'? I extracted the value from downstream DTs. So
-it cannot be incorrect.
+On 8/27/2024 6:42 PM, Konrad Dybcio wrote:
+> On 27.08.2024 8:36 AM, Qiang Yu wrote:
+>> Describe PCIe3 controller and PHY. Also add required system resources like
+>> regulators, clocks, interrupts and registers configuration for PCIe3.
+>>
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 205 ++++++++++++++++++++++++-
+>>   1 file changed, 204 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>> index 74b694e74705..55b81e7de1c7 100644
+>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>> @@ -744,7 +744,7 @@ gcc: clock-controller@100000 {
+>>   
+>>   			clocks = <&bi_tcxo_div2>,
+>>   				 <&sleep_clk>,
+>> -				 <0>,
+>> +				 <&pcie3_phy>,
+>>   				 <&pcie4_phy>,
+>>   				 <&pcie5_phy>,
+>>   				 <&pcie6a_phy>,
+>> @@ -2879,6 +2879,209 @@ mmss_noc: interconnect@1780000 {
+>>   			#interconnect-cells = <2>;
+>>   		};
+>>   
+>> +		pcie3: pci@1bd0000 {
+>> +			device_type = "pci";
+>> +			compatible = "qcom,pcie-x1e80100";
+>> +			reg = <0 0x01bd0000 0 0x3000>,
+>> +			      <0 0x78000000 0 0xf1d>,
+>> +			      <0 0x78000f40 0 0xa8>,
+>> +			      <0 0x78001000 0 0x1000>,
+>> +			      <0 0x78100000 0 0x100000>;
+>> +			reg-names = "parf",
+>> +				    "dbi",
+>> +				    "elbi",
+>> +				    "atu",
+>> +				    "config";
+> There's a "mhi" region at 0x01bd3000, 0x1000-wide too, please add it
+>
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +			ranges = <0x01000000 0 0x00000000 0 0x78200000 0 0x100000>,
+>> +				 <0x02000000 0 0x78300000 0 0x78300000 0 0x3d00000>;
+> There's 64bit BAR space as well:
+>
+> <0x03000000 0x7 0x40000000 0x7 0x40000000 0x0 0x40000000>;
+>
+>> +			bus-range = <0 0xff>;
+> 0x00 please
+>
+>> +
+>> +			dma-coherent;
+>> +
+>> +			linux,pci-domain = <3>;
+>> +			num-lanes = <8>;
+>> +
+>> +			interrupts = <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 166 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 769 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 836 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 671 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 219 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "msi0",
+>> +					  "msi1",
+>> +					  "msi2",
+>> +					  "msi3",
+>> +					  "msi4",
+>> +					  "msi5",
+>> +					  "msi6",
+>> +					  "msi7";
+>> +
+>> +			#interrupt-cells = <1>;
+>> +			interrupt-map-mask = <0 0 0 0x7>;
+>> +			interrupt-map = <0 0 0 1 &intc 0 0 0 220 IRQ_TYPE_LEVEL_HIGH>,
+>> +					<0 0 0 2 &intc 0 0 0 221 IRQ_TYPE_LEVEL_HIGH>,
+>> +					<0 0 0 3 &intc 0 0 0 237 IRQ_TYPE_LEVEL_HIGH>,
+>> +					<0 0 0 4 &intc 0 0 0 238 IRQ_TYPE_LEVEL_HIGH>;
+>> +
+>> +			clocks = <&gcc GCC_PCIE_3_PIPE_CLK_SRC>,
+> We don't toggle source clocks from dt, this is upstream of the pipe
+> div clocks and is taken care of by the common clock framework,
+> please drop.
+GCC_PCIE_3_PIPE_CLK_SRC is a clk mux. The enable and disable callback
+provided in clk driver is used to switch between pipe_clk and XO,
+respectively. If we drop GCC_PCIE_3_PIPE_CLK_SRC here, that means
+the mux will be XO until pipediv2 clk is enabled. I need to do some
+experiment to check this. Will update in thread.
 
-If you want to update it, please clearly provide the reason.
-
-And if this patch is addressing an issue, then a Fixes tag should be present. If
-you want to get it backported (if it is a critical fix), then stable list should
-be CCed.
-
-- Mani
-
-> Update it to the correct value for cfg_bw max mode.
-> 
-> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index c87fdc849c62..ecdfff2456e3 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -93,7 +93,7 @@ static const struct __ufs_qcom_bw_table {
->  	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
->  	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
->  	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
-> -	[MODE_MAX][0][0]		    = { 7643136,	307200 },
-> +	[MODE_MAX][0][0]		    = { 7643136,	819200 },
->  };
->  
->  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
-> -- 
-> 2.17.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Qiang
+>> +				 <&gcc GCC_PCIE_3_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE_3_CFG_AHB_CLK>,
+>> +				 <&gcc GCC_PCIE_3_MSTR_AXI_CLK>,
+>> +				 <&gcc GCC_PCIE_3_SLV_AXI_CLK>,
+>> +				 <&gcc GCC_PCIE_3_SLV_Q2A_AXI_CLK>,
+>> +				 <&gcc GCC_CFG_NOC_PCIE_ANOC_SOUTH_AHB_CLK>,
+> GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK
+>
+>> +				 <&gcc GCC_CNOC_PCIE_NORTH_SF_AXI_CLK>;
+>> +			clock-names = "pipe_clk_src",
+>> +				      "aux",
+>> +				      "cfg",
+>> +				      "bus_master",
+>> +				      "bus_slave",
+>> +				      "slave_q2a",
+>> +				      "noc_aggr",
+>> +				      "cnoc_sf_axi";
+>> +
+>> +			assigned-clocks = <&gcc GCC_PCIE_3_AUX_CLK>;
+>> +			assigned-clock-rates = <19200000>;
+>> +
+>> +			interconnects = <&pcie_south_anoc MASTER_PCIE_3 QCOM_ICC_TAG_ALWAYS
+>> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>> +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+>> +					 &cnoc_main SLAVE_PCIE_3 QCOM_ICC_TAG_ALWAYS>;
+>> +			interconnect-names = "pcie-mem",
+>> +					     "cpu-pcie";
+>> +
+>> +			resets = <&gcc GCC_PCIE_3_BCR>,
+>> +				 <&gcc GCC_PCIE_3_LINK_DOWN_BCR>;
+>> +			reset-names = "pci",
+>> +				      "link_down";
+>> +
+>> +			power-domains = <&gcc GCC_PCIE_3_GDSC>;
+>> +
+>> +			phys = <&pcie3_phy>;
+>> +			phy-names = "pciephy";
+>> +
+>> +			operating-points-v2 = <&pcie3_opp_table>;
+>> +
+>> +			status = "disabled";
+>> +
+>> +			pcie3_opp_table: opp-table {
+>> +				compatible = "operating-points-v2";
+>> +
+>> +				/* GEN 1 x1 */
+>> +				opp-2500000 {
+>> +					opp-hz = /bits/ 64 <2500000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <250000 1>;
+>> +				};
+>> +
+>> +				/* GEN 1 x2 and GEN 2 x1 */
+>> +				opp-5000000 {
+>> +					opp-hz = /bits/ 64 <5000000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <500000 1>;
+>> +				};
+>> +
+>> +				/* GEN 1 x4 and GEN 2 x2*/
+> Missing ' '
+>
+>> +				opp-10000000 {
+>> +					opp-hz = /bits/ 64 <10000000>;
+>> +					required-opps = <&rpmhpd_opp_low_svs>;
+>> +					opp-peak-kBps = <1000000 1>;
+>> +				};
+>> +
+>> +				/* GEN 1 x8 and GEN 2 X4 */
+> Inconsistent capitalization, please use lowercase 'x'
+>
+> [...]
+>
+>> +		pcie3_phy: phy@1be0000 {
+>> +			compatible = "qcom,x1e80100-qmp-gen4x8-pcie-phy";
+>> +			reg = <0 0x01be0000 0 0x10000>;
+>> +
+>> +			clocks = <&gcc GCC_PCIE_3_AUX_CLK>,
+> This clock doesn't belong here, the PHY is clocked by PHY_AUX
+>
+>> +				 <&gcc GCC_PCIE_3_CFG_AHB_CLK>,
+>> +				 <&rpmhcc RPMH_CXO_CLK>,
+> This is unnecessary as commented before
+>
+>> +				 <&gcc GCC_PCIE_3_PHY_RCHNG_CLK>,
+>> +				 <&gcc GCC_PCIE_3_PHY_AUX_CLK>,
+>> +				 <&gcc GCC_PCIE_3_PIPE_CLK>,
+>> +				 <&gcc GCC_PCIE_3_PIPEDIV2_CLK>,
+>> +				 <&tcsr TCSR_PCIE_8L_CLKREF_EN>;
+> This should be the 'ref' here
+>
+> Konrad
 
