@@ -1,125 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-29808-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29809-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79A2A962D08
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:53:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 766D7962E1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:03:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CE608B25540
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:53:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C5041F24C46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:03:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C83831A2567;
-	Wed, 28 Aug 2024 15:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0702D1A3BD0;
+	Wed, 28 Aug 2024 17:03:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YSHlBo+l"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="n/3I1wkM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD2036130;
-	Wed, 28 Aug 2024 15:53:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B55196C9C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 17:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724860423; cv=none; b=lwlY+/Cskz0Fz0zfyEAJ9/3EsbW6T6wuAL0gUDwtuZA0+PmJc341xSCzpgyRcHCB5OzqXYWl2lmYlqZcyQUsG9OkPB2/LFKqlN1KFVMOSMqmEYvswhVAUd6kFgnCV3kGiErno0aV5rp7qke0MirK2LvKqthHJpQbxfIJXBn2BQg=
+	t=1724864623; cv=none; b=T7zjn5BqQanFyS/j9EFh0e7Iwv4yeiRr2fR5oFy5bOYGne/c2DOyyN2sB9mDnB/FRCMwebfMRNdXT0JH/1/MowuHN8WBelqt9NKLaUkpMKTSnSVkMgjP9uixI2fbOpuhKLSqeYAaGIbwLDASBXhDjzDCCF90UTugI7JLb+RBIlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724860423; c=relaxed/simple;
-	bh=FceCKpvwCfYxeVjhu7dja8rLnOmk8oo7I++7LCS81Os=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bpGreNAnheUVzblTwTNOyv5uwyvqbPL2VAmXW4zBXu+EpSZs2b5AFSEAkVwqREq+wB7gy3GbiD8G3ta9Q/fQRhVmbKfEEmr3/8AjsxlpHOpnjWGDqd8ZGYrK0w/d4G5BiwaixQ45sE8PWRrx1oyKIEn1WW4eCI7fsYb3+glj6lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YSHlBo+l; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BEEC4CEC4;
-	Wed, 28 Aug 2024 15:53:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724860423;
-	bh=FceCKpvwCfYxeVjhu7dja8rLnOmk8oo7I++7LCS81Os=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YSHlBo+lH7EtoI6uF+gIKcgjd9oBGCAmJJm51PU7R5og/9T8YIhusI+lD6Hjb8iLY
-	 hAtNShc4mk69/Qc56HZoyml4uqh0lO47YpsTrZ4etaMElT9d+jlndSc/aHWkasKc+D
-	 FV2ucl0nT3Q6yVPGQh/I/y+0jmwJksKsfxZ+7OROHiB2iWyYav4i3Ds10emSgnx5ol
-	 A7CWs3QoFl6kfXs6Ti6gV2IJRdAb8w/tX1vfgZjkT9i/46Exm4qV1f563eSGQh4Wxh
-	 1M5e+xKvpzP8ShQEOfg7M/f91GjOc52bGt4cB3H6My1e9dFCLU9wGhhvvhPlbPsy+i
-	 19ckAowLYmw5w==
-Date: Wed, 28 Aug 2024 16:53:36 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>, imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 3/3] dt-bindings: gpio: simplify GPIO hog nodes schema
-Message-ID: <20240828-goofiness-haven-6d22011353e4@spud>
-References: <20240828-dt-bindings-gpio-hog-v1-0-63b83e47d804@linaro.org>
- <20240828-dt-bindings-gpio-hog-v1-3-63b83e47d804@linaro.org>
+	s=arc-20240116; t=1724864623; c=relaxed/simple;
+	bh=QasJiYQ1cDw/pStQicO3S8JcebgaLLR56R+OjX3L02Q=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XTrRKY8quIm4sJMArdnTHIMlAyiUFTDLq9ffdQTR03UbEOKRvZitF5WPmLkx1sWi1wch84aFfR0EpRwBCGFrGiTcg/robHnbhR9+46k6PMm6iWfMUsNmPWtdf5fcJyB5DVwcocFP2Jvs11QmK1KtIexnccPf5ySch62qiACFn6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=n/3I1wkM; arc=none smtp.client-ip=209.85.222.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7a1da036d35so441960485a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 10:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1724864621; x=1725469421; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QasJiYQ1cDw/pStQicO3S8JcebgaLLR56R+OjX3L02Q=;
+        b=n/3I1wkMOKH+bGMxL+yQlzYfp6qROm3K4v+wypIb2F2NGydGx7NvkwnFFoECDVTYPm
+         vDoA97XRSHkf9PaWXySsakpKfQbooUxWJHeNLg/veERRbwVvR0Bs3REW/8wglLdHHV5d
+         b38bqXOLIpis1bpZC9cMiuA/maV5T3pWaE4Eo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724864621; x=1725469421;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QasJiYQ1cDw/pStQicO3S8JcebgaLLR56R+OjX3L02Q=;
+        b=k+urA7UhQzghcU8+MkA6xUApUbk7I7J2bLgiQgh9xketQFGxpkX7wUitFj8elDkc43
+         WikLbOuKW7YLnwySV+gYBFLLIGi8whc1ym+K3VqBKqJu9FswEzW1YmnHsFzkZehWIkSc
+         IsRKN2JLv6VDHnqlp/+K7sr26bTE2WwJKD47OGpf+IK4TYi9vY4mpJ98S1xVaWIcRdIc
+         oRwhyIsC8lPDlB3UlVq7PKTjmR7uA6ojE804dxpDihoBiw8vIZGH4dGqAHDl+uRJVmsA
+         0zsG12J8ZZsmY3jD4M6JKojEFt4oOqLD0ttuU1ie/L0f+Mx7sPikIDHuU+iIs5VcDNJs
+         hPng==
+X-Forwarded-Encrypted: i=1; AJvYcCXZxCoT5F5492xQURNoKIRxhsoz20sLD5ZpDkWLqOJeRoWNwlZP4ueBRgpdQHNBCJ8Lgzw49rYR7PZHV4/s@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhVB0UT9Q5h/1wbHd202xMoJm5CbHK/MNrBbrRUyP/J32bMNyk
+	npfN0iNr4vX/nvaThr+v8V6qwjmwz+Dfm3XUe1a9CH0HCab5+RRrgKgFRdexXjRrg5Stdf+yh89
+	nw1aneeQjgsNc3dtZRC4mbrWONfF9xUfRngdC
+X-Google-Smtp-Source: AGHT+IEVO9KZmNWSFybfc7A1nURst7111SB2+UOWqLJ8aG+gb/58BS72acni8VLoQAEGgDW7MBt6MwGtixuxjlVQbiw=
+X-Received: by 2002:a05:620a:2496:b0:7a4:f480:c315 with SMTP id
+ af79cd13be357-7a804182b1fmr3651685a.3.1724864621186; Wed, 28 Aug 2024
+ 10:03:41 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 28 Aug 2024 13:03:40 -0400
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="OayRlMiikjtxs/jT"
-Content-Disposition: inline
-In-Reply-To: <20240828-dt-bindings-gpio-hog-v1-3-63b83e47d804@linaro.org>
+In-Reply-To: <8597375d-6c15-4d20-96fd-2598805c09d5@linaro.org>
+References: <20240827231237.1014813-1-swboyd@chromium.org> <20240827231237.1014813-2-swboyd@chromium.org>
+ <8597375d-6c15-4d20-96fd-2598805c09d5@linaro.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Wed, 28 Aug 2024 13:03:40 -0400
+Message-ID: <CAE-0n50_+ci9H4M74FC1xVF5szE7kULFifEEnE+-DxaivGG-Bw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] clk: qcom: dispcc-sc7180: Only park display clks
+ at init
+To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
+	Taniya Das <quic_tdas@quicinc.com>, Amit Pundir <amit.pundir@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
+Quoting Neil Armstrong (2024-08-28 05:22:25)
+> On 28/08/2024 01:12, Stephen Boyd wrote:
+> > Amit Pundir reports that audio and USB-C host mode stops working on
+> > sm8550 if the gcc_usb30_prim_master_clk_src clk is registered and
+> > clk_rcg2_shared_init() parks it on XO.
+>
+> Why does it change the dispcc-sc7180 in this case ?
+>
 
---OayRlMiikjtxs/jT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Aug 28, 2024 at 11:35:59AM +0200, Krzysztof Kozlowski wrote:
-> The core schema in dtschema already strictly defines contents of nodes
-> with "gpio-hog" property (with additionalProperties: false), thus the
-> only thing device schema should do is: define "type: object" and
-> required "gpio-hog".  Make the code a bit simpler by removing redundant
-> parts.
->=20
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  .../devicetree/bindings/gpio/fairchild,74hc595.yaml          | 11 ------=
------
->  Documentation/devicetree/bindings/gpio/fsl-imx-gpio.yaml     | 11 ------=
------
->  Documentation/devicetree/bindings/gpio/gpio-pca95xx.yaml     | 11 ------=
------
->  .../devicetree/bindings/gpio/microchip,mpfs-gpio.yaml        | 12 ------=
-------
-
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-
-
-Cheers,
-Conor.
-
---OayRlMiikjtxs/jT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZs9H/wAKCRB4tDGHoIJi
-0r7DAQDw7o8LeA1EG/uppquSI4wvHkpnTbF9vLKnFD2DK5QubgEApnVKe+GiJvsk
-xuyCPYk1pqnyzWfnNVW7zYqynGfKLQ8=
-=DkUp
------END PGP SIGNATURE-----
-
---OayRlMiikjtxs/jT--
+The patch that broke it affected all RCGs. Let me add that detail and
+resend.
 
