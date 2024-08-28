@@ -1,170 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-29783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A40449629CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 16:08:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 855EF9629ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 16:12:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2659A1F21B9B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 14:08:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D76B1C23DE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 14:12:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFC5D18990D;
-	Wed, 28 Aug 2024 14:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68B3E1898F1;
+	Wed, 28 Aug 2024 14:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kN1NdiLx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CKPsk5hp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9A516B386
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 14:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF07F189512;
+	Wed, 28 Aug 2024 14:11:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724854094; cv=none; b=sMmyL/VB+XQLHXc+CT6IlkKExuOuK9xKZDZw8400tkAwlqZxhUxmG3X02C+MEA5GX9bwyIKBzuxBGfprdRgMh0xW97tyVeSU6Kc8uh7M5DFG42EpDUa2q8HALw1nGj7of7kPBWl65lleb+5CG3W7mYLua7uhwQnGDwnCTLIN/a4=
+	t=1724854319; cv=none; b=hYEq4EfP1s7+Baeu8T/4PPfUooevorSSe2DQWWw/SYjbtiE4iF/mTDIPotqR74Igh4wqH13Zf2V90SRyrXMkBpNxLvYt/kKdt1bhh9KqoKRm4vY1qYkFsv3slofEAbPaygSXRs8tn84BVi47pKoElDtlVRFDpiL6EPVS2EcAmCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724854094; c=relaxed/simple;
-	bh=6i0DTl1y7zbuvBA51P56G8/7JFUWcfprfnnfq9ZDKXk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PTVbfbXI4HqDzWxyL/hb0rx7nQXgwBXQ6vHFFraKvKf72gXMFU/cO10LULY3TTIVKTxA26vdozudYMDKMffgsisBl3sVQJ6IGfu1KaFeSYPqyWCTxlvhypUsSRcDEcteNP736e2cQOFJ01WwgWnx3GP8ODitBPDrtsgxPYCE4ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kN1NdiLx; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-715cdc7a153so526073b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 07:08:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724854093; x=1725458893; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=5zUmIuVSMTrxDTnFMXgZkNU2N5FNce8+WlLOBteoNVY=;
-        b=kN1NdiLxQuYP5shimXt7YOVeK6/wVVwYY/hpQWSN3h+A/4pa2fEB5Kv8AIlndf2Ad2
-         flL+5V7sOgw+eHHaX6+pO7U/qtnOomHi23YfCbeqf2CJPG41jSuruHVYsDop0VIDzB4Q
-         INucJaf66A8oUt4R0zaUsaYs0SCPs3Z/VnNn54cC3TRqRhWm80ufQUXhQo8GZTdUtadI
-         wg32Ri/UglYutNMh9ajDlMyq+nfZEiojxFjLB4geqDY3schZwApqPos81C7oeDql6JGV
-         U1qzf5VvItnVqwgLdcUM4wUZ3iidD1fbx1LORttAsM4R8FM2lf0PlWpzDN6qySB3vocq
-         hQPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724854093; x=1725458893;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5zUmIuVSMTrxDTnFMXgZkNU2N5FNce8+WlLOBteoNVY=;
-        b=U/o/UTbefdrYOco5bRtMEcp+8fCPI5Vjs6f5kMzO/MjyirjmE5zrPMG12PoG1EiuzV
-         o+c0RlLEE4GxcrsPOztIa4sjxUIGkCJaEEJehW8g7sgs4rWCOvoLMBUSqdD5EAqgzCR9
-         ZaKBWKVDw7c78fU5ZfmjdKIEkmx/PFhrPlWXM7zfBgekhGIdw2ckthpi6OhP/cnsgFgH
-         TAf8EZabuxmUbHrD4qkyQV/eGnG0B2zo1SwEFgY3/FRC40xp1biWHptE9zqqy+N8inwn
-         XzSwOkCphrexGENULiOo09izKVlvAnp5samtgRjAH1dq0pPERe7rjo7J8/CLOLoynjbF
-         peKw==
-X-Forwarded-Encrypted: i=1; AJvYcCWFbrzbsjd2hfkxshSlFOuOAhbFl+lAixJQtyPcf3BngboOaMh2JPWGRqNu7QHZD3Kad9PRP6/c1GU80F3w@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLYPwjMPgVP49a8azcXpwLd4hSBp2Azrdv+qEIkGy70SU4s9v5
-	mFQF0YVkFCjK1wUNmhE34mWfORy1KcWjy5pv8V+YDncCKinexMCUokIQpunvcw==
-X-Google-Smtp-Source: AGHT+IHSBNCosOUJ4UP07jnycwgnAwwiOp55OzQxxQNujnZSA4wzt+zHe/mbquDbKqudh7XMBpjfDQ==
-X-Received: by 2002:a05:6a00:23d2:b0:706:aa39:d5c1 with SMTP id d2e1a72fcca58-715d10fdc97mr3135046b3a.8.1724854092494;
-        Wed, 28 Aug 2024 07:08:12 -0700 (PDT)
-Received: from thinkpad ([120.56.198.191])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7143425527esm10147003b3a.57.2024.08.28.07.08.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 07:08:12 -0700 (PDT)
-Date: Wed, 28 Aug 2024 19:38:05 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Manish Pandey <quic_mapa@quicinc.com>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com,
-	quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
-	quic_rampraka@quicinc.com, quic_cang@quicinc.com,
-	quic_nguyenb@quicinc.com
-Subject: Re: [PATCH V2] scsi: ufs: ufs-qcom: add fixup_dev_quirks vops
-Message-ID: <20240828140805.zhvand7q3wbdmfrt@thinkpad>
-References: <20240828134032.10663-1-quic_mapa@quicinc.com>
+	s=arc-20240116; t=1724854319; c=relaxed/simple;
+	bh=JJXWJoMrNO4Gsh8t4+ahvDypothpTM3jC9jnVIAl5lQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Fbkud9uBNbNygJ4h4rtYLDCsnlrXKxgh13lz6krh8vpaWL+ha4w9fhzdmrxENB0+kvZ3sn/8h3OZrjUu6a4k1otGL4JLTBGdISm5Ug5duj3XIDTO0G4wEyjeKwP84TzuP/I0NODtbrOE3lz6Vk/wt8/3PyvRcHkNo/M69lQfEKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CKPsk5hp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SAxrNC027129;
+	Wed, 28 Aug 2024 14:11:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/iHlp1ibTvLljzJlqeVILbKdL42Yrm6BLUJ7+iaPpLA=; b=CKPsk5hp45xucro4
+	MUjo9sRzqPhSl8xFi5KXLgAsEc33GM5VjDQcMQlSf/39zKlfR7VfvdMCjHawSGpe
+	PUYmVNEW+feLsQ6RkGbjoWMqc2Bcr7euLGGEN9Ayffa4b88ReqgguexQ2P3WbaBT
+	iXfZm/lPyZZ3q9gxR8teTImGxuJ13kgT86+3gXhZ3Z23Qbkne+pbyb1EwR9dNabi
+	Qx5j3hYlWYfE176gVSFvDXrEs9iTIG5USvKrQFYJCXUTUzO2/aygHVYRnosqiUYP
+	aZqUd9zRgLW5D8q847IDlLphskBQW+t+sqogtfLRFlx4CiAwJ+FnTeQ9O8HbgN2a
+	HCYO9g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419putj0e8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 14:11:53 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SEBqmE004256
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 14:11:52 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
+ 2024 07:11:46 -0700
+Message-ID: <23a8b53e-ae33-4f93-a1b9-3af2d37a4063@quicinc.com>
+Date: Wed, 28 Aug 2024 22:11:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY
+ variables to data field inside csiphy struct
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-6-quic_depengs@quicinc.com>
+ <cc1484d4-7a61-4f5c-b617-a6ad99985bda@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <cc1484d4-7a61-4f5c-b617-a6ad99985bda@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240828134032.10663-1-quic_mapa@quicinc.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TrEyfmn-pGeFmZMd3FdrZmj9MjzrZCXl
+X-Proofpoint-ORIG-GUID: TrEyfmn-pGeFmZMd3FdrZmj9MjzrZCXl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-28_05,2024-08-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408280101
 
-On Wed, Aug 28, 2024 at 07:10:32PM +0530, Manish Pandey wrote:
-> Add fixup_dev_quirk vops in QCOM UFS platforms and provide an initial
-> vendor-specific device quirk table to add UFS device specific quirks
-> which are enabled only for specified UFS devices.
+Hi Bryan,
+
+On 8/19/2024 8:01 AM, Vladimir Zapolskiy wrote:
+> On 8/12/24 17:41, Depeng Shao wrote:
+>> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+>> A .data field in the csiphy device structure allows us to extend out the
+>> register layout of the three phase capable CSIPHY layer.
+>>
+>> Move the existing lane configuration structure to an encapsulating
+>> structure -> struct csiphy_device_regs which is derived from the .data
+>> field populated at PHY init time, as opposed to calculated at lane
+>> configuration.
+>>
+>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+>> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>> ---
+>>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 55 ++++++++++++-------
+>>   .../media/platform/qcom/camss/camss-csiphy.h  |  1 +
+>>   2 files changed, 36 insertions(+), 20 deletions(-)
+
+>> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/ 
+>> drivers/media/platform/qcom/camss/camss-csiphy.h
+>> index bdf9a9c8bacc..cac1f800b7d8 100644
+>> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
+>> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
+>> @@ -95,6 +95,7 @@ struct csiphy_device {
+>>       struct csiphy_config cfg;
+>>       struct v4l2_mbus_framefmt fmt[MSM_CSIPHY_PADS_NUM];
+>>       const struct csiphy_subdev_resources *res;
+>> +    void *data;
+> 
+> I would suggest to make the type/name above explicit:
 > 
 
-Why the quirks are enabled only for Qcom platforms? If these are required by the
-UFS device, then they should be added to ufs_fixups[] in ufshcd.c.
+I will follow Vladimir's suggestion to update the type/name, please 
+reply this mail if you have other comment.
 
-> Micron and Skhynix UFS device needs DELAY_BEFORE_LPM quirk to have a
-> delay before VCC is powered off.
-> 
-
-Micron fix is already part of ufs_fixups[].
-
-> Toshiba UFS devices require delay after VCC power rail is turned-off
-> in QCOM platforms. Hence add Toshiba vendor ID and DELAY_AFTER_LPM
-> quirk for Toshiba UFS devices in QCOM platforms.
-> 
-
-This sounds like the issue is specific to Qcom platforms only.
-
-> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
-> ---
-
-Where is the changelog?
-
-- Mani
-
->  drivers/ufs/host/ufs-qcom.c | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 810e637047d0..9dbfbe643e5e 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -834,6 +834,25 @@ static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
->  	return err;
->  }
->  
-> +/* UFS device-specific quirks */
-> +static struct ufs_dev_quirk ufs_qcom_dev_fixups[] = {
-> +	{ .wmanufacturerid = UFS_VENDOR_MICRON,
-> +	  .model = UFS_ANY_MODEL,
-> +	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM },
-> +	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
-> +	  .model = UFS_ANY_MODEL,
-> +	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM },
-> +	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
-> +	  .model = UFS_ANY_MODEL,
-> +	  .quirk = UFS_DEVICE_QUIRK_DELAY_AFTER_LPM },
-> +	{}
-> +};
-> +
-> +static void ufs_qcom_fixup_dev_quirks(struct ufs_hba *hba)
-> +{
-> +	ufshcd_fixup_dev_quirks(hba, ufs_qcom_dev_fixups);
-> +}
-> +
->  static u32 ufs_qcom_get_ufs_hci_version(struct ufs_hba *hba)
->  {
->  	return ufshci_version(2, 0);
-> @@ -1798,6 +1817,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
->  	.link_startup_notify    = ufs_qcom_link_startup_notify,
->  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
->  	.apply_dev_quirks	= ufs_qcom_apply_dev_quirks,
-> +	.fixup_dev_quirks       = ufs_qcom_fixup_dev_quirks,
->  	.suspend		= ufs_qcom_suspend,
->  	.resume			= ufs_qcom_resume,
->  	.dbg_register_dump	= ufs_qcom_dump_dbg_regs,
-> -- 
-> 2.17.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Depeng
 
