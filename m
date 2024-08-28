@@ -1,55 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-29815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E235962F09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:52:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 107FA962FEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 20:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B17551C2192B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:52:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC4AC2829C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 18:28:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E10621A706D;
-	Wed, 28 Aug 2024 17:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E6C13775E;
+	Wed, 28 Aug 2024 18:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="b1jmHD6h"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HA7xUb5o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.4])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C941E611E;
-	Wed, 28 Aug 2024 17:52:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A058154C19;
+	Wed, 28 Aug 2024 18:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724867574; cv=none; b=alFykV+1RDggWBfjZb9Ijc4SpKnIQrTYkPxUeg2nDbnyHFvhvG3ZZPvYR3GnvMgAma4Wu1IPXSQvTK+cdzdqaeMgJQhzQm8+A7qmq9TvAHYa/UTXlU+cyuRW6QOeW2c7wK1hRjZcnL/vvGfyFXUZ6bc5EhEfg58RG/MjQqLqqQM=
+	t=1724869684; cv=none; b=PFgHwtrzCoA9QENvWTudLhFMiG9D+o5I/H3X/YWMeU6uFFw4YR4DC8I+FPCarRibmppFKYBVf8zr21S0O+FP9tNy4YE9C/XseXCao6Z2+ymGqcuVvwgxK+XIA2rMlaZvF20JrcPZfhISPrv3ylOvWuaGLabpgRTtzX7M9qvgDTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724867574; c=relaxed/simple;
-	bh=/+xEV1s8pa3qhVql4gBdH5NqGH17G6AkQLZZCqV3jnw=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=fP5KVimdTEaN2J0ZapaBHy6lMGah8PM/aocUm9twfmIpqv2Qnv289iFCQHXgPjV+rvsRldw5/fsGlmsu68XVWSnPK7C054yuY9sVF0WEkyB4ypmOxuInM2P3e10w6TeGDLhgDvDxgMcaITtY6ZGE6G69+T2nxhqAu98SK7Su5bw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=b1jmHD6h; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1724867531; x=1725472331; i=markus.elfring@web.de;
-	bh=cWUC/Z3aG3WTiZLoE9HJ1x7Ols2sRq6uGOw77LkVo9U=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=b1jmHD6hIaox9rfvqbbDG+U6TB0MhdO+wgDixGLC7fsPMW1qcJYfRP75b4eIVh55
-	 jYikd7nQ7NoaWBTNM7d76DnK/oEFXhlPU0u9CfWBKIwGk/bjpu2Ug8hh+qkcZxg5I
-	 w17mU5DDLatYS3TeW+eje/wC1TJxuhgKJnSh+YWdVXK3Sr2GNbJmlqZIRdeFtpiCO
-	 0owF0P4yDCDijT5T2YqulQQgY7YgZXjVuCpedGvm0+74A+B9CVMifNdpMCcRHl6YP
-	 AShNlvw0PiVjl/+XO3I29MxIOqHXumiKZLrLqu8ltdvhjkB+wjpMEydJx4tQvOyV3
-	 FtoMpoBvnX/fwNvDMg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.85.95]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MODiX-1sTeJ018ob-00Ox9r; Wed, 28
- Aug 2024 19:52:11 +0200
-Message-ID: <95cea320-4c47-4399-a615-295fc1129c04@web.de>
-Date: Wed, 28 Aug 2024 19:52:09 +0200
+	s=arc-20240116; t=1724869684; c=relaxed/simple;
+	bh=aCAeJRxX3OOMMGQLteBZ6z4OrD0eBvsrA/f5/ym6en8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=OZ7N6iGMzAywOK1jza7yULS4pqLu55lxw1mQjO8QFaOae8jAsMHnw5kBu3MAuatnRyP6UgqjTTH0OmMswa4zBL7MqN1Yie6RNxZjCunreonI5NODnvMvpLgDnAYkIYONzikYv+YJhCqc2YnUc71Nw8zThCRnRIpqhxL77Kb+CHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HA7xUb5o; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SBkOdH001796;
+	Wed, 28 Aug 2024 18:27:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	t6OiZigp34+5PZDO1ghwcrR5DceV0lzroVaQE5qnpj4=; b=HA7xUb5o4fjSk4d6
+	BNSuXPDf+1VfCnmncb300H5+EH3aRHRJxk70fMMZuT6fVQXngOTTsAvqD3dtbslY
+	4Z6oYhf3N3zJeyWjvUZlUmTON1ZEwl9niWKH6sisCiLRS1m5cpUhDYPOEgOS1sU7
+	Q8C0/6NlQ0J0Nz439kP/z7z2djR7TjsZMsh8zJsKa3Km6v7oQQgoNFbFcnhnk1+R
+	3E1dfN3d7uczPVEIfN4+hCLd2wuhjpSfZcCrc/RTOLKh35q9aTSlRNoydgj2Pk4f
+	4uOlzxdQK+lDkU+1F+2+4v7HVWwc7FY0U2A/b8+WMFoRP3m09fOSxm9R46IpYVmf
+	FwoMbg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419puw2rfx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 18:27:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SIRrwE005623
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 18:27:53 GMT
+Received: from [10.71.111.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
+ 2024 11:27:53 -0700
+Message-ID: <1facdd7c-b15d-4d91-b96a-5b3b72dbad66@quicinc.com>
+Date: Wed, 28 Aug 2024 11:27:52 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,75 +65,280 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Jie Gan <quic_jiegan@quicinc.com>, coresight@lists.linaro.org,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- James Clark <james.clark@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Mike Leach <mike.leach@linaro.org>, Rob Herring <robh@kernel.org>,
- Suzuki Poulouse <suzuki.poulose@arm.com>
-Cc: LKML <linux-kernel@vger.kernel.org>,
- Jinlong Mao <quic_jinlmao@quicinc.com>, Song Chai
- <quic_songchai@quicinc.com>, Tingwei Zhang <quic_tingweiz@quicinc.com>,
- Tao Zhang <quic_taozha@quicinc.com>,
- Yuanfang Zhang <quic_yuanfang@quicinc.com>
-References: <20240828012706.543605-5-quic_jiegan@quicinc.com>
-Subject: Re: [PATCH v4 4/5] Coresight: Add Coresight TMC Control Unit driver
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240828012706.543605-5-quic_jiegan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:B9MR2feQ+JQx+jGIkuoKQcLqjmbU63G9N5x9hY9ft8p2QcpjDGc
- jemUaRSRxROvOWhzJeq1PdJ7QVq5kpFPhngfEeRH7LcRbcL1HMOt6yS21ZvOjhTBBFdmQB3
- PmKQ28Jv76H++NfYkvG0FUkICIPwqKe+dx44zj1hV/03Dt8Os+89C+CDMRQoAGAzkejqrWQ
- kGVHEuY2g7Msio08n1C0g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:QrupnjinL4M=;McIiekfMC/E/uMXRZiCSjeWhmgZ
- tmBRMk6HspsXsXPcDnSNtWn5P1XNzG8m9BHNolksEbnbGNdpJMMPMTKc1J/4MnxwEpcoiVcjZ
- 8PRHgWdzEIpTWyaWYE+gYqA8RAJ9Y4/wxNe4DOWTK3zoaGpsNFSNPFpyFPfVWv+RqqdmqUiCK
- xtIyeKhvBavVbcPpg+RdzovsqXVa2eDwEfFIkPCr9TYUjysdjZ7wIUaZ5rPnQmDCpm8aYNhla
- x/zqsaC/gCDQhV5QbJI/aIVZRslUNMozKVaWwLlLNo4pN/KmWsVpdTY2/0+/VZjb4Wf/OZw9Y
- 4lVdv8ziQx29+TA2Y/sI6k2/1DfWNti0ILLhbpIcbw2hzObhovHt3R+TH2stp/tsmtQwvJV1m
- OqYMnNRmBt0yDyJovpEvsUeRlwFBRzeYsN9YCw/mfUeRhAk1VQwrjZ40+eR+JoxRSJ29NdQpm
- E11yDnAggzX252F+Jv6B9W/A0zsOLumm0ZE6E/BVHldeTycMtJJUtYwvW81E46fxB1nFsWr+3
- 3weT+X6LUnQHBR+m0aHUHCRMOvUDgYDvurTixm/Fnwb8Vu7obl7YAaq9TdH9rYQWi6xEfDeV4
- Ha84qPlZP/EtQIrwqyi4pdqx2oI6MYVT/L/434YRE1N1vfXiRoPG3aDoJs6o+I/dxMIe1Ds+n
- osk1rmWSX4jAQFzfn2PpzXznffT0Yq9A/JsWTC3be4X0LZd/B6jjzOiUve1v3mOLiQY59MQ8X
- eNl80K4d1Cl3wqemrOeL5UZ6lMP79WaiLECUcDz9hjUYdiINd4GC+4u/bmlzxpWzR9EoEAgiM
- rJqbHb2dLD7S3FryJjFQVSuw==
+Subject: Re: [PATCH v5 08/12] drm/msm/dpu: split dpu_plane_atomic_check()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240627-dpu-virtual-wide-v5-0-5efb90cbb8be@linaro.org>
+ <20240627-dpu-virtual-wide-v5-8-5efb90cbb8be@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240627-dpu-virtual-wide-v5-8-5efb90cbb8be@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sLxxy_Ae_vYnYIcXMI49bTgP9t0eg_Ju
+X-Proofpoint-GUID: sLxxy_Ae_vYnYIcXMI49bTgP9t0eg_Ju
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-28_08,2024-08-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 malwarescore=0 bulkscore=0 mlxscore=0
+ lowpriorityscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
+ adultscore=0 spamscore=0 impostorscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408280134
 
-=E2=80=A6
-> +++ b/drivers/hwtracing/coresight/coresight-ctcu.c
-> @@ -0,0 +1,292 @@
-=E2=80=A6
-> +static int __ctcu_set_etr_traceid(struct coresight_device *csdev,
-> +				  u8 traceid,
-> +				  int port_num,
-> +				  bool enable)
-> +{
-=E2=80=A6
-> +	spin_lock_irqsave(&drvdata->spin_lock, flags);
-> +	CS_UNLOCK(drvdata->base);
-=E2=80=A6
-> +	CS_LOCK(drvdata->base);
-> +	spin_unlock_irqrestore(&drvdata->spin_lock, flags);
+
+
+On 6/26/2024 2:46 PM, Dmitry Baryshkov wrote:
+> Split dpu_plane_atomic_check() function into two pieces:
+> 
+> dpu_plane_atomic_check_nopipe() performing generic checks on the pstate,
+> without touching the associated pipe,
+> 
+> and
+> 
+> dpu_plane_atomic_check_pipes(), which takes into account used pipes.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 178 +++++++++++++++++++-----------
+>   1 file changed, 112 insertions(+), 66 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 115c1bd77bdd..9b9fe28052ad 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -788,49 +788,22 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>   #define MAX_UPSCALE_RATIO	20
+>   #define MAX_DOWNSCALE_RATIO	4
+>   
+> -static int dpu_plane_atomic_check(struct drm_plane *plane,
+> -				  struct drm_atomic_state *state)
+> +static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+> +					 struct drm_plane_state *new_plane_state,
+> +					 const struct drm_crtc_state *crtc_state)
+>   {
+> -	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+> -										 plane);
+>   	int ret = 0, min_scale, max_scale;
+>   	struct dpu_plane *pdpu = to_dpu_plane(plane);
+>   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>   	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+>   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> -	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> -	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> -	const struct drm_crtc_state *crtc_state = NULL;
+> -	const struct msm_format *fmt;
+>   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>   	struct drm_rect fb_rect = { 0 };
+>   	uint32_t max_linewidth;
+> -	unsigned int rotation;
+> -	uint32_t supported_rotations;
+> -	const struct dpu_sspp_cfg *pipe_hw_caps;
+> -	const struct dpu_sspp_sub_blks *sblk;
+> -
+> -	if (new_plane_state->crtc)
+> -		crtc_state = drm_atomic_get_new_crtc_state(state,
+> -							   new_plane_state->crtc);
+> -
+> -	pipe->sspp = dpu_rm_get_sspp(&kms->rm, pdpu->pipe);
+> -	r_pipe->sspp = NULL;
+>   
+> -	if (!pipe->sspp)
+> -		return -EINVAL;
+> -
+> -	pipe_hw_caps = pipe->sspp->cap;
+> -	sblk = pipe->sspp->cap->sblk;
+> -
+> -	if (sblk->scaler_blk.len) {
+> -		min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+> -		max_scale = MAX_DOWNSCALE_RATIO << 16;
+> -	} else {
+> -		min_scale = DRM_PLANE_NO_SCALING;
+> -		max_scale = DRM_PLANE_NO_SCALING;
+> -	}
+> +	min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+> +	max_scale = MAX_DOWNSCALE_RATIO << 16;
+>   
+>   	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+>   						  min_scale,
+> @@ -843,11 +816,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	if (!new_plane_state->visible)
+>   		return 0;
+>   
+> -	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+> -
+>   	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+>   	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+>   		DPU_ERROR("> %d plane stages assigned\n",
+> @@ -871,8 +839,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   		return -E2BIG;
+>   	}
+>   
+> -	fmt = msm_framebuffer_format(new_plane_state->fb);
+> -
+>   	max_linewidth = pdpu->catalog->caps->max_linewidth;
+>   
+>   	drm_rect_rotate(&pipe_cfg->src_rect,
+> @@ -881,6 +847,78 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   
+>   	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+>   	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
+> +		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> +			return -E2BIG;
+> +		}
+> +
+> +		*r_pipe_cfg = *pipe_cfg;
+> +		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+> +		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+> +		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+> +		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> +	} else {
+> +		memset(r_pipe_cfg, 0, sizeof(*r_pipe_cfg));
+> +	}
+> +
+
+This is the part I am not able to fully understand. Assignment of 
+r_pipe_cfg is also pipe related so why should that move to 
+dpu_plane_atomic_check_nopipe(). It should be part of 
+dpu_plane_atomic_check_pipe().
+
+> +	drm_rect_rotate_inv(&pipe_cfg->src_rect,
+> +			    new_plane_state->fb->width, new_plane_state->fb->height,
+> +			    new_plane_state->rotation);
+> +	if (r_pipe_cfg->src_rect.x1 != 0)
+> +		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+> +				    new_plane_state->fb->width, new_plane_state->fb->height,
+> +				    new_plane_state->rotation);
+> +
+> +	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
 > +
 > +	return 0;
 > +}
-=E2=80=A6
+> +
+> +static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+> +					struct drm_atomic_state *state,
+> +					const struct drm_crtc_state *crtc_state)
+> +{
+> +	struct drm_plane_state *new_plane_state =
+> +		drm_atomic_get_new_plane_state(state, plane);
+> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
+> +	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
+> +	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> +	const struct msm_format *fmt;
+> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> +	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> +	uint32_t max_linewidth;
+> +	unsigned int rotation;
+> +	uint32_t supported_rotations;
+> +	const struct dpu_sspp_cfg *pipe_hw_caps;
+> +	const struct dpu_sspp_sub_blks *sblk;
+> +	int ret = 0;
+> +
+> +	pipe_hw_caps = pipe->sspp->cap;
+> +	sblk = pipe->sspp->cap->sblk;
+> +
+> +	/*
+> +	 * We already have verified scaling against platform limitations.
+> +	 * Now check if the SSPP supports scaling at all.
+> +	 */
+> +	if (!sblk->scaler_blk.len &&
+> +	    ((drm_rect_width(&new_plane_state->src) >> 16 !=
+> +	      drm_rect_width(&new_plane_state->dst)) ||
+> +	     (drm_rect_height(&new_plane_state->src) >> 16 !=
+> +	      drm_rect_height(&new_plane_state->dst))))
+> +		return -ERANGE;
+> +
 
-Under which circumstances would you become interested to apply a statement
-like =E2=80=9Cguard(spinlock_irqsave)(&drvdata->spin_lock);=E2=80=9D?
-https://elixir.bootlin.com/linux/v6.11-rc5/source/include/linux/spinlock.h=
-#L572
+Should this part be retained under dpu_plane_atomic_check_nopipe()?
 
-Regards,
-Markus
+This is also not pipe dependent.
+
+> +	fmt = msm_framebuffer_format(new_plane_state->fb);
+> +
+> +	max_linewidth = pdpu->catalog->caps->max_linewidth;
+> +
+> +	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt,
+> +					  &crtc_state->adjusted_mode);
+> +	if (ret)
+> +		return ret;
+> +
+> +	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+>   		/*
+>   		 * In parallel multirect case only the half of the usual width
+>   		 * is supported for tiled formats. If we are here, we know that
+> @@ -894,12 +932,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   			return -E2BIG;
+>   		}
+>   
+> -		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> -			return -E2BIG;
+> -		}
+> -
+>   		if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+>   		    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
+>   		    (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
+> @@ -921,26 +953,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   		r_pipe->multirect_index = DPU_SSPP_RECT_1;
+>   		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>   
+> -		*r_pipe_cfg = *pipe_cfg;
+> -		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+> -		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+> -		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+> -		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> -	}
+> -
+> -	drm_rect_rotate_inv(&pipe_cfg->src_rect,
+> -			    new_plane_state->fb->width, new_plane_state->fb->height,
+> -			    new_plane_state->rotation);
+> -	if (r_pipe->sspp)
+> -		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+> -				    new_plane_state->fb->width, new_plane_state->fb->height,
+> -				    new_plane_state->rotation);
+> -
+> -	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
+> -	if (ret)
+> -		return ret;
+> -
+> -	if (r_pipe->sspp) {
+>   		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+>   						  &crtc_state->adjusted_mode);
+>   		if (ret)
+> @@ -963,11 +975,45 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>   	}
+>   
+>   	pstate->rotation = rotation;
+
+The dpu_plane_check_inline_rotation() is also pipe independent. So even 
+that goes to dpu_plane_atomic_check_nopipe()?
+
+> -	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+>   
+>   	return 0;
+>   }
+>   
+
+<snip>
+
 
