@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-29752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29753-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5E599623BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 11:41:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E9899623CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 11:42:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 15AA51C20A5D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 09:41:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D2C7282DD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 09:42:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D59C51662E7;
-	Wed, 28 Aug 2024 09:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E599616A36E;
+	Wed, 28 Aug 2024 09:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nKToqbHT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Vv/16hMq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22469165EEF;
-	Wed, 28 Aug 2024 09:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4088615ECD7;
+	Wed, 28 Aug 2024 09:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724838076; cv=none; b=QWSZJyJbu8MgVGUq8XMktm2hOT++SZPr0wlOl5HVNf3qsqdofIAQnPHt2Lt4mCUTJBWJsvX+UAYE/bdcyHMsENMi2gE9x1WK22EkuJ+AVT3vOgQHCY6BdBP3uGOmD/sl0+xd6tVqBBvQ7DAZJw0PTruooQWNbhFaBEN03rOnXw8=
+	t=1724838115; cv=none; b=BAsZzaHRm2m6uDUnlpn1eQ316q3eRSVrlmh+NMMfRVPfN+UJcUCgoSGfU5dkIuDAcCe9nnqaMkfnh7u3GEbh4kGRp2xwM96darJZLPTYvsVHO7YVaM5I+o6fTVbxetwf8CaTkbvUx0gHoKkpEeRaW+XfdIOGSpmS9/3l/6Ekc7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724838076; c=relaxed/simple;
-	bh=KmLvLZCvXN+ISC2aNUSSVE3qHQPfDdF+tdNTgeSVTWw=;
+	s=arc-20240116; t=1724838115; c=relaxed/simple;
+	bh=MV74E9nZBynQxBR8dg/mjqqGm0n/3VH7sTdu3wSjF40=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HrI3a83SwINRyZ0iiamOIgFJgsbsZsG5599Ahx0Mj3G7lcLpD2qpgxevYnVgV6x0HgO5o87HNx+zttRvvu9rEpgSYnG0kC4SfJjMSYDVmG9lkPWKJKELFvsJuHICWEpyXQU/bBXDvX5Vqz++7ClnB4MPBMq6tcs18OzWdpsrIhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nKToqbHT; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=Ks/okCQiskzqWAuWEj2oliOEphCFdKjD1pcDUk4jcYcmwe1OIZQxVOBuziVp5+3AYl0KjP+GmIwKr0ixov7t9SiEZYWj4XmLZl2LL18u1rdEqrpaaOCFTqdmwJyhYFLBkJFUqIyGzwzeFdv/yfhvwVxC5PRkfhH+181PA8rvAPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Vv/16hMq; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47RLqiP6027416;
-	Wed, 28 Aug 2024 09:41:09 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47RLowAi021973;
+	Wed, 28 Aug 2024 09:41:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Glnt4wfb8lmUVsOzwL5WYgQj8annLWuBVIaCfgWkSTk=; b=nKToqbHT0gmxAona
-	PhABQ19pUEQOO6S2/XiViehtHBc0kr+rXqomks2oymgGZt+6UIQNPAlSltyUNHwN
-	mB1QSgkLDflZ8uEhdm3r+IAjcGmk33pvjFH4sOSTT8eiogpN+Ie7q9oWYqVoouCk
-	BQBfD0Cf9Odq8RlL7aJ/KmUolOgFP4GD1dALyIRQI4d0UC/kDfiKiTYLvSZirBQj
-	PEjkzBixqzTc5zEXbFsR5UQoezF7u8w2Ev/XGruI1sdJKqcro1zNOGg1K1a0r1ad
-	LAGYR7XQKBUX1N++kWD2Hb/2de0LHUhKUJimTKTMGL+U07JcnhkY+fJe7RgDkN5f
-	KiUUWQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419q2xsb8q-1
+	G2M9Wgad7757x4Y7yhdMnzDx2L4gjT0MN/6gHvFUW08=; b=Vv/16hMq0h+orYIo
+	RbV95w19NWMMOJesYH8BhQL86VCh+sGhjG2/j78sbr2tj7zUJhc2YjXa+WpVWsh6
+	wdNb25YNkkebrmtkwwhZLHp0rPt7/8LUab8ZC1nC77QWSUPJkrMPGKx8NSQUwEPA
+	7uZpwt25ftzcVZl0HPRUnUXf2pRGBit4QYIbGtfVWwgGftryyz6bWodQ0OcdiFZs
+	UqjV6FXiv8V0IPaWcRFZXz7mAnJJuVKe3cOaCPvStd1SO444kCzPTVRPRoVn64Fr
+	SSvPgnsiNmLgPyg4dUwSqM/M6wY+vledi/r/CwFds2WcdRL1V9ajZn9rpleySJVS
+	CzBxVg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419q2xsbaa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 09:41:08 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47S9f74C001893
+	Wed, 28 Aug 2024 09:41:43 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47S9fgGA014181
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 09:41:07 GMT
-Received: from [10.216.7.68] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 28 Aug 2024 09:41:42 GMT
+Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
- 2024 02:41:01 -0700
-Message-ID: <818a4f89-d64b-4657-8845-d01caec0a750@quicinc.com>
-Date: Wed, 28 Aug 2024 15:10:57 +0530
+ 2024 02:41:36 -0700
+Message-ID: <79a294b3-90a7-4900-bac1-281d321c9a55@quicinc.com>
+Date: Wed, 28 Aug 2024 17:41:32 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,108 +65,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] clk: qcom: Add support for Global Clock Controller
- on QCS8300
-To: Andrew Lunn <andrew@lunn.ch>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        "Ajit
- Pandey" <quic_ajipan@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Satya Priya Kakitapalli
-	<quic_skakitap@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <netdev@vger.kernel.org>
-References: <20240822-qcs8300-gcc-v2-0-b310dfa70ad8@quicinc.com>
- <20240822-qcs8300-gcc-v2-2-b310dfa70ad8@quicinc.com>
- <bf5b7607-a8fc-49e3-8cf7-8ef4b30ba542@lunn.ch>
- <01c5178e-58fe-4c45-a82e-d0b6b6789645@quicinc.com>
- <049ee7d3-9379-4c8f-88ed-7aec03ad3367@lunn.ch>
+Subject: Re: [PATCH 1/8] phy: qcom-qmp: pcs-pcie: Add v6.30 register offsets
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <manivannan.sadhasivam@linaro.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <robh@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>, <abel.vesa@linaro.org>,
+        <quic_msarkar@quicinc.com>, <quic_devipriy@quicinc.com>,
+        <dmitry.baryshkov@linaro.org>, <kw@linux.com>, <lpieralisi@kernel.org>,
+        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+ <20240827063631.3932971-2-quic_qianyu@quicinc.com>
+ <2ojutgxk4kplxwrxxcq5zorejuohbow7dr6lhl4cwndkwzvxf6@lxg4um6krdnh>
 Content-Language: en-US
-From: Imran Shaik <quic_imrashai@quicinc.com>
-In-Reply-To: <049ee7d3-9379-4c8f-88ed-7aec03ad3367@lunn.ch>
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <2ojutgxk4kplxwrxxcq5zorejuohbow7dr6lhl4cwndkwzvxf6@lxg4um6krdnh>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 35tbvDru6ZV_oimTL3j0FtbCPK_ORpex
-X-Proofpoint-GUID: 35tbvDru6ZV_oimTL3j0FtbCPK_ORpex
+X-Proofpoint-ORIG-GUID: qcWtSUmrOLNrIVb0U78pxP9xNMLSlD5q
+X-Proofpoint-GUID: qcWtSUmrOLNrIVb0U78pxP9xNMLSlD5q
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-28_03,2024-08-27_01,2024-05-17_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 spamscore=0
+ clxscore=1011 priorityscore=1501 lowpriorityscore=0 spamscore=0
  impostorscore=0 mlxlogscore=999 phishscore=0 adultscore=0 bulkscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408280069
 
 
-
-On 8/26/2024 6:24 PM, Andrew Lunn wrote:
-> On Mon, Aug 26, 2024 at 04:25:39PM +0530, Imran Shaik wrote:
+On 8/27/2024 7:37 PM, Krzysztof Kozlowski wrote:
+> On Mon, Aug 26, 2024 at 11:36:24PM -0700, Qiang Yu wrote:
+>> x1e80100 SoC uses QMP phy with version v6.30 for PCIe Gen4 x8. Add the new
+>> PCS PCIE specific offsets in a dedicated header file.
 >>
+>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>> ---
+>>   .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    | 25 +++++++++++++++++++
+>>   1 file changed, 25 insertions(+)
+>>   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
 >>
->> On 8/23/2024 1:29 AM, Andrew Lunn wrote:
->>>> +static int gcc_qcs8300_probe(struct platform_device *pdev)
->>>> +{
->>>> +	struct regmap *regmap;
->>>> +	int ret;
->>>> +
->>>> +	regmap = qcom_cc_map(pdev, &gcc_qcs8300_desc);
->>>> +	if (IS_ERR(regmap))
->>>> +		return PTR_ERR(regmap);
->>>> +
->>>> +	ret = qcom_cc_register_rcg_dfs(regmap, gcc_dfs_clocks,
->>>> +				       ARRAY_SIZE(gcc_dfs_clocks));
->>>> +	if (ret)
->>>> +		return ret;
->>>> +
->>>> +	/* Keep some clocks always enabled */
->>>
->>> Sorry, but you need to explain why. Why cannot the camera driver
->>> enable these clocks when it loads? Why cannot the display driver
->>> enable these clocks when it loads.
->>>
->>
->> These clocks are recommended to be kept always ON as per the HW design and
->> also exposing clock structures and marking them critical in the kernel would
->> lead to redundant code. Based on previous discussions with clock
->> maintainers, it is recommended to keep such clocks enabled at probe and not
->> model them. This approach is consistently followed for all other targets as
->> well.
-> 
-> I don't see why it would add redundant code. It is a few lines of code
-> in the driver, which every driver using clocks has. If you really
-> don't want the clock turned off because it is unused, you can use
-> CLK_IGNORE_UNUSED, along with a comment explaining why.
-> 
-> What i was actually guessing is that you don't actually have open
-> drivers for these hardware blocks, just a blob running in user
-> space. As such, it cannot turn the clocks on. If that is the case, i
-> would much prefer you are honest about this, and document it.
-> 
-
-We have recently discussed enabling the clocks at probe with the 
-maintainers in the below threads as well.
-
-https://lore.kernel.org/all/664cca91-8615-d3f6-7525-15b9b6725cce@quicinc.com/
-
-It was concluded that keeping them enabled at probe is acceptable. We 
-are now following this approach across all targets.
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+>> new file mode 100644
+>> index 000000000000..5a58ff197e6e
+>> --- /dev/null
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+>> @@ -0,0 +1,25 @@
+>> +/* SPDX-License-Identifier: GPL-2.0 */
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center. All rights reserved.
+>> + */
+>> +
+>> +#ifndef QCOM_PHY_QMP_PCS_PCIE_V6_30_H_
+>> +#define QCOM_PHY_QMP_PCS_PCIE_V6_30_H_
+>> +
+>> +/* Only for QMP V6_30 PHY - PCIE have different offsets than V6 */
+>> +#define QPHY_PCIE_V6_30_PCS_POWER_STATE_CONFIG2		0x014
+>> +#define QPHY_PCIE_V6_30_PCS_TX_RX_CONFIG		0x020
+>> +#define QPHY_PCIE_V6_30_PCS_ENDPOINT_REFCLK_DRIVE	0x024
+>> +#define QPHY_PCIE_V6_30_PCS_OSC_DTCT_ACTIONS		0x098
+>> +#define QPHY_PCIE_V6_30_PCS_EQ_CONFIG1			0x0a8
+>> +#define QPHY_PCIE_V6_30_PCS_G3_RXEQEVAL_TIME		0x0f8
+>> +#define QPHY_PCIE_V6_30_PCS_G4_RXEQEVAL_TIME		0x0fc
+>> +#define QPHY_PCIE_V6_30_PCS_G4_EQ_CONFIG5		0x110
+>> +#define QPHY_PCIE_V6_30_PCS_G4_PRE_GAIN			0x164
+>> +#define QPHY_PCIE_V6_30_PCS_RX_MARGINING_CONFIG1	0x184
+>> +#define QPHY_PCIE_V6_30_PCS_RX_MARGINING_CONFIG3	0x18c
+>> +#define QPHY_PCIE_V6_30_PCS_RX_MARGINING_CONFIG5	0x194
+>> +#define QPHY_PCIE_V6_30_PCS_G3_FOM_EQ_CONFIG5		0x1b4
+>> +#define QPHY_PCIE_V6_30_PCS_G4_FOM_EQ_CONFIG5		0x1c8
+> There is no user of these. Squash it with the user, because there is
+> little point in adding dead code.
+>
+> Best regards,
+> Krzysztof
+OK, will squash this three patches related to phy setting into one patch.
 
 Thanks,
-Imran
-
-> 	Andrew
+Qiang
 
