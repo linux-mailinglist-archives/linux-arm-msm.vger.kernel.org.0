@@ -1,185 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-29686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29688-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01594961B13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 02:26:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F264961B6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 03:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5324A1F24731
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 00:26:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CF113B20C8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 01:28:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBD6411CAF;
-	Wed, 28 Aug 2024 00:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8771D2556E;
+	Wed, 28 Aug 2024 01:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TmDAqwH1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="COiKDZNb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D13BD512;
-	Wed, 28 Aug 2024 00:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2C4115E96;
+	Wed, 28 Aug 2024 01:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724804791; cv=none; b=eBPXLqaVgysyoqS07oWKzQQ4YyPzIvNjA9SNxdoNiO7shBggHmDRXk+SSk7bs8Rj1o73GUv93/CTxRb5+Nfqo7EQ91Hk85EapmorQmSlcIb5UI3Ufa4f0eYmL7rGblT9oSKV49hs7qnZpaMg1WoMCo4bE1qr6DX2+N73xsJazUo=
+	t=1724808478; cv=none; b=ACJXnP5c+LXGP6ZslPm+6FcPha7GAyMaJRE0aIDAtcn8JlxVME7tRWrGyJl4PQKoGzRzMoRkmqiZKlb/rgaJjJ9unMXSHSNhfyFYafPs2La4hYyQerzynksbvhJ8ZTB2Y9Edj6Ju+5Rmq3Y2hO+LIOKnoxrlUbkbLdbEg4kmqmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724804791; c=relaxed/simple;
-	bh=3BxYW8fatp/yBFsFz/oCa/Qh8//iHs1gU1fRTYqapfo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HzmPaLfcukhrOBJbYvNE58DFfqxU6I14RJ5/8weKe3IXvYM5T6mwZ7OJ2l6WdjSBLLK/PBg8U2XbuOjPEw6gB+UYM7pw9I5/KgRM1/BDKde+S6l7fFI2iYGDXsTmHgd7ncKYgp4EtDVaP2q59g38UcoYimlRgQV8WIq/j671wmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TmDAqwH1; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1724804789; x=1756340789;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=3BxYW8fatp/yBFsFz/oCa/Qh8//iHs1gU1fRTYqapfo=;
-  b=TmDAqwH19j1EW5uO7nZVGlnssJXFRm2re3v2E5Ws9jsVvOqQsTL0v1TF
-   Nb2S9dYOObnlIkzw3WCI/g7Bwb/tkoyEHdlPmriYu4qes/0e0C0Y230Vl
-   ntINFmotanQnxF0dNeXDxwWO/1CtJT8adYEic3Th0Ve9UyOvmlwYyuqzM
-   HHIiTdlyPbKQy6WUwRqceKvS/YM+eaoQZmKMpkI5jYSrINcMMKTjT1C5l
-   RtSsM9WTj8Vu6HsNR6xh66Q79D2fMp0m26on73ek1eLTCTKV+/S1SZ6Sf
-   XiF56kSZ6XKaxyHEgNUtFKjlySLd7EW3ZsUwem8AGCjY+If9tApa/teLK
-   Q==;
-X-CSE-ConnectionGUID: AxZFmEyIQx6/S/fmCltE/Q==
-X-CSE-MsgGUID: GJgqbI58Qvq3AGS/jVFQGg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11177"; a="23273736"
-X-IronPort-AV: E=Sophos;i="6.10,181,1719903600"; 
-   d="scan'208";a="23273736"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2024 17:26:28 -0700
-X-CSE-ConnectionGUID: bb80TmV3QoOI0wkcWCQaDw==
-X-CSE-MsgGUID: kp8sTFTaRbezJjWGBtZ3Yg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,181,1719903600"; 
-   d="scan'208";a="63383351"
-Received: from lkp-server01.sh.intel.com (HELO 9a732dc145d3) ([10.239.97.150])
-  by orviesa006.jf.intel.com with ESMTP; 27 Aug 2024 17:26:25 -0700
-Received: from kbuild by 9a732dc145d3 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sj6Vy-000KGI-1x;
-	Wed, 28 Aug 2024 00:26:22 +0000
-Date: Wed, 28 Aug 2024 08:26:00 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dikshita Agarwal via B4 Relay <devnull+quic_dikshita.quicinc.com@kernel.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>
-Subject: Re: [PATCH v3 18/29] media: iris: implement vb2 streaming ops
-Message-ID: <202408280735.el4Z7sYK-lkp@intel.com>
-References: <20240827-iris_v3-v3-18-c5fdbbe65e70@quicinc.com>
+	s=arc-20240116; t=1724808478; c=relaxed/simple;
+	bh=+iegS13tf3OHYURtUB1IWgq6SiDTOPJhqairr3LTkdY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hW9DQy+i69Lq71FQwQfXrYSyRFKiuvjqiG5sNVSaPDOjJMjrgdMgmE1mG7KZul+UAy4gQf5lzIw6DtuUmAxrHRJltNpAqZOlOO8F+vVPqoWwKCGDhBFVdJ8Fyl0PsBmxj0yQXTWMmdj8QoxcBjlh9N6rJnFuwV2qTHZx6JAqjzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=COiKDZNb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47RLZeQk026181;
+	Wed, 28 Aug 2024 01:27:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TzfGNMuPe+MY1W2UIe5YMP
+	ikqIGdtYpDCu9e91Aj4kE=; b=COiKDZNbTKpy8NvHKgzAFZ240jnuo4piFfqRvy
+	CZKMYWftVcIfKSsLByGW0uZfBOBRWbwhevF+KWqmZuk58Y9d1qvA+J7Vt7ektRi4
+	2qElPgvQ9ruGzU58UxnBsdJw5wtDokUT+3imj4pXki4ZdrUFdyajUOuuw7ldeHTa
+	stOtNs5iw56zuCyH1lEQWNYuRyNvIC3UC3ZsMRiPfoEUum6/5IXPogNmkh8yC/Ij
+	cUNSG3w8xpKKCQYEbgANTxUx4Dm7mVKmWcIp4X4x+p2g5M8qdXCm6ZfGCLlstmzk
+	KE2GI9XLudzjue1FNIEK9HkV5ZxsHtNsvPhC/gchSNtxjAYg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419putgbeq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 01:27:31 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47S1RU55032024
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 01:27:30 GMT
+Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 27 Aug 2024 18:27:24 -0700
+From: Jie Gan <quic_jiegan@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+Subject: [PATCH v4 0/5] Coresight: Add Coresight TMC Control Unit driver
+Date: Wed, 28 Aug 2024 09:27:01 +0800
+Message-ID: <20240828012706.543605-1-quic_jiegan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240827-iris_v3-v3-18-c5fdbbe65e70@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jeHd-1B_POH16_f6BEWj8lUCyiQdrTB_
+X-Proofpoint-ORIG-GUID: jeHd-1B_POH16_f6BEWj8lUCyiQdrTB_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-27_12,2024-08-27_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408280009
 
-Hi Dikshita,
+The Coresight TMC Control Unit(CTCU) device hosts miscellaneous configuration
+registers to control various features related to TMC ETR device.
 
-kernel test robot noticed the following build warnings:
+The CTCU device works as a helper device physically connected to the TMC ETR device.
+---------------------------------------------------------
+             |ETR0|             |ETR1|
+              . \                 / .
+              .  \               /  .
+              .   \             /   .
+              .    \           /    .
+---------------------------------------------------
+ETR0ATID0-ETR0ATID3     CTCU    ETR1ATID0-ETR1ATID3
+---------------------------------------------------
+Each ETR has four ATID registers with 128 bits long in total.
+e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
 
-[auto build test WARNING on 31aaa7d95e09892c81df0d7c49ae85640fa4e202]
+Based on the trace id which is programed in CTCU ATID register of
+specific ETR, trace data with that trace id can get into ETR's buffer
+while other trace data gets ignored. The number of CTCU ATID registers
+depends on the number of defined TMC ETR devices. For example, two TMC
+ETR devices need eight ATID registers. ETR0 with ETR0ATID0-ETR0ATID3
+and ETR1 with ETR1ATID0-ETRATID3.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal-via-B4-Relay/dt-bindings-media-Add-sm8550-dt-schema/20240827-181059
-base:   31aaa7d95e09892c81df0d7c49ae85640fa4e202
-patch link:    https://lore.kernel.org/r/20240827-iris_v3-v3-18-c5fdbbe65e70%40quicinc.com
-patch subject: [PATCH v3 18/29] media: iris: implement vb2 streaming ops
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20240828/202408280735.el4Z7sYK-lkp@intel.com/config)
-compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240828/202408280735.el4Z7sYK-lkp@intel.com/reproduce)
+The significant challenge in enabling the data filter function is how
+to collect the trace ID of the source device. The introduction of
+trace_id callback function addresses this challenge. The callback function
+collects trace ID of the device and return it back. The trace ID will be
+stored in the structure called cs_sink_data and transmitted to helper
+and sink devices.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202408280735.el4Z7sYK-lkp@intel.com/
+The cs_sink_data structure is created to address how to transmit
+parameters needs by coresight_enable_path/coresight_disbale_path
+functions.
 
-All warnings (new ones prefixed by >>):
+Here is an example of the struct cs_sink_data:
+struct cs_sink_data {
+        struct perf_output_handle  *handle; //used by perf mode
+        struct coresight_device    *sink;   //used to retrieve atid_offset
+        u32                        traceid; //traceid needed by CTCU
+};
 
->> drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c:167:12: warning: variable 'flush_type' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
-     167 |                 else if (V4L2_TYPE_IS_CAPTURE(plane))
-         |                          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/uapi/linux/videodev2.h:174:36: note: expanded from macro 'V4L2_TYPE_IS_CAPTURE'
-     174 | #define V4L2_TYPE_IS_CAPTURE(type) (!V4L2_TYPE_IS_OUTPUT(type))
-         |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c:175:26: note: uninitialized use occurs here
-     175 |                 flush_pkt.flush_type = flush_type;
-         |                                        ^~~~~~~~~~
-   drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c:167:8: note: remove the 'if' if its condition is always true
-     167 |                 else if (V4L2_TYPE_IS_CAPTURE(plane))
-         |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     168 |                         flush_type = HFI_FLUSH_OUTPUT;
-   drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c:145:16: note: initialize the variable 'flush_type' to silence this warning
-     145 |         u32 flush_type;
-         |                       ^
-         |                        = 0
-   1 warning generated.
+The atid_offset mentioned before is the offset to ATID register in CTCU
+device.
 
+Enabling the source device will configure one bit in the ATID register based
+on its trace ID.
+Disabling the source devices will reset the bit in the AITD register
+based on its trace ID.
 
-vim +167 drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+Useage:
+Enable:
+STM device with trace ID 5 and ETR0 is activated.
+Bitmap before the enablement:
+ETR0ATID0:
+31..................543210
+==========================
+0000000000000000000000...0
+==========================
 
-   139	
-   140	static int iris_hfi_gen1_session_stop(struct iris_inst *inst, u32 plane)
-   141	{
-   142		struct iris_core *core = inst->core;
-   143		struct hfi_session_flush_pkt flush_pkt;
-   144		struct hfi_session_pkt pkt;
-   145		u32 flush_type;
-   146		int ret = 0;
-   147	
-   148		if ((V4L2_TYPE_IS_OUTPUT(plane) &&
-   149		     inst->state == IRIS_INST_INPUT_STREAMING) ||
-   150		    (V4L2_TYPE_IS_CAPTURE(plane) &&
-   151		     inst->state == IRIS_INST_OUTPUT_STREAMING) ||
-   152		    inst->state == IRIS_INST_ERROR) {
-   153			reinit_completion(&inst->completion);
-   154			iris_hfi_gen1_packet_session_cmd(inst, &pkt, HFI_CMD_SESSION_STOP);
-   155			ret = iris_hfi_queue_cmd_write(core, &pkt, pkt.shdr.hdr.size);
-   156			if (!ret)
-   157				ret = iris_wait_for_session_response(inst, false);
-   158	
-   159			reinit_completion(&inst->completion);
-   160			iris_hfi_gen1_packet_session_cmd(inst, &pkt, HFI_CMD_SESSION_RELEASE_RESOURCES);
-   161			ret = iris_hfi_queue_cmd_write(core, &pkt, pkt.shdr.hdr.size);
-   162			if (!ret)
-   163				ret = iris_wait_for_session_response(inst, false);
-   164		} else if (inst->state == IRIS_INST_STREAMING) {
-   165			if (V4L2_TYPE_IS_OUTPUT(plane))
-   166				flush_type = HFI_FLUSH_ALL;
- > 167			else if (V4L2_TYPE_IS_CAPTURE(plane))
-   168				flush_type = HFI_FLUSH_OUTPUT;
-   169	
-   170			reinit_completion(&inst->flush_completion);
-   171	
-   172			flush_pkt.shdr.hdr.size = sizeof(struct hfi_session_flush_pkt);
-   173			flush_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_FLUSH;
-   174			flush_pkt.shdr.session_id = inst->session_id;
-   175			flush_pkt.flush_type = flush_type;
-   176	
-   177			ret = iris_hfi_queue_cmd_write(core, &flush_pkt, flush_pkt.shdr.hdr.size);
-   178			if (!ret)
-   179				ret = iris_wait_for_session_response(inst, true);
-   180		}
-   181	
-   182		return ret;
-   183	}
-   184	
+Bitmap after the enablement:
+31..................543210
+==========================
+0000000000000...0000100000
+==========================
+
+The bit 5 of the ETR0ATID0 register is configured to 1 when enabling the
+STM device.
+
+Disable:
+STM device with trace ID 5 and ETR0 is activated.
+Bitmap before the disablement:
+ETR0ATID0:
+31................6543210
+=========================
+000000000010111...0100000
+=========================
+
+Bitmap after the disablement
+ETR0ATID0:
+31................6543210
+=========================
+000000000010111...0000000
+=========================
+
+The bit 5 of the ETR0ATID0 register is reset to 0 when disabling the STM
+device.
+
+Previous discussion for V1:
+https://lore.kernel.org/lkml/20240618072726.3767974-1-quic_jiegan@quicinc.com/T/#t
+
+Changes since V2:
+1. Rename the device to Coresight Control Unit.
+2. Introduce the trace_id function pointer to address the challeng how to
+properly collect the trace ID of the device.
+3. Introduce a new way to define the qcom,ccu-atid-offset property in
+device tree.
+4. Disabling the filter function blocked on acquiring the ATID-offset,
+which will be addressed in a separate patch once it’s ready.
+
+Previous discussion for V2:
+https://lore.kernel.org/linux-arm-msm/20240705090049.1656986-1-quic_jiegan@quicinc.com/T/#t
+
+Changes since V3:
+1. Rename the device to Coresight TMC Control Unit(CTCU).
+2. Introduce a new way to define the platform related configs. The new
+   structure, qcom_ctcu_config, is used to store configurations specific
+   to a platform. Each platform should have its own qcom_ctcu_config structure.
+3. In perf mode, the ETM devices allocate their trace IDs using the
+   perf_sink_id_map. In sysfs mode, the ETM devices allocate their trace
+   IDs using the id_map_default.
+4. Considering the scenario where both ETR devices might be enabled simultaneously
+   with multiple sources, retrieving and using trace IDs instead of id_map is more effective
+   for the CTCU device in sysfs mode. For example, We can configure one ETR as sink for high
+   throughput trace data like ETM and another ETR for low throughput trace data like STM.
+   In this case, STM data won’t be flushed out by ETM data quickly. However, if we use id_map to
+   manage the trace IDs, we need to create a separate id_map for each ETR device. Addtionally, We
+   would need to iterate through the entire id_map for each configuration.
+5. Add support for apb's clock name "apb". If the function fails to obtain the clock with
+   the name "apb_pclk", it will attempt to acquire the clock with the name "apb".
+
+Previous discussion for V3:
+https://lore.kernel.org/linux-arm-kernel/20240812024141.2867655-1-quic_jiegan@quicinc.com/
+
+Changes since V4
+1. Add TMC description in binding file.
+2. Restrict the number of ports for the CTCU device to a range of 0 to 1 in the binding file,
+because the maximum number of CTCU devices is 2 for existing projects.
+
+Jie Gan (5):
+  Coresight: Add support for new APB clock name
+  Coresight: Add trace_id function to retrieving the trace ID
+  dt-bindings: arm: Add Coresight TMC Control Unit hardware
+  Coresight: Add Coresight TMC Control Unit driver
+  arm64: dts: qcom: Add CTCU and ETR nodes for SA8775p
+
+ .../bindings/arm/qcom,coresight-ctcu.yaml     |  84 +++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 160 ++++++++++
+ drivers/hwtracing/coresight/Kconfig           |   8 +
+ drivers/hwtracing/coresight/Makefile          |   1 +
+ drivers/hwtracing/coresight/coresight-core.c  |  59 +++-
+ drivers/hwtracing/coresight/coresight-ctcu.c  | 292 ++++++++++++++++++
+ drivers/hwtracing/coresight/coresight-ctcu.h  |  21 ++
+ drivers/hwtracing/coresight/coresight-etb10.c |   3 +-
+ .../hwtracing/coresight/coresight-etm-perf.c  |  37 ++-
+ .../coresight/coresight-etm3x-core.c          |  30 ++
+ .../coresight/coresight-etm4x-core.c          |  29 ++
+ drivers/hwtracing/coresight/coresight-priv.h  |  13 +-
+ drivers/hwtracing/coresight/coresight-stm.c   |  22 ++
+ drivers/hwtracing/coresight/coresight-sysfs.c |  24 +-
+ .../hwtracing/coresight/coresight-tmc-etf.c   |   3 +-
+ .../hwtracing/coresight/coresight-tmc-etr.c   |   6 +-
+ drivers/hwtracing/coresight/coresight-tpda.c  |  20 ++
+ drivers/hwtracing/coresight/coresight-trbe.c  |   4 +-
+ drivers/hwtracing/coresight/ultrasoc-smb.c    |   3 +-
+ include/linux/coresight.h                     |  16 +-
+ 20 files changed, 807 insertions(+), 28 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
