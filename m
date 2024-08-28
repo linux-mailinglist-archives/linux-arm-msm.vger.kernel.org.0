@@ -1,99 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-29768-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29769-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16A4396281D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:01:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB3D3962837
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:06:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4996F1C23FA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:01:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2D3B9B2359C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:06:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C6B8184535;
-	Wed, 28 Aug 2024 13:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7F23178CF2;
+	Wed, 28 Aug 2024 13:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tXXxzklN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rqhDxg7O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3577B184101;
-	Wed, 28 Aug 2024 13:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6690175D47;
+	Wed, 28 Aug 2024 13:06:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724850065; cv=none; b=HS3g/mwvYn+BZxg/HWOmD3MU0iFnWDnn1guUCSpqpwlue/HbQkMPV6vn1Kq8jKlJO6sBrBI01h3vWzQTxNyE83cc/JPGMo98qPLMVsZWSrPP0sGnANk5Gyhpu6rN+HNb5zv/IG0qICyxRNFe/xcg015uLCcuR3bvN3nKeMJVNQk=
+	t=1724850377; cv=none; b=SXfFtcrpL4UH2N0QuePxlMUsmlMJa2SA1ENGXaBS72EyQ/j5gnPeggdxRY5gHDEQXipGY8tFw6NP5RUAaF8eb5baU+y5u19djaDcOm6TH5mVM1CMqGgsJYW/Ao1CoRKTN8GZVsnpuYJyRxLYFcN0ppnhj5pVbqviny8dKUYfJZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724850065; c=relaxed/simple;
-	bh=4MqjuvOTgdAG6z38bgV8cG5wFVU/c5CcZ2m7/WlkeFs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EseAlM0Vf//4eUDbUFgvY4aNYJlXBQraTT1nI+iTyd38h8RP2J9Bj5jTaSuvXEd4obCeLDkZS4l31MWJUtFJiuaZmd8qddQCYBexHVuE6Wv9BYd2lAGv8/T31bDG5D/7WnV1EMxrp9dw/XEyJ+J6kSAAuHTLUYY6ZuiHFbijBWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tXXxzklN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F4D2C4CAD7;
-	Wed, 28 Aug 2024 13:01:04 +0000 (UTC)
+	s=arc-20240116; t=1724850377; c=relaxed/simple;
+	bh=EAdjClXapxDjpgnzaErsxac7Ms6f3DmQPAtiSikh0mc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pz4J9v95tB6zZS9QVko4K3wDnK2o8BAcavSs0JADiCfnoatKWBAsQvqvOIPKNUz/wcTqvQK7v1EM60WrKztudJwPBlORvEV4pDmDU4h6T4Z/hAvZWydaD4mFX4Qe7iMKZp8/9cEdzSlbJ6ZNXBERemSY1EouVPU/ibwaZjLfQsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rqhDxg7O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B061C515AF;
+	Wed, 28 Aug 2024 13:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724850064;
-	bh=4MqjuvOTgdAG6z38bgV8cG5wFVU/c5CcZ2m7/WlkeFs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tXXxzklN4ZyYaGMPRfOyW2goyZxLaxvQBeMUbf89sUoHmDuO7a7x5QfZxT5aqHU5p
-	 sGDJ7nfZNcEl0NFjBXl/ibpJeM9hLQmxiwNBujFSg+NnvfAZ3OBJA42MlnpjJke+y7
-	 G7LTm4GMOWpMSIXa57snRVy2N0C3eS/N46pDlVwSiFBo23p9XxkjdrtFXNWDOSYHZA
-	 b4HEnZkaNDCxz140k19RXjgLP+ClnN+SDTub3mYgjPYgrmwhclJF7uOx2TtBqxN6pw
-	 BD1luvOa+7SA3pXVs13LmYNmAYmKZdd4xd+f9gWfn8Mv2u0IIUDixSpLuumg8w5xKS
-	 9QwfQoZPyhpPw==
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] regulator: qcom_spmi: Use of_property_read_bool()
-Date: Wed, 28 Aug 2024 08:00:55 -0500
-Message-ID: <20240828130056.3481050-2-robh@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240828130056.3481050-1-robh@kernel.org>
-References: <20240828130056.3481050-1-robh@kernel.org>
+	s=k20201202; t=1724850377;
+	bh=EAdjClXapxDjpgnzaErsxac7Ms6f3DmQPAtiSikh0mc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=rqhDxg7OLfyXhZJg0/6GI7L1rn3nyBCEOpEGcoT2jrkx0uP1NuGUz2vUSz7/2ibPR
+	 Ptl++7k3/8sp8CaT4JREMDaXXKGht7roD/tgfXKeETkGjblPM2dcrOOVdRqJXVLgki
+	 RaLDMoyhCFMe6v36FH+576lIHTDV9XWY52FjTFNgKfz28UZwRR4OCM3CzmNZWXqWPc
+	 MKFWpnoLOwxrkY6r5F/mn58yKtBkpxQKI96rssqDvKMxobXI3jssuYuberTXok3vlr
+	 6JF2JjO8zp+qkmx+h6VcdIU9yri0fg/P39bBAONkKLFfZ0AMSRHtC3r7dHnCyXCgXj
+	 mFY/AjrUg421A==
+Date: Wed, 28 Aug 2024 18:36:13 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Amit Vadhavana <av2082000@gmail.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, ricardo@marliere.net,
+	linux-kernel-mentees@lists.linux.dev, skhan@linuxfoundation.org,
+	olivierdautricourt@gmail.com, sr@denx.de,
+	ludovic.desroches@microchip.com, florian.fainelli@broadcom.com,
+	bcm-kernel-feedback-list@broadcom.com, rjui@broadcom.com,
+	sbranden@broadcom.com, wangzhou1@hisilicon.com, haijie1@huawei.com,
+	fenghua.yu@intel.com, dave.jiang@intel.com, zhoubinbin@loongson.cn,
+	sean.wang@mediatek.com, matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com, afaerber@suse.de,
+	manivannan.sadhasivam@linaro.org, Basavaraj.Natikar@amd.com,
+	linus.walleij@linaro.org, ldewangan@nvidia.com,
+	jonathanh@nvidia.com, thierry.reding@gmail.com,
+	laurent.pinchart@ideasonboard.com, michal.simek@amd.com,
+	Frank.Li@nxp.com, n.shubin@yadro.com, yajun.deng@linux.dev,
+	quic_jjohnson@quicinc.com, lizetao1@huawei.com, pliem@maxlinear.com,
+	konrad.dybcio@linaro.org, kees@kernel.org, gustavoars@kernel.org,
+	bryan.odonoghue@linaro.org, linux@treblig.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	linux-actions@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH V2] dmaengine: Fix spelling mistakes
+Message-ID: <Zs8gxcOa8/ja5wDW@vaman>
+References: <20240817080408.8010-1-av2082000@gmail.com>
+ <b155a6e9-9fe1-4990-8ba7-e1ff24cca041@stanley.mountain>
+ <CAPMW_rLPN1uLNR=j+A7U03AHX5m_LSpd1EnQoCpXixX+0e4ApQ@mail.gmail.com>
+ <070cc3e2-d0db-4d50-9a64-6a16d88b30df@stanley.mountain>
+ <CAPMW_rJi46_2Ho6KNS9NK0kbfc3ujrx-EJ3586wf0u7vq2kUog@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPMW_rJi46_2Ho6KNS9NK0kbfc3ujrx-EJ3586wf0u7vq2kUog@mail.gmail.com>
 
-Use of_property_read_bool() to read boolean properties rather than
-of_find_property(). This is part of a larger effort to remove callers
-of of_find_property() and similar functions. of_find_property() leaks
-the DT property pointer which is a problem for dynamically allocated
-nodes which may be freed.
+On 27-08-24, 21:47, Amit Vadhavana wrote:
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
----
- drivers/regulator/qcom_spmi-regulator.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+> Hi All,
+> 
+> I wanted to follow up on the DMA patch that I submitted on 17 Aug.
+> Kees Cook has already reviewed it. Have you all had a chance to review
+> it as well?
+> Please let me know if any additional changes or updates are needed.
 
-diff --git a/drivers/regulator/qcom_spmi-regulator.c b/drivers/regulator/qcom_spmi-regulator.c
-index 68603649db48..89657e8eea82 100644
---- a/drivers/regulator/qcom_spmi-regulator.c
-+++ b/drivers/regulator/qcom_spmi-regulator.c
-@@ -2577,15 +2577,13 @@ static int qcom_spmi_regulator_probe(struct platform_device *pdev)
- 
- 		if (saw_regmap) {
- 			reg_node = of_get_child_by_name(node, reg->name);
--			reg_prop = of_find_property(reg_node, "qcom,saw-leader",
--						    &lenp);
--			of_node_put(reg_node);
--			if (reg_prop) {
-+			if (of_property_read_bool(reg_node, "qcom,saw-leader")) {
- 				spmi_saw_ops = *(vreg->desc.ops);
- 				spmi_saw_ops.set_voltage_sel =
- 					spmi_regulator_saw_set_voltage;
- 				vreg->desc.ops = &spmi_saw_ops;
- 			}
-+			of_node_put(reg_node);
- 		}
- 
- 		if (vreg->set_points && vreg->set_points->count == 1) {
+Oddly enough, I dont see that in my list, can you please repost
+
 -- 
-2.45.2
-
+~Vinod
 
