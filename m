@@ -1,261 +1,245 @@
-Return-Path: <linux-arm-msm+bounces-29780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 48B1C96292A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:46:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85D5D96292D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:47:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3D1E283979
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:46:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F32371F22985
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 13:47:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF14828373;
-	Wed, 28 Aug 2024 13:46:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C05F15B0E4;
+	Wed, 28 Aug 2024 13:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HF6cANEY"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="M0a0Tf4Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2059.outbound.protection.outlook.com [40.107.236.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B441DFE3;
-	Wed, 28 Aug 2024 13:46:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724852813; cv=none; b=TS2Rez5S/AHlNFj4Hd7hX5Szr86AOrjEZ4nfCT2wdSM2Z0y/T5diKTE/U0EILr9rm8xJsvBKbRaHXp/Zcj/4Gy3kSevthkmuAy1hHMpeRpM0DNG96dtSlM82cs5YwV5E6PG2mEYC1RdTfKESEfUatDf+X2ZZ5fKkEoxItOHkcQo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724852813; c=relaxed/simple;
-	bh=ZqGiglr5qTsH/eaZrjdB3mtpUrARzIsL4NVsTp2REno=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NMrLhlYaleCbgDVRfBvNZDn3pMq7B8E26ls31aUrq13lb+O9uMQCHYAJWseDtbw25tbIoLNOo+pcTlxWCQVQAPcBEELhoUpReidxoRH/I8/7wLPJdHBxNGRkrcLemkfbJlvz14EUadXtqVY9bCUdAnisT27On5mLJewcE23q0Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HF6cANEY; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-53351642021so8029188e87.3;
-        Wed, 28 Aug 2024 06:46:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724852810; x=1725457610; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zK1lhMw3IsSWwXgKEhgbn5qag7aMlRwtX6PSIQDNdLw=;
-        b=HF6cANEYuFtNL4dDhu8D4Lj+EXkYuXl9DWzNRV5VbT96YYfSbO3NdHD26oy7g9yBMS
-         7WS9mHAhv/69U0easRuoIHcV6tGkVJCRhPMSvcWucA+LESewj64G6keB7/1+2YUuzH60
-         p/8nxdCFs4Wr9XqbHb+S7Iy8/aUnbw8H4kG5YwMkmOiOmFECz8usDAD4bSj0gtu5lb8w
-         R18lItJISMcMSPSAuQ4zBtnITMu26+DIcsDSryLXRXtlhHfAUSWTqUzfw/y6WQ9zLjg2
-         W+ptvWcfE0OKPh/Yh/4zGP+lgIT6jsjlJvK++dITcNHpRLhDBr68Rd3DrE6ewm+uTcvs
-         oF/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724852810; x=1725457610;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zK1lhMw3IsSWwXgKEhgbn5qag7aMlRwtX6PSIQDNdLw=;
-        b=ToKPzXntSjIQvuJcprNs0Td2UDB+FHd9KE4kxbE6f177laEuMeWINKURrniOaSbsma
-         Tw8JaIIE4NyweVLV21hUxz1eFqDVc/oSdmrjQ4qgquImp1bdffIYYU+gJNuE1NdtATdQ
-         p7r/ij5QKpssaP3PNSvEQP23d4N07Zx/c/Vgk7jCIAHWoTioX60e2ggoInahdCRL21Hn
-         6Wbr80Er+E8vvlMxQgoL4j17ZneSqB6scMk8oZGsb+z/WVPIy1iyzY2K3ZdVJHQFrsM/
-         CxycDz8+ey3SdCz1QHS9xwRjDzdv3OE/0A9puEK0C6YXO4W/ITW6UnNMYdwdBFl8PLN3
-         8wTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWHgoNHUSa143xxwyTClBvaHolVZluEebbpMX9sWPm0SRg2p1sncK+9FIbd33iP+GYRiI/vNgSz7KuhjcgW@vger.kernel.org, AJvYcCXFLWZ63J3OapNe+lQhvsMabsd2x6ZGt1cMEqxyA6Bl7cnZZQvfba7LA/44IzQdXQygMPNR7A928BSxXDLS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzip3l9bmr/Fu6UlJucoigPFtc1G0gYBaNCQ3+wDy9ip/Fh1W5j
-	PCTm5WpwRmz6PdwlxUeBN9BLgxX0z4VkfKXlwm4urNwvfA1Cere4sSy90bRllG/iFW2L6/5UBzP
-	GBX+m6Knr/nABvlJ2twdcrNlE7fs=
-X-Google-Smtp-Source: AGHT+IFUTMrOZvhdOzhyEhoAcvZyzQa9INgHinlfjZc1gSs77VWpaj/Y9vJhrfrFiAuGjUoshzpAbZ/M20KY6vVjT+Q=
-X-Received: by 2002:a05:651c:2121:b0:2ef:dd45:8755 with SMTP id
- 38308e7fff4ca-2f4f48ec79fmr120483011fa.9.1724852809216; Wed, 28 Aug 2024
- 06:46:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980DB168489;
+	Wed, 28 Aug 2024 13:47:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724852837; cv=fail; b=ECMs1OpoKjK2nh+892fz4FNrl/ggeB8dpGLREYOhP/YJ//HmbI5R8pC7sZK3OwwqPhYvOkvEO4QAVPa3kkYPKKGhPfkUdg5JLnej6Smw1Omu0jZFpylyoUoyYiqvm8JsiKk+N/cNjWRtv3ytEBdl2ZtsTGdh6sf8QmBSea0aQFo=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724852837; c=relaxed/simple;
+	bh=I9yCfVoZsSKA6cYxE/Ip2+t6LkMAu/aJqm7NbbQG9KY=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Tco7m4HuBai0LCh+ee/djPe+Pqy4WdSME+0CnN88oeCfnkd0QV+vzLhDqdOKHr5mnzAUmrAwNPNJ7YRK0ieGIVwC8erqD3GBZ+9GqpV2ajtFaHw4d1yOhKhOiiDpaJRM5cIci1FJWbVws5K4hkV1acFbwfCQ8creCIiuGtD7sUU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=M0a0Tf4Q; arc=fail smtp.client-ip=40.107.236.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wt2mjeaJj3iOTQz3Di6Bnv9AxjXgaU4CLyitWlLIscki7DUDezmTm0d1kschEMVC4w/1COK8SlMdJAgVNLHiPARz3PUPi+5CMtfpgWsUWYSE6LZ6XC/YBRZmQtWmIsbbkxKytaGNREC75AfvVsna7/4C5ciaQJ1Ndc/dMmcDV3GWynBXq/7dXLDLY29vzceqMW1Dk51TWWkX0bkxJZPWW2apjAcuc+MdpKCrv4GcSsscT1FnDS7Zl4tRyxfA0piW1CferLE+RwfQxPCyDInoE5gPiO/iuVE4KdhXFh2uEdSltk4KpVg2yfOyOQpWkDn0YAF3cgLGBY2qbZMmNSwL+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xZ/3RnJDzeIzTH9uNNF5YKLr5sQXYENlhvKNDOYe6bE=;
+ b=uqmCvu2M2NhJU/Il54Zt6ygxA1yxeVTacJuMnLwIs+B23huHMScPNSfBtCMfSHxG0mk7f+ApdP3/g2Ac1Bxv5uSJzWaXcHa1ioVgXVy6wBFtVgdX/TfOReZIitWupULCJIGjohKjzE/YnwR4aNFIrk+FxAZ/8TdfD3UwiNmQPrwP7gh5eeOeEdJaJuWOYHRoJld04uxP0RFKj8IP3mm5kSbbZXlOWokyeTh2jxzHHWdxp56mlcpKKQQPHBqE8hakVsFHeUwYWVjdQ3Ugw2LP8ZuShE6eNMS3buSjmSFpGLjXHMFkkYWtbp1FBPDCp4WK7kpB7S9J8H66GTuFY8GK9Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=xZ/3RnJDzeIzTH9uNNF5YKLr5sQXYENlhvKNDOYe6bE=;
+ b=M0a0Tf4QutylaMBMwRVV0c8kXqiyZnfbhKOlkjH+XOr00COgTIvZCBAjdBes62xhAEh1fRn5ien459XQz861i/4EDeQlvElzkLBk7MFbeiBD3j44GetMbCDV5bSgIDo7zy5TT2EVb9z03hpG0gR2wxghZbkBSmUvOqmYczQ3JDB2nh/w0tFJsMR+mwfZ2I3m28veTLPERbqSf1t1v2M/Kd0DbY9DeUZCeCEoHh61qfUCyHK/T32sVgNEC4VjbfnyNjZJ5sHUPncfsPqp6AIldb2Zg5CHuPj5YM9yWYkr2/HixjetbZ6zcaTV7bB/QhUsMWUh1LDjQ9hOqqXFkg+opg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM8PR12MB5447.namprd12.prod.outlook.com (2603:10b6:8:36::7) by
+ BY5PR12MB4179.namprd12.prod.outlook.com (2603:10b6:a03:211::8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7897.27; Wed, 28 Aug 2024 13:47:12 +0000
+Received: from DM8PR12MB5447.namprd12.prod.outlook.com
+ ([fe80::5f8:82ee:7da9:219b]) by DM8PR12MB5447.namprd12.prod.outlook.com
+ ([fe80::5f8:82ee:7da9:219b%4]) with mapi id 15.20.7875.018; Wed, 28 Aug 2024
+ 13:47:12 +0000
+Message-ID: <7733a4ca-330b-4127-af12-33f376fbbc47@nvidia.com>
+Date: Wed, 28 Aug 2024 14:47:05 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Replace divide operator with
+ comparison
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, kernel test robot <lkp@intel.com>,
+ Dan Carpenter <dan.carpenter@linaro.org>,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
+References: <20240813094035.974317-1-quic_skakitap@quicinc.com>
+ <4d314b61-7483-4ceb-ac72-10dbd7e4522a@linaro.org>
+From: Jon Hunter <jonathanh@nvidia.com>
+Content-Language: en-US
+In-Reply-To: <4d314b61-7483-4ceb-ac72-10dbd7e4522a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: LO4P123CA0121.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:192::18) To DM8PR12MB5447.namprd12.prod.outlook.com
+ (2603:10b6:8:36::7)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com>
- <20240815-preemption-a750-t-v1-4-7bda26c34037@gmail.com> <20240819200837.etzn7oaoamnceigr@hu-akhilpo-hyd.qualcomm.com>
- <CACu1E7E7FPJP-Ry64m257A7WrL3Q9jy8xMS9XpSBRNimBWzYUQ@mail.gmail.com>
- <20240822200534.fgugb3zmcp7hjyck@hu-akhilpo-hyd.qualcomm.com>
- <CACu1E7F068sAMFgn=D7qBGM81qvYP4iW1+hXpfXVKtQGWeyTKQ@mail.gmail.com>
- <CACu1E7EueMnte9e+yLEtRE9WmG0J5bVMj59VbPfkDeB7OHbsAw@mail.gmail.com>
- <20240827194828.jxwelq4xr2wsdxos@hu-akhilpo-hyd.qualcomm.com>
- <d95ef763-7237-4080-b323-838ca337734a@gmail.com> <CAF6AEGuASw0YO8b0X24-iq1pqTnBEpr0Tm3Scmt4-T+HeCMY_A@mail.gmail.com>
- <57064da3-190c-4554-b085-d56daf979933@gmail.com> <CAF6AEGtYh6jnYcFLcUnEobjQqKmqxuX29wO1qqnGYFQJ+EUBxw@mail.gmail.com>
-In-Reply-To: <CAF6AEGtYh6jnYcFLcUnEobjQqKmqxuX29wO1qqnGYFQJ+EUBxw@mail.gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 28 Aug 2024 06:46:37 -0700
-Message-ID: <CAF6AEGuBMiQft4SCrf=xTQ76q8=+-OS3SEKMmw7TGT5rb=Sygw@mail.gmail.com>
-Subject: Re: [PATCH 4/7] drm/msm/A6xx: Implement preemption for A7XX targets
-To: Antonino Maniscalco <antomani103@gmail.com>
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>, Connor Abbott <cwabbott0@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Sharat Masetty <smasetty@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM8PR12MB5447:EE_|BY5PR12MB4179:EE_
+X-MS-Office365-Filtering-Correlation-Id: a62872a4-3a1d-42e0-e99f-08dcc767eaee
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?UWFXN3ZORlliS1JjL2N6R29pNXJ1a3pvdE0zb0kvQXVtYzlOdG1lNHpYZDBI?=
+ =?utf-8?B?aFovOHp4QlpLdWVqSUt3OXUxMk5NSnlKTTl6azh2dWJEYjZjOFRFWWhqUFZh?=
+ =?utf-8?B?Q0diUUJocnd2ejFRc1lVcVFRYVRYa282YkhHbE1UWWZuMHpmdWNuNXRuTmVJ?=
+ =?utf-8?B?SE5VeHAwaG1RZlZ4UG1TSnViQlFuU3hwZ1pteFlqckdwb25JYmoyNVAvMmdx?=
+ =?utf-8?B?TGg3ZHNTVHRQUFdOeHZzL0lNMkRPRHZSYWQ0VDhDK3lmMnZLZGVuekNDMFVK?=
+ =?utf-8?B?R1QzRjBYRGh4eHRmV1FLWkROMFdDWDhJQTg3L0QwL0phbGh4TW5HYnBmN2Np?=
+ =?utf-8?B?UTRIMHFIQmg0T2hOS2hDN3M4RStHOTRzR0VuaWFPc3lEODFvUUVBWDJ3Tkdo?=
+ =?utf-8?B?eVpUQTJOWmpsOVIwK1FFczdTaEpMUWZTRmdWRlBlT0tXb05CaUZmWkltZnJ6?=
+ =?utf-8?B?OVg3V0Z2VnRtbVVzK3ZBMDBKU1hYL2pjbEFnbmtWeDhBREV6Q2wrZi9VRTJa?=
+ =?utf-8?B?d0hMdTFwWXJ4L1U3MFptem10dGc4SVloZG1nQUkyQ2V4dm9SU1h2WGR2TFlp?=
+ =?utf-8?B?SVZLZ21KUWxpLzJPaHVXUVhLUGFBMkFnaWh2elI3d2trK0lEaUxMMlI2R0JX?=
+ =?utf-8?B?SEpwN0t6eUhOZlJQQS9IdEdJcnN6bVpVbW9KcVQ2SFRBRDU2WWltZHJmOGh6?=
+ =?utf-8?B?VFJLTnZhQ2c2Q0RIWEY1VFdiZjBQODBDQWlvM3daRFRNZHQzODRObkRCT2x2?=
+ =?utf-8?B?UjZSU0JSYngvWUZlME9pVFNmMUdDcUtWYUFyTlNWcm8waGFHZ3QxdVBKdjJT?=
+ =?utf-8?B?RUpMQnFRek1lT2EvWTZwTFNwWmhjaFdmV2NJbHpiR3RwN2MrclBmMHRFRzl5?=
+ =?utf-8?B?UTZpS2ZKNDNSZDA0MzcwbmdOb2htMmliUE9ETUJ1TEtSYkNZeDM0c09SYk1w?=
+ =?utf-8?B?VkJjNHBseDIyS2NtSU5FYXBsODVMczlaMVFMbkhkRFcrRGtkUTZ0RWFDQXZK?=
+ =?utf-8?B?MmFHcG5QTy9DNEc5R0c1a29PZFhISlMrUldDMys1REJ2bmZJNG5mQ0dVeGxt?=
+ =?utf-8?B?L3dFTFp3SGZpSGtZd3pkR1F5TUFvYytyVkNrWENpNEU3V1NScU5IaEhsakoz?=
+ =?utf-8?B?RDFFaTFWYnpPL3k1SGE3SzRVajhKbXZsSXhLeDRIZGw4SFJqUEQwdkpkQmxE?=
+ =?utf-8?B?NkZBQXNPbzIzNENBL0l1Wk5nYS8vK3FNRlQ2Zlp0dnJoVEdCOTR2TVVzMWl5?=
+ =?utf-8?B?K3ZjcG80QU54VjhMZytmQ3FXdzFhc0R0dzF4Y3RmOG9kcVNudkgxYUV1VlV2?=
+ =?utf-8?B?MHhlM2NpWEFLNmY3STk1aXhic2FGdmJRblIxcVozckt0bmxGYXF4blRtUHUx?=
+ =?utf-8?B?dWhJUTdqcHU5Tjk5OFlFN0JzS2N6L0RWb2g4M2NHSGxsTjNkTEdpMHdqdGhT?=
+ =?utf-8?B?N2JuWkNZN2Z6Y1IvTGVnRnlkLytZUzBVTXlDT1h0b3M3RVhlUjFmcVBydWN5?=
+ =?utf-8?B?THBQcUJ2YzhZNmFrZDJ1enJOUEhtdXRYeWNCZEJNaG9FMXlBRGtmWkpwdFBO?=
+ =?utf-8?B?aGl0RzJ5amJjSjBETkVJd3F2L2Eya2FGTjgvY0pyaDlqSmUwNHh6cEh2bkRa?=
+ =?utf-8?B?dHhHVUg2a29aR1VxOVdxUXlMT0tkRzlTR3RQRkRObjkvOXZzWEdBa0VUQnNU?=
+ =?utf-8?B?TVNOT21kdDVnZ1p4UG1jSjFtNnhkQnUrRkhKY0g1ckloVjBWMWV3c0VIbHVZ?=
+ =?utf-8?B?RStjVFBYRWFrdjhhUGZva0pmRVhpS0tMKytLTmZyTWVsb2RidHJvbE1DcCtY?=
+ =?utf-8?Q?e3Pd6eD6zryo0pHZ9JiAvbvbhNxyB6YgM4n/Q=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR12MB5447.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?ZVYwOVlqbDRMTmYvU01YNW1jNnd3WTdPcGJ0RGZEN0RSbE1ERldDL0RMTHBr?=
+ =?utf-8?B?c25PdWhCVVIzdDhXMVVRaElZUUFGamQrT1lPeGRHNmdmaG90ZGVsWWIxZVdR?=
+ =?utf-8?B?ckRqRmFFS21hTjlSZDVzeVUrSzlnZHd6ZVhVWitOazduQ2t5aGtJT0JCSk1t?=
+ =?utf-8?B?NFVJWVVkS3ZKSkVqSkg5N2ZiSmloUGc3clliZzhWMEFQSU1MbVQveEJhcFR3?=
+ =?utf-8?B?UTdoVUdrMEQ4S1ZmRzRqZThzMVZRYnpjSDVubllMYm8vWTRKK2VqN0YwT0JR?=
+ =?utf-8?B?bWVBM1pTQTY2WEtMTFRhdFpYSjA3RndhS3RqYUU5cU4xai94eUxMRktBR3Ji?=
+ =?utf-8?B?UzZSeHlscUgrSEtRTElmQ0xZd0RyNFpyQmZEMEhSUDVoQXJDK3dOckZFL1Zi?=
+ =?utf-8?B?Q3FsVUZCeW1RVVhxaTdQa1c1bmp4dlNvVG94VVEzUjdmQ3dXQzJzVFFWRjNa?=
+ =?utf-8?B?RzRYQVFzN2MyWHJyNzZxN25pejdRQnp0QkUrL3laWFVRVksxT20xUUZ6L0pP?=
+ =?utf-8?B?aUhpaHFmS0RXbUpEckhXY3VNNDFlOWR1QXVmYjFaU0lpMTRBbEhwL0RPNHdV?=
+ =?utf-8?B?VUVRN3c3Q2RQREpyM05YOWcrNHdVVGdrTWxOMU8vMTB5RTdqT3d1djJuOXNE?=
+ =?utf-8?B?b3l4eWZDWUhxRlg1OTF0aUFZc2kxdzZ3Y1ZsVXdoUGF0d2NtVGtaaTY1K3pw?=
+ =?utf-8?B?V0ZpQ0xkMlV6SHd3U080NE1JRTlmSVU3cVZGbUZVcUw1WEJ6Sml3S2pKbk9o?=
+ =?utf-8?B?TGF6c1Y4Y3RtUmlCTkd0Slg5NDAydmpxTFVGWk90NE9CcVJtdyt3alNSL0Zs?=
+ =?utf-8?B?NjVkUGlva3JITHBWdW1HZmVKUDFRZHV2Rm1EQzBVMUlibThUMXB6bWhFMHhx?=
+ =?utf-8?B?ZGdkMU1JVkk2andxVXZ0SHRlUzE2NFNOOHdHQXpUdnpPVTZiZjBMeXcrY1pr?=
+ =?utf-8?B?ajhydFYwa1R6SXYvNkVrUW81YnJkQjJBb0VzSVQvSTJFQkdpS0NHTFU2WTYz?=
+ =?utf-8?B?YzNtRVlIOEMwSmo2dTRIUWVSMEhscEtsUjFkakFyZnliYVRkNkNZMVFlazEx?=
+ =?utf-8?B?TEdIVHZGQlZOSjVlcWV6Skdhc1JrVmxjTWRoeGFYM1lFQnpOOUhDVXRUTCtH?=
+ =?utf-8?B?RkE3NytTOTY3ckg2U09DOEQvSmFiM0N5VUFaVVBueE9sWTBCNDFtVDVmaHdu?=
+ =?utf-8?B?M01xaDVVR1lYTHF5aFhLUDhIcG1RaHh1WWo0MU1JcVd4ZHREa0ltUzlrZU1o?=
+ =?utf-8?B?Vk9MUWp2cVNTbks5Y2dyMVN1aTg2d3pVcUtuTlN0NzM3NHpwTmtjTEpuTXRR?=
+ =?utf-8?B?RzR6Rldwb2YwUFdmSnZGcDNLRlBMaGhSV1B4TTJwTUlVbi9reE9iV3U2MUYv?=
+ =?utf-8?B?cE4yVmJJdDRJa1pRM2hGemhtaGxGSHVCWGFIT09mdG5icyt5MmcrLy9MV3la?=
+ =?utf-8?B?bUxITWpjZXN5L0pjdWtmd09sakNGbGZPY2JzeW9XL3AzQkwreTBXbnJPbXRp?=
+ =?utf-8?B?OUJwNW9XZTVXQ1p4MDlZbmwyU2JpcVB4RUpqbFhzUXMvckF5N0xXWFdQVU52?=
+ =?utf-8?B?cG44ZGM2RDVJWEViaElTQU9vZkl1N2pNdXVaY0phTTd2VFlTeWhEdFFzcGgz?=
+ =?utf-8?B?RVNNZDdLUXpzRHNqOXVFczFGRGREOFpsWjV2MTVzV1BKWmFQcmxHUHVlRGtK?=
+ =?utf-8?B?dnBIV25sbDNBdlVPdVNBWEpzUTB3ek4zZ0xBVnAwaFZ3RnNpTjd6RlBKbGk1?=
+ =?utf-8?B?dkZDU1VwdENIM3dabFlkcVFuVnM1aUtuRGlqNDh1eUkra2VUM2pxOXNvZFVH?=
+ =?utf-8?B?cStSSWxNTWI3NWoxdUE3ZDZZeEd4anVGdWtWcDRXK2Z5ejY5c0pyZUp2WnZp?=
+ =?utf-8?B?UW1ac2ZYc1NjNjNZTXpCVitWa0FsS0sveTl5UTFPVTVRUmtrYzdJSEk2ZUI4?=
+ =?utf-8?B?MHh2d1ljUVpteFdpaVcyTGRtVUxQanhFa1MrdThDWkY5SmNjN29pWDNzc1VE?=
+ =?utf-8?B?MUREbVFZOUJmdWZ1WmFNVEhRQ0pIYUFYK3JLSXNhVUcrZmVhWEdaYklONVpN?=
+ =?utf-8?B?N2tsaDJKL24yMXBEejBmOXYvNjZWTG5wcCtuQllDZFVOS3lsbmtkcDlYOXox?=
+ =?utf-8?B?eEdlOHE1NU5LQitBcUZzZlJsR0F4cEpyVDZNeUF4NWdmWkl3bzQ0UG5FcWpv?=
+ =?utf-8?B?TkN3djFpNGNlWXdmYkZSaTRBUmh4YVRvbjhHaFB4RXl3T1dDUEQzUGdRclQz?=
+ =?utf-8?B?Z0lGc2xjUVZuZCtXckJmdzl3UG1BPT0=?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a62872a4-3a1d-42e0-e99f-08dcc767eaee
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR12MB5447.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2024 13:47:11.9188
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ouzkFzUuOrqYPzJekq9PNzK0psZDJQD+lDGqJBPeNTa80Php3J4X5MeE0HfnWIdIeOD4uEgzEn1IkzA4pIJ6mg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR12MB4179
 
-On Wed, Aug 28, 2024 at 6:42=E2=80=AFAM Rob Clark <robdclark@gmail.com> wro=
-te:
->
-> On Tue, Aug 27, 2024 at 3:56=E2=80=AFPM Antonino Maniscalco
-> <antomani103@gmail.com> wrote:
-> >
-> > On 8/27/24 11:07 PM, Rob Clark wrote:
-> > > On Tue, Aug 27, 2024 at 1:25=E2=80=AFPM Antonino Maniscalco
-> > > <antomani103@gmail.com> wrote:
-> > >>
-> > >> On 8/27/24 9:48 PM, Akhil P Oommen wrote:
-> > >>> On Fri, Aug 23, 2024 at 10:23:48AM +0100, Connor Abbott wrote:
-> > >>>> On Fri, Aug 23, 2024 at 10:21=E2=80=AFAM Connor Abbott <cwabbott0@=
-gmail.com> wrote:
-> > >>>>>
-> > >>>>> On Thu, Aug 22, 2024 at 9:06=E2=80=AFPM Akhil P Oommen <quic_akhi=
-lpo@quicinc.com> wrote:
-> > >>>>>>
-> > >>>>>> On Wed, Aug 21, 2024 at 05:02:56PM +0100, Connor Abbott wrote:
-> > >>>>>>> On Mon, Aug 19, 2024 at 9:09=E2=80=AFPM Akhil P Oommen <quic_ak=
-hilpo@quicinc.com> wrote:
-> > >>>>>>>>
-> > >>>>>>>> On Thu, Aug 15, 2024 at 08:26:14PM +0200, Antonino Maniscalco =
-wrote:
-> > >>>>>>>>> This patch implements preemption feature for A6xx targets, th=
-is allows
-> > >>>>>>>>> the GPU to switch to a higher priority ringbuffer if one is r=
-eady. A6XX
-> > >>>>>>>>> hardware as such supports multiple levels of preemption granu=
-larities,
-> > >>>>>>>>> ranging from coarse grained(ringbuffer level) to a more fine =
-grained
-> > >>>>>>>>> such as draw-call level or a bin boundary level preemption. T=
-his patch
-> > >>>>>>>>> enables the basic preemption level, with more fine grained pr=
-eemption
-> > >>>>>>>>> support to follow.
-> > >>>>>>>>>
-> > >>>>>>>>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> > >>>>>>>>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> > >>>>>>>>> ---
-> > >>>>>>>>
-> > >>>>>>>> No postamble packets which resets perfcounters? It is necessar=
-y. Also, I
-> > >>>>>>>> think we should disable preemption during profiling like we di=
-sable slumber.
-> > >>>>>>>>
-> > >>>>>>>> -Akhil.
-> > >>>>>>>
-> > >>>>>>> I don't see anything in kgsl which disables preemption during
-> > >>>>>>> profiling. It disables resetting perfcounters when doing system=
--wide
-> > >>>>>>> profiling, like freedreno, and in that case I assume preempting=
- is
-> > >>>>>>> fine because the system profiler has a complete view of everyth=
-ing and
-> > >>>>>>> should "see" preemptions through the traces. For something like
-> > >>>>>>> VK_KHR_performance_query I suppose we'd want to disable preempt=
-ion
-> > >>>>>>> because we disable saving/restoring perf counters, but that has=
- to
-> > >>>>>>> happen in userspace because the kernel doesn't know what usersp=
-ace
-> > >>>>>>> does.
-> > >>>>>>>
-> > >>>>>>
-> > >>>>>> KGSL does some sort of arbitration of perfcounter configurations=
- and
-> > >>>>>> adds the select/enablement reg configuration as part of dynamic
-> > >>>>>> power up register list which we are not doing here. Is this some=
-thing
-> > >>>>>> you are taking care of from userspace via preamble?
-> > >>>>>>
-> > >>>>>> -Akhil
-> > >>>>>
-> > >>>>> I don't think we have to take care of that in userspace, because =
-Mesa
-> > >>>>> will always configure the counter registers before reading them i=
-n the
-> > >>>>> same submission, and if it gets preempted in the meantime then we=
-'re
-> > >>>>> toast anyways (due to not saving/restoring perf counters). kgsl s=
-ets
-> > >>>>> them from userspace, which is why it has to do something to set t=
-hem
-> > >>>>
-> > >>>> Sorry, should be "kgsl sets them from the kernel".
-> > >>>>
-> > >>>>> after IFPC slumber or a context switch when the HW state is gone.
-> > >>>>> Also, because the upstream approach doesn't play nicely with syst=
-em
-> > >>>>> profilers like perfetto, VK_KHR_performance_query is hidden by de=
-fault
-> > >>>>> behind a debug flag in turnip. So there's already an element of "=
-this
-> > >>>>> is unsupported, you have to know what you're doing to use it."
-> > >>>
-> > >>> But when you have composition on GPU enabled, there will be very fr=
-equent
-> > >>> preemption. And I don't know how usable profiling tools will be in =
-that
-> > >>> case unless you disable preemption with a Mesa debug flag. But for =
-that
-> > >>> to work, all existing submitqueues should be destroyed and recreate=
-d.
-> > >>>
-> > >>> So I was thinking that we can use the sysprof propertry to force L0
-> > >>> preemption from kernel.
-> > >>>
-> > >>> -Akhil.
-> > >>>
-> > >>
-> > >> Right but when using a system profiler I imagined the expectation wo=
-uld
-> > >> be to be able to understand how applications and compositor interact=
-. An
-> > >> use case could be measuring latency and understanding what contribut=
-es
-> > >> to it. That is actually the main reason I added traces for preemptio=
-n.
-> > >> Disabling preemption would make it less useful for this type of
-> > >> analysis. Did you have an use case in mind for a system profiler tha=
-t
-> > >> would benefit from disabling preemption and that is not covered by
-> > >> VK_KHR_performance_query (or equivalent GL ext)?
-> > >
-> > > I would think that we want to generate an event, with GPU timestamp
-> > > (ie. RB_DONE) and which ring we are switching to, so that perfetto/et=
-c
-> > > could display multiple GPU timelines and where the switch from one to
-> > > the other happens.
-> > >
-> > > I'm a bit curious how this is handled on android, with AGI/etc.. I
-> > > don't see any support in perfetto for this.
-> > >
-> > > BR,
-> > > -R
-> > >
-> > >> Best regards,
-> > >> --
-> > >> Antonino Maniscalco <antomani103@gmail.com>
-> > >>
-> >
-> > Looking at KGSL they seem to use ftrace and I don't see it doing
-> > anything to get a timestamp from some GPU timer, really not sure how
-> > that would be put in a gpu timeline.
->
-> I suspect it would require some work on perfetto trace-processor.  It
-> can ingest ftrace events (but those would end up being something
-> driver specific).  Maybe with u_trace and some tracepoints in the
-> 'ambles something could be done that would be more driver agnostic
-> (but idk if that would work for gpu's where preemption happens more
-> autonomously in the fw)
+Hi Satya, Vladimir,
 
-btw how to handle tracing preemption probably shouldn't hold up
-sending the next iteration of this series.  There isn't that much more
-time to get this in v6.12, and I think better visualization of
-preemption is going to take some work outside of the kernel.
+On 13/08/2024 21:01, Vladimir Zapolskiy wrote:
+> On 8/13/24 12:40, Satya Priya Kakitapalli wrote:
+>> In zonda_pll_adjust_l_val() replace the divide operator with comparison
+>> operator since comparisons are faster than divisions.
+>>
+>> Fixes: f4973130d255 ("clk: qcom: clk-alpha-pll: Update set_rate for 
+>> Zonda PLL")
+> 
+> Apparently the change is not a fix, therefore I believe the Fixes tag
+> shall be removed.
 
-BR,
--R
+
+ From the commit message it is not clear that this is a fix, but I
+believe that it is. With the current -next I am seeing the following
+build error (with GCC 7.3.1) on ARM ...
+
+drivers/clk/qcom/clk-alpha-pll.o: In function `clk_zonda_pll_set_rate':
+clk-alpha-pll.c:(.text+0x45dc): undefined reference to `__aeabi_uldivmod'
+  
+>> Reported-by: kernel test robot <lkp@intel.com>
+>> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+>> Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
+
+There is also the above smatch warning that was reported.
+
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>>   drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c 
+>> b/drivers/clk/qcom/clk-alpha-pll.c
+>> index 2f620ccb41cb..fd8a82bb3690 100644
+>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>> @@ -2126,7 +2126,7 @@ static void zonda_pll_adjust_l_val(unsigned long 
+>> rate, unsigned long prate, u32
+>>       remainder = do_div(quotient, prate);
+>>       *l = quotient;
+> 
+> Since it's not a fix, but a simplification, you may wish to remove
+> an unnecessary 'quotient' local variable:
+> 
+> remainder = do_div(rate, prate);
+> 
+>> -    if ((remainder * 2) / prate)
+>> +    if ((remainder * 2) >= prate)
+>>           *l = *l + 1;
+> 
+> *l = rate + (u32)(remainder * 2 >= prate);
+
+
+The above change does fix this build error for me.
+
+Satya, did you intend this to be a fix? Can we get this into -next?
+
+Thanks
+Jon
+
+-- 
+nvpublic
 
