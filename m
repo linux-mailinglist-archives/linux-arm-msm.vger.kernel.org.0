@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-29756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39AB4962449
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 12:07:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 870AE962547
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 12:53:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 42EF9B21D5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 10:06:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B86801C213A9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 10:53:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6C3F16078B;
-	Wed, 28 Aug 2024 10:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F6BD168C26;
+	Wed, 28 Aug 2024 10:53:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JunY7zgw"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SrYfdQ5x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF78A158DC2;
-	Wed, 28 Aug 2024 10:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E587C145323;
+	Wed, 28 Aug 2024 10:53:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724839613; cv=none; b=N1fGnyD82x4G3AmWq3ULbWzottCwixKQRNmTZy/XKFOOhp/P0iBJNVBm7ClHfncLrLIH1ksE1zpaPbD8s4jVwvNCJGcfy+VNN8Ij4YH+YHIiYhjWh0K387D/kiAMkRr7hK9fsuCH1fyJNQpC/UI2RbSniilPvDyu357ltyGI0OU=
+	t=1724842396; cv=none; b=CPvZtvwlS9sOOeio9DLUSuWI/JbwuQCsw3OVeRsRn6ys7Hy1QDeKKXRb/EcCDJn/HTwwca7xR1/IJq7/7JRHxNg+F6EFPzHfti5UUN7w1J3CXUtJqdZFzMwlON1ZFrASa4lLPj25pjvdty965zbeP2feTn4P5YVxy/meGkrRn/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724839613; c=relaxed/simple;
-	bh=FKGbrxqJSRa4U0/BHk4YGXG5im9Iz1hjXpIRWRfZKEg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mKTtzcT3xg6DSWJN6G8CGctWssu+pQZqW4HkPD3Uij6AFd/vZiaYLqeOMnWezUjwWuAMtV7aYg4UbdKqlJcaZknaaD6SQWCZH1T5rOh5SsV8Y5YseJ4SPuC8MnveYY46omIFnnESjYUfoD1+1JFMMTqZQb1LLgZgzjrndSIPySE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JunY7zgw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SA5Qp5026192;
-	Wed, 28 Aug 2024 10:06:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EwycJpyb+jhaoS/+kJ3yX61GWjWCUDaA9mWmk5KUAAw=; b=JunY7zgwgChRjrKl
-	gBNMFyB13ShnH/qzQgmDIba59qgsue4+6uEJKLU5OhNzOhammsirrVPXM+wDqIHs
-	7HdSCbxipVcR1jTa6XBnNlO749gROQQSyaHeVROm/CrTjWWhie8a31nucBVJtBv9
-	fDIVcDAVJ6vFbA1LDHxEsZScekC5vw+Eo6ZhnOBJh0qgYJ+VJjW5nP81cwZLZ6YG
-	MR74R0R0eRxjp5iMVdfB08abg+8mnXefpUIsGFuGPS87yyn7M8nJXAj5iyRUOr6I
-	nZLNeqMHHIz451HUUYl5InjBm4YhAc2v9KfjN5M3Y4UAiu22x9bXMunoeAAi5fm/
-	LgO6uA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419puthe1b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 10:06:45 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SA6iXA008184
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 10:06:44 GMT
-Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
- 2024 03:06:39 -0700
-Message-ID: <b9aee62c-3c8c-4a8f-8559-41fabced7fbe@quicinc.com>
-Date: Wed, 28 Aug 2024 18:06:36 +0800
+	s=arc-20240116; t=1724842396; c=relaxed/simple;
+	bh=HtDkjtaxe3miaxMYMdKc7yS5PMEQcFjoZyJk2VNa5qY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RsMm99Cp9q23pYqzMh8pfMFoTxjMIjpMKS9AruU9h8UJk3cdNjSD7BPk37Kep20CWY9UuJ8vQoX20I8cVCywhqoXPsC1K4X3m/KGW6VXlbjg3WZeyvZoZlWok2EWc3VaVXeQ3NtVMadJVZCVVRVKf/jbr/Q+zGuIFB4fO6At9rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SrYfdQ5x; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52f01b8738dso5063621e87.1;
+        Wed, 28 Aug 2024 03:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724842393; x=1725447193; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=P/oO55OLwIlvvWrft7aZlbidsgbt95mQfK88nVF8lCQ=;
+        b=SrYfdQ5xlVHjxN3lKF9BaNtlTLPc725MUeaoX3GVnLO8bEhY5b/NUjg1bXDfcNqURS
+         W4iukO/5G/tT0oCbVouL0IWmPc0oFx3CAc1JdONWShFHngoGmJR+Yzx1Q6+AH8JUMVp5
+         6L/Gxf6C+m7/it9lt9u1bAmYCz77F+FOD6ivO0r0m3JICsjnZB2gpCx3wMYUhlv/NzXG
+         LfD0EVwvWMboXHkRtbizvLAuJvaZ5YNPaakvS0kMLc5l/Z3wHY4CmV8jpfTPZbVIUlUv
+         CzwJMjoWsCKBUHpA56XyagUgU2CLxS9AibeTAD9ym+qblskvIPsGIUTezmNFx2JcXUX8
+         K/KA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724842393; x=1725447193;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=P/oO55OLwIlvvWrft7aZlbidsgbt95mQfK88nVF8lCQ=;
+        b=rDpmDT07r4jO7js6PQTHLz23mdTqrM+TuGQNOfdq7oZvGrNk7QHR/oqNXbBvE66iSD
+         Wb3purojAfudzdWwdDDZSOniyZqqdPm2yEf9hZ3qyA4evgQcW1+lgBGjHTy6k2gAY2Kh
+         DultHvJeGer+Mn3ExCu+O+1bjOCJTTMskw7w3Au/tSOhFHU4SoKXLROaL6raDPV51F/x
+         8XSVzQcTAUYnp98lgZLBmWXFJ/JXJop4CF2CYbiub/XCAIJWSMqYO+xon5uEOVHvrKYo
+         H60zfjDxRCqWaRftpJErx+5QdWonP3BqA8JzibVC1h12oB+eLVxLHVOcp9qB2vpC47pJ
+         bYwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUtrirS3FUSJE0hKDMr5RsPZjEyYpgHGo2m9f20pxnkj+FVc5wptHKalECuN9yek8EvwYF8ppYReHBiLyPp@vger.kernel.org, AJvYcCXNXZxGjPIlnKO9jrfK32Vod5CBg5und+4Tbm9MlV7xZ7OjAuzep1BV2gFhAKan01y9Li7gHbMdRjab@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqEOaTDSaSug6qGF9Tcdm/sAb/WzFsxJrQ3i0O6YQOU+fPxlo8
+	KmEDQOueOubS5mwwIdk8/yqfKqZyGjYFRV9qHzBqo2PnM2T1xNDx
+X-Google-Smtp-Source: AGHT+IH6mdEjNO8lFcO7gyh2vhdnt9t/44n0EW9WpjQVd0L1g3aWJISkLCKCpMTT1sVFJ9icC9QuHQ==
+X-Received: by 2002:a05:6512:224a:b0:533:47ca:9773 with SMTP id 2adb3069b0e04-534387be915mr12265378e87.57.1724842392155;
+        Wed, 28 Aug 2024 03:53:12 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a86e5489383sm228017066b.20.2024.08.28.03.53.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Aug 2024 03:53:11 -0700 (PDT)
+Message-ID: <1145f7e2-248d-4170-b7be-db694e37fec4@gmail.com>
+Date: Wed, 28 Aug 2024 12:53:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,71 +76,58 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: add base QCS615 RIDE dts
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20240828-add_initial_support_for_qcs615-v1-0-5599869ea10f@quicinc.com>
- <20240828-add_initial_support_for_qcs615-v1-6-5599869ea10f@quicinc.com>
- <22qkvfravm6sxiq3xfavahg2u6b2pwlyzqbqvd55zym5zef3gi@m4bsqkdvggty>
- <17d0017e-b55d-4b32-9fd3-1a1a84e5ebf9@quicinc.com>
- <0ec92d59-0648-40ed-a522-307152b5c37d@kernel.org>
- <148451f2-6b1b-4616-b703-fd52e7afa2be@quicinc.com>
- <90c98fee-770c-4b83-9e05-6f04866094c2@kernel.org>
-From: Lijuan Gao <quic_lijuang@quicinc.com>
-In-Reply-To: <90c98fee-770c-4b83-9e05-6f04866094c2@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GskXdbBZ_q4xX6T_X4aS1OuOGb7snX_K
-X-Proofpoint-ORIG-GUID: GskXdbBZ_q4xX6T_X4aS1OuOGb7snX_K
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-28_03,2024-08-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
- mlxlogscore=640 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408280072
+Subject: Re: [PATCH 03/16] arm64: dts: qcom: sc7180: change labels to
+ lower-case
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240828-dts-qcom-label-v1-0-b27b72130247@linaro.org>
+ <20240828-dts-qcom-label-v1-3-b27b72130247@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <20240828-dts-qcom-label-v1-3-b27b72130247@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-
-在 8/28/2024 5:34 PM, Krzysztof Kozlowski 写道:
-> On 28/08/2024 11:31, Lijuan Gao wrote:
->>>>>> +/ {
->>>>>> +	model = "Qualcomm Technologies, Inc. QCS615 Ride";
->>>>>> +	compatible = "qcom,qcs615-ride", "qcom,qcs615";
->>>>>> +
->>>>>> +	chosen {
->>>>>> +		bootargs = "console=hvc0";
->>>>>
->>>>> Noooo, last time I agreed on this, you told me later it is different.
->>>>>
->>>> In the early stages, enabling HVC is to more easily verify clock and
->>>> PMIC related functions, as it’s difficult to debug without the console
->>>> log. After the clock and PMIC are ready, we will enable the UART console.
->>>
->>> Working serial is supposed to be part of the early submission.
->>>
->> Okay, I will remove it in the next patch.
+On 28.08.2024 9:17 AM, Krzysztof Kozlowski wrote:
+> DTS coding style expects labels to be lowercase.  No functional impact.
+> Verified with comparing decompiled DTB (dtx_diff and fdtdump+diff).
 > 
-> Can you post next version with proper serial device?
-Well noted, will update in the next version.
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi  |  84 ++---
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi |   8 +-
+>  .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi     |   8 +-
+>  .../boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   8 +-
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi               | 344 ++++++++++-----------
+>  arch/arm64/boot/dts/qcom/sm7125.dtsi               |  16 +-
+>  6 files changed, 234 insertions(+), 234 deletions(-)
 > 
-> Best regards,
-> Krzysztof
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi b/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
+> index ee35a454dbf6..f362b6b436ce 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-firmware-tfa.dtsi
+> @@ -6,82 +6,82 @@
+>   * by Qualcomm firmware.
+>   */
+>  
+> -&CPU0 {
+> +&cpu0 {
+>  	/delete-property/ power-domains;
+>  	/delete-property/ power-domain-names;
+>  
+> -	cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+> -			   &LITTLE_CPU_SLEEP_1
+> -			   &CLUSTER_SLEEP_0>;
+> +	cpu-idle-states = <&LITTLE_cpu_sleep_0
+> +			   &LITTLE_cpu_sleep_1
+> +			   &cluster_sleep_0>;
 
--- 
-Thx and BRs
-Lijuan Gao
+I suppose this wasn't intended
+
+Konrad
 
