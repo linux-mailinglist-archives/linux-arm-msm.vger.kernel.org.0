@@ -1,141 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-29784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 855EF9629ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 16:12:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8132D962AFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:02:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8D76B1C23DE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 14:12:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 355AD1F23A6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:02:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68B3E1898F1;
-	Wed, 28 Aug 2024 14:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E1C71891AC;
+	Wed, 28 Aug 2024 15:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CKPsk5hp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYzLPD28"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF07F189512;
-	Wed, 28 Aug 2024 14:11:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745C917C9AF;
+	Wed, 28 Aug 2024 15:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724854319; cv=none; b=hYEq4EfP1s7+Baeu8T/4PPfUooevorSSe2DQWWw/SYjbtiE4iF/mTDIPotqR74Igh4wqH13Zf2V90SRyrXMkBpNxLvYt/kKdt1bhh9KqoKRm4vY1qYkFsv3slofEAbPaygSXRs8tn84BVi47pKoElDtlVRFDpiL6EPVS2EcAmCU=
+	t=1724857332; cv=none; b=qtkY3k1m3sXYuNjlMaF1QJI1HgXZFi+V9CiwmGcLH74vw2r5s/MR/oX6neVr51bddGM/or9boipNfi+RtqmiBsgVSHwaBaLLfJFogWJ5B7fbkP8Sk24oekdtQ36FFn9+Bsvgyuy8Q6UxzWW1SokgdX5YpTYiBSFlqRoUeNUZh9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724854319; c=relaxed/simple;
-	bh=JJXWJoMrNO4Gsh8t4+ahvDypothpTM3jC9jnVIAl5lQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Fbkud9uBNbNygJ4h4rtYLDCsnlrXKxgh13lz6krh8vpaWL+ha4w9fhzdmrxENB0+kvZ3sn/8h3OZrjUu6a4k1otGL4JLTBGdISm5Ug5duj3XIDTO0G4wEyjeKwP84TzuP/I0NODtbrOE3lz6Vk/wt8/3PyvRcHkNo/M69lQfEKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CKPsk5hp; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SAxrNC027129;
-	Wed, 28 Aug 2024 14:11:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/iHlp1ibTvLljzJlqeVILbKdL42Yrm6BLUJ7+iaPpLA=; b=CKPsk5hp45xucro4
-	MUjo9sRzqPhSl8xFi5KXLgAsEc33GM5VjDQcMQlSf/39zKlfR7VfvdMCjHawSGpe
-	PUYmVNEW+feLsQ6RkGbjoWMqc2Bcr7euLGGEN9Ayffa4b88ReqgguexQ2P3WbaBT
-	iXfZm/lPyZZ3q9gxR8teTImGxuJ13kgT86+3gXhZ3Z23Qbkne+pbyb1EwR9dNabi
-	Qx5j3hYlWYfE176gVSFvDXrEs9iTIG5USvKrQFYJCXUTUzO2/aygHVYRnosqiUYP
-	aZqUd9zRgLW5D8q847IDlLphskBQW+t+sqogtfLRFlx4CiAwJ+FnTeQ9O8HbgN2a
-	HCYO9g==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419putj0e8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 14:11:53 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SEBqmE004256
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 14:11:52 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
- 2024 07:11:46 -0700
-Message-ID: <23a8b53e-ae33-4f93-a1b9-3af2d37a4063@quicinc.com>
-Date: Wed, 28 Aug 2024 22:11:43 +0800
+	s=arc-20240116; t=1724857332; c=relaxed/simple;
+	bh=+C5Ir0kofCaMx4UpFydW1CbwaTLDRckemtDzjSxoIW0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SkQBn0zhUpe0W9PxLGk+hVsMcZ1lDejZrFxSkY8/v7AP7ZqDDHq6yqX5xckldFPig/Ov0qgvzDDp6exlkvSwZ1bLhjlKnUahUOXOMhaT6WVhpwJvsr+GKF/lXoWzKiRd/MYfuYoOekqABaUPv6818Cjl4L25rlcAvZzk4w++6h0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VYzLPD28; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2d5f5d8cc01so563860a91.0;
+        Wed, 28 Aug 2024 08:02:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724857330; x=1725462130; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2T684eJY5uaT2GoNJQao8Ux/8bEW4DFpDBArVLTN0ng=;
+        b=VYzLPD28b98jg3JgtPrrvO7ljh3gaQakBPOgpWfyJyKYZ5oHz2czCW+K1ZwCQL829U
+         93lVaftfKHUnQFmlesdYiKRxYFgemO5DHHYcTpqi23NvJG86W3hYLD9GOV2jXpTx+8R7
+         8vYzRN9OnpeSoGDyt71E3DDDbGZbEhbrAYYXyjLDbLUTxUt436n1RjTjHLvk0TQ2gv8g
+         SDCvZ+GKNHc9Ed6rUmUVQVmGWHAY5IqByBnRkg/x8hdWR+AeBc/phEuZ6bOs6/gPTqkq
+         AXmcg2atsQ+M96Kn+37NNLXEkHuQJpKbsNhVOdTvnx7z9+THXBJyGRhllzPQZUw7Izmv
+         tiew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724857330; x=1725462130;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2T684eJY5uaT2GoNJQao8Ux/8bEW4DFpDBArVLTN0ng=;
+        b=ETuQGnY6PosSqNL8/rXrqfz8hD2RenxQdvWeJAaB9UornbIjX+vs1/jjsBfYpP9tjj
+         H5amniApPM7eTR5c5+sq4Sq4emIbXkNZn0yEFnYZiVdx3w+ExslZiGmyV5HCk6LwGahC
+         nZQVXW+6GReaX5XVsmwJpsWeFF7lgyTqLB5fmyjacGRGr//n1sD+RnG5HN7JAlJnW4Tw
+         L9GXDXOsGuJnTzZ4MqFkiwOPahcML57oieNFf2uO5JjdkZi2FvcqzPD1Q0e0MmTVT3Ml
+         2UApp+04CAahDuXYzmBKhnhdL4Azqga8xd8sBM7lV7QbXV07F07R4BYj9gvFnhf0OCL7
+         Mv6A==
+X-Forwarded-Encrypted: i=1; AJvYcCXK8kFBrCWCC++cRR4YjtbPMcRv8Txxby3A1UUdLSZghUMvccol+eMu8vawTd4ZT1zb+T7QDIMcpyc9cz4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzMs5FL2xN31P+sCzy3oluYn+DrhywE/Jg5xp8vQo3hHytdy3zT
+	hNTrDhdxhtim5B3pAcQPdHVFRXhs7d3bqh7mUQ2+et60FrUePTt1JJVisjAazyMN0Cri0iWkr0y
+	EkquuQ4nO8SM7gWKp92kQeC3M6F4=
+X-Google-Smtp-Source: AGHT+IF7bNTPR1qyKoYtr4W+dmqFvYBuHOT06w+IqX5vqDvi6m7zgZ+Ib4Beyv/qmB8HmkrdfHIOYz2dLy3spp+c14A=
+X-Received: by 2002:a17:90a:644c:b0:2c9:90fa:b9f8 with SMTP id
+ 98e67ed59e1d1-2d843d6f66dmr3633644a91.10.1724857329540; Wed, 28 Aug 2024
+ 08:02:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] media: qcom: camss: csiphy-3ph: Move CSIPHY
- variables to data field inside csiphy struct
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-6-quic_depengs@quicinc.com>
- <cc1484d4-7a61-4f5c-b617-a6ad99985bda@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <cc1484d4-7a61-4f5c-b617-a6ad99985bda@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TrEyfmn-pGeFmZMd3FdrZmj9MjzrZCXl
-X-Proofpoint-ORIG-GUID: TrEyfmn-pGeFmZMd3FdrZmj9MjzrZCXl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-28_05,2024-08-27_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408280101
+References: <20240722-a306a-v3-1-cff90857c615@gmail.com>
+In-Reply-To: <20240722-a306a-v3-1-cff90857c615@gmail.com>
+From: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <trabarni@gmail.com>
+Date: Wed, 28 Aug 2024 17:01:58 +0200
+Message-ID: <CAGsSOWUO=+LE6Xat61yoE9u9TTAdpAEXo9ECvkAw9Cbyw_AZ8A@mail.gmail.com>
+Subject: Re: [PATCH v3] drm/msm/adreno: Add A306A support
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	=?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Bryan,
+I hope it was not forgotten or am I missing something?
 
-On 8/19/2024 8:01 AM, Vladimir Zapolskiy wrote:
-> On 8/12/24 17:41, Depeng Shao wrote:
->> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>
->> A .data field in the csiphy device structure allows us to extend out the
->> register layout of the three phase capable CSIPHY layer.
->>
->> Move the existing lane configuration structure to an encapsulating
->> structure -> struct csiphy_device_regs which is derived from the .data
->> field populated at PHY init time, as opposed to calculated at lane
->> configuration.
->>
->> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
->> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
->>   .../qcom/camss/camss-csiphy-3ph-1-0.c         | 55 ++++++++++++-------
->>   .../media/platform/qcom/camss/camss-csiphy.h  |  1 +
->>   2 files changed, 36 insertions(+), 20 deletions(-)
-
->> diff --git a/drivers/media/platform/qcom/camss/camss-csiphy.h b/ 
->> drivers/media/platform/qcom/camss/camss-csiphy.h
->> index bdf9a9c8bacc..cac1f800b7d8 100644
->> --- a/drivers/media/platform/qcom/camss/camss-csiphy.h
->> +++ b/drivers/media/platform/qcom/camss/camss-csiphy.h
->> @@ -95,6 +95,7 @@ struct csiphy_device {
->>       struct csiphy_config cfg;
->>       struct v4l2_mbus_framefmt fmt[MSM_CSIPHY_PADS_NUM];
->>       const struct csiphy_subdev_resources *res;
->> +    void *data;
-> 
-> I would suggest to make the type/name above explicit:
-> 
-
-I will follow Vladimir's suggestion to update the type/name, please 
-reply this mail if you have other comment.
-
-Thanks,
-Depeng
+On Mon, Jul 22, 2024 at 4:58=E2=80=AFPM Barnab=C3=A1s Cz=C3=A9m=C3=A1n <tra=
+barni@gmail.com> wrote:
+>
+> From: Otto Pfl=C3=BCger <otto.pflueger@abscue.de>
+>
+> Add support for Adreno 306A GPU what is found in MSM8917 SoC.
+> This GPU marketing name is Adreno 308.
+>
+> Signed-off-by: Otto Pfl=C3=BCger <otto.pflueger@abscue.de>
+> [use internal name of the GPU, reword the commit message]
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail.com>
+> ---
+> Changes in v3:
+> - Fix issues addressed by reviews.
+> - Rebase on latest next.
+> - Link to v2: https://lore.kernel.org/r/20240620-a306a-v2-1-0d388e1deebf@=
+gmail.com
+>
+> Changes in v2:
+> - Rebase on https://patchwork.freedesktop.org/series/127393/
+> - Link to v1: https://lore.kernel.org/r/20240528-a306a-v1-1-03a66dacd8c7@=
+gmail.com
+> ---
+>  drivers/gpu/drm/msm/adreno/a3xx_catalog.c | 11 +++++++++++
+>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c     | 14 +++++++++++---
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  6 ++++++
+>  3 files changed, 28 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_catalog.c b/drivers/gpu/drm/=
+msm/adreno/a3xx_catalog.c
+> index 0de8465b6cf0..2eb6c3e93748 100644
+> --- a/drivers/gpu/drm/msm/adreno/a3xx_catalog.c
+> +++ b/drivers/gpu/drm/msm/adreno/a3xx_catalog.c
+> @@ -41,6 +41,17 @@ static const struct adreno_info a3xx_gpus[] =3D {
+>                 .gmem  =3D SZ_128K,
+>                 .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+>                 .init  =3D a3xx_gpu_init,
+> +       }, {
+> +               .chip_ids =3D ADRENO_CHIP_IDS(0x03000620),
+> +               .family =3D ADRENO_3XX,
+> +               .revn =3D 308,
+> +               .fw =3D {
+> +                       [ADRENO_FW_PM4] =3D "a300_pm4.fw",
+> +                       [ADRENO_FW_PFP] =3D "a300_pfp.fw",
+> +               },
+> +               .gmem =3D SZ_128K,
+> +               .inactive_period =3D DRM_MSM_INACTIVE_PERIOD,
+> +               .init =3D a3xx_gpu_init,
+>         }, {
+>                 .chip_ids =3D ADRENO_CHIP_IDS(
+>                         0x03020000,
+> diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a3xx_gpu.c
+> index 5273dc849838..b46ff49f47cf 100644
+> --- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
+> @@ -145,6 +145,10 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+>                 gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003)=
+;
+>                 gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x0000000a=
+);
+>                 gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x0000000a=
+);
+> +       } else if (adreno_is_a306a(adreno_gpu)) {
+> +               gpu_write(gpu, REG_A3XX_VBIF_ROUND_ROBIN_QOS_ARB, 0x0003)=
+;
+> +               gpu_write(gpu, REG_A3XX_VBIF_OUT_RD_LIM_CONF0, 0x00000010=
+);
+> +               gpu_write(gpu, REG_A3XX_VBIF_OUT_WR_LIM_CONF0, 0x00000010=
+);
+>         } else if (adreno_is_a320(adreno_gpu)) {
+>                 /* Set up 16 deep read/write request queues: */
+>                 gpu_write(gpu, REG_A3XX_VBIF_IN_RD_LIM_CONF0, 0x10101010)=
+;
+> @@ -237,7 +241,9 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+>         gpu_write(gpu, REG_A3XX_UCHE_CACHE_MODE_CONTROL_REG, 0x00000001);
+>
+>         /* Enable Clock gating: */
+> -       if (adreno_is_a305b(adreno_gpu) || adreno_is_a306(adreno_gpu))
+> +       if (adreno_is_a305b(adreno_gpu) ||
+> +           adreno_is_a306(adreno_gpu) ||
+> +           adreno_is_a306a(adreno_gpu))
+>                 gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xaaaaaaaa);
+>         else if (adreno_is_a320(adreno_gpu))
+>                 gpu_write(gpu, REG_A3XX_RBBM_CLOCK_CTL, 0xbfffffff);
+> @@ -334,8 +340,10 @@ static int a3xx_hw_init(struct msm_gpu *gpu)
+>                 gpu_write(gpu, REG_A3XX_CP_PFP_UCODE_DATA, ptr[i]);
+>
+>         /* CP ROQ queue sizes (bytes) - RB:16, ST:16, IB1:32, IB2:64 */
+> -       if (adreno_is_a305(adreno_gpu) || adreno_is_a306(adreno_gpu) ||
+> -                       adreno_is_a320(adreno_gpu)) {
+> +       if (adreno_is_a305(adreno_gpu) ||
+> +           adreno_is_a306(adreno_gpu) ||
+> +           adreno_is_a306a(adreno_gpu) ||
+> +           adreno_is_a320(adreno_gpu)) {
+>                 gpu_write(gpu, REG_AXXX_CP_QUEUE_THRESHOLDS,
+>                                 AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB1_START(2)=
+ |
+>                                 AXXX_CP_QUEUE_THRESHOLDS_CSQ_IB2_START(6)=
+ |
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/ms=
+m/adreno/adreno_gpu.h
+> index 1ab523a163a0..c3b7970c2bfa 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -294,6 +294,12 @@ static inline bool adreno_is_a306(const struct adren=
+o_gpu *gpu)
+>         return adreno_is_revn(gpu, 307);
+>  }
+>
+> +static inline bool adreno_is_a306a(const struct adreno_gpu *gpu)
+> +{
+> +       /* a306a (marketing name is a308) */
+> +       return adreno_is_revn(gpu, 308);
+> +}
+> +
+>  static inline bool adreno_is_a320(const struct adreno_gpu *gpu)
+>  {
+>         return adreno_is_revn(gpu, 320);
+>
+> ---
+> base-commit: dee7f101b64219f512bb2f842227bd04c14efe30
+> change-id: 20240528-a306a-48e173724d6c
+>
+> Best regards,
+> --
+> Barnab=C3=A1s Cz=C3=A9m=C3=A1n <trabarni@gmail.com>
+>
 
