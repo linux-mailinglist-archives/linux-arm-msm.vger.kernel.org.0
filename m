@@ -1,110 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-29826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29827-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 457089630E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 21:24:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B8B19630F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 21:29:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0115285A82
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:23:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D70A1F2282C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:29:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8D9B1A76CE;
-	Wed, 28 Aug 2024 19:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF6061AAE0F;
+	Wed, 28 Aug 2024 19:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Zr08nFW+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Gq+PYT2z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C769487BE;
-	Wed, 28 Aug 2024 19:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097021AB521;
+	Wed, 28 Aug 2024 19:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724873037; cv=none; b=E74QhUCzG6Lcwb5H1RvfaAqtZMwh24BTgS3tizKKihrOeTvRKPQXL6wQsULY8/DAYNwLa+8VzMyyydWLchANIJSRDl8bdueZeTcLjrzSgaH2rnZ2G9mfdi/D3W1x3qnGblGD7QvpOLMpYB6yO3eok2kYCP84l6arOnuzWyzwQ2c=
+	t=1724873352; cv=none; b=ZLrVzJcY3Snk+TQX6hBBDalFvv2rN7wWZgMUgrdtSf5AfRy2v77j9UKF1Ioz2RHTCgwJCi8a8Aj5JPhJLXtVTtOPTSMYoLc7/Pox3p31eMY7qIlw8BFSAW7DPArja2GjYY8zQpWKW8M4xIJybJAQsOIiIya9ypPrPiKnYewdsVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724873037; c=relaxed/simple;
-	bh=0vwRHTUc7DjLYw/YgmGxwlu3n/Uj0aNKkMKn39r+rsI=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tsAzvzDTUU8IOcYMd+nKkEW8HXhKD+A6+N9iClPS08smDng/stwgoFzQIA1uDUae+yJQ2mCQxiWfsi5UDAc+Kql9JHx6SILOAKWORWFEA2UPzm30i86noFTKfXFfLJX38paPFgFln3IeBDuAhi56rsrNrQIDtmMOZksxPxugB8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Zr08nFW+; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1724873352; c=relaxed/simple;
+	bh=JNQpCHio/7PsfDOjKeTprEoZn/UEuxEkSTJIxzLDNi8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LCEP+3ikmGQfNNs+aLVxY39NW0wI3VEAw4GiOcFNk/xPMuSqyidmkiyPzW42itd2ImAqrPMJznbnnktmYr68eJV8vykQR3W+iA/VS30QEc3KWLZP9IlT64Kjjdo/JqWJi5lecBwqiaTH7TWL+2o5xOXMdigd6jWWpd9zpaMH1FU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Gq+PYT2z; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SJM1QA012835;
-	Wed, 28 Aug 2024 19:23:15 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SJMKLm013831;
+	Wed, 28 Aug 2024 19:29:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aVl1um6bdKcTVasU9ob3zV0YqUw8q5eZh9fCTXeP//Q=; b=Zr08nFW+YDSNYQqi
-	T/dCkkmS/FM2/CdLRRf/5SR8JW8X/7zxddmr7+R0FAAA03u4QoHg5zKn/OpkKCHN
-	hArgmr60z0gYrqZ345V/Q2i523NDba6z1q1gmfFD3/+glTXmWfcabLS9mkNmnmDb
-	c/ffLLFHqt+D+8xdalNI/Sc8zJB8mfEDAqzt68L7inDkQdQJhOVCQQ12+6pzdin1
-	LcWQF/U0po/+wIVNCziotm2wnpCiHYe2KqWEHHIU5KScmy7FnW6yjvrrapYa97o/
-	OwQwTS/Z+heBCKXxc/uS86Ibzupu5ny67YniQ1niLpWvmT/uUvNLjS9Yna6Vk75Q
-	3vg/JA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv12uxs-1
+	Mwtgi+gnjWuKo9mkFeZBhSIqHl8rbt68meeE7YfuJkE=; b=Gq+PYT2zPuF+r2Rl
+	spITY+Qoz1JxTp7wyV6eapHPgQWNCNktw143r8hlYK/Ykd8rsCqmvw4FN5WYofSI
+	u9om3ZBhukx3GmIhfiu0G23BHHI9zcMLGGq6DoEdD6qIKanvX1tlrsdyTM3Dzju4
+	KLn7j92X8oFExzLUbHuD1+uy+r5i7hIr3F/iqGFq5rM4Z60Zd6X/f3K60tvBc869
+	cC4gYkC56hLs0ssHXY2TjxKLhptsnXSeBrzaStYP+/cDxaM7NOprI+mW355k6/Un
+	dk7bD8J/+hMKvxO9VmQK7teeVAEicG7wUpbXvjDAlUUwszsWub0RikDKQsRuvzAh
+	CFTwEQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv12v7r-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 19:23:15 +0000 (GMT)
+	Wed, 28 Aug 2024 19:29:03 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SJNEl6024206
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SJT2ve007196
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 19:23:14 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 28 Aug 2024 12:23:08 -0700
-Date: Thu, 29 Aug 2024 00:53:04 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>
-CC: Antonino Maniscalco <antomani103@gmail.com>,
-        Connor Abbott
-	<cwabbott0@gmail.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>
-Subject: Re: [PATCH 4/7] drm/msm/A6xx: Implement preemption for A7XX targets
-Message-ID: <20240828192304.dojqyvbnqzhy63na@hu-akhilpo-hyd.qualcomm.com>
-References: <CACu1E7E7FPJP-Ry64m257A7WrL3Q9jy8xMS9XpSBRNimBWzYUQ@mail.gmail.com>
- <20240822200534.fgugb3zmcp7hjyck@hu-akhilpo-hyd.qualcomm.com>
- <CACu1E7F068sAMFgn=D7qBGM81qvYP4iW1+hXpfXVKtQGWeyTKQ@mail.gmail.com>
- <CACu1E7EueMnte9e+yLEtRE9WmG0J5bVMj59VbPfkDeB7OHbsAw@mail.gmail.com>
- <20240827194828.jxwelq4xr2wsdxos@hu-akhilpo-hyd.qualcomm.com>
- <d95ef763-7237-4080-b323-838ca337734a@gmail.com>
- <CAF6AEGuASw0YO8b0X24-iq1pqTnBEpr0Tm3Scmt4-T+HeCMY_A@mail.gmail.com>
- <57064da3-190c-4554-b085-d56daf979933@gmail.com>
- <CAF6AEGtYh6jnYcFLcUnEobjQqKmqxuX29wO1qqnGYFQJ+EUBxw@mail.gmail.com>
- <CAF6AEGuBMiQft4SCrf=xTQ76q8=+-OS3SEKMmw7TGT5rb=Sygw@mail.gmail.com>
+	Wed, 28 Aug 2024 19:29:02 GMT
+Received: from [10.71.111.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
+ 2024 12:29:02 -0700
+Message-ID: <b82377b0-0f82-4880-b625-a6e564428d0b@quicinc.com>
+Date: Wed, 28 Aug 2024 12:29:01 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGuBMiQft4SCrf=xTQ76q8=+-OS3SEKMmw7TGT5rb=Sygw@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 08/12] drm/msm/dpu: split dpu_plane_atomic_check()
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn
+ Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240627-dpu-virtual-wide-v5-0-5efb90cbb8be@linaro.org>
+ <20240627-dpu-virtual-wide-v5-8-5efb90cbb8be@linaro.org>
+ <1facdd7c-b15d-4d91-b96a-5b3b72dbad66@quicinc.com>
+ <CAA8EJpr_wCAO5fw+ZbbuPUtnJFms+Q-X02ekWEGCnvuxcHKbqQ@mail.gmail.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpr_wCAO5fw+ZbbuPUtnJFms+Q-X02ekWEGCnvuxcHKbqQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3wUa4nw9YNeQ19SOTO4mINAVLHXBHVQr
-X-Proofpoint-ORIG-GUID: 3wUa4nw9YNeQ19SOTO4mINAVLHXBHVQr
+X-Proofpoint-GUID: PxY5YuKM3cKwLzAM81XQn0RlN8vSJsmz
+X-Proofpoint-ORIG-GUID: PxY5YuKM3cKwLzAM81XQn0RlN8vSJsmz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-28_08,2024-08-28_01,2024-05-17_01
@@ -114,137 +97,281 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorit
  adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408280141
 
-On Wed, Aug 28, 2024 at 06:46:37AM -0700, Rob Clark wrote:
-> On Wed, Aug 28, 2024 at 6:42 AM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Tue, Aug 27, 2024 at 3:56 PM Antonino Maniscalco
-> > <antomani103@gmail.com> wrote:
-> > >
-> > > On 8/27/24 11:07 PM, Rob Clark wrote:
-> > > > On Tue, Aug 27, 2024 at 1:25 PM Antonino Maniscalco
-> > > > <antomani103@gmail.com> wrote:
-> > > >>
-> > > >> On 8/27/24 9:48 PM, Akhil P Oommen wrote:
-> > > >>> On Fri, Aug 23, 2024 at 10:23:48AM +0100, Connor Abbott wrote:
-> > > >>>> On Fri, Aug 23, 2024 at 10:21 AM Connor Abbott <cwabbott0@gmail.com> wrote:
-> > > >>>>>
-> > > >>>>> On Thu, Aug 22, 2024 at 9:06 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> > > >>>>>>
-> > > >>>>>> On Wed, Aug 21, 2024 at 05:02:56PM +0100, Connor Abbott wrote:
-> > > >>>>>>> On Mon, Aug 19, 2024 at 9:09 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
-> > > >>>>>>>>
-> > > >>>>>>>> On Thu, Aug 15, 2024 at 08:26:14PM +0200, Antonino Maniscalco wrote:
-> > > >>>>>>>>> This patch implements preemption feature for A6xx targets, this allows
-> > > >>>>>>>>> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
-> > > >>>>>>>>> hardware as such supports multiple levels of preemption granularities,
-> > > >>>>>>>>> ranging from coarse grained(ringbuffer level) to a more fine grained
-> > > >>>>>>>>> such as draw-call level or a bin boundary level preemption. This patch
-> > > >>>>>>>>> enables the basic preemption level, with more fine grained preemption
-> > > >>>>>>>>> support to follow.
-> > > >>>>>>>>>
-> > > >>>>>>>>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> > > >>>>>>>>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> > > >>>>>>>>> ---
-> > > >>>>>>>>
-> > > >>>>>>>> No postamble packets which resets perfcounters? It is necessary. Also, I
-> > > >>>>>>>> think we should disable preemption during profiling like we disable slumber.
-> > > >>>>>>>>
-> > > >>>>>>>> -Akhil.
-> > > >>>>>>>
-> > > >>>>>>> I don't see anything in kgsl which disables preemption during
-> > > >>>>>>> profiling. It disables resetting perfcounters when doing system-wide
-> > > >>>>>>> profiling, like freedreno, and in that case I assume preempting is
-> > > >>>>>>> fine because the system profiler has a complete view of everything and
-> > > >>>>>>> should "see" preemptions through the traces. For something like
-> > > >>>>>>> VK_KHR_performance_query I suppose we'd want to disable preemption
-> > > >>>>>>> because we disable saving/restoring perf counters, but that has to
-> > > >>>>>>> happen in userspace because the kernel doesn't know what userspace
-> > > >>>>>>> does.
-> > > >>>>>>>
-> > > >>>>>>
-> > > >>>>>> KGSL does some sort of arbitration of perfcounter configurations and
-> > > >>>>>> adds the select/enablement reg configuration as part of dynamic
-> > > >>>>>> power up register list which we are not doing here. Is this something
-> > > >>>>>> you are taking care of from userspace via preamble?
-> > > >>>>>>
-> > > >>>>>> -Akhil
-> > > >>>>>
-> > > >>>>> I don't think we have to take care of that in userspace, because Mesa
-> > > >>>>> will always configure the counter registers before reading them in the
-> > > >>>>> same submission, and if it gets preempted in the meantime then we're
-> > > >>>>> toast anyways (due to not saving/restoring perf counters). kgsl sets
-> > > >>>>> them from userspace, which is why it has to do something to set them
-> > > >>>>
-> > > >>>> Sorry, should be "kgsl sets them from the kernel".
-> > > >>>>
-> > > >>>>> after IFPC slumber or a context switch when the HW state is gone.
-> > > >>>>> Also, because the upstream approach doesn't play nicely with system
-> > > >>>>> profilers like perfetto, VK_KHR_performance_query is hidden by default
-> > > >>>>> behind a debug flag in turnip. So there's already an element of "this
-> > > >>>>> is unsupported, you have to know what you're doing to use it."
-> > > >>>
-> > > >>> But when you have composition on GPU enabled, there will be very frequent
-> > > >>> preemption. And I don't know how usable profiling tools will be in that
-> > > >>> case unless you disable preemption with a Mesa debug flag. But for that
-> > > >>> to work, all existing submitqueues should be destroyed and recreated.
-> > > >>>
-> > > >>> So I was thinking that we can use the sysprof propertry to force L0
-> > > >>> preemption from kernel.
-> > > >>>
-> > > >>> -Akhil.
-> > > >>>
-> > > >>
-> > > >> Right but when using a system profiler I imagined the expectation would
-> > > >> be to be able to understand how applications and compositor interact. An
-> > > >> use case could be measuring latency and understanding what contributes
-> > > >> to it. That is actually the main reason I added traces for preemption.
-> > > >> Disabling preemption would make it less useful for this type of
-> > > >> analysis. Did you have an use case in mind for a system profiler that
-> > > >> would benefit from disabling preemption and that is not covered by
-> > > >> VK_KHR_performance_query (or equivalent GL ext)?
 
-Please consider this as a friendly suggestion based on Conner's clarification.
-Not a blocker. TBH, I don't have clairty on the profiling story in Mesa!
 
-> > > >
-> > > > I would think that we want to generate an event, with GPU timestamp
-> > > > (ie. RB_DONE) and which ring we are switching to, so that perfetto/etc
-> > > > could display multiple GPU timelines and where the switch from one to
-> > > > the other happens.
-> > > >
-> > > > I'm a bit curious how this is handled on android, with AGI/etc.. I
-> > > > don't see any support in perfetto for this.
-> > > >
-> > > > BR,
-> > > > -R
-> > > >
-> > > >> Best regards,
-> > > >> --
-> > > >> Antonino Maniscalco <antomani103@gmail.com>
-> > > >>
-> > >
-> > > Looking at KGSL they seem to use ftrace and I don't see it doing
-> > > anything to get a timestamp from some GPU timer, really not sure how
-> > > that would be put in a gpu timeline.
-
-Yeah, we usually rely on ftraces which is good enough to measure preemption
-latency.
-
--Akhil.
-
-> >
-> > I suspect it would require some work on perfetto trace-processor.  It
-> > can ingest ftrace events (but those would end up being something
-> > driver specific).  Maybe with u_trace and some tracepoints in the
-> > 'ambles something could be done that would be more driver agnostic
-> > (but idk if that would work for gpu's where preemption happens more
-> > autonomously in the fw)
+On 8/28/2024 11:59 AM, Dmitry Baryshkov wrote:
+> On Wed, 28 Aug 2024 at 21:27, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 6/26/2024 2:46 PM, Dmitry Baryshkov wrote:
+>>> Split dpu_plane_atomic_check() function into two pieces:
+>>>
+>>> dpu_plane_atomic_check_nopipe() performing generic checks on the pstate,
+>>> without touching the associated pipe,
+>>>
+>>> and
+>>>
+>>> dpu_plane_atomic_check_pipes(), which takes into account used pipes.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 178 +++++++++++++++++++-----------
+>>>    1 file changed, 112 insertions(+), 66 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> index 115c1bd77bdd..9b9fe28052ad 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>>> @@ -788,49 +788,22 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>>>    #define MAX_UPSCALE_RATIO   20
+>>>    #define MAX_DOWNSCALE_RATIO 4
+>>>
+>>> -static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>> -                               struct drm_atomic_state *state)
+>>> +static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>>> +                                      struct drm_plane_state *new_plane_state,
+>>> +                                      const struct drm_crtc_state *crtc_state)
+>>>    {
+>>> -     struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+>>> -                                                                              plane);
+>>>        int ret = 0, min_scale, max_scale;
+>>>        struct dpu_plane *pdpu = to_dpu_plane(plane);
+>>>        struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>>>        u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+>>>        struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+>>> -     struct dpu_sw_pipe *pipe = &pstate->pipe;
+>>> -     struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+>>> -     const struct drm_crtc_state *crtc_state = NULL;
+>>> -     const struct msm_format *fmt;
+>>>        struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>>>        struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>>>        struct drm_rect fb_rect = { 0 };
+>>>        uint32_t max_linewidth;
+>>> -     unsigned int rotation;
+>>> -     uint32_t supported_rotations;
+>>> -     const struct dpu_sspp_cfg *pipe_hw_caps;
+>>> -     const struct dpu_sspp_sub_blks *sblk;
+>>> -
+>>> -     if (new_plane_state->crtc)
+>>> -             crtc_state = drm_atomic_get_new_crtc_state(state,
+>>> -                                                        new_plane_state->crtc);
+>>> -
+>>> -     pipe->sspp = dpu_rm_get_sspp(&kms->rm, pdpu->pipe);
+>>> -     r_pipe->sspp = NULL;
+>>>
+>>> -     if (!pipe->sspp)
+>>> -             return -EINVAL;
+>>> -
+>>> -     pipe_hw_caps = pipe->sspp->cap;
+>>> -     sblk = pipe->sspp->cap->sblk;
+>>> -
+>>> -     if (sblk->scaler_blk.len) {
+>>> -             min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+>>> -             max_scale = MAX_DOWNSCALE_RATIO << 16;
+>>> -     } else {
+>>> -             min_scale = DRM_PLANE_NO_SCALING;
+>>> -             max_scale = DRM_PLANE_NO_SCALING;
+>>> -     }
+>>> +     min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+>>> +     max_scale = MAX_DOWNSCALE_RATIO << 16;
+>>>
+>>>        ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
+>>>                                                  min_scale,
+>>> @@ -843,11 +816,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>        if (!new_plane_state->visible)
+>>>                return 0;
+>>>
+>>> -     pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>> -     pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>> -     r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
+>>> -     r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
+>>> -
+>>>        pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
+>>>        if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
+>>>                DPU_ERROR("> %d plane stages assigned\n",
+>>> @@ -871,8 +839,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>                return -E2BIG;
+>>>        }
+>>>
+>>> -     fmt = msm_framebuffer_format(new_plane_state->fb);
+>>> -
+>>>        max_linewidth = pdpu->catalog->caps->max_linewidth;
+>>>
+>>>        drm_rect_rotate(&pipe_cfg->src_rect,
+>>> @@ -881,6 +847,78 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>
+>>>        if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+>>>             _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
+>>> +             if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+>>> +                     DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+>>> +                                     DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+>>> +                     return -E2BIG;
+>>> +             }
+>>> +
+>>> +             *r_pipe_cfg = *pipe_cfg;
+>>> +             pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+>>> +             pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+>>> +             r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+>>> +             r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+>>> +     } else {
+>>> +             memset(r_pipe_cfg, 0, sizeof(*r_pipe_cfg));
+>>> +     }
+>>> +
+>>
+>> This is the part I am not able to fully understand. Assignment of
+>> r_pipe_cfg is also pipe related so why should that move to
+>> dpu_plane_atomic_check_nopipe(). It should be part of
+>> dpu_plane_atomic_check_pipe().
 > 
-> btw how to handle tracing preemption probably shouldn't hold up
-> sending the next iteration of this series.  There isn't that much more
-> time to get this in v6.12, and I think better visualization of
-> preemption is going to take some work outside of the kernel.
+> Because it happens before possible pipe / rectangle allocation. These
+> values are further used to assign resources.
 > 
-> BR,
-> -R
+
+Are you referring to SSPP allocation which happens in 
+dpu_plane_virtual_assign_resources() later on?
+
+I see your point, but thats why originally I wanted to ask whether this 
+should be called dpu_plane_atomic_check_nosspp() and 
+dpu_plane_atomic_check_sspp() because pipe is kind of assigned either 
+here or already assigned. Its the SSPP which is not.
+
+>>
+>>> +     drm_rect_rotate_inv(&pipe_cfg->src_rect,
+>>> +                         new_plane_state->fb->width, new_plane_state->fb->height,
+>>> +                         new_plane_state->rotation);
+>>> +     if (r_pipe_cfg->src_rect.x1 != 0)
+>>> +             drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+>>> +                                 new_plane_state->fb->width, new_plane_state->fb->height,
+>>> +                                 new_plane_state->rotation);
+>>> +
+>>> +     pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +
+>>> +static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>>> +                                     struct drm_atomic_state *state,
+>>> +                                     const struct drm_crtc_state *crtc_state)
+>>> +{
+>>> +     struct drm_plane_state *new_plane_state =
+>>> +             drm_atomic_get_new_plane_state(state, plane);
+>>> +     struct dpu_plane *pdpu = to_dpu_plane(plane);
+>>> +     struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+>>> +     struct dpu_sw_pipe *pipe = &pstate->pipe;
+>>> +     struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+>>> +     const struct msm_format *fmt;
+>>> +     struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+>>> +     struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+>>> +     uint32_t max_linewidth;
+>>> +     unsigned int rotation;
+>>> +     uint32_t supported_rotations;
+>>> +     const struct dpu_sspp_cfg *pipe_hw_caps;
+>>> +     const struct dpu_sspp_sub_blks *sblk;
+>>> +     int ret = 0;
+>>> +
+>>> +     pipe_hw_caps = pipe->sspp->cap;
+>>> +     sblk = pipe->sspp->cap->sblk;
+>>> +
+>>> +     /*
+>>> +      * We already have verified scaling against platform limitations.
+>>> +      * Now check if the SSPP supports scaling at all.
+>>> +      */
+>>> +     if (!sblk->scaler_blk.len &&
+>>> +         ((drm_rect_width(&new_plane_state->src) >> 16 !=
+>>> +           drm_rect_width(&new_plane_state->dst)) ||
+>>> +          (drm_rect_height(&new_plane_state->src) >> 16 !=
+>>> +           drm_rect_height(&new_plane_state->dst))))
+>>> +             return -ERANGE;
+>>> +
+>>
+>> Should this part be retained under dpu_plane_atomic_check_nopipe()?
+>>
+>> This is also not pipe dependent.
+> 
+> No, it uses sblk->scaler_blk, so it depends on the actual SSPP being
+> used for this pipe.
+> 
+
+Ack.
+
+>>
+>>> +     fmt = msm_framebuffer_format(new_plane_state->fb);
+>>> +
+>>> +     max_linewidth = pdpu->catalog->caps->max_linewidth;
+>>> +
+>>> +     ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt,
+>>> +                                       &crtc_state->adjusted_mode);
+>>> +     if (ret)
+>>> +             return ret;
+>>> +
+>>> +     if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+>>>                /*
+>>>                 * In parallel multirect case only the half of the usual width
+>>>                 * is supported for tiled formats. If we are here, we know that
+>>> @@ -894,12 +932,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>                        return -E2BIG;
+>>>                }
+>>>
+>>> -             if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+>>> -                     DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+>>> -                                     DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+>>> -                     return -E2BIG;
+>>> -             }
+>>> -
+>>>                if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
+>>>                    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
+>>>                    (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
+>>> @@ -921,26 +953,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>                r_pipe->multirect_index = DPU_SSPP_RECT_1;
+>>>                r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>>>
+>>> -             *r_pipe_cfg = *pipe_cfg;
+>>> -             pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+>>> -             pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+>>> -             r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+>>> -             r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+>>> -     }
+>>> -
+>>> -     drm_rect_rotate_inv(&pipe_cfg->src_rect,
+>>> -                         new_plane_state->fb->width, new_plane_state->fb->height,
+>>> -                         new_plane_state->rotation);
+>>> -     if (r_pipe->sspp)
+>>> -             drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+>>> -                                 new_plane_state->fb->width, new_plane_state->fb->height,
+>>> -                                 new_plane_state->rotation);
+>>> -
+>>> -     ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
+>>> -     if (ret)
+>>> -             return ret;
+>>> -
+>>> -     if (r_pipe->sspp) {
+>>>                ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+>>>                                                  &crtc_state->adjusted_mode);
+>>>                if (ret)
+>>> @@ -963,11 +975,45 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>>>        }
+>>>
+>>>        pstate->rotation = rotation;
+>>
+>> The dpu_plane_check_inline_rotation() is also pipe independent. So even
+>> that goes to dpu_plane_atomic_check_nopipe()?
+> 
+> It also depends on the sblk if I remember correctly. Also note that
+> the next patch moves it to check_pipe().
+> 
+
+Ack. I checked the next change. this part is fine.
+
+>>
+>>> -     pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+>>>
+>>>        return 0;
+>>>    }
+>>>
+>>
+>> <snip>
+>>
+> 
+> 
 
