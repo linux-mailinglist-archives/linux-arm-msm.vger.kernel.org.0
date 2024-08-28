@@ -1,154 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-29828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81C669630F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 21:31:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42D2896310D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 21:38:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E27A2817E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:31:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 605F41C2125A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 19:38:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5E291ABEAD;
-	Wed, 28 Aug 2024 19:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3B9C1A2554;
+	Wed, 28 Aug 2024 19:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kN2bwTjN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q66HfvfA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2D91A7AEE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 19:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F015F433C1
+	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 19:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724873481; cv=none; b=h/njbUOD/62Yhb+VpVJnRKBIkdIZIp1x/lOTUIwUfikDINzYyelQOH67vYFzf8ForSysk6F7PqXTQkOa1I+FrftSxE6KT3gZxRRnezFgp796Lz+ELn2/2X6kbRFRozaIhY0L4FRZZdDWNW/UBJ1clGzNyxnv0mqGa608vQtmMZs=
+	t=1724873919; cv=none; b=a0pgbMOpOR9QqgAuTIQigTchvOvGKgeT7dT+QYJfVYODgSZXanTvn/KW9mq7xKB9br2PWUNHEn/XCgSi58BFNWltkbfc1EVY7l+ODUAHWhc6+bt+EWBwtBHs3x/hATFgAfRxXvol4aKV1f5ZBr6h4xOLfpJmg3+N19LVmwUpOGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724873481; c=relaxed/simple;
-	bh=VuB8aOD1DFpYanM0ekrE9ZDfb9mPITbIOAVIdF3y8q0=;
+	s=arc-20240116; t=1724873919; c=relaxed/simple;
+	bh=czIvoLCUNhtT+cdAWhA5HMEa42cJFm5CbUX5WTE7BmI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f2/V0CDUUVzQ0DO9MvWYnSdyEr7I7xej4fzgUUxVbkD6+C2uRAhHAOZqXNDKf1TEvxNOv+Ie0JT0U4FeKUJU/56C5ZF83LjHWoluItItHqJnfIum62fWSb5nvk4BEAHEMbL9cmYI4K5mHWf99suAkvpY3ZqtzApE6L/eQPF3fxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kN2bwTjN; arc=none smtp.client-ip=209.85.167.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=nxQrp7w6YImLZ72/SweR5xI3rKS+Gi+7jbyNsk86ZB3LY52rKksJpDvUR6k1Yi7WF5twrvdqiEERUwkA09++03N52W8+rkZcm6CdnZyM2ZeLZfB2Rl0FJAuq9VAfnmNJkpFJ0tXZEeV4PmKSsIIRa1Azd6+8yjeN3Ce7q4AxUcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q66HfvfA; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-533488ffaddso8665594e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 12:31:19 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-533488ffaf7so9792879e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 12:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724873478; x=1725478278; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=AoA1rvh9tEvmLE6yW93wrf40qTudqkuqIKNU0qjFVRI=;
-        b=kN2bwTjNGYgwqVThl7k0LilhcbN1N7ZtcwfkSP1SCA1gRhUdZyG0tTowtswBLXnqzf
-         FERQcnwMHv3882Bfh8YlCqe3MQbhcCoXQ2MnYy62pOKnAWDYNeT1NBSMA07g2nFNq7bV
-         6YPmaRTMQVjW9TV8cbytkFxomIS48BHZKkO+iU6WSS/ENcR7URWUejNLDVhdLcSn847q
-         7gUs+Q6vPjohyMkCXvybIGxcxxd9VsWdSEriRdIcBp3e5nysd4MahgTaoEZwm1+areo+
-         qOs5qKrQ1E0eOeVK4FyriUaO5IZLks+xpqS39wuDPxMVjEgYiU0hJRHru4ao8Fwbp5k/
-         Sn2A==
+        d=linaro.org; s=google; t=1724873916; x=1725478716; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=S2boCnau9cNyFJbbhnQn5xxnCB2xmtbbHbu9uGAoNXM=;
+        b=q66HfvfAa8P5ArO9tzgFgNgfijQk0UKpkHviplg0bGv8opClY2WGY/aZT52CpLwmml
+         zwZlMkEW3kHgSSR95NBCFR6zn3/AwIuDgNN+sVP45Fo+fcGtqOodOTRB+EM3G+KSCJOX
+         MIuhompqo0jXS7NDLUoyV/u3Gc+YsiiSM4Bo+s1u4RySqsHm4c83TK4htv4Dm0ZJd2NJ
+         3Y9dYvZsukOgr2TOxCabaugqMvEWCNBKd/FdA4SxZmloqFuN+HUG8yDXxugOGnCl+VUs
+         V33Uc7Qs63OcRNUJedsrPUBkT54aiLpG1N5Tb/9sxBEIOqjC61sc/EzLlNXKUpOIbHMy
+         TgJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724873478; x=1725478278;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AoA1rvh9tEvmLE6yW93wrf40qTudqkuqIKNU0qjFVRI=;
-        b=v3Fc+G/v+MhL8Z002NMq/+2COQlT1KNXojPFt3WTFyxmnbWVpRShUTD7KGB521HKYq
-         EbaBWXrHvNP9oglPlET/dVSeDKhzn5y46Le2tJIr+pkelwL5MivBjx6SlzHIzqMJs3qc
-         0E3Lk4DbBFoIK4ojf8yaQq2SXUPBGMiK4IC4aazKLpZMOmpu6Rmu2nJfMvn29pOLErv/
-         xd0fq3z4YBicuWYqsYS5hSZ7L2Of6bYxowrOSH3O5KhmPu0xAWS6b4VW1NlSJ1d01I0h
-         IMA+8mmDpnOIqdVuS8WtTFw8PegG+tkB+HdbZYn7xlpLeFmcRJI/pxAVlY0wkeWg9ZK7
-         pEBA==
-X-Forwarded-Encrypted: i=1; AJvYcCWIkBdhOkELO47IPx9Q7y0v/mXgu74BseOdTSGVQZXIaBFyCz7gbnVJH8p68OSu5ghP0Mn/Mk3N6OEPYq2y@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwDzZAIFrepI4Km0ogoVQIk4GBxwCCrYStmRb1iM+/nMMScnBB
-	lFhmDRZ7OPTcShxgTn7odRtLpzu0kS2D4juYbDxteyfv0RJ3LbxDzqTxZsT6M1E=
-X-Google-Smtp-Source: AGHT+IGIA5Nxp4aLQLPCqJOBJCzuUgDnPtLzTB/9BIteMLCqncZoQFdLyaWZQ9R4m004CPzbIRDsdA==
-X-Received: by 2002:a05:6512:3b2b:b0:52c:e084:bb1e with SMTP id 2adb3069b0e04-5353e5696d8mr199475e87.13.1724873477405;
-        Wed, 28 Aug 2024 12:31:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1724873916; x=1725478716;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S2boCnau9cNyFJbbhnQn5xxnCB2xmtbbHbu9uGAoNXM=;
+        b=pjFdpmQ4I33KKt5jLUXiQ6Hy2yI02bypAdLl3HWyl+85PWeQU2B0muSHl7RtNVepu8
+         NHL4nZ5Up3xGTzw84bfSXR1V1YilJZ2CLQeJzKyvXEI3guewbCLWk82wopEqJBQPP/Ya
+         PuszA1gEypKzqdJg22MvCxM1AoZf8nF4VoOWgE9oFZDouDvQy3Ap+fQjS75e9OktTXOi
+         YDvI3CZaHuTytGmGwAOqB4HmMhx12bEZnR4+onBSo5PRF7RkbfdMkWuW1ktfWXhNFaz5
+         DD7PveX8H1nlnXv/3C2WrdkAqdLrh63mJ85yEISSFDCGSyh67wI7s4WIPnA4gg/ROweB
+         lyCg==
+X-Forwarded-Encrypted: i=1; AJvYcCVR0MeObcQGv049iiWUU6ZjAQHZjV7GOZgcJWVz2hok3ivl1AgULqsW7SAwgLy4ds7+Gj0FNWjiWi9Dhy0M@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNOjib0CILC9Ib1GSxAjJOn/YdjE7Zdq5T3nwaofr5sujx03Ca
+	8GCM1r0/tuJ/OCekg8BiTSo5HxEF0rebn/oJ9v1iMqXeLzxfrZdZyat3756gkeE=
+X-Google-Smtp-Source: AGHT+IFX0ICTjWKM1raHcDBZYIJQJARuE3gnbn2GEX7Oc+LTxOmCamgvksbRuiWzNjzPy3Id1Vcj8w==
+X-Received: by 2002:a05:6512:b84:b0:533:466d:698c with SMTP id 2adb3069b0e04-5353e5aad3bmr216482e87.39.1724873915220;
+        Wed, 28 Aug 2024 12:38:35 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5334ea591bbsm2251241e87.176.2024.08.28.12.31.16
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5334ea5d34fsm2321105e87.192.2024.08.28.12.38.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 12:31:17 -0700 (PDT)
-Date: Wed, 28 Aug 2024 22:31:15 +0300
+        Wed, 28 Aug 2024 12:38:34 -0700 (PDT)
+Date: Wed, 28 Aug 2024 22:38:32 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Trilok Soni <quic_tsoni@quicinc.com>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>, 
-	Elson Roy Serrao <quic_eserrao@quicinc.com>, andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, gregkh@linuxfoundation.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-usb@vger.kernel.org
-Subject: Re: [PATCH 0/8] Enable EUD on Qualcomm sm8450 SoC
-Message-ID: <bvhukpvqtn2rmgscqgfzwxi6lxmm547iesxwfvjeuvs6k72adm@g2vumqixalu5>
-References: <20240730222439.3469-1-quic_eserrao@quicinc.com>
- <023d4ea8-635d-435f-bae2-87284f70123b@linaro.org>
- <2a17eaca-54af-d1fa-304d-c7e0afd85b33@quicinc.com>
- <32f23133-c494-46c1-a1f7-cabddb6331a8@linaro.org>
- <622c0fd6-e4e2-6597-d0a2-ff449d7d2f59@quicinc.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Jeykumar Sankaran <jsanka@codeaurora.org>
+Subject: Re: [PATCH v2 2/2] drm/msm/dpu: don't play tricks with debug macros
+Message-ID: <sfdha2ywvtuffsyyrrbwzjt6nkjojpbnribp2vva6fp62swftp@mjhm6r74rq7e>
+References: <20240802-dpu-fix-wb-v2-0-7eac9eb8e895@linaro.org>
+ <20240802-dpu-fix-wb-v2-2-7eac9eb8e895@linaro.org>
+ <1efd71c4-3bee-4c71-9e40-1284b9483824@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <622c0fd6-e4e2-6597-d0a2-ff449d7d2f59@quicinc.com>
+In-Reply-To: <1efd71c4-3bee-4c71-9e40-1284b9483824@kernel.org>
 
-On Tue, Aug 06, 2024 at 11:58:02AM GMT, Trilok Soni wrote:
-> On 8/1/2024 3:52 AM, Caleb Connolly wrote:
-> > Hi Trilok,
+On Tue, Aug 27, 2024 at 11:39:45AM GMT, Konrad Dybcio wrote:
+> On 2.08.2024 9:47 PM, Dmitry Baryshkov wrote:
+> > DPU debugging macros need to be converted to a proper drm_debug_*
+> > macros, however this is a going an intrusive patch, not suitable for a
+> > fix. Wire DPU_DEBUG and DPU_DEBUG_DRIVER to always use DRM_DEBUG_DRIVER
+> > to make sure that DPU debugging messages always end up in the drm debug
+> > messages and are controlled via the usual drm.debug mask.
 > > 
-> > On 31/07/2024 21:58, Trilok Soni wrote:
-> >> On 7/31/2024 4:13 AM, Caleb Connolly wrote:
-> >>>>      2.) Proper routing of USB role switch notifications: EUD hub is physically
-> >>>>       present in between the USB connector and the USB controller. So the
-> >>>>       usb role switch notifications originating from the connector should
-> >>>>       route through EUD. EUD also relies on role switch notifications to
-> >>>>       communicate with the USB, regarding EUD attach/detach events.
-> >>>>
-> >>>> This series aims at implementing the above aspects to enable EUD on
-> >>>> Qualcomm sm8450 SoC.
-> >>>
-> >>> Are there any plans to make this feature available for folks outside of Qualcomm / an NDA?
-> >>>
-> >>> There is an openOCD fork on CodeLinaro but it still requires some proprietary library which is only available to folks with a quicinc email as I understand it.
-> >>>
-> >>
-> >> Which codelinaro link are you referring here?
+> > I don't think that it is a good idea for a generic DPU_DEBUG macro to be
+> > tied to DRM_UT_KMS. It is used to report a debug message from driver, so by
+> > default it should go to the DRM_UT_DRIVER channel. While refactoring
+> > debug macros later on we might end up with particular messages going to
+> > ATOMIC or KMS, but DRIVER should be the default.
 > > 
-> > That would be https://git.codelinaro.org/clo/la/openocd-org/openocd/-/blob/qcom_changes/README_QCOM?ref_type=heads
+> > Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 14 ++------------
+> >  1 file changed, 2 insertions(+), 12 deletions(-)
 > > 
-> > Which says:
-> > 
-> > Qualcomm specific tools:
-> > - Login to qpm.qualcomm.com
-> > - QUTS: 1.64.1.39 (version & above)
-> > - Qualcomm Host USB Product Suite - QUD QC only : 1.00.63 (supported version)
-> > - EUD QC : 2.1.1 (supported version)
-> > 
-> > I believe the specific versions of QUD and EUD are only available to Qualcomm engineers and not even to OEMs, though I might be mistaken.
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > index e2adc937ea63..935ff6fd172c 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> > @@ -31,24 +31,14 @@
+> >   * @fmt: Pointer to format string
+> >   */
+> >  #define DPU_DEBUG(fmt, ...)                                                \
+> > -	do {                                                               \
+> > -		if (drm_debug_enabled(DRM_UT_KMS))                         \
+> > -			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+> > -		else                                                       \
+> > -			pr_debug(fmt, ##__VA_ARGS__);                      \
+> > -	} while (0)
+> > +	DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
 > 
-> Thanks. So are we okay w/ one of the following option? (trying to understand the need here properly before I relay it internally). 
-> 
-> Options:
-> 
-> (1) Provide EUD library and tools - proprietary w/o any login requirement. 
-> (2) Provide open-source EUD library and tools w/o any login requirement. 
-> 
-> Is Option (1) fine to begin with or option 2 is must? 
+> Should we just get rid of these macros at this point and use
+> DRM_DEBUG_DRIVER directly?
 
-The usual problem of (1) is future compatibility guarantees. What
-system libraries will it depend upon? When the open-source world and
-openocd update to the next libusb ABI, will it break the EUD library?
-
-Next, which interfaces are going to be used and/or provided by the lib
-and tools? In other words, will it be really useful?
-
-Last, if is prorietary, then under which licence? Will it allow reverse
-engineering or not? Will it allow redistributing? Also note that OpenOCD
-is licenced under GPL-2.0-or-later, so while one can link it with a
-proprietary software, they can not further distribute the resulting
-binaries. Also there might be different questions on whether the lib
-itself is a derivative work (and as such it must be covered by the GPL).
+I was hoping to get this into 6.11 as shown by the series subject.
+Reworking the debug macros is on my plate, but it going to be more
+intrusive. As such, it will probably be a 6.13+ material.
 
 -- 
 With best wishes
