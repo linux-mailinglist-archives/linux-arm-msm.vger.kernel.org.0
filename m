@@ -1,274 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-29792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C9F0962B46
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:08:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6793E962BC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 17:15:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9DD911F25AFD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:08:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9AD401C23B6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 15:15:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40E941A2844;
-	Wed, 28 Aug 2024 15:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C81A71A4B6C;
+	Wed, 28 Aug 2024 15:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mJKCP7HJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z5wR9DUa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6201A4B73;
-	Wed, 28 Aug 2024 15:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C8F51A2C17;
+	Wed, 28 Aug 2024 15:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724857653; cv=none; b=JfGuStIw6x7UWLd50AREy7olsvPgy/rEvMYTDM/ijbBOTGT4Y/BnwlEqXoFPzscpFQl4s1L7IYsrZPqqOCN+0qq8bg9bUuZPGx4SkMiSmGzwMD144yfDocOugY66+UsftykiovtmFodF05WHwfPp1t4E7Wo+Q1UIZ8ELYEoXeKc=
+	t=1724857927; cv=none; b=JPPixrghu6gH/k2CIkZDkKaHM3GLS2+IDTHaz04hZ/LXfHUuPCjlMmWJPZSAhD03PfVK7qCs/VlMNC+zm1VZg8rcIZnd2OKVnhb15WAj2lzOcBJoV9wOhOSZWhFOPGXpoD9+/FlS2mFwDsoD3Oc92pjHnez/njnE0nRO3zd8PvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724857653; c=relaxed/simple;
-	bh=jILtHjxwjjgjZztGE+ONkoeHJvK1Bqz1u5O/Mgt87zo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=e79/Ut7iuYHakmUaeeYrImBXxff34wOe1n1osahSP3HwhBigvmfDDf4Wn/bJ8HaSFsRQNYMiSBLNNo7K/U/70+WWmUxyi5IDiU63E+ONKW6uCsGZXzNaI9ndF7RL8Y1om9Bqln/GJT8OEKiwC+8lSlKOqlNNCDgoK3CjGohWJQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mJKCP7HJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4C9C4CEC2;
-	Wed, 28 Aug 2024 15:07:29 +0000 (UTC)
+	s=arc-20240116; t=1724857927; c=relaxed/simple;
+	bh=9GuXAxjPKxPmRMioM0desVcabOX2V79hzACInoh3ahU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tWhzj+IiPtJunr8sEQ5vlxnNzrOv+1qiXkqYhe+72lzuqPGbi2462iEKs9NXkTjG4s8fz0F7RJAc18NIlF5oNMNgW6WjMJVhzhn3tz5wU0mi/ltUq+lS/cWtszLqt/a5Qy/385jPj7g6s+qJA8NrJZW+yk3co+Yo724WRQ7lqVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z5wR9DUa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC85C4CEC1;
+	Wed, 28 Aug 2024 15:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724857653;
-	bh=jILtHjxwjjgjZztGE+ONkoeHJvK1Bqz1u5O/Mgt87zo=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=mJKCP7HJpC7Xt9GPKaQpMw1iu94/AbDzSgkCeySm3xlDqzNaTfvLLLb6grL1S2oV9
-	 at7ECEuYsOUBkRRcoAlUuFIquJZKzJ2CRdU8ZXsJA/CdWqYCPqocQbbVpe8HidYqwd
-	 9X9HvMLQoBjWSoXhGwvyBGNRqpWBZ9lofMNbC6LWSKTTyNQhZ9qCLCwaz9FxN+tCWy
-	 IbFnZDgP5qtUOpVNRhNisC2clbNrm7z0FVuohwxm1FuekIzujrkK3gH4Q+lHvKcy/k
-	 UTt5rn2ekStKnWpPdD77cLE1Ylx4xCcKR5RVe6HCD5SgFVlCKRDSER7oWPC/FdAncn
-	 1LIpeQQ1uhkpw==
-From: Konrad Dybcio <konradybcio@kernel.org>
-Date: Wed, 28 Aug 2024 17:06:59 +0200
-Subject: [PATCH v2 6/6] drm/msm/a6xx: Add A621 support
+	s=k20201202; t=1724857927;
+	bh=9GuXAxjPKxPmRMioM0desVcabOX2V79hzACInoh3ahU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Z5wR9DUaujBFT4XeskFDnq/unR1mK7T6eJVLJ6YdAP+4nJKvH1Bn+zE/tDmRvwe07
+	 q/ANLYGHJerruJiRG5M1e2eew8M4KozXaXfYkpzvJB9ffU04lJC7uDBHeA7OhT5ybC
+	 /dwjw3Ixv+2eEcBdWnkCfyxbmgyH6b5BixfZHYVkOEDpn3+drA5zECDmYH3rcGhoAw
+	 a7xOWsHEdyshtT5wRUFmtLz2zx2NqjL3wV7S11mJQbOG3xkIqm45rnAVDuUkpDBTxH
+	 +BteBBRDPODTWwLRe+4wEk7ibapa3HeaM69wia0TMC7HzTu30IDQtkcZ8zKeXk0utP
+	 nQ28Nxcj3TxiA==
+Date: Wed, 28 Aug 2024 10:12:05 -0500
+From: Rob Herring <robh@kernel.org>
+To: Jie Gan <quic_jiegan@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Jinlong Mao <quic_jinlmao@quicinc.com>, coresight@lists.linaro.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Tingwei Zhang <quic_tingweiz@quicinc.com>,
+	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+	Tao Zhang <quic_taozha@quicinc.com>,
+	Song Chai <quic_songchai@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com
+Subject: Re: [PATCH v4 3/5] dt-bindings: arm: Add Coresight TMC Control Unit
+ hardware
+Message-ID: <20240828151205.GA3830921-robh@kernel.org>
+References: <20240828012706.543605-1-quic_jiegan@quicinc.com>
+ <20240828012706.543605-4-quic_jiegan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240828-topic-a621-v2-6-1882c6b57432@kernel.org>
-References: <20240828-topic-a621-v2-0-1882c6b57432@kernel.org>
-In-Reply-To: <20240828-topic-a621-v2-0-1882c6b57432@kernel.org>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724857626; l=7367;
- i=konradybcio@kernel.org; s=20230215; h=from:subject:message-id;
- bh=RlDVPf4sSmjRNEQBMyj74j3T0Pz3TGytFQVkPF4yXA4=;
- b=4roaOxw8rygadrRbHoROYIC+eX5VJaNHf1BIzIoCP5mTnmb6/0LNZWwbkwkWElancN/KamruP
- O1872/4yPgKCCfOujsUwoQJBl2u4T/RQPSd2DMZxxq8eD1WWsP2RPJv
-X-Developer-Key: i=konradybcio@kernel.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240828012706.543605-4-quic_jiegan@quicinc.com>
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+On Wed, Aug 28, 2024 at 09:27:04AM +0800, Jie Gan wrote:
+> Add binding file to specify how to define a Coresight TMC
+> Control Unit device in device tree.
+> 
+> It is responsible for controlling the data filter function
+> based on the source device's Trace ID for TMC ETR device.
+> The trace data with that Trace id can get into ETR's buffer
+> while other trace data gets ignored.
+> 
+> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> ---
+>  .../bindings/arm/qcom,coresight-ctcu.yaml     | 84 +++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> new file mode 100644
+> index 000000000000..669aac646451
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> @@ -0,0 +1,84 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-ctcu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: CoreSight TMC Control Unit
+> +
+> +maintainers:
+> +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
+> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> +  - Jie Gan <quic_jiegan@quicinc.com>
+> +
+> +description:
 
-A621 is a clear A662 derivative (same lineage as A650), no explosions
-or sick features, other than a NoC bug which can stall the GPU..
+You need '>' or '|' if you want to preserve paragraphs.
 
-Add support for it.
+> +  The Trace Memory Controller(TMC) is used for Embedded Trace Buffer(ETB),
+> +  Embedded Trace FIFO(ETF) and Embedded Trace Router(ETR) configurations.
+> +  The configuration mode (ETB, ETF, ETR) is discovered at boot time when
+> +  the device is probed.
+> +
+> +  The Coresight TMC Control unit controls various Coresight behaviors.
+> +  It works as a helper device when connected to TMC ETR device.
+> +  It is responsible for controlling the data filter function based on
+> +  the source device's Trace ID for TMC ETR device. The trace data with
+> +  that Trace id can get into ETR's buffer while other trace data gets
+> +  ignored.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sa8775p-ctcu
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: apb
+> +
+> +  in-ports:
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 78 ++++++++++++++++++++++++++++++-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c     | 18 +++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c     |  6 +++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  5 ++
- 4 files changed, 106 insertions(+), 1 deletion(-)
+Just "ports". "in-ports" is for the case when you have "out-ports".
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index deee0b686962..d9d4a3e821f7 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -129,6 +129,59 @@ static const struct adreno_reglist a615_hwcg[] = {
- 	{},
- };
- 
-+static const struct adreno_reglist a620_hwcg[] = {
-+	{REG_A6XX_RBBM_CLOCK_CNTL_SP0, 0x02222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_SP0, 0x02222220},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_SP0, 0x00000080},
-+	{REG_A6XX_RBBM_CLOCK_HYST_SP0, 0x0000f3cf},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_TP0, 0x02222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_TP0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL3_TP0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL4_TP0, 0x00022222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_TP0, 0x11111111},
-+	{REG_A6XX_RBBM_CLOCK_DELAY2_TP0, 0x11111111},
-+	{REG_A6XX_RBBM_CLOCK_DELAY3_TP0, 0x11111111},
-+	{REG_A6XX_RBBM_CLOCK_DELAY4_TP0, 0x00011111},
-+	{REG_A6XX_RBBM_CLOCK_HYST_TP0, 0x77777777},
-+	{REG_A6XX_RBBM_CLOCK_HYST2_TP0, 0x77777777},
-+	{REG_A6XX_RBBM_CLOCK_HYST3_TP0, 0x77777777},
-+	{REG_A6XX_RBBM_CLOCK_HYST4_TP0, 0x00077777},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_RB0, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_RB0, 0x01002222},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_CCU0, 0x00002220},
-+	{REG_A6XX_RBBM_CLOCK_HYST_RB_CCU0, 0x00040f00},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_RAC, 0x25222022},
-+	{REG_A6XX_RBBM_CLOCK_CNTL2_RAC, 0x00005555},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_RAC, 0x00000011},
-+	{REG_A6XX_RBBM_CLOCK_HYST_RAC, 0x00445044},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_TSE_RAS_RBBM, 0x04222222},
-+	{REG_A6XX_RBBM_CLOCK_MODE_VFD, 0x00002222},
-+	{REG_A6XX_RBBM_CLOCK_MODE_GPC, 0x00222222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_HLSQ_2, 0x00000002},
-+	{REG_A6XX_RBBM_CLOCK_MODE_HLSQ, 0x00002222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_TSE_RAS_RBBM, 0x00004000},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_VFD, 0x00002222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_GPC, 0x00000200},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_HLSQ, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_HYST_TSE_RAS_RBBM, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_HYST_VFD, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_HYST_GPC, 0x04104004},
-+	{REG_A6XX_RBBM_CLOCK_HYST_HLSQ, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_TEX_FCHE, 0x00000222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_TEX_FCHE, 0x00000111},
-+	{REG_A6XX_RBBM_CLOCK_HYST_TEX_FCHE, 0x00000777},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_UCHE, 0x22222222},
-+	{REG_A6XX_RBBM_CLOCK_HYST_UCHE, 0x00000004},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_UCHE, 0x00000002},
-+	{REG_A6XX_RBBM_ISDB_CNT, 0x00000182},
-+	{REG_A6XX_RBBM_RAC_THRESHOLD_CNT, 0x00000000},
-+	{REG_A6XX_RBBM_SP_HYST_CNT, 0x00000000},
-+	{REG_A6XX_RBBM_CLOCK_CNTL_GMU_GX, 0x00000222},
-+	{REG_A6XX_RBBM_CLOCK_DELAY_GMU_GX, 0x00000111},
-+	{REG_A6XX_RBBM_CLOCK_HYST_GMU_GX, 0x00000555},
-+	{},
-+};
-+
- static const struct adreno_reglist a630_hwcg[] = {
- 	{REG_A6XX_RBBM_CLOCK_CNTL_SP0, 0x22222222},
- 	{REG_A6XX_RBBM_CLOCK_CNTL_SP1, 0x22222222},
-@@ -490,7 +543,6 @@ static const u32 a630_protect_regs[] = {
- };
- DECLARE_ADRENO_PROTECT(a630_protect, 32);
- 
--/* These are for a620 and a650 */
- static const u32 a650_protect_regs[] = {
- 	A6XX_PROTECT_RDONLY(0x00000, 0x04ff),
- 	A6XX_PROTECT_RDONLY(0x00501, 0x0005),
-@@ -774,6 +826,30 @@ static const struct adreno_info a6xx_gpus[] = {
- 			{ 169, 2 },
- 			{ 180, 1 },
- 		),
-+	}, {
-+		.chip_ids = ADRENO_CHIP_IDS(0x06020100),
-+		.family = ADRENO_6XX_GEN3,
-+		.fw = {
-+			[ADRENO_FW_SQE] = "a650_sqe.fw",
-+			[ADRENO_FW_GMU] = "a621_gmu.bin",
-+		},
-+		.gmem = SZ_512K,
-+		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
-+		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
-+			  ADRENO_QUIRK_HAS_HW_APRIV,
-+		.init = a6xx_gpu_init,
-+		.zapfw = "a620_zap.mbn",
-+		.a6xx = &(const struct a6xx_info) {
-+			.hwcg = a620_hwcg,
-+			.protect = &a650_protect,
-+			.gmu_cgc_mode = 0x00020200,
-+			.prim_fifo_threshold = 0x00010000,
-+		},
-+		.address_space_size = SZ_16G,
-+		.speedbins = ADRENO_SPEEDBINS(
-+			{ 0, 0 },
-+			{ 137, 1 },
-+		),
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(
- 			0x06030001,
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 6f168f1f32d8..37927bdd6fbe 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -423,6 +423,20 @@ static int a6xx_gmu_gfx_rail_on(struct a6xx_gmu *gmu)
- 	return a6xx_gmu_set_oob(gmu, GMU_OOB_BOOT_SLUMBER);
- }
- 
-+static void a6xx_gemnoc_workaround(struct a6xx_gmu *gmu)
-+{
-+	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-+	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-+
-+	/*
-+	 * GEMNoC can power collapse whilst the GPU is being powered down, resulting
-+	 * in the power down sequence not being fully executed. That in turn can
-+	 * prevent CX_GDSC from collapsing. Assert Qactive to avoid this.
-+	 */
-+	if (adreno_is_a621(adreno_gpu) || adreno_is_7c3(adreno_gpu))
-+		gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, BIT(0));
-+}
-+
- /* Let the GMU know that we are about to go into slumber */
- static int a6xx_gmu_notify_slumber(struct a6xx_gmu *gmu)
- {
-@@ -456,6 +470,8 @@ static int a6xx_gmu_notify_slumber(struct a6xx_gmu *gmu)
- 	}
- 
- out:
-+	a6xx_gemnoc_workaround(gmu);
-+
- 	/* Put fence into allow mode */
- 	gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
- 	return ret;
-@@ -945,6 +961,8 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 	/* Force off SPTP in case the GMU is managing it */
- 	a6xx_sptprac_disable(gmu);
- 
-+	a6xx_gemnoc_workaround(gmu);
-+
- 	/* Make sure there are no outstanding RPMh votes */
- 	a6xx_gmu_rpmh_off(gmu);
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 33a319f7d200..f2eca69613af 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -523,6 +523,12 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 	if (adreno_is_a619_holi(gpu))
- 		gpu->ubwc_config.highest_bank_bit = 13;
- 
-+	if (adreno_is_a621(gpu)) {
-+		gpu->ubwc_config.highest_bank_bit = 13;
-+		gpu->ubwc_config.amsbc = 1;
-+		gpu->ubwc_config.uavflagprd_inv = 2;
-+	}
-+
- 	if (adreno_is_a640_family(gpu))
- 		gpu->ubwc_config.amsbc = 1;
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 26972b2cc896..ea2c25e007eb 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -384,6 +384,11 @@ static inline int adreno_is_a619_holi(const struct adreno_gpu *gpu)
- 	return adreno_is_a619(gpu) && adreno_has_gmu_wrapper(gpu);
- }
- 
-+static inline int adreno_is_a621(const struct adreno_gpu *gpu)
-+{
-+	return gpu->info->chip_ids[0] == 0x06020100;
-+}
-+
- static inline int adreno_is_a630(const struct adreno_gpu *gpu)
- {
- 	return adreno_is_revn(gpu, 630);
-
--- 
-2.46.0
-
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    patternProperties:
+> +      '^port(@[0-1])?$':
+> +        description: Input connections from CoreSight Trace bus
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - in-ports
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    ctcu@1001000 {
+> +        compatible = "qcom,sa8775p-ctcu";
+> +        reg = <0x1001000 0x1000>;
+> +
+> +        clocks = <&aoss_qmp>;
+> +        clock-names = "apb";
+> +
+> +        in-ports {
+> +            #address-cells = <1>;
+> +            #size-cells = <0>;
+> +
+> +            port@0 {
+> +                reg = <0>;
+> +                ctcu_in_port0: endpoint {
+> +                    remote-endpoint = <&etr0_out_port>;
+> +                };
+> +            };
+> +
+> +            port@1 {
+> +                reg = <1>;
+> +                ctcu_in_port1: endpoint {
+> +                    remote-endpoint = <&etr1_out_port>;
+> +                };
+> +            };
+> +        };
+> +    };
+> -- 
+> 2.34.1
+> 
 
