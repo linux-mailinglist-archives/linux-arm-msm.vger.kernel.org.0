@@ -1,164 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-29866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BD129632EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 22:52:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A909C963318
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 22:56:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D4EF1F251F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 20:52:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A2021F235B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 20:56:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7E651ACDE1;
-	Wed, 28 Aug 2024 20:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C7BE1AD416;
+	Wed, 28 Aug 2024 20:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Qg+Kfh29"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YWnETyzH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B101AC43E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 20:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B73481AD419;
+	Wed, 28 Aug 2024 20:54:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724878176; cv=none; b=HwBT4ITBEWSsAzqqRAtMeB+QoJmyIZvEdCEAB+6UAbT21XJWnhL/1sp5++b/R4ZHLDDFCsAeF/4pG3gO7vnX92sGLy9nZFs3T3RUS+qiD5bhTtiGIfHnuO2co61hYVcf7TleApBLAJ9U848cBEiTcT7+9/NWLx7u1UhPUdHWaaI=
+	t=1724878461; cv=none; b=i4F3KZF+fyEYnKyX+NZJFaxzCY+SjAJYPDMw9iFrgc5VK6glVks44LiYBR90ofGyHHAVwye+4LPRd7Gxq2WrQ3hRW6baPmFsOq6TYJ5XklJJUTKghwbjFgc6j0aKWEYR5EaSVnSm63J9B42Lwy+ojrp8jeFeFv/x1Q1J078IMQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724878176; c=relaxed/simple;
-	bh=SI+regcL35D2pgjCxxik/DYpB87OSLp3n3YVroEysHE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cyi1XCwKYGNwBgkABZQxPnyUNgMnZ+QjZSJEdX51BCcT0NgAl5vTGLx5lMV+qrcvyIwQpR0g0bSH/E4qmfrLBAz6JS2c+cqUEkPXUcQumQgu4rcHmdTUQwcp4VNumgmJ75+RzLEVSnFwuKs5yEh3eFwFsx9mp0Tk6LJSKw8JRIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Qg+Kfh29; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso3409352e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 13:49:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724878172; x=1725482972; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=b7iL+wVZPXpJO8ClTV1l/2A644kBdScvCJ/IGN2rpT8=;
-        b=Qg+Kfh29ecFEHpDywXmVQQEHgKVokkO9rkJkIRAyDQiSrHVfnsVbZw8NyiCqKO3JHn
-         M2gAzAH7GdvCvxZoC5Lkw++52KQkP1pWpWsWXMJmk429g6RRydQ6Z2cCJrn0O6eik9A8
-         WPGAA8U+uK9EcIJLSI03H6sSjquGyrfl5eV37x6oSDoAkdhbPXfyzM+91SJoo2KLf1pQ
-         7pj/Azt60V3BLCkLw7Zo+c8nAmgrWle6fB4Wj3Q/KTLVagyU1NXkqanHuhCRk55MCkXo
-         zHmE6h7Xo1btpudXhqVQJzP6yoWaGV0ExceZjR4f0HjUS+vFZhEgnSPkoRrUf04nKqAa
-         wu3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724878172; x=1725482972;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b7iL+wVZPXpJO8ClTV1l/2A644kBdScvCJ/IGN2rpT8=;
-        b=loJM93gRbkH3xwSVhXzn0IrcfePkiJSerG3OjLKD02JP/O2UznBq8S5F2Ws4pa9CJV
-         5MC400fgOC2/4NVhwwp3zbqsJP0+QjX7h31ISL1JKS7qjP5M2DgiLeu2bNvZJpg4pWe6
-         j557TMYIM31Z2+nDEfauzsQaDgGutQ7yaByhcGU7ARqIv/M4Xumhd79UjcR9681croYa
-         XKhokzfD1ZkEp+NCdWH2oxqEzrfodpYJGvpsHSRi6AdaA2ki2hwopRT7HLCW5vnUrhlb
-         niZCB8dYJUEZhX0H84m89EsfQ+PcrUXdXOFuDOCOIyQtPyDdgZHuCBfxu0nW84iPeIAa
-         wLGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVIUwLKr9su0woD06f2SpvsDMGKtJbMChGFK3+ncz5k5l5RxZ+yl59TeD9Fhoi+5psd7Dn+NDmLBvVz+Bal@vger.kernel.org
-X-Gm-Message-State: AOJu0YzbIQBzIpX440Rz6ESMeCkhx5MOj4J8/us28nfYNh15iQOOW3ey
-	v3MuizSkbinuDDi99TPHdQa5HT3ApDiVxS6ptDZRxw/Il6ickKTG7+3JFg/4Uks=
-X-Google-Smtp-Source: AGHT+IGFlooROX7KAAWEZ3u9MgehYtM/1Q4NV0a/4GC6vjfI00yn1fIiQPQwXUf0jAQZYDlL800GWg==
-X-Received: by 2002:a05:6512:ac9:b0:533:4591:fbf1 with SMTP id 2adb3069b0e04-5353e567669mr289888e87.15.1724878171237;
-        Wed, 28 Aug 2024 13:49:31 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5334ea36413sm2299368e87.79.2024.08.28.13.49.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Aug 2024 13:49:30 -0700 (PDT)
-Date: Wed, 28 Aug 2024 23:49:29 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Marc Gonzalez <mgonzalez@freebox.fr>
-Cc: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, Caleb Connolly <caleb.connolly@linaro.org>
-Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: hide last LPASS SMMU context
- bank from linux
-Message-ID: <jxxstowusullmfvtee7xvabc7s3ifele5xlc6muem65dnvzxih@e2nm7ln5n2qv>
-References: <20240819-smmu-v1-0-bce6e4738825@freebox.fr>
- <20240819-smmu-v1-1-bce6e4738825@freebox.fr>
+	s=arc-20240116; t=1724878461; c=relaxed/simple;
+	bh=Y5JOTKPLBYkgbs9ET0rkL3T8lT+8nyzAoNLFrcTCTrk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=l6X0wEkljEhqKPK+e8v7cZ0Ql17gRYOVXOZKjzEA0Tdhx1GZ9yNruMb30IP93B9Euszqyet+SvHOq4F/juVVAwwCIYTjH1Dq1eAxldomqGbPAXMCRU7STeKqYYhBLDznA1MAI+S8I4chHmdJzwcKz8Uw1jTzrxkPgmmHAhl3b1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YWnETyzH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SJMH9T019451;
+	Wed, 28 Aug 2024 20:54:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+P5WYitcoq3XvPB7O8epxydnV7BcDeTbxoMdSCYchEs=; b=YWnETyzHMaRXYNk6
+	viormWOWROXgJ/jJ27nResZdCS0WZTCIM+lPRxOcMmHv7qBsxGPK+xyglBVtsXO8
+	Zf9uGPOfDO5bLT1PDY2YQIQv0Why1eriiPDEVQWSqa5fzYwG2taHOZnzAF69xmBw
+	NMIVirGBPy8cwkKT3FatwgUhuZ68KMRhT8IunZgQ2LjVduE4GOZZXc/rXfIaoq/J
+	QM5m5/AjX3Q9mt3NdWwCbaCMrfxsKuPj9f7NKU/hOQAk8DoOQXW3QtE9sZmUqj0e
+	YD6Fpiohp6pDHmuvq2VpcDskVYO1tQp4p6JCGkrJVON6Q5xQYGMZBy0hy9/irmhF
+	/+YeBA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419putk3kh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 20:54:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SKs3S7007863
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 28 Aug 2024 20:54:03 GMT
+Received: from [10.71.111.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
+ 2024 13:54:02 -0700
+Message-ID: <96c8d16c-071b-4462-bd10-2791404fdb1a@quicinc.com>
+Date: Wed, 28 Aug 2024 13:54:02 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240819-smmu-v1-1-bce6e4738825@freebox.fr>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 10/12] drm/msm/dpu: add support for virtual planes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+References: <20240627-dpu-virtual-wide-v5-0-5efb90cbb8be@linaro.org>
+ <20240627-dpu-virtual-wide-v5-10-5efb90cbb8be@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240627-dpu-virtual-wide-v5-10-5efb90cbb8be@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4_FjgocgzoPiH6KLXDXbzNyJm91b13O_
+X-Proofpoint-ORIG-GUID: 4_FjgocgzoPiH6KLXDXbzNyJm91b13O_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-28_08,2024-08-28_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408280151
 
-On Mon, Aug 19, 2024 at 02:59:35PM GMT, Marc Gonzalez wrote:
-> On qcom msm8998, writing to the last context bank of lpass_q6_smmu
-> (base address 0x05100000) produces a system freeze & reboot.
+
+
+On 6/26/2024 2:46 PM, Dmitry Baryshkov wrote:
+> Only several SSPP blocks support such features as YUV output or scaling,
+> thus different DRM planes have different features.  Properly utilizing
+> all planes requires the attention of the compositor, who should
+> prefer simpler planes to YUV-supporting ones. Otherwise it is very easy
+> to end up in a situation when all featureful planes are already
+> allocated for simple windows, leaving no spare plane for YUV playback.
 > 
-> The hardware/hypervisor reports 13 context banks for the LPASS SMMU
-> on msm8998, but only the first 12 are accessible...
-> Override the number of context banks
+> To solve this problem make all planes virtual. Each plane is registered
+> as if it supports all possible features, but then at the runtime during
+> the atomic_check phase the driver selects backing SSPP block for each
+> plane.
 > 
-> [    2.546101] arm-smmu 5100000.iommu: probing hardware configuration...
-> [    2.552439] arm-smmu 5100000.iommu: SMMUv2 with:
-> [    2.558945] arm-smmu 5100000.iommu: 	stage 1 translation
-> [    2.563627] arm-smmu 5100000.iommu: 	address translation ops
-> [    2.568923] arm-smmu 5100000.iommu: 	non-coherent table walk
-> [    2.574566] arm-smmu 5100000.iommu: 	(IDR0.CTTW overridden by FW configuration)
-> [    2.580220] arm-smmu 5100000.iommu: 	stream matching with 12 register groups
-> [    2.587263] arm-smmu 5100000.iommu: 	13 context banks (0 stage-2 only)
-> [    2.614447] arm-smmu 5100000.iommu: 	Supported page sizes: 0x63315000
-> [    2.621358] arm-smmu 5100000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
-> [    2.627772] arm-smmu 5100000.iommu: 	preserved 0 boot mappings
+> As the planes are attached to the CRTC and not the the encoder, the
+> SSPP blocks are also allocated per CRTC ID (all other resources are
+> currently allocated per encoder ID). This also matches the hardware
+> requirement, where both rectangles of a single SSPP can only be used
+> with the LM pair.
 > 
-> Specifically, the crashes occur here:
+> Note, this does not provide support for using two different SSPP blocks
+> for a single plane or using two rectangles of an SSPP to drive two
+> planes. Each plane still gets its own SSPP and can utilize either a solo
+> rectangle or both multirect rectangles depending on the resolution.
 > 
-> 	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
-> 	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
+> Note #2: By default support for virtual planes is turned off and the
+> driver still uses old code path with preallocated SSPP block for each
+> plane. To enable virtual planes, pass 'msm.dpu_use_virtual_planes=1'
+> kernel parameter.
 > 
-> and here:
-> 
-> 	arm_smmu_write_context_bank(smmu, i);
-> 	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
-> 
-> It is likely that FW reserves the last context bank for its own use,
-> thus a simple work-around is: DON'T USE IT in Linux.
-> 
-> If we decrease the number of context banks, last one will be "hidden".
-> 
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 5 +++++
->  1 file changed, 5 insertions(+)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  50 +++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   |  10 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   |   4 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 236 ++++++++++++++++++++++++++----
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  16 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    |  77 ++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    |  27 ++++
+>   7 files changed, 391 insertions(+), 29 deletions(-)
 > 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 7e65189ca7b8c..d08c18edf5732 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -282,6 +282,11 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
->  	u32 smr;
->  	int i;
->  
-> +	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-lpass-smmu")) {
-> +		dev_warn(smmu->dev, "hide last ctx bank from linux");
 
-dev_info() or dev_dbg(). dev_warn should be reserved to the case when
-you need to warn the user that something went wrong. In this case it is
-expected that the last bank is unusable.
+<snip>
 
-> +		--smmu->num_context_banks;
-> +	}
+> +struct dpu_hw_sspp *dpu_rm_reserve_sspp(struct dpu_rm *rm,
+> +					struct dpu_global_state *global_state,
+> +					struct drm_crtc *crtc,
+> +					struct dpu_rm_sspp_requirements *reqs)
+> +{
+> +	uint32_t crtc_id = crtc->base.id;
+> +	unsigned int weight, best_weight = UINT_MAX;
+> +	struct dpu_hw_sspp *hw_sspp;
+> +	unsigned long mask = 0;
+> +	int i, best_idx = -1;
 > +
->  	/*
->  	 * Some platforms support more than the Arm SMMU architected maximum of
->  	 * 128 stream matching groups. For unknown reasons, the additional
-> 
-> -- 
-> 2.34.1
-> 
+> +	/*
+> +	 * Don't take cursor feature into consideration until there is proper support for SSPP_CURSORn.
+> +	 */
+> +	mask |= BIT(DPU_SSPP_CURSOR);
+> +
+> +	if (reqs->scale)
+> +		mask |= BIT(DPU_SSPP_SCALER_RGB) |
+> +			BIT(DPU_SSPP_SCALER_QSEED2) |
+> +			BIT(DPU_SSPP_SCALER_QSEED3_COMPATIBLE);
+> +
+> +	if (reqs->yuv)
+> +		mask |= BIT(DPU_SSPP_CSC) |
+> +			BIT(DPU_SSPP_CSC_10BIT);
+> +
+> +	if (reqs->rot90)
+> +		mask |= BIT(DPU_SSPP_INLINE_ROTATION);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(rm->hw_sspp); i++) {
+> +		if (!rm->hw_sspp[i])
+> +			continue;
+> +
+> +		if (global_state->sspp_to_crtc_id[i])
+> +			continue;
+> +
+> +		hw_sspp = rm->hw_sspp[i];
+> +
+> +		/* skip incompatible planes */
+> +		if (reqs->scale && !hw_sspp->cap->sblk->scaler_blk.len)
+> +			continue;
+> +
+> +		if (reqs->yuv && !hw_sspp->cap->sblk->csc_blk.len)
+> +			continue;
+> +
+> +		if (reqs->rot90 && !(hw_sspp->cap->features & DPU_SSPP_INLINE_ROTATION))
+> +			continue;
+> +
+> +		/*
+> +		 * For non-yuv, non-scaled planes prefer simple (DMA or RGB)
+> +		 * plane, falling back to VIG only if there are no such planes.
+> +		 *
+> +		 * This way we'd leave VIG sspps to be later used for YUV formats.
+> +		 */
+> +		weight = hweight64(hw_sspp->cap->features & ~mask);
+> +		if (weight < best_weight) {
+> +			best_weight = weight;
+> +			best_idx = i;
+> +		}
+> +	}
 
--- 
-With best wishes
-Dmitry
+As commented in the earlier version, we need to stop using hweight as a 
+means of identifying the SSPP type and just use type and feature bits 
+instead.
 
