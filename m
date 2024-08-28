@@ -1,344 +1,249 @@
-Return-Path: <linux-arm-msm+bounces-29816-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 107FA962FEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 20:28:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42015962FFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 20:30:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC4AC2829C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 18:28:05 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A9A69B22E07
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Aug 2024 18:30:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49E6C13775E;
-	Wed, 28 Aug 2024 18:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 116AB189520;
+	Wed, 28 Aug 2024 18:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HA7xUb5o"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="JrupxumO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11012016.outbound.protection.outlook.com [52.101.66.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A058154C19;
-	Wed, 28 Aug 2024 18:28:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724869684; cv=none; b=PFgHwtrzCoA9QENvWTudLhFMiG9D+o5I/H3X/YWMeU6uFFw4YR4DC8I+FPCarRibmppFKYBVf8zr21S0O+FP9tNy4YE9C/XseXCao6Z2+ymGqcuVvwgxK+XIA2rMlaZvF20JrcPZfhISPrv3ylOvWuaGLabpgRTtzX7M9qvgDTY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724869684; c=relaxed/simple;
-	bh=aCAeJRxX3OOMMGQLteBZ6z4OrD0eBvsrA/f5/ym6en8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=OZ7N6iGMzAywOK1jza7yULS4pqLu55lxw1mQjO8QFaOae8jAsMHnw5kBu3MAuatnRyP6UgqjTTH0OmMswa4zBL7MqN1Yie6RNxZjCunreonI5NODnvMvpLgDnAYkIYONzikYv+YJhCqc2YnUc71Nw8zThCRnRIpqhxL77Kb+CHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HA7xUb5o; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SBkOdH001796;
-	Wed, 28 Aug 2024 18:27:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	t6OiZigp34+5PZDO1ghwcrR5DceV0lzroVaQE5qnpj4=; b=HA7xUb5o4fjSk4d6
-	BNSuXPDf+1VfCnmncb300H5+EH3aRHRJxk70fMMZuT6fVQXngOTTsAvqD3dtbslY
-	4Z6oYhf3N3zJeyWjvUZlUmTON1ZEwl9niWKH6sisCiLRS1m5cpUhDYPOEgOS1sU7
-	Q8C0/6NlQ0J0Nz439kP/z7z2djR7TjsZMsh8zJsKa3Km6v7oQQgoNFbFcnhnk1+R
-	3E1dfN3d7uczPVEIfN4+hCLd2wuhjpSfZcCrc/RTOLKh35q9aTSlRNoydgj2Pk4f
-	4uOlzxdQK+lDkU+1F+2+4v7HVWwc7FY0U2A/b8+WMFoRP3m09fOSxm9R46IpYVmf
-	FwoMbg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419puw2rfx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 18:27:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47SIRrwE005623
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 28 Aug 2024 18:27:53 GMT
-Received: from [10.71.111.76] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 28 Aug
- 2024 11:27:53 -0700
-Message-ID: <1facdd7c-b15d-4d91-b96a-5b3b72dbad66@quicinc.com>
-Date: Wed, 28 Aug 2024 11:27:52 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A786156997;
+	Wed, 28 Aug 2024 18:30:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.66.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1724869826; cv=fail; b=LFYTayN8R1+vMRRfR+Fl9Ua+59b75+84lTH/F/30CS6CtwO64Fw22fu0Xj28vUWni+G1ihXw+eGGaxwm7bMQGmnF/vs0iMC92FHNI5pUvvNrN6pBw0zgKHeQdd4mt7/N3GRgiZA4aJ57Eufzbmiz+R2YrQy67gK5ipR9VHUXFG8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1724869826; c=relaxed/simple;
+	bh=kgAMQnfGhIrARmWopNs1yCTF6YuLJbusgfz8W8qORNk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=eU78dGbdiGr0VDpMkggoRet77Mp4GqOFH7MQmZy/LopW+MqlK2wN8ApDnbi0ACZTvHdKTdSbuaho8zO8WgwNnP1E9jk2JEBrT3v6olKqpp0+wMtI9Y09vYr9RMlNiRBOe+aZLWL+BVLuzTduci1BXg0njQiiWFEvwqrYpO+AekA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=JrupxumO; arc=fail smtp.client-ip=52.101.66.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=LEiRMZV3KEW8/Nmmvh1T1qtf3gmDT+aXaZtLfIOkRscT1vHa9Sti+s/wd7moCEQ/B6w+H2VSx90NTle1ksvu6gWWsY54ww5gFevfEUsvW2QznZlcGSMZ7Glb3TrOiEkt/F+a88iccHxtLXLQAsDVFYk1k52fUmzy64VaRct9EiPFzEb9gnehz8DMGl2RCnO3+HGGCmPXYKYqVLla3fxNyXPa2Ye/3mXdvSNbo92KT8AnFSdt1/wiqxdS/pqidsFXgZvtHPL73GHTpD2wDBtd7VsGhsgfK4EAU3CshpbwhX9a2y8aY0tjP9u2C0wsg1R13QIF2rANz9C2KywliGEBWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DtTX7ZeUWon3ysxxLnLMj9HAA+ZQa1VvMs1V3MlR+4A=;
+ b=FJppQbGux5Zp0t87RtMTpGKodk7HEuJ1XxH7hxPlLD5JVtY1uyAF2GU3WA5BVkhvj8wwboZzcTl4CY2IbqKFIy8d3YN1CMkTWWiX7Zvd6WCDDUPrpJBSTICHd0fNm1VBEEO1jVzC47xutl4lEAZDWTW1PP6np6/dGI/LUPGmNN/ZHFnugMwBm7IgEFzwO0yjWrdbbdk1DH7zH8j1P7q1tUHmHvqbIjYeEWTliX+u6n1Y0H9beTXaRr80/9CxmiQpQtiH8H94E/UGy5kWNi6prRn8TOEE1HWxZWev/HA9N8t5XhVj1TCuGaOX4FyGweOE+SUgkT/vSuve41owF5vCBA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DtTX7ZeUWon3ysxxLnLMj9HAA+ZQa1VvMs1V3MlR+4A=;
+ b=JrupxumOjex7loUZtMYFQygakWa9tp2qLRFO3rVD4FQs29bp24QrbhnszwMZtdGvZ8bS9yLsEtniGaGrA2pHqXRSQ86++O90tdMAf8DjfrReDWMEaqyoO4w+AX6GlAagogkqz5LZOvxChqPpGIyb4cfSATYMH0JvkpMeYOtu/Kf5Ski43VlaNaDGQ1yhrqW5gN2ZtDPXlRQ6ULcPl4EgtCrFdlzSAu/FwW0WU5gw41CqpjW6qN4+yt+gpou1HAQQ0TG5A2TadXWxej6NOferVsCveINPJBVC5wYjpb5MHN6JXoFcMC+fY2U28Taozr5qe2+2fE42IL59FvYShWO3SA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from PAXPR04MB9642.eurprd04.prod.outlook.com (2603:10a6:102:240::14)
+ by AS8PR04MB7957.eurprd04.prod.outlook.com (2603:10a6:20b:2a2::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7897.25; Wed, 28 Aug
+ 2024 18:30:22 +0000
+Received: from PAXPR04MB9642.eurprd04.prod.outlook.com
+ ([fe80::9126:a61e:341d:4b06]) by PAXPR04MB9642.eurprd04.prod.outlook.com
+ ([fe80::9126:a61e:341d:4b06%4]) with mapi id 15.20.7897.027; Wed, 28 Aug 2024
+ 18:30:21 +0000
+Date: Wed, 28 Aug 2024 14:30:13 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 05/12] PCI: endpoint: Assign PCI domain number for
+ endpoint controllers
+Message-ID: <Zs9stQDfpUcpIxt9@lizhi-Precision-Tower-5810>
+References: <20240828-pci-qcom-hotplug-v4-0-263a385fbbcb@linaro.org>
+ <20240828-pci-qcom-hotplug-v4-5-263a385fbbcb@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240828-pci-qcom-hotplug-v4-5-263a385fbbcb@linaro.org>
+X-ClientProxiedBy: SJ0PR13CA0179.namprd13.prod.outlook.com
+ (2603:10b6:a03:2c7::34) To PAXPR04MB9642.eurprd04.prod.outlook.com
+ (2603:10a6:102:240::14)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 08/12] drm/msm/dpu: split dpu_plane_atomic_check()
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20240627-dpu-virtual-wide-v5-0-5efb90cbb8be@linaro.org>
- <20240627-dpu-virtual-wide-v5-8-5efb90cbb8be@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240627-dpu-virtual-wide-v5-8-5efb90cbb8be@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sLxxy_Ae_vYnYIcXMI49bTgP9t0eg_Ju
-X-Proofpoint-GUID: sLxxy_Ae_vYnYIcXMI49bTgP9t0eg_Ju
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-28_08,2024-08-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 bulkscore=0 mlxscore=0
- lowpriorityscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
- adultscore=0 spamscore=0 impostorscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2408280134
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PAXPR04MB9642:EE_|AS8PR04MB7957:EE_
+X-MS-Office365-Filtering-Correlation-Id: 40462fe7-b546-4e8d-271c-08dcc78f79c4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|52116014|7416014|1800799024|366016|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?Mu3Ci3dwTTa/x7CJuv4ELo4zDnI4X6EG40gBfbkzQzEs8bmBxsPPDfBYzOxP?=
+ =?us-ascii?Q?65oOLvmEknV26kFwwzr+7MKG8UonXtStkRHMX6+2VCYfRFlAAd5PBJg1yBXf?=
+ =?us-ascii?Q?tOEY/5iPjZB8vbwRA17CVj1zKx9UG18f1+OZ0EuvrWcTyJ0VnEzwGzNuyWOv?=
+ =?us-ascii?Q?f+dizbkTpUgedbAbTW5sLE1KtiYL3X5jsnZeQnffidAZ8UZayIzokbTLoZJi?=
+ =?us-ascii?Q?03Fzt+ydCoj+0QlMlXl1sS8GnTSTCpnbAXOUzmdU1EcazpQ9B7Lq1BmivRCG?=
+ =?us-ascii?Q?CLdqMftkH8544buM2jHWTmLqex+E1MH86ni7BwoN4xBf03jkK/XONjggFj/W?=
+ =?us-ascii?Q?WJCivbYYPOu3sdFReV4o9D2g//d+HZuKLWW9E5gvHTdlZvOrWJLc/s1iXFWi?=
+ =?us-ascii?Q?Sc2VSJVNxRSSrbvXwOlt4YIUasi+Zt619EWaDklxJAXj0ni8Qm657mddRcV4?=
+ =?us-ascii?Q?dkl8WRHqZKG2hg9gTbQb/k5xLL9lpk0WvTiFR4wKqVm6MKGxwDluN0TD/6xe?=
+ =?us-ascii?Q?KjMoQO9FnUfhtaoyoy1UWFDjYJciZtsym0xZkeiy3/ElJA40dI3V4Zcl5iNq?=
+ =?us-ascii?Q?txHsnZOe8zrDBabNa5x4zHq3EepDzdz4FrYJiKPiNxKUgxbtXIrA2GiVoWNq?=
+ =?us-ascii?Q?e5ZIzK3gGcEMJMH+lLZ1VcYToyf0DHqX3nqcOT9e3ulOyixtUda7ZKp+CSDa?=
+ =?us-ascii?Q?cBIJ7lubr68Lpdv1yXiXk90pKW1UFl6hj7JNdovJTPyTtktj43jdwXWsVkuK?=
+ =?us-ascii?Q?SRAoCaImzbBSLvmABYkK0koOS/XOJTB0Q1cwuqrhx7pvJswzBMn+lOxYcdZU?=
+ =?us-ascii?Q?5GCkVbOY+ISIMEZklTaRyAG1u32+0hiX40vapWNWwS//UL/mfmEHXXK9Z9Mh?=
+ =?us-ascii?Q?8knDar9M8n5bOMPugYIWUciWm+CEwAtz0KXMOPZsA21kurFUjFWc5dlCrjxM?=
+ =?us-ascii?Q?d6CIWy81l8FQv4xxxhW+ceghQKPcfaLzn9KpbTFNXB0AvAAIHoTSN0VruzFL?=
+ =?us-ascii?Q?/amuCU+L5dAEpnkTGpCMrata2cMBzjtOnufDy7LlOrn2VfG3nzr01z3v/npr?=
+ =?us-ascii?Q?7q3ceS+sGImDyf6LpzrFIayWAR4t62ykZb/9+Fg7CKSWXBoBQvNSpfaQaS8U?=
+ =?us-ascii?Q?WP/dCY2nUYX/s6iUoV9Bw0f3fF0JPdTT2BT80f73AyE5xw3ksmYopmL37ZQ5?=
+ =?us-ascii?Q?Elihfh0+XNMY4HkyQB5fklZVn5bvMMxOmN5aJrku1dLxdfMMtJ2LOagM+MfK?=
+ =?us-ascii?Q?8kM1/D7pedHcf168HUMFGdaC2mtluS+lUxuvN5JZ3rMwKBkBFQuAb2Qkv8J8?=
+ =?us-ascii?Q?q2gOJNUe35Rvcw/wrekxt6I/NiTxFzQ7i/IFYMJ6XRap1Guw+s8B5pYm4qse?=
+ =?us-ascii?Q?L5Rt05PMBIWc/IvlBUfzkDBmzpwCU3kwi6SSvSlGom2ycexaFQ=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PAXPR04MB9642.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(52116014)(7416014)(1800799024)(366016)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?P9+22/hNLooBLom4KRPzrhncPbkqHShNqM+Ym9zk/Jeh3SlDD1d31x9q/byG?=
+ =?us-ascii?Q?x6ImEBJlyeBgYfbscQugs3g3aj67mU15LOKQX7nqT8GOxfomuYZ73etVxdO2?=
+ =?us-ascii?Q?AOnZNvQpN2oBtwzKi5Z4M3GU81vn2v49NTZLM9IuktlVhVfZrOm4du6CL0zw?=
+ =?us-ascii?Q?ID0n/XPObHepGhYslJb/pVjCizO3R2b3EvzpzkYX2zW0WHWxrttcnEPksK7N?=
+ =?us-ascii?Q?NjigYmRly2Tz4AAwMR9ZnaH92qSoYJieWU2zSx+j5xyELgaCJqi/jg8SepdC?=
+ =?us-ascii?Q?7BrhcMqi3nGaF0PzaQCdKPTudsdX7BFq8ZBINpCPMge+JvXk9Y8hg9vFUeDS?=
+ =?us-ascii?Q?GO7DUKfSr2G5pCKp5pUGER7Kp76TcqQjf8AkkJCCrIRsVP94IvXbsAb6oAWq?=
+ =?us-ascii?Q?dVnxge0r0WuXFCqkOrhHswLxcQw+CC6VI3cWkOMb0dO60NU4zrR1N+lfVeoH?=
+ =?us-ascii?Q?tB/jxQVA1W8F711bf807GeTQe6FoL5EnZmmhHjAJFuRP+gvKy2zo0Det1LcU?=
+ =?us-ascii?Q?fDj2ZiS7CaDIJifA9kpMpK3/wb3rLpvcIp1tkqZe9wLpWCxzkb7RtKL+J6sq?=
+ =?us-ascii?Q?g8gayHXOzwpj3TdGhoG7xwjbUoUZYJj9swLaeTZsBxlgp/SXx5SGp0ytBU1D?=
+ =?us-ascii?Q?OJPBDUOMgivN8EsGAct49+NQg5IyAnDObFuaCEj60QJLMMCYoLiWR/RvCWja?=
+ =?us-ascii?Q?pEmQoma0qcY0CnQL0hEEzJLj1ILpzqmr4bx/Qq1PiiasplT1AUemS/Fpt2Er?=
+ =?us-ascii?Q?cb45GIlgyMjPTdQQ9QloWlO5zNpqbdeZCa4Uu4wIngMdPidwziOcMb8sAA7B?=
+ =?us-ascii?Q?U5fK5Cxnz1zvm+fxdbiNFzp/SJq0SW8UpiLq04YTQhabhAwRx4zvKrMYQzdD?=
+ =?us-ascii?Q?g8rpYSjx4EK/zSiwX+XMQxThGfAI9sBhLchZQYV/+R7h7AjyOnKFsOFI+uSy?=
+ =?us-ascii?Q?QontwNjqHziknNn6oxGCxjD3uW5zSKU0XcaZdaB3Zifs2hO++ENUvuRSRFBo?=
+ =?us-ascii?Q?E4/85F+4tkgN4VdtVbO6DaI7odQTYwxZuFoDCuOOxHOQJglIJYeMTTJk5Rhf?=
+ =?us-ascii?Q?0tiM5Fl+2KwDKK+72fOj2PSsX5s80cXP92M/ohnFtKY/Q+13T36Pr+XEX0YF?=
+ =?us-ascii?Q?mAaoonxY5axuUoAA4OV7J99h7CS4H20d1JYYez3LZAvIMlwBNJv9bR0nvoT+?=
+ =?us-ascii?Q?aNnINIyL6WYdB+EPA8F5bu0dQiT4rcrsIIK9jIRmStQD/UcZFlQ5Z/kBOspy?=
+ =?us-ascii?Q?aqxXreV18b4akEY67D3gWqnRANfVpQpGTP18cnfq5vzfGBn5vZafd232K4Z5?=
+ =?us-ascii?Q?3QlZvpkv1KIjtSDHvU/DIa7fMIzKwOi9dtMRu085M8vV1PNNdnQTWifkIVKk?=
+ =?us-ascii?Q?H/4ByDqMrO0JuiiqsQiyJsXHfVk/whiboQ1nyYzzmWHFJJT7+xgO+kEKlw7f?=
+ =?us-ascii?Q?SQUyMc3CzsDxTLmBsO5rDTTd2dxPduGcWQATMonA/nbDu+SfvzEl00pjspAn?=
+ =?us-ascii?Q?CeGS+XYQnRTun9baEvsnC08JTAp4jJ/3iCojOpkI3aqPLST4jMCsSKmWgqaj?=
+ =?us-ascii?Q?+9QwpDYhQCy1neko6wODRbURY15C5OTjFJlxRvxY?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 40462fe7-b546-4e8d-271c-08dcc78f79c4
+X-MS-Exchange-CrossTenant-AuthSource: PAXPR04MB9642.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2024 18:30:21.8650
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: V1K1t7SCs14y7fTHRgy7xAJypJ1a0o8Ni2yzynJGWRSPVVMD/hVwArcHPDcM0BFehaRs32s+Z5tJmHBvCrdieg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB7957
 
+On Wed, Aug 28, 2024 at 09:16:15PM +0530, Manivannan Sadhasivam wrote:
+> Right now, PCI endpoint subsystem doesn't assign PCI domain number for the
+> PCI endpoint controllers. But this domain number could be useful to the EPC
+> drivers to uniquely identify each controller based on the hardware instance
+> when there are multiple ones present in an SoC (even multiple RC/EP).
+>
+> So let's make use of the existing pci_bus_find_domain_nr() API to allocate
+> domain numbers based on either Devicetree (linux,pci-domain) property or
+> dynamic domain number allocation scheme.
+>
+> It should be noted that the domain number allocated by this API will be
+> based on both RC and EP controllers in a SoC. If the 'linux,pci-domain' DT
+> property is present, then the domain number represents the actual hardware
+> instance of the PCI endpoint controller. If not, then the domain number
+> will be allocated based on the PCI EP/RC controller probe order.
+>
+> If the architecture doesn't support CONFIG_PCI_DOMAINS_GENERIC (rare), then
+> currently a warning is thrown to indicate that the architecture specific
+> implementation is needed.
+>
 
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 
-On 6/26/2024 2:46 PM, Dmitry Baryshkov wrote:
-> Split dpu_plane_atomic_check() function into two pieces:
-> 
-> dpu_plane_atomic_check_nopipe() performing generic checks on the pstate,
-> without touching the associated pipe,
-> 
-> and
-> 
-> dpu_plane_atomic_check_pipes(), which takes into account used pipes.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 178 +++++++++++++++++++-----------
->   1 file changed, 112 insertions(+), 66 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index 115c1bd77bdd..9b9fe28052ad 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -788,49 +788,22 @@ static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
->   #define MAX_UPSCALE_RATIO	20
->   #define MAX_DOWNSCALE_RATIO	4
->   
-> -static int dpu_plane_atomic_check(struct drm_plane *plane,
-> -				  struct drm_atomic_state *state)
-> +static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
-> +					 struct drm_plane_state *new_plane_state,
-> +					 const struct drm_crtc_state *crtc_state)
->   {
-> -	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
-> -										 plane);
->   	int ret = 0, min_scale, max_scale;
->   	struct dpu_plane *pdpu = to_dpu_plane(plane);
->   	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
->   	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
->   	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
-> -	struct dpu_sw_pipe *pipe = &pstate->pipe;
-> -	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
-> -	const struct drm_crtc_state *crtc_state = NULL;
-> -	const struct msm_format *fmt;
->   	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
->   	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
->   	struct drm_rect fb_rect = { 0 };
->   	uint32_t max_linewidth;
-> -	unsigned int rotation;
-> -	uint32_t supported_rotations;
-> -	const struct dpu_sspp_cfg *pipe_hw_caps;
-> -	const struct dpu_sspp_sub_blks *sblk;
-> -
-> -	if (new_plane_state->crtc)
-> -		crtc_state = drm_atomic_get_new_crtc_state(state,
-> -							   new_plane_state->crtc);
-> -
-> -	pipe->sspp = dpu_rm_get_sspp(&kms->rm, pdpu->pipe);
-> -	r_pipe->sspp = NULL;
->   
-> -	if (!pipe->sspp)
-> -		return -EINVAL;
-> -
-> -	pipe_hw_caps = pipe->sspp->cap;
-> -	sblk = pipe->sspp->cap->sblk;
-> -
-> -	if (sblk->scaler_blk.len) {
-> -		min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
-> -		max_scale = MAX_DOWNSCALE_RATIO << 16;
-> -	} else {
-> -		min_scale = DRM_PLANE_NO_SCALING;
-> -		max_scale = DRM_PLANE_NO_SCALING;
-> -	}
-> +	min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
-> +	max_scale = MAX_DOWNSCALE_RATIO << 16;
->   
->   	ret = drm_atomic_helper_check_plane_state(new_plane_state, crtc_state,
->   						  min_scale,
-> @@ -843,11 +816,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	if (!new_plane_state->visible)
->   		return 0;
->   
-> -	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
->   	pstate->stage = DPU_STAGE_0 + pstate->base.normalized_zpos;
->   	if (pstate->stage >= pdpu->catalog->caps->max_mixer_blendstages) {
->   		DPU_ERROR("> %d plane stages assigned\n",
-> @@ -871,8 +839,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   		return -E2BIG;
->   	}
->   
-> -	fmt = msm_framebuffer_format(new_plane_state->fb);
-> -
->   	max_linewidth = pdpu->catalog->caps->max_linewidth;
->   
->   	drm_rect_rotate(&pipe_cfg->src_rect,
-> @@ -881,6 +847,78 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   
->   	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
->   	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
-> +		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
-> +			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-> +					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> +			return -E2BIG;
-> +		}
+>  drivers/pci/endpoint/pci-epc-core.c | 14 ++++++++++++++
+>  include/linux/pci-epc.h             |  2 ++
+>  2 files changed, 16 insertions(+)
+>
+> diff --git a/drivers/pci/endpoint/pci-epc-core.c b/drivers/pci/endpoint/pci-epc-core.c
+> index 84309dfe0c68..085a2de8b923 100644
+> --- a/drivers/pci/endpoint/pci-epc-core.c
+> +++ b/drivers/pci/endpoint/pci-epc-core.c
+> @@ -838,6 +838,10 @@ void pci_epc_destroy(struct pci_epc *epc)
+>  {
+>  	pci_ep_cfs_remove_epc_group(epc->group);
+>  	device_unregister(&epc->dev);
 > +
-> +		*r_pipe_cfg = *pipe_cfg;
-> +		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
-> +		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
-> +		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
-> +		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
-> +	} else {
-> +		memset(r_pipe_cfg, 0, sizeof(*r_pipe_cfg));
-> +	}
-> +
-
-This is the part I am not able to fully understand. Assignment of 
-r_pipe_cfg is also pipe related so why should that move to 
-dpu_plane_atomic_check_nopipe(). It should be part of 
-dpu_plane_atomic_check_pipe().
-
-> +	drm_rect_rotate_inv(&pipe_cfg->src_rect,
-> +			    new_plane_state->fb->width, new_plane_state->fb->height,
-> +			    new_plane_state->rotation);
-> +	if (r_pipe_cfg->src_rect.x1 != 0)
-> +		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
-> +				    new_plane_state->fb->width, new_plane_state->fb->height,
-> +				    new_plane_state->rotation);
-> +
-> +	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
-> +
-> +	return 0;
-> +}
-> +
-> +static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
-> +					struct drm_atomic_state *state,
-> +					const struct drm_crtc_state *crtc_state)
-> +{
-> +	struct drm_plane_state *new_plane_state =
-> +		drm_atomic_get_new_plane_state(state, plane);
-> +	struct dpu_plane *pdpu = to_dpu_plane(plane);
-> +	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
-> +	struct dpu_sw_pipe *pipe = &pstate->pipe;
-> +	struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
-> +	const struct msm_format *fmt;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
-> +	struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
-> +	uint32_t max_linewidth;
-> +	unsigned int rotation;
-> +	uint32_t supported_rotations;
-> +	const struct dpu_sspp_cfg *pipe_hw_caps;
-> +	const struct dpu_sspp_sub_blks *sblk;
-> +	int ret = 0;
-> +
-> +	pipe_hw_caps = pipe->sspp->cap;
-> +	sblk = pipe->sspp->cap->sblk;
-> +
+> +#ifdef CONFIG_PCI_DOMAINS_GENERIC
+> +	pci_bus_release_domain_nr(NULL, &epc->dev);
+> +#endif
+>  }
+>  EXPORT_SYMBOL_GPL(pci_epc_destroy);
+>
+> @@ -900,6 +904,16 @@ __pci_epc_create(struct device *dev, const struct pci_epc_ops *ops,
+>  	epc->dev.release = pci_epc_release;
+>  	epc->ops = ops;
+>
+> +#ifdef CONFIG_PCI_DOMAINS_GENERIC
+> +	epc->domain_nr = pci_bus_find_domain_nr(NULL, dev);
+> +#else
 > +	/*
-> +	 * We already have verified scaling against platform limitations.
-> +	 * Now check if the SSPP supports scaling at all.
+> +	 * TODO: If the architecture doesn't support generic PCI
+> +	 * domains, then a custom implementation has to be used.
 > +	 */
-> +	if (!sblk->scaler_blk.len &&
-> +	    ((drm_rect_width(&new_plane_state->src) >> 16 !=
-> +	      drm_rect_width(&new_plane_state->dst)) ||
-> +	     (drm_rect_height(&new_plane_state->src) >> 16 !=
-> +	      drm_rect_height(&new_plane_state->dst))))
-> +		return -ERANGE;
+> +	WARN_ONCE(1, "This architecture doesn't support generic PCI domains\n");
+> +#endif
 > +
-
-Should this part be retained under dpu_plane_atomic_check_nopipe()?
-
-This is also not pipe dependent.
-
-> +	fmt = msm_framebuffer_format(new_plane_state->fb);
-> +
-> +	max_linewidth = pdpu->catalog->caps->max_linewidth;
-> +
-> +	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt,
-> +					  &crtc_state->adjusted_mode);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
->   		/*
->   		 * In parallel multirect case only the half of the usual width
->   		 * is supported for tiled formats. If we are here, we know that
-> @@ -894,12 +932,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   			return -E2BIG;
->   		}
->   
-> -		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
-> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
-> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
-> -			return -E2BIG;
-> -		}
-> -
->   		if (drm_rect_width(&pipe_cfg->src_rect) != drm_rect_width(&pipe_cfg->dst_rect) ||
->   		    drm_rect_height(&pipe_cfg->src_rect) != drm_rect_height(&pipe_cfg->dst_rect) ||
->   		    (!test_bit(DPU_SSPP_SMART_DMA_V1, &pipe->sspp->cap->features) &&
-> @@ -921,26 +953,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   		r_pipe->multirect_index = DPU_SSPP_RECT_1;
->   		r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
->   
-> -		*r_pipe_cfg = *pipe_cfg;
-> -		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
-> -		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
-> -		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
-> -		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
-> -	}
-> -
-> -	drm_rect_rotate_inv(&pipe_cfg->src_rect,
-> -			    new_plane_state->fb->width, new_plane_state->fb->height,
-> -			    new_plane_state->rotation);
-> -	if (r_pipe->sspp)
-> -		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
-> -				    new_plane_state->fb->width, new_plane_state->fb->height,
-> -				    new_plane_state->rotation);
-> -
-> -	ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt, &crtc_state->adjusted_mode);
-> -	if (ret)
-> -		return ret;
-> -
-> -	if (r_pipe->sspp) {
->   		ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
->   						  &crtc_state->adjusted_mode);
->   		if (ret)
-> @@ -963,11 +975,45 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
->   	}
->   
->   	pstate->rotation = rotation;
-
-The dpu_plane_check_inline_rotation() is also pipe independent. So even 
-that goes to dpu_plane_atomic_check_nopipe()?
-
-> -	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
->   
->   	return 0;
->   }
->   
-
-<snip>
-
+>  	ret = dev_set_name(&epc->dev, "%s", dev_name(dev));
+>  	if (ret)
+>  		goto put_dev;
+> diff --git a/include/linux/pci-epc.h b/include/linux/pci-epc.h
+> index 85bdf2adb760..8e3dcac55dcd 100644
+> --- a/include/linux/pci-epc.h
+> +++ b/include/linux/pci-epc.h
+> @@ -128,6 +128,7 @@ struct pci_epc_mem {
+>   * @group: configfs group representing the PCI EPC device
+>   * @lock: mutex to protect pci_epc ops
+>   * @function_num_map: bitmap to manage physical function number
+> + * @domain_nr: PCI domain number of the endpoint controller
+>   * @init_complete: flag to indicate whether the EPC initialization is complete
+>   *                 or not
+>   */
+> @@ -145,6 +146,7 @@ struct pci_epc {
+>  	/* mutex to protect against concurrent access of EP controller */
+>  	struct mutex			lock;
+>  	unsigned long			function_num_map;
+> +	int				domain_nr;
+>  	bool				init_complete;
+>  };
+>
+>
+> --
+> 2.25.1
+>
 
