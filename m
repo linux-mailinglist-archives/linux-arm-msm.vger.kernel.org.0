@@ -1,133 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-30058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B82BA964B2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 18:13:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CBBC964B7F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 18:21:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 71817283E90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 16:13:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5DB81F21622
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 16:21:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD7B61B4C58;
-	Thu, 29 Aug 2024 16:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20DE51B81D7;
+	Thu, 29 Aug 2024 16:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gDeXTXAG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UAGJi+B9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23DA71B3F27
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 16:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69171922FE;
+	Thu, 29 Aug 2024 16:18:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724948000; cv=none; b=okYnwcO8jOx/rfmsjJ+2H0g2YmJevc2CS4/32iCSo8zh6yBmiTi9SWuQmqf+bjwRmvdxPnwZCJnb480ioUhyMta3IHxdbF1qWYnCSvMkZOon9oB6Zb9UK6ottViSfd+VkcDFtGD0APJEb+sr5S4s4MBFW8gErE53lB66V/3ew0M=
+	t=1724948302; cv=none; b=AelYCvUiSgdYSsA13uQI/YGNpStmFAeHm9PW264dl9aBGXqOZCyhxKCx6g4V0ntdmqJfgJmYUEvTcxui/oIm+gp1oUNYeF/BjUnhOA2iwZMgNjOLWDg9bXob5yLkUh8jT5Q8/kt1hQWDq5ZPj8vxyMAeEvT3Gi/MiWBt1bUwpsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724948000; c=relaxed/simple;
-	bh=dHkC8BQ/oCFG+KGsaHIHKPgYPFJGnB+AcptiQKVOpA8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mknpT59fYDkqWFTXf2dxJftLJyErtYZQ3xC6rMgV9/2ILOeJjWewaXXGa9YUkG4cznNj364l4ZeeUij3MgBM8vrPZC8BeOEIhQgDp0C16TD8HDnsNkVz1sXooChLoetRHXZPh6UwS8CjclAd0zv9xpCv6BwZit/pgoI0Fik3bNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gDeXTXAG; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1724947998;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Gjf9lEYKxo79UOeU1ud431sTBQCGkwHKYo7rx3w8B+0=;
-	b=gDeXTXAG070NZM5MtaHVLnRbLjt5/c8A/DaNXvxNK2Lfu5fA4iphw0VlvGyKS77YdBeU1d
-	VK7MQl1L7UZP3AjG3jDP+7Ou7K56jeUnQ363KbZ4EjRhHg/67oqx1bf+Zow3jI6BeUe+qi
-	CXuC+qGThQPU415jSbevBqoT3qoKHmk=
-Received: from mail-oi1-f198.google.com (mail-oi1-f198.google.com
- [209.85.167.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-145-EcqcxeNFOSyOfM-ajUTYUA-1; Thu, 29 Aug 2024 12:13:16 -0400
-X-MC-Unique: EcqcxeNFOSyOfM-ajUTYUA-1
-Received: by mail-oi1-f198.google.com with SMTP id 5614622812f47-3db2e938b79so954238b6e.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 09:13:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724947996; x=1725552796;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Gjf9lEYKxo79UOeU1ud431sTBQCGkwHKYo7rx3w8B+0=;
-        b=VuGsSKLkG/mwvVxWsLU3nOQ8HQjNNl3tl8Rb+O7SflumN/Mp3ruLvPhVfDydo8PVKy
-         yXIWgko18xaEXe2k7fo9IIbBnt/4jxVsfYdBf9Jvte6aSZqa338cjYrT+6MTvm3s0W5h
-         +V5lSZZuLBlCOqfFPtif8kxmESLg9PDkFs15JuGUP45bpIV3OztD1JgZ6kwUFBnrxs4g
-         dmkjqXaEgFLQY4p0o2+jq8iBTv/S4EhuVlK0/6QS0HVSJ31iOC+3LCbHEpW+sqrivp4j
-         X4GmcCfVoW2eH62Zho7cXgbCr+pLJuXJmg1Pdy2qT5Z6snQxhRJEVcjIth1CsczGofTf
-         5Uxg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjZYCFtJv7leHkTU/zQ/7wvMfPiPM13P/pXTLI+mvILv0+t07hVRS1X82axQoAPrep8iExhVZujNmxbA5h@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzx1toABRAISUJmSIR1WeMplYImx5UwMIJxcr1UGtTemHwmGfZQ
-	XvcAC5mTRmg6PD8uGQA2Xg4GPJoBLJkNwWie0ruGU9vfg9PaeNKNey0YU1TeqtAA0WbM0qXfYkT
-	uxY37SnElcayXGKYL25uUBy6B3Hrr/OdWEcL3d8Uyy1OawVpwT+NS/azEaXnQRQDHkAxHn+jvJ7
-	Afn1lEIj1+z7z4KxUQBiDGy7P6lDXg4ri924aWBg==
-X-Received: by 2002:a05:6808:158c:b0:3d9:b33e:d3c7 with SMTP id 5614622812f47-3df05c46699mr3393138b6e.5.1724947995777;
-        Thu, 29 Aug 2024 09:13:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEp2WvBJh6ce6etsdNcPyEsUAS6R8viWHcvInnOKhT3fldRVCreceAGksb536DXzOLO4wV5wrO3yDa/aIrEbnw=
-X-Received: by 2002:a05:6808:158c:b0:3d9:b33e:d3c7 with SMTP id
- 5614622812f47-3df05c46699mr3393107b6e.5.1724947995414; Thu, 29 Aug 2024
- 09:13:15 -0700 (PDT)
+	s=arc-20240116; t=1724948302; c=relaxed/simple;
+	bh=0DFCIEnpEsAW/SjC51AnwDz3RJhoIFR9GB8cHGV8p5Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KGWN7ouoZWtgi/n3+9NSUASNGsvGB3tD6UoLgls9YyXrQ19uDbIJis99sM7jje1kiqWQnqk0ZrPaxfMxlhmOTWGwKf9U5tSDL1F1TCnxxCclTSyuknj02uM4s5WCqyIZ7g4z6Kh3U5cuczs1XAKHcuQZe11aOqtnzqpbWfpGkJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UAGJi+B9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B1F8C4CEC5;
+	Thu, 29 Aug 2024 16:18:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724948301;
+	bh=0DFCIEnpEsAW/SjC51AnwDz3RJhoIFR9GB8cHGV8p5Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=UAGJi+B9G7+ByyYTIff3xkkjmNTvtXetrK7MraXov7GbqBK4stVR39FvWENtwLR2y
+	 DiS6pkiibezMP1HXyHh0jQvBRZcUNV216gv7u55c+LduKII9t7gur38dgEwaaTc0WJ
+	 6IMawqXsQvaRLr8ynXiHoRLOSW/X3LJKZmY7kj0jb6uJ2EkN8dCRz8oZ6e8jJaWeo+
+	 Me8/i22BFG48bmjL5K9LF6vXvbNzrgUcN3ms38IQPVzEqtTt3HKp9gWZSFOd9nDabb
+	 FUQ74IrtCj095vhYzPK6hUgnn1pSQsVeAi+4JER9g0V9hm9A/4/S4V8GaAadxBUhpL
+	 MietOEiOgq9rA==
+Date: Thu, 29 Aug 2024 17:18:17 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: phy: add NXP PTN3222 eUSB2 to USB2
+ redriver
+Message-ID: <20240829-dandy-jingle-1002fb99b900@spud>
+References: <20240829-nxp-ptn3222-v1-0-46906bc4747a@linaro.org>
+ <20240829-nxp-ptn3222-v1-1-46906bc4747a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240829012005.382715-1-bmasney@redhat.com> <20240829012005.382715-3-bmasney@redhat.com>
- <20240829155829.GA6489@eaf>
-In-Reply-To: <20240829155829.GA6489@eaf>
-From: Brian Masney <bmasney@redhat.com>
-Date: Thu, 29 Aug 2024 12:13:03 -0400
-Message-ID: <CABx5tqKJ9Swc3dF3wG46BUL9-zDpVNyqXLeuA92kOZCbNU_wCA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] crypto: qcom-rng: fix support for ACPI-based systems
-To: =?UTF-8?Q?Ernesto_A=2E_Fern=C3=A1ndez?= <ernesto.mnd.fernandez@gmail.com>
-Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>, herbert@gondor.apana.org.au, 
-	davem@davemloft.net, quic_omprsing@quicinc.com, neil.armstrong@linaro.org, 
-	quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="lb2JHJxD1qBMGfou"
+Content-Disposition: inline
+In-Reply-To: <20240829-nxp-ptn3222-v1-1-46906bc4747a@linaro.org>
+
+
+--lb2JHJxD1qBMGfou
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Aug 29, 2024 at 11:58=E2=80=AFAM Ernesto A. Fern=C3=A1ndez
-<ernesto.mnd.fernandez@gmail.com> wrote:
-> thanks for the patch. I have one doubt:
->
-> On Wed, Aug 28, 2024 at 09:20:05PM -0400, Brian Masney wrote:
-> > The qcom-rng driver supports both ACPI and device tree based systems.
-> > ACPI support was broken when the hw_random interface support was added.
-> > Let's go ahead and fix this by checking has_acpi_companion().
-> >
-> > This fix was boot tested on a Qualcomm Amberwing server.
-> >
-> > Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface suppor=
-t")
-> > Signed-off-by: Brian Masney <bmasney@redhat.com>
-> > ---
-> >  drivers/crypto/qcom-rng.c | 36 ++++++++++++++++++++----------------
-> >  1 file changed, 20 insertions(+), 16 deletions(-)
-> >
-> > diff --git a/drivers/crypto/qcom-rng.c b/drivers/crypto/qcom-rng.c
-> > index 4ed545001b77..470062cb258c 100644
-> > --- a/drivers/crypto/qcom-rng.c
-> > +++ b/drivers/crypto/qcom-rng.c
-> > @@ -176,6 +176,21 @@ static struct rng_alg qcom_rng_alg =3D {
-> >       }
-> >  };
-> >
-> > +static struct qcom_rng_match_data qcom_prng_match_data =3D {
-> > +     .skip_init =3D false,
->
-> So with acpi, skip_init will be set to false now, right? But before
-> f29cd5bb64c2 broke it, skip_init used to be set to true. Was that wrong
-> before, or now?
+On Thu, Aug 29, 2024 at 11:21:13AM +0300, Dmitry Baryshkov wrote:
+> The NXP PTN3222 is the single-port eUSB2 to USB2 redriver that performs
+> translation between eUSB2 and USB2 signalling schemes. It supports all
+> three data rates: Low Speed, Full Speed and High Speed.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../devicetree/bindings/phy/nxp,ptn3222.yaml       | 55 ++++++++++++++++=
+++++++
+>  1 file changed, 55 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/phy/nxp,ptn3222.yaml b/Doc=
+umentation/devicetree/bindings/phy/nxp,ptn3222.yaml
+> new file mode 100644
+> index 000000000000..acec5bb2391d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/phy/nxp,ptn3222.yaml
+> @@ -0,0 +1,55 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/phy/nxp,ptn3222.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: NXP PTN3222 1-port eUSB2 to USB2 redriver
+> +
+> +maintainers:
+> +  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - nxp,ptn3222
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  "#phy-cells":
+> +    const: 0
+> +
+> +  vdd1v8-supply:
+> +    description: power supply (1.8V)
 
-Good catch! I didn't check the _DSD and assumed it was always false.
-I'll verify on the server we have in the lab and post a v2.
+As a nit, these descriptions could just be ": true" like the
+reset-gpios, they're equally obvious.
 
-Brian
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
 
+Cheers,
+Conor.
+
+> +
+> +  vdd3v3-supply:
+> +    description: power supply (3.3V)
+> +
+> +  reset-gpios: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - '#phy-cells'
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    i2c {
+> +        #address-cells =3D <1>;
+> +        #size-cells =3D <0>;
+> +
+> +        redriver@4f {
+> +            compatible =3D "nxp,ptn3222";
+> +            reg =3D <0x4f>;
+> +            #phy-cells =3D <0>;
+> +            vdd3v3-supply =3D <&vreg_3p3>;
+> +            vdd1v8-supply =3D <&vreg_1p8>;
+> +            reset-gpios =3D <&gpio_reset GPIO_ACTIVE_LOW>;
+> +        };
+> +    };
+> +...
+>=20
+> --=20
+> 2.39.2
+>=20
+
+--lb2JHJxD1qBMGfou
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZtCfSAAKCRB4tDGHoIJi
+0g0vAP0ULmArYvwsKhDXcZT3/4k+oqLJV5IRg5A/j6KAIiP0kAEA3keLUf3OdneN
+T8XD0nEmiPfqLNo/YVZtsIw/VcqqsQ4=
+=tE0b
+-----END PGP SIGNATURE-----
+
+--lb2JHJxD1qBMGfou--
 
