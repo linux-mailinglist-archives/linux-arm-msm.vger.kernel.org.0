@@ -1,163 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-29962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1B07964184
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 12:23:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3CE696418B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 12:24:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E68C71C21CAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:23:37 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7F4B6B2552A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:24:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60CFE191F6F;
-	Thu, 29 Aug 2024 10:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6CE51ABEC0;
+	Thu, 29 Aug 2024 10:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BtKSMlW7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uk+IUGBj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A98E1917DD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 10:19:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2378B1ABECE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 10:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724926759; cv=none; b=TWe+eyjTAqPjYIrFTdMS5Er8Rfm6PXaA8hemkgHGDcCD9v1hAMTaA2VXvSCzPFff+4G8VgrRzrF4Nf/TFo48NiRYhxHeT1kLuVbLtZoC0Ia+nLTLYIAMN/h4dJlo3GXak8f5D+pgbbMtuzXHh8fDprNnRmxTl7tc+Mjb9IFiMAY=
+	t=1724926770; cv=none; b=Frv3Rs/ar3c/9s1XpykYeNV3NNydzh75UNnAdhH+T51Abcxim0CK40VC6ECEyY3u16oweBto9mD5qawd4iZlWkPuUPgT0pIjtRYq5juqmey7fhDjQJAEw4ZUnH7WCXdOwZdR0HPHNBcpQ3Chu3S1+B9vKLIt2UezgFSXbyojV+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724926759; c=relaxed/simple;
-	bh=NgBGaohZSn2ujQXQ1kODfi5bvv65HVMuTRh6A6bGzVU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GawRMgn3ggOSe5eEQQg0PBW/Vsvb7heWms15RgaIaTNQr5K/OfSkfMG4YMvtNsLzvrecWcsHZp6WvjUIMa8jL9P2RXksrZR/nAIcEsbXJIeEWqYlPHXitju0JraXvqn/MDV+zVHxt3e7LZKX0CKfc126PRNz7boZEtA6T0AASdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BtKSMlW7; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1724926770; c=relaxed/simple;
+	bh=JiZQWXIRJ3HjYCLl7hFrsgGpcmSL/PwTn6gBZKW5NnI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=g4GA/YYNvPbOYrI4pRBsQW4In6GnWPoGxsCsnyq+7mEAJrN33pbrwDmgRnU0WR1oC1xFrRboV3fR5p5TqmQD/IeF0SySyreUsY+aZslKAYqjEQgrWhmA6AU1zLWm7h/JMAxJAsx9Eo+Q1lHHDJ44lmlKj5DyusMVb6keNPMlj9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uk+IUGBj; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a86859e2fc0so46281366b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 03:19:17 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5343617fdddso844371e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 03:19:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724926756; x=1725531556; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nopjZOiXiccCurmPDi4lhpMiSpQ7X9/bOex7t+lHZIA=;
-        b=BtKSMlW7XZr4Lm1FTEzEuYL3fXKE5eGRH61E/NLz/rpLx/sioXTyJ/Vv+Sld6sa5em
-         WtDUuSRBQxVlacSJy3uvHA9QNDUGOuuEyItOE74V4vPIOP1Dlcztc0j0mjfqbp1diBpz
-         TqchM1et8b7eomaF4CZy7d+P9Kgy2smIRv2iGUIBPSpXxUvDi4m54TkkovYAeeDO58u+
-         uMAZD0c0DTrJ3OkVUqgNgm/2IQmhEl9ruCh+TN1hM1Rw4Ru5DFOkLaOGQni+/5ntlqvy
-         0V/o495Llx+KAYfGyfpHhYX/XtRfsqSIiXxaj2O2MW9bWq9MhNMp40EUkUFODN5Ul3Km
-         SPuw==
+        d=linaro.org; s=google; t=1724926767; x=1725531567; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dsgEl12pS5/oK+D6m4jiXUFGwYqDk87JRvruFRHJCvw=;
+        b=uk+IUGBj5vZH3cUlq2z+8waWEcJdBbudsV6P5FOXvr7So1vE7L2e7qHSw1N5JsuKCQ
+         QlW0/hRw8G4d/Sa3gISoaOm5JS9YG5HQInI8cnMdPtR1GEPrn7g4ial+4H9w6Wx3KtVD
+         433zVeHCx6YnUt9yCdFwxG7RvrxCsC0tm1JQoFLC5lSMpF04b17ngzA+T8tKoUH42SEE
+         IuaBWpMZFwbDgUoAqhfXCniT/ZIRZWcaVPKLPRUoY3TAsc75Q4VvNvxCZoU5rEYPhXx9
+         rprx8+ECE+/26gBj0bkBrX8diJyx57P0yEOaWTC88DssIYeTx81ErBOqc6DzTfwL9pkd
+         jd3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724926756; x=1725531556;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nopjZOiXiccCurmPDi4lhpMiSpQ7X9/bOex7t+lHZIA=;
-        b=suPlvukDix2D2ZDCgNLPpm7xeP9J35ea2jNg+5QCVYfkK/xvISVmuS3qYhYb3CmgP8
-         IcdYsvnNIl2azayyTE4jsix23gv+GCX0oCCfrN1dx6e58Bb9OVRDUIl+87mWleN2X6an
-         Wjc0NpVJ9lJkPyKOUDrSkaRV9BgDyfrimaca7DbSE1gNbHYE5vP25D1tIGwWJqz4wSfL
-         lEGopuTo4tAUqvGSu7QfIrWPDW9aeut9lq/0kY84jct+Ld7smndd1xjeOeK4Y67V8PD3
-         ItmQIhlerlAaILhIn7HyUVMwm6Z7eVexyvqn+S097x2a0vvN5qRolMfm58UkZhPayC3k
-         jDBw==
-X-Forwarded-Encrypted: i=1; AJvYcCVm0diZXaY3xQnZowuRM95jG9CSSd5w/CuOZ669JbKgYnhEEXv3n1oPcjy8G6EZQufGfN4a568IJdAizepa@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9oLaA3rP/0lDuTzr17v2PquAvQ11fZT4Wt/MIBGSuYdZUTc75
-	UIuqEWvfeJUBHSVk4A80jNCJm2Xv21Y1MEVNSeqomQeCdCZZnU3geuQdiMydiEQ=
-X-Google-Smtp-Source: AGHT+IETKZnM5+V8q/IAwppa+3QG8CZq/4HYaD9qYC2EdM3dOtcZyyhQ65wHS4u5dtwJxEHeX73Mvw==
-X-Received: by 2002:a17:907:7216:b0:a86:bb5f:ebbd with SMTP id a640c23a62f3a-a897fad70f8mr137210866b.63.1724926755889;
-        Thu, 29 Aug 2024 03:19:15 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8988fefb60sm60432366b.43.2024.08.29.03.19.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2024 03:19:15 -0700 (PDT)
-Message-ID: <45298600-beaf-438f-979a-3cb9e207a32e@linaro.org>
-Date: Thu, 29 Aug 2024 11:19:14 +0100
+        d=1e100.net; s=20230601; t=1724926767; x=1725531567;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dsgEl12pS5/oK+D6m4jiXUFGwYqDk87JRvruFRHJCvw=;
+        b=pRd6UPdLgSr1bQ8ytBFBRnwzKnDaragRlxKPZMomjPFUy4GcM1jk5HCiqZfsrhs9LI
+         EgsUtczhCQ5akpLMIsneHWC9n3vu0yMT6eT2is57SBrZQ1y6d+4WhQYlqXu5sHTccfkP
+         ux6Pi21x1hlnU//jjdUux0uMEA1DSzbT9JbwnBodKahOVWWLmuNqJVnOUlCW09Yr5Xgy
+         c9oapaf7feq/y0wMC1PEUDFQPRGr7stjQZOrBS+39lHO+e7TzNEu/73KXC3X8UH3opmu
+         Q8C85iNfrQP6Ghauo3Lo/PKP78Pdg6GhWi6CimFP+VPHJfzGdS1url6jjCiDZn9XZcIJ
+         Sq3A==
+X-Forwarded-Encrypted: i=1; AJvYcCWTDpPTHu3IxtA8xErEqwarBPHmvmTPqdiVXuNIc8Q08s+leLurrUGYomoeav6GXSJz4x2dv4GVFjDKZnxm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkZ5CPLSJCEr6/Hh40jYN51T1AYp56RyqUBxF1spfQ5uHhTHyQ
+	yvuScfwJ8VWhnS6zRsTWnIfIFW+8qJNA8y2EDKP3Gtt/QTAQdR4XaqGlkLLKK3w=
+X-Google-Smtp-Source: AGHT+IFI/J4pmYQEU4+SHn18VCyisudN4k2godV3tyoAlPi2LbLETrSD6LA/Lou8PXucHxARCjq3Jg==
+X-Received: by 2002:a05:6512:234b:b0:530:b773:b4ce with SMTP id 2adb3069b0e04-5353e575f40mr2138577e87.33.1724926766646;
+        Thu, 29 Aug 2024 03:19:26 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53540827af9sm116406e87.170.2024.08.29.03.19.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2024 03:19:26 -0700 (PDT)
+Date: Thu, 29 Aug 2024 13:19:24 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: neil.armstrong@linaro.org
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] phy: add NXP PTN3222 eUSB2 to USB2 redriver
+Message-ID: <izr7linltwo4kbpp4dtls7bahvk4a2hwtqaz3fyuktjuiudqly@ivulir54ktxk>
+References: <20240829-nxp-ptn3222-v1-0-46906bc4747a@linaro.org>
+ <20240829-nxp-ptn3222-v1-2-46906bc4747a@linaro.org>
+ <79a643de-9808-4866-9e41-8bd5ab55ffed@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/4] soc: qcom: geni-se: Export function
- geni_se_clks_off()
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
- <20240829092418.2863659-4-quic_msavaliy@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240829092418.2863659-4-quic_msavaliy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <79a643de-9808-4866-9e41-8bd5ab55ffed@linaro.org>
 
-On 29/08/2024 10:24, Mukesh Kumar Savaliya wrote:
-> Currently driver provides geni_se_resources_off() function to turn
-> off SE resources like clocks, pinctrl. But we don't have function to
-> control clock separately, hence export function geni_se_clks_off()
-> to turn off clocks separately without disturbing GPIO.
+On Thu, Aug 29, 2024 at 10:30:49AM GMT, neil.armstrong@linaro.org wrote:
+> On 29/08/2024 10:21, Dmitry Baryshkov wrote:
+> > The NXP PTN3222 is the single-port eUSB2 to USB2 redriver that performs
+> > translation between eUSB2 and USB2 signalling schemes. It supports all
+> > three data rates: Low Speed, Full Speed and High Speed.
+> > 
+> > The reset state enables autonegotiation of the PHY role and of the data
+> > rate, so no additional programming is required.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >   drivers/phy/Kconfig           |  11 ++++
+> >   drivers/phy/Makefile          |   1 +
+> >   drivers/phy/phy-nxp-ptn3222.c | 119 ++++++++++++++++++++++++++++++++++++++++++
+> >   3 files changed, 131 insertions(+)
+
+> > +
+> > +	ptn3222->supplies[0].supply = "vdd3v3";
+> > +	ptn3222->supplies[0].init_load_uA = 11000;
+> > +	ptn3222->supplies[1].supply = "vdd1v8";
+> > +	ptn3222->supplies[1].init_load_uA = 55000;
+> > +
+> > +	ret = devm_regulator_bulk_get(dev,
+> > +				      NUM_SUPPLIES,
+> > +				      ptn3222->supplies);
 > 
-> The client drivers like i2c requires this function for use case where
-> i2c SE is shared between two subsystems.
+> Suggestion only, you could switch to devm_regulator_bulk_get_const()
+
+Good idea, I'll take a look.
+
 > 
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> > +	if (ret)
+> > +		return ret;
+> > +
 
-Suggest:
-
-Currently the driver provides a function called 
-geni_serial_resources_off() to turn off resources like clocks and 
-pinctrl. We don't have a function to control clocks separately hence, 
-export the function geni_se_clks_off() to turn off clocks separately 
-without disturbing GPIO.
-
-Client drivers like I2C require this function for use-cases where the 
-I2C SE is shared between two subsystems.
-
-> ---
->   drivers/soc/qcom/qcom-geni-se.c  | 4 +++-
->   include/linux/soc/qcom/geni-se.h | 3 +++
->   2 files changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
-> index 2e8f24d5da80..20166c8fc919 100644
-> --- a/drivers/soc/qcom/qcom-geni-se.c
-> +++ b/drivers/soc/qcom/qcom-geni-se.c
-> @@ -1,5 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0
->   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->   
->   /* Disable MMIO tracing to prevent excessive logging of unwanted MMIO traces */
->   #define __DISABLE_TRACE_MMIO__
-> @@ -482,13 +483,14 @@ void geni_se_config_packing(struct geni_se *se, int bpw, int pack_words,
->   }
->   EXPORT_SYMBOL_GPL(geni_se_config_packing);
->   
-> -static void geni_se_clks_off(struct geni_se *se)
-> +void geni_se_clks_off(struct geni_se *se)
->   {
->   	struct geni_wrapper *wrapper = se->wrapper;
->   
->   	clk_disable_unprepare(se->clk);
->   	clk_bulk_disable_unprepare(wrapper->num_clks, wrapper->clks);
->   }
-> +EXPORT_SYMBOL_GPL(geni_se_clks_off);
->
-
-Does it make sense to have geni_se_clks_off() exported without having 
-geni_se_clks_on() similarly exported ?
-
-Two exported functions already appear to wrapper this functionality for you.
-
-geni_se_resources_off -> gensi_se_clks_off
-geni_se_resources_on -> gensi_se_clks_on
-
-Seems like a usage violation to have geni_se_resources_on() switch the 
-clocks on but then have something else directly call gensi_se_clks_off() 
-without going through geni_se_resources_off();
-
-?
-
----
-bod
+-- 
+With best wishes
+Dmitry
 
