@@ -1,108 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-30066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32081964CA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:08:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 870CE964C8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:04:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D0E401F22A6A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 17:08:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CC97284794
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 17:04:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D11631B6539;
-	Thu, 29 Aug 2024 17:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1ECC1B6541;
+	Thu, 29 Aug 2024 17:02:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b="GTRwDYmV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RSyj7Njj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.smtpout.orange.fr (smtp-30.smtpout.orange.fr [80.12.242.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876231B5ECA;
-	Thu, 29 Aug 2024 17:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.12.242.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8601B151C;
+	Thu, 29 Aug 2024 17:02:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724951317; cv=none; b=SXx9nznRk2E7zmZ/XrBSCa9qZK0OotFWYLLd4iD+2mZggc/kn6fmC4seboyPVLJn3KseYp9G7pf7MwKLGPVfqfJQSwWVGvxbqGmw09XR+pJsoUq0J4VJrjVkKslBlSMlUjKovclhtyjSu1+cplmzPdGvF8/Jn5zfM7Kg1Td19f4=
+	t=1724950920; cv=none; b=M3aDYJc+eZWfRJJlBIm45m1uxeoTaMoFd5HrJD4K+tYyJzlfAmj4Vi02lqn2fRZkPyjcOfHFR5Amtvak8oUJh885Mtxmqneq6Udx867EjtHRAQHP0UXwj6laBORW5WxsEQZWFqQS/NNT+1Yt9879kR76dBQGrhPx0LtExWbE8LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724951317; c=relaxed/simple;
-	bh=nCsfZR0DC6lf6gcln2KJvvNw1BZHYsRdAEITqq8RUd4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cJSVSuFXm1H2Lfwa0IL36dNxKqVuvZ/wAxXE9kA08t+ThNPL8KHHVW5BY2ti+McF1a7BS4LYSmzrTmR5SDAGpFek38K54NgByHJ6rw0cl+Ewbk0uR3SjrV79zrLee8LjfrRrox8hEcZBXRf06gkuSrhEkfrj4eBptQN9Y3D2CJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr; spf=pass smtp.mailfrom=wanadoo.fr; dkim=pass (2048-bit key) header.d=wanadoo.fr header.i=@wanadoo.fr header.b=GTRwDYmV; arc=none smtp.client-ip=80.12.242.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=wanadoo.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wanadoo.fr
-Received: from [192.168.1.37] ([90.11.132.44])
-	by smtp.orange.fr with ESMTPA
-	id jiUCsyvkeaZQfjiUCsKfCa; Thu, 29 Aug 2024 18:59:06 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-	s=t20230301; t=1724950746;
-	bh=U0rARhUcsMEGaXLPrLb2Io5v6VQIJivXpcySQ5zqyt0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:From;
-	b=GTRwDYmVWu7ZmIc/5J4OSl7GuXt7Xblb9X4HcsI+x0+SKyL48fTUgSpTx5YVyuMBE
-	 J2VR0vAwQh1ZDrZSg0ZMlba+knOddlqLh3MXtYlqJJd1itWWDhlRC11LSAESVZup8d
-	 Nm70Lb8SYQvYErTVKwOJScy3VEEjfZXN0q4ZzJUdrQvMFRRC6wFj3ltkL1cn6KpKLq
-	 GCMEEJxVu+MdwcjK5qTEBHsDKqoB70SkjXQ8xY/959AWEmtBMFG6AUwuILcC3T3Qye
-	 NKEW1xOzgHNPL7Z5dHeLuNd4SpkycbaH+5+hBDwq9lomeHalSUgK7vUiD9lgbZZ8pW
-	 m7QlII75+HiXQ==
-X-ME-Helo: [192.168.1.37]
-X-ME-Auth: bWFyaW9uLmphaWxsZXRAd2FuYWRvby5mcg==
-X-ME-Date: Thu, 29 Aug 2024 18:59:06 +0200
-X-ME-IP: 90.11.132.44
-Message-ID: <c2464c65-836d-4609-b40b-2e3df4012688@wanadoo.fr>
-Date: Thu, 29 Aug 2024 18:59:03 +0200
+	s=arc-20240116; t=1724950920; c=relaxed/simple;
+	bh=RJBfIbkiW7TN/v+WigG9LTCZysSAl3Gpt7zlyd7Izms=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KQHmuhPkrBlYhaK2GxYt047Ci9jPylFLM6xtQLxnoidlhX60LvG5DLd9ifas6SowTHLxDhiJ4WTGy0Gi6L6iPLUOSpwlIgnUFnxc6EDszh1HffXP465T38NBsFhz/KBJV8OUdZEfe8BvBC9D6lp3Lnxy45LW1Lh2RQwtV70zbBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RSyj7Njj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D31DC4CEC1;
+	Thu, 29 Aug 2024 17:01:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724950920;
+	bh=RJBfIbkiW7TN/v+WigG9LTCZysSAl3Gpt7zlyd7Izms=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RSyj7NjjcVbLlXlQ2Sdc0Im7sEu5rfFbFbMCx6LDBgU09J5wkKh8ur2t1D6mlumFj
+	 Gt/nYmGVY71Io1lWD6hs7T1A/ZuK7rdasdnOs8OlV0cXmgbgEUAv+7pWtMPGiKYrVM
+	 gZSE04vBYyr1aQ6YkzVocL06apGlZVnID9VGMWwbkLppHXRJ7qMFy0dX0DzLjnqoWP
+	 6rhB+A0EsxqqDuJA9oE9OptA7AcuRy+cTrFfCv/63/Zl8a1wgBu6dciVPXDOnxOZU9
+	 lsd40uOxv6vIAUhp5r82VWMfGfcJoQsLmPO4e0lFCQ1O742t0MSnVoLTNFN/Q5D1rZ
+	 +Fd7WXENuYj3A==
+Date: Thu, 29 Aug 2024 22:31:56 +0530
+From: Vinod Koul <vkoul@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+	quic_vdadhani@quicinc.com
+Subject: Re: [PATCH v1 0/4] Enable shared SE support over I2C
+Message-ID: <ZtCphFX+4hXMNFPG@vaman>
+References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] clk: qcom: Fix error checking for
- devm_clk_hw_get_clk()
-To: Yan Zhen <yanzhen@vivo.com>, andersson@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, opensource.kernel@vivo.com
-References: <20240827025252.3512746-1-yanzhen@vivo.com>
-Content-Language: en-US, fr-FR
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <20240827025252.3512746-1-yanzhen@vivo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
 
-Le 27/08/2024 à 04:52, Yan Zhen a écrit :
-> The devm_clk_hw_get_clk() function returns error pointers.
-> It never returns NULL.  Update the check accordingly.
+On 29-08-24, 14:54, Mukesh Kumar Savaliya wrote:
+> This Series adds support to share QUP based I2C SE between subsystems.
+> Each subsystem should have its own GPII which interacts between SE and
+> GSI DMA HW engine.
 > 
-> Fixes: 8737ec830ee3 ("clk: qcom: common: Add interconnect clocks support")'
-> Signed-off-by: Yan Zhen <yanzhen@vivo.com>
+> Subsystem must acquire Lock over the SE on GPII channel so that it
+> gets uninterrupted control till it unlocks the SE. It also makes sure
+> the commonly shared TLMM GPIOs are not touched which can impact other
+> subsystem or cause any interruption. Generally, GPIOs are being
+> unconfigured during suspend time. 
+
+Most of the use case it is either I2C using it or some other peripheral
+using it, so who are you protecting the channel with this locking
+mechanism?
+
+> GSI DMA engine is capable to perform requested transfer operations
+> from any of the SE in a seamless way and its transparent to the
+> subsystems. Make sure to enable “qcom,shared-se” flag only while
+> enabling this feature. I2C client should add in its respective parent
+> node.
+
+Why should this be expose to peripheral drivers and not handled
+internally inside dma driver, you lock, submit the txn to engine and
+then unlock when txn is processed, why should this be exposed to
+clients?
+
+> 
 > ---
+> Mukesh Kumar Savaliya (4):
+>   dt-bindindgs: i2c: qcom,i2c-geni: Document shared flag
+>   dma: gpi: Add Lock and Unlock TRE support to access SE exclusively
+>   soc: qcom: geni-se: Export function geni_se_clks_off()
+>   i2c: i2c-qcom-geni: Enable i2c controller sharing between two
+>     subsystems
 > 
-> Changes in v3:
-> - Providing a "fixes" tag blaming the commit.
+>  .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  4 ++
+>  drivers/dma/qcom/gpi.c                        | 37 ++++++++++++++++++-
+>  drivers/i2c/busses/i2c-qcom-geni.c            | 29 +++++++++++----
+>  drivers/soc/qcom/qcom-geni-se.c               |  4 +-
+>  include/linux/dma/qcom-gpi-dma.h              |  6 +++
+>  include/linux/soc/qcom/geni-se.h              |  3 ++
+>  6 files changed, 74 insertions(+), 9 deletions(-)
 > 
->   drivers/clk/qcom/common.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> -- 
+> 2.25.1
 > 
-> diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> index 33cc1f73c69d..5a9e653916ea 100644
-> --- a/drivers/clk/qcom/common.c
-> +++ b/drivers/clk/qcom/common.c
-> @@ -273,8 +273,8 @@ static int qcom_cc_icc_register(struct device *dev,
->   		icd[i].slave_id = desc->icc_hws[i].slave_id;
->   		hws = &desc->clks[desc->icc_hws[i].clk_id]->hw;
->   		icd[i].clk = devm_clk_hw_get_clk(dev, hws, "icc");
-> -		if (!icd[i].clk)
-> -			return dev_err_probe(dev, -ENOENT,
-> +		if (IS_ERR(icd[i].clk))
-> +			return dev_err_probe(dev, PTR_ERR(icd[i].clk),
->   					     "(%d) clock entry is null\n", i);
 
-Nitpick: Maybe the message could be updated as-well?
-
-CJ
-
->   		icd[i].name = clk_hw_get_name(hws);
->   	}
-
+-- 
+~Vinod
 
