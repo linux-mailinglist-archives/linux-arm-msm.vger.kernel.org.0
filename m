@@ -1,143 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-29917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2DAA963DD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 09:58:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 283CF963E09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:08:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C60F288412
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 07:58:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D24F11F21FC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 08:08:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B31818A6BC;
-	Thu, 29 Aug 2024 07:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D5A1118A6A1;
+	Thu, 29 Aug 2024 08:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c2cimbev"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wZyaHPkZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0714E1B813;
-	Thu, 29 Aug 2024 07:58:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3BE15DBC1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 08:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724918285; cv=none; b=nDZ5sERqZXUwLVc6NgAdVYNsqD9Ed/pO4ZwZvjXPAasfV0U9IVeM3W4kntiYw/lrzriyqz27uz/MNTNYe+0wtmOhUPVZb/KtJlL/JvlfdVVl7qIjIRr4NZcckJB2O83yFNu/eDIbtnXbESARVnXBp7CGvVeglJcbJriBvqJzqSs=
+	t=1724918926; cv=none; b=ALTtGw30kD4pLZOl4W/dvLpe/qNSY7o/0H5WXtLMoQLqhXl2aI8b+/QCqjZ8mlu87INaAJRYS+9KOEcjFcMLKn17pgpvGyY1oPb9ZAwHlmApWjQhOCdYm2aE6w9Y57tb5Bdz5OBipLm3NNTm6pz6UJ+7ZwetsZjFae4HcVR4/ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724918285; c=relaxed/simple;
-	bh=xxaLtv0q8WiO22sQEm0ulKg7KPVsl9z0GngcTOmfnXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ToXypwPasHKSGzK2/e1aGQINpq6dQzIiT7kA9S7FI7V5mdxOK1s3py2GpG/aXNZBoUakBs1jbNCOFDHku5xQ0YNIVsrM0S2p5xK6+CaUSn/Qd401J60eBnvr2PBPxrfzh+v6TOLrQVBP5IKpre9BaSRmIkfFM3paK6OcCuV/qas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c2cimbev; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55287C4CEC1;
-	Thu, 29 Aug 2024 07:57:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724918284;
-	bh=xxaLtv0q8WiO22sQEm0ulKg7KPVsl9z0GngcTOmfnXo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=c2cimbevF8UQ8GLpaB0G5GGZz3Vi4r0CXj5nxuxOWbEMi9HqKxloOM+fldlyFIh6d
-	 Sqk64XiHSNlK73PHI4yfg9L94pje7akTIE1gJTqeUbr6fsDu6nYWtfpKAou3o5s+jD
-	 f8U8FB/4G+9Ji/n/Hfm5ExoVJ4wrJH8bqlAqCA2fMYsF8trznpd9nHORfOOnzJoG5c
-	 sLpPzXKcDH1w5zIdYV967zFFVcKodJeUibp7vM259IC/GSHbfxcbjb0uksg3n2EOjV
-	 YMCgQTT+CXRqUIrHSzBpNReYFzdbZ7YzwhkxTcuCGajwRbBdDmobHrRqZF9OuTvRJV
-	 hs3NIMhFuop1g==
-Message-ID: <11c897d7-ea9c-4474-81f6-1fc2198d289d@kernel.org>
-Date: Thu, 29 Aug 2024 09:57:43 +0200
+	s=arc-20240116; t=1724918926; c=relaxed/simple;
+	bh=0/9pzeYLRdS8zB2Y2FxT7S7A9LvOM/8Gj6nTQAlPhG4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tM1N8eg1dKllmKi8uye1ZkOBqMhK1KWpBpsZPMumyAaTvlKQhbAput1mzO08+npAs7ZOuHjUYgBmsZN8pyidZpzje9aZ1dFYmJyLynmNCZTeZY7zMIKYWA9cduyvSOl435TTYyuDt2yVs2ZYCg0Mx6P0HE90uOLN8KytYApDwpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wZyaHPkZ; arc=none smtp.client-ip=209.85.167.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-53438aa64a4so396971e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 01:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724918923; x=1725523723; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=T4BmdnrzBdhHgzltTkpUo2txI/5MakiYPq5y08PZ3iA=;
+        b=wZyaHPkZuwlOGp0iunpaOknMyf0WyHC9wRgSIYzy+TpzomJnZ+Ws7znVeJARtzvPsh
+         OutWYQSTBSd+8uo9Vl2zDINhaSTi1o0ir1ed9eizWn00nmOaw8aC+V4T3Zv0fLQXWRfu
+         wgJIMA/NezdkSG0lEdbHoJsdTgG5efBMoCRoEpcbQ4nPJRelShyFOf+FwR+9WQs1z/3D
+         4gqcQWslpdXnaz5mX1X8ZOCKg6E0oZq6tIwyJyOhCoQ+VsfC5f6udZOZr5qAuS0nB07m
+         FKlgfjQnMGwVE+ynN4XWoAkP8hlE6iUm2HKM+lsT255Oyd1l17UXKhe7E5wKmohLtjID
+         jMAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724918923; x=1725523723;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=T4BmdnrzBdhHgzltTkpUo2txI/5MakiYPq5y08PZ3iA=;
+        b=s4MHftIcH9RNOON9bm2U7cvv5FTde9jB3m7ocK/Pv4Gss0S7Z2cpPeBcAmyjyQgBIJ
+         iZ1UsREoeR7zV6K7tDAy/tTMKvVnZ7RD0A9ILO2Dv+Ymj/ai8Bv44aI21tY0hvt0j8d9
+         odkTq3q7NqyLsO0zDRSEn4txhpZvDhEhzrcWO7+HpRUYGtIT/VCYatTu2u0e1UUu676i
+         1BWDBdE+cBk6WJQCvOxlAFwi7Lo2IhtdA/sl/pqXvkls9Kj9ZENC46dU6KTYZ/FEjPzw
+         Jqs+d2E1Ex3WK6vYEEf08luXTo8DKteNUdqQL++WvsBM+Np8XnKCKfBYMuBEM0d6A1Nn
+         eh+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUnveGgaLPrcGWg1g6L1prPvoxhAba9zZk26mn+wSUmWOFugAzdPR/Pvba12cG/nw+sRTUOFtBKDDOULqns@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTlHmi2VVCVg1tENLZa4wpbdKshlNc2kim3+Q19SL+lD2ikSyY
+	aJrzjqyugx6pw5L/OsQ6+NZ87eABj/Hyawu2hbg5jMboFZAF0FHYorExrliBtCY=
+X-Google-Smtp-Source: AGHT+IFTQjqSKFSw070YjNsOEWLTFMBsy1Rq3X8Pmfp9WqqZRc0GHm4rRo/dmxH9UycESrTXamJ/2A==
+X-Received: by 2002:a05:6512:1195:b0:52c:e159:a998 with SMTP id 2adb3069b0e04-5353e57874dmr1271656e87.29.1724918922593;
+        Thu, 29 Aug 2024 01:08:42 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53540827759sm86257e87.158.2024.08.29.01.08.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2024 01:08:41 -0700 (PDT)
+Date: Thu, 29 Aug 2024 11:08:40 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Yangtao Li <frank.li@vivo.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, krzk@kernel.org, 
+	alim.akhtar@samsung.com, konrad.dybcio@linaro.org, liubo03@inspur.com, robh@kernel.org, 
+	yuvaraj.cd@gmail.com, ks.giri@samsung.com, vasanth.a@samsung.com, 
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH 2/4] phy: qualcomm: phy-qcom-apq8064-sata: Convert to
+ devm_clk_get_enabled()
+Message-ID: <fngnwis5yyf56w3vs424clfuqf6qvaquq4udipqidco7jmr6fx@ijledjmr6apj>
+References: <20240822084400.1595426-1-frank.li@vivo.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] arm64: qcom: Introduce SA8255p Ride platform
-To: Nikunj Kela <quic_nkela@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
- herbert@gondor.apana.org.au, davem@davemloft.net, sudeep.holla@arm.com,
- andi.shyti@kernel.org, tglx@linutronix.de, will@kernel.org, joro@8bytes.org,
- jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
- amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
- wim@linux-watchdog.org, linux@roeck-us.net
-Cc: robin.murphy@arm.com, cristian.marussi@arm.com, rui.zhang@intel.com,
- lukasz.luba@arm.com, vkoul@kernel.org, quic_gurus@quicinc.com,
- agross@kernel.org, bartosz.golaszewski@linaro.org, quic_rjendra@quicinc.com,
- robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
- linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
- kernel@quicinc.com, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
- quic_shazhuss@quicinc.com
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240828203721.2751904-1-quic_nkela@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240822084400.1595426-1-frank.li@vivo.com>
 
-On 28/08/2024 22:36, Nikunj Kela wrote:
-> This series enables the support for SA8255p Qualcomm SoC and Ride
-> platform. This platform uses SCMI power, reset, performance, sensor
-> protocols for resources(e.g. clocks, regulator, interconnect, phy etc.)
-> management. SA8255p is a virtual platforms that uses Qualcomm smc/hvc
-> transport driver.
+On Thu, Aug 22, 2024 at 02:44:00AM GMT, Yangtao Li wrote:
+> Convert devm_clk_get(), clk_prepare_enable() to a single
+> call to devm_clk_get_enabled(), as this is exactly
+> what this function does.
+> 
+> Signed-off-by: Yangtao Li <frank.li@vivo.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-apq8064-sata.c | 22 ++++----------------
+>  1 file changed, 4 insertions(+), 18 deletions(-)
 > 
 
-Who is supposed to merge it? The Cc-list is quite enormous and I got now
-20 bounces:
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-"    Too many recipients to the message"
 
-at least drop some non-maintainer related, I counted 5-7 Qualcomm ones
-which should not be needed.
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
