@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-29932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 874D1963E9E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:33:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CEA3C963EC8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:39:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13CD41F233FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 08:33:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F2B2B1C2250A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 08:39:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE42318C351;
-	Thu, 29 Aug 2024 08:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66F0F18C031;
+	Thu, 29 Aug 2024 08:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hZUzzT2X"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rf3NwBcp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4DC115E5D2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 08:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F311B158556
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 08:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724920255; cv=none; b=M0vhNDC/+arIAJr6lFpxBSA/rzcfwczED6jPL0AxT4Zsnvs+ltZShRN5kDfWBc72r9cdV5A+NENox+2B29mcZ9GPOH/cdmVBR23WMbOQQXX9mLZiWIhmp8aYjfTFLxgsibBKQXYBuTn4E0ZiXcT9PebzynoSGT2ZeTMbrENMNwM=
+	t=1724920748; cv=none; b=Bs9UXYY0h0cV8layaVc4VbLih50WGT5TUWxWdYMRUHcn6nJmSYYvUcozwD1fnN0Y0LsVxQgJEjDECcR+9nyx7lUVVq9Wq6Sc6Y4vV4+WYjI21ZZH8Sa8T7ZSe5Rx5LYs4Ulwd/+GjptEpfWmLX5APeD0KZnSj2P/7QbYzEZbisQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724920255; c=relaxed/simple;
-	bh=zsRlTwTVxlGdUebG4U9l/6351oc6rYJx9FuwhzGC6rE=;
+	s=arc-20240116; t=1724920748; c=relaxed/simple;
+	bh=jblHVtPlSRyRcTc1sapQUz8zWsXCqzPBsWFiHN5Cij0=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=K17UaHjbQWgJiGAkRGLPApUxex7PIDUjCiLvd2yXWFGW5/HEoh14Ossqqrx3ZbO9uwnF2kzEZ7uD2pqvd5AkQnxBmT5C8eU33YpSQsUBOeweQY9q7Ivdy3CRttfVgABR2kuHjGNXdmzDtDrJyDrwhfunErWzc5EQniOM8FRNQSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hZUzzT2X; arc=none smtp.client-ip=209.85.128.50
+	 In-Reply-To:Content-Type; b=FDzmviIZ6MYuKX+frjDCTuNXq9wmTzVgmVrvJHA2wzIJb2/GA9ZRPXjqeNr2CeX8hY21Fo8VNZ7NZ7MbOZnmwLZlmlOH2TVJPSldSkberX3+alLZEL4IPTDJDo3pjQQefnc6QoLJzSRKLXyNEi3IQSBMYiAwJ5cWHG47EePKfuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rf3NwBcp; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42bac9469e8so3286095e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 01:30:53 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42bb81e795bso1634475e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 01:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724920252; x=1725525052; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1724920744; x=1725525544; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/fW71FS0lmTuV1wHWmHmOLHgNUvex8iYSoVrr1nHB6s=;
-        b=hZUzzT2X/mV4DMzsi9yoJEMQUFCpeE07A4XhcJXheGoBBL1/ZgA3di7X9fwYJCU+dF
-         uFpI6mqw4CNrdw4BzMCalI/nAv42Al5cHcqcgllmZmSTr5YmsrHvqWdvfIHih4D9vW3N
-         T+7+nalypG5mCyIQXZoyYtTCWpiAd/A4kMCYVi/QEb5F/JRD8b6wHzzWs6+bHWoLX5rO
-         y5DidyEd89N4QJUsp8Mh5XhmZx2693yJoNxS93xz3TJmyBLmpZMCfs101Jqggtvmeg1C
-         VGIDWXCqG+nB2fydzx7IuAEiqyQJBJpOZQ4jafwrX3CvuAEi2ttyqgHheNYiv2/6b15b
-         D3vg==
+        bh=CO2qDrsMP+yzCovNk6lA4Pu0Mr9YSLT3he5TsfVnVjU=;
+        b=rf3NwBcp7zyDX8xCN1+DdpOz7pKyvT64qPCZIr2oaNa9pQ8YKCWt3Zq+d6aNXONN3h
+         vUU+BeLV6MNeL+EKXL3kRvCIpezmt8tMRED6XH9sBHob2XvO0RhWL8guG9bCr5dzGEfZ
+         QGFmlhnc1d6Rc05flHW91cdna5Vdeq+MyCLS+RvhY2Mp5MjuGtLHdzvrngr0oea4uSIu
+         D04ActDHpPvj3c/1IY2M0sS3UP8unAXz7WlfrqD93jGmvQaQFcfKbRpkGjo6YwNqPT1c
+         gmumKs+pKmtLyj1tTdSZDtd+BnMx2PwKbN+7NQ1gAIbq3sEq7J7MINWtckklcQx2Tsjq
+         TK0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724920252; x=1725525052;
+        d=1e100.net; s=20230601; t=1724920744; x=1725525544;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=/fW71FS0lmTuV1wHWmHmOLHgNUvex8iYSoVrr1nHB6s=;
-        b=hHiGA5fC60bubWyLb/cM7QBF4PiAE9+24ux4KeDIr6GmQVkfk8VHhkSf3cPwkA1vxg
-         urzsr6TsiZz7iGf0BpmjeSAqsGF7RXgQi4C6E1jlgeHwtOBJKueHPGXs35a6/NbqS2qv
-         0T67c/FipZA7Lz9gREWKkHCIqzxNcAA/pjzIZOKSQtmezalf3ZZ4fohIZFr5udVRCvKO
-         f2oVBxVo9C1TlSFS1AMzPPhns2pR7BAdC1wyv9u3+/OVztRs0USRI2TMke+b1BHhKHl1
-         9b7JcfeWOBvVfhkpyQld+r4VMF0xSNsr4DdL/O0yOB5N+9JtGN8l/8GSXEu+VGUGy7xL
-         BfHw==
-X-Forwarded-Encrypted: i=1; AJvYcCURnIUyU8NuiST9FPJVjxQ6qkWEgUrSBW+mdd+ppxmB5hDBrUBSFRY30KeNFNqKF9liYO/hLmZbWwdF8h26@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQrtq2YRIZfc7pVnn/ItYo0Z5H0tjiwNGwds8S0vLAfxjBQ0v0
-	DHRbwTcSKOskSc4Fkd+SezSNrcBPga+UjYFMaYqs4cLcaxstXoWCZ5fFbNlwa/w=
-X-Google-Smtp-Source: AGHT+IHGuznT7s9K3x5HeSkF7fCIjIIH9qT4bN2dkHvKGxtIsO2SxucelcGw+Ke16+3q8DaHNkERJA==
-X-Received: by 2002:a05:600c:5110:b0:426:6696:9e50 with SMTP id 5b1f17b1804b1-42bb02591d1mr12515665e9.14.1724920251352;
-        Thu, 29 Aug 2024 01:30:51 -0700 (PDT)
+        bh=CO2qDrsMP+yzCovNk6lA4Pu0Mr9YSLT3he5TsfVnVjU=;
+        b=gqswnbnVzHDCecqd4ehBTpHk7LNJknwNkUWGJiKxLG3N5sTXMRcCGs5AylyQInZKa8
+         LTdnKnWoDfUgI+bIMfkPu/2BDpPluIr/jnpRaL8sVs9C/gwkwVfBUFmtK5zt9tFUpDst
+         dyf7O5MLFb4+VpDDw3zqIksnDetuzCkIH6Benx5YYgYJTRJX9UrWTFDhIg5WhxBZmaaz
+         0d0jBVm4a6epvkA7JB7rjd3BtjkcUGMQqU+8quK2KTsMhlsibjZDxlZ7ct1PEGQWRubo
+         eHa722giQYyyu+GgJksRRqNRK0uKzWbBSPb6Ka5tGjvrcOaMx8LnTsTCnS8a3RdGGg54
+         /OnA==
+X-Forwarded-Encrypted: i=1; AJvYcCXbr8xb22bfTYLhay038Q9q4pk9Mm2CIx3XHMYjKFhJlmoteCJrFjd52heMHl8/jszk1BzXxfqYLeEqVAIi@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfbejIR9cdzj8zGO90shLahE4eqBhYjH51GfAQLMw6V6wymgLJ
+	UgV3VeBh3RW89x1f9rH1q4lDyFw6wD0l0IZU6A1d2XF35MYU2wfW2rPB2i7k5SI=
+X-Google-Smtp-Source: AGHT+IHJ6YMQtL6bF1ZYAujgdoTC0F57VZqnjoZTloLOVyRjTt1XAYtUUXQV0H+lzvpfFlFKW4qPmA==
+X-Received: by 2002:a5d:4e83:0:b0:371:8ced:52e2 with SMTP id ffacd0b85a97d-3749b5882a6mr1297289f8f.52.1724920743786;
+        Thu, 29 Aug 2024 01:39:03 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:12f5:c9c:a0e1:6915? ([2a01:e0a:982:cbb0:12f5:c9c:a0e1:6915])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42ba639652esm44084155e9.2.2024.08.29.01.30.50
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3749ee9ba83sm826888f8f.54.2024.08.29.01.39.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2024 01:30:50 -0700 (PDT)
-Message-ID: <79a643de-9808-4866-9e41-8bd5ab55ffed@linaro.org>
-Date: Thu, 29 Aug 2024 10:30:49 +0200
+        Thu, 29 Aug 2024 01:39:03 -0700 (PDT)
+Message-ID: <e93b223b-5988-422f-888c-b648ad6e0ea4@linaro.org>
+Date: Thu, 29 Aug 2024 10:39:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,18 +78,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] phy: add NXP PTN3222 eUSB2 to USB2 redriver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240829-nxp-ptn3222-v1-0-46906bc4747a@linaro.org>
- <20240829-nxp-ptn3222-v1-2-46906bc4747a@linaro.org>
+Subject: Re: [PATCH v2 2/2] clk: qcom: gcc-sm8550: Don't use shared clk_ops
+ for QUPs
+To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Stephen Boyd <swboyd@chromium.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ patches@lists.linux.dev, linux-clk@vger.kernel.org,
+ Taniya Das <quic_tdas@quicinc.com>, Amit Pundir <amit.pundir@linaro.org>
+References: <20240827231237.1014813-1-swboyd@chromium.org>
+ <20240827231237.1014813-3-swboyd@chromium.org>
+ <1684855f-5901-459a-beb7-2569003b30ac@linaro.org>
+ <00adff607d757702fa673942ed60c354.sboyd@kernel.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -116,189 +117,39 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20240829-nxp-ptn3222-v1-2-46906bc4747a@linaro.org>
+In-Reply-To: <00adff607d757702fa673942ed60c354.sboyd@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 29/08/2024 10:21, Dmitry Baryshkov wrote:
-> The NXP PTN3222 is the single-port eUSB2 to USB2 redriver that performs
-> translation between eUSB2 and USB2 signalling schemes. It supports all
-> three data rates: Low Speed, Full Speed and High Speed.
+On 28/08/2024 19:13, Stephen Boyd wrote:
+> Quoting Neil Armstrong (2024-08-28 05:22:37)
+>> On 28/08/2024 01:12, Stephen Boyd wrote:
+>>> diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+>>> index 7944ddb4b47d..0244a05866b8 100644
+>>> --- a/drivers/clk/qcom/gcc-sm8550.c
+>>> +++ b/drivers/clk/qcom/gcc-sm8550.c
+>>> @@ -992,7 +992,7 @@ static struct clk_init_data gcc_qupv3_wrap2_s7_clk_src_init = {
+>>>        .parent_data = gcc_parent_data_0,
+>>>        .num_parents = ARRAY_SIZE(gcc_parent_data_0),
+>>>        .flags = CLK_SET_RATE_PARENT,
+>>> -     .ops = &clk_rcg2_shared_ops,
+>>> +     .ops = &clk_rcg2_ops,
+>>>    };
+>>>    
+>>>    static struct clk_rcg2 gcc_qupv3_wrap2_s7_clk_src = {
+>>
+>> I think you missed gcc_qupv3_wrap2_s7_clk_src
 > 
-> The reset state enables autonegotiation of the PHY role and of the data
-> rate, so no additional programming is required.
+> Nope. The diff header shows it is in gcc_qupv3_wrap2_s7_clk_src_init
+> which is assigned to the gcc_qupv3_wrap2_s7_clk_src clk's hw.init
+> pointer.
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/phy/Kconfig           |  11 ++++
->   drivers/phy/Makefile          |   1 +
->   drivers/phy/phy-nxp-ptn3222.c | 119 ++++++++++++++++++++++++++++++++++++++++++
->   3 files changed, 131 insertions(+)
-> 
-> diff --git a/drivers/phy/Kconfig b/drivers/phy/Kconfig
-> index dfab1c66b3e5..cb06a7f79740 100644
-> --- a/drivers/phy/Kconfig
-> +++ b/drivers/phy/Kconfig
-> @@ -82,6 +82,17 @@ config PHY_AIROHA_PCIE
->   	  This driver create the basic PHY instance and provides initialize
->   	  callback for PCIe GEN3 port.
->   
-> +config PHY_NXP_PTN3222
-> +	tristate "NXP PTN3222 1-port eUSB2 to USB2 redriver"
-> +	depends on I2C
-> +	depends on OF
-> +	select GENERIC_PHY
-> +	help
-> +	  Enable this to support NXP PTN3222 1-port eUSB2 to USB2 Redriver.
-> +	  This redriver performs translation between eUSB2 and USB2 signalling
-> +	  schemes. It supports all three USB 2.0 data rates: Low Speed, Full
-> +	  Speed and High Speed.
-> +
->   source "drivers/phy/allwinner/Kconfig"
->   source "drivers/phy/amlogic/Kconfig"
->   source "drivers/phy/broadcom/Kconfig"
-> diff --git a/drivers/phy/Makefile b/drivers/phy/Makefile
-> index 5fcbce5f9ab1..b64247046575 100644
-> --- a/drivers/phy/Makefile
-> +++ b/drivers/phy/Makefile
-> @@ -11,6 +11,7 @@ obj-$(CONFIG_PHY_XGENE)			+= phy-xgene.o
->   obj-$(CONFIG_PHY_PISTACHIO_USB)		+= phy-pistachio-usb.o
->   obj-$(CONFIG_USB_LGM_PHY)		+= phy-lgm-usb.o
->   obj-$(CONFIG_PHY_AIROHA_PCIE)		+= phy-airoha-pcie.o
-> +obj-$(CONFIG_PHY_NXP_PTN3222)		+= phy-nxp-ptn3222.o
->   obj-y					+= allwinner/	\
->   					   amlogic/	\
->   					   broadcom/	\
-> diff --git a/drivers/phy/phy-nxp-ptn3222.c b/drivers/phy/phy-nxp-ptn3222.c
-> new file mode 100644
-> index 000000000000..429a91910f14
-> --- /dev/null
-> +++ b/drivers/phy/phy-nxp-ptn3222.c
-> @@ -0,0 +1,119 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2024, Linaro Limited
-> + */
-> +
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/i2c.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/phy/phy.h>
-> +#include <linux/regmap.h>
-> +#include <linux/regulator/consumer.h>
-> +
-> +#define NUM_SUPPLIES 2
-> +
-> +struct ptn3222 {
-> +	struct i2c_client *client;
-> +	struct phy *phy;
-> +	struct gpio_desc *reset_gpio;
-> +	struct regulator_bulk_data supplies[NUM_SUPPLIES];
-> +};
-> +
-> +static int ptn3222_init(struct phy *phy)
-> +{
-> +	struct ptn3222 *ptn3222 = phy_get_drvdata(phy);
-> +	int ret;
-> +
-> +	ret = regulator_bulk_enable(NUM_SUPPLIES, ptn3222->supplies);
-> +	if (ret)
-> +		return ret;
-> +
-> +	gpiod_set_value_cansleep(ptn3222->reset_gpio, 0);
-> +
-> +	return 0;
-> +}
-> +
-> +static int ptn3222_exit(struct phy *phy)
-> +{
-> +	struct ptn3222 *ptn3222 = phy_get_drvdata(phy);
-> +
-> +	gpiod_set_value_cansleep(ptn3222->reset_gpio, 1);
-> +
-> +	return regulator_bulk_disable(NUM_SUPPLIES, ptn3222->supplies);
-> +}
-> +
-> +static const struct phy_ops ptn3222_ops = {
-> +	.init		= ptn3222_init,
-> +	.exit		= ptn3222_exit,
-> +	.owner		= THIS_MODULE,
-> +};
-> +
-> +static int ptn3222_probe(struct i2c_client *client)
-> +{
-> +	struct device *dev = &client->dev;
-> +	struct phy_provider *phy_provider;
-> +	struct ptn3222 *ptn3222;
-> +	int ret;
-> +
-> +	ptn3222 = devm_kzalloc(dev, sizeof(*ptn3222), GFP_KERNEL);
-> +	if (!ptn3222)
-> +		return -ENOMEM;
-> +
-> +	ptn3222->client = client;
-> +
-> +	ptn3222->reset_gpio = devm_gpiod_get_optional(dev, "reset",
-> +						      GPIOD_OUT_HIGH);
-> +	if (IS_ERR(ptn3222->reset_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(ptn3222->reset_gpio),
-> +				     "unable to acquire reset gpio\n");
-> +
-> +	ptn3222->supplies[0].supply = "vdd3v3";
-> +	ptn3222->supplies[0].init_load_uA = 11000;
-> +	ptn3222->supplies[1].supply = "vdd1v8";
-> +	ptn3222->supplies[1].init_load_uA = 55000;
-> +
-> +	ret = devm_regulator_bulk_get(dev,
-> +				      NUM_SUPPLIES,
-> +				      ptn3222->supplies);
+> 	.clkr.hw.init = &gcc_qupv3_wrap2_s7_clk_src_init,
 
-Suggestion only, you could switch to devm_regulator_bulk_get_const()
+Ack
 
-> +	if (ret)
-> +		return ret;
-> +
-> +	ptn3222->phy = devm_phy_create(dev, dev->of_node, &ptn3222_ops);
-> +	if (IS_ERR(ptn3222->phy)) {
-> +		dev_err(dev, "failed to create PHY: %d\n", ret);
-> +		return PTR_ERR(ptn3222->phy);
-> +	}
-> +
-> +	phy_set_drvdata(ptn3222->phy, ptn3222);
-> +
-> +	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
-> +
-> +	return PTR_ERR_OR_ZERO(phy_provider);
-> +}
-> +
-> +static const struct i2c_device_id ptn3222_table[] = {
-> +	{ "ptn3222" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(i2c, ptn3222_table);
-> +
-> +static const struct of_device_id ptn3222_of_table[] = {
-> +	{ .compatible = "nxp,ptn3222" },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, ptn3222_of_table);
-> +
-> +static struct i2c_driver ptn3222_driver = {
-> +	.driver = {
-> +		.name = "ptn3222",
-> +		.of_match_table = ptn3222_of_table,
-> +	},
-> +	.probe = ptn3222_probe,
-> +	.id_table = ptn3222_table,
-> +};
-> +
-> +module_i2c_driver(ptn3222_driver);
-> +
-> +MODULE_DESCRIPTION("NXP PTN3222 eUSB2 Redriver driver");
-> +MODULE_LICENSE("GPL");
-> 
-
-Apart that, it looks fine, please add my:
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+Even if I wasn't able to reproduce the original issue:
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 
