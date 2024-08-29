@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9A4396502E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 21:54:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6548D96503B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 21:56:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95F861F24418
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:54:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A9F31F221CF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:56:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5838E1BAEED;
-	Thu, 29 Aug 2024 19:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2551BC084;
+	Thu, 29 Aug 2024 19:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YRfiYAP7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXnTYe2g"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F701BAEDE;
-	Thu, 29 Aug 2024 19:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2552A1BC070
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 19:46:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724960696; cv=none; b=euV8/2qNpPKoiLE96NTEVWHKSUKLVnlXE/cuJrhJsQPz80f+urVq16E1q78flWsF64fn63r1BRg52qHXOrtri81svQUiMLILGFnqt0ifi9isvyqkAMGDR6UbnGLWUUO1meRK1KhEChHekmVW9+1RfljXRaB59Lk//mdd13B2QQM=
+	t=1724960809; cv=none; b=nO1+LFSknQcaCrViomM8Ncu+xd4atyk3yiPM0xRPFQWLvFiZaOK6r7vZJxAbyVuEJNxVD9Xb4mMdANS5Pcr/mTlAGjhJDwIM3KKnAtFNtyiz6BKBbR+FISecErcDDp01c9t9HG7oTtDEvvxy8mpD+sNKSmsU3/9GyO0PlMDiRfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724960696; c=relaxed/simple;
-	bh=k/g00ysHF7KkuUbMODChP4TngDt/vB6+q6ahC1ZjB14=;
+	s=arc-20240116; t=1724960809; c=relaxed/simple;
+	bh=xjo6xE95/L4xgY83ZcPoZzNMlqlD3HD/nseN0UBMbks=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nz0VUU3Cz7nln7L+BCfvEEWF6Z5JXCo+KYsQVGLexV4myzArLhv+T0PlydCxWW+KR3Ga3K3FACaM9ifppHFxWBkwK/UMz98kwSI09XVdLs2DuVPBwgtAA79zuzWrgx2PK26crCLJwe33ypBRryeq65FbOzdttxhLaYpsZ3P899Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YRfiYAP7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9E8C4CEC2;
-	Thu, 29 Aug 2024 19:44:51 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=mtefTgL5CKCcxjMaOesTqu786T3XpMrIvbP4k8L+4NRgZPUBlVqxqkIVfAA/VdEGZ13ZSX0YUAY76S8kWa2z/NAd0kHb6nGxCNIgS93YEs3Oda+30+eyRU/LG4RU1ojffspXtyHqzqehRtzshkPAY7N3cbLm+C/bTecuxKYsN+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXnTYe2g; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF01BC4CEC2;
+	Thu, 29 Aug 2024 19:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724960695;
-	bh=k/g00ysHF7KkuUbMODChP4TngDt/vB6+q6ahC1ZjB14=;
+	s=k20201202; t=1724960808;
+	bh=xjo6xE95/L4xgY83ZcPoZzNMlqlD3HD/nseN0UBMbks=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YRfiYAP7VoPoNx/3AAkHbr5Qk8vXD3mE2Vj2EiM2UXXnPBZbGuwHvUr0GBJNv9/cb
-	 r2p9aAgV8pSy0lfu1XX6mGJgZfY2A7xPcgSWqguM40AxlzmuwjrP6GXndjzusSOhOf
-	 ZgNjxfL/lA25Q+UrG9cLm228FqQy0Uv8B/RHc1wJVmYNiJXaa6haJqDdRNnrxbuZqA
-	 Eh4Z3x7TSnr0hz2TAgl7wykB1fHftqmvckZ6d+hdIyIrxLtPKC8Wdca81SbXJ8Ueu9
-	 WoYbT/OT2L5McrRT5yoLpV07TjdjQZ6iilvNtvSLa6baA6zIyKSj8906zKeu59drC+
-	 8wpfssMv6gM8Q==
-Message-ID: <1a1e3d43-27b7-4927-ad4d-25580bd133e7@kernel.org>
-Date: Thu, 29 Aug 2024 21:44:48 +0200
+	b=nXnTYe2g5t6g0IYQfZzIOoRUDL5g+p97OsR8OCbz0pRxSO2MFH/3RrQc6cVa4zHAd
+	 wmmR4kJtXCL+5J6/e3YAOFwkUYHtOqGESst62S0fCcs6C0W55wncDzDnh0YlfQ6dBn
+	 BKlXcNOOEMrWQourvYwHWc+D2qvg9pxpott30lb8K+nhbTbNfIHESM3Q2dhGK3LDeq
+	 Pt+woW9Y/MGknEEB/+ZNenmd62fIWzhfQPvr51KmDI4whcZuTB2AqwluJXiAF93BK5
+	 BUZNOq7SQ5kg02K2rL28YUlrCdjsqe6RYsKn1HCtVuPfZtBilghjMZHiFHSbtcHLJ4
+	 jY3/ZhVX1zrTA==
+Message-ID: <2dca6714-971f-46d1-9a72-511a276f6ded@kernel.org>
+Date: Thu, 29 Aug 2024 21:46:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,43 +50,43 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] Revert "soc: qcom: smd-rpm: Match rpmsg channel
- instead of compatible"
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Andy Gross <agross@kernel.org>,
- Stephan Gerhold <stephan@gerhold.net>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- linux-clk@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- stable@vger.kernel.org
-References: <20240729-fix-smd-rpm-v2-0-0776408a94c5@linaro.org>
- <20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc8280xp-wdk2023: dt definition for
+ WDK2023
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+ linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Merck Hung <merckhung@gmail.com>
+References: <5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz>
+ <910a53f7-af59-423f-ade2-66d53ddf0538@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240729-fix-smd-rpm-v2-1-0776408a94c5@linaro.org>
+In-Reply-To: <910a53f7-af59-423f-ade2-66d53ddf0538@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.07.2024 9:52 PM, Dmitry Baryshkov wrote:
-> The rpm_requests device nodes have the compatible node. As such the
-> rpmsg core uses OF modalias instead of a native rpmsg modalias. Thus if
-> smd-rpm is built as a module, it doesn't get autoloaded for the device.
+On 29.08.2024 6:37 PM, Konrad Dybcio wrote:
+> On 29.08.2024 1:47 PM, Jens Glathe wrote:
+>> "Microsoft Windows Dev Kit 2023" aka "Blackrock" aka "Project Volterra"
+>>
+>> Device tree for the Windows Dev Kit 2023. This work
+>> is based on the initial work of Merck Hung <merckhung@gmail.com>.
+>>
+>> Original work: https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
+>>
+>> This dt is more or less deducted from the Thinkpad X13s.
+>> It contains a lot of guesswork, and also a lot of research on
+>> what works with the Windows Dev Kit.
+>>
+>> It is in use and under development since May 2023, pretty stable now.
+>>
+>> Signed-off-by: Merck Hung <merckhung@gmail.com>
+>> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>> ---
 > 
-> Revert the commit bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel
-> instead of compatible")
-> 
-> Fixes: bcabe1e09135 ("soc: qcom: smd-rpm: Match rpmsg channel instead of compatible")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> microsoft,volterra
 
-Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+sorry this one was called blackrock, volterra is a marketing name
 
 Konrad
+
 
