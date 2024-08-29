@@ -1,231 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-29997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D58C89642FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 13:30:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8250964329
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 13:33:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F901B24FAA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 11:30:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67B4E1F21D3D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 11:33:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C475B190698;
-	Thu, 29 Aug 2024 11:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3691917FB;
+	Thu, 29 Aug 2024 11:33:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kNYP7RCT"
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="OmBXnpBx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F3218A923
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 11:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEECC18DF9F;
+	Thu, 29 Aug 2024 11:33:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724931048; cv=none; b=hU+7Qt/9XYbmXmiR+ndO0NV06PfEmlt8+rBKR05lvSa3Tx7Il7AWionJeINtyzPNdYnOq6pP5HihE9QFYZRdbF1ZIkvQS0i35L5OWOk34gx9ADB+rXF/gnWtGMpJ6WoWmAEFH+qHLj765KrStGoyf7PWdKtEToBCTBHi96FtKN0=
+	t=1724931221; cv=none; b=jvkKhC9TUFVBD6nMLxd/oW4LmxwQ+gs9ZS1cTBG2IP6jqdY0ZFbsmUV6pFOvxAHDxhDr1Wq5bXzk+6NQoxq8qnpPmR+AdsiSfksMDuVs9QqsbU3x+zYpIZdrW0APAXn6xysXFPX1ukQ3vEXw+ZlacfzelHqGG7jYUwrZ1LNiBhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724931048; c=relaxed/simple;
-	bh=RXf5XnyjxXzPYrjzh0dJt5iTU1Fh5vM2+LPu5cXxgAc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kQ3BAeaA7rwzs2Novmosh+0yJtsClXDbn8wJG2wXTEH5DTNoPyrG2dXrzR/50P17iRyKkpe8GQ+gIanz9bshTcDlXZgScGdBDkiwCs/FKDaR43wQgXymMV4W0pS0ULd96Kr3JnRvXg/MIasKkK2eNV0OJQCh5t9IizWz6bf4BfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kNYP7RCT; arc=none smtp.client-ip=209.85.210.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-7093b53f315so201696a34.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 04:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724931046; x=1725535846; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ReWorqYY0VGDLTBveQGdWy9bVyDQzpWAgTpeL0AFwY4=;
-        b=kNYP7RCTCifDszMwfgplfvzgQYtCjJ2/C3B6iXgLzCh53Q9yqCdQrWR+LZHq8wUjrm
-         WfyzMM3OxQsJwbLyjh94iZDzoodxudY5NIKm64sigob1nb2cLPAIk486WKoe1lGQIzPS
-         9QuxC6NUY8S4QzbiE1V2XPllQSxhtq56EOJNZ5J1JVIQO1BNqyS221Ej6CbMl4KjggkS
-         vwq8zg6W/SUQp5qf9zpP7jBCJborG17OXHYxY8Go2l0tGEZQZbQ7j1kbJAWfBJU6lgPY
-         2piCKqravF81QyCFg3FLso/SwZzHEVVscbDKCxKfgasdoJZgtjvnQSE6nl9b5p81gJ0H
-         0h4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724931046; x=1725535846;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ReWorqYY0VGDLTBveQGdWy9bVyDQzpWAgTpeL0AFwY4=;
-        b=hwEIWxJyqjVtKyMudkE6pomHAl9n6ct0KPpP67dRdANiQsY2voXu7QWE6mXtCXGr3n
-         nmz+dljx1jDxfNHIsIn0mtXjV6s/eqVxmIUgFvtQ88KNFPvKb6YtdnQDo6r6FnZgqaFT
-         SjnTTzwjJ6VOAm6ecWToyEjQ0e38WpyySgvZ2uHWOLiDzzMYQNGtX8O/qh9lXmpH4Rmx
-         VdzxDnRDGKigfkL4aYEy5A5b7KgAkHm0gr/oh/fG0e8teP9lpZbaci94ohSowJS58OPv
-         uEwOCVUOXRR2iXR6Kuc7CYq2ijEG/i0k69Se9c/F7e7laKx/M0zF/ZtIKgYxmrCoL00Z
-         g0QQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWIEKKVijoqQiaNMPPHu8GuFeMyckel9hF/rzRdHxc+I8034xQGMVUxR3XKam2G+nWYQG3dZ0xaLZYTHziu@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyw7ki3bo/2SEx3h1bJIJ+PgaUNAZ355A5nczoKtkqJ/ozns4dt
-	r83w7ETTy8d7SivQudFW3M0O8q9SDv5yE3F4IDLxu/X2HKEQSoZzetrjjfFL4PMI8YHOjl5wpr6
-	/BlHBGFZVX70mMoLBev3Kq9BTF1zA8Ves49XPBQ==
-X-Google-Smtp-Source: AGHT+IEm6BpoCMJsMfPee0AxB7OK/BDhaR2otSKRjnCeYj7NqNbE55ilZhyParmXKAp88a/NdIInEA0aKqv3uoj+iQI=
-X-Received: by 2002:a05:6830:7190:b0:70b:2999:2d7e with SMTP id
- 46e09a7af769-70f5c3a239bmr2489351a34.1.1724931044713; Thu, 29 Aug 2024
- 04:30:44 -0700 (PDT)
+	s=arc-20240116; t=1724931221; c=relaxed/simple;
+	bh=8JH/E7Cgzfn8+ujOrfoRemEzIuEa1qpfghMcYGXxRZA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=uE7G1Ij9NWnZmVhoE8NQXxUb+DsiL/AaWW725z7lthvSQ8Hsm756vyVt9e/6IUvhCgf2ikvbiil+zdfk8HkhGg7MI8VnQJo3Mw/9CgKiPGXwQHZGI2f8v5F55R6CPD8cYuB3g4ky6fApjogya8sucnfEx6E5Ml/WTFzg0BYi6y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=OmBXnpBx reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=HrS8HTFMXVJIQ943vpnL41KSoth9i2mrgBYnnMrbyEo=; b=O
+	mBXnpBxlajjsKWdBcW5nL2LqMq5u1XX6BuKaPp/DEaF+Ud6/EMARR0H5+dVpzBGp
+	nVS5P4lL1z+i8RaBj0mfjAL7f+8/uHVRsQlKHg9B9RUqGHNiUqVavWaMBLpJFw8Y
+	OrVyJvM/aMweJ4xTGSsiCfXL5H9/kmeQZ0zilfEZ6E=
+Received: from slark_xiao$163.com ( [112.97.81.228] ) by
+ ajax-webmail-wmsvr-40-130 (Coremail) ; Thu, 29 Aug 2024 19:33:23 +0800
+ (CST)
+Date: Thu, 29 Aug 2024 19:33:23 +0800 (CST)
+From: "Slark Xiao" <slark_xiao@163.com>
+To: "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re:Re: Re: Re: [PATCH v2 1/2] bus: mhi: host: pci_generic: Update
+ the file path for Foxconn SDX55/SDX72
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2024 www.mailtech.cn 163com
+In-Reply-To: <20240726115858.GG2628@thinkpad>
+References: <20240725022941.65948-1-slark_xiao@163.com>
+ <20240725035954.GA2317@thinkpad>
+ <6dd00891.8235.190e91ac139.Coremail.slark_xiao@163.com>
+ <20240726050051.GA2628@thinkpad>
+ <5aa442e3.4d45.190ed9bf7c0.Coremail.slark_xiao@163.com>
+ <20240726115858.GG2628@thinkpad>
+X-NTES-SC: AL_Qu2ZBvWYvkor5SCabOkfmk8Sg+84W8K3v/0v1YVQOpF8jADoygsaUEFcM0HUyMO2CQmpmgeIVghz6tl7Yq53Q6YBvmzn5swFQDdqBCoe7GBgZw==
+Content-Transfer-Encoding: base64
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
- <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-13-bdb05b4b5a2e@linaro.org>
-In-Reply-To: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-13-bdb05b4b5a2e@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 29 Aug 2024 14:30:32 +0300
-Message-ID: <CAA8EJpoRiF5uYUeeVog6QU+5f64eBzVDwafopXLnRkW5EiW6Eg@mail.gmail.com>
-Subject: Re: [PATCH 13/21] drm/msm/dpu: Support quad pipe in header files
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <49726bf.a036.1919de95fdd.Coremail.slark_xiao@163.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:_____wD3n+qDXNBmQ3BBAA--.39808W
+X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbioxxKZGVOFNvVnwABs+
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Thu, 29 Aug 2024 at 13:20, Jun Nie <jun.nie@linaro.org> wrote:
->
-> Support 4 pipes and their configs at most. They are for 2 SSPP
-> and their multi-rect mode. Because one SSPP can co-work with
-> 2 mixer at most, 2 pair of mixer are needed for 2 SSPP in quad-
-> pipe case. So 2 mixer configs are needed in quad-pipe case.
-
-As you wrote this is based (depends?) on the virtual planes, then you
-know that the code already uses either one or two SSPP blocks to drive
-one sw_pipe. I'm not sure what do you mean by "2 mixer configs". There
-are 4 LMs and 4 mixer configurations in the quad-pipe case. The commit
-message is thus misleading.
-
->
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  2 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 11 ++++++++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h   | 30 +++++++++++++++++++++--------
->  3 files changed, 33 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index a2eff36a2224c..424725303ccad 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -32,7 +32,7 @@
->  #define DPU_MAX_PLANES                 4
->  #endif
->
-> -#define PIPES_PER_STAGE                        2
-> +#define PIPES_PER_STAGE                        4
->  #ifndef DPU_MAX_DE_CURVES
->  #define DPU_MAX_DE_CURVES              3
->  #endif
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> index fc54625ae5d4f..ae6beff2c294b 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-> @@ -143,11 +143,20 @@ struct dpu_hw_pixel_ext {
->   *             such as decimation, flip etc to program this field
->   * @dest_rect: destination ROI.
->   * @rotation: simplified drm rotation hint
-> + * @visible: mark this cfg is valid
-
-So is it valid or visible?
-
-> + * @mxcfg_id: mixer config ID for left or right half screen.
-> + *             We have single SSPP, dual SSPP, single SSPP+multi_rect or dual
-> + *             SSPP+multi_rect case. mxcfg_id mark current pipe will use
-> + *             which mixer cfg. The first mxcfg is for the left half of screen,
-> + *             the 2nd mxcfg is for the right half screen. The heading cfg may
-> + *             be skipped by pipe with the first mxcfg_id = 1 if the plane is
-> + *             only displayed in the right side, thus SSPP goes to later mixers.
-
-too long description for an unreadable name.
-
->   */
->  struct dpu_sw_pipe_cfg {
->         struct drm_rect src_rect;
->         struct drm_rect dst_rect;
-> -       unsigned int rotation;
-> +       unsigned int rotation, mxcfg_id;
-> +       bool visible;
->  };
->
->  /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> index e225d5baceb09..9e79cf9eba264 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-> @@ -14,14 +14,30 @@
->  #include "dpu_hw_mdss.h"
->  #include "dpu_hw_sspp.h"
->
-> +/**
-> + * Max number of mixer configs. Because we support 4 pipes at most,
-> + * the 4 pipes are with 2 SSPP and their multi-rect mode. While one
-
-Or 4 SSPPs. Or 3 SSPPs. Or even a single SSPP if it doesn't cover the
-whole screen.
-
-I'm really sorry to say, but I can not understand this text.
-
-> + * SSPP can co-work with 2 mixer at most, then 2 pair of mixer are
-> + * needed for 2 SSPP in quad-pipe case. Thus 2 mixer configs are
-> + * needed in quad-pipe case.
-> + */
-> +#define MIX_CFGS_IN_CRTC 2
-> +
->  /**
->   * struct dpu_plane_state: Define dpu extension of drm plane state object
->   * @base:      base drm plane state object
->   * @aspace:    pointer to address space for input/output buffers
-> - * @pipe:      software pipe description
-> - * @r_pipe:    software pipe description of the second pipe
-> - * @pipe_cfg:  software pipe configuration
-> - * @r_pipe_cfg:        software pipe configuration for the second pipe
-> + * @pipe:      software pipe description. Some or all of fields in array can
-
-array has elements, not fields.
-
-> + *             be in use per topology. The heading fields are used first,
-> + *             and the later fields is invalid if visible field of pipe_cfg
-> + *             is not set. For example, the visible fields of pipe_cfg are set
-> + *             in the first 2 pipe_cfg fields, and the mxcfg_id for them are
-> + *             0 and 1. That means the first pipe is for left half screen and
-> + *             the 2nd pipe is for right half. The visible field of the 3rd
-> + *             pipe_cfg is not set, which means the 3rd and 4th pipe are not
-> + *             in use.
-
-NAK. A single LM pair might already need two sw pipes.
-After reading the comment I have doubts that you understand what the
-code is currently doing.
-
-> + * @pipe_cfg:  software pipe configuration. The 4 fields are for SSPP and their
-> +               parallel rect as above pipes.
->   * @stage:     assigned by crtc blender
->   * @needs_qos_remap: qos remap settings need to be updated
->   * @multirect_index: index of the rectangle of SSPP
-> @@ -34,10 +50,8 @@
->  struct dpu_plane_state {
->         struct drm_plane_state base;
->         struct msm_gem_address_space *aspace;
-> -       struct dpu_sw_pipe pipe;
-> -       struct dpu_sw_pipe r_pipe;
-> -       struct dpu_sw_pipe_cfg pipe_cfg;
-> -       struct dpu_sw_pipe_cfg r_pipe_cfg;
-> +       struct dpu_sw_pipe pipe[PIPES_PER_STAGE];
-> +       struct dpu_sw_pipe_cfg pipe_cfg[PIPES_PER_STAGE];
->         enum dpu_stage stage;
->         bool needs_qos_remap;
->         bool pending;
->
-> --
-> 2.34.1
->
-
-
--- 
-With best wishes
-Dmitry
+CgoKQXQgMjAyNC0wNy0yNiAxOTo1ODo1OCwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2
+YW5uYW4uc2FkaGFzaXZhbUBsaW5hcm8ub3JnPiB3cm90ZToKPk9uIEZyaSwgSnVsIDI2LCAyMDI0
+IGF0IDAxOjU1OjQwUE0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IAo+PiBBdCAyMDI0LTA3
+LTI2IDEzOjAwOjUxLCAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaXZhbm5hbi5zYWRoYXNp
+dmFtQGxpbmFyby5vcmc+IHdyb3RlOgo+PiA+T24gVGh1LCBKdWwgMjUsIDIwMjQgYXQgMDQ6NTY6
+MDNQTSArMDgwMCwgU2xhcmsgWGlhbyB3cm90ZToKPj4gPj4gCj4+ID4+IEF0IDIwMjQtMDctMjUg
+MTE6NTk6NTQsICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1A
+bGluYXJvLm9yZz4gd3JvdGU6Cj4+ID4+ID5PbiBUaHUsIEp1bCAyNSwgMjAyNCBhdCAxMDoyOTo0
+MEFNICswODAwLCBTbGFyayBYaWFvIHdyb3RlOgo+PiA+PiA+PiBUbyBzZXBhcmF0ZSB0aGUgaW1h
+Z2VzIG9mIEZveGNvbm4gZnJvbSBvdGhlciB2ZW5kb3JzLCBhZGRpbmcgYQo+PiA+PiA+PiBuZXcg
+Zm94Y29ubiBzdWJmb2xkZXIgdW5kZXIgcWNvbS88cGxhdGZvcm0+IGZvciBlZGwgaW1hZ2UgcGF0
+aC4KPj4gPj4gPj4gQW5kIGRlbGV0ZSB0aGUgZncgcGF0Y2ggc2luY2UgaXQncyB1c2VsZXNzIGZv
+ciBGb3hjb25uIGRldmljZXMuCj4+ID4+ID4+IAo+PiA+PiA+PiBGaXhlczogYmYzMGE3NWU2ZTAw
+ICgiYnVzOiBtaGk6IGhvc3Q6IEFkZCBzdXBwb3J0IGZvciBGb3hjb25uIFNEWDcyIG1vZGVtcyIp
+Cj4+ID4+ID4+IFNpZ25lZC1vZmYtYnk6IFNsYXJrIFhpYW8gPHNsYXJrX3hpYW9AMTYzLmNvbT4K
+Pj4gPj4gPj4gLS0tCj4+ID4+ID4+IHYyOiBjaGFuZ2UgdGhlIGZvbGRlciBwYXRoIGFyY2hpdGVj
+dHVyZQo+PiA+PiA+PiAtLS0KPj4gPj4gPj4gIGRyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5l
+cmljLmMgfCAxMyArKysrKy0tLS0tLS0tCj4+ID4+ID4+ICAxIGZpbGUgY2hhbmdlZCwgNSBpbnNl
+cnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQo+PiA+PiA+PiAKPj4gPj4gPj4gZGlmZiAtLWdpdCBh
+L2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMgYi9kcml2ZXJzL2J1cy9taGkvaG9z
+dC9wY2lfZ2VuZXJpYy5jCj4+ID4+ID4+IGluZGV4IDE0YTExODgwYmNlYS4uZjE1OWE5ZGQ1M2U3
+IDEwMDY0NAo+PiA+PiA+PiAtLS0gYS9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5j
+Cj4+ID4+ID4+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPj4gPj4g
+Pj4gQEAgLTQzMyw4ICs0MzMsNyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9jb250cm9sbGVy
+X2NvbmZpZyBtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZyA9IHsKPj4gPj4gPj4gIAo+PiA+PiA+
+PiAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZvIG1oaV9mb3hjb25uX3NkeDU1
+X2luZm8gPSB7Cj4+ID4+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi1zZHg1NSIsCj4+ID4+ID4+IC0J
+LmZ3ID0gInFjb20vc2R4NTVtL3NibDEubWJuIiwKPj4gPj4gPj4gLQkuZWRsID0gInFjb20vc2R4
+NTVtL2VkbC5tYm4iLAo+PiA+PiA+PiArCS5lZGwgPSAicWNvbS9zZHg1NW0vZm94Y29ubi9wcm9n
+X2ZpcmVob3NlX3NkeDU1Lm1ibiIsCj4+ID4+ID4KPj4gPj4gPkkgdGhpbmsgeW91IG1pc3VuZGVy
+c3Rvb2Qgd2hhdCBJIHN1Z2dlc3RlZCBpbiBlYXJsaWVyIHJldmlzaW9uLiBZb3Ugc2hvdWxkIGFk
+ZAo+PiA+PiA+dGhlIEZveGNvbm4gc3BlY2lmaWMgZncgb25seSBpZiBpdCBpcyBkaWZmZXJlbnQg
+ZnJvbSB0aGUgcWNvbSBvbmUuIElzIGl0IHJlYWxseQo+PiA+PiA+ZGlmZmVyZW50IGZvciBhbGwg
+dGhlc2UgbW9kZW1zPyBPdGhlcndpc2UsIHdoYXQgaXMgdGhlIHBvaW50IG9mIGFkZGluZyB0aGVt
+Pwo+PiA+PiA+Cj4+ID4+ID4tIE1hbmkKPj4gPj4gCj4+ID4+ID4KPj4gPj4gSGkgTWFuaSwKPj4g
+Pj4gWWVzLCBhbGwgcHJvZ3JhbWVyIGZpbGVzIGFyZSBkaWZmZXJlbnQgd2l0aCBkZWZhdWx0LiBX
+ZSBhZGQgYSBzaWduIHN0ZXAgZm9yIGVhY2ggaW1hZ2UKPj4gPj4gZmlsZS4gVGhhdCBtZWFucyBv
+dGhlciB2ZW5kb3IncyBlZGwgaW1hZ2UoaW5jbHVkaW5nIFF1YWxjb21tKSBjYW4ndCBiZSBhcHBs
+aWVkIGZvcgo+PiA+PiBGb3hjb25uIGRldmljZXMuIAo+PiA+PiAKPj4gPgo+PiA+R290Y2hhLiBQ
+bGVhc2UgaW5jbHVkZSB0aGlzIGluZm8gaW4gdGhlIGNvbW1pdCBtZXNzYWdlIGFzIHBlb3BsZSBt
+YXkgd29uZGVyIHdoYXQKPj4gPnRoZSBkaWZmZXJlbmNlIGJldHdlZW4geW91cnMgYW5kIHFjb20u
+Cj4+IAo+PiA+Cj4+IElmIHBvc3NpYmxlLCBwZWxhc2UgaGVscCBtZSBhZGQgaXQgaW50byBteSBj
+b21taXQgbWVzc2FnZS4KPj4gCj4KPk9rLiBJIGNhbiBhZGQgdGhpcyB3aGlsZSBhcHBseWluZy4K
+CkhpIE1hbmksCkNvdWxkIHlvdSBoZWxwIG1lcmdlIHRoaXMgaW50byBtaGktbmV4dD8gSSBzYXcg
+eW91IGp1c3QgYXBwbGllZCBzb21lIG90aGVyIGNoYW5nZXMuClNvIEkgdGhpbmsgdGhlIG1lcmdl
+IHdpbmRvdyBzaG91bGQgYmUgb3BlbmVkLgoKVGhhbmtzCj4KPj4gCj4+ID5VbnJlbGF0ZWQgcXVl
+c3Rpb24gdG8gdGhpcyBwYXRjaDogT25jZSB0aGUgRURMIGlzIHByb2dyYW1tZWQsIHdoYXQgYXJl
+IHRoZQo+PiA+aW1hZ2VzIHRoYXQgdGhlIHVzZXIgaGFzIHRvIGZsYXNoIHVzaW5nIEZpcmVob3Nl
+IHByb3RvY29sPyBJcyB0aGF0IHRoZSBmdWxsIFNESwo+PiA+b3IganVzdCBTQkwvQVBQUyBpbWFn
+ZT8KPj4gPgo+PiAKPj4gPklmIHNvLCB3aGF0IGlzIHRoZSBzaXplIG9mIHRoZSBpbWFnZXM/Cj4+
+IAo+PiAKPj4gVGhpcyBkZXBlbmRzIG9uIGEgcmF3IGZpbGUsIGxldCdzIHRha2UgU0RYNjUgYXMg
+YW4gZXhhbXBsZS4gVGhlIGZpbGXCoAo+PiByYXdwcm9ncmFtX25hbmRfcDRLX2IyNTZLLnhtbCBj
+b250YWlucyBiZWxvdyBpdGVtczoKPj4gLi4uLi4KPj4gPGVyYXNlIFBBR0VTX1BFUl9CTE9DSz0i
+NjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBudW1fcGFydGl0aW9uX3NlY3RvcnM9IjY0
+MCIgc3RhcnRfc2VjdG9yPSIwIi8+Cj4+IDxwcm9ncmFtIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNF
+Q1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBmaWxlbmFtZT0ieGJsLmVsZi5lbmMiIGxhYmVsPSJz
+YmwiIGxhc3Rfc2VjdG9yPSI2MzkiIG51bV9wYXJ0aXRpb25fc2VjdG9ycz0iNjQwIiBwaHlzaWNh
+bF9wYXJ0aXRpb25fbnVtYmVyPSIwIiBzdGFydF9zZWN0b3I9IjAiLz4KPj4gLi4uLi4KPj4gPGVy
+YXNlIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBudW1f
+cGFydGl0aW9uX3NlY3RvcnM9IjI3NDU2IiBzdGFydF9zZWN0b3I9IjE2NTEyIi8+Cj4+IMKgIDxw
+cm9ncmFtIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBm
+aWxlbmFtZT0iTk9OLUhMT1MudWJpLmVuYyIgbGFiZWw9Im1vZGVtIiBsYXN0X3NlY3Rvcj0iNDM5
+NjciIG51bV9wYXJ0aXRpb25fc2VjdG9ycz0iMjc0NTYiIHBoeXNpY2FsX3BhcnRpdGlvbl9udW1i
+ZXI9IjAiIHN0YXJ0X3NlY3Rvcj0iMTY1MTIiLz4KPj4gLi4uCj4+IAo+PiAKPj4gVGhpcyBmaWxl
+IGNvbnRhaW5zIDIgcGFydCwgImVyYXNlIiBhbmQgInByb2dyYW0iLgo+PiBlcmFzZSB3aWxsIHRl
+bGwgdGhlIHRvb2wgdG8gZXJhc2UgdGhlIHBhcnRpdGlvbiBmcm9tIHNlY3RvciB4IHRvIHkuCj4+
+IEFuZCAicHJvZ3JhbSIgd2lsbCB0ZWxsIHRoZSB0b29sIHRvIGZsYXNoIHRoZSBmaWxlIGludG8g
+dGhhdCBwYXJ0aW9uIHdoaWNoIHN0YXJ0IGZyb20gc2VjdG9yIG0gdG8gbi4KPj4gCj4+IAo+PiBT
+byB0aGUgbG9naWNhbCBpcywgZnVsbCBTREsgb3IganVzdCBvbmUgb3Igc29tZSBwYXJ0aXRpb25z
+IGFyZSBmbGFzaGVkIGRlcGVuZHMgb24gdGhpcyByYXcgZmlsZS4KPj4gTm9ybWFsbHksIGZ1bGwg
+U0RLIGlzIHRoZSBtYWluIHNjZW5hcmlvLiBBbmQgdGhlIHNpemUgaXMgYWJvdXQgMTUwTUIgdG8g
+MjAwTUIuCj4+IFRoYW5rcy4gCj4+IAo+Cj5Pa2F5LCB0aGFua3MuIEkganVzdCB3YW50ZWQgdG8g
+dW5kZXJzdGFuZCB3aGF0IGltYWdlcyBhcmUgZ2V0dGluZyBmbGFzaGVkLgo+Cj4tIE1hbmkKPgo+
+PiA+Cj4+ID4tIE1hbmkKPj4gPgo+PiA+PiA+PiAgCS5jb25maWcgPSAmbW9kZW1fZm94Y29ubl9z
+ZHg1NV9jb25maWcsCj4+ID4+ID4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRfQkFSX05V
+TSwKPj4gPj4gPj4gIAkuZG1hX2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gPj4gQEAgLTQ0NCw4ICs0
+NDMsNyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5f
+c2R4NTVfaW5mbyA9IHsKPj4gPj4gPj4gIAo+PiA+PiA+PiAgc3RhdGljIGNvbnN0IHN0cnVjdCBt
+aGlfcGNpX2Rldl9pbmZvIG1oaV9mb3hjb25uX3Q5OXcxNzVfaW5mbyA9IHsKPj4gPj4gPj4gIAku
+bmFtZSA9ICJmb3hjb25uLXQ5OXcxNzUiLAo+PiA+PiA+PiAtCS5mdyA9ICJxY29tL3NkeDU1bS9z
+YmwxLm1ibiIsCj4+ID4+ID4+IC0JLmVkbCA9ICJxY29tL3NkeDU1bS9lZGwubWJuIiwKPj4gPj4g
+Pj4gKwkuZWRsID0gInFjb20vc2R4NTVtL2ZveGNvbm4vcHJvZ19maXJlaG9zZV9zZHg1NS5tYm4i
+LAo+PiA+PiA+PiAgCS5jb25maWcgPSAmbW9kZW1fZm94Y29ubl9zZHg1NV9jb25maWcsCj4+ID4+
+ID4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRfQkFSX05VTSwKPj4gPj4gPj4gIAkuZG1h
+X2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gPj4gQEAgLTQ1NSw4ICs0NTMsNyBAQCBzdGF0aWMgY29u
+c3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fdDk5dzE3NV9pbmZvID0gewo+
+PiA+PiA+PiAgCj4+ID4+ID4+ICBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8g
+bWhpX2ZveGNvbm5fZHc1OTMwZV9pbmZvID0gewo+PiA+PiA+PiAgCS5uYW1lID0gImZveGNvbm4t
+ZHc1OTMwZSIsCj4+ID4+ID4+IC0JLmZ3ID0gInFjb20vc2R4NTVtL3NibDEubWJuIiwKPj4gPj4g
+Pj4gLQkuZWRsID0gInFjb20vc2R4NTVtL2VkbC5tYm4iLAo+PiA+PiA+PiArCS5lZGwgPSAicWNv
+bS9zZHg1NW0vZm94Y29ubi9wcm9nX2ZpcmVob3NlX3NkeDU1Lm1ibiIsCj4+ID4+ID4+ICAJLmNv
+bmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDU1X2NvbmZpZywKPj4gPj4gPj4gIAkuYmFyX251bSA9
+IE1ISV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiA+PiAgCS5kbWFfZGF0YV93aWR0aCA9IDMy
+LAo+PiA+PiA+PiBAQCAtNTAyLDcgKzQ5OSw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3Bj
+aV9kZXZfaW5mbyBtaGlfZm94Y29ubl9kdzU5MzJlX2luZm8gPSB7Cj4+ID4+ID4+ICAKPj4gPj4g
+Pj4gIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl90OTl3
+NTE1X2luZm8gPSB7Cj4+ID4+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi10OTl3NTE1IiwKPj4gPj4g
+Pj4gLQkuZWRsID0gImZveC9zZHg3Mm0vZWRsLm1ibiIsCj4+ID4+ID4+ICsJLmVkbCA9ICJxY29t
+L3NkeDcybS9mb3hjb25uL2VkbC5tYm4iLAo+PiA+PiA+PiAgCS5lZGxfdHJpZ2dlciA9IHRydWUs
+Cj4+ID4+ID4+ICAJLmNvbmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZywKPj4gPj4g
+Pj4gIAkuYmFyX251bSA9IE1ISV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiA+PiBAQCAtNTEz
+LDcgKzUxMCw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94
+Y29ubl90OTl3NTE1X2luZm8gPSB7Cj4+ID4+ID4+ICAKPj4gPj4gPj4gIHN0YXRpYyBjb25zdCBz
+dHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl9kdzU5MzRlX2luZm8gPSB7Cj4+ID4+
+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi1kdzU5MzRlIiwKPj4gPj4gPj4gLQkuZWRsID0gImZveC9z
+ZHg3Mm0vZWRsLm1ibiIsCj4+ID4+ID4+ICsJLmVkbCA9ICJxY29tL3NkeDcybS9mb3hjb25uL2Vk
+bC5tYm4iLAo+PiA+PiA+PiAgCS5lZGxfdHJpZ2dlciA9IHRydWUsCj4+ID4+ID4+ICAJLmNvbmZp
+ZyA9ICZtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZywKPj4gPj4gPj4gIAkuYmFyX251bSA9IE1I
+SV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiA+PiAtLSAKPj4gPj4gPj4gMi4yNS4xCj4+ID4+
+ID4+IAo+PiA+PiA+Cj4+ID4+ID4tLSAKPj4gPj4gPuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCv
+jSDgrprgrqTgrr7grprgrr/grrXgrq7gr40KPj4gPgo+PiA+LS0gCj4+ID7grq7grqPgrr/grrXg
+rqPgr43grqPgrqngr40g4K6a4K6k4K6+4K6a4K6/4K614K6u4K+NCj4KPi0tIAo+4K6u4K6j4K6/
+4K614K6j4K+N4K6j4K6p4K+NIOCumuCupOCuvuCumuCuv+CuteCuruCvjQo=
 
