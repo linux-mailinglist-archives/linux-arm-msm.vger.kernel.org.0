@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-30116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADA2196511D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 22:49:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D743996511C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 22:49:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2CE40B228BA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 20:49:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8BFE21F2292E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 20:49:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18B8618C013;
-	Thu, 29 Aug 2024 20:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F210C18C00E;
+	Thu, 29 Aug 2024 20:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XDCJws7w"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cRbDHi1o"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D74F18C003;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8126E18C001;
 	Thu, 29 Aug 2024 20:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724964557; cv=none; b=Cbwg8F5GbxEfK8z+E5H5xpjUQ2RDa3u6tMHRM1N4ic/MCe3NSQEeNCKf8g28keSg7+SfzWT+iTfeA4BzPVGrozjRCZXVeSODYiXUM2hJhi6p1fXqGGxaWQ5bH3pNXZ6IcwbBmKkudDLQL1O40xApnUfQmALCsbgDoI0QZANmcbk=
+	t=1724964556; cv=none; b=RenGUjktH8fcTzUxbK5mL/XUq6W7r6rUsj7qSXaSu/sh6GRmIjCe0w4jCtiO2KjT9xlYcdU9nUVw/RDXhJ7X/odCskoNBGhAtBr9/awjYKaNGqUhvfEQDT/hxzFzXeOn4ooYPv+MnklQ8nYqr6DPWlYzX5Cb9d2MNi2/pPv5ZxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724964557; c=relaxed/simple;
-	bh=dR2G/MD6yM3cOdkFd3LB/ulhZzh5I4UbvIhzhfe8P0U=;
+	s=arc-20240116; t=1724964556; c=relaxed/simple;
+	bh=e096vd+UGNu8nhPc7VODA2MS7X3rPYMs4TqTAd6/p+w=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=c8lTRlqANp6XhLL5wolzg6ujgCF3R8ECpnFtIaK8oNQv9pOI3pdv0k+JoWeREAiEWsMNpEcvv3u5u4qgttqZR3VN8V+bzC+MCeHK1fVTbYo1GGVJjlL11toQFzjUOjkMbDvX52VZfQcidsTQKn5PFfTBnT1uZLrE/IzaPMBKRho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XDCJws7w; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=uUp1SPOH+B5cT5qwJLIHEBZeJw4cM95cDw2hOD423QpACjARmn3ghsD4B+rLqLIRd20huO9BZojYlgWOxgt6gUF77rQHko3wdc8Njo/9JRovwbE9Z5yg+ImConOUcT5awc68IBzrxPuGtbzs4EJRSl5BKe3YPb/tM8ecLiXAjpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cRbDHi1o; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47TGYXKe020024;
-	Thu, 29 Aug 2024 20:49:00 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47TIHdZt029683;
+	Thu, 29 Aug 2024 20:49:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gqb2UzyXCprwQxN+jRDsHSNUSPIyeNgE724FJcAyVKs=; b=XDCJws7w3USJKy28
-	w2IAYk6TTwh4wlFe6QON69V2nAQeVF0A3T9wgwW8C6xJQs3LjM0c50bB5+lgKn25
-	vSOHvlJL4So9Cr2JmHB1p5SncVpGxNIOKNsIztdSedUlOqlggsQ0Yk3/4sLcE25N
-	9fhe/Po5mjk8Mh6k7KsyNuUNvSoowezj1R3B2OoAesaSMdpRZoxEsuE9WrMaJLSt
-	lCKuVpKnCr7rOe93Qe/YFuxEMuG/uqsre0Dty2pLzwMP5P3uahFPVUlueC+7cBhj
-	FMGPryYkxcSTEFGWP2sgAmX80cT6Gt9NKiMCqG8m+0Mf8A13Bvpu7WBa5YYAkSjc
-	pHmAvQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419putpnc0-1
+	qODsJSNBUwNBwv/NnQmyvRkfF2gKRPblTOuINE501Gs=; b=cRbDHi1otFM6YmpH
+	lku8z6H+4bqd+/ZAwHjo1iYQ4iQg8dfRy02xnxai3umvJc08AXxSNcbC2OIgz3gZ
+	0trm0w+MCB8AV4OPshDvj7jIBsCAoNYIGTmTiEBI/SeQCiRm9BhQQvQ8Fa9bOGNb
+	6Bn0gsEmKsEg/XrYQ7eZP4qg4q/sOBFtIcsLZHeED0vkRNmpqJOSuWE99M6W9DV4
+	cPYVKSmW7nsT1qArrmOvv/LKAwomMNKdYYSQ8COqfWr8R/mj1eAGhUyFbLQsx1+y
+	YhBNNdUpH5858RVkSCk4IorYLOsimL6kovza6kdDOV5pO3D7g2ypv5N1AAByqmUu
+	TLc8UA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41ax4mgard-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 29 Aug 2024 20:49:00 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47TKmxDL020564
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47TKn0mK003214
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 20:48:59 GMT
+	Thu, 29 Aug 2024 20:49:00 GMT
 Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.1544.9; Thu, 29 Aug 2024 13:48:59 -0700
 From: Jessica Zhang <quic_jesszhan@quicinc.com>
-Date: Thu, 29 Aug 2024 13:48:22 -0700
-Subject: [PATCH 01/21] drm: add clone mode check for CRTC
+Date: Thu, 29 Aug 2024 13:48:23 -0700
+Subject: [PATCH 02/21] drm: print clone mode status in atomic state
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240829-concurrent-wb-v1-1-502b16ae2ebb@quicinc.com>
+Message-ID: <20240829-concurrent-wb-v1-2-502b16ae2ebb@quicinc.com>
 References: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
 In-Reply-To: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
 To: Rob Clark <robdclark@gmail.com>,
@@ -89,52 +89,47 @@ CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         "Jessica
  Zhang" <quic_jesszhan@quicinc.com>
 X-Mailer: b4 0.15-dev-99b12
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724964539; l=799;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1724964539; l=849;
  i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=dR2G/MD6yM3cOdkFd3LB/ulhZzh5I4UbvIhzhfe8P0U=;
- b=TvXkjmvu+zsZtd+1ybktZpZOmh4GmSflM3w4MQVEPLPin2U542DT2Z0Q9N4VzjwrxubgbWS1y
- S+QSdH78ROiBjqLvR5xC4/Hy7u+/aKANCp5crB2VIP6Y1E6uQ0GrORB
+ bh=e096vd+UGNu8nhPc7VODA2MS7X3rPYMs4TqTAd6/p+w=;
+ b=NT2w9k5F2A+JMojngiiGVRCD8/ifOy/8GoDaMcu1bm945Z5XKcDhDtNmfuYB3eyXFBgipNrIP
+ SJQU79RtCioCufAjF3iN6v3xKSRR+agrvi5+5oSK+VQVbQzm2VPRPiS
 X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
  pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qjurr45G4WYarkFUrfuKuFxW1gldVwSP
-X-Proofpoint-ORIG-GUID: qjurr45G4WYarkFUrfuKuFxW1gldVwSP
+X-Proofpoint-GUID: q1DI6H_2SWl0D5MnYhAhmiC4Wex6LSSM
+X-Proofpoint-ORIG-GUID: q1DI6H_2SWl0D5MnYhAhmiC4Wex6LSSM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
  definitions=2024-08-29_06,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
- mlxlogscore=988 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ impostorscore=0 spamscore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0 mlxscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2407110000 definitions=main-2408290147
 
-Add helper to check if the given CRTC state is in clone mode
+Add clone mode status to the DRM atomic print state
 
 Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 ---
- include/drm/drm_crtc.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/drm_atomic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/drm/drm_crtc.h b/include/drm/drm_crtc.h
-index 8b48a1974da3..ecb93e2c4afc 100644
---- a/include/drm/drm_crtc.h
-+++ b/include/drm/drm_crtc.h
-@@ -1323,5 +1323,12 @@ static inline struct drm_crtc *drm_crtc_find(struct drm_device *dev,
+diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+index 07b4b394e3bf..145d6a758d4d 100644
+--- a/drivers/gpu/drm/drm_atomic.c
++++ b/drivers/gpu/drm/drm_atomic.c
+@@ -455,6 +455,7 @@ static void drm_atomic_crtc_print_state(struct drm_printer *p,
+ 	drm_printf(p, "\tconnector_mask=%x\n", state->connector_mask);
+ 	drm_printf(p, "\tencoder_mask=%x\n", state->encoder_mask);
+ 	drm_printf(p, "\tmode: " DRM_MODE_FMT "\n", DRM_MODE_ARG(&state->mode));
++	drm_printf(p, "\tin_clone_mode=%d\n", drm_crtc_in_clone_mode(crtc->state));
  
- int drm_crtc_create_scaling_filter_property(struct drm_crtc *crtc,
- 					    unsigned int supported_filters);
-+static inline bool drm_crtc_in_clone_mode(struct drm_crtc_state *crtc_state)
-+{
-+	if (!crtc_state)
-+		return false;
-+
-+	return hweight32(crtc_state->encoder_mask) > 1;
-+}
- 
- #endif /* __DRM_CRTC_H__ */
+ 	if (crtc->funcs->atomic_print_state)
+ 		crtc->funcs->atomic_print_state(p, state);
 
 -- 
 2.34.1
