@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-29966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69676964191
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 12:25:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96BAF964193
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 12:25:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFADDB25739
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:25:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52198288CCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 10:25:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C866C1922DE;
-	Thu, 29 Aug 2024 10:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE7C18EFF5;
+	Thu, 29 Aug 2024 10:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B6bg9gTw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="baxmJyPG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414E218EFEE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 10:19:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C95191F88
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 10:19:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724926782; cv=none; b=biQKPiAGeL33A5l168g2mqQi12B46Oa8GrGhyP4Xjb72Y6HXX0c6ePpNA1gjbYuqk+F5Pbae0kbu3Asc1MHm43iIw8bfNewxJ81bU7IfY703O0d+KyqdSpHJBmsIOEch1MN4ZEutaXLUnsGwH8aczb3JLmbJWfDOZlCDPc5KddQ=
+	t=1724926792; cv=none; b=Nu7hy6Bk5lDz/HC9EIt91JLPj717QtV6nTt4dQI+Tdq/R8Xyg/9SwGA5xdqrTDeWDXtqbHoakB03FqgZhG2W+OtGT1iWOCdOycmWwmwvc2pxy9qCSE9bxeXzPErOxXSO0ryT4g2hk5I1jXqpwsbDCw8+sLaWrZ/XDHQHpk02uJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724926782; c=relaxed/simple;
-	bh=3KazaGbXvjBN09Ux7IxbvfmwCLry/wnucqSSUOzn9II=;
+	s=arc-20240116; t=1724926792; c=relaxed/simple;
+	bh=sjBVYTV8i33N2zpmEmydrCOK2azR2M1Z7wjB2RL+G3o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=prLCD3CZFMHychxMCE8CL/8saZ8GTeWrxkA4QmGmqsqhYN1AN1727ZgJFDce71FDsIv1mcn+lnoSCOOYNBv4ydFgvsT0HBDOAX1W2D2wyFGXz+Fdpsf49P0uYNj2w52oKGyDRHPdVrIk2ypx+pF1U+lquST0EM4G3fNuMegFgqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B6bg9gTw; arc=none smtp.client-ip=209.85.210.179
+	 In-Reply-To:To:Cc; b=sa6hQ1um0d0XjhutOIhLasRqVKdLm3Yov3lUwGhDru1HBYzyJAvw+cH1fsv35HQ2wAgpnQXZ+1ApX0DlZTq3ctZknyY7ztU3wobEYXFX1wFE8MY20AmSj1JMhFDA0OtYrnDbVNvStwHvnxCKR6DnVwjHYUme7Lm+iD0rGweFxLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=baxmJyPG; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-714287e4083so448936b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 03:19:41 -0700 (PDT)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-714287e4083so449048b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 03:19:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1724926780; x=1725531580; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1724926790; x=1725531590; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=E55a1wcpHLjnTLosXy4HNdH7HmAgykI1Dzag/SnhcTk=;
-        b=B6bg9gTwHoXRMZG2FSkUTMGtLWrbLwWDZ6gcvoZb+rDj6VvUxNJOE/nWV2y55ssQSH
-         UuB2hNANbkPSRBLdnp8K3PryLbFGw0IDQd56WXGqzqmBvgxUtnHTDbNLriiCPFVGamPj
-         SOWKn8QBMhVikjnVT3N2oY0bzedKEt3c/0g3cqoWyTK5HwpA+oxjXVN0+p3MjttMO8rC
-         x1gQo3vvPxgO7f9AzUZ+GWZDEluK8dAgCzACTB5/roWg2ivVmwcw2+WJTUP9egLgMD/e
-         hxrcM3Le+CbJEFB1ZGX/5EwR6wcvJxJeFJnrb4zkJ64iLUDIjq6A+kWAJ57SJyuJHstm
-         I/hg==
+        bh=5XVbg4H7DqUL1wC1sOrarS7KoxsQPZKXglpZrahZaTU=;
+        b=baxmJyPGjZfBbss+26Fo28aPN1tdDf4D5DySLMzrEpseSnRTg/o+ZA0pWYyCPNb+15
+         8v3dC6Y3cLw6mEqFddxsxQpiqHu0aztkI1fJDUJ/297e2K1/sQzDXpdLNKjIW72oWSX4
+         QrphJ3h4jjAe9wtcPb/H2gJzCU2Kv8Hl8nSuI7z+Zwcwwec7SAx1NWnIEs47WCoueuFq
+         AaULR1i89XB/7vTGuJWcB1yN/THFX755FdyXqDP8G/z2qZoObAAuoEaeuLgoLOf2NKpr
+         tCzOylBRlzfjWXQcvaM0bqlLHCkym6/s76cg6ai0224UmI5mpQmHnZsoTj2nhMx1ESc5
+         7G2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724926780; x=1725531580;
+        d=1e100.net; s=20230601; t=1724926790; x=1725531590;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=E55a1wcpHLjnTLosXy4HNdH7HmAgykI1Dzag/SnhcTk=;
-        b=KNeSHrfnSXca+zhXzaNYOr40LRTYkb0lzcwR4diDhNee0DTjtIX6QyiVBTnTnbJD3v
-         iTRVoqW6y7f1KzBHGvkBqmqFNVMsKX2141F2qHiDZ6G/aUcs8thJM3GlRZdW3qYWw3am
-         q/5blztlHzJIncoeHY6RKeWSYZdWWxFbyxr7I+I5Z3AuIeQsKsK53IYlDeTnW58aUt2/
-         OTEedvWdD/EdP/7Th6+P7czQDszl7R7zDBk97cS1IA5sIl+WkxAusX3RmO7Z5UjJ3swr
-         GKE57DzwCPmBAOQucIRxRlHwBDLde0SwJklUGbs9Y5HF9PMneNz9+vujGQe0M88fsJ/3
-         IwOg==
-X-Gm-Message-State: AOJu0Ywpve8RNWWcgCeDugINbusZZpw6rk6UG09SFA6MqycCdJULh3sO
-	L87z/pg9tz34VoxBopiGgpaYsDkUJ2lO+46mPh7YFvely3pnblmGzpS9ow8pBKA=
-X-Google-Smtp-Source: AGHT+IEqQrSjReMBtL61vjPIYBgNN+UQ6L12JGUOOf0f2rla6UKGtA7MG5pXDEiIM1GTX8hCV5eYsw==
-X-Received: by 2002:a05:6a20:aa89:b0:1cc:e487:ec12 with SMTP id adf61e73a8af0-1cce487ec8cmr1045714637.34.1724926780573;
-        Thu, 29 Aug 2024 03:19:40 -0700 (PDT)
+        bh=5XVbg4H7DqUL1wC1sOrarS7KoxsQPZKXglpZrahZaTU=;
+        b=NzM/4oU2HilwAs24Wil+XrqFkRnH0jYINk4+3JFw+Xr84ZQBB9Vb6mDY2FJgLO2ABZ
+         SLdNgHQQWwe1/iWPLkffiY+bTysTTiQauwx8kgpwS/EPz6cEiANxdtf1UqZiT6w02DPd
+         W3Fy+YtNsyan8b3hxsN1GLpCH6BSM8pMayGL+p6+op5w8H28SNOf8HSuUyyc5M/+L7MI
+         xj8zgAaf2fs+5lOloyN3gxKWWwvijDdBac3hjl8b8ysAJHh1ts4cTyR+YnHONGxZgz3g
+         OQ1nJJmsFTIjrss0q40k6X3xB8cfqo6PEbbshINCrQmejxvIIcLgGu3BvLm18TNPSoFS
+         3wFg==
+X-Gm-Message-State: AOJu0Yw8aTbPErTiT+YHCKy3VpNNhaH4PP0Mws/FCxnf+4LYy3Yj4tOy
+	MXAOE2ZtLg9hMHcPgXasDvxO+RcwGIUcZoENvbbbRs/A+SELF/eGFN14cKWDtHQ=
+X-Google-Smtp-Source: AGHT+IGMiDAlBDPtFQkiAuC1/1Ru4Yek6z8/XGcKf7/UgBC41xY5mzvqMxXMJ8xpjMIYreA+jiSxnw==
+X-Received: by 2002:a05:6a20:be1b:b0:1c4:c305:121c with SMTP id adf61e73a8af0-1cce10fe4afmr2046484637.42.1724926790096;
+        Thu, 29 Aug 2024 03:19:50 -0700 (PDT)
 Received: from [127.0.1.1] ([112.65.12.167])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d22e9d4df4sm891684a12.82.2024.08.29.03.19.32
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d22e9d4df4sm891684a12.82.2024.08.29.03.19.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2024 03:19:39 -0700 (PDT)
+        Thu, 29 Aug 2024 03:19:49 -0700 (PDT)
 From: Jun Nie <jun.nie@linaro.org>
-Date: Thu, 29 Aug 2024 18:17:33 +0800
-Subject: [PATCH 04/21] drm/msm/dsi: support DSC configurations with
- slice_per_pkt > 1
+Date: Thu, 29 Aug 2024 18:17:34 +0800
+Subject: [PATCH 05/21] drm/msm/dpu: polish log for resource allocation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-4-bdb05b4b5a2e@linaro.org>
+Message-Id: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-5-bdb05b4b5a2e@linaro.org>
 References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
 In-Reply-To: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -90,113 +89,67 @@ To: Rob Clark <robdclark@gmail.com>,
  Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jun Nie <jun.nie@linaro.org>, Jonathan Marek <jonathan@marek.ca>
+ Jun Nie <jun.nie@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1724926736; l=3705;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1724926736; l=1882;
  i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=/3AbBR4A8QK4EPx9duFdiBsejuWCAd+c9GSHXKntqOw=;
- b=zfJJ6qS1x60/eMkNq5xKVUkAUMljY/7SXEzK0bP3wQZcxhGk+Y4RMZTE/ZoVI+ZzMYY4OaIYy
- QfldO5kWIQTBjjJjfx+lUMuVaZFIs9cTNJT92t2QZAH9/14hxo+jxLN
+ bh=sjBVYTV8i33N2zpmEmydrCOK2azR2M1Z7wjB2RL+G3o=;
+ b=KlDubHL67SerBVY8xx5C5rEgv2bphTfdqkLShKTQ6oSJjyiQdRzrnDbHsO7yCoorHxYyrI+d4
+ PPKWy5EToqpAUBNS0nw1kQCBCuQTNZkTCn/nz02pzYUcFPn1NzZ7pG7
 X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
  pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-From: Jonathan Marek <jonathan@marek.ca>
+Add resource allocation type info.
 
-MSM display controller support multiple slice to be sent in a single DSC
-packet. Add a dsc_slice_per_pkt field to mipi_dsi_device struct and
-support this field in msm mdss driver.
-
-Note that the removed "pkt_per_line = slice_per_intf * slice_per_pkt"
-comment is incorrect.
-
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 25 ++++++++++---------------
- include/drm/drm_mipi_dsi.h         |  2 ++
- 2 files changed, 12 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 5abade8f26b88..36f0470cdf588 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -157,6 +157,7 @@ struct msm_dsi_host {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 15b42a6683639..e219d706610c2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -778,6 +778,21 @@ void dpu_rm_release_all_sspp(struct dpu_global_state *global_state,
+ 		ARRAY_SIZE(global_state->sspp_to_crtc_id), crtc_id);
+ }
  
- 	struct drm_display_mode *mode;
- 	struct drm_dsc_config *dsc;
-+	unsigned int dsc_slice_per_pkt;
++static char *dpu_hw_blk_type_name[] = {
++	[DPU_HW_BLK_TOP] = "blk_top",
++	[DPU_HW_BLK_SSPP] = "blk_sspp",
++	[DPU_HW_BLK_LM] = "blk_lm",
++	[DPU_HW_BLK_CTL] = "blk_ctl",
++	[DPU_HW_BLK_PINGPONG] = "blk_pingpong",
++	[DPU_HW_BLK_INTF] = "blk_intf",
++	[DPU_HW_BLK_WB] = "blk_wb",
++	[DPU_HW_BLK_DSPP] = "blk_dspp",
++	[DPU_HW_BLK_MERGE_3D] = "blk_merge_3d",
++	[DPU_HW_BLK_DSC] = "blk_dsc",
++	[DPU_HW_BLK_CDM] = "blk_cdm",
++	[DPU_HW_BLK_MAX] = "blk_none",
++};
++
+ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 	struct dpu_global_state *global_state, uint32_t enc_id,
+ 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size)
+@@ -828,13 +843,13 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 			continue;
  
- 	/* connected device info */
- 	unsigned int channel;
-@@ -861,17 +862,10 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
- 
- 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
--	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
-+	bytes_per_pkt = dsc->slice_chunk_size * msm_host->dsc_slice_per_pkt;
- 
- 	eol_byte_num = total_bytes_per_intf % 3;
--
--	/*
--	 * Typically, pkt_per_line = slice_per_intf * slice_per_pkt.
--	 *
--	 * Since the current driver only supports slice_per_pkt = 1,
--	 * pkt_per_line will be equal to slice per intf for now.
--	 */
--	pkt_per_line = slice_per_intf;
-+	pkt_per_line = slice_per_intf / msm_host->dsc_slice_per_pkt;
- 
- 	if (is_cmd_mode) /* packet data type */
- 		reg = DSI_COMMAND_COMPRESSION_MODE_CTRL_STREAM0_DATATYPE(MIPI_DSI_DCS_LONG_WRITE);
-@@ -1019,12 +1013,8 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		else
- 			/*
- 			 * When DSC is enabled, WC = slice_chunk_size * slice_per_pkt + 1.
--			 * Currently, the driver only supports default value of slice_per_pkt = 1
--			 *
--			 * TODO: Expand mipi_dsi_device struct to hold slice_per_pkt info
--			 *       and adjust DSC math to account for slice_per_pkt.
- 			 */
--			wc = msm_host->dsc->slice_chunk_size + 1;
-+			wc = msm_host->dsc->slice_chunk_size * msm_host->dsc_slice_per_pkt + 1;
- 
- 		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL,
- 			DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
-@@ -1629,8 +1619,13 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
- 	msm_host->lanes = dsi->lanes;
- 	msm_host->format = dsi->format;
- 	msm_host->mode_flags = dsi->mode_flags;
--	if (dsi->dsc)
-+	if (dsi->dsc) {
- 		msm_host->dsc = dsi->dsc;
-+		msm_host->dsc_slice_per_pkt = dsi->dsc_slice_per_pkt;
-+		/* for backwards compatibility, assume 1 if not set */
-+		if (!msm_host->dsc_slice_per_pkt)
-+			msm_host->dsc_slice_per_pkt = 1;
-+	}
- 
- 	ret = dsi_dev_attach(msm_host->pdev);
- 	if (ret)
-diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
-index 0f520eeeaa8e3..1c1b56077d44a 100644
---- a/include/drm/drm_mipi_dsi.h
-+++ b/include/drm/drm_mipi_dsi.h
-@@ -182,6 +182,7 @@ struct mipi_dsi_device_info {
-  * be set to the real limits of the hardware, zero is only accepted for
-  * legacy drivers
-  * @dsc: panel/bridge DSC pps payload to be sent
-+ * @dsc_slice_per_pkt: number of DSC slices to be sent as in a single packet
-  */
- struct mipi_dsi_device {
- 	struct mipi_dsi_host *host;
-@@ -196,6 +197,7 @@ struct mipi_dsi_device {
- 	unsigned long hs_rate;
- 	unsigned long lp_rate;
- 	struct drm_dsc_config *dsc;
-+	unsigned int dsc_slice_per_pkt;
- };
- 
- /**
+ 		if (num_blks == blks_size) {
+-			DPU_ERROR("More than %d resources assigned to enc %d\n",
+-				  blks_size, enc_id);
++			DPU_ERROR("More than %d %s assigned to enc %d\n",
++				  blks_size, dpu_hw_blk_type_name[type], enc_id);
+ 			break;
+ 		}
+ 		if (!hw_blks[i]) {
+-			DPU_ERROR("Allocated resource %d unavailable to assign to enc %d\n",
+-				  type, enc_id);
++			DPU_ERROR("%s unavailable to assign to enc %d\n",
++				  dpu_hw_blk_type_name[type], enc_id);
+ 			break;
+ 		}
+ 		blks[num_blks++] = hw_blks[i];
 
 -- 
 2.34.1
