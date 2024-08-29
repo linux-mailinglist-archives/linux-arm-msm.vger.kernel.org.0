@@ -1,135 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-30052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4D2C9649EB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 17:25:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E338B964A1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 17:32:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8ECBE1F237BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 15:25:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2EFCBB20E93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 15:32:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83BA41B1516;
-	Thu, 29 Aug 2024 15:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 925ED4084E;
+	Thu, 29 Aug 2024 15:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tey8LXv9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mDz46tf/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004CD1A76D3;
-	Thu, 29 Aug 2024 15:25:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DD51A0732
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 15:32:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724945118; cv=none; b=R4+UU3rGHJlqmkGh1TXqvOz/7Ql7OshlpHmAYpvJUowJEJ7YBhXmpxN3j0ErkEav13b/YkTP8dWWz/LZpfyNm/xWNUn0yOZkN87wgZ1Z1e/UtOoFRbNzL3SSQsoh7w/qiwYgsBYluSR81EwOrYZykcnfMtGBhds/kTx+V55lxz8=
+	t=1724945573; cv=none; b=BFy5hszhobXliZe1QATYvgZD5HjEyNQmhDcBGLZQBX/dul8FqkhevGPb5GCtBk2qd9b41bI9vuSeMYp2KDvszBpGy0eW7STuCfuTXAjHyPHa1kWpFnRoBgPoYESLJB+rvLdY1UMRYYwHOuhbGhhOsT6jg9eY91rD3uZ2SN+E1bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724945118; c=relaxed/simple;
-	bh=W5GQhkVjz2wwdC5lXitoDCDre3m21qvN2+9J1ktg/iQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CCeBhvOO4/roSTwe6K6usqLu+IsRn5Rz1nqdMswJ0fy8DX6juH3/VkTk1m3LRMcyRenHds0C9SpqeEM7ER37HrwHrtenFwOIGq+ZNaX7MmWFNtdMgnAUXp5TjOgpQt0vNzSirAsQ28coWfCEUgwiBMdI0urME5LW2EXTe3nvXPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tey8LXv9; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428141be2ddso7092325e9.2;
-        Thu, 29 Aug 2024 08:25:16 -0700 (PDT)
+	s=arc-20240116; t=1724945573; c=relaxed/simple;
+	bh=0G7mze1wqVFZhZ50FKq6hXqQeQruWH7KyxgzMCGv9Jg=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=aP5AMpZlv4kttypUXSt3OvM0Tjam0bY/CJ61LFmwtrLzHnTtcxulSgaAOOuOzYHADX7LNcwOWzbm+rllQZwf3/xPAgExLkzpuMfena48wmEME/mJmuAtn/iOqtDMXcB6G4W5Rgg3KWSZxI8dpWOQNF4DSFPRc9HpvKBATime49I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mDz46tf/; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4280c55e488so5453255e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 08:32:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724945115; x=1725549915; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3CePclmUlJ9R5wUKygyM22ovfabY44x27bhlzsShvYo=;
-        b=Tey8LXv9NHiqcu/Y32HoVzNjsf6xaqLtc7NcTR4LQ5K84vDoFR81iYrrBA7G5Y5orU
-         pJTNjE0lYSx0fAfPM+eYZDFM2efME79dqpzFqKYbJ78yTF9p9mB0NHzMqcrEb2bJ9+JO
-         t7Yo+ErJavMUEe0KUjDi8+dfDOWwGfjKIXaKT1IRcB5LSVMkrALiUeTyVaAOf7YI+ozb
-         4PuFZFVOpD4SeJtzKi4IGjge5scaWP62M2VFjoo61ZCKam2gZJErtLHfBx8NI2MPFeVD
-         3Y0VPVOpz1+RvcUrkW0ykk+Cuqp1OvAKfIYCIPFxHNklqOZtDuJE8xpKaQC90sDHto5r
-         wiEQ==
+        d=linaro.org; s=google; t=1724945570; x=1725550370; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uwIrcvcDSEkc0RK+FZLEdtiYNR69eb3bXf7QeoQAwQo=;
+        b=mDz46tf/752Nd6C0tos8Nnon14OtQuj7p2yzaiDrbcM5HCBWsiatNOXOjrV6IB4Jqn
+         cWMMMlhuDFBYuX9lOfEMfeb1JQ1lUFJ4GPjW7VvLvpTwvnPd6ZTGyUAo7AknsKDF5qVF
+         aYQA4br7oFvSIyGIPmqMoF4nk9w7RYiafmL9rlRxLeKzLR/9gRTGXaYy4NIwbP7SO8RD
+         bRoZNu3Qfeih5gBdQEkR09XM6woq9BBibL54KB/oPqTKSa7Qtpuaa2nAaPWVKHzldnvj
+         kqMdNA6Ss+zMeR2H3jlCKq7h2aqldubl7435qvGj23aM9xeDI6jnYZGpY7A1CLJPHIWa
+         Z7zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724945115; x=1725549915;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3CePclmUlJ9R5wUKygyM22ovfabY44x27bhlzsShvYo=;
-        b=aQFx0EBYh6N4EVwZk+bgVtzJv6SeI+82YWE73MzjImC/UnChABtc7+eVI5LVn2ZLAt
-         b8eE5Pwbnc+V6IPUJJBEQxtANson44kT/UPv7rkEmjAzFyWie4ej8cQEPvABLcUdP3JF
-         kzXcMdh/aPpXgG4HoiJR6nrYOvcXZ7owmqLGFX8w1wndbvn1MfmhffE+YkNez3fa4aTR
-         ngSzPibD2N4rI3yKMvsgG3CTBom7gPzeKk76IanyQGc4dQekLxAoT5l1/ZeGkEq9AbY+
-         Ey+BXgTmoH1l0v+SdhmXRelrZCruaYXihblvlJaQiz/7GVG0LSDK5sRt3olJfSZyT9GF
-         vA9A==
-X-Forwarded-Encrypted: i=1; AJvYcCUlCLEXFe3JUyRzen1ZUj4c+H3fFD6omSRM/hy/LoadHLrfVa2lesysfhvPpr7cnj8ScTHwaf0JjE+Iw2n1@vger.kernel.org, AJvYcCVSw59G5jQNi8YQkdPtbdI7g2OxnmLX6Rmmd5wdUKJD+j30am046r1ukVh8UnCAc6jZ2ORq+b3KVtyBXTk=@vger.kernel.org, AJvYcCXVu/631ww0GmA6GJpHJmzy80jBUONYcN0UQdtpo/Lfyk04bCeYi5FnKBADRLjm8DTIt0zolk0AHU+9S0k=@vger.kernel.org, AJvYcCXzWFQj8z7uH30wVb9Jb+PYh3MNZVun/KwyBOF74rHAftNp8EO0sdfAoQ+PeocCv7ARcdSHe7v7KmifbhCo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXhkbpF2U0LC5u39auOyiTZ0Ebg3UHuazrvTlwrRyQKOJX+S8g
-	gL4qmU9acOEF/DTbo/t1jgcR1a92QM3FlcJKYV08XNJiTRAIZbTx
-X-Google-Smtp-Source: AGHT+IHB9DwVQH+LaPCki7l5s2XbNvXlqbr5f4VqUYxz7BdDtbuqto3Zl5PtmeS+7pmQVpMQVL7Cmg==
-X-Received: by 2002:a05:600c:474c:b0:426:6e95:78d6 with SMTP id 5b1f17b1804b1-42bb01aa1fdmr26574845e9.4.1724945114644;
-        Thu, 29 Aug 2024 08:25:14 -0700 (PDT)
-Received: from orome (p200300e41f29d300f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f29:d300:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb37f7849sm25800085e9.7.2024.08.29.08.25.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Aug 2024 08:25:13 -0700 (PDT)
-Date: Thu, 29 Aug 2024 17:25:12 +0200
-From: Thierry Reding <thierry.reding@gmail.com>
-To: Lu Baolu <baolu.lu@linux.intel.com>
-Cc: Dmitry Osipenko <digetx@gmail.com>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>, 
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
-	Robin Murphy <robin.murphy@arm.com>, Jason Gunthorpe <jgg@ziepe.ca>, 
-	Kevin Tian <kevin.tian@intel.com>, linux-media@vger.kernel.org, linux-tegra@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Jason Gunthorpe <jgg@nvidia.com>
-Subject: Re: [PATCH 1/2] media: nvidia: tegra: Use iommu_paging_domain_alloc()
-Message-ID: <2o6gpxknio4kvf5fmqgai5jaov65semmw3wvtmt4gdauwzhbti@ii3ydtlmp2sb>
-References: <20240812072105.9578-1-baolu.lu@linux.intel.com>
+        d=1e100.net; s=20230601; t=1724945570; x=1725550370;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uwIrcvcDSEkc0RK+FZLEdtiYNR69eb3bXf7QeoQAwQo=;
+        b=RO9efU0i2FtguE2+0q0aOxZuTCtJSO6jzBWGDNHYQvuBAfXw4Z57MYqu8ziDo5ByKi
+         qnVCwt0vJwok4TZUHbZ15DawRz7dFflgjjdJvdskXjKkT1AhAnL5QqOB4LOsSUkv6e06
+         orT8JZa6glpB6zu/9dmL/Ko07aki6lX7IzSrBVMpHsUE3gHrSb0XKijw7wcDv6DF5LKa
+         AlaSu1H4te4VfKQmgKLXH7u/8ydjkmfvblxgDi7HH5J4bnNTgUGgPoXqD7t+NUMphkG1
+         fW/IQoJqvSxmXujQZvjp4fRx+NxBdw/A/edpePwWngCh9CZzg/KnjiFm8q1YKu1i2EAi
+         lf7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVNKH/JW9UhXqZVJ5ykfwdMPpZ2NRylkLiIVyumYucWQUHaSEqvYXNAC3rJoHPkmy6BSwRqyRkSRsF5H9f8@vger.kernel.org
+X-Gm-Message-State: AOJu0YwzxkRMWCXA2Fl/bbSYvSg1w1z0bZ/nt/8+6IPdu3utfxMgHQcU
+	6yd5slSJshmdY0bIGpCnVO2XsucJ4ppDiJzU+t0LSC9Xjlp0nx/10wTl3eD44tg=
+X-Google-Smtp-Source: AGHT+IH9+8PYMVuyhooHnEKm7HBNRG/ZhyKn3bATO2CBKzTwDuYlMBgk64q+sm8/yfyRVK6phMfsFQ==
+X-Received: by 2002:a05:600c:2214:b0:426:5e32:4857 with SMTP id 5b1f17b1804b1-42bb7396721mr22388775e9.0.1724945569542;
+        Thu, 29 Aug 2024 08:32:49 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:12f5:c9c:a0e1:6915? ([2a01:e0a:982:cbb0:12f5:c9c:a0e1:6915])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3749ee9ba8esm1699175f8f.50.2024.08.29.08.32.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Aug 2024 08:32:49 -0700 (PDT)
+Message-ID: <c1e35d3d-fa00-4453-aaa3-9f23a07acb4f@linaro.org>
+Date: Thu, 29 Aug 2024 17:32:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cowfqq5j65e3ovof"
-Content-Disposition: inline
-In-Reply-To: <20240812072105.9578-1-baolu.lu@linux.intel.com>
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 1/2] clk: qcom: dispcc-sc7180: Only park display clks
+ at init
+To: Stephen Boyd <swboyd@chromium.org>, Konrad Dybcio
+ <konradybcio@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ patches@lists.linux.dev, linux-clk@vger.kernel.org,
+ Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
+References: <20240828171722.1251587-1-swboyd@chromium.org>
+ <20240828171722.1251587-2-swboyd@chromium.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20240828171722.1251587-2-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+Hi,
 
---cowfqq5j65e3ovof
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Aug 12, 2024 at 03:21:04PM GMT, Lu Baolu wrote:
-> An iommu domain is allocated in tegra_vde_iommu_init() and is attached to
-> vde->dev. Use iommu_paging_domain_alloc() to make it explicit.
->=20
-> Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Link: https://lore.kernel.org/r/20240610085555.88197-9-baolu.lu@linux.int=
-el.com
+On 28/08/2024 19:17, Stephen Boyd wrote:
+> Amit Pundir reports that audio and USB-C host mode stops working on
+> sm8550 after commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
+> registration"). That's because the gcc_usb30_prim_master_clk_src clk is
+> registered and clk_rcg2_shared_init() parks it on XO. Running USB at a
+> slower speed than the link supports is effectively under-clocking the
+> USB link and probably confusing the downstream USB devices.
+> 
+> We didn't need to change all the shared RCGs to park on XO at
+> registration time in commit commit 01a0a6cc8cfd ("clk: qcom: Park shared
+> RCGs upon registration"). Instead, we only needed to park the few
+> display related clks on sc7180 to fix the issue.
+> 
+> Fix sm8550 (and likely other qcom SoCs) by skipping the parking part of
+> clk_rcg2_shared_init(). Make that the default init clk_op for shared
+> RCGs, but keep the part where we cache the config register as that's
+> still necessary to figure out the true parent of the clk is. Introduce
+> another set of clk_ops 'clk_rcg2_shared_init_park' that does what
+> clk_rcg2_shared_init() was doing and use that for the display clks on
+> sc7180. This fixes the sm8550 problem and limits the "park upon
+> registration" logic to the display clks that need it.
+> 
+> Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+> Cc: Konrad Dybcio <konradybcio@kernel.org>
+> Cc: Bjorn Andersson <andersson@kernel.org>
+> Cc: Taniya Das <quic_tdas@quicinc.com>
+> Cc: Neil Armstrong <neil.armstrong@linaro.org>
+> Reported-by: Amit Pundir <amit.pundir@linaro.org>
+> Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/media/platform/nvidia/tegra-vde/iommu.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
+>   drivers/clk/qcom/clk-rcg.h       |  1 +
+>   drivers/clk/qcom/clk-rcg2.c      | 36 +++++++++++++++++++++++++++++---
+>   drivers/clk/qcom/dispcc-sc7180.c |  8 +++----
+>   3 files changed, 38 insertions(+), 7 deletions(-)
+> 
+<snip>
 
-Acked-by: Thierry Reding <treding@nvidia.com>
+I've been testing this serie on SM8650, and with 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
+it fixes an issue we have that triggers:
+[   18.740736] ------------[ cut here ]------------
+[   18.745837] ufs_phy_gdsc status stuck at 'off'
+[   18.745929] WARNING: CPU: 1 PID: 197 at drivers/clk/qcom/gdsc.c:178 gdsc_toggle_logic+0x15c/0x164
+...
+after waking up UFS from runtime suspend.
 
---cowfqq5j65e3ovof
-Content-Type: application/pgp-signature; name="signature.asc"
+So I suspect we'll need to figure out which SM8650 GCC shared clocks would need
+to use clk_rcg2_shared_init_park_ops ?
 
------BEGIN PGP SIGNATURE-----
+We also had random boot crash when initializing the display very late on multiple platforms,
+and so far "clk: qcom: Park shared RCGs upon registration" fixed that, but I also suppose Ill
+need to reflect the changes done to dispcc-sc7180.c to dispcc-sm8650.c and others.
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmbQktQACgkQ3SOs138+
-s6EUfRAAme7fMme4dA56e6MubG7cFGGWr8iHzpMLzb7Gxi4bRxcYB/Gtn/cepURr
-Ybbn9lG86we9+zbd+FNlPWTKXxFFZG3kDfKnU4eILM2y56SQApilQzwwicdOgN5a
-7aqDJu0/eEIwagudME6HYDlALal0MCib/UblMbReIP7XnAcrR+HhO1aRMy95l6P+
-xYD6VzW7evnIR1BRkz5CHS9Dgo7o3ykNsGr0wDkYjK6oFjF5g9Y6LZCZIRO3sZxe
-jqijysA0g9cAk+NsDNmWKbd0UEMM3DX1ROebrEzbBkXC9+PWe56LmP77zigyPHVr
-aVXBy9edGGmkJfKvwvkJJLAs3wpjN2cHVO8zPjg2bntFR5VhAPgMo7RJKt4Tj/A9
-rEcmcaPggDUVVgJEbogj1zZtpeTp89+56tGcFjJvMi1sVbudisnejl4aSfx/Hnzc
-4QKrj/ajGfmJkPJbjjUEIzTSV+Z7L3M06jC9eLrgKzURdymvDUAPuVaZWkPcT/DK
-hqiTAVU43r+yr40ZwRoxyuHIQLxGIxmUtnjk96uQhKa7bs3loD4KR00EIX590fGL
-cRL3yZFx2G7ILQ1Cnru0vXA3iF9RxG1eikHZHtqTPsInPseAMx6QpE0Vn0I/gT0G
-S/cBJhFE3NxmP45u2DKKrhq7+pRf6AEpKh1tnwZoB6NIx5cwGG0=
-=3ZMs
------END PGP SIGNATURE-----
-
---cowfqq5j65e3ovof--
+Neil
 
