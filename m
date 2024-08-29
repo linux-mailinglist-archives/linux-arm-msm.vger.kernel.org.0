@@ -1,63 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-30048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C23D96487B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 16:33:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D03E79648B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 16:40:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0172C2814A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 14:33:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7051E1F25D34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 14:40:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D57FA1AED4D;
-	Thu, 29 Aug 2024 14:32:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pUIn2GP9"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E70C31B0118;
+	Thu, 29 Aug 2024 14:39:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472941A76B7;
-	Thu, 29 Aug 2024 14:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EA881B143B;
+	Thu, 29 Aug 2024 14:39:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724941977; cv=none; b=dkI6EZJi2FMFRY35fFxQZr0HdpACUlpOtBU4lxgftw9Lc6T/Y2gJWXJiMw+pL6SBSkDeflbL38pT2+gkg77kNMaVcMqQT8RXyPLgS/ZeLVtBipaSi/ixmQn6Gej+uqjo/FWxDCybUG5ruOCAg1tYdm4zABme2mZ3Q2l9C+Cc18Y=
+	t=1724942393; cv=none; b=OUXXaEcchNlB6RPjB/09NR+56RWIu8UwwP8HpSProgdFbBv4BJuG2uJDKXCqn4xNco4u8xgfxNH5B0xgpl2MvexXuPZ5PpiMXovQIgX9PC7hh5amMvBjdbHFquHP24h/CnFenp9Pk9y8By1tSfCodluPt9FtlGgAL33niIjrH4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724941977; c=relaxed/simple;
-	bh=Eb2ZPuL+3koYo3fJiQg7r+u2ELH+/JY4bfYIJUUyklQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=PM66MnWmM2MU+RigcYj5UkO6MJaNRxzocFXkS9c8pdfGutOI6Dp6B8+bcJz6ieP12HE0FmrKOp3jACKBxXrPMNyGs0STdI/wxGs1h/hGBXl6S7+O8aHjsJBus/gXCRikXegUgvLhPIfzhwk9MNAXxb9zB6i3TCPblLyzNysSi/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pUIn2GP9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47T8OgEF010887;
-	Thu, 29 Aug 2024 14:32:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zqodGm77Krj1I3ICwjAgMZxw71umf4G4EfC6q1kQGnc=; b=pUIn2GP9ddnHQMb4
-	T2kX9Iqau3GZVC3a1ozrr4tFfUrgabfm+3+wAGdeP5QVJSSAGQnR7i6mRTiM7laZ
-	fyOpIFF+8NbM7EwE5mWqAcOMPx31DasKVQJSR6mc0st9dwYqzZHbugtrQfgptnYP
-	uLRcmPmzIl6SeMJfsTHakblCSOb1fPj040sgiC/7RqQdMaAE+/V97UYzcxNga84x
-	eU4GY0imdLwyQmiqV6/GQrPbaXO2Wpo+8fwbl/0YVTaz97VQ3Ypq/5Raz3bwVyfv
-	qC/kSEpO64eDMPm1AytzMMHI5Kw3YrV8rGhozJUbK9QQSJ+T01ifJmTOm5bPzwK6
-	YS7fFA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv0nkr7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 14:32:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47TEWLm9000806
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 14:32:21 GMT
-Received: from [10.110.28.107] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 29 Aug
- 2024 07:32:17 -0700
-Message-ID: <b263cd16-b5c2-4dd8-a6fc-7d6861338bcb@quicinc.com>
-Date: Thu, 29 Aug 2024 07:32:16 -0700
+	s=arc-20240116; t=1724942393; c=relaxed/simple;
+	bh=HBjPQ7htFePlvgPXIVgV4omFwKv/gvrtPNO0yF79XDs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=TyDb7VF9tlOmMncNfkW1Iz6jkIky5gO9/t2/OkkMiwTfY8lm/juI39wJT4L2SmfXWLJ4XHEHwnY9oL3GmEENMs94dAmBX9U8utxSH2WSCpjhC+vjVpXHp51KmwKAwpcH4DzzuX+Ha5ve23LGqtLe/kxPiPuNxnBF05sWNMU76a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C1F9BDA7;
+	Thu, 29 Aug 2024 07:40:16 -0700 (PDT)
+Received: from [10.57.16.245] (unknown [10.57.16.245])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A801D3F66E;
+	Thu, 29 Aug 2024 07:39:13 -0700 (PDT)
+Message-ID: <1a7ab0db-646d-4975-9974-7b911990055a@arm.com>
+Date: Thu, 29 Aug 2024 15:38:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,79 +42,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/22] arm64: qcom: Introduce SA8255p Ride platform
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <sudeep.holla@arm.com>, <andi.shyti@kernel.org>, <tglx@linutronix.de>,
-        <will@kernel.org>, <joro@8bytes.org>, <jassisinghbrar@gmail.com>,
-        <lee@kernel.org>, <linus.walleij@linaro.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
-        <wim@linux-watchdog.org>, <linux@roeck-us.net>
-CC: <robin.murphy@arm.com>, <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
-        <agross@kernel.org>, <bartosz.golaszewski@linaro.org>,
-        <quic_rjendra@quicinc.com>, <robimarko@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
-        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_psodagud@quicinc.com>, <quic_tsoni@quicinc.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <11c897d7-ea9c-4474-81f6-1fc2198d289d@kernel.org>
-From: Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <11c897d7-ea9c-4474-81f6-1fc2198d289d@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fv5TpYAMjB7nkZE4j2aSXpV4D3dEfStr
-X-Proofpoint-ORIG-GUID: fv5TpYAMjB7nkZE4j2aSXpV4D3dEfStr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-29_03,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 bulkscore=0 impostorscore=0 phishscore=0 clxscore=1015
- mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290100
+Subject: Re: [PATCH v6 RESED 1/2] dma: replace zone_dma_bits by zone_dma_limit
+To: neil.armstrong@linaro.org, Baruch Siach <baruch@tkos.co.il>,
+ Christoph Hellwig <hch@lst.de>, Marek Szyprowski <m.szyprowski@samsung.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: iommu@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-s390@vger.kernel.org, =?UTF-8?B?UGV0ciBUZXNhxZnDrWs=?=
+ <petr@tesarici.cz>, Ramon Fried <ramon@neureality.ai>,
+ Elad Nachman <enachman@marvell.com>,
+ linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <cover.1723359916.git.baruch@tkos.co.il>
+ <17c067618b93e5d71f19c37826d54db4299621a3.1723359916.git.baruch@tkos.co.il>
+ <1a0c7282-63e0-4add-8e38-3abe3e0a8e2f@linaro.org>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <1a0c7282-63e0-4add-8e38-3abe3e0a8e2f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-On 8/29/2024 12:57 AM, Krzysztof Kozlowski wrote:
-> On 28/08/2024 22:36, Nikunj Kela wrote:
->> This series enables the support for SA8255p Qualcomm SoC and Ride
->> platform. This platform uses SCMI power, reset, performance, sensor
->> protocols for resources(e.g. clocks, regulator, interconnect, phy etc.)
->> management. SA8255p is a virtual platforms that uses Qualcomm smc/hvc
->> transport driver.
+On 2024-08-29 2:42 pm, Neil Armstrong wrote:
+> Hi,
+> 
+> On 11/08/2024 09:09, Baruch Siach wrote:
+>> From: Catalin Marinas <catalin.marinas@arm.com>
 >>
-> Who is supposed to merge it? The Cc-list is quite enormous and I got now
-> 20 bounces:
->
-> "    Too many recipients to the message"
->
-> at least drop some non-maintainer related, I counted 5-7 Qualcomm ones
-> which should not be needed.
->
-> Best regards,
-> Krzysztof
+>> Hardware DMA limit might not be power of 2. When RAM range starts above
+>> 0, say 4GB, DMA limit of 30 bits should end at 5GB. A single high bit
+>> can not encode this limit.
+>>
+>> Use plain address for DMA zone limit.
+>>
+>> Since DMA zone can now potentially span beyond 4GB physical limit of
+>> DMA32, make sure to use DMA zone for GFP_DMA32 allocations in that case.
+>>
+>> Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+>> Co-developed-by: Baruch Siach <baruch@tkos.co.il>
+>> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+>> ---
+>>   arch/arm64/mm/init.c       | 30 +++++++++++++++---------------
+>>   arch/powerpc/mm/mem.c      |  5 ++++-
+>>   arch/s390/mm/init.c        |  2 +-
+>>   include/linux/dma-direct.h |  2 +-
+>>   kernel/dma/direct.c        |  6 +++---
+>>   kernel/dma/pool.c          |  4 ++--
+>>   kernel/dma/swiotlb.c       |  6 +++---
+>>   7 files changed, 29 insertions(+), 26 deletions(-)
+>>
+> 
+> <snip>
+> 
+> This change breaks the Qualcomm SM8550-HDK boot since next-20240826.
+> It doesn't affect SM8550-QRD or other similar SoCs like SM8650 or SM8450.
+> The last CI run on next-20240828 can be found at:
+> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/pipelines/100936
+> 
+> SM8550-HDK boot log:
+> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/165617
+> 
+[...]
 
-Hi Krzysztof,
+Yeah, a 35-bit ZONE_DMA is sure to make stuff go wrong:
 
-I ran maintainers script to get all the emails. I kept maintainers,
-reviewers and "in file" ones in addition to some Qualcomm leads. I will
-drop "in file" and Qualcomm leads in next version.
+> [    0.000000] Zone ranges:
+> [    0.000000]   DMA      [mem 0x0000000080000000-0x0000000affffffff]
+> [    0.000000]   DMA32    empty
+> [    0.000000]   Normal   empty
+
+Compared to before:
+
+[    0.000000]   DMA      [mem 0x0000000080000000-0x00000000ffffffff]
+[    0.000000]   DMA32    empty
+[    0.000000]   Normal   [mem 0x0000000100000000-0x0000000affffffff]
+
+This'll be because the SoC DT is describing a general non-restrictive range:
+		dma-ranges = <0 0 0 0 0x10 0>;
+
+Which proves we need more information than 
+{acpi,of}_dma_get_max_cpu_address() are currently able to give us, 
+because what zone_dma_limit actually wants to be is the *minimum* of the 
+lowest highest CPU address of any DMA range, and the lowest CPU address 
+of any DMA range + 2^32. I was thinking it had all ended up looking a 
+bit too easy... :)
+
+I think v1 of the fix[1] might actually work out for this, albeit still 
+for the wrong reasons - if so, I concede that maybe at this point it 
+might be safest to go back to that one as a quick short-term fix (with a 
+big fat comment to say so) rather than try to rush the proper solution 
+or revert everything.
 
 Thanks,
+Robin.
 
--Nikunj
-
+[1] 
+https://lore.kernel.org/linux-arm-kernel/731d204f5f556ad61bbaf004b1d984f83c90b4f5.1724748249.git.baruch@tkos.co.il/
 
