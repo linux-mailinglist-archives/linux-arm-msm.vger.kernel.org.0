@@ -1,203 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-29883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0EF49637A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 03:23:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 22DDA9637B0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 03:26:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B557B2209C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 01:23:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8765DB20BC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 01:26:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF3771798F;
-	Thu, 29 Aug 2024 01:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 172E61798C;
+	Thu, 29 Aug 2024 01:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Fy1jxqix"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IJsfSflN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248F6DDD9;
-	Thu, 29 Aug 2024 01:23:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8978ED51E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 01:26:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724894611; cv=none; b=Q6EkmZldPzKdOo1W6/SfvqesvWXjPNgVgvNJs2/ht6irYtEMoMoq9KRVw87CMDtftDyLIGfcA8YvrPe3B/VSGWlk6poW1po0ZFaTWclrjLcUQwDEkrFXjwT7/C/XohVFqkfzMz3+A6bheLxcf5WSZMLHbAfqtyquTHHv3POkMKs=
+	t=1724894762; cv=none; b=YoS7m1zPQVuOqBSSE9g9FSMZKBqSDzpWruGTSggLPTrMvo5vZcyHvJ9nnHxER8CC6g7uJdz3K1cK90JucTMExtXhNQlM0LoIqtNvY8+LqXQT6YL+OKA8W2dRbNlZzovoEvEhP+Qnb0+/nE2m+AWV0AwWV2/VpGgkkn9VV/u3Cbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724894611; c=relaxed/simple;
-	bh=EuCV/wD+dIScOu94/ACKSYB5DVcgXbt4JHWLx9Cy0Pc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QZHUVwTVtMHRlBvDGLO0MjerPHYkOK18RMI9CrfyU6wZ5YazVCx0BKrfjdLtaxb65OSyD8PidB7/DfqCYfyGQmeIdBbSG5UeCS6dwPXu/cPspwDVyoaiKHgzHukZ10cgQauXzRBpxVpEMQzkEwUrDJ07AHN1cad5M+AK5CCahyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Fy1jxqix; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47SJLu9w002739;
-	Thu, 29 Aug 2024 01:23:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=bLjNkGKfGj31Adt8TVVTYz5W
-	HZ4ehvtEMig1+mnI9GQ=; b=Fy1jxqixKrlfZQ60pDWGHchorDTBRtw5s84dUJF1
-	v7fgy7hBjOXD9mbWVWyKnfUPAmbsYqa4r9pbUJP+uVhdPJ0KnB9Nt4l/e++Rko/n
-	kHixNAwtn/dUtt5URt0HLfh5BSOxFCR0jiyDC7aE27sosGF9sEwO5OFK4zgRRdv2
-	NHTtOC+UvG/+ZLb/b51y3okAHjoSX6AVQmG4iI+hwVdQvi1ohD8zq1ZE+bNPOQu9
-	hYcvUMicJY1Co6qv05vgxtyssNYPiUkaloKxCnQZATLBbc/WTSCOLLPsHnGaKe/8
-	EjY/HSLdScfLXnr0UFsYk+vi4IQpAYm2S1VmOQTYlUPPGA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419putujg7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 01:23:03 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47T1N20D010087
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 01:23:02 GMT
-Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 28 Aug 2024 18:22:56 -0700
-Date: Thu, 29 Aug 2024 09:22:52 +0800
-From: JieGan <quic_jiegan@quicinc.com>
-To: Rob Herring <robh@kernel.org>
-CC: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Tingwei Zhang
-	<quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        "Tao
- Zhang" <quic_taozha@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-Subject: Re: [PATCH v4 3/5] dt-bindings: arm: Add Coresight TMC Control Unit
- hardware
-Message-ID: <Zs/NbGOzRII0LJNU@jiegan-gv.ap.qualcomm.com>
-References: <20240828012706.543605-1-quic_jiegan@quicinc.com>
- <20240828012706.543605-4-quic_jiegan@quicinc.com>
- <20240828151205.GA3830921-robh@kernel.org>
+	s=arc-20240116; t=1724894762; c=relaxed/simple;
+	bh=F6LYgtupOlXgjAGai0ZKkEXkGCwTktV7Rh1Kho42+dQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H8FtPdEDIpvpxZN56PeuuXUYHzhmrqyyG9s4Z4vS+dw2MbM2KrFfFsfDhyYEa1e8/z6KL70oPTVVfVn2mb+9bVgmM/Ic43dJzK5GIFz2v9DYavCatmCBSCm2FUuZ2mJSVT+ph+/BmA47B62cy3nBrPRpOCYUmryxOONVrNt+cMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IJsfSflN; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1724894759;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=NCKBnd0N4ngofQtqdbmG0bsbv/saL/8NeHoK/DY/VL8=;
+	b=IJsfSflN+xVlhudor/fUjlM7BvKjj1uRP4s8Ilft0TdZkXEdorKq6woFBUEj9RIgzyE+en
+	saIQh3jJBYCo1cHOLQItd0a1bniYWiG3llCyCTYonwOQWAI0H9OraxMPPZ0bCml+sWZ7eL
+	7m6rZpQ72jABBHN37slx1qiyFlb/YxA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-509-CyCxNePnMSmO1fC22Fbv4g-1; Wed, 28 Aug 2024 21:25:58 -0400
+X-MC-Unique: CyCxNePnMSmO1fC22Fbv4g-1
+Received: by mail-wr1-f71.google.com with SMTP id ffacd0b85a97d-3718bf7d54aso60052f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Aug 2024 18:25:58 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724894756; x=1725499556;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NCKBnd0N4ngofQtqdbmG0bsbv/saL/8NeHoK/DY/VL8=;
+        b=o5ErNm4jQkbDLQ9vomy1cyrxlbuchze0JQU8FW1JL9+cxc0oP2sTjuGtAiQ/zDEs3i
+         xj7sbhHqz2pUWfIwA3hwSKrlkSyB/+icjWZ5NUfIqRwnqEdh4heA7G3T/sEjvWFDhnFO
+         yRd9OA8FONUtozOP/Mo4jBa+Xa5pj/8wamJXzBTuvnjLDS4cqeXxDYdc+jSDoq/XfPad
+         r2CAvWu8WF/yIyoS2R5OfpjUfPhPdZ3bnALCAbpBD0PnvmuNk7cMZlPd64Ln1uhLkMuP
+         nsYEyt2DKucIxFH5NULpW+CQOp4DI4DAAq+AJYu0OZNIU2tXBJJGn3IrJwxddYbjGlql
+         lCxA==
+X-Forwarded-Encrypted: i=1; AJvYcCWu6WFdBBsZ9vTtDXp6asDwa7/nzUGQ+qlNywO+OKaX3k/+q93M0hAmWpGuftG31PY7AOTW6PmDO4vk8oQQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVpMrytMQyojCev5dKRUs0duNSHJ6Axvnj8uRN4E/iMJGU1KrS
+	hphcibrp7fvWXidfcaLa5zURmI5IqcOn/cYwSMsgO9DdsBXV82582fr7h5qRHRapAg0sW8+REM7
+	2qf5eCCOrMp5b4bj7F/wEwvj8rkY5EIURogoYg+GM+haWcFoyNBFwrj3g7Yu9+CUDcBwkm4ZMlr
+	DIX6gtfZUqfcgzMraBWjj1RaQLhFS/lGCeWpRX9WfjFMxwWkzy
+X-Received: by 2002:a5d:6188:0:b0:367:bb20:b3e1 with SMTP id ffacd0b85a97d-3749b585e8cmr751686f8f.51.1724894756686;
+        Wed, 28 Aug 2024 18:25:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH+KwBJlKEFrvCMNKO3gDjDCmOoXBeyyJ7X1fRtCCoZgJdTwG2aRjnzlCpU5Q++v6rK8ksdBopA+iVJG8goB+4=
+X-Received: by 2002:a5d:6188:0:b0:367:bb20:b3e1 with SMTP id
+ ffacd0b85a97d-3749b585e8cmr751675f8f.51.1724894756248; Wed, 28 Aug 2024
+ 18:25:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240828151205.GA3830921-robh@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: D4C0V4ke46dMwbAUNV4rApxcOX-kJj4m
-X-Proofpoint-GUID: D4C0V4ke46dMwbAUNV4rApxcOX-kJj4m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-28_10,2024-08-28_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 suspectscore=0 phishscore=0 spamscore=0 bulkscore=0
- clxscore=1011 mlxscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290009
+References: <20240828184019.GA21181@eaf> <a8914563-d158-4141-b022-340081062440@quicinc.com>
+ <20240828201313.GA26138@eaf>
+In-Reply-To: <20240828201313.GA26138@eaf>
+From: Brian Masney <bmasney@redhat.com>
+Date: Wed, 28 Aug 2024 21:25:44 -0400
+Message-ID: <CABx5tq+ZFpTDdjV7R5HSEFyNoR5VUYDHm89JEHvKb-9TW6Oejw@mail.gmail.com>
+Subject: Re: qcom-rng is broken for acpi
+To: =?UTF-8?Q?Ernesto_A=2E_Fern=C3=A1ndez?= <ernesto.mnd.fernandez@gmail.com>
+Cc: Trilok Soni <quic_tsoni@quicinc.com>, linux-crypto@vger.kernel.org, 
+	Herbert Xu <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>, 
+	linux-arm-msm@vger.kernel.org, Om Prakash Singh <quic_omprsing@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 28, 2024 at 10:12:05AM -0500, Rob Herring wrote:
-> On Wed, Aug 28, 2024 at 09:27:04AM +0800, Jie Gan wrote:
-> > Add binding file to specify how to define a Coresight TMC
-> > Control Unit device in device tree.
-> > 
-> > It is responsible for controlling the data filter function
-> > based on the source device's Trace ID for TMC ETR device.
-> > The trace data with that Trace id can get into ETR's buffer
-> > while other trace data gets ignored.
-> > 
-> > Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> > ---
-> >  .../bindings/arm/qcom,coresight-ctcu.yaml     | 84 +++++++++++++++++++
-> >  1 file changed, 84 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
-> > 
-> > diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
-> > new file mode 100644
-> > index 000000000000..669aac646451
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
-> > @@ -0,0 +1,84 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/arm/qcom,coresight-ctcu.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: CoreSight TMC Control Unit
-> > +
-> > +maintainers:
-> > +  - Yuanfang Zhang <quic_yuanfang@quicinc.com>
-> > +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> > +  - Jie Gan <quic_jiegan@quicinc.com>
-> > +
-> > +description:
-> 
-> You need '>' or '|' if you want to preserve paragraphs.
+On Wed, Aug 28, 2024 at 4:13=E2=80=AFPM Ernesto A. Fern=C3=A1ndez
+<ernesto.mnd.fernandez@gmail.com> wrote:
+> On Wed, Aug 28, 2024 at 12:03:57PM -0700, Trilok Soni wrote:
+> > On 8/28/2024 11:40 AM, Ernesto A. Fern=C3=A1ndez wrote:
+> > > Hi, I have a bug to report.
+> > >
+> > > I'm getting a null pointer dereference inside qcom_rng_probe() when t=
+his
+> > > driver gets loaded. The problem comes from here:
+> > >
+> > >   rng->of_data =3D (struct qcom_rng_of_data *)of_device_get_match_dat=
+a(&pdev->dev);
+> > >
+> > > because of_device_get_match_data() will just return null for acpi. It=
+ seems
+> > > that acpi was left behind by the changes in commit f29cd5bb64c2 ("cry=
+pto:
+> > > qcom-rng - Add hw_random interface support").
+> >
+> > Which Qualcomm platform you are testing w/ the ACPI? Most of our platfo=
+rms
+> > uses the devicetree.
+>
+> Amberwing.
 
-Sorry for the mistake, I did not observe it by self-checking.
-I will add it in next version.
+We have a few Amberwing servers in the lab at Red Hat. I verified that
+qcom-rng was crashing on boot with an upstream kernel, and it's now
+fixed with this:
 
-description: -> description: |
+https://lore.kernel.org/linux-arm-msm/20240829012005.382715-1-bmasney@redha=
+t.com/T/#t
 
-> 
-> > +  The Trace Memory Controller(TMC) is used for Embedded Trace Buffer(ETB),
-> > +  Embedded Trace FIFO(ETF) and Embedded Trace Router(ETR) configurations.
-> > +  The configuration mode (ETB, ETF, ETR) is discovered at boot time when
-> > +  the device is probed.
-> > +
-> > +  The Coresight TMC Control unit controls various Coresight behaviors.
-> > +  It works as a helper device when connected to TMC ETR device.
-> > +  It is responsible for controlling the data filter function based on
-> > +  the source device's Trace ID for TMC ETR device. The trace data with
-> > +  that Trace id can get into ETR's buffer while other trace data gets
-> > +  ignored.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - qcom,sa8775p-ctcu
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: apb
-> > +
-> > +  in-ports:
-> 
-> Just "ports". "in-ports" is for the case when you have "out-ports".
+Brian
 
-We had a discusstion about why use "in-ports" in v3.
-https://lore.kernel.org/linux-arm-kernel/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com/
-
-The individual driver must "fix" before use "ports". The question is do we need to fix
-the logic of the individual driver before submit this patch?
-
-> > > -- 
-> > 2.34.1
-> > 
-
-Thanks,
-Jie
 
