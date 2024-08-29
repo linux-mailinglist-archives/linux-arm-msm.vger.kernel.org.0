@@ -1,142 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-30051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30052-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84F2D964953
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 17:01:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E4D2C9649EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 17:25:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2FFAB1F2303E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 15:01:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8ECBE1F237BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 15:25:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C681326AE6;
-	Thu, 29 Aug 2024 15:01:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83BA41B1516;
+	Thu, 29 Aug 2024 15:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J4cOHHuN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tey8LXv9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D276A194C88;
-	Thu, 29 Aug 2024 15:00:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004CD1A76D3;
+	Thu, 29 Aug 2024 15:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724943660; cv=none; b=SL1Pfoo0IHmLbg0Jz5lnq8dYsEAE0MvR5haHdupI2ykYvg3FDcQl2LDTdSzo3ix/4UkLQsPt5F4RU8uqfDYXmqjoTUjOS6hLpjkTs5gq3LsIgu5oWtFCULjVrK/ZGQjaRFAkHzBP2+JaW0UJgF991+ofDgLy+OkHRUonV34FZVk=
+	t=1724945118; cv=none; b=R4+UU3rGHJlqmkGh1TXqvOz/7Ql7OshlpHmAYpvJUowJEJ7YBhXmpxN3j0ErkEav13b/YkTP8dWWz/LZpfyNm/xWNUn0yOZkN87wgZ1Z1e/UtOoFRbNzL3SSQsoh7w/qiwYgsBYluSR81EwOrYZykcnfMtGBhds/kTx+V55lxz8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724943660; c=relaxed/simple;
-	bh=O+d/0lMVaIYVMB/riqqZ+H+RRARHH5fN/vZI7PK+/nw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bMNTOR30Ev4R0D+6yZXc9Kjr+8D9Cx6cLFuS1HWiq+pfa0Swv43boSKQg2tAzVmzHa6JN20JRSmWaBc/1tN86N/NsZ2OV/+JkjFihDap7pIVJfemRvJZcy7E8csKoSjX4gKj124xhKzihdtIuJowpe93CmFJYHceJGSZ1XpfwBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J4cOHHuN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47T8cT5f010662;
-	Thu, 29 Aug 2024 14:55:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qci3cwf+mW9KbSy7TQgd0WaPW96WIwi1KoQEYhtS2Pg=; b=J4cOHHuN9G0HjIWw
-	/25+ak2LuBuAXp7eGZFNHpxPl4yiyt4dzF4/+JUKvfdGtA+Llcb8s4yxBbzWM/qx
-	SDse382kxkCffOGDv4/s90dEPT0QfLufEfqvCiYmN2dS1erBe1xZKIFs/xCQTgKW
-	eUNr/ayP1xNcIIFUQPA1OKbttqGzD5ZUyGnLhUfIcV8j9EUjwdR+O/WggxiMdIaO
-	vn4PSEfEetkhvnwVZpPaljah10iK0iDxhDZ/fx+mHaREAivl9Ws9FMCtTQowBTmf
-	6QSBDl8Tnw9mG0YdKGgp95evG4PmaNnSawAlXBb7iAW0aoWXh53eS8KzLdpzPHhu
-	x3NmJw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv0np5p-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 14:55:50 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47TEtnF4031331
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 14:55:49 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 29 Aug
- 2024 07:55:48 -0700
-Message-ID: <f6075361-1766-35a5-c7ac-cc3eb416a4e1@quicinc.com>
-Date: Thu, 29 Aug 2024 08:55:47 -0600
+	s=arc-20240116; t=1724945118; c=relaxed/simple;
+	bh=W5GQhkVjz2wwdC5lXitoDCDre3m21qvN2+9J1ktg/iQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CCeBhvOO4/roSTwe6K6usqLu+IsRn5Rz1nqdMswJ0fy8DX6juH3/VkTk1m3LRMcyRenHds0C9SpqeEM7ER37HrwHrtenFwOIGq+ZNaX7MmWFNtdMgnAUXp5TjOgpQt0vNzSirAsQ28coWfCEUgwiBMdI0urME5LW2EXTe3nvXPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tey8LXv9; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-428141be2ddso7092325e9.2;
+        Thu, 29 Aug 2024 08:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724945115; x=1725549915; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3CePclmUlJ9R5wUKygyM22ovfabY44x27bhlzsShvYo=;
+        b=Tey8LXv9NHiqcu/Y32HoVzNjsf6xaqLtc7NcTR4LQ5K84vDoFR81iYrrBA7G5Y5orU
+         pJTNjE0lYSx0fAfPM+eYZDFM2efME79dqpzFqKYbJ78yTF9p9mB0NHzMqcrEb2bJ9+JO
+         t7Yo+ErJavMUEe0KUjDi8+dfDOWwGfjKIXaKT1IRcB5LSVMkrALiUeTyVaAOf7YI+ozb
+         4PuFZFVOpD4SeJtzKi4IGjge5scaWP62M2VFjoo61ZCKam2gZJErtLHfBx8NI2MPFeVD
+         3Y0VPVOpz1+RvcUrkW0ykk+Cuqp1OvAKfIYCIPFxHNklqOZtDuJE8xpKaQC90sDHto5r
+         wiEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724945115; x=1725549915;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3CePclmUlJ9R5wUKygyM22ovfabY44x27bhlzsShvYo=;
+        b=aQFx0EBYh6N4EVwZk+bgVtzJv6SeI+82YWE73MzjImC/UnChABtc7+eVI5LVn2ZLAt
+         b8eE5Pwbnc+V6IPUJJBEQxtANson44kT/UPv7rkEmjAzFyWie4ej8cQEPvABLcUdP3JF
+         kzXcMdh/aPpXgG4HoiJR6nrYOvcXZ7owmqLGFX8w1wndbvn1MfmhffE+YkNez3fa4aTR
+         ngSzPibD2N4rI3yKMvsgG3CTBom7gPzeKk76IanyQGc4dQekLxAoT5l1/ZeGkEq9AbY+
+         Ey+BXgTmoH1l0v+SdhmXRelrZCruaYXihblvlJaQiz/7GVG0LSDK5sRt3olJfSZyT9GF
+         vA9A==
+X-Forwarded-Encrypted: i=1; AJvYcCUlCLEXFe3JUyRzen1ZUj4c+H3fFD6omSRM/hy/LoadHLrfVa2lesysfhvPpr7cnj8ScTHwaf0JjE+Iw2n1@vger.kernel.org, AJvYcCVSw59G5jQNi8YQkdPtbdI7g2OxnmLX6Rmmd5wdUKJD+j30am046r1ukVh8UnCAc6jZ2ORq+b3KVtyBXTk=@vger.kernel.org, AJvYcCXVu/631ww0GmA6GJpHJmzy80jBUONYcN0UQdtpo/Lfyk04bCeYi5FnKBADRLjm8DTIt0zolk0AHU+9S0k=@vger.kernel.org, AJvYcCXzWFQj8z7uH30wVb9Jb+PYh3MNZVun/KwyBOF74rHAftNp8EO0sdfAoQ+PeocCv7ARcdSHe7v7KmifbhCo@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXhkbpF2U0LC5u39auOyiTZ0Ebg3UHuazrvTlwrRyQKOJX+S8g
+	gL4qmU9acOEF/DTbo/t1jgcR1a92QM3FlcJKYV08XNJiTRAIZbTx
+X-Google-Smtp-Source: AGHT+IHB9DwVQH+LaPCki7l5s2XbNvXlqbr5f4VqUYxz7BdDtbuqto3Zl5PtmeS+7pmQVpMQVL7Cmg==
+X-Received: by 2002:a05:600c:474c:b0:426:6e95:78d6 with SMTP id 5b1f17b1804b1-42bb01aa1fdmr26574845e9.4.1724945114644;
+        Thu, 29 Aug 2024 08:25:14 -0700 (PDT)
+Received: from orome (p200300e41f29d300f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f29:d300:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb37f7849sm25800085e9.7.2024.08.29.08.25.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2024 08:25:13 -0700 (PDT)
+Date: Thu, 29 Aug 2024 17:25:12 +0200
+From: Thierry Reding <thierry.reding@gmail.com>
+To: Lu Baolu <baolu.lu@linux.intel.com>
+Cc: Dmitry Osipenko <digetx@gmail.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Jonathan Hunter <jonathanh@nvidia.com>, 
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Jason Gunthorpe <jgg@ziepe.ca>, 
+	Kevin Tian <kevin.tian@intel.com>, linux-media@vger.kernel.org, linux-tegra@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, iommu@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	Jason Gunthorpe <jgg@nvidia.com>
+Subject: Re: [PATCH 1/2] media: nvidia: tegra: Use iommu_paging_domain_alloc()
+Message-ID: <2o6gpxknio4kvf5fmqgai5jaov65semmw3wvtmt4gdauwzhbti@ii3ydtlmp2sb>
+References: <20240812072105.9578-1-baolu.lu@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: qcom-rng is broken for acpi
-Content-Language: en-US
-To: Brian Masney <bmasney@redhat.com>,
-        =?UTF-8?Q?Ernesto_A=2e_Fern=c3=a1ndez?=
-	<ernesto.mnd.fernandez@gmail.com>
-CC: Trilok Soni <quic_tsoni@quicinc.com>, <linux-crypto@vger.kernel.org>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        <linux-arm-msm@vger.kernel.org>,
-        Om Prakash Singh
-	<quic_omprsing@quicinc.com>
-References: <20240828184019.GA21181@eaf>
- <a8914563-d158-4141-b022-340081062440@quicinc.com>
- <20240828201313.GA26138@eaf>
- <CABx5tq+ZFpTDdjV7R5HSEFyNoR5VUYDHm89JEHvKb-9TW6Oejw@mail.gmail.com>
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <CABx5tq+ZFpTDdjV7R5HSEFyNoR5VUYDHm89JEHvKb-9TW6Oejw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nPn6qFdRs7NaGeLsQxwaLHdeZRIfhkaK
-X-Proofpoint-ORIG-GUID: nPn6qFdRs7NaGeLsQxwaLHdeZRIfhkaK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-29_03,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=826 bulkscore=0 impostorscore=0 phishscore=0 clxscore=1011
- mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290104
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="cowfqq5j65e3ovof"
+Content-Disposition: inline
+In-Reply-To: <20240812072105.9578-1-baolu.lu@linux.intel.com>
 
-On 8/28/2024 7:25 PM, Brian Masney wrote:
-> On Wed, Aug 28, 2024 at 4:13 PM Ernesto A. Fernández
-> <ernesto.mnd.fernandez@gmail.com> wrote:
->> On Wed, Aug 28, 2024 at 12:03:57PM -0700, Trilok Soni wrote:
->>> On 8/28/2024 11:40 AM, Ernesto A. Fernández wrote:
->>>> Hi, I have a bug to report.
->>>>
->>>> I'm getting a null pointer dereference inside qcom_rng_probe() when this
->>>> driver gets loaded. The problem comes from here:
->>>>
->>>>    rng->of_data = (struct qcom_rng_of_data *)of_device_get_match_data(&pdev->dev);
->>>>
->>>> because of_device_get_match_data() will just return null for acpi. It seems
->>>> that acpi was left behind by the changes in commit f29cd5bb64c2 ("crypto:
->>>> qcom-rng - Add hw_random interface support").
->>>
->>> Which Qualcomm platform you are testing w/ the ACPI? Most of our platforms
->>> uses the devicetree.
->>
->> Amberwing.
-> 
-> We have a few Amberwing servers in the lab at Red Hat. I verified that
-> qcom-rng was crashing on boot with an upstream kernel, and it's now
-> fixed with this:
-> 
-> https://lore.kernel.org/linux-arm-msm/20240829012005.382715-1-bmasney@redhat.com/T/#t
-> 
-> Brian
-> 
-> 
 
-Interesting, I haven't seen this in my testing.  I'll go swing back and 
-try to figure out why.
+--cowfqq5j65e3ovof
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-For future reference, I'm still supporting Amberwing/QDF2400. 
-Addressing emails to me is a good way to get my attention.
+On Mon, Aug 12, 2024 at 03:21:04PM GMT, Lu Baolu wrote:
+> An iommu domain is allocated in tegra_vde_iommu_init() and is attached to
+> vde->dev. Use iommu_paging_domain_alloc() to make it explicit.
+>=20
+> Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+> Link: https://lore.kernel.org/r/20240610085555.88197-9-baolu.lu@linux.int=
+el.com
+> ---
+>  drivers/media/platform/nvidia/tegra-vde/iommu.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
 
--Jeff
+Acked-by: Thierry Reding <treding@nvidia.com>
+
+--cowfqq5j65e3ovof
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmbQktQACgkQ3SOs138+
+s6EUfRAAme7fMme4dA56e6MubG7cFGGWr8iHzpMLzb7Gxi4bRxcYB/Gtn/cepURr
+Ybbn9lG86we9+zbd+FNlPWTKXxFFZG3kDfKnU4eILM2y56SQApilQzwwicdOgN5a
+7aqDJu0/eEIwagudME6HYDlALal0MCib/UblMbReIP7XnAcrR+HhO1aRMy95l6P+
+xYD6VzW7evnIR1BRkz5CHS9Dgo7o3ykNsGr0wDkYjK6oFjF5g9Y6LZCZIRO3sZxe
+jqijysA0g9cAk+NsDNmWKbd0UEMM3DX1ROebrEzbBkXC9+PWe56LmP77zigyPHVr
+aVXBy9edGGmkJfKvwvkJJLAs3wpjN2cHVO8zPjg2bntFR5VhAPgMo7RJKt4Tj/A9
+rEcmcaPggDUVVgJEbogj1zZtpeTp89+56tGcFjJvMi1sVbudisnejl4aSfx/Hnzc
+4QKrj/ajGfmJkPJbjjUEIzTSV+Z7L3M06jC9eLrgKzURdymvDUAPuVaZWkPcT/DK
+hqiTAVU43r+yr40ZwRoxyuHIQLxGIxmUtnjk96uQhKa7bs3loD4KR00EIX590fGL
+cRL3yZFx2G7ILQ1Cnru0vXA3iF9RxG1eikHZHtqTPsInPseAMx6QpE0Vn0I/gT0G
+S/cBJhFE3NxmP45u2DKKrhq7+pRf6AEpKh1tnwZoB6NIx5cwGG0=
+=3ZMs
+-----END PGP SIGNATURE-----
+
+--cowfqq5j65e3ovof--
 
