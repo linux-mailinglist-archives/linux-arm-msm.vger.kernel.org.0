@@ -1,120 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-30113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2EFA965042
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 21:56:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6C87965124
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 22:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80F3028B0D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:56:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 180671C23511
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 20:50:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38D641BE872;
-	Thu, 29 Aug 2024 19:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BC0D1BA87A;
+	Thu, 29 Aug 2024 20:49:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOMCQ/VQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eazZdALR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A68E1BE868;
-	Thu, 29 Aug 2024 19:49:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E15518B496;
+	Thu, 29 Aug 2024 20:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724960955; cv=none; b=GX4cXAVIMfwgkbpjo5TnrrXVWDSsMaKJiMMA5YHxTT2gDkj4+ERIThdDHhklsOaJoPq/xHnfd9jE4xRM2U6s6KOkvxxxwoPzPAipGLZU+0ibff1iEWazoSoRrXcQacIKSNl9mGTYiH1MlYI2ThmuuxewiTsmoUSXeZW4OiFC0Sc=
+	t=1724964558; cv=none; b=VF1b9M7seRWGFghT84hZrYsQ5a+c0mb3uxURyB5q47Z8DCCtzRxc7NF+7LEQmhHxmIUjicfjwxy+FQigEnB+E0sRiMM6TQ3e13uy0QSUCk4OAxWym3OShTGa3f77eQzddBj7RaavWZN5VYEOVjELqz+gweu/GpaUnaT7+4FvnXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724960955; c=relaxed/simple;
-	bh=VQFkfIt1ZFmvcgrZPQB4L0rRyNlBeXoAfBINrTFokH8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B2cE+T6ETKdV6HDKWoROeiEuB/RXcnwMCd1voDT0ZxW79QS6I4ie7h5yrMgwmXXX8rm+2ZyDNpDBvYpyF/inZUTg34rqPXU3fkJhGz2SHd9PJMZYgwepPojj3/N5OiXALstjhC3m14hFG77WW7oIryyhPFIBdKZTYHgx/siQyFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SOMCQ/VQ; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5bed72ff2f2so1241471a12.2;
-        Thu, 29 Aug 2024 12:49:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1724960952; x=1725565752; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C6zTyRy44LbsV/er+6Rmmr7d7exqhqQ5s8Va18uvln0=;
-        b=SOMCQ/VQpSXbRGvD4QN4FFC4PBjB6PFtgwQXM19lDbBTZhg5GeSPldyo0kBQb447Aa
-         KKZkp3UBQMNAXp/eN8GK8GGXHfT3sjePnK+wUPi8mGJwaSYDxcSdzGfk1KsgTtBO4Wvu
-         sgKOnMNkzaGmEhF2IHYqAqGLG07F/KhML7vfBNvZcb3DIyoiMeSxEUMtsbY9nhXXYZO9
-         19KnU2uEuJVVyGQ3OBIiMIymrFxK34o7SMnsbXKCs0fBle9lycaEIs41xXog2mt1U3/+
-         Xx8tJMp7/VG2rbkgv6bpCwmIHYVCTx/oIq3dRBouWeYbjRXSNH6VtLLJ6yVa0qLWWtD+
-         Z/YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724960952; x=1725565752;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C6zTyRy44LbsV/er+6Rmmr7d7exqhqQ5s8Va18uvln0=;
-        b=TdGfwPdVxU1XVe70IvKAiT5r9/KNtEpPBtXG/KNzJqYPQAC/QzTsvEATq0VnMDzkFe
-         Rivq1QVZ94MRQXit7W4sPvM+0Pe5zwvWIVnH1PKZJtKntrXRjRnbVsVKBdMXQ9o0PpTJ
-         2yMfKd3yjR6ZFbBGXl5SdqT9jei5wi3xDDfAWdrdme0RDrZsgtp+5Uxq0OGn7CcDhm0N
-         XpGoV2c1pVgNW/yJgIycavDKLTR4DMWW5gyfYka07fYwpRMbEDOu996T5dYMK77e9A7c
-         4P2gwd6ou/VZFg71bqK1BgyPdfcyReGjk1Tql5BuhM2woNmaYFNiIvj2JhNFpJ+mWAKK
-         QpuA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkY72gpC5F6BuQ3egZttU3tU/A0iMvh/xMQue3iL002fr1pPjhZpthK55ANzjN096Sy16LAJWbDDVYHHpS@vger.kernel.org, AJvYcCUt5zX7klMtj+Obdhb9RpEVDHc0CiPhgzibAESo1tnF26sivqyClcSRHieHA3jOGLewZpHErKIJRWKl@vger.kernel.org, AJvYcCV5HqpylIqjZYOqj6hAGntG8amjdnhzmDb5U4rwKxs38hZVY/PjRrvX/NnwbE5vVjStoHDrxlolgUE=@vger.kernel.org, AJvYcCW4jO7zBX6P3nMaIwN8QMcqOssdOHT/MrD5slHHl93DBJO9ut/M/2sgA52y1vaFIvyr9Mqw1MCel+w6jYTDbQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSjroT426onmSIErHLFNpxezt9blzJVqBXAv2drdUbH9p+Axu4
-	9x9W4rgNiHoARYCVp5Qi9OrzQuwZ4UsJ15XMUWGUviYpUk72xeuw
-X-Google-Smtp-Source: AGHT+IEG6BreU15tWsvDqXfz+6NfLSYPAoFtBNvZap0mdBrmPnCL4g6PIPExiJh2Sz2VysaWO/gXoQ==
-X-Received: by 2002:a17:907:7292:b0:a86:a909:4f67 with SMTP id a640c23a62f3a-a897fa759c4mr273076266b.52.1724960951288;
-        Thu, 29 Aug 2024 12:49:11 -0700 (PDT)
-Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8988feb9f7sm114184666b.42.2024.08.29.12.49.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Aug 2024 12:49:10 -0700 (PDT)
-Message-ID: <159df608-e52c-4317-a1f2-d0f94ebfc25a@gmail.com>
-Date: Thu, 29 Aug 2024 21:49:07 +0200
+	s=arc-20240116; t=1724964558; c=relaxed/simple;
+	bh=li2FK37xH5VcoxQBl82OOClVE0swUPx/KS02ws4/GLc=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=RT0xLqc7ABeqx20AJb6ia9mD2UcrMKq2kE9AfMmRF2d1UWFf4blFdr4OGmbYdW5lDOxZCqqtEKCA1yEp6qOFwR/y64P8NniUAXzqDzoOR968Fcr9zm68A3d0ygzHxpYNcDUThWkxgKAOfflF/srlsco8nbWKika+VaBXqstOQts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eazZdALR; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47THZYUs013576;
+	Thu, 29 Aug 2024 20:49:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=TYC4TzRd+KuX9AOfuqWSug
+	xiUtqlBhucAyGClbXpUEg=; b=eazZdALR0tfzG5khNnK+rHG/T3UmQbN/KteYOk
+	MfDC41O/Jlw+nfDO54UUM8ZKVwkwlttQANsFgP8T37WjFoNrkFQSwPFkLJRCnE2e
+	Nrvc7VqGLGhPFpCiTeROTsuWZQU/MVaSL/a9FN2qIEWI36bKC6XixVmY0dhE7og4
+	CwfRHuUo4C0Op0mmIF2DMDApwosbjSqT9U8itG+wfMmKN04/07l1ZcLyqU6KzYVW
+	saevLa/RH25Vbef3k2/+zaj9b9CMNQc6BFoU0z6KcVWugSdtA5u5SuNU+j5jpRXS
+	LV1g4FwrZ5mBZbrIMtuEBqFonpncK2BI8E8qE8z05Uywr3GA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419px5pgw9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Aug 2024 20:49:00 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47TKmxK8020558
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Aug 2024 20:48:59 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 29 Aug 2024 13:48:59 -0700
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH 00/21] drm/msm/dpu: Add Concurrent Writeback Support for
+ DPU 10.x+
+Date: Thu, 29 Aug 2024 13:48:21 -0700
+Message-ID: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] interconnect: qcom: add QCS8300 interconnect provider
- driver
-To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
- Danila Tikhonov <danila@jiaxyga.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Vladimir Lypak <vladimir.lypak@gmail.com>,
- Adam Skladowski <a39.skl@gmail.com>, Sibi Sankar <quic_sibis@quicinc.com>,
- Rohit Agarwal <quic_rohiagar@quicinc.com>,
- Rajendra Nayak <quic_rjendra@quicinc.com>,
- Andrew Halaney <ahalaney@redhat.com>, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
- quic_okukatla@quicinc.com
-References: <20240827151622.305-1-quic_rlaggysh@quicinc.com>
- <20240827151622.305-3-quic_rlaggysh@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konradybcio@gmail.com>
-In-Reply-To: <20240827151622.305-3-quic_rlaggysh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJXe0GYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDM0ML3eT8vOTSoqLUvBLd8iRdS/MUMyNjC/M0S1MjJaCegqLUtMwKsHn
+ RsbW1AMkBZs9fAAAA
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        <quic_abhinavk@quicinc.com>, Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-99b12
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1724964539; l=5099;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=li2FK37xH5VcoxQBl82OOClVE0swUPx/KS02ws4/GLc=;
+ b=bRtpb/AhdA68uX10EF0UV+7Uyfsb79gzMyXZhhf/+zOcoVWQJe0QnUQp71b6zMZhrVi8fE/DL
+ Jj4I4HzHvUUBawL9q7qRInasI+52WZF4tJrNJWUkA/wjgVGKhAgKnvF
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: uzw6JP2Kku02lsaug26DAF5r76jOjL5K
+X-Proofpoint-GUID: uzw6JP2Kku02lsaug26DAF5r76jOjL5K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-29_06,2024-08-29_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ adultscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0
+ priorityscore=1501 bulkscore=0 mlxscore=0 malwarescore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408290147
 
-On 27.08.2024 5:16 PM, Raviteja Laggyshetty wrote:
-> Add driver for the Qualcomm interconnect buses found in QCS8300
-> based platforms. The topology consists of several NoCs that are
-> controlled by a remote processor that collects the aggregated
-> bandwidth for each master-slave pairs.
-> 
-> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-> ---
+DPU supports a single writeback session running concurrently with primary
+display when the CWB mux is configured properly. This series enables
+clone mode for DPU driver and adds support for programming the CWB mux
+in cases where the hardware has dedicated CWB pingpong blocks. Currently,
+the CWB hardware blocks have only been added to the SM8650
+hardware catalog.
 
-[...]
+This changes are split into two parts:
 
-> +static struct qcom_icc_bcm *dc_noc_bcms[] = {
-> +};
+The first part of the series will pull in Dmitry's patches to refactor
+the DPU resource manager to be based off of CRTC instead of encoder.
+This includes some changes (noted in the relevant commits) by me and
+Abhinav to fix some issues with getting the global state and refactoring
+the CDM allocation to work with Dmitry's changes.
 
-Please drop such empty nodes
+The second part of the series will add support for CWB by doing the
+following:
 
-Konrad
+1) Add a DRM helper to detect if the current CRTC state is in clone mode
+   and add an "in_clone_mode" entry to the atomic state print
+2) Add the CWB mux to the hardware catalog and clarify the pingpong
+   block index enum to specifiy which pingpong blocks are dedicated to
+   CWB only and which ones are general use pingpong blocks
+3) Add CWB as part of the devcoredump
+4) Add support for configuring the CWB mux via dpu_hw_wb ops
+5) Add pending flush support for CWB
+6) Add support for validating clone mode in the DPU CRTC and setting up
+   CWB within the encoder
+7) Adjust the encoder trigger flush, trigger start, and kickoff order to
+   accomodate clone mode
+8) Adjust when the frame done timer is started for clone mode
+9) Define the possible clones for DPU encoders so that 
+
+The feature was tested on SM8650 using IGT's kms_writeback test with the
+following change [1] and dumping the writeback framebuffer when in clone
+mode. I haven't gotten the chance to test it on DP yet, but I've
+validated both single and dual LM on DSI.
+
+To test CWB with IGT, you'll need to apply this series [1] and run
+the following command:
+
+IGT_FRAME_DUMP_PATH=<dump path> FRAME_PNG_FILE_NAME=<file name> \
+./build/tests/kms_writeback [--run-subtest dump-valid-clones] \
+-dc <primary display mode>
+
+[1] https://patchwork.freedesktop.org/series/137933/
+
+---
+Dmitry Baryshkov (4):
+      drm/msm/dpu: get rid of struct dpu_rm_requirements
+      drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
+      drm/msm/dpu: move resource allocation to CRTC
+      drm/msm/dpu: fill CRTC resources in dpu_crtc.c
+
+Esha Bharadwaj (3):
+      drm/msm/dpu: add CWB entry to catalog for SM8650
+      drm/msm/dpu: add devcoredumps for cwb registers
+      drm/msm/dpu: add CWB support to dpu_hw_wb
+
+Jessica Zhang (14):
+      drm: add clone mode check for CRTC
+      drm: print clone mode status in atomic state
+      drm/msm/dpu: Check CRTC encoders are valid clones
+      drm/msm/dpu: Add RM support for allocating CWB
+      drm/msm/dpu: Add CWB to msm_display_topology
+      drm/msm/dpu: Require modeset if clone mode status changes
+      drm/msm/dpu: Reserve resources for CWB
+      drm/msm/dpu: Configure CWB in writeback encoder
+      drm/msm/dpu: Program hw_ctl to support CWB
+      drm/msm/dpu: Adjust writeback phys encoder setup for CWB
+      drm/msm/dpu: Start frame done timer after encoder kickoff
+      drm/msm/dpu: Skip trigger flush and start for CWB
+      drm/msm/dpu: Reorder encoder kickoff for CWB
+      drm/msm/dpu: Set possible clones for all encoders
+
+ drivers/gpu/drm/drm_atomic.c                       |   1 +
+ .../drm/msm/disp/dpu1/catalog/dpu_10_0_sm8650.h    |  29 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |   4 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |   4 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |   4 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           | 253 ++++++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 358 ++++++++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |  36 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   |  18 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  67 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  13 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  30 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |  69 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h          |  34 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  12 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             | 351 ++++++++++++--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h             |  14 +-
+ drivers/gpu/drm/msm/msm_drv.h                      |   2 +
+ include/drm/drm_crtc.h                             |   7 +
+ 22 files changed, 994 insertions(+), 352 deletions(-)
+---
+base-commit: dd482072df04d3c2bb180fc860b0ed0d3c99bdd4
+change-id: 20240618-concurrent-wb-97d62387f952
+
+Best regards,
+-- 
+Jessica Zhang <quic_jesszhan@quicinc.com>
+
 
