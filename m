@@ -1,309 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-30144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45D1E9652D9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 00:25:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47BCE9653A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 01:45:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E58ED28536B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 22:25:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 636321C22B52
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 23:45:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2B81BC08E;
-	Thu, 29 Aug 2024 22:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EC5018F2D1;
+	Thu, 29 Aug 2024 23:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eah9mlFU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oEUTfNLz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B23C1BAEEE;
-	Thu, 29 Aug 2024 22:24:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E08F18EFEB;
+	Thu, 29 Aug 2024 23:45:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724970279; cv=none; b=TkBvzJ35UljYA51JKQkgTqi4k0CK8P1m9iCganCUOBHOdG434IlyP/7FZ1Y33SPl0Fwa8lRwgt9RRUR1yu66FNKAjW9vXMuSrj+v7WAxHNQKleuUhH/NS4iYmYBBM8APH0Qptiiz9zaZB6g7GwQKtpKejcvaPbYA2N5lBPawm28=
+	t=1724975146; cv=none; b=OwLoS4kTkt0c7SMVnYHAsvi0Vgjg332W+NY+tZ15SJxnU99Pv5YNZva3IvBS3zLAEwu8etZ4ppswojBMKvEOiWq0BPtKSFXGemiLHVreN2qO3y3YEi5Dfgake405nXvAlBIuoEKLWYXNkcR2VU9YHBv/2rVo+aGpo+mAvNr+GaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724970279; c=relaxed/simple;
-	bh=vNp4WCXRq96/jsbTyQi8C13HB80VQ5tpk67BkQVTMlQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=C0zPe599LFI6qBXEEZD6PtM5gkj3wg8jzel+2dag9jzeSErzW/FcYDxJ3Y5h/MxoCSBTxObY/K4tlG9Gv4JDmcUR3tLYX7FQSYM4h81RYbR4Y/kOYIyMmNGH2l9s6S/gveJh1bXmulIYnXIvdf3Gmc0R0RmydtvZ4kS65vIbt40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eah9mlFU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47THWFOG026564;
-	Thu, 29 Aug 2024 22:24:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OikWV/zxhCjbqlu1U3SrGEvR6lLB0Wn4slbdklJYTbQ=; b=eah9mlFUiP8U2VPm
-	C2fRIGHbALCXiJ2dg5iiSTWWGrrJG4hcOVmBlzZQgz9WSEhILxnJNru1yrxSn/N+
-	xGK7RThKNRyd17la0q+19UxJSgOgSUyq5gNFlqQknwFlNRs9AvBVj8NmN4av+7Qp
-	iuZzrb6HZ5WDmEhtpI2G5/R8Y4SNFfloKCL9byLSHyI7Zz7lTJOfcYn9jjg/3lXk
-	FWJ4eDnf5LeiXzF1rLop15EAggNmJNqP68Tlg83dpshOqp83pqH1PQqx/UBtaI5o
-	im5wW4b9CGjV6n8QVowjQtqOq5GaczfOntucqC085rm0NnZRr6azGqK4ixGlZA/X
-	NM6uuA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419puvesp0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 22:24:14 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47TMOD6e014638
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 22:24:13 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 29 Aug 2024 15:24:13 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Thu, 29 Aug 2024 15:24:13 -0700
-Subject: [PATCH RFC v2 5/5] mm: guest_memfd: Add option to remove
- inaccessible memory from direct map
+	s=arc-20240116; t=1724975146; c=relaxed/simple;
+	bh=mB+gFgRsjrN1n+Vmo4u3AaQ+WoeWXnfwpWmVbAnCFqE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=smxYXt6iUPtSbp3sP4+4SUCL8ERNAmvEtHgOjc5Hxaplh0T0zBaDr/skrz0nzt0QznkE2L+IVZ3E7kbfwIMrD9c3H3hHj3sGzFz1npnA6K+VeJrOc8u+5nJt893fnFG19J+gaaiyVOFM1GH/HHyd1CtRGDtWNrOUuRBfnqr9pVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oEUTfNLz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9BE9C4CEC3;
+	Thu, 29 Aug 2024 23:45:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1724975145;
+	bh=mB+gFgRsjrN1n+Vmo4u3AaQ+WoeWXnfwpWmVbAnCFqE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=oEUTfNLz4GKXtANc/aeaMq4xCcZPhy7mByMa/ACg1eOE/UynPYS6H7CiOpkgLQ5KZ
+	 /2tu+Sbss+514G8Nv8psWJ8hzTntQkbslQMhJUDfwVnmVSpKJMRKGEr81Uym+ozFYB
+	 9expCgAmyXUewVYBfUA0CwsiIoh6ZWdzptgzMH9/3B/Tt+UeDW3Rtib7qM3ODM1vIq
+	 zDzh8grbPeDcDR5Y/1w6L0g7JxgiRHqYpHO728Lj/AqEUmGvFmEgGqnCjfjsYZTF+5
+	 yyrUXhFGX0D5qK74RHBEJY5X80Aj91hpr3jjcuXHFGfrLrj2qYHCwOyBLhZdpGka/i
+	 BmJPQv3PKOy0w==
+Message-ID: <343c2bc4-46b5-443b-bb3b-ed4a45ecce76@kernel.org>
+Date: Fri, 30 Aug 2024 01:45:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] firmware: qcom_scm: Add API to get waitqueue IRQ
+ info
+To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com
+References: <cover.1724968351.git.quic_uchalich@quicinc.com>
+ <9acc746885d6b06c2333f0493413c44b85fa7f02.1724968351.git.quic_uchalich@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <9acc746885d6b06c2333f0493413c44b85fa7f02.1724968351.git.quic_uchalich@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240829-guest-memfd-lib-v2-5-b9afc1ff3656@quicinc.com>
-References: <20240829-guest-memfd-lib-v2-0-b9afc1ff3656@quicinc.com>
-In-Reply-To: <20240829-guest-memfd-lib-v2-0-b9afc1ff3656@quicinc.com>
-To: Andrew Morton <akpm@linux-foundation.org>,
-        Sean Christopherson
-	<seanjc@google.com>,
-        Paolo Bonzini <pbonzini@redhat.com>,
-        Thomas Gleixner
-	<tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-        Borislav Petkov
-	<bp@alien8.de>,
-        Dave Hansen <dave.hansen@linux.intel.com>,
-        Fuad Tabba
-	<tabba@google.com>, David Hildenbrand <david@redhat.com>,
-        Patrick Roy
-	<roypat@amazon.co.uk>, <qperret@google.com>,
-        Ackerley Tng
-	<ackerleytng@google.com>,
-        Mike Rapoport <rppt@kernel.org>, <x86@kernel.org>,
-        "H. Peter Anvin" <hpa@zytor.com>
-CC: <linux-kernel@vger.kernel.org>, <linux-mm@kvack.org>,
-        <kvm@vger.kernel.org>, <linux-coco@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        Elliot Berman <quic_eberman@quicinc.com>
-X-Mailer: b4 0.14.1
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VKocc11VXrfwDcfhSZyfG1SnIgFpRfUU
-X-Proofpoint-GUID: VKocc11VXrfwDcfhSZyfG1SnIgFpRfUU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-29_06,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=721 priorityscore=1501 bulkscore=0 impostorscore=0
- adultscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 mlxscore=0
- spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290158
 
-When memory is made inaccessible to the host, Linux may still
-speculatively access the folio if a load_unaligned_zeropad is performed
-at the end of the prior page. To ensure Linux itself catches such errors
-without hypervisor crashing Linux, unmap the guest-inaccessible pages
-from the direct map.
+On 30.08.2024 12:15 AM, Unnathi Chalicheemala wrote:
+> Bootloader and firmware for SM8650 and older chipsets expect node
+> name as "qcom_scm". However, DeviceTree uses node name "scm" and this
+> mismatch prevents firmware from correctly identifying waitqueue IRQ
+> information. Waitqueue IRQ is used for signaling between secure and
+> non-secure worlds.
+> 
+> To resolve this, introduce qcom_scm_get_waitq_irq() that'll get the
+> hardware irq number to be used from firmware instead of relying on data
+> provided by devicetree, thereby bypassing the DeviceTree node name
+> mismatch.
+> 
+> This hardware irq number is converted to a linux irq number using newly
+> defined fill_irq_fwspec_params(). This linux irq number is then supplied to
+> the threaded_irq call.
+> 
+> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+> ---
+>  drivers/firmware/qcom/qcom_scm.c | 59 +++++++++++++++++++++++++++++++-
+>  drivers/firmware/qcom/qcom_scm.h |  1 +
+>  2 files changed, 59 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 00c379a3cceb..ed51fbb1c065 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -32,6 +32,14 @@
+>  #include "qcom_scm.h"
+>  #include "qcom_tzmem.h"
+>  
+> +#define GIC_SPI_BASE            32
+> +#define GIC_MAX_SPI             987  // 1019 - 32
+> +#define GIC_ESPI_BASE           4096
+> +#define GIC_MAX_ESPI            1024 // 5120 - 4096
 
-This feature is made optional because arm64 pKVM can provide a special,
-detectable fault which can be fixed up directly.
+Are these going to remain constant on different implementations of the
+interrupt controller across different SoCs that use this? Are these
+mandated anywhere in the arm spec and/or present across the tree with
+parts touching gicv3?
 
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
----
- include/linux/guest_memfd.h |  1 +
- mm/guest_memfd.c            | 79 +++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 78 insertions(+), 2 deletions(-)
+Also, the subtraction comments take some guesswork.. perhaps something like
+0..31 etc. would be easier.
 
-diff --git a/include/linux/guest_memfd.h b/include/linux/guest_memfd.h
-index 66e5d3ab42613..de53bce15db99 100644
---- a/include/linux/guest_memfd.h
-+++ b/include/linux/guest_memfd.h
-@@ -33,6 +33,7 @@ enum guest_memfd_grab_flags {
- 
- enum guest_memfd_create_flags {
- 	GUEST_MEMFD_FLAG_CLEAR_INACCESSIBLE = (1UL << 0),
-+	GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP = (1UL << 1),
- };
- 
- struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags);
-diff --git a/mm/guest_memfd.c b/mm/guest_memfd.c
-index 194b2c3ea1525..d4232739d4c5b 100644
---- a/mm/guest_memfd.c
-+++ b/mm/guest_memfd.c
-@@ -8,6 +8,7 @@
- #include <linux/falloc.h>
- #include <linux/guest_memfd.h>
- #include <linux/pagemap.h>
-+#include <linux/set_memory.h>
- #include <linux/wait.h>
- 
- #include "internal.h"
-@@ -26,6 +27,45 @@ struct guest_memfd_private {
- 	atomic_t safe;
- };
- 
-+static inline int folio_set_direct_map_invalid_noflush(struct folio *folio)
-+{
-+	unsigned long i, nr = folio_nr_pages(folio);
-+	int r;
-+
-+	for (i = 0; i < nr; i++) {
-+		struct page *page = folio_page(folio, i);
-+
-+		r = set_direct_map_invalid_noflush(page);
-+		if (r)
-+			goto out_remap;
-+	}
-+	/**
-+	 * Currently no need to flush as hypervisor will also be flushing
-+	 * tlb when giving the folio to guest.
-+	 */
-+
-+	return 0;
-+out_remap:
-+	for (; i > 0; i--) {
-+		struct page *page = folio_page(folio, i - 1);
-+
-+		BUG_ON(set_direct_map_default_noflush(page));
-+	}
-+
-+	return r;
-+}
-+
-+static inline void folio_set_direct_map_default_noflush(struct folio *folio)
-+{
-+	unsigned long i, nr = folio_nr_pages(folio);
-+
-+	for (i = 0; i < nr; i++) {
-+		struct page *page = folio_page(folio, i);
-+
-+		BUG_ON(set_direct_map_default_noflush(page));
-+	}
-+}
-+
- static inline int base_safe_refs(struct folio *folio)
- {
- 	/* 1 for filemap */
-@@ -131,6 +171,12 @@ struct folio *guest_memfd_grab_folio(struct file *file, pgoff_t index, u32 flags
- 				goto out_free;
- 		}
- 	} else {
-+		if (gmem_flags & GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP) {
-+			r = folio_set_direct_map_invalid_noflush(folio);
-+			if (r < 0)
-+				goto out_free;
-+		}
-+
- 		if (ops->prepare_inaccessible) {
- 			r = ops->prepare_inaccessible(inode, folio);
- 			if (r < 0)
-@@ -203,6 +249,7 @@ int guest_memfd_make_accessible(struct folio *folio)
- 	struct guest_memfd_private *private = folio_get_private(folio);
- 	struct inode *inode = folio_inode(folio);
- 	struct guest_memfd_operations *ops = inode->i_private;
-+	unsigned long gmem_flags;
- 	int r;
- 
- 	/*
-@@ -218,6 +265,10 @@ int guest_memfd_make_accessible(struct folio *folio)
- 	if (!r)
- 		return -EBUSY;
- 
-+	gmem_flags = (unsigned long)inode->i_mapping->i_private_data;
-+	if (gmem_flags & GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP)
-+		folio_set_direct_map_default_noflush(folio);
-+
- 	if (ops->prepare_accessible) {
- 		r = ops->prepare_accessible(inode, folio);
- 		if (r)
-@@ -248,6 +299,7 @@ int guest_memfd_make_inaccessible(struct folio *folio)
- 	struct guest_memfd_private *private = folio_get_private(folio);
- 	struct inode *inode = folio_inode(folio);
- 	struct guest_memfd_operations *ops = inode->i_private;
-+	unsigned long gmem_flags;
- 	int r;
- 
- 	r = atomic_dec_if_positive(&private->accessible);
-@@ -266,6 +318,13 @@ int guest_memfd_make_inaccessible(struct folio *folio)
- 		goto err;
- 	}
- 
-+	gmem_flags = (unsigned long)inode->i_mapping->i_private_data;
-+	if (gmem_flags & GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP) {
-+		r = folio_set_direct_map_invalid_noflush(folio);
-+		if (r)
-+			goto err;
-+	}
-+
- 	if (ops->prepare_inaccessible) {
- 		r = ops->prepare_inaccessible(inode, folio);
- 		if (r)
-@@ -454,6 +513,7 @@ static int gmem_error_folio(struct address_space *mapping, struct folio *folio)
- 	struct guest_memfd_operations *ops = inode->i_private;
- 	off_t offset = folio->index;
- 	size_t nr = folio_nr_pages(folio);
-+	unsigned long gmem_flags;
- 	int ret;
- 
- 	filemap_invalidate_lock_shared(mapping);
-@@ -464,6 +524,10 @@ static int gmem_error_folio(struct address_space *mapping, struct folio *folio)
- 
- 	filemap_invalidate_unlock_shared(mapping);
- 
-+	gmem_flags = (unsigned long)inode->i_mapping->i_private_data;
-+	if (gmem_flags & GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP)
-+		folio_set_direct_map_default_noflush(folio);
-+
- 	return ret;
- }
- 
-@@ -474,7 +538,7 @@ static bool gmem_release_folio(struct folio *folio, gfp_t gfp)
- 	struct guest_memfd_operations *ops = inode->i_private;
- 	off_t offset = folio->index;
- 	size_t nr = folio_nr_pages(folio);
--	unsigned long val, expected;
-+	unsigned long val, expected, gmem_flags;
- 	int ret;
- 
- 	ret = ops->invalidate_begin(inode, offset, nr);
-@@ -483,6 +547,10 @@ static bool gmem_release_folio(struct folio *folio, gfp_t gfp)
- 	if (ops->invalidate_end)
- 		ops->invalidate_end(inode, offset, nr);
- 
-+	gmem_flags = (unsigned long)inode->i_mapping->i_private_data;
-+	if (gmem_flags & GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP)
-+		folio_set_direct_map_default_noflush(folio);
-+
- 	expected = base_safe_refs(folio);
- 	val = atomic_read(&private->safe);
- 	WARN_ONCE(val != expected, "folio[%x] safe ref: %d != expected %d\n",
-@@ -518,7 +586,14 @@ static inline bool guest_memfd_check_ops(const struct guest_memfd_operations *op
- 
- static inline unsigned long guest_memfd_valid_flags(void)
- {
--	return GUEST_MEMFD_FLAG_CLEAR_INACCESSIBLE;
-+	unsigned long flags = GUEST_MEMFD_FLAG_CLEAR_INACCESSIBLE;
-+
-+#ifdef CONFIG_ARCH_HAS_SET_DIRECT_MAP
-+	if (can_set_direct_map())
-+		flags |= GUEST_MEMFD_FLAG_REMOVE_DIRECT_MAP;
-+#endif
-+
-+	return flags;
- }
- 
- /**
+The MAX_(E)SPI macros could also just have the hwirq number to make the
+if-conditions below simpler
 
--- 
-2.34.1
+> +
+> +#define GIC_IRQ_TYPE_SPI        0
+> +#define GIC_IRQ_TYPE_ESPI       2
 
+We can definitely use dt-bindings for this
+
+> +
+>  static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
+>  module_param(download_mode, bool, 0);
+>  
+> @@ -1819,6 +1827,55 @@ bool qcom_scm_is_available(void)
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_scm_is_available);
+>  
+> +static int qcom_scm_fill_irq_fwspec_params(struct irq_fwspec *fwspec, u32 virq)
+> +{
+> +	if (WARN(virq < GIC_SPI_BASE, "Unexpected virq: %d\n", virq)) {
+> +		return -ENXIO;
+> +	} else if (virq <= (GIC_SPI_BASE + GIC_MAX_SPI)) {
+> +		fwspec->param_count = 3;
+> +		fwspec->param[0] = GIC_IRQ_TYPE_SPI;
+> +		fwspec->param[1] = virq - GIC_SPI_BASE;
+> +		fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
+> +	} else if (WARN(virq < GIC_ESPI_BASE, "Unexpected virq: %d\n", virq)) {
+> +		return -ENXIO;
+> +	} else if (virq < (GIC_ESPI_BASE + GIC_MAX_ESPI)) {
+> +		fwspec->param_count = 3;
+> +		fwspec->param[0] = GIC_IRQ_TYPE_ESPI;
+> +		fwspec->param[1] = virq - GIC_ESPI_BASE;
+> +		fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
+> +	} else {
+> +		WARN(1, "Unexpected virq: %d\n", virq);
+> +		return -ENXIO;
+> +	}
+> +	return 0;
+
+This could use some prettifying (incl the previous comment):
+
+if (GIC_SPI_BASE <= virq && virq <= GIC_SPI_MAX) {
+	fwspec->param[0] = GIC_IRQ_TYPE_SPI;
+	fwspec->param[1] = virq - GIC_SPI_BASE;
+} else if (GIC_ESPI_BASE <= virq && virq <= GIC_ESPI_MAX) {
+	fwspec->param[0] = GIC_IRQ_TYPE_ESPI;
+	fwspec->param[1] = virq - GIC_ESPI_BASE;
+} else {
+	WARN(1, "Unexpected virq"...
+	return -ENXIO;
+}
+
+fwspec->param[2] = IRQ_TYPE_EDGE_RISING;
+fwspec->param_count = 3;
+
+is much easier to follow along in my opinion
+
+> +}
+> +
+> +static int qcom_scm_get_waitq_irq(void)
+> +{
+> +	int ret;
+> +	u32 hwirq;
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_WAITQ,
+> +		.cmd = QCOM_SCM_WAITQ_GET_INFO,
+> +		.owner = ARM_SMCCC_OWNER_SIP
+> +	};
+> +	struct qcom_scm_res res;
+> +	struct irq_fwspec fwspec;
+> +
+> +	ret = qcom_scm_call_atomic(__scm->dev, &desc, &res);
+> +	if (ret)
+> +		return ret;
+> +
+> +	fwspec.fwnode = of_node_to_fwnode(__scm->dev->of_node);
+> +	hwirq = res.result[1] & 0xffff;
+
+GENMASK(15, 0)
+
+> +	ret = qcom_scm_fill_irq_fwspec_params(&fwspec, hwirq);
+> +	if (ret)
+> +		return ret;
+> +	ret = irq_create_fwspec_mapping(&fwspec);
+> +
+> +	return ret;
+> +}
+> +
+>  static int qcom_scm_assert_valid_wq_ctx(u32 wq_ctx)
+>  {
+>  	/* FW currently only supports a single wq_ctx (zero).
+> @@ -1936,7 +1993,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>  	/* Let all above stores be available after this */
+>  	smp_store_release(&__scm, scm);
+>  
+> -	irq = platform_get_irq_optional(pdev, 0);
+> +	irq = qcom_scm_get_waitq_irq();
+>  	if (irq < 0) {
+>  		if (irq != -ENXIO)
+
+Is this smc call left unimplemented on !auto platforms? If it's not
+(or it spits out bogus data), we're going to get a WARN splat in the
+log..
+
+Additionally, this mechanism ties the trustzone and hypervisor together..
+Why isn't this done in gunyah which abstracts these resources? A hypercall
+sounds much saner than tying in a third party into the mix
+
+Konrad
 
