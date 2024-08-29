@@ -1,186 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-29998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8250964329
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 13:33:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E85F96433A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 13:38:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67B4E1F21D3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 11:33:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E8584284608
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 11:38:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B3691917FB;
-	Thu, 29 Aug 2024 11:33:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBD7419148D;
+	Thu, 29 Aug 2024 11:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=163.com header.i=@163.com header.b="OmBXnpBx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aCPHQ6eJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from m16.mail.163.com (m16.mail.163.com [220.197.31.4])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEECC18DF9F;
-	Thu, 29 Aug 2024 11:33:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=220.197.31.4
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131961BC4E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 11:38:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724931221; cv=none; b=jvkKhC9TUFVBD6nMLxd/oW4LmxwQ+gs9ZS1cTBG2IP6jqdY0ZFbsmUV6pFOvxAHDxhDr1Wq5bXzk+6NQoxq8qnpPmR+AdsiSfksMDuVs9QqsbU3x+zYpIZdrW0APAXn6xysXFPX1ukQ3vEXw+ZlacfzelHqGG7jYUwrZ1LNiBhQ=
+	t=1724931501; cv=none; b=WqgNX1KyT2h6orLLLHRP89WwpfXKIoqyax0l1feywmt5RyKAZGIfpzy7Cpo931kiEqPyLvk2ivT+5Pqikn238a1sp2TT5SmL1Yu66+QBnQaaAdF+QIYd4pZXKM3KlS+OJOllKf1JN2SWjiA8eCpXBvC8gb8eIXvVL8zHTGYhsM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724931221; c=relaxed/simple;
-	bh=8JH/E7Cgzfn8+ujOrfoRemEzIuEa1qpfghMcYGXxRZA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=uE7G1Ij9NWnZmVhoE8NQXxUb+DsiL/AaWW725z7lthvSQ8Hsm756vyVt9e/6IUvhCgf2ikvbiil+zdfk8HkhGg7MI8VnQJo3Mw/9CgKiPGXwQHZGI2f8v5F55R6CPD8cYuB3g4ky6fApjogya8sucnfEx6E5Ml/WTFzg0BYi6y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com; spf=pass smtp.mailfrom=163.com; dkim=fail (1024-bit key) header.d=163.com header.i=@163.com header.b=OmBXnpBx reason="signature verification failed"; arc=none smtp.client-ip=220.197.31.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=163.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=163.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=HrS8HTFMXVJIQ943vpnL41KSoth9i2mrgBYnnMrbyEo=; b=O
-	mBXnpBxlajjsKWdBcW5nL2LqMq5u1XX6BuKaPp/DEaF+Ud6/EMARR0H5+dVpzBGp
-	nVS5P4lL1z+i8RaBj0mfjAL7f+8/uHVRsQlKHg9B9RUqGHNiUqVavWaMBLpJFw8Y
-	OrVyJvM/aMweJ4xTGSsiCfXL5H9/kmeQZ0zilfEZ6E=
-Received: from slark_xiao$163.com ( [112.97.81.228] ) by
- ajax-webmail-wmsvr-40-130 (Coremail) ; Thu, 29 Aug 2024 19:33:23 +0800
- (CST)
-Date: Thu, 29 Aug 2024 19:33:23 +0800 (CST)
-From: "Slark Xiao" <slark_xiao@163.com>
-To: "Manivannan Sadhasivam" <manivannan.sadhasivam@linaro.org>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re:Re: Re: Re: [PATCH v2 1/2] bus: mhi: host: pci_generic: Update
- the file path for Foxconn SDX55/SDX72
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2024 www.mailtech.cn 163com
-In-Reply-To: <20240726115858.GG2628@thinkpad>
-References: <20240725022941.65948-1-slark_xiao@163.com>
- <20240725035954.GA2317@thinkpad>
- <6dd00891.8235.190e91ac139.Coremail.slark_xiao@163.com>
- <20240726050051.GA2628@thinkpad>
- <5aa442e3.4d45.190ed9bf7c0.Coremail.slark_xiao@163.com>
- <20240726115858.GG2628@thinkpad>
-X-NTES-SC: AL_Qu2ZBvWYvkor5SCabOkfmk8Sg+84W8K3v/0v1YVQOpF8jADoygsaUEFcM0HUyMO2CQmpmgeIVghz6tl7Yq53Q6YBvmzn5swFQDdqBCoe7GBgZw==
-Content-Transfer-Encoding: base64
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1724931501; c=relaxed/simple;
+	bh=sAqxDssG2hUzCsznN5QQ4NJdr3fxj/p/yD8yzAk1mKY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TGK67dzYGMh309twsmghaySIRbKbPJG5JRSW42BU7DFAaw3CCdDu8fAr3U44/5YRjIg6kk5iEabIrafrPGrkdnUJt6bwsa08mZ8EdttjcogZXQx9zevmLwLyFdYR0CzMZpeZ54zD+sEiGE9gym4FOuURxvH0rhchJWAoL6h4AVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aCPHQ6eJ; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e16582cb9f9so432182276.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 04:38:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724931499; x=1725536299; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5xrA5JIScAJNAxNi++FV2D+NsqZDXM2fowkG+0TvI+Y=;
+        b=aCPHQ6eJk62vXQZzgp69eVa1DbYMyII8O/jjU+zxEfSedby18UwBRWRWuuwhS+MbwW
+         nRa/xqXpDywg+d/Lrx5mEKgSbtnN15a+3jE88Gy3PYxL2fo3Ifqp4mLlpAQW08QMWLvv
+         dt2CfGvP4PHPaCt4dII2D63w5iyoua4eJar1fScY4dywvNWE0ZgalY03TelwZ4cqJYtC
+         VX0IUfA6Px0WuSWfpN1o3eOQbLa0ieoD1vVfrm6NJv8PVWBz3obmRJtfgGvMSHShisW7
+         5KfVQGJ7ErdQaEb5mt3+eTVsyW8WaMX1ZsfqGZS0fnci7UK7GnUaxTPR9YRSOkdWhjBF
+         Lj0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724931499; x=1725536299;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5xrA5JIScAJNAxNi++FV2D+NsqZDXM2fowkG+0TvI+Y=;
+        b=o9ePoGlCZNxEv8osRZcaYUYKoPSvD7MoeDvVHIurnV8heDeJWWdQFttIR8iLJKvXXI
+         0XuHLaHVDzzIpwfiBEFWbLd8OFjOWI4DDH8z9q2zMa5xHDU38Snsa2B9ByB/JKtsTc14
+         IS4yQy2KMi/JSBHumvk9rQpwkiyOMtvRqa1VkWXtDdmMTn8gTC3mN/My+AKvlk7c2i6g
+         zfC52sRnAckAH/5pX/EshqH4X2u6kmfaekm6vl9TVDoXmCakpyj8a+Bx+X3Q5r4kc0+f
+         dl8AaElVvRcmO3XzvW31SRTRlRuCcyLH5EJmGbV8VwlbF0QGQgQHH4KLBRRQZVJ3VXai
+         WmOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVIftLQ0QN3wqLP7eaHQa/2OKEUvWG5TxU2eCxnJ1ihQzDjcV9Jw+OiMTggMyQDhOckQkPgOaamNJYofk7M@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5C7SGvP/ImPdOnIa06223LGhdxy6AdPXs11OIr7RXP1PlDrVH
+	QkwhF9kWDnhE5KktTZc7CN2X+Fm5YjD+zqFIM52+rbntzorZ5fKhncSyqi+fzIAhUIlqTgnbJ1R
+	UbZibDu7Lq5IngK6opLszO2Qi78uHhKAzclk0Ig==
+X-Google-Smtp-Source: AGHT+IE8ArmNS0unbJoKUInpYCOA6IvrbcNO0CGeVhh4esEWs6+xbLygq4z4qqnuCJH4Ls1bO6F0PfxgRxlJ6R41Gdc=
+X-Received: by 2002:a05:6902:707:b0:e11:446b:d43b with SMTP id
+ 3f1490d57ef6-e1a5c667cedmr2047797276.16.1724931498789; Thu, 29 Aug 2024
+ 04:38:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <49726bf.a036.1919de95fdd.Coremail.slark_xiao@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:_____wD3n+qDXNBmQ3BBAA--.39808W
-X-CM-SenderInfo: xvod2y5b0lt0i6rwjhhfrp/1tbioxxKZGVOFNvVnwABs+
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
+ <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-14-bdb05b4b5a2e@linaro.org>
+In-Reply-To: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-14-bdb05b4b5a2e@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 29 Aug 2024 14:38:07 +0300
+Message-ID: <CAA8EJpp5TwzCZ6bpQQzzVBpEwhi28s-fX9wwOtrasCAGDBdykA@mail.gmail.com>
+Subject: Re: [PATCH 14/21] drm/msm/dpu: Support quad-pipe in SSPP checking
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-CgoKQXQgMjAyNC0wNy0yNiAxOTo1ODo1OCwgIk1hbml2YW5uYW4gU2FkaGFzaXZhbSIgPG1hbml2
-YW5uYW4uc2FkaGFzaXZhbUBsaW5hcm8ub3JnPiB3cm90ZToKPk9uIEZyaSwgSnVsIDI2LCAyMDI0
-IGF0IDAxOjU1OjQwUE0gKzA4MDAsIFNsYXJrIFhpYW8gd3JvdGU6Cj4+IAo+PiBBdCAyMDI0LTA3
-LTI2IDEzOjAwOjUxLCAiTWFuaXZhbm5hbiBTYWRoYXNpdmFtIiA8bWFuaXZhbm5hbi5zYWRoYXNp
-dmFtQGxpbmFyby5vcmc+IHdyb3RlOgo+PiA+T24gVGh1LCBKdWwgMjUsIDIwMjQgYXQgMDQ6NTY6
-MDNQTSArMDgwMCwgU2xhcmsgWGlhbyB3cm90ZToKPj4gPj4gCj4+ID4+IEF0IDIwMjQtMDctMjUg
-MTE6NTk6NTQsICJNYW5pdmFubmFuIFNhZGhhc2l2YW0iIDxtYW5pdmFubmFuLnNhZGhhc2l2YW1A
-bGluYXJvLm9yZz4gd3JvdGU6Cj4+ID4+ID5PbiBUaHUsIEp1bCAyNSwgMjAyNCBhdCAxMDoyOTo0
-MEFNICswODAwLCBTbGFyayBYaWFvIHdyb3RlOgo+PiA+PiA+PiBUbyBzZXBhcmF0ZSB0aGUgaW1h
-Z2VzIG9mIEZveGNvbm4gZnJvbSBvdGhlciB2ZW5kb3JzLCBhZGRpbmcgYQo+PiA+PiA+PiBuZXcg
-Zm94Y29ubiBzdWJmb2xkZXIgdW5kZXIgcWNvbS88cGxhdGZvcm0+IGZvciBlZGwgaW1hZ2UgcGF0
-aC4KPj4gPj4gPj4gQW5kIGRlbGV0ZSB0aGUgZncgcGF0Y2ggc2luY2UgaXQncyB1c2VsZXNzIGZv
-ciBGb3hjb25uIGRldmljZXMuCj4+ID4+ID4+IAo+PiA+PiA+PiBGaXhlczogYmYzMGE3NWU2ZTAw
-ICgiYnVzOiBtaGk6IGhvc3Q6IEFkZCBzdXBwb3J0IGZvciBGb3hjb25uIFNEWDcyIG1vZGVtcyIp
-Cj4+ID4+ID4+IFNpZ25lZC1vZmYtYnk6IFNsYXJrIFhpYW8gPHNsYXJrX3hpYW9AMTYzLmNvbT4K
-Pj4gPj4gPj4gLS0tCj4+ID4+ID4+IHYyOiBjaGFuZ2UgdGhlIGZvbGRlciBwYXRoIGFyY2hpdGVj
-dHVyZQo+PiA+PiA+PiAtLS0KPj4gPj4gPj4gIGRyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5l
-cmljLmMgfCAxMyArKysrKy0tLS0tLS0tCj4+ID4+ID4+ICAxIGZpbGUgY2hhbmdlZCwgNSBpbnNl
-cnRpb25zKCspLCA4IGRlbGV0aW9ucygtKQo+PiA+PiA+PiAKPj4gPj4gPj4gZGlmZiAtLWdpdCBh
-L2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMgYi9kcml2ZXJzL2J1cy9taGkvaG9z
-dC9wY2lfZ2VuZXJpYy5jCj4+ID4+ID4+IGluZGV4IDE0YTExODgwYmNlYS4uZjE1OWE5ZGQ1M2U3
-IDEwMDY0NAo+PiA+PiA+PiAtLS0gYS9kcml2ZXJzL2J1cy9taGkvaG9zdC9wY2lfZ2VuZXJpYy5j
-Cj4+ID4+ID4+ICsrKyBiL2RyaXZlcnMvYnVzL21oaS9ob3N0L3BjaV9nZW5lcmljLmMKPj4gPj4g
-Pj4gQEAgLTQzMyw4ICs0MzMsNyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9jb250cm9sbGVy
-X2NvbmZpZyBtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZyA9IHsKPj4gPj4gPj4gIAo+PiA+PiA+
-PiAgc3RhdGljIGNvbnN0IHN0cnVjdCBtaGlfcGNpX2Rldl9pbmZvIG1oaV9mb3hjb25uX3NkeDU1
-X2luZm8gPSB7Cj4+ID4+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi1zZHg1NSIsCj4+ID4+ID4+IC0J
-LmZ3ID0gInFjb20vc2R4NTVtL3NibDEubWJuIiwKPj4gPj4gPj4gLQkuZWRsID0gInFjb20vc2R4
-NTVtL2VkbC5tYm4iLAo+PiA+PiA+PiArCS5lZGwgPSAicWNvbS9zZHg1NW0vZm94Y29ubi9wcm9n
-X2ZpcmVob3NlX3NkeDU1Lm1ibiIsCj4+ID4+ID4KPj4gPj4gPkkgdGhpbmsgeW91IG1pc3VuZGVy
-c3Rvb2Qgd2hhdCBJIHN1Z2dlc3RlZCBpbiBlYXJsaWVyIHJldmlzaW9uLiBZb3Ugc2hvdWxkIGFk
-ZAo+PiA+PiA+dGhlIEZveGNvbm4gc3BlY2lmaWMgZncgb25seSBpZiBpdCBpcyBkaWZmZXJlbnQg
-ZnJvbSB0aGUgcWNvbSBvbmUuIElzIGl0IHJlYWxseQo+PiA+PiA+ZGlmZmVyZW50IGZvciBhbGwg
-dGhlc2UgbW9kZW1zPyBPdGhlcndpc2UsIHdoYXQgaXMgdGhlIHBvaW50IG9mIGFkZGluZyB0aGVt
-Pwo+PiA+PiA+Cj4+ID4+ID4tIE1hbmkKPj4gPj4gCj4+ID4+ID4KPj4gPj4gSGkgTWFuaSwKPj4g
-Pj4gWWVzLCBhbGwgcHJvZ3JhbWVyIGZpbGVzIGFyZSBkaWZmZXJlbnQgd2l0aCBkZWZhdWx0LiBX
-ZSBhZGQgYSBzaWduIHN0ZXAgZm9yIGVhY2ggaW1hZ2UKPj4gPj4gZmlsZS4gVGhhdCBtZWFucyBv
-dGhlciB2ZW5kb3IncyBlZGwgaW1hZ2UoaW5jbHVkaW5nIFF1YWxjb21tKSBjYW4ndCBiZSBhcHBs
-aWVkIGZvcgo+PiA+PiBGb3hjb25uIGRldmljZXMuIAo+PiA+PiAKPj4gPgo+PiA+R290Y2hhLiBQ
-bGVhc2UgaW5jbHVkZSB0aGlzIGluZm8gaW4gdGhlIGNvbW1pdCBtZXNzYWdlIGFzIHBlb3BsZSBt
-YXkgd29uZGVyIHdoYXQKPj4gPnRoZSBkaWZmZXJlbmNlIGJldHdlZW4geW91cnMgYW5kIHFjb20u
-Cj4+IAo+PiA+Cj4+IElmIHBvc3NpYmxlLCBwZWxhc2UgaGVscCBtZSBhZGQgaXQgaW50byBteSBj
-b21taXQgbWVzc2FnZS4KPj4gCj4KPk9rLiBJIGNhbiBhZGQgdGhpcyB3aGlsZSBhcHBseWluZy4K
-CkhpIE1hbmksCkNvdWxkIHlvdSBoZWxwIG1lcmdlIHRoaXMgaW50byBtaGktbmV4dD8gSSBzYXcg
-eW91IGp1c3QgYXBwbGllZCBzb21lIG90aGVyIGNoYW5nZXMuClNvIEkgdGhpbmsgdGhlIG1lcmdl
-IHdpbmRvdyBzaG91bGQgYmUgb3BlbmVkLgoKVGhhbmtzCj4KPj4gCj4+ID5VbnJlbGF0ZWQgcXVl
-c3Rpb24gdG8gdGhpcyBwYXRjaDogT25jZSB0aGUgRURMIGlzIHByb2dyYW1tZWQsIHdoYXQgYXJl
-IHRoZQo+PiA+aW1hZ2VzIHRoYXQgdGhlIHVzZXIgaGFzIHRvIGZsYXNoIHVzaW5nIEZpcmVob3Nl
-IHByb3RvY29sPyBJcyB0aGF0IHRoZSBmdWxsIFNESwo+PiA+b3IganVzdCBTQkwvQVBQUyBpbWFn
-ZT8KPj4gPgo+PiAKPj4gPklmIHNvLCB3aGF0IGlzIHRoZSBzaXplIG9mIHRoZSBpbWFnZXM/Cj4+
-IAo+PiAKPj4gVGhpcyBkZXBlbmRzIG9uIGEgcmF3IGZpbGUsIGxldCdzIHRha2UgU0RYNjUgYXMg
-YW4gZXhhbXBsZS4gVGhlIGZpbGXCoAo+PiByYXdwcm9ncmFtX25hbmRfcDRLX2IyNTZLLnhtbCBj
-b250YWlucyBiZWxvdyBpdGVtczoKPj4gLi4uLi4KPj4gPGVyYXNlIFBBR0VTX1BFUl9CTE9DSz0i
-NjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBudW1fcGFydGl0aW9uX3NlY3RvcnM9IjY0
-MCIgc3RhcnRfc2VjdG9yPSIwIi8+Cj4+IDxwcm9ncmFtIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNF
-Q1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBmaWxlbmFtZT0ieGJsLmVsZi5lbmMiIGxhYmVsPSJz
-YmwiIGxhc3Rfc2VjdG9yPSI2MzkiIG51bV9wYXJ0aXRpb25fc2VjdG9ycz0iNjQwIiBwaHlzaWNh
-bF9wYXJ0aXRpb25fbnVtYmVyPSIwIiBzdGFydF9zZWN0b3I9IjAiLz4KPj4gLi4uLi4KPj4gPGVy
-YXNlIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBudW1f
-cGFydGl0aW9uX3NlY3RvcnM9IjI3NDU2IiBzdGFydF9zZWN0b3I9IjE2NTEyIi8+Cj4+IMKgIDxw
-cm9ncmFtIFBBR0VTX1BFUl9CTE9DSz0iNjQiIFNFQ1RPUl9TSVpFX0lOX0JZVEVTPSI0MDk2IiBm
-aWxlbmFtZT0iTk9OLUhMT1MudWJpLmVuYyIgbGFiZWw9Im1vZGVtIiBsYXN0X3NlY3Rvcj0iNDM5
-NjciIG51bV9wYXJ0aXRpb25fc2VjdG9ycz0iMjc0NTYiIHBoeXNpY2FsX3BhcnRpdGlvbl9udW1i
-ZXI9IjAiIHN0YXJ0X3NlY3Rvcj0iMTY1MTIiLz4KPj4gLi4uCj4+IAo+PiAKPj4gVGhpcyBmaWxl
-IGNvbnRhaW5zIDIgcGFydCwgImVyYXNlIiBhbmQgInByb2dyYW0iLgo+PiBlcmFzZSB3aWxsIHRl
-bGwgdGhlIHRvb2wgdG8gZXJhc2UgdGhlIHBhcnRpdGlvbiBmcm9tIHNlY3RvciB4IHRvIHkuCj4+
-IEFuZCAicHJvZ3JhbSIgd2lsbCB0ZWxsIHRoZSB0b29sIHRvIGZsYXNoIHRoZSBmaWxlIGludG8g
-dGhhdCBwYXJ0aW9uIHdoaWNoIHN0YXJ0IGZyb20gc2VjdG9yIG0gdG8gbi4KPj4gCj4+IAo+PiBT
-byB0aGUgbG9naWNhbCBpcywgZnVsbCBTREsgb3IganVzdCBvbmUgb3Igc29tZSBwYXJ0aXRpb25z
-IGFyZSBmbGFzaGVkIGRlcGVuZHMgb24gdGhpcyByYXcgZmlsZS4KPj4gTm9ybWFsbHksIGZ1bGwg
-U0RLIGlzIHRoZSBtYWluIHNjZW5hcmlvLiBBbmQgdGhlIHNpemUgaXMgYWJvdXQgMTUwTUIgdG8g
-MjAwTUIuCj4+IFRoYW5rcy4gCj4+IAo+Cj5Pa2F5LCB0aGFua3MuIEkganVzdCB3YW50ZWQgdG8g
-dW5kZXJzdGFuZCB3aGF0IGltYWdlcyBhcmUgZ2V0dGluZyBmbGFzaGVkLgo+Cj4tIE1hbmkKPgo+
-PiA+Cj4+ID4tIE1hbmkKPj4gPgo+PiA+PiA+PiAgCS5jb25maWcgPSAmbW9kZW1fZm94Y29ubl9z
-ZHg1NV9jb25maWcsCj4+ID4+ID4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRfQkFSX05V
-TSwKPj4gPj4gPj4gIAkuZG1hX2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gPj4gQEAgLTQ0NCw4ICs0
-NDMsNyBAQCBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5f
-c2R4NTVfaW5mbyA9IHsKPj4gPj4gPj4gIAo+PiA+PiA+PiAgc3RhdGljIGNvbnN0IHN0cnVjdCBt
-aGlfcGNpX2Rldl9pbmZvIG1oaV9mb3hjb25uX3Q5OXcxNzVfaW5mbyA9IHsKPj4gPj4gPj4gIAku
-bmFtZSA9ICJmb3hjb25uLXQ5OXcxNzUiLAo+PiA+PiA+PiAtCS5mdyA9ICJxY29tL3NkeDU1bS9z
-YmwxLm1ibiIsCj4+ID4+ID4+IC0JLmVkbCA9ICJxY29tL3NkeDU1bS9lZGwubWJuIiwKPj4gPj4g
-Pj4gKwkuZWRsID0gInFjb20vc2R4NTVtL2ZveGNvbm4vcHJvZ19maXJlaG9zZV9zZHg1NS5tYm4i
-LAo+PiA+PiA+PiAgCS5jb25maWcgPSAmbW9kZW1fZm94Y29ubl9zZHg1NV9jb25maWcsCj4+ID4+
-ID4+ICAJLmJhcl9udW0gPSBNSElfUENJX0RFRkFVTFRfQkFSX05VTSwKPj4gPj4gPj4gIAkuZG1h
-X2RhdGFfd2lkdGggPSAzMiwKPj4gPj4gPj4gQEAgLTQ1NSw4ICs0NTMsNyBAQCBzdGF0aWMgY29u
-c3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8gbWhpX2ZveGNvbm5fdDk5dzE3NV9pbmZvID0gewo+
-PiA+PiA+PiAgCj4+ID4+ID4+ICBzdGF0aWMgY29uc3Qgc3RydWN0IG1oaV9wY2lfZGV2X2luZm8g
-bWhpX2ZveGNvbm5fZHc1OTMwZV9pbmZvID0gewo+PiA+PiA+PiAgCS5uYW1lID0gImZveGNvbm4t
-ZHc1OTMwZSIsCj4+ID4+ID4+IC0JLmZ3ID0gInFjb20vc2R4NTVtL3NibDEubWJuIiwKPj4gPj4g
-Pj4gLQkuZWRsID0gInFjb20vc2R4NTVtL2VkbC5tYm4iLAo+PiA+PiA+PiArCS5lZGwgPSAicWNv
-bS9zZHg1NW0vZm94Y29ubi9wcm9nX2ZpcmVob3NlX3NkeDU1Lm1ibiIsCj4+ID4+ID4+ICAJLmNv
-bmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDU1X2NvbmZpZywKPj4gPj4gPj4gIAkuYmFyX251bSA9
-IE1ISV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiA+PiAgCS5kbWFfZGF0YV93aWR0aCA9IDMy
-LAo+PiA+PiA+PiBAQCAtNTAyLDcgKzQ5OSw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3Bj
-aV9kZXZfaW5mbyBtaGlfZm94Y29ubl9kdzU5MzJlX2luZm8gPSB7Cj4+ID4+ID4+ICAKPj4gPj4g
-Pj4gIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl90OTl3
-NTE1X2luZm8gPSB7Cj4+ID4+ID4+ICAJLm5hbWUgPSAiZm94Y29ubi10OTl3NTE1IiwKPj4gPj4g
-Pj4gLQkuZWRsID0gImZveC9zZHg3Mm0vZWRsLm1ibiIsCj4+ID4+ID4+ICsJLmVkbCA9ICJxY29t
-L3NkeDcybS9mb3hjb25uL2VkbC5tYm4iLAo+PiA+PiA+PiAgCS5lZGxfdHJpZ2dlciA9IHRydWUs
-Cj4+ID4+ID4+ICAJLmNvbmZpZyA9ICZtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZywKPj4gPj4g
-Pj4gIAkuYmFyX251bSA9IE1ISV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiA+PiBAQCAtNTEz
-LDcgKzUxMCw3IEBAIHN0YXRpYyBjb25zdCBzdHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94
-Y29ubl90OTl3NTE1X2luZm8gPSB7Cj4+ID4+ID4+ICAKPj4gPj4gPj4gIHN0YXRpYyBjb25zdCBz
-dHJ1Y3QgbWhpX3BjaV9kZXZfaW5mbyBtaGlfZm94Y29ubl9kdzU5MzRlX2luZm8gPSB7Cj4+ID4+
-ID4+ICAJLm5hbWUgPSAiZm94Y29ubi1kdzU5MzRlIiwKPj4gPj4gPj4gLQkuZWRsID0gImZveC9z
-ZHg3Mm0vZWRsLm1ibiIsCj4+ID4+ID4+ICsJLmVkbCA9ICJxY29tL3NkeDcybS9mb3hjb25uL2Vk
-bC5tYm4iLAo+PiA+PiA+PiAgCS5lZGxfdHJpZ2dlciA9IHRydWUsCj4+ID4+ID4+ICAJLmNvbmZp
-ZyA9ICZtb2RlbV9mb3hjb25uX3NkeDcyX2NvbmZpZywKPj4gPj4gPj4gIAkuYmFyX251bSA9IE1I
-SV9QQ0lfREVGQVVMVF9CQVJfTlVNLAo+PiA+PiA+PiAtLSAKPj4gPj4gPj4gMi4yNS4xCj4+ID4+
-ID4+IAo+PiA+PiA+Cj4+ID4+ID4tLSAKPj4gPj4gPuCuruCuo+Cuv+CuteCuo+CvjeCuo+CuqeCv
-jSDgrprgrqTgrr7grprgrr/grrXgrq7gr40KPj4gPgo+PiA+LS0gCj4+ID7grq7grqPgrr/grrXg
-rqPgr43grqPgrqngr40g4K6a4K6k4K6+4K6a4K6/4K614K6u4K+NCj4KPi0tIAo+4K6u4K6j4K6/
-4K614K6j4K+N4K6j4K6p4K+NIOCumuCupOCuvuCumuCuv+CuteCuruCvjQo=
+On Thu, 29 Aug 2024 at 13:21, Jun Nie <jun.nie@linaro.org> wrote:
+>
+> Support quad-pipe in SSPP checking with unified method
+>
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 108 ++++++++++++++----------------
+>  1 file changed, 51 insertions(+), 57 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 4df7cfed4d230..78bf8f0292f62 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -738,12 +738,40 @@ static int dpu_plane_check_inline_rotation(struct dpu_plane *pdpu,
+>  static int dpu_plane_atomic_check_pipe(struct dpu_plane *pdpu,
+>                 struct dpu_sw_pipe *pipe,
+>                 struct dpu_sw_pipe_cfg *pipe_cfg,
+> -               const struct msm_format *fmt,
+> -               const struct drm_display_mode *mode)
+> +               const struct drm_display_mode *mode,
+> +               struct drm_plane_state *new_plane_state)
+>  {
+>         uint32_t min_src_size;
+>         struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>         int ret;
+> +       const struct msm_format *fmt;
+> +       uint32_t supported_rotations;
+> +       const struct dpu_sspp_cfg *pipe_hw_caps;
+> +       const struct dpu_sspp_sub_blks *sblk;
+> +
+> +       pipe_hw_caps = pipe->sspp->cap;
+> +       sblk = pipe->sspp->cap->sblk;
+> +
+> +       /*
+> +        * We already have verified scaling against platform limitations.
+> +        * Now check if the SSPP supports scaling at all.
+> +        */
+> +       if (!sblk->scaler_blk.len &&
+> +           ((drm_rect_width(&new_plane_state->src) >> 16 !=
+> +             drm_rect_width(&new_plane_state->dst)) ||
+> +            (drm_rect_height(&new_plane_state->src) >> 16 !=
+> +             drm_rect_height(&new_plane_state->dst))))
+> +               return -ERANGE;
+> +
+> +       fmt = msm_framebuffer_format(new_plane_state->fb);
+> +
+> +       supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
+> +
+> +       if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
+> +               supported_rotations |= DRM_MODE_ROTATE_90;
+> +
+> +       pipe_cfg->rotation = drm_rotation_simplify(new_plane_state->rotation,
+> +                                                  supported_rotations);
+>
+>         min_src_size = MSM_FORMAT_IS_YUV(fmt) ? 2 : 1;
+>
+> @@ -886,8 +914,7 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>         return 0;
+>  }
+>
+> -static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe *pipe,
+> -                                                  struct dpu_sw_pipe_cfg *pipe_cfg,
+> +static int dpu_plane_is_multirect_parallel_capable(struct dpu_sw_pipe_cfg *pipe_cfg,
+>                                                    const struct msm_format *fmt,
+>                                                    uint32_t max_linewidth)
+>  {
+> @@ -916,49 +943,19 @@ static int dpu_plane_atomic_check_pipes(struct drm_plane *plane,
+>                 drm_atomic_get_new_plane_state(state, plane);
+>         struct dpu_plane *pdpu = to_dpu_plane(plane);
+>         struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> -       struct dpu_sw_pipe *pipe = &pstate->pipe;
+> -       struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> -       const struct msm_format *fmt;
+> -       struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> -       struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> -       uint32_t supported_rotations;
+> -       const struct dpu_sspp_cfg *pipe_hw_caps;
+> -       const struct dpu_sspp_sub_blks *sblk;
+> -       int ret = 0;
+> -
+> -       pipe_hw_caps = pipe->sspp->cap;
+> -       sblk = pipe->sspp->cap->sblk;
+> -
+> -       /*
+> -        * We already have verified scaling against platform limitations.
+> -        * Now check if the SSPP supports scaling at all.
+> -        */
+> -       if (!sblk->scaler_blk.len &&
+> -           ((drm_rect_width(&new_plane_state->src) >> 16 !=
+> -             drm_rect_width(&new_plane_state->dst)) ||
+> -            (drm_rect_height(&new_plane_state->src) >> 16 !=
+> -             drm_rect_height(&new_plane_state->dst))))
+> -               return -ERANGE;
+> -
+> -       fmt = msm_framebuffer_format(new_plane_state->fb);
+> -
+> -       supported_rotations = DRM_MODE_REFLECT_MASK | DRM_MODE_ROTATE_0;
+> -
+> -       if (pipe_hw_caps->features & BIT(DPU_SSPP_INLINE_ROTATION))
+> -               supported_rotations |= DRM_MODE_ROTATE_90;
+> -
+> -       pipe_cfg->rotation = drm_rotation_simplify(new_plane_state->rotation,
+> -                                                  supported_rotations);
+> -       r_pipe_cfg->rotation = pipe_cfg->rotation;
+> -
+> -       ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt,
+> -                                         &crtc_state->adjusted_mode);
+> -       if (ret)
+> -               return ret;
+> +       struct dpu_sw_pipe *pipe;
+> +       struct dpu_sw_pipe_cfg *pipe_cfg;
+> +       int ret = 0, i;
+>
+> -       if (drm_rect_width(&r_pipe_cfg->src_rect) != 0) {
+> -               ret = dpu_plane_atomic_check_pipe(pdpu, r_pipe, r_pipe_cfg, fmt,
+> -                                                 &crtc_state->adjusted_mode);
+> +       for (i = 0; i < PIPES_PER_STAGE; i++) {
+> +               pipe = &pstate->pipe[i];
+> +               pipe_cfg = &pstate->pipe_cfg[i];
+> +               if (!pipe_cfg->visible || !pipe->sspp)
+> +                       break;
+> +               DPU_DEBUG_PLANE(pdpu, "pipe %d is in use, validate it\n", i);
+> +               ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg,
+> +                                                 &crtc_state->adjusted_mode,
+> +                                                 new_plane_state);
+>                 if (ret)
+>                         return ret;
+>         }
+> @@ -975,10 +972,10 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>         struct dpu_plane *pdpu = to_dpu_plane(plane);
+>         struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+>         struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
+> -       struct dpu_sw_pipe *pipe = &pstate->pipe;
+> -       struct dpu_sw_pipe *r_pipe = &pstate->r_pipe;
+> -       struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg;
+> -       struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->r_pipe_cfg;
+> +       struct dpu_sw_pipe *pipe = &pstate->pipe[0];
+> +       struct dpu_sw_pipe *r_pipe = &pstate->pipe[1];
+> +       struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg[0];
+> +       struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->pipe_cfg[1];
+>         const struct drm_crtc_state *crtc_state = NULL;
+>
+>         if (new_plane_state->crtc)
+> @@ -1033,13 +1030,10 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+>                         return -E2BIG;
+>                 }
+>
+> -               /*
+> -                * Use multirect for wide plane. We do not support dynamic
+> -                * assignment of SSPPs, so we know the configuration.
+> -                */
+>                 pipe->multirect_index = DPU_SSPP_RECT_0;
+>                 pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>
+> +               r_pipe->sspp = pipe->sspp;
+
+NAK
+
+>                 r_pipe->multirect_index = DPU_SSPP_RECT_1;
+>                 r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_PARALLEL;
+>         }
+> @@ -1056,7 +1050,7 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>                 drm_atomic_get_old_plane_state(state, plane);
+>         struct dpu_plane_state *pstate = to_dpu_plane_state(plane_state);
+>         struct drm_crtc_state *crtc_state;
+> -       int ret;
+> +       int ret, i;
+>
+>         if (plane_state->crtc)
+>                 crtc_state = drm_atomic_get_new_crtc_state(state,
+> @@ -1071,8 +1065,8 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
+>                  * resources are freed by dpu_crtc_assign_plane_resources(),
+>                  * but clean them here.
+>                  */
+> -               pstate->pipe.sspp = NULL;
+> -               pstate->r_pipe.sspp = NULL;
+> +               for (i = 0; i < PIPES_PER_STAGE; i++)
+> +                       pstate->pipe[i].sspp = NULL;
+>
+>                 return 0;
+>         }
+>
+> --
+> 2.34.1
+>
+
+
+-- 
+With best wishes
+Dmitry
 
