@@ -1,124 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-30060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB752964BC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 18:34:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0789964BCB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 18:37:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6BFF02815BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 16:34:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2ECD61C22291
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 16:37:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99FAA1B4C2B;
-	Thu, 29 Aug 2024 16:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A61B51922DE;
+	Thu, 29 Aug 2024 16:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="mraA67B5"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ABQ+Bhok"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6E01B151F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 16:34:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F2EEAD5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 16:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724949249; cv=none; b=spJ/6GDyIhIGaDeiWgH1IQRWJDf9UuDG6f1GVcrkrfEVWlecJuhrPP7kvBLXyVeDs1dBAbcoENI8QZEqQaVtOgJZ6ghdagtNMGWd1mZp25AB3L2W7KVV3CSCroBaFzd+/JCxOM8s1Whkf7hYd1ZLOZWcm5smwjk5/4flcruz+0k=
+	t=1724949453; cv=none; b=Y8uU0hZ8HR5RcjGuouKR8w5sQwZVqOsAzqVvYVxGuv+qIQnw/mR9qFjY1PLq9nC1CmAs6OrtsEMUtqSWOWhQYNbo7X25Suuj50ZuEqFVK3UcoQj/xuJDC75A6XmOQZG/xMhOHlxeF+24bfDH3aueuy2S8v+cpqPBRMa/R5zp1Rg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724949249; c=relaxed/simple;
-	bh=f9ggnbaNx6g7QkKhE0uWKvaLNCn+0nMqKl1EdSDlrko=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EsA5CIWIPS9UCiRKSaIuTsYhtTW0oDHt8om3O5o7N8M/38MSPpAs/ZIFmb6tyHfspumlegmN1vQfRM7IRgXKdEMc/vzy3gOYRMrS0fd/DS3QLAR9S98tnQF24kmj4TecB1oDJj/h0E6FcSEr7aF+rdXGLsTRbw06LecRR1nO1lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=mraA67B5; arc=none smtp.client-ip=209.85.219.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e0b7efa1c1bso949378276.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 09:34:07 -0700 (PDT)
+	s=arc-20240116; t=1724949453; c=relaxed/simple;
+	bh=uhL9/HB1FjhDeN0xe90P+EZykmLRNXJXLdcJvYAldvc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=L6xQ6wkM6/ic+LNASC+QNKl//XZHRP3z1H9BcxRUU1vB1HWtgXnDodF0xuqklhVGxyGg7yp/MEqppkUBdysNpgc0n4/7x6YcXUUcOTK48N/dYhWkdDM1hOzfAFgPcBYe0WHRIPSeKoYZOkGcZ9bsuqzD32sCOBZN7GikcRrzDWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ABQ+Bhok; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5bec87ececeso1002732a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 09:37:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1724949247; x=1725554047; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pRtM4U4oM4flFzKh5LtNwM6RZHqWXvQpSJa0+3EzZV8=;
-        b=mraA67B5KEbmdGdQpC5K14X56XzO2OBQc66GU2oiZsJ9/bMnWegyeXrnw7Zv/JBBYd
-         Ex/444xCk3UDvP7GZaR8Re1s6Ks1Xk6HajfupiveOZYZ+V0A3YYT79/6s5dHI6G4c6H8
-         4MbV4lLbO5qo8vmK7/WlCmBEIqVv+c8GBnbfM=
+        d=gmail.com; s=20230601; t=1724949450; x=1725554250; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DOaqirJ+YqAwQEHiFUcwLd9wSONgEqokFkF8Yi7+TsI=;
+        b=ABQ+BhokFHqA8Vq/zHqj1wseudrY1ycrquuqji6Tj5t2pdL4QErkXH15EaMAi1BPgc
+         bU7284MXgJC7Y2JaRVbWRdW2iwyBE+QaLoZ1x0OXGKN9+BgPZ6wQDi28y65LmRQp4gi7
+         6YicSJu965KCBYl+JIOlnl2QVOFrVs3F0tG+AYBZa1+qddvP09gQsnc1K7TbxruQd1/9
+         b0EXe75U/B+PCDBd7tR6iOexPtC7YBS3u3FJ+KmM2RJaMiTWsfeS2UgtGfPvQ3EYTIUQ
+         TxnmED9Slt+He0tkH90jL+GcGdQ1MB7+KGaWxCeLm3Mu7hQtwaXOkgrezWX4nqa0iJSl
+         o73g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724949247; x=1725554047;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pRtM4U4oM4flFzKh5LtNwM6RZHqWXvQpSJa0+3EzZV8=;
-        b=EIgaAmaazwa1bBOE/SxB/IZC3cep1sDBCjm6Xjp8VqotOK8JSdZJnien/gHbM3FlIF
-         8x0hWDnKbojrUoDfVIxdBf9KP2XfHdJ+aheBWwJkHthuoJS6W1FfWMOs1pYqGvJCvxVg
-         DMCuFASOGw+6dMWFbfwfd3z/voh2OfGDZG890xLOpPCRvEUuAMWW3dHf2NCD4Y33oUYr
-         /zgInK3BGY8KaZk61w2DGKoeQ1/he6Hf+vTAbh01fW7wWNHlAv4ik68VfYtZVN3etzf6
-         0nHIDbYLCyY66tDTarIYExDZZW2AiuzXp6bcelyDdG3cb4zKaT++y1iSFNaOi3Vmzh/7
-         JKmA==
-X-Forwarded-Encrypted: i=1; AJvYcCVpefFh5cw/Y+bQ4CPf5KPd6sAwT0Yz4BZw2tHJHL4RH22XMlS2v7EkA5qjZQMwTr//+HBMfQz5zr3wI1wX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxvk4ywuv9rWIuZM8+g/FMcTqqkgn603L1kOAILM+lb+SQ4ROwl
-	2P6p9SKOVWgiKIOHi+ejo6B6zgMz95bJ5qyKpn6QZMRqq/A2JNelV/C5rE8kfs0MCWvvX14w+vF
-	ERAI0dUiQ8m/bbqj8DcFDpDWGU3lZIjSvfzezBDN3zoTZD3w=
-X-Google-Smtp-Source: AGHT+IFdgoh+wmsAD4IyiGquH5DZqMo6QnoVdZGml88Zv9QvUTnxFAeUkWxpW+y2lOckQ5m2pUWWUdo0OYOdQx3Ns8o=
-X-Received: by 2002:a05:6902:2b08:b0:e16:6c41:1601 with SMTP id
- 3f1490d57ef6-e1a5acab419mr3163028276.33.1724949246921; Thu, 29 Aug 2024
- 09:34:06 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 29 Aug 2024 09:34:06 -0700
+        d=1e100.net; s=20230601; t=1724949450; x=1725554250;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DOaqirJ+YqAwQEHiFUcwLd9wSONgEqokFkF8Yi7+TsI=;
+        b=R0aiM0/xhWdRGVSHWaM4xyO1YEzZR6xGcq6IYW0LZ8jDVkoEBxUmMHJJ4wOBI9ikbn
+         wsV0XOULXgV1y9oWv/0I7iZjMYQvHeVeExotxKRzBah2fMmmLsWmggnmzmRvqU0hXHPm
+         fbqwSWspBREvhmSmvrbI6pow9p0MyCFosdONIMmAoooy70HKi1GqxK0lt0UqBGcqxu9c
+         7YeWONtFHoL7Irq9P5E2BODFw4sR2/C0lN+Hm5x5r8CLGWXr8m2JSbFmEktDlO48UYQU
+         RKfXR/VFLLJCVstJqVZ7wBJadU888CSSopsSl3EkyzG1JZXJ5QNE6efrmBSc5HMjn2l2
+         hbpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUTm+F+3ptJBGJV/wFKCnpRO1MN3EoEb9XVAhYeV5/dXGQPtG2o6i5K2s4yipys8XXWl3oGoMmUrOT7VMt3@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8Kfy5aFc6fSkr/72TgTgJ6SmQ6f1APN1JFzCYaq/BLBwp0z8p
+	UC5sN2kd7tLP9XdogalDb/wJ+Tv4VvE9JBfEagVa09O3Qeh/8BAF82Qp27Ip
+X-Google-Smtp-Source: AGHT+IFD3G0dde0nTtd+lC6j0iaH58BoG1AQLOilheJz6GRVFg4osnjKLYrjQs0cvoPHQ0537uf0Mg==
+X-Received: by 2002:a05:6402:d08:b0:5bf:17f:4b7b with SMTP id 4fb4d7f45d1cf-5c21ed9e756mr3039036a12.32.1724949449514;
+        Thu, 29 Aug 2024 09:37:29 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226c6ab6asm867512a12.10.2024.08.29.09.37.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Aug 2024 09:37:28 -0700 (PDT)
+Message-ID: <910a53f7-af59-423f-ade2-66d53ddf0538@gmail.com>
+Date: Thu, 29 Aug 2024 18:37:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <c1e35d3d-fa00-4453-aaa3-9f23a07acb4f@linaro.org>
-References: <20240828171722.1251587-1-swboyd@chromium.org> <20240828171722.1251587-2-swboyd@chromium.org>
- <c1e35d3d-fa00-4453-aaa3-9f23a07acb4f@linaro.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Thu, 29 Aug 2024 09:34:05 -0700
-Message-ID: <CAE-0n51Ag1wpj0uUPVtMvgZJE2FF_FZkw+j=bRiAq3vYk=Y_Fw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] clk: qcom: dispcc-sc7180: Only park display clks
- at init
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
-	Amit Pundir <amit.pundir@linaro.org>, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc8280xp-wdk2023: dt definition for
+ WDK2023
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
+ linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Merck Hung <merckhung@gmail.com>
+References: <5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Quoting Neil Armstrong (2024-08-29 08:32:48)
->
->
-> I've been testing this serie on SM8650, and with 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-> it fixes an issue we have that triggers:
-> [   18.740736] ------------[ cut here ]------------
-> [   18.745837] ufs_phy_gdsc status stuck at 'off'
-> [   18.745929] WARNING: CPU: 1 PID: 197 at drivers/clk/qcom/gdsc.c:178 gdsc_toggle_logic+0x15c/0x164
-> ...
-> after waking up UFS from runtime suspend.
+On 29.08.2024 1:47 PM, Jens Glathe wrote:
+> "Microsoft Windows Dev Kit 2023" aka "Blackrock" aka "Project Volterra"
+> 
+> Device tree for the Windows Dev Kit 2023. This work
+> is based on the initial work of Merck Hung <merckhung@gmail.com>.
+> 
+> Original work: https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
+> 
+> This dt is more or less deducted from the Thinkpad X13s.
+> It contains a lot of guesswork, and also a lot of research on
+> what works with the Windows Dev Kit.
+> 
+> It is in use and under development since May 2023, pretty stable now.
+> 
+> Signed-off-by: Merck Hung <merckhung@gmail.com>
+> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> ---
 
-Oof that's not good.
+microsoft,volterra
 
->
-> So I suspect we'll need to figure out which SM8650 GCC shared clocks would need
-> to use clk_rcg2_shared_init_park_ops ?
->
-> We also had random boot crash when initializing the display very late on multiple platforms,
-> and so far "clk: qcom: Park shared RCGs upon registration" fixed that, but I also suppose Ill
-> need to reflect the changes done to dispcc-sc7180.c to dispcc-sm8650.c and others.
+please fix the spaces and wrapping, add bindings and resend
 
-It sounds like it's better to make the default always park at
-registration time and special case the one or two places where that
-isn't possible, i.e. USB because it has special rate requirements. So I
-should just go back to v1 then and pile on the QUP patches.
-
-In the long run we probably need to put the clk rate and enable control
-into the pm_domains for the gdscs that require them and implement the
-"parking" and "unparking" there instead of in the clk_ops layer. That
-way we know that when the gdsc is turned on it will have a clk that
-works, and when it is turned off it is always parked. We can also use
-the gdsc on/off state at init time to increment the enable count on the
-shared PLLs by using clk_hw_get_clk() and clk consumer APIs. This will
-let us move the boot state into the kernel in a way that doesn't break
-when a child clk sharing a PLL is turned off.
+Konrad
 
