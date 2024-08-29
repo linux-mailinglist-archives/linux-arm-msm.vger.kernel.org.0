@@ -1,208 +1,584 @@
-Return-Path: <linux-arm-msm+bounces-29947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-29948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7372963FF9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 11:27:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E59FF964033
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 11:33:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 076DD1C22442
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 09:27:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 634EB1F236E9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 09:33:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3286F18DF93;
-	Thu, 29 Aug 2024 09:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DCEE18A924;
+	Thu, 29 Aug 2024 09:33:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="idA4KpHX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qHmuYsPy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B5118DF94;
-	Thu, 29 Aug 2024 09:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23994189F31
+	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 09:33:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724923579; cv=none; b=buMhjukQncQuUgiC52F/5XQT7ZZoktjI6axUsRHW9dHhhzJTCvbS2E4zj2pCvj91ZKA2kv3gcWTpLly0anCKPKpdtZK7ppESvUKEN6UCp482CLOJJ9/riI0d9Dqz5FGeHbyPUSdncWEunDerPtv1KFjXBsEDl06/0zyuYYQR7Ss=
+	t=1724924010; cv=none; b=IOVE1RukMFNRjwxG3F1d/pJAd2LgDSYxM0FLta3kxheI8x/IGWL25sBJU8IhSz2PhMAkllPU5czr/lHPc9ZpLTtpHNL+L6w2Ilw6MLj5R2IhOb8tLRmovXLiyWNF+dLYvtfDSpPPKLydBNZR64120LTWGbtMjQQOZtSuvUCpbJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724923579; c=relaxed/simple;
-	bh=P9bp+kuK45uZZSN3cpkVtEACd9ZvSOCvJtQ1RH40zPA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=FMXey5xyWqTsU4eYRwa2hAx50zUlFkzdzzlmvKl+SsSjaVQzwhOYVq2kg6Tl3jeyisQ3XFa6N/Y3yppBBvs8KTsupDsKJjTHGOx8AfmfCOtGoy7+X1IiZJJsSUMWhrgAS3YDMUcZ7ZOj5kySZKEVd1NHkAWvMdaqYdjbAR1vjik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=idA4KpHX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47T8Oggj010887;
-	Thu, 29 Aug 2024 09:26:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=yuNVYZ9hfDi
-	5n3vRZsFzMDLctazYKEOldnRMnjkS1N4=; b=idA4KpHXUElhLgJzEECHCg0+sop
-	wtiDaIUHDisO2YuDnsXOyRDB7X7YmHefPiSz7lsoutWHazy4sfi9PTdXcgpIgAeJ
-	4FbvibGJYx9wps3tMVX2DLg9hndTbzszajn95ARmeblO1rBfd/G+sGIT7CXywEMu
-	9WXJA4BoGp5fn7MzeW5xbHw+Ik+HzE4VIp9sKFqorkO1pLvG8AWYUgYZloEn6lPz
-	yJj6MTXCXmostDlKj3QI6nm9t2zlfD+MYE8KHp3jZtvvBNOQqbnLkoyFC+z+pnmg
-	5ROZNjd5se1OVVksFlhmKnOYX6VadYfyYaCrLd6j+KaB74ZKhzKyUXRjh0g==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv0mqfc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 09:26:13 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 47T9QAtr019440;
-	Thu, 29 Aug 2024 09:26:10 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 4178kmcgmm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 09:26:10 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 47T9Q2X5019351;
-	Thu, 29 Aug 2024 09:26:10 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 47T9Q9Br019426
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Aug 2024 09:26:10 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
-	id DAEEF242FD; Thu, 29 Aug 2024 14:56:08 +0530 (+0530)
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-To: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: quic_vdadhani@quicinc.com,
-        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: [PATCH v1 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing between two subsystems
-Date: Thu, 29 Aug 2024 14:54:18 +0530
-Message-Id: <20240829092418.2863659-5-quic_msavaliy@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
-References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
+	s=arc-20240116; t=1724924010; c=relaxed/simple;
+	bh=VB1kDnu1MIKuQQyIPG+ao88lOi5fFWaWQ4pPR/dfLYY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ITviuT+mQxXHTV0TNLetlrhxuSebLV0ZNIKApaOp0b6EtLPP2lUVgAd/EKSWTAUdEWE1y4U60rRensqGRNEAMS9OilPXCmXs8WD35F7zvZmTUcx1UvUrQpm0pwFwj8+tZeEhsA7YopS7AZOOm3InKnHdiwWQ0pqB4dlBEfQGKkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qHmuYsPy; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5343617fdddso765984e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 02:33:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1724924006; x=1725528806; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jf1RPd5k7N/KVvI+pR1mRC3GqCsCws3Rx9+XmMS/Wws=;
+        b=qHmuYsPyHOjMKuudmW3MAPOpIovYRUGYh7jBI8Ttbuhd/qlLuDKOSQKiwEAwGxgnxH
+         lONv8ExEFaHOzBCcGhm0ULoFOleF7VdAVZthz3YKBaXGJ/czZ6ih8dv/mYsCaaMjyX1w
+         /+zqciqjUE1SIT46ee//l/NkHWGY+ibY6AhCFNsBxFweYZsl9Oyk+LyH6LGN9++ir12v
+         3cRO9WzthmABKqjLmFjRXeaeUfNmxWwTZwKy0mPcYHxVE3Yizx3yXRh+mNpgmZlPBnQh
+         zxoEJpNNVhC1jfO5eWgADYn/6xzSBCGUePnZ+RYgJ0VIiiuXXhQKseKQCEAywOepVxIJ
+         bHRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724924006; x=1725528806;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jf1RPd5k7N/KVvI+pR1mRC3GqCsCws3Rx9+XmMS/Wws=;
+        b=JKVirR7JkSkM/FGbr1bp9heuvKv7AeVu795oVFET1pqSLZG3MXfduN4eGDDr2dcDZk
+         eMe6T+s+cjoKX5si2YbjUBKtbbGxbG61771IXindqX1T3sVPJmhbGttma7iGQFJHiofn
+         mGzjgwLYGpCMb72sb8qtvZNAy+ew3+kzLNWjow/6SaSPRkLPOUC4SK0c69ofeX7LefLx
+         pQL9Bnl7S3Es00VvHpb5kjXfP0FDrK85vv4n5PQqVATwmXhcuWZEQpn8autLuZQqxHlf
+         +5SWnK20HjcNX6Nt+YE08MWb43oJ6PiqpDTkC3H/q/2cNpKBUfojEPkBeKZj9DNSXaLO
+         t7WQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXVVuxnbjllQrwiOyz4xe4vHE5HFbCTQ6Ox6ScsJy9XhqQJ97z+PV/TmhqMkhQshJISny4QmB65M/nl+qPb@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcvRaGHwFtqA3vTDLAmTLtqC+kWAgSiSYqrwx590AdcGLwfVN9
+	T354+/ujknx7aIjw+d2J8POJlQitvOx+AFP+ATDtVUWatS2oA6vm2fHbykfG5Ps=
+X-Google-Smtp-Source: AGHT+IF0uXzxqPg+vkmJaBu1kcINtw+G6a7PP/BHLmzK3LMZI1o0ADhmOi10PWnUFYBbncLDSaMPzA==
+X-Received: by 2002:a05:6512:3094:b0:52e:9921:6dff with SMTP id 2adb3069b0e04-5353e5755a3mr2004560e87.26.1724924005677;
+        Thu, 29 Aug 2024 02:33:25 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-535407ac51esm105418e87.80.2024.08.29.02.33.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Aug 2024 02:33:25 -0700 (PDT)
+Date: Thu, 29 Aug 2024 12:33:23 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: quic_dikshita@quicinc.com
+Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Vedang Nagar <quic_vnagar@quicinc.com>
+Subject: Re: [PATCH v3 16/29] media: iris: implement iris v4l2_ctrl_ops and
+ prepare capabilities
+Message-ID: <gehwgofhviqcnopaughxfcpsqmbbiaayid2scgat4xnd5ngwmo@ylawfiup2tqc>
+References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
+ <20240827-iris_v3-v3-16-c5fdbbe65e70@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hyrKRq-Nfoh8TtgE-h8UfBcCI7jn7QTC
-X-Proofpoint-ORIG-GUID: hyrKRq-Nfoh8TtgE-h8UfBcCI7jn7QTC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-29_02,2024-08-29_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 bulkscore=0 impostorscore=0 phishscore=0 clxscore=1015
- mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408290069
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240827-iris_v3-v3-16-c5fdbbe65e70@quicinc.com>
 
-Add support to share I2C SE by two Subsystems in a mutually exclusive way.
-Use  "qcom,shared-se" flag in a particular i2c instance node if the
-usecase requires i2c controller to be shared.
+On Tue, Aug 27, 2024 at 03:35:41PM GMT, Dikshita Agarwal via B4 Relay wrote:
+> From: Vedang Nagar <quic_vnagar@quicinc.com>
+> 
+> Implement s_ctrl and g_volatile_ctrl ctrl ops.
+> Introduce platform specific driver and firmware capabilities.
+> Capabilities are set of video specifications
+> and features supported by a specific platform (SOC).
+> Each capability is defined with min, max, range, default
+> value and corresponding HFI.
+> 
+> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> ---
+>  drivers/media/platform/qcom/iris/Makefile          |   1 +
+>  drivers/media/platform/qcom/iris/iris_buffer.c     |   3 +-
+>  drivers/media/platform/qcom/iris/iris_core.h       |   2 +
+>  drivers/media/platform/qcom/iris/iris_ctrls.c      | 194 +++++++++++++++++++++
+>  drivers/media/platform/qcom/iris/iris_ctrls.h      |  15 ++
+>  .../platform/qcom/iris/iris_hfi_gen1_defines.h     |   4 +
+>  .../platform/qcom/iris/iris_hfi_gen2_command.c     |   1 +
+>  .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   9 +
+>  drivers/media/platform/qcom/iris/iris_instance.h   |   6 +
+>  .../platform/qcom/iris/iris_platform_common.h      |  71 ++++++++
+>  .../platform/qcom/iris/iris_platform_sm8250.c      |  56 ++++++
+>  .../platform/qcom/iris/iris_platform_sm8550.c      | 138 +++++++++++++++
+>  drivers/media/platform/qcom/iris/iris_probe.c      |   7 +
+>  drivers/media/platform/qcom/iris/iris_vdec.c       |  24 ++-
+>  drivers/media/platform/qcom/iris/iris_vdec.h       |   2 +-
+>  drivers/media/platform/qcom/iris/iris_vidc.c       |  16 +-
+>  16 files changed, 536 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+> index 9c50e29db41e..a746681e03cd 100644
+> --- a/drivers/media/platform/qcom/iris/Makefile
+> +++ b/drivers/media/platform/qcom/iris/Makefile
+> @@ -1,5 +1,6 @@
+>  iris-objs += iris_buffer.o \
+>               iris_core.o \
+> +             iris_ctrls.o \
+>               iris_firmware.o \
+>               iris_hfi_common.o \
+>               iris_hfi_gen1_command.o \
+> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
+> index a1017ceede7d..652117a19b45 100644
+> --- a/drivers/media/platform/qcom/iris/iris_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+> @@ -12,7 +12,6 @@
+>  #define MAX_WIDTH 4096
+>  #define MAX_HEIGHT 2304
+>  #define NUM_MBS_4K (DIV_ROUND_UP(MAX_WIDTH, 16) * DIV_ROUND_UP(MAX_HEIGHT, 16))
+> -#define BASE_RES_MB_MAX 138240
+>  
+>  /*
+>   * NV12:
+> @@ -74,7 +73,7 @@ static u32 iris_input_buffer_size(struct iris_inst *inst)
+>  	num_mbs = iris_get_mbpf(inst);
+>  	if (num_mbs > NUM_MBS_4K) {
+>  		div_factor = 4;
+> -		base_res_mbs = BASE_RES_MB_MAX;
+> +		base_res_mbs = inst->driver_cap[MBPF].value;
+>  	} else {
+>  		base_res_mbs = NUM_MBS_4K;
+>  		div_factor = 2;
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
+> index 1f6eca31928d..657d26a0fa2e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.h
+> +++ b/drivers/media/platform/qcom/iris/iris_core.h
+> @@ -58,6 +58,7 @@
+>   * @intr_status: interrupt status
+>   * @sys_error_handler: a delayed work for handling system fatal error
+>   * @instances: a list_head of all instances
+> + * @inst_fw_cap: an array of supported instance capabilities
+>   */
+>  
+>  struct iris_core {
+> @@ -97,6 +98,7 @@ struct iris_core {
+>  	u32					intr_status;
+>  	struct delayed_work			sys_error_handler;
+>  	struct list_head			instances;
+> +	struct platform_inst_fw_cap		inst_fw_cap[INST_FW_CAP_MAX];
+>  };
+>  
+>  int iris_core_init(struct iris_core *core);
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> new file mode 100644
+> index 000000000000..868306d68a87
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> @@ -0,0 +1,194 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include "iris_ctrls.h"
+> +#include "iris_instance.h"
+> +
+> +static bool iris_valid_cap_id(enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	return cap_id >= 1 && cap_id < INST_FW_CAP_MAX;
+> +}
+> +
+> +static enum platform_inst_fw_cap_type iris_get_cap_id(u32 id)
+> +{
+> +	switch (id) {
+> +	case V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER:
+> +		return DEBLOCK;
+> +	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
+> +		return PROFILE;
+> +	case V4L2_CID_MPEG_VIDEO_H264_LEVEL:
+> +		return LEVEL;
+> +	default:
+> +		return INST_FW_CAP_MAX;
+> +	}
+> +}
+> +
+> +static u32 iris_get_v4l2_id(enum platform_inst_fw_cap_type cap_id)
+> +{
+> +	if (!iris_valid_cap_id(cap_id))
+> +		return 0;
+> +
+> +	switch (cap_id) {
+> +	case DEBLOCK:
+> +		return V4L2_CID_MPEG_VIDEO_DECODER_MPEG4_DEBLOCK_FILTER;
+> +	case PROFILE:
+> +		return V4L2_CID_MPEG_VIDEO_H264_PROFILE;
+> +	case LEVEL:
+> +		return V4L2_CID_MPEG_VIDEO_H264_LEVEL;
+> +	default:
+> +		return 0;
+> +	}
+> +}
+> +
+> +static int iris_vdec_op_g_volatile_ctrl(struct v4l2_ctrl *ctrl)
+> +{
+> +	enum platform_inst_fw_cap_type cap_id;
+> +	struct iris_inst *inst = NULL;
+> +
+> +	inst = container_of(ctrl->handler, struct iris_inst, ctrl_handler);
+> +	switch (ctrl->id) {
+> +	case V4L2_CID_MIN_BUFFERS_FOR_CAPTURE:
+> +		ctrl->val = inst->buffers[BUF_OUTPUT].min_count;
+> +		break;
+> +	case V4L2_CID_MIN_BUFFERS_FOR_OUTPUT:
+> +		ctrl->val = inst->buffers[BUF_INPUT].min_count;
+> +		break;
+> +	default:
+> +		cap_id = iris_get_cap_id(ctrl->id);
+> +		if (iris_valid_cap_id(cap_id))
+> +			ctrl->val = inst->fw_cap[cap_id].value;
+> +		else
+> +			return -EINVAL;
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static int iris_vdec_op_s_ctrl(struct v4l2_ctrl *ctrl)
+> +{
+> +	enum platform_inst_fw_cap_type cap_id;
+> +	struct platform_inst_fw_cap *cap;
+> +	struct iris_inst *inst;
+> +
+> +	inst = container_of(ctrl->handler, struct iris_inst, ctrl_handler);
+> +	cap = &inst->fw_cap[0];
+> +
+> +	cap_id = iris_get_cap_id(ctrl->id);
+> +	if (!iris_valid_cap_id(cap_id))
+> +		return -EINVAL;
+> +
+> +	cap[cap_id].flags |= CAP_FLAG_CLIENT_SET;
+> +
+> +	inst->fw_cap[cap_id].value = ctrl->val;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct v4l2_ctrl_ops iris_ctrl_ops = {
+> +	.s_ctrl = iris_vdec_op_s_ctrl,
+> +	.g_volatile_ctrl = iris_vdec_op_g_volatile_ctrl,
+> +};
+> +
+> +int iris_ctrls_init(struct iris_inst *inst)
+> +{
+> +	struct platform_inst_fw_cap *cap;
+> +	int num_ctrls = 0, ctrl_idx = 0;
+> +	int idx = 0, ret;
+> +	u32 v4l2_id;
+> +
+> +	cap = &inst->fw_cap[0];
+> +
+> +	for (idx = 1; idx < INST_FW_CAP_MAX; idx++) {
+> +		if (iris_get_v4l2_id(cap[idx].cap_id))
+> +			num_ctrls++;
+> +	}
+> +	if (!num_ctrls)
+> +		return -EINVAL;
+> +
+> +	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, num_ctrls);
+> +	if (ret)
+> +		return ret;
+> +
+> +	for (idx = 1; idx < INST_FW_CAP_MAX; idx++) {
+> +		struct v4l2_ctrl *ctrl;
+> +
+> +		v4l2_id = iris_get_v4l2_id(cap[idx].cap_id);
+> +		if (!v4l2_id)
+> +			continue;
+> +
+> +		if (ctrl_idx >= num_ctrls) {
+> +			ret = -EINVAL;
+> +			goto error;
+> +		}
+> +
+> +		if (cap[idx].flags & CAP_FLAG_MENU) {
+> +			ctrl = v4l2_ctrl_new_std_menu(&inst->ctrl_handler,
+> +						      &iris_ctrl_ops,
+> +						      v4l2_id,
+> +						      cap[idx].max,
+> +						      ~(cap[idx].step_or_mask),
+> +						      cap[idx].value);
+> +		} else {
+> +			ctrl = v4l2_ctrl_new_std(&inst->ctrl_handler,
+> +						 &iris_ctrl_ops,
+> +						 v4l2_id,
+> +						 cap[idx].min,
+> +						 cap[idx].max,
+> +						 cap[idx].step_or_mask,
+> +						 cap[idx].value);
+> +		}
+> +		if (!ctrl) {
+> +			ret = -EINVAL;
+> +			goto error;
+> +		}
+> +
+> +		ret = inst->ctrl_handler.error;
+> +		if (ret)
+> +			goto error;
+> +
+> +		if ((cap[idx].flags & CAP_FLAG_VOLATILE) ||
+> +		    (ctrl->id == V4L2_CID_MIN_BUFFERS_FOR_CAPTURE ||
+> +		     ctrl->id == V4L2_CID_MIN_BUFFERS_FOR_OUTPUT))
+> +			ctrl->flags |= V4L2_CTRL_FLAG_VOLATILE;
+> +
+> +		ctrl->flags |= V4L2_CTRL_FLAG_EXECUTE_ON_WRITE;
+> +		ctrl_idx++;
+> +	}
+> +
+> +	return 0;
+> +error:
+> +	v4l2_ctrl_handler_free(&inst->ctrl_handler);
+> +
+> +	return ret;
+> +}
+> +
+> +int iris_session_init_caps(struct iris_core *core)
+> +{
+> +	struct platform_inst_fw_cap *inst_plat_cap_data;
+> +	int i, num_inst_cap;
+> +	u32 cap_id;
+> +
+> +	inst_plat_cap_data = core->iris_platform_data->inst_fw_cap_data;
+> +	if (!inst_plat_cap_data)
+> +		return -EINVAL;
+> +
+> +	num_inst_cap = core->iris_platform_data->inst_fw_cap_data_size;
+> +
+> +	for (i = 0; i < num_inst_cap && i < INST_FW_CAP_MAX - 1; i++) {
 
-I2C driver just need to mark first_msg and last_msg flag to help indicate
-GPI driver to  take lock and unlock TRE there by protecting from concurrent
-access from other EE or Subsystem.
+Drop the second condition
 
-gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
-Unlock TRE for the respective transfer operations.
+> +		cap_id = inst_plat_cap_data[i].cap_id;
+> +		if (!iris_valid_cap_id(cap_id))
+> +			continue;
+> +
+> +		core->inst_fw_cap[cap_id].cap_id = inst_plat_cap_data[i].cap_id;
+> +		core->inst_fw_cap[cap_id].min = inst_plat_cap_data[i].min;
+> +		core->inst_fw_cap[cap_id].max = inst_plat_cap_data[i].max;
+> +		core->inst_fw_cap[cap_id].step_or_mask = inst_plat_cap_data[i].step_or_mask;
+> +		core->inst_fw_cap[cap_id].value = inst_plat_cap_data[i].value;
+> +		core->inst_fw_cap[cap_id].flags = inst_plat_cap_data[i].flags;
+> +		core->inst_fw_cap[cap_id].hfi_id = inst_plat_cap_data[i].hfi_id;
+> +	}
+> +
+> +	return 0;
+> +}
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.h b/drivers/media/platform/qcom/iris/iris_ctrls.h
+> new file mode 100644
+> index 000000000000..46e1da847aa8
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.h
+> @@ -0,0 +1,15 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _IRIS_CTRLS_H_
+> +#define _IRIS_CTRLS_H_
+> +
+> +struct iris_core;
+> +struct iris_inst;
+> +
+> +int iris_ctrls_init(struct iris_inst *inst);
+> +int iris_session_init_caps(struct iris_core *core);
+> +
+> +#endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> index da52e497b74a..9dc050063924 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_defines.h
+> @@ -31,9 +31,13 @@
+>  #define HFI_EVENT_SYS_ERROR				0x1
+>  #define HFI_EVENT_SESSION_ERROR				0x2
+>  
+> +#define HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER	0x1200001
+> +
+>  #define HFI_PROPERTY_SYS_CODEC_POWER_PLANE_CTRL		0x5
+>  #define HFI_PROPERTY_SYS_IMAGE_VERSION			0x6
+>  
+> +#define HFI_PROPERTY_PARAM_WORK_MODE			0x1015
+> +#define HFI_PROPERTY_PARAM_WORK_ROUTE			0x1017
+>  #define HFI_MSG_SYS_INIT				0x20001
+>  #define HFI_MSG_SYS_SESSION_INIT			0x20006
+>  #define HFI_MSG_SYS_SESSION_END				0x20007
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index a74114b0761a..6ad2ca7be0f0 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -108,6 +108,7 @@ static int iris_hfi_gen2_session_set_default_header(struct iris_inst *inst)
+>  	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+>  	u32 default_header = false;
+>  
+> +	default_header = inst->fw_cap[DEFAULT_HEADER].value;
 
-Since the GPIOs are also shared for the i2c bus between two SS, do not
-touch GPIO configuration during runtime suspend and only turn off the
-clocks. This will allow other SS to continue to transfer the data
-without any disturbance over the IO lines.
+This isn't related to the s_ctrl and g_volatile_ctrl. Please split this
+commit into the chunk that is actually related to that API and the rest
+of the changes.
 
-Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
----
- drivers/i2c/busses/i2c-qcom-geni.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+>  	iris_hfi_gen2_packet_session_property(inst,
+>  					      HFI_PROP_DEC_DEFAULT_HEADER,
+>  					      HFI_HOST_FLAGS_NONE,
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> index 18cc9365ab75..401df7b4e976 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+> @@ -28,7 +28,16 @@
+>  #define HFI_PROP_UBWC_BANK_SWZL_LEVEL3		0x03000008
+>  #define HFI_PROP_UBWC_BANK_SPREADING		0x03000009
+>  #define HFI_PROP_CODEC				0x03000100
+> +#define HFI_PROP_PROFILE			0x03000107
+> +#define HFI_PROP_LEVEL				0x03000108
+> +#define HFI_PROP_STAGE				0x0300010a
+> +#define HFI_PROP_PIPE				0x0300010b
+> +#define HFI_PROP_LUMA_CHROMA_BIT_DEPTH		0x0300010f
+> +#define HFI_PROP_CODED_FRAMES			0x03000120
+> +#define HFI_PROP_BUFFER_HOST_MAX_COUNT		0x03000123
+> +#define HFI_PROP_PIC_ORDER_CNT_TYPE		0x03000128
+>  #define HFI_PROP_DEC_DEFAULT_HEADER		0x03000168
+> +#define HFI_PROP_DEC_START_FROM_RAP_FRAME	0x03000169
+>  #define HFI_PROP_END				0x03FFFFFF
+>  
+>  #define HFI_SESSION_ERROR_BEGIN			0x04000000
+> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+> index d28b8fd7ec2f..2429b9860789 100644
+> --- a/drivers/media/platform/qcom/iris/iris_instance.h
+> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
+> @@ -23,8 +23,11 @@
+>   * @fh: reference of v4l2 file handler
+>   * @fmt_src: structure of v4l2_format for source
+>   * @fmt_dst: structure of v4l2_format for destination
+> + * @ctrl_handler: reference of v4l2 ctrl handler
+>   * @crop: structure of crop info
+>   * @completions: structure of signal completions
+> + * @driver_cap: array of supported instance driver capabilities
+> + * @fw_cap: array of supported instance firmware capabilities
+>   * @buffers: array of different iris buffers
+>   * @fw_min_count: minimnum count of buffers needed by fw
+>   * @once_per_session_set: boolean to set once per session property
+> @@ -42,8 +45,11 @@ struct iris_inst {
+>  	struct v4l2_fh			fh;
+>  	struct v4l2_format		*fmt_src;
+>  	struct v4l2_format		*fmt_dst;
+> +	struct v4l2_ctrl_handler	ctrl_handler;
+>  	struct iris_hfi_rect_desc	crop;
+>  	struct completion		completion;
+> +	struct platform_inst_driver_cap	driver_cap[INST_DRIVER_CAP_MAX];
+> +	struct platform_inst_fw_cap	fw_cap[INST_FW_CAP_MAX];
+>  	struct iris_buffers		buffers[BUF_TYPE_MAX];
+>  	u32				fw_min_count;
+>  	bool				once_per_session_set;
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index 754cccc638a5..2935b769abb7 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -10,6 +10,23 @@
+>  #define HW_RESPONSE_TIMEOUT_VALUE               (1000) /* milliseconds */
+>  #define AUTOSUSPEND_DELAY_VALUE			(HW_RESPONSE_TIMEOUT_VALUE + 500) /* milliseconds */
+>  
+> +#define REGISTER_BIT_DEPTH(luma, chroma)	((luma) << 16 | (chroma))
+> +#define BIT_DEPTH_8				REGISTER_BIT_DEPTH(8, 8)
+> +#define CODED_FRAMES_PROGRESSIVE		0x0
+> +#define DEFAULT_MAX_HOST_BUF_COUNT		64
+> +#define DEFAULT_MAX_HOST_BURST_BUF_COUNT	256
+> +
+> +enum stage_type {
+> +	STAGE_1 = 1,
+> +	STAGE_2 = 2,
+> +};
+> +
+> +enum pipe_type {
+> +	PIPE_1 = 1,
+> +	PIPE_2 = 2,
+> +	PIPE_4 = 4,
+> +};
+> +
+>  extern struct iris_platform_data sm8550_data;
+>  extern struct iris_platform_data sm8250_data;
+>  
+> @@ -41,6 +58,56 @@ struct ubwc_config_data {
+>  	u32	bank_spreading;
+>  };
+>  
+> +enum platform_inst_driver_cap_type {
+> +	FRAME_WIDTH = 1,
+> +	FRAME_HEIGHT,
+> +	MBPF,
+> +	INST_DRIVER_CAP_MAX,
+> +};
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index eebb0cbb6ca4..ee2e431601a6 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -1,5 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0
- // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-+// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
- 
- #include <linux/acpi.h>
- #include <linux/clk.h>
-@@ -99,6 +100,7 @@ struct geni_i2c_dev {
- 	struct dma_chan *rx_c;
- 	bool gpi_mode;
- 	bool abort_done;
-+	bool is_shared;
- };
- 
- struct geni_i2c_desc {
-@@ -602,6 +604,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
- 	peripheral.clk_div = itr->clk_div;
- 	peripheral.set_config = 1;
- 	peripheral.multi_msg = false;
-+	peripheral.shared_se = gi2c->is_shared;
- 
- 	for (i = 0; i < num; i++) {
- 		gi2c->cur = &msgs[i];
-@@ -612,6 +615,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
- 		if (i < num - 1)
- 			peripheral.stretch = 1;
- 
-+		peripheral.first_msg = (i == 0);
-+		peripheral.last_msg = (i == num - 1);
- 		peripheral.addr = msgs[i].addr;
- 
- 		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-@@ -631,8 +636,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
- 		dma_async_issue_pending(gi2c->tx_c);
- 
- 		time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
--		if (!time_left)
-+		if (!time_left) {
-+			dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
-+						gi2c->cur->flags, gi2c->cur->addr);
- 			gi2c->err = -ETIMEDOUT;
-+		}
- 
- 		if (gi2c->err) {
- 			ret = gi2c->err;
-@@ -800,6 +808,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
- 		gi2c->clk_freq_out = KHZ(100);
- 	}
- 
-+	if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
-+		gi2c->is_shared = true;
-+		dev_dbg(&pdev->dev, "Shared SE Usecase\n");
-+	}
-+
- 	if (has_acpi_companion(dev))
- 		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
- 
-@@ -962,14 +975,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
- 	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
- 
- 	disable_irq(gi2c->irq);
--	ret = geni_se_resources_off(&gi2c->se);
--	if (ret) {
--		enable_irq(gi2c->irq);
--		return ret;
--
-+	if (gi2c->is_shared) {
-+		geni_se_clks_off(&gi2c->se);
- 	} else {
--		gi2c->suspended = 1;
-+		ret = geni_se_resources_off(&gi2c->se);
-+		if (ret) {
-+			enable_irq(gi2c->irq);
-+			return ret;
-+		}
- 	}
-+	gi2c->suspended = 1;
- 
- 	clk_disable_unprepare(gi2c->core_clk);
- 
+Please use C structures for platform caps. You have introduced a
+wrapping that 1:1 maps to C code, which is not iterated or otherwise
+accessed via a generic ID aside from the driver code.
+
+> +
+> +enum platform_inst_fw_cap_type {
+> +	PROFILE = 1,
+> +	LEVEL,
+> +	INPUT_BUF_HOST_MAX_COUNT,
+> +	STAGE,
+> +	PIPE,
+> +	POC,
+> +	CODED_FRAMES,
+> +	BIT_DEPTH,
+> +	DEFAULT_HEADER,
+> +	RAP_FRAME,
+> +	DEBLOCK,
+> +	INST_FW_CAP_MAX,
+> +};
+
+I have mixed feelings towards fw caps. Let's see how the code evolves
+after you split the commit into V4L2 CTRL code and the rest of the
+changes.
+
+> +
+> +enum platform_inst_cap_flags {
+> +	CAP_FLAG_NONE			= 0,
+
+No need to define NONE, just skip the setting.
+
+> +	CAP_FLAG_DYNAMIC_ALLOWED	= BIT(0),
+> +	CAP_FLAG_MENU			= BIT(1),
+> +	CAP_FLAG_INPUT_PORT		= BIT(2),
+> +	CAP_FLAG_OUTPUT_PORT		= BIT(3),
+> +	CAP_FLAG_CLIENT_SET		= BIT(4),
+> +	CAP_FLAG_BITMASK		= BIT(5),
+> +	CAP_FLAG_VOLATILE		= BIT(6),
+> +};
+> +
+> +struct platform_inst_driver_cap {
+> +	enum platform_inst_driver_cap_type cap_id;
+> +	u32 min;
+> +	u32 max;
+> +	u32 value;
+> +};
+> +
+> +struct platform_inst_fw_cap {
+> +	enum platform_inst_fw_cap_type cap_id;
+> +	s64 min;
+> +	s64 max;
+> +	s64 step_or_mask;
+> +	s64 value;
+> +	u32 hfi_id;
+> +	enum platform_inst_cap_flags flags;
+> +};
+> +
+
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
