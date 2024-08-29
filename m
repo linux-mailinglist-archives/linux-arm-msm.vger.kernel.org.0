@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-30112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6548D96503B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 21:56:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2EFA965042
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 21:56:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A9F31F221CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:56:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80F3028B0D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Aug 2024 19:56:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A2551BC084;
-	Thu, 29 Aug 2024 19:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38D641BE872;
+	Thu, 29 Aug 2024 19:49:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXnTYe2g"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SOMCQ/VQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2552A1BC070
-	for <linux-arm-msm@vger.kernel.org>; Thu, 29 Aug 2024 19:46:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A68E1BE868;
+	Thu, 29 Aug 2024 19:49:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724960809; cv=none; b=nO1+LFSknQcaCrViomM8Ncu+xd4atyk3yiPM0xRPFQWLvFiZaOK6r7vZJxAbyVuEJNxVD9Xb4mMdANS5Pcr/mTlAGjhJDwIM3KKnAtFNtyiz6BKBbR+FISecErcDDp01c9t9HG7oTtDEvvxy8mpD+sNKSmsU3/9GyO0PlMDiRfQ=
+	t=1724960955; cv=none; b=GX4cXAVIMfwgkbpjo5TnrrXVWDSsMaKJiMMA5YHxTT2gDkj4+ERIThdDHhklsOaJoPq/xHnfd9jE4xRM2U6s6KOkvxxxwoPzPAipGLZU+0ibff1iEWazoSoRrXcQacIKSNl9mGTYiH1MlYI2ThmuuxewiTsmoUSXeZW4OiFC0Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724960809; c=relaxed/simple;
-	bh=xjo6xE95/L4xgY83ZcPoZzNMlqlD3HD/nseN0UBMbks=;
+	s=arc-20240116; t=1724960955; c=relaxed/simple;
+	bh=VQFkfIt1ZFmvcgrZPQB4L0rRyNlBeXoAfBINrTFokH8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mtefTgL5CKCcxjMaOesTqu786T3XpMrIvbP4k8L+4NRgZPUBlVqxqkIVfAA/VdEGZ13ZSX0YUAY76S8kWa2z/NAd0kHb6nGxCNIgS93YEs3Oda+30+eyRU/LG4RU1ojffspXtyHqzqehRtzshkPAY7N3cbLm+C/bTecuxKYsN+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXnTYe2g; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF01BC4CEC2;
-	Thu, 29 Aug 2024 19:46:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1724960808;
-	bh=xjo6xE95/L4xgY83ZcPoZzNMlqlD3HD/nseN0UBMbks=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nXnTYe2g5t6g0IYQfZzIOoRUDL5g+p97OsR8OCbz0pRxSO2MFH/3RrQc6cVa4zHAd
-	 wmmR4kJtXCL+5J6/e3YAOFwkUYHtOqGESst62S0fCcs6C0W55wncDzDnh0YlfQ6dBn
-	 BKlXcNOOEMrWQourvYwHWc+D2qvg9pxpott30lb8K+nhbTbNfIHESM3Q2dhGK3LDeq
-	 Pt+woW9Y/MGknEEB/+ZNenmd62fIWzhfQPvr51KmDI4whcZuTB2AqwluJXiAF93BK5
-	 BUZNOq7SQ5kg02K2rL28YUlrCdjsqe6RYsKn1HCtVuPfZtBilghjMZHiFHSbtcHLJ4
-	 jY3/ZhVX1zrTA==
-Message-ID: <2dca6714-971f-46d1-9a72-511a276f6ded@kernel.org>
-Date: Thu, 29 Aug 2024 21:46:44 +0200
+	 In-Reply-To:Content-Type; b=B2cE+T6ETKdV6HDKWoROeiEuB/RXcnwMCd1voDT0ZxW79QS6I4ie7h5yrMgwmXXX8rm+2ZyDNpDBvYpyF/inZUTg34rqPXU3fkJhGz2SHd9PJMZYgwepPojj3/N5OiXALstjhC3m14hFG77WW7oIryyhPFIBdKZTYHgx/siQyFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SOMCQ/VQ; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5bed72ff2f2so1241471a12.2;
+        Thu, 29 Aug 2024 12:49:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1724960952; x=1725565752; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C6zTyRy44LbsV/er+6Rmmr7d7exqhqQ5s8Va18uvln0=;
+        b=SOMCQ/VQpSXbRGvD4QN4FFC4PBjB6PFtgwQXM19lDbBTZhg5GeSPldyo0kBQb447Aa
+         KKZkp3UBQMNAXp/eN8GK8GGXHfT3sjePnK+wUPi8mGJwaSYDxcSdzGfk1KsgTtBO4Wvu
+         sgKOnMNkzaGmEhF2IHYqAqGLG07F/KhML7vfBNvZcb3DIyoiMeSxEUMtsbY9nhXXYZO9
+         19KnU2uEuJVVyGQ3OBIiMIymrFxK34o7SMnsbXKCs0fBle9lycaEIs41xXog2mt1U3/+
+         Xx8tJMp7/VG2rbkgv6bpCwmIHYVCTx/oIq3dRBouWeYbjRXSNH6VtLLJ6yVa0qLWWtD+
+         Z/YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1724960952; x=1725565752;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C6zTyRy44LbsV/er+6Rmmr7d7exqhqQ5s8Va18uvln0=;
+        b=TdGfwPdVxU1XVe70IvKAiT5r9/KNtEpPBtXG/KNzJqYPQAC/QzTsvEATq0VnMDzkFe
+         Rivq1QVZ94MRQXit7W4sPvM+0Pe5zwvWIVnH1PKZJtKntrXRjRnbVsVKBdMXQ9o0PpTJ
+         2yMfKd3yjR6ZFbBGXl5SdqT9jei5wi3xDDfAWdrdme0RDrZsgtp+5Uxq0OGn7CcDhm0N
+         XpGoV2c1pVgNW/yJgIycavDKLTR4DMWW5gyfYka07fYwpRMbEDOu996T5dYMK77e9A7c
+         4P2gwd6ou/VZFg71bqK1BgyPdfcyReGjk1Tql5BuhM2woNmaYFNiIvj2JhNFpJ+mWAKK
+         QpuA==
+X-Forwarded-Encrypted: i=1; AJvYcCUkY72gpC5F6BuQ3egZttU3tU/A0iMvh/xMQue3iL002fr1pPjhZpthK55ANzjN096Sy16LAJWbDDVYHHpS@vger.kernel.org, AJvYcCUt5zX7klMtj+Obdhb9RpEVDHc0CiPhgzibAESo1tnF26sivqyClcSRHieHA3jOGLewZpHErKIJRWKl@vger.kernel.org, AJvYcCV5HqpylIqjZYOqj6hAGntG8amjdnhzmDb5U4rwKxs38hZVY/PjRrvX/NnwbE5vVjStoHDrxlolgUE=@vger.kernel.org, AJvYcCW4jO7zBX6P3nMaIwN8QMcqOssdOHT/MrD5slHHl93DBJO9ut/M/2sgA52y1vaFIvyr9Mqw1MCel+w6jYTDbQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSjroT426onmSIErHLFNpxezt9blzJVqBXAv2drdUbH9p+Axu4
+	9x9W4rgNiHoARYCVp5Qi9OrzQuwZ4UsJ15XMUWGUviYpUk72xeuw
+X-Google-Smtp-Source: AGHT+IEG6BreU15tWsvDqXfz+6NfLSYPAoFtBNvZap0mdBrmPnCL4g6PIPExiJh2Sz2VysaWO/gXoQ==
+X-Received: by 2002:a17:907:7292:b0:a86:a909:4f67 with SMTP id a640c23a62f3a-a897fa759c4mr273076266b.52.1724960951288;
+        Thu, 29 Aug 2024 12:49:11 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8988feb9f7sm114184666b.42.2024.08.29.12.49.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Aug 2024 12:49:10 -0700 (PDT)
+Message-ID: <159df608-e52c-4317-a1f2-d0f94ebfc25a@gmail.com>
+Date: Thu, 29 Aug 2024 21:49:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,43 +76,45 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] arm64: dts: qcom: sc8280xp-wdk2023: dt definition for
- WDK2023
-To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
- linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Merck Hung <merckhung@gmail.com>
-References: <5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz>
- <910a53f7-af59-423f-ade2-66d53ddf0538@gmail.com>
+Subject: Re: [PATCH 2/2] interconnect: qcom: add QCS8300 interconnect provider
+ driver
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+ Danila Tikhonov <danila@jiaxyga.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Vladimir Lypak <vladimir.lypak@gmail.com>,
+ Adam Skladowski <a39.skl@gmail.com>, Sibi Sankar <quic_sibis@quicinc.com>,
+ Rohit Agarwal <quic_rohiagar@quicinc.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ Andrew Halaney <ahalaney@redhat.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_mdtipton@quicinc.com,
+ quic_okukatla@quicinc.com
+References: <20240827151622.305-1-quic_rlaggysh@quicinc.com>
+ <20240827151622.305-3-quic_rlaggysh@quicinc.com>
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <910a53f7-af59-423f-ade2-66d53ddf0538@gmail.com>
+From: Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <20240827151622.305-3-quic_rlaggysh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29.08.2024 6:37 PM, Konrad Dybcio wrote:
-> On 29.08.2024 1:47 PM, Jens Glathe wrote:
->> "Microsoft Windows Dev Kit 2023" aka "Blackrock" aka "Project Volterra"
->>
->> Device tree for the Windows Dev Kit 2023. This work
->> is based on the initial work of Merck Hung <merckhung@gmail.com>.
->>
->> Original work: https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
->>
->> This dt is more or less deducted from the Thinkpad X13s.
->> It contains a lot of guesswork, and also a lot of research on
->> what works with the Windows Dev Kit.
->>
->> It is in use and under development since May 2023, pretty stable now.
->>
->> Signed-off-by: Merck Hung <merckhung@gmail.com>
->> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
->> ---
+On 27.08.2024 5:16 PM, Raviteja Laggyshetty wrote:
+> Add driver for the Qualcomm interconnect buses found in QCS8300
+> based platforms. The topology consists of several NoCs that are
+> controlled by a remote processor that collects the aggregated
+> bandwidth for each master-slave pairs.
 > 
-> microsoft,volterra
+> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> ---
 
-sorry this one was called blackrock, volterra is a marketing name
+[...]
+
+> +static struct qcom_icc_bcm *dc_noc_bcms[] = {
+> +};
+
+Please drop such empty nodes
 
 Konrad
-
 
