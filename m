@@ -1,209 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-30260-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6751F9664C6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 16:59:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91E339664E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 17:02:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1EFB8288448
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 14:59:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C51631C2433D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 15:02:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6230D1B375E;
-	Fri, 30 Aug 2024 14:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E4D51B3B3A;
+	Fri, 30 Aug 2024 15:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JW+UgMY0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Tz0tsQls"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B695A1917E2;
-	Fri, 30 Aug 2024 14:59:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C685019ABB7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 15:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725029978; cv=none; b=nRhW74K60H1ldr8B+RAl+gUxhCI9/AOWuASXzcBvr/45aIT+nS6nkRZwSNCyk42QB9GPzSebvh98yXt0xk/uXbRaidbHek0grvdVnEIF0cObo6G1pAargzpD2T9HZcy09Wt42hKh+b/r9eNmn5RGQzK3IxBXJle3YHji6CommO4=
+	t=1725030167; cv=none; b=klvaMhhb9j552dPbDMhcYfQuYcmoMtoNB6S9mHadaV5sPx2JKJY3om762165Gn5sMDLaG1BUIMXzNUOih7oTN4f6EixtHoVmygxwPYJKb3CIie+UBT1g8pKbdhuAcHN8mXKrOzwRXur0vFMv5x3RmqfjQ7DhVDPT6U5zyjO/bBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725029978; c=relaxed/simple;
-	bh=ZNinG2P8QRlT1ahrPp1CbuKepet2IrmxrveZ7JQJiWw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Wt0JXrLRnlmCSj3rpJfLkuKsXT9b6x4ZC6X2JkEwqkHmeSpJ/sc70WLgb++oNsPhQxeqZ/V/NF9HM9ildOweM9hnNrhZPZjVKOTq5h604F9NMZHakehxFaEgx+8BiYGDwS5vAfuqqHB9ep9hZJbIdG20fsYcytFccZC6PCzhAls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JW+UgMY0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U80U5h017955;
-	Fri, 30 Aug 2024 14:59:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LgF5ZYD5IR1SwpOQJWoYZ0vhtIBCV/uVX/Uy6jMvB+U=; b=JW+UgMY0WG7cYPxh
-	h5qbUmrcF7dtTxFEkfIeAqxlqBgxYcB+3CZny67trU3LOtF+0U4HIpspMGfzcOhq
-	msC1wvhSlwj8bpmjQ/Tx+Gmc2P2XwrixJ2abHLWGTV2V+mjBVoNI4jPgIB84/6F9
-	25Az8Tx0hT92YLi3vrSd2cTMoSUyzlfR+w7D5Q9y82On5OgO9C4F4VkLGgoi89xc
-	DhYo9p18OVlaEX4o56acMPom2eulqSSvGMtkGCvBAiWSOMs6zao8l0CHKTmVcMyq
-	RHawE0M2mn2qdcjMXxSqmkWQFSpRi6RsTP31Dv58UYgGmZptMM7CpgAhaCGnDrDu
-	e/jQsg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419puts9dj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 30 Aug 2024 14:58:59 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47UEwwPD011056
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 30 Aug 2024 14:58:58 GMT
-Received: from [10.110.28.107] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 Aug
- 2024 07:58:55 -0700
-Message-ID: <9befe692-a05d-4fa0-9ff9-8d6030e4cb66@quicinc.com>
-Date: Fri, 30 Aug 2024 07:58:54 -0700
+	s=arc-20240116; t=1725030167; c=relaxed/simple;
+	bh=05Ug7ioAkdhFAePhII4Vc+gSjFm43GWdFX6ne6hrPGw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hGcEp1rrcODHGZAixPTjufl63+/88/C7MNkIz847FdpSm1Os0smpzN3eBnfQRTCzE1RovIAZS3I7T1Ei3p0E/HugXg0C0XkbzfKigShf5anQUHl++zTDKUxvDCvXA7NZfocnpfZT2ZrqyH1mF/odrrjgUPucRjhomOOoFaUmtS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Tz0tsQls; arc=none smtp.client-ip=209.85.128.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6c3f1939d12so16951317b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 08:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725030164; x=1725634964; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=F2e3mmIPFWuSOpfLBsYpWRoU+NPRtJO5EHCOY7Ury58=;
+        b=Tz0tsQls30XUI7rZXlceEJcqtV1U1dj8Ch3A3C/MSKj84mbUv67gwcnWl0yZ2/aZ30
+         SBo9/O8X4/LJRRCTFQ3YKDJhkZ2Vb41RPnKTDWsit/UaJHVLz2L1+SC7n6y+sBRMsXWa
+         zkewKKNmoaBPAdMJ44ARvvU2KZmpYzW788CqFx/5g0IaEyACQG28AnDD4zg7Y1DNSg1y
+         9owrfZvY/j9Ptl9DFJHuDPHkso90HRowsRnUaNpJmpWUcbwYhVDM9NJvAcvDOjEVw74N
+         0mD452E92RGjKIyUGThOyy8Y/5HegrS31dot3aX+soINVFh0axfQUpzFhj/ixnPZ5kvU
+         aN7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725030164; x=1725634964;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=F2e3mmIPFWuSOpfLBsYpWRoU+NPRtJO5EHCOY7Ury58=;
+        b=xJ9XLRSI/HImtjz2ghdgPS3WcuqP//rXQfGEUhkQEYqDAe4k1g1Jnw62csx7TSTowK
+         AiyGv+i9vPxOcNJSXrupX3dDfta4jIoEumTOKPic/wNYMYJ51nar0QruHX6C/k/8UO9Z
+         KRTcJwiQ5M0Wj1Bk/4l/LJFiyvTKdYzJi+BRq/n+xuh2/9cS+iS8gCW9rkAi/0Zvzxo1
+         KIVKMZbtZBsun3vSLFMX9FcxYHtxi9sW8Le5wXOS4M1VYKf2enZI7VDfKezcQmO2rfqv
+         LlQ6zcDwMf8NqssyQny8REO2Akgm/676o7DQyj1ERurzP12J3ZKfVluVXb+NaEjRqhP9
+         b2qA==
+X-Forwarded-Encrypted: i=1; AJvYcCXHDlEhCHvADhErggx0ZkfTLnjZyLoIE8EmQ0QM3HhVrIreeDatZE3nbMpEhJlmoghzU3DoEX8cTL9OQ3d9@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywm5TFKBFGJ1joaSBCldnvFZhlrq1rMX3lmrLc98Pf82CDC55v4
+	LVyBE/sBhaVi7QeaBd1aLJiCnNNmIdxckz5e5FM7ULGH3UovaOd+VgutZe7/7WVPOOCHQ6AdgTy
+	fAnRxxWaN6Tmo/D2PgQ7ze/N2YjIU5ZfAC+ODJg==
+X-Google-Smtp-Source: AGHT+IFc//5kL8zjuzX0HATe2aqlD+/GQOHR2GsXykxt0dzQVL6MquQvcDRfkA8Djc2UfS/is6roCbJKiRofIJTKX+E=
+X-Received: by 2002:a05:690c:f84:b0:62c:e6c0:e887 with SMTP id
+ 00721157ae682-6d40d88eabfmr26157167b3.9.1725030164245; Fri, 30 Aug 2024
+ 08:02:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/22] arm64: dts: qcom: Add reduced functional DT for
- SA8255p Ride platform
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <sudeep.holla@arm.com>, <andi.shyti@kernel.org>, <tglx@linutronix.de>,
-        <will@kernel.org>, <joro@8bytes.org>, <jassisinghbrar@gmail.com>,
-        <lee@kernel.org>, <linus.walleij@linaro.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
-        <wim@linux-watchdog.org>, <linux@roeck-us.net>
-CC: <robin.murphy@arm.com>, <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <vkoul@kernel.org>, <quic_gurus@quicinc.com>,
-        <agross@kernel.org>, <bartosz.golaszewski@linaro.org>,
-        <quic_rjendra@quicinc.com>, <robimarko@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
-        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_psodagud@quicinc.com>, <quic_tsoni@quicinc.com>,
-        <quic_shazhuss@quicinc.com>
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <20240828203721.2751904-23-quic_nkela@quicinc.com>
- <746be896-8798-44b0-aa86-e77cf34655e1@kernel.org>
- <57eee144-cdc4-48e7-838b-103cda6ec1dd@quicinc.com>
- <095f5048-5c39-438d-b5a9-7519199a8e9f@kernel.org>
-From: Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <095f5048-5c39-438d-b5a9-7519199a8e9f@kernel.org>
+References: <20240823-x1e80100-phy-add-gen4x4-v3-0-b7765631ca01@linaro.org>
+ <20240823-x1e80100-phy-add-gen4x4-v3-1-b7765631ca01@linaro.org>
+ <gvx3sdsdxigel3iwu7vgvvgxohvnaqq6suogsqojeumobhwhdk@5qct23m5ncda> <ZtG2dUVkdwBpBbix@hovoldconsulting.com>
+In-Reply-To: <ZtG2dUVkdwBpBbix@hovoldconsulting.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 30 Aug 2024 18:02:34 +0300
+Message-ID: <CAA8EJpqD1XYbw35oxP4hWutbGs8nRTSwOsBAJcYGos8FBbAHew@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x4
+To: Johan Hovold <johan@kernel.org>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Johan Hovold <johan+linaro@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SkQErJ6yG1XnlEy5h9kGSvc-Bpyu79A9
-X-Proofpoint-ORIG-GUID: SkQErJ6yG1XnlEy5h9kGSvc-Bpyu79A9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-30_09,2024-08-30_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 phishscore=0 adultscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408300114
 
+On Fri, 30 Aug 2024 at 15:09, Johan Hovold <johan@kernel.org> wrote:
+>
+> On Fri, Aug 30, 2024 at 01:42:10PM +0300, Dmitry Baryshkov wrote:
+> > On Fri, Aug 23, 2024 at 10:04:15AM GMT, Abel Vesa wrote:
+> > > The sixth PCIe instance on X1E80100 can be used in either 4-lane mode or
+> > > 2-lane mode. Document the 4-lane mode as a separate compatible.
+> >
+> > As the patches were merged, it's too late for this series, but as a
+> > note: we should think of a way to describe the PHY configuration without
+> > changing the compatibility strings. The hardware stays the same, it's
+> > just the number of lanes being wired that changes.
+>
+> No, this is not about configuration and we need two separate compatibles
+> as the two PHY instances are distinct and only one of them can be used
+> in 4-lane mode.
 
-On 8/30/2024 2:51 AM, Krzysztof Kozlowski wrote:
-> On 29/08/2024 21:06, Nikunj Kela wrote:
->> On 8/29/2024 12:49 AM, Krzysztof Kozlowski wrote:
->>> On 28/08/2024 22:37, Nikunj Kela wrote:
->>>> SA8255p Ride platform is an automotive virtual platform. This platform
->>>> abstracts resources such as clocks, regulators etc. in the firmware VM.
->>>> The device drivers request resources operations over SCMI using power,
->>>> performance, reset and sensor protocols.
->>>>
->>>> Multiple virtual SCMI instances are being employed for greater parallelism.
->>>> These instances are tied to devices such that devices can have dedicated
->>>> SCMI channel. Firmware VM (runs SCMI platform stack) is SMP enabled and
->>>> can process requests from agents in parallel. Qualcomm smc transport is
->>>> used for communication between SCMI agent and platform.
->>>>
->>>> Let's add the reduced functional support for SA8255p Ride board.
->>>> Subsequently, the support for PCIe, USB, UFS, Ethernet will be added.
->>>>
->>>> Co-developed-by: Shazad Hussain <quic_shazhuss@quicinc.com>
->>>> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
->>>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/Makefile           |    1 +
->>>>  arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi |   80 +
->>>>  arch/arm64/boot/dts/qcom/sa8255p-ride.dts   |  149 ++
->>>>  arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi  | 2312 ++++++++++++++++++
->>>>  arch/arm64/boot/dts/qcom/sa8255p.dtsi       | 2405 +++++++++++++++++++
->>>>  5 files changed, 4947 insertions(+)
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/sa8255p-pmics.dtsi
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/sa8255p-scmi.dtsi
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/sa8255p.dtsi
->>>>
->>> ...
->>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sa8255p-ride.dts b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->>>> new file mode 100644
->>>> index 000000000000..1dc03051ad92
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/sa8255p-ride.dts
->>>> @@ -0,0 +1,149 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +
->>>> +/dts-v1/;
->>>> +
->>>> +#include <dt-bindings/gpio/gpio.h>
->>>> +
->>>> +#include "sa8255p.dtsi"
->>>> +#include "sa8255p-pmics.dtsi"
->>>> +#include "sa8255p-scmi.dtsi"
->>>> +
->>>> +/ {
->>>> +	model = "Qualcomm Technologies, Inc. SA8255P Ride";
->>>> +	compatible = "qcom,sa8255p-ride", "qcom,sa8255p";
->>>> +
->>>> +	aliases {
->>>> +		i2c11 = &i2c11;
->>>> +		i2c18 = &i2c18;
->>>> +		serial0 = &uart10;
->>>> +		serial1 = &uart4;
->>>> +		spi16 = &spi16;
->>>> +		scmichannels = &scmichannels;
->>> Nothing parses this.
->>>
->> We are using this alias in bootloader to speed up the parsing. Since we
-> Then please provide link to the bindings in this open-source upstream
-> bootloader.
->
-> Otherwise it is a clear no-go for me. We don't add properties because
-> some downstream wants them. Imagine what would happen if we opened that
-> can of worms...
+Ack, makes sense.
 
-Point taken! I will remove this alias and label from DT in next version.
-We can add it back if/once the bootloader changes are upstreamed. Thanks!
+> The mistake was to ever describe pcie6a as 2-lane in the x1e80100 dtsi
+> (and possibly also in the ambiguous commit message above). Whether
+> pcie6a is used in 4-lane or 2-lane mode is determined by a TCSR
+> register.
 
+Yes, I was confused by the commit message. I assumed that the
+compatible string is used to switch PHY modes. Had the patchset come
+with the DT patch, it would be easier to understand what was going on.
 
->> are using 64 SCMI instances and SCMI smc transport driver for
->> Qualcomm(drivers/firmware/arm_scmi/transports/smc.c) expects
->> cap-id(created by hypervisor at boot time), our bootloader gets those
->> cap-id for each channel and populate them. This alias is an optimization
->> to save boottime as in automotive, boot KPIs are critical.
-> I will refrain about commenting on KPIs...
->
->
->
-> Best regards,
-> Krzysztof
->
+-- 
+With best wishes
+Dmitry
 
