@@ -1,144 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-30168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECCA496598B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:09:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 673B2965996
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:11:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1BB31F211C2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:09:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CF372B22A91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:11:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFED153511;
-	Fri, 30 Aug 2024 08:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5E2D158A37;
+	Fri, 30 Aug 2024 08:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVvlzQiX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhNsIyEK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AD013665B;
-	Fri, 30 Aug 2024 08:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAB51509A8;
+	Fri, 30 Aug 2024 08:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725005375; cv=none; b=a/6RY+wY7RLK/QeX3DTvpets9Gm98ZHRt+oYSRt/CPAy97FLr/FFjD6HFn+EM02Etxmb7UfoPC0luA3DQ2aR+u0tLPBDwC/VxfFZF83vmNw/0fG2Gt6J7BmbGeSpfpESNUuwQvDxhbBlLZ2mtJKhccO/cezc+HKPNSAxGzEWRmk=
+	t=1725005450; cv=none; b=hNOZszWxDgN48KJdw9ABkWgfH6DNuYAQn4L4cw+SBj+iifuRCMWt0nHvjheJ7gqD9Be7SOda6gOZSUQKY1x3lwhct4ZT9N9QJnm3R1K8kApjHC/EDqAgtJDMZLKf9vcbo2jylBPk5dGLKcklDfr+X+4mNq9DzySPorfSKETYjHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725005375; c=relaxed/simple;
-	bh=psRYHcPRCYF38pQMxZ9gOGSn8llKO6OrKAOhYVtvoQg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ngQTq+DxODEVKorhQAvpeamRYfqz/XQg11IqaRHH74qcRlwdCE7I+BnfQo/DIBZpH4mvYAO622n8BiAx0gM2dnPQ/r99D0tVhcuXsLS20Nhmcgl0XBUAcCpWVTjLkEiizk7FJEFlrWbaPq2GA065oyGV7MSCx0gB1HKXGLpn2LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVvlzQiX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E46DC4CEC4;
-	Fri, 30 Aug 2024 08:09:33 +0000 (UTC)
+	s=arc-20240116; t=1725005450; c=relaxed/simple;
+	bh=xYuItBQNMP96MzefUyk+q8WjjT2Y1ucVlzEXtvlMHcs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=jqR0G/JrN7XwOdE3wz6EbjYZ9QBpzkfNBhEommXLLMG8Eh+ykDf2MTO0ZXhrHfU2EbEIyvWrtut3qB8ukj8rb9J8k3DHI0mCHwhPvTk9Fdk9DkridfWhxShq+9PuRZrFh5aJcSjvUndyUWOg5KmDrLHBOKlelOY1GXAfccJdWYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhNsIyEK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA72C4CEC2;
+	Fri, 30 Aug 2024 08:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725005375;
-	bh=psRYHcPRCYF38pQMxZ9gOGSn8llKO6OrKAOhYVtvoQg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iVvlzQiX67N4WqoIal2grdhnpsLXs3qpTg4kilma1sz7wcw92uo9NuYbHE9+Mrfkf
-	 ML1BzDa9h8258ohqXLzYe5Nx3UUS1W/Dam45bXkLTeIEzJfVNJOYfVFoCQ9jK5IGpG
-	 V3uhUTtvPTPBR6x1zYxrIQoSsG3G8XXoOO+y3L4Vqwb01YM6ytkmxAwTDMOiPjmk+I
-	 cf5g3ggn1au8TKWz/hGD81rZBl2dS2b0NNKp58CGSVmFBh8+fBK7+ZW4kpv1gcqRps
-	 C+Hzz1NjPD8l0OPjobQeXSCgj1D1xgSePfr+Lofc/VNGpwakAlCx73yxXOy+iJ0vET
-	 qubKYAyALjnOQ==
-Message-ID: <76fb94fb-abb9-4cb7-a477-9839d1bc6287@kernel.org>
-Date: Fri, 30 Aug 2024 10:09:31 +0200
+	s=k20201202; t=1725005450;
+	bh=xYuItBQNMP96MzefUyk+q8WjjT2Y1ucVlzEXtvlMHcs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=OhNsIyEK3V2pCrW3tzn7S5hCisdmB5E7oCfj25Oo0JKAAK/Ujg7pBCHKQSugzFyQu
+	 UFXzC0iB4ftTxjcrMOUucHRNlgoVhvUnxMBlfRlTJpVqbO6f3pcWSbuZYpxFd+Vv58
+	 BpPAenoG07doPHMHViJIFhtwq6o09PH3ifnCqogtyn15eeDynet6mz08iSVdq9bF8u
+	 IvmINMgaqU3z8r+lKg4E15douPhE9VqP3LR9fEY6GgF1RGoTLwQQEX6ficnww3IYA8
+	 swmt4k0NWxFg+yOzlLsIq7D5pNZCzBsVZ38wZ3hNGjsy1G0jrHsOfgTreO5fEJ3hSg
+	 hRnQD6f+DVunw==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, Ray Jui <rjui@broadcom.com>, 
+ Scott Branden <sbranden@broadcom.com>, 
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Chunfeng Yun <chunfeng.yun@mediatek.com>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: linux-phy@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+ linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+ linux-arm-msm@vger.kernel.org
+In-Reply-To: <20240826-phy-of-node-scope-v1-0-5b4d82582644@linaro.org>
+References: <20240826-phy-of-node-scope-v1-0-5b4d82582644@linaro.org>
+Subject: Re: [PATCH 00/11] phy: simplify with cleanup.h and few other ideas
+Message-Id: <172500544630.434293.13040748970370817856.b4-ty@kernel.org>
+Date: Fri, 30 Aug 2024 13:40:46 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] bus: qcom: Simplify with dev_err_probe()
-To: Yu Jiaoliang <yujiaoliang@vivo.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: opensource.kernel@vivo.com
-References: <20240829124118.3256437-1-yujiaoliang@vivo.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240829124118.3256437-1-yujiaoliang@vivo.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On 29/08/2024 14:41, Yu Jiaoliang wrote:
-> Error handling in probe() can be a bit simpler with dev_err_probe().
+
+On Mon, 26 Aug 2024 12:07:16 +0200, Krzysztof Kozlowski wrote:
+> Make code simpler with scoped/cleanup.h/dev_err_probe.
 > 
-> Signed-off-by: Yu Jiaoliang <yujiaoliang@vivo.com>
-> ---
->  drivers/bus/qcom-ebi2.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+> Best regards,
+> Krzysztof
 > 
-> diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
-> index c1fef1b4bd89..dbd6a99bcc99 100644
-> --- a/drivers/bus/qcom-ebi2.c
-> +++ b/drivers/bus/qcom-ebi2.c
-> @@ -308,10 +308,8 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
->  		return PTR_ERR(ebi2xclk);
->  
->  	ret = clk_prepare_enable(ebi2xclk);
-> -	if (ret) {
-> -		dev_err(dev, "could not enable EBI2X clk (%d)\n", ret);
-> -		return ret;
-> -	}
-> +	if (ret)
-> +		return dev_err_probe(dev, ret, "could not enable EBI2X clk\n");
->  
->  	ebi2clk = devm_clk_get(dev, "ebi2");
->  	if (IS_ERR(ebi2clk)) {
 
+Applied, thanks!
 
-This cannot defer, so not much benefits. And again you change only one
-place.
-
-That's pointless and churn.
+[01/11] phy: broadcom: bcm-cygnus-pcie: Simplify with scoped for each OF child loop
+        commit: e33525de6c3c7780564e0859ea6daef27309995b
+[02/11] phy: broadcom: brcm-sata: Simplify with scoped for each OF child loop
+        commit: a7f1dbf479d2a3cbf2a25bd186bbe15efd17d849
+[03/11] phy: cadence: sierra: Simplify with scoped for each OF child loop
+        commit: 612f9fcb435fdc9abd46b6339c9000cef6d323a2
+[04/11] phy: hisilicon: usb2: Simplify with scoped for each OF child loop
+        commit: 93cab07a02f08e4a2837dd22280b741ba0a7a541
+[05/11] phy: mediatek: tphy: Simplify with scoped for each OF child loop
+        commit: d2714416770ed0cecaf69eaff34d20817f2c3bea
+[06/11] phy: mediatek: xsphy: Simplify with scoped for each OF child loop
+        commit: 77df35acd182a23c117a937ffd6b0830a5428649
+[07/11] phy: qcom: qmp-pcie-msm8996: Simplify with scoped for each OF child loop
+        commit: 608863e1e600a4d91b00dddd6ff11eda1cbebaa5
+[08/11] phy: ti: am654-serdes: Use scoped device node handling to simplify error paths
+        commit: 29b44a38503856952862c710d47d933c0173fd04
+[09/11] phy: ti: gmii-sel: Simplify with dev_err_probe()
+        commit: 27a4046255377eb0faab5c41fd271b1acab1ac41
+[10/11] phy: ti: j721e-wiz: Drop OF node reference earlier for simpler code
+        commit: afd7aaf3ecaf1b247db1294ef0687fb3cb530213
+[11/11] phy: ti: j721e-wiz: Simplify with scoped for each OF child loop
+        commit: 0d5a213c2eae880e0f7f8bc252314bae194d68d8
 
 Best regards,
-Krzysztof
+-- 
+~Vinod
+
 
 
