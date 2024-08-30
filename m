@@ -1,155 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-30298-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C391C966890
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 19:59:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C494966899
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 20:01:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7C715281113
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 17:59:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5658D1C2449D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 18:01:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D1BC1BBBF3;
-	Fri, 30 Aug 2024 17:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF25B1BB688;
+	Fri, 30 Aug 2024 18:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="SIMdyvhG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N0ow5aR9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CF61B6544
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 17:59:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6041BAEE3;
+	Fri, 30 Aug 2024 18:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725040786; cv=none; b=PTjP3aur6gnkqnPDAFgWZ/rGK1UUkChaTZirU5kBYxBNdfvsskHnDaAv+a996RVt2MftT/XaU/I3RQf4+7zTFF3nHKSGwi2mUW7KhvRk4mz43WNu1R5LlGq/4ipsq6Wcg8z/gZZUG+1d4Z9A7qKnoZl96Wks5/+wEm8bsKRqhgs=
+	t=1725040899; cv=none; b=BJI0TjbAH1ot3yM6Iv6VdEzMpfgZJN7OD4yzzZNCwhpiYX+xZnlTbYxUEBhkzXxJYBqL3cvdRQhV4wkMy2lYiQhiB0i6FyHERL8xyAixqqByX7gL31kQ0h9tuwP4H8K6fOs6q5NTrs1i0Sh7SwHeyYlZ97jvzNQAY0m6UEVRevI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725040786; c=relaxed/simple;
-	bh=bj/8ePnd9N5jkwmNNZHSUu+WS6alCNx2/c1EgzNdu9M=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JviCuFjvT91XHlSSqK4RIc/IbAOsocyCWSbEyhKe3sN1DInlnLUCqcWjGqwQixUGAq38EOtqfaOcDcxtoPC5BqqhAkMiZoDqkrxZJSwr1ZUMOJhnuYowd194jxayOClbZg6DuGt7h5kkknInL+4Lj0DEcSScL5HpDBAiaFEjH2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=SIMdyvhG; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7a809736a2cso118923885a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 10:59:43 -0700 (PDT)
+	s=arc-20240116; t=1725040899; c=relaxed/simple;
+	bh=ZS7rAQHnKHVt9ULoDQ7CQ752YPOg47HODDvhgraxX1E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OwwKBPTh19+nlHElvn6FzRtXDaEgMZ1keQiGBAhAddvFemwgcvj++X5/uXzKT9HMzoe67rQzjFIlnYE670MePXOTKLNj8AaOB+1sQs8qrmw2pTkNRC9PFfJv42R04w316548c/tS2aQr50S+rD2cu/oaxx76ezRcW1bmk8asgis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N0ow5aR9; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-45693d58a19so3191571cf.1;
+        Fri, 30 Aug 2024 11:01:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725040783; x=1725645583; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Jhz1rRhno8njq5zktzlz7/IAi0Jmdsp69Iep1staOok=;
-        b=SIMdyvhGa2tNknrfuAlGbuTiBQCLg8LVKPbuBVhKUij06WbtZfJfsPAhtEvGZdqdZ6
-         +LQAC8Fho0oUKZfjrFKOeIMMp30WwQgzEIx0c4UVBjiAriusiApcWM+nZ4aoGokvqzhE
-         roh2cl5uwpZsy8vx0SeLMv5ab8V5FpaMat64k=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725040783; x=1725645583;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1725040897; x=1725645697; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jhz1rRhno8njq5zktzlz7/IAi0Jmdsp69Iep1staOok=;
-        b=cQLw270oYTKOqRifN8ULtAgGLpdBLRCnkiOIYMv6y/JB8C4Ssv5IgC0eWst6wN/0zb
-         JlL5gU+BcFqua9/3lnMmGAMxcLNkqkIbI5Qw9LmZzL+FXU9eXZqm2krie6koOXIbo/2c
-         TV7H3FK2lnLx2PR5uCpvPHQzKbu2YX0csswX8LKD8I6aQx4aUsHoO8Ut2vBHe9pQtafV
-         ibEaqtrMwbkQ3Onff/VmJXejZRXMElUdA0/S7lZP0cxVXjvCUAAegqhPB/sWtpbNM/g7
-         RPs+rIDncbXTplaVoOgb/GdrHflhAqZjQjBc47mQ5bLpoSmiC/YzxPR+nY9C6ItwJCAP
-         bGAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXkEpPS72e0DjrkJbjoz5rjZsbSIOf7TvNgZFcJ5oMetwl5F76EB8DGXRKhkaF95jgSkh710oBWMTeQCkQZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkKwLXG308qf0zq4WP3b25trHfSPxz7fQ0gznrAFoupC5PhD7H
-	KbhYzHn65Ok5tYONap383o/TFw5b8CLWHPWYhv7/HNzIPNGn4It54sVxM9EInqYwt+KR6afX4Au
-	kR7DsjJMiDJfqYXdlASMV4XUJq0bu5ej8XeN4
-X-Google-Smtp-Source: AGHT+IHE9gJOVOJVUWUOzVHbgABXqnqZXNh9tS/AWBDgyXu5yk/NgBnqXpZ3pSyYOAZ/GdUVzRGNh7r9+6YhsM3pYS8=
-X-Received: by 2002:a05:620a:3909:b0:7a3:6dd9:efa6 with SMTP id
- af79cd13be357-7a8041c1bbemr727023785a.33.1725040782659; Fri, 30 Aug 2024
- 10:59:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 30 Aug 2024 10:59:41 -0700
+        bh=HLvYg5qPZOuBa2bLwjdlcUDAONbv8N/Y0QijdwRkes4=;
+        b=N0ow5aR9aV9/WvouxeIs88GO9yxT5CDIUWW17pgldQD3B6fYCa/oGBI4/gWrrbZnKm
+         bt+W+jCVM9rQYMaQD9WaaUs3ZxPlqSw1sekz8qPGnrxYvur/nSM+psUX8moxVy4F2FTy
+         sa5PPqELSM0oYN5e7qpuDhOyAAToF2Lpv9T8EEATkrFAD49W9K9KD7VQdK3zWhhnnwif
+         pThNPnNUkkcSXj7Zap0gBOKUrYETOijH3qKKqpY8ETXLMhlOV+xiwQZBD2kBRGK08iSm
+         vqDvlGOHbwvsEdW2HtJbIV629+ZOH8XYT71C88Ukf0ZPhWk5MkSOUvgXss/VQsd7YmMH
+         8efQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725040897; x=1725645697;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HLvYg5qPZOuBa2bLwjdlcUDAONbv8N/Y0QijdwRkes4=;
+        b=MAn0gaZbD8AMEeYM4sT34DHN9QhLmvyyeJG/1pdMHQl1zQ0aZq7aDhBLP+mjduJXxx
+         oFjSgoTB0EQL4MSujqtz6IJgWdLUFEDJ8uk+jsRdyF9rWZNtYAB5tgjP442Sm5sbPFAh
+         J6ZaJ+cFZrjTA3WC2Jes4xcHcS7cILMeB9yEDboOxcBEoD6o1e+o0YM5Inx0im/ZDayR
+         +DI0aRDGO1j4Lk/1oMln3+cQWeOCgGgQAZ3pvB1QRpbghP46P25Ve7eTgf5gu9aMho4L
+         DXYKOrT1Fmq+IkWtpnV9ip2ESmwTWtooNLhApZGDWprBSg+QKF2/STlkAXVO/IS678+j
+         /rTg==
+X-Forwarded-Encrypted: i=1; AJvYcCVpVxZcZDx6ssgGvGiC2PggF5Mnd36wq4IDSy862P23hcKMEzeF+G3kCITfN4FSOY55Xwi3zXggQnKzwTdn@vger.kernel.org, AJvYcCXJ85lS+8I/z9iXxpYjEsD/NpXCKOb1smW4JsVJbVnJ1jfu+noLEHouDWwCZuKnM3qUHczOt1GKvoHfhMDp@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJN0N7eP7FwESI9YNvBCjHPCn0BQbxoMV/A9in524rfCQJxFaz
+	DLMYW0HV3FMNiKgHU5UZpIO6Uk26q03Lm0vEk+mWbBC+mgkBa5hvV2BTTxTeO7RdHwDdS3leCma
+	GLXv5Sq80SGUuCjgwdi6M473z+kY=
+X-Google-Smtp-Source: AGHT+IFu///hBMmZWnVnZFXWWl3sgqFDNwBWJcs8tlCbuU7dA43zOW8J5u4FcLF2SJo5g8r7eT05NQ0pWhwY2DhDSV0=
+X-Received: by 2002:a05:622a:2b4a:b0:44f:f11a:63de with SMTP id
+ d75a77b69052e-4567f6fae93mr77951991cf.61.1725040896527; Fri, 30 Aug 2024
+ 11:01:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <1edc1fdb-ccf9-4dec-9669-d8c33511c7b0@kernel.org>
-References: <20240819233628.2074654-1-swboyd@chromium.org> <20240819233628.2074654-3-swboyd@chromium.org>
- <CAE-0n52rYVs81jtnFHyfc+K4wECvyCKmnHu2w9JhPNqvMYEeOA@mail.gmail.com> <1edc1fdb-ccf9-4dec-9669-d8c33511c7b0@kernel.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 30 Aug 2024 10:59:41 -0700
-Message-ID: <CAE-0n53p3=-dJLRXkkReUXWEy=yNUtLvgs2R6tMHtZmtYZSxXw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] clk: qcom: gcc-sm8550: Don't park the USB RCG at
- registration time
-To: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	patches@lists.linux.dev, linux-clk@vger.kernel.org, 
-	Taniya Das <quic_tdas@quicinc.com>, Amit Pundir <amit.pundir@linaro.org>
+References: <20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com> <20240830-preemption-a750-t-v2-4-86aeead2cd80@gmail.com>
+In-Reply-To: <20240830-preemption-a750-t-v2-4-86aeead2cd80@gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Fri, 30 Aug 2024 11:01:23 -0700
+Message-ID: <CAF6AEGtxCnoyrEHPknV7C9XO3OcTpSOmGq-j2K7UDKXF1j0ssA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/9] drm/msm/A6xx: Implement preemption for A7XX targets
+To: Antonino Maniscalco <antomani103@gmail.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, Sharat Masetty <smasetty@codeaurora.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Quoting Konrad Dybcio (2024-08-30 05:24:20)
-> On 27.08.2024 8:12 PM, Stephen Boyd wrote:
-> > Quoting Stephen Boyd (2024-08-19 16:36:27)
-> >> Amit Pundir reports that audio and USB-C host mode stops working if the
-> >> gcc_usb30_prim_master_clk_src clk is registered and
-> >> clk_rcg2_shared_init() parks it on XO. Skip parking this clk at
-> >> registration time to fix those issues.
-> >>
-> >> Partially revert commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon
-> >> registration") by skipping the parking bit for this clk, but keep the
-> >> part where we cache the config register. That's still necessary to
-> >> figure out the true parent of the clk at registration time.
-> >>
-> >> Fixes: 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration")
-> >> Fixes: 929c75d57566 ("clk: qcom: gcc-sm8550: Mark RCGs shared where applicable")
-> >> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> >> Cc: Bjorn Andersson <andersson@kernel.org>
-> >> Cc: Taniya Das <quic_tdas@quicinc.com>
-> >> Reported-by: Amit Pundir <amit.pundir@linaro.org>
-> >> Closes: https://lore.kernel.org/CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com
-> >> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> >> ---
-> >>  drivers/clk/qcom/clk-rcg.h    |  1 +
-> >>  drivers/clk/qcom/clk-rcg2.c   | 30 ++++++++++++++++++++++++++++++
-> >>  drivers/clk/qcom/gcc-sm8550.c |  2 +-
-> >>  3 files changed, 32 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> >> index d7414361e432..8e0f3372dc7a 100644
-> >> --- a/drivers/clk/qcom/clk-rcg.h
-> >> +++ b/drivers/clk/qcom/clk-rcg.h
-> >> @@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
-> >>  extern const struct clk_ops clk_pixel_ops;
-> >>  extern const struct clk_ops clk_gfx3d_ops;
-> >>  extern const struct clk_ops clk_rcg2_shared_ops;
-> >> +extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
-> >
-> > I'm considering inverting these two rcg2_shared clk_ops so that only a
-> > few clks are parked at clk registration time, to minimize the impact of
-> > commit 01a0a6cc8cfd ("clk: qcom: Park shared RCGs upon registration").
-> > We're up to three or four band-aids, that we can probably wait on
-> > applying if we make all the shared RCGs determine the correct parent at
-> > registration time but skip the parking, except for the display clks on
-> > sc7180 where that exposes another problem with shared parents getting
-> > turned off during probe. It's possible that other SoCs will want to park
-> > their display clks as well to avoid that secondary problem, but it can
-> > be an opt-in case instead of a change to all shared RCGs.
+On Fri, Aug 30, 2024 at 8:33=E2=80=AFAM Antonino Maniscalco
+<antomani103@gmail.com> wrote:
 >
-> Are all cases that need the parking obvious like it was the case on 7180,
-> i.e. some downstream branch is stuck and there's complaining in dmesg?
+> This patch implements preemption feature for A6xx targets, this allows
+> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
+> hardware as such supports multiple levels of preemption granularities,
+> ranging from coarse grained(ringbuffer level) to a more fine grained
+> such as draw-call level or a bin boundary level preemption. This patch
+> enables the basic preemption level, with more fine grained preemption
+> support to follow.
+>
+> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+> ---
+>  drivers/gpu/drm/msm/Makefile              |   1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 323 +++++++++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 ++++++++++++
+>  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 431 ++++++++++++++++++++++++=
+++++++
+>  drivers/gpu/drm/msm/msm_ringbuffer.h      |   7 +
+>  5 files changed, 921 insertions(+), 9 deletions(-)
 >
 
-I'm under the impression that we need to park the clk when it is shared
-by a remoteproc/firmware or is associated with a GDSC. It seems that on
-older generations of hardware the GDSC would get unstuck eventually, but
-newer generations stay broken and cause all sorts of havoc.
+[snip]
 
-Note that in my statement earlier in this thread I'm talking about
-parking the clk at registration time. That's done to avoid a problem
-where a shared RCG turns off their parent PLL and another shared RCG is
-also using that PLL but hasn't parked yet. The solution was to park at
-registration time to fix that. It's mostly a workaround for the fact
-that the clk framework doesn't have a good way to track dependencies for
-all the child clks that are enable at registration time which want to
-keep the parent PLL enabled. The problem is that it breaks things like
-USB that has strict frequency requirements for the link.
+> +
+> +int a6xx_preempt_submitqueue_setup(struct msm_gpu *gpu,
+> +               struct msm_gpu_submitqueue *queue)
+> +{
+> +       void *ptr;
+> +
+> +       /*
+> +        * Create a per submitqueue buffer for the CP to save and restore=
+ user
+> +        * specific information such as the VPC streamout data.
+> +        */
+> +       ptr =3D msm_gem_kernel_new(gpu->dev, A6XX_PREEMPT_USER_RECORD_SIZ=
+E,
+> +                       MSM_BO_WC, gpu->aspace, &queue->bo, &queue->bo_io=
+va);
+
+Can this be MSM_BO_MAP_PRIV?  Otherwise it is visible (and writeable)
+by other proceess's userspace generated cmdstream.
+
+And a similar question for the scratch_bo..  I'd have to give some
+thought to what sort of mischief could be had, but generall kernel
+mappings that are not MAP_PRIV are a thing to be careful about.
+
+BR,
+-R
 
