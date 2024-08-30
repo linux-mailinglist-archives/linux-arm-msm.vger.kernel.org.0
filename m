@@ -1,105 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-30307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30308-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7697B9669D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 21:33:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9ACB9669FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 21:42:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E9918B2549E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 19:33:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 693E61F24C3E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 19:42:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 312291BBBCC;
-	Fri, 30 Aug 2024 19:30:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFB4C1BCA1E;
+	Fri, 30 Aug 2024 19:42:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jXcp/9+s"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FpGoxpbY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BF11531F5;
-	Fri, 30 Aug 2024 19:30:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF1933CD1;
+	Fri, 30 Aug 2024 19:42:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725046237; cv=none; b=EsTvDOgk+3r8B5L7/BfFIqzk/IKEYmHbTWdGJIH7+WSWFs7cwXCrEU1f3d7l17+70A1A1hVb1saogbHULQyjKQeJ3/yRxRzjlC7LKk5EusDljyIixP3WAQTNQddmbMQ+nwCCVM5TJP1vZgLR2ZbVEb4EOc6wSdKkZchmrp8hsgw=
+	t=1725046973; cv=none; b=FbmG8tkYThVbt9s1UnpxseHZDzR1CgdAHeYJ15V8smbkALv65chRW9ATOqEAs764ZRwdH/jDZSZu0Tw2VzgLRFjSXLhc8RzDj1fGyLd6qxkOMgbMSKVfbCYYrPO24sLpcUnEQ/GDrlZsFZa0m0ukd2uDTT4S0P7k0fBU+tKA+5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725046237; c=relaxed/simple;
-	bh=rz8KDKw3aTWGQcJdgAqnxUa0Kv/DBZMxKlXY8HtiKFw=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=FaySeFG/s3oIhW/0I9LJv+yWfA5UjmTWrcc0AN+RnMItV9Qu2wAIo7D8UaW8SVIRfT6qiMSZnqWbOEp0pjTKZwmIpPGXgJ0dOGf1WvNd10MqJ8zNBqKtejCLKCcYPDIUcvcsxzUTd9dJ2BT/ACl5XEIlIuWJNRagjlDe7ySvYzQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jXcp/9+s; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC793C4CEC2;
-	Fri, 30 Aug 2024 19:30:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725046236;
-	bh=rz8KDKw3aTWGQcJdgAqnxUa0Kv/DBZMxKlXY8HtiKFw=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=jXcp/9+snMJHOYEgWuq8md6a8c055bh4zmF5ps27aLwFi5MpxHT10AitTZKkvZbt1
-	 nZFxYsO+Fqko0Vbwu+1leQo9D2jZhOMqBc2e0U+9zYp9EpLGswwYBMXk6ycolf74zO
-	 Mpn0hr/CtxZOBues2jY7VaWFauXfq0RBk8QH7nbKS6+p5tiZ0aCnLiKO2FOYNOjp7q
-	 +vzCwlLJL27xEPOQCp3P8/eWnlyiNa/Qb+xwKM/VXKk78JbZSbUWTxByHlQaM0yWxt
-	 wIciwVXClMWc8zuJzvVN4MtAVXK/SXDrcKA7Ic5taHyccl63gIsgN44tV8xq0IAHId
-	 tdLYhOGEMgNnw==
-From: Mark Brown <broonie@kernel.org>
-To: srinivas.kandagatla@linaro.org
-Cc: perex@perex.cz, tiwai@suse.com, alsa-devel@alsa-project.org, 
- linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org, 
- linux-kernel@vger.kernel.org, amit.pundir@linaro.org, 
- dmitry.baryshkov@linaro.org
-In-Reply-To: <20240816091210.50172-1-srinivas.kandagatla@linaro.org>
-References: <20240816091210.50172-1-srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH v2] ASoC: codecs: lpass-va-macro: set the default codec
- version for sm8250
-Message-Id: <172504623446.461126.12391681424311035210.b4-ty@kernel.org>
-Date: Fri, 30 Aug 2024 20:30:34 +0100
+	s=arc-20240116; t=1725046973; c=relaxed/simple;
+	bh=VkvmwOBTAbY4H3cu7EBu9vnJCjHiUPba1qZ0hdED++4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=rqye/j6rIUqT7BYgodNDCD0PaskDremtY52zL67xUxiiRgrrbWaADZ2CEoU+EtXAhSQFUTNk/lpt1HiLIZ3bluFn2bXk73VtPtQob7pgZp6PDaQfVPKYkBkwz+kwW7AwSPDqE6HXyDOxoKhXly0fbzlg/A/ffvQQ7b/XZxr3qvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FpGoxpbY; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47UFNwNf026547;
+	Fri, 30 Aug 2024 19:42:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WQgQSOmOou41lnjoOVdQJ1WiykWFVVUCp0NkH8CM0ck=; b=FpGoxpbYrTu5QaY/
+	A0UvBNbYdubJ6iwapbNkHL9YOf+v7DNSP+y/BVoiWYUrdtmTbvWARrVRhFEbii0H
+	jhucTi5kSxS0ISL4np8zvqJVCHNkZXUDWZmuVkV2AQBc0c069uTm34pmS0OKWT3Y
+	xqDEbi1FPGqe1Zak7TW1FubbRIYeFqLfmQkILBV1MFzwdxLFRKTJQp7l07+xb4vr
+	99VPp7GZrWh8ug05ic3XfMxI4hxZYhT0KzyP2rTpZNH+Q5Wa35noDDF+7jffBqEA
+	ogx0Q16MMcjRBAJIQA0F3EeB4nfb6GeOD4o36Keb0++WYK0lpDl9mZG0xyT3mYHn
+	MSnWaw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419puvj0mt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 19:42:38 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47UJgbCr000412
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 19:42:37 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 Aug
+ 2024 12:42:30 -0700
+Message-ID: <092a7427-8971-4ee4-a417-52653ed892a4@quicinc.com>
+Date: Fri, 30 Aug 2024 12:42:26 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/21] drm: print clone mode status in atomic state
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, <quic_ebharadw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>
+References: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
+ <20240829-concurrent-wb-v1-2-502b16ae2ebb@quicinc.com>
+ <e3moledbfob2xkgxpbta3onlzc5yi6u7cbsmuo5ao4qq7nyyhj@lr32vqnjzkbi>
+Content-Language: en-US
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <e3moledbfob2xkgxpbta3onlzc5yi6u7cbsmuo5ao4qq7nyyhj@lr32vqnjzkbi>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-37811
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Q3rFbF65V4GUkrvwZWoJL0bf-rlb0wYf
+X-Proofpoint-GUID: Q3rFbF65V4GUkrvwZWoJL0bf-rlb0wYf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-30_10,2024-08-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 priorityscore=1501 bulkscore=0 impostorscore=0
+ adultscore=0 malwarescore=0 phishscore=0 lowpriorityscore=0 mlxscore=0
+ spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408300151
 
-On Fri, 16 Aug 2024 10:12:10 +0100, srinivas.kandagatla@linaro.org wrote:
-> sm8250 and sc7280 have lpass codec version 1.0, as these are very old
-> platforms, they do not have a reliable way to get the codec version
-> from core_id registers.
+
+
+On 8/30/2024 9:38 AM, Dmitry Baryshkov wrote:
+> On Thu, Aug 29, 2024 at 01:48:23PM GMT, Jessica Zhang wrote:
+>> Add clone mode status to the DRM atomic print state
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/drm_atomic.c | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+>> index 07b4b394e3bf..145d6a758d4d 100644
+>> --- a/drivers/gpu/drm/drm_atomic.c
+>> +++ b/drivers/gpu/drm/drm_atomic.c
+>> @@ -455,6 +455,7 @@ static void drm_atomic_crtc_print_state(struct drm_printer *p,
+>>   	drm_printf(p, "\tconnector_mask=%x\n", state->connector_mask);
+>>   	drm_printf(p, "\tencoder_mask=%x\n", state->encoder_mask);
+>>   	drm_printf(p, "\tmode: " DRM_MODE_FMT "\n", DRM_MODE_ARG(&state->mode));
+>> +	drm_printf(p, "\tin_clone_mode=%d\n", drm_crtc_in_clone_mode(crtc->state));
 > 
-> On codec versions below 2.0, even though the core_id registers are
-> available to read, the values of these registers are not unique to be
-> able to determine the version of the codec dynamically.
-> 
-> [...]
+> We have encoder_mask two lines above. What is the benefit of having the
+> separate in_clone_mode?
 
-Applied to
+Hi Dmitry,
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+I was thinking that this would be an easy way to note if a CRTC was in 
+clone mode, but I can see why this is redundant.
 
-Thanks!
-
-[1/1] ASoC: codecs: lpass-va-macro: set the default codec version for sm8250
-      commit: 77212f300bfd6fb3edaabd1daf863cabb521854a
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+Will drop this patch.
 
 Thanks,
-Mark
 
+Jessica Zhang
+
+> 
+>>   
+>>   	if (crtc->funcs->atomic_print_state)
+>>   		crtc->funcs->atomic_print_state(p, state);
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
+> -- 
+> With best wishes
+> Dmitry
 
