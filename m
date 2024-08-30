@@ -1,136 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-30164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80C7296592A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 09:55:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 920D5965938
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 09:57:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35D281F243F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 07:55:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED9DBB24AEF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 07:56:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C8EE15CD4D;
-	Fri, 30 Aug 2024 07:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 768BB166F24;
+	Fri, 30 Aug 2024 07:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SO8orggT"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BHNyda4a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D58B15C147;
-	Fri, 30 Aug 2024 07:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F016166F19;
+	Fri, 30 Aug 2024 07:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725004543; cv=none; b=GaLMCd7xIjALcoR43WZjNfjPtOifvksANCqDSX7bRLAQrCFyCxNN2kdOLgBdIqhYs4bepFGnwXUKxsRbeOFQLD6Rzi6pfvaTw07oULdoJwPBRmYQQuptjcjqiol2BizFSsxU16/odUPOJZqRZugRSr0gFV9NWjSX+00+wFIE9ro=
+	t=1725004600; cv=none; b=gRcZERYieaTld7Km2cBcyrkNcyAaFTLyn5CJFoopDxgZ+yVPoKXgrOVyoleyklOVy2MGPtPej901heSe7hwx4CoR6+5MdwNoftgZ1CcREVEiWBxn6/WB0Zcq+97ETyqjXfHIpa6C+RV++gKiXGyzzij24N7d7BrkK0T4fkE3vhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725004543; c=relaxed/simple;
-	bh=ICOnWy5ERtMLb4aSD3kPGAsQnN7m6tT8L+4jFpK3UFM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Jgkhemus3VKiQjJj0yC2xTfeWrNqFoY6Mm6+BYf07iEPrmVuOtdujunENbNzwlPw8v6mCCRKStfjvF7g09DaZfa0qEZ7un6sV7RAF3GIm4OowSmpPaBULNPQF4jWId/4vW+Qlqul9VPFC7ajvDBXKRJYgz2q+FCKOyabHSMbHCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SO8orggT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47TITuiq011732;
-	Fri, 30 Aug 2024 07:54:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	zYycfQ4lgaP4WF5dIMosJrmcyjh/Y2HNGGyYhdP2JtU=; b=SO8orggTFx1V5LiP
-	9mX9wuxE/5g0JhXMQpgYOLIHs2duHRm5fJqalUZVnWugLgAIO/1vD9d8c4ySLrrh
-	S5VqXtx86szGRqqGkan/VqZzemVP4JYsNXhyByeE7MI0dlqu9ztm9i0Yds3l3ten
-	ZPGrI2apaiBErdcLTo71EoXVzJbtGBjr367ABriWvpvNijBuM98SZuXO7JDGH34d
-	MzPcVumMHZc2uWK+0ZtxfY11p2v4zQ3lEe+Pfp0XUYIo7+0l7WZwMA4+O1K6H1Yn
-	m5/cfi9vlCKJDG/B0JxizHrjA932R1DnbIro/H8ii8hWXLq+sTEika3eYA1h3TzO
-	A13gfQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv0fv1x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 30 Aug 2024 07:54:56 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47U7stlY017067
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 30 Aug 2024 07:54:55 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 Aug
- 2024 00:54:49 -0700
-Message-ID: <c17d6216-654d-427a-b267-a3886929ab48@quicinc.com>
-Date: Fri, 30 Aug 2024 13:24:46 +0530
+	s=arc-20240116; t=1725004600; c=relaxed/simple;
+	bh=U4aM1hyfgmnABktPEoPihbWuQKzIRjJ4DLsY+FoG9kk=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=ecr2D8YstqIwa79twhvBWMMRVmI/vsO9SBt+noCGdBnNp21ueRzhQG9R1WG6Kgo/8RPAO1J7il2JRTs6x65qFCDzP0LEVq8pDT1Hh4zlYU46eX+1nPtutVYIVf2qiHXwJSa+VSwKF2vjFruag/r2j7e5guGsrurP2e71Xo8iMP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BHNyda4a; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB802C4CEC4;
+	Fri, 30 Aug 2024 07:56:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725004599;
+	bh=U4aM1hyfgmnABktPEoPihbWuQKzIRjJ4DLsY+FoG9kk=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=BHNyda4a4tXvWZKGZlA8yJUWmu70dsUndKIaLh96aenGuqGPnckueP1Ub5kvBuL4w
+	 fpmko32NXF1xhcWW/0NEUHcFmZYbByWIxsmb+UO70ybKgA3ib4IFy0zCoejPBOGW9d
+	 ZJX1EaCk6Ei44FTLOXfejeshHuhf/khjj5HnQk972QYy0z+WiJUQisI6ohghsZxUx/
+	 Kt79lBRshF9LcqTYGkINQcrCbS/rD8//hyfiRPDltkfEg/+1fdWpIZA1OMXoQXTUE4
+	 9ozyVc4tZqXtHyTCMcr99ExZLXukOAlFUNUDmPK5KXLQtDwI3UcEaJpBei9/8oT1x3
+	 Kd8y3y6Onm79g==
+From: Lee Jones <lee@kernel.org>
+To: lee@kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, krzk@kernel.org, jic23@kernel.org, 
+ Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <20240826092734.2899562-3-ruanjinjie@huawei.com>
+References: <20240826092734.2899562-1-ruanjinjie@huawei.com>
+ <20240826092734.2899562-3-ruanjinjie@huawei.com>
+Subject: Re: (subset) [PATCH -next RESEND 2/2] mfd: qcom-spmi-pmic: Use
+ for_each_child_of_node_scoped()
+Message-Id: <172500459843.69285.53949628511366991.b4-ty@kernel.org>
+Date: Fri, 30 Aug 2024 08:56:38 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 6/6] arm64: dts: qcom: ipq5018: Enable PCIe
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <p.zabel@pengutronix.de>, <quic_nsekar@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <robimarko@gmail.com>
-References: <20240827045757.1101194-1-quic_srichara@quicinc.com>
- <20240827045757.1101194-7-quic_srichara@quicinc.com>
- <nut3ru5rdjf3k3np47gqbpuczvpsuoismx6hp55ivc5mqmdglz@zyzbra46i6iz>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <nut3ru5rdjf3k3np47gqbpuczvpsuoismx6hp55ivc5mqmdglz@zyzbra46i6iz>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZFbtisr6HyB-2IYFdtE3WJX3D8urmszh
-X-Proofpoint-ORIG-GUID: ZFbtisr6HyB-2IYFdtE3WJX3D8urmszh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-08-30_03,2024-08-29_02,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 suspectscore=0 lowpriorityscore=0
- malwarescore=0 spamscore=0 mlxlogscore=701 mlxscore=0 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2408300057
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.13.0
 
-
-
-On 8/29/2024 2:40 PM, Dmitry Baryshkov wrote:
-> On Tue, Aug 27, 2024 at 10:27:57AM GMT, Sricharan R wrote:
->> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
->>
->> Enable the PCIe controller and PHY nodes for RDP 432-c2.
->>
->> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> ---
->>   [v2] Moved status as last property
->>
->>   arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts | 9 +++++++++
->>   1 file changed, 9 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->> index 8460b538eb6a..2b253da7f776 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
->> @@ -28,6 +28,15 @@ &blsp1_uart1 {
->>   	status = "okay";
->>   };
->>   
->> +&pcie1 {
->> +	perst-gpios = <&tlmm 15 GPIO_ACTIVE_LOW>;
+On Mon, 26 Aug 2024 17:27:34 +0800, Jinjie Ruan wrote:
+> Avoids the need for manual cleanup of_node_put() in early exits
+> from the loop.
 > 
-> pinctrl? wake-gpios?
 > 
 
-  ok, will add to make it explicit.
-  Otherwise pinctrl was default muxed.
+Applied, thanks!
 
-Regards,
-  Sricharan
+[2/2] mfd: qcom-spmi-pmic: Use for_each_child_of_node_scoped()
+      commit: 12d219610d11d2c0917961680ca5fee369b500db
+
+--
+Lee Jones [李琼斯]
+
 
