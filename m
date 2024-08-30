@@ -1,84 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-30155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30156-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B876196583D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 09:18:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C36DF965841
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 09:20:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 54526280C71
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 07:18:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DB471F21520
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 07:20:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C90951586C0;
-	Fri, 30 Aug 2024 07:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 085491531FE;
+	Fri, 30 Aug 2024 07:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NrE5amNS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="joBH0amu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBB3155A32
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 07:17:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B754481D1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 07:20:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725002277; cv=none; b=pUmRXSlYLqH7Vun+axn5nzbXpcdDIb//4Lgtbjf9dZDWtiBZjzt3qn6tOglGVdzPKnhvWbByIej8QRMoBzObT6alE2kH2lxiQ9Y9/wr0VUzFqpIRKYxwu/5TK+kFPbu14cIo9+GH9MYsUnFh7/dM6UZbKF14IVomSU+rYLVZE1U=
+	t=1725002414; cv=none; b=iN48LsrchEL33XW/Vv0w6Rvegj0N0F7h8SQN6bebkgflYBe6Lscwasx09Jwk5Ji3zJpoBFHCRP3ziWB463i9503e1ynmHp7S1u9kQNYGKmYkP/3pNSLN2cEco7OAubAMTtO8WR9135s+Qzd+JA4dD1RRk3JfhZeFRNtxe3z1xeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725002277; c=relaxed/simple;
-	bh=Hj7O3fn7LsnB+ScXKkFHRAn9BFQguNH0VHtWrri72AA=;
+	s=arc-20240116; t=1725002414; c=relaxed/simple;
+	bh=HLaqna6UCuIrOsmYb1PawOtU1637YFWvoiEdQ3WVIvQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bs5JAI8BzV1xBhW43l1OokdmyNCxpaDUXp7hAwLMhnmVlGhSI7J9s/aW0JEWd9pBBUdskPwyzJ70I1n33qTqZsTXYJLkj3tFJjQvizELlnjaFI/twuRpSDKIsX0T7ieb3VBZCHbACZVRU0yAjE/OR4VMSnXHKxVK6WFXWScsvy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NrE5amNS; arc=none smtp.client-ip=209.85.167.45
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ww+zwOouSssfPiKsfYjjcs18aEUOI242ui3FA6VlDnl1qxsm1gZ6QDnFlxb7AkS2QREsdWCRZlMkst2mAjKqVTwBoVWzZyodvCLLivkTW4vNQDMSL/z/Zj4QsmQS4NKWG3kHDGIJg3k1uIEdk4r8fEp3RY+btJbTe8czdeDJtCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=joBH0amu; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5343617fdddso2639215e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 00:17:55 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f401b2347dso13922291fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 00:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725002274; x=1725607074; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725002411; x=1725607211; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dUg0V5H1t924JBTmuGBSBlhyIluvyw9yjkWinmsdOTU=;
-        b=NrE5amNSjjLk1aCUL+ziEkL1316lK7CqRftOCcGRRRRFrXA7HLtg4TuNEMCsveo9Np
-         tJyWo5evk+grLP/L3IUayt05kY3saByhfBhy6/tTO6Ady7DtYuR/XHFdOcX+RTpMyEhf
-         qyYRXq8TXoaiZxgFc41TB+ZsfMC1GKul+M/91nejXA+bfa4T0uQM0PrNGBrB+fly7h/E
-         n/aGtjC6tkOFK6jC05WGtu6WiT8fO/hiWNPKv47y1Ck5/OXH0kLBCEApSb2TI2vuEjSj
-         dAGYyC6YUfu5VFusl6H2doD29wNG/fQh0zOvPnmqrztMItMiI2yFXy0s2N+XfFhVMkWp
-         zHig==
+        bh=3qiXwyV3htRr/C+q00ThbxxW4I9Cl0S2rzv2BfSX2XE=;
+        b=joBH0amuZpBKyGqaJtPqzzegijjS50M4tXjk8LFHCMGa9oGTVNbBs1udaNr602W2WT
+         4xdG9K9J+IXAhMn2CX9uWbtRe7I++LOA+blDXWboGMjWLTxqbUypPoJFgeaQBPK/fOr5
+         CrludGWJ0ZBMpqblO99/Qyg7ckv1tlCURDn3rUqGoC0YOCpmCbJW2Ab92R+8NFn3N2Pr
+         lUa1PLpiPEw9oKoYgaccdpKFo4yL2+GrCU8rXl1TClSVeQOvvloKXh7UCKbVQngLvkJ0
+         d51G7tshDXD4+RUyYMwOCUvYi/52COj8nF/0Az5yn+M/UKTra/j06NKvbeTgkOoVAA3c
+         IDew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725002274; x=1725607074;
+        d=1e100.net; s=20230601; t=1725002411; x=1725607211;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dUg0V5H1t924JBTmuGBSBlhyIluvyw9yjkWinmsdOTU=;
-        b=J9J76xZIZLd1zUzqd3z6cBeEgF2QgG3AZqvQt/iKZmgZfFDOPLZ2tA0XjfoSki5GmV
-         xG8eSP78YNkV7FiWCElU5/VTCdn/0Soz6wtP8Nu9qsEEGLd108pYwPHY+FyXmXnDZmZN
-         8WvLjRGvuGIrF6neixPmq1IwY6NKWx+6Zf/gtmAUNbFI6R5I/kSQt7kOO4WV5aIM63Uq
-         8Fh572kH2LQe9JlRBz2g8r5mtRwdEy83k5uIQtDRF5eplYZS8X9Kdl75tE3dwx+y5sLq
-         /i5JSBp1YgaOlFqV2k+MdrWIFHHaND5YZ3Cl5RShYNuJYnd2FCQq5OiWh1DycxDV+Gf5
-         Mbsg==
-X-Forwarded-Encrypted: i=1; AJvYcCWWg9ShqdH5nSsjorsnPNNyF7j/DAsHRBsAjIYoCxf7DnjeRhU/izVFljV0AxH4rbAEoP81nF4qpO2PoNdk@vger.kernel.org
-X-Gm-Message-State: AOJu0YynKYPYTPWkBSsR9bdLdvx1oGB+WhboTjNQTYwz9pl7YRz7LbdZ
-	Y6P08lcQpOr8Q9w2vb5+/j3TcPiqgpOCqLbBBh9zwy6CnXIYkXES3Nr+PEaojbU=
-X-Google-Smtp-Source: AGHT+IHLpyKzhGXa8aflreXMGMxxXWhUvSYwRpfddmegIAVSkC2C6GCg1+q+ITO/U8ejaqpmrVXchw==
-X-Received: by 2002:a05:6512:238d:b0:52c:cd77:fe03 with SMTP id 2adb3069b0e04-53546b32f72mr980860e87.14.1725002273778;
-        Fri, 30 Aug 2024 00:17:53 -0700 (PDT)
+        bh=3qiXwyV3htRr/C+q00ThbxxW4I9Cl0S2rzv2BfSX2XE=;
+        b=NYAWwj6EPlBuPbPAB2bLVFTo1c0GDztmXSM9gAkb3dOsDGP0veblf8cF9wWaH/IPT0
+         m8GIfxLWni5cCvhnk4j+1kkc0WaMaA5GZiAqEJZQtRgtpA98AM90fLEKdt0J03bVqiL4
+         DK3y9xlRCVd8IGcnR1E/XSG/WZ/+P7mbXBm+GVhp9JIKB5QP28ABf6yD/KGotNH1rR7n
+         nV+3BGA3781Emxd6wl1xan7mH8SHL3ZBrV2gzKQemJ++83OENqZAkzieaNEi3w4IVBrZ
+         jB/j000w5Ad7fIXra3/6SsJjkMgyk3Cjb5RxmL4rGpcHQPS/UNrQfHQTtPYuytNYB91f
+         Zn0A==
+X-Forwarded-Encrypted: i=1; AJvYcCV/gg0ID+/DD8humfm3hLYg9sbCCzzjgaH7Rqlxx8aDnrdquR7Ior8ShLEnda8DWYEBVs40W6hwuiSoFoVQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwndyaB6JO07+aN4W+qNBBbwODNLCxHMGcm6S/jGT+Mwwf0PBar
+	p7GjqZxgEVYcLgoHeEBkKkQUT38O35ihO5s76NKZTZk3a2HLfeWOJcZDpChCNyw=
+X-Google-Smtp-Source: AGHT+IHr64ktPPLwO8bWL9kuJHNB6sUG3ObN0WP5rN3nb+epYFlsrNNeuu9wmeVfANO5vZbNzp/aoQ==
+X-Received: by 2002:a2e:a99c:0:b0:2ef:2f8a:52d5 with SMTP id 38308e7fff4ca-2f61e05c9cfmr5342641fa.8.1725002410729;
+        Fri, 30 Aug 2024 00:20:10 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-535407ac51esm454470e87.80.2024.08.30.00.17.53
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f6151828c3sm5066641fa.109.2024.08.30.00.20.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Aug 2024 00:17:53 -0700 (PDT)
-Date: Fri, 30 Aug 2024 10:17:51 +0300
+        Fri, 30 Aug 2024 00:20:10 -0700 (PDT)
+Date: Fri, 30 Aug 2024 10:20:08 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Sachin Gupta <quic_sachgupt@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+To: Manish Pandey <quic_mapa@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
+	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com, 
-	quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com, quic_mapa@quicinc.com, 
-	quic_cang@quicinc.com, quic_nguyenb@quicinc.com
-Subject: Re: [PATCH V3] arm64: dts: qcom: Add SD Card node for qcm6490-idp
-Message-ID: <hlknpxukiqitcyfx5lyxjv6wsnpmyvatrxkgsif66sqruv2c6m@zm4tp7ouoidi>
-References: <20240829121225.14184-1-quic_sachgupt@quicinc.com>
+	quic_rampraka@quicinc.com, quic_cang@quicinc.com, quic_nguyenb@quicinc.com, 
+	stable@vger.kernel.org
+Subject: Re: [PATCH V4] scsi: ufs: qcom: update MODE_MAX cfg_bw value
+Message-ID: <a7v4sgkh5f67hmbrpf4hukgt652qzkgaykszsbzbed44bnh2m7@xaspg6nxxduf>
+References: <20240829123938.31115-1-quic_mapa@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,27 +86,49 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240829121225.14184-1-quic_sachgupt@quicinc.com>
+In-Reply-To: <20240829123938.31115-1-quic_mapa@quicinc.com>
 
-On Thu, Aug 29, 2024 at 05:42:25PM GMT, Sachin Gupta wrote:
-> Add SD Card node for Qualcomm qcm6490-idp Board.
+On Thu, Aug 29, 2024 at 06:09:38PM GMT, Manish Pandey wrote:
+> The cfg_bw value for max mode is incorrect for the Qualcomm SoC.
+> Update it to the correct value for cfg_bw max mode.
 > 
-> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+> Fixes: 03ce80a1bb86 ("scsi: ufs: qcom: Add support for scaling interconnects")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
 > ---
+> Changes from v3:
+> - Cced stable@vger.kernel.org.
+> 
 > Changes from v2:
->  - Corrected patch version.
+> - Addressed Mani comment, added fixes tag.
 
-In future: no need to resend for such small issues.
+Mani also asked you to provide details, why the value is considered to
+be incorrect. You have responded in the email, but instead those details
+should have gone to the commit message. Please fix it accordingly.
 
 > 
 > Changes from v1:
->  - Define sd_cd node. (Thanks Dmitry)
+> - Updated commit message.
 > ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 33 ++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
+>  drivers/ufs/host/ufs-qcom.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+> index c87fdc849c62..ecdfff2456e3 100644
+> --- a/drivers/ufs/host/ufs-qcom.c
+> +++ b/drivers/ufs/host/ufs-qcom.c
+> @@ -93,7 +93,7 @@ static const struct __ufs_qcom_bw_table {
+>  	[MODE_HS_RB][UFS_HS_G3][UFS_LANE_2] = { 1492582,	204800 },
+>  	[MODE_HS_RB][UFS_HS_G4][UFS_LANE_2] = { 2915200,	409600 },
+>  	[MODE_HS_RB][UFS_HS_G5][UFS_LANE_2] = { 5836800,	819200 },
+> -	[MODE_MAX][0][0]		    = { 7643136,	307200 },
+> +	[MODE_MAX][0][0]		    = { 7643136,	819200 },
+>  };
+>  
+>  static void ufs_qcom_get_default_testbus_cfg(struct ufs_qcom_host *host);
+> -- 
+> 2.17.1
+> 
 
 -- 
 With best wishes
