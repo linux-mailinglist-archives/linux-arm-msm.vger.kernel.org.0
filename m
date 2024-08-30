@@ -1,113 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-30185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C2A0965A2F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:23:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 340A8965A45
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:26:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8DEBF1C20D7F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:23:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67A101C20DAD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:26:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBC4516BE18;
-	Fri, 30 Aug 2024 08:23:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1321016C856;
+	Fri, 30 Aug 2024 08:26:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="agb3mJpH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VSVMf61I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FC116726E;
-	Fri, 30 Aug 2024 08:23:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5A614D294
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 08:26:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725006227; cv=none; b=u5OQi1v7Bh4pfMoentWPokTfln8kIHEWlhn8wGY3oATPFBt0MZGO/czxktEcRjxE75TYRZ9enLoU7gQkqgaaY0x/AiJeaXkBoCTSrA482G2n+9AT5W6HD70vadqrNWT2A4Vz2mdaHc3d0W8/DWLYW/YVISCqjXRLlu3dDRtIRrc=
+	t=1725006383; cv=none; b=OQh/IPj5uLUS7W5L8ICwn7qj3Yi8sVOfL983lfGOVFqPGWWFJW50X6EsUpPVQ/evWKGStHP70Jae2JeIh/fFFyH+5AfVYK2QqJEiPoDI7vX7K95dQ0FQPRGo7cTf+9zKse6FDCGEB6xsjp5ZM7iqn7+88FpwmYCx1+4IQsHrgTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725006227; c=relaxed/simple;
-	bh=3Y9mMq3/KBsce91Bb2CDzhvN2+J+/hQB5/+wKDGtYzw=;
+	s=arc-20240116; t=1725006383; c=relaxed/simple;
+	bh=e6UmKK1uv4GE4oEQ3Qw87ejtvJIm9dvgZYCtxPS7nHw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oy7CtjTkB00BF6utjjayv5fBUegCPjKyZHXQpOfAJVVn2jYrazWFxP44C9Zo5E4+XpAceSKy4v+b4bX/Hoo73jvNGHjxz2HT1eS3UCB+u77v86zhMTBJNHPzoc+oyt8MFKkuUm6R+Hc2jbm1qiO7a6i5Oz3zwwxUwEwK6bklzvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=agb3mJpH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94914C4CEC2;
-	Fri, 30 Aug 2024 08:23:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725006227;
-	bh=3Y9mMq3/KBsce91Bb2CDzhvN2+J+/hQB5/+wKDGtYzw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=agb3mJpHsKBiXBBdsw3MLK1eOD5wm1M0YQCjOdirZwfj4JOS6W9nuCLKAe9oRZToo
-	 UFpENv9l2Ej+SlyWHrVTPicbbf+iKligkNhJ6l0m2Z1hR/5tA+RAy+MvrmhY0ST0VP
-	 huMgtsNGHkuOS2SUKU28kN1vJ6l+rrJ1gS8yoR4bFmTyPN0xcKNcpF/6sxf7N9ev92
-	 0se7wu82ZBQKXhejuWr233rXiJTOmQgIKV7sSboPcQ44cOph+a6TPdHzrytLThLAo0
-	 N2eAYW376rP2/zWP0t0UKDpAj3FdPoRUSp8dowoUzS/LM8GYmCnabaPh6CIf8Pvtns
-	 qqbXacVbJq0+A==
-Date: Fri, 30 Aug 2024 10:23:44 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Sricharan R <quic_srichara@quicinc.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com, 
-	manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, robimarko@gmail.com
-Subject: Re: [PATCH V3 1/6] dt-bindings: phy: qcom,uniphy-pcie: Document PCIe
- uniphy
-Message-ID: <e2qgpvfccpo2sd4mbrynxruvt5attqmtd5oik26of7tv7u4lq6@kvb63sglwa5b>
-References: <20240830081132.4016860-1-quic_srichara@quicinc.com>
- <20240830081132.4016860-2-quic_srichara@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=WtvWpPh2CPwgxTtDZw/ne3Q71GCNS0YqxSaNYBXcGiEv6DNdvCgscYcKbHmzr8FCD0QMB6/u4AVN6l18bwYgLtBgGXROUHxTHJtuXbeA+9hu3zRy1tKd2spgtIlKkMZnwzj3EY/Kj55rc6o7F2prI7CJSEk0B5mjTowbJjoXrJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VSVMf61I; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a868831216cso190701866b.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 01:26:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725006379; x=1725611179; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uDSO4akp2KhRfSSRiJYvlvkWluMAutHA5r9aDvMGObY=;
+        b=VSVMf61IFmJzTyq/NKbr+n/WIrJ72qCjuQWvF1HHZd6Ij3qdhr1J0q/NMafM6aaG7u
+         uKHR0eWhlW6Q4+oFmgkKjBiq5/PKcoabp+14AkEqtelber5GHIov1p4kJWgqDPZzhj0R
+         dEWkOSOfAH3k+ALE//zFU9ltqVfe9uX1wv11SxIUf8UyTqX8l0qnQbFp5X6JPXURgjic
+         m1jSoTdQm8IT9XiJv2K2Vcqs2JT0rxK8ttez2E7xHCHe9L/PgCI9U/enjwsBefo/xUe6
+         gS8rr/CEET8rTBsR1Wa9IuoJlxqVfbN013/mbcu3Rf+JMsfysM0meBzSBmA3lpqxQWRj
+         PQ1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725006379; x=1725611179;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uDSO4akp2KhRfSSRiJYvlvkWluMAutHA5r9aDvMGObY=;
+        b=ZvqzrTV9i3Cq2MshfbD/ZcJCOAtIzXqdeMRAr7SLdiG6dtJX0gQKHlU471Ttw5HBjG
+         lnyGQqOR+Ko64bO/MNCcyJh0mdsDrFbtMK6+iVnsu45VcFf+SCGf6Jha1wf18zj03qfO
+         YtZuuif8/PicZQ4/7EcKIUT8YcIiKnrA71QLI7F+TnSg9SzAKlgSF3lbevz4kDsnWJmh
+         AvStMujGsca5hoQcjv9xG9FDm0EdOBdajdsmFuazpW2gMbWKWXWQ4MiqWm3daCx69MJb
+         R2Gby0dC8ThNg792uNLtjjfCcZC5j97/zK9ZHMaClfmH24G8DIxi6jNO676QzHLWCn45
+         +5sw==
+X-Forwarded-Encrypted: i=1; AJvYcCU42YCqxiLYZQ9x6GdOy4dV6mfwHDtxi6JZ3o5Vh5ZyvdfQGYnxtJOmZ3sx0DODIq1I7N+bJ/zgh616p1Gr@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyNDHK+NgK9G9bpmXXrZM0Okb4APXNprcycsmk/7IjrZeSka5i
+	d4Mhr+1FMq4XnbK8q83Ubn4ulI73J4i8pCPxvLLWDGtCNtve36M84TaKh3DPWwo=
+X-Google-Smtp-Source: AGHT+IHMd2a7oX2CNchv5nPzpcimaPtAh2+17ZJkKEC5K6QZXNRoCN7DgkRBQORt2wViPlTE8ZcuJg==
+X-Received: by 2002:a17:906:794b:b0:a80:f79a:eb6f with SMTP id a640c23a62f3a-a897f77fdbbmr448369466b.8.1725006379328;
+        Fri, 30 Aug 2024 01:26:19 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff1f:b280:290:d5b:6ddc:fbdb])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89892164f5sm185254466b.192.2024.08.30.01.26.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Aug 2024 01:26:19 -0700 (PDT)
+Date: Fri, 30 Aug 2024 10:26:14 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux@mainlining.org
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280.dtsi: Fix PMU nodes for Cortex
+ A55 and A78
+Message-ID: <ZtGCJincjO7z-WFm@linaro.org>
+References: <20240818192905.120477-1-danila@jiaxyga.com>
+ <5gmsbbnuc7sbkpptomvpl6aarw5poutvjfav5rilgogb7727vi@nhtr5m24tkmt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240830081132.4016860-2-quic_srichara@quicinc.com>
+In-Reply-To: <5gmsbbnuc7sbkpptomvpl6aarw5poutvjfav5rilgogb7727vi@nhtr5m24tkmt>
 
-On Fri, Aug 30, 2024 at 01:41:27PM +0530, Sricharan R wrote:
-> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+On Fri, Aug 30, 2024 at 11:13:28AM +0300, Dmitry Baryshkov wrote:
+> On Sun, Aug 18, 2024 at 10:29:05PM GMT, Danila Tikhonov wrote:
+> > The SC7280, SM7325, and QCM6490 platforms feature an 8-core setup
+> > consisting of:
+> > - 1x Kryo 670 Prime (Cortex-A78) / Kryo 670 Gold Plus (Cortex-A78)
+> > - 3x Kryo 670 Gold (Cortex-A78)
+> > - 4x Kryo 670 Silver (Cortex-A55)
+> > (The CPU cores in the SC7280 are simply called Kryo, but are
+> > nevertheless based on the same Cortex A78 and A55).
+> > 
+> > Use the correct compatibility.
+> > 
+> > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++--
+> >  1 file changed, 7 insertions(+), 2 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > index 91cc5e74d8f5..ab024a3c3653 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > @@ -845,8 +845,13 @@ wlan_smp2p_in: wlan-wpss-to-ap {
+> >  		};
+> >  	};
+> >  
+> > -	pmu {
+> > -		compatible = "arm,armv8-pmuv3";
+> > +	pmu-a55 {
+> > +		compatible = "arm,cortex-a55-pmu";
+> > +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
+> > +	};
+> > +
+> > +	pmu-a78 {
+> > +		compatible = "arm,cortex-a78-pmu";
+> >  		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
 > 
-> Document the Qualcomm UNIPHY PCIe 28LP present in IPQ5018.
+> Shouldn't these two entries have GIC_CPU_MASK_RAW(), limiting interrupts
+> to the corresponding cores? I see that in [1] Rob used masks for older
+> SoCs, but skipped them for newer ones.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [v3] Added reviewed-by tags
+> [1] https://lore.kernel.org/all/20240417204247.3216703-1-robh@kernel.org/
 > 
->  .../phy/qcom,ipq5018-uniphy-pcie.yaml         | 70 +++++++++++++++++++
->  1 file changed, 70 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
-> new file mode 100644
-> index 000000000000..c04dd179eb8b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
-> @@ -0,0 +1,70 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/qcom,ipq5018-uniphy-pcie.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm UNIPHY PCIe 28LP PHY controller for genx1, genx2
-> +
-> +maintainers:
-> +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
-> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq5018-uniphy-pcie-gen2x1
-> +      - qcom,ipq5018-uniphy-pcie-gen2x2
 
-... and now I wonder why there are two compatibles. Isn't the phy the
-same? We talk about the same hardware?
+According to the bindings, the cpu mask bits apply only to gic-v2, but
+not gic-v3. It looks correct in Rob's changes. And here too, since
+SC7280 uses gic-v3.
 
-Best regards,
-Krzysztof
-
+Thanks,
+Stephan
 
