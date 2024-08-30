@@ -1,40 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-30252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FBDA9661CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 14:31:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5867696620E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 14:54:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 748BF1C209E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:31:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13A12280C10
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:54:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95E2C192D9C;
-	Fri, 30 Aug 2024 12:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69E31192D79;
+	Fri, 30 Aug 2024 12:54:04 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6587B192581;
-	Fri, 30 Aug 2024 12:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AE8F16DC3D;
+	Fri, 30 Aug 2024 12:54:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725021086; cv=none; b=fFvhmBKaiNdo/KrAOKcO7zL6JzFAINc+smUXTVCyW5hn9XocOUj5lcw7dVV1uNcnkJVHLNtAi/Ra17pS8tg5LOSKvhNMcLpHrzJl8hdASi0VrSt15zoa7ktdeAWLWOrI3hOMod0D1Ld9gJFMq0yAWKuacEDiF2HQrv5Ge+sybH8=
+	t=1725022444; cv=none; b=e6wg0FNI9SeZbXRN2VjbCZjK3qCqznznRczp5f36E9/BN5omD9uln3HXTrY5cUaa4uRkxX+p2t5sZw2Mm80auOsTJjJSwdlKpfmNs/BOXTcFofDXC/I8QLwpyexN0d20cMqMcggN0AlNON9CDn/xMZ1lm0Uk1d1zh4Xv+poT5bU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725021086; c=relaxed/simple;
-	bh=oof5KM6kmb1k0VNrztj4BbtVdtVtzGXFeVrQdpuiNh8=;
+	s=arc-20240116; t=1725022444; c=relaxed/simple;
+	bh=Zq61/A7v10LBO9Fzob+2az5/LlVNojC3XIEiFP1NTi4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JaBbMTzmPuTl7ZtsGB0wuKCTKbtlcy7aghVJLUbLmdrGdBQTZK+a+Jf2HMH7hdiah5mR74Pg3OZQudrYDgkshuoLKzQvKRycBym/+pTqtmxr1yQyw3YyHpZXzNC2n3nZ/m+BlvMVKJCsGyPiTMreM7fFbf0qF84DpQexVXGgs0g=
+	 In-Reply-To:Content-Type; b=PqTpOsqDPOGe0M5pQ+FonPrBfg08GNvuZNF49eWtrpmqF7GQj7tdXPY5e9cfA6NfQRrdojQdWDV/RGNJQbnU+cvrPXuS/GWKMqDbgC9enUgoMfVojtpiYc2Y5TTo45KrYHCesvQ6hzjZn7fiJXPoIiEX6NL8i7p2Z5NJVsxmSOs=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1592A152B;
-	Fri, 30 Aug 2024 05:31:50 -0700 (PDT)
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0D46A1063;
+	Fri, 30 Aug 2024 05:54:27 -0700 (PDT)
 Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 229553F762;
-	Fri, 30 Aug 2024 05:31:22 -0700 (PDT)
-Message-ID: <35849d74-1197-446b-9a4c-1b8aabb38427@arm.com>
-Date: Fri, 30 Aug 2024 13:31:20 +0100
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B12D83F66E;
+	Fri, 30 Aug 2024 05:53:58 -0700 (PDT)
+Message-ID: <fe5fcd06-ff28-4171-aa22-1bdc1e8510d0@arm.com>
+Date: Fri, 30 Aug 2024 13:53:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,175 +42,118 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 5/6] iommu/arm-smmu: add ACTLR data and support for
- SC7280
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>,
- Will Deacon <will@kernel.org>
-Cc: robdclark@gmail.com, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com,
+Subject: Re: [PATCH v14 1/6] iommu/arm-smmu: re-enable context caching in smmu
+ reset operation
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, robdclark@gmail.com,
+ will@kernel.org, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com,
  robh@kernel.org, krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
- dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org,
- iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
 References: <20240816174259.2056829-1-quic_bibekkum@quicinc.com>
- <20240816174259.2056829-6-quic_bibekkum@quicinc.com>
- <20240823155918.GD525@willie-the-truck>
- <3ae75a75-1717-40b6-9149-bc3673d520d6@quicinc.com>
- <20240827124714.GB4772@willie-the-truck>
- <b335452a-977e-41cc-9424-a2244fbe20de@quicinc.com>
+ <20240816174259.2056829-2-quic_bibekkum@quicinc.com>
 From: Robin Murphy <robin.murphy@arm.com>
 Content-Language: en-GB
-In-Reply-To: <b335452a-977e-41cc-9424-a2244fbe20de@quicinc.com>
+In-Reply-To: <20240816174259.2056829-2-quic_bibekkum@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 30/08/2024 11:00 am, Bibek Kumar Patro wrote:
+On 16/08/2024 6:42 pm, Bibek Kumar Patro wrote:
+> Default MMU-500 reset operation disables context caching in
+> prefetch buffer. It is however expected for context banks using
+> the ACTLR register to retain their prefetch value during reset
+> and runtime suspend.
 > 
+> Replace default MMU-500 reset operation with Qualcomm specific reset
+> operation which envelope the default reset operation and re-enables
+> context caching in prefetch buffer for Qualcomm SoCs.
 > 
-> On 8/27/2024 6:17 PM, Will Deacon wrote:
->> On Mon, Aug 26, 2024 at 04:33:24PM +0530, Bibek Kumar Patro wrote:
->>>
->>>
->>> On 8/23/2024 9:29 PM, Will Deacon wrote:
->>>> On Fri, Aug 16, 2024 at 11:12:58PM +0530, Bibek Kumar Patro wrote:
->>>>> Add ACTLR data table for SC7280 along with support for
->>>>> same including SC7280 specific implementation operations.
->>>>>
->>>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>>> ---
->>>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 58 
->>>>> +++++++++++++++++++++-
->>>>>    1 file changed, 57 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c 
->>>>> b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> index dc143b250704..a776c7906c76 100644
->>>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>>> @@ -31,6 +31,55 @@
->>>>>    #define PREFETCH_MODERATE    (2 << PREFETCH_SHIFT)
->>>>>    #define PREFETCH_DEEP        (3 << PREFETCH_SHIFT)
->>>>>
->>>>> +static const struct actlr_config sc7280_apps_actlr_cfg[] = {
->>>>> +    { 0x0800, 0x04e0, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x0900, 0x0402, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x0901, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x0d01, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x1181, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1182, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1183, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1184, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1185, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1186, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1187, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1188, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x1189, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x118b, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x118c, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x118d, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x118e, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x118f, 0x0420, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +    { 0x2000, 0x0020, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x2040, 0x0000, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x2062, 0x0000, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x2080, 0x0020, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x20c0, 0x0020, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x2100, 0x0020, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x2140, 0x0000, PREFETCH_DEFAULT | CMTLB },
->>>>> +    { 0x2180, 0x0020, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x2181, 0x0004, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x2183, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x2184, 0x0020, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +    { 0x2187, 0x0000, PREFETCH_SHALLOW | CPRE | CMTLB },
->>>>> +};
->>>>> +
->>>>> +static const struct actlr_config sc7280_gfx_actlr_cfg[] = {
->>>>> +    { 0x0000, 0x07ff, PREFETCH_DEEP | CPRE | CMTLB },
->>>>> +};
->>>>
->>>> It's Will "stuck record" Deacon here again to say that I don't think
->>>> this data belongs in the driver.
->>>>
->>>
->>> Hi Will,
->>>
->>> It will be difficult to reach a consensus here, with Robin and the DT 
->>> folks
->>> okay to keep it in the driver, while you believe it doesn't belong 
->>> there.
->>>
->>> Robin, Rob, could you please share your thoughts on concluding the 
->>> placement
->>> of this prefetch data?
->>>
->>> As discussed earlier [1], the prefetch value for each client doesn’t 
->>> define
->>> the hardware topology and is implementation-defined register writes 
->>> used by
->>> the software driver.
->>
->> It does reflect the hardware topology though, doesn't it? Those magic hex
->> masks above refer to stream ids, so the table is hard-coding the prefetch
->> values for particular matches.
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> ---
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 36 ++++++++++++++++++++--
+>   1 file changed, 33 insertions(+), 3 deletions(-)
 > 
-> That is correct in the sense that stream id is mapped to context bank
-> where these configurations are applied.
-> However the other part of it is implementation-defined register/values
-> for which community opinion was register/value kind of data, should not
-> belong to device tree and are not generally approved of.
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index 36c6b36ad4ff..8ac1850b852f 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -16,6 +16,16 @@
 > 
-> Would also like to point out that the prefetch values are recommended
-> settings and doesn’t mean these are the only configuration which would
-> work for the soc.
-> So the SID-to-prefetch isn't strictly SoC defined but is a software
-> configuration, IMO.
+>   #define QCOM_DUMMY_VAL	-1
+> 
+> +/*
+> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
+> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
+> + * buffer). The remaining bits are implementation defined and vary across
+> + * SoCs.
+> + */
+> +
+> +#define CPRE			(1 << 1)
+> +#define CMTLB			(1 << 0)
+> +
+>   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+>   {
+>   	return container_of(smmu, struct qcom_smmu, smmu);
+> @@ -381,11 +391,31 @@ static int qcom_smmu_def_domain_type(struct device *dev)
+>   	return match ? IOMMU_DOMAIN_IDENTITY : 0;
+>   }
+> 
+> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
+> +{
+> +	int ret;
+> +	u32 val;
+> +	int i;
+> +
+> +	ret = arm_mmu500_reset(smmu);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* arm_mmu500_reset() disables CPRE which is re-enabled here */
 
-What's particularly confusing is that most of the IDs encoded here don't 
-actually seem to line up with what's in the respective SoC DTSIs...
-
-However by this point I'm wary of whether we've lost sight of *why* 
-we're doing this, and that we're deep into begging the question of 
-whether identifying devices by StreamID is the right thing to do in the 
-first place. For example, as best I can tell from a quick skim, we have 
-over 2 dozen lines of data here which all serve the exact same purpose 
-of applying PREFETCH_DEEP | CPRE | CMTLB to instances of 
-"qcom,fastrpc-compute-cb". In general it seems unlikely that the same 
-device would want wildly different prefetch settings across different 
-SoCs, or even between different instances in the same SoC, so I'm really 
-coming round to the conclusion that this data would probably be best 
-handled as an extension of the existing qcom_smmu_client_of_match mechanism.
+I still think it would be good to document why we think this is OK, 
+given the reasons for disabling CPRE to begin with.
 
 Thanks,
 Robin.
 
+> +	for (i = 0; i < smmu->num_context_banks; ++i) {
+> +		val = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
+> +		val |= CPRE;
+> +		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, val);
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+>   static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
+>   {
+>   	int ret;
 > 
->> If I run on a different SoC configuration > with the same table, then 
->> the prefetch settings will be applied to the
->> wrong devices. How is that not hardware topology?
->>
+> -	arm_mmu500_reset(smmu);
+> +	qcom_smmu500_reset(smmu);
 > 
-> The configuration table is tied to SoC compatible string however as I
-> mentioned above, its basically a s/w recommended setting.
-> (using prefetch settings other than the recommended values e.g 
-> PREFECH_DEFAULT instead of PREFETCH_DEEP would not render the device 
-> unusable unlike changing stream-ids which can make it unusable).
+>   	/*
+>   	 * To address performance degradation in non-real time clients,
+> @@ -412,7 +442,7 @@ static const struct arm_smmu_impl qcom_smmu_500_impl = {
+>   	.init_context = qcom_smmu_init_context,
+>   	.cfg_probe = qcom_smmu_cfg_probe,
+>   	.def_domain_type = qcom_smmu_def_domain_type,
+> -	.reset = arm_mmu500_reset,
+> +	.reset = qcom_smmu500_reset,
+>   	.write_s2cr = qcom_smmu_write_s2cr,
+>   	.tlb_sync = qcom_smmu_tlb_sync,
+>   #ifdef CONFIG_ARM_SMMU_QCOM_DEBUG
+> @@ -445,7 +475,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
+>   static const struct arm_smmu_impl qcom_adreno_smmu_500_impl = {
+>   	.init_context = qcom_adreno_smmu_init_context,
+>   	.def_domain_type = qcom_smmu_def_domain_type,
+> -	.reset = arm_mmu500_reset,
+> +	.reset = qcom_smmu500_reset,
+>   	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
+>   	.write_sctlr = qcom_adreno_smmu_write_sctlr,
+>   	.tlb_sync = qcom_smmu_tlb_sync,
+> --
+> 2.34.1
 > 
-> Since it is implementation specific we cannot have a generic DT binding,
-> tying stream ids to these recommended settings.
-> Even with qcom specific binding due to dependency on implementation, not
-> sure if we would be able to maintain consistency.
-> 
-> So from maintenance perspective carrying these in driver appear to be
-> simpler/flexible. And if it doesn’t violate existing precedence, we
-> would prefer to carry it that way.
-> 
-> This parallels how _"QoS settings"_ are handled within the driver 
-> (similar to this example [1]).
-> 
-> [1]. 
-> https://lore.kernel.org/linux-arm-msm/20231030-sc8280xp-dpu-safe-lut-v1-1-6d485d7b428f@quicinc.com/#t
-> 
-> Thanks & regards,
-> Bibek
-> 
->> WIll
 
