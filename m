@@ -1,85 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-30286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B895D9667F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 19:25:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F16FF966805
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 19:32:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C4001F21D16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 17:25:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F23351C23B0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 17:32:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C1AD1BA895;
-	Fri, 30 Aug 2024 17:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FpqK2Azr"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE26C1B9B34;
+	Fri, 30 Aug 2024 17:32:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gollum.nazgul.ch (gollum.nazgul.ch [81.221.21.253])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099BA1B2EC8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 17:25:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F9815C153;
+	Fri, 30 Aug 2024 17:32:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=81.221.21.253
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725038736; cv=none; b=HGH26ysPnziQI9s28oiTMcvrvg8ihOzD6JL7QsZeujgw7KyMLtnrqGk5925wLEtVec0gduA6wYgHVAVSFYzsu1eD39Ha/ISXcBlvkKMGzMg5ZowtrGBKrIrb+oq8VyxPyVM50ako9qTxCOtxYHnKHRRHh+KJap2hHaKbpWsf5Ys=
+	t=1725039158; cv=none; b=GyIlJx1isTuLcaupEat8gj/HZkfhbXut3gOMjmnk5sKoEa1JIsbQsHgsCd4OtBDWi0PBfcrPhqxr/qOZyuwM6NXB9gqCAToTZDH8ieNOLUOXknDwR0D3gH9bjtV4EhuV9yhgkqOmFws/kywoCCu3nYHdQVLLw7gU3hOx9degS5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725038736; c=relaxed/simple;
-	bh=9PXjV5D5W69HmwAx6lnawYhG+6CsfaGiYevdrRLJydQ=;
+	s=arc-20240116; t=1725039158; c=relaxed/simple;
+	bh=zyVt9psjs8zEXvo7436G4vkXueW/Jhz/sxgi1VJhsKc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mp/49m3pVAxXR4BT9rcS1OvPz8fl7iMvSMp1/nZPeUnhYgaf1LiJGjfyTcvkqtwHaxgMrsJUhV96G0LUUx9fL9vV5RQWnR5f9U4yakvTGRxZCBzo9B+eT8gkmQpL6lGu6qxTrpd6bkkrziovhOwOo2G7sGQKTZWLC5xu4eol1as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FpqK2Azr; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5334a8a1b07so2528615e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 10:25:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725038732; x=1725643532; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tts8d/vsTb2shtPr8ARgYB6shyI2W4IvjVV+pUS/EO0=;
-        b=FpqK2Azra7kHdEaWOPRB/DuG2NF7TBXSnPlEL47wFEVYNZiH7ifQvJL+/moZ0UNeWG
-         Z/bC1DPPT+bQAjLUluO7WqVi0KPS742NZ+eI0VvfGH27bvSlp1zbH6DGTmH/HhLpKjBL
-         FOLKr7F3tdsiy3HzOg4s+dLRDYH1llSgKNGcSV2WLnH81Wl3hEqhKd2jfIZPMXJmURJX
-         DbU3jWVda+0egsRr2Rynshd+qbcB9ZLX14vgn95K9adcA1ENCxYFUxWe4uaTS2oMIwQr
-         sQzmwXwGRvrwTi6l/4FpF1oRyK5MrlDJ/nTx7ReNc2o+YxNcfS+Vlaua2ZW+TAcyw8AI
-         HgcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725038732; x=1725643532;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tts8d/vsTb2shtPr8ARgYB6shyI2W4IvjVV+pUS/EO0=;
-        b=icO8gkKnK1Ubh2cMT3lqu5XARCh5gMxbWxLvLLmR6ZX2P47uz3md4s0YgO5kCNjOX5
-         tyDdNvYp8QL/J245fachjk/FX50xig5Adl0+jfWujujlRAtIPYqydPGbocl8gm0SVtq+
-         Rj6BrWxTPRH2jKFS4d/9eU2KlbTz08KJyUd5q6RgKABr0osR3rwaYQvEOLXFNN3ZJL+2
-         lxUDBICi5kHltKu5F+APKTA9kyrH4zGZp5u+xRXfHjaj9Wx1ajB2hoavcszySYlm3lNL
-         ejj6uWuFhRltFXs2JFPzNAmzqTXhE9SKWd3boz3DPuwHloWzTmzxuVTR4AA0gEv4ZiAy
-         L12w==
-X-Forwarded-Encrypted: i=1; AJvYcCW2sTOHvmeRQW9p9B/2gMejd1cfdmvYDo8b/KOymq2zccovoYT1Wtd6M/9B+wdwgDUx9C8ny/8Rf8cA0UE1@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3GVj1IbuUCmwdpJsAxSInsFKAym+A14buzuzDwfOOD4F+uC4w
-	iHJMAl2xpW8I4aYH+R+9louqfypHKfurNBRs4igp4mCN28qJeOGxt2/fw9ZUuZI=
-X-Google-Smtp-Source: AGHT+IE8/VaQxR5xEjwPCk3dHcHC7hA2aM+AJamVIo5ydsZa6i1ax86Oclom/5rHRIiZMUxAhFZJZQ==
-X-Received: by 2002:a05:6512:224a:b0:52b:de5b:1b30 with SMTP id 2adb3069b0e04-53546ba09afmr2488465e87.44.1725038731406;
-        Fri, 30 Aug 2024 10:25:31 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5354084ca95sm693710e87.245.2024.08.30.10.25.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Aug 2024 10:25:31 -0700 (PDT)
-Date: Fri, 30 Aug 2024 20:25:29 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH 14/21] drm/msm/dpu: Reserve resources for CWB
-Message-ID: <yohtzxysheoybac24hxil6zzzsqi4inx6oh6x7vaoj5lvtdf3u@vd5nax37ilqd>
-References: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
- <20240829-concurrent-wb-v1-14-502b16ae2ebb@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=fRNNP04mw+c/qD3VVTQmWCiF5QaxRa6PAPV8QaA4AdSbCMuXuadv9KFf5U2UnL9yUasDKIjUpL6Qhziao7rW6IUhkWWzbzHT/wuRmtll3N8So2Bu4pdgk8HPfoVzqfFL/BhfeUASNB7BIC8DOTtUzaGQtW3YsePuaUPa9iP9Rko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch; spf=pass smtp.mailfrom=nazgul.ch; arc=none smtp.client-ip=81.221.21.253
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nazgul.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nazgul.ch
+Received: from localhost (gollum.nazgul.ch [local])
+	by gollum.nazgul.ch (OpenSMTPD) with ESMTPA id dcec7dd3;
+	Fri, 30 Aug 2024 19:25:52 +0200 (CEST)
+Date: Fri, 30 Aug 2024 19:25:52 +0200
+From: Marcus Glocker <marcus@nazgul.ch>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>, 
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v5 4/6] arm64: dts: qcom: Add UFS node
+Message-ID: <l5vwputpefdkweti56em37i5asrd3vb7pxhwlzir7webfuk3fl@afcqm3faq2gt>
+References: <p3mhtj2rp6y2ezuwpd2gu7dwx5cbckfu4s4pazcudi4j2wogtr@4yecb2bkeyms>
+ <g5vlxrttgvfqkktlkhu4uzhtvnp3qtjcbr7l2uztapzqwhrsem@wg574xldh5ar>
+ <cd9d5a7c-ec0b-4f0a-bac2-f747799bf295@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,192 +53,130 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240829-concurrent-wb-v1-14-502b16ae2ebb@quicinc.com>
+In-Reply-To: <cd9d5a7c-ec0b-4f0a-bac2-f747799bf295@kernel.org>
 
-On Thu, Aug 29, 2024 at 01:48:35PM GMT, Jessica Zhang wrote:
-> Reserve dedicated pingpong blocks for CWB
+On Fri, Aug 30, 2024 at 02:05:48AM +0200, Konrad Dybcio wrote:
 
-Please explain design ideas. Having just a single phrase is usually not
-enough.
-
+> On 17.08.2024 10:38 PM, Marcus Glocker wrote:
+> > Add the UFS Host Controller node.  This was basically copied from the
+> > arch/arm64/boot/dts/qcom/sc7180.dtsi file.
+> >
+> > Signed-off-by: Marcus Glocker <marcus@nazgul.ch>
+> > Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 72 ++++++++++++++++++++++++++
+> >  1 file changed, 72 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi 
+> > b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index 7bca5fcd7d52..9f01b3ff3737 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -2878,6 +2878,78 @@ mmss_noc: interconnect@1780000 {
+> >  			#interconnect-cells = <2>;
+> >  		};
+> >
+> > +		ufs_mem_hc: ufs@1d84000 {
+> > +			compatible = "qcom,x1e80100-ufshc", "qcom,ufshc",
+> > +				     "jedec,ufs-2.0";
+> > +			reg = <0 0x01d84000 0 0x3000>;
+> > +			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+> > +			phys = <&ufs_mem_phy>;
+> > +			phy-names = "ufsphy";
+> > +			lanes-per-direction = <1>;
+> > +			#reset-cells = <1>;
+> > +			resets = <&gcc GCC_UFS_PHY_BCR>;
+> > +			reset-names = "rst";
+> > +
+> > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> > +
+> > +			iommus = <&apps_smmu 0xa0 0x0>;
 > 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 17 ++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
->  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 65 +++++++++++++++++++++++++++++
->  3 files changed, 79 insertions(+), 4 deletions(-)
+> Looks like this should be 0x1a0 maybe
+> > +
+> > +			clock-names = "core_clk",
+> > +				      "bus_aggr_clk",
+> > +				      "iface_clk",
+> > +				      "core_clk_unipro",
+> > +				      "ref_clk",
+> > +				      "tx_lane0_sync_clk",
+> > +				      "rx_lane0_sync_clk";
+> > +			clocks = <&gcc GCC_UFS_PHY_AXI_CLK>,
+> > +				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
+> > +				 <&gcc GCC_UFS_PHY_AHB_CLK>,
+> > +				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
+> > +				 <&rpmhcc RPMH_CXO_CLK>,
+> > +				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
+> > +				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>;
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 36b677cf9c7a..f1bd14d1f89e 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -2,7 +2,7 @@
->  /*
->   * Copyright (C) 2013 Red Hat
->   * Copyright (c) 2014-2018, 2020-2021 The Linux Foundation. All rights reserved.
-> - * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->   *
->   * Author: Rob Clark <robdclark@gmail.com>
->   */
-> @@ -1054,6 +1054,7 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
->  	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
->  	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
->  	int num_pp, num_dsc;
-> +	bool is_cwb_encoder;
->  	unsigned int dsc_mask = 0;
->  	int i;
->  
-> @@ -1067,6 +1068,8 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
->  
->  	priv = drm_enc->dev->dev_private;
->  	dpu_kms = to_dpu_kms(priv->kms);
-> +	is_cwb_encoder = drm_crtc_in_clone_mode(crtc_state) &&
-> +		dpu_enc->disp_info.intf_type == INTF_WB;
->  
->  	global_state = dpu_kms_get_existing_global_state(dpu_kms);
->  	if (IS_ERR_OR_NULL(global_state)) {
-> @@ -1077,9 +1080,15 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
->  	trace_dpu_enc_mode_set(DRMID(drm_enc));
->  
->  	/* Query resource that have been reserved in atomic check step. */
-> -	num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> -		drm_enc->crtc, DPU_HW_BLK_PINGPONG, hw_pp,
-> -		ARRAY_SIZE(hw_pp));
-> +	if (is_cwb_encoder)
-> +		num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> +			drm_enc->crtc, DPU_HW_BLK_DCWB_PINGPONG, hw_pp,
-> +			ARRAY_SIZE(hw_pp));
-> +	else
-> +		num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
-> +			drm_enc->crtc, DPU_HW_BLK_PINGPONG, hw_pp,
-> +			ARRAY_SIZE(hw_pp));
-
-Why is this necessary? Can we still use DPU_HW_BLK_PINGPONG?
-
-> +
->  	dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
->  			drm_enc->crtc, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> index c43cb55fe1d2..c87790a1b940 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-> @@ -77,6 +77,7 @@ enum dpu_hw_blk_type {
->  	DPU_HW_BLK_LM,
->  	DPU_HW_BLK_CTL,
->  	DPU_HW_BLK_PINGPONG,
-> +	DPU_HW_BLK_DCWB_PINGPONG,
->  	DPU_HW_BLK_INTF,
->  	DPU_HW_BLK_WB,
->  	DPU_HW_BLK_DSPP,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> index 13f84375e15d..afad26556cd5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-> @@ -236,6 +236,48 @@ static int _dpu_rm_get_lm_peer(struct dpu_rm *rm, int primary_idx)
->  	return -EINVAL;
->  }
->  
-> +static int _dpu_rm_reserve_cwb_pingpong(struct dpu_rm *rm,
-> +		struct dpu_global_state *global_state, uint32_t crtc_id,
-> +		struct msm_display_topology *topology)
-> +{
-> +	int num_cwb_pp = topology->num_lm, cwb_pp_count = 0;
-> +	int cwb_pp_idx[MAX_BLOCKS];
-> +
-> +	/*
-> +	 * Reserve additional dedicated CWB pingpong blocks for each mixer
-> +	 *
-> +	 * TODO: add support for reserving non-dedicated CWB pingpong blocks
-> +	 */
-> +	for (int i = 0; i < ARRAY_SIZE(rm->mixer_blks) &&
-> +			cwb_pp_count < num_cwb_pp; i++) {
-> +		for (int j = PINGPONG_CWB_0 - PINGPONG_0;
-> +				j < ARRAY_SIZE(rm->pingpong_blks); j++) {
-
-Alignment...
-
-> +			/*
-> +			 * Odd LMs must be assigned to odd pingpongs and even
-> +			 * LMs with even pingpongs
-> +			 */
-> +			if (reserved_by_other(global_state->pingpong_to_crtc_id,
-> +						j, crtc_id) ||
-> +					i % 2 != j % 2)
-> +				continue;
-> +
-> +			cwb_pp_idx[cwb_pp_count] = j;
-> +			cwb_pp_count++;
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (cwb_pp_count != num_cwb_pp) {
-> +		DPU_ERROR("Unable to reserve all cwb pingpongs\n");
-> +		return -ENAVAIL;
-> +	}
-> +
-> +	for (int i = 0; i < cwb_pp_count; i++)
-> +		global_state->pingpong_to_crtc_id[cwb_pp_idx[i]] = crtc_id;
-> +
-> +	return 0;
-> +}
-> +
->  /**
->   * _dpu_rm_check_lm_and_get_connected_blks - check if proposed layer mixer meets
->   *	proposed use case requirements, incl. hardwired dependent blocks like
-> @@ -617,6 +659,14 @@ static int _dpu_rm_make_reservation(
->  		return ret;
->  	}
->  
-> +	if (topology->cwb_enabled) {
-> +		ret = _dpu_rm_reserve_cwb_pingpong(rm, global_state,
-> +				crtc_id, topology);
-> +		if (ret) {
-> +			DPU_ERROR("unable to find appropriate dcwb pingpongs\n");
-> +			return ret;
-> +		}
-> +	}
->  
->  	ret = _dpu_rm_reserve_ctls(rm, global_state, crtc_id,
->  			topology);
-> @@ -706,6 +756,7 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
->  
->  	switch (type) {
->  	case DPU_HW_BLK_PINGPONG:
-> +	case DPU_HW_BLK_DCWB_PINGPONG:
->  		hw_blks = rm->pingpong_blks;
->  		hw_to_crtc_id = global_state->pingpong_to_crtc_id;
->  		max_blks = ARRAY_SIZE(rm->pingpong_blks);
-> @@ -745,6 +796,20 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
->  		if (hw_to_crtc_id[i] != crtc_id)
->  			continue;
->  
-> +		if (type == DPU_HW_BLK_PINGPONG) {
-> +			struct dpu_hw_pingpong *pp = to_dpu_hw_pingpong(hw_blks[i]);
-> +
-> +			if (pp->idx >= PINGPONG_CWB_0)
-> +				continue;
-> +		}
-> +
-> +		if (type == DPU_HW_BLK_DCWB_PINGPONG) {
-> +			struct dpu_hw_pingpong *pp = to_dpu_hw_pingpong(hw_blks[i]);
-> +
-> +			if (pp->idx < PINGPONG_CWB_0)
-> +				continue;
-> +		}
-> +
->  		if (num_blks == blks_size) {
->  			DPU_ERROR("More than %d resources assigned to crtc %d\n",
->  				  blks_size, crtc_id);
+> You also want
 > 
-> -- 
-> 2.34.1
+> <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>
 > 
+> > +			freq-table-hz = <50000000 200000000>,
+> 25000000 300000000
+> 
+> > +					<0 0>,
+> > +					<0 0>,
+> > +					<37500000 150000000>,
+> 75000000 300000000
+> 
+> > +					<0 0>,
+> > +					<0 0>,
+> > +					<0 0>;
+> > +
+> > +			interconnects = <&aggre1_noc MASTER_UFS_MEM QCOM_ICC_TAG_ALWAYS
+> > +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> > +					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ALWAYS
+> > +					 &config_noc SLAVE_UFS_MEM_CFG QCOM_ICC_TAG_ALWAYS>;
+> > +			interconnect-names = "ufs-ddr", "cpu-ufs";
+> > +
+> > +			qcom,ice = <&ice>;
+> > +
+> > +			status = "disabled";
+> > +		};
+> > +
+> > +		ufs_mem_phy: phy@1d87000 {
+> > +			compatible = "qcom,x1e80100-qmp-ufs-phy";
+> > +			reg = <0 0x01d87000 0 0x1000>;
+> 
+> most definitely should be 0x01d80000 with a size of 0x2000
+> 
+> > +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+> > +				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+> > +				 <&tcsr TCSR_UFS_PHY_CLKREF_EN>;
+> > +			clock-names = "ref",
+> > +				      "ref_aux",
+> > +				      "qref";
+> > +			power-domains = <&gcc GCC_UFS_PHY_GDSC>;
+> > +			resets = <&ufs_mem_hc 0>;
+> > +			reset-names = "ufsphy";
+> > +			#phy-cells = <0>;
+> > +			status = "disabled";
+> > +		};
+> > +
+> > +		ice: crypto@1d90000 {
+> > +			compatible = "qcom,x1e80100-inline-crypto-engine",
+> > +				     "qcom,inline-crypto-engine";
+> > +			reg = <0 0x01d90000 0 0x8000>;
+> 
+> 0x1d88000
+> 
+> 
+> All this combined means you probably wrote your init sequence into some
+> free(?) register space and the one left over from the bootloader was
+> good enough :P
+> 
+> Konrad
 
--- 
-With best wishes
-Dmitry
+I have not done anything special in our sub-system to boot this DTB.
+Changing the values as suggested by you also doesn't make any difference
+to me.
+
+Anyway, I think I'll give up at this point, since this process is
+getting too time consuming for me.  We'll go ahead with out downstream
+patches, which works for us so far.
+
+Cheers,
+Marcus
 
