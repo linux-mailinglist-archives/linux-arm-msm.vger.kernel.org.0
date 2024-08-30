@@ -1,141 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-30186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 340A8965A45
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:26:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5022F965A6F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:36:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 67A101C20DAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:26:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 74A811C22E53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:36:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1321016C856;
-	Fri, 30 Aug 2024 08:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A50C16D4D9;
+	Fri, 30 Aug 2024 08:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VSVMf61I"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MWtnQLDE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5A614D294
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 08:26:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD91316D31C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 08:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725006383; cv=none; b=OQh/IPj5uLUS7W5L8ICwn7qj3Yi8sVOfL983lfGOVFqPGWWFJW50X6EsUpPVQ/evWKGStHP70Jae2JeIh/fFFyH+5AfVYK2QqJEiPoDI7vX7K95dQ0FQPRGo7cTf+9zKse6FDCGEB6xsjp5ZM7iqn7+88FpwmYCx1+4IQsHrgTY=
+	t=1725006962; cv=none; b=SyZHBCGwm1pnEnvzE/pDeof9rXkgrt04xl2IhZH+PMiRWHYiPZaScQx0PA2ohviM87vHEYbvb3oeprC+M329WzaEBHIZ6Xm09xDS9z6+kdIj9PBVyZJGWaPWJDPwlD5hWkwY4foTebUbP1Jq3jx9f2irHsZwlqVlzrjIeXfVfBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725006383; c=relaxed/simple;
-	bh=e6UmKK1uv4GE4oEQ3Qw87ejtvJIm9dvgZYCtxPS7nHw=;
+	s=arc-20240116; t=1725006962; c=relaxed/simple;
+	bh=AQdl9xmsK8ZMt1kvTa1HmFVUzpMAE8Xf7jM0R7oI+ZA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WtvWpPh2CPwgxTtDZw/ne3Q71GCNS0YqxSaNYBXcGiEv6DNdvCgscYcKbHmzr8FCD0QMB6/u4AVN6l18bwYgLtBgGXROUHxTHJtuXbeA+9hu3zRy1tKd2spgtIlKkMZnwzj3EY/Kj55rc6o7F2prI7CJSEk0B5mjTowbJjoXrJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VSVMf61I; arc=none smtp.client-ip=209.85.218.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=FAJQX3hAAy1ZVBC7NrK2BH18dkAoGXfZwye1aaeOdJ4dLvwbMnsJJcYAsUmufg3erjvavrYvDUa/HTXy+pkasPG+JOw3f+i9FBQogut3t2o93QzzHu2n7rBUaXHtV3x3opCo+7USarRpYLvS4tXrWxi5Fin5xPLvvA6g5y4eOdA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MWtnQLDE; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a868831216cso190701866b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 01:26:20 -0700 (PDT)
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7bcf8077742so1087225a12.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 01:36:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725006379; x=1725611179; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uDSO4akp2KhRfSSRiJYvlvkWluMAutHA5r9aDvMGObY=;
-        b=VSVMf61IFmJzTyq/NKbr+n/WIrJ72qCjuQWvF1HHZd6Ij3qdhr1J0q/NMafM6aaG7u
-         uKHR0eWhlW6Q4+oFmgkKjBiq5/PKcoabp+14AkEqtelber5GHIov1p4kJWgqDPZzhj0R
-         dEWkOSOfAH3k+ALE//zFU9ltqVfe9uX1wv11SxIUf8UyTqX8l0qnQbFp5X6JPXURgjic
-         m1jSoTdQm8IT9XiJv2K2Vcqs2JT0rxK8ttez2E7xHCHe9L/PgCI9U/enjwsBefo/xUe6
-         gS8rr/CEET8rTBsR1Wa9IuoJlxqVfbN013/mbcu3Rf+JMsfysM0meBzSBmA3lpqxQWRj
-         PQ1A==
+        d=linaro.org; s=google; t=1725006960; x=1725611760; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HRHmHWrP9aGbtsGBj3sSUa2W5O9vCt0AWItUOkadt2Y=;
+        b=MWtnQLDEotjVGwRD8x2jJQlPXUavaLCtAok/8AauIKs8WgpKFuVk5dfUSdnXya6hFb
+         7xDyebGN3RKnW0xAbTarnWJjq5CG4LSjmNG7xKybp9ifd2Qo2swh5Qe3oUmdjXNpiBBk
+         WJr9vCbtQiBmxt1bAfVNgvcnGbJ+Xo9oO//0csk3YgOQXZfKTi0pnWymStsbVTe8Sww7
+         Rg18jgVpcNhV1T/mOV8xNnp7UQU9LNRwN+tmvwe8JjDvvUcfqOag2yD2rAB9O8PzfOSG
+         snw1T629O+zDuEbz+DxCZkbGb2pzwr1C9z5WL8Qh8q7KupWuU71XjPtoy1ahvPZ+7oXd
+         1NgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725006379; x=1725611179;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uDSO4akp2KhRfSSRiJYvlvkWluMAutHA5r9aDvMGObY=;
-        b=ZvqzrTV9i3Cq2MshfbD/ZcJCOAtIzXqdeMRAr7SLdiG6dtJX0gQKHlU471Ttw5HBjG
-         lnyGQqOR+Ko64bO/MNCcyJh0mdsDrFbtMK6+iVnsu45VcFf+SCGf6Jha1wf18zj03qfO
-         YtZuuif8/PicZQ4/7EcKIUT8YcIiKnrA71QLI7F+TnSg9SzAKlgSF3lbevz4kDsnWJmh
-         AvStMujGsca5hoQcjv9xG9FDm0EdOBdajdsmFuazpW2gMbWKWXWQ4MiqWm3daCx69MJb
-         R2Gby0dC8ThNg792uNLtjjfCcZC5j97/zK9ZHMaClfmH24G8DIxi6jNO676QzHLWCn45
-         +5sw==
-X-Forwarded-Encrypted: i=1; AJvYcCU42YCqxiLYZQ9x6GdOy4dV6mfwHDtxi6JZ3o5Vh5ZyvdfQGYnxtJOmZ3sx0DODIq1I7N+bJ/zgh616p1Gr@vger.kernel.org
-X-Gm-Message-State: AOJu0YwyNDHK+NgK9G9bpmXXrZM0Okb4APXNprcycsmk/7IjrZeSka5i
-	d4Mhr+1FMq4XnbK8q83Ubn4ulI73J4i8pCPxvLLWDGtCNtve36M84TaKh3DPWwo=
-X-Google-Smtp-Source: AGHT+IHMd2a7oX2CNchv5nPzpcimaPtAh2+17ZJkKEC5K6QZXNRoCN7DgkRBQORt2wViPlTE8ZcuJg==
-X-Received: by 2002:a17:906:794b:b0:a80:f79a:eb6f with SMTP id a640c23a62f3a-a897f77fdbbmr448369466b.8.1725006379328;
-        Fri, 30 Aug 2024 01:26:19 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff1f:b280:290:d5b:6ddc:fbdb])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89892164f5sm185254466b.192.2024.08.30.01.26.18
+        d=1e100.net; s=20230601; t=1725006960; x=1725611760;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HRHmHWrP9aGbtsGBj3sSUa2W5O9vCt0AWItUOkadt2Y=;
+        b=uPBo7ALp1vjOPg7MDpjqekj+q4rkxOMAKO4yaKL2ualKYWlroky6vl6hqh3XvSt1aZ
+         I4FzkXJlQOf5FhkB1xOlVMJ4lve0QmnlzvAb1jQ5qo1U6HcB/MlmsiOvTiMdB8VAg5Cs
+         2LN6qiL++lTpONV/F4MAlu4dVm5Q68H+kBJeGTkhgxvInSgdMCuSbithi7C/LSyjuY+T
+         +Z0JZdxVP/V6pWUelE5BPvjKEQquW3ziPHiyi6QyTLdBfT+kbSgLxDZ6W50OnVX16YrT
+         7hxlVeup9z8NS/+yy0VHyPxqo1oseY9mzlAMNW9+Yc5R/J2/UdcrQ3rRpfRUFNUHe2AZ
+         rhZA==
+X-Forwarded-Encrypted: i=1; AJvYcCWs26yw1xecSfs0DWxZkexCtjvnDyBHEgRTPdzzRN8bNZI8Bqi645EjaC7TGxzI1U7b+LxtaF4/kz5focgM@vger.kernel.org
+X-Gm-Message-State: AOJu0YyRVT0v5gBNvrrLXsV1wR97TDOKK3TyYYJhF/xPRqvDVfO05fQ/
+	37cZ3d+TW2dRRDlJl+hZPLbRXsU3Py7v2x6MCHcN+zmJU/hMdhh81PE0oNCXLg==
+X-Google-Smtp-Source: AGHT+IEg701oVGHlnE52pK3OQhbcRTjhhzAp3dBmqRMQAHDvR10F57i/IZHuH1pve1bxSwuJqV6lAQ==
+X-Received: by 2002:a17:90b:4b01:b0:2d3:ce8d:f7f1 with SMTP id 98e67ed59e1d1-2d8561c7556mr6135729a91.25.1725006960007;
+        Fri, 30 Aug 2024 01:36:00 -0700 (PDT)
+Received: from thinkpad ([117.193.213.95])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d85b39ce64sm3134091a91.39.2024.08.30.01.35.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Aug 2024 01:26:19 -0700 (PDT)
-Date: Fri, 30 Aug 2024 10:26:14 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Danila Tikhonov <danila@jiaxyga.com>, andersson@kernel.org,
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, cros-qcom-dts-watchers@chromium.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux@mainlining.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280.dtsi: Fix PMU nodes for Cortex
- A55 and A78
-Message-ID: <ZtGCJincjO7z-WFm@linaro.org>
-References: <20240818192905.120477-1-danila@jiaxyga.com>
- <5gmsbbnuc7sbkpptomvpl6aarw5poutvjfav5rilgogb7727vi@nhtr5m24tkmt>
+        Fri, 30 Aug 2024 01:35:59 -0700 (PDT)
+Date: Fri, 30 Aug 2024 14:05:51 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Sricharan R <quic_srichara@quicinc.com>
+Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	vkoul@kernel.org, kishon@kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, p.zabel@pengutronix.de,
+	dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-phy@lists.infradead.org, robimarko@gmail.com
+Subject: Re: [PATCH V2 2/6] dt-bindings: PCI: qcom: Add IPQ5108 SoC
+Message-ID: <20240830083551.yazww3kj2shf4ocq@thinkpad>
+References: <20240827045757.1101194-1-quic_srichara@quicinc.com>
+ <20240827045757.1101194-3-quic_srichara@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <5gmsbbnuc7sbkpptomvpl6aarw5poutvjfav5rilgogb7727vi@nhtr5m24tkmt>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240827045757.1101194-3-quic_srichara@quicinc.com>
 
-On Fri, Aug 30, 2024 at 11:13:28AM +0300, Dmitry Baryshkov wrote:
-> On Sun, Aug 18, 2024 at 10:29:05PM GMT, Danila Tikhonov wrote:
-> > The SC7280, SM7325, and QCM6490 platforms feature an 8-core setup
-> > consisting of:
-> > - 1x Kryo 670 Prime (Cortex-A78) / Kryo 670 Gold Plus (Cortex-A78)
-> > - 3x Kryo 670 Gold (Cortex-A78)
-> > - 4x Kryo 670 Silver (Cortex-A55)
-> > (The CPU cores in the SC7280 are simply called Kryo, but are
-> > nevertheless based on the same Cortex A78 and A55).
-> > 
-> > Use the correct compatibility.
-> > 
-> > Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++--
-> >  1 file changed, 7 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > index 91cc5e74d8f5..ab024a3c3653 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -845,8 +845,13 @@ wlan_smp2p_in: wlan-wpss-to-ap {
-> >  		};
-> >  	};
-> >  
-> > -	pmu {
-> > -		compatible = "arm,armv8-pmuv3";
-> > +	pmu-a55 {
-> > +		compatible = "arm,cortex-a55-pmu";
-> > +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
-> > +	};
-> > +
-> > +	pmu-a78 {
-> > +		compatible = "arm,cortex-a78-pmu";
-> >  		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
+On Tue, Aug 27, 2024 at 10:27:53AM +0530, Sricharan R wrote:
+> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
 > 
-> Shouldn't these two entries have GIC_CPU_MASK_RAW(), limiting interrupts
-> to the corresponding cores? I see that in [1] Rob used masks for older
-> SoCs, but skipped them for newer ones.
+> Add support for the PCIe controller on the Qualcomm
+> IPQ5108 SoC to the bindings.
 > 
-> [1] https://lore.kernel.org/all/20240417204247.3216703-1-robh@kernel.org/
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+- Mani
+
+> ---
+>  [v2] Added reviewed by tag
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 35 +++++++++++++++++++
+>  1 file changed, 35 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index f867746b1ae5..c12efa27b8d8 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -21,6 +21,7 @@ properties:
+>            - qcom,pcie-apq8064
+>            - qcom,pcie-apq8084
+>            - qcom,pcie-ipq4019
+> +          - qcom,pcie-ipq5018
+>            - qcom,pcie-ipq6018
+>            - qcom,pcie-ipq8064
+>            - qcom,pcie-ipq8064-v2
+> @@ -312,6 +313,39 @@ allOf:
+>              - const: ahb # AHB reset
+>              - const: phy_ahb # PHY AHB reset
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-ipq5018
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 6
+> +          maxItems: 6
+> +        clock-names:
+> +          items:
+> +            - const: iface # PCIe to SysNOC BIU clock
+> +            - const: axi_m # AXI Master clock
+> +            - const: axi_s # AXI Slave clock
+> +            - const: ahb # AHB clock
+> +            - const: aux # Auxiliary clock
+> +            - const: axi_bridge # AXI bridge clock
+> +        resets:
+> +          minItems: 8
+> +          maxItems: 8
+> +        reset-names:
+> +          items:
+> +            - const: pipe # PIPE reset
+> +            - const: sleep # Sleep reset
+> +            - const: sticky # Core sticky reset
+> +            - const: axi_m # AXI master reset
+> +            - const: axi_s # AXI slave reset
+> +            - const: ahb # AHB reset
+> +            - const: axi_m_sticky # AXI master sticky reset
+> +            - const: axi_s_sticky # AXI slave sticky reset
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -503,6 +537,7 @@ allOf:
+>                enum:
+>                  - qcom,pcie-apq8064
+>                  - qcom,pcie-ipq4019
+> +                - qcom,pcie-ipq5018
+>                  - qcom,pcie-ipq8064
+>                  - qcom,pcie-ipq8064v2
+>                  - qcom,pcie-ipq8074
+> -- 
+> 2.34.1
 > 
 
-According to the bindings, the cpu mask bits apply only to gic-v2, but
-not gic-v3. It looks correct in Rob's changes. And here too, since
-SC7280 uses gic-v3.
-
-Thanks,
-Stephan
+-- 
+மணிவண்ணன் சதாசிவம்
 
