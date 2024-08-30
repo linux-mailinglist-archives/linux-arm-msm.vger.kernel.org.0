@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30216-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47514965DBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:01:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C82FE965DC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:01:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D708B280FC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:01:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 50D0B1F2772C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:01:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F285717B4FE;
-	Fri, 30 Aug 2024 10:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F234F17C7A5;
+	Fri, 30 Aug 2024 10:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XcnojyBo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAaUvILn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D3316D302;
-	Fri, 30 Aug 2024 10:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D1D17B506;
+	Fri, 30 Aug 2024 10:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725012055; cv=none; b=Go4lCfVVlOxSkYjwUHEhylAajvtlDShAZVcCtN69Y7UDyI7tJwTjjbzSbEUS0q15yqL/DCPPdWHaMNKyld95jtrK5tCn4jW/XWQXSk0QO4P4REnJVqwMgcmzQBVprFWAjFLOHMpfiA6GZ822XVSIBilh23nRJRR30mqmoayG57Q=
+	t=1725012093; cv=none; b=mmKhKkm5D/F7T282nGNOEHBhkjb8z0xuFiC0P0Ne7yTI4a+GPnQX6QuLgjZmdfGYDej39b/hmjEeL2CEtCnDbnsMXd12ttMVzFez6ywcI9NEmaJ3I96ukaQTzkHQ+/DTb4d7CK5ZJ0sgNvLu0uAAbjJp3QJVl82q13EvqLttL44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725012055; c=relaxed/simple;
-	bh=C3ag8Y3EtU5RLIBr1X7bSD/nVTfEcPkUuGp8nq5gfug=;
+	s=arc-20240116; t=1725012093; c=relaxed/simple;
+	bh=eUzYi6PdntJZPmYPnJQixEyscHo0C+wrxQUeHB41bbc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C5MpCjbBlAacZZLNpUC8mqa9siQoNhWunmnSSykZYzR9dRTTPinbwjFgMhnNidKEiTmPwj81j2x+YBB8zt8WlRCEt2BS9RNZXvRAFWhkbDbdULxRLwMm+Jc87GUM8NeYea+LMG2LjVWp/Njb3+CSCaheN5pr8rLrCKn3tXiv1rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XcnojyBo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AA0C4CEC2;
-	Fri, 30 Aug 2024 10:00:38 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ZskaJwTGnyqBCiFLMRfpQJr6ZSh9pb3Zo+Gx8QfHJ1pRhiYxJGaeI5hKdk007ang0+mUQfHg2hafnzRzPjh9pv+uloAI+VJSVxk88EnJnIPp+zkdMddWY65QW0ArP1cJNa0F2/gROu6yKnRAVhTCKyVuztvaE/kaHVp8N97GcIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAaUvILn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05DDC4CEC2;
+	Fri, 30 Aug 2024 10:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725012055;
-	bh=C3ag8Y3EtU5RLIBr1X7bSD/nVTfEcPkUuGp8nq5gfug=;
+	s=k20201202; t=1725012093;
+	bh=eUzYi6PdntJZPmYPnJQixEyscHo0C+wrxQUeHB41bbc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=XcnojyBoEw03okmEUhYyiuVGiudJln6+lDRs8RxPWqbnTVTN6kE3HlvahTSw+mzJf
-	 pvSuQIZGDFm5q7+PodHvHA+dKD54Xnc+KvOhMDDquwXX6MwvUMNevlgnga7+gF0liv
-	 etjGaB3lkh0Je4N09EdQu9CEAlXQ/vs40UgVTUTBSqM5vnBJ8s+libUlWcfcv5pJ3J
-	 8R2RznLX2M2oPYtLBta2qNizJWyc9vaRMvvZQytr+/SVRq4HibkkWVkyl6ltP6VhlB
-	 TcLdC+eKkVuq5aN9IBkdbZYrkKv8jadgoTwXPMmC0qulvRKpVx2+VqAc+OaUedNLyj
-	 KtqvrSS0g2iXQ==
-Message-ID: <b6c1a81e-1533-4a17-8d6a-49a209a38557@kernel.org>
-Date: Fri, 30 Aug 2024 12:00:36 +0200
+	b=eAaUvILnBtDSgeFWzKX1FxEuxAnt6xh6lHsvh2kuAu9rklGpq5ojTtSI/vqBMIAqI
+	 zN9fqAl4u0xEtvqu7SL/YKzxo7EPQNDB6XX3lEB2DHSd9zD++FAE3ArKT1np7OORog
+	 LVeionBUk+dDg+vDfAW+zdH8oonfRdTeNOH21Gt+n8oFEIkNtULR9LcxhwGe+xX+gO
+	 Ld9NGJIfYZDT2/OWRDHAh1X/q5CuCM5NRDTRPklbwAOovkLIz7qkLzsvgMXwSaTUuZ
+	 HRy5beZUuvo30aQQt0XvW+p1C/4hAUXkE0LDJ9dJll1c8207JNTDPQQ1x0mQlqZpKp
+	 P3ERjEsKcn2QA==
+Message-ID: <4ab9dcb6-4a0b-493c-943b-5de05457c592@kernel.org>
+Date: Fri, 30 Aug 2024 12:01:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,34 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/22] dt-bindings: arm-smmu: document the support on
- SA8255p
-To: Nikunj Kela <quic_nkela@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
- viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
- sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
- will@kernel.org, joro@8bytes.org, jassisinghbrar@gmail.com, lee@kernel.org,
- linus.walleij@linaro.org, amitk@kernel.org, thara.gopinath@gmail.com,
- broonie@kernel.org, wim@linux-watchdog.org, linux@roeck-us.net,
- robin.murphy@arm.com, cristian.marussi@arm.com, rui.zhang@intel.com,
- lukasz.luba@arm.com, vkoul@kernel.org, quic_gurus@quicinc.com,
- agross@kernel.org, bartosz.golaszewski@linaro.org, quic_rjendra@quicinc.com,
- robimarko@gmail.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
- linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
- kernel@quicinc.com, quic_psodagud@quicinc.com, quic_tsoni@quicinc.com,
- quic_shazhuss@quicinc.com
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <20240828203721.2751904-15-quic_nkela@quicinc.com>
- <ompfueg7civ5spjdumkhd7qgx4cnvjcftznf3z3q5duuxppt5d@fao7zx4oxfm3>
- <e8e9cdcf-63c8-4bfa-aacc-d99338c7f8fa@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3 0/2] phy: qcom: qmp-pcie: Add support for Gen4 4-lane
+ mode for X1E80100
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
+Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
+References: <20240823-x1e80100-phy-add-gen4x4-v3-0-b7765631ca01@linaro.org>
+ <172495833400.405683.4328817324548517864.b4-ty@kernel.org>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -121,39 +106,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <e8e9cdcf-63c8-4bfa-aacc-d99338c7f8fa@quicinc.com>
+In-Reply-To: <172495833400.405683.4328817324548517864.b4-ty@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/08/2024 17:39, Nikunj Kela wrote:
+On 29/08/2024 21:05, Vinod Koul wrote:
 > 
-> On 8/29/2024 12:36 AM, Krzysztof Kozlowski wrote:
->> On Wed, Aug 28, 2024 at 01:37:13PM -0700, Nikunj Kela wrote:
->>> Add compatible for smmu representing support on SA8255p.
->>>
->>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
->>> ---
->>>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 3 +++
->>>  1 file changed, 3 insertions(+)
->>>
->> Your subjects contain quite redundant/excessive information. In the same
->> time they lack information about device. 
+> On Fri, 23 Aug 2024 10:04:14 +0300, Abel Vesa wrote:
+>> On all X Elite boards currently supported upstream, the NVMe sits
+>> on the PCIe 6. Until now that has been configured in dual lane mode
+>> only. The schematics reveal that the NVMe is actually using 4 lanes.
+>> So add support for the 4-lane mode and document the compatible for it.
 >>
->> 1. s/document the support on/add/
->> 2. s/SA8255p/SA8255p SMMU-or-whatever-device-it-is/
+>> This patchset depends on:
+>> https://lore.kernel.org/all/20240805-phy-qcom-qmp-pcie-write-all-tbls-second-port-v3-1-6967c6bf61d1@linaro.org/
 >>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> Best regards,
->> Krzysztof
+>> [...]
 > 
-> Okay. I thought arm-smmu tag already indicate which device this patch is
-> for but would put SMMU explicitly in the subject.
+> Applied, thanks!
+> 
+> [1/2] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHY Gen4 x4
+>       commit: 0c5f4d23f77631f657b60ef660676303f7620688
 
-arm,smmu indicates the binding file which might be or might not exactly
-be the same as actual device. Sometimes they have difference names. I am
-not saying that it would be beneficial here, but some other patches
-could benefit probably.
+Heh, we discussed yesterday on IRC that this should wait.
+
+Why do we keep discussing things in private...
 
 Best regards,
 Krzysztof
