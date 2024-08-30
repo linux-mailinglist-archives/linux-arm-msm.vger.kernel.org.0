@@ -1,159 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-30253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5867696620E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 14:54:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B86096630B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 15:39:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13A12280C10
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:54:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A7068B20521
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 13:39:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69E31192D79;
-	Fri, 30 Aug 2024 12:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAA881A4AB3;
+	Fri, 30 Aug 2024 13:39:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L7aY1pXW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9AE8F16DC3D;
-	Fri, 30 Aug 2024 12:54:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BF61D1305;
+	Fri, 30 Aug 2024 13:39:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725022444; cv=none; b=e6wg0FNI9SeZbXRN2VjbCZjK3qCqznznRczp5f36E9/BN5omD9uln3HXTrY5cUaa4uRkxX+p2t5sZw2Mm80auOsTJjJSwdlKpfmNs/BOXTcFofDXC/I8QLwpyexN0d20cMqMcggN0AlNON9CDn/xMZ1lm0Uk1d1zh4Xv+poT5bU=
+	t=1725025170; cv=none; b=CNunh4XsH9nXKI9of8WwOZPXUTuL1S+Rb/ilZwXJhN0ZCdp01MyBE//6224HH78MNYs5lSZZjeaQQvbf7x296DNA+xHXAOQXv6wougmHrxmvKlxsSXFjA4D6ACeQjnkFiSvUs/e2l2+qfC7ltW72ZggbTTfjpbUGErAoeHBqJn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725022444; c=relaxed/simple;
-	bh=Zq61/A7v10LBO9Fzob+2az5/LlVNojC3XIEiFP1NTi4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PqTpOsqDPOGe0M5pQ+FonPrBfg08GNvuZNF49eWtrpmqF7GQj7tdXPY5e9cfA6NfQRrdojQdWDV/RGNJQbnU+cvrPXuS/GWKMqDbgC9enUgoMfVojtpiYc2Y5TTo45KrYHCesvQ6hzjZn7fiJXPoIiEX6NL8i7p2Z5NJVsxmSOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0D46A1063;
-	Fri, 30 Aug 2024 05:54:27 -0700 (PDT)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B12D83F66E;
-	Fri, 30 Aug 2024 05:53:58 -0700 (PDT)
-Message-ID: <fe5fcd06-ff28-4171-aa22-1bdc1e8510d0@arm.com>
-Date: Fri, 30 Aug 2024 13:53:57 +0100
+	s=arc-20240116; t=1725025170; c=relaxed/simple;
+	bh=uVq1JUP82sSYRL8HVnjc53Jwj+KQIHIMQcKZeNj96Mw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=B0iV2tq/NNsd3ukD1uiV0iNjysbvaTnOwpByWmlplY4bszoPtBmJLcAY0vcADLxwAHDwX2c35MhI+10y0weHnXmn2VTYonPDM8Q+q4njm+RpF/ZBF8JQ4y4WBHMPFaq612Ys3uzf8BU69iNtjFYdzjDvotEAV9KegFSPaPxpGN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L7aY1pXW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U80BZI011434;
+	Fri, 30 Aug 2024 13:39:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=CoOr2HN15nF8r7fQEfoG1Y
+	3ol5UgNAjHoywlmgPJch8=; b=L7aY1pXWoTJH4mJ0bRvvqODeFwkQfspQmFGhkY
+	w/Q9YFlXddw6uxt7X3wJUTv6pCZye43U6R41EymhonkSn8CyfpVS2NFybX1ak4sn
+	LjJ+CJakhISwcGzeXLH8EslWaIz45UCR3ct05kQs2IDvsS75HLBNc42YEI2bt/Qe
+	K9uEvkXwBQsogSIETXHZ/NYsDBDEWqlsHox+JZX/qiT2scewUV9z4SHCwq7FJz3V
+	6oHa7tZMKTKQNi2cN8IrLR4IBqpobs6iu2rkXA1jqiL9Uiltn8k6yjsV+B839l/1
+	KoPMle5UfDhIl5MbcpctV7qEbz2QXbH94vpE5Cc+ayQ1ZUtA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419pv0s4d0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 13:39:25 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47UDdNpa011828
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 13:39:23 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 30 Aug 2024 06:39:20 -0700
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: <conor+dt@kernel.org>, <krzk+dt@kernel.org>, <robh@kernel.org>,
+        <konradybcio@kernel.org>, <andersson@kernel.org>, <lee@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Mukesh Ojha <quic_mojha@quicinc.com>,
+        "Elliot
+ Berman" <quic_eberman@quicinc.com>
+Subject: [PATCH v2 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for sa8775p
+Date: Fri, 30 Aug 2024 19:09:07 +0530
+Message-ID: <20240830133908.2246139-1-quic_mojha@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 1/6] iommu/arm-smmu: re-enable context caching in smmu
- reset operation
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, robdclark@gmail.com,
- will@kernel.org, joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com,
- robh@kernel.org, krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
- dmitry.baryshkov@linaro.org, konrad.dybcio@linaro.org
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20240816174259.2056829-1-quic_bibekkum@quicinc.com>
- <20240816174259.2056829-2-quic_bibekkum@quicinc.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20240816174259.2056829-2-quic_bibekkum@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: e_ImQjHIbGK6EzfyfyQk0uuEYvUkIZa0
+X-Proofpoint-ORIG-GUID: e_ImQjHIbGK6EzfyfyQk0uuEYvUkIZa0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-30_08,2024-08-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=968 bulkscore=0 impostorscore=0 phishscore=0 clxscore=1011
+ mlxscore=0 spamscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408300104
 
-On 16/08/2024 6:42 pm, Bibek Kumar Patro wrote:
-> Default MMU-500 reset operation disables context caching in
-> prefetch buffer. It is however expected for context banks using
-> the ACTLR register to retain their prefetch value during reset
-> and runtime suspend.
-> 
-> Replace default MMU-500 reset operation with Qualcomm specific reset
-> operation which envelope the default reset operation and re-enables
-> context caching in prefetch buffer for Qualcomm SoCs.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 36 ++++++++++++++++++++--
->   1 file changed, 33 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 36c6b36ad4ff..8ac1850b852f 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -16,6 +16,16 @@
-> 
->   #define QCOM_DUMMY_VAL	-1
-> 
-> +/*
-> + * SMMU-500 TRM defines BIT(0) as CMTLB (Enable context caching in the
-> + * macro TLB) and BIT(1) as CPRE (Enable context caching in the prefetch
-> + * buffer). The remaining bits are implementation defined and vary across
-> + * SoCs.
-> + */
-> +
-> +#define CPRE			(1 << 1)
-> +#define CMTLB			(1 << 0)
-> +
->   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->   {
->   	return container_of(smmu, struct qcom_smmu, smmu);
-> @@ -381,11 +391,31 @@ static int qcom_smmu_def_domain_type(struct device *dev)
->   	return match ? IOMMU_DOMAIN_IDENTITY : 0;
->   }
-> 
-> +static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
-> +{
-> +	int ret;
-> +	u32 val;
-> +	int i;
-> +
-> +	ret = arm_mmu500_reset(smmu);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* arm_mmu500_reset() disables CPRE which is re-enabled here */
+Document the compatible for sa8775p SoC.
 
-I still think it would be good to document why we think this is OK, 
-given the reasons for disabling CPRE to begin with.
+Reviewed-by: Elliot Berman <quic_eberman@quicinc.com>
+Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+---
+Changes in v2:
+ - Added R-by tag and rebased it.
 
-Thanks,
-Robin.
+ Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-> +	for (i = 0; i < smmu->num_context_banks; ++i) {
-> +		val = arm_smmu_cb_read(smmu, i, ARM_SMMU_CB_ACTLR);
-> +		val |= CPRE;
-> +		arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_ACTLR, val);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   static int qcom_sdm845_smmu500_reset(struct arm_smmu_device *smmu)
->   {
->   	int ret;
-> 
-> -	arm_mmu500_reset(smmu);
-> +	qcom_smmu500_reset(smmu);
-> 
->   	/*
->   	 * To address performance degradation in non-real time clients,
-> @@ -412,7 +442,7 @@ static const struct arm_smmu_impl qcom_smmu_500_impl = {
->   	.init_context = qcom_smmu_init_context,
->   	.cfg_probe = qcom_smmu_cfg_probe,
->   	.def_domain_type = qcom_smmu_def_domain_type,
-> -	.reset = arm_mmu500_reset,
-> +	.reset = qcom_smmu500_reset,
->   	.write_s2cr = qcom_smmu_write_s2cr,
->   	.tlb_sync = qcom_smmu_tlb_sync,
->   #ifdef CONFIG_ARM_SMMU_QCOM_DEBUG
-> @@ -445,7 +475,7 @@ static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
->   static const struct arm_smmu_impl qcom_adreno_smmu_500_impl = {
->   	.init_context = qcom_adreno_smmu_init_context,
->   	.def_domain_type = qcom_smmu_def_domain_type,
-> -	.reset = arm_mmu500_reset,
-> +	.reset = qcom_smmu500_reset,
->   	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
->   	.write_sctlr = qcom_adreno_smmu_write_sctlr,
->   	.tlb_sync = qcom_smmu_tlb_sync,
-> --
-> 2.34.1
-> 
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+index c6bd14ec5aa0..7d0b0b403150 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -21,6 +21,7 @@ properties:
+           - qcom,msm8998-tcsr
+           - qcom,qcm2290-tcsr
+           - qcom,qcs404-tcsr
++          - qcom,sa8775p-tcsr
+           - qcom,sc7180-tcsr
+           - qcom,sc7280-tcsr
+           - qcom,sc8280xp-tcsr
+-- 
+2.34.1
+
 
