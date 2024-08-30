@@ -1,108 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-30169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 673B2965996
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:11:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7163B9659B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:12:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CF372B22A91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:11:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26DF61F23F49
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:12:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5E2D158A37;
-	Fri, 30 Aug 2024 08:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1D8916C68F;
+	Fri, 30 Aug 2024 08:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhNsIyEK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f6gk6D9W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAB51509A8;
-	Fri, 30 Aug 2024 08:10:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524DD1662E9;
+	Fri, 30 Aug 2024 08:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725005450; cv=none; b=hNOZszWxDgN48KJdw9ABkWgfH6DNuYAQn4L4cw+SBj+iifuRCMWt0nHvjheJ7gqD9Be7SOda6gOZSUQKY1x3lwhct4ZT9N9QJnm3R1K8kApjHC/EDqAgtJDMZLKf9vcbo2jylBPk5dGLKcklDfr+X+4mNq9DzySPorfSKETYjHw=
+	t=1725005552; cv=none; b=Wsv+gS4wNQmZ2hj6zH25Lwoeol1tTtEQNTHIJyoNKHubOBfXx/im0wUxO/b5JboNDIdswUbrhEtAdRyi31VU3VIkqhrg38XZ0k/ekERxJjXmCDfTrzHg6VQ+Mln83iZdAdxddpF7x1ZhqHq26HlmlIVkOJrxSZjf4khGUG5NyhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725005450; c=relaxed/simple;
-	bh=xYuItBQNMP96MzefUyk+q8WjjT2Y1ucVlzEXtvlMHcs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=jqR0G/JrN7XwOdE3wz6EbjYZ9QBpzkfNBhEommXLLMG8Eh+ykDf2MTO0ZXhrHfU2EbEIyvWrtut3qB8ukj8rb9J8k3DHI0mCHwhPvTk9Fdk9DkridfWhxShq+9PuRZrFh5aJcSjvUndyUWOg5KmDrLHBOKlelOY1GXAfccJdWYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhNsIyEK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA72C4CEC2;
-	Fri, 30 Aug 2024 08:10:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725005450;
-	bh=xYuItBQNMP96MzefUyk+q8WjjT2Y1ucVlzEXtvlMHcs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=OhNsIyEK3V2pCrW3tzn7S5hCisdmB5E7oCfj25Oo0JKAAK/Ujg7pBCHKQSugzFyQu
-	 UFXzC0iB4ftTxjcrMOUucHRNlgoVhvUnxMBlfRlTJpVqbO6f3pcWSbuZYpxFd+Vv58
-	 BpPAenoG07doPHMHViJIFhtwq6o09PH3ifnCqogtyn15eeDynet6mz08iSVdq9bF8u
-	 IvmINMgaqU3z8r+lKg4E15douPhE9VqP3LR9fEY6GgF1RGoTLwQQEX6ficnww3IYA8
-	 swmt4k0NWxFg+yOzlLsIq7D5pNZCzBsVZ38wZ3hNGjsy1G0jrHsOfgTreO5fEJ3hSg
-	 hRnQD6f+DVunw==
-From: Vinod Koul <vkoul@kernel.org>
-To: Kishon Vijay Abraham I <kishon@kernel.org>, Ray Jui <rjui@broadcom.com>, 
- Scott Branden <sbranden@broadcom.com>, 
- Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
- Chunfeng Yun <chunfeng.yun@mediatek.com>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: linux-phy@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, linux-mediatek@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org
-In-Reply-To: <20240826-phy-of-node-scope-v1-0-5b4d82582644@linaro.org>
-References: <20240826-phy-of-node-scope-v1-0-5b4d82582644@linaro.org>
-Subject: Re: [PATCH 00/11] phy: simplify with cleanup.h and few other ideas
-Message-Id: <172500544630.434293.13040748970370817856.b4-ty@kernel.org>
-Date: Fri, 30 Aug 2024 13:40:46 +0530
+	s=arc-20240116; t=1725005552; c=relaxed/simple;
+	bh=Uhxa9m/XpteOfUJZw2Q2F5tehPi1ofHMzr1Dy9LkPvo=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=BcqzqLgPtdSoa7ZGjNWk93J5c7U3N8Dp1SlJX2m8Vnk7rD7jG2SE8n9Nb5rXgLHRfNr87QnusCh4ZQRqjdHPrlYQMESFnL6qZUtulY+stlSl+4o/BQaMNbpiod4Fx1FTu4ab8r/MYVQ+Ns8wlkTevxYDybwb9qoPhfHc2R6LdYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f6gk6D9W; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47U82FKK014817;
+	Fri, 30 Aug 2024 08:12:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=WzhEQEwjdllwj0vXOBom7x
+	uTc7Ztg2B5E/X6dg14QpA=; b=f6gk6D9WwtGHIt5gkp9TZb/NKW/a/XmVQI1onI
+	jq152p+AlX0oOialE1DmqF/+NkUa6z9dmiPJhLMN3QGZaGPippSTnwtLpZmoZvg6
+	1xvHWmfabPu9GBIBCbpktvM2ASvR8mOVKmCEQi7uf01UoirwxMnC03WlrteDupL2
+	ao3snsyT+uvQJnZni2YuHoTDoFKQG7np+4tsDn/hY9B3OiguwOPNOGL4uNWNaXp9
+	TAXnaYuJBHR4562m8wSypNZBRIEri+FJ6ya2QDUbKRyjzWsj7J8oiDULT0v35qfm
+	rPM7oRnd9w7PxNfMQz1AhWyMaTypqahK7L2mriOs0F3/mqLA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 419px5qsyv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 08:12:10 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47U8Bqr9006343
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 08:11:52 GMT
+Received: from hu-srichara-blr.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 30 Aug 2024 01:11:46 -0700
+From: Sricharan R <quic_srichara@quicinc.com>
+To: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
+        <manivannan.sadhasivam@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <vkoul@kernel.org>,
+        <kishon@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <p.zabel@pengutronix.de>, <dmitry.baryshkov@linaro.org>,
+        <quic_nsekar@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pci@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <robimarko@gmail.com>, <quic_srichara@quicinc.com>
+Subject: [PATCH V3 0/6] Enable IPQ5018 PCI support
+Date: Fri, 30 Aug 2024 13:41:26 +0530
+Message-ID: <20240830081132.4016860-1-quic_srichara@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.13.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: q7F81tEDt44XnZU3hI6WA4efSH2nwZDP
+X-Proofpoint-GUID: q7F81tEDt44XnZU3hI6WA4efSH2nwZDP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-30_03,2024-08-29_02,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ adultscore=0 suspectscore=0 lowpriorityscore=0 mlxlogscore=887 spamscore=0
+ priorityscore=1501 bulkscore=0 mlxscore=0 malwarescore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2408300060
 
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 
-On Mon, 26 Aug 2024 12:07:16 +0200, Krzysztof Kozlowski wrote:
-> Make code simpler with scoped/cleanup.h/dev_err_probe.
-> 
-> Best regards,
-> Krzysztof
-> 
+This patch series adds the relevant phy and controller
+DT configurations for enabling PCI gen2 support
+on IPQ5018.
 
-Applied, thanks!
+v3:
+  Added Reviewed-by tag for patch#1.
+  Fixed dev_err_probe usage in patch#3.
+  Added pinctrl/wak pins for pcie1 in patch#6.
 
-[01/11] phy: broadcom: bcm-cygnus-pcie: Simplify with scoped for each OF child loop
-        commit: e33525de6c3c7780564e0859ea6daef27309995b
-[02/11] phy: broadcom: brcm-sata: Simplify with scoped for each OF child loop
-        commit: a7f1dbf479d2a3cbf2a25bd186bbe15efd17d849
-[03/11] phy: cadence: sierra: Simplify with scoped for each OF child loop
-        commit: 612f9fcb435fdc9abd46b6339c9000cef6d323a2
-[04/11] phy: hisilicon: usb2: Simplify with scoped for each OF child loop
-        commit: 93cab07a02f08e4a2837dd22280b741ba0a7a541
-[05/11] phy: mediatek: tphy: Simplify with scoped for each OF child loop
-        commit: d2714416770ed0cecaf69eaff34d20817f2c3bea
-[06/11] phy: mediatek: xsphy: Simplify with scoped for each OF child loop
-        commit: 77df35acd182a23c117a937ffd6b0830a5428649
-[07/11] phy: qcom: qmp-pcie-msm8996: Simplify with scoped for each OF child loop
-        commit: 608863e1e600a4d91b00dddd6ff11eda1cbebaa5
-[08/11] phy: ti: am654-serdes: Use scoped device node handling to simplify error paths
-        commit: 29b44a38503856952862c710d47d933c0173fd04
-[09/11] phy: ti: gmii-sel: Simplify with dev_err_probe()
-        commit: 27a4046255377eb0faab5c41fd271b1acab1ac41
-[10/11] phy: ti: j721e-wiz: Drop OF node reference earlier for simpler code
-        commit: afd7aaf3ecaf1b247db1294ef0687fb3cb530213
-[11/11] phy: ti: j721e-wiz: Simplify with scoped for each OF child loop
-        commit: 0d5a213c2eae880e0f7f8bc252314bae194d68d8
+v2:
+  Fixed all review comments from Krzysztof, Robert Marko,
+  Dmitry Baryshkov, Manivannan Sadhasivam, Konrad Dybcio.
+  Updated the respective patches for their changes.
 
-Best regards,
+v1:
+ https://lore.kernel.org/lkml/32389b66-48f3-8ee8-e2f1-1613feed3cc7@gmail.com/T/
+
+Nitheesh Sekar (5):
+  dt-bindings: phy: qcom,uniphy-pcie: Document PCIe uniphy
+  dt-bindings: PCI: qcom: Add IPQ5108 SoC
+  phy: qcom: Introduce PCIe UNIPHY 28LP driver
+  arm64: dts: qcom: ipq5018: Add PCIe related nodes
+  arm64: dts: qcom: ipq5018: Enable PCIe
+
+Sricharan R (1):
+  PCI: qcom: Add support for IPQ5018
+
+ .../devicetree/bindings/pci/qcom,pcie.yaml    |  35 ++
+ .../phy/qcom,ipq5018-uniphy-pcie.yaml         |  70 ++++
+ .../arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  37 ++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 168 ++++++++-
+ drivers/pci/controller/dwc/pcie-qcom.c        |   1 +
+ drivers/phy/qualcomm/Kconfig                  |  12 +
+ drivers/phy/qualcomm/Makefile                 |   1 +
+ .../phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c  | 346 ++++++++++++++++++
+ 8 files changed, 668 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy-pcie-28lp.c
+
 -- 
-~Vinod
-
+2.34.1
 
 
