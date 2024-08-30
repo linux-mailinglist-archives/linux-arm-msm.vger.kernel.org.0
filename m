@@ -1,65 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D02C6965EC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:21:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1B26965E2E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:14:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F05A1F28C28
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:21:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6C4E1C24CE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:14:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41576192D69;
-	Fri, 30 Aug 2024 10:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6309F18A6A2;
+	Fri, 30 Aug 2024 10:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kXZyuVjL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NWw21wlV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D69D1B81CA;
-	Fri, 30 Aug 2024 10:13:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C23C189B9E;
+	Fri, 30 Aug 2024 10:11:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725012814; cv=none; b=D3l0L7fLsVVRRASCtnr4a0/SFN6nuJOJnyWfNvkk6NLY7YtK2t5vAGfg0l3inzH3i2ibB2hejib0zSnvdfumehM/ipzayYoAqE39tTC8KHXnXJjeujrUlCBsd8IyQElWOd7LcvGJeTspzTe8blMLRZz2pqBWOmOTG650Jdg5pIA=
+	t=1725012687; cv=none; b=ZD/sDjLHPdd4s3esGV5r75ZzYpTEkQFM9Wiz72zv4jlBZc2a9WqGI8Vt1omc9vSIGF7sGdXaVksw68Xjh1GIh0kdjVPlUy56guq3FAbgVP+JRySCd6HzmIg7MumZA+4bj0uZU0cHpUiPBG883/XIsTkNwwSv+kmBVKS+Ihk+4ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725012814; c=relaxed/simple;
-	bh=dQXMhFDkjliFhmplZpCGpyMLGcjFXo2Jfh64aGjcXMw=;
+	s=arc-20240116; t=1725012687; c=relaxed/simple;
+	bh=SNJUm5M4m6/Ol3FXxzaJa4l8sLQfdcQU5E9AymsEN2g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lDs7DqhEa56rZghML64nsNSzhQeTQTOghGpZsURabk/sVuqZuYdp+nDQ1aCF/+Ojk8e7/S4FB56iJNd6wPP+YiypZSbBdwLRA8hqzg+ucpZIuP7B9tH4KT3w9vf7j+2KUm8wXlXXSsl8YXGg8v6W8E6LqzqkrGUiEXyrwSsfEuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kXZyuVjL; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1725012813; x=1756548813;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=dQXMhFDkjliFhmplZpCGpyMLGcjFXo2Jfh64aGjcXMw=;
-  b=kXZyuVjLmPwTgZ9wavnuwsXI8E04akYpYiK3V38xP92XJ3FAxgBl9Ml7
-   crWAlMctIkVI1+9qFoxNYzfoaUwiqnCKSxrbmc4NN4KgdXvBt5ML4k9Ov
-   PuIGh5OntWTBAMhYwVXIp79uWwUDmhVPiuvmoDQZjbUtxhs+YPaQYO0y7
-   4YoQ1L/CSnWb9Go3qL9AJw1J6eCmLVsu6ViSXvPBY0PRJqe8uUuR03EON
-   0TDhB8JK2+kRwTG/0GcjOoXwOB4iotN3pHm2KTDvNUEWzyNpPzXaqRGFf
-   HtgF6b8carAiQfWZ+HEffsMK6O1b9hGnUHBT8TheejpLTMxh3Hmstcm3z
-   Q==;
-X-CSE-ConnectionGUID: Nfj1Ifa8S6mdOdFO5iMZdA==
-X-CSE-MsgGUID: pX50qCKLQgW/ro4x2J813A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11179"; a="27526439"
-X-IronPort-AV: E=Sophos;i="6.10,188,1719903600"; 
-   d="scan'208";a="27526439"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2024 03:13:33 -0700
-X-CSE-ConnectionGUID: jZv7umMAQTa+WZQnioMLSw==
-X-CSE-MsgGUID: TeO4kTqySN6J2+ljLQaQ4g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,188,1719903600"; 
-   d="scan'208";a="68013163"
-Received: from ltuz-desk.ger.corp.intel.com (HELO [10.245.246.101]) ([10.245.246.101])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Aug 2024 03:13:26 -0700
-Message-ID: <b682bd8f-2743-42cf-b51f-1444faf4635f@linux.intel.com>
-Date: Fri, 30 Aug 2024 12:05:58 +0200
+	 In-Reply-To:Content-Type; b=n4cJjv+wJAcCNWsoMFXp3KlaSmCIo/yQFSkzwETogAkJcVF0CSHavI65wqd8GCemmjIflDO2wAn9CldWyXL7/VwgVaBTvKTVcUFg5TjX4ePBNOo/HMJ8cBeDE1A/iPPhxasOaevePHJ+Rmolwe1eq5mlthwnjT/+ht2Fsv7NJCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWw21wlV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481FBC4CEC6;
+	Fri, 30 Aug 2024 10:11:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725012686;
+	bh=SNJUm5M4m6/Ol3FXxzaJa4l8sLQfdcQU5E9AymsEN2g=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=NWw21wlVyfWEBrS68LaNiH6zLQLL1y8oJtacSZMH6nd9veMnBBGeDsg9OgDudxjhz
+	 m4P592lGL8ep0sfwzcEhyrs1hCJkAD4p3ieHwaSHiJfzKo1CQypX3B6AwXXplsemFT
+	 1uBe1zoGtsz7iBjX7ZHr62ZoVyRQjhN1ofKMAPS+m6UXgBO3sBMd4o9v0mmdsfRtVl
+	 ScwYpjC0PaLJb9QsBlfKCJnvkmWGvYiFXbviaLdXJfThOFxl+yTekM7czUZmxkQlKU
+	 dsBnEc2Hyla7Zs8CMIqaVknX/Ih3y0STDqB8KtWHUQ7a+n16wSQ/BtLYMwfRI+Hs7u
+	 dalSkkMUlss2w==
+Message-ID: <0a79b9df-4ca4-4dc8-9930-3fa1dc7d3174@kernel.org>
+Date: Fri, 30 Aug 2024 12:11:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,270 +50,265 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v26 31/33] ALSA: usb-audio: Add USB offload route kcontrol
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- dmitry.torokhov@gmail.com, corbet@lwn.net, broonie@kernel.org,
- lgirdwood@gmail.com, tiwai@suse.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, robh@kernel.org,
- gregkh@linuxfoundation.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20240829194105.1504814-1-quic_wcheng@quicinc.com>
- <20240829194105.1504814-32-quic_wcheng@quicinc.com>
+Subject: Re: [PATCH v1 1/7] dt-bindings: arm: Add support for Coresight TGU
+ trace
+To: songchai <quic_songchai@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20240830092311.14400-1-quic_songchai@quicinc.com>
+ <20240830092311.14400-2-quic_songchai@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20240829194105.1504814-32-quic_wcheng@quicinc.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240830092311.14400-2-quic_songchai@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 8/29/24 21:41, Wesley Cheng wrote:
-> In order to allow userspace/applications know about USB offloading status,
-> expose a sound kcontrol that fetches information about which sound card
-> and PCM index the USB device is mapped to for supporting offloading.  In
-> the USB audio offloading framework, the ASoC BE DAI link is the entity
-> responsible for registering to the SOC USB layer.
+On 30/08/2024 11:23, songchai wrote:
+> The Trigger Generation Unit (TGU) is designed to detect patterns or
+> sequences within a specific region of the System on Chip (SoC). Once
+> configured and activated, it monitors sense inputs and can detect a
+> pre-programmed state or sequence across clock cycles, subsequently
+> producing a trigger.
 > 
-> It is expected for the USB SND offloading driver to add the kcontrol to the
-> sound card associated with the USB audio device.  An example output would
-> look like:
-
-this is very odd, the offloading driver adds a control to another card?
-
-That seems like a rather important layering violation.
-
-I thought it was done the other way, the USB audio card created a
-control that would point to the other card/device.
-
-
+>    TGU configuration space
+>         offset table
+>  x-------------------------x
+>  |                         |
+>  |                         |
+>  |                         |                           Step configuration
+>  |                         |                             space layout
+>  |   coresight management  |                           x-------------x
+>  |        registers        |                     |---> |             |
+>  |                         |                     |     |  reserve    |
+>  |                         |                     |     |             |
+>  |-------------------------|                     |     |-------------|
+>  |                         |                     |     | prioroty[3] |
+>  |         step[7]         |<--                  |     |-------------|
+>  |-------------------------|   |                 |     | prioroty[2] |
+>  |                         |   |                 |     |-------------|
+>  |           ...           |   |Steps region     |     | prioroty[1] |
+>  |                         |   |                 |     |-------------|
+>  |-------------------------|   |                 |     | prioroty[0] |
+>  |                         |<--                  |     |-------------|
+>  |         step[0]         |-------------------->      |             |
+>  |-------------------------|                           |  condition  |
+>  |                         |                           |             |
+>  |     control and status  |                           x-------------x
+>  |           space         |                           |             |
+>  x-------------------------x                           |Timer/Counter|
+>                                                        |             |
+> 						       x-------------x
+> TGU Configuration in Hardware
 > 
-> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
-> -1, -1 (range -1->255)
+> The TGU provides a step region for user configuration, similar
+> to a flow chart. Each step region consists of three register clusters:
 > 
-> This example signifies that there is no mapped ASoC path available for the
-> USB SND device.
-
-but that control would not even exist if the ASoC-based driver isn't probed.
-
-It's become really hard to follow, I've been on all this for 1.5hrs and
-losing track of the design.
-
-> tinymix -D 1 get 'USB Offload Playback Route PCM#0'
-> 0, 0 (range -1->255)
+> 1.Priority Region: Sets the required signals with priority.
+> 2.Condition Region: Defines specific requirements (e.g., signal A
+> reaches three times) and the subsequent action once the requirement is
+> met.
+> 3.Timer/Counter (Optional): Provides timing or counting functionality.
 > 
-> This example signifies that the offload path is available over ASoC sound
-> card index#0 and PCM device#0.
+> Add a new coresight-tgu.yaml file to describe the bindings required to
+> define the TGU in the device trees.
 > 
-> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> Signed-off-by: songchai <quic_songchai@quicinc.com>
+
+It feels like you are using login name as real name. Please investigate
+this and confirm whether latin transcription/transliteration of your
+name is like above.
+
 > ---
->  sound/usb/Kconfig                 |  10 +++
->  sound/usb/Makefile                |   2 +
->  sound/usb/mixer_usb_offload.c     | 102 ++++++++++++++++++++++++++++++
->  sound/usb/mixer_usb_offload.h     |  17 +++++
->  sound/usb/qcom/Makefile           |   2 +-
->  sound/usb/qcom/qc_audio_offload.c |   2 +
->  6 files changed, 134 insertions(+), 1 deletion(-)
->  create mode 100644 sound/usb/mixer_usb_offload.c
->  create mode 100644 sound/usb/mixer_usb_offload.h
+>  .../bindings/arm/qcom,coresight-tgu.yaml      | 136 ++++++++++++++++++
+>  1 file changed, 136 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
 > 
-> diff --git a/sound/usb/Kconfig b/sound/usb/Kconfig
-> index 5cc3eaf53e6b..e3fbf9541d0b 100644
-> --- a/sound/usb/Kconfig
-> +++ b/sound/usb/Kconfig
-> @@ -176,10 +176,20 @@ config SND_BCD2000
->  	  To compile this driver as a module, choose M here: the module
->  	  will be called snd-bcd2000.
->  
-> +config SND_USB_OFFLOAD_MIXER
-> +	tristate "USB Audio Offload mixer control"
-> +	help
-> +	 Say Y to enable the USB audio offloading mixer controls.  This
-> +	 exposes an USB offload capable kcontrol to signal to applications
-> +	 about which platform sound card can support USB audio offload.
-> +	 The returning values specify the mapped ASoC card and PCM device
-> +	 the USB audio device is associated to.
-> +
->  config SND_USB_AUDIO_QMI
->  	tristate "Qualcomm Audio Offload driver"
->  	depends on QCOM_QMI_HELPERS && SND_USB_AUDIO && USB_XHCI_SIDEBAND && SND_SOC_USB
->  	select SND_PCM
-> +	select SND_USB_OFFLOAD_MIXER
->  	help
->  	  Say Y here to enable the Qualcomm USB audio offloading feature.
->  
-> diff --git a/sound/usb/Makefile b/sound/usb/Makefile
-> index 54a06a2f73ca..2f19f854944c 100644
-> --- a/sound/usb/Makefile
-> +++ b/sound/usb/Makefile
-> @@ -36,3 +36,5 @@ obj-$(CONFIG_SND_USB_US122L) += snd-usbmidi-lib.o
->  
->  obj-$(CONFIG_SND) += misc/ usx2y/ caiaq/ 6fire/ hiface/ bcd2000/ qcom/
->  obj-$(CONFIG_SND_USB_LINE6)	+= line6/
-> +
-> +obj-$(CONFIG_SND_USB_OFFLOAD_MIXER) += mixer_usb_offload.o
-> diff --git a/sound/usb/mixer_usb_offload.c b/sound/usb/mixer_usb_offload.c
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
 > new file mode 100644
-> index 000000000000..16e2fd634684
+> index 000000000000..c261252e33e0
 > --- /dev/null
-> +++ b/sound/usb/mixer_usb_offload.c
-> @@ -0,0 +1,102 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
+> @@ -0,0 +1,136 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tgu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +#include <linux/usb.h>
+> +title: Trigger Generation Unit - TGU
 > +
-> +#include <sound/core.h>
-> +#include <sound/control.h>
-> +#include <sound/soc-usb.h>
+> +description: |
+> +  The Trigger Generation Unit (TGU) is a Data Engine which can be utilized
+> +  to sense a plurality of signals and create a trigger into the CTI or
+> +  generate interrupts to processors. The TGU is like the trigger circuit
+> +  of a Logic Analyzer.The corresponding trigger logic can be realized by
+> +  configuring the conditions for each step after sensing the signal.
+> +  Once setup and enabled, it will observe sense inputs and based upon
+> +  the activity of those inputs, even over clock cycles, may detect a
+> +  preprogrammed state/sequence and then produce a trigger or interrupt.
 > +
-> +#include "usbaudio.h"
-> +#include "card.h"
-> +#include "helper.h"
-> +#include "mixer.h"
+> +  The primary use case of the TGU is to detect patterns or sequences on a
+> +  given set of signals within some region of the SoC.
 > +
-> +#include "mixer_usb_offload.h"
+> +maintainers:
+> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> +  - Sam Chai <quic_songchai@quicinc.com>
 > +
-> +#define PCM_IDX(n)  ((n) & 0xffff)
-> +#define CARD_IDX(n) ((n) >> 16)
+> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
+> +select:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        enum:
+> +          - qcom,coresight-tgu
+> +  required:
+> +    - compatible
 > +
-> +static int
-> +snd_usb_offload_route_get(struct snd_kcontrol *kcontrol,
-> +			  struct snd_ctl_elem_value *ucontrol)
-> +{
-> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
-> +	int ret;
+> +properties:
+> +  $nodename:
+> +    pattern: "^tgu(@[0-9a-f]+)$"
+
+Drop the pattern (and anyway @ is not optional).
+
+> +  compatible:
+> +    items:
+> +      - const: qcom,coresight-tgu
+> +      - const: arm,primecell
 > +
-> +	ret = snd_soc_usb_update_offload_route(sysdev,
-> +					       CARD_IDX(kcontrol->private_value),
-> +					       PCM_IDX(kcontrol->private_value),
-> +					       SNDRV_PCM_STREAM_PLAYBACK,
-> +					       ucontrol->value.integer.value);
-> +	if (ret < 0) {
-> +		ucontrol->value.integer.value[0] = -1;
-> +		ucontrol->value.integer.value[1] = -1;
-> +	}
+> +  reg:
+> +    maxItems: 1
 > +
-> +	return 0;
-> +}
+> +  clocks:
+> +    maxItems: 1
 > +
-> +static int snd_usb_offload_route_info(struct snd_kcontrol *kcontrol,
-> +				      struct snd_ctl_elem_info *uinfo)
-> +{
-> +	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
-> +	uinfo->count = 2;
-> +	uinfo->value.integer.min = -1;
-> +	/* Arbitrary max value, as there is no 'limit' on number of PCM devices */
-> +	uinfo->value.integer.max = 0xff;
+> +  clock-names:
+> +    items:
+> +      - const: apb_pclk
 > +
-> +	return 0;
-> +}
+> +  qcom,tgu-steps:
+> +    description:
+> +      The trigger logic is realized by configuring each step after sensing
+> +      the signal. The parameter here is used to describe the maximum of steps
+> +      that could be configured in the current TGU.
+
+Why this is board or SoC level property? All below also feel like
+unnecessary stuff from downstream.
+
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 8
 > +
-> +static struct snd_kcontrol_new snd_usb_offload_mapped_ctl = {
-> +	.iface = SNDRV_CTL_ELEM_IFACE_CARD,
-> +	.access = SNDRV_CTL_ELEM_ACCESS_READ,
-> +	.info = snd_usb_offload_route_info,
-> +	.get = snd_usb_offload_route_get,
-> +};
+> +  qcom,tgu-regs:
+> +    description:
+> +      There are some "groups" register clusters in each step, which are used to configure the signal
+> +      that we want to detect.Meanwhile, each group has its own priority, and the priority increases
+> +      with number of groups.For example, group3 has a higher priority than group2 ,the signal configured
+> +      in group3 will be sensed more preferentially than the signal which is configured in group2.
+> +      The parameter here is used to describe the signal number that each group could be configured.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 18
 > +
-> +/**
-> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
-> + * @chip - USB SND chip device
-> + *
-> + * Creates a sound control for a USB audio device, so that applications can
-> + * query for if there is an available USB audio offload path, and which
-> + * card is managing it.
-> + */
-> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
-> +{
-> +	struct usb_device *udev = chip->dev;
-> +	struct snd_kcontrol_new *chip_kctl;
-> +	struct snd_usb_substream *subs;
-> +	struct snd_usb_stream *as;
-> +	char ctl_name[37];
-> +	int ret;
+> +  qcom,tgu-conditions:
+> +    description:
+> +      A condition sets a specific requirement for a step and defines the subsequent
+> +      action once the requirement is met. For example, in step two, if signal A is
+> +      detected three times, the process jumps back to step one. The parameter describes
+> +      the register number for each functionality, whether it is setting a specific
+> +      requirement or defining a subsequent action.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 4
 > +
-> +	list_for_each_entry(as, &chip->pcm_list, list) {
-> +		subs = &as->substream[SNDRV_PCM_STREAM_PLAYBACK];
-> +		if (!subs->ep_num)
-> +			continue;
+> +  qcom,tgu-timer-counters:
+> +    description:
+> +      TGU has timer and counter which are used to set some requirement on each step.
+> +      For example, we could use counter to create a trigger into CTI once TGU senses
+> +      the target signal three times.This parameter is used to describe the number of
+> +      Timers/Counters in TGU.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 2
 > +
-> +		chip_kctl = &snd_usb_offload_mapped_ctl;
-> +		chip_kctl->count = 1;
-> +		/*
-> +		 * Store the associated USB SND card number and PCM index for
-> +		 * the kctl.
-> +		 */
-> +		chip_kctl->private_value = as->pcm_index |
-> +					  chip->card->number << 16;
-> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
-> +			as->pcm_index);
-> +		chip_kctl->name = ctl_name;
-> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
-> +				  udev->bus->sysdev));
-> +		if (ret < 0)
-> +			break;
-> +	}
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    additionalProperties: false
 > +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(snd_usb_offload_create_ctl);
-> diff --git a/sound/usb/mixer_usb_offload.h b/sound/usb/mixer_usb_offload.h
-> new file mode 100644
-> index 000000000000..3f6e2a8b19c8
-> --- /dev/null
-> +++ b/sound/usb/mixer_usb_offload.h
-> @@ -0,0 +1,17 @@
-> +/* SPDX-License-Identifier: GPL-2.0
-> + *
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+> +    properties:
+> +      port:
+> +        description: AXI Slave connected to another Coresight component
+> +        $ref: /schemas/graph.yaml#/properties/port
 > +
-> +#ifndef __USB_OFFLOAD_MIXER_H
-> +#define __USB_OFFLOAD_MIXER_H
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
 > +
-> +#if IS_ENABLED(CONFIG_SND_USB_OFFLOAD_MIXER)
-> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip);
-> +#else
-> +static inline int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
-> +{
-> +	return 0;
-> +}
-> +#endif
-> +#endif /* __USB_OFFLOAD_MIXER_H */
-> diff --git a/sound/usb/qcom/Makefile b/sound/usb/qcom/Makefile
-> index a81c9b28d484..4005e8391ab9 100644
-> --- a/sound/usb/qcom/Makefile
-> +++ b/sound/usb/qcom/Makefile
-> @@ -1,2 +1,2 @@
->  snd-usb-audio-qmi-objs := usb_audio_qmi_v01.o qc_audio_offload.o
-> -obj-$(CONFIG_SND_USB_AUDIO_QMI) += snd-usb-audio-qmi.o
-> \ No newline at end of file
-> +obj-$(CONFIG_SND_USB_AUDIO_QMI) += snd-usb-audio-qmi.o
-> diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-> index a7ad15404fd1..5b9262a116be 100644
-> --- a/sound/usb/qcom/qc_audio_offload.c
-> +++ b/sound/usb/qcom/qc_audio_offload.c
-> @@ -36,6 +36,7 @@
->  #include "../helper.h"
->  #include "../pcm.h"
->  #include "../power.h"
-> +#include "../mixer_usb_offload.h"
->  
->  #include "usb_audio_qmi_v01.h"
->  
-> @@ -1703,6 +1704,7 @@ static void qc_usb_audio_offload_probe(struct snd_usb_audio *chip)
->  		sdev->card_idx = chip->card->number;
->  		sdev->chip_idx = chip->index;
->  
-> +		snd_usb_offload_create_ctl(chip);
->  		snd_soc_usb_connect(usb_get_usb_backend(udev), sdev);
->  	}
->  
+> +additionalProperties: false
+> +
+> +examples:
+> +  # minimum TGU definition.
+
+Drop comment
+
+> +  - |
+> +    tgu@10b0e000 {
+> +        compatible = "qcom,coresight-tgu", "arm,primecell";
+> +        reg = <0x10b0e000 0x1000>;
+> +
+Best regards,
+Krzysztof
 
 
