@@ -1,176 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-30245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FC58965FBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 12:57:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22BA8966110
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 13:55:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 148DF1F22174
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:57:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D20352820E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 11:55:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 643FA18FDC5;
-	Fri, 30 Aug 2024 10:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 83AA019882E;
+	Fri, 30 Aug 2024 11:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nyULD8XN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ClwvBHk/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4CF18FDAB;
-	Fri, 30 Aug 2024 10:57:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDFB18F2D5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 11:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725015463; cv=none; b=SVAvaCt+c0OyPqa0SULLt8sIEILjjF5ne5v82BAsAbB85WTO7oqEt+1z46c+kpQTdnFM6JLz1mNz90hyYzrRGDtsgY1N1deYUhkzUXQspsvFh8UCOlSp84yucMHX/ID+78KBZq+f+dLs/zEskCbePOVZJPGhjmO2+4ByMidrlbM=
+	t=1725018929; cv=none; b=juhxwCEe2cXNBB6Czx2mCigLSG7NE9rBxk1LDTVUkMTRCW27LStyOt828lbnIsFCdOAZv15ZElkXEEUXNCA+C6LEswUJlWdNqqlY5+cHU+ECN92qf5f7n9vrY4/I+E+BsCsMYhz6aji5d7PxPec24sSizM8C8UZd4QiRHsHNXD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725015463; c=relaxed/simple;
-	bh=QPCh73MIzsRMp5X5kkNuR5+8HEgvyLIfQtr8PVQNfrI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rfso4vs7dJeZ0KHj++kSJ0kX5XbtgsKsNCWkmoNMxKwAff4nDg4ATaTqUycjo2ppvA0CldKiY0V00BT2lEF+r3oZ7dhxNwNN1sJ5bzp2Xf7X6x4Zh48XQ4W1c3HbZyInnn0rGjg9h+0hBdBUoHPl0cdifjQQ2tV7OZS6qRdK5CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nyULD8XN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D1C6C4CEC2;
-	Fri, 30 Aug 2024 10:57:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725015462;
-	bh=QPCh73MIzsRMp5X5kkNuR5+8HEgvyLIfQtr8PVQNfrI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=nyULD8XN9KhFmHcY6IhmQJ/cgW8RQJqf5i0mFy0WuY/2gz3EavGK/PSGDNuVdOaQF
-	 y7sMc9OrxoIaC41y7afx2/hVAckafh0xZV4F7B/8bdrG0KdceX1M+IphTTLaAg5Rff
-	 mkju/xoZyXpJ71GJo+EjKXRW/uTAHZ85V/yu2oRtLwKvbuyo1gAlEdCqSG0YepN3HU
-	 rEfQP5QDvdlI5a7BO9RQVZIOKeIBND95oyGLZEh11ZW4j5X24ZVvzc2vXJJrbio9wU
-	 /99BqBU+riVyihJY4eS9zvgtyseRF6RDMdZbZlooUpYLl4ET6tBzd/qQfomzaSEC/p
-	 R8VcDsjDe9aNw==
-Message-ID: <f7b8980b-b5e8-41c3-8e4c-488e06a4ab15@kernel.org>
-Date: Fri, 30 Aug 2024 12:57:37 +0200
+	s=arc-20240116; t=1725018929; c=relaxed/simple;
+	bh=rGJabSH1WjGrwPyUZvO8SIhkBqF284ClrE8qaXkEwU4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MTcnCOgOjSuryoQI62m+e0dF34KY3EakAHA8JW0GnscI4Pyr6A0pnT3EA2uwYe7Z6N3lT6bPXRfablUcpkYwMm8ks+SFRrR+V04xFSl8TreQDM8GA2eIFO1dwto9A9Ag5bmwu8q4HVxucwfP+5YqqE3BHmBt070m5pLX/hXvllI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ClwvBHk/; arc=none smtp.client-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5df9c34c890so1018963eaf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 04:55:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725018926; x=1725623726; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=2kXXjyoQkOSIGIfDRWOMPNe7ntaakkXVTK3kq6Qxk2A=;
+        b=ClwvBHk/WBUYgmBFNCANRNc9u98r85EiYTRleP0gl7m5yUCdhZYOCmptRPPVyyo+FG
+         cmC9iTEto7mZQi839hnUE3mo+R/L5MAenQautgTaAwinoAiRwlHTm/mma7HMRL3bg8iF
+         vRtDiOzSLAtBJZaWAJd3l6g4fe+pJ1v1EppUG10j9JLzpu+ayQHoeu4FqNW6UXR6rL0A
+         qUzyxQaCIe0HnBlyRfn0C/h4UqfR5ceFNiZAAxWIWNnKei4eL0gh6xttZRWbTPt+j/g7
+         h2IXkauYYoGKfrXBX7/uTWRTvxga4J1z+xUWzsJw+hBdjQ/xPm1o7PLgwvusPZH5BtzJ
+         wmYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725018926; x=1725623726;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2kXXjyoQkOSIGIfDRWOMPNe7ntaakkXVTK3kq6Qxk2A=;
+        b=EQGrfvCxWoCI9m6CxOEMq+cKSwH2eddAiNZ+PRi/p/c1GUURPP9LzlAyZO20xW+2UY
+         EsKJYdSP3zKQdFzF8O4Ap8mcVeOoy1xmO2B7XrWq8O2mtMtUxAU7Y9ozgM1PRxA2izD7
+         M+VWQH/08wuJGtTYZgA51km2L+BqUYDMjcwHMoO0h2XBUySOqHcRnH2D5YaqgoBjPXKy
+         j8s+OyhRvm3DUuMSQMmAuMbVCpHnJIYNZTfWiG5PQt4O+8Eki6cCOY6r9E+v83BdfPlm
+         cNmP3Y/L+1Z+abK8glFEJSBlsvbPcWnY7LBc0JFIBo7lULtTdiBNa1ruLaBD2d7goK/B
+         +U0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVj7b3Zf7q4wnG3d/Z7Vg+24D+03IgRlQAkMSDANIhGfJAuMWcwhx+mV+bS68gs5TKOHCGj3hsufjXAb40J@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNz7Sjx61Cy+GF+Ni2hWQCZDggZXQGfGJ4OoMF1YCTRVGN+6Fh
+	zYYcJNPfDdcpZiJXtFyDTPhDyvvWbK8o9+kijn+0Y0TKoC5GOLmDJKFa3RbwWQ==
+X-Google-Smtp-Source: AGHT+IH/BxJwIxRjq4Ftk2utGPO5gE372yrfaYPPrKkvTKKraSTvq03DzON9Ri0ykoGoYqRcozC2MA==
+X-Received: by 2002:a05:6871:e25d:b0:25e:129c:2223 with SMTP id 586e51a60fabf-277900f62cfmr5786865fac.19.1725018926065;
+        Fri, 30 Aug 2024 04:55:26 -0700 (PDT)
+Received: from thinkpad ([117.193.213.95])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-715e5773733sm2584959b3a.217.2024.08.30.04.55.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Aug 2024 04:55:25 -0700 (PDT)
+Date: Fri, 30 Aug 2024 17:25:19 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Slark Xiao <slark_xiao@163.com>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] bus: mhi: host: pci_generic: Update the file path
+ for Foxconn SDX55/SDX72
+Message-ID: <20240830115519.nun52bselrkc77qy@thinkpad>
+References: <20240725022941.65948-1-slark_xiao@163.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] soc: qcom: pbs: Simplify with dev_err_probe()
-To: =?UTF-8?B?5LqO5L286Imv?= <yujiaoliang@vivo.com>
-Cc: "opensource.kernel" <opensource.kernel@vivo.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-References: <20240829124813.3264437-1-yujiaoliang@vivo.com>
- <894145dc-46fb-451f-a461-d0b9ff1e50dd@kernel.org>
- <5c558e3b-2d65-4045-816a-5e9415d26b8d@vivo.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <5c558e3b-2d65-4045-816a-5e9415d26b8d@vivo.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240725022941.65948-1-slark_xiao@163.com>
 
-On 30/08/2024 12:52, 于佼良 wrote:
-> On 2024/8/30 16:08, Krzysztof Kozlowski wrote:
->> On 29/08/2024 14:48, Yu Jiaoliang wrote:
->>> Error handling in probe() can be a bit simpler with dev_err_probe().
->>>
->>> Signed-off-by: Yu Jiaoliang <yujiaoliang@vivo.com>
->>> ---
->>>   drivers/soc/qcom/qcom-pbs.c | 7 +++----
->>>   1 file changed, 3 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/soc/qcom/qcom-pbs.c b/drivers/soc/qcom/qcom-pbs.c
->>> index 77a70d3d0d0b..ab9de12ec901 100644
->>> --- a/drivers/soc/qcom/qcom-pbs.c
->>> +++ b/drivers/soc/qcom/qcom-pbs.c
->>> @@ -201,10 +201,9 @@ static int qcom_pbs_probe(struct platform_device *pdev)
->>>   	}
->>>   
->>>   	ret = device_property_read_u32(pbs->dev, "reg", &val);
->>> -	if (ret < 0) {
->>> -		dev_err(pbs->dev, "Couldn't find reg, ret = %d\n", ret);
->>> -		return ret;
->>> -	}
->>> +	if (ret < 0)
->>> +		return dev_err_probe(pbs->dev, ret, "Couldn't find reg\n");
-> Thank you for the feedback. I apologize for the oversight.
->> This cannot defer, so not much benefits.
-> As noted in the dev_err_probe documentation, using this helper offers 
-> benefits like standardized error code formatting and more compact error 
-> paths.
+On Thu, Jul 25, 2024 at 10:29:40AM +0800, Slark Xiao wrote:
+> To separate the images of Foxconn from other vendors, adding a
+> new foxconn subfolder under qcom/<platform> for edl image path.
+> And delete the fw patch since it's useless for Foxconn devices.
 > 
-> "Using this helper in your probe function is totally fine even if @err  
-> known to nerver be -EPROBE_DEFER. The benefit compared to a normal 
-> dev_err() is the standardized format of the error code, it being emitted 
-> syumbolically (i.e. you get "EAGAIN" instead of "-35") and the fact that 
-> the error code is returned which allows more compact error paths."
+> Fixes: bf30a75e6e00 ("bus: mhi: host: Add support for Foxconn SDX72 modems")
+> Signed-off-by: Slark Xiao <slark_xiao@163.com>
 
-I know, I wrote a bit of patches for the kernel myself...
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-It's still for me little benefit.
+- Mani
 
+> ---
+> v2: change the folder path architecture
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 14a11880bcea..f159a9dd53e7 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -433,8 +433,7 @@ static const struct mhi_controller_config modem_foxconn_sdx72_config = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+>  	.name = "foxconn-sdx55",
+> -	.fw = "qcom/sdx55m/sbl1.mbn",
+> -	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl = "qcom/sdx55m/foxconn/prog_firehose_sdx55.mbn",
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -444,8 +443,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_sdx55_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+>  	.name = "foxconn-t99w175",
+> -	.fw = "qcom/sdx55m/sbl1.mbn",
+> -	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl = "qcom/sdx55m/foxconn/prog_firehose_sdx55.mbn",
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -455,8 +453,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w175_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_dw5930e_info = {
+>  	.name = "foxconn-dw5930e",
+> -	.fw = "qcom/sdx55m/sbl1.mbn",
+> -	.edl = "qcom/sdx55m/edl.mbn",
+> +	.edl = "qcom/sdx55m/foxconn/prog_firehose_sdx55.mbn",
+>  	.config = &modem_foxconn_sdx55_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+>  	.dma_data_width = 32,
+> @@ -502,7 +499,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_dw5932e_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_t99w515_info = {
+>  	.name = "foxconn-t99w515",
+> -	.edl = "fox/sdx72m/edl.mbn",
+> +	.edl = "qcom/sdx72m/foxconn/edl.mbn",
+>  	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx72_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> @@ -513,7 +510,7 @@ static const struct mhi_pci_dev_info mhi_foxconn_t99w515_info = {
+>  
+>  static const struct mhi_pci_dev_info mhi_foxconn_dw5934e_info = {
+>  	.name = "foxconn-dw5934e",
+> -	.edl = "fox/sdx72m/edl.mbn",
+> +	.edl = "qcom/sdx72m/foxconn/edl.mbn",
+>  	.edl_trigger = true,
+>  	.config = &modem_foxconn_sdx72_config,
+>  	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> -- 
+> 2.25.1
+> 
 
->> And you ignore other place in
->> the probe()... That's like a weird pattern with all your patches change
->> something irrelevant, but leave other places unchanged.
-> If you think it's OK, I will update the patch to include both 
-> modifications in the probe() function. I plan to submit patch v2 with 
-> these changes and hope it will be more acceptable.
-
-Doing this one-by-one is churn. For me that's not correct.
-
-Changing this everywhere in the driver is questionable/subjective: some
-find it ok, some not (considering this cannot defer).
-
-But, after looking at your other patches like this (see serial), I have
-doubts you know what you are doing in general. And that's the real
-problem. You send innocent patch which requires a serious review,
-because you do not understand the code.
-
-Please get a mentor which will guide you through this. Or do some more
-impactful changes like fixing warnings.
-
-Best regards,
-Krzysztof
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
