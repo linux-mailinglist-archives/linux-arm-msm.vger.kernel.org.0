@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 606A4965989
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:08:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ECCA496598B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 10:09:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E6BA2849FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:08:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1BB31F211C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 08:09:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91F2F153511;
-	Fri, 30 Aug 2024 08:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CFED153511;
+	Fri, 30 Aug 2024 08:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UpznnXln"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iVvlzQiX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69781158A37;
-	Fri, 30 Aug 2024 08:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AD013665B;
+	Fri, 30 Aug 2024 08:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725005325; cv=none; b=p5WUAMYnTT/iYfmXvGG7cS4+JvAfcEyaRmakpd3V3hDuKtPr15JBcdnW8fChAb23ekjwZbQPr7ixKWQ0WqndydlmTQCdjlunSZPbW3h1IBK2N3Td2Ldn+B4CV721d9Vhl3LkBmbLM8j3/sqU91ICHsCtYwMNjC4yNa7Ve9FlFVE=
+	t=1725005375; cv=none; b=a/6RY+wY7RLK/QeX3DTvpets9Gm98ZHRt+oYSRt/CPAy97FLr/FFjD6HFn+EM02Etxmb7UfoPC0luA3DQ2aR+u0tLPBDwC/VxfFZF83vmNw/0fG2Gt6J7BmbGeSpfpESNUuwQvDxhbBlLZ2mtJKhccO/cezc+HKPNSAxGzEWRmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725005325; c=relaxed/simple;
-	bh=PqzG1wMKf+Lh89C3TH2PK6hlu1n8Etga00lX9mwe+D8=;
+	s=arc-20240116; t=1725005375; c=relaxed/simple;
+	bh=psRYHcPRCYF38pQMxZ9gOGSn8llKO6OrKAOhYVtvoQg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bu41OujxsKshEq9wrgQG3/DE2Nya4kSxgbx8ke24awCqWYb72SrUAk1DgjfPHPriY3RWUQjVLEhMlyhR7dVTd17KRnfWncy6J/bJhqtmifNeF8uxDpd6ds8PFCQfIqBjLWL2BOpqi7VZDffzk5xUHGdRpoLGUjDpELeTh8EhrkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UpznnXln; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714E1C4CEC2;
-	Fri, 30 Aug 2024 08:08:43 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ngQTq+DxODEVKorhQAvpeamRYfqz/XQg11IqaRHH74qcRlwdCE7I+BnfQo/DIBZpH4mvYAO622n8BiAx0gM2dnPQ/r99D0tVhcuXsLS20Nhmcgl0XBUAcCpWVTjLkEiizk7FJEFlrWbaPq2GA065oyGV7MSCx0gB1HKXGLpn2LU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iVvlzQiX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E46DC4CEC4;
+	Fri, 30 Aug 2024 08:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725005325;
-	bh=PqzG1wMKf+Lh89C3TH2PK6hlu1n8Etga00lX9mwe+D8=;
+	s=k20201202; t=1725005375;
+	bh=psRYHcPRCYF38pQMxZ9gOGSn8llKO6OrKAOhYVtvoQg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UpznnXlnWEq7k2SBr3wcCgFwcIINfzumcxzQ9iOWO1krkkzJc/Nt1qcKUok9CZRO5
-	 3MUVaTEvCkRqjVr+KXFtvBEy326qg1lriKOuue3n44UxPHN1DYvAMexwA0QEkpjHfn
-	 f0bD1hu+jLWNSEXeTFZyojJJJ4ZoPGcTHuXQMVeT7aR3NVTkixBr4QwLeH7giM8DSC
-	 XibPUMAr+s4aDGEFGCa+z2VQBbz8z7nxiwgGW4xyrBpcKO8s4aP3Uq2cfXPe3GlY0/
-	 yXG8HX3D8XqWJPM08vVvaMJZ7UCJ8Tf4tymuPNWjJGY/BH4j+H6IbdYYjk5xsYIX+B
-	 nF1gGkNysNIrQ==
-Message-ID: <894145dc-46fb-451f-a461-d0b9ff1e50dd@kernel.org>
-Date: Fri, 30 Aug 2024 10:08:41 +0200
+	b=iVvlzQiX67N4WqoIal2grdhnpsLXs3qpTg4kilma1sz7wcw92uo9NuYbHE9+Mrfkf
+	 ML1BzDa9h8258ohqXLzYe5Nx3UUS1W/Dam45bXkLTeIEzJfVNJOYfVFoCQ9jK5IGpG
+	 V3uhUTtvPTPBR6x1zYxrIQoSsG3G8XXoOO+y3L4Vqwb01YM6ytkmxAwTDMOiPjmk+I
+	 cf5g3ggn1au8TKWz/hGD81rZBl2dS2b0NNKp58CGSVmFBh8+fBK7+ZW4kpv1gcqRps
+	 C+Hzz1NjPD8l0OPjobQeXSCgj1D1xgSePfr+Lofc/VNGpwakAlCx73yxXOy+iJ0vET
+	 qubKYAyALjnOQ==
+Message-ID: <76fb94fb-abb9-4cb7-a477-9839d1bc6287@kernel.org>
+Date: Fri, 30 Aug 2024 10:09:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,13 +50,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] soc: qcom: pbs: Simplify with dev_err_probe()
+Subject: Re: [PATCH v1] bus: qcom: Simplify with dev_err_probe()
 To: Yu Jiaoliang <yujiaoliang@vivo.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
 Cc: opensource.kernel@vivo.com
-References: <20240829124813.3264437-1-yujiaoliang@vivo.com>
+References: <20240829124118.3256437-1-yujiaoliang@vivo.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -102,36 +102,39 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240829124813.3264437-1-yujiaoliang@vivo.com>
+In-Reply-To: <20240829124118.3256437-1-yujiaoliang@vivo.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/08/2024 14:48, Yu Jiaoliang wrote:
+On 29/08/2024 14:41, Yu Jiaoliang wrote:
 > Error handling in probe() can be a bit simpler with dev_err_probe().
 > 
 > Signed-off-by: Yu Jiaoliang <yujiaoliang@vivo.com>
 > ---
->  drivers/soc/qcom/qcom-pbs.c | 7 +++----
->  1 file changed, 3 insertions(+), 4 deletions(-)
+>  drivers/bus/qcom-ebi2.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/qcom-pbs.c b/drivers/soc/qcom/qcom-pbs.c
-> index 77a70d3d0d0b..ab9de12ec901 100644
-> --- a/drivers/soc/qcom/qcom-pbs.c
-> +++ b/drivers/soc/qcom/qcom-pbs.c
-> @@ -201,10 +201,9 @@ static int qcom_pbs_probe(struct platform_device *pdev)
->  	}
+> diff --git a/drivers/bus/qcom-ebi2.c b/drivers/bus/qcom-ebi2.c
+> index c1fef1b4bd89..dbd6a99bcc99 100644
+> --- a/drivers/bus/qcom-ebi2.c
+> +++ b/drivers/bus/qcom-ebi2.c
+> @@ -308,10 +308,8 @@ static int qcom_ebi2_probe(struct platform_device *pdev)
+>  		return PTR_ERR(ebi2xclk);
 >  
->  	ret = device_property_read_u32(pbs->dev, "reg", &val);
-> -	if (ret < 0) {
-> -		dev_err(pbs->dev, "Couldn't find reg, ret = %d\n", ret);
+>  	ret = clk_prepare_enable(ebi2xclk);
+> -	if (ret) {
+> -		dev_err(dev, "could not enable EBI2X clk (%d)\n", ret);
 > -		return ret;
 > -	}
-> +	if (ret < 0)
-> +		return dev_err_probe(pbs->dev, ret, "Couldn't find reg\n");
+> +	if (ret)
+> +		return dev_err_probe(dev, ret, "could not enable EBI2X clk\n");
+>  
+>  	ebi2clk = devm_clk_get(dev, "ebi2");
+>  	if (IS_ERR(ebi2clk)) {
 
-This cannot defer, so not much benefits. And you ignore other place in
-the probe()... That's like a weird pattern with all your patches change
-something irrelevant, but leave other places unchanged.
+
+This cannot defer, so not much benefits. And again you change only one
+place.
 
 That's pointless and churn.
 
