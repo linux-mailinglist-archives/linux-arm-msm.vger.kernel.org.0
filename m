@@ -1,151 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-30314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49B67966ADA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 22:51:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 118D1966C24
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 00:16:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E9C71C21C53
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 20:51:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C232A28466F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 22:16:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3AE91BF819;
-	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D1C1C1749;
+	Fri, 30 Aug 2024 22:16:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q/JKN6NV"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BiJI/+ia"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C214015C153;
-	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CD91BDAB1;
+	Fri, 30 Aug 2024 22:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725051061; cv=none; b=c9vk60XdsCn9TgtGazAs26dEcOrKfc8T3U7To0UhjAOFjAwBq2NL8VtKbrDDd+y1WGW6pvWKTu4qgwGkFG4g8xDAZb+EqMNSWiHM7r7tqzLz2R0cdQVmTKAkaboGDXqUunp5ztgAOADpPN7FCepZ3faqnbiudWVxcKPmOFeBgNo=
+	t=1725056177; cv=none; b=NNp4/diLn/EPJPDLUtmh4bugKuLWRsmuwbNMmjFwXpsuYNBoQtcIqGfgE26P/OQL9zLEDxCq1DsjC8EhJajWhPnJHmKWIYbe/0X+HJv8/e+MyypPtHoNKd8FjB2sOxvau5n1akGETEwlJk/dVXkdQOOlrFsdO/1ZxZpW3jZpuQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725051061; c=relaxed/simple;
-	bh=wlq18c85cf5NFaz/GOdFOn9Y5Nz0ucxWSmCOdXWJFG0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HzitS3tBnbV/MyCE1FDbpLYNtpSkR9Q6XlksfM0x7LBny5jnlYRjMHjEK6iNKEjzQuPFlVUNu/dsXuN7tgFac6O7EUH3tGevdlgo6LU9i5dfbnQ0yyKMek2EMBidqKIHD7ny5lyDZ/OGnFZOGX97E18iv9o4vmHIrB6lrk92+CY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q/JKN6NV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 8C799C4CEC2;
-	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725051061;
-	bh=wlq18c85cf5NFaz/GOdFOn9Y5Nz0ucxWSmCOdXWJFG0=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=q/JKN6NVPr9umuFgSX+B5wSGFWvF2Sgf6I5CYX+JyhUTj4pZ3VSvqR18YGUaoMdBL
-	 bhJXQr655OkKZ21Dijepjz52Bbt9/S/wiv+7L05pG/+axUke+w1ocv+ItzWH9cC1/8
-	 KxYAWlfMN8ZA6s6aiTW0o6UUN/RqOC+idgV6wdqjRCPR5yKPjCusfT5OhKO75u56Q9
-	 eNLlnahhpGnljeH8J2hkhOv2sIiIzeod/IfL2Au7fwlbM+u0DRkGK0dmRpoX2yMVb/
-	 jc8+NuGpf2NS1Bc7Ztcfqh8KITj3bf6CJp2lpqiH/gHI3EigIvOal0IZcDI58cbjum
-	 hmse3tIIcdrPQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74FDDCA0EF3;
-	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
-From: =?utf-8?q?Andr=C3=A9_Apitzsch_via_B4_Relay?= <devnull+git.apitzsch.eu@kernel.org>
-Date: Fri, 30 Aug 2024 22:49:50 +0200
-Subject: [PATCH] Revert "arm64: dts: qcom: msm8939-longcheer-l9100: Add
- rear flash"
+	s=arc-20240116; t=1725056177; c=relaxed/simple;
+	bh=eiAiaAMxrnwkQh8OZNgENo2OCIGfzf4Ul9qhg+3zyfY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QTq1jHFT8kZLQJMI/7JEKgoIT+cuCU3c1DHR/kjPhmxbaAtII/hrlHcR3qnroYamIMPCIXozSYpshPMQFHklRJxwAR7XOipmj2tBvZzOOfv2eHdd/GWbMKLMiFgVEph7akFdU9aeVg7hBfn8w8+LZCmGKw5emGsn4mkuU43Jbqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BiJI/+ia; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47UFsQJk023319;
+	Fri, 30 Aug 2024 22:16:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	naL+DF9ioWHaYPmy57myekiuG522s2M1hb98q4d0hHk=; b=BiJI/+iae4Z7E9jd
+	nyfk1m73von9yTfpP9jgnjoNzImr1W6Xu6KiNyybLgpxlj6+Fxhkwlzj2+L59lhW
+	8lXaVRUqojol6WnJWKf+jt8z4zlMY/uynqCWxAI9Dcku4soOMiEwiu++8VNd6NSa
+	1/IBC/cjxnYugpwYM9lQpfS6liHs8PYV6/9CLG1QA5D58/bYszfFrGTj3iYbKeY9
+	1WSAutdpTbroE/t6xNO9wpxRUbVhIo3jAAKblVnjhPc5Q8L787iLKkNC2HWwI58T
+	1wmMjfAY4Qzl2Aw4vz5/3CW/jOufE5tht1JQ23FJaXtSV5bcRUUAmXKm7/RJOvB4
+	qxZIjw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41a612r7hr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 22:16:01 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47UMG05Y032297
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 22:16:00 GMT
+Received: from [10.110.126.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 Aug
+ 2024 15:15:59 -0700
+Message-ID: <02138a65-4cd7-4423-886d-35ad86afcff0@quicinc.com>
+Date: Fri, 30 Aug 2024 15:15:58 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20240830-revert_flash-v1-1-ad7057ea7e6e@apitzsch.eu>
-X-B4-Tracking: v=1; b=H4sIAG0w0mYC/x2MQQqAIBAAvxJ7TlBTsL4SEZJrLoSFRgTi35OOA
- zNTIGMizDB1BRI+lOmMDUTfwRZs3JGRawySS8XNwFmTMN2rP2wOTKEwSo/CWaGhJVdCT++/m5d
- aP60G5wFeAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1725051108; l=1873;
- i=git@apitzsch.eu; s=20240325; h=from:subject:message-id;
- bh=e8OmqrXh0tbGdO++XiKLMFxfWpEu2DvMhtbt6MUV/A8=;
- b=O92PbyqG9ghtpTVHIrrk4BWY3mb570s0wC+LCtYQgraW1WTvErXUQeUUY4HkEXbOS6+roClHo
- g+t/fpRE8VODfR1hFpZdFkMzkY/5hvmkmQ2j+HXDl50hZD8x03TIlZW
-X-Developer-Key: i=git@apitzsch.eu; a=ed25519;
- pk=wxovcZRfvNYBMcTw4QFFtNEP4qv39gnBfnfyImXZxiU=
-X-Endpoint-Received: by B4 Relay for git@apitzsch.eu/20240325 with
- auth_id=142
-X-Original-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Reply-To: git@apitzsch.eu
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/7] dt-bindings: arm: Add support for Coresight TGU
+ trace
+To: songchai <quic_songchai@quicinc.com>,
+        Suzuki K Poulose
+	<suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>, James Clark
+	<james.clark@arm.com>,
+        Alexander Shishkin
+	<alexander.shishkin@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn
+ Andersson" <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20240830092311.14400-1-quic_songchai@quicinc.com>
+ <20240830092311.14400-2-quic_songchai@quicinc.com>
+Content-Language: en-US
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20240830092311.14400-2-quic_songchai@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: exG77MoKoMk6EyX4HCq-mfpniNBrNMYr
+X-Proofpoint-ORIG-GUID: exG77MoKoMk6EyX4HCq-mfpniNBrNMYr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-30_11,2024-08-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ phishscore=0 spamscore=0 mlxlogscore=712 adultscore=0 impostorscore=0
+ mlxscore=0 suspectscore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408300173
 
-From: André Apitzsch <git@apitzsch.eu>
+On 8/30/2024 2:23 AM, songchai wrote:
+>  |                         |                     |     |             |
+>  |-------------------------|                     |     |-------------|
+>  |                         |                     |     | prioroty[3] |
 
-Patch "arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash" has
-been applied twice. This reverts the older version of the patch.
 
-Revert the commit f98bdb21cfc9 ("arm64: dts: qcom:
-msm8939-longcheer-l9100: Add rear flash")
+s/prioroty/priority 
 
-Fixes: f98bdb21cfc9 ("arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash")
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
- .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 26 ----------------------
- 1 file changed, 26 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-index adc992ebc29d..b845da4fa23e 100644
---- a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
-@@ -160,25 +160,6 @@ led@2 {
- 		};
- 	};
- 
--	flash-led-controller@53 {
--		compatible = "silergy,sy7802";
--		reg = <0x53>;
--		#address-cells = <1>;
--		#size-cells = <0>;
--
--		enable-gpios = <&tlmm 16 GPIO_ACTIVE_HIGH>;
--
--		pinctrl-0 = <&camera_rear_flash_default>;
--		pinctrl-names = "default";
--
--		led@0 {
--			reg = <0>;
--			function = LED_FUNCTION_FLASH;
--			color = <LED_COLOR_ID_WHITE>;
--			led-sources = <0>, <1>;
--		};
--	};
--
- 	flash-led-controller@53 {
- 		compatible = "silergy,sy7802";
- 		reg = <0x53>;
-@@ -364,13 +345,6 @@ camera_rear_flash_default: camera-rear-flash-default-state {
- 		bias-disable;
- 	};
- 
--	camera_rear_flash_default: camera-rear-flash-default-state {
--		pins = "gpio9", "gpio16", "gpio51";
--		function = "gpio";
--		drive-strength = <2>;
--		bias-disable;
--	};
--
- 	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
- 		pins = "gpio20";
- 		function = "gpio";
-
----
-base-commit: d7b69f6e9e1c8b6acdcce3b385779eb046835dd5
-change-id: 20240830-revert_flash-4e184591da15
-
-Best regards,
 -- 
-André Apitzsch <git@apitzsch.eu>
-
+---Trilok Soni
 
 
