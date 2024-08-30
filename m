@@ -1,128 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-30256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59024966449
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 16:37:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09F7296645B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 16:45:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1057F1F224ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 14:37:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B363F1F23EB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 14:45:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B20A1B253C;
-	Fri, 30 Aug 2024 14:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC1BE1B2EDF;
+	Fri, 30 Aug 2024 14:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="bRWv4l8r"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X8hU75Rq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF18C18FDA7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 14:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627131B252B;
+	Fri, 30 Aug 2024 14:44:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725028625; cv=none; b=kdh1yC5qmahwk8tIFMS+wTebZvrMVFHmjfcJUgldbZAJFZAtXjoONx1PAxNZJZeR0f1GoWRwDffY8TpycgGZ2Zkk2M9ef+KgvxNIGQbpnuN41sqFC2kBJhMki7V/5FUXcqrysYXwHEqFAuSM5akHvDrmk50KlDoXHrtkJKK6z1E=
+	t=1725029096; cv=none; b=csvKFWy7+Ba7Lqv2oTQ/ExD4ND9bKlrSWg62sIEnZDjOcqqtXtLRuowDFmb29szoj9dgZv14zYgsX/ArFgNhKt9+2VyJG6jdTLSd0GEV0vIihnV8E2F31RoeNbg4nxpDrED2B8lS+uqtdku3fALjEzwx9iCPJD+DU6FD0Tt6pqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725028625; c=relaxed/simple;
-	bh=6DJ4mwdZqTyn+tCBTzm9Nt4MFTRGoqfAUGU4OJWiSPA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=mCV2XOABngAuU+3Jaq6EXHoD6VVMmcjIWeyltYZwoHYRMwBdw6P8snNJOHO+IA8Cek3fGksOwejckHG3IekDxwAl57TQlBjkLZ9JXC95b2C+ymiVmRRM8opfXixosYjfbXb8CfinQI0c9kfXHYgieXUHUvWNc25HpP9ypX+KKSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=bRWv4l8r; arc=none smtp.client-ip=209.85.214.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-201f2b7fe0dso16156275ad.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 07:37:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725028622; x=1725633422; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hVGFtc4kbH/Z7yqtrPYtyKUgQC3PRuwLn6BIajvZoto=;
-        b=bRWv4l8rs+inO6G4b2v0RFfqQwx6b1GVkLXMvt4cE3BtTgV6PzlGtUIhwrP0qDdW+l
-         Q8850itHeKMxONyE8VuxUYKU02FYnSh2CGkX6MsN4XEstDEO9snFIXjXOkuzt1oA1Sqj
-         anM+9kULzAPnB/6sydd8t7kdXFVMP2phanguE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725028622; x=1725633422;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hVGFtc4kbH/Z7yqtrPYtyKUgQC3PRuwLn6BIajvZoto=;
-        b=QwYkgmUwLAuXdX5bNbzotZnEPufg4shbNmm/ui69llkfYMVW88z2hv8QUi5z9pEX/0
-         s/zxkynVU4U+Dp+D7ziC+joOAu1kfque5bomKPPb4DWycFwqp/QhCpAyADILjljB1ud9
-         0ep/hvKVDtaeKs+Q9DfVPYRDDRuKvixuQ0SC+Knm7uiwab22T6ZSnr1wAlP4rb7uj0Du
-         uUEMaQDzxeVWdEPgRuvC6MjcSppHYvI65DS1tlICsFYId0GqtXVnNTpWc3fYIygEfv+K
-         7eGpMz9oFjYplkdLvQp2m/ofZBRKnsMQnw1YbYLglovxp6y9jSPoJVPqOhPA4pZPEGaC
-         n6bQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUZ0xdkaCwUiLd8GZX5ivrbfD4IDt1QqMi552m9lh3B5lQg6z/7jUrx1xICJ1FTRfd9AvmJFc0H1Zo7mtyl@vger.kernel.org
-X-Gm-Message-State: AOJu0YziMLJB6+SP+284FQ4aQ/lY8wu78hnJ7iUyecCGbomRzYE/gcjg
-	97Sqi/1emoDutMQI3VdCc4YyePttieTHcLr8OyQRbJ+GiW/EzcgduyQ17jKrwA==
-X-Google-Smtp-Source: AGHT+IGP6SDvpMqfxS3K75/5XYUOBv7vIBL6yYiKATWxkoAlTdnFF/xsDDuA76lReR1HWMHHMH5SwQ==
-X-Received: by 2002:a17:903:1c8:b0:201:f9c1:f543 with SMTP id d9443c01a7336-2050c3b979dmr87360535ad.18.1725028622087;
-        Fri, 30 Aug 2024 07:37:02 -0700 (PDT)
-Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:8144:c259:d49:bb8e])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-205152b3117sm27628785ad.47.2024.08.30.07.37.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Aug 2024 07:37:01 -0700 (PDT)
-From: Douglas Anderson <dianders@chromium.org>
-To: Mark Brown <broonie@kernel.org>
-Cc: dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	Douglas Anderson <dianders@chromium.org>,
-	kernel test robot <lkp@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] regulator: core: Stub devm_regulator_bulk_get_const() if !CONFIG_REGULATOR
-Date: Fri, 30 Aug 2024 07:35:12 -0700
-Message-ID: <20240830073511.1.Ib733229a8a19fad8179213c05e1af01b51e42328@changeid>
-X-Mailer: git-send-email 2.46.0.469.g59c65b2a67-goog
+	s=arc-20240116; t=1725029096; c=relaxed/simple;
+	bh=6f2WgrwM+oBYMEbFA/A5ogXzYsctqgEAAF3bpBkOzoI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=U0+8JWN6f2jlfnE/CKfxCUwLg7427Ll8/09EnwO9VnUlAE6l3Ob0qAT8TdzG3KJ8UqctI97oIjWXiaWO8EQL+TyIs9+OEaXeBy0bsLdt9JAvi1DIfu5IvgAcPljdJBUbcMmJiK5wAzTD7NXoNY0n1PT+FAtmNO4YeJpVe+mSa6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X8hU75Rq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05761C4AF0C;
+	Fri, 30 Aug 2024 14:44:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725029096;
+	bh=6f2WgrwM+oBYMEbFA/A5ogXzYsctqgEAAF3bpBkOzoI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=X8hU75RqiVjleNV2CmnO+SkF/2Gn01NxdY0DInl/ArQXvSPxnVAj8dDUcEFMn66zY
+	 +3mmWMmWZuwLV241PoaoXTaVJN6okrGd3xlKS4iiQht/2gZ+1eTIyGBx9wKZXvlFGj
+	 3piz2KI5T5BE8Udz0v/zWytv1bJWYexgTAtDXUMV7dcCSEhWaBr6Ymnh52s7xOCWi/
+	 Rzjurj2cPgwlqVqTjF29w/qxo2ErO2qxkd24o/C9u7tWMTtApIvh7CqiRO5LgTiebA
+	 8qN3SyuOnxabblpMgVOvpH7hOYdVFa/2TWorxZVq+PRS7XYrxC5gzClsWNBrdcaet1
+	 WKbMGJrZBR2WA==
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53346132348so2451821e87.2;
+        Fri, 30 Aug 2024 07:44:55 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUtHGLGGQWB4NpN8+TFkHv3tKgTwHMCshJBAdYevdzcFRElqDC3thtrdv/4O/cVhMkgkdiA/Gb6ULw4@vger.kernel.org, AJvYcCUvyLGVtg70+qCaIqX8e8tgJjW5aXUKbTBvOD02f7EEorzw9VpKd+VAr6pnKRnHO9ig6BUg2T42MKEfd9imCDs=@vger.kernel.org, AJvYcCV2yfXRoNw9qOYLx6i7NolXZpPiuZRqAaXsFOUfYNv+XaVZoWZOWeuH51kbMmUqnqllONJ/CgXQMNy0KQ==@vger.kernel.org, AJvYcCV7c23bkeml06Z9T03kidlGbx1icDUCo3iw/q6PtS4Emt5F9ZrH2NQIycCkvzcj7Mz8/1JbSJbdq2U=@vger.kernel.org, AJvYcCVj9FYbbAIT/qwUTYwWdKplR5JfFZDyTepXswF7toh9Kogyo6lXQrpPR55auYH/kpgpkgTGycnNJIaR@vger.kernel.org, AJvYcCW1Bty/9LPUwre2I8eSsqkkbVrU+OIaOQYW6AeO5eU72KsPub8Ri3LMFTjIwwLg/nJCjvpqUGypc6kg+NAc@vger.kernel.org, AJvYcCWDvZ+g2Tc0eU32cfS2KZ7gKKiNNQyjJIVdd627HHTnZDXnumsIusG4hO/UDsBvM9OSN7wJwy4P07/QfQ==@vger.kernel.org, AJvYcCWJde+cuo4yUft1e1TJImgMJkKcstpI1+jYOqrYCvNQyEKX4a3ix1DVmOrtbsvM6gxQXpQq1PI07rHHYZZnVA==@vger.kernel.org, AJvYcCWPmZvJo7dz5Lm+3B1YPMT+nJf8wFoFHKuOLrtVNYpneOisOXl+gDNnfiaiOJR8hYjg9QlVC1dZMAwB+0aK@vger.kernel.org, AJvYcCWUYQyeDAWBGcGe
+ VV/ekxnSJMvKmjuEeY5zkri4zwyxEsVpyIXzT0EgDpscv+uO3X1AxNBc8/KFBsm0DkR5@vger.kernel.org, AJvYcCXuNDzqObOPbbapyj+yS64zEkVGxCITQF1cVUXX2lYww86JTMnzmeM1vg0w9lae5MVPmYtXn/UZlQ==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw2/V7vkaptSvwm/nhuzNK3FZiC3W+SsM9b/3OjNDKreR3qx7Lz
+	DojmKY4pqyBsOCmblwmMYtaRqbwHiAtJYZZaTfo9sXVfyNebgJrowoiNly/Nl+n09uyzXZIq+s3
+	CloeRYEOplWbkM/vKwYutQzUIcQ==
+X-Google-Smtp-Source: AGHT+IHNK+9MXGVAZLBYt9qXZDqL92+9Mw4J9z0N2JZfmchRYYjKoFr1fQ6DbSfpa5bXY7t46hBzKKVI680zgd+zxWw=
+X-Received: by 2002:a05:6512:2345:b0:52f:c833:861a with SMTP id
+ 2adb3069b0e04-53546bb06dfmr1793360e87.51.1725029094340; Fri, 30 Aug 2024
+ 07:44:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240828203721.2751904-22-quic_nkela@quicinc.com> <20240829185240.GA914553-robh@kernel.org>
+ <de0c40c2-3627-4c63-9112-4eb13cf75c0a@quicinc.com>
+In-Reply-To: <de0c40c2-3627-4c63-9112-4eb13cf75c0a@quicinc.com>
+From: Rob Herring <robh@kernel.org>
+Date: Fri, 30 Aug 2024 09:44:41 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKS1pB9GMjEwji_XO_DmrKs4J6GkcxpRkUqcAAHwCseQg@mail.gmail.com>
+Message-ID: <CAL_JsqKS1pB9GMjEwji_XO_DmrKs4J6GkcxpRkUqcAAHwCseQg@mail.gmail.com>
+Subject: Re: [PATCH 21/22] ARM: dt: GIC: add extended SPI specifier
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org, 
+	herbert@gondor.apana.org.au, davem@davemloft.net, sudeep.holla@arm.com, 
+	andi.shyti@kernel.org, tglx@linutronix.de, will@kernel.org, joro@8bytes.org, 
+	jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org, 
+	amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org, 
+	wim@linux-watchdog.org, linux@roeck-us.net, robin.murphy@arm.com, 
+	cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com, 
+	vkoul@kernel.org, quic_gurus@quicinc.com, agross@kernel.org, 
+	bartosz.golaszewski@linaro.org, quic_rjendra@quicinc.com, robimarko@gmail.com, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	linux-crypto@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org, 
+	iommu@lists.linux.dev, linux-gpio@vger.kernel.org, 
+	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, kernel@quicinc.com, quic_psodagud@quicinc.com, 
+	quic_tsoni@quicinc.com, quic_shazhuss@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When adding devm_regulator_bulk_get_const() I missed adding a stub for
-when CONFIG_REGULATOR is not enabled. Under certain conditions (like
-randconfig testing) this can cause the compiler to reports errors
-like:
+On Thu, Aug 29, 2024 at 2:02=E2=80=AFPM Nikunj Kela <quic_nkela@quicinc.com=
+> wrote:
+>
+>
+> On 8/29/2024 11:52 AM, Rob Herring wrote:
+> > On Wed, Aug 28, 2024 at 01:37:20PM -0700, Nikunj Kela wrote:
+> >> Add interrupt specifier for extended SPI interrupts.
+> > What's an "extended SPI"? Is this a GIC spec thing? If so, what version=
+?
+>
+> Extended SPI is an extended range of SPI interrupts supported by GIC.
+>
+> Excerpt below from
+> Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
+>
+> "The 1st cell is the interrupt type; 0 for SPI interrupts, 1 for PPI
+> interrupts, 2 for interrupts in the Extended SPI range, 3 for the
+> Extended PPI range. Other values are reserved for future use."
+>
+> "The 2nd cell contains the interrupt number for the interrupt type. SPI
+> interrupts are in the range [0-987]. PPI interrupts are in the range
+> [0-15]. Extented SPI interrupts are in the range [0-1023]. Extended PPI
+> interrupts are in the range [0-127]."
 
-  error: implicit declaration of function 'devm_regulator_bulk_get_const';
-  did you mean 'devm_regulator_bulk_get_enable'?
+Looks like you should add EPPI define too while you're here.
 
-Add the stub.
-
-Fixes: 1de452a0edda ("regulator: core: Allow drivers to define their init data as const")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202408301813.TesFuSbh-lkp@intel.com/
-Cc: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- include/linux/regulator/consumer.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
-index d986ec13092e..b9ce521910a0 100644
---- a/include/linux/regulator/consumer.h
-+++ b/include/linux/regulator/consumer.h
-@@ -452,6 +452,14 @@ static inline int of_regulator_bulk_get_all(struct device *dev, struct device_no
- 	return 0;
- }
- 
-+static inline int devm_regulator_bulk_get_const(
-+	struct device *dev, int num_consumers,
-+	const struct regulator_bulk_data *in_consumers,
-+	struct regulator_bulk_data **out_consumers)
-+{
-+	return 0;
-+}
-+
- static inline int regulator_bulk_enable(int num_consumers,
- 					struct regulator_bulk_data *consumers)
- {
--- 
-2.46.0.469.g59c65b2a67-goog
-
+Rob
 
