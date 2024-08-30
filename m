@@ -1,159 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-30313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 549A6966ABF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 22:37:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49B67966ADA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 22:51:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0518B284A18
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 20:37:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E9C71C21C53
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 20:51:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F0551BF7FD;
-	Fri, 30 Aug 2024 20:37:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3AE91BF819;
+	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LQUVzpUS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q/JKN6NV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758B71BD00F;
-	Fri, 30 Aug 2024 20:37:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C214015C153;
+	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725050235; cv=none; b=IrJWyp37IotElfTV3/aQzpj+Bdi4NpzebeM9Fp8mdtdSy/IHmpTzPX+4f2GVAZxUoKclXiUtGSGYPtQE5gb3i5+oNO8vZ0SRxxqWF7xqtOtQ8J/Jvmvftrs40aQWMVPhQUfQBynPlPPez9rUh30UJuety3WagZsHRhGFUBZJ8/I=
+	t=1725051061; cv=none; b=c9vk60XdsCn9TgtGazAs26dEcOrKfc8T3U7To0UhjAOFjAwBq2NL8VtKbrDDd+y1WGW6pvWKTu4qgwGkFG4g8xDAZb+EqMNSWiHM7r7tqzLz2R0cdQVmTKAkaboGDXqUunp5ztgAOADpPN7FCepZ3faqnbiudWVxcKPmOFeBgNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725050235; c=relaxed/simple;
-	bh=c3WCB+XMKHkIhwbiRpzvW51j6lByBKQZ9lpJoC1uMRw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HBCO68Hfa+O7i70QAkU2lvCpSm+rc7SM5K+DVb5D/F/7qlNboBYTzkyXPvTXfTOXc5w7bLlYhEppUKqs1znkOnRTFBsjLjgXFCN4eC8kmjgkh7fVLvryJBDrWodPk77rawhbaS5Wz177RXvl8KIEMRmqaCEkmvX9CQCPFXdCAhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LQUVzpUS; arc=none smtp.client-ip=209.85.167.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3de13126957so1443653b6e.0;
-        Fri, 30 Aug 2024 13:37:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725050232; x=1725655032; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o+kQe6VsLr0w8NPho0fLf/Dst/MLp8Ox6OpvKwqHs6A=;
-        b=LQUVzpUSt+zTPdpk8JdEpd+f3doxiaIIaKDNxViiQp0jsBdJ19n1IdsMYap2L+ROog
-         uv+q1JEKmNDr2FTNFfJI06osT118lzUTv4sxqkrpg0rilompUy6P0EiF530cv2CDicLZ
-         szjnZ0jK5bjx/TiJ3Szt/3QZz/I/8UM3NEpwJb+mesK3U5xkBpHWEmxCYeHxwdMtLP4Z
-         M6FnfqSQUc7Uqb8HjdSa35WL1jD2MEu0I2CUEQ21Utdix5TGjSRxfnq9EQZiIQfeycz6
-         IXVoJ/2r3zX4A+CFDTU25vwk8JsIyeXzvkPXPRsGKrLakput1VBIozDyqyrdNltAfP9j
-         x6Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725050232; x=1725655032;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=o+kQe6VsLr0w8NPho0fLf/Dst/MLp8Ox6OpvKwqHs6A=;
-        b=F4IVQg0c+HlVjaQ5BOuMEVXq5Gl10sZNLARyhslIM4fLnhfETxokrk6xJQTZvfQoYA
-         1g/BaU86iVJQW4xXYGFL9uRGrXmtG4zFrvS265J0EfmXD+07YH2lACwehHRek/cwfngg
-         ENuWiRqtkV5pLkZrdBokpe3nLYEDWiejyTuIAxg1Bu1KcMbJzpCwwcbMR1rmLa89RlDk
-         tY86VZaL9K3AFPeQVm3V1PkoEXGBofuEo84tEfTSsxBCN2XvKO4trEsN5kN9iGpSRjba
-         Lp6OsztNtchNQi9mW6fo0D72tXxW3mI3Q1N6ky6qGH6r748y11zhCOqSN3Zj0id0N+0u
-         ciGA==
-X-Forwarded-Encrypted: i=1; AJvYcCV+vdjSO11vvjqG2XaNKvuZn410bZ5Htxt78pSBp+LF+8EmmZ5x6VsR870djo7bR60xdIFkyb/J/OzIoQmv@vger.kernel.org, AJvYcCWwdY8EcR6DrtKoN/edvdDvvh5fvEluy4PyrKGi+vp/3a6cfETgern3/+Jijhay+NDILhnTd9f2qcxysMEg@vger.kernel.org
-X-Gm-Message-State: AOJu0YydbZj7Ng0xHTerIB3cECz4AiWpt1vYAr+OdZsfOl9tRxkcjK9J
-	sc5VvplcQwo0cLmoMc6pxnyewYpEZHcOAjgpm/xQpchAcozlUK4DEfq2oZA+1L6oJN9wv5lT5xC
-	BiY5Zs2xgDZ71+xHhHEvD5KKOXZ8=
-X-Google-Smtp-Source: AGHT+IGBK5VzsLTg+8hHTDlEwYoRoCMP3HK0fagxgjtTycr60ZVf6Hnz+b7BKk+/0NUyK2hlKcW4jKAotktIaq2r89c=
-X-Received: by 2002:a05:6808:144c:b0:3da:bc80:b233 with SMTP id
- 5614622812f47-3df05d6e387mr8639762b6e.17.1725050232471; Fri, 30 Aug 2024
- 13:37:12 -0700 (PDT)
+	s=arc-20240116; t=1725051061; c=relaxed/simple;
+	bh=wlq18c85cf5NFaz/GOdFOn9Y5Nz0ucxWSmCOdXWJFG0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HzitS3tBnbV/MyCE1FDbpLYNtpSkR9Q6XlksfM0x7LBny5jnlYRjMHjEK6iNKEjzQuPFlVUNu/dsXuN7tgFac6O7EUH3tGevdlgo6LU9i5dfbnQ0yyKMek2EMBidqKIHD7ny5lyDZ/OGnFZOGX97E18iv9o4vmHIrB6lrk92+CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q/JKN6NV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8C799C4CEC2;
+	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725051061;
+	bh=wlq18c85cf5NFaz/GOdFOn9Y5Nz0ucxWSmCOdXWJFG0=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=q/JKN6NVPr9umuFgSX+B5wSGFWvF2Sgf6I5CYX+JyhUTj4pZ3VSvqR18YGUaoMdBL
+	 bhJXQr655OkKZ21Dijepjz52Bbt9/S/wiv+7L05pG/+axUke+w1ocv+ItzWH9cC1/8
+	 KxYAWlfMN8ZA6s6aiTW0o6UUN/RqOC+idgV6wdqjRCPR5yKPjCusfT5OhKO75u56Q9
+	 eNLlnahhpGnljeH8J2hkhOv2sIiIzeod/IfL2Au7fwlbM+u0DRkGK0dmRpoX2yMVb/
+	 jc8+NuGpf2NS1Bc7Ztcfqh8KITj3bf6CJp2lpqiH/gHI3EigIvOal0IZcDI58cbjum
+	 hmse3tIIcdrPQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74FDDCA0EF3;
+	Fri, 30 Aug 2024 20:51:01 +0000 (UTC)
+From: =?utf-8?q?Andr=C3=A9_Apitzsch_via_B4_Relay?= <devnull+git.apitzsch.eu@kernel.org>
+Date: Fri, 30 Aug 2024 22:49:50 +0200
+Subject: [PATCH] Revert "arm64: dts: qcom: msm8939-longcheer-l9100: Add
+ rear flash"
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com> <20240830-preemption-a750-t-v2-4-86aeead2cd80@gmail.com>
-In-Reply-To: <20240830-preemption-a750-t-v2-4-86aeead2cd80@gmail.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 30 Aug 2024 13:36:59 -0700
-Message-ID: <CAF6AEGuMah=C_i1qqaAP+Pz5t=bX5+Tq4Mq6HXoSeyWpaj7Cqw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/9] drm/msm/A6xx: Implement preemption for A7XX targets
-To: Antonino Maniscalco <antomani103@gmail.com>
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Sharat Masetty <smasetty@codeaurora.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240830-revert_flash-v1-1-ad7057ea7e6e@apitzsch.eu>
+X-B4-Tracking: v=1; b=H4sIAG0w0mYC/x2MQQqAIBAAvxJ7TlBTsL4SEZJrLoSFRgTi35OOA
+ zNTIGMizDB1BRI+lOmMDUTfwRZs3JGRawySS8XNwFmTMN2rP2wOTKEwSo/CWaGhJVdCT++/m5d
+ aP60G5wFeAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1725051108; l=1873;
+ i=git@apitzsch.eu; s=20240325; h=from:subject:message-id;
+ bh=e8OmqrXh0tbGdO++XiKLMFxfWpEu2DvMhtbt6MUV/A8=;
+ b=O92PbyqG9ghtpTVHIrrk4BWY3mb570s0wC+LCtYQgraW1WTvErXUQeUUY4HkEXbOS6+roClHo
+ g+t/fpRE8VODfR1hFpZdFkMzkY/5hvmkmQ2j+HXDl50hZD8x03TIlZW
+X-Developer-Key: i=git@apitzsch.eu; a=ed25519;
+ pk=wxovcZRfvNYBMcTw4QFFtNEP4qv39gnBfnfyImXZxiU=
+X-Endpoint-Received: by B4 Relay for git@apitzsch.eu/20240325 with
+ auth_id=142
+X-Original-From: =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
+Reply-To: git@apitzsch.eu
 
-On Fri, Aug 30, 2024 at 8:33=E2=80=AFAM Antonino Maniscalco
-<antomani103@gmail.com> wrote:
->
-> This patch implements preemption feature for A6xx targets, this allows
-> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
-> hardware as such supports multiple levels of preemption granularities,
-> ranging from coarse grained(ringbuffer level) to a more fine grained
-> such as draw-call level or a bin boundary level preemption. This patch
-> enables the basic preemption level, with more fine grained preemption
-> support to follow.
->
-> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> ---
->  drivers/gpu/drm/msm/Makefile              |   1 +
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 323 +++++++++++++++++++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 ++++++++++++
->  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 431 ++++++++++++++++++++++++=
-++++++
->  drivers/gpu/drm/msm/msm_ringbuffer.h      |   7 +
->  5 files changed, 921 insertions(+), 9 deletions(-)
->
+From: André Apitzsch <git@apitzsch.eu>
 
-[snip]
+Patch "arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash" has
+been applied twice. This reverts the older version of the patch.
 
-> +void a6xx_preempt_trigger(struct msm_gpu *gpu)
-> +{
-> +       struct adreno_gpu *adreno_gpu =3D to_adreno_gpu(gpu);
-> +       struct a6xx_gpu *a6xx_gpu =3D to_a6xx_gpu(adreno_gpu);
-> +       u64 preempt_offset_priv_secure;
-> +       unsigned long flags;
-> +       struct msm_ringbuffer *ring;
-> +       uint64_t user_ctx_iova;
-> +       unsigned int cntl;
-> +
-> +       if (gpu->nr_rings =3D=3D 1)
-> +               return;
-> +
-> +       /*
-> +        * Lock to make sure another thread attempting preemption doesn't=
- skip it
-> +        * while we are still evaluating the next ring. This makes sure t=
-he other
-> +        * thread does start preemption if we abort it and avoids a soft =
-lock.
-> +        */
-> +       spin_lock_irqsave(&a6xx_gpu->eval_lock, flags);
-> +
-> +       /*
-> +        * Try to start preemption by moving from NONE to START. If
-> +        * unsuccessful, a preemption is already in flight
-> +        */
-> +       if (!try_preempt_state(a6xx_gpu, PREEMPT_NONE, PREEMPT_START)) {
-> +               spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
-> +               return;
-> +       }
-> +
-> +       cntl =3D (((a6xx_gpu->preempt_level << 6) & 0xC0) |
-> +               ((a6xx_gpu->skip_save_restore << 9) & 0x200) |
-> +               ((a6xx_gpu->uses_gmem << 8) & 0x100) | 0x1);
+Revert the commit f98bdb21cfc9 ("arm64: dts: qcom:
+msm8939-longcheer-l9100: Add rear flash")
 
-nit, could we define these fields in the xml, and not open-code
-register building?
+Fixes: f98bdb21cfc9 ("arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash")
+Signed-off-by: André Apitzsch <git@apitzsch.eu>
+---
+ .../boot/dts/qcom/msm8939-longcheer-l9100.dts      | 26 ----------------------
+ 1 file changed, 26 deletions(-)
 
-BR,
--R
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+index adc992ebc29d..b845da4fa23e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
++++ b/arch/arm64/boot/dts/qcom/msm8939-longcheer-l9100.dts
+@@ -160,25 +160,6 @@ led@2 {
+ 		};
+ 	};
+ 
+-	flash-led-controller@53 {
+-		compatible = "silergy,sy7802";
+-		reg = <0x53>;
+-		#address-cells = <1>;
+-		#size-cells = <0>;
+-
+-		enable-gpios = <&tlmm 16 GPIO_ACTIVE_HIGH>;
+-
+-		pinctrl-0 = <&camera_rear_flash_default>;
+-		pinctrl-names = "default";
+-
+-		led@0 {
+-			reg = <0>;
+-			function = LED_FUNCTION_FLASH;
+-			color = <LED_COLOR_ID_WHITE>;
+-			led-sources = <0>, <1>;
+-		};
+-	};
+-
+ 	flash-led-controller@53 {
+ 		compatible = "silergy,sy7802";
+ 		reg = <0x53>;
+@@ -364,13 +345,6 @@ camera_rear_flash_default: camera-rear-flash-default-state {
+ 		bias-disable;
+ 	};
+ 
+-	camera_rear_flash_default: camera-rear-flash-default-state {
+-		pins = "gpio9", "gpio16", "gpio51";
+-		function = "gpio";
+-		drive-strength = <2>;
+-		bias-disable;
+-	};
+-
+ 	gpio_hall_sensor_default: gpio-hall-sensor-default-state {
+ 		pins = "gpio20";
+ 		function = "gpio";
+
+---
+base-commit: d7b69f6e9e1c8b6acdcce3b385779eb046835dd5
+change-id: 20240830-revert_flash-4e184591da15
+
+Best regards,
+-- 
+André Apitzsch <git@apitzsch.eu>
+
+
 
