@@ -1,140 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-30276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30277-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5F19396673F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 18:46:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9687E966740
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 18:46:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB492287310
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 16:46:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E13F1F25B1D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 16:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B239D1BA885;
-	Fri, 30 Aug 2024 16:43:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F9CB1B6524;
+	Fri, 30 Aug 2024 16:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="emN0ncTA"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pOMb1304"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43111B9B2E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 16:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F1C1B5313;
+	Fri, 30 Aug 2024 16:44:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725036180; cv=none; b=n5sIUrax0gaTnvx6pWPPtoH8SWQ0ddq7xGRz2EcK3R4g3UqnAGQm3HZa7iQ5+g/JciyN+KOZdJ0ATbSVsp18sDirMxjGwb7zppi2wu5Y1aWC60UQhXmNeY76jWf+abcxTedTuEF12OG0og3if8xUXH3JCvdQRWmv2gLoxBzIBdE=
+	t=1725036296; cv=none; b=Cznkj3KwN0osqlPhjz4lpkI89/9lq68MFPYTDFOYawKpoU6z/w5b9J3ZFw+oJuJmP+B0P513WTobUsUW6c8sQ2pPBJ99WBXBdnUDibMvW93AfhUMlI84CQAW48B3uBfIJH6NW/snxNOkrweKH779pj1ArZ3IypSj6MY3fZCJFpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725036180; c=relaxed/simple;
-	bh=RsXcGhU8oABB3fLKCkcpnk7Vk50IpKb3QFG9nxtNDg4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SjFqftFW3CO4iAN4ctGO+3piBBzjAnFYLiWkgBQeqdoez2NzSrt4RxeYuulwZqGDdQ+XnbMxpLzNRK73XXB+v5eWWLMz7G3lU/pp28AM8eDlSnRPyRcZIfFvetBizEMOxtTXVbb17SL9h7ZWj+HbCr84jVmX7h42kUCTSJRA9w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=emN0ncTA; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53438aa64a4so2482148e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 09:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725036176; x=1725640976; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Ti26gzK1EQz5HySKD6b54SohAjKM16M+gJtA+MrRBY=;
-        b=emN0ncTAUSPFyrOoN3BTYOjNM6R2wSDgH+aqKbeyzhj6ty/VaCHtVbsXhEoCHaVpea
-         o7y70lxp/8LfzuS5tkDdmC6pkvmVLQWJpbQW4VyRA+8ns4KX8DytlVWHoCIZl5EXl0pn
-         k1boIV0T7I//YA7Y4nCI3op+rZrq55fdoxxMGCLZFdv2lrCeqg+ChZt44aoWSpXwOGto
-         vh9VSXSM+pCd0wRrOoXoCeZ/7EhJYLC7bI+o801PeTqVJacInuhKgcWldenjS4yedgC+
-         9SRzT76+LPh5ZoMdgAuxrsWmay/N/HlP7aW6jceb0Ttm0Z+AcRF3ueUjhLi48JgumEB2
-         lcJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725036176; x=1725640976;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7Ti26gzK1EQz5HySKD6b54SohAjKM16M+gJtA+MrRBY=;
-        b=TAifoj3xQ20CLXzNQ600VuIphc0/WC/N3dwrNs5uC7ru5tRBJFf9kNX4KKmguRt5uo
-         ZkPxGl7ol0Cwl6JzKlHpAvbTaaxs7wHYwocKPEVjLJOG+kC/WvG5vweHxx/6rdPrrFE0
-         JyHYh77BVS7H3dG4McTEet8dNUsJz0BI7TYiy90OuoC1wuo0242vw1ebLJzDsDV5YkBS
-         G+u/ZwEost2Vvl4PqKzl9zD3TlLW7OebdRa8S1lo5SKiJIQgUMwryoigl4dYrVovP5ZJ
-         kyQI7N55U+gKmQG2Jhu5j/+ciK6zGf+413RcAJ3IeVYQwut+nLZDaA3x3pB0NfOJb0oH
-         JqnA==
-X-Forwarded-Encrypted: i=1; AJvYcCVN2T2Xnh6ZoYRbpDXvhDfxIdEkThVRzJZJI1pRtKbKSjx8vX7zZMg9icEIN8WE4775o4TrGWUoyfyBQcZk@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNJMrL/eXMhBnbvsDesuEuHPd4tC7z6DIGcxrT6EvaXt5ipklI
-	bS3HCno7mc44H1S9DvropvObv4aYufrJfxZboEaJT5I8VUeVYU2dcGafDT16ktQ=
-X-Google-Smtp-Source: AGHT+IHPok1p6V+eHfwGcCeO0mQYbxw1nUP6jPzcZsijDd7LU+nuYlx/M/lyCnpp0vDdUCgJVIYcDg==
-X-Received: by 2002:a05:6512:159a:b0:52c:e047:5c38 with SMTP id 2adb3069b0e04-53546b0401cmr2164051e87.15.1725036175176;
-        Fri, 30 Aug 2024 09:42:55 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5354084dfc3sm680610e87.269.2024.08.30.09.42.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Aug 2024 09:42:54 -0700 (PDT)
-Date: Fri, 30 Aug 2024 19:42:52 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, quic_abhinavk@quicinc.com, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH 05/21] drm/msm/dpu: move resource allocation to CRTC
-Message-ID: <fiydda6an5a4dc2gmrj4fnti4ymkk7ntbtpq6mgushmgnzl6cp@pwtz6goteljh>
-References: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
- <20240829-concurrent-wb-v1-5-502b16ae2ebb@quicinc.com>
+	s=arc-20240116; t=1725036296; c=relaxed/simple;
+	bh=cAx/CkSWaWBsOEdX3c4Sy30s5GhSkh62nw8fBxVHlBI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Da4MMt9Ch3XDPpndtH3DHb3ePwxwCHsI5Dn4EshuBc0GxUvhk2Aaj1MoNFV8FsrL407y5/+26bCpOiBlWsS5EE6bPQKuaU3f3RCYN/LpcyRB7ThK7uW06bZxW42+rlHS43kY/kVog+eek71+4Xnr7m085GoV09YUkGezptYnT5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pOMb1304; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 47UFI2jI028797;
+	Fri, 30 Aug 2024 16:44:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PTXvTkGDdGSjOfgJlvddv1N2iFsBozj7rOvj7GAdUJQ=; b=pOMb1304Cbvlf3TN
+	8p83Z/mIQfgAaovKh4Z/wSAJ1KQcsjCsBu3n7jfTST58JbXbRMRtwh1ZaPUl6H55
+	aN2+BxJ2a57zT3D/pjUa/RTZ+gt5RONggAGfdkwCbp4tCvGZz7MgPjaCXLYOHXXU
+	9mvA14URxvZS5JrNbpqAkPxkGXKIDhYPDNDYSARJvu1ar1CPb8sWbXQVzGOEx2iZ
+	30hV3X1pAz2v4gFNcMgYYglQSLFC7zP0yGC7nyVjqJ0JtPvxQ2z5IJhPITYtR/vA
+	HCpdCP0+EABsyu2hTzZbThYRbgL9bGF0DfsAcx4oYNxZD501CM6CtirbKk7D1cET
+	G5y2ag==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41ax4mk8x4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 16:44:42 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 47UGifL2032621
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 30 Aug 2024 16:44:41 GMT
+Received: from [10.110.126.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 30 Aug
+ 2024 09:44:40 -0700
+Message-ID: <9b495b92-5b6f-4a8f-8877-fef111b7259c@quicinc.com>
+Date: Fri, 30 Aug 2024 09:44:40 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240829-concurrent-wb-v1-5-502b16ae2ebb@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/7] dt-bindings: arm: Add support for Coresight TGU
+ trace
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        songchai
+	<quic_songchai@quicinc.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        "Mike
+ Leach" <mike.leach@linaro.org>,
+        James Clark <james.clark@arm.com>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
+References: <20240830092311.14400-1-quic_songchai@quicinc.com>
+ <20240830092311.14400-2-quic_songchai@quicinc.com>
+ <0a79b9df-4ca4-4dc8-9930-3fa1dc7d3174@kernel.org>
+Content-Language: en-US
+From: Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <0a79b9df-4ca4-4dc8-9930-3fa1dc7d3174@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NwKB0PFUnUcS7bfCt6_Q1lyvobbJ-T_m
+X-Proofpoint-ORIG-GUID: NwKB0PFUnUcS7bfCt6_Q1lyvobbJ-T_m
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
+ definitions=2024-08-30_10,2024-08-30_01,2024-05-17_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=788
+ impostorscore=0 spamscore=0 suspectscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 malwarescore=0 phishscore=0 mlxscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2408300128
 
-On Thu, Aug 29, 2024 at 01:48:26PM GMT, Jessica Zhang wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> All resource allocation is centered around the LMs. Then other blocks
-> (except DSCs) are allocated basing on the LMs that was selected, and LM
-> powers up the CRTC rather than the encoder.
-> 
-> Moreover if at some point the driver supports encoder cloning,
-> allocating resources from the encoder will be incorrect, as all clones
-> will have different encoder IDs, while LMs are to be shared by these
-> encoders.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> [quic_abhinavk@quicinc.com: Refactored resource allocation for CDM]
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> [quic_jesszhan@quicinc.com: Changed to grabbing exising global state and
-> dropped clearing num_mixers in crtc_disable]
+On 8/30/2024 3:11 AM, Krzysztof Kozlowski wrote:
+>> Add a new coresight-tgu.yaml file to describe the bindings required to
+>> define the TGU in the device trees.
+>>
+>> Signed-off-by: songchai <quic_songchai@quicinc.com>
+> It feels like you are using login name as real name. Please investigate
+> this and confirm whether latin transcription/transliteration of your
+> name is like above.
 
-Hmm, I still see the chunk in dpu_crtc_disable(). I think the chunk is
-correct so that if there is a disable/enable pair of calls with no
-intermediate mode_set then num_mixers carry over the correct value.
+It should be "Signed-off-by: Sam Chai <quic_songchai@quicinc.com>" ? 
 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  89 +++++++++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 201 +++++++++++-----------------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  19 +++
->  3 files changed, 183 insertions(+), 126 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> index 4c1be2f0555f..3296b0650056 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> @@ -1091,9 +1091,6 @@ static void dpu_crtc_disable(struct drm_crtc *crtc,
->  
->  	dpu_core_perf_crtc_update(crtc, 0);
->  
-> -	memset(cstate->mixers, 0, sizeof(cstate->mixers));
-> -	cstate->num_mixers = 0;
-> -
->  	/* disable clk & bw control until clk & bw properties are set */
->  	cstate->bw_control = false;
->  	cstate->bw_split_vote = false;
 
 -- 
-With best wishes
-Dmitry
+---Trilok Soni
+
 
