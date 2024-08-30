@@ -1,192 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-30162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42914965905
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 09:47:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0AAE296591C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 09:51:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B7D381F26729
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 07:47:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA9E6281843
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Aug 2024 07:51:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EC4F15886A;
-	Fri, 30 Aug 2024 07:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DC6A14EC41;
+	Fri, 30 Aug 2024 07:51:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qazfL5dO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M0atW2IK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CD01531D7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 07:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263EE157E62
+	for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 07:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725004033; cv=none; b=sEdCr52CeU2dGoAQ5n141sO1iZ44r8s3bKTDQW6VZqkb76cvZFCmkgeb5goqMKXk97noa5Hj1hM0dzvqwendKhiaRT+2kuyPUo65l42mokvG4sw83CBnfae22BJt2If0FKKFZOz1aAtZuMdzl/SF0gwD1XhiWmClCrpExO57lVo=
+	t=1725004284; cv=none; b=qYP/uxa5HLxQldHbze4HW8De6vl2h5uU4ICe2kF/94L4FmiioTq+EahpsP92y60XCNpSB4ZApFpD3T2XyWbmhf3N2IZgfHUdOs2oWPj8bh89PmD66N9vbuEMMy+9LhI6moSsUMug4X9i+zGWV4qHlLddR/H+6G1oElZ36++/IQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725004033; c=relaxed/simple;
-	bh=VSiORfFqwbMU54hiZwB1d3ZojmwfIK/Qol4tPF7c/rc=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=M4cShopYA9dRJ2IV0d9KuVYgk3InUUIDeWre/W0NJ6QGgSELym+YXuKLXt3kyct/fKkWmhpnqmoUhY8/EQCaZW7p3YE8ukil/wjKW3tznr0dqKr+u8C0x84ESOQgwZJk8nlkdOe3PZ3e/XccJtLImglThZpUDEc8HChsq79xNEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qazfL5dO; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1725004284; c=relaxed/simple;
+	bh=DGUmuhRxxCGg9vi/0rKa1zUzA/w1Wk8C4Iq6rNs+qFY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XcNz/dfYwEwRwD3lVL7HqcavQFQLmmqx/gtIJWAlrf81l0955Srs8yJ480nB1/15+P6gdmkY4r+C8dlssVje+E89DljVG7jOHZzmHO7YMLv2dffBrTIOkuz48Hr8QI+x/48t8oVdWxbfgkpk0k9SogCWUu0yAd/lDtIRsnnsAIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M0atW2IK; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3718c176ed7so937559f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 00:47:11 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2f504652853so16913891fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Aug 2024 00:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725004030; x=1725608830; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=25wikd69ZUkkr5ycvweR6XCBMtXqdYbsu8TrXjjukv4=;
-        b=qazfL5dORWWqOYfiwI0R5dz/FQJYosfGn2YVhSFRa0ipa8xnW34SNbGeR6H8ZomZAZ
-         vF5A8YJnXWKztJZHyMDTBvWX/u0qsVZtUYD8hzW37A2DGQcrZLgVc+yXyAf6Srrjyrua
-         fyDeyuxaXWYwIQiWuDAhRUB02Faetj+LuxmnWJGze96/qGTu6x7yWVHhjHi62h775uWh
-         JvuaF2VSP5GVkUlCHgq1aQUo50C1cLa7qC3dsehwen3H1CdtuQtckakJz+pijsJQ3+cZ
-         w8V332D57vTsCuwDOAgDlm7tRwWXNQupPPdSZfNhsldyvjj9XKFeiUu4z7AtKHUgVp0B
-         iIMg==
+        d=linaro.org; s=google; t=1725004280; x=1725609080; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EMykQbUJVW9W9sXQRmc6M1cASoIaLQkUOCZZdts0xts=;
+        b=M0atW2IKjuH2X3mSRLNHaQpRaybqldHIygKSFBIoS4J55QpcswKSi09cLoFgUntKdl
+         cXtCsPUiQ5/2awEwjxKNlYTzhBsG264rARTtd6x6GkABIoHo05TlsmobS5YzxoJFlHox
+         8h5IgEPLkhHUrKSdJokwv7e/iWzZAzbWlTSJ+qVSONlJJVV2oyfMp2fqGJB89SCqrm0P
+         lzemXtI+KLFEtmukPf33DvTvUirfb2Bpij/GMbiA72mHrydJqsuft7Kb+Iq8MJj79SVh
+         vQxnCb0DMGl8YiQ7T1TmFSn+wm92cXo/EuY2lEHzXKhgw5AlL0RlFHWYpemMI59Ud6Di
+         5hMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725004030; x=1725608830;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=25wikd69ZUkkr5ycvweR6XCBMtXqdYbsu8TrXjjukv4=;
-        b=pWExw8GVQuAAHCm1gT03nZnMBhK5vlaZ6JhV8H1Tjd17kkPNHQFufYbKtxl1M9qWzz
-         HNN9AUMW4l4zafBJrkj07S2nYpg3o3F+IY8FfLPHXpkjDe8G0Z/6ZG6FqCW8QlfZctpx
-         ldRT3V66XNdDP7l7x5apeoE5qCA9oVLd81uRXvNNExENexf8xvtTmRXHEE3QYZc06ncv
-         Z3bWDBieQnGvb5v8YCSmGa8uJ3MTZCColLdk7iled0Ng8TNTkqP9WSwXIZGMX2GF+AXE
-         3li9jAG1vYVRc6ZgNxE8JToY4ZqLeKM6E4L2qU3EfHhi8u1FVMOSZ1xk5jmzVM2KvBG0
-         UaQw==
-X-Forwarded-Encrypted: i=1; AJvYcCWJgczNNIpuuXzQEX0Sbxt+x2ss+JzAow4iVbwC3Ab6Sbs7VWkGHwZadfHwJY3awAbuoF3oJSDmfRMLjrhk@vger.kernel.org
-X-Gm-Message-State: AOJu0YzV03CBkd0/Axu9gMw8ERFP+Q7krdzHD16XapzN5Ii8i1j5Ar/C
-	c1u3p+3ltSUO4wWw1Cok0g4id8r2XT46DSbEoKjoBxLI4ZMLDlVmmIMvPpkMmhs=
-X-Google-Smtp-Source: AGHT+IF6QuMgE0Qpt5xvvURSWNcFFsHwHxW5+gCKscPEUBfHGSOw2gWJKaA138vKn+BaqPUisECt5w==
-X-Received: by 2002:a5d:60c1:0:b0:367:980a:6af with SMTP id ffacd0b85a97d-3749b58841emr3646647f8f.59.1725004029586;
-        Fri, 30 Aug 2024 00:47:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5001:8e1b:dd18:1d3? ([2a01:e0a:982:cbb0:5001:8e1b:dd18:1d3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3749ee99d6dsm3272538f8f.48.2024.08.30.00.47.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Aug 2024 00:47:09 -0700 (PDT)
-Message-ID: <d1ceab6e-907a-4939-8be4-6b460d6c594f@linaro.org>
-Date: Fri, 30 Aug 2024 09:47:06 +0200
+        d=1e100.net; s=20230601; t=1725004280; x=1725609080;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EMykQbUJVW9W9sXQRmc6M1cASoIaLQkUOCZZdts0xts=;
+        b=I9DtGuoKv3tgfliQyIHV2TgF9nezonNN2hIB7kPKzVL0Kvz/rf/JfJ4H/TGON5x+yE
+         yU24nfmKZ2TFzwhT7MXT3oWm6QZ5CX/ZWK8YVsaQ4oTzX4Nv+EuJAoTjfZocMERlDbi6
+         i/3soNZ3W/9WT9CrAjZLFnayTygFJAsajtGbkT/B5aZSQNGvpoZZTKEfn86hx8gmle3d
+         uJhGVolgF08LS00z90V8SvbqWNM7IVXLCUGsi8dLaOEO/HpmLB+Etfz+U0ra4cbDHGd2
+         /fYCiHJ+tcse7DySzXV2seZtcYJQjw/zKCIn884vtbeuHiHswncGHKk70MwG+JH91I9k
+         cViQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUGcaIcCIEIyQqXkaL3CR/Hrj3J9jJh3j3uiiqODrfbhVU7nC+HqO+WE+9D4fWogzb9HFlMQxjZfh+VdN8Y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7QPqQWgZ8l892vv0bgvFl/3AOoWO5m5crr49xrIVL14buefOY
+	TvYYgPXfemc7W/p0/v+xagtko4CJbl1hX5LM2Odo//nC6wQIdkQJd9RZLO8EQF2ZlkDoACaZOnZ
+	q
+X-Google-Smtp-Source: AGHT+IFD8xmWdEqG4hdLLMpP5UGoKymovpPF1vANY5dTJv/PkTuwIIAOL72iFTwhOFpAPYmHZn+NBg==
+X-Received: by 2002:a05:651c:198c:b0:2f3:d560:ed9f with SMTP id 38308e7fff4ca-2f61e025823mr8837721fa.5.1725004279543;
+        Fri, 30 Aug 2024 00:51:19 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f615194f2fsm5315721fa.134.2024.08.30.00.51.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Aug 2024 00:51:19 -0700 (PDT)
+Date: Fri, 30 Aug 2024 10:51:17 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Griffin Kroah-Hartman <griffin@kroah.com>, amahesh@qti.qualcomm.com, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	stable <stable@kernel.org>, Ekansh Gupta <quic_ekangupt@quicinc.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Subject: Re: [PATCH] Revert "misc: fastrpc: Restrict untrusted app to attach
+ to privileged PD"
+Message-ID: <jof6sunnfydjp34o543jnhwz3zmjn32f6cwre3etbn27ov2mxl@mdzkojaqeteq>
+References: <20240815094920.8242-1-griffin@kroah.com>
+ <b93eda80-828c-4873-a52b-34428f3570df@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v1 0/4] Enable shared SE support over I2C
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b93eda80-828c-4873-a52b-34428f3570df@linaro.org>
 
-Hi,
+On Thu, Aug 15, 2024 at 03:55:01PM GMT, Srinivas Kandagatla wrote:
+> 
+> 
+> On 15/08/2024 10:49, Griffin Kroah-Hartman wrote:
+> > This reverts commit bab2f5e8fd5d2f759db26b78d9db57412888f187.
+> > 
+> > Joel reported that this commit breaks userspace and stops sensors in
+> > SDM845 from working. Also breaks other qcom SoC devices running postmarketOS.
+> > 
+> > Cc: stable <stable@kernel.org>
+> > Cc: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> > Reported-by: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+> > Link: https://lore.kernel.org/r/9a9f5646-a554-4b65-8122-d212bb665c81@umsystem.edu
+> > Signed-off-by: Griffin Kroah-Hartman <griffin@kroah.com>
+> > ---
+> 
+> 
+> Lets fix this properly by updating existing device tree entries and bindings
+> to enforce misuse of "qcom,non-secure-domain" on all Qcom SoC's.
 
-On 29/08/2024 11:24, Mukesh Kumar Savaliya wrote:
-> This Series adds support to share QUP based I2C SE between subsystems.
-> Each subsystem should have its own GPII which interacts between SE and
-> GSI DMA HW engine.
+It is not possible. We must remain compatible with existing DTs.
+
 > 
-> Subsystem must acquire Lock over the SE on GPII channel so that it
-> gets uninterrupted control till it unlocks the SE. It also makes sure
-> the commonly shared TLMM GPIOs are not touched which can impact other
-> subsystem or cause any interruption. Generally, GPIOs are being
-> unconfigured during suspend time.
+> As this patch is only doing part of the job and breaking existing platforms,
 > 
-> GSI DMA engine is capable to perform requested transfer operations
-> from any of the SE in a seamless way and its transparent to the
-> subsystems. Make sure to enable “qcom,shared-se” flag only while
-> enabling this feature. I2C client should add in its respective parent
-> node.
+> Acked-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
-> ---
-> Mukesh Kumar Savaliya (4):
->    dt-bindindgs: i2c: qcom,i2c-geni: Document shared flag
->    dma: gpi: Add Lock and Unlock TRE support to access SE exclusively
->    soc: qcom: geni-se: Export function geni_se_clks_off()
->    i2c: i2c-qcom-geni: Enable i2c controller sharing between two
->      subsystems
+> --srini
 > 
->   .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  4 ++
->   drivers/dma/qcom/gpi.c                        | 37 ++++++++++++++++++-
->   drivers/i2c/busses/i2c-qcom-geni.c            | 29 +++++++++++----
->   drivers/soc/qcom/qcom-geni-se.c               |  4 +-
->   include/linux/dma/qcom-gpi-dma.h              |  6 +++
->   include/linux/soc/qcom/geni-se.h              |  3 ++
->   6 files changed, 74 insertions(+), 9 deletions(-)
+> 
 > 
 
-I see in downstream that this flag is used on the SM8650 qupv3_se6_i2c,
-and that on the SM8650-HDK this i2c is shared between the aDSP battmgr and
-the linux to access the HDMI controller.
-
-Is this is the target use-case ?
-
-We have some issues on this platform that crashes the system when Linux
-does some I2C transfers while battmgr does some access at the same time,
-the problem is that on the Linux side the i2c uses the SE DMA and not GPI
-because fifo_disable=0 so by default this bypasses GPI.
-
-A temporary fix has been merged:
-https://lore.kernel.org/all/20240605-topic-sm8650-upstream-hdk-iommu-fix-v1-1-9fd7233725fa@linaro.org/
-but it's clearly not a real solution
-
-What would be the solution to use the shared i2c with on one side battmgr
-using GPI and the kernel using SE DMA ?
-
-In this case, shouldn't we force using GPI on linux with:
-==============><=====================================================================
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index ee2e431601a6..a15825ea56de 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -885,7 +885,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
-         else
-                 fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
-
--       if (fifo_disable) {
-+       if (gi2c->is_shared || fifo_disable) {
-                 /* FIFO is disabled, so we can only use GPI DMA */
-                 gi2c->gpi_mode = true;
-                 ret = setup_gpi_dma(gi2c);
-==============><=====================================================================
-
-Neil
+-- 
+With best wishes
+Dmitry
 
