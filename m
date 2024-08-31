@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-30332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23694966F0A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 05:19:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4A8E9966F0E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 05:19:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE5C51F23339
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 03:19:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7BAA91C21DA8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 03:19:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFD4E13C9CB;
-	Sat, 31 Aug 2024 03:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECC5514A0B8;
+	Sat, 31 Aug 2024 03:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tbVYKLle"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tGJrIQfF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3AB13C68E;
-	Sat, 31 Aug 2024 03:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A0A149DFD;
+	Sat, 31 Aug 2024 03:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725074337; cv=none; b=NJFDpVfyF/2Xn9Gm1vC+9ZDS1/LIPG1XCNcgauNv5e85zXYeeETLc7IgE/TedDPPAxbZH3jaepFDfLDOOa8icERMuHtZNL9g1ZwjiiYC1KSdf7+WzisZVp9XWXyN/3/rNo8cfooG4NaaY0V1oV6AwWoh+4NhNODLWCbS5WNROK4=
+	t=1725074339; cv=none; b=vD13xooomVA0e23M2STUOj4auiW03OUfzEZBLySznepdsS1p9PC3of3bJdHq5vJgeo5uMX0QQEvB5hY37wYJrLHXbyRsta1vKdyXl5n0fX9xy7UE2g8EiElTAy1PRrOWspGT2OBnBZmyl1sWl+4udd7jBzJ5Ve15rAdlQoNwZJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725074337; c=relaxed/simple;
-	bh=Z/C4jbQoZhpuH06E5YtrvtuIdZmaT78NRqr20g8IN88=;
+	s=arc-20240116; t=1725074339; c=relaxed/simple;
+	bh=6GDq4O8JisAvvgleto+qPvuk9YLTFutjBjf+WZY5Vr8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OrvtTbFHCn/BNouXWGM87oAcAcY7IMNPVvOMe0XsEdr7BogvTGiKYxoccYuqsCi1Uz/ve04SP0lq5iDaQdl/e9ZGroIqa4iL3qQj1GRmwzGemOtHUKoqwP8c2/vwolYZi6gJz50et4YdCWTJGztJm+sw/lLwrq1pSfx/IgwHKLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tbVYKLle; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B9BC4CEC0;
-	Sat, 31 Aug 2024 03:18:55 +0000 (UTC)
+	 MIME-Version:Content-Type; b=g3Z+/kgdheK4JwYKnBLLBFCNHDS3vgwEkARJvBZArSGKGHVBr+lCGzsFQrxEsJJ38mGnPtc18rP8wpjlBQCZmAqTNoFou1wxpaDnYZO6ZVz7CHXGvO0WesC1TEEvW5qIGRjEVvSQ0KQsK4iHnVSe6bsDeoFPKs3fhUr9xfiMr/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tGJrIQfF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5B6C4CEC4;
+	Sat, 31 Aug 2024 03:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725074337;
-	bh=Z/C4jbQoZhpuH06E5YtrvtuIdZmaT78NRqr20g8IN88=;
+	s=k20201202; t=1725074339;
+	bh=6GDq4O8JisAvvgleto+qPvuk9YLTFutjBjf+WZY5Vr8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbVYKLlePUtrVfzV8jnO3ywdONj/k0NzHuRJL8mKguwljtDNbXvO4CBe4hPnulkTD
-	 aZ7WMUG+ViIFvg9PcNP03bCUBKUL19IvlebegP+AtQfGWop1HvYnlA4Aw8oI6mpkWG
-	 lZAIzDpStJpTHFidaje8/IPjs3a3Vt5owOfZmyE1u4vB+bHIkqNQ8h8M3sa5IvC1AN
-	 EvsVOhlmRA9YgJ1vxB/s57MojZDxsY5hKO3ugM/1AmYDRzXdozfxCK7K9xjjTZ4tvs
-	 bro2I7VrspiKBvXx02bH7+hwN/ChifdzLsKGZUDqAseAP8YJMZLW02DzY1W+ioCD+j
-	 khHbwMKFS5vRw==
+	b=tGJrIQfFTlhqPKSaEDM4PhzybFhVsNCfH5cBtTlbuOuLrKwnljEbNt7IPg7T3LX3G
+	 LXc1n1l3yKZiNoXsINrH4zPic+AdOklC/SPN2zdtBYcxG3clfVS0YiOM/10mO+06dr
+	 70OPXi6vGSk5e08PsigMIoYd1TLysD/lzQbWAlk/yjX9dmgAfUOTh1YuqY7ZcxvvfB
+	 KhhuiD7//5tPXwLqCksZOdYxPSY9l7F3JxjZeB2Av+LnBPxkBdK8Cbgv7xUXzwr7Ji
+	 lL05soWdwA+LT3r72t5IKEXo1PB9r1akpCAz3hst3z8ZzXfvuisnmH7ZBZYdeXwKfW
+	 MxjAADf4kFuug==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
+To: Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	=?UTF-8?q?Andr=C3=A9=20Apitzsch?= <git@apitzsch.eu>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Revert "arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash"
-Date: Fri, 30 Aug 2024 22:18:38 -0500
-Message-ID: <172507431836.12792.1003409106538102062.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: Re: [PATCH v2 0/2] ThinkPad T14s Gen 6 support
+Date: Fri, 30 Aug 2024 22:18:39 -0500
+Message-ID: <172507431831.12792.2576325909388945717.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240830-revert_flash-v1-1-ad7057ea7e6e@apitzsch.eu>
-References: <20240830-revert_flash-v1-1-ad7057ea7e6e@apitzsch.eu>
+In-Reply-To: <20240828-topic-t14s_upstream-v2-0-49faea18de84@quicinc.com>
+References: <20240828-topic-t14s_upstream-v2-0-49faea18de84@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,20 +68,22 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 30 Aug 2024 22:49:50 +0200, André Apitzsch wrote:
-> Patch "arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash" has
-> been applied twice. This reverts the older version of the patch.
+On Wed, 28 Aug 2024 23:31:59 +0200, Konrad Dybcio wrote:
+> As good as the other X1 laptops
 > 
-> Revert the commit f98bdb21cfc9 ("arm64: dts: qcom:
-> msm8939-longcheer-l9100: Add rear flash")
+> See this page for more hw info:
+> 
+> https://www.lenovo.com/us/en/p/laptops/thinkpad/thinkpadt/lenovo-thinkpad-t14s-gen-6-(14-inch-snapdragon)/len101t0099
 > 
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] Revert "arm64: dts: qcom: msm8939-longcheer-l9100: Add rear flash"
-      commit: 4b520e4983c37b2e33ea0dd5171cb8a79fd7e022
+[1/2] dt-bindings: arm: qcom: Add Lenovo ThinkPad T14s Gen 6
+      commit: 7ad660f9991d3f9029b55c112e728ef43170d402
+[2/2] arm64: dts: qcom: Add X1E78100 ThinkPad T14s Gen 6
+      commit: 7d1cbe2f49854a9a5f723e3932da7da1b7e3c7b8
 
 Best regards,
 -- 
