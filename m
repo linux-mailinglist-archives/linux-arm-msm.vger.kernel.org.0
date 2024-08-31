@@ -1,449 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-30342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30343-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C4AD9671B9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 15:18:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 872C19671FB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 15:54:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E854B2839B1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 13:18:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 402A328168C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 13:54:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5825B101E2;
-	Sat, 31 Aug 2024 13:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DDA1168C7;
+	Sat, 31 Aug 2024 13:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a1hh+iJb"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1jjL5XG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F9B848C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 13:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3F31400A
+	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 13:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725110302; cv=none; b=Z2L4DxlDOxbsGgB0sK9/QxidbUx/+29sIJqRTwk28/Xrmf8cIDkb3dZgoKhKM83vm4dRYOFHJRcSbZ+TNJ4lZjfzzeMLQS/mh4tPjGiAcqvB686TveBn5boy0QzvSuN57NQ9oSdlYsbuMoYnk8pMMMVnVEubKgWNFUcl4QqaQ0M=
+	t=1725112440; cv=none; b=iQlfGZzeBlPQpfYrEV3cR85fdi/8lpEVnRmG0OmaMHZTYIfI0ph2OUKxTwQbtJ0fF6wh7187tZZYsUUYZ955ivhA9XrvVqP/FSBcirHQwkjVkw3kP1n4y9REOPbby5NvhFWB9pHNIovgYk2bOuhm1vl1+nTNjInnDzTdqbh3GoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725110302; c=relaxed/simple;
-	bh=mu13EQ9HoQejLYVNxt2U8RKRikdH3YeZJxgItcqJ/1w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t+/ll1qWZocYXtcwoqrOw/G2yANhtcTMqK62f2NYAytc1XKR7TD9oUtl0gjuCdYCmB0sZbaZX+17b0iNTLkKW1aD6j2wuPE/JQ+5hZ9ygem/Y8bQWoWLjZJNuKCvqyq6092NgKlXW/GPMlug3e8pYoY5q6d0vbtHjQXuJj3gfEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a1hh+iJb; arc=none smtp.client-ip=209.85.167.44
+	s=arc-20240116; t=1725112440; c=relaxed/simple;
+	bh=wJ4QgFNuqwu/Leb/N4TW45209mZ5WZDv25eNPwvyxO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HASPJipLgAk6OGP1+nPzynPMJzvf1YV7q0Z/bwUKAvPw1FgTAq1LEWRMp+VouVHHp4MW3XbZF40BauY5xk957nveCL5E1fsOnCfGhMtB5hPE6TH/wNvVRZVSAgTUmUGr9Oj0L+TsIb+T/8fXde5vWS+7jw8MNHE2WPdCyHhUDTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1jjL5XG; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-533461323cdso3353466e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 06:18:19 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42bbd16fca8so11964585e9.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 06:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725110298; x=1725715098; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NJkTnaPWIP3xGBTfa2SPoHVtOVzpX0uKAT2t6dy54EM=;
-        b=a1hh+iJbox7UcgTuAp6MNR2ePkcTlYDPewA5oDq/HbnO+ve5O84RRLMAs6NiPtQV4H
-         ogGStaIi3+Xv4KXMrPnavc6Jz7CPfDMev+6eK74HLJC8sayc7QHmKe1JX+tLQBZDYCN1
-         dhN5pcROFKCESfkh6nAaraaRDuSytpaCo12evEfVU8KFiuFE6gJwOWou1zoogngbZdoU
-         Lk41EHMG44mArGu+2hwXQCbPGrt0Dh7BGcD8sSbDV9C6kqBTzONOcj+R4kDpxKo29pBs
-         HOTh+RR0UhgwqXG6D4EW/zEbsmHBTc7R3JhAG3emU6dvAoseqkObv+s1T6hZWU9KYwz3
-         lOrA==
+        d=linaro.org; s=google; t=1725112437; x=1725717237; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=36D9CATQ2pvh5CBMOXJIawRjTPDBw45elgFZcq41bNg=;
+        b=V1jjL5XGEq/3FxsxLbbIBYQP1A3m+CNzjc0UwmTIAf8wcRF9bLUw1UYeU5PPWw7Lsf
+         AyStAX/hfsp7xSYO9/1AjXv8qk6jZczpQjGfiuJ3+Ku7CKZfSmm0E404Ai6xqu26E+Mg
+         5VHoewo6DBbe1s4I+wZ6651TjANCPwP7iwRaRlPMyE5cJXc+EV7r+Lklcbi5HuSNBJex
+         jQzuu/AN23x7KaVxUF5Rcf/rHT4yB7biBUabHEGZxQ0B2aJOfEInlQmWEoEgs/QuqPx/
+         KTnOJRdUQUfWQPmI8oqdZuvC5tOpDFmvXZGiW3WkGSS7eKCHn0k/rMf3Hl9KFv3LFlEx
+         4qoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725110298; x=1725715098;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NJkTnaPWIP3xGBTfa2SPoHVtOVzpX0uKAT2t6dy54EM=;
-        b=PjQLDFRGoTl70uUDNZGg7Pumh8FqtXO02iRIlnch/EJMz97glBTj3UyAdzIfCCOwEq
-         lCevi7pyEp3kvOxM2xYeUWi2oghNYTa1e5ynne0bhsraLYYfy47Hh0DWOaNVmhwLFw+R
-         mex2bROxoEnedQD/tfDPjy8mEtPi1dZShHneB48cu/r2flBDdm/N8Vzzz2YMv+mE98Kj
-         w/4Gp6DzWaJzBFLB2lE3G6VlvAdjJqBdapSkY0/9eM/ZYF8ejh28oAsB6Spy5HF9jtvW
-         ckI+7N3+Un+eqZac2fzhrov1NvL2mFLfquMQQzVtNlCVSAmcCK28YxeMkkj3PR5emuvs
-         eM5g==
-X-Forwarded-Encrypted: i=1; AJvYcCX9Lj8gi/S8ybFAANpHiXEdA5ieZkwPhz5AQK2blL/SwujZQ94zgfsLC+OTz5bCaF2bMQzsmOAjOehD6NGL@vger.kernel.org
-X-Gm-Message-State: AOJu0YxjAGlccVFAfw0Oi4Zn2yr4D8YMpE3O5R7tHkDBjjJJqq7F7gG+
-	pR3EbFrM2vRWbl+906dgBeqVNCzRurp5k0e4KPxBqlSsKst50kWPYgRuILyQOpo=
-X-Google-Smtp-Source: AGHT+IGPOz7dvYo89+4zvzcBxzz/93RdbGmQWnTvKAy390yr3LyXNraYmjVZVSj51lwW56kV+d9PFw==
-X-Received: by 2002:a05:6512:3d0f:b0:533:46de:30a0 with SMTP id 2adb3069b0e04-53546b9c0cemr3283704e87.54.1725110297376;
-        Sat, 31 Aug 2024 06:18:17 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89891a3e9dsm325824366b.108.2024.08.31.06.18.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Aug 2024 06:18:17 -0700 (PDT)
-Message-ID: <293f3ddd-531b-443f-a58c-a789337e2b35@linaro.org>
-Date: Sat, 31 Aug 2024 14:18:16 +0100
+        d=1e100.net; s=20230601; t=1725112437; x=1725717237;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=36D9CATQ2pvh5CBMOXJIawRjTPDBw45elgFZcq41bNg=;
+        b=eYSo/HK1GnAc8x0X85rcBePCOqNIszjGRSBg/GOrY3TbLafMIr4+z+N7EHfYFGc/IU
+         RdPS5R75FZKhaIOE7unLDchJuJjr+dJmCjA4oL6DK7Q8zfj9KelUg+nl6+7Ip6akBW0S
+         lUWl8fUUK4EgLwIBfpFUBQa7z0ZohEaqCoTMOWkBcFveAIgcWIQxirE15BYmEwApQZks
+         m9IhG2/RK5Hxn6oe9fSncYhVUwKRDea6J8dlIiA+tPBussAu0UfCgMAzWuXsDbLft7hs
+         4XLN728XZSG7jFOltrHpF/OAUfnEOMDNlg+aU4EqLyZQfxZCFirz5aLlKu5dVQkq6mtF
+         Wz/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUCGgkcJRJrUIs9C6QDOnotHRQXfQKLCn+pqRwL/xCgqclX5Uc6YuWvnJ1JjkurxXBa3PZxgW99ysTEEAvn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2IqcYioKpcZ8ELKbRUgb9xsBqe1tUizGJQFshhC1a+K0Cb6O6
+	VFQizCmw6A7jVBsuJ9Aq0kgALZHUGBFyLEbZZIQP5Hs0ih7ej4SQjgTl0m3wobY=
+X-Google-Smtp-Source: AGHT+IHX2XVIKii7FuT5487mVz6P9wGbmrCYDRQmGLpqd0rgF3FqG6sdOGhjn9n4TnD5FCIX0Rz0Cg==
+X-Received: by 2002:a05:600c:3b25:b0:428:d83:eb6b with SMTP id 5b1f17b1804b1-42bb0294357mr77516125e9.15.1725112436454;
+        Sat, 31 Aug 2024 06:53:56 -0700 (PDT)
+Received: from linaro.org ([82.79.186.176])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb6deb2dcsm77602925e9.1.2024.08.31.06.53.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Aug 2024 06:53:55 -0700 (PDT)
+Date: Sat, 31 Aug 2024 16:53:54 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Maulik Shah <quic_mkshah@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Johan Hovold <johan@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: qcom: x1e80100: Bypass PDC wakeup parent for now
+Message-ID: <ZtMgcsjpA6e5kSoc@linaro.org>
+References: <20240830-x1e80100-bypass-pdc-v1-1-d4c00be0c3e3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/29] media: iris: implement video firmware
- load/unload
-To: quic_dikshita@quicinc.com, Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
- <20240827-iris_v3-v3-7-c5fdbbe65e70@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240827-iris_v3-v3-7-c5fdbbe65e70@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240830-x1e80100-bypass-pdc-v1-1-d4c00be0c3e3@linaro.org>
 
-On 27/08/2024 11:05, Dikshita Agarwal via B4 Relay wrote:
-> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+On 24-08-30 11:09:07, Stephan Gerhold wrote:
+> On X1E80100, GPIO interrupts for wakeup-capable pins have been broken since
+> the introduction of the pinctrl driver. This prevents keyboard and touchpad
+> from working on most of the X1E laptops. So far we have worked around this
+> by manually building a kernel with the "wakeup-parent" removed from the
+> pinctrl node in the device tree, but we cannot expect all users to do that.
 > 
-> Load/unload firmware in memory via mdt loader.
-> Firmware is loaded as part of core initialization
-> and unloaded as part of core de-initialization.
+> Implement a similar workaround in the driver by clearing the wakeirq_map
+> for X1E80100. This avoids using the PDC wakeup parent for all GPIOs
+> and handles the interrupts directly in the pinctrl driver instead.
 > 
-> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> The PDC driver needs additional changes to support X1E80100 properly.
+> Adding a workaround separately first allows to land the necessary PDC
+> changes through the normal release cycle, while still solving the more
+> critical problem with keyboard and touchpad on the current stable kernel
+> versions. Bypassing the PDC is enough for now, because we have not yet
+> enabled the deep idle states where using the PDC becomes necessary.
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: 05e4941d97ef ("pinctrl: qcom: Add X1E80100 pinctrl driver")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+
 > ---
->   drivers/media/platform/qcom/iris/Kconfig           |   2 +
->   drivers/media/platform/qcom/iris/Makefile          |   1 +
->   drivers/media/platform/qcom/iris/iris_core.c       |   8 ++
->   drivers/media/platform/qcom/iris/iris_firmware.c   | 146 +++++++++++++++++++++
->   drivers/media/platform/qcom/iris/iris_firmware.h   |  14 ++
->   .../platform/qcom/iris/iris_platform_common.h      |  12 ++
->   .../platform/qcom/iris/iris_platform_sm8250.c      |  10 ++
->   .../platform/qcom/iris/iris_platform_sm8550.c      |  10 ++
->   8 files changed, 203 insertions(+)
+> Commenting out .wakeirq_map as well would give an unused declaration
+> warning for x1e80100_pdc_map. The map itself is correct, so I just "clear"
+> it by setting .nwakeirq_map to 0 for now. It's just temporary - this patch
+> will be reverted after we add X1E80100 support to the PDC driver.
+> ---
+>  drivers/pinctrl/qcom/pinctrl-x1e80100.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/media/platform/qcom/iris/Kconfig b/drivers/media/platform/qcom/iris/Kconfig
-> index 4b757bb8adf3..ea518760c65c 100644
-> --- a/drivers/media/platform/qcom/iris/Kconfig
-> +++ b/drivers/media/platform/qcom/iris/Kconfig
-> @@ -3,6 +3,8 @@ config VIDEO_QCOM_IRIS
->           depends on VIDEO_DEV
->           depends on ARCH_QCOM || COMPILE_TEST
->           select V4L2_MEM2MEM_DEV
-> +        select QCOM_MDT_LOADER if ARCH_QCOM
-> +        select QCOM_SCM
->           help
->             This is a V4L2 driver for Qualcomm Iris video accelerator
->             hardware. It accelerates decoding operations on various
-> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
-> index 48d54e53a576..ddd4c994a0b9 100644
-> --- a/drivers/media/platform/qcom/iris/Makefile
-> +++ b/drivers/media/platform/qcom/iris/Makefile
-> @@ -1,4 +1,5 @@
->   iris-objs += iris_core.o \
-> +             iris_firmware.o \
->                iris_hfi_gen1_command.o \
->                iris_hfi_gen2_command.o \
->                iris_hfi_queue.o \
-> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
-> index 360a54909ef6..8c7d53c57086 100644
-> --- a/drivers/media/platform/qcom/iris/iris_core.c
-> +++ b/drivers/media/platform/qcom/iris/iris_core.c
-> @@ -4,11 +4,13 @@
->    */
->   
->   #include "iris_core.h"
-> +#include "iris_firmware.h"
->   #include "iris_state.h"
->   
->   void iris_core_deinit(struct iris_core *core)
->   {
->   	mutex_lock(&core->lock);
-> +	iris_fw_unload(core);
->   	iris_hfi_queues_deinit(core);
->   	core->state = IRIS_CORE_DEINIT;
->   	mutex_unlock(&core->lock);
-> @@ -33,10 +35,16 @@ int iris_core_init(struct iris_core *core)
->   	if (ret)
->   		goto error;
->   
-> +	ret = iris_fw_load(core);
-> +	if (ret)
-> +		goto error_queue_deinit;
-> +
->   	mutex_unlock(&core->lock);
->   
->   	return 0;
->   
-> +error_queue_deinit:
-> +	iris_hfi_queues_deinit(core);
->   error:
->   	core->state = IRIS_CORE_DEINIT;
->   exit:
-> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> new file mode 100644
-> index 000000000000..55bbcc798f4c
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> @@ -0,0 +1,146 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/firmware.h>
-> +#include <linux/firmware/qcom/qcom_scm.h>
-> +#include <linux/of_address.h>
-> +#include <linux/of_reserved_mem.h>
-> +#include <linux/soc/qcom/mdt_loader.h>
-> +
-> +#include "iris_core.h"
-> +#include "iris_firmware.h"
-> +
-> +#define MAX_FIRMWARE_NAME_SIZE	128
-> +
-> +static int iris_protect_cp_mem(struct iris_core *core)
-> +{
-> +	struct tz_cp_config *cp_config;
-> +	int ret;
-> +
-> +	cp_config = core->iris_platform_data->tz_cp_config_data;
-> +
-> +	ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
-> +					     cp_config->cp_size,
-> +					     cp_config->cp_nonpixel_start,
-> +					     cp_config->cp_nonpixel_size);
-> +	if (ret)
-> +		dev_err(core->dev, "failed to protect memory(%d)\n", ret);
-> +
-> +	return ret;
-> +}
-> +
-> +static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> +{
-> +	const struct firmware *firmware = NULL;
-> +	struct device_node *node = NULL;
-> +	struct reserved_mem *rmem;
-> +	phys_addr_t mem_phys = 0;
-> +	void *mem_virt = NULL;
-> +	size_t res_size = 0;
-> +	ssize_t fw_size = 0;
-> +	struct device *dev;
-> +	int pas_id = 0;
-> +	int ret;
-> +
-> +	if (!fw_name || !(*fw_name) || !core)
-> +		return -EINVAL;
-> +
-> +	dev = core->dev;
-> +
-> +	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
-> +		return -EINVAL;
-> +
-> +	pas_id = core->iris_platform_data->pas_id;
-> +
-> +	node = of_parse_phandle(dev->of_node, "memory-region", 0);
-> +	if (!node)
-> +		return -EINVAL;
-> +
-> +	rmem = of_reserved_mem_lookup(node);
-> +	if (!rmem) {
-> +		ret = -EINVAL;
-> +		goto err_put_node;
-> +	}
-> +
-> +	mem_phys = rmem->base;
-> +	res_size = rmem->size;
-> +
-> +	ret = request_firmware(&firmware, fw_name, dev);
-> +	if (ret) {
-> +		dev_err(core->dev, "failed to request fw \"%s\", error %d\n",
-> +			fw_name, ret);
-> +		goto err_put_node;
-> +	}
-> +
-> +	fw_size = qcom_mdt_get_size(firmware);
-> +	if (fw_size < 0 || res_size < (size_t)fw_size) {
-> +		ret = -EINVAL;
-> +		dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
-> +			fw_size, res_size);
-> +		goto err_release_fw;
-> +	}
-> +
-> +	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
-> +	if (!mem_virt) {
-> +		dev_err(core->dev, "failed to remap fw memory phys %pa[p]\n",
-> +			&mem_phys);
-> +		goto err_release_fw;
-> +	}
-> +
-> +	ret = qcom_mdt_load(dev, firmware, fw_name,
-> +			    pas_id, mem_virt, mem_phys, res_size, NULL);
-> +	if (ret) {
-> +		dev_err(core->dev, "error %d loading fw \"%s\"\n",
-> +			ret, fw_name);
-> +		goto err_mem_unmap;
-> +	}
-> +	ret = qcom_scm_pas_auth_and_reset(pas_id);
-> +	if (ret) {
-> +		dev_err(core->dev, "error %d authenticating fw \"%s\"\n",
-> +			ret, fw_name);
-> +		goto err_mem_unmap;
-> +	}
-> +
-> +	return ret;
-> +
-> +err_mem_unmap:
-> +	memunmap(mem_virt);
-> +err_release_fw:
-> +	release_firmware(firmware);
-> +err_put_node:
-> +	of_node_put(node);
-> +	return ret;
-> +}
-> +
-> +int iris_fw_load(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	ret = iris_load_fw_to_memory(core, core->iris_platform_data->fwname);
-> +	if (ret) {
-> +		dev_err(core->dev, "firmware download failed\n");
-> +		return -ENOMEM;
-> +	}
-> +
-> +	ret = iris_protect_cp_mem(core);
-> +	if (ret) {
-> +		dev_err(core->dev, "protect memory failed\n");
-> +		qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> +		return ret;
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +int iris_fw_unload(struct iris_core *core)
-> +{
-> +	int ret;
-> +
-> +	ret = qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> +	if (ret)
-> +		dev_err(core->dev, "firmware unload failed with ret %d\n", ret);
-> +
-> +	return ret;
-> +}
-> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.h b/drivers/media/platform/qcom/iris/iris_firmware.h
-> new file mode 100644
-> index 000000000000..8d4f6b7f75c5
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/iris/iris_firmware.h
-> @@ -0,0 +1,14 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#ifndef _IRIS_FIRMWARE_H_
-> +#define _IRIS_FIRMWARE_H_
-> +
-> +struct iris_core;
-> +
-> +int iris_fw_load(struct iris_core *core);
-> +int iris_fw_unload(struct iris_core *core);
-> +
-> +#endif
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> index 5287fdf913bc..9c919367f9d7 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-> @@ -6,6 +6,8 @@
->   #ifndef _IRIS_PLATFORM_COMMON_H_
->   #define _IRIS_PLATFORM_COMMON_H_
->   
-> +#define IRIS_PAS_ID				9
-> +
->   extern struct iris_platform_data sm8550_data;
->   extern struct iris_platform_data sm8250_data;
->   
-> @@ -20,6 +22,13 @@ struct platform_clk_data {
->   	const char *clk_name;
->   };
->   
-> +struct tz_cp_config {
-> +	u32 cp_start;
-> +	u32 cp_size;
-> +	u32 cp_nonpixel_start;
-> +	u32 cp_nonpixel_size;
-> +};
-> +
->   struct iris_platform_data {
->   	struct iris_inst *(*get_instance)(void);
->   	const struct icc_info *icc_tbl;
-> @@ -33,6 +42,9 @@ struct iris_platform_data {
->   	const char * const *clk_rst_tbl;
->   	unsigned int clk_rst_tbl_size;
->   	u64 dma_mask;
-> +	const char *fwname;
-> +	u32 pas_id;
-> +	struct tz_cp_config *tz_cp_config_data;
->   };
->   
->   #endif
-> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-> index 664cb2b359a3..36bcb1b851ed 100644
-> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-> @@ -25,6 +25,13 @@ static const struct platform_clk_data sm8250_clk_table[] = {
->   	{IRIS_HW_CLK,   "vcodec0_core" },
->   };
->   
-> +static struct tz_cp_config tz_cp_config_sm8250 = {
-> +	.cp_start = 0,
-> +	.cp_size = 0x25800000,
-> +	.cp_nonpixel_start = 0x01000000,
-> +	.cp_nonpixel_size = 0x24800000,
-> +};
-> +
->   struct iris_platform_data sm8250_data = {
->   	.get_instance = iris_hfi_gen1_get_instance,
->   	.icc_tbl = sm8250_icc_table,
-> @@ -38,4 +45,7 @@ struct iris_platform_data sm8250_data = {
->   	.clk_tbl = sm8250_clk_table,
->   	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
->   	.dma_mask = GENMASK(31, 29) - 1,
-> +	.fwname = "qcom/vpu/vpu20_p4.mbn",
-
-
-RB5/sm8250 on this kernel
-
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-stable-24-08-29-iris-v3-rb5?ref_type=heads
-
-CONFIG_QCOM_VENUS = m
-
-Loads fine and I can run this simple smoke test
-
-ffplay -loglevel debug -codec:video h264_v4l2m2m -i sample-5s.mp4
-gst-launch-1.0 -vvv -e filesrc location=sample-5s.mp4 ! qtdemux ! 
-parsebin ! v4l2h264dec ! autovideosink
-
-
-CONFIG_QCOM_IRIS = m
-
-[    2.130077] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 
-counters available
-[   12.282381] qcom-iris aa00000.video-codec: Adding to iommu group 13
-[   12.463983] qcom-iris aa00000.video-codec: Direct firmware load for 
-qcom/vpu/vpu20_p4.mbn failed with error -2
-[   12.474396] qcom-iris aa00000.video-codec: failed to request fw 
-"qcom/vpu/vpu20_p4.mbn", error -2
-[   12.490919] qcom-iris aa00000.video-codec: firmware download failed
-[   12.516391] qcom-iris aa00000.video-codec: core init failed
-
-In venus the firmware name is
-
-.fwname = "qcom/vpu-1.0/venus.mbn"
-
-What firmware reference are you testing on with your rb5/sm8250 stuff ?
-
-Mine is linux-firmware / Debian sid.
-
-root@linaro-gnome:~# dpkg -S /lib/firmware/qcom/vpu-1.0/venus.mbn
-firmware-qcom-soc: /lib/firmware/qcom/vpu-1.0/venus.mbn
-
-https://packages.debian.org/sid/firmware-qcom-soc
-
-Anyway I don't see much logic/justification for the firmware string change.
-
----
-bod
+> diff --git a/drivers/pinctrl/qcom/pinctrl-x1e80100.c b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
+> index 65ed933f05ce..abfcdd3da9e8 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-x1e80100.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-x1e80100.c
+> @@ -1839,7 +1839,9 @@ static const struct msm_pinctrl_soc_data x1e80100_pinctrl = {
+>  	.ngroups = ARRAY_SIZE(x1e80100_groups),
+>  	.ngpios = 239,
+>  	.wakeirq_map = x1e80100_pdc_map,
+> -	.nwakeirq_map = ARRAY_SIZE(x1e80100_pdc_map),
+> +	/* TODO: Enabling PDC currently breaks GPIO interrupts */
+> +	.nwakeirq_map = 0,
+> +	/* .nwakeirq_map = ARRAY_SIZE(x1e80100_pdc_map), */
+>  	.egpio_func = 9,
+>  };
+>  
+> 
+> ---
+> base-commit: 128f71fe014fc91efa1407ce549f94a9a9f1072c
+> change-id: 20240830-x1e80100-bypass-pdc-39a8c1ae594f
+> 
+> Best regards,
+> -- 
+> Stephan Gerhold <stephan.gerhold@linaro.org>
+> 
 
