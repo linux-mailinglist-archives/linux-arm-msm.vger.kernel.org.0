@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-30341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFDCB9670D6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 12:27:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C4AD9671B9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 15:18:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 874E62843CB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 10:27:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E854B2839B1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 13:18:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93296170A10;
-	Sat, 31 Aug 2024 10:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5825B101E2;
+	Sat, 31 Aug 2024 13:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TVUoWnjF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="a1hh+iJb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C80416A940
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 10:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F9B848C
+	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 13:18:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725100017; cv=none; b=N1lYPKe2MpqpYm35U5f/GznhawwkaU/ox/9Hb+tLRfJoZu/BjV2kEKJgw56cRsPFiNUutxMZSUHN9GQxspP0p0rdxR7GQoVwo2iNB+US7sodk8Ef/u9eIH/cM8VvFznuh90wAyGjymWVUlfsPAxpb8YrUNrP0oloPP4yS21YBwQ=
+	t=1725110302; cv=none; b=Z2L4DxlDOxbsGgB0sK9/QxidbUx/+29sIJqRTwk28/Xrmf8cIDkb3dZgoKhKM83vm4dRYOFHJRcSbZ+TNJ4lZjfzzeMLQS/mh4tPjGiAcqvB686TveBn5boy0QzvSuN57NQ9oSdlYsbuMoYnk8pMMMVnVEubKgWNFUcl4QqaQ0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725100017; c=relaxed/simple;
-	bh=GxM60uGsres/8YhaCNMKhlV8xG0sgvDG+jwYrJmNqtM=;
+	s=arc-20240116; t=1725110302; c=relaxed/simple;
+	bh=mu13EQ9HoQejLYVNxt2U8RKRikdH3YeZJxgItcqJ/1w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GK5FQq2UZQPV90U8o2bYIjhmOikYp1zglfpq+ZOpJ8NQhZtrE0tqEctargx9EUzz8cyJtKj3A/4sjBbLKotvrM/AjvRmgo+6ZGG2EeG4XaA1MIcbdU/QOtJqme8dLRIBQIqY0Bp0BxtUUPU1JI4DisBtiH7ionc3WvgblNEpEEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TVUoWnjF; arc=none smtp.client-ip=209.85.208.180
+	 In-Reply-To:Content-Type; b=t+/ll1qWZocYXtcwoqrOw/G2yANhtcTMqK62f2NYAytc1XKR7TD9oUtl0gjuCdYCmB0sZbaZX+17b0iNTLkKW1aD6j2wuPE/JQ+5hZ9ygem/Y8bQWoWLjZJNuKCvqyq6092NgKlXW/GPMlug3e8pYoY5q6d0vbtHjQXuJj3gfEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=a1hh+iJb; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f5064816edso28997401fa.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 03:26:54 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-533461323cdso3353466e87.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 06:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725100012; x=1725704812; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725110298; x=1725715098; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=t7IgB1agJBW5RBkqLzlSX6ufghWuw8mW4AOdleN6NVM=;
-        b=TVUoWnjFxfXDCBK0xY73yx5VVf9LmvBXpbhJtbOao1Hs3Uil2bZv2FdmYfriSaOpQY
-         OloR/MA/UyUBymJovNxs0/nK6mwoy0390lEQ5L7TcMEVmmRQxC8h8D3PC9Qw0Jqw4JnI
-         gpBtDR9rABKyiZWpfvYkPu/m2OyN7qNUhU3K7XToRprohKw3dLq9k+azbDdQNj1HY1a5
-         oz8r3fOSyjwgJW/mdhMICdeReV1QuQqxTWHqBXvVrxDGR/stKeHvlNA8fZXdIS4CI55V
-         aKC7HK1E9pi/hkVGch0ZUDooKQmQdS7T64nBPZUlnfu04oTAockoBYxRB/kIIhf4Yj8q
-         rBXA==
+        bh=NJkTnaPWIP3xGBTfa2SPoHVtOVzpX0uKAT2t6dy54EM=;
+        b=a1hh+iJbox7UcgTuAp6MNR2ePkcTlYDPewA5oDq/HbnO+ve5O84RRLMAs6NiPtQV4H
+         ogGStaIi3+Xv4KXMrPnavc6Jz7CPfDMev+6eK74HLJC8sayc7QHmKe1JX+tLQBZDYCN1
+         dhN5pcROFKCESfkh6nAaraaRDuSytpaCo12evEfVU8KFiuFE6gJwOWou1zoogngbZdoU
+         Lk41EHMG44mArGu+2hwXQCbPGrt0Dh7BGcD8sSbDV9C6kqBTzONOcj+R4kDpxKo29pBs
+         HOTh+RR0UhgwqXG6D4EW/zEbsmHBTc7R3JhAG3emU6dvAoseqkObv+s1T6hZWU9KYwz3
+         lOrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725100012; x=1725704812;
+        d=1e100.net; s=20230601; t=1725110298; x=1725715098;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t7IgB1agJBW5RBkqLzlSX6ufghWuw8mW4AOdleN6NVM=;
-        b=FUCuK54iusCamdpoxbtJOq0w9byRwVMM+afrwI0zZnYkGMJH+t4LnNYSxZDkBt+k6s
-         /CPL5/M6FiUqog90qWw4KZzN7Nkfe+zKluQMKAB7eokr0dAtkcagDtk4cIcAlMTcxaU6
-         39vBH9PySk+KJyj4OhZnwoHqzCg/zB4Z/hlbgJfuAHw+6Q3IMSBJhuzrJoFMiXx/A8kL
-         ofmjsu11TTg9eYb1QzOoYWL/5m9PBtQFqoYQCtTpfZueK3Zof0jqG62czZuW5fDlNosX
-         3Ws+8QHPpijodk736woLQqXomuL5Mb0+3TgiKYVqxRdNmak1/MFxNmAAlaEWWoxre0L2
-         KucQ==
-X-Gm-Message-State: AOJu0Yyhg2AKI6I+631ItXg6ootmlLqlUBi2UCde/vD4cw2O0/yjX9Wi
-	p3fr0j2hj1MsVqhSlcyHpzyFu6xsoDJIH4CVhF2oZj4mlLGh6xLpxTp1htUmr68=
-X-Google-Smtp-Source: AGHT+IHTXl7fs6MOyZbzgPXqP04Jf+Owl6eDwnf2NZWtSnIIVFM8b2dwxzRBRRwgDmGHzyhMft09UA==
-X-Received: by 2002:a05:651c:b26:b0:2ef:1d8d:21fd with SMTP id 38308e7fff4ca-2f610390981mr70278371fa.2.1725100011804;
-        Sat, 31 Aug 2024 03:26:51 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0c3:3a00::7a1? (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f614efec43sm10060541fa.29.2024.08.31.03.26.51
+        bh=NJkTnaPWIP3xGBTfa2SPoHVtOVzpX0uKAT2t6dy54EM=;
+        b=PjQLDFRGoTl70uUDNZGg7Pumh8FqtXO02iRIlnch/EJMz97glBTj3UyAdzIfCCOwEq
+         lCevi7pyEp3kvOxM2xYeUWi2oghNYTa1e5ynne0bhsraLYYfy47Hh0DWOaNVmhwLFw+R
+         mex2bROxoEnedQD/tfDPjy8mEtPi1dZShHneB48cu/r2flBDdm/N8Vzzz2YMv+mE98Kj
+         w/4Gp6DzWaJzBFLB2lE3G6VlvAdjJqBdapSkY0/9eM/ZYF8ejh28oAsB6Spy5HF9jtvW
+         ckI+7N3+Un+eqZac2fzhrov1NvL2mFLfquMQQzVtNlCVSAmcCK28YxeMkkj3PR5emuvs
+         eM5g==
+X-Forwarded-Encrypted: i=1; AJvYcCX9Lj8gi/S8ybFAANpHiXEdA5ieZkwPhz5AQK2blL/SwujZQ94zgfsLC+OTz5bCaF2bMQzsmOAjOehD6NGL@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjAGlccVFAfw0Oi4Zn2yr4D8YMpE3O5R7tHkDBjjJJqq7F7gG+
+	pR3EbFrM2vRWbl+906dgBeqVNCzRurp5k0e4KPxBqlSsKst50kWPYgRuILyQOpo=
+X-Google-Smtp-Source: AGHT+IGPOz7dvYo89+4zvzcBxzz/93RdbGmQWnTvKAy390yr3LyXNraYmjVZVSj51lwW56kV+d9PFw==
+X-Received: by 2002:a05:6512:3d0f:b0:533:46de:30a0 with SMTP id 2adb3069b0e04-53546b9c0cemr3283704e87.54.1725110297376;
+        Sat, 31 Aug 2024 06:18:17 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89891a3e9dsm325824366b.108.2024.08.31.06.18.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Aug 2024 03:26:51 -0700 (PDT)
-Message-ID: <2009ea50-c82e-45ee-afd2-b6f5e0435dba@linaro.org>
-Date: Sat, 31 Aug 2024 13:26:49 +0300
+        Sat, 31 Aug 2024 06:18:17 -0700 (PDT)
+Message-ID: <293f3ddd-531b-443f-a58c-a789337e2b35@linaro.org>
+Date: Sat, 31 Aug 2024 14:18:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,352 +76,374 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/6] drm/msm: add msm8998 hdmi phy/pll support
-To: Marc Gonzalez <mgonzalez@freebox.fr>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 07/29] media: iris: implement video firmware
+ load/unload
+To: quic_dikshita@quicinc.com, Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>,
- Pierre-Hugues Husson <phhusson@freebox.fr>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>
-References: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
- <20240724-hdmi-tx-v7-4-e44a20553464@freebox.fr>
-Content-Language: en-GB
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20240724-hdmi-tx-v7-4-e44a20553464@freebox.fr>
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
+ <20240827-iris_v3-v3-7-c5fdbbe65e70@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240827-iris_v3-v3-7-c5fdbbe65e70@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 24/07/2024 18:01, Marc Gonzalez wrote:
-> From: Arnaud Vrac <avrac@freebox.fr>
+On 27/08/2024 11:05, Dikshita Agarwal via B4 Relay wrote:
+> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > 
-> Add support for the HDMI PHY as present on the Qualcomm MSM8998 SoC.
-> This code is mostly copy & paste of the vendor code from msm-4.4
-> kernel.lnx.4.4.r38-rel.
+> Load/unload firmware in memory via mdt loader.
+> Firmware is loaded as part of core initialization
+> and unloaded as part of core de-initialization.
 > 
-> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/Makefile                   |   1 +
->   drivers/gpu/drm/msm/hdmi/hdmi.h                |   8 +
->   drivers/gpu/drm/msm/hdmi/hdmi_phy.c            |   5 +
->   drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c       | 779 +++++++++++++++++++++++++
->   drivers/gpu/drm/msm/registers/display/hdmi.xml |  89 +++
->   5 files changed, 882 insertions(+)
+>   drivers/media/platform/qcom/iris/Kconfig           |   2 +
+>   drivers/media/platform/qcom/iris/Makefile          |   1 +
+>   drivers/media/platform/qcom/iris/iris_core.c       |   8 ++
+>   drivers/media/platform/qcom/iris/iris_firmware.c   | 146 +++++++++++++++++++++
+>   drivers/media/platform/qcom/iris/iris_firmware.h   |  14 ++
+>   .../platform/qcom/iris/iris_platform_common.h      |  12 ++
+>   .../platform/qcom/iris/iris_platform_sm8250.c      |  10 ++
+>   .../platform/qcom/iris/iris_platform_sm8550.c      |  10 ++
+>   8 files changed, 203 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index eb788921ff4fe..b9a5dc8c33ede 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -32,6 +32,7 @@ msm-display-$(CONFIG_DRM_MSM_HDMI) += \
->   	hdmi/hdmi_phy.o \
->   	hdmi/hdmi_phy_8960.o \
->   	hdmi/hdmi_phy_8996.o \
-> +	hdmi/hdmi_phy_8998.o \
->   	hdmi/hdmi_phy_8x60.o \
->   	hdmi/hdmi_phy_8x74.o \
->   	hdmi/hdmi_pll_8960.o \
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
-> index 4586baf364151..a62d2aedfbb72 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi.h
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
-> @@ -137,6 +137,7 @@ enum hdmi_phy_type {
->   	MSM_HDMI_PHY_8960,
->   	MSM_HDMI_PHY_8x74,
->   	MSM_HDMI_PHY_8996,
-> +	MSM_HDMI_PHY_8998,
->   	MSM_HDMI_PHY_MAX,
->   };
+> diff --git a/drivers/media/platform/qcom/iris/Kconfig b/drivers/media/platform/qcom/iris/Kconfig
+> index 4b757bb8adf3..ea518760c65c 100644
+> --- a/drivers/media/platform/qcom/iris/Kconfig
+> +++ b/drivers/media/platform/qcom/iris/Kconfig
+> @@ -3,6 +3,8 @@ config VIDEO_QCOM_IRIS
+>           depends on VIDEO_DEV
+>           depends on ARCH_QCOM || COMPILE_TEST
+>           select V4L2_MEM2MEM_DEV
+> +        select QCOM_MDT_LOADER if ARCH_QCOM
+> +        select QCOM_SCM
+>           help
+>             This is a V4L2 driver for Qualcomm Iris video accelerator
+>             hardware. It accelerates decoding operations on various
+> diff --git a/drivers/media/platform/qcom/iris/Makefile b/drivers/media/platform/qcom/iris/Makefile
+> index 48d54e53a576..ddd4c994a0b9 100644
+> --- a/drivers/media/platform/qcom/iris/Makefile
+> +++ b/drivers/media/platform/qcom/iris/Makefile
+> @@ -1,4 +1,5 @@
+>   iris-objs += iris_core.o \
+> +             iris_firmware.o \
+>                iris_hfi_gen1_command.o \
+>                iris_hfi_gen2_command.o \
+>                iris_hfi_queue.o \
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+> index 360a54909ef6..8c7d53c57086 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.c
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -4,11 +4,13 @@
+>    */
 >   
-> @@ -154,6 +155,7 @@ extern const struct hdmi_phy_cfg msm_hdmi_phy_8x60_cfg;
->   extern const struct hdmi_phy_cfg msm_hdmi_phy_8960_cfg;
->   extern const struct hdmi_phy_cfg msm_hdmi_phy_8x74_cfg;
->   extern const struct hdmi_phy_cfg msm_hdmi_phy_8996_cfg;
-> +extern const struct hdmi_phy_cfg msm_hdmi_phy_8998_cfg;
+>   #include "iris_core.h"
+> +#include "iris_firmware.h"
+>   #include "iris_state.h"
 >   
->   struct hdmi_phy {
->   	struct platform_device *pdev;
-> @@ -184,6 +186,7 @@ void __exit msm_hdmi_phy_driver_unregister(void);
->   #ifdef CONFIG_COMMON_CLK
->   int msm_hdmi_pll_8960_init(struct platform_device *pdev);
->   int msm_hdmi_pll_8996_init(struct platform_device *pdev);
-> +int msm_hdmi_pll_8998_init(struct platform_device *pdev);
->   #else
->   static inline int msm_hdmi_pll_8960_init(struct platform_device *pdev)
+>   void iris_core_deinit(struct iris_core *core)
 >   {
-> @@ -194,6 +197,11 @@ static inline int msm_hdmi_pll_8996_init(struct platform_device *pdev)
->   {
->   	return -ENODEV;
->   }
+>   	mutex_lock(&core->lock);
+> +	iris_fw_unload(core);
+>   	iris_hfi_queues_deinit(core);
+>   	core->state = IRIS_CORE_DEINIT;
+>   	mutex_unlock(&core->lock);
+> @@ -33,10 +35,16 @@ int iris_core_init(struct iris_core *core)
+>   	if (ret)
+>   		goto error;
+>   
+> +	ret = iris_fw_load(core);
+> +	if (ret)
+> +		goto error_queue_deinit;
 > +
-> +static inline int msm_hdmi_pll_8998_init(struct platform_device *pdev)
-> +{
-> +	return -ENODEV;
-> +}
->   #endif
+>   	mutex_unlock(&core->lock);
 >   
->   /*
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> index 88a3423b7f24d..95b3f7535d840 100644
-> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy.c
-> @@ -118,6 +118,9 @@ static int msm_hdmi_phy_pll_init(struct platform_device *pdev,
->   	case MSM_HDMI_PHY_8996:
->   		ret = msm_hdmi_pll_8996_init(pdev);
->   		break;
-> +	case MSM_HDMI_PHY_8998:
-> +		ret = msm_hdmi_pll_8998_init(pdev);
-> +		break;
->   	/*
->   	 * we don't have PLL support for these, don't report an error for now
->   	 */
-> @@ -193,6 +196,8 @@ static const struct of_device_id msm_hdmi_phy_dt_match[] = {
->   	  .data = &msm_hdmi_phy_8x74_cfg },
->   	{ .compatible = "qcom,hdmi-phy-8996",
->   	  .data = &msm_hdmi_phy_8996_cfg },
-> +	{ .compatible = "qcom,hdmi-phy-8998",
-> +	  .data = &msm_hdmi_phy_8998_cfg },
->   	{}
->   };
+>   	return 0;
 >   
-> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
+> +error_queue_deinit:
+> +	iris_hfi_queues_deinit(core);
+>   error:
+>   	core->state = IRIS_CORE_DEINIT;
+>   exit:
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
 > new file mode 100644
-> index 0000000000000..9a3b005fa391a
+> index 000000000000..55bbcc798f4c
 > --- /dev/null
-> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-> @@ -0,0 +1,779 @@
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> @@ -0,0 +1,146 @@
 > +// SPDX-License-Identifier: GPL-2.0-only
 > +/*
-> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2024 Freebox SAS
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 > + */
 > +
-> +#include <linux/clk-provider.h>
-> +#include <linux/delay.h>
+> +#include <linux/firmware.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/of_address.h>
+> +#include <linux/of_reserved_mem.h>
+> +#include <linux/soc/qcom/mdt_loader.h>
 > +
-> +#include "hdmi.h"
+> +#include "iris_core.h"
+> +#include "iris_firmware.h"
 > +
-> +#define HDMI_VCO_MAX_FREQ			12000000000UL
-> +#define HDMI_VCO_MIN_FREQ			8000000000UL
+> +#define MAX_FIRMWARE_NAME_SIZE	128
 > +
-> +#define HDMI_PCLK_MAX_FREQ			600000000
-> +#define HDMI_PCLK_MIN_FREQ			25000000
-> +
-> +#define HDMI_HIGH_FREQ_BIT_CLK_THRESHOLD	3400000000UL
-> +#define HDMI_DIG_FREQ_BIT_CLK_THRESHOLD		1500000000UL
-> +#define HDMI_MID_FREQ_BIT_CLK_THRESHOLD		750000000UL
-> +#define HDMI_CORECLK_DIV			5
-> +#define HDMI_DEFAULT_REF_CLOCK			19200000
-> +#define HDMI_PLL_CMP_CNT			1024
-> +
-> +#define HDMI_PLL_POLL_MAX_READS			100
-> +#define HDMI_PLL_POLL_TIMEOUT_US		150
-> +
-> +#define HDMI_NUM_TX_CHANNEL			4
-> +
-> +struct hdmi_pll_8998 {
-> +	struct platform_device *pdev;
-> +	struct clk_hw clk_hw;
-> +	unsigned long rate;
-> +
-> +	/* pll mmio base */
-> +	void __iomem *mmio_qserdes_com;
-> +	/* tx channel base */
-> +	void __iomem *mmio_qserdes_tx[HDMI_NUM_TX_CHANNEL];
-> +};
-> +
-> +#define hw_clk_to_pll(x) container_of(x, struct hdmi_pll_8998, clk_hw)
-> +
-> +struct hdmi_8998_phy_pll_reg_cfg {
-> +	u32 com_svs_mode_clk_sel;
-> +	u32 com_hsclk_sel;
-> +	u32 com_pll_cctrl_mode0;
-> +	u32 com_pll_rctrl_mode0;
-> +	u32 com_cp_ctrl_mode0;
-> +	u32 com_dec_start_mode0;
-> +	u32 com_div_frac_start1_mode0;
-> +	u32 com_div_frac_start2_mode0;
-> +	u32 com_div_frac_start3_mode0;
-> +	u32 com_integloop_gain0_mode0;
-> +	u32 com_integloop_gain1_mode0;
-> +	u32 com_lock_cmp_en;
-> +	u32 com_lock_cmp1_mode0;
-> +	u32 com_lock_cmp2_mode0;
-> +	u32 com_lock_cmp3_mode0;
-> +	u32 com_core_clk_en;
-> +	u32 com_coreclk_div_mode0;
-> +
-> +	u32 tx_lx_tx_band[HDMI_NUM_TX_CHANNEL];
-> +	u32 tx_lx_tx_drv_lvl[HDMI_NUM_TX_CHANNEL];
-> +	u32 tx_lx_tx_emp_post1_lvl[HDMI_NUM_TX_CHANNEL];
-> +	u32 tx_lx_pre_driver_1[HDMI_NUM_TX_CHANNEL];
-> +	u32 tx_lx_pre_driver_2[HDMI_NUM_TX_CHANNEL];
-> +	u32 tx_lx_res_code_offset[HDMI_NUM_TX_CHANNEL];
-> +
-> +	u32 phy_mode;
-> +};
-> +
-> +struct hdmi_8998_post_divider {
-> +	u64 vco_freq;
-> +	int hsclk_divsel;
-> +	int vco_ratio;
-> +	int tx_band_sel;
-> +	int half_rate_mode;
-> +};
-> +
-> +static inline struct hdmi_phy *pll_get_phy(struct hdmi_pll_8998 *pll)
+> +static int iris_protect_cp_mem(struct iris_core *core)
 > +{
-> +	return platform_get_drvdata(pll->pdev);
+> +	struct tz_cp_config *cp_config;
+> +	int ret;
+> +
+> +	cp_config = core->iris_platform_data->tz_cp_config_data;
+> +
+> +	ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
+> +					     cp_config->cp_size,
+> +					     cp_config->cp_nonpixel_start,
+> +					     cp_config->cp_nonpixel_size);
+> +	if (ret)
+> +		dev_err(core->dev, "failed to protect memory(%d)\n", ret);
+> +
+> +	return ret;
 > +}
 > +
-> +static inline void hdmi_pll_write(struct hdmi_pll_8998 *pll, int offset,
-> +				  u32 data)
+> +static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
 > +{
-> +	writel(data, pll->mmio_qserdes_com + offset);
-> +}
+> +	const struct firmware *firmware = NULL;
+> +	struct device_node *node = NULL;
+> +	struct reserved_mem *rmem;
+> +	phys_addr_t mem_phys = 0;
+> +	void *mem_virt = NULL;
+> +	size_t res_size = 0;
+> +	ssize_t fw_size = 0;
+> +	struct device *dev;
+> +	int pas_id = 0;
+> +	int ret;
 > +
-> +static inline u32 hdmi_pll_read(struct hdmi_pll_8998 *pll, int offset)
-> +{
-> +	return readl(pll->mmio_qserdes_com + offset);
-> +}
+> +	if (!fw_name || !(*fw_name) || !core)
+> +		return -EINVAL;
 > +
-> +static inline void hdmi_tx_chan_write(struct hdmi_pll_8998 *pll, int channel,
-> +				      int offset, int data)
-> +{
-> +	 writel(data, pll->mmio_qserdes_tx[channel] + offset);
-> +}
+> +	dev = core->dev;
 > +
-> +static inline u32 pll_get_cpctrl(u64 frac_start, unsigned long ref_clk,
-> +				 bool gen_ssc)
-> +{
-> +	if ((frac_start != 0) || gen_ssc)
-> +		return 0x8;
+> +	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
+> +		return -EINVAL;
 > +
-> +	return 0x30;
-> +}
+> +	pas_id = core->iris_platform_data->pas_id;
 > +
-> +static inline u32 pll_get_rctrl(u64 frac_start, bool gen_ssc)
-> +{
-> +	if ((frac_start != 0) || gen_ssc)
-> +		return 0x16;
+> +	node = of_parse_phandle(dev->of_node, "memory-region", 0);
+> +	if (!node)
+> +		return -EINVAL;
 > +
-> +	return 0x18;
-> +}
-> +
-> +static inline u32 pll_get_cctrl(u64 frac_start, bool gen_ssc)
-> +{
-> +	if ((frac_start != 0) || gen_ssc)
-> +		return 0x34;
-> +
-> +	return 0x2;
-> +}
-> +
-> +static inline u32 pll_get_integloop_gain(u64 frac_start, u64 bclk, u32 ref_clk,
-> +					 bool gen_ssc)
-> +{
-> +	int digclk_divsel = bclk > HDMI_DIG_FREQ_BIT_CLK_THRESHOLD ? 1 : 2;
-> +	u64 base;
-> +
-> +	if ((frac_start != 0) || gen_ssc)
-> +		base = 0x3F;
-> +	else
-> +		base = 0xC4;
-> +
-> +	base <<= (digclk_divsel == 2 ? 1 : 0);
-> +
-> +	return (base <= 2046 ? base : 2046);
-> +}
-> +
-> +static inline u32 pll_get_pll_cmp(u64 fdata, unsigned long ref_clk)
-> +{
-> +	u64 dividend = HDMI_PLL_CMP_CNT * fdata;
-> +	u32 divisor = ref_clk * 10;
-> +	u32 rem;
-> +
-> +	rem = do_div(dividend, divisor);
-> +	if (rem > (divisor >> 1))
-> +		dividend++;
-> +
-> +	return dividend - 1;
-> +}
-> +
-> +static inline u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
-> +{
-> +	u64 fdata = ((u64)pll_cmp) * ref_clk * 10;
-> +
-> +	do_div(fdata, HDMI_PLL_CMP_CNT);
-> +
-> +	return fdata;
-> +}
-> +
-> +#define HDMI_REF_CLOCK_HZ ((u64)19200000)
-> +#define HDMI_MHZ_TO_HZ ((u64)1000000)
-> +static int pll_get_post_div(struct hdmi_8998_post_divider *pd, u64 bclk)
-> +{
-> +	u32 const ratio_list[] = {1, 2, 3, 4, 5, 6,
-> +				     9, 10, 12, 15, 25};
-> +	u32 const band_list[] = {0, 1, 2, 3};
-> +	u32 const sz_ratio = ARRAY_SIZE(ratio_list);
-> +	u32 const sz_band = ARRAY_SIZE(band_list);
-> +	u32 const cmp_cnt = 1024;
-> +	u32 const th_min = 500, th_max = 1000;
-> +	u32 half_rate_mode = 0;
-> +	u32 list_elements;
-> +	int optimal_index;
-> +	u32 i, j, k;
-> +	u32 found_hsclk_divsel = 0, found_vco_ratio;
-> +	u32 found_tx_band_sel;
-> +	u64 const min_freq = HDMI_VCO_MIN_FREQ, max_freq = HDMI_VCO_MAX_FREQ;
-> +	u64 freq_list[ARRAY_SIZE(ratio_list) * ARRAY_SIZE(band_list)];
-> +	u64 found_vco_freq;
-> +	u64 freq_optimal;
-> +
-> +find_optimal_index:
-> +	freq_optimal = max_freq;
-> +	optimal_index = -1;
-> +	list_elements = 0;
-> +
-> +	for (i = 0; i < sz_ratio; i++) {
-> +		for (j = 0; j < sz_band; j++) {
-> +			u64 freq = div_u64(bclk, (1 << half_rate_mode));
-> +
-> +			freq *= (ratio_list[i] * (1 << band_list[j]));
-> +			freq_list[list_elements++] = freq;
-> +		}
+> +	rmem = of_reserved_mem_lookup(node);
+> +	if (!rmem) {
+> +		ret = -EINVAL;
+> +		goto err_put_node;
 > +	}
 > +
-> +	for (k = 0; k < ARRAY_SIZE(freq_list); k++) {
-> +		u32 const clks_pll_div = 2, core_clk_div = 5;
-> +		u32 const rng1 = 16, rng2 = 8;
-> +		u32 th1, th2;
-> +		u64 core_clk, rvar1, rem;
+> +	mem_phys = rmem->base;
+> +	res_size = rmem->size;
 > +
-> +		core_clk = (((freq_list[k] /
-> +			      ratio_list[k / sz_band]) /
-> +			      clks_pll_div) / core_clk_div);
+> +	ret = request_firmware(&firmware, fw_name, dev);
+> +	if (ret) {
+> +		dev_err(core->dev, "failed to request fw \"%s\", error %d\n",
+> +			fw_name, ret);
+> +		goto err_put_node;
+> +	}
+> +
+> +	fw_size = qcom_mdt_get_size(firmware);
+> +	if (fw_size < 0 || res_size < (size_t)fw_size) {
+> +		ret = -EINVAL;
+> +		dev_err(core->dev, "out of bound fw image fw size: %ld, res_size: %lu\n",
+> +			fw_size, res_size);
+> +		goto err_release_fw;
+> +	}
+> +
+> +	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
+> +	if (!mem_virt) {
+> +		dev_err(core->dev, "failed to remap fw memory phys %pa[p]\n",
+> +			&mem_phys);
+> +		goto err_release_fw;
+> +	}
+> +
+> +	ret = qcom_mdt_load(dev, firmware, fw_name,
+> +			    pas_id, mem_virt, mem_phys, res_size, NULL);
+> +	if (ret) {
+> +		dev_err(core->dev, "error %d loading fw \"%s\"\n",
+> +			ret, fw_name);
+> +		goto err_mem_unmap;
+> +	}
+> +	ret = qcom_scm_pas_auth_and_reset(pas_id);
+> +	if (ret) {
+> +		dev_err(core->dev, "error %d authenticating fw \"%s\"\n",
+> +			ret, fw_name);
+> +		goto err_mem_unmap;
+> +	}
+> +
+> +	return ret;
+> +
+> +err_mem_unmap:
+> +	memunmap(mem_virt);
+> +err_release_fw:
+> +	release_firmware(firmware);
+> +err_put_node:
+> +	of_node_put(node);
+> +	return ret;
+> +}
+> +
+> +int iris_fw_load(struct iris_core *core)
+> +{
+> +	int ret;
+> +
+> +	ret = iris_load_fw_to_memory(core, core->iris_platform_data->fwname);
+> +	if (ret) {
+> +		dev_err(core->dev, "firmware download failed\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	ret = iris_protect_cp_mem(core);
+> +	if (ret) {
+> +		dev_err(core->dev, "protect memory failed\n");
+> +		qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
+> +		return ret;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +int iris_fw_unload(struct iris_core *core)
+> +{
+> +	int ret;
+> +
+> +	ret = qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
+> +	if (ret)
+> +		dev_err(core->dev, "firmware unload failed with ret %d\n", ret);
+> +
+> +	return ret;
+> +}
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.h b/drivers/media/platform/qcom/iris/iris_firmware.h
+> new file mode 100644
+> index 000000000000..8d4f6b7f75c5
+> --- /dev/null
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.h
+> @@ -0,0 +1,14 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#ifndef _IRIS_FIRMWARE_H_
+> +#define _IRIS_FIRMWARE_H_
+> +
+> +struct iris_core;
+> +
+> +int iris_fw_load(struct iris_core *core);
+> +int iris_fw_unload(struct iris_core *core);
+> +
+> +#endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index 5287fdf913bc..9c919367f9d7 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -6,6 +6,8 @@
+>   #ifndef _IRIS_PLATFORM_COMMON_H_
+>   #define _IRIS_PLATFORM_COMMON_H_
+>   
+> +#define IRIS_PAS_ID				9
+> +
+>   extern struct iris_platform_data sm8550_data;
+>   extern struct iris_platform_data sm8250_data;
+>   
+> @@ -20,6 +22,13 @@ struct platform_clk_data {
+>   	const char *clk_name;
+>   };
+>   
+> +struct tz_cp_config {
+> +	u32 cp_start;
+> +	u32 cp_size;
+> +	u32 cp_nonpixel_start;
+> +	u32 cp_nonpixel_size;
+> +};
+> +
+>   struct iris_platform_data {
+>   	struct iris_inst *(*get_instance)(void);
+>   	const struct icc_info *icc_tbl;
+> @@ -33,6 +42,9 @@ struct iris_platform_data {
+>   	const char * const *clk_rst_tbl;
+>   	unsigned int clk_rst_tbl_size;
+>   	u64 dma_mask;
+> +	const char *fwname;
+> +	u32 pas_id;
+> +	struct tz_cp_config *tz_cp_config_data;
+>   };
+>   
+>   #endif
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> index 664cb2b359a3..36bcb1b851ed 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> @@ -25,6 +25,13 @@ static const struct platform_clk_data sm8250_clk_table[] = {
+>   	{IRIS_HW_CLK,   "vcodec0_core" },
+>   };
+>   
+> +static struct tz_cp_config tz_cp_config_sm8250 = {
+> +	.cp_start = 0,
+> +	.cp_size = 0x25800000,
+> +	.cp_nonpixel_start = 0x01000000,
+> +	.cp_nonpixel_size = 0x24800000,
+> +};
+> +
+>   struct iris_platform_data sm8250_data = {
+>   	.get_instance = iris_hfi_gen1_get_instance,
+>   	.icc_tbl = sm8250_icc_table,
+> @@ -38,4 +45,7 @@ struct iris_platform_data sm8250_data = {
+>   	.clk_tbl = sm8250_clk_table,
+>   	.clk_tbl_size = ARRAY_SIZE(sm8250_clk_table),
+>   	.dma_mask = GENMASK(31, 29) - 1,
+> +	.fwname = "qcom/vpu/vpu20_p4.mbn",
 
-This causes linking errors on arm32:
 
-/usr/bin/arm-linux-gnueabi-ld: drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.o: 
-in function `pll_get_post_div':
-drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c:207: undefined reference to 
-`__aeabi_uldivmod'
+RB5/sm8250 on this kernel
 
-I'll replace this with div_u64. If it results in wrong frequencies being 
-selected, please post a separate fix for 6.12-rc
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-stable-24-08-29-iris-v3-rb5?ref_type=heads
 
--- 
-With best wishes
-Dmitry
+CONFIG_QCOM_VENUS = m
 
+Loads fine and I can run this simple smoke test
+
+ffplay -loglevel debug -codec:video h264_v4l2m2m -i sample-5s.mp4
+gst-launch-1.0 -vvv -e filesrc location=sample-5s.mp4 ! qtdemux ! 
+parsebin ! v4l2h264dec ! autovideosink
+
+
+CONFIG_QCOM_IRIS = m
+
+[    2.130077] hw perfevents: enabled with armv8_pmuv3 PMU driver, 7 
+counters available
+[   12.282381] qcom-iris aa00000.video-codec: Adding to iommu group 13
+[   12.463983] qcom-iris aa00000.video-codec: Direct firmware load for 
+qcom/vpu/vpu20_p4.mbn failed with error -2
+[   12.474396] qcom-iris aa00000.video-codec: failed to request fw 
+"qcom/vpu/vpu20_p4.mbn", error -2
+[   12.490919] qcom-iris aa00000.video-codec: firmware download failed
+[   12.516391] qcom-iris aa00000.video-codec: core init failed
+
+In venus the firmware name is
+
+.fwname = "qcom/vpu-1.0/venus.mbn"
+
+What firmware reference are you testing on with your rb5/sm8250 stuff ?
+
+Mine is linux-firmware / Debian sid.
+
+root@linaro-gnome:~# dpkg -S /lib/firmware/qcom/vpu-1.0/venus.mbn
+firmware-qcom-soc: /lib/firmware/qcom/vpu-1.0/venus.mbn
+
+https://packages.debian.org/sid/firmware-qcom-soc
+
+Anyway I don't see much logic/justification for the firmware string change.
+
+---
+bod
 
