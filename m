@@ -1,112 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-30339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5CB196701D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 09:32:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A53949670A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 12:01:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D4891F23273
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 07:32:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B2A11F22E41
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 10:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1CD913B787;
-	Sat, 31 Aug 2024 07:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15C8E17ADF1;
+	Sat, 31 Aug 2024 10:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qYxFf9Wc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VNdAUUS9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F4A1E52D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 07:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB13D8468;
+	Sat, 31 Aug 2024 10:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725089572; cv=none; b=NIAZNPbRwq1etMKNEKf4QzaujJX02z5/LuWU8+61onO5tPOXp1IvBp9VF0kPQ+enqn1JW0YCVzpD+s/Nb5SCE1p2LYW2sVjgm/dcIpNvxq7C7K+NkqAc7/wfa0lfRxoTfNAizW0idVRrLTnawGVU9n7ktCaITk32CopWGHWAIdw=
+	t=1725098483; cv=none; b=rCOOF5ZM/nzg9Lit4qNANiD+MdxGlB4XFb3B4vec3VqMIwDShuN/AchRiTg+7wKbSp8SrqHKhDB1x4UJdcXf3K8WZiBll1EfvysSaDIh2a2sNeh9OgrgvM9oSY9kVsmIy5SOiFQsKpAERoCAW27I9Fcim/clEbSNgoXSu8Qs9E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725089572; c=relaxed/simple;
-	bh=HZ0ybC8pX2XgQuC0gj0GbmtuX/ZZdUeCFQ1FnNhn0vw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HYMsBS5VHfrayGAraEsQUb6MZkxHD3kdoUJdPBWagpkJI2co37KPkT6O/b1ELiPy8VTnHKO2ADHlL+F0DsBMtDFFX33bfurm+NgQhgyxX/hqZwA/ssbUfv3L8kZijgj+a31SLBi3Qpg1lGkIVppxb/CN6PwuI80GYXjo7zF4ku8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qYxFf9Wc; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5334a8a1b07so3097237e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 00:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725089569; x=1725694369; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OS8ULx5Wy3Uin8uMU+jA2lsKZWXO0jfHJrS2BmvfGak=;
-        b=qYxFf9WcNWTZfbf+QTzd49Mb2tR7NS12ya/QTReoJm4v/HZ5+gTLzBtff64kHqFIMy
-         cUKPrsDPpC7YwnB24dNsDhghkKycuXtgRlO8Q7ls7rYCTP4ngPkAP8HVgJoXhwQOP9xe
-         FiAR0DAqBgCD3EZkDTfu/bJFMbyE7xY5tbjQEd8OMm8Z+ftyLJIcRltoYYO2A0uBAm8U
-         0N1fWKC8EM+keNtcUSJFC3NFivxpNoCm+Fm7Ot677xCtkrF05YlD3p+P/hIk+27Vy/FO
-         aMqiT5mXIJyMDj9DYRmPjAPDvIT26zSgYIVu+6kleUbuKaaG35zWB1PHUA9Qn8A3n6YN
-         8BGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725089569; x=1725694369;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OS8ULx5Wy3Uin8uMU+jA2lsKZWXO0jfHJrS2BmvfGak=;
-        b=Xw3lTZkBcHOMy2yGS/6DllHiGzJByYzqz7p3eFr8wrZO5CRGcpR0RkGKWPG3LyTSz6
-         +1zE8GVev+xBZwOdb7q9DDO4GKJ354BQDForP35trKUrv68hn4eV9/L4vjp4NF911Bx2
-         1jC7l8wRg+lj7WBdrS+GxrDSMkTmUYP4xqOsruIfO723Byk9wLYlbkOi0/j5cRg/yZb6
-         /grzjsBXBK9ywgyt/xHSRVYKZKFgJIregLNOOwzEKbtOvscJh64pzhDGyP9PH4HoFTR2
-         /DA68/TCxYjjdQFGBNaiJWyWd6QghWiujb8yeCOUJ3quuMWjgRXH3ikEx6sqxth22CS0
-         pIdA==
-X-Forwarded-Encrypted: i=1; AJvYcCXHsDlsCpiSdAoaNLnM1idJOCcIsCHQxoYiIb3HP2HE41BhUf0+Tq+7i2VN+jgMNGvjuZ+hfqaBnynzdACa@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyok+8WLEpO4YT7VXkpsQPW4Vx1UhfdE2mZYzfet+ikDRX1lL7w
-	K8yrvoyA+2mOOWdJhTgRQee6oZMDX0hzmLK6bPNJ8rRjW2lMbgfN8mDYGIm4aEY=
-X-Google-Smtp-Source: AGHT+IHSwIZuGkOF6avHB4MdTpBlMLY/846/wnZaz9dipDFZweWYq6Dgrc9xbu2b5L3gvviZCMkIRQ==
-X-Received: by 2002:a05:6512:b26:b0:530:ab68:25e6 with SMTP id 2adb3069b0e04-53546ba080amr3149891e87.48.1725089568293;
-        Sat, 31 Aug 2024 00:32:48 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53540840badsm881573e87.185.2024.08.31.00.32.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Aug 2024 00:32:47 -0700 (PDT)
-Date: Sat, 31 Aug 2024 10:32:45 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, dri-devel@lists.freedesktop.org, 
-	quic_jesszhan@quicinc.com, swboyd@chromium.org, dianders@chromium.org, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] drm/msm: register a fault handler for display mmu
- faults
-Message-ID: <4nryt4ujiefvf4xikundjlynt7bpv76qffobczm7j3s6u5qrwz@7p5gqnhy37kz>
-References: <20240628214848.4075651-1-quic_abhinavk@quicinc.com>
- <20240628214848.4075651-2-quic_abhinavk@quicinc.com>
+	s=arc-20240116; t=1725098483; c=relaxed/simple;
+	bh=nrEkWt81J6H3ttTmKA+t6pIm9o90tetoQINzh4TM3TU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VnRKdtd1SgSaZ4Y9oD9n8HPGWiwsTFZjSllIk3qeBCFxMPj+Pvrj4/Od1yP+nBWvGT7ngLiNnXOjP9MTJKWod7Xj4G8mgIYzPQRHEtEJ7uL7EbkIaX9EGsoIdWM69PWE65WeKp3fKfgM68SL+zsRV5hVzBQIaTkpVH/vesI4M4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VNdAUUS9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A29C4CEC0;
+	Sat, 31 Aug 2024 10:01:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725098482;
+	bh=nrEkWt81J6H3ttTmKA+t6pIm9o90tetoQINzh4TM3TU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VNdAUUS9uGGiplHGjiXOEfZLqtZyV+j2RVOZALlAGdykjBkFAUxUxBAsLWwx0LS0m
+	 5dTjdfxs+bP9aiza71yBfMGcJcj/jd6j0IuuyFQgWYXR34Fe2MRBdSo8UalR1UvSnB
+	 kw0FrZUBJSgsXty8aCXv4Wd2e8vaVepDk4D9JLeL2dl7okmHfJyzRnR2H008OAbGkd
+	 6YMWhdojXpXSo2dUvQPG8Tu7zq/AdDSyFS3hbT4w7SvZg54lveC6nJ5W1uoE9klGG2
+	 wHtZDKSozOR+89bIriht6cmFwZxulF7l59faD9Pv+ktA4mB+VGLjZPVO77WfkY+Hsp
+	 D7kADDeqdbiRw==
+Message-ID: <18399b69-235e-47f9-b876-45fb2a4766e4@kernel.org>
+Date: Sat, 31 Aug 2024 12:01:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240628214848.4075651-2-quic_abhinavk@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/8] dt-bindings: clock: add Qualcomm IPQ5332 NSSCC
+ clock and reset definitions
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, andersson@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org,
+ catalin.marinas@arm.com, will@kernel.org, djakov@kernel.org,
+ richardcochran@gmail.com, geert+renesas@glider.be,
+ neil.armstrong@linaro.org, arnd@arndb.de, nfraprado@collabora.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-pm@vger.kernel.org,
+ netdev@vger.kernel.org, Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+References: <20240829082830.56959-1-quic_varada@quicinc.com>
+ <20240829082830.56959-4-quic_varada@quicinc.com>
+ <gomm5yozebwfuhmgziajmkflbj6knmbwae4mls5kuwl5ngcbrx@mndpiktfken2>
+ <CAA8EJpoSZwqw7_UVVXzwOd77Xh6j5LzKus-ZfuL_f5yrc8AYkg@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <CAA8EJpoSZwqw7_UVVXzwOd77Xh6j5LzKus-ZfuL_f5yrc8AYkg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jun 28, 2024 at 02:48:43PM GMT, Abhinav Kumar wrote:
-> In preparation to register a iommu fault handler for display
-> related modules, register a fault handler for the backing
-> mmu object of msm_kms.
+On 31/08/2024 08:56, Dmitry Baryshkov wrote:
+> On Sat, 31 Aug 2024 at 09:11, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>
+>> On Thu, Aug 29, 2024 at 01:58:25PM +0530, Varadarajan Narayanan wrote:
+>>> From: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>>
+>>> Add NSSCC clock and reset definitions for Qualcomm IPQ5332.
+>>> Enable interconnect provider ability for use by the ethernet
+>>> driver.
+>>>
+>>> Signed-off-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+>>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>>> ---
+>>> v5: Marked #power-domain-cells as false
+>>>     Included #interconnect-cells
+>>
+>> Then this might not be GCC-like clock controller or gcc.yaml
+>> should not include power-domain-cells.
 > 
-> Currently, the fault handler only captures the display snapshot
-> but we can expand this later if more information needs to be
-> added to debug display mmu faults.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/msm_kms.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
+> qcom,gcc.yaml already doesn't mark #power-domain-cells as required, so
+> it should be fine. See qcom,gcc-apq8064.yaml or qcom,gcc-ipq4019.yaml.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+I know, I am not saying whether code is correct or not, but whether it
+makes sense. If it does not have power domains, but instead interconnect
+cells, maybe it should not be considered a "GCC" like block.
 
--- 
-With best wishes
-Dmitry
+Best regards,
+Krzysztof
+
 
