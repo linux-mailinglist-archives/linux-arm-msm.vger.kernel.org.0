@@ -1,98 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-30352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30353-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 034D696735F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 23:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D50D9675C5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 11:31:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A88891F220CE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Aug 2024 21:51:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB74A1F21A5D
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 09:31:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F5FE17B401;
-	Sat, 31 Aug 2024 21:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B17A714B949;
+	Sun,  1 Sep 2024 09:31:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=kuruczgy.com header.i=@kuruczgy.com header.b="Epo4RKkb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KR0SeRW8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-184.mta0.migadu.com (out-184.mta0.migadu.com [91.218.175.184])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C91416EC1B
-	for <linux-arm-msm@vger.kernel.org>; Sat, 31 Aug 2024 21:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B8B14B084;
+	Sun,  1 Sep 2024 09:31:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725141058; cv=none; b=BsmRT8gtp11gL+iCx1gM5o/X+HxPKJau3XVJItwubibr/bZ9DDuwcEMK6eIrSFCn85Jrv1VA7QylMssFLoFNplXMdVoozLHbVN1zt5n0osoQb44rYyG4qjwa0ofPx265InSmlNwRb5WjsvpniGYwcD09rfUHDaE+jhdhu8wYEk8=
+	t=1725183105; cv=none; b=KJgRfQdA21UWIGtDo5HNYLfUpyyFPTPz4c9QtuV4uoDJVFnssB7BrsRKT4GgNEdSByjEwiOqafL3LnucMHdUs8juemCDs41jg8vH0I6NJefU9j5uv7vTl0+aTjsY8RSvUyl13xo4HuRrxaLG2MSSjt1YUBNU3buva72fcQTnQn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725141058; c=relaxed/simple;
-	bh=3wGrMnM2vclQhrcQmwGiVliT+rHB6JAHjVx5LHqeLCk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZBIdJqJW6LfEMIJy3nBm4aAtMNpjhBDHJUFD8p81v/XhO2pftOYCQPZWxJtjhJFchFFAu0CUDNuTrZPwoHaf7MM5UkUZ9OaRrJRFN2xXImZiESSDpbrYubYRUMt1Pq5u439/iQOCAUTfYm+4lrRzfxXburYGRpAZofRpcY+FuXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kuruczgy.com; spf=pass smtp.mailfrom=kuruczgy.com; dkim=pass (1024-bit key) header.d=kuruczgy.com header.i=@kuruczgy.com header.b=Epo4RKkb; arc=none smtp.client-ip=91.218.175.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kuruczgy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kuruczgy.com
-Message-ID: <1f6676ae-62bf-40e1-b93c-463fa7d04cef@kuruczgy.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kuruczgy.com;
-	s=default; t=1725141053;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=oTTxbm5FRKBWZJPjYUBnkFj2GnM7Zwi1RSotZuqKSv0=;
-	b=Epo4RKkbvgj0Pu3nc0WR0rnBMIqrltiBcOrQH60nPt+RmBRL4pTlEiqvDdGCqzQHLaQphA
-	GxHcqdRBReY4Aby9hey2tRCLxkBRnlBjht5nKuPUJHYsGx3htSfPomMuRmcijkhmf5e5VH
-	LA00B8U2KZCkpHSIrjeY0l+AmXfD9pU=
-Date: Sat, 31 Aug 2024 23:50:50 +0200
+	s=arc-20240116; t=1725183105; c=relaxed/simple;
+	bh=HX95G8WQPXXEMqFVk5uQHFdvVxTtf9VYKA/2Fnc+KSE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UrflH7bca6RzKW2SRi923K5R3OOTOelfViULhIjTcsqIAxN2RcZx0wTldoQSnweZ4qYXckNMSNBVmBw+3EYi33tbXNZg98p8Zjyip921lOfMVJrDPbUxaukxSm7iszJK6pbS3o31rYI9x0Wzm15pwO3yBbFbIm0TQXAplcFsRSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KR0SeRW8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FCC0C4CEC3;
+	Sun,  1 Sep 2024 09:31:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725183105;
+	bh=HX95G8WQPXXEMqFVk5uQHFdvVxTtf9VYKA/2Fnc+KSE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=KR0SeRW8or71KiZ6k9UJFjLDabYzHz+CVE9dzMZoLZYTRNxsCE+Ji5GgWdKkqQbZR
+	 vLDUWynoyYjq/G6HU/88H/jS8VKHXAINtCN6qAcL04Hq/9pqMqu8+sG72krkbvKCdf
+	 sseII++7Nu8/W6nxgy2KBzWGaVrwoP+KDGL5ssvIR7R8d80Xk1Eaf14lsDBvJLbW2T
+	 yft1b5Nq1nSr+9nObRTCVvu3wyj8TXyT/sp5gDQaklwbCAFvtuMcVOix01YHXN8kTU
+	 mzNmvuzo8leHiqT+e1vvBeYSjzixm92IfV3dhnIBmYmh9QC/I/KBkhT8xQGXz6dG5l
+	 utkz8aFiU5oLA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1skgwB-000000004vA-3jIB;
+	Sun, 01 Sep 2024 11:31:59 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: [PATCH] clk: qcom: videocc-sm8350: use HW_CTRL_TRIGGER for vcodec GDSCs
+Date: Sun,  1 Sep 2024 11:30:24 +0200
+Message-ID: <20240901093024.18841-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.44.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Subject: Re: [v2,1/2] drm/msm/dpu1: don't choke on disabling the writeback
- connector
-To: Leonard Lausen <leonard@lausen.nl>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Jeykumar Sankaran <jsanka@codeaurora.org>, stable@vger.kernel.org
-References: <20240802-dpu-fix-wb-v2-1-7eac9eb8e895@linaro.org>
- <b70a4d1d-f98f-4169-942c-cb9006a42b40@kuruczgy.com>
- <0b2286bf-42fc-45dc-a4e0-89f85e97b189@lausen.nl>
- <56bf547a-08a5-4a08-87a9-c65f94416ef3@kuruczgy.com>
- <9d359542-bd16-4aba-88a8-0bdea1c1de44@lausen.nl>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>
-In-Reply-To: <9d359542-bd16-4aba-88a8-0bdea1c1de44@lausen.nl>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 
-Dear Leonard,
+A recent change in the venus driver results in a stuck clock on the
+Lenovo ThinkPad X13s, for example, when streaming video in firefox:
 
-I installed KDE. First, I ran it with the my regular kernel without this 
-patch. The first interesting thing I notice is that the screen *does* 
-come back after resume. (The error messages are still present though.)
+	video_cc_mvs0_clk status stuck at 'off'
+	WARNING: CPU: 6 PID: 2885 at drivers/clk/qcom/clk-branch.c:87 clk_branch_wait+0x144/0x15c
+	...
+	Call trace:
+	 clk_branch_wait+0x144/0x15c
+	 clk_branch2_enable+0x30/0x40
+	 clk_core_enable+0xd8/0x29c
+	 clk_enable+0x2c/0x4c
+	 vcodec_clks_enable.isra.0+0x94/0xd8 [venus_core]
+	 coreid_power_v4+0x464/0x628 [venus_core]
+	 vdec_start_streaming+0xc4/0x510 [venus_dec]
+	 vb2_start_streaming+0x6c/0x180 [videobuf2_common]
+	 vb2_core_streamon+0x120/0x1dc [videobuf2_common]
+	 vb2_streamon+0x1c/0x6c [videobuf2_v4l2]
+	 v4l2_m2m_ioctl_streamon+0x30/0x80 [v4l2_mem2mem]
+	 v4l_streamon+0x24/0x30 [videodev]
 
-> Ack. Do you mean that Rob Clark also uses Yoga Slim 7x but does not face the "screen never comes back (always have to switch VT back-and-forth to bring it back)" issue?
+using the out-of-tree sm8350/sc8280xp venus support. [1]
 
-Yes, at least that's what I gathered from our conversations on IRC. But 
-with the above in mind, I now suspect that this comes down to desktop 
-environment differences.
+Update also the sm8350/sc8280xp GDSC definitions so that the hw control
+mode can be changed at runtime as the venus driver now requires.
 
-> It would be great if you can validate whether this patch breaks CRTC state (which includes the CTM state) on Yoga Slim 7x, or whether that is specific to the trogdor lazor (Chromebook Acer Spin 513), though it may require you to install KDE.
+Fixes: ec9a652e5149 ("venus: pm_helpers: Use dev_pm_genpd_set_hwmode to switch GDSC mode on V6")
+Link: https://lore.kernel.org/lkml/20230731-topic-8280_venus-v1-0-8c8bbe1983a5@linaro.org/ # [1]
+Cc: Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Cc: Abel Vesa <abel.vesa@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+ drivers/clk/qcom/videocc-sm8350.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Well "Night Light" seems to be even more broken under KDE. I went into 
-System Settings, set it to "Always on night light", and tried to adjust 
-the temperature slider. While adjusting the slider, the screen goes 
-black, and only comes back after a few seconds. The color temperature 
-does not change, no matter what I change the slider to. Afterwards I 
-tried with this patch as well, but it produces the exact same behavior.
+diff --git a/drivers/clk/qcom/videocc-sm8350.c b/drivers/clk/qcom/videocc-sm8350.c
+index 5bd6fe3e1298..874d4da95ff8 100644
+--- a/drivers/clk/qcom/videocc-sm8350.c
++++ b/drivers/clk/qcom/videocc-sm8350.c
+@@ -452,7 +452,7 @@ static struct gdsc mvs0_gdsc = {
+ 	.pd = {
+ 		.name = "mvs0_gdsc",
+ 	},
+-	.flags = HW_CTRL | RETAIN_FF_ENABLE,
++	.flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
+ 	.pwrsts = PWRSTS_OFF_ON,
+ };
+ 
+@@ -461,7 +461,7 @@ static struct gdsc mvs1_gdsc = {
+ 	.pd = {
+ 		.name = "mvs1_gdsc",
+ 	},
+-	.flags = HW_CTRL | RETAIN_FF_ENABLE,
++	.flags = HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
+ 	.pwrsts = PWRSTS_OFF_ON,
+ };
+ 
+-- 
+2.44.2
 
-Best regards,
-György
 
