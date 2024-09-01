@@ -1,163 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-30354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 767289675EE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 12:49:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E02529676DC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 15:58:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 245D31F2178C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 10:49:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52E581F21438
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 13:58:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DECE15FA92;
-	Sun,  1 Sep 2024 10:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DEBB17DFE4;
+	Sun,  1 Sep 2024 13:58:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="UK7WbqZg"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fpfklRr+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE061514C9
-	for <linux-arm-msm@vger.kernel.org>; Sun,  1 Sep 2024 10:49:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD7823776;
+	Sun,  1 Sep 2024 13:58:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725187789; cv=none; b=mpu+4odxsnk2oNX6Bn176nEhGIs89TMCac9NvZm3A5xZVFrcINtTyV1rbNkGbI0UMk6Y327yhr7MYFd4p9LG1cSUlh96hid82IRJ1TKbxbh+zU3UMkiE84QK8U2LY4ihr9t6mWWr2jr/5MLMfUM1nkTKVJOo/v9bpP9Nait7d5o=
+	t=1725199098; cv=none; b=SJuVcC4cOTbRw9eQJkb1pRehEEryvas0KDDQGQ8QMfMe9dy1qfmrPnYFV/eVov17fHQfKlyP8eIAfa6xou/DWFQEvZTXjZs6hPPpE4B5dknkOQjl0XYXGT7Ud4imCgzbECsCRw8LYpGmBLxqA18BwPTv/FhpKFRJR2Y/DD5Lfqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725187789; c=relaxed/simple;
-	bh=4nwnklqqvsAc7MlMb9SGAUN0SLGRpyLpiVNTSWhiEsQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n+SB+OAxcOVtpR3OqY/96fFyo1lM/RmHBQNAghZkHiX4BTOAUfn9aTo1N29SAOuSIOzhDED5LE3SL02D/Se27MJRngWskzNpPcdqFN+bJKwumYj88D64qVdSP5VQ05FTyjQRmNj0DAWCFQeUwLlFgtBeXifpHj+Xdbg5qDyRiak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=UK7WbqZg; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5c22b1f470dso2877124a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Sep 2024 03:49:47 -0700 (PDT)
+	s=arc-20240116; t=1725199098; c=relaxed/simple;
+	bh=7U5S3BcfrluzhcaFH6ZlRrmgiZYswEEz59+n3akw6cM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VOXIrNBqffIKLOyR9vCnVrOMdnrGw/3U3BcZSbftNHLyWJuP+xCt9nxofCFqLxNEZk9/T7h/Ej3RjyHfZ1pyk1BSH3DeKxQIQoJbRErLiGQT2ZsaMAK7vnIvj3+d8ERuY34lwTCPrJgrQsN8Ripn7LSCWfsJn0hBDkNNtyXsbI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fpfklRr+; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a86fa3dea99so186679166b.2;
+        Sun, 01 Sep 2024 06:58:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google; t=1725187786; x=1725792586; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OhlOtzk6ka1oIdqe+onUSXvd3zsuH7hAUMYt+5lHzME=;
-        b=UK7WbqZg6gjbhMMQDiu64lCfR1lupvljoKXesMQIP9yiqm+EWGqK0sI8ByX9CeZvgS
-         /yIstKVWglrOOkWGJHqVf9glVv4TKBxxxZk3JqeRtaJUWrcto5pYZXZFvGFwj/O7NZJv
-         qjaVqWcDO7xfBoj180Z72xc4Wog8xhqhTkmiTrs7Ly4kFHUw5twKBria7FQg18W3m8im
-         4PUooQgHpbe+a84sUgXC2m7nC8F15ZnI/pTcEsC7gwnBxqhezJhpEyDeVUMPWVpBoGk6
-         Uo3/j+3h7K1Yg5ddQVjtMet+qFIkaVYxTijan/04yM9Y6BitnJdkfneF0EPRumjflnfF
-         ZIZw==
+        d=gmail.com; s=20230601; t=1725199095; x=1725803895; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lqxrlwZgVOZrfaPkQI4LlyC8aVNLGRmKHeCXm7BpQqU=;
+        b=fpfklRr+5OTUX2Fc8ttzSJpc+HE7BcmorNUJScfaR3m+lHH3ksVPrpDqJPF0AidyDT
+         fV2c9sYlU+EPNa0WyMwNJ6nH+RbyOWPVvK03kIL1Z/Bzy0V1NDoW0dWU4iNoKNp2rvVc
+         BhXFGff1d+gKa767cpeX+XXEoolnIMlMv2/uiVcCKr2y4IeAa5GNOfQgm/iMg3MdYWWj
+         61F5TN2jlSZ2P3gqomVn4fcKS0OpnqSzs9HrFpnAGfsLlHUK0qpPe8g9GJi2zpOtcpYf
+         WFtARJYnchcHOu/95Drne0RJyFit5n6sE/lAqsl9ytMHYmcnDdX3VA6DmGvijmSu2gYj
+         MBoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725187786; x=1725792586;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OhlOtzk6ka1oIdqe+onUSXvd3zsuH7hAUMYt+5lHzME=;
-        b=b4gc105xwM/JJDVRth0+U978YvuKjR9ce70FI4QaUjddUrnNBnZ4jc4OKRUuFdR6C+
-         DF1tO508+FtBno2khhxRz+DemdOIMma82CnRpL/AAcMdzYWFAA+DSJVivmxkFf7Bfhiy
-         to5lawLVazLu6C0qrAWcNo3mzzQhpCCMO1Y4kmtW7h6ecW6VS1/jM81xhPh79loZZ2UV
-         r+u/q0+sUp7/vH5bx0uIWBEzrDgM1JxzGncOeR3j9k4TnzmdG/bb/NvcakzM+MP+jDvt
-         XmRIfxRcI1iq4r1PxY5LAO8irhhtq+CdSyCZsQKe/61TtGTgMVq8qDYCzfDxeNZScySJ
-         xVyA==
-X-Forwarded-Encrypted: i=1; AJvYcCUd+W6Xz/Fy+fTPrzd8zPi3hi2T+kOyAuDJZdQRQTOT4FItDu+BDMVVpoaZaat+g6nX7Z+A1a4Dzbp3f1zB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCxRGH7j/tbBtn/6niioJMJL/clsb03it/9sHhgQZDh4jk/QrS
-	HfVkbYbHFMzhD25ClhggLu5MvWtIP+VMMNFRTprzvcDMeMt7772m4tntxHfl35ZASjpziMXQA8k
-	d7gIlvVjpqYjBhVtG5o3loTehFH9I2DxrGbaA1Q==
-X-Google-Smtp-Source: AGHT+IFwKp0NUUT00gkpVQ/Lgb5F42y9K4+DR9h8gGYvnQkPv2xwPRh8qm1SYQIv+iTl5XbdqKQgRJgi5DX3dMDLWss=
-X-Received: by 2002:a05:6402:1e8c:b0:5c1:6abb:423c with SMTP id
- 4fb4d7f45d1cf-5c242350df7mr2935480a12.2.1725187785486; Sun, 01 Sep 2024
- 03:49:45 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725199095; x=1725803895;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lqxrlwZgVOZrfaPkQI4LlyC8aVNLGRmKHeCXm7BpQqU=;
+        b=Lp77bG0KTDZlU7x8qPEK3oFrNw7RO9eDQMRdTVL43zIScTll5z8rLSE7ZR7DKClO1v
+         tb3iVLaTn0neyY9hg+azRa+3qbsrOZWX2PDdA1EJj2/XASRisRj1r40oX8qDXq0N88Ak
+         lXDqOrL2UDnHVlU1JgDc8jA7DwwC8e+NMqTlEwmiGz9UEUMPQGwrMzGLMJe/W3E5uT2i
+         ssiyBaKtz51LQyqz4QOrYwGqdXcjDGX5slcr4xI0a8N1gd9GHwS7mcStvhwJm1DB2Iqz
+         pgio/8dQ50AAjzFEwapxcseVAPGBtIUycfS9uS8vKQXjf5YPhoGcuYG9AkRaWIyzB9Ny
+         yi2A==
+X-Forwarded-Encrypted: i=1; AJvYcCVXNHu03v7EyVuK82TgaIW5vK80Vrq24h4DbC0mDgJDLGdZq5ZMckLICA+at48KtGBGt/MxRenTRyskRDSN@vger.kernel.org, AJvYcCXbbB8WRF/bMzkNUV5jnuJm5aps4a9c1sDvUyTFTlnrrSkJK3ERacgIjM8ApWSCui7H/R/8rZidiwZbor/K@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYwEk1T+SsnIt+n7wqIrT6Yd/g+JZZNGwjSvgsTZA0R3I3/AiL
+	vo3nZ90jf9v9I7kZ+fxSy5PizFdZlPLsud7fEa4kYECgf3I5biBP
+X-Google-Smtp-Source: AGHT+IGKf5lWnIdWvQXm43UX9gltPdmoOxHDk3rgMDtuWMcrI5JctjcMpoKubosYad2+GjDL5ZOL4g==
+X-Received: by 2002:a05:6402:3506:b0:5c0:a8b4:3d92 with SMTP id 4fb4d7f45d1cf-5c21ed8ba82mr11941841a12.27.1725199094059;
+        Sun, 01 Sep 2024 06:58:14 -0700 (PDT)
+Received: from localhost.localdomain (public-nat-01.vpngate.v4.open.ad.jp. [219.100.37.233])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226ccff17sm4051295a12.73.2024.09.01.06.58.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 01 Sep 2024 06:58:13 -0700 (PDT)
+From: Vladimir Lypak <vladimir.lypak@gmail.com>
+To: Vladimir Lypak <vladimir.lypak@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Jordan Crouse <jordan@cosmicpenguin.net>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/4] fixes for Adreno A5Xx preemption
+Date: Sun,  1 Sep 2024 13:53:59 +0000
+Message-ID: <20240901135419.1075412-1-vladimir.lypak@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240901093024.18841-1-johan+linaro@kernel.org>
-In-Reply-To: <20240901093024.18841-1-johan+linaro@kernel.org>
-From: Steev Klimaszewski <steev@kali.org>
-Date: Sun, 1 Sep 2024 05:49:33 -0500
-Message-ID: <CAKXuJqgZhyyAP2vpSnyygcC0k+BzXU+Gq-O5NnFRWWebfSLD5Q@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: videocc-sm8350: use HW_CTRL_TRIGGER for vcodec GDSCs
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Ulf Hansson <ulf.hansson@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, Taniya Das <quic_tdas@quicinc.com>, 
-	Abel Vesa <abel.vesa@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Johan,
+There are several issues with preemption on Adreno A5XX GPUs which
+render system unusable if more than one priority level is used. Those
+issues include persistent GPU faults and hangs, full UI lockups with
+idling GPU.
 
-On Sun, Sep 1, 2024 at 4:31=E2=80=AFAM Johan Hovold <johan+linaro@kernel.or=
-g> wrote:
->
-> A recent change in the venus driver results in a stuck clock on the
-> Lenovo ThinkPad X13s, for example, when streaming video in firefox:
->
->         video_cc_mvs0_clk status stuck at 'off'
->         WARNING: CPU: 6 PID: 2885 at drivers/clk/qcom/clk-branch.c:87 clk=
-_branch_wait+0x144/0x15c
->         ...
->         Call trace:
->          clk_branch_wait+0x144/0x15c
->          clk_branch2_enable+0x30/0x40
->          clk_core_enable+0xd8/0x29c
->          clk_enable+0x2c/0x4c
->          vcodec_clks_enable.isra.0+0x94/0xd8 [venus_core]
->          coreid_power_v4+0x464/0x628 [venus_core]
->          vdec_start_streaming+0xc4/0x510 [venus_dec]
->          vb2_start_streaming+0x6c/0x180 [videobuf2_common]
->          vb2_core_streamon+0x120/0x1dc [videobuf2_common]
->          vb2_streamon+0x1c/0x6c [videobuf2_v4l2]
->          v4l2_m2m_ioctl_streamon+0x30/0x80 [v4l2_mem2mem]
->          v4l_streamon+0x24/0x30 [videodev]
->
-> using the out-of-tree sm8350/sc8280xp venus support. [1]
->
-> Update also the sm8350/sc8280xp GDSC definitions so that the hw control
-> mode can be changed at runtime as the venus driver now requires.
->
-> Fixes: ec9a652e5149 ("venus: pm_helpers: Use dev_pm_genpd_set_hwmode to s=
-witch GDSC mode on V6")
-> Link: https://lore.kernel.org/lkml/20230731-topic-8280_venus-v1-0-8c8bbe1=
-983a5@linaro.org/ # [1]
-> Cc: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Cc: Taniya Das <quic_tdas@quicinc.com>
-> Cc: Abel Vesa <abel.vesa@linaro.org>
-> Cc: Konrad Dybcio <konradybcio@kernel.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  drivers/clk/qcom/videocc-sm8350.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/clk/qcom/videocc-sm8350.c b/drivers/clk/qcom/videocc=
--sm8350.c
-> index 5bd6fe3e1298..874d4da95ff8 100644
-> --- a/drivers/clk/qcom/videocc-sm8350.c
-> +++ b/drivers/clk/qcom/videocc-sm8350.c
-> @@ -452,7 +452,7 @@ static struct gdsc mvs0_gdsc =3D {
->         .pd =3D {
->                 .name =3D "mvs0_gdsc",
->         },
-> -       .flags =3D HW_CTRL | RETAIN_FF_ENABLE,
-> +       .flags =3D HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
->         .pwrsts =3D PWRSTS_OFF_ON,
->  };
->
-> @@ -461,7 +461,7 @@ static struct gdsc mvs1_gdsc =3D {
->         .pd =3D {
->                 .name =3D "mvs1_gdsc",
->         },
-> -       .flags =3D HW_CTRL | RETAIN_FF_ENABLE,
-> +       .flags =3D HW_CTRL_TRIGGER | RETAIN_FF_ENABLE,
->         .pwrsts =3D PWRSTS_OFF_ON,
->  };
->
-> --
-> 2.44.2
->
->
-Being as I saw this as well locally, I've now tested with this patch
-on top of 6.11-rc6 and can confirm that I don't see the splat anymore.
-Tested-by: Steev Klimaszewski <steev@kali.org>
+---
+Changes in v2:
+- Use spinlock to serialize preemption initiation in patch 3
+- Added Reviewed-by on patch 2
+---
+Vladimir Lypak (4):
+  drm/msm/a5xx: disable preemption in submits by default
+  drm/msm/a5xx: properly clear preemption records on resume
+  drm/msm/a5xx: fix races in preemption evaluation stage
+  drm/msm/a5xx: workaround early ring-buffer emptiness check
+
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c     | 12 +++++++--
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.h     |  2 ++
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 30 +++++++++++++++++++++--
+ 3 files changed, 40 insertions(+), 4 deletions(-)
+---
+base-commit: 985bf40edf4343dcb04c33f58b40b4a85c1776d4
+-- 
+2.46.0
+
 
