@@ -1,69 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-30366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39FA2967910
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 18:39:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70CB9967B8B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 19:48:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4F312B21CFA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 16:39:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 192341F216DF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 17:48:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B47183CAB;
-	Sun,  1 Sep 2024 16:39:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1B8217E900;
+	Sun,  1 Sep 2024 17:47:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C9F183092;
-	Sun,  1 Sep 2024 16:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6638F53E15;
+	Sun,  1 Sep 2024 17:47:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725208754; cv=none; b=O4NzGKogNRL/C0utI3WskaJ0EYaXEnIZMHPoFGvTSqOnEF+OVX4ZaVvLxarvv87wL9gpjCsfLAqJN6JFIenbh7inZP3d1B9aywzpxHBzVdMcbyxsX9VVPKAvzWZKsxu0opJEBXx2VOxpHGCMlr5Y2Bi7jXxUwW1pmGBKUra0t+I=
+	t=1725212876; cv=none; b=sxYPFo+TXDbLv4u2UHEAb5nlH8m6c7XWB/QN2kMGl/UAw41e3jSNgBg9HYxDjRtus0x4KvEIdHc9p0S3voGvb7vvjPTb7+n6aV2R0p9Bg3H6NVhpn2kCgE+EQMKKknBKnv5swwFNhVPuio9+AGQp+CprNv2FqW7dcpfNtKuixOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725208754; c=relaxed/simple;
-	bh=zIhIkoVXpvbfRozdweaTPuS9Czttm7pA83bjd33G17Q=;
+	s=arc-20240116; t=1725212876; c=relaxed/simple;
+	bh=Xmc/hEdWTjAatvH4xDGup5Qa9uRF6QYKHs5Vb3yKznU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gXSC4Y+sfQVrw5VJ0Is6t+nJyNQjLBl5MbYTUdK9IDW2NBGLLaahePYFQMHUJXUJ+knceHJIbIlCspEH9qxCQCdQHAcfp4y0nIXjGwBEMfNTrJt6ia905qZAZCpsx/zJUC3684BOtiQLI1hLU/bj9cg88Kl0mtc8vEdkmxw7UIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=ss3Bb+KBNeQCGfrzmFPEtbk8sGJvB7kCE5aMVIX/r+L/MuzpLYTZCmA5ToKQrReN/lt102wrsIzMS+wk/0Z2L4jmfLuuPewD54w7LT/zaLcH+yRzGnhyplmuUN4Jcwu9EWPN602RO0WrsfXfuwjsGtcz2YMNUxXbF5UKGHHYU+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.215.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-714302e7285so3172364b3a.2;
-        Sun, 01 Sep 2024 09:39:13 -0700 (PDT)
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-7cdf2ac6130so1002598a12.2;
+        Sun, 01 Sep 2024 10:47:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725208753; x=1725813553;
+        d=1e100.net; s=20230601; t=1725212875; x=1725817675;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DdQ9MmCX6g//66R+kXqtwpzYrNhfNVvRsZUbdkwW+/o=;
-        b=wRE7iJ1E/poavYzFU5FdA38oVJlg1CyJJmb/IYTHjBLcyYEIglwjX9NjOOnNaBUQ9E
-         K4eEqrdxrBatQ4ui4eESmJCvdhGoeutWkQS3e8QuwxliIdVb4beyazVdIGvr55aWwqTE
-         8Ji4MP5iW5Kfay1f7alLmbShxhgqBMv/fHDWByhYO6XF0n9YNk5cSywAqPDNjOXYIl3m
-         2ltJM9JHFiGcHHh6PyQCWwpvNLT2G/+JhhBkh/0lSGQwy+aF9yFH1zbptmcO92GvV2aS
-         WLcVzVbVFXoqhfWPQ3inYy5tjZ/qYA/uaO09BCLh/ItpT2e2NLQfeotkyS2uH1pReh+t
-         n6xQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWX5wchVqhA8Vtg6PZ4jLjBmI2WAlBKwgd3OtuDQd94o75+7N0QxPIgeQ+bYfWcuhPGaKlRkZ8ccQYKxeUx@vger.kernel.org, AJvYcCWbvjdb/HvDWtcdZS0wU0J1jiFn5xIddKb4yFf/+oHCBT0WhUBZqTvjVz8mdiGwA4QYh6YONIovJn/N93Go@vger.kernel.org, AJvYcCXxzHtEJPaD4ePzMWZvoVe3lwwotTPzC2L7txXxKypinDgmoJeNUZ+W3uyciyeBD4zQusJmJyjsrTBq@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHrJblzxhzuTyevNigEa17KD7yQZRvyEnoAuzCRTGt2v+GOPrO
-	eJwpr4+dQD+EpY1CJURQnmn2+ZEi0+p66lOiDk834XfWcEWhE3gBxbSITTXxXRs=
-X-Google-Smtp-Source: AGHT+IHDTtd3Bt3Ic/YtMPXlOPa79bdRbV2FfzYGXiQ4sv8MjhZBrNnxhKksIYesxf2EWpqAQ6Rnxw==
-X-Received: by 2002:a05:6300:668c:b0:1cc:e9bc:256e with SMTP id adf61e73a8af0-1cce9bc26dfmr10516897637.30.1725208752645;
-        Sun, 01 Sep 2024 09:39:12 -0700 (PDT)
+        bh=cJYJQ1zlbAg/HiswfyOpJTEd1H+q6QzgGzUjsdDbFPY=;
+        b=UJKRPrJ0uNU+egfc8HnkDCL2uvkws3XZbNd5Zc4pmLEAHeZCEnSRWXflnaU5Q4TNQW
+         GZTjBk3mYaK9v/G6hpKWMPv2XGy3mY5vArGAAC6MiMK0YefjMpUYV5IMmGIeHwkq2pgC
+         c37YeTslwVGCFe+E+QIaV5ZsMaJRNRfyKQM3ooTGv9zRS90CpUjDzulKKXLmJNYEXaU4
+         9waehK7uNXReodhM9KHVeDTfYh0RvOMcRsMpYDgdFfX5eDWTVsfjv38y8ZqVdp2obNsZ
+         BDVpLrgGRlS3DkXRQvYbPFeS3QoxexBFVpPVpMKYYxHOF5qYWeizMYaxUR4OeDHE4DBZ
+         03ng==
+X-Forwarded-Encrypted: i=1; AJvYcCUv5CKwu6W3+mOdkrUkgFOHI8UYcMZ6orD1WBcaPXT+8Ao+KIwpFepRkFJ3aeAsz4IHzUaNUBq8PQ6U@vger.kernel.org, AJvYcCV8Y4Mk/FY80Obgw19kfpGyI/ykkr9PqNdy9sHNhos92e/qjrSQiblDnFh0YcJDanYDSAkXNAd0y0awXVZq@vger.kernel.org, AJvYcCVjl13GQmDvxGMsvSDVMDnVF9zRcDbZhkMrsyXPivtElGAB81U1cMHmuatGtXBVS2JyTXqMwCJSwlmI@vger.kernel.org, AJvYcCWTosf+r1reefsNdCXsQhKawJ8ZRIgHai7eSQmS2Ll3ByUQ3OaKu1J+qqn4cRmm27UCdOb0bVMzUIlFl92K6Q==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzNH+kGg5fWooOzQKeTyGciSLDg+3YFCLl06f28xx4+D6oKL1G/
+	CM4ZtMwBY29cYIH9lzxWOt9qfzdHNbl2M0ut/DhDwomKVcZOyhPO
+X-Google-Smtp-Source: AGHT+IEneXWt9Gk0g2RG61bxa1zZfsP3uwuDaYDhRSJVUYa7KkQxRn2HCtoVJzwC9/ELD2s3tYj9IA==
+X-Received: by 2002:a05:6a21:3a44:b0:1c4:a49b:403 with SMTP id adf61e73a8af0-1cece5e24c1mr4521500637.46.1725212874415;
+        Sun, 01 Sep 2024 10:47:54 -0700 (PDT)
 Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d22e7821cesm6112899a12.55.2024.09.01.09.39.11
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2051553648fsm54619285ad.172.2024.09.01.10.47.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Sep 2024 09:39:12 -0700 (PDT)
-Date: Mon, 2 Sep 2024 01:39:10 +0900
+        Sun, 01 Sep 2024 10:47:53 -0700 (PDT)
+Date: Mon, 2 Sep 2024 02:47:52 +0900
 From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-Cc: jingoohan1@gmail.com, manivannan.sadhasivam@linaro.org,
-	lpieralisi@kernel.org, robh@kernel.org, bhelgaas@google.com,
-	linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, quic_mrana@quicinc.com
-Subject: Re: [PATCH v4] PCI: qcom: Disable mirroring of DBI and iATU register
- space in BAR region
-Message-ID: <20240901163910.GD235729@rocinante>
-References: <20240814220338.1969668-1-quic_pyarlaga@quicinc.com>
+To: manivannan.sadhasivam@linaro.org
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v4 00/12] PCI: qcom: Enumerate endpoints based on Link up
+ event in 'global_irq' interrupt
+Message-ID: <20240901174752.GL235729@rocinante>
+References: <20240828-pci-qcom-hotplug-v4-0-263a385fbbcb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,94 +78,72 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240814220338.1969668-1-quic_pyarlaga@quicinc.com>
+In-Reply-To: <20240828-pci-qcom-hotplug-v4-0-263a385fbbcb@linaro.org>
 
 Hello,
 
-> PARF hardware block which is a wrapper on top of DWC PCIe controller
-> mirrors the DBI and ATU register space. It uses PARF_SLV_ADDR_SPACE_SIZE
-> register to get the size of the memory block to be mirrored and uses
-> PARF_DBI_BASE_ADDR, PARF_ATU_BASE_ADDR registers to determine the base
-> address of DBI and ATU space inside the memory block that is being
-> mirrored.
+> This series adds support to enumerate the PCIe endpoint devices using the Qcom
+> specific 'Link up' event in 'global' IRQ. Historically, Qcom PCIe RC controllers
+> lacked standard hotplug support. So when an endpoint is attached to the SoC,
+> users have to rescan the bus manually to enumerate the device. But this can be
+> avoided by rescanning the bus upon receiving 'Link up' event.
 > 
-> When a memory region which is located above the SLV_ADDR_SPACE_SIZE
-> boundary is used for BAR region then there could be an overlap of DBI and
-> ATU address space that is getting mirrored and the BAR region. This
-> results in DBI and ATU address space contents getting updated when a PCIe
-> function driver tries updating the BAR/MMIO memory region. Reference
-> memory map of the PCIe memory region with DBI and ATU address space
-> overlapping BAR region is as below.
+> Qcom PCIe RC controllers are capable of generating the 'global' SPI interrupt
+> to the host CPUs. The device driver can use this interrupt to identify events
+> such as PCIe link specific events, safety events etc...
 > 
->                         |---------------|
->                         |               |
->                         |               |
->         ------- --------|---------------|
->            |       |    |---------------|
->            |       |    |       DBI     |
->            |       |    |---------------|---->DBI_BASE_ADDR
->            |       |    |               |
->            |       |    |               |
->            |    PCIe    |               |---->2*SLV_ADDR_SPACE_SIZE
->            |    BAR/MMIO|---------------|
->            |    Region  |       ATU     |
->            |       |    |---------------|---->ATU_BASE_ADDR
->            |       |    |               |
->         PCIe       |    |---------------|
->         Memory     |    |       DBI     |
->         Region     |    |---------------|---->DBI_BASE_ADDR
->            |       |    |               |
->            |    --------|               |
->            |            |               |---->SLV_ADDR_SPACE_SIZE
->            |            |---------------|
->            |            |       ATU     |
->            |            |---------------|---->ATU_BASE_ADDR
->            |            |               |
->            |            |---------------|
->            |            |       DBI     |
->            |            |---------------|---->DBI_BASE_ADDR
->            |            |               |
->            |            |               |
->         ----------------|---------------|
->                         |               |
->                         |               |
->                         |               |
->                         |---------------|
+> One such event is the PCIe Link up event generated when an endpoint is detected
+> on the bus and the Link is 'up'. This event can be used to enumerate the
+> endpoint devices.
 > 
-> Currently memory region beyond the SLV_ADDR_SPACE_SIZE boundary is not
-> used for BAR region which is why the above mentioned issue is not
-> encountered. This issue is discovered as part of internal testing when we
-> tried moving the BAR region beyond the SLV_ADDR_SPACE_SIZE boundary. Hence
-> we are trying to fix this.
+> So add support for capturing the PCIe Link up event using the 'global' interrupt
+> in the driver. Once the Link up event is received, the bus underneath the host
+> bridge is scanned to enumerate PCIe endpoint devices.
 > 
-> As PARF hardware block mirrors DBI and ATU register space after every
-> PARF_SLV_ADDR_SPACE_SIZE (default 0x1000000) boundary multiple, program
-> maximum possible size to this register by writing 0x80000000 to it(it
-> considers only powers of 2 as values) to avoid mirroring DBI and ATU to
-> BAR/MMIO region. Write the physical base address of DBI and ATU register
-> blocks to PARF_DBI_BASE_ADDR (default 0x0) and PARF_ATU_BASE_ADDR (default
-> 0x1000) respectively to make sure DBI and ATU blocks are at expected
-> memory locations.
+> This series also has some cleanups to the Qcom PCIe EP controller driver for
+> interrupt handling.
 > 
-> The register offsets PARF_DBI_BASE_ADDR_V2, PARF_SLV_ADDR_SPACE_SIZE_V2
-> and PARF_ATU_BASE_ADDR are applicable for platforms that use Qcom IP
-> rev 1.9.0, 2.7.0 and 2.9.0. PARF_DBI_BASE_ADDR_V2 and
-> PARF_SLV_ADDR_SPACE_SIZE_V2 are applicable for Qcom IP rev 2.3.3.
-> PARF_DBI_BASE_ADDR and PARF_SLV_ADDR_SPACE_SIZE are applicable for Qcom
-> IP rev 1.0.0, 2.3.2 and 2.4.0. Update init()/post_init() functions of the
-> respective Qcom IP versions to program applicable PARF_DBI_BASE_ADDR,
-> PARF_SLV_ADDR_SPACE_SIZE and PARF_ATU_BASE_ADDR register offsets. Update
-> the SLV_ADDR_SPACE_SZ macro to 0x80000000 to set highest bit in
-> PARF_SLV_ADDR_SPACE_SIZE register.
+> NOTE: During v2 review, there was a discussion about removing the devices when
+> 'Link Down' event is received. But this needs some more investigation, so I'm
+> planning to add it later.
 > 
-> Cache DBI and iATU physical addresses in 'struct dw_pcie' so that
-> pcie_qcom.c driver can program these addresses in the PARF_DBI_BASE_ADDR
-> and PARF_ATU_BASE_ADDR registers.
+> Testing
+> =======
+> 
+> This series is tested on Qcom SM8450 based development board that has 2 SoCs
+> connected over PCIe.
+> 
+> Merging Strategy
+> ================
+> 
+> I'm expecting the binding and PCI driver changes to go through PCI tree and DTS
+> patches through Qcom tree.
 
 Applied to controller/qcom, thank you!
 
-[1/1] PCI: qcom: Disable mirroring of DBI and iATU register space in BAR region
-      https://git.kernel.org/pci/pci/c/10ba0854c5e6
+[01/08] PCI: qcom-ep: Drop the redundant masking of global IRQ events
+        https://git.kernel.org/pci/pci/c/3858e8a5ea71
+
+[02/08] PCI: qcom-ep: Reword the error message for receiving unknown global IRQ event
+        https://git.kernel.org/pci/pci/c/95bebcbd657c
+
+[03/08] dt-bindings: PCI: pci-ep: Update Maintainers
+        https://git.kernel.org/pci/pci/c/99244b999dec
+
+[04/08] dt-bindings: PCI: pci-ep: Document 'linux,pci-domain' property
+        https://git.kernel.org/pci/pci/c/ada94d00620a
+
+[05/08] PCI: endpoint: Assign PCI domain number for endpoint controllers
+        https://git.kernel.org/pci/pci/c/0328947c5032
+
+[06/08] PCI: qcom-ep: Modify 'global_irq' and 'perst_irq' IRQ device names
+        https://git.kernel.org/pci/pci/c/bba1251edf85
+
+[07/08] dt-bindings: PCI: qcom,pcie-sm8450: Add 'global' interrupt
+        https://git.kernel.org/pci/pci/c/6efd853303a5
+
+[08/08] PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt
+        https://git.kernel.org/pci/pci/c/4581403f6792
 
 	Krzysztof
 
