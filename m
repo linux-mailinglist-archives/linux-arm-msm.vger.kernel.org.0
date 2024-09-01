@@ -1,75 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-30356-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 176B29676E0
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 15:58:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F0C159676E4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 15:59:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B45A81F21598
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 13:58:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE3A9280A13
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Sep 2024 13:58:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 868EC17CA1B;
-	Sun,  1 Sep 2024 13:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40B6917E00F;
+	Sun,  1 Sep 2024 13:58:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POd3zqZH"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jooq4BOn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1C323776;
-	Sun,  1 Sep 2024 13:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9214F17E009;
+	Sun,  1 Sep 2024 13:58:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725199115; cv=none; b=d8ga+ASSdjfDt0Nv5ZhunJfXyOU7Vbm7URguEVSdDlw09jR7EPoGpNGnMjm8AjLVX9EsjHIa7/X0Fu3RZsuzAdDzYgxwYAtlRB+JifAfUAOka/+xivFC7C65PyfK0ijeTqGTJnAo2GkUyMWE8ZkpLJTHKFUZ9AbxXDksbAk0sJY=
+	t=1725199136; cv=none; b=jCVKZs9x104fR7ohs4m5zQogdKCev4B+CPQg0VdlN44fPRO5fpiURwuB6mRhG6Ht2nb0nowO+vqxR47nOHOM8MzDUHVNwQwODDWWJoOCfTtbY95DkzQUWEK1VOIhGveXcSh7+xqxKc0MLG3K5wWjRH75luXGLadcuxPsLbEqRUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725199115; c=relaxed/simple;
-	bh=snn4m/zasEEhcc7exBGazglhiLuUySVTjszGGgcH1SY=;
+	s=arc-20240116; t=1725199136; c=relaxed/simple;
+	bh=s0i5ADl0K7DntgQCTfBvEdaBgPw83fZVlWFAqfcd7oI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G0P4LvGIwZiaz4GlEkeqTXpQEA6OfV+5xTlqvo4hHUrv50cYxhfqdmrAx4xfKti/47iLeuSf0hXBnCUOOd0+iVsUhx0ufM6HI1ahy3hBj/JYO8ADNasDlprfAz+3OKMyBeMgPeshpbKRQghjAotZBM1DOU8EcpfBS/sawdw0WlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POd3zqZH; arc=none smtp.client-ip=209.85.167.47
+	 MIME-Version; b=Y7+jImiOTkvEVd85DHDNCbDDgLcfiMWnxy+CMG8gsZgR4egYVeNKkVPkOiin9sGWIpFZ5P5h33pPykpF4vVm3M2V9NkdiyQkBpwN0Gs5Ysh7VC5zfxuLELVWXJjsKTKp040PQtTDpYh6a0VMz+DE7+aLNKH9RSUUVC/+0o4yr6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jooq4BOn; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso5787648e87.0;
-        Sun, 01 Sep 2024 06:58:33 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5c245c62362so938472a12.0;
+        Sun, 01 Sep 2024 06:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725199112; x=1725803912; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725199133; x=1725803933; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+eCXOU2o0WyaxUOWiQryFOZ2WSRKqjV/d0DGCFko1Bo=;
-        b=POd3zqZH7Unzaq21QxJkMyOzFqwv6QqYF8W6qkilFqyjnk23Q9Pe4gU0pTPumLm2Ow
-         AKn/LxATcBHLROEYmxsT3M8yG+BrWIXLc2gtvqGFbmVz2xcvDnti74CtY7Xo6PwqKwJi
-         nCrTn4L9SppZPkcpEEjTOOLxloka2KPP4WzKgbQlsQX5foYFL6iO8Q5ISakQ7GsivQiJ
-         u8YWmC+bSmIGCovfA2T0ZQ39shrLUDVGlYs0nurHA5D9/uB6ZNgn3skz3ng4Suc6bOkb
-         p+aXmYu7ZH6X+DdEHcJC6FCahdNhVj5D4m/f7c9aEZeMVGOt8UJf1QR1hc6nmew5w/8J
-         2ADw==
+        bh=B+CwOEtqu3IBPCzfQKTkK2Lp868q6E74YpTPp0btJmU=;
+        b=jooq4BOnX1S5+ZKjqukZiCzpvpitfeHy8bCBBmf9yo5LPZuJrleFXGCpQHWBJZ1lJ1
+         lsBsF2JjzqNkio1AQMk5/07MhZEXkwSKoYH4knMfbF2nIxmzx14luBapthp0LbJbH0VM
+         0XZEw85rDzQNVdb77a4qIr1X431c1aJXQh9vWT0xqxC4uHiVB4OPe6blgz2eToU9YMBc
+         i5LOLSaHLF39TpNTPcIHWzlCYvOjcn+R+8Xp+tp7Az8tLWZP9XiWm8qifCA2YBifID0w
+         MR6G1xcIqGU5MuFE3v0h7xsI6KnOIg0g3puayvZjOqjlOVuev/xNlpXLh0jdPWBMdCK7
+         0oGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725199112; x=1725803912;
+        d=1e100.net; s=20230601; t=1725199133; x=1725803933;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+eCXOU2o0WyaxUOWiQryFOZ2WSRKqjV/d0DGCFko1Bo=;
-        b=VtaK7VVBPflU4yS0HwsqCvRkxA8e/y09NDc6AAdSnMqov6O25AilV3IhPqO1koo0zJ
-         ehKt9+tna53R/9KQRAsF0tOW6IvrBfApRIgratjpLL/bpmI4TRkbwxy0OlyX+w4jBBrP
-         W1wLr2/xo71No5PH39FrM7XAs/Snv0fTbtL1XMy6A6O2WTw3sGcKepGF69heV/D9JMCL
-         x6CC8x3XnUVRgNwYwofCZhi9ZSXQeMU129eJtsnLP0gNRDzHzM6xmIE8rCfoPL9ma6W9
-         hOe2BDvB0PzbqeruwjQ8hmwHxhCRGM/cZAOO8EnNfLZOr1s2VQYiPjyEEboMSwBGgsI/
-         Wv2A==
-X-Forwarded-Encrypted: i=1; AJvYcCVnQATY/DlwN/H4OGTZbzD8Fye+Xej0aDiIqvg2BxJsodSGR8l70UPORiwOSMsrxnxrL488cQCrfZdT+cwM@vger.kernel.org, AJvYcCX8DE9lJOU1NFjnkRWSjtFefTUgqBNhvtwTDo5MWW3qwLIajfPC8iWuLznsUZkeSwRuU6sl3Bj6FkYC0CVp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3OlbkNy6Mux/TsJgn6EXou6ZZSFaBXWJ/ewxaprQKO8Kwy1zK
-	QMEhsVY705WKuiuyV5cd+w9gcho6NMO0bh9IgpUrG5cPQpDL1jt2
-X-Google-Smtp-Source: AGHT+IEhJhR+EGTz9SVuSnRPn3GWsNoA7zhQ8yY5bQFJ0WhnpllSB30EbmSSaMGVYnNQTqlr8qSSfg==
-X-Received: by 2002:a2e:851:0:b0:2ee:7a71:6e3b with SMTP id 38308e7fff4ca-2f61e05d76fmr44960571fa.27.1725199111104;
-        Sun, 01 Sep 2024 06:58:31 -0700 (PDT)
+        bh=B+CwOEtqu3IBPCzfQKTkK2Lp868q6E74YpTPp0btJmU=;
+        b=XI/A4c6jmeje6tDB7AFo2pY7kIoeIzDjqS4+v3gK5oYhY1r09kZPHMIkLXUofavu4P
+         V1yHKio/KIbuufU5mczX8GqFczy5X6U5LLrF7qWHJSXpz/5ia11ybtdpg7tBs8UzN1C2
+         SfDYTNYmGaFTifOTd4rT6WJRMtnp5Vrb/kKRpjCRz2Qfy7g4RHinR1FAI7AJI17MDE8l
+         6fRganlls7jpUMEMsxksUAl0fexOmlylFZc55+eewTUkq6PtW6mtaGkoqmkUNljBPY2e
+         XLb40dbXR3M+NS6oSloUxGbgBnRahyqii1Nfp+NieZTs1zJV76HQeboPjqudiBzRqGw0
+         YpvA==
+X-Forwarded-Encrypted: i=1; AJvYcCUdhz2JTMbSbVEyadrspafvAWJg2DasoIs27K+hIsrkyh56YYKTll3s0a3BxB4Pyf4Zvlf6KRDOlUtacylt@vger.kernel.org, AJvYcCWDkz8pXfdi00JUwOPXzT2F+o8zR5Qchy8HOBPLT5+VvLjGozbtjk+B9KHsvq3lkkhukJts7Xvf3d04z/E5@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMRjSXNuvBu8AZiuMJRA1d6b1HE3LVbWkgNquZ+1HTcKYPCmoA
+	dEeR1SXX+laiVnuS477+Lj+3pnnY4njqyJxwcSaJT/RPrhJudkcx
+X-Google-Smtp-Source: AGHT+IGB9/p9xuAKpPD5hLbzPgo/k1PC7HI4vXcDLu/C9nNRamu9OWu9KjLrtObSAMysisCiqYCWgA==
+X-Received: by 2002:a05:6402:254d:b0:5c2:5cc8:353f with SMTP id 4fb4d7f45d1cf-5c25cc837bcmr436347a12.22.1725199132019;
+        Sun, 01 Sep 2024 06:58:52 -0700 (PDT)
 Received: from localhost.localdomain (public-nat-01.vpngate.v4.open.ad.jp. [219.100.37.233])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226ccff17sm4051295a12.73.2024.09.01.06.58.17
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c226ccff17sm4051295a12.73.2024.09.01.06.58.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Sep 2024 06:58:30 -0700 (PDT)
+        Sun, 01 Sep 2024 06:58:51 -0700 (PDT)
 From: Vladimir Lypak <vladimir.lypak@gmail.com>
 To: Vladimir Lypak <vladimir.lypak@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>,
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Clark <robdclark@gmail.com>,
 	Sean Paul <sean@poorly.run>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -82,9 +83,9 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	dri-devel@lists.freedesktop.org,
 	freedreno@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/4] drm/msm/a5xx: disable preemption in submits by default
-Date: Sun,  1 Sep 2024 13:54:00 +0000
-Message-ID: <20240901135419.1075412-2-vladimir.lypak@gmail.com>
+Subject: [PATCH v2 2/4] drm/msm/a5xx: properly clear preemption records on resume
+Date: Sun,  1 Sep 2024 13:54:01 +0000
+Message-ID: <20240901135419.1075412-3-vladimir.lypak@gmail.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240901135419.1075412-1-vladimir.lypak@gmail.com>
 References: <20240901135419.1075412-1-vladimir.lypak@gmail.com>
@@ -96,43 +97,32 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Fine grain preemption (switching from/to points within submits)
-requires extra handling in command stream of those submits, especially
-when rendering with tiling (using GMEM). However this handling is
-missing at this point in mesa (and always was). For this reason we get
-random GPU faults and hangs if more than one priority level is used
-because local preemption is enabled prior to executing command stream
-from submit.
-With that said it was ahead of time to enable local preemption by
-default considering the fact that even on downstream kernel it is only
-enabled if requested via UAPI.
+Two fields of preempt_record which are used by CP aren't reset on
+resume: "data" and "info". This is the reason behind faults which happen
+when we try to switch to the ring that was active last before suspend.
+In addition those faults can't be recovered from because we use suspend
+and resume to do so (keeping values of those fields again).
 
-Fixes: a7a4c19c36de ("drm/msm/a5xx: fix setting of the CP_PREEMPT_ENABLE_LOCAL register")
+Fixes: b1fc2839d2f9 ("drm/msm: Implement preemption for A5XX targets")
 Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index c0b5373e90d7..6c80d3003966 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -150,9 +150,13 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
- 	OUT_RING(ring, 1);
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+index f58dd564d122..67a8ef4adf6b 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+@@ -204,6 +204,8 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
+ 		return;
  
--	/* Enable local preemption for finegrain preemption */
-+	/*
-+	 * Disable local preemption by default because it requires
-+	 * user-space to be aware of it and provide additional handling
-+	 * to restore rendering state or do various flushes on switch.
-+	 */
- 	OUT_PKT7(ring, CP_PREEMPT_ENABLE_LOCAL, 1);
--	OUT_RING(ring, 0x1);
-+	OUT_RING(ring, 0x0);
- 
- 	/* Allow CP_CONTEXT_SWITCH_YIELD packets in the IB2 */
- 	OUT_PKT7(ring, CP_YIELD_ENABLE, 1);
+ 	for (i = 0; i < gpu->nr_rings; i++) {
++		a5xx_gpu->preempt[i]->data = 0;
++		a5xx_gpu->preempt[i]->info = 0;
+ 		a5xx_gpu->preempt[i]->wptr = 0;
+ 		a5xx_gpu->preempt[i]->rptr = 0;
+ 		a5xx_gpu->preempt[i]->rbase = gpu->rb[i]->iova;
 -- 
 2.46.0
 
