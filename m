@@ -1,134 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-30385-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7A4D1968393
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 11:49:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 456FB96839E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 11:50:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3643428259F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 09:49:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18B421C224F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 09:50:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4271A1C32F2;
-	Mon,  2 Sep 2024 09:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01B241D2F4A;
+	Mon,  2 Sep 2024 09:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="tleLBvQA"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="fQJmJfM3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C099D44C76
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Sep 2024 09:49:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF501D2795
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Sep 2024 09:50:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725270567; cv=none; b=r2xdiM0yPzQk/aAg2XvJuBxAt37h34nxFqXC77ggV9IgruhDDlr+vQ3tdhNCMthzZMp2mOa3OtOHr9OVGCbCTwH4rw6TP3RS5Mwo3/4WX8R8f7PGSY3n6p6G7dOuVQdLFZFVnC55/wK6lQXPRwLq1ED9iWfVkHXJfjbSckbweaY=
+	t=1725270624; cv=none; b=TQDgJ+NI+Pp/UKhnDTb5P3Na3PjxxV32RTaP0veaA9v/k0k0EvJTly7t1vHz1FI/bZQHAW3UpVMd68+c/LS4c7LcWwJBt+u+ijSEicWA54txH3/ju+VX/DI9HVAEBTQWectzwH46bJafWYnnLKleWssp/UlvEvvT3bomtkzRJzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725270567; c=relaxed/simple;
-	bh=5pbRVwtopQ6d3wAPmWATKqqvjPzTOivIPDWsPsi2O8g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YQP7/1ckUo6jPXlQ9Drof3kmwYt5rDbUpBGpkYclvixNv5liYdK8d2gV4QUA3LWSgy5uuQNBwrEpEcMhNw8+efQfObOCYcQ0IW0H0ZZSum3DPC6js3cOCXeF0XngT3Ovd4ggMeoryNvbzy2FY6ToXpHdyLS5hRhkvOkHRpELSwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=tleLBvQA; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1725270624; c=relaxed/simple;
+	bh=28McJcVKs42ZY9Sq0kv5hG33Yboh2UqyM8r6czZX88U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NScEkgQszS54fA540XuOtnvjUQk9nCrYw819BU5OlCE2ETic1XPSj21hBQ+hCKYRf61enLl+Nsf03vV+61lUbS4QhCZRSQPUCuRNKgo2Fb7Jl2YGmzOV97HXh+SVF2UHj6n15oMkt2ItU2I/UGAZqsmdToXzFA6vmrkHgod+ycs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=fQJmJfM3; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42c7a49152aso18674915e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 02:49:25 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f3e9fb6ee9so49438361fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 02:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1725270564; x=1725875364; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1725270622; x=1725875422; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oZJOnRKxxutEChlIW+5PAtmNmotUPz7eaFOc9n7zpMA=;
-        b=tleLBvQAsPSRdsh5JmgS619e+ITiQMFIFL6RTyMMXJxQ+pxI8HPgecO7zIAqvhBvbJ
-         xaQW5GoqJKquXKpcYKwqvb8Yeb4+JmTgYj6Fr5fHoD7cZoFa/VLVxV7BqcrU9QjkkZFT
-         rCiN3S+AZPf6AzcX41OTjl7UkHY+jZ+UfCLEpyCvJZ+vTWjGfT6jF36uGRn9t8u7wF6o
-         9ZCu8vNqforrKnENJeKxggP8bgSkA+sOPbcYVwv7N96aPN6BrBkuzzV6PU1Wz5sB+oAE
-         8/hf33TxF+qnvWDAkw8A3LeqHr2D7emNlK0pLTgolt7LFprqmXR8EjNxTrmy4/l9KMxU
-         Af1w==
+        bh=28McJcVKs42ZY9Sq0kv5hG33Yboh2UqyM8r6czZX88U=;
+        b=fQJmJfM3bxDIA8JgfCiwG8tAZrBQpb0Ta8h1hshKZR/wqjq8diVlFu3v5wISePnfmr
+         7CBwrfOFTRVhSJewyZjTjigC0RqpomBTVN7QrNfKtcsOR9kLdYYPWKm/xL3K5CcZjogK
+         8eV3kqoZVehKa/zqDVIwTH6JLClY8E2mi2bJO5KZT0gLHe7/vnRqIFEhmjoXVZshTDGN
+         aUTOIkcOesVnEmkHqGnZKjzw5vLC13Xk6kCSratOYjSB5z8sJRDKsdYV2ugLwJWvRcmf
+         GqD9OniP1NrpiJnZrUlQtKPQIWzpDjXVdFO01JdJkHWA6RkPANZYkdrsyiML1wRyOkSD
+         0Yig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725270564; x=1725875364;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1725270622; x=1725875422;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oZJOnRKxxutEChlIW+5PAtmNmotUPz7eaFOc9n7zpMA=;
-        b=oSheFj2AdAqJhN/PMF+ypAn/ogoewGVtk657o4ae/CTYtXXhUody3B1YPMwj/CXcPI
-         gOlNl4EXwIcJ2l4+TijRyGDv3232/HW5ZUfl9fWI+HqXp7x5WbZM1vjZZb4joKMKZt1i
-         qMbKqBotJTdGy9qtjJUHW3fePPKSn1Zv0nWIWBikEZa9ytQh2TCtBkaoGoRTCD1ZktME
-         R9TKLJr9NbWNA/jIUUjbNiW0kCf9hfbcBi48aID4sKD6P+VONpM7Qrm9g/1hnyXVsGtN
-         yfPd4L83mUNWJHF0VmpCCdnGIwNJrRGz5hDK9GrQE5XUg9vxYRbY/PwzOa64JRFiIjRc
-         O9yQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVks2Cn0G0Ng5SjhEnKw6iexanN4l/OzLRYW3VZ9mbkVpBe+KIV4ngo8sqACCvVH8faakL16UJCgNgBLl6Q@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDHfcxrWev6O7d61L/xzyTbdOkwv3vyGC+0bM1AjrRMvAOGH4v
-	heR2fXJ1QSrRh0Fh2aPqZleFzErB15ddeO5xolvN1/oLMj3tSRqsoMB4frJFAC0=
-X-Google-Smtp-Source: AGHT+IFPE9DrSMLqeufhX66yLGT0OKavBe2zcsQBz4ANdf9tEN6d/UmYFJCTb/y4f/xkAno+0UHlVA==
-X-Received: by 2002:a05:600c:1548:b0:426:59d3:8cae with SMTP id 5b1f17b1804b1-42bb01b9302mr119554325e9.13.1725270563591;
-        Mon, 02 Sep 2024 02:49:23 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:b496:9e67:73c9:9f5a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bb6df795asm131691865e9.21.2024.09.02.02.49.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 02:49:23 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Daire McNamara <daire.mcnamara@microchip.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Maxime Ripard <mripard@kernel.org>,
-	Masahiro Yamada <yamada.masahiro@socionext.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	imx@lists.linux.dev,
-	linux-arm-kernel@lists.infradead.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 3/3] dt-bindings: gpio: simplify GPIO hog nodes schema
-Date: Mon,  2 Sep 2024 11:49:21 +0200
-Message-ID: <172527055993.21602.6768562114748623429.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240828-dt-bindings-gpio-hog-v1-3-63b83e47d804@linaro.org>
-References: <20240828-dt-bindings-gpio-hog-v1-0-63b83e47d804@linaro.org> <20240828-dt-bindings-gpio-hog-v1-3-63b83e47d804@linaro.org>
+        bh=28McJcVKs42ZY9Sq0kv5hG33Yboh2UqyM8r6czZX88U=;
+        b=J3w0KO6Qt4INo6BKgQJ6dc093hFxFWsyKmKghbFIS1Vx0f8BBePZWKwqct7Li3Jy2N
+         2NccKaX9YUgL+55XcZaQqHKcvok8PR6W+Ug0l4xg4G9+4cCTb5zi1ng4t/Pq619ayd/A
+         yw2gMkgZSkIhWnGJLWh0HleOeIq0FkEfjgurzvXSOqjRxZdiuFXv2EJLhiI48OwHj+8W
+         e+f6bL9PaGgFOhKkoRis0WkvFTEbfKDiSUzXCSbHfANxi5bwQPZl9KD4QJ5RYLux8bIs
+         BlN4YQtLG70BaHQNmq24Em26nR1Dntv/KjX3RdekfapnDE+VZKlga6vL2FupTdwBuX8T
+         yNWA==
+X-Forwarded-Encrypted: i=1; AJvYcCWBMcJd24n3Y2nfYnxGdaA7/qkl49jX5U4gd5eYZAgJJX70Ra1WqqphTj6yAeCawR41cbgR7NvHQpp1J+mo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2OHMtrcxRd5YJheJZiY5kZ3cLqdft7DNTbSwdYITItiJ9hBig
+	6Jme/kfDhxbTjsZa4Vr+bHXQH7fhBKfT8xPTA4GEvtby2RdMWsa7+A104kmf0Vg4VOaZ8nattVR
+	JLJYD3WGuyOxMnSvps5DyFaF2TqG4pdaJhVbiVA==
+X-Google-Smtp-Source: AGHT+IHzAjC82O5fFXZUuxREWWYMeyebjNflKtG1tJUMYRTIdDHBfO7anU/6cm0HwOYbXK/491VB93Nh9ac09yNZ/4I=
+X-Received: by 2002:a05:651c:552:b0:2f0:25dc:1886 with SMTP id
+ 38308e7fff4ca-2f636a04470mr20450581fa.10.1725270620988; Mon, 02 Sep 2024
+ 02:50:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20240828-dt-bindings-gpio-hog-v1-0-63b83e47d804@linaro.org>
+ <20240828-dt-bindings-gpio-hog-v1-2-63b83e47d804@linaro.org> <CACRpkdZzF5yJQnnDsjU8cTr9Fpe7wZZXoW3K-wFYuAq2vv8XxA@mail.gmail.com>
+In-Reply-To: <CACRpkdZzF5yJQnnDsjU8cTr9Fpe7wZZXoW3K-wFYuAq2vv8XxA@mail.gmail.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 2 Sep 2024 11:50:08 +0200
+Message-ID: <CAMRc=Mcv9nfiG7N-ttS_A=Ay-5Wv2mYpT+41G1u8G4GrMQAuEA@mail.gmail.com>
+Subject: Re: [PATCH 2/3] dt-bindings: pinctrl: qcom: add missing type to GPIO hogs
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Daire McNamara <daire.mcnamara@microchip.com>, 
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Maxime Ripard <mripard@kernel.org>, Masahiro Yamada <yamada.masahiro@socionext.com>, 
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Conor Dooley <conor.dooley@microchip.com>, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-riscv@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Sat, Aug 31, 2024 at 12:32=E2=80=AFAM Linus Walleij <linus.walleij@linar=
+o.org> wrote:
+>
+> On Wed, Aug 28, 2024 at 11:36=E2=80=AFAM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>
+> > GPIO hog nodes should define type, otherwise "dummy-hog" boolean
+> > properties would be allowed.
+> >
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+>
+> I suppose it's best of Bartosz applies this to the GPIO tree with
+> the rest of the series?
+>
+> Yours,
+> Linus Walleij
 
+Ah, I picked up the GPIO changes separately. No problem, I'll pick
+this one up as well.
 
-On Wed, 28 Aug 2024 11:35:59 +0200, Krzysztof Kozlowski wrote:
-> The core schema in dtschema already strictly defines contents of nodes
-> with "gpio-hog" property (with additionalProperties: false), thus the
-> only thing device schema should do is: define "type: object" and
-> required "gpio-hog".  Make the code a bit simpler by removing redundant
-> parts.
-> 
-> 
-> [...]
-
-Applied, thanks!
-
-[3/3] dt-bindings: gpio: simplify GPIO hog nodes schema
-      commit: 98db29d1b4b7b1fe9b54d11e66a396fc37a73c57
-
-Best regards,
--- 
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Bart
 
