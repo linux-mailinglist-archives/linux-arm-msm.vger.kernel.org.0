@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-30410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFCEF968ADA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 17:26:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA635968AE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 17:26:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 68AF9B21873
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 15:26:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95A831F22C02
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 15:26:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 670861A2640;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABC9D1A303A;
 	Mon,  2 Sep 2024 15:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OOajRi7b"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a98VxKJ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5AC19F112;
-	Mon,  2 Sep 2024 15:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2C119F136;
+	Mon,  2 Sep 2024 15:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725290759; cv=none; b=WSJHnJBSnnIwey0/j+P3ReTHWj8BH8i7cr0v/P1ymaZ8VjCvNcKvm5uH07RjB8TlrXJK7W9RzReQnlJWBvRyE/Z63XXGMs3/2VY165PlWe/QYwxjGVGCccnpm5b8KOWnT8eBCw+k9mRIaymioSVaDLrdC/qDvLNCiKwKwSiNba8=
+	t=1725290759; cv=none; b=J1ryzdO2OasB9N84E031gIAVa+G8nwCg5PP9z9thDrj8Wd8977LP3B0/+W95iso5quhx6dcGqUnhC+BVflIZB82Q51l24r5Cag8QxoMv0G/sgw5XWAfjLYPNR34Q8aXRWUeVSZPWWSsb58Ha6TGImCHJ1F3eqy/q/21X9pGLS0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1725290759; c=relaxed/simple;
-	bh=oQKVeNddgWEZ+iUeSzOZSrp67FiADWhXubuEZAGpt6E=;
+	bh=J8laTVGLPlinWELLiAPvZYBQ7QhzLARn0Z1HPyqtgLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XUxMTkHsEMPmdWCz6NMSqEcENXsM6wFh7/TUZ0pa2+uac9zKXHAqFN/76FACEVp1lynNXaTpetMEeTDmaX19+bJgueYnsOs5G6Ed8OZYFvljym90iRIft/t2h8mLiM4CZVPen+ULSwVFnpfFRjPJttiN87kTLNFI85EBsp0FfjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OOajRi7b; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B03C4CEC7;
+	 MIME-Version; b=ZKNjXClaF3WsEDPygfF3zmNk+i6t/cvXoTuYAUdoly5Vip2pdHnm+MllLaMZxifJNiqJTFjVvxMUN03HF6YRcoUheWb2VaX7ZPMV8Mb8GwYph0N6i5HQwB9ntuO+YHWro7QBkLN0/JYO2J9nbNev5+EbmXWgAkV3MhKT7pjOXaA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a98VxKJ8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7707C4CECC;
 	Mon,  2 Sep 2024 15:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1725290758;
-	bh=oQKVeNddgWEZ+iUeSzOZSrp67FiADWhXubuEZAGpt6E=;
+	bh=J8laTVGLPlinWELLiAPvZYBQ7QhzLARn0Z1HPyqtgLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOajRi7bRKowYZTuQrEyBdR7fwwclxQAsIawkpV58KGaIE66hD4ueweC+li+nvc69
-	 3NgmQt29AKM08F5SdIf9yAr7a4ZZiZVIlydCzbXKubNc21iABCre/8xmG84k5nNPbp
-	 cp++tl9S9nT9pzDmHcOc4plSraVEvjqPnfzOme8lXdCdcDokQAOEWsPMauZw/c5KOW
-	 bXjM3ULgHu5jfks85xnz7HOkKqg++tVCnSvLnmhnFDVI0vkq87xOtzcip+aowTglNO
-	 lXovFsyTrBfxvPRutft9/+sPXJ+KMj7Ko+VQ9XjPmm29Vea6Qdbp4IllIPTRt+lxU6
-	 bsZlFXXa+tfOQ==
+	b=a98VxKJ86KTIH0lekyvOwkTqMZMjPr8BSv4hQghs0u7/IOd+ny56Jd7zhlvPAF4Nb
+	 g8MitmGVcR3odE+SLQfHYbNZEZop2WyqG8W2w/SyqgzBDn/YxxBnVU1RqJ/A25z8Y9
+	 fxGNh/Wt7/2dGJ50Ybc8AfMFKSfl8gyGkwBCT25O4L1bSW2OYY4kq7Ut+FEkELqZsb
+	 P+jRzGheOXQc9fjE1InXJqSzeLHUF9alll5NbaWmSTt23n4DGPeRMub7ftYr/EIdtU
+	 OPgahsm7Cw0CebjXXBcgoEnpkOe6NcVlw93jiVOvh27DKkg4caFcXr3nre7EIbi1vm
+	 djW4T1yWSqSHA==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sl8wX-000000000Ff-1TEK;
+	id 1sl8wX-000000000Fh-1tFO;
 	Mon, 02 Sep 2024 17:26:13 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -55,11 +55,10 @@ Cc: Jiri Slaby <jirislaby@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-serial@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>,
-	stable@vger.kernel.org
-Subject: [PATCH 2/8] serial: qcom-geni: fix false console tx restart
-Date: Mon,  2 Sep 2024 17:24:45 +0200
-Message-ID: <20240902152451.862-3-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 3/8] soc: qcom: geni-se: add GP_LENGTH/IRQ_EN_SET/IRQ_EN_CLEAR registers
+Date: Mon,  2 Sep 2024 17:24:46 +0200
+Message-ID: <20240902152451.862-4-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
 In-Reply-To: <20240902152451.862-1-johan+linaro@kernel.org>
 References: <20240902152451.862-1-johan+linaro@kernel.org>
@@ -71,86 +70,63 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commit 663abb1a7a7f ("tty: serial: qcom_geni_serial: Fix UART hang")
-addressed an issue with stalled tx after the console code interrupted
-the last bytes of a tx command by reenabling the watermark interrupt if
-there is data in write buffer. This can however break software flow
-control by re-enabling tx after the user has stopped it.
+From: Douglas Anderson <dianders@chromium.org>
 
-Address the original issue by not clearing the CMD_DONE flag after
-polling for command completion. This allows the interrupt handler to
-start another transfer when the CMD_DONE interrupt has not been disabled
-due to flow control.
+For UART devices the M_GP_LENGTH is the TX word count. For other
+devices this is the transaction word count.
 
-Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
-Fixes: 663abb1a7a7f ("tty: serial: qcom_geni_serial: Fix UART hang")
-Cc: stable@vger.kernel.org	# 4.17
+For UART devices the S_GP_LENGTH is the RX word count.
+
+The IRQ_EN set/clear registers allow you to set or clear bits in the
+IRQ_EN register without needing a read-modify-write.
+
+Acked-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240610152420.v4.1.Ife7ced506aef1be3158712aa3ff34a006b973559@changeid
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ include/linux/soc/qcom/geni-se.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index e1926124339d..0af4a93c0af5 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -314,18 +314,16 @@ static void qcom_geni_serial_setup_tx(struct uart_port *uport, u32 xmit_size)
- static void qcom_geni_serial_poll_tx_done(struct uart_port *uport)
- {
- 	int done;
--	u32 irq_clear = M_CMD_DONE_EN;
+diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
+index 0f038a1a0330..c3bca9c0bf2c 100644
+--- a/include/linux/soc/qcom/geni-se.h
++++ b/include/linux/soc/qcom/geni-se.h
+@@ -88,11 +88,15 @@ struct geni_se {
+ #define SE_GENI_M_IRQ_STATUS		0x610
+ #define SE_GENI_M_IRQ_EN		0x614
+ #define SE_GENI_M_IRQ_CLEAR		0x618
++#define SE_GENI_M_IRQ_EN_SET		0x61c
++#define SE_GENI_M_IRQ_EN_CLEAR		0x620
+ #define SE_GENI_S_CMD0			0x630
+ #define SE_GENI_S_CMD_CTRL_REG		0x634
+ #define SE_GENI_S_IRQ_STATUS		0x640
+ #define SE_GENI_S_IRQ_EN		0x644
+ #define SE_GENI_S_IRQ_CLEAR		0x648
++#define SE_GENI_S_IRQ_EN_SET		0x64c
++#define SE_GENI_S_IRQ_EN_CLEAR		0x650
+ #define SE_GENI_TX_FIFOn		0x700
+ #define SE_GENI_RX_FIFOn		0x780
+ #define SE_GENI_TX_FIFO_STATUS		0x800
+@@ -101,6 +105,8 @@ struct geni_se {
+ #define SE_GENI_RX_WATERMARK_REG	0x810
+ #define SE_GENI_RX_RFR_WATERMARK_REG	0x814
+ #define SE_GENI_IOS			0x908
++#define SE_GENI_M_GP_LENGTH		0x910
++#define SE_GENI_S_GP_LENGTH		0x914
+ #define SE_DMA_TX_IRQ_STAT		0xc40
+ #define SE_DMA_TX_IRQ_CLR		0xc44
+ #define SE_DMA_TX_FSM_RST		0xc58
+@@ -234,6 +240,9 @@ struct geni_se {
+ #define IO2_DATA_IN			BIT(1)
+ #define RX_DATA_IN			BIT(0)
  
- 	done = qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
- 						M_CMD_DONE_EN, true);
- 	if (!done) {
- 		writel(M_GENI_CMD_ABORT, uport->membase +
- 						SE_GENI_M_CMD_CTRL_REG);
--		irq_clear |= M_CMD_ABORT_EN;
- 		qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
- 							M_CMD_ABORT_EN, true);
-+		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
- 	}
--	writel(irq_clear, uport->membase + SE_GENI_M_IRQ_CLEAR);
- }
- 
- static void qcom_geni_serial_abort_rx(struct uart_port *uport)
-@@ -386,6 +384,7 @@ static void qcom_geni_serial_poll_put_char(struct uart_port *uport,
- 							unsigned char c)
- {
- 	writel(DEF_TX_WM, uport->membase + SE_GENI_TX_WATERMARK_REG);
-+	writel(M_CMD_DONE_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
- 	qcom_geni_serial_setup_tx(uport, 1);
- 	WARN_ON(!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
- 						M_TX_FIFO_WATERMARK_EN, true));
-@@ -430,6 +429,7 @@ __qcom_geni_serial_console_write(struct uart_port *uport, const char *s,
- 	}
- 
- 	writel(DEF_TX_WM, uport->membase + SE_GENI_TX_WATERMARK_REG);
-+	writel(M_CMD_DONE_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
- 	qcom_geni_serial_setup_tx(uport, bytes_to_send);
- 	for (i = 0; i < count; ) {
- 		size_t chars_to_write = 0;
-@@ -471,7 +471,6 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
- 	bool locked = true;
- 	unsigned long flags;
- 	u32 geni_status;
--	u32 irq_en;
- 
- 	WARN_ON(co->index < 0 || co->index >= GENI_UART_CONS_PORTS);
- 
-@@ -503,12 +502,6 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
- 		 * has been sent, in which case we need to look for done first.
- 		 */
- 		qcom_geni_serial_poll_tx_done(uport);
--
--		if (!kfifo_is_empty(&uport->state->port.xmit_fifo)) {
--			irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
--			writel(irq_en | M_TX_FIFO_WATERMARK_EN,
--					uport->membase + SE_GENI_M_IRQ_EN);
--		}
- 	}
- 
- 	__qcom_geni_serial_console_write(uport, s, count);
++/* SE_GENI_M_GP_LENGTH and SE_GENI_S_GP_LENGTH fields */
++#define GP_LENGTH			GENMASK(31, 0)
++
+ /* SE_DMA_TX_IRQ_STAT Register fields */
+ #define TX_DMA_DONE			BIT(0)
+ #define TX_EOT				BIT(1)
 -- 
 2.44.2
 
