@@ -1,258 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-30388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85C469683D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 11:55:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA9EA9683F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 12:02:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A85A01C2270E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 09:55:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D0CB1F21146
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 10:02:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4171D2F52;
-	Mon,  2 Sep 2024 09:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA41A13C816;
+	Mon,  2 Sep 2024 10:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="garDceda"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GbdhIL4J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B6E1D1F44;
-	Mon,  2 Sep 2024 09:55:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAFA13B586
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Sep 2024 10:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725270949; cv=none; b=XW5UBuiHs3Ncw5BPltctwL++hoLYYpZwSkAnaIeKa4ejaDzsUaznAZZX+5i9Rl1mhhf2RdP4d2kCCeiBISib27t/GteAmuAXnTlzgDAsF7HjuDsglCoxC1QyGEyUlwo7wudWgfzZW9+wXYwlWQN02JIrq2gFjkXIOZMq5AFNj0I=
+	t=1725271327; cv=none; b=MhCgYhBYz+b+8PkrFmgY30UdF7Z/6p9wo6zlQd8wGufrsxfn2qroI03XrZJggBRx/ZjsFIx/hnnkWXZXn347aAXK1PdeD2kwYLBaXIcUJgxZJz/9l1ICJAcLyfsRUBVYj8brr5eQXImUARGR3EgOdhZV6zJsxxHjvqhsRPWOU+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725270949; c=relaxed/simple;
-	bh=oSbh502HY4Dm7eT1eVi4kY+Nmou7uF6mBzhrHjfaVG8=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KF2ccvYtajv22GFVSGnlnTqYrV2Gfcfy7+OtpynRxq/w/A9dSbRU7af1PoRKcHDt3lr+om/BRarJtQeEsewjWt+LPsFFptVgD9mZgGPZADrcr6p0uCXLMySnh2g3zTElJfTmEUkwnee2Ju/mqJsviovrg5XnZDulFY+8P4k5/oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=garDceda; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 481N0WlF020660;
-	Mon, 2 Sep 2024 09:55:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=+0UtkfU8O8EqtBRippx73Z
-	t/xKIk4RmzJwGe9dLxsLM=; b=garDcedaPCzJmrCWtbrUJT62pVwHdotzm5sJOr
-	YUIRU9u9tpiI1oCYG8ri03pTrltvlCKxAR5auj1zrohmIHTTgNGgraMDyW5YZ/X1
-	27sqpIMw0bMs8jQ5GY/69PayOf3tgmSm3oRqoTV8qJwZNYQX9MU5FFsqZogUh3WT
-	ITV3pnDlfaulo59WAC6ybFTkJf990O6vIosmzbeDvzfWfqvq5MnpC0HgM9KkkLQX
-	oriSGYRpPhFavrdibWdKoUBAiI+n9UvEanIYP0jjE9LRpZjFw/TCagcZcDo/yaO3
-	3d5kxbnWRBpTQULYFjuYJXBGnYAb8AKANKY2iVM5/xszqeXg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bvf8v53h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 02 Sep 2024 09:55:07 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4829t777002818
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 2 Sep 2024 09:55:07 GMT
-Received: from hu-jsuraj-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 2 Sep 2024 02:54:57 -0700
-From: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-To: <quic_jsuraj@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        "Jose
- Abreu" <joabreu@synopsys.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>, <netdev@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Prasad Sodagudi
-	<psodagud@quicinc.com>,
-        Andrew Halaney <ahalaney@redhat.com>, Rob Herring
-	<robh@kernel.org>
-CC: <kernel@quicinc.com>
-Subject: [PATCH net] net: stmmac: Stop using a single dma_map() for multiple descriptors
-Date: Mon, 2 Sep 2024 15:24:36 +0530
-Message-ID: <20240902095436.3756093-1-quic_jsuraj@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1725271327; c=relaxed/simple;
+	bh=EBknvpDUrij4cpLfzBdffa1oujXZf/ajfnRsM0wrQio=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RJZuJY64geIEeznLAvPpOqfj5gAZWCCJposa46qKDn4yFR2FLp+GvO5fZh5c1nsCphLXCVE6Yb0YXG4TtQ5gxH4wbbAOV/hY5GKf1X6O8TK7wIb/71j/djbh/ZivwejOWp6vSTxQRAhqQD2Vpgmw8iYrscHrddu+5ZdIxMCyoGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GbdhIL4J; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c255eab93dso165942a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 03:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725271324; x=1725876124; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=azCIJs0Yes3UGBt+MS43513CbCpSEhJdQPA/Vui0QvE=;
+        b=GbdhIL4JUQ4EMqShlXt+cfZM881W/GyuHb/ImSbQEmjMHpKQGs2IeiXUiHjJobzTnx
+         aJZgk1AG1A9puNQg36xKk6LtQmokuv/3MWHhMDLXZIaybO8I64nvwpBVMfM49MPYQW9Q
+         NGx8rcZPNbTaUc5vjEs08r5ZypH6zkRsUWuxTxV6FLCjIfwESwmjejF0Uk0/C2jHr5Cj
+         nexagsKjE7TU+I9XiI2PQREuEAdEXFJagG7yEMlUIovwABU14K7c5yr0fzaeHqGR+rWv
+         3Km9HgDrJ+PubKafgWFQ8rpmubcPWD/BRemUZ8jEY4KTjnBwk1KroDPfi45V5DDgP5HA
+         AAkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725271324; x=1725876124;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=azCIJs0Yes3UGBt+MS43513CbCpSEhJdQPA/Vui0QvE=;
+        b=Y04zrgbfTO2MLlHLNKjPjTocZ3kI9BMjrk+xfgRQXf7CSh2FOvAecp4NwuVe5YGuSA
+         vsONqNoh9P8tLojRTS/gIgWu5Hp8oSqg6pxUDcDsFlkzJWbEUpsbffMmaHuo2ZcblRIq
+         0zx6+MWCjVnHxMu99CFAs16yjXbeL3LJxzl9U4AYXl1tJu6ngaAaFvD7y1uOBbc+akuO
+         XW5vWHjYw1y3YV/7RgHwkHPqGnIQ93EVSE0iDr8Gj+2W7Q/ZHlu9PbCWVa5TPfGuGrmY
+         2fXl5aHbBo4brhxwiAwHMLwTFO8oerZxjJTf76FZOpDhrUoEyGS2N5gTSPjMERMptiYe
+         0zhw==
+X-Forwarded-Encrypted: i=1; AJvYcCUp2DKMHg7Xkb/Fc8w144roXmgDh9R1ELkWGlmJFMCf8iTpkp5n5FIzZg5WejNitmSFf3nsh07BOGEMma1T@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw626gMtttKvPLW0sgWNzwZdDg6YB8jC4aZPHIyUy8LVzOzAWXj
+	2kXSqA0Dl43sZeAwqa6kjWLFdRO5J0gGvytMpmNEMipvRzvU02F/DrFKyz4iFVg=
+X-Google-Smtp-Source: AGHT+IETNIV8jXmXuTCEzIyDws1SHg/IJcZqr8A8sztUFROxV3ILjfFsLc9fgtmtMi4l37rswX3tSA==
+X-Received: by 2002:a05:6402:3583:b0:5a2:7cfe:2371 with SMTP id 4fb4d7f45d1cf-5c22f902d00mr3927077a12.3.1725271324024;
+        Mon, 02 Sep 2024 03:02:04 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.222.82])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c25bcb46f0sm1414180a12.60.2024.09.02.03.02.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Sep 2024 03:02:03 -0700 (PDT)
+Message-ID: <884facf9-09dd-4454-9f39-67335b4e8c5f@linaro.org>
+Date: Mon, 2 Sep 2024 12:02:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] dt-bindings: pinctrl: qcom: add missing type to GPIO
+ hogs
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Linus Walleij <linus.walleij@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+ Bjorn Andersson <andersson@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>,
+ Daire McNamara <daire.mcnamara@microchip.com>,
+ Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+ Masami Hiramatsu <mhiramat@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+ Masahiro Yamada <yamada.masahiro@socionext.com>, linux-gpio@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+ Conor Dooley <conor.dooley@microchip.com>, imx@lists.linux.dev,
+ linux-arm-kernel@lists.infradead.org, linux-riscv@lists.infradead.org
+References: <20240828-dt-bindings-gpio-hog-v1-0-63b83e47d804@linaro.org>
+ <20240828-dt-bindings-gpio-hog-v1-2-63b83e47d804@linaro.org>
+ <CACRpkdZzF5yJQnnDsjU8cTr9Fpe7wZZXoW3K-wFYuAq2vv8XxA@mail.gmail.com>
+ <CAMRc=Mcv9nfiG7N-ttS_A=Ay-5Wv2mYpT+41G1u8G4GrMQAuEA@mail.gmail.com>
+ <CAMRc=Md9+pmiDSzjhNXBOzZeBLCemvxCzFMAyfFH_Qi329jG9Q@mail.gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ D2GYIS41Kv4Isx2dEFh+/Q==
+In-Reply-To: <CAMRc=Md9+pmiDSzjhNXBOzZeBLCemvxCzFMAyfFH_Qi329jG9Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SowefPK2xML-I30pU6pjQmD6hjAW__dP
-X-Proofpoint-ORIG-GUID: SowefPK2xML-I30pU6pjQmD6hjAW__dP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.28.16
- definitions=2024-09-02_02,2024-09-02_01,2024-05-17_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- suspectscore=0 clxscore=1015 priorityscore=1501 adultscore=0
- malwarescore=0 phishscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409020081
 
-Currently same page address is shared
-between multiple buffer addresses and causing smmu fault for other
-descriptor if address hold by one descriptor got cleaned.
-Allocate separate buffer address for each descriptor
-for TSO path so that if one descriptor cleared it should not
-clean other descriptor address.
+On 02/09/2024 11:51, Bartosz Golaszewski wrote:
+> On Mon, Sep 2, 2024 at 11:50 AM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+>>
+>> On Sat, Aug 31, 2024 at 12:32 AM Linus Walleij <linus.walleij@linaro.org> wrote:
+>>>
+>>> On Wed, Aug 28, 2024 at 11:36 AM Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>
+>>>> GPIO hog nodes should define type, otherwise "dummy-hog" boolean
+>>>> properties would be allowed.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+>>>
+>>> I suppose it's best of Bartosz applies this to the GPIO tree with
+>>> the rest of the series?
+>>>
+>>> Yours,
+>>> Linus Walleij
+>>
+>> Ah, I picked up the GPIO changes separately. No problem, I'll pick
+>> this one up as well.
+>>
+>> Bart
+> 
+> Nope, I cannot, this doesn't apply to the GPIO tree.
 
-Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
----
+Hm, probably there is something in pinctrl tree.
 
-Changes since v2:
-- Fixed function description 
-- Fixed handling of return value.
+@Linus, can you grab pinctrl bits?
 
-
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 63 ++++++++++++-------
- 1 file changed, 42 insertions(+), 21 deletions(-)
-
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 83b654b7a9fd..5948774c403f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4136,16 +4136,18 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
- /**
-  *  stmmac_tso_allocator - close entry point of the driver
-  *  @priv: driver private structure
-- *  @des: buffer start address
-+ *  @addr: Contains either skb frag address or skb->data address
-  *  @total_len: total length to fill in descriptors
-  *  @last_segment: condition for the last descriptor
-  *  @queue: TX queue index
-+ * @is_skb_frag: condition to check whether skb data is part of fragment or not
-  *  Description:
-  *  This function fills descriptor and request new descriptors according to
-  *  buffer length to fill
-+ *  This function returns 0 on success else -ERRNO on fail
-  */
--static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
--				 int total_len, bool last_segment, u32 queue)
-+static int stmmac_tso_allocator(struct stmmac_priv *priv, void *addr,
-+				int total_len, bool last_segment, u32 queue, bool is_skb_frag)
- {
- 	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
- 	struct dma_desc *desc;
-@@ -4153,6 +4155,8 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
- 	int tmp_len;
- 
- 	tmp_len = total_len;
-+	unsigned int offset = 0;
-+	unsigned char *data = addr;
- 
- 	while (tmp_len > 0) {
- 		dma_addr_t curr_addr;
-@@ -4161,20 +4165,44 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
- 						priv->dma_conf.dma_tx_size);
- 		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
- 
-+		buff_size = tmp_len >= TSO_MAX_BUFF_SIZE ? TSO_MAX_BUFF_SIZE : tmp_len;
-+
- 		if (tx_q->tbs & STMMAC_TBS_AVAIL)
- 			desc = &tx_q->dma_entx[tx_q->cur_tx].basic;
- 		else
- 			desc = &tx_q->dma_tx[tx_q->cur_tx];
- 
--		curr_addr = des + (total_len - tmp_len);
-+		offset = total_len - tmp_len;
-+		if (!is_skb_frag) {
-+			curr_addr = dma_map_single(priv->device, data + offset, buff_size,
-+						   DMA_TO_DEVICE);
-+
-+			if (dma_mapping_error(priv->device, curr_addr))
-+				return -ENOMEM;
-+
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = curr_addr;
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].len = buff_size;
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = false;
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
-+		} else {
-+			curr_addr = skb_frag_dma_map(priv->device, addr, offset,
-+						     buff_size,
-+						     DMA_TO_DEVICE);
-+
-+			if (dma_mapping_error(priv->device, curr_addr))
-+				return -ENOMEM;
-+
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = curr_addr;
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].len = buff_size;
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = true;
-+			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
-+		}
-+
- 		if (priv->dma_cap.addr64 <= 32)
- 			desc->des0 = cpu_to_le32(curr_addr);
- 		else
- 			stmmac_set_desc_addr(priv, desc, curr_addr);
- 
--		buff_size = tmp_len >= TSO_MAX_BUFF_SIZE ?
--			    TSO_MAX_BUFF_SIZE : tmp_len;
--
- 		stmmac_prepare_tso_tx_desc(priv, desc, 0, buff_size,
- 				0, 1,
- 				(last_segment) && (tmp_len <= TSO_MAX_BUFF_SIZE),
-@@ -4182,6 +4210,7 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
- 
- 		tmp_len -= TSO_MAX_BUFF_SIZE;
- 	}
-+	return 0;
- }
- 
- static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue)
-@@ -4351,25 +4380,17 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
- 		pay_len = 0;
- 	}
- 
--	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
-+	if (stmmac_tso_allocator(priv, (skb->data + proto_hdr_len),
-+				 tmp_pay_len, nfrags == 0, queue, false))
-+		goto dma_map_err;
- 
- 	/* Prepare fragments */
- 	for (i = 0; i < nfrags; i++) {
--		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
-+		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
- 
--		des = skb_frag_dma_map(priv->device, frag, 0,
--				       skb_frag_size(frag),
--				       DMA_TO_DEVICE);
--		if (dma_mapping_error(priv->device, des))
-+		if (stmmac_tso_allocator(priv, frag, skb_frag_size(frag),
-+					 (i == nfrags - 1), queue, true))
- 			goto dma_map_err;
--
--		stmmac_tso_allocator(priv, des, skb_frag_size(frag),
--				     (i == nfrags - 1), queue);
--
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_frag_size(frag);
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = true;
--		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
- 	}
- 
- 	tx_q->tx_skbuff_dma[tx_q->cur_tx].last_segment = true;
--- 
-2.25.1
+Best regards,
+Krzysztof
 
 
