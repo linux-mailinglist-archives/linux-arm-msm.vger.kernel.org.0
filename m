@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-30415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25492968AEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 17:26:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD3E1968AE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 17:26:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D02331F22BD2
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3CBFF1F22C24
 	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 15:26:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDC991A3050;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDA4E1A304F;
 	Mon,  2 Sep 2024 15:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dxupzCLa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WQWDqHxu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7739E1A2656;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774561A2658;
 	Mon,  2 Sep 2024 15:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725290759; cv=none; b=RL37llod1HgyFvBDPMGvCEPdjHTuNYCujXLD+TFi74ijj93h++0LLX6SdW+SZrwiWE10v0u3CTuWtmyUg4JURSFkJcyTYt0iuXF/yd+MSGWRAUf8VK4jP5ZaST27CtR9ZWy50HhTZcxVGzf8D2xq9R16aA7Vq7Zj+Z10neYQNnY=
+	t=1725290759; cv=none; b=PQnFFPz1Ojc9j2M9IaLFKNDv6dl+AHqtZ6U3ay0dArav5ns+bJLkfokdmqqCdZlbhgOq/0g4WPuihaHTLlFv2fwSMEN256G2Krm0fP+s4g8VLcoTykh37PFxLPopHk5D31V7EVIb3IEc9PDVRX2g4PJS3xLP7+/GxUEgb0gUBWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1725290759; c=relaxed/simple;
-	bh=eBGRyIpVzQehl9xGekyRe1Te+y5jWUjLRLylfuuAzJw=;
+	bh=V5hACLzeVR15kWP871kA/q+aCfEhF0lIeJeWRbN4eF4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OeABEQB8erD8j4GY6O6gQqayyQzHi2VFj0G7sX5DTxbG22NbMZGDv5bHvJ2Lo8iS0bpVny06Fi+QSMAicPpOwgEBJJObiWFTRdodQQ/kmeDReckZW+X82OdmE6OTgvnpdKjHYWZHxBKjHY+WwkvsYjvkerlCOdREK+X9cRMwufw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dxupzCLa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3F71C4AF13;
+	 MIME-Version; b=pxa5SnnA9ubWELY2LoBcLz67Z7iGrHstFIVsji9avnL0svJVLqL/1hp2pvu0R8WYAcZbQ7SeiUSVP81bQXQ1OVhsWHMSo5BL/OjEzLeoNMc3cWGzVGKPimR1oVw+A3YJI9HiY5VIMwTDN/UNlkKz8qvp6w46ZEOphN4Uz2Dz8eY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WQWDqHxu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B43C4AF14;
 	Mon,  2 Sep 2024 15:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1725290759;
-	bh=eBGRyIpVzQehl9xGekyRe1Te+y5jWUjLRLylfuuAzJw=;
+	bh=V5hACLzeVR15kWP871kA/q+aCfEhF0lIeJeWRbN4eF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dxupzCLapPOII3223qpzwyGkwoChHO9Jsm4pSw9Jb6XPjvp4wr0rYD/vPKQP1fJ2+
-	 TpXdYh+1Yu+uvFkq0X1faC4BQeb8jJBu50liHxzDabskGP/BHIxJX4b1DiyECK2jYf
-	 uu1DvwCD4MU+xOuHjpMCYpTYQtOgrCwejvL/jdCR6EPmsLG07nnRaIyGtIzuJMEPE0
-	 rm1nWmZ6YwTWTuxBbFuR4sdQ5ZfRedDJnBOmpzcSt2EeCWc6U7HsazgESbKE2j3jS1
-	 kNJpSA+g2yvnvu+eyme2XZLvQoKkMJ9fMwov/UFVGAKNp71OpZSXd/cy+23oDVKApO
-	 K2rtJ0QKDo6Pg==
+	b=WQWDqHxugk34rZI2XEcCsQ7W4d1dHbbiY5FbmIyyIqXI7zkNVpk37Jh3dp6MNSW44
+	 gJqNls0b/Cv8C7CUZD7uZ+tv8eUIAdBCbPICRln4T8gqJPE8eIVCUPJCaFogcC0LGg
+	 Cgk+RpbQsi1js1Ji2JKnelQzVZvuHIyzS0FXUPb1Vz9Awnzc17rtGfhePLlQqJXPOn
+	 nDYN5qlDuj1xDJkG9HZ3nFfMU5o/PpFKRuvyU4dGSUPKIhAz1XSRzgLvfMjnI57NHq
+	 JrlfjEGPrOpiu5bH7OLg0AD8c78KRKvCAIDBeHGSDSRmmvl+VGHtdz8xq6ewNCPJni
+	 ITOTwwQm+jbcw==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1sl8wX-000000000Ft-3O6K;
+	id 1sl8wX-000000000Fw-3rFq;
 	Mon, 02 Sep 2024 17:26:13 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -55,10 +55,11 @@ Cc: Jiri Slaby <jirislaby@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-serial@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 7/8] serial: qcom-geni: disable interrupts during console writes
-Date: Mon,  2 Sep 2024 17:24:50 +0200
-Message-ID: <20240902152451.862-8-johan+linaro@kernel.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	stable@vger.kernel.org
+Subject: [PATCH 8/8] serial: qcom-geni: fix polled console corruption
+Date: Mon,  2 Sep 2024 17:24:51 +0200
+Message-ID: <20240902152451.862-9-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
 In-Reply-To: <20240902152451.862-1-johan+linaro@kernel.org>
 References: <20240902152451.862-1-johan+linaro@kernel.org>
@@ -70,55 +71,114 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Disable the GENI interrupts during console writes to reduce the risk of
-having interrupt handlers spinning on the port lock on other cores for
-extended periods of time.
+The polled UART operations are used by the kernel debugger (KDB, KGDB),
+which can interrupt the kernel at any point in time. The current
+Qualcomm GENI implementation does not really work when there is on-going
+serial output as it inadvertently "hijacks" the current tx command,
+which can result in both the initial debugger output being corrupted as
+well as the corruption of any on-going serial output (up to 4k
+characters) when execution resumes:
 
-This can, for example, reduce the total amount of time spent in the
-interrupt handler during boot of the x1e80100 CRD by up to a factor nine
-(e.g. from 274 ms to 30 ms) while the worst case processing time drops
-from 19 ms to 8 ms.
+0190: abcdefghijklmnopqrstuvwxyz0123456789 0190: abcdefghijklmnopqrstuvwxyz0123456789
+0191: abcdefghijklmnop[   50.825552] sysrq: DEBUG
+qrstuvwxyz0123456789 0191: abcdefghijklmnopqrstuvwxyz0123456789
+Entering kdb (current=0xffff53510b4cd280, pid 640) on processor 2 due to Keyboard Entry
+[2]kdb> go
+omlji3h3h2g2g1f1f0e0ezdzdycycxbxbwawav :t72r2rp
+o9n976k5j5j4i4i3h3h2g2g1f1f0e0ezdzdycycxbxbwawavu:t7t8s8s8r2r2q0q0p
+o9n9n8ml6k6k5j5j4i4i3h3h2g2g1f1f0e0ezdzdycycxbxbwawav v u:u:t9t0s4s4rq0p
+o9n9n8m8m7l7l6k6k5j5j40q0p                                              p o
+o9n9n8m8m7l7l6k6k5j5j4i4i3h3h2g2g1f1f0e0ezdzdycycxbxbwawav :t8t9s4s4r4r4q0q0p
+
+Fix this by making sure that the polled output implementation waits for
+the tx fifo to drain before cancelling any on-going longer transfers. As
+the polled code cannot take any locks, leave the state variables as they
+are and instead make sure that the interrupt handler always starts a new
+tx command when there is data in the write buffer.
+
+Since the debugger can interrupt the interrupt handler when it is
+writing data to the tx fifo, it is currently not possible to fully
+prevent losing up to 64 bytes of tty output on resume.
 
 Fixes: c4f528795d1a ("tty: serial: msm_geni_serial: Add serial driver support for GENI based QUP")
+Cc: stable@vger.kernel.org      # 4.17
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c | 27 ++++++++++++++++++---------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index be620c5703f5..fbed143c90a3 100644
+index fbed143c90a3..cf8bafd99a09 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -488,6 +488,7 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
+@@ -145,6 +145,7 @@ static const struct uart_ops qcom_geni_uart_pops;
+ static struct uart_driver qcom_geni_console_driver;
+ static struct uart_driver qcom_geni_uart_driver;
+ 
++static void __qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport);
+ static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport);
+ 
+ static inline struct qcom_geni_serial_port *to_dev_port(struct uart_port *uport)
+@@ -403,13 +404,14 @@ static int qcom_geni_serial_get_char(struct uart_port *uport)
+ static void qcom_geni_serial_poll_put_char(struct uart_port *uport,
+ 							unsigned char c)
  {
- 	struct uart_port *uport;
- 	struct qcom_geni_serial_port *port;
-+	u32 m_irq_en, s_irq_en;
- 	bool locked = true;
- 	unsigned long flags;
- 
-@@ -503,6 +504,11 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
- 	else
- 		uart_port_lock_irqsave(uport, &flags);
- 
-+	m_irq_en = readl(uport->membase + SE_GENI_M_IRQ_EN);
-+	s_irq_en = readl(uport->membase + SE_GENI_S_IRQ_EN);
-+	writel(0, uport->membase + SE_GENI_M_IRQ_EN);
-+	writel(0, uport->membase + SE_GENI_S_IRQ_EN);
+-	writel(DEF_TX_WM, uport->membase + SE_GENI_TX_WATERMARK_REG);
++	if (qcom_geni_serial_main_active(uport)) {
++		qcom_geni_serial_poll_tx_done(uport);
++		__qcom_geni_serial_cancel_tx_cmd(uport);
++	}
 +
- 	if (qcom_geni_serial_main_active(uport)) {
- 		/* Wait for completion or drain FIFO */
- 		if (!locked || port->tx_remaining == 0)
-@@ -515,6 +521,9 @@ static void qcom_geni_serial_console_write(struct console *co, const char *s,
- 
- 	__qcom_geni_serial_console_write(uport, s, count);
- 
-+	writel(m_irq_en, uport->membase + SE_GENI_M_IRQ_EN);
-+	writel(s_irq_en, uport->membase + SE_GENI_S_IRQ_EN);
-+
- 	if (locked)
- 		uart_port_unlock_irqrestore(uport, flags);
+ 	writel(M_CMD_DONE_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+ 	qcom_geni_serial_setup_tx(uport, 1);
+-	WARN_ON(!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+-						M_TX_FIFO_WATERMARK_EN, true));
+ 	writel(c, uport->membase + SE_GENI_TX_FIFOn);
+-	writel(M_TX_FIFO_WATERMARK_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+ 	qcom_geni_serial_poll_tx_done(uport);
  }
+ #endif
+@@ -688,13 +690,10 @@ static void qcom_geni_serial_stop_tx_fifo(struct uart_port *uport)
+ 	writel(irq_en, uport->membase + SE_GENI_M_IRQ_EN);
+ }
+ 
+-static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport)
++static void __qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport)
+ {
+ 	struct qcom_geni_serial_port *port = to_dev_port(uport);
+ 
+-	if (!qcom_geni_serial_main_active(uport))
+-		return;
+-
+ 	geni_se_cancel_m_cmd(&port->se);
+ 	if (!qcom_geni_serial_poll_bit(uport, SE_GENI_M_IRQ_STATUS,
+ 						M_CMD_CANCEL_EN, true)) {
+@@ -704,6 +703,16 @@ static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport)
+ 		writel(M_CMD_ABORT_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
+ 	}
+ 	writel(M_CMD_CANCEL_EN, uport->membase + SE_GENI_M_IRQ_CLEAR);
++}
++
++static void qcom_geni_serial_cancel_tx_cmd(struct uart_port *uport)
++{
++	struct qcom_geni_serial_port *port = to_dev_port(uport);
++
++	if (!qcom_geni_serial_main_active(uport))
++		return;
++
++	__qcom_geni_serial_cancel_tx_cmd(uport);
+ 
+ 	port->tx_remaining = 0;
+ 	port->tx_queued = 0;
+@@ -930,7 +939,7 @@ static void qcom_geni_serial_handle_tx_fifo(struct uart_port *uport,
+ 	if (!chunk)
+ 		goto out_write_wakeup;
+ 
+-	if (!port->tx_remaining) {
++	if (!active) {
+ 		qcom_geni_serial_setup_tx(uport, pending);
+ 		port->tx_remaining = pending;
+ 		port->tx_queued = 0;
 -- 
 2.44.2
 
