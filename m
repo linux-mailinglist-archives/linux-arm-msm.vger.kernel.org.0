@@ -1,234 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-30418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55DC9968B75
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 18:01:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C952968B7A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 18:02:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E94F1C21E9C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 16:01:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0A071F21A04
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 16:02:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE1591A2639;
-	Mon,  2 Sep 2024 16:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 831041CB512;
+	Mon,  2 Sep 2024 16:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e8wK5sYs"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4osFr0t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B5519F121
-	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Sep 2024 16:01:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0F061FEB
+	for <linux-arm-msm@vger.kernel.org>; Mon,  2 Sep 2024 16:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725292908; cv=none; b=SCW7M3SvDENstsPGLVAFrMFIXBasIpQgR//sGw62S2F0OvYpii86F/nz1HzkkhMjGj0rWHinnZlRPO6jewxwAqIiggrSf9fez67ToJLpVNpXJD++MPr1Ax14IO383B42DcDuIHzcYCSfzgKkh883aRQF9Np3KMT7vWIeCveupRw=
+	t=1725292937; cv=none; b=jQ9Klns+qJCYPngT4PU1qtBky13GhTYs/wLRF1WlPub9emoRhV5szTDeeBFUd6EJijwAOxcuTV8ClwyFqD57DZ2bXKK6p82aeBezuCqWUFz7yP7C3ZMw1b84xBvIH7MeoKvbCJ6MpV7wRtVEYMBp2Wxu3AZtHzKuN/P8B71K2IA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725292908; c=relaxed/simple;
-	bh=q1Sk8iuFNM9LQs8bptLDUAHhOMaqgVIg77iI7T6Vu8A=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=by9y1BZoJIcN6e5R4enXr6htLURUfmypVMQqfGKWEhxzdq+Hiqsceo8FqGVDroFV8rp/6285atCs9Zxodt3bW23crSwI5Op9SLtf0yg96OmPkkPOLKaDSnI+CP4cyKmZzYGWdEWBDW+ip9jO7OFJOFj0482v+racY2zQD2l3FwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e8wK5sYs; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42bb6d3e260so37820345e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 09:01:46 -0700 (PDT)
+	s=arc-20240116; t=1725292937; c=relaxed/simple;
+	bh=bhOd29Ph4ablsEbCbVtM4OLdkWT2TfJLL97jz9+8E3g=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Z9Q74Rw/5qW68WSDGdgRWeliFEl90HNjvK+jN0yjz2rebWTZFamAtn0RzH1ZrmRPNPDlcMXhMFH8/vrhbGoLhDx5jJi/Y5K3ouEgAy/lnFA5iT0Qfrwi9t0RUtZAHh1EGCM4RiAzhquY/4SmoI3tV9+n3Pf5mPQ5eCiv2A5xMb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4osFr0t; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5c260b19f71so1019113a12.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 09:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725292905; x=1725897705; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SF/Ff5WyVgapJBUAlK400SzZpWZqi3ZPw8P5uireNeY=;
-        b=e8wK5sYsjM0AD8LzuG7K+7Xl/+zk638xdmWTZ1BTH4jI2VoTmhmjzRW4vmu0KveuED
-         pTUiuldzjftnjn5xS/dllodJFBde9dDHHazU/T+gD8/iUn3EL/+RKDKwT+RDjN4cOuSY
-         DabfxJih/6s2w2OlarvpL0Bp7F9f3/Q/CX9zRVuVB0IIzeXXCvCe9tlUB2rDgJv0cqwm
-         Drm4JwFO2QWFJIeuGtPl42BxX+TIFt5G0S5B/WilEvfXOL5flVLn2c9ApoXeLaztFsZq
-         ESIU41qcBrDzBkCFm8LQ9rGmWptL2MneSC/7CWww1gShlvQjurc4vJKFqUsQs0dBrwEx
-         EejQ==
+        d=gmail.com; s=20230601; t=1725292934; x=1725897734; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=C5Vz4j/A/EBROJlE9V4B05ru+E+LAW4sw0oP3utBImE=;
+        b=B4osFr0tWxUmkN0P1PcPTS0B8Kg83ZtZ9F3t1713jpWwUumzTSwAmynse5ykVchfJz
+         7AbUlPIuvCbe5SxEP/4D+DFeSUkWbiz3nvKhuR2W071hFiLWUBAU/UjWRPpgGkYsLSi3
+         aPMvBabGdIET7muCcMSlwpZi8/qkEL/s+HP7i7zEdrG+CZy8I60Ts9Al90PR/hGu82D2
+         EO8n/TEIJCDdNxRDoAjVMDqjbT5l+DIHxvoL065p2zp3jQ5tsl4SY/zrWiHWdKEqPGSN
+         ypyx0ULBHt4RCaTKGQOYUGNodtBOglxgDI6xT+1e4v7SX2nZJqeuFMcULA93CBlPrrai
+         mfgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725292905; x=1725897705;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=SF/Ff5WyVgapJBUAlK400SzZpWZqi3ZPw8P5uireNeY=;
-        b=ngsmm6f1fL0JvmAFcDXl5V1eYHGNMVXSKXdKBZaTNbVi4T1n+9K8OSfkZQEHsR9X+S
-         cvgABDzXthO2V+0/FcUrs1qxV7LW2Ja8YVTtZzGjNqaVSCg9NTnDYF0S+O+0xvnoEmt5
-         qXin/PwMUInMjYRci4UnoP/JZsMVZHr2kadPK8irX21Hhl3wUtZVt/tLM4DxnDM8Y5ES
-         RURIkh6c10On6B2kzgbBCrD/ONTg7dL+1iE/qWMKMJIGkWYCfelhTCXajevUW5qmtvfs
-         c1rLFUIIlC2L2v96aSNzH949HjK5C1pL0rR76Sre/8WhADDwgEQkuwd9WUOxDCai23GR
-         Y04A==
-X-Forwarded-Encrypted: i=1; AJvYcCUb0vsVOU35iGuz5lQ8tY9YAao/UizXIo+aVKYCjNJdO4/An7xWQ/ngzstSuCmSrF9vRrorg1OGZgdPZRWk@vger.kernel.org
-X-Gm-Message-State: AOJu0YyotBKXUmeZ2ZW9ngqX001qb6C8PlB94Uam3fjY8q0gbdkJx6KA
-	F3GaTWRRCQgP5o2+nU/Q/i3FUB2qQHDTBz/VePRDZHXPQstpca/H6rRv279d2HY=
-X-Google-Smtp-Source: AGHT+IF1FhUQ7IvRKPdMigexj7urXN7rPlu172HF+X6OH59nohe9A0m5J5raB29jCzlTZvWnIcmgDA==
-X-Received: by 2002:a05:600c:1d27:b0:428:9ba:39f with SMTP id 5b1f17b1804b1-42bdc6333bdmr57198385e9.11.1725292904649;
-        Mon, 02 Sep 2024 09:01:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:7dba:3cd0:a1f4:e3fa? ([2a01:e0a:982:cbb0:7dba:3cd0:a1f4:e3fa])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42ba639d512sm175180525e9.18.2024.09.02.09.01.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Sep 2024 09:01:44 -0700 (PDT)
-Message-ID: <925061d3-9894-4332-8c2a-e494ad22c66b@linaro.org>
-Date: Mon, 2 Sep 2024 18:01:43 +0200
+        d=1e100.net; s=20230601; t=1725292934; x=1725897734;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C5Vz4j/A/EBROJlE9V4B05ru+E+LAW4sw0oP3utBImE=;
+        b=FLaSXmc/MAgofJUeZZHSNnZzC50uvhACu3mgeWkyee4S2j+ZELPUiwtim6i2p5vu9i
+         38iPuj10qh+IBjKsPd+Dpd0nuNmgo5p8CsaR2vxlN9Y6qFrvEI0cZK1SzJQpUFuuq0vA
+         efFq7v07mGIAgulyk88lsf9rSu3PSVDjCsF+o1EajEqA4j2waAun5/W+NZZvzjuybCkC
+         0NBJTiAC/poLC5sadDl+jFC95W9IJLodpn2ACULIe1F3fpyUPKEDiyUa/At8Jc7uT5v+
+         C2uLtMNJc4JayCpOW8/Phf9fykoVRn9NRWhc8niX6RKzmd9r0/8PNkFjkOxXNVNnuAa3
+         LaSw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9liV0VoX0IBz9WTlt2EU5ZDs54SfQ2foUWpCEa8TqYvqCdFri3hu1zxeeHs+JvrNcihoacY6O4/yiZLN2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcMKofn+sxTqv2cERsuxD67xN9W/RclI1AJdQ1+NnSVvJD7cIY
+	pLEyRCOi1DRqzX9A/yP/ZXftjSqSPIowLQxyCOTDh09GyDpZK+rzc/Jw87yHvGNPmSk/8FmMexP
+	3g3SxkkPxcJ0/5tovmhJLf6718eY=
+X-Google-Smtp-Source: AGHT+IEhc+/8y64ZulsxnV4yI6VLUOUZZy9iSB4IdqH34+WUVPpWjXBiGG98AToLe56K34DK7eKcTEBawagsbwAnfMs=
+X-Received: by 2002:a05:6402:350c:b0:5be:d7d8:49ad with SMTP id
+ 4fb4d7f45d1cf-5c24374192amr4098204a12.22.1725292932960; Mon, 02 Sep 2024
+ 09:02:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-romulus: Set up USB
- Multiport controller
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>,
- 20240830-nxp-ptn3222-v2-0-4c6d8535cf6c@linaro.org
-References: <20240902-topic-sl7_updates-v1-0-3ee667e6652d@quicinc.com>
- <20240902-topic-sl7_updates-v1-2-3ee667e6652d@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240902-topic-sl7_updates-v1-2-3ee667e6652d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 2 Sep 2024 09:02:01 -0700
+Message-ID: <CAF6AEGudK7YMiKDhtvYgp=bY64OZZt0UQSkEkSxLo4rLmeVd9g@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-next-2024-09-02 for v6.12
+To: Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc: dri-devel <dri-devel@lists.freedesktop.org>, 
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>, freedreno <freedreno@lists.freedesktop.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 02/09/2024 16:50, Konrad Dybcio wrote:
-> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
-> 
-> The USB MP controller is wired up to the USB-A port on the left side
-> and to the Surface Connector on the right side. Configure it.
-> 
-> While at it, remove a stray double \n.
-> 
-> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
-> ---
->   .../boot/dts/qcom/x1e80100-microsoft-romulus.dtsi  | 59 +++++++++++++++++++++-
->   1 file changed, 57 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> index 5419d0b02785..ac2acf949b70 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> @@ -572,7 +572,17 @@ &i2c5 {
->   
->   	status = "okay";
->   
-> -	/* Something @4f */
-> +	ptn3222: redriver@4f {
-> +		compatible = "nxp,ptn3222";
-> +		reg = <0x4f>;
-> +
-> +		reset-gpios = <&tlmm 7 GPIO_ACTIVE_LOW>;
-> +
-> +		vdd3v3-supply = <&vreg_l13b>;
-> +		vdd1v8-supply = <&vreg_l4b>;
-> +
-> +		#phy-cells = <0>;
+Hi Dave, Sima,
 
-It's unrelated to mutiport USB-A, should go in a separate change,
-and also probably in a bigger change enabling usb-c features using
-the retimer.
+This is the main pull for v6.12.  It ended a bit smaller this time,
+there are a few series on the dpu and gpu side that weren't quite
+ready to go this time around.
 
-Neil
+Further description below.
 
-> +	};
->   };
->   
->   &i2c7 {
-> @@ -583,7 +593,6 @@ &i2c7 {
->   	/* PS8830 USB retimer @8 */
->   };
->   
-> -
->   &mdss {
->   	status = "okay";
->   };
-> @@ -717,6 +726,15 @@ &smb2360_1_eusb2_repeater {
->   	vdd3-supply = <&vreg_l14b>;
->   };
->   
-> +&smb2360_2 {
-> +	status = "okay";
-> +};
-> +
-> +&smb2360_2_eusb2_repeater {
-> +	vdd18-supply = <&vreg_l3d>;
-> +	vdd3-supply = <&vreg_l8b>;
-> +};
-> +
->   &tlmm {
->   	gpio-reserved-ranges = <44 4>, /* SPI (TPM) */
->   			       <238 1>; /* UFS Reset */
-> @@ -856,3 +874,40 @@ &usb_1_ss1_dwc3_hs {
->   &usb_1_ss1_qmpphy_out {
->   	remote-endpoint = <&pmic_glink_ss1_ss_in>;
->   };
-> +
-> +/* MP0 goes to the Surface Connector, MP1 goes to the USB-A port */
-> +&usb_mp {
-> +	status = "okay";
-> +};
-> +
-> +&usb_mp_hsphy0 {
-> +	vdd-supply = <&vreg_l2e>;
-> +	vdda12-supply = <&vreg_l2j>;
-> +
-> +	phys = <&smb2360_2_eusb2_repeater>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_mp_hsphy1 {
-> +	vdd-supply = <&vreg_l2e>;
-> +	vdda12-supply = <&vreg_l2j>;
-> +
-> +	phys = <&ptn3222>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_mp_qmpphy0 {
-> +	vdda-phy-supply = <&vreg_l3e>;
-> +	vdda-pll-supply = <&vreg_l3c>;
-> +
-> +	status = "okay";
-> +};
-> +
-> +&usb_mp_qmpphy1 {
-> +	vdda-phy-supply = <&vreg_l3e>;
-> +	vdda-pll-supply = <&vreg_l3c>;
-> +
-> +	status = "okay";
-> +};
-> 
+The following changes since commit 6d0ebb3904853d18eeec7af5e8b4ca351b6f9025=
+:
 
+  Merge tag 'drm-intel-next-2024-08-29' of
+https://gitlab.freedesktop.org/drm/i915/kernel into drm-next
+(2024-08-30 13:41:32 +1000)
+
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-next-2024-09-02
+
+for you to fetch changes up to 15302579373ed2c8ada629e9e7bcf9569393a48d:
+
+  drm/msm/dpu: enable writeback on SM6350 (2024-09-02 02:53:44 +0300)
+
+----------------------------------------------------------------
+Updates for v6.12
+
+DPU:
+- Fix implement DP/PHY mapping on SC8180X
+- Enable writeback on SM8150, SC8180X, SM6125, SM6350
+
+DP:
+- Enable widebus on all relevant chipsets
+
+DSI:
+- Fix PHY programming on SM8350 / SM8450
+
+HDMI:
+- Add support for HDMI on MSM8998
+
+MDP5:
+- NULL string fix
+
+GPU:
+- A642L speedbin support
+- A615 support
+- A306 support
+- A621 support
+- Expand UBWC uapi
+- A7xx GPU devcoredump fixes
+- A5xx preemption fixes
+- cleanups
+
+----------------------------------------------------------------
+Abhinav Kumar (1):
+      drm/msm/dp: enable widebus on all relevant chipsets
+
+Aleksandr Mishin (1):
+      drm/msm: Fix incorrect file name output in adreno_request_fw()
+
+Arnaud Vrac (1):
+      drm/msm: add msm8998 hdmi phy/pll support
+
+Connor Abbott (7):
+      drm/msm: Use a7xx family directly in gpu_state
+      drm/msm: Dump correct dbgahb clusters on a750
+      drm/msm: Fix CP_BV_DRAW_STATE_ADDR name
+      drm/msm: Update a6xx register XML
+      drm/msm: Expand UBWC config setting
+      drm/msm: Expose expanded UBWC config uapi
+      drm/msm: Fix UBWC macrotile_mode for a680
+
+Dmitry Baryshkov (6):
+      drm/msm/dpu: Configure DP INTF/PHY selector
+      drm/msm/dsi: correct programming sequence for SM8350 / SM8450
+      drm/msm/dpu: enable writeback on SM8150
+      drm/msm/dpu: enable writeback on SC8108X
+      drm/msm/dpu: enable writeback on SM6125
+      drm/msm/dpu: enable writeback on SM6350
+
+Eugene Lepshy (1):
+      drm/msm/a6xx: Add A642L speedbin (0x81)
+
+Konrad Dybcio (7):
+      drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+      drm/msm/a6xx: Evaluate adreno_is_a650_family in pdc_in_aop check
+      drm/msm/a6xx: Store primFifoThreshold in struct a6xx_info
+      drm/msm/a6xx: Store correct gmu_cgc_mode in struct a6xx_info
+      drm/msm/a6xx: Use the per-GPU value for gmu_cgc_mode
+      drm/msm/a6xx: Set GMU CGC properties on a6xx too
+      drm/msm/a6xx: Add A621 support
+
+Laurent Pinchart (1):
+      drm/msm: Remove prototypes for non-existing functions
+
+Li Zetao (1):
+      drm/msm/adreno: Use kvmemdup to simplify the code
+
+Marc Gonzalez (3):
+      dt-bindings: phy: add qcom,hdmi-phy-8998
+      dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
+      drm/msm/hdmi: add "qcom,hdmi-tx-8998" compatible
+
+Otto Pfl=C3=BCger (1):
+      drm/msm/adreno: Add A306A support
+
+Richard Acayan (1):
+      drm/msm/adreno: add a615 support
+
+Rob Clark (1):
+      drm/msm: Remove unused pm_state
+
+Sherry Yang (1):
+      drm/msm: fix %s null argument error
+
+Vladimir Lypak (4):
+      drm/msm/a5xx: disable preemption in submits by default
+      drm/msm/a5xx: properly clear preemption records on resume
+      drm/msm/a5xx: fix races in preemption evaluation stage
+      drm/msm/a5xx: workaround early ring-buffer emptiness check
+
+ .../devicetree/bindings/display/msm/hdmi.yaml      |   28 +-
+ .../devicetree/bindings/phy/qcom,hdmi-phy-qmp.yaml |    1 +
+ drivers/gpu/drm/msm/Makefile                       |    1 +
+ drivers/gpu/drm/msm/adreno/a3xx_catalog.c          |   11 +
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   14 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   16 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.h              |    2 +
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c          |   30 +-
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |  141 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c              |   21 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              |   89 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              |    2 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c        |   46 +-
+ .../gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h  |    2 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c            |   15 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   51 +-
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h |   18 +
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |   18 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_4_sm6125.h |   18 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h |   18 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |    6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c         |   41 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h         |   18 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h           |    7 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   12 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c           |    2 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                |   10 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c          |   12 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.c                    |    1 +
+ drivers/gpu/drm/msm/hdmi/hdmi.h                    |    8 +
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c                |    5 +
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c           |  779 ++++++++++++++
+ drivers/gpu/drm/msm/msm_drv.h                      |    4 -
+ drivers/gpu/drm/msm/msm_gpu.c                      |    1 -
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml      | 1118 ++++++++++++++++=
++++-
+ drivers/gpu/drm/msm/registers/display/hdmi.xml     |   89 ++
+ include/uapi/drm/msm_drm.h                         |    2 +
+ 37 files changed, 2527 insertions(+), 130 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
 
