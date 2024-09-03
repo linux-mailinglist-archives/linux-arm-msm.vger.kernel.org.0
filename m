@@ -1,103 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-30516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11B3F969CCF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 14:03:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF341969D52
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 14:19:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BB2591F24D45
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 12:03:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC2CB284F48
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 12:19:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADDD51C987E;
-	Tue,  3 Sep 2024 12:03:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98F661C9867;
+	Tue,  3 Sep 2024 12:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gp9vvm+C"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OH9uUOac"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0221C9862
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 12:03:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0050043AD2;
+	Tue,  3 Sep 2024 12:19:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725365001; cv=none; b=ZbIJWiXT2GnEUunjAZTZEShQgWPS9wy04YNSP6hKMpHKfsxAz9p4u8uk3+1yxnxEKSDOCv8sTAzX9CN1K80hHFxUsMEnyaOWQyidaN2b+d8Ag3mGmiIW63gWzHCyN164fn8oT0ZTkAEQNwP5kRa7Jk+Z8XmtX2gG+y8PndHvzBM=
+	t=1725365965; cv=none; b=ndCNJ9uU1Xf7wGiLDMFkesye8HDB1bZFj07PlvvUpSzdHcQThk1myaA/klzDhbaAGn/mFi/Q+dMNdqbzrEKj104LZV/XZXpaQiCw6/5DlQHxgbqtpR8FnS36ldvCXDoTfr56RcD+fEudtuasVA5QI+4qgZXvEmBOyW9z0xhhwZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725365001; c=relaxed/simple;
-	bh=kEy0uL+fD2lKj3iUlgQ27J8z/bCXyx9tdiqTWqPKOBk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k1U4hGChg2fmRH/h1iUEaw6LXLliTujzXThxfjU1zXY6/vm6GtJDMdGiD4LE98k9xDKHYxyHQSOdt3x+mYXzaVi4fY5IeD7P8c5de5YN2G+Aoqqmj7cZll5gLOCtvx4e29Lkngksh4HU2QlZqzQ7pbn/I80daFoR3VCz6zqhOuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gp9vvm+C; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6daf46ee332so6029357b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 05:03:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725364999; x=1725969799; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=uT/aD2fYaRoviJnEdnc8G+3b8uWSX+p8TECg/DCp5mo=;
-        b=gp9vvm+C1jByzbT/wWT7AOvC50nptTMcmhxYhhhMKcqLUevaeqnTxDw0q2ACVCXp27
-         +TIQB8Jclw1WEKuEQNqJs0wdJ6KVqe2LQJSK23fr41dTVAgmU9n6YrDWhHZO1OyV+GRd
-         28TXKZtpwiP8JNkAiAeqsevQP+/4qwZqjb7V0VInQZSNlvwsLR0CkbekH7DfDM438DSS
-         3zpv8eQCBXbPuTBj5DZMN7LYHBh5Wk/VCNJfxjc/QMNEZSQqQ7jEb7JqnD2SO3SMfm/w
-         oqDQoLlPrRpIpVFjxiKbr8Zzk3LEnuACv8BjUN4FIz5a0T80vqTZnzhqPPpUaux2uiIp
-         2aLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725364999; x=1725969799;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uT/aD2fYaRoviJnEdnc8G+3b8uWSX+p8TECg/DCp5mo=;
-        b=JtoKRzjLfG/yRDHeNPo+zraA5paHAM6S2z91BHO17HIhjFXDk3wVtFy6LU7B2jIj0b
-         ok+uFugq4natMbY2dvzdMxfxvgr/4+vnGEBbaupNYsJblKKRrNFeLbOBiGwpH26XkDsx
-         NZ5QNm7IgEWbSs7jl/xaa2XxOnflLawYeIOGNn4rLN9XGV+YTGJMg1VRP1h9D9xtHNLj
-         iTyMyZIShpbcaLFnCtiQym95zxrBJocsck6PEjrGu+wniRejk0Wuphim2BhtNsiRTNk/
-         SI574SYcv2fw5l8wUC2FXY+jyzsbSAFsCoZ/OjLVaT7/3ve4dxRzzPaDcbcs9Mc9kop4
-         Kxiw==
-X-Forwarded-Encrypted: i=1; AJvYcCWEbRb6N201jswrkPo6GyyG40gPIZPuRlxwjMYfybJ7n0GKgDPTTP/iiNb+sx5ckB6go/pnoBhPVzWXtRzQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhInhCpWEb49E5yLlxwodWkU7uJbXtuZQbuLVWYywTu1nb1y0h
-	KgbtFa23rsL+tTP+738uqnVwegH4PnBY830bBzaMKTXqKO1Gj9ygMX5QVaOfLI0yvBKAku23I8i
-	+qVCEtv4wLcz0LXq+q/ziWXXmgDKt/uc8drCYaQ==
-X-Google-Smtp-Source: AGHT+IGjLf7ldseShYpxexhc7HH680FQerWRfT+m5UtLRaHJVdDS5HYSjtVrk09unMIBtJDDtIBsKWubTRG962bdoF0=
-X-Received: by 2002:a05:690c:2a83:b0:6d4:d6de:3de4 with SMTP id
- 00721157ae682-6d4d6de4266mr91396297b3.34.1725364998931; Tue, 03 Sep 2024
- 05:03:18 -0700 (PDT)
+	s=arc-20240116; t=1725365965; c=relaxed/simple;
+	bh=gbo4/mKMeubqUqqbz7EHAAgwwQpeWtNwbPSYqPjugXU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pmbJjP8LjmwM/aSNmp83qumY7giiEnXdEjVmguphajdVGNZaVbKsx+jDKno5KO5HxGbwOkyxLH9D6YCY4oMkU1i8pn8pum6oajNUBFttzKzFtfak2IthTj7NVw0ncEmW/GjLstigM3DQ7WavbcafZ1sbY9WlG9I3u0G3P6lh+LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OH9uUOac; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 483AjBI9012531;
+	Tue, 3 Sep 2024 12:19:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=UouSdmp5vW+k5kiV/tZDag
+	Bl9X6H399ALSapGOwQMZc=; b=OH9uUOac/s7hgTtOkJaHBtKU2DaNyGBZFMFKUm
+	Gw3cCRyGqm5mY0TWlcTrHqrVsn4OX5nmmNpNQ/AjBM3iS3zgSwnEFgD0Y9Nxf0XE
+	5hU/D0qNiNX5rM6R/pDXtJKOv4V9FSVFejOtR4EJl9lcxEcD62/JFjQem1Jh5pSd
+	yhtpyhvjN6D56VCWTUcmJN5v1OD/OApOuCofn89G0ttMyHtOmLtBSoUPOMspEIDA
+	7/PQ1cDvJRDVO+mzCyGpgrUzBHJ2tIRReylkVEuns0m9K4HcaKhu9JS9J7vO9pdC
+	6Vd1v/+LCWNtGpWv08ympGN3lo/xGmuJqlDxNRBiISSxKUFQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bu8uq9ep-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 03 Sep 2024 12:19:00 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 483CIwqN002058
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 3 Sep 2024 12:18:58 GMT
+Received: from hu-jinlmao-lv.qualcomm.com (10.49.16.6) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 3 Sep 2024 05:18:58 -0700
+From: Mao Jinlong <quic_jinlmao@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Andy Gross
+	<agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: Mao Jinlong <quic_jinlmao@quicinc.com>, <linux-kernel@vger.kernel.org>,
+        <coresight@lists.linaro.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>
+Subject: [PATCH v1 0/2] Add Qualcomm extended CTI support
+Date: Tue, 3 Sep 2024 05:18:42 -0700
+Message-ID: <20240903121847.6964-1-quic_jinlmao@quicinc.com>
+X-Mailer: git-send-email 2.41.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240903-topic-qmp_typo-v1-1-781e81799992@quicinc.com>
-In-Reply-To: <20240903-topic-qmp_typo-v1-1-781e81799992@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 3 Sep 2024 15:03:07 +0300
-Message-ID: <CAA8EJpp_O4B+eciQ9h8nPdiVxy4CTD8nE+WiYbDmUUSuhvwvMg@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom: qmp: Fix lecacy-legacy typo
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	Johan Hovold <johan+linaro@kernel.org>, Konrad Dybcio <quic_kdybcio@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: AqGtn_e045D5jgcicJXXHca7hQvTM6S3
+X-Proofpoint-GUID: AqGtn_e045D5jgcicJXXHca7hQvTM6S3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-02_06,2024-09-03_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 adultscore=0 clxscore=1015 mlxscore=0 spamscore=0
+ mlxlogscore=875 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409030099
 
-On Tue, 3 Sept 2024 at 14:13, Konrad Dybcio <konradybcio@kernel.org> wrote:
->
-> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
->
-> Introduced in Commit b3982f2144e1 ("phy: qcom-qmp-combo: restructure
-> PHY creation"). No functional changes.
->
-> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+The QCOM extended CTI is a heavily parameterized version of ARM’s CSCTI.
+It allows a debugger to send to trigger events to a processor or to send
+a trigger event to one or more processors when a trigger event occurs on
+another processor on the same SoC, or even between SoCs.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+QCOM extended CTI supports up to 128 triggers. And some of the register
+offsets are changed.
+
+The commands to configure CTI triggers are the same as ARM's CTI.
+
+Mao Jinlong (2):
+  dt-bindings: arm: Add Qualcomm extended CTI
+  coresight: cti: Add Qualcomm extended CTI support
+
+ .../bindings/arm/arm,coresight-cti.yaml       |  14 ++
+ .../hwtracing/coresight/coresight-cti-core.c  |  75 +++++++----
+ .../coresight/coresight-cti-platform.c        |  16 ++-
+ .../hwtracing/coresight/coresight-cti-sysfs.c | 124 ++++++++++++++----
+ drivers/hwtracing/coresight/coresight-cti.h   | 123 +++++++++++------
+ 5 files changed, 253 insertions(+), 99 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.41.0
+
 
