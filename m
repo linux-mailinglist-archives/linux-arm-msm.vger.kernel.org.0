@@ -1,161 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-30493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E99ED969751
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 10:38:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71FA9969758
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 10:39:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 941C91F24FC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 08:38:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 215EA285950
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 08:39:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 623D12101BC;
-	Tue,  3 Sep 2024 08:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253D51D417C;
+	Tue,  3 Sep 2024 08:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hla0dovU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cRnDmP24"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4DA91A265F;
-	Tue,  3 Sep 2024 08:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650EA2101B6
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 08:39:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725352693; cv=none; b=CPJdeJE/33NEoqaAIqRjgSr+93BGgi5aEj0hQkuWrJelUp72NDqB2xRB0F4e415lR+H9E3YUIhKRcKTVMQJlzz+xZU5YsmyycSLyHDjD3P1Ac4dFAZoLs/RD75D65nkQ6t1dBBJBXzq96Wxk10fQlFLMfAxmF5bOccoB5LWTHNQ=
+	t=1725352746; cv=none; b=qPWpTS84H8awisADeOEhtZfMa4S/wxzq77O6lFd4hSTF9cKgm2mx4pfJ1N72Bmcn3rYz4oZZn+rJwHDoFYhCJvjWY6P298Bz7bPioqW4BpiFBMN49moTXqI+6UdwfTGAsua2DISZYuv5ORKo6HxxYsgaFzhF8prKbvocTkg3mvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725352693; c=relaxed/simple;
-	bh=XbrhZalToo1tSy22aYkgfedlGGwKm/cH60Z8HE/u53c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=n+fxNkgxBZxHDmEcHuosefYTfsOvvAjD5yxVdtH0yN+Qs7YZsU6PSSg+LRZGRpOnVLCkSFq3pz4XFL+1PY2osufMb1hCHa1PERAe9wrd5GdyiePIJeHt7jJnZafM56e7B6KDV1hVApj7OHv3yv2DZCJLnHEAb6RfGRT8E9u8Eps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hla0dovU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 482LRSAv028888;
-	Tue, 3 Sep 2024 08:38:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CSiPVPzWfiduYlMyPPYbxX3CLFqvDnkaba/MGBq03C4=; b=hla0dovUsUQyu5i1
-	/X4QDlKTV8tinazPua/aAgH1vxaOKLEtC1oPI7vDrWzWSEiYvhgt7tGizGUQ8vpr
-	QX8dojdW0fEcLPBxqn8RPSAGtdNicZ/oBts7K5+4Djuq3FhQn0nrcw/0jmg5yn3z
-	kQ8+pRyGxzHuOCZuHxoMySNcnZ7AHZk6uYdOgFnoPR/s2q1NMTh6cIAViSrE1nWH
-	9NrIAt4SmrGKhFxmsWEAR8NiB3okgPonU24gq14q+q7rJFuxuGz/Xsruqfp9o73W
-	FUbWugwXUGC8IpZtgw1UF0Qx7OyDBl21vcsFBkp+slrIRNdTMWszTrEjvZogaCer
-	m9tj8w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bud2pnad-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Sep 2024 08:38:07 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4838c62H025569
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Sep 2024 08:38:06 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
- 01:38:04 -0700
-Message-ID: <7688ac1c-14da-46a2-a5dc-f01c104485f8@quicinc.com>
-Date: Tue, 3 Sep 2024 16:38:02 +0800
+	s=arc-20240116; t=1725352746; c=relaxed/simple;
+	bh=e5af9rbtMfwPdCktmF2EBrBC1PCNX5lMnFWNNZ5dkfs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gCgZs04WXVbq+lOcRDwLqjMmaD+9QDPKgncWX41umAZBtOVjInLOgR84zCEXbA9aM4QuBLtKukdYujH3V0ut6orp4g5V7uorq0IWBR//FgISh3hXfHypaOX6HitX9aB4D5FzY527nzAmweuqlUSXJ7frERCA1lBnh0wWuM03hN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cRnDmP24; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6d9f65f9e3eso11771277b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 01:39:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725352743; x=1725957543; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SM1WY9R0jnBXvCH2B20Ux18/9VPyZZGXYMi6xyrsvoY=;
+        b=cRnDmP24nfHUAsMeFjCxTtr/g/8HBiO7ktSOd1AqE+v+JfLd6sk6u/71jlXL7sdIRR
+         KBF76ihLP4gIgZjkDNrL6SQDKjxHomcdNlol2A71VVAJzwuOyLePMElI/f0bxmMSJ3f9
+         K2XxbXt5T5GQR36BXENSRQhnoXODEwgdcPrMQuK0aTc0tQczRrv+rbrOCWuGxh3loQCR
+         n+iesaFiYkNj7B+yz7BT7FJV8SE+Xkg68kMkuODjMsdm0pm2AdDSsDTY6GKtO7gHiWHR
+         eIab2zXMXU7wbEF75YodqLzkZfqa4oc3TqZuOGyoFyVyCNQFc1YHAqhaPUXiRbjAFt1L
+         B++A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725352743; x=1725957543;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SM1WY9R0jnBXvCH2B20Ux18/9VPyZZGXYMi6xyrsvoY=;
+        b=Dyn0syCHoS7dd4Ic760q306ZUsApLKwCyLtu34W3zFxnu5HCVuw713UEGmd80lOmMf
+         Uft0QzvOdIcIrA9M1vgOmRsaVnANRUn0oX47O4NkCE7Wls4xYP53KUgtrTCrdaDUXL19
+         Qk6Pn0lrqrMCPaOWwrdma/M5si5SRzbihLC9mA7a73pVZgRXwkk3Q0XfX2pZXhmOFyVj
+         fii2uht1yLelwm3ssD2byYfis7zXA4aHUpPTSL+uRQRbDcNPDOGG1MlA1ht0tReT/hmY
+         zvUH2zbfFWrV0QaOe7yhOao/oMKX/Ld1VIvYxhZnxPkl6D4eOxlxcniATCUQPlWRHww1
+         Sg5Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWF41y4yB1PJMHlylBk9TKAfuO3Ubk5Pm2CZprDSRfHLvSStcf+1u3+5ZdPR5PiYI7rbc3a1TIdJp+gy8U4@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBXnjxdyuayiT8fBcWt96is7Sv9Zuf010ORW+XApgYvECCZjOL
+	9XK+WyxwNBSqtmGU8gnSLVTJudoR//Gxd3PoOOThxRiVeVnf6sY7Ad07MIeWve4U5w2KQDr3nxB
+	6PwkhScVh8AsHZmdiGpS6G7Q2Y9ynx5KhsBoUnQ==
+X-Google-Smtp-Source: AGHT+IFbM1gU4uS9xIx6y43JcKI8YAURVYh6pDj9pYXO/pSHTCFGSGpn1z9v/8HVe+Fc4cpzOy4crENudRNUXfcTqTk=
+X-Received: by 2002:a05:690c:ed6:b0:65f:77c3:63a0 with SMTP id
+ 00721157ae682-6d40dd7035amr137045667b3.7.1725352743184; Tue, 03 Sep 2024
+ 01:39:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: cache: qcom,llcc: add num-banks property
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Conor Dooley <conor@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240903-qcs8300_llcc_driver-v1-0-228659bdf067@quicinc.com>
- <20240903-qcs8300_llcc_driver-v1-1-228659bdf067@quicinc.com>
- <g7fyt57kzynzpux5nea2v22gcuu24asbr54axzms7mhdh4jq5a@xdyqifloofbk>
- <ac1b3ba2-ac57-411c-acdb-69d288d88355@quicinc.com>
- <21715065-c48a-4172-98ec-ce48c6a1126e@kernel.org>
-Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <21715065-c48a-4172-98ec-ce48c6a1126e@kernel.org>
+References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
+ <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-7-bdb05b4b5a2e@linaro.org>
+ <CAA8EJpqZjO9rfVgVkhyCpg9qfyc13MHtz=RRhZG6ihMsVM+bSA@mail.gmail.com> <CABymUCMCjYfXBOqXcLGZvH6CxU7Z_Qq1kKioZGC8PCORjtJM8Q@mail.gmail.com>
+In-Reply-To: <CABymUCMCjYfXBOqXcLGZvH6CxU7Z_Qq1kKioZGC8PCORjtJM8Q@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 3 Sep 2024 11:38:52 +0300
+Message-ID: <CAA8EJpr1YxwFE5k3F3wjP2Gtf9H7ve7751OwJp3dVNKYiGsnZA@mail.gmail.com>
+Subject: Re: [PATCH 07/21] drm/msm/dpu: Support dynamic DSC number
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4w54AiTzy5QvcFY8ll7gxavilQIAA0ZG
-X-Proofpoint-ORIG-GUID: 4w54AiTzy5QvcFY8ll7gxavilQIAA0ZG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-02_06,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- clxscore=1015 spamscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- bulkscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409030068
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, 3 Sept 2024 at 10:48, Jun Nie <jun.nie@linaro.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B48=E6=
+=9C=8829=E6=97=A5=E5=91=A8=E5=9B=9B 19:10=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > On Thu, 29 Aug 2024 at 13:20, Jun Nie <jun.nie@linaro.org> wrote:
+> > >
+> > > Do not assume DSC number as 2. Because there are 4 DSC in
+> > > quad pipe case.
+> >
+> > Please expand the commit message. You prefer brevity, but your
+> > comments lack clarifications.
+>
+> Is below message OK?
+>
+> Current DSC number is fixed to 2 for any DSC usage case. While there are
+> more usage case that involve different number of DSC engine, such 4 in
+> quad-pipe case with bonded-DSI scenario. So retrieve the real number with
+> this change.
+
+Please rewrite the last sentence. See
+Documentation/process/submitting-patches.rst "Describe your changes".
+
+>
+> >
+> > >
+> > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > > ---
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 4 ++--
+> > >  1 file changed, 2 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gp=
+u/drm/msm/disp/dpu1/dpu_encoder.c
+> > > index 6bdd9c21ff3ed..05b203be2a9bc 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > @@ -553,9 +553,9 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder=
+ *drm_enc)
+> > >                 if (dpu_enc->phys_encs[i])
+> > >                         intf_count++;
+> > >
+> > > -       /* See dpu_encoder_get_topology, we only support 2:2:1 topolo=
+gy */
+> > > +       /* DSC and mixer are mapped 1:1, so reuse the mixer number */
+> >
+> > Why? DSCmerge is a valid topology even if it is not supported yet.
+>
+> DSC merge is already supported in 2:2:1 topology without this patch
+> set. This change
+> is to get real DSC number in 4:4:2 topology, so that DSC merge can be
+> enabled for the
+> case.
+
+Yep, 3DMerge, not DSC Merge. Basically the comment about 1:1 is
+incorrect. See sde_rm.h
+
+Also it's "number of mixers", not "mixer number" (two different things).
+
+>
+> >
+> > >         if (dpu_enc->dsc)
+> > > -               num_dsc =3D 2;
+> > > +               num_dsc =3D dpu_crtc_get_lm_num(drm_enc->crtc->state)=
+;
+> > >
+> > >         return (num_dsc > 0) && (num_dsc > intf_count);
+> > >  }
+> > >
+> > > --
+> > > 2.34.1
+> > >
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
 
 
-On 9/3/2024 4:00 PM, Krzysztof Kozlowski wrote:
-> On 03/09/2024 09:30, Jingyi Wang wrote:
->>
->>
->> On 9/3/2024 3:10 PM, Krzysztof Kozlowski wrote:
->>> On Tue, Sep 03, 2024 at 02:21:29PM +0800, Jingyi Wang wrote:
->>>> Add a property "num-banks" for errata.
->>>
->>> This you said in commit subject and we see in the diff. You *MUST*
->>> explain why.
->>>
-Usually the num of LLCC banks is read from hardware, but there is errata
-on some SoCs to get the wrong bank num from LLCC_COMMON_STATUS0. Add a
-property "num-banks" to indicate the accurate data.
->>>>
->>>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
->>>> ---
->>>>  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 5 +++++
->>>>  1 file changed, 5 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->>>> index 68ea5f70b75f..03241b719c98 100644
->>>> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->>>> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->>>> @@ -56,6 +56,11 @@ properties:
->>>>      items:
->>>>        - const: multi-chan-ddr
->>>>  
->>>> +  num-banks:
->>>
->>> No vendor prefix? So this is generic property? Then add to some common
->>> schema with proper explanation WHY.
->>>
-
-will qcom,num-banks be okay?
-
->>>> +    $ref: /schemas/types.yaml#/definitions/uint32
->>>> +    description:
->>>> +      The num of llcc banks
->>>
->>> And what are llcc (or LLCC?) banks?
->>>
->>>
-
-LLCC banks means LLCC register regions with same memory size and reg offset
-and different memory base for LLCC configuration.
-
->> Will add the vendor prefix and description in the next series.
-> 
-> You did not provide rationale nor answer to concerns so far.
-> 
-> Best regards,
-> Krzysztof
-> 
-Thanks,
-Jingyi
+--=20
+With best wishes
+Dmitry
 
