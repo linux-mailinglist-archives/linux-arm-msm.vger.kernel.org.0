@@ -1,373 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-30463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30462-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 149D49694A6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:06:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F8BF969497
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:05:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 95A541F24652
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 07:06:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F1171F23DDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 07:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6FAF1D67AF;
-	Tue,  3 Sep 2024 07:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26BC61D619F;
+	Tue,  3 Sep 2024 07:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d9cxw9lm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NWs85Gwj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A101CE6EA;
-	Tue,  3 Sep 2024 07:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA5C1D6186;
+	Tue,  3 Sep 2024 07:05:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725347141; cv=none; b=bKw8gtNQi90nTfImCOf+OqQGAcMyo4pq3c86eWkXYMuhkRZIfnn6K2KBwAYF+2Jy/9elQve4q+xTrF/kj7eHOM3gmUmOjA0Q0B5NyBD5QseMn6bNTGUuW2fVqUI4eqpGQpghBdKlj3vakGzhXd3JZg2UtUwDUukRyn/pYqfm4zk=
+	t=1725347118; cv=none; b=CE5E5sNiRg2nUzYD9SwZL7fLV9fYihLZYBSGYE/YM6YkgQIHbLSrgDIBtFN8nQQ5jbN67HiBsIhADMQKftrLK4V62/9OwS8rbAoacxkmdWdPlbHA8BesYgR51ZKimTZc4MGiwy0yTZoNFRtYU3sG8VinjBkKygxw/hRP8SrfryY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725347141; c=relaxed/simple;
-	bh=5GaolwnLCSoMymCebjafmVmrbgRSIqHeQeiMovImkqw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gdXuwsG7PoGzCUcDFUYNrwyP6KHk3Ej1whxrvMXmjhu7YIaTLE9zlc2FCv29oYulb8DshFven5zo/UU0N5mCebMjmcz1wXYJrXPqd84DevGEF50bAMb73uxd988nAivylcawVRUNLtN+1XI6dG/u3RRxXA3L1kYGmjmb33Jqh0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d9cxw9lm; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 482NE6TG008272;
-	Tue, 3 Sep 2024 07:05:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ye396ih4RDlbZkUenphDf1DsaEEWV/ifYur6NO7zwcM=; b=d9cxw9lmFnINb3/r
-	RWI0vjBwVkJlKvEr5yOPWce/T4MrVwQNsGafWa67iaapCKWuCNN0Dv3W54TWQvdg
-	amVDASiNSNRMQTA9FzCzBHDF3bXZsdxxtr+NZjrNeceGGvlYaMNnVAj2jkfbrd43
-	xi/RR8CKybHt8BSQclrZDlbW/PTwZX3CyTuSwrQfnK8RxHFplQJuR0zU4vst9ET9
-	rzz5/SGRAg9+TWxvQN8/6YH4BNk7TrxumBBLKwxo7oSWx2XljrLxuCbR66auq0KE
-	wqv+QTZF4H0zgDWa3d6U6p/0XyQXwzK8uKmJgNJTaJRj1tfgna+PsyNhdB/ljzhU
-	lDYJ7A==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41buxf692y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Sep 2024 07:05:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48375BoJ014244
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Sep 2024 07:05:11 GMT
-Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
- 00:05:08 -0700
-Message-ID: <65026fea-c591-d072-e7e8-2abf1fd057ce@quicinc.com>
-Date: Tue, 3 Sep 2024 12:35:05 +0530
+	s=arc-20240116; t=1725347118; c=relaxed/simple;
+	bh=g0Cp1fv3EY9RybFOpZ16xUq2zvaYfPTo5AJYXb8Jf9U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oK1JDVke/+/dFu6tWCdtT0fU3a3p8R5fJhfLe584oWfV5+pliR2qPln7LpOE4YpmprmkFgNEWVYGJyfvHy6j0PnLtpPpw3J+3umTX49PGqTPYofr4Rtvg4YmtVC2NXPM5kYhShe2l6Kh4tph82ZPoOMthomTxbxYCLNHT4xXlb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWs85Gwj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94982C4CEC6;
+	Tue,  3 Sep 2024 07:05:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725347117;
+	bh=g0Cp1fv3EY9RybFOpZ16xUq2zvaYfPTo5AJYXb8Jf9U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NWs85Gwjo39OiZkBv/qSN9J64ksnsFTHSbphoxCcNqJ2RLRYejE0sSjXp5gcWFDDy
+	 B5krl2A46VMGdtiF666ZGJ4na7ukMpQLIRp1FpTezW8N9Bhn10lzt5OhkV7O/e+iFr
+	 jBe4qGuS5mWrsbowe5e+XLyvsEEnnOLuugAC3Hg1fiihljb/wJmZaEDX/hXLNpYZIW
+	 V9pqhlPjBN7OL1b8GlqD0e22aLrGCWszmXXgJIZMLzvr49TfPGOv2Rfd8EL8iH6cF6
+	 9dhaVYLTGo8aGLg+wPmwGIU7RdwSgdaXStEhgcFMQjh/nPfAqHEv9gYsCtn0MdG/OA
+	 BdsTTQ1/9TyiQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1slNbY-000000000tZ-370a;
+	Tue, 03 Sep 2024 09:05:32 +0200
+Date: Tue, 3 Sep 2024 09:05:32 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: x1e80100-t14s: Add external DP
+ support
+Message-ID: <Zta1PN-bvOyPYJCs@hovoldconsulting.com>
+References: <20240902-x1e80100-crd-dts-add-external-dp-support-v1-0-899c264c0eb7@linaro.org>
+ <20240902-x1e80100-crd-dts-add-external-dp-support-v1-2-899c264c0eb7@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 2/2] media: venus: Enable h.264 hierarchical coding
-Content-Language: en-US
-To: Fritz Koenig <frkoenig@chromium.org>,
-        Stanimir Varbanov
-	<stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: Nathan Hebert <nhebert@chromium.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240814-submit-v3-0-f7d05e3e8560@chromium.org>
- <20240814-submit-v3-2-f7d05e3e8560@chromium.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20240814-submit-v3-2-f7d05e3e8560@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: T1mArqI1fQrlrJEtSG7tDZaTEMyGbL5C
-X-Proofpoint-ORIG-GUID: T1mArqI1fQrlrJEtSG7tDZaTEMyGbL5C
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-02_06,2024-09-02_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- adultscore=0 clxscore=1011 mlxlogscore=999 lowpriorityscore=0 phishscore=0
- bulkscore=0 mlxscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2409030055
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240902-x1e80100-crd-dts-add-external-dp-support-v1-2-899c264c0eb7@linaro.org>
 
-
-
-On 8/15/2024 3:44 AM, Fritz Koenig wrote:
-> HFI supports hierarchical P encoding and the ability to specify the
-> bitrate for the different layers.
+On Mon, Sep 02, 2024 at 06:01:36PM +0300, Abel Vesa wrote:
+> The Lenovo Thinkpad T14s has only 2 USB Type-C ports, both of them
+> supporting external DP altmode. Between each QMP combo PHY and the
+> corresponding Type-C port, sits one Parade PS8830 retimer which handles
+> both orientation and SBU muxing. Add nodes for each retimer, fix the
+> graphs between connectors and the PHYs accordingly add the voltage
+> regulators needed by each retimer and then enable DP 0 and 1.
 > 
-> Connect the controls that V4L2 provides and HFI supports.
-> 
-> Signed-off-by: Fritz Koenig <frkoenig@chromium.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  drivers/media/platform/qcom/venus/core.h       |  4 ++
->  drivers/media/platform/qcom/venus/venc.c       | 85 +++++++++++++++---------
->  drivers/media/platform/qcom/venus/venc_ctrls.c | 92 ++++++++++++++++++++++++++
->  3 files changed, 151 insertions(+), 30 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 55202b89e1b9..fd46a7778d8c 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -26,6 +26,7 @@
->  #define VIDC_CLKS_NUM_MAX		4
->  #define VIDC_VCODEC_CLKS_NUM_MAX	2
->  #define VIDC_RESETS_NUM_MAX		2
-> +#define VIDC_MAX_HIER_CODING_LAYER 6
+>  .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts     | 278 ++++++++++++++++++++-
+>  1 file changed, 274 insertions(+), 4 deletions(-)
+ 			};
+> @@ -127,6 +143,90 @@ vreg_edp_3p3: regulator-edp-3p3 {
+>  		regulator-boot-on;
+>  	};
 >  
->  extern int venus_fw_debug;
->  
-> @@ -255,6 +256,7 @@ struct venc_controls {
->  	u32 rc_enable;
->  	u32 const_quality;
->  	u32 frame_skip_mode;
-> +	u32 layer_bitrate;
->  
->  	u32 h264_i_period;
->  	u32 h264_entropy_mode;
-> @@ -273,6 +275,8 @@ struct venc_controls {
->  	s32 h264_loop_filter_alpha;
->  	s32 h264_loop_filter_beta;
->  	u32 h264_8x8_transform;
-> +	u32 h264_hier_layers;
-> +	u32 h264_hier_layer_bitrate[VIDC_MAX_HIER_CODING_LAYER];
->  
->  	u32 hevc_i_qp;
->  	u32 hevc_p_qp;
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 3ec2fb8d9fab..af2c92069967 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -734,6 +734,29 @@ static int venc_set_properties(struct venus_inst *inst)
->  		if (ret)
->  			return ret;
->  
-> +		if (ctr->layer_bitrate) {
-> +			unsigned int i;
-> +
-> +			ptype = HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER;
-> +			ret = hfi_session_set_property(inst, ptype, &ctr->h264_hier_layers);
-> +			if (ret)
-> +				return ret;
-> +
-> +			ptype = HFI_PROPERTY_CONFIG_VENC_HIER_P_ENH_LAYER;
-> +			ret = hfi_session_set_property(inst, ptype, &ctr->layer_bitrate);
-> +			if (ret)
-> +				return ret;
-> +
-> +			for (i = 0; i < ctr->h264_hier_layers; ++i) {
-> +				ptype = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE;
-> +				brate.bitrate = ctr->h264_hier_layer_bitrate[i];
-> +				brate.layer_id = i;
-> +
-> +				ret = hfi_session_set_property(inst, ptype, &brate);
-> +				if (ret)
-> +					return ret;
-> +			}
-> +		}
->  	}
->  
->  	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-> @@ -823,45 +846,47 @@ static int venc_set_properties(struct venus_inst *inst)
->  			return ret;
->  	}
->  
-> -	if (!ctr->bitrate)
-> -		bitrate = 64000;
-> -	else
-> -		bitrate = ctr->bitrate;
-> +	if (!ctr->layer_bitrate) {
-> +		if (!ctr->bitrate)
-> +			bitrate = 64000;
-> +		else
-> +			bitrate = ctr->bitrate;
->  
-> -	ptype = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE;
-> -	brate.bitrate = bitrate;
-> -	brate.layer_id = 0;
-> +		ptype = HFI_PROPERTY_CONFIG_VENC_TARGET_BITRATE;
-> +		brate.bitrate = bitrate;
-> +		brate.layer_id = 0;
->  
-> -	ret = hfi_session_set_property(inst, ptype, &brate);
-> -	if (ret)
-> -		return ret;
-> +		ret = hfi_session_set_property(inst, ptype, &brate);
-> +		if (ret)
-> +			return ret;
->  
-> -	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-> -	    inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-> -		ptype = HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER;
-> -		if (ctr->header_mode == V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE)
-> -			en.enable = 0;
-> +		if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
-> +				inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
-> +			ptype = HFI_PROPERTY_CONFIG_VENC_SYNC_FRAME_SEQUENCE_HEADER;
-> +			if (ctr->header_mode == V4L2_MPEG_VIDEO_HEADER_MODE_SEPARATE)
-why move this ctrl setting inside ctr->layer_bitrate check?
-I don't think this depends on layer bitrate.
+> +	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
 
-Thanks,
-Dikshita
-> +				en.enable = 0;
-> +			else
-> +				en.enable = 1;
+Please consider spelling out "retimer". It seems it's mostly you that
+use "rtmr" in the kernel currently, and not sure saving those three
+chars is worth the cost in readability.
+
+But if this is what these rails are called in the (CRD) schematics (I
+didn't check), then just ignore this comment.
+
+> +		compatible = "regulator-fixed";
 > +
-> +			ret = hfi_session_set_property(inst, ptype, &en);
-> +			if (ret)
-> +				return ret;
-> +		}
+> +		regulator-name = "VREG_RTMR0_1P15";
+> +		regulator-min-microvolt = <1150000>;
+> +		regulator-max-microvolt = <1150000>;
 > +
-> +		if (!ctr->bitrate_peak)
-> +			bitrate *= 2;
->  		else
-> -			en.enable = 1;
-> +			bitrate = ctr->bitrate_peak;
+> +		gpio = <&pm8550ve_8_gpios 8 GPIO_ACTIVE_HIGH>;
+> +		enable-active-high;
+> +
+> +		pinctrl-0 = <&rtmr0_1p15_reg_en>;
+> +		pinctrl-names = "default";
+> +	};
+
+Please keep the nodes sorted by name (by moving the retimer nodes below
+the nvme regulator.
+
+>  	vreg_nvme: regulator-nvme {
+>  		compatible = "regulator-fixed";
 >  
-> -		ret = hfi_session_set_property(inst, ptype, &en);
-> +		ptype = HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE;
-> +		brate.bitrate = bitrate;
-> +		brate.layer_id = 0;
-> +
-> +		ret = hfi_session_set_property(inst, ptype, &brate);
->  		if (ret)
->  			return ret;
->  	}
+> @@ -484,6 +584,111 @@ keyboard@3a {
+>  	};
+>  };
 >  
-> -	if (!ctr->bitrate_peak)
-> -		bitrate *= 2;
-> -	else
-> -		bitrate = ctr->bitrate_peak;
-> -
-> -	ptype = HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE;
-> -	brate.bitrate = bitrate;
-> -	brate.layer_id = 0;
-> -
-> -	ret = hfi_session_set_property(inst, ptype, &brate);
-> -	if (ret)
-> -		return ret;
-> -
->  	ptype = HFI_PROPERTY_PARAM_VENC_SESSION_QP;
->  	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_HEVC) {
->  		quant.qp_i = ctr->hevc_i_qp;
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 3e1f6f26eddf..e340783a4ef2 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -346,6 +346,55 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
->  
->  		ctr->h264_8x8_transform = ctrl->val;
->  		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_TYPE:
-> +		if (ctrl->val != V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P)
-> +			return -EINVAL;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING:
-> +		ctr->layer_bitrate = ctrl->val;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_LAYER:
-> +		if (ctrl->val > VIDC_MAX_HIER_CODING_LAYER)
-> +			return -EINVAL;
-> +		ctr->h264_hier_layers = ctrl->val;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L0_BR:
-> +		ctr->h264_hier_layer_bitrate[0] = ctrl->val;
-> +		ret = dynamic_bitrate_update(inst, ctr->h264_hier_layer_bitrate[0], 0);
-> +		if (ret)
-> +			return ret;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L1_BR:
-> +		ctr->h264_hier_layer_bitrate[1] = ctrl->val;
-> +		ret = dynamic_bitrate_update(inst, ctr->h264_hier_layer_bitrate[1], 1);
-> +		if (ret)
-> +			return ret;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L2_BR:
-> +		ctr->h264_hier_layer_bitrate[2] = ctrl->val;
-> +		ret = dynamic_bitrate_update(inst, ctr->h264_hier_layer_bitrate[2], 2);
-> +		if (ret)
-> +			return ret;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L3_BR:
-> +		ctr->h264_hier_layer_bitrate[3] = ctrl->val;
-> +		ret = dynamic_bitrate_update(inst, ctr->h264_hier_layer_bitrate[3], 3);
-> +		if (ret)
-> +			return ret;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L4_BR:
-> +		ctr->h264_hier_layer_bitrate[4] = ctrl->val;
-> +		ret = dynamic_bitrate_update(inst, ctr->h264_hier_layer_bitrate[4], 4);
-> +		if (ret)
-> +			return ret;
-> +		break;
-> +	case V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L5_BR:
-> +		ctr->h264_hier_layer_bitrate[5] = ctrl->val;
-> +		ret = dynamic_bitrate_update(inst, ctr->h264_hier_layer_bitrate[5], 5);
-> +		if (ret)
-> +			return ret;
-> +		break;
+> +&i2c3 {
+> +	clock-frequency = <400000>;
 > +
->  	default:
->  		return -EINVAL;
->  	}
-> @@ -628,6 +677,49 @@ int venc_ctrl_init(struct venus_inst *inst)
->  			  V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD, 0,
->  			  ((4096 * 2304) >> 8), 1, 0);
->  
-> +	if (IS_V4(inst->core) || IS_V6(inst->core)) {
-> +		v4l2_ctrl_new_std_menu(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				       V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_TYPE,
-> +				       V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P,
-> +				       1, V4L2_MPEG_VIDEO_H264_HIERARCHICAL_CODING_P);
+> +	status = "okay";
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING, 0, 1, 1, 0);
+> +	typec-mux@8 {
+> +		compatible = "parade,ps8830";
+> +		reg = <0x08>;
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIERARCHICAL_CODING_LAYER, 0,
-> +				  VIDC_MAX_HIER_CODING_LAYER, 1, 0);
+> +		clocks = <&rpmhcc RPMH_RF_CLK3>;
+> +		clock-names = "xo";
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L0_BR,
-> +				  BITRATE_MIN, BITRATE_MAX, BITRATE_STEP, BITRATE_DEFAULT);
+> +		vdd15-supply = <&vreg_rtmr0_1p15>;
+
+As Konrad already pointed on the retimer patch, this one should be name
+vdd115 or similar.
+
+> +		vdd18-supply = <&vreg_rtmr0_1p8>;
+> +		vdd33-supply = <&vreg_rtmr0_3p3>;
+
+> +&i2c7 {
+> +	clock-frequency = <400000>;
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L1_BR,
-> +				  BITRATE_MIN, BITRATE_MAX,
-> +				  BITRATE_STEP, BITRATE_DEFAULT);
+> +	status = "okay";
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L2_BR,
-> +				  BITRATE_MIN, BITRATE_MAX,
-> +				  BITRATE_STEP, BITRATE_DEFAULT);
+> +	typec-mux@8 {
+> +		compatible = "parade,ps8830";
+> +		reg = <0x8>;
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L3_BR,
-> +				  BITRATE_MIN, BITRATE_MAX,
-> +				  BITRATE_STEP, BITRATE_DEFAULT);
+> +		clocks = <&rpmhcc RPMH_RF_CLK4>;
+> +		clock-names = "xo";
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L4_BR,
-> +				  BITRATE_MIN, BITRATE_MAX,
-> +				  BITRATE_STEP, BITRATE_DEFAULT);
+> +		vdd15-supply = <&vreg_rtmr1_1p15>;
+> +		vdd18-supply = <&vreg_rtmr1_1p8>;
+> +		vdd33-supply = <&vreg_rtmr1_3p3>;
 > +
-> +		v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
-> +				  V4L2_CID_MPEG_VIDEO_H264_HIER_CODING_L5_BR,
-> +				  BITRATE_MIN, BITRATE_MAX,
-> +				  BITRATE_STEP, BITRATE_DEFAULT);
-> +	}
+> +		reset-gpios = <&tlmm 176 GPIO_ACTIVE_HIGH>;
 > +
->  	ret = inst->ctrl_handler.error;
->  	if (ret)
->  		goto err;
-> 
+> +		retimer-switch;
+> +		orientation-switch;
+> +
+> +		ports {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +
+> +			port@0 {
+> +				reg = <0>;
+> +
+> +				retimer_ss1_ss_out: endpoint {
+> +					remote-endpoint = <&pmic_glink_ss1_ss_in>;
+> +				};
+> +			};
+> +
+> +			port@1 {
+> +				reg = <1>;
+> +
+> +				retimer_ss1_ss_in: endpoint {
+> +					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
+> +				};
+> +			};
+> +
+> +			port@2 {
+> +				reg = <2>;
+> +
+> +				retimer_ss1_con_sbu_out: endpoint {
+> +					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
+> +				};
+> +			};
+> +
+
+Stray newline.
+
+> +		};
+> +	};
+> +};
+
+> +	rtmr1_3p3_reg_en: rtmr1-3p3-reg-en-state {
+> +		pins = "gpio186";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-disable;
+> +	};
+> +
+> +
+
+Stray newline.
+
+>  	wcd_default: wcd-reset-n-active-state {
+>  		pins = "gpio191";
+>  		function = "gpio";
+
+Johan
 
