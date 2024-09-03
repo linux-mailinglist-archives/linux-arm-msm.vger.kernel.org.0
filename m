@@ -1,143 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-30490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C14C596970F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 10:30:28 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59F64969730
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 10:35:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30760B22B8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 08:30:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F94C1F2502D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 08:35:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E51E81DAC5D;
-	Tue,  3 Sep 2024 08:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AC332139D4;
+	Tue,  3 Sep 2024 08:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b9ZCm+Hb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="iqIlh8kK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488571A2643
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 08:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C361D54D3;
+	Tue,  3 Sep 2024 08:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725352223; cv=none; b=HsH6Xma2f3u0sX5gHJUiIXdZRXfKF+3mcmh0SGkWJpHM/9LhYkQbUhJ4djEl+5GoElJbxr9JFnwHoDyopC5Mr3n1v5FVa/eLQ8qsa+Gs0Mep8ZZImgsRY1QGFYtGatSK+vchkQJyRxez0S0ItANRxIgzDmfsLWy3RJ/ExCH4xEI=
+	t=1725352496; cv=none; b=VQgzwpU0jJLy6qPQYgxy4mKBhK/GSz93rfTUnCVgBI1HtjAcptPXg05v4Ul3Rb8/ss2Ip5WFodYYjE8O4J2fWv1+S5HNWxUStL/qFmUmF7pK6fiA9Kf/frHGjpywWQKL1MnEKaIldDdou3Vae0Jvc9kouCfKZy+H5dojkaQmRTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725352223; c=relaxed/simple;
-	bh=7JLA6SwNTAG/M4bSvCUM1V19PPQJ03NHMutZLhv2tcE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fRdjvkxD+goJkU56CdEt+OdmBXZ8UeFzy1v/yi9KDhGpXafrNe67wC8nAIiG2W1YimYQ/EH3RVaqYZ8wf0zQvvKPqWNwxG98ApNdW/zzpYCrpsDAQpHlmlCUxWeYL8q2i9dko6vG9PXQK5lfPYela909pxyAoM9su/KiXKCpmVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b9ZCm+Hb; arc=none smtp.client-ip=209.85.128.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6bada443ffeso38522067b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 01:30:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725352221; x=1725957021; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7JLA6SwNTAG/M4bSvCUM1V19PPQJ03NHMutZLhv2tcE=;
-        b=b9ZCm+HbXFGhfPtrZmGqjHRJ4qCpoWV4TkDXBkvsz6hat136XKzTiFGVIDCbWqtKuz
-         xOLftlwMhPJ/7nlMT/kWrrMzeQm7llJKugQ8sMHnz/HPMz1Zsj6x8Lw+uY7Q/1VfsH0e
-         pFfjB10wT0y1Nr87ujNbS0zkiuXoxn/+Fghb/4psgCtr9+mJOF03MhSPxzWJkPl46Uo3
-         /JF5NRpqrxlRab5Q2cocKLTzNhernE8FK2T99EXrG/b3SfiyZrpT6RfTLFogWGMlIL/t
-         x1tM6pAE4Qb0BJCOnODvT+IwdwelO8kYOIrIOQuQnLnuXxCQPBo95Z4Tr0YWL0xjtKBV
-         UChw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725352221; x=1725957021;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7JLA6SwNTAG/M4bSvCUM1V19PPQJ03NHMutZLhv2tcE=;
-        b=K8n1nYREcEMCM45T+uNBueFhG+oTG4QqliuXtAMOZwFArCt5/lIc4T/9IZBUEFX+Ml
-         4jdkr61hXdsLeZn2qqrQ0WvlFC5bKMu7M0abL+lALFoj8tRBvHQdkGMImlF/HeLsLqvM
-         ZQnb/gbM61VFLLMLRqldKQv3TRQtx/8EU5uET32UibDlkTaALgPDOks295hj4DKjD0uw
-         eYksMTJuuf6TJGJpe6S7d5ynjnw4Ev9Gf30XnkQPk+160VLZHoHttU0/khN31sXJWWm3
-         hHpz5Yga+v1pMxasoAlW6DXrtZa06ZItR1nx8O07vHjAv3RwABrq3q9QaEBfzDaXCwoG
-         daPw==
-X-Forwarded-Encrypted: i=1; AJvYcCVPo68cIS6BevqYu7QqRs8aYVjyvPdepu9VUFlFKxL0tD1FoSTGchbb48H08e9f4CV4huRGTzjY/P9+EitD@vger.kernel.org
-X-Gm-Message-State: AOJu0YyLEj/o7y+FTX4YSEriPeNE2VF3bIdiT3sQpKcTrdhS0m8/OtAv
-	694Adip36o3V55au8ZPt4TXuOIRNx8IRRIU0h10w88ABIGtkDmmCBQC4gFLFz3dDVxuLPDJ1XBP
-	6rXrI8ybyFgegQq2ZLx+IH1HDpn+JPx4bph8RFQ==
-X-Google-Smtp-Source: AGHT+IE6+IuJbo/Qa4C+ke6jr8gGlhel248tosjzF6z+OPZUMgyyXNzVAr6RoXE16AWMpicsRKxNkqNsZU1ZeXemP1I=
-X-Received: by 2002:a05:690c:f02:b0:6c7:a120:e104 with SMTP id
- 00721157ae682-6d3f7fabc73mr125792017b3.4.1725352221035; Tue, 03 Sep 2024
- 01:30:21 -0700 (PDT)
+	s=arc-20240116; t=1725352496; c=relaxed/simple;
+	bh=DcqVGHAbdkZJ7C2Cnme5LXeOG99gJt2c8w9Iy8Jn+z0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mNzQzNyTR4Ec6N8aRL5Vkeo0gkV6MdUDkfxsR5BbSeWCp2jV0gtm+3ChPDw6jIkUzE63dnkGOv4erQrFh9+QQKDdJnVtUfg7jcj6y74qhIjfQquPVxgxjfliDbtQB4ByezNugGuMRKc64LZZsY5kMBbhmAx8gnaerdBJ6Ab4m7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=iqIlh8kK; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1725352495; x=1756888495;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=DcqVGHAbdkZJ7C2Cnme5LXeOG99gJt2c8w9Iy8Jn+z0=;
+  b=iqIlh8kKSLVl3TWKrIhSoL/Veh+V7Gb3QzcykSQgsr4x+7oVTd3avF63
+   JpLNZ65KdcDe5ChRXA/OKm9+84dBClNZBqFXB3nkvkF54OBWaglqryGPK
+   jbsD8EV2iptWU6WsF2K4vQQsU4vFXLuulQA1/rQA1WcM0qOGlWudz9e+C
+   +pZ1IWc9sPncx2P91ub072WIKcenNnmlJx8HMou8S5SfBloAxdEgrS5ov
+   cVF7eg7A0Cgo0V8FV8voQBDslag1rfm18uF391UDfAriy9EEYsUJlpQpz
+   vYA4qlYZOg94BhbvkbqGBk55hBTRxmoS7OvBEzOuhZETQ0jcXgBGAyF9+
+   A==;
+X-CSE-ConnectionGUID: klY8aux4RD2TMCT4VsT8zA==
+X-CSE-MsgGUID: GAOT8KMiR22934+TfaLC3Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11183"; a="34591477"
+X-IronPort-AV: E=Sophos;i="6.10,198,1719903600"; 
+   d="scan'208";a="34591477"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2024 01:34:54 -0700
+X-CSE-ConnectionGUID: qMqO0RE1TBOYiHK3mMpRoA==
+X-CSE-MsgGUID: FHA1mpkLQnmg+WEKl/nAqw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,198,1719903600"; 
+   d="scan'208";a="95636522"
+Received: from lkp-server01.sh.intel.com (HELO 9c6b1c7d3b50) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 03 Sep 2024 01:34:51 -0700
+Received: from kbuild by 9c6b1c7d3b50 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1slOzw-0006Po-2k;
+	Tue, 03 Sep 2024 08:34:48 +0000
+Date: Tue, 3 Sep 2024 16:33:51 +0800
+From: kernel test robot <lkp@intel.com>
+To: Johan Hovold <johan+linaro@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: oe-kbuild-all@lists.linux.dev, Jiri Slaby <jirislaby@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	=?iso-8859-1?Q?'N=EDcolas_F_=2E_R_=2E_A_=2E?= Prado' <nfraprado@collabora.com>,
+	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org
+Subject: Re: [PATCH 6/8] serial: qcom-geni: fix console corruption
+Message-ID: <202409031521.hMYVfAjO-lkp@intel.com>
+References: <20240902152451.862-7-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
- <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-2-bdb05b4b5a2e@linaro.org>
- <CAA8EJpp_LWmuN8CFuQEAME-O44_wJXUKsR1QwahuigzSss5Rqw@mail.gmail.com> <CABymUCPXDTCVeeC0s+1UyuqYF0XNW55qtOBV9--BOoSjAzVjkg@mail.gmail.com>
-In-Reply-To: <CABymUCPXDTCVeeC0s+1UyuqYF0XNW55qtOBV9--BOoSjAzVjkg@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 3 Sep 2024 11:30:09 +0300
-Message-ID: <CAA8EJppMkd4QmQHiFGNQNRyCh6S3BGqcQ7Deoag25AjH9rJwdA@mail.gmail.com>
-Subject: Re: [PATCH 02/21] drm/msm/dsi: fix DSC width for the bonded DSI case
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240902152451.862-7-johan+linaro@kernel.org>
 
-On Tue, 3 Sept 2024 at 10:32, Jun Nie <jun.nie@linaro.org> wrote:
->
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B48=E6=
-=9C=8829=E6=97=A5=E5=91=A8=E5=9B=9B 18:54=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On Thu, 29 Aug 2024 at 13:19, Jun Nie <jun.nie@linaro.org> wrote:
-> > >
-> > > From: Jonathan Marek <jonathan@marek.ca>
-> > >
-> > > For the bonded DSI case, DSC pic_width and timing calculations should=
- use
-> > > the width of a single panel instead of the total combined width.
-> >
-> > What is a "single panel"? Please rephrase the commit message so that
-> > it reads logically.
->
-> Yeah, it is a bit confusing without the usage case explanation. "single D=
-SI
-> interface" shall be much better here. Because bonded-DSI can work with
-> a single panel with 2 DSI, or with 2 panels with one DSI on each panel.
+Hi Johan,
 
-Yes, it sounds much better.
+kernel test robot noticed the following build warnings:
 
-> >
-> > >
-> > > Bonded DSI can be used to drive a single panel having two input
-> > > channels, or to drive two panels with a input channel on every panel =
-that
-> > > behave like single panel for display controller.
-> >
-> > Missing actual action. See Documentation/process/submitting-patches.rst
-> >
-> > >
-> > > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> >
-> > As pointed out during internal review, missing Fixes tag. Any reason
-> > for ignoring it?
->
-> Sorry, it is missed by mistaken. I am just more familiar with
-> "Signed-off-by" than
-> "Fixes:" tag, so not sensitive to Fixed tag and miss it when you
-> mention it. Will
-> add it.
+[auto build test WARNING on tty/tty-testing]
+[also build test WARNING on tty/tty-next tty/tty-linus driver-core/driver-core-testing driver-core/driver-core-next driver-core/driver-core-linus usb/usb-testing usb/usb-next usb/usb-linus linus/master v6.11-rc6 next-20240902]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Well, the regular rule of reviews applies: if you don't agree or don't
-understand, please reply first.
+url:    https://github.com/intel-lab-lkp/linux/commits/Johan-Hovold/serial-qcom-geni-fix-fifo-polling-timeout/20240902-232801
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
+patch link:    https://lore.kernel.org/r/20240902152451.862-7-johan%2Blinaro%40kernel.org
+patch subject: [PATCH 6/8] serial: qcom-geni: fix console corruption
+config: arc-randconfig-001-20240903 (https://download.01.org/0day-ci/archive/20240903/202409031521.hMYVfAjO-lkp@intel.com/config)
+compiler: arc-elf-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240903/202409031521.hMYVfAjO-lkp@intel.com/reproduce)
 
---=20
-With best wishes
-Dmitry
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202409031521.hMYVfAjO-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/tty/serial/qcom_geni_serial.c:314:13: warning: 'qcom_geni_serial_drain_fifo' defined but not used [-Wunused-function]
+     314 | static void qcom_geni_serial_drain_fifo(struct uart_port *uport)
+         |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+vim +/qcom_geni_serial_drain_fifo +314 drivers/tty/serial/qcom_geni_serial.c
+
+   313	
+ > 314	static void qcom_geni_serial_drain_fifo(struct uart_port *uport)
+   315	{
+   316		struct qcom_geni_serial_port *port = to_dev_port(uport);
+   317	
+   318		if (!qcom_geni_serial_main_active(uport))
+   319			return;
+   320	
+   321		qcom_geni_serial_poll_bitfield(uport, SE_GENI_M_GP_LENGTH, GP_LENGTH,
+   322				port->tx_queued);
+   323	}
+   324	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
