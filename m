@@ -1,204 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-30509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E59C9699BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 12:08:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 67CCC9699CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 12:12:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D28431F21AF0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 10:08:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CC9C1F2381B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 10:12:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACE041AD246;
-	Tue,  3 Sep 2024 10:08:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jMwAti1/"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DEF545003;
+	Tue,  3 Sep 2024 10:12:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C3317C9B3
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 10:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0C219CC27
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 10:12:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.144.164.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725358092; cv=none; b=SYwQ1MO+Xg7mmfNpUlYNYR0VU2L1da+QUnTD/q6Lylgoth78WQ1OboPyAjaIWU3HCnTtW+Lsmr6Cf1IfYJ13CsOt2WdkEEorsRw3S+/a+IkDPzNL3ipTJr5xDTDdXfCyZkLWDFFcJYCTYtmyNx4FRGjv3hYX7eBN1IDdaK6jdIY=
+	t=1725358373; cv=none; b=MkMy6UB9k02aJ/FEx8JSiwzEhbL8Nxp/+/H7pvrUy6q3NI03Z/hCcXlvrlCv0ZEqrf8T8mEi2g0hpfsF5yQG2v5FYqCH6rrha05w8yaCv2jBxLXsUgE9tOd++aXRJs4Y2YlPqOnXQSKjJPsqt+TY3MeWnRhWk3ych0cft488u64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725358092; c=relaxed/simple;
-	bh=6bTRYQZHTglWTJC7wyHP20pyge5C84o1/IGAmWaRwf0=;
+	s=arc-20240116; t=1725358373; c=relaxed/simple;
+	bh=9zyLZkZi3WvUWzvDtDcI/uI3OMpeVONHVVckewC3Twc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aHnNKlqy/8r+vPRNUI3zaVjaYJQqCJHwmsomLxcsnfcoye0O3kL7PjbY+vecxRTITm3MUgtwtEWLFK5qPWohNtK3s6SbaPP6gc45oouvYTPOoWDEwjY2Laf3hn/WBwDsf1sMPh3vbk4FwGby6XEOZ7Uay3lW8rn2cYpHocK81O4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jMwAti1/; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2f3f68dd44bso54193071fa.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 03:08:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725358089; x=1725962889; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0e+/bOJFRqb0nes1Q9jMToVP1YJTjUlu3i/U84Ta6UA=;
-        b=jMwAti1/LOWzUL3x7sa8Uzvlk73tnuwpphcW0l6+fhlAQsajzZCbZsFKXLbwl0YRox
-         5WJgljxViOHU7XnnGtj0JomxUXZCBr23hsBEZc6CmYLscfEGIOJSI+K9jDrT71A0Mqw9
-         rQAHTNO6wKJaCcInKn1fH1QLjL1J5CJXaWgC+Cmr+usvDx9O7qRSB9u2EmOICDj3bBE4
-         TkUviGfybJ6Ma1CF3cw08a1Ky2WUK7Q+ksfVHoGKQTbMbcrnt9/6iJiZJtSxioyMU6KR
-         QIdkFaJB1wEQlJdaNrhSWrRh+9Zfr/csWhw/1P8o7O8MwGWK8VLjpCT+EXKOnDWrcFNx
-         buhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725358089; x=1725962889;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0e+/bOJFRqb0nes1Q9jMToVP1YJTjUlu3i/U84Ta6UA=;
-        b=dAJoK25ikX7v0rKPSS+Qj5MT9JPtcE9HFHVTWKtKRvwaihShVI67tHYsyBGMuBM1Tj
-         S/EJ5Wow+znk2kTTvvpzQa/b6YBqFYgAg5pXTPLDggQNSeirfnZjIiWdqUw+1VtkdIG5
-         jEGzAzT5kukwQk6PP6+I59G0tG6nwBa9K+F62Mg9q9T0czK3j7OwIZpoU2Q3Sf4aFvvr
-         UTG/xFRedIGOuwOV1HvkGB6aIFwpXmxUdY8qOMo2Y8ZBhqRKjTWOqml+ta9N5XCTwq1d
-         pCIX6aiNubpuVQ3aFzjkOalFyUXniWYAPaCDfthc+xstDcT51IJbs4A897VzvHBKkUSq
-         jGNg==
-X-Forwarded-Encrypted: i=1; AJvYcCXBDGmrfAJ4JRkF2giFjHfhYgr5GxHnqYNHjjurA2dfw0zgZqkDGM0jrYXHVMIqKDEo7eI0CTfaxGk2G3bj@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZ/8WPlFdk4W+9R5K+ghPYXmx258M7Ese16S3d/gI78ZONnRcu
-	aiAdDbFN65SRpJFXHoQn/MI/3xjz9USFbDsaFbYxNit8yEXjIZLqDh76apuuANc=
-X-Google-Smtp-Source: AGHT+IHURSxn8JuHtVJVvoiEiZTlTfhw8w8J8/Z7bW8FeSLPqZdVZHzr8ZEPh/23jMl+hcIYhPbHaA==
-X-Received: by 2002:a05:651c:550:b0:2f5:11f6:1b24 with SMTP id 38308e7fff4ca-2f61e0562admr98342451fa.18.1725358088606;
-        Tue, 03 Sep 2024 03:08:08 -0700 (PDT)
-Received: from linaro.org ([84.232.173.69])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c24b5ad63dsm3808995a12.80.2024.09.03.03.08.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 03:08:08 -0700 (PDT)
-Date: Tue, 3 Sep 2024 13:08:06 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Rajendra Nayak <quic_rjendra@quicinc.com>, bp@alien8.de,
-	tony.luck@intel.com, mchehab@kernel.org, rric@kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org,
-	quic_sibis@quicinc.com, linux-arm-msm@vger.kernel.org,
-	linux-edac@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] EDAC/qcom: Make irq configuration optional
-Message-ID: <ZtbgBqYNDBr5d/fy@linaro.org>
-References: <20240903060138.3191160-1-quic_rjendra@quicinc.com>
- <ZtbG9plGQfUqVvXo@linaro.org>
- <20240903082720.zcln2da4y6kxju5g@thinkpad>
+	 Content-Type:Content-Disposition:In-Reply-To; b=A6EdDxo3B1h/4g8Qmsov7hXedj1zHvqfMKqJK8gMIE5LpB1DMh5jguJU2M7pri4emzJEYW/R5tSWvsK8kkJrSb+uuuJMoOj4uW1kkP3tXtLzGJFgfEJ0b3Ifn1n4JdTyob09SgYfq7/6vUXigTN8qJ8avlxfz9MrVyvCBzJM+lI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org; spf=pass smtp.mailfrom=somainline.org; arc=none smtp.client-ip=5.144.164.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=somainline.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=somainline.org
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7D02E3EDDE;
+	Tue,  3 Sep 2024 12:12:47 +0200 (CEST)
+Date: Tue, 3 Sep 2024 12:12:46 +0200
+From: Marijn Suijten <marijn.suijten@somainline.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 03/21] drm/msm/dsi: pass the right width to dsc
+Message-ID: <6kecwqe5npysc3rup5tkij5iepgk3pf5erattfv25caedixaml@6zev3sdwjjbu>
+References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
+ <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-3-bdb05b4b5a2e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240903082720.zcln2da4y6kxju5g@thinkpad>
+In-Reply-To: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-3-bdb05b4b5a2e@linaro.org>
 
-On 24-09-03 13:57:20, Manivannan Sadhasivam wrote:
-> On Tue, Sep 03, 2024 at 11:21:10AM +0300, Abel Vesa wrote:
-> > On 24-09-03 11:31:38, Rajendra Nayak wrote:
-> > > On most modern qualcomm SoCs, the configuration necessary to enable the
-> > > Tag/Data RAM realted irqs being propagated to the SoC irq controller is
-> > 
-> > Nitpick: s/realted/related/
-> > 
-> > > already done in firmware (in DSF or 'DDR System Firmware')
-> > > 
-> > > On some like the x1e80100, these registers aren't even accesible to the
-> > > kernel causing a crash when edac device is probed.
-> > > 
-> > > Hence, make the irq configuration optional in the driver and mark x1e80100
-> > > as the SoC on which this should be avoided.
-> > > 
-> > > Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-> > 
-> > Not sure about this fixes tag though.
-> > 
+On 2024-08-29 18:17:32, Jun Nie wrote:
+> Data width for dsc engine is aligned with pipe, not with whole screen
+> width. Because the width may be halved in DSI bonded case.
 > 
-> Because, this commit introduced LLCC node which triggers the probe of the EDAC
-> driver leading to the crash.
+> The dsc width is not related to the timing with back front porch in
+> later stage, so update dsc timing earlier.
 > 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
 
-Fair enough.
+I already sent a patch for this:
+https://lore.kernel.org/linux-arm-msm/20240417-drm-msm-initial-dualpipe-dsc-fixes-v1-2-78ae3ee9a697@somainline.org/
 
-> - Mani
+And then came up with a better solution, outlined in:
+https://lore.kernel.org/linux-arm-msm/7fqwkryeumkt7zxsec6va7ys22nfs3tr4rrcz323extdz3f6zv@w4uu2lk4uh7v/
+
+Would you mind dropping this patch so that I can send a better solution?
+
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 13 ++++++-------
+>  1 file changed, 6 insertions(+), 7 deletions(-)
 > 
-> > > Reported-by: Bjorn Andersson <andersson@kernel.org>
-> > > Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> > > ---
-> > >  drivers/edac/qcom_edac.c           | 8 +++++---
-> > >  drivers/soc/qcom/llcc-qcom.c       | 3 +++
-> > >  include/linux/soc/qcom/llcc-qcom.h | 2 ++
-> > >  3 files changed, 10 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-> > > index d3cd4cc54ace..96611ca09ac5 100644
-> > > --- a/drivers/edac/qcom_edac.c
-> > > +++ b/drivers/edac/qcom_edac.c
-> > > @@ -342,9 +342,11 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
-> > >  	int ecc_irq;
-> > >  	int rc;
-> > >  
-> > > -	rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
-> > > -	if (rc)
-> > > -		return rc;
-> > > +	if (!llcc_driv_data->ecc_irq_configured) {
-> > > +		rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
-> > > +		if (rc)
-> > > +			return rc;
-> > > +	}
-> > >  
-> > >  	/* Allocate edac control info */
-> > >  	edev_ctl = edac_device_alloc_ctl_info(0, "qcom-llcc", 1, "bank",
-> > > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> > > index 8fa4ffd3a9b5..b1c0ae9991d6 100644
-> > > --- a/drivers/soc/qcom/llcc-qcom.c
-> > > +++ b/drivers/soc/qcom/llcc-qcom.c
-> > > @@ -139,6 +139,7 @@ struct qcom_llcc_config {
-> > >  	int size;
-> > >  	bool need_llcc_cfg;
-> > >  	bool no_edac;
-> > > +	bool irq_configured;
-> > >  };
-> > >  
-> > >  struct qcom_sct_config {
-> > > @@ -718,6 +719,7 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
-> > >  		.need_llcc_cfg	= true,
-> > >  		.reg_offset	= llcc_v2_1_reg_offset,
-> > >  		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-> > > +		.irq_configured = true,
-> > >  	},
-> > >  };
-> > >  
-> > > @@ -1345,6 +1347,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
-> > >  	drv_data->cfg = llcc_cfg;
-> > >  	drv_data->cfg_size = sz;
-> > >  	drv_data->edac_reg_offset = cfg->edac_reg_offset;
-> > > +	drv_data->ecc_irq_configured = cfg->irq_configured;
-> > >  	mutex_init(&drv_data->lock);
-> > >  	platform_set_drvdata(pdev, drv_data);
-> > >  
-> > > diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> > > index 9e9f528b1370..acad1f4cf854 100644
-> > > --- a/include/linux/soc/qcom/llcc-qcom.h
-> > > +++ b/include/linux/soc/qcom/llcc-qcom.h
-> > > @@ -125,6 +125,7 @@ struct llcc_edac_reg_offset {
-> > >   * @num_banks: Number of llcc banks
-> > >   * @bitmap: Bit map to track the active slice ids
-> > >   * @ecc_irq: interrupt for llcc cache error detection and reporting
-> > > + * @ecc_irq_configured: 'True' if firmware has already configured the irq propagation
-> > >   * @version: Indicates the LLCC version
-> > >   */
-> > >  struct llcc_drv_data {
-> > > @@ -139,6 +140,7 @@ struct llcc_drv_data {
-> > >  	u32 num_banks;
-> > >  	unsigned long *bitmap;
-> > >  	int ecc_irq;
-> > > +	bool ecc_irq_configured;
-> > >  	u32 version;
-> > >  };
-> > >  
-> > > -- 
-> > > 2.34.1
-> > > 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 7a4d9c071be5a..5abade8f26b88 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -953,7 +953,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  			return;
+>  		}
+>  
+> -		dsc->pic_width = mode->hdisplay;
+> +		dsc->pic_width = hdisplay;
+
+The other part of this already happened in patch 02/21?
+
+- Marijn
+
+>  		dsc->pic_height = mode->vdisplay;
+>  		DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
+>  
+> @@ -964,6 +964,11 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  		if (ret)
+>  			return;
+>  
+> +		if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO)
+> +			dsi_update_dsc_timing(msm_host, false, hdisplay);
+> +		else
+> +			dsi_update_dsc_timing(msm_host, true, hdisplay);
+> +
+>  		/*
+>  		 * DPU sends 3 bytes per pclk cycle to DSI. If widebus is
+>  		 * enabled, bus width is extended to 6 bytes.
+> @@ -990,9 +995,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  	}
+>  
+>  	if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
+> -		if (msm_host->dsc)
+> -			dsi_update_dsc_timing(msm_host, false, mode->hdisplay);
+> -
+>  		dsi_write(msm_host, REG_DSI_ACTIVE_H,
+>  			DSI_ACTIVE_H_START(ha_start) |
+>  			DSI_ACTIVE_H_END(ha_end));
+> @@ -1011,9 +1013,6 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  			DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
+>  			DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
+>  	} else {		/* command mode */
+> -		if (msm_host->dsc)
+> -			dsi_update_dsc_timing(msm_host, true, mode->hdisplay);
+> -
+>  		/* image data and 1 byte write_memory_start cmd */
+>  		if (!msm_host->dsc)
+>  			wc = hdisplay * mipi_dsi_pixel_format_to_bpp(msm_host->format) / 8 + 1;
 > 
 > -- 
-> மணிவண்ணன் சதாசிவம்
+> 2.34.1
+> 
 
