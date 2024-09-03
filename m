@@ -1,107 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-30430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72C79968EA8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 22:05:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DDFA9690C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 02:57:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3128728379B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Sep 2024 20:05:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6E402834E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 00:57:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 887FE1C62C3;
-	Mon,  2 Sep 2024 20:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5202C1A4E6E;
+	Tue,  3 Sep 2024 00:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPsrhTfc"
+	dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b="CIOB4dFi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out30-99.freemail.mail.aliyun.com (out30-99.freemail.mail.aliyun.com [115.124.30.99])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC1C1A2656;
-	Mon,  2 Sep 2024 20:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DC7A20;
+	Tue,  3 Sep 2024 00:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=115.124.30.99
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725307516; cv=none; b=Xgt43cLJy2sWL0SecPwEKjXP5sMBkogkqpwdC5yE+YGxx9r99s6jZTvZ65b9ip6FUCTPXKD7hGvCzg+3hBqkF9E4R7F8nzIRec10yst9If3iJb+pZ3hArVCCiipAgRJTi5u88Us0uAg/kTx0JETTs5YvdGiCCeBrPgEBoqXkGSM=
+	t=1725325024; cv=none; b=m6egQw2+YGd4YBNVoYRZhyelDOxBC4zieeBYs+iKtT7vCoka9g4PGg+GMh8vLtYRjpo3fBPplOJxfZssa8zbUSjGBEPBE0Ssi6uZL1umBbl6kk+YHe/9zZqaM22ySjaWIL4MR+HcHW3GQLgZakmCPJHJYMSstSsKF08y6siwWuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725307516; c=relaxed/simple;
-	bh=hTs8v+dIotmZYJZL8iDde0DHOaDQoZeGsavc9Jc1hYU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=W+WIm8nlthJkQlvgTts3hFGP+0ZfrV8q8969lXGTfy/d2yvxOeA7/HgeyIQJOaXRNf9lJwF8whWZxjbmfoUpIvfeyu0T+BKKpPtyhdThESCUB+6etVg4uXbyK9VIkR9kWGxuuBDkzSVKa0OkKrqAUC2fLB7+/nYlCVUjUW8nOxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPsrhTfc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7184C4CEC2;
-	Mon,  2 Sep 2024 20:05:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725307515;
-	bh=hTs8v+dIotmZYJZL8iDde0DHOaDQoZeGsavc9Jc1hYU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QPsrhTfc7DmbvvMNNcf/S2p88IYwck9izHx6jW5DkcF53RzIlsi8PAFGXBqXVyAlY
-	 fo+mH96KJJ4R5YrSAKTUrnmJ+N0QuRj1cORyi88VnZlSlKxyzT4WflvEdYBc3Byu0R
-	 58hJhTqPOC8sgcgZdcENiOniLjmmUgJJdPwxDVot+LaVZ/0+KNAklJuzf6CMRhuRkX
-	 EG51NGtRRzSXBsZqFWQT9YMlIVBvoZ1oVSKpHmBLw3nVIM+33b6ChZfOOixez+79bW
-	 KpoG0QHTsk769qTiuE+cS1LrGOtVMKWzc3ddziwIOGRhj214J3wau+jZo8nwsFbQjS
-	 iJ15BZ6PUMdxQ==
-Message-ID: <29c63407-d32a-4afd-ac92-498bf5855359@kernel.org>
-Date: Mon, 2 Sep 2024 22:05:10 +0200
+	s=arc-20240116; t=1725325024; c=relaxed/simple;
+	bh=2Rb1rrb9vlFmfD7dyqSuGhWuJzQKezZMlL4kXTVshmw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=RixEEcVqpHz6bhargIbOCXlrcZGr8yWtpMQNWJRUX3p1miS7MVMqFLUgFXLCOzNY33y0gU7vXXOyYP75SR9Sr7iqM2JKcBvCI96+J9CAVMDMNw29JcqTxe10DC77NPMSkrW/rTnCdnxTSnsPIKEY+w/b/mXxtIyR0R1hd8Ia+Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com; spf=pass smtp.mailfrom=linux.alibaba.com; dkim=pass (1024-bit key) header.d=linux.alibaba.com header.i=@linux.alibaba.com header.b=CIOB4dFi; arc=none smtp.client-ip=115.124.30.99
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.alibaba.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.alibaba.com
+DKIM-Signature:v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=linux.alibaba.com; s=default;
+	t=1725325018; h=From:To:Subject:Date:Message-Id:MIME-Version;
+	bh=6LvQLmmUBZPT66uPvu6WKjwYLJgMZ1Dy5+7biil4v3Q=;
+	b=CIOB4dFiAwZ3lX2P/wscBsSSsjO4TLKsqG5kifRZ3imnRkB+cAZ4E+mQ7ye8PVxks5f1VoK0BLl9Wy73vtiMvntcNoHeqjdWhYyiKOHa9+cf4WnYhRlfr88LFjgd2qiDMsZ2jOJxFA/kY9r0ZK3VHlST8UQBhpJkN4O4KWbr8Ck=
+Received: from localhost(mailfrom:yang.lee@linux.alibaba.com fp:SMTPD_---0WEB7hkY_1725325016)
+          by smtp.aliyun-inc.com;
+          Tue, 03 Sep 2024 08:56:57 +0800
+From: Yang Li <yang.lee@linux.alibaba.com>
+To: robdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	airlied@gmail.com
+Cc: linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Abaci Robot <abaci@linux.alibaba.com>
+Subject: [PATCH -next] drm/msm: Remove unneeded semicolon
+Date: Tue,  3 Sep 2024 08:56:55 +0800
+Message-Id: <20240903005655.4183-1-yang.lee@linux.alibaba.com>
+X-Mailer: git-send-email 2.32.0.3.g01195cf9f
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Enable external DP
- support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240902-x1e80100-crd-dts-add-external-dp-support-v1-0-899c264c0eb7@linaro.org>
- <20240902-x1e80100-crd-dts-add-external-dp-support-v1-1-899c264c0eb7@linaro.org>
- <th2x3gtx56fr7zuhhleuj77eghfe7kgbfhok7ul5egez4iq5v2@qy5wy4hxpb5s>
-Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <th2x3gtx56fr7zuhhleuj77eghfe7kgbfhok7ul5egez4iq5v2@qy5wy4hxpb5s>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2.09.2024 8:54 PM, Dmitry Baryshkov wrote:
-> On Mon, Sep 02, 2024 at 06:01:35PM GMT, Abel Vesa wrote:
->> The Qualcomm Snapdragon X Elite CRD board has 3 USB Type-C ports,
->> all of them supporting external DP altmode. Between each QMP
->> combo PHY and the corresponding Type-C port, sits one Parade PS8830
->> retimer which handles both orientation and SBU muxing. Add nodes for
->> each retimer, fix the graphs between connectors and the PHYs accordingly,
->> add the voltage regulators needed by each retimer and then enable all
->> 3 remaining DPUs.
->>
->> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
->> ---
+./drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c:282:2-3: Unneeded semicolon
 
-[...]
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=9852
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+---
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> 
->> @@ -1164,7 +1566,7 @@ &usb_1_ss0_dwc3_hs {
->>  };
->>  
->>  &usb_1_ss0_qmpphy_out {
->> -	remote-endpoint = <&pmic_glink_ss0_ss_in>;
->> +	remote-endpoint = <&retimer_ss0_ss_in>;
->>  };
-> 
-> orientation-switch
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
+index 0e3a2b16a2ce..65cf237c6b4e 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
+@@ -279,7 +279,7 @@ static int pll_get_post_div(struct hdmi_8998_post_divider *pd, u64 bclk)
+ 	case 25:
+ 		found_hsclk_divsel = 14;
+ 		break;
+-	};
++	}
+ 
+ 	pd->vco_freq = found_vco_freq;
+ 	pd->tx_band_sel = found_tx_band_sel;
+-- 
+2.32.0.3.g01195cf9f
 
-https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=17c5909f53e01c151c91f66949a9c4f191756bae
-
-> and mode-switch for the QMP PHY?
-
-Oops! Looks like adding it and fixing some bugs in the qmpphy driver makes
-usb+dp work every now and then..
-
-Konrad
 
