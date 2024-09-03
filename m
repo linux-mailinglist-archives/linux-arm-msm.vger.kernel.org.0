@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-30438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 574549691D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 05:23:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0421D9691E1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 05:23:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 75C741C20837
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 03:23:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A975328428B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 03:23:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A333D1CDFC2;
-	Tue,  3 Sep 2024 03:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 582731CDFD4;
+	Tue,  3 Sep 2024 03:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E5BGTtNZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UterggER"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A58E1A4E6A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 03:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD90433BC
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 03:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725333778; cv=none; b=oiq+9L5MrGfq/K4Zh5lsgXNaaHzgd5EWeqnHGU0jXTPKhK8NfJX76pLxervXBmYpXOeYn4AAUMxwpLVCtA/to8hX7kTR/D91LgHJwf7E58De8eDa8UTFTfnFBQPq6AUWsbqCIjcz4lQDnf/OHYQlYEUvAj2d5BCtCTxu3U61k4E=
+	t=1725333779; cv=none; b=IpSyOhKXhI2Cq2nM01J0D0flrfdOR66EJD9qvi6tqvFWj1jLrZs7Wee+qT1iUi4arp/E1lVQBc5KFjSqudyty0WRikQED8dhZTLmNaBVfbpSDks/Id7Z1aQpiZ57LzuSwiDEkmz29LkAW6iqE65TxXn+L8+4eeIs90Wqe3VzBGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725333778; c=relaxed/simple;
-	bh=BWVEJP/ONJMOkJpUbz8o2AZX8ZM3XLIHEzcDCb2AhdY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RpDmt6Q0yh3lv7FyTqaFd9B7DKztZra9ejoFKVDfkz54VqEukHZuOATTqSaZS1fUg/KK7hkUnfn2TEXeICKdoOq8ThxGl1aKax8UHJcC6Z6E3GNApzMKtLRGq0vYTKKDxZwYeuUdeA4IE1IqHzTo91efjNiroVbJvzXZPK9vaOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E5BGTtNZ; arc=none smtp.client-ip=209.85.208.170
+	s=arc-20240116; t=1725333779; c=relaxed/simple;
+	bh=9hiBNik93uZFwi3I0kzx7lGjwl8YmM6Oy86cQrRvVmE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=svtP0YRitTgb8GgYGgSqCMgbi1m459JdVUyTICGM18t85FUtGx7e/jtq/ZHdwuNAiELrjXTsVSaOleOdfkBm832uAfiYzTCiPvZbW9V0dsrNXzr/OET3UkujkkggSBQVgZOuo/27XtjhU4MZBd06fwAJGz9pQvy7sNUaXKrteYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UterggER; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f4f2868621so51132211fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 20:22:56 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f4f2868710so51723431fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 20:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1725333775; x=1725938575; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=k86P+NeDmsIICrQRJRBhlplxtE6L+zqQWOXWus04Fdk=;
-        b=E5BGTtNZE2ZpPoQz0q+E2FeKPFf8X1tPcKXszFLcht04C23E7aNPI4yBv6SmFmlmAd
-         z5k/8fQlHyOi630N+37JELQD7YlmkaAaNBrIdIua8mA5BLSvjlrIAf0d1oMU4GNJ36n4
-         7GJrdtDuUu8Op85qQfvrI1v/kfRDKiUoenZU2EidRYgVm05ANi1QvvWSmsMITjfQKhWK
-         H7UdduwQYdDodRTlH03Wc5Tf3xI5e+Z+jMPCQj44zmrf2FwXgkV4zPw98OQZ2H5zaXhC
-         p9mIjdADo4WpOXW6jvV2dx4RADOda+8wgQxWtVil1EtvG7hMWpjqj/5fZkjB9fIYp2P8
-         Gihw==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t8t12yUPj7e8mb7vqEqGXgnNpICOFF3VwhWmBnR3jP0=;
+        b=UterggERPFuHzFaDeR1C9LqTVraP1EIEj1Qrq4+ti3KW1L3zlZCs8jhFfDHzYiWedD
+         gC3U3bckR/JfEcZzRhIIh5W4GMvqP4UUVZPJByoMtD2ZJXT4JybdbweFvxPbmyb6QV6w
+         yLyHpQ0YqLw4+LbuVJ4vHt5xFQpEgISgO0xCG+WxGRgSmyfpod0yutTrEIxZkZAwly85
+         C+p1rywoOgwuNlCpUPRJ4k+F//zdBZs/8eBFKFpeChrSHwkuS2Gr9jmb6VhnjAJKdQSP
+         EveIVKPNSbXgsxpWMjM8ocuBCdeRL0l68IJnIOnpiI/zJ7zujEgqqp29RlzVaq0sBZgJ
+         NEpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1725333775; x=1725938575;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k86P+NeDmsIICrQRJRBhlplxtE6L+zqQWOXWus04Fdk=;
-        b=Tj00N6dd4/lop/3m5cURrSDcRgRq6ha78JSqIQ+IfZQphvr5lqFBnk8QcrNQnD/+pK
-         FBqVJBbygHmvBKRzmMZV9831UGMwu9QZb/XO/iBKx0SSffN4uCPSf3onaf9hIA2qbcX3
-         EEenVtHmDmWv+R2ZTp4niVTAt2cqoMFF1/NgtDrueS2DW4OyGNsWN3dsMPnjFvxp19Z3
-         0I0Grd+RT+pdNHDXeLO+jP3BRqlJyJm9xuELrNE8eXYlBSLVe8a4pDCq5eH2vP8n2Xsx
-         mA4lPJ14atesd+3uG1l+JNh91iC6CLmjPJ2rTerIq6ILA3pVk3BIcihPwvO7Z3dP24yO
-         FROA==
-X-Forwarded-Encrypted: i=1; AJvYcCUlJqtrq7FmBAnt7y6TziyLcnd0fdnj9KsX4Y32deqJGOjvJekaZfTT1f0aUUN/3vAd4nfbH9O4mslD5LIp@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcwiYlsIRL8b8XffcTlts+lRQXctUJk8TDefzXLpSCU52epVe/
-	zuyvitHuFBQo+EtZE5A+gcttDDK6vZnj6YiFgHc/IuwJFIDBtcrv1CyVCzTBiks=
-X-Google-Smtp-Source: AGHT+IHup46cN3yQHFtBvP4UoyD6AAcxffm5fZhZ+b6e//DT+N4kqwIf/Nd53QViZRdsD52isOP+xg==
-X-Received: by 2002:a05:651c:1545:b0:2f3:fd4a:eac6 with SMTP id 38308e7fff4ca-2f629041d3dmr51981481fa.18.1725333773785;
-        Mon, 02 Sep 2024 20:22:53 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t8t12yUPj7e8mb7vqEqGXgnNpICOFF3VwhWmBnR3jP0=;
+        b=ooyiI3PBC1kwywHPMtrYb5po4bA8nwmUuBW/KNSy95fNzIzetcwtIy4yy9BjSqK9LZ
+         qoEYYvuwrGZJayk1Bakcht5pilqmp21Xp1lfMhLv8aPckWFN0ahaZZuwQ3xmV9c11C+9
+         1WQ4XhXroOTOCNI7doyJ5nNfi2T831Ha2fg4qhznp/8nv5a2qdEkkqqisLeR2XPdHjLl
+         zRsIQZVI7EkPLXVJ/GiYzexZPh/sLT983VL/cEFhUWBMzp29+7zwmI1ZebhtVKd80r9x
+         YzPKncBceaiz3dy7Lmku1qfFB5ougQzvfSRz5pt233UOoHgW16Ir/9u0XGfaEUFmO2F+
+         jQXw==
+X-Forwarded-Encrypted: i=1; AJvYcCXenuq6bBj5Q++RvKsjnUo9czGTlZzmSTwnC5eIn/zYNlR8aWj3iE4XWuvHp9KjoKh/PdVQZ9bMu7EwnZEQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZ6HMTYQazBq4xJWmjWtyutAeS9egVgeIwxwlbMlRMEWgtc7Ma
+	tvZAg/J4Cnxktf5kQwNgB4ydCXy60tiwggt1GBA3G0s+NuYKRKbdlMyaYNAMx1Q=
+X-Google-Smtp-Source: AGHT+IGTh9Dwb7pkkxXKkDP242kXyVpn9BHR6Ast3Q1izqpsDPXTt0iIBv644h0se6VkdS6Eg+y/bA==
+X-Received: by 2002:a2e:1312:0:b0:2f3:d82b:1959 with SMTP id 38308e7fff4ca-2f64441ec9fmr11810191fa.23.1725333774462;
+        Mon, 02 Sep 2024 20:22:54 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.90])
         by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f614ed15a5sm21003961fa.8.2024.09.02.20.22.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 20:22:53 -0700 (PDT)
+        Mon, 02 Sep 2024 20:22:54 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH v6 00/15] drm/msm/dpu: be more friendly to X.org
-Date: Tue, 03 Sep 2024 06:22:43 +0300
-Message-Id: <20240903-dpu-mode-config-width-v6-0-617e1ecc4b7a@linaro.org>
+Date: Tue, 03 Sep 2024 06:22:44 +0300
+Subject: [PATCH v6 01/15] drm/msm/dpu: make sure phys resources are
+ properly initialized
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,11 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAOB1mYC/3XOTU7EMAwF4KuMsiYof840rLgHYpHGSWsJmlE6F
- NCodycdCVFUZfksv8++sTkWijN7Ot1YiQvNlKca7MOJhdFPQ+SENTMllBFadhwvH/w9Y+QhT4k
- G/kl4HblVFnU4ewTlWe1eSkz0dXdfXmseab7m8n0/s8ht+iu6hrhILjiKFG2fOtkn+fxGky/5M
- ZeBbeSi/hgrdItRlZHWJ1ACzuDtgdE7RpoWoyujXAx1yQXn+gNjdoxqMmb7RuguSI1eezgwsGe
- gxUBlQEh0nUGrTfrHrOv6A5TtRzLXAQAA
+Message-Id: <20240903-dpu-mode-config-width-v6-1-617e1ecc4b7a@linaro.org>
+References: <20240903-dpu-mode-config-width-v6-0-617e1ecc4b7a@linaro.org>
+In-Reply-To: <20240903-dpu-mode-config-width-v6-0-617e1ecc4b7a@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -91,97 +91,66 @@ Cc: Abel Vesa <abel.vesa@linaro.org>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3939;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1849;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=BWVEJP/ONJMOkJpUbz8o2AZX8ZM3XLIHEzcDCb2AhdY=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBm1oEH5JMLUNrrzbgK45w6apcf3EfatK6LZJ3+E
- wRkqZlhv4KJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZtaBBwAKCRCLPIo+Aiko
- 1ZJvCACvXSgRM4G9ST5s8TaC31WE0fKnDcQ0H1u6rQ3/pxZUKfiW47dfvrTwZt95w12HY7xl+ON
- FL99dIjwvpPWzRTpQn+j+JyxNwl2fZvI22I0Vns1aE+vysbwV+e2etagCv/szbCYxEla65PgIBQ
- Iq5PdYToIoYR43LuQINahbZFRW9XxRJs+tqCcEaLf4nx0jaF0Fl5ZGiU9hJ0EIrUum3JYrnRs6B
- YQfhNXiHxY12T9wp/cFC4HFy5XhTrpveTfVOvJ3FHHUU7CySnQKlS99Y1xw6j8tNEdBxQuH/bk6
- 78iP3jx6m+RYBdqGMhI67lz17s4U9Xk9f3huV+VKzCNEIUcy
+ bh=9hiBNik93uZFwi3I0kzx7lGjwl8YmM6Oy86cQrRvVmE=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBm1oEKxWGO3YydUMBY3XruJjJyYMN06dPEnug/J
+ vWyj4bB7YOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZtaBCgAKCRCLPIo+Aiko
+ 1TBRB/9JjK9bNDkipN2L++V/P9kllEmOlC5pKEHKSTthCTD86R3p1mBRjVDpnr2naySQVy7Ft+V
+ /khY5l/aDueIB9Sr6YGQbaB4rf3ZsrG9mL8c3V2xgw+60qtcLncikmD32e86nqR2lVmvpnAU4Wf
+ NAXXf4UoR5Jec0mb45LmD5bOdIuCI45MiK1joxXb+eHACJrbYFEWvfmq18kuSY1gzeMoSYCXhXw
+ 3I/TFEGVvjaThzJAtBWuchqyBSTw9otRq/njo7lx06SsnVbXoJNo//O6eDgAggWfSFdlmB/RILj
+ plc9tN5Zcu/2nwXJvGDcu6SY9QVu4nWmcVTEEhPuhfY+p6zH
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Unlike other compositors X.org allocates a single framebuffer covering
-the whole screen space. This is not an issue with the single screens,
-but with the multi-monitor setup 5120x4096 becomes a limiting factor.
-Check the hardware-bound limitations and lift the FB max size to
-16383x16383.
+The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
+zero-init of the hw_ctl array, but didn't change the error condition,
+that checked for hw_ctl[i] being NULL. At the same time because of the
+early returns in case of an error dpu_encoder_phys might be left with
+the resources assigned in the previous state. Rework assigning of hw_pp
+/ hw_ctl to the dpu_encoder_phys in order to make sure they are always
+set correctly.
 
+Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
+Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
-Changes in v6:
-- Fixed the commit subject of the resource assignment patch (Abhinav)
-- Reworked resource assignment to dpu_encoder_phys in
-  dpu_encoder_virt_atomic_mode_set (Abhinav)
-- Fixed num_dspp check / hw_dspp assignment (Abhinav)
-- Moved dpu_encoder_assign_crtc_resources under the needs_modeset()
-  check (Abhinav)
-- Link to v5: https://lore.kernel.org/r/20240625-dpu-mode-config-width-v5-0-501d984d634f@linaro.org
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-Changes in v5:
-- Fix crash in the writeback code.
-- Link to v4: https://lore.kernel.org/r/20240624-dpu-mode-config-width-v4-0-1038c13da3a5@linaro.org
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 3b171bf227d1..949ebda2fa82 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1174,21 +1174,20 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+ 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+ 
+-		if (!dpu_enc->hw_pp[i]) {
++		phys->hw_pp = dpu_enc->hw_pp[i];
++		if (!phys->hw_pp) {
+ 			DPU_ERROR_ENC(dpu_enc,
+ 				"no pp block assigned at idx: %d\n", i);
+ 			return;
+ 		}
+ 
+-		if (!hw_ctl[i]) {
++		phys->hw_ctl = i < num_ctl ? to_dpu_hw_ctl(hw_ctl[i]) : NULL;
++		if (!phys->hw_ctl) {
+ 			DPU_ERROR_ENC(dpu_enc,
+ 				"no ctl block assigned at idx: %d\n", i);
+ 			return;
+ 		}
+ 
+-		phys->hw_pp = dpu_enc->hw_pp[i];
+-		phys->hw_ctl = to_dpu_hw_ctl(hw_ctl[i]);
+-
+ 		phys->cached_mode = crtc_state->adjusted_mode;
+ 		if (phys->ops.atomic_mode_set)
+ 			phys->ops.atomic_mode_set(phys, crtc_state, conn_state);
 
-Changes in v4:
-- Fix handling of the not visible planes with the FB being set, as
-  detected via the kms_cursor_edge_walk test.
-- Link to v3: https://lore.kernel.org/r/20240614-dpu-mode-config-width-v3-0-29ec4069c99b@linaro.org
-
-Changes in v3:
-- Reoder the functions to pull up a fix to the start of the patchset
-  (Abhinav)
-- Rename the _dpu_crtc_setup_lm_bounds() to
-  _dpu_crtc_check_and_setup_lm_bounds() (Abhinav)
-- Make dpu_crtc_mode_valid() static.
-- Link to v2: https://lore.kernel.org/r/20240603-dpu-mode-config-width-v2-0-16af520575a6@linaro.org
-
-Changes in v2:
-- Added dpu_crtc_valid() to verify that 2*lm_width limit is enforced
-  (Abhinav)
-- Link to v1: https://lore.kernel.org/r/20240319-dpu-mode-config-width-v1-0-d0fe6bf81bf1@linaro.org
-
----
-Dmitry Baryshkov (15):
-      drm/msm/dpu: make sure phys resources are properly initialized
-      drm/msm/dpu: move CRTC resource assignment to dpu_encoder_virt_atomic_check
-      drm/msm/dpu: check for overflow in _dpu_crtc_setup_lm_bounds()
-      drm/msm/dpu: drop dpu_format_check_modified_format
-      drm/msm/dpu: drop dpu_format_populate_layout from dpu_plane_sspp_atomic_update
-      drm/msm/dpu: drop extra aspace checks in dpu_formats
-      drm/msm/dpu: drop msm_format from struct dpu_hw_fmt_layout
-      drm/msm/dpu: pass drm_framebuffer to _dpu_format_get_plane_sizes()
-      drm/msm/dpu: move pitch check to _dpu_format_get_plane_sizes_linear()
-      drm/msm/dpu: split dpu_format_populate_layout
-      drm/msm/dpu: make dpu_format_populate_addrs return void
-      drm/msm/dpu: move layout setup population out of dpu_plane_prepare_fb()
-      drm/msm/dpu: check for the plane pitch overflow
-      drm/msm/dpu: merge MAX_IMG_WIDTH/HEIGHT with DPU_MAX_IMG_WIDTH/HEIGHT
-      drm/msm/dpu: sync mode_config limits to the FB limits in dpu_plane.c
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c           |  34 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  68 +++---
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  37 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c        | 243 +++++++--------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_formats.h        |  30 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   2 -
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h        |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c          |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h          |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  10 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c          |  50 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h          |   3 +
- drivers/gpu/drm/msm/msm_kms.h                      |   6 -
- 14 files changed, 201 insertions(+), 295 deletions(-)
----
-base-commit: ecc768a84f0b8e631986f9ade3118fa37852fef0
-change-id: 20240318-dpu-mode-config-width-626d3c7ad52a
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+2.39.2
 
 
