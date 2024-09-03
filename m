@@ -1,77 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-30450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8728C9691F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 05:23:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B9D59691F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 05:23:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BA0EB1C22A80
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 03:23:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7A3D2842FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 03:23:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E07561CDFA5;
-	Tue,  3 Sep 2024 03:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C06D61CE6EB;
+	Tue,  3 Sep 2024 03:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n9j/YHUo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QWnNDrPz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205241CE6F5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 03:23:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6161CE6FD
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 03:23:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725333786; cv=none; b=CWI0bLcMfhAzXvX1jPD/BgMWXjgOZ79xGARgKS/6nIQC/MpR4SJGh57Wnddfx64sJUd4pJyENgET/Mwp5XX1HT1o7TQIPT/vqpU/aEMU7CAk9TrE/Y+psvchT2p0wmGfYeJjPxgLvmc2TXzuDeXoHHRQGu2o4oYc5aC68zeQM/c=
+	t=1725333787; cv=none; b=QY/w2uYTtCCt3P+mXWEoIuKMaF6FkddPHMVa20uWevqR5sizkKna8dtcjBhNaHgkWkaPFoQdntH3WXxTS4HLn6xYOMUNMdZUOWyRIIKx8hZULKMJeiL97VdzvCSLuoO21JCwgVss3thJ21S909ZCEOnKd1mXDtEwvtfPMjMu95U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725333786; c=relaxed/simple;
-	bh=u19dHALRdHSRYZ4rbk5/scc2X+1dvppKJEof9vorl5k=;
+	s=arc-20240116; t=1725333787; c=relaxed/simple;
+	bh=XPsvsitt1q1/pSPR8E1pmuiZ9IMdCJRZ86FgRWBJlZE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UGD/LWNM/Jj+hHxu6VRgfdPpYH30j0C4oHX3YPw/DXK7uX1ln9ETGsHaS8+HYRSd3V/1Q4OJ+oUUZ9umgBz82TBiqyaEgobG/gbKGOz3lwHXM0LBXi0ODDGdATcFS4BwA4WtXC8eH2MnQ9f67frkoXt7KPOWqVEpzT+cuvwOz3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n9j/YHUo; arc=none smtp.client-ip=209.85.208.182
+	 In-Reply-To:To:Cc; b=suQA0Uo0O+/Uv+wPxbZb1oRwKbwhu727Pxg9G40evPgy/dcZBJHMvB59Rda0VN2b8mSGqC6QsbvGnQbKIUyTaAYqG5UYa1quR5J+0875ZcdCsDCbVJzqtfsBuqx9SqsMBy0ttPRafYuOzCFFO5+Wcq74lIlvk5o0GdDjGd6qFOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QWnNDrPz; arc=none smtp.client-ip=209.85.208.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f406034874so57522611fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 20:23:04 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f5064816edso54876241fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Sep 2024 20:23:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725333783; x=1725938583; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725333784; x=1725938584; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JnTpKnP4ELVQ61jnwvZH/DvQ98T2PSNEOPQgmIwZDJg=;
-        b=n9j/YHUoN3Pc7PfLLQJw3V09uS0+V8G4PFTwwbx7GIVfYXXbne1vWGpsgtxQi+4uaj
-         +nEJNZ2D+K0OgOOUyApnlrkWrop9gpmX4GvPSeRbjRbC+8h7yYmjHnNREOMa8VgAbMJJ
-         F7JPbAty9vk7HMkaMwiIy2Mo8AceGZ3X13dCwfq4WxwMDPmaMb0q/8gA0uW9x5uWc3yq
-         CAzRz7MyTnnzx+tHvF/PSfjk+UoupxHzViLaD4x8GikFyOhqguXAP6zyneJU3y8yX2ge
-         Uohy8DeP9BWfs4YWGXW6MLPQRZ9BrzaUqf9fY78nGgB5iytdF/7R7xLIHyviXnxWoViA
-         2tXw==
+        bh=nNcyVVvZk5loLiufOoESYV0Fl75NGNrg1mqZRy+YG+o=;
+        b=QWnNDrPzE/fZD4CeEHzpaL+/PgTflDSCJWtIbEW3ggsJAmXpWDAnP8Mm5mRi/VXdZn
+         kUI18sMGOBAKPLuAPX3iqSZXm/1aFMYN0rOP0GVDFFZEw3ReFI+lfm8h6e9ZhFLPyW3B
+         sZ7EKXRSUnMEq9FWGXdSrAbm0NEUItnZKF84wD9w0RlFAL2djSF8mqpsfEuYhMu1zx0z
+         DNvb1KGKUJIF3ixk7wydFHkN5qUFUuiHcaoB7Ad4Z9E8yjJifaOjTIl2AQIaFaZkxwwP
+         3t+8pkWgegbwl9032w1CUjEIqx53Tr3uOhxGxfdwMKKKShM2KGJf1bhKTXBuDi6zdRsX
+         bZug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725333783; x=1725938583;
+        d=1e100.net; s=20230601; t=1725333784; x=1725938584;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JnTpKnP4ELVQ61jnwvZH/DvQ98T2PSNEOPQgmIwZDJg=;
-        b=Jr1DOIn1/PN4MUOsyus+LJ4NY1jm7dkfSTCiCMDPEGpDsOJBNhChy2pT1CVKblEaJ0
-         IsfBMKjLT25M8pd0zI1NPEny35Fa4ClUjJKbJ94az12actwotwVGJFQpz2KjGeHuj79a
-         /ifM5nQX6G2ER8Cxc+9KrY+Ohcim6R0RpVwh+osOlBGqKr+Qz9XdBllaWLWb/x6dvLd4
-         8woD/Osbb2i5Ij5JXnMccgGwyyZWFGym3JQmxiu8z6/MD9EnhZkMQlh511c6K3QUWn31
-         waOIkKBFQdN1BtHh+kjpBWLd7nMdmHsLnbnoT82eLNwJW1g2c/Ri8vUXPwvfNeXxMZ3L
-         epog==
-X-Forwarded-Encrypted: i=1; AJvYcCXxzLRVvmI5Oc9yMc50Wq7c2mLNFGJm7PkooipfqhW7LMsXTYNS0F+ahQWEEmh1opGJrnTe23w1kKS2iyaW@vger.kernel.org
-X-Gm-Message-State: AOJu0YybvCLCY2Ymnp4PME2IzqdrlNJb4c+gS55jeo7JnzSGur7TVMga
-	kx6zzEi6EWvOfCexNnDyo7UOKtKmtwgzuo5bmgevNEKpnBH0oxKBiSlKNo1d7h+rFR6jfCpcnys
-	+
-X-Google-Smtp-Source: AGHT+IEur2S4Nc8ikOaCA/vRxjSg9edwKu2KMOglmSfJLktNRs/Rto+WlQVfrZDdXvSQVQIb7dZQsg==
-X-Received: by 2002:a05:651c:548:b0:2f3:b078:84bc with SMTP id 38308e7fff4ca-2f6105b5d9amr123073801fa.4.1725333782729;
-        Mon, 02 Sep 2024 20:23:02 -0700 (PDT)
+        bh=nNcyVVvZk5loLiufOoESYV0Fl75NGNrg1mqZRy+YG+o=;
+        b=W+DWrM1w2Jhi9Pvqa5dIZRAfe5bLbEB6vYTtsqrE0iNHAG6RytG0WE+eb0mqH2Tq5j
+         raSc6mn8LmCfawSHzMSIscfd1ytpi1kEDfS1Hqc07ynr3A1QTLHKEQfmPpN2kkO4B9oX
+         WbydFNCAZcsEvsyucqvwl2fJ1kISdDTtSzZVQ/fwJ6ufilb62ylzl8OWxeMxNUAwW6+a
+         ZbO+vowXmWnr0U8XJsaNr1E+d4bUZG70i5sxFVvwvyI6p3JmerBXo4o1UcG92kRv2eXt
+         GJbHFNqvU18wuuZNqglzQWLgaMJk+3oa6o3WxqKTEocEuXX38w1FgGUWlUjozzrfJ/lA
+         RicQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUsaL/3nsPSv9z6sh2blQG/Zj76z3ZFa8XQMq7e+yvS4OfASm8kMMgvRrS/pxZxmmkCoFG7sT/dCv1L9FPP@vger.kernel.org
+X-Gm-Message-State: AOJu0YyFkmd4YBzAunJ/g1DxkZq4KCLKAVLsWsjY5kEkYpEA8QSEyFQy
+	zrGPumhaOCTlFHKnBuRiIGSuEME4ruV/g3DPQ6aXzP74MpY9FjlQ99vb2b1zIiw=
+X-Google-Smtp-Source: AGHT+IHOxIlT4SuY36W/z8DrCYweOAxrs+1iXepanIFfvFeHHaelsiCTrgeQYczKg8X0mf/jree25A==
+X-Received: by 2002:a2e:4609:0:b0:2ef:3126:390d with SMTP id 38308e7fff4ca-2f61054aaf9mr101064971fa.42.1725333783444;
+        Mon, 02 Sep 2024 20:23:03 -0700 (PDT)
 Received: from umbar.lan ([192.130.178.90])
         by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f614ed15a5sm21003961fa.8.2024.09.02.20.23.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Sep 2024 20:23:02 -0700 (PDT)
+        Mon, 02 Sep 2024 20:23:03 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 03 Sep 2024 06:22:55 +0300
-Subject: [PATCH v6 12/15] drm/msm/dpu: move layout setup population out of
- dpu_plane_prepare_fb()
+Date: Tue, 03 Sep 2024 06:22:56 +0300
+Subject: [PATCH v6 13/15] drm/msm/dpu: check for the plane pitch overflow
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240903-dpu-mode-config-width-v6-12-617e1ecc4b7a@linaro.org>
+Message-Id: <20240903-dpu-mode-config-width-v6-13-617e1ecc4b7a@linaro.org>
 References: <20240903-dpu-mode-config-width-v6-0-617e1ecc4b7a@linaro.org>
 In-Reply-To: <20240903-dpu-mode-config-width-v6-0-617e1ecc4b7a@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -92,101 +90,67 @@ Cc: Abel Vesa <abel.vesa@linaro.org>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3133;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1824;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=u19dHALRdHSRYZ4rbk5/scc2X+1dvppKJEof9vorl5k=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBm1oEMacu4VLgoz8vof64f2OfQYFd9niVuVDtKX
- 83StGnymjCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZtaBDAAKCRCLPIo+Aiko
- 1e39CACupr8oxAKD1t+qVPxOmjXpbbdG6wzw8SbDmbedj+zXOC0djbZyWtWzE6hgKL34zGTw1Qn
- GV3mNPqdkKCiTAN1mnu+38hzbZnUMMeTlOcaxs5XthjcpyAGPZluOdgQ774GgFMa2MBnXBkBWYb
- YEGUGiD/tkChgUEuusX9vmMmvgdfewaQJHux+5zTCLzoEYrZDyIdFKadt1SxBMSfDRhBbogUa+e
- YUUHaf8miu9Z50D6d+OtM7zeMopnVpgFQtSW4gAL3icIuITSQ+Qr1vNrjxhal6Si+qm92feHU49
- WmHo3n/Pon45PILZUyc5Hce8jZiYewnI15xbT4gAQpfV8jbm
+ bh=XPsvsitt1q1/pSPR8E1pmuiZ9IMdCJRZ86FgRWBJlZE=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBm1oEM5yi+wct8hrTlmYoAn+9Ei59ElyUyoj8WD
+ 4JcHT2FZiSJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZtaBDAAKCRCLPIo+Aiko
+ 1aLgB/9+zx1fLDKaiXhu0s2o9e1/WxNm3q+pEqD9GEUvWsZ2ruuv3/us/a2E3sWA1xfeD6j+x6P
+ PLQNgXQUiVsHtPkyyBV/bKHE8vZ8ZsexfiVTqJV1N4VW1lYY3a+Exk1Obtj2kydjkK0q+k6s2LO
+ 2l3WBM7vowl7zwQnqf0sREz/bDPBVaYX5g5gwfmAhiQj8gR+T1HG0eaj4sERZuhiMobz8iS8AFo
+ bNSuD6yLzMdbRjXg4QjmcE1i+mMVlCerTG4J+jkD7QLuioNf6LAgcj4dDdDabBfXx09ez4mCUg6
+ 5m35FR4+pASI75ScJ+7gOFAmUXCU6OX58qU+QfPckcYhmwcD
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Move the call to dpu_format_populate_plane_sizes() to the atomic_check
-step, so that any issues with the FB layout can be reported as early as
-possible.
-
-At the same time move the call to dpu_format_populate_addrs() to
-dpu_plane_sspp_atomic_update(). This way the all layout management is
-performed only for the visible planes: the .prepare_fb callback is
-called for not visible planes too, so keeping dpu_format_populate_addrs
-in dpu_plane_prepare_fb() will require dpu_format_populate_plane_sizes()
-to be called for !visible planes too.
+Check that the plane pitch doesn't overflow the maximum pitch size
+allowed by the hardware.
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 2 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 6 +++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+index 4a910b808687..8998d1862e16 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+@@ -12,6 +12,8 @@
+ 
+ struct dpu_hw_sspp;
+ 
++#define DPU_SSPP_MAX_PITCH_SIZE		0xffff
++
+ /**
+  * Flags
+  */
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index df95377b98fc..3045bda8a7b7 100644
+index 3045bda8a7b7..f686588bf896 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -675,19 +675,6 @@ static int dpu_plane_prepare_fb(struct drm_plane *plane,
- 		}
+@@ -782,7 +782,7 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ {
+ 	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
+ 										 plane);
+-	int ret = 0, min_scale;
++	int i, ret = 0, min_scale;
+ 	struct dpu_plane *pdpu = to_dpu_plane(plane);
+ 	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+ 	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+@@ -856,6 +856,10 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+ 		return ret;
  	}
  
--	ret = dpu_format_populate_plane_sizes(new_state->fb, &pstate->layout);
--	if (ret) {
--		DPU_ERROR_PLANE(pdpu, "failed to get format plane sizes, %d\n", ret);
--		if (pstate->aspace)
--			msm_framebuffer_cleanup(new_state->fb, pstate->aspace,
--						pstate->needs_dirtyfb);
--		return ret;
--	}
--
--	dpu_format_populate_addrs(pstate->aspace,
--				  new_state->fb,
--				  &pstate->layout);
--
- 	return 0;
- }
- 
-@@ -863,6 +850,12 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
- 		return -E2BIG;
- 	}
- 
-+	ret = dpu_format_populate_plane_sizes(new_plane_state->fb, &pstate->layout);
-+	if (ret) {
-+		DPU_ERROR_PLANE(pdpu, "failed to get format plane sizes, %d\n", ret);
-+		return ret;
-+	}
++	for (i = 0; i < pstate->layout.num_planes; i++)
++		if (pstate->layout.plane_pitch[i] > DPU_SSPP_MAX_PITCH_SIZE)
++			return -E2BIG;
 +
  	fmt = msm_framebuffer_format(new_plane_state->fb);
  
  	max_linewidth = pdpu->catalog->caps->max_linewidth;
-@@ -1102,7 +1095,8 @@ static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
- 		_dpu_plane_set_qos_remap(plane, pipe);
- }
- 
--static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
-+static void dpu_plane_sspp_atomic_update(struct drm_plane *plane,
-+					 struct drm_plane_state *new_state)
- {
- 	struct dpu_plane *pdpu = to_dpu_plane(plane);
- 	struct drm_plane_state *state = plane->state;
-@@ -1123,6 +1117,8 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 	pstate->needs_qos_remap |= (is_rt_pipe != pdpu->is_rt_pipe);
- 	pdpu->is_rt_pipe = is_rt_pipe;
- 
-+	dpu_format_populate_addrs(pstate->aspace, new_state->fb, &pstate->layout);
-+
- 	DPU_DEBUG_PLANE(pdpu, "FB[%u] " DRM_RECT_FP_FMT "->crtc%u " DRM_RECT_FMT
- 			", %p4cc ubwc %d\n", fb->base.id, DRM_RECT_FP_ARG(&state->src),
- 			crtc->base.id, DRM_RECT_ARG(&state->dst),
-@@ -1187,7 +1183,7 @@ static void dpu_plane_atomic_update(struct drm_plane *plane,
- 	if (!new_state->visible) {
- 		_dpu_plane_atomic_disable(plane);
- 	} else {
--		dpu_plane_sspp_atomic_update(plane);
-+		dpu_plane_sspp_atomic_update(plane, new_state);
- 	}
- }
- 
 
 -- 
 2.39.2
