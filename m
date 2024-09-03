@@ -1,255 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-30545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 991D796A69E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 20:32:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96ECD96A6DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 20:48:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 50287288178
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 18:32:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C7DC71C244C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 18:48:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9A94191477;
-	Tue,  3 Sep 2024 18:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E32D91922DB;
+	Tue,  3 Sep 2024 18:47:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UA8eeZG1"
+	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="Y4JsSm1q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1401917CD;
-	Tue,  3 Sep 2024 18:32:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9554C19258E;
+	Tue,  3 Sep 2024 18:47:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725388355; cv=none; b=sStsLn6/t6Ul3JLb+CPg4IIiQymxumyurn2hJWJCjQDbyHkY6CTf2xlv+KSTcRm7AJeTEmEkYrZNjayoLGCSTfvarr1xIk+hxWfl+eUfC6Uo4LBd4bNmC5Hr++pp1jIY955ErbHLM3iZQgKpR6gOSgqDwQZrlUh+qNVf6+INOfc=
+	t=1725389255; cv=none; b=QdJ6n3E0Gxsl0nBxRDN9omNm+IC8D2+dVWz3gxelyiME4VXQ9Zm25WNMsnL6gToy7p/aRx+9fusT3M3bSVpr9CrPKpW46EBDYq8ycJWgctN/Mx8tRcB0KSod2W2kVxFIK08S6R4Sq25FVumQ5BAss9WX4Y2UlCXhg7W065jaVH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725388355; c=relaxed/simple;
-	bh=nYiZP4ZQdAgrx+clF6rOT89SYsiPaOcm3NPZLG3JsrY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=R2KD9+hKyE3sNsnLqH/GRMy5hSXLdizuQBG7fpRMJti/n+L1mVp/VQP0CEbUo/R6QlXkAKwc6G38fJURjIMZ4m7bvtrQ0YIdF4OvFnqys8xzlkdD1uFFgw4BOqi++8Cmhv5w4hVkBga7hUB7U2Gg3uDwnHwH84Hij6I/QY/Y60A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UA8eeZG1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 483AgDrT019040;
-	Tue, 3 Sep 2024 18:32:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1w9wz0apQoz9JLbYl/ERFoLViBi4KWpYV/ahb6L5VvI=; b=UA8eeZG1AOclyfWE
-	px9cnBK67B0esWDzggm9xx9cD8uj+fdtyJWX0kDvIRWQ4xO7UryboztUGv0p5aip
-	DyviQkcrfWBJDCvaxkub55ZooCk3j16hcmH9BGJZBRXsHgv/6STZOFu88sTjrU0g
-	wgzOsRcsKtjnh5jM5LnJ7YarDC59lCrE755lne+kVAAlIyThfhCAeu9nQajUiuOY
-	8G/XMznbwtzgvARXeHIrUDU/lojdKR1mYLhqJTu/5BnEd8alc2dERN5z396Aae6F
-	KLGj+CXIReW+PUwYTkRduXOThOplwy0HCqF6T45cmZXgdKhh5U/+k2SO22U7wT+p
-	qnGccw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bud2re8c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Sep 2024 18:32:23 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 483IWMKL025340
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Sep 2024 18:32:22 GMT
-Received: from [10.81.25.230] (10.49.16.6) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
- 11:32:21 -0700
-Message-ID: <af65b744-7538-4929-9ab4-8ee42e17b8d1@quicinc.com>
-Date: Tue, 3 Sep 2024 11:32:13 -0700
+	s=arc-20240116; t=1725389255; c=relaxed/simple;
+	bh=ssgzH7Oc3qh676QCEo9CYK0VCZM8yF5XfpuYiyIoGkg=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eSWdWaWfECVAKWv0hTMb2qvRwh/ggNOBPr2AH1Gzfk4sKv7+28ON+jbdBi1BLQ4TI9weNzRxiRREKvz4UPGLAUE0uqDgovkHV1DcniNHwh2NLcIAbM6Agfwnud7XcGfhpEKPcVcaqxm85X2q5FZZzxYRIMqS0HdFyT/6XbBGg6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=Y4JsSm1q; arc=none smtp.client-ip=198.47.23.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+	by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 483IlD8l014660;
+	Tue, 3 Sep 2024 13:47:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1725389233;
+	bh=FTqTyrECFvbLD17NBUWn4/583otSS6XLuEd+TP20G+I=;
+	h=From:To:CC:Subject:Date;
+	b=Y4JsSm1q5fFCVCyu7U7R/zp9O4h3Ge7Fo9rsYjLUds7t3Lip38a0++nzk0EsGTzj4
+	 Mvi107htYdS9aBxknJ/fuzpXEAh5W8pfgPSjpCOBqi386Kp04mRnyFuCeoZ35Tw124
+	 E/zsKSKZWmnL8OSn3R9bOvssyvBipDhTrfcyPtYo=
+Received: from DLEE104.ent.ti.com (dlee104.ent.ti.com [157.170.170.34])
+	by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTP id 483IlDLW008470;
+	Tue, 3 Sep 2024 13:47:13 -0500
+Received: from DLEE100.ent.ti.com (157.170.170.30) by DLEE104.ent.ti.com
+ (157.170.170.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 3
+ Sep 2024 13:47:12 -0500
+Received: from lelvsmtp6.itg.ti.com (10.180.75.249) by DLEE100.ent.ti.com
+ (157.170.170.30) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Tue, 3 Sep 2024 13:47:12 -0500
+Received: from localhost (uda0133052.dhcp.ti.com [128.247.81.232])
+	by lelvsmtp6.itg.ti.com (8.15.2/8.15.2) with ESMTP id 483IlCbZ127692;
+	Tue, 3 Sep 2024 13:47:12 -0500
+From: Nishanth Menon <nm@ti.com>
+To: Lee Jones <lee@kernel.org>
+CC: Arnd Bergmann <arnd@arndb.de>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, Nishanth Menon <nm@ti.com>,
+        Mark Brown
+	<broonie@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <bcm-kernel-feedback-list@broadcom.com>,
+        Florian Fainelli
+	<florian.fainelli@broadcom.com>,
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>
+Subject: [PATCH V2] mfd: syscon: Use regmap max_register_is_0 as needed
+Date: Tue, 3 Sep 2024 13:47:10 -0500
+Message-ID: <20240903184710.1552067-1-nm@ti.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] PCI: qcom: Add equalization settings for 16 GT/s
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <agross@kernel.org>, <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <mani@kernel.org>, <quic_msarkar@quicinc.com>,
-        <quic_kraravin@quicinc.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Jingoo Han
-	<jingoohan1@gmail.com>,
-        Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Niklas Cassel <cassel@kernel.org>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20240821170917.21018-1-quic_schintav@quicinc.com>
- <20240821170917.21018-3-quic_schintav@quicinc.com>
- <20240826075505.zg3tr7abs5rotkjo@thinkpad>
-Content-Language: en-US
-From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-In-Reply-To: <20240826075505.zg3tr7abs5rotkjo@thinkpad>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wC_49uT40JyFPI3FlYlOaTyD4Kck3Wmv
-X-Proofpoint-ORIG-GUID: wC_49uT40JyFPI3FlYlOaTyD4Kck3Wmv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-03_06,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
- spamscore=0 mlxlogscore=999 bulkscore=0 phishscore=0 lowpriorityscore=0
- malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409030149
+Organization: Texas Instruments, Inc.
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 
+syscon has always set the optional max_register configuration of
+regmap to ensure the correct checks are in place. However, a recent
+commit 0ec74ad3c157 ("regmap: rework ->max_register handling")
+introduced explicit configuration in regmap framework for register
+maps that is exactly 1 register, when max_register is pointing to a
+valid register 0. This commit solved a previous limitation of regmap
+framework.
 
+Update syscon driver to consistent in regmap configuration for
+all sizes of syscons by using this new capability by setting
+max_register_is_0, when the max_register is valid and 0.
 
-On 8/26/24 00:55, Manivannan Sadhasivam wrote:
-> On Wed, Aug 21, 2024 at 10:08:43AM -0700, Shashank Babu Chinta Venkata wrote:
->> During high data transmission rates such as 16 GT/s , there is an
->> increased risk of signal loss due to poor channel quality and
->> interference. This can impact receiver's ability to capture signals
->> accurately. Hence, signal compensation is achieved through appropriate
->> lane equalization settings at both transmitter and receiver. This will
->> result in increased PCIe signal strength.
->>
->> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
->> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->> ---
->>  drivers/pci/controller/dwc/pcie-designware.h  | 12 ++++++
->>  drivers/pci/controller/dwc/pcie-qcom-common.c | 37 +++++++++++++++++++
->>  drivers/pci/controller/dwc/pcie-qcom-common.h |  1 +
->>  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  3 ++
->>  drivers/pci/controller/dwc/pcie-qcom.c        |  3 ++
->>  5 files changed, 56 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->> index 53c4c8f399c8..50265a2fbb9f 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware.h
->> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->> @@ -126,6 +126,18 @@
->>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
->>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
->>  
->> +#define GEN3_EQ_CONTROL_OFF			0x8a8
->> +#define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
->> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE	BIT(4)
->> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC	GENMASK(23, 8)
->> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
->> +
->> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
->> +#define GEN3_EQ_FMDC_T_MIN_PHASE23		GENMASK(4, 0)
->> +#define GEN3_EQ_FMDC_N_EVALS			GENMASK(9, 5)
->> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA	GENMASK(13, 10)
->> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA	GENMASK(17, 14)
->> +
->>  #define PCIE_PORT_MULTI_LANE_CTRL	0x8C0
->>  #define PORT_MLTI_UPCFG_SUPPORT		BIT(7)
->>  
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
->> index 1d8992147bba..e085075557cd 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
->> @@ -15,6 +15,43 @@
->>  #include "pcie-designware.h"
->>  #include "pcie-qcom-common.h"
->>  
->> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
->> +{
->> +	u32 reg;
->> +
->> +	/*
->> +	 * GEN3_RELATED_OFF register is repurposed to apply equalization
->> +	 * settings at various data transmission rates through registers
->> +	 * namely GEN3_EQ_*. RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF
->> +	 * determines data rate for which this equalization settings are
->> +	 * applied.
->> +	 */
->> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
->> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
->> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
->> +	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK, 0x1);
->> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
->> +
->> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
->> +	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
->> +		GEN3_EQ_FMDC_N_EVALS |
->> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
->> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
->> +	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
->> +		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
->> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
->> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
->> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
->> +
->> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
->> +	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
->> +		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
->> +		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
->> +		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
->> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
->> +}
->> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
->> +
->>  struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path)
->>  {
->>  	struct icc_path *icc_p;
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
->> index 897fa18e618a..c281582de12c 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
->> @@ -13,3 +13,4 @@
->>  struct icc_path *qcom_pcie_common_icc_get_resource(struct dw_pcie *pci, const char *path);
->>  int qcom_pcie_common_icc_init(struct dw_pcie *pci, struct icc_path *icc_mem, u32 bandwidth);
->>  void qcom_pcie_common_icc_update(struct dw_pcie *pci, struct icc_path *icc_mem);
->> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> index e1860026e134..823e33a4d745 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -455,6 +455,9 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->>  		goto err_disable_resources;
->>  	}
->>  
->> +	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
-> 
-> Abel reported that 'pci->link_gen' is not updated unless the 'max-link-speed'
-> property is set in DT on his platform. I fixed that issue locally and this
-> series will depend on those patches.
-> 
-> Provided that you are having issues with your build environment as discussed
-> offline, I'd like to take over the series to combine my patches and address the
-> review comments. Let me know if you are OK with this or not.
-> 
-> - Mani
-> 
+Signed-off-by: Nishanth Menon <nm@ti.com>
+---
 
-Sure Mani.You can include my patches in your series.
+Based on my search
+https://gist.github.com/nmenon/d537096d041fa553565fba7577d2cd24, the
+pattern of syscon registers that may potentially be impacted by this
+patch (that are exactly 1 register wide) is probably limited, though
+this patch in itself was inspired by a buggy driver code fixed in
+https://lore.kernel.org/linux-pm/20240828131915.3198081-1-nm@ti.com/
+I have tried to Cc lists that may be interested in looking closer to
+avoid un-intended side-effects.
 
-Thanks
-Shashank
->> +		qcom_pcie_common_set_16gt_eq_settings(pci);
->> +
->>  	/*
->>  	 * The physical address of the MMIO region which is exposed as the BAR
->>  	 * should be written to MHI BASE registers.
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> index ee32590f1506..829b34391af1 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -280,6 +280,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->>  {
->>  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
->>  
->> +	if (pcie_link_speed[pci->link_gen] == PCIE_SPEED_16_0GT)
->> +		qcom_pcie_common_set_16gt_eq_settings(pci);
->> +
->>  	/* Enable Link Training state machine */
->>  	if (pcie->cfg->ops->ltssm_enable)
->>  		pcie->cfg->ops->ltssm_enable(pcie);
->> -- 
->> 2.46.0
->>
-> 
+Changes since V1:
+* Incorporate review comments by rewording commit message and $subject
+  and dropped Fixes.
+* No functional change to the patch.
+* Expand the CC list to notify potential users.
+
+V1: https://lore.kernel.org/all/20240828121008.3066002-1-nm@ti.com/
+
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: bcm-kernel-feedback-list@broadcom.com
+Cc: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: linux-stm32@st-md-mailman.stormreply.com
+Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
+
+ drivers/mfd/syscon.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
+index 2ce15f60eb10..3e1d699ba934 100644
+--- a/drivers/mfd/syscon.c
++++ b/drivers/mfd/syscon.c
+@@ -108,6 +108,8 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
+ 	syscon_config.reg_stride = reg_io_width;
+ 	syscon_config.val_bits = reg_io_width * 8;
+ 	syscon_config.max_register = resource_size(&res) - reg_io_width;
++	if (!syscon_config.max_register)
++		syscon_config.max_register_is_0 = true;
+ 
+ 	regmap = regmap_init_mmio(NULL, base, &syscon_config);
+ 	kfree(syscon_config.name);
+@@ -357,6 +359,9 @@ static int syscon_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	syscon_config.max_register = resource_size(res) - 4;
++	if (!syscon_config.max_register)
++		syscon_config.max_register_is_0 = true;
++
+ 	if (pdata)
+ 		syscon_config.name = pdata->label;
+ 	syscon->regmap = devm_regmap_init_mmio(dev, base, &syscon_config);
+
+-- 
+2.46.0
+
 
