@@ -1,143 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-30473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1C33969589
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:32:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7114969599
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:33:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 208491C23266
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 07:32:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7EA9F1F249C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 07:33:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E5271D6DBC;
-	Tue,  3 Sep 2024 07:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11B061D6DC2;
+	Tue,  3 Sep 2024 07:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bGTZJtR8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vs+13x3W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13A41CE6F0;
-	Tue,  3 Sep 2024 07:30:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5034E1C62B1
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 07:32:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725348631; cv=none; b=EVs7FcB+Gp+5zM7UPnshrKHaFeNUsBgNHitTCJV0Hyf11DxuvciSuZfq1oz4uu3Uy5Ydqt7cucZ9w+eSZ5F+Jbk5YY9AnqiY5xGaqYngPX/3GrU+q6iJok8d0qlh1LsCx4YsJTr4BeHkdioD01VVFKSVJHG7IlrXOBnSqtGXh6o=
+	t=1725348775; cv=none; b=cWo/WqExnFAZwS5dcBeFXH5WUq3cg1Md9jgczYPAlXux8kKO4cqxa6t4u5KA809YMPCW7eArTKAQcI38r5W2vWGIcLESS5Y2LennP9UgqUmalQ5JDENFiedhhXV3RvhdP6U5ouMOClqKWhJ1V+toSeBe69Hf57BmIO+MMiXJbg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725348631; c=relaxed/simple;
-	bh=FQL8+4I3J0aMb+Bg8Af8WE+32XKG96uJyEA6bH70sGk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Z7oow8xroNaW+z+tGpoVBmvTDVQWkWCK8KzxoJni7cbHMZLIESulGKTQOsEtF7Jlox39Nu0Kmlhw5O3ZU/EGxi+WE0ZIG0/F1bmU/6G12qKGS/Ba6mmwT31V1lqtP3ILkWkROAJOgADICs9R08+dOvPiAqnLbYa4VyfpS3Tm268=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bGTZJtR8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 482NXddg027125;
-	Tue, 3 Sep 2024 07:30:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xMNo7N8u+Klq9Ajty0axKpZFD9cyAUOWqquZGW4i4fY=; b=bGTZJtR8mrrjKq7C
-	yPrg5+SnM1p9a5dN1G2mBEc8FWZhTkjjA0fYml7C2xHQgjldnuNXzT+kAhF5OcNM
-	2IKMxuk4Yd9x7Ker44IE141jNskc2FzoCQ1sV41snRh7n68mXfteTBnAKUb5nu6p
-	8looIF3TC1sX19Bb5btMhrzE2RQN0hRvE85G1OXC7e0m49P8wclwopP+oFgj5Jsl
-	LI521AgF7OssNcC1Zr96m5gD5/P62d/vWiaJ/Y/A/Ue/Bba+y4YQmNecxyGPw6wX
-	8isLO73KAHPYOUGh/gvBn7aTSyJ/MIcV0u9ne6R6718qiL6k7QRnNDaxrfHdBMc2
-	zWWgIQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41brvexpfw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Sep 2024 07:30:26 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4837UDrT016525
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Sep 2024 07:30:13 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
- 00:30:10 -0700
-Message-ID: <ac1b3ba2-ac57-411c-acdb-69d288d88355@quicinc.com>
-Date: Tue, 3 Sep 2024 15:30:06 +0800
+	s=arc-20240116; t=1725348775; c=relaxed/simple;
+	bh=U7FqpAKPzV4buH+ZI1vofCGLlOfNoJm00tc4Xp0bqlQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ExdU03z4fVQFfK+s4pBNOZcATCypPQrK9Yx5eL2PzPN+03ILR4hBo9CN0emvPIrcf2o+005V/Tjy2EPvgMQ+h1kV0VwedGLhXvELRn9UNlAOc2bOKGkD/1CzmNfoVtSbw01b+1J1AyfhuVJ6t1g3GgTLXpIXi9qdUhRbDmrbTWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vs+13x3W; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5334879ba28so6966663e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 00:32:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725348770; x=1725953570; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=U7FqpAKPzV4buH+ZI1vofCGLlOfNoJm00tc4Xp0bqlQ=;
+        b=Vs+13x3WKrzOvshslTGxrV2rs3mzB14w8WyXspdGmAJ0FPqDDtMXD1FIxD4DOuvK33
+         qWKA6xAa3Al0oJrO9pVkt32AMSgbusv89lhdyNYjuFolfkSy8872pv5dntM5We6GgPyg
+         YCXVx42dnaEZLGqsrrMwLvUyrmdA0lPVvLgfTej5CbeaqZa7nNNErQdSQ+d9DH/9qma3
+         1dAtAomK8rp/LDKAs/yh95mF0rnCC7bS55CysBoqRzXKpa5ymw3WBFJJ4gTN+GUPOoKR
+         0Lj0NtM89RABWVIbT914UdgpRgLD7o+Q7Q5Z8DSbouxKalILdHFcEkYO2SsQV1NvspYA
+         +foA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725348770; x=1725953570;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=U7FqpAKPzV4buH+ZI1vofCGLlOfNoJm00tc4Xp0bqlQ=;
+        b=fd0h1cxEn4rTV2XYWm1RC3MMOcat/tJ9j+APZA1sNMHRP+M4nPKxe4j1amuWqj6qNG
+         f2785nvoaGrp2EJzvyM9+vGm+tzyvs8Eo4zUc+YSpgPU1Tkkghvcdk5Vl9X7uooQCi6h
+         F9rtBLrXA3nLcNcZL6WdXafOCeN+sU4EzmvFrzt7cN9D8UL1W+tvfkTcKezDFo4HYiGa
+         dVOPJIjvmTsPWF4A+kZ3zdtj3C6onm3JMRHzABNMYqwYkT3iLbIEXxEcu42rd8r48p9h
+         yVWwJ1HPa3thkc2XVP8LQ09Yz8anHxhSnMFzChFHw45lDdOR6shl7c3/uX3cvHm3WMT8
+         yY6A==
+X-Forwarded-Encrypted: i=1; AJvYcCWPSDuehmPGR3tMGHZyfRKlrPe81P/EN/7LRqsYjEnmGx76chPoX6Stl2x014FkrcW7E/KRpJkeuDzxBp8A@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlcrfRWByUACcH4M8Yi+Cq2iiXlW4cmLT+I/jLUsI/VZonBHf6
+	R2JaZAAfqDzM4RJ6WSR0IR61jJfksf+jX2fayyLdFrSqK4Dt80PVitrIGnKHPsW5NwrA4GNpzm2
+	eWBX9bhh7grnm9vbm5nzcrU4rLhy4sOX1+nNYiA==
+X-Google-Smtp-Source: AGHT+IHrFPfCS/BVC8UCkjCGmyI7i7/wfoGrPytiT60dSKpQkQEML/b4+Lrc3MCNMZfPCyT+5uqmLNbJH1mOjM56rKk=
+X-Received: by 2002:a05:6512:3b11:b0:52c:e054:4149 with SMTP id
+ 2adb3069b0e04-53546b052fdmr9233089e87.15.1725348770143; Tue, 03 Sep 2024
+ 00:32:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] dt-bindings: cache: qcom,llcc: add num-banks property
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Conor Dooley <conor@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240903-qcs8300_llcc_driver-v1-0-228659bdf067@quicinc.com>
- <20240903-qcs8300_llcc_driver-v1-1-228659bdf067@quicinc.com>
- <g7fyt57kzynzpux5nea2v22gcuu24asbr54axzms7mhdh4jq5a@xdyqifloofbk>
-Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <g7fyt57kzynzpux5nea2v22gcuu24asbr54axzms7mhdh4jq5a@xdyqifloofbk>
+References: <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org>
+ <20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-2-bdb05b4b5a2e@linaro.org>
+ <CAA8EJpp_LWmuN8CFuQEAME-O44_wJXUKsR1QwahuigzSss5Rqw@mail.gmail.com>
+In-Reply-To: <CAA8EJpp_LWmuN8CFuQEAME-O44_wJXUKsR1QwahuigzSss5Rqw@mail.gmail.com>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Tue, 3 Sep 2024 15:32:38 +0800
+Message-ID: <CABymUCPXDTCVeeC0s+1UyuqYF0XNW55qtOBV9--BOoSjAzVjkg@mail.gmail.com>
+Subject: Re: [PATCH 02/21] drm/msm/dsi: fix DSC width for the bonded DSI case
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, Jonathan Marek <jonathan@marek.ca>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: svIScy-1xC1ures7m6vqH_PypRBUBoIS
-X-Proofpoint-ORIG-GUID: svIScy-1xC1ures7m6vqH_PypRBUBoIS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-02_06,2024-09-02_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- adultscore=0 mlxlogscore=864 priorityscore=1501 malwarescore=0 spamscore=0
- mlxscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2409030059
+Content-Transfer-Encoding: quoted-printable
 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B48=E6=
+=9C=8829=E6=97=A5=E5=91=A8=E5=9B=9B 18:54=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Thu, 29 Aug 2024 at 13:19, Jun Nie <jun.nie@linaro.org> wrote:
+> >
+> > From: Jonathan Marek <jonathan@marek.ca>
+> >
+> > For the bonded DSI case, DSC pic_width and timing calculations should u=
+se
+> > the width of a single panel instead of the total combined width.
+>
+> What is a "single panel"? Please rephrase the commit message so that
+> it reads logically.
 
+Yeah, it is a bit confusing without the usage case explanation. "single DSI
+interface" shall be much better here. Because bonded-DSI can work with
+a single panel with 2 DSI, or with 2 panels with one DSI on each panel.
+>
+> >
+> > Bonded DSI can be used to drive a single panel having two input
+> > channels, or to drive two panels with a input channel on every panel th=
+at
+> > behave like single panel for display controller.
+>
+> Missing actual action. See Documentation/process/submitting-patches.rst
+>
+> >
+> > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+>
+> As pointed out during internal review, missing Fixes tag. Any reason
+> for ignoring it?
 
-On 9/3/2024 3:10 PM, Krzysztof Kozlowski wrote:
-> On Tue, Sep 03, 2024 at 02:21:29PM +0800, Jingyi Wang wrote:
->> Add a property "num-banks" for errata.
-> 
-> This you said in commit subject and we see in the diff. You *MUST*
-> explain why.
-> 
->>
->> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
->> ---
->>  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 5 +++++
->>  1 file changed, 5 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->> index 68ea5f70b75f..03241b719c98 100644
->> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
->> @@ -56,6 +56,11 @@ properties:
->>      items:
->>        - const: multi-chan-ddr
->>  
->> +  num-banks:
-> 
-> No vendor prefix? So this is generic property? Then add to some common
-> schema with proper explanation WHY.
-> 
->> +    $ref: /schemas/types.yaml#/definitions/uint32
->> +    description:
->> +      The num of llcc banks
-> 
-> And what are llcc (or LLCC?) banks?
-> 
-> 
-Will add the vendor prefix and description in the next series.
-> Best regards,
-> Krzysztof
-> 
-Thanks,
-Jingyi
-
+Sorry, it is missed by mistaken. I am just more familiar with
+"Signed-off-by" than
+"Fixes:" tag, so not sensitive to Fixed tag and miss it when you
+mention it. Will
+add it.
 
