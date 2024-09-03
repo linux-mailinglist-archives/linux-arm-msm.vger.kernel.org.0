@@ -1,203 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-30549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F28496A9DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 23:19:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C28E96A9FB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 23:22:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 025D31F21751
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 21:19:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 061681F24E9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 21:22:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24931EC005;
-	Tue,  3 Sep 2024 21:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BA291EC011;
+	Tue,  3 Sep 2024 21:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Bx4JhlQN"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="IBJfOFHw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE0801EC002;
-	Tue,  3 Sep 2024 21:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97501EC002
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 21:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725398350; cv=none; b=SUsojfOl8XeDyOFsXeR1l1VHwogATxDLvVy5IRojux0vUTEpmkOBSneinJjKLxCZASczDq2F/EdcWx0VRtiApEn1FhVcrsOeyxg3XsY2sr0Fr4a8Ls46Z3l5xlgOw8KJxztCO3gEhSsFipUAZKqVDkpVzPirjudFe/YI8yreovE=
+	t=1725398568; cv=none; b=bvEkJs7oQDAJtKLvs576kBlI7vRxDtbalJGv1dWcVZIv6n/HXBLnEn3AT5898Qe9/w5brk9Ir7fzhDHcj6h9gvzvfvtccL99nVvvz82Sw/kmMmaeoL731vIplNegh+oxTsS0MFR7P/yFg0VZIKR8PoKlKSeUF/dCDWH8BGP5t+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725398350; c=relaxed/simple;
-	bh=U1ukEr8EN1FDDvS4Y7RULLGTH93cVAvfVFqw0l1CRb8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cVLm6No3ghNg/+ESAo/GLMezLpJ3O0RNBW/4Gz5Ye1HymzM465k564vWBj+g4EvzK/uhSH9MvzvGYVJGktg67Rl3a7SGQ2weTRna4a3BOghO8BHh9QuHY+cXKtCzBeyI0QD8+XTXM0J2KmCiHO0MF/gBisf3OK/uJBijjjJ/AyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Bx4JhlQN; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 483D99Pm014645;
-	Tue, 3 Sep 2024 21:18:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ccVhMBdxEk5S4mL0cUcGF7PalslkLp70MYvdg4jGv40=; b=Bx4JhlQNp4Mr4rRu
-	3MWe1AssFm+F4CHy5VhRZ3BjpoN2yB3csvRBWkLkprI/xAQGZJbPNWhx0AaZIrIm
-	mAfwCKFSfYoLcoJnaXt/yaZXcEgvmUigyRylvKtghA2K9O9No8LHrpGk8Fdzyfka
-	qrLgeZnbAvN/k7+VxkPC8Hmmrh3sZreo7ZweNA9ilpFqlQRHIJASugyOtXzrtoZ8
-	+GeYzosmCwLSIDTRYE5eviuKd4dKB7wyBQDOgfY7UJHlYf2VL8ZolXkhmrrZwj4u
-	JzePcTc+ZynZsxZTSdX1mziwIu9x45dj/QazjTSIJ4edSo+329AexEcIyL0s90be
-	dbmR/g==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41dt69avfe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Sep 2024 21:18:38 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 483LIbs9019044
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Sep 2024 21:18:37 GMT
-Received: from [10.71.114.155] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
- 14:18:36 -0700
-Message-ID: <5b23cbaf-05e2-4310-aad0-7e5bd01c9d3b@quicinc.com>
-Date: Tue, 3 Sep 2024 14:18:36 -0700
+	s=arc-20240116; t=1725398568; c=relaxed/simple;
+	bh=xLNiOMxaw2LZZ/ggNobSqCSlzqvrzF9ZY7MDKfT8EGE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-type; b=NjuoqFmbOrYomIX0779Ywp3rRQ8jri2CjUipmFXOvtca9SYPYalnC4YiDLahAz8CMwzpnu84nf03D1lTIKRMEWxRIMYkRg5tmwlxjhIDidqHiyA70MitM6RGywhruP6Q/qTDAJ2SD4P/UqkwyrXdXjMBkhCQrZU/660RIriBp6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=IBJfOFHw; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1725398565;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=P02lsMX4DngF767Z3UWIfE08mOI+plZIsLND6/2CQRk=;
+	b=IBJfOFHw7HKt7CHe/+c4jLyQkogmBa9WSRBXGkAiN/cl2WuTEv+n9PiRIVWBpN/OWaB0SO
+	MghqFAEvIDqphJnObPfMSqjbXcmSfBmmGajRbk3Tg3ECV+SmFwXPyW/nNgmJPbS1SSKiWj
+	TsJ10YEGc3xC1sh85gwIxhLo1WVZTAc=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-htWmYptAOWu5i8I789l95g-1; Tue, 03 Sep 2024 17:22:44 -0400
+X-MC-Unique: htWmYptAOWu5i8I789l95g-1
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7a80adc8735so18674985a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 14:22:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725398564; x=1726003364;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P02lsMX4DngF767Z3UWIfE08mOI+plZIsLND6/2CQRk=;
+        b=JpxjvtMtVLV5GZMbffhPcyArct0tWZvG9zAtvo+XrrYukYFbXZrSiRQH6UJ0jPrM1h
+         CiTdjGWv2ffE+UyMyFbWj3QU5lkHdia7lNaM+0HowE8TgklzT8AQ3a8wH2fSuEJtPVa8
+         FcHtZA42Wf/A/28t0/nvgI+1GN/oRZjln8/pA2PgNLteKgAAeAHP9gQ8W6Zu6nIl3Nma
+         EIwrYOi7aK/owp4ytqXfuKRlyuCln4/Hh4djraR/GbVGSuju13yja3hDOY+K3S6KqbfT
+         VWpLBF8QSOAKGR3cUPiH3abqJQxguGCuMGV2qlUi54c2J7b2SWbzSx5eKF0A3cLnZ3OZ
+         CO+w==
+X-Forwarded-Encrypted: i=1; AJvYcCUeij+DwhrQT2tO4SOYO4r/1Nvg472D9zXBrp0SbUdXxTby0FP7NIlUFZivT+Xmt5iZUuQmj2gG+In1F6Bv@vger.kernel.org
+X-Gm-Message-State: AOJu0YwhObM5RI+0bv3JQaiiVPuGhI1pUJapjd3tr2ZPHSHjgufjPtxm
+	eR/kXt8fEV28OPtiWcexBXrGDXj2TOjiBn5RPaBZuyMVI11VosEQWpe4E2qPgD8GPZUN2H7gsj8
+	rmAqHkBX6wwnB4g5UBElDGc4E4mmB6igBqeP+LlfGvwNYlTeEi5yNrKaAmUZq0HQ=
+X-Received: by 2002:a05:620a:470f:b0:7a6:6d37:9f19 with SMTP id af79cd13be357-7a811f51a29mr2648121385a.15.1725398564280;
+        Tue, 03 Sep 2024 14:22:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IExSoBiJ4VDU7q6qrqmBNoLmWNnqwcKBZ7V+aCR+x+Y89wh/+jQl2xhNDuBYCHNMXig/9lHhA==
+X-Received: by 2002:a05:620a:470f:b0:7a6:6d37:9f19 with SMTP id af79cd13be357-7a811f51a29mr2648118485a.15.1725398563905;
+        Tue, 03 Sep 2024 14:22:43 -0700 (PDT)
+Received: from x1.redhat.com (c-98-219-206-88.hsd1.pa.comcast.net. [98.219.206.88])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a806bfb8c9sm564737185a.25.2024.09.03.14.22.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Sep 2024 14:22:43 -0700 (PDT)
+From: Brian Masney <bmasney@redhat.com>
+To: herbert@gondor.apana.org.au
+Cc: davem@davemloft.net,
+	quic_omprsing@quicinc.com,
+	neil.armstrong@linaro.org,
+	quic_bjorande@quicinc.com,
+	linux-arm-msm@vger.kernel.org,
+	linux-crypto@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	ernesto.mnd.fernandez@gmail.com,
+	quic_jhugo@quicinc.com
+Subject: [PATCH v2 0/2] crypto: qcom-rng: fix support for ACPI-based systems
+Date: Tue,  3 Sep 2024 17:22:18 -0400
+Message-ID: <20240903212230.707376-1-bmasney@redhat.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v26 21/33] ASoC: qcom: qdsp6: Add USB backend ASoC driver
- for Q6
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <tiwai@suse.com>, <krzk+dt@kernel.org>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>
-References: <20240829194105.1504814-1-quic_wcheng@quicinc.com>
- <20240829194105.1504814-22-quic_wcheng@quicinc.com>
- <afe37014-8ec5-4808-bc24-09ac0f2d93b6@linux.intel.com>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <afe37014-8ec5-4808-bc24-09ac0f2d93b6@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zJj5FS5k0LAWrU0MGLzu1kKo2bkGDL1O
-X-Proofpoint-ORIG-GUID: zJj5FS5k0LAWrU0MGLzu1kKo2bkGDL1O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-03_09,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409030171
 
-Hi Pierre,
+The qcom-rng driver supports both ACPI and device tree based systems.
+ACPI support was broken when the hw_random interface support was added.
+This small series gets that working again.
 
-On 8/30/2024 2:21 AM, Pierre-Louis Bossart wrote:
->
-> On 8/29/24 21:40, Wesley Cheng wrote:
->> Create a USB BE component that will register a new USB port to the ASoC USB
->> framework.  This will handle determination on if the requested audio
->> profile is supported by the USB device currently selected.
->>
->> Check for if the PCM format is supported during the hw_params callback.  If
->> the profile is not supported then the userspace ALSA entity will receive an
->> error, and can take further action.
->>
->> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> ---
->>  include/sound/q6usboffload.h  |  20 +++
->>  sound/soc/qcom/Kconfig        |  10 ++
->>  sound/soc/qcom/qdsp6/Makefile |   1 +
->>  sound/soc/qcom/qdsp6/q6usb.c  | 246 ++++++++++++++++++++++++++++++++++
->>  4 files changed, 277 insertions(+)
->>  create mode 100644 include/sound/q6usboffload.h
->>  create mode 100644 sound/soc/qcom/qdsp6/q6usb.c
->>
->> diff --git a/include/sound/q6usboffload.h b/include/sound/q6usboffload.h
->> new file mode 100644
->> index 000000000000..49ab2c34b84c
->> --- /dev/null
->> +++ b/include/sound/q6usboffload.h
->> @@ -0,0 +1,20 @@
->> +/* SPDX-License-Identifier: GPL-2.0
->> + *
->> + * linux/sound/q6usboffload.h -- QDSP6 USB offload
-> not sure about the linux/ prefix?
->
->> + *
->> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/**
->> + * struct q6usb_offload
->> + * @dev - dev handle to usb be
->> + * @sid - streamID for iommu
->> + * @intr_num - usb interrupter number
->> + * @domain - allocated iommu domain
->> + **/
->> +struct q6usb_offload {
->> +	struct device *dev;
->> +	long long sid;
->> +	u16 intr_num;
->> +	struct iommu_domain *domain;
->> +};
-> consider reordering to avoid holes/alignment issues, e.g. all pointers
-> first, then long long then u16
->
-Will fix these.
->> +static int q6usb_hw_params(struct snd_pcm_substream *substream,
->> +			   struct snd_pcm_hw_params *params,
->> +			   struct snd_soc_dai *dai)
->> +{
->> +	struct q6usb_port_data *data = dev_get_drvdata(dai->dev);
->> +	struct snd_soc_pcm_runtime *rtd = substream->private_data;
->> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
->> +	int direction = substream->stream;
->> +	struct q6afe_port *q6usb_afe;
->> +	struct snd_soc_usb_device *sdev;
->> +	int ret = -EINVAL;
->> +
->> +	mutex_lock(&data->mutex);
->> +
->> +	/* No active chip index */
->> +	if (list_empty(&data->devices))
->> +		goto out;
-> -ENODEV for the default return value>?
-Sure.
->> +
->> +	sdev = list_last_entry(&data->devices, struct snd_soc_usb_device, list);
->> +
->> +	ret = snd_soc_usb_find_supported_format(sdev->chip_idx, params, direction);
->> +	if (ret < 0)
->> +		goto out;
->> +
->> +	q6usb_afe = q6afe_port_get_from_id(cpu_dai->dev, USB_RX);
->> +	if (IS_ERR(q6usb_afe))
->> +		goto out;
->> +
->> +	/* Notify audio DSP about the devices being offloaded */
->> +	ret = afe_port_send_usb_dev_param(q6usb_afe, sdev->card_idx,
->> +					  sdev->ppcm_idx[sdev->num_playback - 1]);
-> don't you need a symmetrical notification upon hw_free()?
->
-> Also what happens if there are multiple calls to hw_params, which is
-> quite legit in ALSA/ASoC?
+This fix was boot tested on a Qualcomm Amberwing server.
 
-The afe_port_send_usb_dev_param() is meant to just update the device selected for offload on the audio DSP end, and this won't be referenced until our Q6AFE DAI sends the port start command in its prepare() callback.  Don't think we need to handle anything specific in the hw_free() case.  As long as the hw_params() callback is called before any audio session is started, then we'll ensure that the device selected is always updated to the audio DSP.
+Changes since v1:
+- Use qcom_prng_ee_match_data instead of qcom_prng_match_data for the
+  true skip_init to match previous behavior (Ernesto)
+- Reordered patches so fix is first (Dmitry)
 
-Thanks
+Brian Masney (2):
+  crypto: qcom-rng: fix support for ACPI-based systems
+  crypto: qcom-rng: rename *_of_data to *_match_data
 
-Wesley Cheng
+ drivers/crypto/qcom-rng.c | 50 +++++++++++++++++++++------------------
+ 1 file changed, 27 insertions(+), 23 deletions(-)
+
+-- 
+2.46.0
 
 
