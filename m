@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94979969DF5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 14:43:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93AF6969E09
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 14:44:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3BADF282680
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 12:43:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B8A941C23119
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 12:44:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5C081CB539;
-	Tue,  3 Sep 2024 12:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD7711D86C6;
+	Tue,  3 Sep 2024 12:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DZ6JnnC5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DpWJM6IZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D1F1B12C4;
-	Tue,  3 Sep 2024 12:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5C11D6DD0;
+	Tue,  3 Sep 2024 12:44:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725367379; cv=none; b=alSlLloFrelxFlYzjeeucyn6o+sGCtWSNnFleLNbZy1Q2+P4NQ4ynALgqIW7W0B61blJlDQvCEc94zFaBOAmPGtyz2WDB2jgFQfiCczjZZYzdLN/677hMrayHbeQq17tTlWSsjeuDi7ujylTU+WPds5LxYsINNVUf46MgRFWV1E=
+	t=1725367473; cv=none; b=a1MNiN8B91kDKQiqmq4pjUKBiVV63a4JD/1KiHG6meo8LgDhNZR0rHnB7HVAjAimqQU44Ic21vdhn6hIxsTHCGkYRzQY/PoBKOUis3WJPUR5x+3DPKV+iLh4qH9qKmhp9mZTENgHAJbmSXm9ly3n4erI3eus/wL49IXqySM3KO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725367379; c=relaxed/simple;
-	bh=Sj6LW76y8E1QHpBBI4Cym7jDGJkhSCV8zLONWuArfYA=;
+	s=arc-20240116; t=1725367473; c=relaxed/simple;
+	bh=CiS7TLGte5qKutCVWQk0V5K52BRWxgq5Dw+aQUFrRMg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fJfofRwlRYPAxs549Nwpas0ulYsdLhyLeI0d10GosS/ebQkoyOpUIsvB2biSICHm9F9VCaQqMvbevv3KAKvVp3c9HxeezHLYiKYlJJ4j3vA9G/8Qj0FTKiT8Wyw3G3hCPlSp97p7ov++09IBmCtwMztyx7ZFXlc7nGz5zblUqAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DZ6JnnC5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE014C4CEC4;
-	Tue,  3 Sep 2024 12:42:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sE/RdtQ/Z+ZPs2O4FMiaViF2sHvMUdvOF9cd27ap9HLhRhYJ8sSNA7CgjaZrUchW2lBc0L4IjoY5UQc7+WKCmT1S/5DHxPGT2hnAsJvwHxBwLsTklwmZ/4o5KG/+eU3/Zm0rOpQc2aTk0/xPuKCmpMPRJinIVs1QAgle4XkCy54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DpWJM6IZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48948C4CEC7;
+	Tue,  3 Sep 2024 12:44:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725367379;
-	bh=Sj6LW76y8E1QHpBBI4Cym7jDGJkhSCV8zLONWuArfYA=;
+	s=k20201202; t=1725367473;
+	bh=CiS7TLGte5qKutCVWQk0V5K52BRWxgq5Dw+aQUFrRMg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DZ6JnnC5wmT76ahDwQkgSTzJT724+pe/rk+clLNPt6Km3yq9bpPMwfNX+abmzX856
-	 w9kttZO+hIuGzHKh2NwuxBfyO8HItFPDkix5g194k8QKf0MKGEXT5Bm0E/icKn1jKP
-	 R8SKap2QZaXiba3kLcXjHvDfYQxi+jHZ7sUkgERCbIRfdsJHQ2ee0CPpUR4RyX1RqO
-	 tt5nHmKzI1ltGTki/2Ux+2kVKBwE3hU9sTfEles1h7YAlIJKtEfH9xZs1l5iCireTX
-	 Df2e27SaIy2QudDQI5aPbiDhIctuQtfxPkwUfxujg+8nXhRY7agk3YoasJg8M8MUh9
-	 +d2dh9P0T/pGA==
-Message-ID: <8d203417-e3da-4969-87ea-f77cdb720756@kernel.org>
-Date: Tue, 3 Sep 2024 14:42:51 +0200
+	b=DpWJM6IZUZzfXrKMMkEzA3nlQK6JFeMBV51+SmXgq6HsuUeDUFVR5a9RMXG/FDswi
+	 WaPMRHTRJvWlhRN4gspqmrC0Z0a5F6eU+d+RoysP6iyTL0F26kLV8RlDccPpKX0k7v
+	 WsaurG48wNbhFIRrQyI4yDtVcVVm8TQUYawnkXvL3q5782LToyBgrs9dL8vsri5Smd
+	 cmIzHgfgoO1JvedTr8iEvLshHGK/5ocnnpnBhVFrb2xO19QLqw91LueX0Dn8bMm7qb
+	 3hie3Q3uxDF6W7mb0gJtIMfwf5SN9pdrD/fYuORFMfG8SNMotElSBXmT2GqRmi/+DY
+	 9ol4VAOBmvX0g==
+Message-ID: <11e49954-5230-4781-8222-2e3360012c37@kernel.org>
+Date: Tue, 3 Sep 2024 14:44:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] dt-bindings: arm: Add Qualcomm extended CTI
+Subject: Re: [PATCH v1 2/2] coresight: cti: Add Qualcomm extended CTI support
 To: Mao Jinlong <quic_jinlmao@quicinc.com>,
  Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
  <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
@@ -62,7 +62,7 @@ Cc: linux-kernel@vger.kernel.org, coresight@lists.linaro.org,
  linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org
 References: <20240903121847.6964-1-quic_jinlmao@quicinc.com>
- <20240903121847.6964-2-quic_jinlmao@quicinc.com>
+ <20240903121847.6964-3-quic_jinlmao@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,45 +108,115 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240903121847.6964-2-quic_jinlmao@quicinc.com>
+In-Reply-To: <20240903121847.6964-3-quic_jinlmao@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
 On 03/09/2024 14:18, Mao Jinlong wrote:
-> Add Qualcomm extended CTI support in CTI binding file. Qualcomm
-> extended CTI supports up to 128 triggers.
+> The QCOM extended CTI is a heavily parameterized version of ARM’s CSCTI.
+> It allows a debugger to send to trigger events to a processor or to send
+> a trigger event to one or more processors when a trigger event occurs
+> on another processor on the same SoC, or even between SoCs. For Qualcomm
+> extended CTI, it supports up to 128 triggers.
 > 
 > Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
 > ---
->  .../devicetree/bindings/arm/arm,coresight-cti.yaml | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
-> index 6a73eaa66a42..141efba7c697 100644
-> --- a/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
-> +++ b/Documentation/devicetree/bindings/arm/arm,coresight-cti.yaml
-> @@ -87,6 +87,10 @@ properties:
->            - const: arm,coresight-cti-v8-arch
->            - const: arm,coresight-cti
->            - const: arm,primecell
-> +      - items:
-> +          - const: qcom,coresight-cti-extended
+>  .../hwtracing/coresight/coresight-cti-core.c  |  75 +++++++----
+>  .../coresight/coresight-cti-platform.c        |  16 ++-
+>  .../hwtracing/coresight/coresight-cti-sysfs.c | 124 ++++++++++++++----
+>  drivers/hwtracing/coresight/coresight-cti.h   | 123 +++++++++++------
+>  4 files changed, 239 insertions(+), 99 deletions(-)
 
-That's just enum in previous entry/list.
 
-> +          - const: arm,coresight-cti
-> +          - const: arm,primecell
 >  
->    reg:
->      maxItems: 1
-> @@ -254,6 +258,16 @@ examples:
->        clocks = <&soc_smc50mhz>;
->        clock-names = "apb_pclk";
->      };
-> +  # minimum extended CTI definition.
-> +  - |
+>  /*
+> - * Device registers
+> - * 0x000 - 0x144: CTI programming and status
+> - * 0xEDC - 0xEF8: CTI integration test.
+> - * 0xF00 - 0xFFC: Coresight management registers.
+> + * CTI CSSoc 600 has a max of 32 trigger signals per direction.
+> + * CTI CSSoc 400 has 8 IO triggers - other CTIs can be impl def.
+> + * Max of in and out defined in the DEVID register.
+> + * - pick up actual number used from .dts parameters if present.
+>   */
+> -/* CTI programming registers */
+> +#define CTIINOUTEN_MAX		128
+> +
+>  #define CTICONTROL		0x000
+> -#define CTIINTACK		0x010
+> -#define CTIAPPSET		0x014
+> -#define CTIAPPCLEAR		0x018
+> -#define CTIAPPPULSE		0x01C
+> -#define CTIINEN(n)		(0x020 + (4 * n))
+> -#define CTIOUTEN(n)		(0x0A0 + (4 * n))
+> -#define CTITRIGINSTATUS		0x130
+> -#define CTITRIGOUTSTATUS	0x134
+> -#define CTICHINSTATUS		0x138
+> -#define CTICHOUTSTATUS		0x13C
+> -#define CTIGATE			0x140
+> -#define ASICCTL			0x144
+> -/* Integration test registers */
+> -#define ITCHINACK		0xEDC /* WO CTI CSSoc 400 only*/
+> -#define ITTRIGINACK		0xEE0 /* WO CTI CSSoc 400 only*/
+> -#define ITCHOUT			0xEE4 /* WO RW-600 */
+> -#define ITTRIGOUT		0xEE8 /* WO RW-600 */
+> -#define ITCHOUTACK		0xEEC /* RO CTI CSSoc 400 only*/
+> -#define ITTRIGOUTACK		0xEF0 /* RO CTI CSSoc 400 only*/
+> -#define ITCHIN			0xEF4 /* RO */
+> -#define ITTRIGIN		0xEF8 /* RO */
+> +
+>  /* management registers */
+>  #define CTIDEVAFF0		0xFA8
+>  #define CTIDEVAFF1		0xFAC
+>  
+> -/*
+> - * CTI CSSoc 600 has a max of 32 trigger signals per direction.
+> - * CTI CSSoc 400 has 8 IO triggers - other CTIs can be impl def.
+> - * Max of in and out defined in the DEVID register.
+> - * - pick up actual number used from .dts parameters if present.
+> - */
+> -#define CTIINOUTEN_MAX		32
+> +static const int cti_normal_offset[] = {
 
-No need for new example. No differences here.
+Uh? Why do you add data definitions into header? These NEVER go to
+headers, for obvious reasons.
+
+> +	0x010,		/* CTIINTACK */
+
+
+>  /**
+>   * Group of related trigger signals
+> @@ -67,7 +109,7 @@
+>   */
+>  struct cti_trig_grp {
+>  	int nr_sigs;
+> -	u32 used_mask;
+> +	DECLARE_BITMAP(used_mask, CTIINOUTEN_MAX);
+>  	int sig_types[];
+>  };
+>  
+> @@ -146,9 +188,9 @@ struct cti_config {
+>  	bool hw_powered;
+>  
+>  	/* registered triggers and filtering */
+> -	u32 trig_in_use;
+> -	u32 trig_out_use;
+> -	u32 trig_out_filter;
+> +	DECLARE_BITMAP(trig_in_use, CTIINOUTEN_MAX);
+> +	DECLARE_BITMAP(trig_out_use, CTIINOUTEN_MAX);
+> +	DECLARE_BITMAP(trig_out_filter, CTIINOUTEN_MAX);
+>  	bool trig_filter_enable;
+>  	u8 xtrig_rchan_sel;
+>  
+> @@ -179,6 +221,7 @@ struct cti_drvdata {
+>  	struct cti_config config;
+>  	struct list_head node;
+>  	void (*csdev_release)(struct device *dev);
+> +	bool	is_extended_cti;
+
+Why different indentation than everything else there? Please write code
+consistent with existing style.
+
 
 
 Best regards,
