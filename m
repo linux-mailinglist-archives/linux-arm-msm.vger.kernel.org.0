@@ -1,327 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-30578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF72196ABF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 00:17:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DDD196AC01
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 00:18:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D0F61F254E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 22:17:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 918351C245E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 22:18:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E890D1D58B3;
-	Tue,  3 Sep 2024 22:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10D5418FC91;
+	Tue,  3 Sep 2024 22:18:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZTmY122Z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U1yE1Vuq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843BF1C9DC0
-	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 22:17:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FB5126C16;
+	Tue,  3 Sep 2024 22:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725401846; cv=none; b=VzVT579cUGwyFNstnYx9HBxVlep88FRBoBBpysYD3DatjuQLjjN8X2aJM6SC+ojRtFP3GVite50ieBIeExt0qwaqcaWRdX+qnkPVnebNBvUKgko87i7UynEo2TOeVwxfx2vSuiKtfq+MGYCgr4O4tcIAu98Mjzqt0fRAC6cePl0=
+	t=1725401924; cv=none; b=KI9PCIangtDlJYqP89gYBh8zhi+F2GhzKTghqaCJ3A5NUWZ/22FWRlZHaxECOpNVR4uU3k8cKLH1keBrjredjfyxKnMM94Oq0Rqn9YDKbEWlP9qbzV+PQtVazSsNKmebyRkiNFJGx3mIXYekx4y6bXjnfGeTOCAXcfDXBpDuuO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725401846; c=relaxed/simple;
-	bh=6nSKMdl8/rMSTMas7fu7iffrXDBuMrREFVYndWL2WPM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gT8Dq2l+roX5dzWLlxPCK5wV9qNWioiaWvSVHhNMvTm6x7aBQQhqgSfG5VRNwH69EmCeV/MDDmM8AjSaQuic3xYRDASAYc27fvBc3aEGmuMY2/LikHY7+1em1qXIv1asWA9zJbf8AeN5i5wL9YzZdqQoBb1i8vljXCkskAAC24U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZTmY122Z; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1725401843;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uX67JJ48/X+mbq8S3u6zeSeVmMvnaUsc25ToyEvfFRg=;
-	b=ZTmY122ZtzOHLAtbHw0c4M6rXfsTOP8DzJ7v9rm/k8quprz7XmzcIzbTHJQL87ja3/OBra
-	dbGPqFkMAxKOqGz0swrr8KS1ReY0OefNyDIjssArIWY+0o2+3GkuY3lUl4jrjVdLnh4Rbx
-	D9UEwOQbfadzYIRzc8pV/n5AqLdRz/Q=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-657-iHEh3iKLOFO_7XpaTe0mDQ-1; Tue, 03 Sep 2024 18:17:22 -0400
-X-MC-Unique: iHEh3iKLOFO_7XpaTe0mDQ-1
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-45798aa2bacso51351661cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 15:17:22 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725401842; x=1726006642;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uX67JJ48/X+mbq8S3u6zeSeVmMvnaUsc25ToyEvfFRg=;
-        b=eGWrr9KXPpYJb8ffkkeSP6E5hmd6WT2r0mBePdT2FizpVb0OIjeUC97DcUfrqYcszY
-         NB2Cvw2nOgT4QSFAnkdX0LnJbmkabN4+COFomBb83cKpG8c/P6Rgl2GfA50F5eH2Q6oR
-         4yfc7qJxP3oYxKw44jKH8sqmd+Y2vmbg8NAzhCrioxnoALH76vEoXFjp1dBBFelQEw2K
-         +yjxC8yE1yVEC9NSQyZwjP72XYulPXm5CjAW/vVPeVpE0sdwC+gKXbBKpQSb2uj+71Fb
-         j2WRGT8q8+z07Uw7T7+T6/drzhHjbl8rVd0SILPTnA4KA+R8sBgBNsFcMh2ctHagLRbD
-         e6yQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVtN1hmGMAPF/AMoDz9oJJrMB3BmDQGAx5Hs8Irr3DzpvNaSrn2Z5k5B+NUldUClM7tqHNM7+8OpDzW6gNH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9IIjBxPAGRByRqj+ds/zSDtVUhBH+7GLi3vyZtT/CpEUtkEfU
-	djlEGZZfDgDrNCWeXpckVKGJgPV/0rckMCxnP8ySgXSkFIjPG0Zlr6fVbtckjuzEPQh0JkeHOMN
-	DKzcyX8XQm/6JGcYAjG4Ov+pxCiQ1wW2qCMuGSmOKRMybsFl0VhPRL/5Xzbvi84s=
-X-Received: by 2002:a05:622a:4892:b0:456:80dd:2b74 with SMTP id d75a77b69052e-456f166a883mr180080081cf.2.1725401841793;
-        Tue, 03 Sep 2024 15:17:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGF+ADqf+HvwhdXdoU9v++JYfldALmtFlgglwFanWYamzzbURjrFGiQObND/oVCHlOkCKZ8dQ==
-X-Received: by 2002:a05:622a:4892:b0:456:80dd:2b74 with SMTP id d75a77b69052e-456f166a883mr180079751cf.2.1725401841295;
-        Tue, 03 Sep 2024 15:17:21 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::40])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45682c8788asm54097881cf.1.2024.09.03.15.17.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 15:17:20 -0700 (PDT)
-Date: Tue, 3 Sep 2024 17:17:18 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Bhupesh Sharma <bhupesh.sharma@linaro.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, Jose Abreu <joabreu@synopsys.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, Prasad Sodagudi <psodagud@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, kernel@quicinc.com
-Subject: Re: [PATCH net] net: stmmac: Stop using a single dma_map() for
- multiple descriptors
-Message-ID: <yy2prsz3tjqwjwxgsrumt3qt2d62gdvjwqsti3favtfmf7m5qs@eychxx5qz25f>
-References: <20240902095436.3756093-1-quic_jsuraj@quicinc.com>
+	s=arc-20240116; t=1725401924; c=relaxed/simple;
+	bh=UHAN35FBq3KAiIrnojpTJmchmFwUeFU4wJ465i+18is=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=LevDC8DHDO54Wqh5yOuOLfmJ0CJqCyoeD79J+eih8pmtgZMEnbIbRNVTiiNwSBSM03LZv4/Ont//17mVmGsJdO7rgr+reF6kfLPcY2n2p66u6qZ06skoWjIBhMTRLqr+C2cYEF0Gm7eW2jVnDgF2zuwnwWKdWZtHf3YDMWw0oLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U1yE1Vuq; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 483IgdDh009481;
+	Tue, 3 Sep 2024 22:18:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qgWlqxKjeBpg4Ts6zdxWmbOOIrvHy2nnFujcHgGQovQ=; b=U1yE1VuqyY9RIxKb
+	HZIyF5kanildyiU66t2j8rFbsVKpObVZ/JsVkRhF9aCT4gTGs8idKZ11GHk+xvGX
+	IzuCeAG2IOnqc+1wy/F+8/dhiotbKDfJqlKAIPf4LAcmJr8Ov5vNd/Xxx0uMInxS
+	I8p/nTEbzJb1FT95O9oOZ/h+lR89CsH5lMGaL7kkKHaSqtyeFt45A0NYmaSNOuD6
+	QS7XdA6UOxRC4+TU1YZhnOTM5ekgC2A/aaduo62RUREvH+uDml9qUTeyUXbafNRD
+	TI43vZLncdBirHeSPPhf9/6DMJP2zVgx0GEdoc9TdNJ2DYIcDMDsMvIKuJWCSMJT
+	vr9roA==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41e0bhj259-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 03 Sep 2024 22:18:27 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 483MIPOa000659
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 3 Sep 2024 22:18:25 GMT
+Received: from [10.134.70.212] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
+ 15:18:24 -0700
+Message-ID: <9f95704d-0699-4b11-b8cb-40f1a57eeebd@quicinc.com>
+Date: Tue, 3 Sep 2024 15:18:24 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240902095436.3756093-1-quic_jsuraj@quicinc.com>
+User-Agent: Mozilla Thunderbird
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: Re: [PATCH 07/21] drm/msm/dpu: Check CRTC encoders are valid clones
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Rob Clark <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>,
+        Sean Paul
+	<sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David
+ Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, <quic_ebharadw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>
+References: <20240829-concurrent-wb-v1-0-502b16ae2ebb@quicinc.com>
+ <20240829-concurrent-wb-v1-7-502b16ae2ebb@quicinc.com>
+ <uqtlpynjdszqyyikj64uxwuqnk3lmzma7kd2vwxipnj4fg2eje@7toj5kww7vk7>
+Content-Language: en-US
+In-Reply-To: <uqtlpynjdszqyyikj64uxwuqnk3lmzma7kd2vwxipnj4fg2eje@7toj5kww7vk7>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: zlqd_Dm-1wxH-7mOEjxkMTFe4fHAHsIR
+X-Proofpoint-GUID: zlqd_Dm-1wxH-7mOEjxkMTFe4fHAHsIR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-03_10,2024-09-03_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409030178
 
-On Mon, Sep 02, 2024 at 03:24:36PM GMT, Suraj Jaiswal wrote:
-> Currently same page address is shared
-> between multiple buffer addresses and causing smmu fault for other
-> descriptor if address hold by one descriptor got cleaned.
-> Allocate separate buffer address for each descriptor
-> for TSO path so that if one descriptor cleared it should not
-> clean other descriptor address.
 
-I think maybe you mean something like:
 
-    Currently in the TSO case a page is mapped with dma_map_single(), and then
-    the resulting dma address is referenced (and offset) by multiple
-    descriptors until the whole region is programmed into the descriptors.
+On 8/30/2024 10:00 AM, Dmitry Baryshkov wrote:
+> On Thu, Aug 29, 2024 at 01:48:28PM GMT, Jessica Zhang wrote:
+>> Check that each encoder in the CRTC state's encoder_mask is marked as a
+>> possible clone for all other encoders in the encoder_mask and that only
+>> one CRTC is in clone mode at a time
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 36 +++++++++++++++++++++++++++++++-
+>>   1 file changed, 35 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> index 5ec1b5a38922..bebae365c036 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> @@ -1,6 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>> - * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
+>>    * Copyright (C) 2013 Red Hat
+>>    * Author: Rob Clark <robdclark@gmail.com>
+>> @@ -1204,6 +1204,36 @@ static struct msm_display_topology dpu_crtc_get_topology(
+>>   	return topology;
+>>   }
+>>   
+>> +static bool dpu_crtc_has_valid_clones(struct drm_crtc *crtc,
+>> +		struct drm_crtc_state *crtc_state)
+>> +{
+>> +	struct drm_encoder *drm_enc;
+>> +	struct drm_crtc *temp_crtc;
+>> +	int num_cwb_sessions = 0;
+>> +
+>> +	drm_for_each_crtc(temp_crtc, crtc->dev)
+>> +		if (drm_crtc_in_clone_mode(temp_crtc->state))
+> 
+> No, get the state from drm_atomic_state. temp_crtc->state might be
+> irrelevant.
 
-    This makes it possible for stmmac_tx_clean() to dma_unmap() the first of the
-    already processed descriptors, while the rest are still being processed
-    by the DMA engine. This leads to an iommu fault due to the DMA engine using
-    unmapped memory as seen below:
+Hi Dmitry,
 
-    <insert splat>
-
-    You can reproduce this easily by <reproduction steps>.
-
-    To fix this, let's map each descriptor's memory reference individually.
-    This way there's no risk of unmapping a region that's still being
-    referenced by the DMA engine in a later descriptor.
-
-That's a bit nitpicky wording wise, but your first sentence is hard
-for me to follow (buffer addresses seems to mean descriptor?). I think
-showing a splat and mentioning how to reproduce is always a bonus as
-well.
+Ack.
 
 > 
-> Signed-off-by: Suraj Jaiswal <quic_jsuraj@quicinc.com>
-
-Fixes: ?
-
-At a quick glance I think its f748be531d70 ("stmmac: support new GMAC4")
-
-> ---
+>> +			num_cwb_sessions++;
 > 
-> Changes since v2:
-> - Fixed function description 
-> - Fixed handling of return value.
-> 
+> Even simpler:
+> if (temp_crtc != crtc && drm_crtc_in_clone_mode(...))
+> 	return false;
 
-This is v1 as far as netdev is concerned :)
+Ack.
 
 > 
->  .../net/ethernet/stmicro/stmmac/stmmac_main.c | 63 ++++++++++++-------
->  1 file changed, 42 insertions(+), 21 deletions(-)
+>> +
+>> +	/*
+>> +	 * Only support a single concurrent writeback session running
+>> +	 * at a time
 > 
-> diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> index 83b654b7a9fd..5948774c403f 100644
-> --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-> @@ -4136,16 +4136,18 @@ static bool stmmac_vlan_insert(struct stmmac_priv *priv, struct sk_buff *skb,
->  /**
->   *  stmmac_tso_allocator - close entry point of the driver
->   *  @priv: driver private structure
-> - *  @des: buffer start address
-> + *  @addr: Contains either skb frag address or skb->data address
->   *  @total_len: total length to fill in descriptors
->   *  @last_segment: condition for the last descriptor
->   *  @queue: TX queue index
-> + * @is_skb_frag: condition to check whether skb data is part of fragment or not
->   *  Description:
->   *  This function fills descriptor and request new descriptors according to
->   *  buffer length to fill
-> + *  This function returns 0 on success else -ERRNO on fail
->   */
-> -static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
-> -				 int total_len, bool last_segment, u32 queue)
-> +static int stmmac_tso_allocator(struct stmmac_priv *priv, void *addr,
-> +				int total_len, bool last_segment, u32 queue, bool is_skb_frag)
->  {
->  	struct stmmac_tx_queue *tx_q = &priv->dma_conf.tx_queue[queue];
->  	struct dma_desc *desc;
-> @@ -4153,6 +4155,8 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
->  	int tmp_len;
->  
->  	tmp_len = total_len;
-> +	unsigned int offset = 0;
-> +	unsigned char *data = addr;
+> If it is not a hardware limitation, please add:
+> FIXME: support more than one session
 
-Reverse xmas tree order, offset is always set below so you could just
-declare it, and data really doesn't seem necessary to me vs using addr
-directly.
+This is a hardware limitation.
 
-https://docs.kernel.org/process/maintainer-netdev.html#local-variable-ordering-reverse-xmas-tree-rcs
+> 
+>> +	 */
+>> +	if (num_cwb_sessions > 1)
+>> +		return false;
+>> +
+>> +	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask) {
+>> +		if ((crtc_state->encoder_mask & drm_enc->possible_clones) !=
+>> +				crtc_state->encoder_mask) {
+> 
+> Align to opening bracket, please. Granted that other drivers don't
+> perform this check, is it really necessary? Doesn't
+> validate_encoder_possible_clones() ensure the same, but during the
+> encoder registration?
 
->  
->  	while (tmp_len > 0) {
->  		dma_addr_t curr_addr;
-> @@ -4161,20 +4165,44 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
->  						priv->dma_conf.dma_tx_size);
->  		WARN_ON(tx_q->tx_skbuff[tx_q->cur_tx]);
->  
-> +		buff_size = tmp_len >= TSO_MAX_BUFF_SIZE ? TSO_MAX_BUFF_SIZE : tmp_len;
-> +
->  		if (tx_q->tbs & STMMAC_TBS_AVAIL)
->  			desc = &tx_q->dma_entx[tx_q->cur_tx].basic;
->  		else
->  			desc = &tx_q->dma_tx[tx_q->cur_tx];
->  
-> -		curr_addr = des + (total_len - tmp_len);
-> +		offset = total_len - tmp_len;
-> +		if (!is_skb_frag) {
-> +			curr_addr = dma_map_single(priv->device, data + offset, buff_size,
-> +						   DMA_TO_DEVICE);
+The difference here is that validate_encoder_possible_clones() is only 
+called when the drm device is initially registered.
 
-Instead of defining "data" above, can't you just use "addr" directly here?
+The check here is to make sure that the encoders userspace is proposing 
+to be cloned are actually possible clones of each other. This might not 
+be necessary for drivers where all encoders are all possible clones of 
+each other. But for MSM (and CWB), real-time display encoders can only 
+be clones of writeback (and vice versa).
 
-> +
-> +			if (dma_mapping_error(priv->device, curr_addr))
-> +				return -ENOMEM;
-> +
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = curr_addr;
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].len = buff_size;
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = false;
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
-> +		} else {
-> +			curr_addr = skb_frag_dma_map(priv->device, addr, offset,
-> +						     buff_size,
-> +						     DMA_TO_DEVICE);
-> +
-> +			if (dma_mapping_error(priv->device, curr_addr))
-> +				return -ENOMEM;
-> +
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = curr_addr;
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].len = buff_size;
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = true;
-> +			tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
-> +		}
-> +
->  		if (priv->dma_cap.addr64 <= 32)
->  			desc->des0 = cpu_to_le32(curr_addr);
->  		else
->  			stmmac_set_desc_addr(priv, desc, curr_addr);
->  
-> -		buff_size = tmp_len >= TSO_MAX_BUFF_SIZE ?
-> -			    TSO_MAX_BUFF_SIZE : tmp_len;
-> -
->  		stmmac_prepare_tso_tx_desc(priv, desc, 0, buff_size,
->  				0, 1,
->  				(last_segment) && (tmp_len <= TSO_MAX_BUFF_SIZE),
-> @@ -4182,6 +4210,7 @@ static void stmmac_tso_allocator(struct stmmac_priv *priv, dma_addr_t des,
->  
->  		tmp_len -= TSO_MAX_BUFF_SIZE;
->  	}
-> +	return 0;
+> 
+>> +			DPU_ERROR("crtc%d failed valid clone check for mask 0x%x\n",
+> 
+> DPU_DEBUG, don't let users spam dmesg.
 
-nit: add a newline before return 0
+Ack.
 
->  }
->  
->  static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue)
-> @@ -4351,25 +4380,17 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
->  		pay_len = 0;
->  	}
->  
-> -	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
-> +	if (stmmac_tso_allocator(priv, (skb->data + proto_hdr_len),
-> +				 tmp_pay_len, nfrags == 0, queue, false))
-> +		goto dma_map_err;
+> 
+>> +				crtc->base.id, crtc_state->encoder_mask);
+>> +			return false;
+>> +		}
+>> +	}
+>> +
+>> +	return true;
+>> +}
+>> +
+>>   static int dpu_crtc_assign_resources(struct drm_crtc *crtc, struct drm_crtc_state *crtc_state)
+>>   {
+>>   	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_CRTC];
+>> @@ -1287,6 +1317,10 @@ static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+>>   			return rc;
+>>   	}
+>>   
+>> +	if (drm_crtc_in_clone_mode(crtc_state) &&
+>> +			!dpu_crtc_has_valid_clones(crtc, crtc_state))
+> 
+> Align to opening bracket.
 
-Changing the second argument here is subtly changing the dma_cap.addr64 <= 32
-case right before this. Is that intentional?
+Ack
 
-i.e., prior, pretend des = 0 (side note but des is a very confusing
-variable name for "dma address" when there's also mentions of desc meaning
-"descriptor" in the DMA ring). In the <= 32 case, we'd call
-stmmac_tso_allocator(priv, 0) and in the else case we'd call
-stmmac_tso_allocator(priv, 0 + proto_hdr_len).
+Thanks,
 
-With this change in both cases its called with the (not-yet-dma-mapped)
-skb->data + proto_hdr_len always (i.e. like the else case).
+Jessica Zhang
 
-Honestly, the <= 32 case reads weird to me without this patch. It
-seems some of the buffer is filled but des is not properly incremented?
-
-I don't know how this hardware is supposed to be programmed (no databook
-access) but that seems fishy (and like a separate bug, which would be
-nice to squash if so in its own patch). Would you be able to explain the
-logic there to me if it does make sense to you?
-
->  
->  	/* Prepare fragments */
->  	for (i = 0; i < nfrags; i++) {
-> -		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
-> +		skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
->  
-> -		des = skb_frag_dma_map(priv->device, frag, 0,
-> -				       skb_frag_size(frag),
-> -				       DMA_TO_DEVICE);
-> -		if (dma_mapping_error(priv->device, des))
-> +		if (stmmac_tso_allocator(priv, frag, skb_frag_size(frag),
-> +					 (i == nfrags - 1), queue, true))
-
-Personally I think it would be nice to change stmmac_tso_allocator() so
-you can keep the frag const above... i.e. something like
-stmmac_tso_allocator(..., void *addr, ..., const skb_frag_t *frag)
-and just check if frag is NULL to determine if you're dealing with a
-frag or not (instead of passing the boolean in to indicate that).
-
-I'm curious if someone else can think of a cleaner API than that for
-that function, even that's not super pretty...
-
->  			goto dma_map_err;
-> -
-> -		stmmac_tso_allocator(priv, des, skb_frag_size(frag),
-> -				     (i == nfrags - 1), queue);
-> -
-> -		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf = des;
-> -		tx_q->tx_skbuff_dma[tx_q->cur_tx].len = skb_frag_size(frag);
-> -		tx_q->tx_skbuff_dma[tx_q->cur_tx].map_as_page = true;
-> -		tx_q->tx_skbuff_dma[tx_q->cur_tx].buf_type = STMMAC_TXBUF_T_SKB;
->  	}
->  
->  	tx_q->tx_skbuff_dma[tx_q->cur_tx].last_segment = true;
+> 
+>> +		return -EINVAL;
+>> +
+>>   	if (!crtc_state->enable || !drm_atomic_crtc_effectively_active(crtc_state)) {
+>>   		DRM_DEBUG_ATOMIC("crtc%d -> enable %d, active %d, skip atomic_check\n",
+>>   				crtc->base.id, crtc_state->enable,
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 > -- 
-> 2.25.1
-> 
-
+> With best wishes
+> Dmitry
 
