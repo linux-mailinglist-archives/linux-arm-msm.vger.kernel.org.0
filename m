@@ -1,220 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-30464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7773A9694D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:11:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0377E9694DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:12:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04F251F249A2
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 07:11:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2C062850DB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 07:12:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EFFF2101BC;
-	Tue,  3 Sep 2024 07:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DCF8B1D61A9;
+	Tue,  3 Sep 2024 07:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HixSsc/5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hkDAMP1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541271D6DA9;
-	Tue,  3 Sep 2024 07:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A914D1CCEEC;
+	Tue,  3 Sep 2024 07:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725347378; cv=none; b=mGfncUzuwDUm0kY/tDEVKdk7fxYqU1ZSDIy7/TPzInIcByobRq2mmmiV1AGnjJUkjqa/2o273e3NFaq6y3pQOfz5OdS1bSSfye2iF0FI19GCCDUclsOYK5jW+ZddZBEuvwT8nSI9cvn1Md9UvYq7yZ6FvtaeKG9/jFdqEx6aUI0=
+	t=1725347453; cv=none; b=OQiRsFbNnGwKiK2LM5Z6+yUtP52WCVubBjew0jiQCn3UNhdgGNNu4CBHJdp/JSNV4HU6CJ43QZmHH+ipjW7YYZfCNHFGI+HsVnR/IYIX+8DQ/J0E8sYgTwBjXF3QtPwyLNx7gaXXpiKca1cHnT7w+HPCo4F/DqQalZhp3MCPa+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725347378; c=relaxed/simple;
-	bh=CCHkRuR4zttYm/e6dnZVqhZ28DY1hQ+/eBD7H++fyLo=;
+	s=arc-20240116; t=1725347453; c=relaxed/simple;
+	bh=T4H+4ElO/PwnBQCNIGbmM+SHoxH07n02T/pQCzCLhPs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FStQH6DSFsMF39LPtAADtFRUjHIhtokKkdHABFrIzcTGq09o/Hac6XBQhM5+78xXTE+WDRV2igQ/En1B401aVv0G+bxQmlhanmrXP4VCV/jD031ReinF4L66hlf6lQB4T02jlyKS/YWYKEcr30/xImGjgFsvLwe3ZGQ6iRarDj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HixSsc/5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34A2C4CEC5;
-	Tue,  3 Sep 2024 07:09:37 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=c2hYv/SbQjmegAwmsyTHCyz7bXr/9BF7FOprtaUljZ2teFr06KwnUElTGc3B0JpxN6q2IrBjuLTt5lKGoIxShqt9u19Kcvy/vkp114P4tV6l6HMrdeezyKQZbGkjsoSm2C5qf31YBD6Nh4ekHpl+1pqvJYYDRZqp/0vJspaSlIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hkDAMP1N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45816C4CEC6;
+	Tue,  3 Sep 2024 07:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725347377;
-	bh=CCHkRuR4zttYm/e6dnZVqhZ28DY1hQ+/eBD7H++fyLo=;
+	s=k20201202; t=1725347453;
+	bh=T4H+4ElO/PwnBQCNIGbmM+SHoxH07n02T/pQCzCLhPs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HixSsc/5RszCmF59GVgXkdhV75LwmOcBgaqwAu2T3hPwuUuNtcOWfL1tt4xgYYvKN
-	 LwAUyb/U2pG3pQna/r4cdzGT8RfVSiDezqUPND4uo8Ac1L3adyOrRhWzJrgIqauyKX
-	 A6kY8gsX0AYN3WEEUfxxPkymnNrz3NkswqY7gQfLU9J9NTGs4xCBzRFCCd8H4Ttfeu
-	 7nP6sVdxFV+uI4G+fwRnOGgaO43mbIJC5OvN2ViEw/0LXHl9U/c+4pzwV01b/T4mRi
-	 WAkSL05IAvCK7GHuv85u8UO/bJZeXWR55CohX/pdW0Bk/aT8aBVw3IeMSQV9syjTv+
-	 MNh9CfBuesdbg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1slNfk-000000000wU-3gP9;
-	Tue, 03 Sep 2024 09:09:52 +0200
-Date: Tue, 3 Sep 2024 09:09:52 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Enable external DP
- support
-Message-ID: <Zta2QJr6jIJcNdUg@hovoldconsulting.com>
-References: <20240902-x1e80100-crd-dts-add-external-dp-support-v1-0-899c264c0eb7@linaro.org>
- <20240902-x1e80100-crd-dts-add-external-dp-support-v1-1-899c264c0eb7@linaro.org>
+	b=hkDAMP1NsoY2wXAXdzoz2K4xJLRUr7NHz6EKTWqFrdn0t9sV6eWWs/zeKlzij5rPl
+	 mPKJ/GNaZDUarxmw1FWzy0zO85uGz0tmmqf0BgBBK8FgqcSwRn9v58t9UmFOK3Kt9L
+	 AAxopvM0m8Ky7Y/LxLTW/E/5Cp6rIzP+3vyPPQsfptw0rsp3mAFeKdhGp8UmSp7GfN
+	 AHjS/Gyb4jMBUUlsenqhfttnvdRq5NDWX4GejeosNkd+w03WZRBBZAhemvIZOuIcj2
+	 oyIrmGdBmsxNBKBkFZcN/+2UIukaTBWedTQdhkubZ0n79JS/MJ8dkCZqqZbJaKdGi4
+	 l5WncypdvKe5Q==
+Date: Tue, 3 Sep 2024 09:10:49 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Jingyi Wang <quic_jingyw@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: cache: qcom,llcc: add num-banks property
+Message-ID: <g7fyt57kzynzpux5nea2v22gcuu24asbr54axzms7mhdh4jq5a@xdyqifloofbk>
+References: <20240903-qcs8300_llcc_driver-v1-0-228659bdf067@quicinc.com>
+ <20240903-qcs8300_llcc_driver-v1-1-228659bdf067@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240902-x1e80100-crd-dts-add-external-dp-support-v1-1-899c264c0eb7@linaro.org>
+In-Reply-To: <20240903-qcs8300_llcc_driver-v1-1-228659bdf067@quicinc.com>
 
-On Mon, Sep 02, 2024 at 06:01:35PM +0300, Abel Vesa wrote:
-> The Qualcomm Snapdragon X Elite CRD board has 3 USB Type-C ports,
-> all of them supporting external DP altmode. Between each QMP
-> combo PHY and the corresponding Type-C port, sits one Parade PS8830
-> retimer which handles both orientation and SBU muxing. Add nodes for
-> each retimer, fix the graphs between connectors and the PHYs accordingly,
-> add the voltage regulators needed by each retimer and then enable all
-> 3 remaining DPUs.
+On Tue, Sep 03, 2024 at 02:21:29PM +0800, Jingyi Wang wrote:
+> Add a property "num-banks" for errata.
+
+This you said in commit subject and we see in the diff. You *MUST*
+explain why.
+
 > 
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 414 +++++++++++++++++++++++++++++-
->  1 file changed, 408 insertions(+), 6 deletions(-)
-
-> @@ -288,6 +312,134 @@ vreg_edp_3p3: regulator-edp-3p3 {
->  		regulator-boot-on;
->  	};
+>  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
+> index 68ea5f70b75f..03241b719c98 100644
+> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
+> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
+> @@ -56,6 +56,11 @@ properties:
+>      items:
+>        - const: multi-chan-ddr
 >  
-> +	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_RTMR0_1P15";
-> +		regulator-min-microvolt = <1150000>;
-> +		regulator-max-microvolt = <1150000>;
-> +
-> +		gpio = <&pm8550ve_8_gpios 8 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-0 = <&rtmr0_1p15_reg_en>;
-> +		pinctrl-names = "default";
-> +	};
+> +  num-banks:
 
-> +	vreg_rtmr2_3p3: regulator-rtmr2-3p3 {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "VREG_RTMR2_3P3";
-> +		regulator-min-microvolt = <3300000>;
-> +		regulator-max-microvolt = <3300000>;
-> +
-> +		gpio = <&tlmm 187 GPIO_ACTIVE_HIGH>;
-> +		enable-active-high;
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&rtmr2_3p3_reg_en>;
-> +	};
-> +
-> +
-> +
+No vendor prefix? So this is generic property? Then add to some common
+schema with proper explanation WHY.
 
-Double stray newline.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      The num of llcc banks
 
-Also move these nodes below the nvme one to maintain sort order.
+And what are llcc (or LLCC?) banks?
 
->  	vreg_nvme: regulator-nvme {
->  		compatible = "regulator-fixed";
->  
-> @@ -709,6 +861,163 @@ keyboard@3a {
->  	};
->  };
 
-> +&i2c7 {
-> +	clock-frequency = <400000>;
-> +
-> +	status = "okay";
-> +
-> +	typec-mux@8 {
-> +		compatible = "parade,ps8830";
-> +		reg = <0x8>;
-> +
-> +		clocks = <&rpmhcc RPMH_RF_CLK4>;
-> +		clock-names = "xo";
-> +
-> +		vdd15-supply = <&vreg_rtmr1_1p15>;
-> +		vdd18-supply = <&vreg_rtmr1_1p8>;
-> +		vdd33-supply = <&vreg_rtmr1_3p3>;
-> +
-> +		reset-gpios = <&tlmm 176 GPIO_ACTIVE_HIGH>;
-> +
-> +		retimer-switch;
-> +		orientation-switch;
-> +
-> +		ports {
-> +			#address-cells = <1>;
-> +			#size-cells = <0>;
-> +
-> +			port@0 {
-> +				reg = <0>;
-> +
-> +				retimer_ss1_ss_out: endpoint {
-> +					remote-endpoint = <&pmic_glink_ss1_ss_in>;
-> +				};
-> +			};
-> +
-> +			port@1 {
-> +				reg = <1>;
-> +
-> +				retimer_ss1_ss_in: endpoint {
-> +					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
-> +				};
-> +			};
-> +
-> +			port@2 {
-> +				reg = <2>;
-> +
-> +				retimer_ss1_con_sbu_out: endpoint {
-> +					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
-> +				};
-> +			};
-> +
+Best regards,
+Krzysztof
 
-Stray newline.
-
-> +		};
-> +	};
-> +};
- 
-> +&pm8550_gpios {
-> +	rtmr0_3p3_reg_en: rtmr0-3p3-reg-en-state {
-> +		pins = "gpio11";
-> +		function = "func1";
-> +		input-disable;
-> +		output-enable;
-> +	};
-> +};
-> +
-> +&pm8550ve_8_gpios {
-> +	rtmr0_1p15_reg_en: rtmr0-1p15-reg-en-state {
-> +		pins = "gpio8";
-> +		function = "func1";
-> +		input-disable;
-> +		output-enable;
-> +	};
-> +};
-> +
-> +&pm8550ve_9_gpios {
-> +	rtmr0_1p8_reg_en: rtmr0-1p8-reg-en-state {
-> +		pins = "gpio8";
-> +		function = "func1";
-> +		input-disable;
-> +		output-enable;
-> +	};
-> +};
-
-Shouldn't you specify the drive strength here as well? (Same on T14s).
-
-Johan
 
