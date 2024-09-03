@@ -1,121 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-30500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7192996987D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 11:16:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 00355969881
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 11:16:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A34DF1C2350F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:16:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 250BF1C22EF0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Sep 2024 09:16:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 077FD1A4E8B;
-	Tue,  3 Sep 2024 09:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43E4C1A3058;
+	Tue,  3 Sep 2024 09:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VdGUxvQP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DD6JpYmg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647E31A4E89;
-	Tue,  3 Sep 2024 09:16:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8191A19F429
+	for <linux-arm-msm@vger.kernel.org>; Tue,  3 Sep 2024 09:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725354989; cv=none; b=WSobYEK5NolBdsG1Mgr8iQcKLknXDGczayYLQraeT0sJWLLIJt14qsoBe7XDqhdD3W6FYOFhUr9V+posS+3mEvI44JQAYDmr6mLSUVMnOj4XGZEqH/v2Qd6LdW2uNDq1YBEt6BHK2u52jnwQ2LfO8joMTeTGSPI3FS5rv/ajlmI=
+	t=1725355010; cv=none; b=pnSnqrn97tmXe5jO+P5haqeMKoFEZ5HkaL/KL7nmF38DV04m9hmqrg5lLgrz+0IvSBBnu/inekgowlJmR361JTg9cgyL79Agfly2vNnWrMaQ03YDIBd482RECw9jxDoUHhuUJMcYKLcUJXhcxqs5Ifg9tTce2hSPGirfFJvHHSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725354989; c=relaxed/simple;
-	bh=Y42K+VKdaOGaWK9Z/RB9RHq/t5rX2mCJb59mIktkP64=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=CCpKyJXA57KZ2NNz4Thv4ElewQkgh7sKvamX4ccsQCZ5TuHBCnMbtCwuJidXIYsorssIXF+oRGFalGBBrz5NT6oEUYgCvLBv9y21WRI70ZZIb2qRYBi4YA8PLCdsxv63wEf9ijV3RouFCudbDoCpPrOWBbmgakbkw4OhduHyke0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VdGUxvQP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4835AldG009037;
-	Tue, 3 Sep 2024 09:15:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	f+aDtDkpqgV1KQ/TcVWTCcSca/Y0X5xFWjMV1qZhGnM=; b=VdGUxvQPWzKAoMkO
-	T0himFDsc9/6hcdNDyf3bIY1Sjq/GTEqWqb3E2JJz1P+TyvKhLrPOs+DeiO6Q0GW
-	40NDT2z+W2Y7k21QWUt0N5l5a5Hmql+HLdacfuhBsIRQgvervtpD1zhYhL0gk28n
-	I3O0ph/u5L1v0CkIPxEzsZSm7nvXzOBLseAoQe8uyareib8c+uueetl0ji00oAQ1
-	YblUxjC7yuMjZ+CGTx68PLhntYsy8IH6PKz6Fa6UZQ8c6V+GuRCP9Yna61xAWd81
-	AL8HIfEm2/nLVdKhOF8vVsht4xCfkencTutYkKg5jC1jkYr4/SgLWGSMTwdSoqdR
-	J3ajvg==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bt66xu4s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 03 Sep 2024 09:15:55 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4839Fs58008084
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 3 Sep 2024 09:15:54 GMT
-Received: from [10.216.9.110] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 3 Sep 2024
- 02:15:49 -0700
-Message-ID: <5169761b-422d-70ab-ba53-a898cb7bfa2f@quicinc.com>
-Date: Tue, 3 Sep 2024 14:45:15 +0530
+	s=arc-20240116; t=1725355010; c=relaxed/simple;
+	bh=HWjGQ4YHroQwD/57wggdSbHx9qHopndgiBjBXsMUmLI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DNhiygDEQ93cuXAP2ak8AEUrPEY2//X4EMrExzElo1PXuW3KOkujDJ0OJAB1ivtCSp+UAwKzm9zuKoTUQ7X4pQBcBB5eB4z3r7SOwy2ug2qgidPyr/KXEG7fqAvK6vPeeOAgEtfWBDYDM16efrh2ZpXbKwzTlxlWpbdPJXp0wu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DD6JpYmg; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f025b94e07so50337411fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Sep 2024 02:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725355007; x=1725959807; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HWjGQ4YHroQwD/57wggdSbHx9qHopndgiBjBXsMUmLI=;
+        b=DD6JpYmgWVf5+3cLE8tXNAjlNYEI5/g0/EHP/ck/Bn4ZzIRalA1RrwCkXoYZdIaCdG
+         ipIA//pJKYA1F6wGFsIdeceFXwh+CZHxn5xhQdRjNu+wm0wJKNDYzgMjsVo4pcnAzLvr
+         okxOuZ+7NKZFAffr5j8Q5RkubPYd+nmEznnR2oNmcdnbznU+ZdX1qc47vVO2wXWYNw4r
+         ioL8BDMzkc0psvCljtoJfX+B1KxuuS6mdXDLmBDhSAChiWd8g3JQdsjr7LjIOq34069i
+         JGFr3EfSWkPV+eOUw9M4RSy6IFnfxEckXVnR2njKS0cUGFNFyyMuls4GRPhJDpQizzRF
+         EFnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725355007; x=1725959807;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HWjGQ4YHroQwD/57wggdSbHx9qHopndgiBjBXsMUmLI=;
+        b=EYpq9BX/0G2iRQ5+EAVmUg78AVuECH/u4XHUKhvclYtnlNVJrz9brAT1obir9sH66d
+         j9srpji3oec3mQzZGzbNwSj235mUSWJwtFSSWjJRVNqHA61XdnLUgEWDhYTtaUMJrJIB
+         iQe6pE67lE/AA/zvXzUN40HtFJElz/tBDyJr4i7xAMA2GxDFqMAJMh91Yn2dI2bHwjZM
+         pXO0S8Gju75CNh6+IU0PKfVVhVa89BAaIqHJyTjTOo4tPzxr9gQHVv8X6oQjXKbrdGFI
+         iDh4LGE4klQv7taQbdls75bxkc5oNK+wtGFnDL1xAhxGwJKnJLPex/a7pz6ldJ5WRn5B
+         0JCA==
+X-Forwarded-Encrypted: i=1; AJvYcCW814aDjXbKtnDn1y0qjSQXFLXBqEFeMO0eJVMCNM1pRa0NWfqkgA4PwVHigjvOXAB4119j8KuvbiDFB1ga@vger.kernel.org
+X-Gm-Message-State: AOJu0YzSHm9YdhrsZKzQ8ajOdCbLV7REi9dffjqpHqRpu1ucLaaoQed6
+	tAgDphgCvg5kSP1PjyCPiw2Xr+pykSCuZdcuuZsvu0Ii9x82jRpFrzPXofQ7UDipW16IrugG9va
+	mJC8wfV5yFwT8aI+habWZxLJTIFvb/H0KdIadjA==
+X-Google-Smtp-Source: AGHT+IF5iXmXm3uBNGtfu2k2W3mUA/wL6HSlGri8eJbZA0MDiPWsO5xxdT1fn59W0sd0nud+XYxGXlKqBmQA/C+s9Vc=
+X-Received: by 2002:a2e:a9a1:0:b0:2f3:d008:a54e with SMTP id
+ 38308e7fff4ca-2f6104f2859mr113545281fa.36.1725355005999; Tue, 03 Sep 2024
+ 02:16:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 0/8] Add QPIC SPI NAND driver
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <miquel.raynal@bootlin.com>,
-        <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <esben@geanix.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>
-References: <20240820104239.1774600-1-quic_mdalam@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <20240820104239.1774600-1-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: UmnCr2WGft70bqzkiVvBtlXxBDElRjoT
-X-Proofpoint-GUID: UmnCr2WGft70bqzkiVvBtlXxBDElRjoT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-02_06,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 spamscore=0 clxscore=1011
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409030074
+References: <20240828-dt-bindings-gpio-hog-v1-0-63b83e47d804@linaro.org>
+ <20240828-dt-bindings-gpio-hog-v1-2-63b83e47d804@linaro.org>
+ <CACRpkdZzF5yJQnnDsjU8cTr9Fpe7wZZXoW3K-wFYuAq2vv8XxA@mail.gmail.com>
+ <CAMRc=Mcv9nfiG7N-ttS_A=Ay-5Wv2mYpT+41G1u8G4GrMQAuEA@mail.gmail.com>
+ <CAMRc=Md9+pmiDSzjhNXBOzZeBLCemvxCzFMAyfFH_Qi329jG9Q@mail.gmail.com> <884facf9-09dd-4454-9f39-67335b4e8c5f@linaro.org>
+In-Reply-To: <884facf9-09dd-4454-9f39-67335b4e8c5f@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 3 Sep 2024 11:16:34 +0200
+Message-ID: <CACRpkdZosOeBhEo460Wr3r9gF+xg1wJGdhvX0xf2_PWLZ2hkYg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] dt-bindings: pinctrl: qcom: add missing type to GPIO hogs
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Daire McNamara <daire.mcnamara@microchip.com>, 
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>, 
+	Maxime Ripard <mripard@kernel.org>, Masahiro Yamada <yamada.masahiro@socionext.com>, 
+	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Conor Dooley <conor.dooley@microchip.com>, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-riscv@lists.infradead.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Miquel,
+On Mon, Sep 2, 2024 at 12:02=E2=80=AFPM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-On 8/20/2024 4:12 PM, Md Sadre Alam wrote:
-> v8:
->   * Fixed compilation warning reported by kernel test robot
->   * Added "chip" description in nandc_set_read_loc_first()
->   * Added "chip" description" in nandc_set_read_loc_last()
->   * Changed data type of read_location0, read_location1,
->     read_location2, read_location3, addr0, addr1, cmd, cfg0,
->     cfg1, ecc_bch_cfg, ecc_buf_cfg, clrflashstatus, clrreadstatus,
->     orig_cmd1, orig_vld to __le32 to fix compilation warning.
->   * Included bitfield.h header file in spi-qpic-snand.c to
->     fix compilation warning
->   * Removed unused variable "steps" variable from
->     qcom_spi_ecc_init_ctx_pipelined()
-> 
-     I have addressed your comments to v6 and further posted till v8.
-     Could you please let me know if this is fine.
-     and how to get this merged ?
+> >>> I suppose it's best of Bartosz applies this to the GPIO tree with
+> >>> the rest of the series?
+> >>>
+> >>> Yours,
+> >>> Linus Walleij
+> >>
+> >> Ah, I picked up the GPIO changes separately. No problem, I'll pick
+> >> this one up as well.
+> >>
+> >> Bart
+> >
+> > Nope, I cannot, this doesn't apply to the GPIO tree.
+>
+> Hm, probably there is something in pinctrl tree.
+>
+> @Linus, can you grab pinctrl bits?
 
-Regards,
-Alam.
+OK I applied this patch 2/3 to the pinctrl tree!
+
+Yours,
+Linus Walleij
 
