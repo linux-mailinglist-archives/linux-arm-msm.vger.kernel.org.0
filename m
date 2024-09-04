@@ -1,153 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-30787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30786-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B0BD96C662
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:28:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A08DC96C660
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:28:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1D3882833C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:28:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5F978287A04
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:28:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9E191E502D;
-	Wed,  4 Sep 2024 18:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C71A11E4101;
+	Wed,  4 Sep 2024 18:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NakPZ2Pt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VyjnTvYV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D57B1E5030;
-	Wed,  4 Sep 2024 18:27:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38D2F1E5002
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 18:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725474428; cv=none; b=f+AQiNfYX3O5qC3kRSxFaFDuVg9lkkZ4oUq34+4R1XdE+RkSh8Xi4XNNKUiYsY3BThQ5O6v9g8rIK4KF2oU/EdKbUfy2VSfd6fuRtxr7N7rJXgWPgQDlvmxvU5I5lU///TVT8sXZ9K8n0k9WIFOR/iPOwjMMIB14q2YC2viH3rU=
+	t=1725474425; cv=none; b=Kfzlu3ZrUfHCOHY+Wv/yJZX4q3HCa8aulJ2z3Rvzd+jiY3+vRt8vavZ5/I1P8JLlamHkmzJW/QVKe4hs+trBub5AUItsik1c7Uj3Xf8Ny2wDzjSkD/Z1x+52AjSZsS3TKu3/m/LGCD975gX4pnOx6rSZoQLU7rIMqN9zMSfoTuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725474428; c=relaxed/simple;
-	bh=AxuabCzX97feCzpb/68gmipCWnlZpmzIO6avHNJ3q54=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NhRwpfjAurw2NOceAX+MDjHpxUZPqkH/7Foc2kESbtK0VzdjfcSVRObLi8t9RajHGp1qmTy9dVNTTKDXfq4XneqMAOv0E0knkdwV1+w00Ir5V8FvrdVMkUk8VZQZI8ARwbqL8t3r4FWcCf4MjY8KgDf7i7hAP6FJA0M7PIRM8zE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NakPZ2Pt; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484GT7T8009464;
-	Wed, 4 Sep 2024 18:27:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oGJgJ0+SAXepCkH4FDpJ9l1jG20sfJFijM2xWFcXdXY=; b=NakPZ2PtfgZzxS9z
-	c6x//WSQIVOWzfHqjxUp2jMb7BsIgKFgjhsACEF/7zUkkh97ons/DWIfzYJYNr48
-	ZqR8qn3NI3SdD+aYEvJVYiEcQO55NVq3DvnSx7XzGxVq6yNkV5bJGNTik3jzHqYo
-	QCYWc5J3hzj13Osm4DDgL+1Qmesih9SQqU23+h9iejB6QV7HVahK+tI4dEh9WFsX
-	ZPWBZUhIYHjMHw67Ohow/83C5pS4byvKibnkBu42i79TeKHyOcKnDBwGpnNdCd6I
-	PbV71AILv6QxswWceSIsrrR62E6/xnbUn16AIj4nkJinykIn013NYKJSJzJiVzjA
-	pNS2zA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41e0bhmyaj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Sep 2024 18:27:01 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484IR0rc002234
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Sep 2024 18:27:00 GMT
-Received: from [10.216.2.237] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
- 11:26:56 -0700
-Message-ID: <b739bcd2-3ba6-4423-8afd-e5200beb9ed9@quicinc.com>
-Date: Wed, 4 Sep 2024 23:56:52 +0530
+	s=arc-20240116; t=1725474425; c=relaxed/simple;
+	bh=4i4pYCDdnuvoC9I5jRbdWBqJ+VIMP5XqmpcmNhFgHRw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=LXISr3FzRrJ1t6jNaMEANtq7Pk05l2C9xUoxngLKmj7r5NEXtAkbsdW+66WchYzOK0kAEjw+jyS+eZjsDfLCqb537XkUhtSVu5PlGsX3Mv/fQvgM+eM0VwiCR6XEiJLgQc0ays82V3qLLCGolqwOFVhcW0MWX836ITYZk+++FFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VyjnTvYV; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-71774dcd09aso1598177b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 11:27:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725474423; x=1726079223; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kGkCTIAzVa1IW+ahJzXvZODyf0r3VDtzuI/PWkUEWZA=;
+        b=VyjnTvYVmP/wbN/+1NWzA2NyA11hUPf8A5FqRdCuYoFtVloe8b9cIuWLpFEvyA4ImT
+         aN9FTwzNd9XfwFNV23kp6C+cdrirELO4GCHqJDxVdwZ1TD9/81jTI8fb6QTw7CTKy58v
+         Au0DqGwD03RPWQeQiib/4OCrt/k/C0ZraI2UwYDabbVDn14SA8H94S6WdzMwujndz14B
+         ch7I5ehVcbkAaXDvRrWAwQ1IWRMT1+3wUnpSgKLp06HQwXJyf30beyr5EMZFXpcdszSU
+         u3FmBCNcinReBCdnpkRM1LPk5TUJDGF3aIT5pzy+j1MhwOnHvdLSbofzADVGQk+Eobe8
+         OSqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725474423; x=1726079223;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kGkCTIAzVa1IW+ahJzXvZODyf0r3VDtzuI/PWkUEWZA=;
+        b=RdvbzI7e5CJdQa/+db4n3JqlGYno7nB/N6eB2eWxGHPR5VbHleGh1rp6iv0lC4BlOM
+         kCc/2AntiKTHWvHkKO/XEmH8Ryh/q8kkLrbgRSfIWWYqFdw78RVorFymKLbswg2i2AbP
+         rCh/Cr13XtWRiarTfjhcuW+3O7ecdXtHILKxPIa8IjaOTBxksDj0aZ9m7B8K/n/38wMS
+         rc0Dro59F1hMsx7FQUDwK2ifXSV85qlzTbE+DK22hig1K4ruCZcGqUHHe74ZDdyuVxoF
+         Ab7F9WhyPWAmJsmrlBH4+XTO1qNgIqArFfs23jUtlw5Vt7BqR/fNDHr/uy1YxIoAL/oh
+         vWZg==
+X-Gm-Message-State: AOJu0YxoFsggWN+tGDRErNeOyAh3vVUpdQYQwpBibxGmceB8XhLfibXn
+	U73xzsey0HVFzdw1lk7+1roPPIlosk/ebcpqY6NzqQ5m6t09/IwmqYoSloG+PYcdiFPrarO+Ift
+	gjhk=
+X-Google-Smtp-Source: AGHT+IG52B8BQjRrNv57uHEeOO2MVWNcL/3nwz38Ns+yt3hYyX35+L9xCIH8/3nref0E0a8VrRTDRA==
+X-Received: by 2002:a05:6a00:ccb:b0:70d:3337:7820 with SMTP id d2e1a72fcca58-7173fa40a69mr15553646b3a.8.1725474422642;
+        Wed, 04 Sep 2024 11:27:02 -0700 (PDT)
+Received: from [127.0.1.1] ([2001:569:fb4d:1a00:31ea:aefe:856f:94e1])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71778534921sm1919787b3a.76.2024.09.04.11.27.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Sep 2024 11:27:02 -0700 (PDT)
+From: Fabien Parent <fabien.parent@linaro.org>
+Date: Wed, 04 Sep 2024 11:26:55 -0700
+Subject: [PATCH] arm64: dts: qcom: msm8939: revert use of APCS mbox for RPM
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <konrad.dybcio@linaro.org>,
-        <andersson@kernel.org>, <andi.shyti@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>
-CC: <quic_vdadhani@quicinc.com>
-References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
- <20240829092418.2863659-2-quic_msavaliy@quicinc.com>
- <9af7518c-45e5-44a2-bbb7-19ce7ed899c3@linaro.org>
- <b2cfda34-f8e2-4db2-b4d4-9c707bfc8417@linaro.org>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <b2cfda34-f8e2-4db2-b4d4-9c707bfc8417@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZfEEzO_-xAAMCJMrfBQgASLp5rp1IckD
-X-Proofpoint-GUID: ZfEEzO_-xAAMCJMrfBQgASLp5rp1IckD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_16,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0
- spamscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409040139
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240904-msm8939-rpm-apcs-fix-v1-1-b608e7e48fe1@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAG+m2GYC/x2MSQqAMAwAvyI5G6itYuNXxINL1ByqpQERxL9bP
+ M7AzAPKSVihKx5IfInKeWSoygLmfTw2RlkygzW2NmQcBg2eHGGKAcc4K65yoydbT35q14Yc5DQ
+ mzvrf9sP7flW610ZmAAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Luca Weiss <luca@lucaweiss.eu>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Fabien Parent <fabien.parent@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1424;
+ i=fabien.parent@linaro.org; h=from:subject:message-id;
+ bh=4i4pYCDdnuvoC9I5jRbdWBqJ+VIMP5XqmpcmNhFgHRw=;
+ b=owJ4nAFtApL9kA0DAAoBZODx/PMGSbYByyZiAGbYpnTqIesh9v/HtU5PVilt98a0lO6fsZmLU
+ Mnd6de0p7L4DYkCMwQAAQoAHRYhBP2jn9nT5J9GAA1rNWTg8fzzBkm2BQJm2KZ0AAoJEGTg8fzz
+ Bkm2vkgP/j6e8BszZSdMLWgtVN/lpEWATxCgv+jCPkifvn/53kOBGW/dfF+le+fFGHjn1gc+UQ9
+ NR30DoP97WRCuq348fvJ2maE1/kGJl6PumwjoTXB47jIx6QLBXKPzEHocsOuSd0m5oYTfy04U5s
+ r7ZrOgoIF93sFr1QZv259aIAyT2D9SQEneWgICyR0mwq0ySAMO6vQs/QmXeObCLEqEM/z/DxIdQ
+ hokL6/7PjR7YrrPaqXjqUa+OYGxfPV1VzLulqRfwIwIydaACfIVrGUuofMbUSAnnXmw8LPPZbW2
+ tMHJO7qNIZ+Idqny91vDh/O4Xh7gz2u8mOKTdDniwyXSrIVx63PhG7NYblxJC0wcDRGRJzb00Px
+ kf7eqfHPSz+grkI9svXltQor6kK0E5KSiqEGlPVO02H2ojtL/OuivvLQ0UBsFDaIkUMtHW/F2Ai
+ Y8jayM0ZAmclpUzteoJxuNqE9WTJPaGYQS3FYE9SaX6HPdYYaBi3XveWkO3xxNCOK99Yu0pb2Uy
+ Vs4BQKlPEgwrZSklu0G8/TtYqtWPmfR3IomT76FLVzvw5j8Lh/5lq/gOmpJuDBuwd06aY4BSxaJ
+ RGGVDyV6VFsIlGznNP0MBU3nDW74jv00EqOi/5a9Ao/gH783LJfT8XH0LNbC1Z5mjtVlcVyRoNs
+ H+yzl+Q/rbMR+nZmJPJI4dA==
+X-Developer-Key: i=fabien.parent@linaro.org; a=openpgp;
+ fpr=11A9B68923ED03CF691FD70BD87F4F8165D79CD7
 
+Commit 22e4e43484c4 ("arm64: dts: qcom: msm8939: Use mboxes
+properties for APCS") broke the boot on msm8939 platforms.
 
+The issue comes from the SMD driver failing to request the mbox
+channel because of circular dependencies:
+	1. rpm -> apcs1_mbox -> rpmcc (RPM_SMD_XO_CLK_SRC) -> rpm.
+	2. rpm -> apcs1_mbox -> gcc -> rpmcc (RPM_SMD_XO_CLK_SRC) -> rpm
+	3. rpm -> apcs1_mbox -> apcs2 -> gcc -> rpmcc (RPM_SMD_XO_CLK_SRC) -> rpm
 
-On 8/29/2024 3:31 PM, Bryan O'Donoghue wrote:
-> On 29/08/2024 10:58, Bryan O'Donoghue wrote:
->> On 29/08/2024 10:24, Mukesh Kumar Savaliya wrote:
->>> Adds qcom,shared-se flag usage. Use this when particular I2C serial
->>> controller needs to be shared between two subsystems.
->>>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git 
->>> a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml 
->>> b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> index 9f66a3bb1f80..ae423127f736 100644
->>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> @@ -60,6 +60,10 @@ properties:
->>>     power-domains:
->>>       maxItems: 1
->>> +  qcom,shared-se:
->>> +    description: True if I2C needs to be shared between two or more 
->>> subsystems.
->>> +    type: boolean
->>> +
->>>     reg:
->>>       maxItems: 1
->>
->> SE = shared execution ?
->>
->> ---
->> bod
->>
-> 
-> Serial Engines
-> 
-Sorry for short name. yes, SE = Serial Engine. I shall mention in 
-brackets in next patch. Noted below TLAs too.
-> This is a good example of defining TLAs
-> 
-> commit eddac5af06546d2e7a0730e3dc02dde3dc91098a
-> Author: Karthikeyan Ramasubramanian <kramasub@codeaurora.org>
-> Date:   Fri Mar 30 11:08:17 2018 -0600
-> 
->      soc: qcom: Add GENI based QUP Wrapper driver
-> 
->      This driver manages the Generic Interface (GENI) firmware based
->      Qualcomm Universal Peripheral (QUP) Wrapper. GENI based QUP is the
->      next generation programmable module composed of multiple Serial
->      Engines (SE)
-> 
-> ...
+To fix this issue let's switch back to using the deprecated
+qcom,ipc property for the RPM node.
+
+Fixes: 22e4e43484c4 ("arm64: dts: qcom: msm8939: Use mboxes properties for APCS")
+Signed-off-by: Fabien Parent <fabien.parent@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/msm8939.dtsi b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+index 46d9480cd464..39405713329b 100644
+--- a/arch/arm64/boot/dts/qcom/msm8939.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8939.dtsi
+@@ -248,7 +248,7 @@ rpm: remoteproc {
+ 
+ 		smd-edge {
+ 			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+-			mboxes = <&apcs1_mbox 0>;
++			qcom,ipc = <&apcs1_mbox 8 0>;
+ 			qcom,smd-edge = <15>;
+ 
+ 			rpm_requests: rpm-requests {
+
+---
+base-commit: d8abb73f584772eaafa95a447c90f1c02dba0dec
+change-id: 20240903-msm8939-rpm-apcs-fix-8924b8b7f593
+
+Best regards,
+-- 
+Fabien Parent <fabien.parent@linaro.org>
+
 
