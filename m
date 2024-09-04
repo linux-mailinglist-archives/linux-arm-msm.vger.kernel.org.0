@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30637-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB90796B333
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 09:46:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38BFB96B340
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 09:48:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B84E1C21D67
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 07:46:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C3A2CB26437
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 07:48:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88659145A05;
-	Wed,  4 Sep 2024 07:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 189721487DD;
+	Wed,  4 Sep 2024 07:47:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+UiyguN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kIj+oy0x"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C142823DE;
-	Wed,  4 Sep 2024 07:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4611482E7;
+	Wed,  4 Sep 2024 07:47:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725435975; cv=none; b=O9M41Ie+pjY3wojLr0DBkWydFkTKstqgDiU3uwI0sp6YekkbqxJBZB6ybQcJf7bdWxQNorEFCalrSUQNjgsfoYmi3J+mqhFLZybs76g3qbyclHCLUV3/LC/R/nN6JHrjxZQ3AcTzHTne0sHFy+umHqcQ1FXEzo6W119LGWmQMP8=
+	t=1725436072; cv=none; b=LKMOt1biQ8i156GhT/tatD6YU9vPZ+t9624ky7vLGaqeIM8wv1z6zkvHdpG0e8arSJaIEeXAwcGF0jADdl6Ff45udgLBt0xciEFHgsIlD2SEW0seH6hwbacVc9daMxi8yMb/y1heF2gmaT+OjqD0/44I89vQXuRBYObIU+IpAtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725435975; c=relaxed/simple;
-	bh=fKem71+e4185IwFYS10I37wk8xRt5F8UjqvaVikFVBE=;
+	s=arc-20240116; t=1725436072; c=relaxed/simple;
+	bh=eIKr8cAo4XHci2u7+szz00vb8bkmDe1laUVSo8kbitM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QlrtJHZDw6PYWLveDDzN2ya6hIZMckrvgxNX9a719UcIEnJkEMEVR/TYO/xOJ68YghEk5lesB8RQImaYsQEW4svB22zhTI5tZP/EYJoaFc3XK/1QLvl20jiN2Rn2reN5yEYE1YyYva7nO3P/ycs0WlYjhsPijU3IL6tbtquYZio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+UiyguN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04326C4CEC2;
-	Wed,  4 Sep 2024 07:46:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IvtoVSOWBQ/1Izd0umuBxu02LjyHQgNDPgG6MrDjQ7578K5zPxOUUS6TGfCU0u2srOjSdrETzXZR4lQ71r1O6ZugALkyvrs7WeOrIr2Fw1x+7W/bivfWcRGQsVxy1zpZG/CvUJk2xj/mU/AKU0L2R9NoSawNXUt3rZ5tqoU/+yM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kIj+oy0x; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C708DC4CEC8;
+	Wed,  4 Sep 2024 07:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725435974;
-	bh=fKem71+e4185IwFYS10I37wk8xRt5F8UjqvaVikFVBE=;
+	s=k20201202; t=1725436071;
+	bh=eIKr8cAo4XHci2u7+szz00vb8bkmDe1laUVSo8kbitM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=R+UiyguNmzX7E9c/x0Bf023yRk1S+3wv7SuRDdHXocV1pIjTn6znVmBK0CzAf8jQm
-	 e6WQH2Tjx8PsWap4earLT/MV8pcBKLDLkdp9T5+qO8S2/wiQxhxRYSSJVPy1c6RQOP
-	 EFFR974PcO40pHubGYmMQy3g1h7QYSJwxmRxr432JlQuEzjSmru2fqrZ2ab3DmWsgH
-	 NdSSQqyUFpQv9QHKGFHQDmWWiydYyQ+GfoCxMYiMVSk/pi3Artge+5JpgbVAtDITwA
-	 Wopp6pqbv3afOyjpraVzFs/v43wKB3qkPZjmM3a9VgkB1VG71oiN28JfanlaR3kaGU
-	 0GSAQC3wdaXkA==
-Message-ID: <9a2b9e55-2bbb-4b91-8d81-1f1f82347125@kernel.org>
-Date: Wed, 4 Sep 2024 09:46:09 +0200
+	b=kIj+oy0xywVYlEUt1FPAKZEIbvjbWV7hk9mI8N4Mic+IL0QO0ob9XYDk+saKva8dv
+	 tllMyQdDS/2QqMOR2u80cxl9+6qD5CspOE+4ZEqMwwl2UjmeYCKV9/Lnz7+MfWzP6p
+	 N9hKTDiiA6HmeVtxuGZapuATd7S2EiMc1YnhFX/CsifFWoMXhRd/ZvkDcMJlrWzIle
+	 wj3lKayasljlQ6QGL5dCdPD5j8Tiog4sYsluE3046xO4M13REYdlMHOBKNSxeDsJQ5
+	 EEurUwQX+VHpPwLDRGLPq3UC230jmdkgbPhtxjGzhPL3VbgBIrLW5QqH3Fjz4tO/fn
+	 kbrcX98yIQbqA==
+Message-ID: <db4cb31f-b219-4ee8-b519-fdec7f7b8760@kernel.org>
+Date: Wed, 4 Sep 2024 09:47:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,29 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp: Add Microsoft Surface Pro
- 9 5G
-To: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240903224252.6207-1-jerome.debretagne@gmail.com>
- <20240903224252.6207-5-jerome.debretagne@gmail.com>
+Subject: Re: [PATCH v2 17/21] dt-bindings: serial: document support for
+ SA8255p
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
+ viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
+ sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
+ will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+ jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
+ amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
+ cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+ wim@linux-watchdog.org, linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
+ linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ kernel@quicinc.com, quic_psodagud@quicinc.com,
+ Praveen Talari <quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-18-quic_nkela@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,64 +118,46 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240903224252.6207-5-jerome.debretagne@gmail.com>
+In-Reply-To: <20240903220240.2594102-18-quic_nkela@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 04/09/2024 00:42, Jérôme de Bretagne wrote:
-> Add an initial devicetree for the Microsoft Surface Pro 9 5G, based
-> on SC8280XP.
+On 04/09/2024 00:02, Nikunj Kela wrote:
+> Add compatibles representing UART support on SA8255p.
 > 
-> It enables the support for Wi-Fi, NVMe, the two USB Type-C ports,
-> Bluetooth, 5G cellular modem, audio output (via Bluetooth headsets),
-> external display via DisplayPort over Type-C (only the bottom USB
-> Type-C port is working so far, corresponding to the usb1 / dp1 nodes),
-> charging, the Surface Aggregator Module (SAM) to get keyboard and
-> touchpad working with the Surface Type Cover accessories.
+> Clocks and interconnects are being configured in the firmware VM
+> on SA8255p platform, therefore making them optional.
 > 
-> Some key features not supported yet:
-> - built-in display (but software fallback is working with efifb
->   when blacklisting the msm module)
-> - built-in display touchscreen
-> - external display with the top USB Type-C port
-> - speakers and microphones
-> - physical volume up and down keys
-> - LID switch detection
+> CC: Praveen Talari <quic_ptalari@quicinc.com>
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+> ---
+>  .../serial/qcom,serial-geni-qcom.yaml         | 53 ++++++++++++++++---
+>  1 file changed, 47 insertions(+), 6 deletions(-)
 > 
-> This devicetree is based on the other SC8280XP ones, for the Lenovo
-> ThinkPad X13s and the Qualcomm CRD.
-> 
-
-...
-
-> +
-> +&swr0 {
-> +	status = "okay";
-> +};
-> +
-> +&swr1 {
-> +	status = "okay";
-> +
-> +	wcd_rx: wcd9380-rx@0,4 {
-
-codec@
-
-> +		compatible = "sdw20217010d00";
-> +		reg = <0 4>;
-> +		qcom,rx-port-mapping = <1 2 3 4 5>;
-> +	};
-> +};
-> +
-> +&swr2 {
-> +	status = "okay";
-> +
-> +	wcd_tx: wcd9380-tx@0,3 {
-
-codec@
+> diff --git a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+> index dd33794b3534..b63c984684f3 100644
+> --- a/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+> +++ b/Documentation/devicetree/bindings/serial/qcom,serial-geni-qcom.yaml
+> @@ -10,14 +10,13 @@ maintainers:
+>    - Andy Gross <agross@kernel.org>
+>    - Bjorn Andersson <bjorn.andersson@linaro.org>
+>  
+> -allOf:
+> -  - $ref: /schemas/serial/serial.yaml#
+> -
+>  properties:
+>    compatible:
+>      enum:
+>        - qcom,geni-uart
+>        - qcom,geni-debug-uart
+> +      - qcom,sa8255p-geni-uart
+> +      - qcom,sa8255p-geni-debug-uart
 
 
-Rest looks good, except ordering of nodes/overrides/phandles. They
-should go alphabetically, AFAIR, so your &tlmm is placed in wrong spot.
+Anyway, the entire patchset is organized wrong. Or you sent only subset.
+
+Where is the driver change? This cannot work. To remind bindings go with
+the driver (nothing new here).
 
 Best regards,
 Krzysztof
