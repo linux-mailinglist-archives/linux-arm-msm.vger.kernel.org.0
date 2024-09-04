@@ -1,95 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-30739-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE55296C02B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:23:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06AAB96C034
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:24:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7A9BB28DDEF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:23:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B76A928E3D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:24:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A2B91DC04C;
-	Wed,  4 Sep 2024 14:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F501E0B66;
+	Wed,  4 Sep 2024 14:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HgfWwr99"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BD471D4170;
-	Wed,  4 Sep 2024 14:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD821E0B62;
+	Wed,  4 Sep 2024 14:20:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725459615; cv=none; b=Rb1zUqBjEJRiwbWsiG5mP7RhRKzzZBc59qBQ9JPStk9qLO4np5FnLkLuwNu5D5xWtNCgmamup/8ElYtNXaPnA4mfrf3RbqHlUDw3KUOLkpLdS83hvi8JcL/O8DN6q/zb+frvn06hdSX8L/dlxzkod4x0KhkPKFfXhn92k+tRokA=
+	t=1725459652; cv=none; b=IVcWfuJ7itkbP/ckS+OJrL9z910O/rdAIW8pndJZg9rXrelatzASuxpj10EJZzAduhAy5MEyW9scbCaNB5p6BEzE6A87Mh6GhFablz6X+UmQbWgz/9EIQpw47yWXDF2wW754g29qO9iyc4AScbELn/4ES3oP9cEZS7vI5vcDGkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725459615; c=relaxed/simple;
-	bh=B2rl0YRMF46/xOA0m8DE2zuayGiU4bM1W3ZzNQIJWAw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vj+TXGJFIovU5vkdmb8yDwrjCpTr7FoK5v5TftOfyzzrJqFqJzGdz8jZAAG45u8cpvKsQB63Ieo/Cb8VLN7U2luI07MCwS8L1w/MKcoCCLWe0Ni+ECWTQ8wj0ylYMDxi0+DLPXcwWGtgOHLE8YOBm7p95kTdwSi28L+XS/jCoT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A47711063;
-	Wed,  4 Sep 2024 07:20:38 -0700 (PDT)
-Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 181E63F73F;
-	Wed,  4 Sep 2024 07:20:10 -0700 (PDT)
-Date: Wed, 4 Sep 2024 15:20:03 +0100
-From: Cristian Marussi <cristian.marussi@arm.com>
-To: Sudeep Holla <sudeep.holla@arm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Johan Hovold <johan@kernel.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>, cristian.marussi@arm.com,
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 1/2] firmware: arm_scmi: Ensure that the message-id
- supports fastchannel
-Message-ID: <ZthrRHmV8xTsPbZ8@pluto>
-References: <20240904031324.2901114-1-quic_sibis@quicinc.com>
- <20240904031324.2901114-2-quic_sibis@quicinc.com>
- <ZtgFj1y5ggipgEOS@hovoldconsulting.com>
- <d482dca4-e61b-4a94-887b-d14422243929@kernel.org>
- <ZthU36Qkzwa5Ilrb@bogus>
+	s=arc-20240116; t=1725459652; c=relaxed/simple;
+	bh=ITsGfugUMr9puQDBp+P640F9MZXA6jU3xRcO2/5S338=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jcBmNp0qI/5C3ZiuEAFsQNpCUdS9HC3W/UHfrXcln7djDQsPJJpgMEHPoQwa+ScbpUrytAy3EN3TJ4S+NdBGqh2kGgPNM04ZMFj4BgEeD3YzZ0y5BCdfSR3UJ7WSwbNGStDQw4Scnl907hxW5fdY2Ii6gd5w1KfeCbk3zRR/dMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HgfWwr99; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484EI96p010431;
+	Wed, 4 Sep 2024 14:20:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QrG8p65E5bnLIK8DqDLKFxiZpnW4MlFd9WmsAYCwB1g=; b=HgfWwr99jDPAjR0t
+	ZhNnb5mln0c6N91jxUTxFqlVES6PtmsYOao451NUE558th3hxETCwkvBzWxC+6Tf
+	o4xywlcGul42t0QThCOFIqPuUEjeJjCQUl6Q2oc2Ocy5lCacgQO0OkrymJaoD3Oz
+	CtHABsC5OEl4nPD5bAMOFvq/iHfH8yE4GcU75rIXrZIJuYupa1QrTr5WewDmo2Ng
+	3CQJOHve+rRrLP9lIRTtcE9FA+ouCNQy1nsvhF2SzstMVRFi0PGt3AmaCtY4XKmm
+	WwvlfAMWN/NHNpFnieP8zKNfqjfwRU6E77S6wFjZo+L+vNYkQc2l98gabPScj7Xu
+	LzK6Bg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41egmrhenu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Sep 2024 14:20:45 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484EKitx020748
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Sep 2024 14:20:44 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
+ 07:20:39 -0700
+Message-ID: <7fb34b98-7bc0-43fb-a6e7-dee073fed317@quicinc.com>
+Date: Wed, 4 Sep 2024 22:20:36 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZthU36Qkzwa5Ilrb@bogus>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
+ CSI PHY devices
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-5-quic_depengs@quicinc.com>
+ <3cdd7101-ae8c-45c9-9695-f7f4202d1edb@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <3cdd7101-ae8c-45c9-9695-f7f4202d1edb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zWSgH0K4kaVarHKiZTAVX6klUesY9va3
+X-Proofpoint-ORIG-GUID: zWSgH0K4kaVarHKiZTAVX6klUesY9va3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-04_11,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ suspectscore=0 lowpriorityscore=0 mlxlogscore=950 priorityscore=1501
+ spamscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409040108
 
-On Wed, Sep 04, 2024 at 01:38:55PM +0100, Sudeep Holla wrote:
-> On Wed, Sep 04, 2024 at 01:29:29PM +0200, Konrad Dybcio wrote:
-> > On 4.09.2024 9:00 AM, Johan Hovold wrote:
+Hi Bryan,
+
+On 8/19/2024 8:17 AM, Vladimir Zapolskiy wrote:
+> On 8/12/24 17:41, Depeng Shao wrote:
+>> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+> I've already expressed concerns about a necessity of this function, 
+> since it
+> adds runtime burden of work, which can be successfully done at compile 
+> time,
+> but okay...
 > 
-> [...]
+> Since it is needed for 3PH case only, it may make sense to remove it 
+> from 2PH
+> and call it here conditionally like
 > 
-> > >
-> > > Unfortunately, this patch breaks resume from suspend on the x1e80100 crd:
-> > >
-> > >         [   26.919676] CPU4: Booted secondary processor 0x0000010000 [0x511f0011]
-> > >         [   26.960607] arm-scmi firmware:scmi: timed out in resp(caller: do_xfer+0x164/0x568)
-> > >         [   26.987142] cpufreq: cpufreq_online: ->get() failed
-> > >
-> > > and then the machine hangs (mostly, I saw an nvme timeout message after a
-> > > while).
-> > >
-> > > Make sure you test suspend as well as some of the warnings I reported
-> > > only show up during suspend.
-> >
-> > Eh it looks like PERF_LEVEL_GET (msgid 8) requires the use of FC, but
-> > the firmware fails to inform us about it through BIT(0) in attrs..
-> >
+>      if (csiphy->res->hw_ops->init)
+>          ret = csiphy->res->hw_ops->init(csiphy);
 > 
-> Just trying to understand things better here. So the firmware expects OSPM
-> to just use FC only for PERF_LEVEL_GET and hence doesn't implement the
-> default/normal channel for PERF_LEVEL_GET(I assume it returns error ?)
-> but fails to set the attribute indicating FC is available for the domain.
+> But it's up to you, I hope the callback will be removed in short future.
 > 
 
-Is not that FCs are optional BUT PERF_LEVEL_GET standard messages is
-support is mandatory by the spec anyway ?
+Could you please comment on if it is fine to remove the init from 2PH 
+driver?
+
 
 Thanks,
-Cristian
+Depeng
 
