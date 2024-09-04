@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-30772-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4604B96C5B8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 19:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B8DA96C5F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:08:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F01F42882C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 17:48:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 188CF282352
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:08:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C48E1E1A1E;
-	Wed,  4 Sep 2024 17:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47B931E1305;
+	Wed,  4 Sep 2024 18:08:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pucGto3l"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FupGuUxA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579D21D88BF;
-	Wed,  4 Sep 2024 17:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A42D82AE9F;
+	Wed,  4 Sep 2024 18:08:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725472068; cv=none; b=qUlRX+YQwqWtWj9Ic2kqUVbcwOaSbua2J5bWyKoBQ83v5VNVp1YjSD1FEOcSVbcSEfh/iTdeffsFBPY7as3S5ZqmfWFIPaAZcx19aMtdWpabVaf+ShoC2sf6VcTKG2cATmLoLRQcgZvU9gXZ95EijZbKoVlRJbw0qyTw4CmVpZI=
+	t=1725473290; cv=none; b=Sxxdwe4AOI/QHYuaDKG4ojVxVg3ceOghr0bx+rZSQibhZvHUqHO/9vsJXCkyZ27Ei7Qiw3H++RhIExN2/VfX6AM5gyPEGO6NyYK3+MQtWKhSNar9HQ/7X0ZCtj+xWKNEibOd1oUqy1eXiH+OpqIbXYAvG8co0sqD3SIUk1MtAFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725472068; c=relaxed/simple;
-	bh=JIFxZElsjBlrrcNLTSikMQZRzfEJoNSRcxA5VX2JZ2o=;
+	s=arc-20240116; t=1725473290; c=relaxed/simple;
+	bh=DAZMDM+ojgArjPYz3GYq7zIak/VZ/DvXd0M+uX3t+rA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aJAFpqHYYVd9VUbVi6RHg0rllIVlezjAge7OAfGUt/uHqth0e8qwOBUrbjtjGto2Ddp4aDGG0wlF7dNT4zt0JiUZKyzTaGUfOg6TSmtusULtX7NZ1kopSXV3eoj9illrmPYqiUxHelFGoqL/m7jCbSSskwWPT48Pzjz6dsdbvuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pucGto3l; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=YQ83AUvvMPUWcoZ3gRffVZbm7Gd7Na13kBpK7u9anfNCHme3t/4bBmzAsvF1uq7cNejvFw0mwlRg+poD+YnMNaAr3WWFWzux3dL0aIQAXH7DCSnyi066dFk6TFEnkm6p7kMIMJSNM8XaSvJ3UyKzWovYGcWogdMuL9TILH0iNCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FupGuUxA; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484BSgSS003593;
-	Wed, 4 Sep 2024 17:47:33 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4849KaJg014913;
+	Wed, 4 Sep 2024 18:08:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qZQnCnyfSNwaoiRWrBhYJ06WGShR2EB7KQmdAo5/+YY=; b=pucGto3lCqkUWCXl
-	V8WVhyNZTi6dz+ghjdudKLGcT+weQzqhfJ3tR5f1Z4CH8NQKr3IQCkvWs1VC42Ox
-	Le5swwmozrzUcHyo+8qFn/HV6W4p1X2OvUBmC1A/XRlu7QNVxJ1SjpyzeJK1h9W2
-	5THz24MknhHWQx6CxB+lr9pM9ddJq0eZGMjpIz+Xvig+jw/euJYudiVayaPu1ya6
-	IjEIe6eION9zlHYSSNLM9aNfzH3Z2+HZdmB1myF7OCgkQx5PyNe5RxfAvmRj6mmZ
-	8h5G8muyNE31pFYPDq9xX1NKUTcDoX7qNMf77trJe9sw4OuVEjTmYdF0rpQHrsHU
-	W0kY5A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41buxfbdqa-1
+	pd1/ZjvknWu6B6l/n+tgyNKndfG6GvonW+0stJXLy+Y=; b=FupGuUxAX4DdE7Fv
+	CUoWzb3A4mxu2zCo2XqyuM2KpIzN/kzKTBkME0iLZFrWN0xOoaaLlDHLErhfiM3C
+	ZNs2zjZmiPf970pbLp8wtrBW0ZzOEi8YrylvYm9kYwirAlf49P2cFtm0acJALmXg
+	NOVQ+9BvByYas72yR6q7xyv5txe4ES3mMSTJSBUt0TDU+Ajj0GWms6M93e6eGYCR
+	hgkwvYTrMcawuX0G6eirTGmGPFO25V70oST4etB3GBLM9Z52F/ss4TvZW4Zetg1M
+	MNn4RLXh7EQKGypgJ+j26h9GQmqyr7U4jvwtZ7OlTjbklDrcPs6m4sCxNhFmLIFk
+	WzUJkg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bt673rx4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Sep 2024 17:47:33 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484HlWCm002144
+	Wed, 04 Sep 2024 18:08:04 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484I83Lp020374
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Sep 2024 17:47:32 GMT
-Received: from [10.50.7.129] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 4 Sep 2024 18:08:03 GMT
+Received: from [10.216.2.237] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
- 10:47:23 -0700
-Message-ID: <c5c1f0bf-2f69-44ae-b54b-d69d002e3199@quicinc.com>
-Date: Wed, 4 Sep 2024 23:17:19 +0530
+ 11:07:59 -0700
+Message-ID: <f70baa0a-f897-42af-931f-082e8c5c12b6@quicinc.com>
+Date: Wed, 4 Sep 2024 23:37:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,218 +65,122 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 5/6] arm64: dts: qcom: ipq5018: Add PCIe related nodes
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC: <bhelgaas@google.com>, <lpieralisi@kernel.org>, <kw@linux.com>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <p.zabel@pengutronix.de>,
-        <dmitry.baryshkov@linaro.org>, <quic_nsekar@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <robimarko@gmail.com>
-References: <20240827045757.1101194-1-quic_srichara@quicinc.com>
- <20240827045757.1101194-6-quic_srichara@quicinc.com>
- <20240830085901.oeiuuijlvq2ydho2@thinkpad>
+Subject: Re: [PATCH v1 0/4] Enable shared SE support over I2C
+To: <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
+        <andersson@kernel.org>, <andi.shyti@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>
+CC: <quic_vdadhani@quicinc.com>
+References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
+ <d1ceab6e-907a-4939-8be4-6b460d6c594f@linaro.org>
 Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <20240830085901.oeiuuijlvq2ydho2@thinkpad>
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <d1ceab6e-907a-4939-8be4-6b460d6c594f@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QIgxJOTfgNCvH2OEJNI5EJz30P3lCKqI
-X-Proofpoint-ORIG-GUID: QIgxJOTfgNCvH2OEJNI5EJz30P3lCKqI
+X-Proofpoint-ORIG-GUID: KrLLI9LjIOyRwlq4-CozeOQYTa9DlUwZ
+X-Proofpoint-GUID: KrLLI9LjIOyRwlq4-CozeOQYTa9DlUwZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-04_15,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- adultscore=0 clxscore=1015 mlxlogscore=999 lowpriorityscore=0 phishscore=0
- bulkscore=0 mlxscore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2409040134
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 spamscore=0 clxscore=1011
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409040136
 
+Thanks Neil !
 
-
-On 8/30/2024 2:29 PM, Manivannan Sadhasivam wrote:
-> On Tue, Aug 27, 2024 at 10:27:56AM +0530, Sricharan R wrote:
->> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+On 8/30/2024 1:17 PM, neil.armstrong@linaro.org wrote:
+> Hi,
+> 
+> On 29/08/2024 11:24, Mukesh Kumar Savaliya wrote:
+>> This Series adds support to share QUP based I2C SE between subsystems.
+>> Each subsystem should have its own GPII which interacts between SE and
+>> GSI DMA HW engine.
 >>
->> Add phy and controller nodes for a 2-lane Gen2 and
->> 1-lane Gen2 PCIe buses.
+>> Subsystem must acquire Lock over the SE on GPII channel so that it
+>> gets uninterrupted control till it unlocks the SE. It also makes sure
+>> the commonly shared TLMM GPIOs are not touched which can impact other
+>> subsystem or cause any interruption. Generally, GPIOs are being
+>> unconfigured during suspend time.
 >>
->> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->> Signed-off-by: Sricharan R <quic_srichara@quicinc.com>
+>> GSI DMA engine is capable to perform requested transfer operations
+>> from any of the SE in a seamless way and its transparent to the
+>> subsystems. Make sure to enable “qcom,shared-se” flag only while
+>> enabling this feature. I2C client should add in its respective parent
+>> node.
+>>
 >> ---
->>   [v2] Removed relocatable flags,  removed assigned-clock-rates,
->>        fixed rest of the cosmetic comments.
+>> Mukesh Kumar Savaliya (4):
+>>    dt-bindindgs: i2c: qcom,i2c-geni: Document shared flag
+>>    dma: gpi: Add Lock and Unlock TRE support to access SE exclusively
+>>    soc: qcom: geni-se: Export function geni_se_clks_off()
+>>    i2c: i2c-qcom-geni: Enable i2c controller sharing between two
+>>      subsystems
 >>
->>   arch/arm64/boot/dts/qcom/ipq5018.dtsi | 168 +++++++++++++++++++++++++-
->>   1 file changed, 166 insertions(+), 2 deletions(-)
+>>   .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  4 ++
+>>   drivers/dma/qcom/gpi.c                        | 37 ++++++++++++++++++-
+>>   drivers/i2c/busses/i2c-qcom-geni.c            | 29 +++++++++++----
+>>   drivers/soc/qcom/qcom-geni-se.c               |  4 +-
+>>   include/linux/dma/qcom-gpi-dma.h              |  6 +++
+>>   include/linux/soc/qcom/geni-se.h              |  3 ++
+>>   6 files changed, 74 insertions(+), 9 deletions(-)
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> index 7e6e2c121979..dd5d6b7ff094 100644
->> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
->> @@ -9,6 +9,7 @@
->>   #include <dt-bindings/interrupt-controller/arm-gic.h>
->>   #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
->>   #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
->> +#include <dt-bindings/gpio/gpio.h>
->>   
->>   / {
->>   	interrupt-parent = <&intc>;
->> @@ -143,7 +144,33 @@ usbphy0: phy@5b000 {
->>   			resets = <&gcc GCC_QUSB2_0_PHY_BCR>;
->>   
->>   			#phy-cells = <0>;
->> +		};
->> +
->> +		pcie_x1phy: phy@7e000{
->> +			compatible = "qcom,ipq5018-uniphy-pcie-gen2x1";
->> +			reg = <0x0007e000 0x800>;
->> +			#phy-cells = <0>;
->> +			#clock-cells = <0>;
->> +			clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
->> +			clock-names = "pipe";
->> +			assigned-clocks = <&gcc GCC_PCIE1_PIPE_CLK>;
->> +			resets = <&gcc GCC_PCIE1_PHY_BCR>,
->> +				 <&gcc GCC_PCIE1PHY_PHY_BCR>;
->> +			reset-names = "phy", "common";
->> +			status = "disabled";
->> +		};
->>   
->> +		pcie_x2phy: phy@86000{
->> +			compatible = "qcom,ipq5018-uniphy-pcie-gen2x2";
->> +			reg = <0x00086000 0x1000>;
->> +			#phy-cells = <0>;
->> +			#clock-cells = <0>;
->> +			clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
->> +			clock-names = "pipe";
->> +			assigned-clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
->> +			resets = <&gcc GCC_PCIE0_PHY_BCR>,
->> +				 <&gcc GCC_PCIE0PHY_PHY_BCR>;
->> +			reset-names = "phy", "common";
->>   			status = "disabled";
->>   		};
->>   
->> @@ -170,8 +197,8 @@ gcc: clock-controller@1800000 {
->>   			reg = <0x01800000 0x80000>;
->>   			clocks = <&xo_board_clk>,
->>   				 <&sleep_clk>,
->> -				 <0>,
->> -				 <0>,
->> +				 <&pcie_x2phy>,
->> +				 <&pcie_x1phy>,
->>   				 <0>,
->>   				 <0>,
->>   				 <0>,
->> @@ -387,6 +414,143 @@ frame@b128000 {
->>   				status = "disabled";
->>   			};
->>   		};
->> +
->> +		pcie0: pci@80000000 {
 > 
-> pcie@
+> I see in downstream that this flag is used on the SM8650 qupv3_se6_i2c,
+> and that on the SM8650-HDK this i2c is shared between the aDSP battmgr and
+> the linux to access the HDMI controller.
 > 
-  ok
+> Is this is the target use-case ?
+Not exactly that usecase. Here making it generic in a way to transfer 
+data which is pushed from two subsystems independently. Consider for 
+example one is ADSP i2c client and another is Linux i2c client. Not sure 
+in what manner battmgr and HDMI sends traffic. we can debug it 
+separately over that email.
+> 
+> We have some issues on this platform that crashes the system when Linux
+> does some I2C transfers while battmgr does some access at the same time,
+> the problem is that on the Linux side the i2c uses the SE DMA and not GPI
+> because fifo_disable=0 so by default this bypasses GPI.
+> 
+> A temporary fix has been merged:
+> https://lore.kernel.org/all/20240605-topic-sm8650-upstream-hdk-iommu-fix-v1-1-9fd7233725fa@linaro.org/
+> but it's clearly not a real solution
+> 
+Seems you have added SID for the GPII being used from linux side. Need 
+to know why you have added it and is it helping ? I have sent an email 
+to know more about this issue before 2 weeks.
 
->> +			compatible = "qcom,pcie-ipq5018";
->> +			reg =  <0x80000000 0xf1d>,
->> +			       <0x80000f20 0xa8>,
->> +			       <0x80001000 0x1000>,
->> +			       <0x00078000 0x3000>,
->> +			       <0x80100000 0x1000>;
+> What would be the solution to use the shared i2c with on one side battmgr
+> using GPI and the kernel using SE DMA ?
 > 
-> Are you sure that the config space is only 4K?
+I have already sent an email on this issue, please respond on it. We 
+shall debug it separately since this feature about sharing is still 
+under implementation as you know about this patch series.
+
+> In this case, shouldn't we force using GPI on linux with:
+> ==============><=====================================================================
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+> b/drivers/i2c/busses/i2c-qcom-geni.c
+> index ee2e431601a6..a15825ea56de 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -885,7 +885,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>          else
+>                  fifo_disable = readl_relaxed(gi2c->se.base + 
+> GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
 > 
-  ok, let me double check.
-
->> +			reg-names = "dbi", "elbi", "atu", "parf", "config";
->> +			device_type = "pci";
->> +			linux,pci-domain = <0>;
->> +			bus-range = <0x00 0xff>;
->> +			num-lanes = <1>;
->> +			max-link-speed = <2>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			phys = <&pcie_x1phy>;
->> +			phy-names ="pciephy";
->> +
->> +			ranges = <0x01000000 0 0x80200000 0x80200000 0 0x00100000
+> -       if (fifo_disable) {
+> +       if (gi2c->is_shared || fifo_disable) {
+>                  /* FIFO is disabled, so we can only use GPI DMA */
+>                  gi2c->gpi_mode = true;
+>                  ret = setup_gpi_dma(gi2c);
+> ==============><=====================================================================
 > 
-> Please check the value of this field in other SoCs.
-
-  ok, if its about the child address encoding for IO region, will fix.
-
-> 
->> +				  0x02000000 0 0x80300000 0x80300000 0 0x10000000>;
->> +
->> +			#interrupt-cells = <1>;
->> +			interrupt-map-mask = <0 0 0 0x7>;
->> +			interrupt-map = <0 0 0 1 &intc 0 0 142 IRQ_TYPE_LEVEL_HIGH>,
->> +					<0 0 0 2 &intc 0 0 143 IRQ_TYPE_LEVEL_HIGH>,
->> +					<0 0 0 3 &intc 0 0 144 IRQ_TYPE_LEVEL_HIGH>,
->> +					<0 0 0 4 &intc 0 0 145 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +			interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
->> +			interrupt-names = "global_irq";
-> 
-> I'm pretty sure that this SoC has SPI based MSI interrupts. So they should be
-> described even though ITS is supported.
-
-  ok
-
-> 
->> +
->> +			clocks = <&gcc GCC_SYS_NOC_PCIE1_AXI_CLK>,
->> +				 <&gcc GCC_PCIE1_AXI_M_CLK>,
->> +				 <&gcc GCC_PCIE1_AXI_S_CLK>,
->> +				 <&gcc GCC_PCIE1_AHB_CLK>,
->> +				 <&gcc GCC_PCIE1_AUX_CLK>,
->> +				 <&gcc GCC_PCIE1_AXI_S_BRIDGE_CLK>;
->> +
->> +			clock-names = "iface",
->> +				      "axi_m",
->> +				      "axi_s",
->> +				      "ahb",
->> +				      "aux",
->> +				      "axi_bridge";
->> +
->> +			resets = <&gcc GCC_PCIE1_PIPE_ARES>,
->> +				 <&gcc GCC_PCIE1_SLEEP_ARES>,
->> +				 <&gcc GCC_PCIE1_CORE_STICKY_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_MASTER_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_SLAVE_ARES>,
->> +				 <&gcc GCC_PCIE1_AHB_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_MASTER_STICKY_ARES>,
->> +				 <&gcc GCC_PCIE1_AXI_SLAVE_STICKY_ARES>;
->> +
->> +			reset-names = "pipe",
->> +				      "sleep",
->> +				      "sticky",
->> +				      "axi_m",
->> +				      "axi_s",
->> +				      "ahb",
->> +				      "axi_m_sticky",
->> +				      "axi_s_sticky";
->> +
->> +			msi-map = <0x0 &v2m0 0x0 0xff8>;
->> +			status = "disabled";
-> 
-> Please add the rootport node also as like other SoCs.
-> 
-  ok
-
-> Above comments applies to below PCIe node.
->
-  ok
-
-Regards,
-  Sricharan
-
+> Neil
 
