@@ -1,205 +1,294 @@
-Return-Path: <linux-arm-msm+bounces-30742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2469C96C073
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:30:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BABF896C086
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:31:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57EFA1C252BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:30:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B3782886BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:31:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F9812EB02;
-	Wed,  4 Sep 2024 14:30:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7DA771DB55F;
+	Wed,  4 Sep 2024 14:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gw5+6Lru"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T3b8iFQR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4A15C96;
-	Wed,  4 Sep 2024 14:30:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C295B63D;
+	Wed,  4 Sep 2024 14:30:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725460207; cv=none; b=me18HeMv54gU0GLRlFxyhD9PAQcn6zotz6QAeOjuF+BW9GRsje7/ZRGo6mEc9TVJcYEHLXC1E+kAORKobbtcS9PeNaDNFXd8wJtHEB//r8pFoMcszK5Xj5YmKC9sK/sqrgYHnGe1pDWScDXPoJU2NF6Xg64W6Z8LrkAiNjnOAlo=
+	t=1725460233; cv=none; b=FuqBfjf2Kh0imJ01thxyLNJo6RUCXlndgdQF41HexGOIkcmn5gJj9dSpCJlkKenIPaLA7mqiuHGjMCCvsvl0VLy/0SMzR01RT4xQQMgiPyX9GAv0vFtFOV7CHvzP2ZfnGplJcsjA+GgdoGhsoug4VeCwEh1G/Viv8b5JlibDUiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725460207; c=relaxed/simple;
-	bh=IGbzTX5KEMiOqp/btvJ1ccQvnyeDHf44Oxf/FGejqvI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WRHYE0L6C4sOLIdV5AHD7QNnFcePc+p8lQ/CSmEmVqoL6dq6yZPHw5hInxNgas9I5Apr+lxM8rlNOFLR0wsnwQf8Gst2IX2zrqNsiQZUeAJgvKYTIn6vWrqB5aNq5/plLiZVWHgmwn6zs8+A8vCC2u+EzZJMTHDJ+C2PisZKUNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gw5+6Lru; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF92EC4CEC2;
-	Wed,  4 Sep 2024 14:29:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725460206;
-	bh=IGbzTX5KEMiOqp/btvJ1ccQvnyeDHf44Oxf/FGejqvI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Gw5+6LrupMCviKvLpbyxwQl6v/VPtEtiCInsUzN21yDLYNvAh2KUEHQH2txBVglAo
-	 Bk+eOg5sZgyG7I0KR4rzFmIEUhJRQ/Q12D3hI3cyiJZVVUd8OzL63w8FFWtzImM7RT
-	 WcN+SP8JJT+Om8z05RBN4wfGSVT3UWfiIegxoPdzHEDNhNabk+128mWyfAvYKMbBHo
-	 XGg6IBIp/bkR3O7YKhmhqAmCqpXxKew2wOm6id79OZdMKaRtv6Ey7StboL101Mf8pU
-	 xUJxeZ0H98YDzFet19o2GdTx5kI9PMulaDv9g3R1YIOuit0PxbEgRUbAy8iBRAd3Hp
-	 80+WccgKKSBSg==
-Message-ID: <51e9fa5a-ac6f-42e8-85e5-7c5c02075a56@kernel.org>
-Date: Wed, 4 Sep 2024 16:29:52 +0200
+	s=arc-20240116; t=1725460233; c=relaxed/simple;
+	bh=oUMmrAUW6n46iBK2Om852EAinIl1iovpcj2mta3w+84=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sv7q6pZRaziNcBCSMXpIhXGBIz2eDCMmHDmxxbRbWZaFJuGSDG+bTnAawX+etyHvnmDBvb09QY6YrfUy4BMgPOSivvFFOvU8ejyr2AJxalFDCtBg7CNx4OK8XAR/xe+a0Yv46D4HFQjx/sGS66bBUXcVon+UGISseoVxdUYHLLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T3b8iFQR; arc=none smtp.client-ip=209.85.166.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-39d4a4e4931so24096225ab.2;
+        Wed, 04 Sep 2024 07:30:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725460230; x=1726065030; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uUh1Bn8LTCD+clJ/J0HFf8JHKVuXPH+EGrtYwcbTYIQ=;
+        b=T3b8iFQR+Yccc2VVuazOGHYlRqZE031oxm/IqlXIoC4hu27WIG008LQ+pfsfdAE1Ow
+         BKZybS8ruJowSLd5eXe76RQ87QkUdPNBOskWimyQKQGvGfnNguIsJe2n+v1TSl5yTLD8
+         G8JQZo27ynRr8xBAqpZH6kdnrlaaPyq5d3mgCZOPA3AboiBNKK3/j7Vr2EGFesFXzYHe
+         GxefLmXULNsAifTMFyw7S5cEfpx1DX2XEoZlxioJ91qVo+aSZHNMpAyE0LOkjad9bzGE
+         SX9EMjsIasmAgD0+6xgKd7FlSLbjZS2ojrICJcDVC62H8HW+oUP9yggHGeXEz0RPyfz2
+         hQwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725460230; x=1726065030;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uUh1Bn8LTCD+clJ/J0HFf8JHKVuXPH+EGrtYwcbTYIQ=;
+        b=Nmh3sppb8rPXE9xh6RXXivvOUHnH2Of9btai6czzlV4Smk3XByCpdjjO4ddR8+FyNx
+         IjrQHM3n2Ey5H8JViye7D9hVDeGeNxVWrI66azXLwPpgf97NrDAyNtFobU7oMsgISgHw
+         E9JTNJ4II1WSSjRV3RvfEznVOphDrCyV8wJ3ITh+TpJBL68GSJvfcARcwgXs4X+Ywr0N
+         fnWnRLkSo9iLpqVNNLD81q816rJgXsbr2q6Z4AOoYhAtyljlyslWMIGKPoYIRrSqcxvR
+         Cd7aNBHD5topwOmcY/xQSLRNug7+3k4J0ldHlb62Nrbk4pTfRJikaOzwkwhT8Dqq9ceO
+         94YA==
+X-Forwarded-Encrypted: i=1; AJvYcCW5jNyPexW9JlWA3m81QD2YN/8PN2xfUq4VNpdGmsK/JY08sF1nzki/RUdkhAHwFOmQDuZ1yRV2Lq/1fU2w@vger.kernel.org, AJvYcCWtXumNGOYze4R9HGJhwdiQPduAtDOuUirnbztRI4oyzW35f5E4l4oPqgzViUN5cyFAceuqQr+Qjrkb2K4/@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhwtZoCu+lQNfqMzciq+CDOPNDfmEzcT0ZSzu7Z1OrmaQeSja4
+	Z0rALkPdSDDZrjez2DoGwX7Cz4vAc3aBwxPpXyBvaOXmqXXj/YLeKn0+TiQNEFvCfxfvluxqm/u
+	Z8JbfPLSuByPLfsmQfEIpgB4sEm4=
+X-Google-Smtp-Source: AGHT+IEOs79kz4wpYRVi6vayStorUTQuG3MLQed42xUFFfh4rUgAOixAlfb7UxVs1MDoDJIZwMT7ryuRLZClp+PiPMc=
+X-Received: by 2002:a92:cda5:0:b0:39f:7a06:2a62 with SMTP id
+ e9e14a558f8ab-39f7a062ad8mr22423485ab.5.1725460229529; Wed, 04 Sep 2024
+ 07:30:29 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 14/21] dt-bindings: cpufreq: qcom-hw: document support
- for SA8255p
-To: Nikunj Kela <quic_nkela@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
- viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
- sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
- will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
- jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
- amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
- cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
- wim@linux-watchdog.org, linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
- linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
- kernel@quicinc.com, quic_psodagud@quicinc.com
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-15-quic_nkela@quicinc.com>
- <odg5ssqu2soaqp6m4rambj7qhqiyp7othkvu4v6fu6xtuhbdho@vccya6qcwgoz>
- <1b831fc1-9360-4038-91b2-b2c0cea513ed@quicinc.com>
- <baf00e50-10b2-410b-9c56-713564a2d1b9@kernel.org>
- <c163149b-bdf1-423b-ab51-f734d00277fe@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <c163149b-bdf1-423b-ab51-f734d00277fe@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com>
+ <20240830-preemption-a750-t-v2-6-86aeead2cd80@gmail.com> <CAF6AEGv82=N4=motCpGhp5N7Yv8oqtBcG4bGahgF53CpFYpTgg@mail.gmail.com>
+ <b899d35a-fedf-4748-ac23-6389a8742160@gmail.com>
+In-Reply-To: <b899d35a-fedf-4748-ac23-6389a8742160@gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 4 Sep 2024 07:30:16 -0700
+Message-ID: <CAF6AEGufJhPMbyJJ7kV6-2cknmOwKD15Z5foYfje0bVjH7G0MQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/9] drm/msm/A6xx: Use posamble to reset counters on preemption
+To: Antonino Maniscalco <antomani103@gmail.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 04/09/2024 16:19, Nikunj Kela wrote:
-> 
-> On 9/4/2024 6:17 AM, Krzysztof Kozlowski wrote:
->> On 04/09/2024 14:27, Nikunj Kela wrote:
->>> On 9/3/2024 11:26 PM, Krzysztof Kozlowski wrote:
->>>> On Tue, Sep 03, 2024 at 03:02:33PM -0700, Nikunj Kela wrote:
->>>>> Add compatible for the cpufreq engine representing support on SA8255p.
->>>>>
->>>>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
->>>>> ---
->>>>>  .../bindings/cpufreq/cpufreq-qcom-hw.yaml        | 16 ++++++++++++++++
->>>>>  1 file changed, 16 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
->>>>> index 1e9797f96410..84865e553c8b 100644
->>>>> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
->>>>> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
->>>>> @@ -34,6 +34,7 @@ properties:
->>>>>          items:
->>>>>            - enum:
->>>>>                - qcom,qdu1000-cpufreq-epss
->>>>> +              - qcom,sa8255p-cpufreq-epss
->>>>>                - qcom,sa8775p-cpufreq-epss
->>>>>                - qcom,sc7280-cpufreq-epss
->>>>>                - qcom,sc8280xp-cpufreq-epss
->>>>> @@ -206,6 +207,21 @@ allOf:
->>>>>          interrupt-names:
->>>>>            minItems: 2
->>>>>  
->>>>> +  - if:
->>>>> +      properties:
->>>>> +        compatible:
->>>>> +          contains:
->>>>> +            enum:
->>>>> +              - qcom,sa8255p-cpufreq-epss
->>>>> +    then:
->>>>> +      properties:
->>>>> +        reg:
->>>>> +          minItems: 2
->>>>> +          maxItems: 2
->>>>> +
->>>>> +        reg-names:
->>>>> +          minItems: 2
->>>>> +          maxItems: 2
->>>> What about interrupts? You need to constrain each of such lists.
->>>>
->>>> Best regards,
->>>> Krzysztof
->>> Interrupts are not required, I still need to put constraints for
->> It's irrelevant whether they are required or not. Each property should
->> be narrowed.
-> 
-> So evenif we don't use interrupts property in our DT(patch#21), we need
-> to mention interrupts here? You suggest we put interrupts with maxItems: 0?
+On Wed, Sep 4, 2024 at 6:39=E2=80=AFAM Antonino Maniscalco
+<antomani103@gmail.com> wrote:
+>
+> On 8/30/24 8:32 PM, Rob Clark wrote:
+> > On Fri, Aug 30, 2024 at 8:33=E2=80=AFAM Antonino Maniscalco
+> > <antomani103@gmail.com> wrote:
+> >>
+> >> Use the postamble to reset perf counters when switching between rings,
+> >> except when sysprof is enabled, analogously to how they are reset
+> >> between submissions when switching pagetables.
+> >>
+> >> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 14 +++++++++++++-
+> >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  6 ++++++
+> >>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 26 +++++++++++++++++++++=
+++++-
+> >>   drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  7 +++++--
+> >>   4 files changed, 49 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/m=
+sm/adreno/a6xx_gpu.c
+> >> index 1a90db5759b8..3528ecbbc1ab 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> >> @@ -366,7 +366,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struc=
+t msm_gem_submit *submit)
+> >>   static void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
+> >>                  struct a6xx_gpu *a6xx_gpu, struct msm_gpu_submitqueue=
+ *queue)
+> >>   {
+> >> -       u64 preempt_offset_priv_secure;
+> >> +       bool sysprof =3D refcount_read(&a6xx_gpu->base.base.sysprof_ac=
+tive) > 1;
+> >> +       u64 preempt_offset_priv_secure, preempt_postamble;
+> >>
+> >>          OUT_PKT7(ring, CP_SET_PSEUDO_REG, 15);
+> >>
+> >> @@ -403,6 +404,17 @@ static void a6xx_emit_set_pseudo_reg(struct msm_r=
+ingbuffer *ring,
+> >>          /* seems OK to set to 0 to disable it */
+> >>          OUT_RING(ring, 0);
+> >>          OUT_RING(ring, 0);
+> >> +
+> >> +       if (!sysprof && a6xx_gpu->preempt_postamble_len) {
+> >> +               preempt_postamble =3D SCRATCH_PREEMPT_POSTAMBLE_IOVA(a=
+6xx_gpu);
+> >> +
+> >> +               OUT_PKT7(ring, CP_SET_AMBLE, 3);
+> >> +               OUT_RING(ring, lower_32_bits(preempt_postamble));
+> >> +               OUT_RING(ring, upper_32_bits(preempt_postamble));
+> >> +               OUT_RING(ring, CP_SET_AMBLE_2_DWORDS(
+> >> +                                       a6xx_gpu->preempt_postamble_le=
+n) |
+> >> +                               CP_SET_AMBLE_2_TYPE(KMD_AMBLE_TYPE));
+> >> +       }
+> >
+> > Hmm, ok, we set this in the submit path.. but do we need to clear it
+> > somehow when transitioning from !sysprof to sysprof?
+> >
+>
+> We can always emit the packet and 0 fields out when sysprof is enabled.
+> Would that be ok for you? Only emitting it when needed might be
+> nontrivial given that there are multiple rings and we would be paying
+> the overhead for emitting it in the more common case (not profiling) anyw=
+ay.
 
-I don't understand. You use three quite separate statements. "Not
-required", "don't use" and here "maxItems: 0" which means not allowed.
+That sounds like it would work
 
-All of these mean something else and I keep guessing and responding
-according to what you write. Probably half of my advises are just trash,
-because it turns out it is something entirely else than what I read.
+> > Also, how does this interact with UMD perfctr queries, I would expect
+> > they would prefer save/restore?
+>
+> Right so my understanding given previous discussions is that we want to
+> disable preemption from userspace in that case? The vulkan extension
+> requires to acquire and release a lock so we could use that to emit the
+> packets that enable and disable preemption perhaps.
 
-Make a decision how the hardware looks like.
+ack
 
-> 
-> I wonder why SA8775p compatible is not in constraint list..
-> 
->>> interrupts? BTW, there is no if block for SA8775p binding in this file.
->>
->>
->> Best regards,
->> Krzysztof
->>
+BR,
+-R
 
-Best regards,
-Krzysztof
-
+> >
+> > BR,
+> > -R
+> >
+> >>   }
+> >>
+> >>   static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *=
+submit)
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/m=
+sm/adreno/a6xx_gpu.h
+> >> index 652e49f01428..2338e36c8f47 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> >> @@ -66,6 +66,7 @@ struct a6xx_gpu {
+> >>          atomic_t preempt_state;
+> >>          spinlock_t eval_lock;
+> >>          struct timer_list preempt_timer;
+> >> +       uint64_t preempt_postamble_len;
+> >>
+> >>          unsigned int preempt_level;
+> >>          bool uses_gmem;
+> >> @@ -99,6 +100,11 @@ struct a6xx_gpu {
+> >>   #define SCRATCH_USER_CTX_IOVA(ring_id, a6xx_gpu) \
+> >>          (a6xx_gpu->scratch_iova + (ring_id * sizeof(uint64_t)))
+> >>
+> >> +#define SCRATCH_PREEMPT_POSTAMBLE_OFFSET (100 * sizeof(u64))
+> >> +
+> >> +#define SCRATCH_PREEMPT_POSTAMBLE_IOVA(a6xx_gpu) \
+> >> +       (a6xx_gpu->scratch_iova + SCRATCH_PREEMPT_POSTAMBLE_OFFSET)
+> >> +
+> >>   /*
+> >>    * In order to do lockless preemption we use a simple state machine =
+to progress
+> >>    * through the process.
+> >> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/d=
+rm/msm/adreno/a6xx_preempt.c
+> >> index 4b61b993f75f..f586615db97e 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> >> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> >> @@ -351,6 +351,28 @@ static int preempt_init_ring(struct a6xx_gpu *a6x=
+x_gpu,
+> >>          return 0;
+> >>   }
+> >>
+> >> +static void preempt_prepare_postamble(struct a6xx_gpu *a6xx_gpu)
+> >> +{
+> >> +       u32 *postamble =3D a6xx_gpu->scratch_ptr + SCRATCH_PREEMPT_POS=
+TAMBLE_OFFSET;
+> >> +       u32 count =3D 0;
+> >> +
+> >> +       postamble[count++] =3D PKT7(CP_REG_RMW, 3);
+> >> +       postamble[count++] =3D REG_A6XX_RBBM_PERFCTR_SRAM_INIT_CMD;
+> >> +       postamble[count++] =3D 0;
+> >> +       postamble[count++] =3D 1;
+> >> +
+> >> +       postamble[count++] =3D PKT7(CP_WAIT_REG_MEM, 6);
+> >> +       postamble[count++] =3D CP_WAIT_REG_MEM_0_FUNCTION(WRITE_EQ);
+> >> +       postamble[count++] =3D CP_WAIT_REG_MEM_1_POLL_ADDR_LO(
+> >> +                               REG_A6XX_RBBM_PERFCTR_SRAM_INIT_STATUS=
+);
+> >> +       postamble[count++] =3D CP_WAIT_REG_MEM_2_POLL_ADDR_HI(0);
+> >> +       postamble[count++] =3D CP_WAIT_REG_MEM_3_REF(0x1);
+> >> +       postamble[count++] =3D CP_WAIT_REG_MEM_4_MASK(0x1);
+> >> +       postamble[count++] =3D CP_WAIT_REG_MEM_5_DELAY_LOOP_CYCLES(0);
+> >> +
+> >> +       a6xx_gpu->preempt_postamble_len =3D count;
+> >> +}
+> >> +
+> >>   void a6xx_preempt_fini(struct msm_gpu *gpu)
+> >>   {
+> >>          struct adreno_gpu *adreno_gpu =3D to_adreno_gpu(gpu);
+> >> @@ -382,10 +404,12 @@ void a6xx_preempt_init(struct msm_gpu *gpu)
+> >>          a6xx_gpu->skip_save_restore =3D 1;
+> >>
+> >>          a6xx_gpu->scratch_ptr  =3D msm_gem_kernel_new(gpu->dev,
+> >> -                       gpu->nr_rings * sizeof(uint64_t), MSM_BO_WC,
+> >> +                       PAGE_SIZE, MSM_BO_WC,
+> >>                          gpu->aspace, &a6xx_gpu->scratch_bo,
+> >>                          &a6xx_gpu->scratch_iova);
+> >>
+> >> +       preempt_prepare_postamble(a6xx_gpu);
+> >> +
+> >>          if (IS_ERR(a6xx_gpu->scratch_ptr))
+> >>                  goto fail;
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm=
+/msm/adreno/adreno_gpu.h
+> >> index 6b1888280a83..87098567483b 100644
+> >> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> >> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> >> @@ -610,12 +610,15 @@ OUT_PKT4(struct msm_ringbuffer *ring, uint16_t r=
+egindx, uint16_t cnt)
+> >>          OUT_RING(ring, PKT4(regindx, cnt));
+> >>   }
+> >>
+> >> +#define PKT7(opcode, cnt) \
+> >> +       (CP_TYPE7_PKT | (cnt << 0) | (PM4_PARITY(cnt) << 15) | \
+> >> +               ((opcode & 0x7F) << 16) | (PM4_PARITY(opcode) << 23))
+> >> +
+> >>   static inline void
+> >>   OUT_PKT7(struct msm_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
+> >>   {
+> >>          adreno_wait_ring(ring, cnt + 1);
+> >> -       OUT_RING(ring, CP_TYPE7_PKT | (cnt << 0) | (PM4_PARITY(cnt) <<=
+ 15) |
+> >> -               ((opcode & 0x7F) << 16) | (PM4_PARITY(opcode) << 23));
+> >> +       OUT_RING(ring, PKT7(opcode, cnt));
+> >>   }
+> >>
+> >>   struct msm_gpu *a2xx_gpu_init(struct drm_device *dev);
+> >>
+> >> --
+> >> 2.46.0
+> >>
+>
+> Best regards,
+> --
+> Antonino Maniscalco <antomani103@gmail.com>
+>
 
