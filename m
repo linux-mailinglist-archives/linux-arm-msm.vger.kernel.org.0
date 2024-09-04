@@ -1,120 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-30628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 763FD96B260
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 09:09:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0022096B274
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 09:12:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BDAC9B24D1C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 07:09:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 781BD1F2567A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 07:12:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CB2313AD03;
-	Wed,  4 Sep 2024 07:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5934D146013;
+	Wed,  4 Sep 2024 07:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DO6RB7ty"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FnRwcbBO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0461EC01C;
-	Wed,  4 Sep 2024 07:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2257083CA3;
+	Wed,  4 Sep 2024 07:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725433780; cv=none; b=WpU38/56ssHFOOB5n8ti8zEYjbC+/xKHasO2ic4xSn9sxSf+EYHCZYLjAAN4MKNHPGo9P/oXps7jBf7rGOJRQZBcJ531tt/j1Zlcit2pyV9El0ZCN2jYP2OPlxfhnVAaC2SPIINwm52VKI52mmJSIrwkJvWy2YvbsQmQ6Zx4Ecg=
+	t=1725433922; cv=none; b=If82lOvlQjZpRQeEc5EO9jzGOazW/lfQxGEHuup7CPuP/YlOBBueXUDRWqnni31vJBbVKV/adGFD64ryhGC7uE5e9d96OCoUaKp7jnRqC0WyOqQjKzMHPQLPC+h1B6plwxUOs6o3wbJK9DHp8k0rjgYJBZj5Ew1o1RLf2l/5MzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725433780; c=relaxed/simple;
-	bh=U7ShB99LMxLCv80JBZpXfOThgO3T2QrCzDNel6QhBhA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WDKD1RhHchayhFV3S6wyInPD3WUvpwBo1HnUsTZO1t3Bjl7IMgy1g+Sjlu1HdfcsBwtHHsTlgKULHn2lwLKX5htYN92hVB2PcbRtI764qdqucVDYV0GJNxTwzXFnhY+HSiEXHOJ9eK2/p16c74Kryelw+/B/eRBDSN31Rq7g80g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DO6RB7ty; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D336C4CEC2;
-	Wed,  4 Sep 2024 07:09:39 +0000 (UTC)
+	s=arc-20240116; t=1725433922; c=relaxed/simple;
+	bh=cLb2NYLXwStX/LKCjvnBpOqyb4PG6V2tb9fd5zD3pBU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=k/FD6cwmDCaRINPpmsaDmb5/tyi+hgMvd4igt5ksbNPywjG/NhwQos8a91gzilbYNWIp2/qAhyoVgEN1QwojUQc42Mtl0UVjPOyk4GH/jO4+d7ygf8uOy+XnzC2kDFjuN8GjbACAn4JTl33cr61ceeHnVu758toGDAjz8d+Fi+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FnRwcbBO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D62EDC4CEC8;
+	Wed,  4 Sep 2024 07:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725433779;
-	bh=U7ShB99LMxLCv80JBZpXfOThgO3T2QrCzDNel6QhBhA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DO6RB7tyywf0ai1BqJXYXdF+mvcKUnltH5kHrqZzHq06+ZOHH5TY4H7VVWAL3PxVn
-	 IJEVMnMu1wpEVi/XhVUl7rvGoIKh65VSNGX3wRCqotMpE+8ZR/xHDbq12Jyj8hV/Na
-	 Hp2fUadwzUf8+k2d5XAaMvFFHVlyojlbdhQEjRLe2JNmbfqWOgwV/cpijKLYZ5cX5c
-	 ItwWToIPYDOssdqZq3nd5gI5MbhE23LtmP4d5oQ7+XmC0R4OiC0sWFygAvJGx5hRvk
-	 2Mfzj0M66qGnmygz0mhv7hGRywB4ZYPek9bT97b79V+MMrOi81Asl5QvNtaVcx6m4g
-	 TdJZZC5TVIHdA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1slk9L-0000000019G-2PP2;
-	Wed, 04 Sep 2024 09:09:56 +0200
-Date: Wed, 4 Sep 2024 09:09:55 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: sudeep.holla@arm.com, cristian.marussi@arm.com,
-	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	konradybcio@kernel.org
-Subject: Re: [PATCH V2 2/2] firmware: arm_scmi: Skip adding bad duplicates
-Message-ID: <ZtgHw1RrZTZLr7Mw@hovoldconsulting.com>
-References: <20240904031324.2901114-1-quic_sibis@quicinc.com>
- <20240904031324.2901114-3-quic_sibis@quicinc.com>
+	s=k20201202; t=1725433921;
+	bh=cLb2NYLXwStX/LKCjvnBpOqyb4PG6V2tb9fd5zD3pBU=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=FnRwcbBO4efSleljAkNSmQi1LC5M8d4zWKC0RG/Q27KGaSkGyodJ6cKG3CpdKsOIk
+	 /YDToeGOoyVHdQMa+YJIyspFgawDMeV6dGIxaocEqM39c9qfhbF4I7tdCmUrpjKd4m
+	 JpNS6bh7yoTMvM/7hHc8RULo4aGUcTmFDpWGpG0KLxyKJzFYUPyl6CeDFCdvMP2o9r
+	 BuS3R88yGeXpa2czuGxdEoEsj5qfoXDTxv3xNW7e/Iic6CbtrKuUHagIBfW1IRIgB8
+	 MWZlC+1oTibAUsTiF40APdpECEBnvGB4XYDLq/bvrWwTS6w2EgGxFfJxttH930Q9sP
+	 vym3NL4vZmx9g==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BBB5ACD3431;
+	Wed,  4 Sep 2024 07:12:01 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>
+Subject: [PATCH v6 0/4] PCI: qcom: Add 16.0 GT/s equalization and margining
+ settings
+Date: Wed, 04 Sep 2024 12:41:56 +0530
+Message-Id: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240904031324.2901114-3-quic_sibis@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADwI2GYC/x3MQQqDMBBG4avIrDsQQoy0VykuYvy1A23UJIgiu
+ buhy2/x3kUJUZDo1VwUsUuSJVTYR0P+48IMlrGatNJGPZXh1QtvfvnxjGA4ZTfIV/LJSsPb1nW
+ wMFTrNWKS439+96Xccvbe6WkAAAA=
+To: Richard Zhu <hongxing.zhu@nxp.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, Jingoo Han <jingoohan1@gmail.com>, 
+ Chuanhua Lei <lchuanhua@maxlinear.com>, 
+ Marek Vasut <marek.vasut+renesas@gmail.com>, 
+ Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ imx@lists.linux.dev, linux-kernel@vger.kernel.org, 
+ linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ abel.vesa@linaro.org, johan+linaro@kernel.org, 
+ Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2406;
+ i=manivannan.sadhasivam@linaro.org; h=from:subject:message-id;
+ bh=cLb2NYLXwStX/LKCjvnBpOqyb4PG6V2tb9fd5zD3pBU=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBm2Ag+yXw76QSloqji0A8dUGvbGecOjKDwzo19V
+ gChmcyzYReJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCZtgIPgAKCRBVnxHm/pHO
+ 9QBoB/40W7x6SSRfFEQvwB1+Lx05sntI/Ecem96LKwXC0adZ62tG7DZcnlrBOHu/Yv/gMxxLb4K
+ hr2epksRdMTtqaQ0nDTXn+3oiwA0Q9WEzst3bydA7yMtYLRcJa0+BfLsc28z58fEHTA2Zojogcg
+ kaCDyFsjo6vwzuD+eE7PWgFtMJGMAjXfb2XcMnolL9RJirnLZ1bZfZjW/5AJ2iwHPkCUsMvqaFP
+ n6ibN4qXxgfXODKqbUrvqbDUDQWcbYJvfqQxMt8nn0QaaxmgmJrIKXBapriYTb4bY+xkQczG8Ih
+ Rds1yh9PZCYFNVq++7Z/H/svXcvpMEk0K9hOzny43boAID1f
+X-Developer-Key: i=manivannan.sadhasivam@linaro.org; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@linaro.org/default with auth_id=185
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reply-To: manivannan.sadhasivam@linaro.org
 
-On Wed, Sep 04, 2024 at 08:43:24AM +0530, Sibi Sankar wrote:
-> Ensure that the bad duplicates reported by the platform firmware doesn't
-> get added to the opp-tables.
+Hi,
 
-Please expand on why this is an issue on Qualcomm platforms, these
-entries aren't just "bad duplicates" if IIUC.
+This series adds 16.0 GT/s specific equalization and RX lane margining settings
+to the Qcom RC and EP drivers. This series is mandatory for the stable operation
+of the PCIe link at 16.0 GT/s on the Qcom platforms.
 
-Also here, please add (examples of) the warnings I reported. During boot
-of the x1e80100 crd, I see:
+NOTE:
+=====
 
-[    8.992956] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.021940] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.036171] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
-[    9.036177] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. New: freq: 3417600000, volt: 0, enabled: 1
+I've taken over the series from Shashank based on the discussion [1]. In order
+to apply the equalization/margining settings properly in the Qcom driver, I
+added the first 2 patches to the series which inevitably touches other vendor
+drivers also.
 
-and during resume:
+- Mani
 
-[   85.286615] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. N
-ew: freq: 3417600000, volt: 0, enabled: 1
-[   85.319849] cpu cpu4: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. N
-ew: freq: 3417600000, volt: 0, enabled: 1
-[   85.334686] debugfs: File 'cpu5' in directory 'opp' already present!
-[   85.341399] debugfs: File 'cpu6' in directory 'opp' already present!
-[   85.348016] debugfs: File 'cpu7' in directory 'opp' already present!
+Changes in v6:
 
-[   85.443093] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. N
-ew: freq: 3417600000, volt: 0, enabled: 1
-[   85.476595] cpu cpu8: _opp_is_duplicate: duplicate OPPs detected. Existing: freq: 3417600000, volt: 0, enabled: 1. N
-ew: freq: 3417600000, volt: 0, enabled: 1
-[   85.491645] debugfs: File 'cpu9' in directory 'opp' already present!
-[   85.498409] debugfs: File 'cpu10' in directory 'opp' already present!
-[   85.505187] debugfs: File 'cpu11' in directory 'opp' already present!
+- Dropped the code refactoring patch as suggested by Johan
+- Added 2 patches to fix the caching of maximum supported link speed value that
+  is needed to apply the equalization/margining settings
+- Updated the commit message of patch 3 as per Bjorn's suggestion
 
-Please also add:
+For previous changelogs, please refer [2]
 
-Reported-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+[1] https://lore.kernel.org/linux-pci/af65b744-7538-4929-9ab4-8ee42e17b8d1@quicinc.com/
+[2] https://lore.kernel.org/linux-pci/20240821170917.21018-1-quic_schintav@quicinc.com/
 
-> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+Manivannan Sadhasivam (2):
+      PCI: dwc: Rename 'dw_pcie::link_gen' to 'dw_pcie::max_link_speed'
+      PCI: dwc: Always cache the maximum link speed value in dw_pcie::max_link_speed
 
-But with this patch applied, instead of the above warnings I now get two
-*errors* at boot:
+Shashank Babu Chinta Venkata (2):
+      PCI: qcom: Add equalization settings for 16.0 GT/s
+      PCI: qcom: Add RX margining settings for 16.0 GT/s
 
-	[    8.952173] cpu cpu4: EM: non-increasing freq: 0
-        [    8.979460] cpu cpu8: EM: non-increasing freq: 0
+ MAINTAINERS                                   |  4 +-
+ drivers/pci/controller/dwc/Kconfig            |  5 ++
+ drivers/pci/controller/dwc/Makefile           |  1 +
+ drivers/pci/controller/dwc/pci-imx6.c         |  8 +--
+ drivers/pci/controller/dwc/pcie-designware.c  | 22 +++++---
+ drivers/pci/controller/dwc/pcie-designware.h  | 32 ++++++++++-
+ drivers/pci/controller/dwc/pcie-intel-gw.c    |  4 +-
+ drivers/pci/controller/dwc/pcie-qcom-common.c | 76 +++++++++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom-common.h |  9 ++++
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +++
+ drivers/pci/controller/dwc/pcie-qcom.c        |  6 +++
+ drivers/pci/controller/dwc/pcie-rcar-gen4.c   |  6 +--
+ 12 files changed, 162 insertions(+), 17 deletions(-)
+---
+base-commit: 47ac09b91befbb6a235ab620c32af719f8208399
+change-id: 20240904-pci-qcom-gen4-stability-02ec65a7e6e4
 
-Can you do something about that as well? At least make sure to highlight
-this in the commit message as this is information that is needed to be
-able to evaluate the patch.
+Best regards,
+-- 
+Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Johan
+
 
