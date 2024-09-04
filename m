@@ -1,74 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-30699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F82096BA14
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 13:19:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 39D3596BA16
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 13:19:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BEE3E2823A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 11:19:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9C4D285609
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 11:19:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B84851D0147;
-	Wed,  4 Sep 2024 11:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 491121D0DD9;
+	Wed,  4 Sep 2024 11:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zbwb7gY0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Djr51pIV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39321482E1
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 11:16:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840E61CFEC1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 11:16:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725448600; cv=none; b=j85B+TqdumV3NszhuawodPShO8oomrWytIs2f7Kw3p7Qyatp+qod5PcaoSq3fAELcLdkaxoirC9bUqEZMcnwaYQrnto1ImZLJyoew0WdNPyOBbt3eUU0fKj0Oor7YAeFgwZ8862DSB/Bw9sGC41tciaY2kGmlMAfbaEUCNGp4Mg=
+	t=1725448601; cv=none; b=aVRvMycuw9d8ksOBTspx0qaDMdcJc0D3NPzzRj90tWBAErY2soOrlJHxVheZF44rrfmoEP1xTGFGHdPDMHM4RlwKESFnBEymu2KleLVlUhoFzIxYSpOs5JZOVxZQqeBjsfUf+9wS18NFDaPVz+k1c079+AdjvPXnEjJLqRoO1pY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725448600; c=relaxed/simple;
-	bh=c7YFjQZQ9qFiuq/qc02UdppMtxArDtNb87IQeV7cXpw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jd0QpIctHZr+mlysQdmhNYQrmS4VHxX2K7ijI/1hXORcNhgncF9B5Wc1L/Ool9YWBrpIEA3rViCZ6IfgEmaUuDwnZEU1rj9gyBVrO56E2A7c0HhwD3VQj7fU/6bTWitQeMMcwM4kam/oUUPyN0uife9P9R9NPJwtVYOxKM6Clqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zbwb7gY0; arc=none smtp.client-ip=209.85.208.41
+	s=arc-20240116; t=1725448601; c=relaxed/simple;
+	bh=uy2aOnLjQ2+G8PZE1lwvy23FpuYKEzMelgcbSLPR/e8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=dE9+tnQ6TEipGZPSC9ud7F4yF28btieLizfytaMBCdvzT81FyThOGrNQ966mHgoHkz+pv8jLiy+uIAVR1lfWokOjhK8YROX6+HGCp5SyawMb33yMpIbAc0ue9ZMrDRTT1Q/WYqCVBmc4z6EsTAdD3iK4G/B+h1TPAdUQZOZuWno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Djr51pIV; arc=none smtp.client-ip=209.85.218.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5c23f0a9699so4533989a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 04:16:38 -0700 (PDT)
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a86a37208b2so766315266b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 04:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725448597; x=1726053397; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oilg9tWKvEXxQ/M2O3r+jxuJg1mqd+S4i3tG0SK8JO8=;
-        b=zbwb7gY046kxD1IavPkAO4+3by9K3XkI9OsNtC2+5SSD9OxBoGmpmQmnCndJTL/9bu
-         UNC5GdpMMR8FrxDg7fJKxe3a5l1t3GgoXt8V7XSjuaVTbdY/lsEkM8dsP6OkiE1NsrDB
-         UJMKa9c/qYwUqsYq9uGHySDRyIM9bIERyseQI13VmlatVskKipuVa7OWID4rCk4ud73u
-         A6ijngLOzK5WHjQZexXFMuQp1yyCzzt07KNwitNHe1aEudNkGj1LcSn6tgFF+0gQ1jMN
-         QusJYiWrWkttydtS8ERTbFNFGfFKOprxMCtMrpOJOW2M16l7BA8rZRFD36gq7xKWZ4s7
-         DJmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725448597; x=1726053397;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1725448598; x=1726053398; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oilg9tWKvEXxQ/M2O3r+jxuJg1mqd+S4i3tG0SK8JO8=;
-        b=WZR6DNmrJKVlrtqU61lZyocPob6d97ZE4WjyDg4dar168iFruHZc/48ca9inmwVwKC
-         Rx76/3tulhycapCFRgAeTlpwKsc7izbZDllYoAQga6pRhOC6MhWDkyB+pgIarM5vg8mj
-         HZs3xKAgNeKK+U5nlCDHeA2oFA8JyOEEgdDujRAi1uDbel1Cr/wpWSfFldQr/lY0pj/w
-         xEe04F10ANEFmwLh/5Y4JCxWLfljL9kKEIsToQf57V+kWqVcFwG75xPrirz5vphUZnK3
-         SpM/viBJylPbZGWXw7Rc7hFFIWXE/PGTdpbge3wdKdCBYX5aRPUeDPr98TS1YxLUURBe
-         K8fg==
-X-Gm-Message-State: AOJu0YyyXk3BYJ4Z5njAy276nheqkkrY0fSXMfTjcm9zdfGvB6aZr5Ta
-	onV5eqaVqSrBNZK23pIF8bpoKT/5y1NGjoVKeqqvg0n+N7Rk0xTbUWgNM9xPhgXaQVlaFnSY9F0
-	k
-X-Google-Smtp-Source: AGHT+IFDLxf05mFn6Zpo7gPc8OHs5gmBfZ92hDGbPWWx24YvDxOHnYJCYJHl59RPYjBMZgwXa+f+Gw==
-X-Received: by 2002:a17:907:3688:b0:a77:cb8b:7a2d with SMTP id a640c23a62f3a-a89d88494ecmr1086423166b.49.1725448596781;
-        Wed, 04 Sep 2024 04:16:36 -0700 (PDT)
+        bh=VBd4o6Fs/+WR6gKfBUJAZ3gI+DtPok8STYaws7NRe20=;
+        b=Djr51pIV7WwwmaBY2dSE7PrQBDXiwwq9J+KiRPyK4y4cNDFk9kDBZgfmL4ewnWrKEF
+         Ptusumej0qZR9zsoOgtTzvpEwgEEB8T/cczpbXCXmSYiSfZMId+HLWPyZQpXAyc7NY62
+         YO/sQv/NY+LjUwiCx5elN7y5T3KKq3xP6jrlNnc23crQ/bMTxcvwCpD5nYIEzzWB6+ZA
+         c1O6XZ+MRKJNm/HdS3UQ4kIyL1EK1ALQPcVFIaNVq2zdplOUea4D+hRfXPVhnLJPsYYF
+         ttvUYEQJTUt1DEnxqC0nZEXFLD3PW3CleYF+M0auNS3+tmufAx/hIL+Eqn0MZlQwnT/p
+         adHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725448598; x=1726053398;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VBd4o6Fs/+WR6gKfBUJAZ3gI+DtPok8STYaws7NRe20=;
+        b=u9Fw+ZqLpwqdQbM0ZbI3kwobAvew6cuAql6ODX9GeY1H+rpKGh5OlXUwf46t+PPHtv
+         Arr1V1fmTEjn08+QPu7bvS7zW+dn1c7UAeM7xI6n3rMIMzj+gSFKtOLkOdIeOfmjG0bu
+         JcaSk2qycqITlKBhHmSnCh2w0wYUw58ROrmcB/RDcn3hzJVGVIHFtX3YLFSXaV53UQu5
+         tZ5Zj07/uaDGVhBxcZsaK3IkGArE32H8GOLToR1iLMlzX/4H1JlDXL6TcTfgF98AV70I
+         uYBrXRBd5sshS1ebv8Ch/a0fHVYUCoBJwVrtN2PMOLD67EisKvfVBwWaURu4b/r4vRMU
+         NNeg==
+X-Gm-Message-State: AOJu0YzhYabC0toSNQfkoY3ZAnRw24JLOkQwSAIZAYsISmCxqw/sMB8b
+	GslB2ynFAvydDuL8yFo7VYf6Id9BUdUQLlC6qtFjzQ4b4iZvsYHU3GCE5u8HQ8dg6LIc856AOSQ
+	N
+X-Google-Smtp-Source: AGHT+IEaUDRcmq3hFpgGLvAT0wRkoJ9UYPEA7OJVNw+XAZA0oup7t5wPyJeYX4X6GGdDipTNzld6DQ==
+X-Received: by 2002:a17:907:7ea1:b0:a88:f826:3792 with SMTP id a640c23a62f3a-a897fad2923mr1515355566b.56.1725448597487;
+        Wed, 04 Sep 2024 04:16:37 -0700 (PDT)
 Received: from lion.localdomain ([2a02:8109:aa0d:be00::a253])
         by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8988fefc12sm793401966b.9.2024.09.04.04.16.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2024 04:16:36 -0700 (PDT)
+        Wed, 04 Sep 2024 04:16:37 -0700 (PDT)
 From: Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH 0/3] arm64: dts: qcom: rb3gen2: add second USB port
-Date: Wed, 04 Sep 2024 13:16:23 +0200
-Message-Id: <20240904-b4-rb3gen2-usb2-v1-0-b858e681195e@linaro.org>
+Date: Wed, 04 Sep 2024 13:16:24 +0200
+Subject: [PATCH 1/3] arm64: dts: qcom: sc7280: convert usb_2 to support
+ multiple ports
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +79,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIdB2GYC/x3MMQqAMAxA0atIZgMxrYheRRysxpqlSosiFO9uc
- XzD/xmSRJUEQ5Uhyq1Jj1DQ1BUs+xy8oK7FwMSWerLoLEZnvATGKzlG6oSabmFpVwOlOqNs+vz
- HcXrfDx01coBhAAAA
+Message-Id: <20240904-b4-rb3gen2-usb2-v1-1-b858e681195e@linaro.org>
+References: <20240904-b4-rb3gen2-usb2-v1-0-b858e681195e@linaro.org>
+In-Reply-To: <20240904-b4-rb3gen2-usb2-v1-0-b858e681195e@linaro.org>
 To: cros-qcom-dts-watchers@chromium.org, 
  Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -88,37 +90,57 @@ To: cros-qcom-dts-watchers@chromium.org,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  Caleb Connolly <caleb.connolly@linaro.org>
 X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=934;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1038;
  i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=c7YFjQZQ9qFiuq/qc02UdppMtxArDtNb87IQeV7cXpw=;
- b=owGbwMvMwCFYaeA6f6eBkTjjabUkhrQbjpNzMsUjnfPSGo5sjz+mqseqyafq941JwfDifr+9Y
- tdzpzV1lLIwCHIwyIopsoifWGbZtPayvcb2BRdg5rAygQxh4OIUgIn0pDH8jzdeVsJrNUfzVPXG
- 7X4hluk2V2xXzeo7ydCbk3ZLgIkpk+GfvStDjmfoqXklWW5qFvWqhTvPKp8qC+da7rVeg68iguU
- yAA==
+ bh=uy2aOnLjQ2+G8PZE1lwvy23FpuYKEzMelgcbSLPR/e8=;
+ b=owGbwMvMwCFYaeA6f6eBkTjjabUkhrQbjpP1zt/nq/l8JfbDDFmfPwemex8JuPJw2fMtoZZS0
+ 11+6Me/6yhlYRDkYJAVU2QRP7HMsmntZXuN7QsuwMxhZQIZwsDFKQATuajJyND4upjBjWfWeTbv
+ CY23gj72nt3QMW3ttml78uQECvdxdJxj+O8q9yHHnkeu0cdc0JD9u923+E8rK4yVY5rdTX9vP8P
+ SmgkA
 X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
  fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 
-Make the necessary adjustments to enable the secondary USB controller,
-which is routed directly to a micro-USB port. This is intended for
-debugging via EUD, and is otherwise useful as a host-facing port with
-mass storage or network gadgets, allowing the type-c to be used with a
-hub.
+We might have more than one port, so use ports instead for the second
+USB controllers.
 
-Peripheral mode has been tested with a network gadget, but I don't have
-the necessary hardware on hand to test host mode.
-
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
-Caleb Connolly (3):
-      arm64: dts: qcom: sc7280: convert usb_2 to support multiple ports
-      arm64: dts: qcom: qcs6490-rb3gen2: make node names consistent
-      arm64: dts: qcom: qcs6490-rb3gen2: describe secondary USB port
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 75 ++++++++++++++++++++++++++--
- arch/arm64/boot/dts/qcom/sc7280.dtsi         | 18 +++++--
- 2 files changed, 87 insertions(+), 6 deletions(-)
----
-base-commit: ecc768a84f0b8e631986f9ade3118fa37852fef0
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 3d8410683402..06a74601c2d7 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3712,11 +3712,23 @@ usb_2_dwc3: usb@8c00000 {
+ 				phy-names = "usb2-phy";
+ 				maximum-speed = "high-speed";
+ 				usb-role-switch;
+ 
+-				port {
+-					usb2_role_switch: endpoint {
+-						remote-endpoint = <&eud_ep>;
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++
++					port@0 {
++						reg = <0>;
++						usb_2_dwc3_hs: endpoint {
++						};
++					};
++
++
++					port@1 {
++						usb2_role_switch: endpoint {
++							remote-endpoint = <&eud_ep>;
++						};
+ 					};
+ 				};
+ 			};
+ 		};
 
-// Caleb (they/them)
+-- 
+2.46.0
 
 
