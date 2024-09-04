@@ -1,79 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-30760-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FD0696C39B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:12:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A2E696C3F3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:21:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 667A71C22167
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:12:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21D902854E5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:21:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BBBD1DFE3F;
-	Wed,  4 Sep 2024 16:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F016F1E0B83;
+	Wed,  4 Sep 2024 16:20:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aaeATE33"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4DC81E00A3;
-	Wed,  4 Sep 2024 16:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464B51DEFDF;
+	Wed,  4 Sep 2024 16:20:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725466355; cv=none; b=Ra13uRTR0dHCZ6pyZwMs1R7/HfjJth2CpY8saY+guDfGHAhJeSnRKGf1cFNLk7qlFtwAb08poil3e7v4q3gyKHB/LOgiKIqwo8yEw5302mpo61SzTV3oC++0/qVZblO7o7cQqX/RBL+FjZr9EMpdK6u+mHd7jhHvoOl6PNfXUy4=
+	t=1725466828; cv=none; b=W7QhVMnzuWPDOhJxqM0TRmv2Z2x1B4j1t4zme9mL4OIgiMdekO8TvGD04o6K5gVAjEGrL1HmXHDDCE2N0fBMnRpvBevficSc/uDgRkMG/eFXxWRCT7wDOKuug5BkAyXCooJhRIOduvkBgWMePpwQec3jtdtEd7Z726y60uXCi5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725466355; c=relaxed/simple;
-	bh=solN3XEqUojQqZrIL0N7uQD9Aa93gtBgkkCSLudia+c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o3LBFl6ILemRW57I7nQchfJeFYFixsQxgrbKamRHMfYgmQdxdXWNNTxZE1DXkoK4e2EaXjf58t/NN0LcC7nGPO6057g8gveXpHGLmpZnJQIHprtFZGCGQEWuUfdXsUUxVfybU5OhILmupV91cblxUIjGIdeSiHYzyNfiCmq+/As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 39658FEC;
-	Wed,  4 Sep 2024 09:12:59 -0700 (PDT)
-Received: from bogus (e107155-lin.cambridge.arm.com [10.1.198.42])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id CF3493F73B;
-	Wed,  4 Sep 2024 09:12:31 -0700 (PDT)
-Date: Wed, 4 Sep 2024 17:12:29 +0100
-From: Sudeep Holla <sudeep.holla@arm.com>
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: <cristian.marussi@arm.com>, <linux-kernel@vger.kernel.org>,
-	<arm-scmi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-arm-msm@vger.kernel.org>, <johan@kernel.org>,
-	<konradybcio@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>
-Subject: Re: [PATCH V2 2/2] firmware: arm_scmi: Skip adding bad duplicates
-Message-ID: <ZtiG7YLcnOR9IIuE@bogus>
-References: <20240904031324.2901114-1-quic_sibis@quicinc.com>
- <20240904031324.2901114-3-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1725466828; c=relaxed/simple;
+	bh=slp4Etgtje6DftRnYdPJeioWj7wktBRDfx/cy4K30Uw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SawERX/oBI77StiHEoYWZirINAVphNnun4PQ0uBnlHv+qjxrx3g+6VNAupjwUTAecz9+mweNFtrQ1BnjxPfQo41psgAO0AcFkn+vdrG0nuwZrSI/kAL8kjLV1mhnaetH4I//t3HaIYWEUFUr/itxLkRLmK6hundhIlSNcJTOixc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aaeATE33; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4849PTY6009594;
+	Wed, 4 Sep 2024 16:14:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4tfCwaUW/WwBvYfCjaPsziSdag+8xEQTbzrRZv1pCws=; b=aaeATE33NrzMA9M0
+	px93HoAXCZOVGr2WMAB2SuORYYT81rCQ1bepqH61oJFCrqF3m7OhF9wsQ+rATsmM
+	t2GG8O5SliCekAxmEkLcSAUmdCtMylh5B1YAlbkCKHZqJiLrSp0LgLJAnbUT8xjK
+	8ItQbd/G1taBxm8jLSvN11Lze/nz0Af3U2tEIqr6omopQ/kt0ju6YvzFzSX6SN+I
+	JGYh8TGI+mmwf1QShoOpL5HgYfy32QuIDPmIeBBPCJqhclVnWLsI0IvbcMcFsPev
+	B2ezLccZ3gFaenort01OBiMe5Ir3FQKWfKTKn2Bbsnvtl3aW5TiIM7Q1hO+rOISb
+	lAlozg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bt673g4w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Sep 2024 16:14:40 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484GEdLo011756
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Sep 2024 16:14:39 GMT
+Received: from [10.110.102.234] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
+ 09:14:35 -0700
+Message-ID: <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
+Date: Wed, 4 Sep 2024 09:14:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240904031324.2901114-3-quic_sibis@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <herbert@gondor.apana.org.au>,
+        <davem@davemloft.net>, <sudeep.holla@arm.com>, <andi.shyti@kernel.org>,
+        <tglx@linutronix.de>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>, <jassisinghbrar@gmail.com>, <lee@kernel.org>,
+        <linus.walleij@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
+        <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <wim@linux-watchdog.org>, <linux@roeck-us.net>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
+        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_psodagud@quicinc.com>, Praveen Talari <quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-17-quic_nkela@quicinc.com>
+ <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
+ <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
+ <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+Content-Language: en-US
+From: Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: v4i211HQiaCallbwRmUsKmac0hXr1oKi
+X-Proofpoint-GUID: v4i211HQiaCallbwRmUsKmac0hXr1oKi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-04_13,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 spamscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409040123
 
-On Wed, Sep 04, 2024 at 08:43:24AM +0530, Sibi Sankar wrote:
-> Ensure that the bad duplicates reported by the platform firmware doesn't
-> get added to the opp-tables.
+
+On 9/4/2024 6:21 AM, Krzysztof Kozlowski wrote:
+> On 04/09/2024 14:48, Nikunj Kela wrote:
+>> On 9/3/2024 11:34 PM, Krzysztof Kozlowski wrote:
+>>> On Tue, Sep 03, 2024 at 03:02:35PM -0700, Nikunj Kela wrote:
+>>>> Add compatible representing spi support on SA8255p.
+>>>>
+>>>> Clocks and interconnects are being configured in firmware VM
+>>>> on SA8255p platform, therefore making them optional.
+>>>>
+>>> Please use standard email subjects, so with the PATCH keyword in the
+>>> title.  helps here to create proper versioned patches.
+>> Where did I miss PATCH keyword in the subject here? It says "[PATCH v2
+>> 16/21] dt-bindings: spi: document support for SA8255p"
+> Oh, wrong template. It was about spi prefix, should be this one:
+
+Sorry, didn't realize SPI uses different subject format than other
+subsystems. Will fix in v3. Thanks
+
+
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching. For bindings, the preferred subjects are
+> explained here:
+> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
 >
-
-I am really interested to know if the platform firmware is presenting
-duplicates intentionally for some unknown reasons and we are just speculating
-it to be broken firmware or is it really broken firmware.
-
-For me, it is very hard to digest something like OPP tables which is there
-for a very long time now is not very well understood by firmware authors.
-How many duplicates are we seeing on this platform really ? If it is
-just one I can understand. More than one is hard to miss from the OPP
-tables in the firmware.
-
-While I am not opposing to make the driver handle these duplicates,
-I am just worried if they are put there intentionally for reasons we
-don't understand yet or not published.
-
---
-Regards,
-Sudeep
+> Best regards,
+> Krzysztof
+>
 
