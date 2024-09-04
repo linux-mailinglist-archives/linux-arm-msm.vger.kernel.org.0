@@ -1,115 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-30744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EB6596C101
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:44:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F075C96C13E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:51:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 38E921F26F2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:44:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A36D0280D9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:51:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14F131DB941;
-	Wed,  4 Sep 2024 14:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDD071DC75A;
+	Wed,  4 Sep 2024 14:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="V+26t17K"
+	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="vUL5bGVq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657801DC05C
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 14:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030B31DC1A3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 14:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725461034; cv=none; b=EIYi6BygZlyQ7VkVfAf8p0LX5tbYcvhubKIeIrEf3kPm7vLCbkKkAPAHxWad9pjBlRuziKokCoA2KLVhCrGaQa+3Rjet/e04IRpAXBRZVLo8bTB9vy5gccjsXr2PyhRUvK+tUH2A/NVphdOQhUyg5cP6h5buLYhlvz5eTYocdrs=
+	t=1725461104; cv=none; b=BtJcz1j6fbHWCOm1Je2wJ6XDrQ96RbOSK5roGsOwVkcv+1+fzpDNA5NR4WhwNE9vz1iBe+tqwHTmd/r1ZGGHaXGnG3HkTfuYuZkO+TAfJQ/euXuVXUQY7pBz0/28gkt7lo7V0YIOG5UuK+JWloDIiv5+8nz8Xq5+WiNDTXjXRUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725461034; c=relaxed/simple;
-	bh=iKqWCvQaTNzfamaO6Kv/yW7GdXAB81lqclGxtEdqyLo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X+AjjKyM7L6wEvAm2tEJiwqoqRTXTEngr0cb4l3aPlPQrW4XtqSJsndLtZR51DYgCO3BBCnscIfoYkqBF54kNJA8vvJ1UBAzSvdbkxFAidwx5YXkpbOPEM6tMdCB6S3+H4hXTFQ+yJ8SpzMbDx2+Riu7QX8z74mtIWWKMJdI5/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=V+26t17K; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1725461031;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=iKqWCvQaTNzfamaO6Kv/yW7GdXAB81lqclGxtEdqyLo=;
-	b=V+26t17K/6RDqPkbcD/BsVhGx7re9YtOu+CMSMoBAn3t/nyV0HTAGyShECaykpEWWcEkt6
-	v7oeOEgfl+VI9siD9n5YgTKs/9pJrsjYB0xTyxxzF2OmqXeZKqAAcp0QclYTCn7zl7pFky
-	T+DSJ0G9fHIH2l5op8lLl/h11bw/e6Q=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-570-5zJA-UqJNgudtrYfrmVQLQ-1; Wed, 04 Sep 2024 10:43:48 -0400
-X-MC-Unique: 5zJA-UqJNgudtrYfrmVQLQ-1
-Received: by mail-ej1-f69.google.com with SMTP id a640c23a62f3a-a868c4d16a6so459377166b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 07:43:47 -0700 (PDT)
+	s=arc-20240116; t=1725461104; c=relaxed/simple;
+	bh=B29IRw+UCEYcVNyBksrJ0DRzaF5TIW1T+MkONM+dbsc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LioGRHoV/VzKIjiz1hEKsrHDX/cAAH6NUB+hsFYH+TzVoMbzGn0DxccwvIVSPeBXxYccMQ9DhQK8otvMSo8IFU6DVmI1CChrG2T4y7ABdcYPT+Rf4LJ5YaJWfJ1duucbeSf3MXM/Ezcw2onaCrvhFo6UFDjXNJ1bnfRwoMm6yUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=vUL5bGVq; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8a1acb51a7so310316166b.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 07:45:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1725461100; x=1726065900; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w/kYvp33pxGDjRpRIJw+Cd3vyUH8fk3GhcxNhxFr24c=;
+        b=vUL5bGVqzN4huSqkARkLY8w92QbvWcAp2VpZfUlNjPa3AoivPpmUisuOqLe9BCdsWQ
+         nYsEUbXVquhhe/ptxUgRKHg3wcYbqAul0BUaBTKkJFYJxugJDqxG554v4CunyCVk6RVd
+         GruByJnhWgROWRfqfOGrPojyW6Sl+pte8M/WVHgI4KJAlkrBkFexCLSRoHIY3LcBfjF2
+         kW3s/TERvtIqBWalp2sls0VQSD8JXXbKRCfflDWACeqnjcQqRz9MOMEvYfpCr8w7GOYn
+         RAQpV3FFOjIsbnhMZlshv9J6RK4OeIdJ5WCE0bwI29SwJ/aXfsoCxxdrzCZDNLd8+FjX
+         EN6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725461027; x=1726065827;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iKqWCvQaTNzfamaO6Kv/yW7GdXAB81lqclGxtEdqyLo=;
-        b=bnB1KT5K3t4GqJ9G3NqFEoZwsotkSKXN5Bxn6mf9QnMLPiLuU3/1S8FnRkvgetWsZo
-         w6C/NHm1W94GBP2ukksqOIp2aO4EbV7gFaZJ+J/UQ/qJ47BmSPPhSWfdPaExrmmX/mH2
-         PgLTZiSMKckxQdCu7eHyEOmqUCycBHZN0Q/Rw0gYQH1qp+sCUt6lFQr39adhRmJ2bmol
-         +O/qFxGGkVlciueVaxq6NFpWRLTtPNhXUjyaKd2I4mLmxNetJBSX/yF4x/nShFvCEbIP
-         VmODP880eNGPC1TVpLVeuFdG6/iPoJzZMVHSpRXaeV5G66CRaCvH1OIa+L3uCDP/ZUbj
-         FmmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWaTWHyRNROnKoIttsZuCDUaem4KjmFpZ2VhR4f8fTg8VSanDnST33bpR/1F4gvnREIUnM16lBW8cmp2TiX@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxo3ZzJho2ULLerxJRal7/HFel7N6noePZ8puu7FbCV+nnIQMvW
-	xDo0wOLSInlI+ACpTTn7hAz5WUII6vOs/6RrVj/1dDFMcoFlompnE1/4n+R3QCZDerWojKp+PkS
-	B3G9T88E+jA/zHiXRizziGLjELVBoAnCx5BgVg8y0yLvhrDLHDQ0+f7DBdNWKrpZnBJBJR2IVwB
-	wrp/cH7tNhDMvMQv3ogfcgu6h5w8cDM//ZSSgJcw==
-X-Received: by 2002:a17:906:c10c:b0:a7a:a46e:dc3c with SMTP id a640c23a62f3a-a89b94a9cd9mr1022117966b.15.1725461026912;
-        Wed, 04 Sep 2024 07:43:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFo5JYtqte+s3eAerfKy35rLUJR8ZL908LjB1GKu3jHSIElZjWXpFnbsGyYvHG9OxwhFiGpzYAtdwVG44/vrLg=
-X-Received: by 2002:a17:906:c10c:b0:a7a:a46e:dc3c with SMTP id
- a640c23a62f3a-a89b94a9cd9mr1022114266b.15.1725461026259; Wed, 04 Sep 2024
- 07:43:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725461100; x=1726065900;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w/kYvp33pxGDjRpRIJw+Cd3vyUH8fk3GhcxNhxFr24c=;
+        b=aOzsuT+038+8v19eyufkjMVtT31FcyEQzRm83U46eHs0cOXB7MaG1UTAm6xVHgQ+NW
+         T5/ksnPV1U5PaIn+aZwUDsEHAc7mDCP66bM0oiF0cYnjPje2kC6BgH52rUqYp642w2LI
+         AvUXVidcUxn1KnYwqxgajAjDdeEiYxoEzEm6kvaLI3dlmWn/7wqMoUep0uu3QPMhhjMN
+         b/I0dU+8JWEjFlzWnWoWnm6lVyNq38w57PuqghLjT9VsUQr+Lfb9fChLmWe5qEO6I1gp
+         u20J0BC+7XFyX29WpZpvnEOfcvwy4aoUI9ezwKW3P3R62weKiJ0IF/GUKtcvLShe2+oj
+         m7/Q==
+X-Gm-Message-State: AOJu0YwfTn/4DBEjy4Wk8JwmfGwLt9mvxggqT7oO3fwH17Tnf+iSdmW2
+	+eZVoP9Ax73nB7xEDuVycDHSdv68ioCqxTGxPBdcIobM29vqDVXzEi2JslPuT7g=
+X-Google-Smtp-Source: AGHT+IHKKGZCOMTNOifmLU7XC2AAO6pro54NRxIGJ/Wgh6Uuq/ZCIGg4bEYaQf3nQEl+RmcJ5Bxizg==
+X-Received: by 2002:a17:907:ea5:b0:a86:6a2b:3e57 with SMTP id a640c23a62f3a-a8a1d31ef60mr526331166b.29.1725461100004;
+        Wed, 04 Sep 2024 07:45:00 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8a61fbae35sm1592066b.34.2024.09.04.07.44.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Sep 2024 07:44:59 -0700 (PDT)
+Message-ID: <f210bbce-d133-4376-878f-586e6f78fcdf@nexus-software.ie>
+Date: Wed, 4 Sep 2024 15:44:57 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240903212230.707376-1-bmasney@redhat.com> <20240903212230.707376-2-bmasney@redhat.com>
-In-Reply-To: <20240903212230.707376-2-bmasney@redhat.com>
-From: Brian Masney <bmasney@redhat.com>
-Date: Wed, 4 Sep 2024 10:43:34 -0400
-Message-ID: <CABx5tqLh_8OMSrZsCFz3wpw4dQf6pQtQ_Ffh35Abop2fqhobTg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] crypto: qcom-rng: fix support for ACPI-based systems
-To: herbert@gondor.apana.org.au
-Cc: davem@davemloft.net, quic_omprsing@quicinc.com, neil.armstrong@linaro.org, 
-	quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	ernesto.mnd.fernandez@gmail.com, quic_jhugo@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/10] media: qcom: camss: Sort CAMSS version enums and
+ compatible strings
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, Robert Foss
+ <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Kapatrala Syed <akapatra@quicinc.com>,
+ Hariram Purushothaman <hariramp@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ cros-qcom-dts-watchers@chromium.org,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org,
+ Suresh Vankadara <quic_svankada@quicinc.com>,
+ Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+References: <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com>
+ <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-4-b18ddcd7d9df@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-4-b18ddcd7d9df@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 3, 2024 at 5:22=E2=80=AFPM Brian Masney <bmasney@redhat.com> wr=
-ote:
-> The qcom-rng driver supports both ACPI and device tree based systems.
-> ACPI support was broken when the hw_random interface support was added.
-> Let's go ahead and fix this by adding a check for has_acpi_companion().
->
-> This fix was boot tested on a Qualcomm Amberwing server.
->
-> Fixes: f29cd5bb64c2 ("crypto: qcom-rng - Add hw_random interface support"=
-)
-> Reported-by: Ernesto A. Fern=C3=A1ndez <ernesto.mnd.fernandez@gmail.com>
-> Closes: https://lore.kernel.org/linux-arm-msm/20240828184019.GA21181@eaf/
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+On 04/09/2024 12:10, Vikram Sharma wrote:
+> Sort CAMSS version enums and compatible strings alphanumerically.
+> 
+> Signed-off-by: Suresh Vankadara <quic_svankada@quicinc.com>
+> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 
-I found a cleaner and less intrusive way to fix this after looking
-through some other drivers, so let me post a v3. Sorry about the
-noise.
-
-Brian
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
 
