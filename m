@@ -1,138 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-30616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 063D596B09F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 07:47:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E5EC96B0BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 07:57:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B927D2868B3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 05:47:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55AFE1F259AB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 05:57:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC6784D8A7;
-	Wed,  4 Sep 2024 05:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C332A126F02;
+	Wed,  4 Sep 2024 05:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FX1Uk6mA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="og1oklMK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 443A67F9;
-	Wed,  4 Sep 2024 05:47:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675DC84FA0;
+	Wed,  4 Sep 2024 05:54:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725428865; cv=none; b=ACDDqrg1xPAQpH5S8sO7c36Ex7hKfOKnFfSggb7MeaZZUbznB1UQGHcU67K9Zl0mEFIOtFvF8eEFp/7doFbss6NG+vDJMs4V2aDlDmQmeeXSzknBs0cT3MuJxj/73XQMPc7HyGXEPpoTKQdUw0dr6gsXtBswOjsA7lT6acS2QVk=
+	t=1725429292; cv=none; b=KD9YkzKJcFrz4q69DBB/sj3uOa7LP/kItNtgtyy+NXWRiEYXhZvaeRoJbuxramEYQUm+JOqMQrNFoNBRtKlbRVuVyXXUQK2eWluPVgEHC41QZqJ/RdbL09jRErMfA4Egjr8ZAdWhVgOWgvWXeKVTLjkiFT2C8So8k3UocKYcRZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725428865; c=relaxed/simple;
-	bh=9+Zsq3U+7RUDbpauXfVLl3TJuE2Hu/j2MRyiO5J/M/g=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SvKGbyLH8QXfgcsHdNdTnBf8h2pzkmYlYkm2ZoRSigqLEp7/oCnwq+H7uf5i554FRQ1NTLM0PXpPxbYk4Ij1iQCFbZilvOK4zlOdAHR642MtTBMFZlQjLqDFejGYz82zPqdqjl5geQk5UOK0AaSMZnUUISzE69NCJMBVMOMYKLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FX1Uk6mA; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2053a0bd0a6so39452545ad.3;
-        Tue, 03 Sep 2024 22:47:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725428863; x=1726033663; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=DPZLARY2mhwLV2+TjRBGHBdo6FGrkaEkzsDd0dO5Ygc=;
-        b=FX1Uk6mAAWir/PB7ogVMHnjeNq393UpQJYqGhMrydL7gVvnfr7TBIs70CwHnJXZW1/
-         e4SmTwf3MLQ1t+elSwjfsDJbxfQ0vDnd3M9GXgvk9hq54l+UYDBKuJRD9yzwwdf3yWzM
-         Lcns5EYxdsFy2NgAJjn+4EYIs61u8tJJ+JusfeJs2soRsmvE/pdL9r/2diggVret4QXx
-         stWshZwWohe1y8sABEIssd1w7TsPf79rnJ01y7RCy5gG0E2RhmP0NS849j9GzGVXzVtW
-         o3YekfV0YXOXMLP6ZH9KdDu1CxOn0NecOUIvZXzKi0U+taemZpsWM6oIWDjtNh3LNvRK
-         e5sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725428863; x=1726033663;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DPZLARY2mhwLV2+TjRBGHBdo6FGrkaEkzsDd0dO5Ygc=;
-        b=NSBl51N4GeGPpSqFMuxKlkjIVsElP76McFygvzV+T2KVorGvR18JAb6oQbZdjkLnKq
-         v17kzX6kir6XWdK5OCh/ryBcl2tioynpozd8pbejWti4dVHoz1fG3pi9QHk04bs1CADe
-         QgGeoHczvvHoSDyo4bL2AzxfqrzPiFOUY/xRGlEZ6M2zweERIRrszRz+mDa/UslmPf6+
-         0Lf6r7Yq7aqhQiynsRxittFXTFeC0gOPkTuUo9dp3uW/MhhZtsVPgrIcCIZ7VD4IZMKC
-         +DYvZYnTwUN+0EdkspN6f9ngk2RiV1I077pC39hXuXGq1E7Hjh3iMmL0Xo+NhaULrA+B
-         Kksg==
-X-Forwarded-Encrypted: i=1; AJvYcCWg1hCwzh67l0p2yyBd/7xjAux2U7zYFS3MyfidogUYGJQ011ApBTk2bp34JthuwNps239u5z/nYqovyjr5@vger.kernel.org, AJvYcCXSQRR41Rr+UP0mXhg25ciDJgTv8ThdIsXWDMIoWzHABRpC2JXpRO8gTY1cKY8ItD69FPySryRR6RPO8Qh1@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrBWDvWOwQvW0/CSubzv0k3Jvyg2I8xu92xPLxfhOoqook3+k0
-	aXl9C1jpkgDSe4AqvdOPKR7T677OtY5kiieWmUbrKWkyNM1EVS05
-X-Google-Smtp-Source: AGHT+IF+Kl9oj/3kcgU89pp4fO+QtscwVY1/SnnNYQ6U/J7Q1U5ipNByGKzJC9sEAPR9TvXFZFxTtg==
-X-Received: by 2002:a17:902:eccc:b0:206:b8b7:85f with SMTP id d9443c01a7336-206b8b78f2fmr7240825ad.3.1725428863100;
-        Tue, 03 Sep 2024 22:47:43 -0700 (PDT)
-Received: from fedora.. ([106.219.164.163])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206aea67bc6sm6536055ad.258.2024.09.03.22.47.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Sep 2024 22:47:42 -0700 (PDT)
-From: Riyan Dhiman <riyandhiman14@gmail.com>
-To: srinivas.kandagatla@linaro.org,
-	bgoswami@quicinc.com,
-	andersson@kernel.org
-Cc: alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Riyan Dhiman <riyandhiman14@gmail.com>
-Subject: [PATCH] soc: qcom: apr: Fix some parenthesis alignment coding style issues
-Date: Wed,  4 Sep 2024 11:17:35 +0530
-Message-ID: <20240904054735.7952-1-riyandhiman14@gmail.com>
-X-Mailer: git-send-email 2.46.0
+	s=arc-20240116; t=1725429292; c=relaxed/simple;
+	bh=pDZcotIHkEE1L9COrUn/fnSB2fVdzH08tCumXOdDPKQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KS6kErx2EgAWB01ysKteKx7RhCNLtFcRHdNJXGsqZ/V3StVjUjF9lqVCIL4bvWA8HcaFPnrLuYEZQFveuHVbQWm6ukw+SeZGb6UImDoSETZ1xeLhNwGDRW0hPG4hChG02tRI36zZ2MOqrq+LaoqSU0nR+e4C5ioTJwpjMaLXP9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=og1oklMK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45A6C4CEC2;
+	Wed,  4 Sep 2024 05:54:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725429291;
+	bh=pDZcotIHkEE1L9COrUn/fnSB2fVdzH08tCumXOdDPKQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=og1oklMK64rQw2DhxZjdNOpmuXJN+eI32oSS1J/ZqbWHobqxlgwp4Q4TSYVXbtqS3
+	 0oyMBQSUdSRxnCPYUrK6AW4+Tr4yLLwSXpB1IHpZEjB1s/Y8rt3aXi3WcY9O1/Uqiy
+	 9RRJoIkdJ/ak0v4gCP4UwGunORkmGWSPaF5eqm6kqyCBDUY9rZgMNy0qvCndpJZG56
+	 ZYxjnS/5QqViNZym19UtdOpE1pvVP+eniYBfFUBjTIQnf77OVJZ84BYWSErJ2Kz7Qc
+	 gR6DXf7NvMoiKYFAeBb2oZo4Tx8mYQSouLkqUrepK2B2uYn6t4CT6WU36m9FX24Lks
+	 4R5qIWL7OFXXA==
+Date: Wed, 4 Sep 2024 07:54:48 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org, 
+	herbert@gondor.apana.org.au, davem@davemloft.net, sudeep.holla@arm.com, andi.shyti@kernel.org, 
+	tglx@linutronix.de, will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
+	jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org, amitk@kernel.org, 
+	thara.gopinath@gmail.com, broonie@kernel.org, cristian.marussi@arm.com, 
+	rui.zhang@intel.com, lukasz.luba@arm.com, wim@linux-watchdog.org, linux@roeck-us.net, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org, iommu@lists.linux.dev, 
+	linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org, linux-spi@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, kernel@quicinc.com, quic_psodagud@quicinc.com
+Subject: Re: [PATCH v2 00/21] arm64: qcom: Introduce SA8255p Ride platform
+Message-ID: <glo34r35r2jqypeureu5dzoe6udkniqbma627jnv55ihfoatfu@ujvsxcsrhhdc>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240903220240.2594102-1-quic_nkela@quicinc.com>
 
-Adhere to Linux kernel coding style.
+On Tue, Sep 03, 2024 at 03:02:19PM -0700, Nikunj Kela wrote:
+> This series enables the support for SA8255p Qualcomm SoC and Ride
+> platform. This platform uses SCMI power, reset, performance, sensor
+> protocols for resources(e.g. clocks, regulator, interconnect, phy etc.)
+> management. SA8255p is a virtual platforms that uses Qualcomm smc/hvc
+> transport driver.
+> 
+> Multiple virtual SCMI instances are being used to achieve the parallelism.
+> SCMI platform stack runs in SMP enabled VM hence allows platform to service
+> multiple resource requests in parallel. Each device is assigned its own
+> dedicated SCMI channel and Tx/Rx doorbells.
+> 
 
-Issue reported by checkpatch:
-- CHECK: Alignment should match open parenthesis
+Do not attach (thread) your patchsets to some other threads (unrelated
+or older versions). This buries them deep in the mailbox and might
+interfere with applying entire sets.
 
-It has no functional changes.
+It does not look like you tested the bindings, at least after quick
+look. Please run  (see
+Documentation/devicetree/bindings/writing-schema.rst for instructions).
+Maybe you need to update your dtschema and yamllint.
 
-Signed-off-by: Riyan Dhiman <riyandhiman14@gmail.com>
----
- drivers/soc/qcom/apr.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index 4fbff3a890e2..db1326bdb170 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -88,7 +88,7 @@ void gpr_free_port(gpr_port_t *port)
- EXPORT_SYMBOL_GPL(gpr_free_port);
- 
- gpr_port_t *gpr_alloc_port(struct apr_device *gdev, struct device *dev,
--				gpr_port_cb cb,	void *priv)
-+			   gpr_port_cb cb, void *priv)
- {
- 	struct packet_router *pr = dev_get_drvdata(gdev->dev.parent);
- 	gpr_port_t *port;
-@@ -159,7 +159,7 @@ static void apr_dev_release(struct device *dev)
- }
- 
- static int apr_callback(struct rpmsg_device *rpdev, void *buf,
--				  int len, void *priv, u32 addr)
-+			int len, void *priv, u32 addr)
- {
- 	struct packet_router *apr = dev_get_drvdata(&rpdev->dev);
- 	struct apr_rx_buf *abuf;
-@@ -222,9 +222,9 @@ static int apr_do_rx_callback(struct packet_router *apr, struct apr_rx_buf *abuf
- 	}
- 
- 	if (hdr->src_domain >= APR_DOMAIN_MAX ||
--			hdr->dest_domain >= APR_DOMAIN_MAX ||
--			hdr->src_svc >= APR_SVC_MAX ||
--			hdr->dest_svc >= APR_SVC_MAX) {
-+	    hdr->dest_domain >= APR_DOMAIN_MAX ||
-+	    hdr->src_svc >= APR_SVC_MAX ||
-+	    hdr->dest_svc >= APR_SVC_MAX) {
- 		dev_err(apr->dev, "APR: Wrong APR header\n");
- 		return -EINVAL;
- 	}
--- 
-2.46.0
+Best regards,
+Krzysztof
 
 
