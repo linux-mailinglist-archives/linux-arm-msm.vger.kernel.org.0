@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B930296BF75
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:01:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F0C096BFC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:14:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 719EE2896D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:01:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F6FAB246E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:14:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F4701DA62C;
-	Wed,  4 Sep 2024 14:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35C851DA630;
+	Wed,  4 Sep 2024 14:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uDUQ4CUC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gkAueRqy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C8F1EBFF7;
-	Wed,  4 Sep 2024 14:00:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02CAC1CCEFC;
+	Wed,  4 Sep 2024 14:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725458436; cv=none; b=oiAnZIn4idaURWtq5/4ZvELyd+vCxkYiHBAHXZeYyzszVUTxpFpoI+ob2hFhajTvxxdIGY3nY2RhTIRZPCq5Qp0S4ctnYenXyGMst9HpAwb6UyxKhQmXUyMP93SJdJc108LCVFKsL9QvYx7GP41NHC6w9qtHwNFawKzbWnahCkc=
+	t=1725459260; cv=none; b=jw2GD01JFfZrb6szUPNa1yfVdcFxZkNnlbolVtRoqI6f2vaG3RQ5xBy0nE3goUbdFcrKse3Q9vbjJk+UafZxsUJ0heQ2hGRbbDTL6lymilPZvccBevZ7sFvonegfZua+E1ykubgEi5Le7g2k5DcXufsqgoKSuiAlW05gCumG/SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725458436; c=relaxed/simple;
-	bh=+CRW9fHTwyqsG6tpJpit9cPLag/L22KmuBUVPJ2c5tw=;
+	s=arc-20240116; t=1725459260; c=relaxed/simple;
+	bh=lqqwnBiFir5y8kxoG40XSQZYTH4Hoz7eCP4L1qiQifo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gtG316+Q31o3a5G+hG80fT6BON+0zhoq0Y8w0q2SypcC7eiTJUwIGIKopcimnHQP6jXAgDcHz89fKwJZ/UQOpnXx+y4E00aYFitkEhgFPZ6yDBKUaHm8pW1n26SgGRrEzJb6+qQkAyCz63jbRanv3SqD7mVWZMFJCsCUpJm0Vfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uDUQ4CUC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D94C4CEC2;
-	Wed,  4 Sep 2024 14:00:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=WyWkr4vr+MOM2so6kXKMvJuTwbAZkFSuSwt9BnYfweCCE3rzRL47z6GZTBkNUfS68O8d+vz53afsiAW8cGSMQ8txlPWUiitQ8KTak+Nw5KhqIk09wGs+IZ//YV80q7+AmXF9kCXnBFEaYVky1VjLTrqVb5P76croCxt2X8iNEww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gkAueRqy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11533C4CEC2;
+	Wed,  4 Sep 2024 14:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725458435;
-	bh=+CRW9fHTwyqsG6tpJpit9cPLag/L22KmuBUVPJ2c5tw=;
+	s=k20201202; t=1725459259;
+	bh=lqqwnBiFir5y8kxoG40XSQZYTH4Hoz7eCP4L1qiQifo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uDUQ4CUCPJas5ehnPA45NkpU2iGhaJXOuvBqXUfs1BVya+C6ei3seJ37JjFPVWpzO
-	 8fNNuLxgvQrHAsWGCZSRvu5A0WZAYISi/bGFgS6RJQvhL2zGUqkvd61X3XSM/+jdVq
-	 zO11l1AxUwPL5rkXTdlrrBfWJhcgfHg0PR+CEvSR/RDt685TGaqWxEU/qJtbRN15eB
-	 n9S56a/OW86ihmyAwFemHTIbuHo5DuzwgHUY+RKjnh2N3aqeFamoZ9e2NZJsiKCDHg
-	 ma7jtF5axJ3v3jP2LwRyH0Oe2GpF8g8XHQ3sTr81npvovgsCD1VJ5rlSSreR7YJ72F
-	 UvFtLBC7/qqZg==
-Message-ID: <edb46e4c-d768-4d11-85f4-27a90ef69c18@kernel.org>
-Date: Wed, 4 Sep 2024 16:00:31 +0200
+	b=gkAueRqyxW7JqsdNwk6nxv6F2XTpJfgMyIZ9lmcL/ILnruuSnXkMLECIXD94YIaEm
+	 hwyT5e0AD86ygJ0isM+5VUUvbvXEom7ZsiMtmM5BobHqhrxpIY//p+twcZxx68ruLF
+	 pGidDNRdtnJxQJcL9UZt8VtYTmh0QbOb6a3ejQvMvl1w1yc0HVTt41e5qV9V3TUB5h
+	 9TYwWrC84iryAdHlEVi4uh/RUcujyc3DxJKjC74wI3KlG6Pqsv2UiMjAK0atW4SEYi
+	 MXg85+MwVtyEThxz//hOmNvOTyHXbgzGT9LQmP8KdiSKuHZY9hwAh/P2NE3V2UIEst
+	 4P1vrnHWBh9dA==
+Message-ID: <74608385-a3a6-4e59-9c63-6fb9d746d234@kernel.org>
+Date: Wed, 4 Sep 2024 16:14:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,96 +50,187 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] firmware: arm_scmi: Skip adding bad duplicates
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
- cristian.marussi@arm.com
-Cc: linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- johan@kernel.org
-References: <20240904031324.2901114-1-quic_sibis@quicinc.com>
- <20240904031324.2901114-3-quic_sibis@quicinc.com>
- <84adb06f-20f0-4e3d-9a6e-43e4b0d1b5ab@kernel.org>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc8280xp: Add Microsoft Surface Pro
+ 9 5G
+To: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240903224252.6207-1-jerome.debretagne@gmail.com>
+ <20240903224252.6207-5-jerome.debretagne@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <84adb06f-20f0-4e3d-9a6e-43e4b0d1b5ab@kernel.org>
+In-Reply-To: <20240903224252.6207-5-jerome.debretagne@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 4.09.2024 3:56 PM, Konrad Dybcio wrote:
-> On 4.09.2024 5:13 AM, Sibi Sankar wrote:
->> Ensure that the bad duplicates reported by the platform firmware doesn't
->> get added to the opp-tables.
->>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>  drivers/firmware/arm_scmi/perf.c | 13 +++++++++++--
->>  1 file changed, 11 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
->> index 2d77b5f40ca7..114c3dd70ede 100644
->> --- a/drivers/firmware/arm_scmi/perf.c
->> +++ b/drivers/firmware/arm_scmi/perf.c
->> @@ -386,9 +386,11 @@ process_response_opp(struct device *dev, struct perf_dom_info *dom,
->>  		le16_to_cpu(r->opp[loop_idx].transition_latency_us);
->>  
->>  	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
->> -	if (ret)
->> +	if (ret) {
->>  		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
->>  			 opp->perf, dom->info.name, ret);
->> +		opp->perf = 0;
->> +	}
->>  }
->>  
->>  static inline void
->> @@ -404,9 +406,12 @@ process_response_opp_v4(struct device *dev, struct perf_dom_info *dom,
->>  		le16_to_cpu(r->opp[loop_idx].transition_latency_us);
->>  
->>  	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
->> -	if (ret)
->> +	if (ret) {
->>  		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
->>  			 opp->perf, dom->info.name, ret);
->> +		opp->perf = 0;
->> +		return;
->> +	}
->>  
->>  	/* Note that PERF v4 reports always five 32-bit words */
->>  	opp->indicative_freq = le32_to_cpu(r->opp[loop_idx].indicative_freq);
->> @@ -871,6 +876,10 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
->>  		else
->>  			freq = dom->opp[idx].indicative_freq * dom->mult_factor;
->>  
->> +		/* Skip all invalid frequencies reported by the firmware */
->> +		if (!freq)
->> +			continue;
+On 4.09.2024 12:42 AM, Jérôme de Bretagne wrote:
+> Add an initial devicetree for the Microsoft Surface Pro 9 5G, based
+> on SC8280XP.
 > 
-> Maybe something like this instead? (not tested)
+> It enables the support for Wi-Fi, NVMe, the two USB Type-C ports,
+> Bluetooth, 5G cellular modem, audio output (via Bluetooth headsets),
+> external display via DisplayPort over Type-C (only the bottom USB
+> Type-C port is working so far, corresponding to the usb1 / dp1 nodes),
+> charging, the Surface Aggregator Module (SAM) to get keyboard and
+> touchpad working with the Surface Type Cover accessories.
 > 
-> diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-> index 2d77b5f40ca7..530692119c79 100644
-> --- a/drivers/firmware/arm_scmi/perf.c
-> +++ b/drivers/firmware/arm_scmi/perf.c
-> @@ -431,8 +431,14 @@ iter_perf_levels_process_response(const struct scmi_protocol_handle *ph,
->  {
->         struct scmi_opp *opp;
->         struct scmi_perf_ipriv *p = priv;
-> +       unsigned int idx = st->desc_index + st->loop_idx;
-> +
-> +       opp = &p->perf_dom->opp[idx];
-> +
-> +       /* Avoid duplicate entries coming from buggy firmware */
-> +       if (idx > 0 && opp->perf && p->perf_dom->opp[idx - 1].perf)
-> +               return 0;
->  
-> -       opp = &p->perf_dom->opp[st->desc_index + st->loop_idx];
->         if (PROTOCOL_REV_MAJOR(p->version) <= 0x3)
->                 process_response_opp(ph->dev, p->perf_dom, opp, st->loop_idx,
->                                      response);
+> Some key features not supported yet:
+> - built-in display (but software fallback is working with efifb
+>   when blacklisting the msm module)
+> - built-in display touchscreen
+> - external display with the top USB Type-C port
+> - speakers and microphones
+> - physical volume up and down keys
+> - LID switch detection
+> 
+> This devicetree is based on the other SC8280XP ones, for the Lenovo
+> ThinkPad X13s and the Qualcomm CRD.
+> 
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> ---
 
-No that won't work, perf_dom->opp has all the entries and that's used
-in e.g. scmi_dvfs_device_opps_add :/
+[...]
+
+> +
+> +	pmic-glink {
+> +		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
+> +
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		connector@0 {
+> +			compatible = "usb-c-connector";
+> +			reg = <0>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +
+> +				port@0 {
+> +					reg = <0>;
+> +
+> +					pmic_glink_con0_hs: endpoint {
+> +						remote-endpoint = <&usb_0_dwc3_hs>;
+> +					};
+> +				};
+> +
+> +				port@1 {
+> +					reg = <1>;
+> +
+> +					pmic_glink_con0_ss: endpoint {
+> +						remote-endpoint = <&usb_0_qmpphy_out>;
+> +					};
+> +				};
+> +
+> +				port@2 {
+> +					reg = <2>;
+> +
+> +					pmic_glink_con0_sbu: endpoint {
+> +						remote-endpoint = <&usb0_sbu_mux>;
+> +					};
+> +				};
+> +			};
+> +		};
+> +
+> +		connector@1 {
+> +			compatible = "usb-c-connector";
+> +			reg = <1>;
+> +			power-role = "dual";
+> +			data-role = "dual";
+> +
+> +			ports {
+> +				#address-cells = <1>;
+> +				#size-cells = <0>;
+> +				port@0 {
+
+Missing newline above
+
+Could you add a comment explaining which port is which (physically)?
+See x1e device trees for an example
+
+[...]
+
+> +	usb0-sbu-mux {
+> +		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
+> +
+> +		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
+> +		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
+> +
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&usb0_sbu_default>;
+
+property-n
+property-names
+
+please, all throughout the file
+
+[...]
+
+> +&pcie4_port0 {
+> +	wifi@0 {
+> +		compatible = "pci17cb,1103";
+> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+> +
+> +		qcom,ath11k-calibration-variant = "LE_X13S";
+
+This is most likely not a x13s, please add a new calibration variant
+
+[...]
+
+
+> +&sound {
+> +	compatible = "qcom,sc8280xp-sndcard";
+> +	model = "SC8280XP-MICROSOFT-SURFACE-PRO-9-5G";
+> +	audio-routing =
+> +		"SpkrLeft IN", "WSA_SPK1 OUT",
+
+Drop the newline after =
+> +		"SpkrRight IN", "WSA_SPK2 OUT",
+> +		"IN1_HPHL", "HPHL_OUT",
+> +		"IN2_HPHR", "HPHR_OUT",
+> +		"AMIC2", "MIC BIAS2",
+> +		"VA DMIC0", "MIC BIAS1",
+> +		"VA DMIC1", "MIC BIAS1",
+> +		"VA DMIC2", "MIC BIAS3",
+> +		"VA DMIC0", "VA MIC BIAS1",
+> +		"VA DMIC1", "VA MIC BIAS1",
+> +		"VA DMIC2", "VA MIC BIAS3",
+> +		"TX SWR_ADC1", "ADC2_OUTPUT";
+> +
+> +	wcd-playback-dai-link {
+> +		link-name = "WCD Playback";
+> +		cpu {
+
+Add a newline between the last property and subnodes
+
+[...]
+
+> +
+> +&uart18 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&uart18_state>;
+> +
+> +	surface-aggregator {
+> +		compatible = "surface,aggregator";
+
+This wasn't tested against the upstream driver (see
+Documentation/devicetree/bindings/platform/microsoft,surface-sam.yaml)
+
+[...]
+
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <70 2>, <74 6>, <125 2>, <128 2>, <154 4>;
+
+Please check that all of these entries are necessary (if they
+aren't, removing them will break booting)
 
 Konrad
 
