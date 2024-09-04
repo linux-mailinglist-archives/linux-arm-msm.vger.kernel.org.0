@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7B6596B7D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 12:07:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 311D096B7E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 12:09:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 914241F22ED4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 10:07:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 622BC1C22259
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 10:09:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29EA91CF2AC;
-	Wed,  4 Sep 2024 10:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201801CEEB7;
+	Wed,  4 Sep 2024 10:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z36tg/QI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HI5ntC4D"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC111BD4E9;
-	Wed,  4 Sep 2024 10:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E883A1CC16B;
+	Wed,  4 Sep 2024 10:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725444445; cv=none; b=Wo1cz1xZHWFWjkM0iIHLRetr+fTEAZPGBPr+r2LhpGG2SLujDxLyEmXRfL7ncRNXOAB8pkMeICMgVBfZOO7CZhx8Dp4SW4HtI5fyZ3p5AASliF38BGa33U2d30O4IO4drSyAgG9j5Ag3FYibEtitTHyuHndo9VqULoFYSyFL9R0=
+	t=1725444540; cv=none; b=t1PEcb2RpafhHqAoqFpdm60TKMVvIMEY0GW5tcX9M2eKiqyXszvHAvLvkxU8ajCtzMVKH5ZqaHFty2j0stcuHe2wbNgilPb30wgY8+kQtinaF43uLVsAWyjnvrv2JTkno5+/RYUMFU9WNuvVbwHUZWvnuPpgBg1F0Nz7M9YOxZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725444445; c=relaxed/simple;
-	bh=3j04vpiHxm3qldw/gVkz+eXyx+hMgIY4U95fgEcETvM=;
+	s=arc-20240116; t=1725444540; c=relaxed/simple;
+	bh=YZWwkReZ49n9P8WkgOjbJ1s9CGRE6fuIwNZU5RAEIjA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lNTvo2a4vnDCuLEWQnPEetNCiSbldXWwKwARNHYfyeIUYPQrpbZ42bgHoGRuWsL2P1tP9TQsp5PvD8ZKZg9ZQa2wXWpjJEAs3WP7pNOJfMh7sRTxVhOBfCzOnu8yCD0GRl8c6i5hK8IDV+Dnjm6VCq+ULDttGaXAl0gyXATePQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z36tg/QI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 709ADC4CEC6;
-	Wed,  4 Sep 2024 10:07:20 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Z2FygyBxPs6OXYGqBYmRt34EQr3MkGlT7E0/1EKMYVR8T+w9msb2FyzEHk53+OhzYqKkaqFqI7Nn8e/dNtYZymdK4FVkvYln952p5zCWyJT1uZeiahBOrnqMi9kZPK2VYj6EQIMiqJOOIl5y5R3EMWpEOWRLPr2MAlciVnzE+YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HI5ntC4D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 718D2C4CECA;
+	Wed,  4 Sep 2024 10:08:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725444444;
-	bh=3j04vpiHxm3qldw/gVkz+eXyx+hMgIY4U95fgEcETvM=;
+	s=k20201202; t=1725444539;
+	bh=YZWwkReZ49n9P8WkgOjbJ1s9CGRE6fuIwNZU5RAEIjA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Z36tg/QIYQwgHt5hLJvoCZe76y4qUDqYhof0zxWtITF/s4mEBKeW3UnSXEJgap8YU
-	 RGyQgyXqinVHWTBC1J3bnX4tN0I87Sj3N6Z1JBIMJAGphAg2zqbKLyMBSatnGtUiAH
-	 h7uRaBbbgVyIZ6LbMuN1iT2k8GcZG4CxpTA4JwpkfsyyYjFoNR1qXvzziKXIk3AQbJ
-	 Ok6yXgpwYyy6lm0FxQMz49Tx/eizrJacziY1Mc3Nzij58g7g6gbhtaPUm6wlZ4Y9Wz
-	 o95ttTR8rW/i3nYqgpJR+AJDMOW8NhOT1WQa1DiYDtDZzLBCQKfGzlPtpmvfFhpOtU
-	 97Z2bx5KsPhFw==
-Message-ID: <77a75021-bb84-416b-9eb2-254724e77b86@kernel.org>
-Date: Wed, 4 Sep 2024 12:07:18 +0200
+	b=HI5ntC4De7eUU1YL0En298CGSZaOi+x4vcB2YqRnGQvn0m6DMLWXM/vREwHqtGK+t
+	 5UtTpZBiR8QrGEI00rA5/gP9+mZ6sSVprnRxv9HunSni7S/QOu/pwwDmkWYrNaksRK
+	 mvbgvHun62O/+hGb0fxwBamJIX9O79RzKcVtugSgyDEp7+rum03IH1t4FWGOnSeCaW
+	 ZMnGsH80dtiGifGBem2ns+9lkKbw9yRXSQfzjn9ECICB4ELJAlfZjow21trJbmLWin
+	 HwIeb9FfC7M6iSCXUE+8On0ZX4+4WNO/RrBGiFCJh49lCGtVfbTVYb5C+0ffe05Bul
+	 S9R5c+JhCBBaw==
+Message-ID: <2fdcb1b1-3d60-4b46-8a9b-127a5950ea28@kernel.org>
+Date: Wed, 4 Sep 2024 12:08:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 1/4] dt-bindings: remoteproc: qcom: document hexagon
- based WCSS secure PIL
-To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>,
- andersson@kernel.org, krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: quic_viswanat@quicinc.com, quic_mmanikan@quicinc.com,
- quic_varada@quicinc.com, quic_srichara@quicinc.com, quic_gokulsri@quiconc.com
-References: <20240829134021.1452711-1-quic_gokulsri@quicinc.com>
- <20240829134021.1452711-2-quic_gokulsri@quicinc.com>
+Subject: Re: [PATCH v1 0/1] arm64: dts: qcom: Add coresight components for
+ x1e80100
+To: JieGan <quic_jiegan@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Tingwei Zhang <quic_tingweiz@quicinc.com>,
+ Jinlong Mao <quic_jinlmao@quicinc.com>, Tao Zhang <quic_taozha@quicinc.com>,
+ Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+ Song Chai <quic_songchai@quicinc.com>, Yushan Li <quic_yushli@quicinc.com>
+References: <20240827072724.2585859-1-quic_jiegan@quicinc.com>
+ <f6813e5a-9b8e-4728-abb2-ad5926d6fa41@kernel.org>
+ <ZtZmwVK8h//nDXm1@jiegan-gv.ap.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,20 +109,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240829134021.1452711-2-quic_gokulsri@quicinc.com>
+In-Reply-To: <ZtZmwVK8h//nDXm1@jiegan-gv.ap.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 29/08/2024 15:40, Gokul Sriram Palanisamy wrote:
-> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+On 03/09/2024 03:30, JieGan wrote:
+> On Mon, Sep 02, 2024 at 05:27:32PM +0200, Konrad Dybcio wrote:
+>> On 27.08.2024 9:27 AM, Jie Gan wrote:
+>>> Add coresight components for x1e80100. This change includes CTI,
+>>> dummy sink, dynamic Funnel, Replicator, STM, TPDM, TPDA and TMC ETF.
+>>>
+>>> Change in V1:
+>>> Check the dtb with dtbs_check W=1, and fix the warnings for
+>>> the change.
+>>>
+>>
+>> Applying this series and enabling CORESIGHT=m (along with all the options
+>> in menuconfig) breaks booting on my X1E Surface Laptop 7
+>>
+>> Konrad
 > 
-> Add new binding document for hexagon based WCSS secure PIL remoteproc.
-> IPQ5332, IPQ9574 follows secure PIL remoteproc.
+> Did not observe any booting issues with our devices. Any relevant log to share?
+> This patch also tested by my colleague.
 > 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> Can you successfully boot without the patch?
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+I think that's the definition of "breaks booting"...
 
 Best regards,
 Krzysztof
