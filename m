@@ -1,134 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-30777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9A5696C612
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:12:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2678C96C614
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:13:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5D391C24F19
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:12:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D7B2B2826F1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:13:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46E406E619;
-	Wed,  4 Sep 2024 18:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82B7F1E1A24;
+	Wed,  4 Sep 2024 18:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="EddMyWSr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ghkzN2/v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FA91E133F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 18:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B3F6E619;
+	Wed,  4 Sep 2024 18:13:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725473572; cv=none; b=i+HPBwjapkFoCZRrjARbJTtpp85iZ3lRPd/V718MeZFmLJZvzrmjqh5sAOY39d6hqPDExOqF2sXFXWpwYAJd9x1k7LJvdQ/gkkuGAFB/nShs6nYxJyUttoeP9Rp3lgXondl/kzasCG/WlRMf1H+0CfWyGV/sNb1hXfWAjc0AR7o=
+	t=1725473584; cv=none; b=lKNb2+cqjTWjQbE5WZLfR3UF1NolERTYafUqdy0K9Uji/0PfEwbODg1C4/ajvTsd6MLnDafL2D326SZ33SbUEP/QJS+MCdlrsVYqFTcVBUKyYliN1ct0XJ6LtFQqmiOVKY90YJwMGGlF2L2SFnfF19t2w+RFEaohWs91xQgzDkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725473572; c=relaxed/simple;
-	bh=EDc4r4+xRzvXVV3HSRmgmHOsfqz56ufDfhO9wjnGKWo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MLqE7xqjlx+M0Ol4TjfHOFLJXN9jIdOGULgSDhOWjwfRRJppnPbHKsmk3yMCs39GKJhErecOKEaK/Vz8mZHdBZ7JCwWgOnFfita14lVHtVuou3vf9d70iKbTR3Szsdy0rTZH9SxWxUxoADSXsHGTngjkkkrIXjxlQeuqGsJzZyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=EddMyWSr; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7a7fef9a5fdso107672485a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 11:12:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1725473568; x=1726078368; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G9qNms9IqvULTHZLxrO4XAA8Z7D/Rr+IHxtM8XyaHUA=;
-        b=EddMyWSrpODvNg9P/qhYGDpf0M14yNpq+qjjvzl7zFV5a0qiIOoZff41UReCfy5hGa
-         SSZwN5e/0fi+t+IlfIEdMjzEkOFE3PJ+Gn32wG2kYNxqbqiNyw5Imo/CRP2PvUFAdtM5
-         v8fgWCfoKCt8h1mJWjfUdoDQdmka1ipHohOD0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725473568; x=1726078368;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G9qNms9IqvULTHZLxrO4XAA8Z7D/Rr+IHxtM8XyaHUA=;
-        b=qnNTIr8ETmv+b0ninb9pI3jWRRyFGnvBZVO7T9Cgwqjx6uOET2jAY/8/+xK1DNuR42
-         dVZ3+LRZkJ+QQvBSk5VRnVceEO1AEQPtSctcI+KO55Rhh4SIA8OmLHflLwoxEY+lcE/+
-         MpyQ1svMYTPl1GqXsgdmyHIH6NY4dXP8duzCPw0vaeIweqSVVbCO7H+PDXb2Q8RqwxKs
-         d6i4mN8BkikHy3r6pSyAAJB3Z0G7my1AUOcW89ZaG05mtVSoa5V5lXixOn/0ym4sQLcp
-         R0VqSkxr1iP+C2HWaqs8MYofuA2iG+cswyDdbPbMA4z5SDtyyZv6tOzgdVpCxjxtYAhe
-         YgbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWuNQ7VM+L0Y7hjLqlqb8NviKpa9C7coj6tPYM3inoJcmV1B56WijH9IHuMD9HVzUh3B17C9+OebU7altA6@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQHRWq5sBiEKErmE9uLU+7JydExvltioCe3yg0xcYhq4jW9ZZf
-	OiS4Pjamw/lH50r3Fua+eWVyZaMso/S7weU2Z6JU+1+DukbTkWaIF33wg9ulk/rFvEQ7hZZi2S0
-	=
-X-Google-Smtp-Source: AGHT+IHyvzoRFQx4UXZzYAc04y4OkjTLl8JrcOZx6n9bgSI3/EIonaUJwSL5HYGo6rsT2NjiyLeBeQ==
-X-Received: by 2002:a05:620a:4149:b0:7a4:f17b:7583 with SMTP id af79cd13be357-7a9888f0cf0mr530380685a.25.1725473568486;
-        Wed, 04 Sep 2024 11:12:48 -0700 (PDT)
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com. [209.85.219.43])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7a98efed959sm3828285a.87.2024.09.04.11.12.47
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Sep 2024 11:12:47 -0700 (PDT)
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6c3552ce7faso9865226d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 11:12:47 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWtKKacsswLXjMYy7fRV14tyFtSXo5pzPHuXw4/01xqmRPzPcmIfgyWBe8EPf8Lut/eAqgGI8EAiNghQIJY@vger.kernel.org
-X-Received: by 2002:a05:6214:490a:b0:6c3:3efe:3fac with SMTP id
- 6a1803df08f44-6c518de919amr63889426d6.3.1725473567119; Wed, 04 Sep 2024
- 11:12:47 -0700 (PDT)
+	s=arc-20240116; t=1725473584; c=relaxed/simple;
+	bh=Jk7G2TpsTASryJFRNVOP6PjlHuFQFoBYI80VRUHa6sQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=O1q0UmBrdlqEYq5CXfRpgDxVW0GVGAXP5P5PbLnKbpxxB31Ne+ZVGE9T9pZa5fwwsMy1ayJ9HPK1u6bN5IC6t0+KyuqEcZ6vcaCyVKjKri07Z4UvUdkkDZHzfIHG78zydzfJFF3MT1OcUslfrjqiNszotVb4+IbMvyVk4VRM/lM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ghkzN2/v; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4849hsAE004948;
+	Wed, 4 Sep 2024 18:12:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+juPx8zIkxLO8OAnjniir1nw5bgl+Aua0oBeGYtwDK4=; b=ghkzN2/vfNNcJuPK
+	J238D7bicUZm9gQu2GzB7mbRIO7gcPq/RVsNF587JOeQEqVhqQhDKJDeK5f6GNW0
+	Ox7IJlMc5neF4n1t1VL5APBF0Bg3aqCXMnDJ/bpyhVC8/A6OTOqDYDkDGoIZXNeh
+	XIq6gMOCUTJpSMmJihHhUfeokX4CIWRSirDlBpmHPJiyUutO70Nh/uszV8AI9kpu
+	KgV9jv9lVPbRQc27+ibJsh8q+woGjJL8cSD6CgEjWdNuVcIrAIoVyD4mj6nT3Gob
+	p1HV0pBwZk9aaCPeVDMVXT34M80LQ2hK6PUCR76l2gtNoezmcpffmUFRtcnio/wF
+	BruQxA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41drqe5xqk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Sep 2024 18:12:58 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484ICvgr020097
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Sep 2024 18:12:57 GMT
+Received: from [10.216.2.237] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
+ 11:12:44 -0700
+Message-ID: <cb7613d0-586e-4089-a1b6-2405f4dc4883@quicinc.com>
+Date: Wed, 4 Sep 2024 23:42:40 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240904021943.2076343-1-ruanjinjie@huawei.com> <20240904021943.2076343-3-ruanjinjie@huawei.com>
-In-Reply-To: <20240904021943.2076343-3-ruanjinjie@huawei.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Wed, 4 Sep 2024 11:12:32 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vdcv4aSNGBOPoLELfTBW_0QYn2mnO0upmuHX=cTpZbLg@mail.gmail.com>
-Message-ID: <CAD=FV=Vdcv4aSNGBOPoLELfTBW_0QYn2mnO0upmuHX=cTpZbLg@mail.gmail.com>
-Subject: Re: [PATCH -next 2/3] spi: geni-qcom: Undo runtime PM changes at
- driver exit time
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: broonie@kernel.org, akashast@codeaurora.org, linux-arm-msm@vger.kernel.org, 
-	linux-spi@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Krzysztof Kozlowski <krzk@kernel.org>, <konrad.dybcio@linaro.org>,
+        <andersson@kernel.org>, <andi.shyti@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>
+CC: <quic_vdadhani@quicinc.com>
+References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
+ <20240829092418.2863659-2-quic_msavaliy@quicinc.com>
+ <74c13a4a-0d4b-4cbd-9a75-9933c098c3ba@kernel.org>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <74c13a4a-0d4b-4cbd-9a75-9933c098c3ba@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: TdXD8YaUdYjnYX4-YPn70LKMeIjU7Q7F
+X-Proofpoint-ORIG-GUID: TdXD8YaUdYjnYX4-YPn70LKMeIjU7Q7F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-04_16,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1011
+ impostorscore=0 spamscore=0 mlxlogscore=478 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2409040137
 
-Hi,
+Thanks Krzysztof for the review.
 
-On Tue, Sep 3, 2024 at 7:11=E2=80=AFPM Jinjie Ruan <ruanjinjie@huawei.com> =
-wrote:
->
-> It's important to undo pm_runtime_use_autosuspend() with
-> pm_runtime_dont_use_autosuspend() at driver exit time unless driver
-> initially enabled pm_runtime with devm_pm_runtime_enable()
-> (which handles it for you).
->
-> Hence, switch to devm_pm_runtime_enable() to fix it.
->
-> Fixes: cfdab2cd85ec ("spi: spi-geni-qcom: Set an autosuspend delay of 250=
- ms")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> ---
->  drivers/spi/spi-geni-qcom.c | 13 +++++--------
->  1 file changed, 5 insertions(+), 8 deletions(-)
+On 8/30/2024 1:41 PM, Krzysztof Kozlowski wrote:
+> On 29/08/2024 11:24, Mukesh Kumar Savaliya wrote:
+>> Adds qcom,shared-se flag usage. Use this when particular I2C serial
+>> controller needs to be shared between two subsystems.
+>>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
+>>   1 file changed, 4 insertions(+)
+> 
+> <form letter>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC. It might happen, that command when run on an older
+> kernel, gives you outdated entries. Therefore please be sure you base
+> your patches on recent Linux kernel.
+> 
+Sorry, i forgot to add list for different SS. I am adding all 
+maintainers and list after running maintainers scripts on each patch.
 
-Given that this is a "Fix" it should be the first patch in the series.
-Your ${SUBJECT} should also not contain "-next". Not only is that not
-a convention for the SPI tree (that I'm aware of) it also is probably
-wrong since fixes should usually get queued to an earlier tree...
+> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+> people, so fix your workflow. Tools might also fail if you work on some
+> ancient tree (don't, instead use mainline) or work on fork of kernel
+> (don't, instead use mainline). Just use b4 and everything should be
+> fine, although remember about `b4 prep --auto-to-cc` if you added new
+> patches to the patchset.
+> 
+> You missed at least devicetree list (maybe more), so this won't be
+> tested by automated tooling. Performing review on untested code might be
+> a waste of time.
+> 
 
-As per my response to patch #1 in your series, the pm_runtime fix also
-needs to be first in your series for correctness.
-
-
-> @@ -1153,10 +1153,9 @@ static int spi_geni_probe(struct platform_device *=
-pdev)
->                 goto spi_geni_release_dma;
->
->         return 0;
-> +
-
-Unrelated whitespace change?
-
-
--Doug
+You mean flag addition into DTSI file ? If yes, then the intention was 
+to just enable feature support but not into mainline because it should 
+happen per board or usecase. Please suggest if i can enable particular 
+node with DTSI feature flag.
+Please correct me if my understanding on your ask went wrong.
+> Please kindly resend and include all necessary To/Cc entries.
+> </form letter>
+> 
+> Best regards,
+> Krzysztof
+> 
+> 
 
