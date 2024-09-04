@@ -1,89 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-30795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 206DB96C7E1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 21:48:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AB2B96C8E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 22:49:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A68BF1F219C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 19:48:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 01C30B203C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:49:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B0D81E0B7F;
-	Wed,  4 Sep 2024 19:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35446C2F2;
+	Wed,  4 Sep 2024 20:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i7F1mgTO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iQNCbpSf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7508340C03
-	for <linux-arm-msm@vger.kernel.org>; Wed,  4 Sep 2024 19:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1FE14901B;
+	Wed,  4 Sep 2024 20:46:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725479309; cv=none; b=LbCuSIqSixGd+c8HB36FEdEXUhT2SglJzan0uTK2x3h2xvyVbwOTxhVfKQdZb9uyaJVwwD1ZgDvDzsqPuvMWK8TFbiVB5Y5Q32KLGqUORCpkVPAUiNu82PQawxmwJBtRlJNYPCj1TkYPa0w8KoW6NXQtLo275L9leozHKmo+3FM=
+	t=1725482803; cv=none; b=TNOk6HWgaqjnPYisZ+roOvJBKHIbrCzajmYBt0axLsOWNdJnxNvHC2DeQjwonZSlj0QYjZNVreQ1OPYo/KsvBesDZbsLttRVWrwylBu5OzV3hcw6YQcZqAXwCMS//h4xRHdsGbESSaTH3lgQuk/ijiwvlj5AGwRrG6rFbfy/5MU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725479309; c=relaxed/simple;
-	bh=xsUoScYxpzbryo8iIoP5ta/J0lMeuRcpjTj8DGoTEkg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NpjPk7/wYdlL4kA1UamX9bhSh84pTWLYz1l3E2GMF9btTfrbdh2YcooZT4KBxDBZqkRoJFjdRFjc8F/nUR6TAGyJLgtMwg2nmqHJzZscP90h/88qgD5IHO7UAsU57NXtasEdaPsNwwJX0XEBslSu6YsoF9VKBPmpYit2uISjg9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i7F1mgTO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91834C4CEC2;
-	Wed,  4 Sep 2024 19:48:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725479309;
-	bh=xsUoScYxpzbryo8iIoP5ta/J0lMeuRcpjTj8DGoTEkg=;
-	h=From:List-Id:To:Cc:Subject:Date:From;
-	b=i7F1mgTOPB890DROpc3kKie4GXlWiZn7dJNiX9yBwyTdw6G6h+ZpfHWtborT42zre
-	 lpSqxbW2hzMU7zAo1aZ52sUKTZpND9CCTqfhgkiXdmrpZbTmwPUFAIzf5I9MARuNyN
-	 RzqkNnTIusy1sZw8zaHZOlfX46LkXVh3B1mr3Q4N6cbTcsyf4aJXS4EDEKL3GYapts
-	 uxV2TSAzE9rU3YB4ml7lOR7/jqsAseZxCdZMXx6MdG6RkjjLFem3OhzXHmBK0Iu3fn
-	 +gT7w8c66G/BkTgMHIOgrwz9K9/SArh+Czbkmi2Qrm7bYne4bBV+tiIJrDDP5ZMCq2
-	 9bavCc/u0r/yA==
-From: Bjorn Andersson <andersson@kernel.org>
-To: arm@kernel.org,
-	soc@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
-	Olof Johansson <olof@lixom.net>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [GIT PULL] Qualcomm Arm64 defconfig updates for v6.12
-Date: Wed,  4 Sep 2024 14:48:26 -0500
-Message-ID: <20240904194827.16766-1-andersson@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1725482803; c=relaxed/simple;
+	bh=vw+J/VIYJjCZ31M6Fi58GMcEvrKNhe1IZc5W69d4XSM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hPwAh/hBaVqeH3isBfrWvNkP/eTWYvOqjksGF4EJQEkDj6zMVjQ94lCakBhmCO4izXYQsyEy3oCoBFVXxXJfGUsjglfIrn2/VhL0c2qLajOOO6tayKqEem56Oiw5xNgX1dQR7WCVfQpxooSPtzsG/+SyvMD8WLLTK810qekkTu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iQNCbpSf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4849lM4g031912;
+	Wed, 4 Sep 2024 20:46:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NLURRDs5TBwe1WjxXBPM9Y+47RMOzmzBmGieeji+aaM=; b=iQNCbpSf6idQlk5T
+	Ms+yAPfJv5ZlBICXenu3+KDAQT/lEbSqj0xWDh6P88cNe1Bbokhy/7aD3wZUfA7P
+	AIW4ftOdCpVUGHNqdSpQBb2xXojOTwaaePCpUqPa0Rf0BZ+Rw4RS+wB35Q1fIBpI
+	Ys6RY75GakwJxzEVTN+xTVdrH0EYkoE0uoQ+Zg9ueazQ8olcAooX0L2UB5pIty8s
+	Dcj+x4jNGRVTC+mVneerTZlGdWI0rCQqJw3xRbeiqE2D8oBv+eZlIOGS3bXpTBv+
+	1w9LjPcs/fZTbHfQxTOunke+g8RtQrgTDvpD/iP8TmwAsYlw4bw/wZM1XivodWk8
+	Y96tvQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bt6742p1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Sep 2024 20:46:11 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484KkAwo026397
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Sep 2024 20:46:10 GMT
+Received: from [10.81.25.230] (10.49.16.6) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
+ 13:46:10 -0700
+Message-ID: <941d1bfb-965e-43e4-9f34-edaf2de5d661@quicinc.com>
+Date: Wed, 4 Sep 2024 13:46:09 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
+Content-Language: en-US
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Johan Hovold
+	<johan@kernel.org>
+CC: Richard Zhu <hongxing.zhu@nxp.com>, Lucas Stach <l.stach@pengutronix.de>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring
+	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+        Shawn Guo
+	<shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix
+ Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>, Jingoo Han <jingoohan1@gmail.com>,
+        Chuanhua Lei <lchuanhua@maxlinear.com>,
+        Marek Vasut <marek.vasut+renesas@gmail.com>,
+        Yoshihiro Shimoda
+	<yoshihiro.shimoda.uh@renesas.com>,
+        <linux-pci@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <imx@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+        <linux-renesas-soc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <abel.vesa@linaro.org>, <johan+linaro@kernel.org>
+References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
+ <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
+ <ZtgqvXGgp2sWNg5O@hovoldconsulting.com>
+ <20240904155233.zm3m6x3wvco35g6t@thinkpad>
+From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+In-Reply-To: <20240904155233.zm3m6x3wvco35g6t@thinkpad>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: yZ_tsvi8JzuRLAhD_yL9olgx968NN90N
+X-Proofpoint-GUID: yZ_tsvi8JzuRLAhD_yL9olgx968NN90N
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-04_18,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ mlxlogscore=999 lowpriorityscore=0 spamscore=0 clxscore=1011
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409040157
 
 
-The following changes since commit 8400291e289ee6b2bf9779ff1c83a291501f017b:
 
-  Linux 6.11-rc1 (2024-07-28 14:19:55 -0700)
+On 9/4/24 08:52, Manivannan Sadhasivam wrote:
+> On Wed, Sep 04, 2024 at 11:39:09AM +0200, Johan Hovold wrote:
+>> On Wed, Sep 04, 2024 at 12:41:59PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+>>> From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+>>>
+>>> During high data transmission rates such as 16.0 GT/s, there is an
+>>> increased risk of signal loss due to poor channel quality and interference.
+>>> This can impact receiver's ability to capture signals accurately. Hence,
+>>> signal compensation is achieved through appropriate lane equalization
+>>> settings at both transmitter and receiver. This will result in increased
+>>> PCIe signal strength.
+>>>
+>>> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+>>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>> [mani: dropped the code refactoring and minor changes]
+>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>  
+>>> +#define GEN3_EQ_CONTROL_OFF			0x8a8
+>>
+>> Nit: uppercase hex since that's what is used for the other offsets
+>>
+>>> +#define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
+>>> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE	BIT(4)
+>>> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC	GENMASK(23, 8)
+>>> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
+>>> +
+>>> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
+>>
+>> Nit: odd indentation uses spaces, uppercase
+>>
+>>> +#define GEN3_EQ_FMDC_T_MIN_PHASE23		GENMASK(4, 0)
+>>> +#define GEN3_EQ_FMDC_N_EVALS			GENMASK(9, 5)
+>>> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA	GENMASK(13, 10)
+>>> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA	GENMASK(17, 14)
+>>> +
+>>>  #define PCIE_PORT_MULTI_LANE_CTRL	0x8C0
+>>>  #define PORT_MLTI_UPCFG_SUPPORT		BIT(7)
+>>>  
+>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
+>>> new file mode 100644
+>>> index 000000000000..dc7d93db9dc5
+>>> --- /dev/null
+>>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
+>>> @@ -0,0 +1,45 @@
+>>> +// SPDX-License-Identifier: GPL-2.0
+>>> +/*
+>>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>>> +
+>>> +#include <linux/pci.h>
+>>> +
+>>> +#include "pcie-designware.h"
+>>> +#include "pcie-qcom-common.h"
+>>> +
+>>> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
+>>> +{
+>>> +	u32 reg;
+>>> +
+>>> +	/*
+>>> +	 * GEN3_RELATED_OFF register is repurposed to apply equalization
+>>> +	 * settings at various data transmission rates through registers namely
+>>> +	 * GEN3_EQ_*. RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF determines
+>>> +	 * data rate for which this equalization settings are applied.
+>>
+>> *The* RATE_SHADOW_SEL bit field
+>>
+>> *the* data rate
+>>
+>> s/this/these/
+>>
+>>> +	 */
+>>> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+>>> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+>>> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+>>> +	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK, 0x1);
+>>
+>> How does 0x1 map to gen4/16 GT?
+>>
+> 
+> I need inputs from Shashank here as I don't know the answer.
+> 
+> - Mani
 
-are available in the Git repository at:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-defconfig-for-6.12
-
-for you to fetch changes up to 115c14ee54aae1d61d2405f9b31f67c1e8947f4e:
-
-  arm64: defconfig: build CONFIG_REGULATOR_QCOM_REFGEN as module (2024-08-14 21:51:08 -0500)
-
-----------------------------------------------------------------
-Qualcomm Arm64 defconfig updates for v6.12
-
-Enable the Qualcomm refgen regulator driver, being introduced in SM8350
-for DSI, as a module.
-
-----------------------------------------------------------------
-Dmitry Baryshkov (1):
-      arm64: defconfig: build CONFIG_REGULATOR_QCOM_REFGEN as module
-
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+GEN3_RELATED_OFF has been repurposed to use with multiple data rates. RATE_SHADOW_SEL_MASK on GEN3_RELATED_OFF value decides the data rate of shadow registers namely GEN3_EQ_* registers. Per documentation 0x0 maps to 8 GT/s, 0x1 maps to 16 GT/s and 0x2 maps to 32 GT/s. 
+> 
+>>> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>>> +
+>>> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+>>> +	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+>>> +		GEN3_EQ_FMDC_N_EVALS |
+>>> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+>>> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+>>> +	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+>>> +		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+>>> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+>>> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+>>> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+>>> +
+>>> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+>>> +	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+>>> +		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+>>> +		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+>>> +		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+>>> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
+>>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
+>>> new file mode 100644
+>>> index 000000000000..259e04b7bdf9
+>>> --- /dev/null
+>>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
+>>> @@ -0,0 +1,8 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>> +/*
+>>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>> + */
+>>> +
+>>> +#include "pcie-designware.h"
+>>
+>> You only need a forward declaration:
+>>
+>> 	struct dw_pcie;
+>>
+>>> +
+>>> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
+>>
+>> Compile guard still missing.
+>>
+>> Johan
+> 
 
