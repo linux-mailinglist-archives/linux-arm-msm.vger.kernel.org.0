@@ -1,138 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-30652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DB9D96B4C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 10:37:00 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6061D96B59F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 10:56:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C0D981C21951
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 08:36:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6D83B20E86
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 08:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E6CF1CEAD0;
-	Wed,  4 Sep 2024 08:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 124D118A6CF;
+	Wed,  4 Sep 2024 08:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Sb5ESuME"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eu8AJDHQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79071CE6F1;
-	Wed,  4 Sep 2024 08:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B4918733B;
+	Wed,  4 Sep 2024 08:55:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725438919; cv=none; b=ew7MJBGLEiFAjW5GnBZCWGi8ezQNYAGaw2gyK61QCX7TjDWbGadFmjn/x63xz47t0laLCJ85fnRn89TkBZjqaObVzbp5DujRnHV/Uat2KbXPDEWt7ny+6gLqevfmQl13+Jn2qf1funNXIq2r0G2Wf6WjLGmsr/2KtntiOCInizc=
+	t=1725440103; cv=none; b=gncyzb7F+dbu8uAoxxQhDDYmvD1PBL5ExsIepzOuCmBZQTJYJekmTGSJDfdChcSdftWPWPD1CxGZqvUCoVqw0Gc+1UlfC14gAwcnh1z3VPTLt6Fu57N1P5kMtxpZgayFol8AYYBrWWN+R3yjtYmH4IpPIi8TkLU6OOWZ+gwDuCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725438919; c=relaxed/simple;
-	bh=VLQhnrWlVZabts9y/tnJs5x+zQRlZ/tWxB2YKf8VWJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=b3lMfLgHIvMsVvPgSf2W56yUjDQlAiJhBKja1NJQv56l/LfAho7KKmmf5DJVFcewSnDG5lkjt8u4Y8/cOpqUapzbbGkEsJykyDoxU3CNOHI8VJ+H9D3ndz805a3W6vllP78pmRJXH+zz5Z8g+1RQTXmhEMAiXHDfw7uXzlWdocU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Sb5ESuME; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 483MVCPs032362;
-	Wed, 4 Sep 2024 08:35:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ISQM5iildReT2V1zg0Db/St/zyvITY2WJ0fEXiO6sNA=; b=Sb5ESuMEZj69JMAN
-	Tp10AHfMC6wYtvIrfuLIsclIvGW2F64lrCw/ml51lfdJBJytFijngW2ymIXxCBV5
-	sWzxvm7wP46JqxOl/PM7LvupC0UM9PAUbF3Sij72rECe8U3pthl97zrHcR4AKzdx
-	+JABkbcoa3Ya7CHnrcbnL4+dK2hvSTIzDw6gnxwq8pfa2UsRRjKBS+E6M0E6yY/D
-	mOZNaccngpBf9C7O9ViQ5yyK0cRJwFmDi/BQTet7ukzcEU42aSQ8hXjcrsAxZhOm
-	3cdt9AVPwgCDSsKEZoe36yq5CrEEgWeqHEuX/gjLCGnKWvJa8JQXviX0HWnZGY18
-	kaTVhg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41drqe4bey-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Sep 2024 08:35:13 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4848ZC7Q003119
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Sep 2024 08:35:12 GMT
-Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
- 01:35:06 -0700
-Message-ID: <729deff2-d5df-4409-b941-af22de408521@quicinc.com>
-Date: Wed, 4 Sep 2024 16:35:03 +0800
+	s=arc-20240116; t=1725440103; c=relaxed/simple;
+	bh=u/8TadMuYKUFhKnQMeDmqC1qJ0hJ+/nvqfXJBcyj304=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CDFlDrw8lGz1lA59JMcph3vEUHnbIPqpksxfKGbbEB79GvsGm808P8ARgUN1bxligBOdGrTL/sQofM4nesO3XQ+L1XqEtuQZzn6isJTpJwZRYT/KU8MwsT6fkDx/USDmReGqjv9jtkVGwGcGFwDIl0SMICciJa4wQqTy/9xmC7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eu8AJDHQ; arc=none smtp.client-ip=198.175.65.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1725440102; x=1756976102;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version:content-transfer-encoding;
+  bh=u/8TadMuYKUFhKnQMeDmqC1qJ0hJ+/nvqfXJBcyj304=;
+  b=eu8AJDHQU0qhRzq0mY8TdTwTxmdyV66Z2CHJ7XLXeZ96ZtXcmD2mJld2
+   ihsz6dXWNsGNwl8dIRk63whwc32yUA9/F7auXG77N0GK7eZyx1yEVFwwE
+   GEqsYDwXREHGOPT1ejfFi2FpyaRiucyXqn5MWrbMfaSSho0RgQaxFlCgJ
+   lplOEVQWcHzg5kx9rVDp2NSnN7SRPulHjhJDL2qxk9W+HP+INOoouYjt3
+   S+eQ+BTYOLpT2BDtW9ff1v1Y5iDh0z77GI5fGmqKICV+KwScU9ZTUJpXq
+   nieyBP/TgaKQW4xUh3TLnXqgajIJHhifgaep3jV15hNyv7NYalZnsE0hS
+   A==;
+X-CSE-ConnectionGUID: duepTFIFRWeymrsjqPB8Fg==
+X-CSE-MsgGUID: JO2jJ9XkThS8KO+DjchFPA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11184"; a="35244164"
+X-IronPort-AV: E=Sophos;i="6.10,201,1719903600"; 
+   d="scan'208";a="35244164"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2024 01:55:01 -0700
+X-CSE-ConnectionGUID: aIVjLDyjT3aNnpyvSWBI2Q==
+X-CSE-MsgGUID: ijdeOUFeRn65XMWUj9GN8A==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,201,1719903600"; 
+   d="scan'208";a="65444076"
+Received: from cpetruta-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.18])
+  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Sep 2024 01:54:52 -0700
+From: Jani Nikula <jani.nikula@linux.intel.com>
+To: Robert Foss <rfoss@kernel.org>, Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Laurent Pinchart
+ <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst
+ <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>,
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
+ Daniel Vetter <daniel@ffwll.ch>, Liam Girdwood <lgirdwood@gmail.com>, Mark
+ Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof
+ Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Marc
+ Gonzalez <mgonzalez@freebox.fr>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Arnaud Vrac <avrac@freebox.fr>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v5 0/2] Basic support for TI TDP158
+In-Reply-To: <87ikvcu54c.fsf@intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20240812-tdp158-v5-0-78684a84ec23@freebox.fr>
+ <172536721812.2552069.2889737892670833119.b4-ty@kernel.org>
+ <87ikvcu54c.fsf@intel.com>
+Date: Wed, 04 Sep 2024 11:54:34 +0300
+Message-ID: <87zfonsss5.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: add base QCS615 RIDE dts
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Thomas Gleixner <tglx@linutronix.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20240828-add_initial_support_for_qcs615-v1-0-5599869ea10f@quicinc.com>
- <20240828-add_initial_support_for_qcs615-v1-6-5599869ea10f@quicinc.com>
- <22qkvfravm6sxiq3xfavahg2u6b2pwlyzqbqvd55zym5zef3gi@m4bsqkdvggty>
- <17d0017e-b55d-4b32-9fd3-1a1a84e5ebf9@quicinc.com>
- <0ec92d59-0648-40ed-a522-307152b5c37d@kernel.org>
- <148451f2-6b1b-4616-b703-fd52e7afa2be@quicinc.com>
- <90c98fee-770c-4b83-9e05-6f04866094c2@kernel.org>
-From: Lijuan Gao <quic_lijuang@quicinc.com>
-In-Reply-To: <90c98fee-770c-4b83-9e05-6f04866094c2@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: nKO07I44AFKjSylCJ7uQwi3lZLXjSL9L
-X-Proofpoint-ORIG-GUID: nKO07I44AFKjSylCJ7uQwi3lZLXjSL9L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_05,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- impostorscore=0 spamscore=0 mlxlogscore=783 bulkscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
- definitions=main-2409040065
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, 03 Sep 2024, Jani Nikula <jani.nikula@linux.intel.com> wrote:
+> On Tue, 03 Sep 2024, Robert Foss <rfoss@kernel.org> wrote:
+>> On Mon, 12 Aug 2024 16:51:00 +0200, Marc Gonzalez wrote:
+>>> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriver.
+>>>=20
+>>> Like the TFP410, the TDP158 can be set up in 2 different ways:
+>>> 1) hard-coding its configuration settings using pin-strapping resistors
+>>> 2) placing it on an I2C bus, and defer set-up until run-time
+>>>=20
+>>> The mode is selected by pin 8 =3D I2C_EN
+>>> I2C_EN =3D 1 =3D=3D> I2C Control Mode
+>>> I2C_EN =3D 0 =3D=3D> Pin Strap Mode
+>>>=20
+>>> [...]
+>>
+>> Applied, thanks!
+>>
+>> [1/2] dt-bindings: display: bridge: add TI TDP158
+>>       https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/887665792b=
+99
+>> [2/2] drm/bridge: add support for TI TDP158
+>>       https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/a15710027a=
+fb
+>
+> Fails build with:
+>
+> ../drivers/gpu/drm/bridge/ti-tdp158.c: In function =E2=80=98tdp158_enable=
+=E2=80=99:
+> ../drivers/gpu/drm/bridge/ti-tdp158.c:31:9: error: implicit declaration o=
+f function =E2=80=98gpiod_set_value_cansleep=E2=80=99 [-Werror=3Dimplicit-f=
+unction-declaration]
+>    31 |         gpiod_set_value_cansleep(tdp158->enable, 1);
+>       |         ^~~~~~~~~~~~~~~~~~~~~~~~
+> ../drivers/gpu/drm/bridge/ti-tdp158.c: In function =E2=80=98tdp158_probe=
+=E2=80=99:
+> ../drivers/gpu/drm/bridge/ti-tdp158.c:80:26: error: implicit declaration =
+of function =E2=80=98devm_gpiod_get_optional=E2=80=99; did you mean =E2=80=
+=98devm_regulator_get_optional=E2=80=99? [-Werror=3Dimplicit-function-decla=
+ration]
+>    80 |         tdp158->enable =3D devm_gpiod_get_optional(dev, "enable",=
+ GPIOD_OUT_LOW);
+>       |                          ^~~~~~~~~~~~~~~~~~~~~~~
+>       |                          devm_regulator_get_optional
+> ../drivers/gpu/drm/bridge/ti-tdp158.c:80:65: error: =E2=80=98GPIOD_OUT_LO=
+W=E2=80=99 undeclared (first use in this function)
+>    80 |         tdp158->enable =3D devm_gpiod_get_optional(dev, "enable",=
+ GPIOD_OUT_LOW);
+>       |                                                                 ^=
+~~~~~~~~~~~~
+> ../drivers/gpu/drm/bridge/ti-tdp158.c:80:65: note: each undeclared identi=
+fier is reported only once for each function it appears in
+
+Fix at [1].
+
+BR,
+Jani.
 
 
+[1] https://lore.kernel.org/r/20240904085206.3331553-1-jani.nikula@intel.com
 
-在 8/28/2024 5:34 PM, Krzysztof Kozlowski 写道:
-> On 28/08/2024 11:31, Lijuan Gao wrote:
->>>>>> +/ {
->>>>>> +	model = "Qualcomm Technologies, Inc. QCS615 Ride";
->>>>>> +	compatible = "qcom,qcs615-ride", "qcom,qcs615";
->>>>>> +
->>>>>> +	chosen {
->>>>>> +		bootargs = "console=hvc0";
->>>>>
->>>>> Noooo, last time I agreed on this, you told me later it is different.
->>>>>
->>>> In the early stages, enabling HVC is to more easily verify clock and
->>>> PMIC related functions, as it’s difficult to debug without the console
->>>> log. After the clock and PMIC are ready, we will enable the UART console.
->>>
->>> Working serial is supposed to be part of the early submission.
->>>
->> Okay, I will remove it in the next patch.
-> 
-> Can you post next version with proper serial device?
-> 
-> Best regards,
-> Krzysztof
-> 
-Hi Krzysztof,
 
-Can we use the dts without console enabled as the first version? When 
-the clock is ready, we will submit new changes to enable the UART console.
-
--- 
-Thx and BRs
-Lijuan Gao
+--=20
+Jani Nikula, Intel
 
