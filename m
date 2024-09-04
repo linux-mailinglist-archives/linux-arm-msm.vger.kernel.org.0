@@ -1,164 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-30798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30799-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 772A496C906
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 22:56:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2963896C917
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 23:07:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 208B11F26410
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:56:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 55B691C249B1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 21:07:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F164013B7A3;
-	Wed,  4 Sep 2024 20:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C072414A098;
+	Wed,  4 Sep 2024 21:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sejuKX8o"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BPWYIsWy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C401F146A79;
-	Wed,  4 Sep 2024 20:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C29738DD1;
+	Wed,  4 Sep 2024 21:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725483410; cv=none; b=XNBeO/SVpI0/6wm/UuxPTzbK8TKFZd0QRrbKLTCklH0L3Tq8igbW6hWsoHjriaxXhG4WV4dPkywpJpGnTuHEQwRup+xesNdwWb8wreJ0DDYoHBWULRiRDBKckx0zgyutUp/5WIc6CGKQRdua0O6xtPaYI5JauP2Z/E78SfRFBaQ=
+	t=1725484023; cv=none; b=tel8ntS72+Okbi+sW9pFdh2AdbsHKFM43ozXqh/RypgEZ4PFiXCBzSXT6i4Hnp0Imqu31T4Iei2WSo/d8LQO0AAgjrGd7tXjDAHUiU/3Pq6zU6KMK0/YFGyhWY79RO6JZg2pd2jrLfuMwyuO0SqVrbQTW9voxEselnBtQZA5E5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725483410; c=relaxed/simple;
-	bh=ClR4OguZqjgD0a6zLxgiWicsv8WlX2RtmMFEul90H0g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XhRpbezzJqJZOXCPD6RckSEN0lM0s4tcy1lv3xKtFa+uLs19A2wZhwg4aaCdlaTT6Jpa89DNbdgBMOycrcGBaqxjBNwhOSPpq/Rg/g7YW4JEkEtavt4aW8QlapiS4vnTiaEEL9DTwv61XMqhKub98xVvEcNkw+TbeZZRkg5CqSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sejuKX8o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87BFC4CEC2;
-	Wed,  4 Sep 2024 20:56:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725483410;
-	bh=ClR4OguZqjgD0a6zLxgiWicsv8WlX2RtmMFEul90H0g=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sejuKX8o1CnnV9DTmEWu+PWGchsAIgOFc4wewuD+QgNeXYNqm3Dd5Zo9nja1TS2YN
-	 Yw2DQD2g5lkJNh1MYmOfUF7qTKn/sDxonCVrSMkmAae8u9fVXRp/p+8ybHoz6Dkux8
-	 oFXnSaXHd6gcTN1Uvl6+A7ZCYT5jrrNI3nhH4Ukv+RESjfO/mjhE9+DXWqO1jwPasw
-	 BVxvl7pqV8gGIN5SoUBwKiNl4C8ZpufKrvEGfR2VdznT1jyL716xE0pccrm2a756Od
-	 rqJx5Ru4oEaVopjY2cPVukeUB1pBVFazv/d4EKNkk2wVOeq+y4sYPueV+RlIamMw9E
-	 vDJwiF3S7A12A==
-Date: Wed, 4 Sep 2024 15:56:47 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, bp@alien8.de, tony.luck@intel.com, 
-	mchehab@kernel.org, rric@kernel.org, konradybcio@kernel.org, quic_sibis@quicinc.com, 
-	abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] EDAC/qcom: Make irq configuration optional
-Message-ID: <3rcpcypiv2cr3s66tz56lui57f7turqriwku3tvukwcejr6kh4@fkk5tyk3qgta>
-References: <20240903101510.3452734-1-quic_rjendra@quicinc.com>
+	s=arc-20240116; t=1725484023; c=relaxed/simple;
+	bh=odu6RoR3qtTtWweMGYFXbf4nuKSVJnn/jlrXrFQ+nm0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=G3F7XKEWK3iLcKyYCA30rO5Ox5gahatU/SyqTBPk8CCHZWvNOU93VkOHCsp2vNoiqYwKL8MhdU7z+1ovN8zFTKzLgZEkc0L7QF1M1Lg6mWqbACGh//kc9K/K9TXyjPdeSnAf1mcPUwIuIQrBGwSk+W9jp+ZWTNtm1ub14tQ4Hn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BPWYIsWy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484GrcYx009456;
+	Wed, 4 Sep 2024 21:06:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dDglSu69AeoOpMOFO6jbmEMEAsj/2CnT5VlnlR29lX8=; b=BPWYIsWyHDs+n5QA
+	0r3glsATHaHZfS3MlmPCkFL1D7dbQOp3mCOQvPb9pRMTPIDNMG6tc3hMI8BMJWR3
+	vjBaWEogng5eIH6/vfWWAfp5zSGbB/vrjSA6f60jlf1tsniFY82BiNYki+cdhKrS
+	gpTMrRbaj8fgTpa0piEIOhek2bVPpjNrX+TDxBTlMERnTFh8f3mHrC7sg360zDLM
+	eXWLNN16uMJ2rzgkYdDvGebjku8nJfqSDucVF9Ij/fuOWzb9bew8TBLT/qPjHrnO
+	1lZCwdUzk5nzmpIywfoihp2NAGACYy0qXkrqZcIm+0f9IJNGh4TdfrIqaxajsHqJ
+	KHhr6g==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41e0bhn93h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Sep 2024 21:06:24 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484L6Mj0000645
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Sep 2024 21:06:22 GMT
+Received: from [10.110.102.234] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
+ 14:06:18 -0700
+Message-ID: <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
+Date: Wed, 4 Sep 2024 14:06:18 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240903101510.3452734-1-quic_rjendra@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+To: Andrew Lunn <andrew@lunn.ch>
+CC: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <sudeep.holla@arm.com>, <andi.shyti@kernel.org>, <tglx@linutronix.de>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>,
+        <jassisinghbrar@gmail.com>, <lee@kernel.org>,
+        <linus.walleij@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
+        <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <wim@linux-watchdog.org>, <linux@roeck-us.net>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
+        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_psodagud@quicinc.com>,
+        Praveen Talari
+	<quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-17-quic_nkela@quicinc.com>
+ <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
+ <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
+ <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+ <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
+ <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
+Content-Language: en-US
+From: Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pquT8ry2dJOFwM1L5eqbhUs2RQGmgVaK
+X-Proofpoint-GUID: pquT8ry2dJOFwM1L5eqbhUs2RQGmgVaK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-04_19,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=978
+ priorityscore=1501 suspectscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1011 impostorscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409040160
 
-On Tue, Sep 03, 2024 at 03:45:10PM GMT, Rajendra Nayak wrote:
-> On most modern qualcomm SoCs, the configuration necessary to enable the
-> Tag/Data RAM related irqs being propagated to the SoC irq controller is
-> already done in firmware (in DSF or 'DDR System Firmware')
-> 
-> On some like the x1e80100, these registers aren't even accesible to the
-> kernel causing a crash when edac device is probed.
-> 
-> Hence, make the irq configuration optional in the driver and mark x1e80100
-> as the SoC on which this should be avoided.
-> 
-> Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-> Reported-by: Bjorn Andersson <andersson@kernel.org>
-> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Mani, would you like me to pick this through the qcom tree?
+On 9/4/2024 9:58 AM, Andrew Lunn wrote:
+>> Sorry, didn't realize SPI uses different subject format than other
+>> subsystems. Will fix in v3. Thanks
+> Each subsystem is free to use its own form. e.g for netdev you will
+> want the prefix [PATCH net-next v42] net: stmmac: dwmac-qcom-ethqos:
+of course they are! No one is disputing that.
+>
+> This is another reason why you should be splitting these patches per
+> subsystem, and submitting both the DT bindings and the code changes as
+> a two patch patchset. You can then learn how each subsystem names its
+> patches.
 
-Regards,
-Bjorn
+Qualcomm QUPs chips have serial engines that can be configured as
+UART/I2C/SPI so QUPs changes require to be pushed in one series for all
+3 subsystems as they all are dependent.
 
-> ---
-> v2: 
-> Minor typo fixed in changelog
-> 
->  drivers/edac/qcom_edac.c           | 8 +++++---
->  drivers/soc/qcom/llcc-qcom.c       | 3 +++
->  include/linux/soc/qcom/llcc-qcom.h | 2 ++
->  3 files changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
-> index d3cd4cc54ace..96611ca09ac5 100644
-> --- a/drivers/edac/qcom_edac.c
-> +++ b/drivers/edac/qcom_edac.c
-> @@ -342,9 +342,11 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
->  	int ecc_irq;
->  	int rc;
->  
-> -	rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
-> -	if (rc)
-> -		return rc;
-> +	if (!llcc_driv_data->ecc_irq_configured) {
-> +		rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
-> +		if (rc)
-> +			return rc;
-> +	}
->  
->  	/* Allocate edac control info */
->  	edev_ctl = edac_device_alloc_ctl_info(0, "qcom-llcc", 1, "bank",
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 8fa4ffd3a9b5..b1c0ae9991d6 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -139,6 +139,7 @@ struct qcom_llcc_config {
->  	int size;
->  	bool need_llcc_cfg;
->  	bool no_edac;
-> +	bool irq_configured;
->  };
->  
->  struct qcom_sct_config {
-> @@ -718,6 +719,7 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
->  		.need_llcc_cfg	= true,
->  		.reg_offset	= llcc_v2_1_reg_offset,
->  		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
-> +		.irq_configured = true,
->  	},
->  };
->  
-> @@ -1345,6 +1347,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  	drv_data->cfg = llcc_cfg;
->  	drv_data->cfg_size = sz;
->  	drv_data->edac_reg_offset = cfg->edac_reg_offset;
-> +	drv_data->ecc_irq_configured = cfg->irq_configured;
->  	mutex_init(&drv_data->lock);
->  	platform_set_drvdata(pdev, drv_data);
->  
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index 9e9f528b1370..acad1f4cf854 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -125,6 +125,7 @@ struct llcc_edac_reg_offset {
->   * @num_banks: Number of llcc banks
->   * @bitmap: Bit map to track the active slice ids
->   * @ecc_irq: interrupt for llcc cache error detection and reporting
-> + * @ecc_irq_configured: 'True' if firmware has already configured the irq propagation
->   * @version: Indicates the LLCC version
->   */
->  struct llcc_drv_data {
-> @@ -139,6 +140,7 @@ struct llcc_drv_data {
->  	u32 num_banks;
->  	unsigned long *bitmap;
->  	int ecc_irq;
-> +	bool ecc_irq_configured;
->  	u32 version;
->  };
->  
-> -- 
-> 2.34.1
-> 
+
+>
+> Please pick one victim subsystem and work on the patches for just that
+> subsystem. Once you have them correct, you can use everything you
+> learned to fixup all your other patches, one by one.
+>
+> 	Andrew      	 
 
