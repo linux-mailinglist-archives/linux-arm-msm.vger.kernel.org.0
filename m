@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30742-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06AAB96C034
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:24:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2469C96C073
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 16:30:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B76A928E3D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:24:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57EFA1C252BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:30:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F501E0B66;
-	Wed,  4 Sep 2024 14:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F9812EB02;
+	Wed,  4 Sep 2024 14:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HgfWwr99"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gw5+6Lru"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD821E0B62;
-	Wed,  4 Sep 2024 14:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4A15C96;
+	Wed,  4 Sep 2024 14:30:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725459652; cv=none; b=IVcWfuJ7itkbP/ckS+OJrL9z910O/rdAIW8pndJZg9rXrelatzASuxpj10EJZzAduhAy5MEyW9scbCaNB5p6BEzE6A87Mh6GhFablz6X+UmQbWgz/9EIQpw47yWXDF2wW754g29qO9iyc4AScbELn/4ES3oP9cEZS7vI5vcDGkI=
+	t=1725460207; cv=none; b=me18HeMv54gU0GLRlFxyhD9PAQcn6zotz6QAeOjuF+BW9GRsje7/ZRGo6mEc9TVJcYEHLXC1E+kAORKobbtcS9PeNaDNFXd8wJtHEB//r8pFoMcszK5Xj5YmKC9sK/sqrgYHnGe1pDWScDXPoJU2NF6Xg64W6Z8LrkAiNjnOAlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725459652; c=relaxed/simple;
-	bh=ITsGfugUMr9puQDBp+P640F9MZXA6jU3xRcO2/5S338=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jcBmNp0qI/5C3ZiuEAFsQNpCUdS9HC3W/UHfrXcln7djDQsPJJpgMEHPoQwa+ScbpUrytAy3EN3TJ4S+NdBGqh2kGgPNM04ZMFj4BgEeD3YzZ0y5BCdfSR3UJ7WSwbNGStDQw4Scnl907hxW5fdY2Ii6gd5w1KfeCbk3zRR/dMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HgfWwr99; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484EI96p010431;
-	Wed, 4 Sep 2024 14:20:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QrG8p65E5bnLIK8DqDLKFxiZpnW4MlFd9WmsAYCwB1g=; b=HgfWwr99jDPAjR0t
-	ZhNnb5mln0c6N91jxUTxFqlVES6PtmsYOao451NUE558th3hxETCwkvBzWxC+6Tf
-	o4xywlcGul42t0QThCOFIqPuUEjeJjCQUl6Q2oc2Ocy5lCacgQO0OkrymJaoD3Oz
-	CtHABsC5OEl4nPD5bAMOFvq/iHfH8yE4GcU75rIXrZIJuYupa1QrTr5WewDmo2Ng
-	3CQJOHve+rRrLP9lIRTtcE9FA+ouCNQy1nsvhF2SzstMVRFi0PGt3AmaCtY4XKmm
-	WwvlfAMWN/NHNpFnieP8zKNfqjfwRU6E77S6wFjZo+L+vNYkQc2l98gabPScj7Xu
-	LzK6Bg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41egmrhenu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Sep 2024 14:20:45 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484EKitx020748
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Sep 2024 14:20:44 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
- 07:20:39 -0700
-Message-ID: <7fb34b98-7bc0-43fb-a6e7-dee073fed317@quicinc.com>
-Date: Wed, 4 Sep 2024 22:20:36 +0800
+	s=arc-20240116; t=1725460207; c=relaxed/simple;
+	bh=IGbzTX5KEMiOqp/btvJ1ccQvnyeDHf44Oxf/FGejqvI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WRHYE0L6C4sOLIdV5AHD7QNnFcePc+p8lQ/CSmEmVqoL6dq6yZPHw5hInxNgas9I5Apr+lxM8rlNOFLR0wsnwQf8Gst2IX2zrqNsiQZUeAJgvKYTIn6vWrqB5aNq5/plLiZVWHgmwn6zs8+A8vCC2u+EzZJMTHDJ+C2PisZKUNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gw5+6Lru; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF92EC4CEC2;
+	Wed,  4 Sep 2024 14:29:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725460206;
+	bh=IGbzTX5KEMiOqp/btvJ1ccQvnyeDHf44Oxf/FGejqvI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Gw5+6LrupMCviKvLpbyxwQl6v/VPtEtiCInsUzN21yDLYNvAh2KUEHQH2txBVglAo
+	 Bk+eOg5sZgyG7I0KR4rzFmIEUhJRQ/Q12D3hI3cyiJZVVUd8OzL63w8FFWtzImM7RT
+	 WcN+SP8JJT+Om8z05RBN4wfGSVT3UWfiIegxoPdzHEDNhNabk+128mWyfAvYKMbBHo
+	 XGg6IBIp/bkR3O7YKhmhqAmCqpXxKew2wOm6id79OZdMKaRtv6Ey7StboL101Mf8pU
+	 xUJxeZ0H98YDzFet19o2GdTx5kI9PMulaDv9g3R1YIOuit0PxbEgRUbAy8iBRAd3Hp
+	 80+WccgKKSBSg==
+Message-ID: <51e9fa5a-ac6f-42e8-85e5-7c5c02075a56@kernel.org>
+Date: Wed, 4 Sep 2024 16:29:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,64 +50,156 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/13] media: qcom: camss: csiphy: Add an init callback to
- CSI PHY devices
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-5-quic_depengs@quicinc.com>
- <3cdd7101-ae8c-45c9-9695-f7f4202d1edb@linaro.org>
+Subject: Re: [PATCH v2 14/21] dt-bindings: cpufreq: qcom-hw: document support
+ for SA8255p
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
+ viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
+ sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
+ will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+ jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
+ amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
+ cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+ wim@linux-watchdog.org, linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
+ linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ kernel@quicinc.com, quic_psodagud@quicinc.com
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-15-quic_nkela@quicinc.com>
+ <odg5ssqu2soaqp6m4rambj7qhqiyp7othkvu4v6fu6xtuhbdho@vccya6qcwgoz>
+ <1b831fc1-9360-4038-91b2-b2c0cea513ed@quicinc.com>
+ <baf00e50-10b2-410b-9c56-713564a2d1b9@kernel.org>
+ <c163149b-bdf1-423b-ab51-f734d00277fe@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <3cdd7101-ae8c-45c9-9695-f7f4202d1edb@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: zWSgH0K4kaVarHKiZTAVX6klUesY9va3
-X-Proofpoint-ORIG-GUID: zWSgH0K4kaVarHKiZTAVX6klUesY9va3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_11,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- suspectscore=0 lowpriorityscore=0 mlxlogscore=950 priorityscore=1501
- spamscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409040108
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <c163149b-bdf1-423b-ab51-f734d00277fe@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Bryan,
-
-On 8/19/2024 8:17 AM, Vladimir Zapolskiy wrote:
-> On 8/12/24 17:41, Depeng Shao wrote:
->> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-
-> I've already expressed concerns about a necessity of this function, 
-> since it
-> adds runtime burden of work, which can be successfully done at compile 
-> time,
-> but okay...
+On 04/09/2024 16:19, Nikunj Kela wrote:
 > 
-> Since it is needed for 3PH case only, it may make sense to remove it 
-> from 2PH
-> and call it here conditionally like
+> On 9/4/2024 6:17 AM, Krzysztof Kozlowski wrote:
+>> On 04/09/2024 14:27, Nikunj Kela wrote:
+>>> On 9/3/2024 11:26 PM, Krzysztof Kozlowski wrote:
+>>>> On Tue, Sep 03, 2024 at 03:02:33PM -0700, Nikunj Kela wrote:
+>>>>> Add compatible for the cpufreq engine representing support on SA8255p.
+>>>>>
+>>>>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+>>>>> ---
+>>>>>  .../bindings/cpufreq/cpufreq-qcom-hw.yaml        | 16 ++++++++++++++++
+>>>>>  1 file changed, 16 insertions(+)
+>>>>>
+>>>>> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+>>>>> index 1e9797f96410..84865e553c8b 100644
+>>>>> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+>>>>> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+>>>>> @@ -34,6 +34,7 @@ properties:
+>>>>>          items:
+>>>>>            - enum:
+>>>>>                - qcom,qdu1000-cpufreq-epss
+>>>>> +              - qcom,sa8255p-cpufreq-epss
+>>>>>                - qcom,sa8775p-cpufreq-epss
+>>>>>                - qcom,sc7280-cpufreq-epss
+>>>>>                - qcom,sc8280xp-cpufreq-epss
+>>>>> @@ -206,6 +207,21 @@ allOf:
+>>>>>          interrupt-names:
+>>>>>            minItems: 2
+>>>>>  
+>>>>> +  - if:
+>>>>> +      properties:
+>>>>> +        compatible:
+>>>>> +          contains:
+>>>>> +            enum:
+>>>>> +              - qcom,sa8255p-cpufreq-epss
+>>>>> +    then:
+>>>>> +      properties:
+>>>>> +        reg:
+>>>>> +          minItems: 2
+>>>>> +          maxItems: 2
+>>>>> +
+>>>>> +        reg-names:
+>>>>> +          minItems: 2
+>>>>> +          maxItems: 2
+>>>> What about interrupts? You need to constrain each of such lists.
+>>>>
+>>>> Best regards,
+>>>> Krzysztof
+>>> Interrupts are not required, I still need to put constraints for
+>> It's irrelevant whether they are required or not. Each property should
+>> be narrowed.
 > 
->      if (csiphy->res->hw_ops->init)
->          ret = csiphy->res->hw_ops->init(csiphy);
+> So evenif we don't use interrupts property in our DT(patch#21), we need
+> to mention interrupts here? You suggest we put interrupts with maxItems: 0?
+
+I don't understand. You use three quite separate statements. "Not
+required", "don't use" and here "maxItems: 0" which means not allowed.
+
+All of these mean something else and I keep guessing and responding
+according to what you write. Probably half of my advises are just trash,
+because it turns out it is something entirely else than what I read.
+
+Make a decision how the hardware looks like.
+
 > 
-> But it's up to you, I hope the callback will be removed in short future.
+> I wonder why SA8775p compatible is not in constraint list..
 > 
+>>> interrupts? BTW, there is no if block for SA8775p binding in this file.
+>>
+>>
+>> Best regards,
+>> Krzysztof
+>>
 
-Could you please comment on if it is fine to remove the init from 2PH 
-driver?
+Best regards,
+Krzysztof
 
-
-Thanks,
-Depeng
 
