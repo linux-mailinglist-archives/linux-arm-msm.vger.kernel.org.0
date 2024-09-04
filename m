@@ -1,156 +1,240 @@
-Return-Path: <linux-arm-msm+bounces-30715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB0C996BC98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:40:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 330EB96BCA4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 14:42:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C0D51F24778
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 12:40:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE0CF2860B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 12:42:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D42D31D9336;
-	Wed,  4 Sep 2024 12:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DD751D935F;
+	Wed,  4 Sep 2024 12:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jXDwggKg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NwSW2uSS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD13C1CF5F5;
-	Wed,  4 Sep 2024 12:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDFB1D88C0;
+	Wed,  4 Sep 2024 12:41:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725453627; cv=none; b=bCDFz1ep/uwzgH8Cv1RNnh0nNMTPXoPJ9F/B5fUeKaVFlQXfvPA5pQNmmIcBn/mpubF9503sAAyaaZfhvZOf8tvNR8/muk0TxW5MwTpS0Id0FXo3Jevu5QbbCoeUkSmSvH80vtK8+VfzuI/GNs4bQPahYJw/uIWJSJGrZ8Tv7vw=
+	t=1725453705; cv=none; b=YyUbcdXkEbdzDQN5O7MsKElKrgjP5frkNaFexX0PNnDOYCaYrBaUgk+24rlobxazT4HaFICny6HccKkDoVrjkuG9OlHWU+1oIXuRvsxmo6s8VXFCMOl/M73BIMUz0/p8lm/OClqONiUH93cOcXbPX5DBFM/pyDbBGAn0GwD0yGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725453627; c=relaxed/simple;
-	bh=/ngbUNVBBiNe+pD6xIFN0OnnDxQc0JlS7tavd/IprnI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s0Br3avA0zKghVA1OnsmhCjxHY7sjRvxP16ZemqmaTo1O+4aWxMIkyFnOtEhefe5EaZr19Fqe41Mtp7jcJjKfpQwvE4PXDOSRU+VQjpWNeHlCP9J/GKBDmHWBBrGhOBv3RUkvOR+us2Inxkuns9v1v9v5wF6PQ3Qtpd00Fk+Tfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jXDwggKg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AF5C4CEC2;
-	Wed,  4 Sep 2024 12:40:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725453627;
-	bh=/ngbUNVBBiNe+pD6xIFN0OnnDxQc0JlS7tavd/IprnI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jXDwggKgQSMlGmQteE8+lmIQyZOoJ2ATiiHBSeR+8T9ZliX/YPRPwbxuSanKdLjS3
-	 X0alkfk3Oy5vEBSwgPMiHQrCRg2EEAuQk8LqTnmjmOngRLHA9WW9tMmpJqBssQpou2
-	 KMjvU6j0XEG9gORlOGkBAbkY1QKjqPEWZrYa0xds9xGR+DLoIl9ILoW4uXb+2SFqvs
-	 G4oQygFu9nG6TxmCdYM79mQNMGxKDHFpaCoMH1P+7/HCf63pO0asvRYGnA7OnZIh3M
-	 psvaWTCOG3tj/kTLwgF5alWhMS0EMcAeL0WRtDB6kJItnVMZT5V1ffVVJOjXIHFobT
-	 dI7HQhPOwqBtQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1slpJU-000000004Xv-28Cn;
-	Wed, 04 Sep 2024 14:40:44 +0200
-Date: Wed, 4 Sep 2024 14:40:44 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Chris Lew <quic_clew@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Abel Vesa <abel.vesa@linaro.org>
-Subject: Re: [PATCH 1/2] soc: qcom: pd_mapper: Add X1E80100
-Message-ID: <ZthVTC8dt1kSdjMb@hovoldconsulting.com>
-References: <20240708-x1e80100-pd-mapper-v1-0-854386af4cf5@linaro.org>
- <20240708-x1e80100-pd-mapper-v1-1-854386af4cf5@linaro.org>
- <Zqet8iInnDhnxkT9@hovoldconsulting.com>
- <ZqiyLvP0gkBnuekL@hovoldconsulting.com>
- <oj4qv5wdxymsgpuy4col2w5gabn6k5blybf2fmrckydjo6sftd@eppcqaqwjn5b>
- <60aa6833-7e08-4986-93e7-4790a8eb8568@quicinc.com>
- <CAA8EJpopAYp3Y6cW8B+2cVM=_oAnWeOqS6zygc4o7b+r9Lj1ZQ@mail.gmail.com>
- <02e3c217-490d-4051-8fb8-6bfcf322e27d@quicinc.com>
- <ZsbomSG6DXTfYxXZ@hovoldconsulting.com>
+	s=arc-20240116; t=1725453705; c=relaxed/simple;
+	bh=uN5W47xKqiofsiRvLQO9FgZG32WsSONW8PUWzSbP6NI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TEFNLN5/eBSULhPU/9l86dgT5peHEF5hFMqeCrmuGNmAFcQcW8MC9g5flIEUBP4NFozikc9cfvVV75osRcR++Qtk8r1+EaD1aHuqlATNIdQkfY3bw+KfTNDX6RvNbnVcHcNTreDa2ivvo4V2JeORXOMtWw94zGN0sMowzrriu38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NwSW2uSS; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484C1A6Q015388;
+	Wed, 4 Sep 2024 12:41:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vvnHrvOk02BNsBCgS1kD4aYGDPo30suEFW3uLxKtM4c=; b=NwSW2uSSUuAG7akB
+	Q3GJEiSZMlKd963W2n9NL5Q3cctGTTLPe8zYwIrVyqOQv4Ih335M/gBDRkzkDZAi
+	b0Q7oakZt7XUYN11S9Z4KSAyd+JYGEj4yXwUKxTK3WpLJmqO+XaROd01biwIB/YN
+	eHlZZtK4xfz+SNXzr4ifPeE8Zv8xlAwq+LqBgeV1PRrWC+MuRHQgz3o1j/XT96cH
+	/OmJXQBFJiBhyUz45vrGbJ7mqeWJi4s9jaTqyfWQf9k8ibPVY0cUi8/A578sJxUA
+	VRTGzLqM5WAp91JFqIhFEnk1CebrvmaqHMya0qRA2Lte3OaPJzaW2aoS1HMPiN3L
+	Jof2aQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41dt69cuj5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 04 Sep 2024 12:41:06 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484Cf4LT023068
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 4 Sep 2024 12:41:05 GMT
+Received: from [10.110.120.207] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
+ 05:41:01 -0700
+Message-ID: <06968d9d-0428-4fe8-8526-c91db3d9f0e7@quicinc.com>
+Date: Wed, 4 Sep 2024 05:41:01 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZsbomSG6DXTfYxXZ@hovoldconsulting.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/21] dt-bindings: i2c: document support for SA8255p
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <herbert@gondor.apana.org.au>,
+        <davem@davemloft.net>, <sudeep.holla@arm.com>, <andi.shyti@kernel.org>,
+        <tglx@linutronix.de>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>, <jassisinghbrar@gmail.com>, <lee@kernel.org>,
+        <linus.walleij@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
+        <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <wim@linux-watchdog.org>, <linux@roeck-us.net>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
+        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_psodagud@quicinc.com>, Praveen Talari <quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-16-quic_nkela@quicinc.com>
+ <xtguaoof7iblrtd2idsa2k4ml64qkttgliyijbeqw5thkdcbx3@jnm75a4wmbqd>
+From: Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <xtguaoof7iblrtd2idsa2k4ml64qkttgliyijbeqw5thkdcbx3@jnm75a4wmbqd>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CmrIEOmtqvMg8k9u_x-TRH3ehu6PryTp
+X-Proofpoint-ORIG-GUID: CmrIEOmtqvMg8k9u_x-TRH3ehu6PryTp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-04_10,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409040095
 
-On Thu, Aug 22, 2024 at 09:28:26AM +0200, Johan Hovold wrote:
-> On Tue, Jul 30, 2024 at 11:04:58PM -0700, Chris Lew wrote:
-> 
-> > GLINK has a concept that is called "intents". An intent is an object 
-> > that signifies that a remote channel is ready to receive a packet 
-> > through GLINK. Intents can be pre-emptively queued, or they can be 
-> > requested by the sending entity. GLINK will not try to send or it will 
-> > block until there is an intent available.
-> > 
-> > Intents are exchanged with GLINK_CMD_INTENT packets. When Linux receives 
-> > one of these packets we add it to an idr "riids".
-> > 
-> > Example sending call:
-> >      pmic_glink_send() --> rpmsg_send() --> qcom_glink_send() --> 
-> > __qcom_glink_send() --> qcom_glink_request_intent()
-> > 
-> > In __qcom_glink_send(), we check if there are any available intents in 
-> > "riids", if there aren't any intents we request an intent through 
-> > qcom_glink_request_intent(). This sends a GLINK_CMD_RX_INTENT_REQ packet 
-> > to the remote and waits for a GLINK_CMD_RX_INTENT_REQ_ACK packet in 
-> > return. This ack packet will have a field that says whether the intent 
-> > has been granted or not. When linux gets this ack packet, we will wake 
-> > up the thread waiting in qcom_glink_request_intent().
-> > 
-> > The ECANCELED comes from qcom_glink_request_intent() when we receive a 
-> > GLINK_CMD_RX_INTENT_REQ_ACK that has granted == false.
-> > 
-> > On the firmware, when a glink channel is registered they can optionally 
-> > fill in a handler for GLINK_CMD_RX_INTENT_REQ packets. If this handler 
-> > is not configured, then a default one will be used where all 
-> > GLINK_CMD_RX_INTENT_REQ packets will be responded with 
-> > GLINK_CMD_RX_INTENT_REQ_ACK and granted == false. If a channel is 
-> > implemented this way, then the only thing Linux can do is wait and retry 
-> > until the remote queues the intents on its own accord.
-> > 
-> > This would be my current guess as to what's happening based on this not 
-> > being consistent and only seen every couple of reboots. A stop path 
-> > problem sounds like it should happen every time, and we should also see 
-> > the remoteproc prints related to powering down the adsp. The above race 
-> > should be applicable to all platforms but depends on the speed of the 
-> > ADSP vs the CPU.
-> 
-> Thanks for the above. This indeed seems to match what I'm seeing as I
-> also reported here [1]:
-> 
-> [    9.539415]  30000000.remoteproc:glink-edge: qcom_glink_handle_intent_req_ack - cid = 9, granted = 0
-> [    9.561750] qcom_battmgr.pmic_glink_power_supply pmic_glink.power-supply.0: failed to request power notifications
-> 
-> [    9.448945]  30000000.remoteproc:glink-edge: qcom_glink_handle_intent_req_ack - cid = 9, granted = 0
-> [    9.461267] pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to send altmode request: 0x10 (-125)
-> [    9.469241] qcom,apr 30000000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:1
-> [    9.478968] pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to request altmode notifications: -125
-> 
-> I assume we do not want to have every client driver implement a retry
-> loop for the first communication with the remote end, so can this be
-> handled by the pmic_glink driver somehow? For example, by not forwarding
-> state changes until some generic request has gone through?
 
-Has there been any progress on this issue? It's already been five weeks
-since my initial report and we're closing in on the merge window for
-6.12. If this isn't resolved soon, I'll send patch to disable the
-in-kernel pd-mapper by marking it as broken.
+On 9/3/2024 11:31 PM, Krzysztof Kozlowski wrote:
+> On Tue, Sep 03, 2024 at 03:02:34PM -0700, Nikunj Kela wrote:
+>> Add compatible representing i2c support on SA8255p.
+>>
+>> Clocks and interconnects are being configured in Firmware VM
+>> on SA8255p, therefore making them optional.
+>>
+>> CC: Praveen Talari <quic_ptalari@quicinc.com>
+>> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+>> ---
+>>  .../bindings/i2c/qcom,i2c-geni-qcom.yaml      | 33 +++++++++++++++++--
+>>  1 file changed, 31 insertions(+), 2 deletions(-)
+>>
+> I don't know what to do with this patch. Using specific compatibles next
+> to generic compatible is just wrong, although mistake was probably
+> allowing generic compatible. The patch does not explain the differences
+> in interface which would explain why devices are not compatible.
 
-> And what about the audio service errors:
-> 
-> 	[   14.565059] PDR: avs/audio get domain list txn wait failed: -110
->	[   14.571943] PDR: service lookup for avs/audio failed: -110
-> 
-> Does this seem to be a separate (but related) issue or just a different
-> symptom?
+I mentioned in the description that clocks and interconnects on this
+platform are configured in Firmware VM(over SCMI using power and perf
+domains) therefore this is not compatible with existing generic compatible.
 
-I can confirm that the audio breakage is also related to the in-kernel
-pd-mapper. I hit it after 30 reboots with the in-kernel pd-mapper, but
-have not seen it with the user space service (e.g. after 100+ reboots).
 
-> [1] https://lore.kernel.org/lkml/ZsRGV4hplvidpYji@hovoldconsulting.com/
+>  In the
+> same time my advice of separate binding was not followed, because maybe
+> these devices are compatible? But then it should be expressed...
 
-Johan
+Sorry, I missed that. You want me to use 'oneOf' expression with this
+compatible?
+
+
+>
+> You have entire commit msg to explain what and why.
+
+Will put more details in description.
+
+
+>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> index 9f66a3bb1f80..b477fae734b6 100644
+>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> @@ -15,6 +15,7 @@ properties:
+>>      enum:
+>>        - qcom,geni-i2c
+>>        - qcom,geni-i2c-master-hub
+>> +      - qcom,sa8255p-geni-i2c
+>>  
+>>    clocks:
+>>      minItems: 1
+>> @@ -69,8 +70,6 @@ properties:
+>>  required:
+>>    - compatible
+>>    - interrupts
+>> -  - clocks
+>> -  - clock-names
+>>    - reg
+>>  
+>>  allOf:
+>> @@ -81,6 +80,10 @@ allOf:
+>>            contains:
+>>              const: qcom,geni-i2c-master-hub
+>>      then:
+>> +      required:
+>> +        - clocks
+>> +        - clock-names
+>
+> So it is required here?
+
+We are removing clocks from generic required list and enforcing rules
+for all compatibles other than sa8255p.
+
+
+>> +
+>>        properties:
+>>          clocks:
+>>            minItems: 2
+>> @@ -100,7 +103,21 @@ allOf:
+>>            items:
+>>              - const: qup-core
+>>              - const: qup-config
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            const: qcom,sa8255p-geni-i2c
+>> +    then:
+>> +      required:
+>> +        - power-domains
+>> +
+> And possible here? I assume with the same clocks? The same for
+> interconnects - same values are valid?
+
+I guess I need to put here the same description as in the cover letter
+to make it more clear. We are not using clocks and interconnects in this
+platform in Linux. Instead, sending request to Firmware VM over
+SCMI(using power and perf protocols)
+
+
+>
+>>      else:
+>> +      required:
+>> +        - clocks
+>> +        - clock-names
+> And clocks are required again?
+Explained above.
+>> +
+>>        properties:
+>>          clocks:
+>>            maxItems: 1
+> Eeee? So now all other variants have max 1 clock?
+
+I will make if block for sa8255p up so else is not applied to rest of
+the platforms.
+
+
+>
+> Nope, this wasn't ever tested on real DTS.
+
+This is tested on SA8255p DTS and I ran DT schema check on SA8775p DT as
+well.
+
+
+>
+> Best regards,
+> Krzysztof
+>
 
