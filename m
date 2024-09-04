@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BEBA96C625
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:16:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F11CF96C633
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:20:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BECEA1C228CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:16:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA708285F61
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 18:20:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D40131E132E;
-	Wed,  4 Sep 2024 18:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 630E71E1A17;
+	Wed,  4 Sep 2024 18:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="s8gHIkcz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cncuwtl0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB411DC1A2;
-	Wed,  4 Sep 2024 18:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F9B51E1310;
+	Wed,  4 Sep 2024 18:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725473790; cv=none; b=rIGv1obDIMfVYCMsA4dvAia2YtyArp/fuze0g6T95cTDBiUXiKtsg51XMkR+wp9WCwFDkkK86H2DlVx6FtVoauuM2LrixiyUPSOttuMGsdrt3c+fKh+DATpWOMHnU8kQ4c8GwscyhC7HdQroViCS6+SFnblsJDKTG6w+qzj33hY=
+	t=1725474035; cv=none; b=uh3n6kp0NoQQuGouO9+w2FEWDGIVfnqlpHTnYLZi9T/Hde6ooaSwkxhQ6+z8ayNc0qC9ypGw6NQLKAgjf+Gw9YUU+QjbBN6QZeGcXM0c+AoPbrgFrntAVeKkG+YjFtNZfLojg5+hNXqeErMQ3MGM4QphSiXVSTSXMer8+yzlXgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725473790; c=relaxed/simple;
-	bh=mtx1u1ixv5Azx4m3nJAArYmfaHcyt0YeqfamjYc1Nks=;
+	s=arc-20240116; t=1725474035; c=relaxed/simple;
+	bh=Q4i2HnlofTeTKZg8z+uya3rhQlKBc8FTeDBFtIP9Hr8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lBZpzFPFUKOrgOLqu4UHBz6Du+aNFEMlSB8R+hSqUQBRNOOH/NG0siJ7j9Q9zN0RrZj2zf1T8GeHXifcaG17Yg/Dtem6J3ja5/uo3HvsPQnW3BH9Z+Dk2fis6qL7ez9UNFnmihaPI7C0iEnrir7pTw8xdI5hkQ2uRH0QGCQI2Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=s8gHIkcz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8C8C4CEC2;
-	Wed,  4 Sep 2024 18:16:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sZt52XDHN/ynwNBY11PhZIDW0mBaEpaG5qQT30B2G6fLn1lzwEnh7JgXqPVWpC8v9rvV6+THusXbmOHTfXakD9Efwo2lxVbdhOVHBryt/G+qTHPzWQZlikdv/zheIncLImuoFL1iyj6wD/legai26OmFhEuQDxW1JarjzzMCZkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cncuwtl0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 136D3C4CEC2;
+	Wed,  4 Sep 2024 18:20:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725473790;
-	bh=mtx1u1ixv5Azx4m3nJAArYmfaHcyt0YeqfamjYc1Nks=;
+	s=k20201202; t=1725474034;
+	bh=Q4i2HnlofTeTKZg8z+uya3rhQlKBc8FTeDBFtIP9Hr8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=s8gHIkcz2xOM4HbTOVNS3t/CSjJuiz/SquZcIAE4+9oFfraveIyH7bnKzDde+xfRh
-	 57GCS6SzxY/QRQKZEfwoaGEJjA+ieEV6OhJ39RHOCeH7+Z/kxMSD0yVemGs24qowkI
-	 RPrlQVIUL5Kf251NRVS0Y2lulCFuO1SGzasQc9Z7ioivIoOaJhzfKRtIxGWfspEUDG
-	 Ehbu/9BrafykCwSNTNvL+zGLnqbbQsVP/CPIX4O8vKH3gSqYLPkl4F6bObRUxSAKSs
-	 ihJRipmGJUx0IIJeeaNIJNe61zF/Or7jzmrwF+sw+SJ5tr+EJ4SUCmJypfCXzaMniW
-	 mBtDUTzN+a4rw==
-Message-ID: <ec59c6d0-0ef9-482f-8aa6-42d36c3420e5@kernel.org>
-Date: Wed, 4 Sep 2024 20:16:19 +0200
+	b=Cncuwtl0Kz6OwE29Rpq+S59CxfjGaYbhXm66ADcFb+KTwqYvE1ZSIw1+VNwn1iMmg
+	 qjoGh5Zkf0t8OcCT5ZP2/wHwC8DduQj7WE8tOuxUDE1C97R842bx4V92xDGSiheqwz
+	 hBdb98y2bPayYcjTbR/FaIyQyX+cJfKQWx7vyIA+rEHpefov82HvskJyW5wUCa68zm
+	 15kk7Kq2BwH3vYz9VtRW+rhhGIDMbN1e4cFxAXpE5Xeq5BjjBDpyeTpIgLVL8zPS33
+	 z084N34XDlXISG03XXAf9USzsgIwbpkWEz7757IXSE4W2eKaj9aSQpFSBYEj2t2KRg
+	 UQesnpRpaqV6g==
+Message-ID: <a4bbb898-bf91-4dcb-b7da-ab032b228aa2@kernel.org>
+Date: Wed, 4 Sep 2024 20:20:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 1/6] dt-bindings: phy: qcom,uniphy-pcie: Document PCIe
- uniphy
-To: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc: bhelgaas@google.com, lpieralisi@kernel.org, kw@linux.com,
- manivannan.sadhasivam@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, vkoul@kernel.org, kishon@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, p.zabel@pengutronix.de,
- dmitry.baryshkov@linaro.org, quic_nsekar@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, robimarko@gmail.com
-References: <20240830081132.4016860-1-quic_srichara@quicinc.com>
- <20240830081132.4016860-2-quic_srichara@quicinc.com>
- <e2qgpvfccpo2sd4mbrynxruvt5attqmtd5oik26of7tv7u4lq6@kvb63sglwa5b>
- <de17d37f-ed0c-4e73-91d5-fc902573212a@quicinc.com>
+Subject: Re: [PATCH v1 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+ konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
+Cc: quic_vdadhani@quicinc.com
+References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
+ <20240829092418.2863659-2-quic_msavaliy@quicinc.com>
+ <74c13a4a-0d4b-4cbd-9a75-9933c098c3ba@kernel.org>
+ <cb7613d0-586e-4089-a1b6-2405f4dc4883@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,61 +106,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <de17d37f-ed0c-4e73-91d5-fc902573212a@quicinc.com>
+In-Reply-To: <cb7613d0-586e-4089-a1b6-2405f4dc4883@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/09/2024 19:20, Sricharan Ramabadhran wrote:
-> 
-> 
-> On 8/30/2024 1:53 PM, Krzysztof Kozlowski wrote:
->> On Fri, Aug 30, 2024 at 01:41:27PM +0530, Sricharan R wrote:
->>> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
->>>
->>> Document the Qualcomm UNIPHY PCIe 28LP present in IPQ5018.
->>>
->>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
->>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>> ---
->>>   [v3] Added reviewed-by tags
->>>
->>>   .../phy/qcom,ipq5018-uniphy-pcie.yaml         | 70 +++++++++++++++++++
->>>   1 file changed, 70 insertions(+)
->>>   create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
->>> new file mode 100644
->>> index 000000000000..c04dd179eb8b
->>> --- /dev/null
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq5018-uniphy-pcie.yaml
->>> @@ -0,0 +1,70 @@
->>> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
->>> +%YAML 1.2
->>> +---
->>> +$id: http://devicetree.org/schemas/phy/qcom,ipq5018-uniphy-pcie.yaml#
->>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->>> +
->>> +title: Qualcomm UNIPHY PCIe 28LP PHY controller for genx1, genx2
->>> +
->>> +maintainers:
->>> +  - Nitheesh Sekar <quic_nsekar@quicinc.com>
->>> +  - Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>> +
->>> +properties:
->>> +  compatible:
->>> +    enum:
->>> +      - qcom,ipq5018-uniphy-pcie-gen2x1
->>> +      - qcom,ipq5018-uniphy-pcie-gen2x2
+On 04/09/2024 20:12, Mukesh Kumar Savaliya wrote:
+>> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+>> people, so fix your workflow. Tools might also fail if you work on some
+>> ancient tree (don't, instead use mainline) or work on fork of kernel
+>> (don't, instead use mainline). Just use b4 and everything should be
+>> fine, although remember about `b4 prep --auto-to-cc` if you added new
+>> patches to the patchset.
 >>
->> ... and now I wonder why there are two compatibles. Isn't the phy the
->> same? We talk about the same hardware?
->   We have 2 different physical phys. One with single lane and another
->   with dual lane. Its same IP, but for 2 lanes, 2 sets of the phy
->   specific registers needs to configured. So differentiating that here.
+>> You missed at least devicetree list (maybe more), so this won't be
+>> tested by automated tooling. Performing review on untested code might be
+>> a waste of time.
+>>
+> 
+> You mean flag addition into DTSI file ? If yes, then the intention was 
+> to just enable feature support but not into mainline because it should 
+> happen per board or usecase. Please suggest if i can enable particular 
+> node with DTSI feature flag.
+> Please correct me if my understanding on your ask went wrong.
 
-What you described, suggests using phy mode or num-lanes in PCI
-controller, not separate compatible. It's the same IP.
+How is this related?
 
 Best regards,
 Krzysztof
