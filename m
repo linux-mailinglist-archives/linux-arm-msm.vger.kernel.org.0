@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-30732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DEB996BEB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 15:37:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B19D96BEB5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 15:38:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26006282C8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 13:37:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ACC961F24995
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 13:38:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 586C91DC069;
-	Wed,  4 Sep 2024 13:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0DE31DC19B;
+	Wed,  4 Sep 2024 13:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l6v+SAhg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Of09j7Bu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233181DC063;
-	Wed,  4 Sep 2024 13:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A9D1DC18F;
+	Wed,  4 Sep 2024 13:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725457008; cv=none; b=tiOOWcJ5Rjal6lhuwvrSWYf2sH9yhEKWcwVIMQ/KkMwDSPAoQUyJ4SBaMxxXT4NVx3EGegzjjS9po6yYJ1GyJdzmS9Q3gzyyPaM1t7b55khRjWFq6gDHXYkbPQho/WHBwW1nRdEgM3CjYk9NXjHuqf1Bo6tO883jX2dMCYZFGh4=
+	t=1725457009; cv=none; b=Ec5ZDd7ti8vJN94mGmkXpYALnGWRGk6bmo2H/dVG5PdMvppgK9XCfwOcjEx5H4JU5FIjXVz0tAv/UuutaKv7mN0N3wbIyF1EEwOmkN9/FlBBXWGbrDVphAKrLrNkDGYa6k2ewd1vBAZc6t9PbB2ijBmP0w1IY1roAgrWUIVBF54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725457008; c=relaxed/simple;
-	bh=qjvJ5qt+qG+v8zQHBH0fy06OHFR7KWMqsLIE2+fh8Zk=;
+	s=arc-20240116; t=1725457009; c=relaxed/simple;
+	bh=qWY32TQVxIiG/7F7JcJ2JBNdihZus2JMmzuFFBXoAw8=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=MMacCKeZKK94XvAAbT3fQmuKW54Ldab0du5+GhquLmebWzzdE9CiAMIABHa3F62lhahwMBvUhq0dDDt5MBVQTl9ZkT5MLjKL/+phz92OTUmZS5KNM8tye5Y2k+d9fefylweP36bvGeLo+UXHYn9989JIZKZaZUByHMyjz2SYfNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l6v+SAhg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32ACDC4CEC3;
-	Wed,  4 Sep 2024 13:36:47 +0000 (UTC)
+	 Message-Id:Subject; b=Q+CnMXO2VeWWxwZxDADuTJ1+jO+ewC+o04j/9xkLXpN0gFzct3/BWEbzJSTPALToSGByfHXMtboAJm8nJM68KI6DJsM9bHNqZ2ecJsnkWx2SLeWmZkCSgSIE/PPkoziip6c7Gceir2qiPxDnY4jqfyTkx4VLsuetcu+VV0fDtsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Of09j7Bu; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B510CC4CECC;
+	Wed,  4 Sep 2024 13:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725457007;
-	bh=qjvJ5qt+qG+v8zQHBH0fy06OHFR7KWMqsLIE2+fh8Zk=;
+	s=k20201202; t=1725457009;
+	bh=qWY32TQVxIiG/7F7JcJ2JBNdihZus2JMmzuFFBXoAw8=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=l6v+SAhgFmSTidGa/NZMfa+E2fxijpwefZgT2IDlGcYuRzNjWIyd6iH20DjofLFRV
-	 YGDq2n/BishEtIrwor3UsfA5mqR13B2kXN2j0gkxinVYdvd05lvQ+p1O+Q03QRt3Rg
-	 i/wKIOCYDE1aDUU+Gs6KCt6A7X/Fl4u/NEtu/CWXFMD5HXYG1qOMIvsx7GjUIjDxbp
-	 LmOT3P9ENaCBKh+444/Jls9mof2UOOSIsw0XZskX6gyRbthfueOa7GTuHNA8i58HHX
-	 mw8LDvsH44u2NlGjPZ/FhkhzdwGwsQdmIQ5vks0W7WUoPkHmaxhKLlZSap+5Km4yP/
-	 k3MOGW5bY7xrw==
-Date: Wed, 04 Sep 2024 08:36:46 -0500
+	b=Of09j7BuUK/iZCc5Z6JVx/0geBcWgWdJG67JTXEoneZVqv1rdanX4h73G7aKpgK+s
+	 hD3JEuO1EEHmeCIi293LsmozCAvh6CqWjLjGb4mT5mjZqES2YNBb3IcLCPxwbhq4H9
+	 ZZlljf7w7/j5c32YHnmbd+MI24QJHgmzEJwoA2gRYxBcrU2+Obu6TcnFrlTsrvsyMp
+	 J0JuUk363D9BYB9AUuq896Y0DcZaOM09RRE5RpJhaQg/g76hJIQB1+LwVzeA5nEkjv
+	 m2mYOdANauOKn78/QjnaVZN8Ti/7bc9vRxNaDR0yOJ/47+WNxrtFSfHRcPG6EABZRr
+	 Ag+Z3bw7Lj99Q==
+Date: Wed, 04 Sep 2024 08:36:47 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,125 +51,133 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: devicetree@vger.kernel.org, Robert Foss <rfoss@kernel.org>, 
- linux-media@vger.kernel.org, stable@vger.kernel.org, 
- linux-arm-kernel@lists.infradead.org, cros-qcom-dts-watchers@chromium.org, 
- linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
- linux-arm-msm@vger.kernel.org, Todor Tomov <todor.too@gmail.com>, 
- Hariram Purushothaman <hariramp@quicinc.com>, 
- Kapatrala Syed <akapatra@quicinc.com>, 
- Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>, 
- Hariram Purushothaman <quic_hariramp@quicinc.com>, 
- Will Deacon <will@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Catalin Marinas <catalin.marinas@arm.com>, 
- Suresh Vankadara <quic_svankada@quicinc.com>, 
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-In-Reply-To: <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com>
-References: <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com>
-Message-Id: <172545686193.2410595.1216751512618101525.robh@kernel.org>
-Subject: Re: [PATCH 00/10] (no cover subject)
+To: Jingyi Wang <quic_jingyw@quicinc.com>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Vinod Koul <vkoul@kernel.org>, 
+ Zhenhua Huang <quic_zhenhuah@quicinc.com>, Andy Gross <agross@kernel.org>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Robin Murphy <robin.murphy@arm.com>, 
+ Avri Altman <avri.altman@wdc.com>, 
+ Catalin Marinas <catalin.marinas@arm.com>, linux-arm-msm@vger.kernel.org, 
+ Kyle Deng <quic_chunkaid@quicinc.com>, linux-kernel@vger.kernel.org, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Tingguo Cheng <quic_tingguoc@quicinc.com>, linux-scsi@vger.kernel.org, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Das Srinagesh <quic_gurus@quicinc.com>, iommu@lists.linux.dev, 
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Robert Marko <robimarko@gmail.com>, 
+ linux-arm-kernel@lists.infradead.org, Jassi Brar <jassisinghbrar@gmail.com>, 
+ Bjorn Andersson <andersson@kernel.org>, linux-remoteproc@vger.kernel.org, 
+ Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Lee Jones <lee@kernel.org>, Xin Liu <quic_liuxin@quicinc.com>, 
+ Thomas Gleixner <tglx@linutronix.de>, linux-pm@vger.kernel.org, 
+ Shazad Hussain <quic_shazhuss@quicinc.com>, linux-phy@lists.infradead.org, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Bart Van Assche <bvanassche@acm.org>, 
+ devicetree@vger.kernel.org
+In-Reply-To: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
+References: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
+Message-Id: <172545686260.2410635.12324465724634886770.robh@kernel.org>
+Subject: Re: [PATCH 00/19] Add initial support for QCS8300
 
 
-On Wed, 04 Sep 2024 16:40:06 +0530, Vikram Sharma wrote:
-> SC7280 is a Qualcomm SoC. This series adds support to
-> bring up the CSIPHY, CSID, VFE/RDI interfaces in SC7280.
+On Wed, 04 Sep 2024 16:33:41 +0800, Jingyi Wang wrote:
+> Add initial support for QCS8300 SoC and QCS8300 RIDE board.
 > 
-> SC7280 provides
+> This revision brings support for:
+> - CPUs with cpu idle
+> - interrupt-controller with PDC wakeup support
+> - gcc
+> - TLMM
+> - interconnect
+> - qup with uart
+> - smmu
+> - pmic
+> - ufs
+> - ipcc
+> - sram
+> - remoteprocs including ADSP,CDSP and GPDSP
 > 
-> - 3 x VFE, 3 RDI per VFE
-> - 2 x VFE Lite, 4 RDI per VFE
-> - 3 x CSID
-> - 2 x CSID Lite
-> - 5 x CSI PHY
-> 
-> The changes are verified on SC7280 qcs6490-rb3gen2-vision board,
-> the base dts for qcs6490-rb3gen2 is:
-> https://lore.kernel.org/all/20231103184655.23555-1-quic_kbajaj@quicinc.com/
-> 
-> V1 for this series: https://lore.kernel.org/linux-arm-msm/20240629-camss_first_post_linux_next-v1-0-bc798edabc3a@quicinc.com/
-> 
-> Changes in V2:
-> 1)  Improved indentation/formatting.
-> 2)  Removed _src clocks and misleading code comments.
-> 3)  Added name fields for power domains and csid register offset in DTSI.
-> 4)  Dropped minItems field from YAML file.
-> 5)  Listed changes in alphabetical order.
-> 6)  Updated description and commit text to reflect changes
-> 7)  Changed the compatible string from imx412 to imx577.
-> 8)  Added board-specific enablement changes in the newly created vision
->      board DTSI file.
-> 9)  Fixed bug encountered during testing.
-> 10) Moved logically independent changes to a new/seprate patch.
-> 11) Removed cci0 as no sensor is on this port and MCLK2, which was a
->     copy-paste error from the RB5 board reference.
-> 12) Added power rails, referencing the RB5 board.
-> 13) Discarded Patch 5/6 completely (not required).
-> 14) Removed unused enums.
-> 
-> To: Robert Foss <rfoss@kernel.org>
-> To: Todor Tomov <todor.too@gmail.com>
-> To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> To: Mauro Carvalho Chehab <mchehab@kernel.org>
-> To: Rob Herring <robh@kernel.org>
-> To: Krzysztof Kozlowski <krzk+dt@kernel.org>
-> To: Conor Dooley <conor+dt@kernel.org>
-> To: Kapatrala Syed <akapatra@quicinc.com>
-> To: Hariram Purushothaman <hariramp@quicinc.com>
-> To: Bjorn Andersson <andersson@kernel.org>
-> To: Konrad Dybcio <konradybcio@kernel.org>
-> To: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-> To: cros-qcom-dts-watchers@chromium.org
-> To: Catalin Marinas <catalin.marinas@arm.com>
-> To: Will Deacon <will@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-media@vger.kernel.org
-> Cc: devicetree@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: linux-arm-kernel@lists.infradead.org
-> 
-> Test-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
-> Suresh Vankadara (1):
->       media: qcom: camss: Add support for camss driver on SC7280
+> patch series organized as:
+> - 1-2: remoteproc binding and driver
+> - 3-5: ufs binding and driver
+> - 6-7: rpmhpd binding and driver
+> - 8-15: bindings for other components found on the SoC
+> - 16-19: changes to support the device tree
 > 
-> Vikram Sharma (9):
->       media: dt-bindings: media: camss: Add qcom,sc7280-camss binding
->       media: dt-bindings: media: qcs6490-rb3gen2-vision-mezzanine: Add dt bindings
->       media: qcom: camss: Fix potential crash if domain attach fails
->       media: qcom: camss: Sort CAMSS version enums and compatible strings
->       media: qcom: camss: Add camss_link_entities_v2
->       arm64: dts: qcom: sc7280: Add support for camss
->       arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Enable IMX577 sensor
->       arm64: dts: qcom: sc7280: Add default and suspend states for GPIO
->       arm64: defconfig: Enable camcc driver for SC7280
+> dependencies:
+> tlmm: https://lore.kernel.org/linux-arm-msm/20240819064933.1778204-1-quic_jingyw@quicinc.com/
+> gcc: https://lore.kernel.org/all/20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com/
+> interconnect: https://lore.kernel.org/linux-arm-msm/20240827151622.305-1-quic_rlaggysh@quicinc.com/
 > 
->  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
->  .../bindings/media/qcom,sc7280-camss.yaml          | 441 +++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
->  .../dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts  |  61 +++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 208 ++++++++++
->  arch/arm64/configs/defconfig                       |   1 +
->  drivers/media/platform/qcom/camss/camss-csid.c     |   1 -
->  .../platform/qcom/camss/camss-csiphy-3ph-1-0.c     |  13 +-
->  drivers/media/platform/qcom/camss/camss-csiphy.c   |   5 +
->  drivers/media/platform/qcom/camss/camss-csiphy.h   |   1 +
->  drivers/media/platform/qcom/camss/camss-vfe.c      |   8 +-
->  drivers/media/platform/qcom/camss/camss.c          | 400 ++++++++++++++++++-
->  drivers/media/platform/qcom/camss/camss.h          |   1 +
->  13 files changed, 1131 insertions(+), 11 deletions(-)
+> dtb check got following err:
+> /local/mnt/workspace/jingyi/aim500/linux/arch/arm64/boot/dts/qcom/qcs8300-ride.dtb: interconnect@1680000: Unevaluated properties are not allowed ('reg' was unexpected)
+> which is cause by "reg" compatible missing in dt binding, will be fixed in interconnect patch series.
+> 
 > ---
-> base-commit: fdadd93817f124fd0ea6ef251d4a1068b7feceba
-> change-id: 20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-15c195fb3f12
+> Jingyi Wang (11):
+>       dt-bindings: remoteproc: qcom,sa8775p-pas: Document QCS8300 remoteproc
+>       remoteproc: qcom: pas: Add QCS8300 remoteproc support
+>       dt-bindings: qcom,pdc: document QCS8300 Power Domain Controller
+>       dt-bindings: soc: qcom: add qcom,qcs8300-imem compatible
+>       dt-bindings: mailbox: qcom-ipcc: Document QCS8300 IPCC
+>       dt-bindings: mfd: qcom,tcsr: Add compatible for QCS8300
+>       dt-bindings: nvmem: qfprom: Add compatible for QCS8300
+>       dt-bindings: arm: qcom: document QCS8275/QCS8300 SoC and reference board
+>       arm64: defconfig: enable clock controller, interconnect and pinctrl for QCS8300
+>       arm64: dts: qcom: add initial support for QCS8300 DTSI
+>       arm64: dts: qcom: add base QCS8300 RIDE dts
+> 
+> Kyle Deng (1):
+>       dt-bindings: soc: qcom,aoss-qmp: Document the QCS8300 AOSS channel
+> 
+> Shazad Hussain (1):
+>       dt-bindings: power: rpmpd: Add QCS8300 power domains
+> 
+> Tingguo Cheng (1):
+>       pmdomain: qcom: rpmhpd: Add QCS8300 power domains
+> 
+> Xin Liu (3):
+>       dt-bindings: phy: Add QMP UFS PHY comptible for QCS8300
+>       dt-bindings: ufs: qcom: Document the QCS8300 UFS Controller
+>       phy: qcom-qmp-ufs: Add support for QCS8300
+> 
+> Zhenhua Huang (2):
+>       dt-bindings: arm-smmu: Add compatible for QCS8300 SoC
+>       dt-bindings: firmware: qcom,scm: document SCM on QCS8300 SoCs
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |    8 +
+>  .../devicetree/bindings/firmware/qcom,scm.yaml     |    1 +
+>  .../bindings/interrupt-controller/qcom,pdc.yaml    |    1 +
+>  .../devicetree/bindings/iommu/arm,smmu.yaml        |    2 +
+>  .../devicetree/bindings/mailbox/qcom-ipcc.yaml     |    1 +
+>  .../devicetree/bindings/mfd/qcom,tcsr.yaml         |    1 +
+>  .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |    1 +
+>  .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml    |    2 +
+>  .../devicetree/bindings/power/qcom,rpmpd.yaml      |    1 +
+>  .../bindings/remoteproc/qcom,sa8775p-pas.yaml      |    6 +
+>  .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |    1 +
+>  .../devicetree/bindings/sram/qcom,imem.yaml        |    1 +
+>  .../devicetree/bindings/ufs/qcom,ufs.yaml          |    2 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |  246 ++++
+>  arch/arm64/boot/dts/qcom/qcs8300.dtsi              | 1282 ++++++++++++++++++++
+>  arch/arm64/configs/defconfig                       |    3 +
+>  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c            |    3 +
+>  drivers/pmdomain/qcom/rpmhpd.c                     |   24 +
+>  drivers/remoteproc/qcom_q6v5_pas.c                 |    3 +
+>  include/dt-bindings/power/qcom-rpmpd.h             |   19 +
+>  21 files changed, 1609 insertions(+)
+> ---
+> base-commit: eb8c5ca373cbb018a84eb4db25c863302c9b6314
+> change-id: 20240829-qcs8300_initial_dtsi-1a386eb317d3
 > 
 > Best regards,
 > --
-> Vikram Sharma <quic_vikramsa@quicinc.com>
+> Jingyi Wang <quic_jingyw@quicinc.com>
 > 
 > 
 > 
@@ -189,20 +197,19 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/qcs6490-rb3gen2-vision-mezzanine.dtb' for 20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com:
+New warnings running 'make CHECK_DTBS=y qcom/qcs8300-ride.dtb' for 20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com:
 
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtb: pcie@1c08000: interrupts: [[0, 307, 4], [0, 308, 4], [0, 309, 4], [0, 312, 4], [0, 313, 4], [0, 314, 4], [0, 374, 4], [0, 375, 4]] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtb: pcie@1c08000: interrupt-names:0: 'msi' was expected
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtb: pcie@1c08000: interrupt-names: ['msi0', 'msi1', 'msi2', 'msi3', 'msi4', 'msi5', 'msi6', 'msi7'] is too long
-	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc7280.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtb: usb@8cf8800: interrupt-names: ['pwr_event', 'hs_phy_irq', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtb: video-codec@aa00000: iommus: [[66, 8576, 32]] is too short
-	from schema $id: http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#
-arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dtb: pinctrl@f100000: Unevaluated properties are not allowed ('cam2-default', 'cam2-suspend' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sc7280-pinctrl.yaml#
+In file included from arch/arm64/boot/dts/qcom/qcs8300-ride.dts:11:
+arch/arm64/boot/dts/qcom/qcs8300.dtsi:6:10: fatal error: dt-bindings/clock/qcom,qcs8300-gcc.h: No such file or directory
+    6 | #include <dt-bindings/clock/qcom,qcs8300-gcc.h>
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[3]: *** [scripts/Makefile.lib:434: arch/arm64/boot/dts/qcom/qcs8300-ride.dtb] Error 1
+make[2]: *** [scripts/Makefile.build:490: arch/arm64/boot/dts/qcom] Error 2
+make[2]: Target 'arch/arm64/boot/dts/qcom/qcs8300-ride.dtb' not remade because of errors.
+make[1]: *** [/home/rob/proj/linux-dt-testing/Makefile:1390: qcom/qcs8300-ride.dtb] Error 2
+make: *** [Makefile:224: __sub-make] Error 2
+make: Target 'qcom/qcs8300-ride.dtb' not remade because of errors.
 
 
 
