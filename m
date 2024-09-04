@@ -1,229 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-30797-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30798-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9463F96C8F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 22:50:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 772A496C906
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 22:56:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A7B3B1C248BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:50:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 208B11F26410
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 20:56:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D15A8146A86;
-	Wed,  4 Sep 2024 20:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F164013B7A3;
+	Wed,  4 Sep 2024 20:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IC3xmFZG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sejuKX8o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE9762A02;
-	Wed,  4 Sep 2024 20:50:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C401F146A79;
+	Wed,  4 Sep 2024 20:56:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725483005; cv=none; b=Uf8AfToTOsyHa7i0g8C0BjQrLNzhEZoRsQK/B7EAV6DmBQd9rvKlLRjCN/Lugi4nQrhjTtcSvjFPgOMy9ejCNRlEwCSnWHOxvdW1F5Tr4jK7zQb9AYi0pB2ZvY8FOqeQYrrZStjOl6BV9IYmISw5M5+l5pjHOrjHy9Edv3rNGV8=
+	t=1725483410; cv=none; b=XNBeO/SVpI0/6wm/UuxPTzbK8TKFZd0QRrbKLTCklH0L3Tq8igbW6hWsoHjriaxXhG4WV4dPkywpJpGnTuHEQwRup+xesNdwWb8wreJ0DDYoHBWULRiRDBKckx0zgyutUp/5WIc6CGKQRdua0O6xtPaYI5JauP2Z/E78SfRFBaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725483005; c=relaxed/simple;
-	bh=hMDviyqPpbNkAXtWMozFCrxEkhOype3sYzn9/eDJzS0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=bIxxYAdxJFTCcJToIk2BpzJhLJ7zYnv4dQItgIuFvLte/dRbktZPKiQvpdlVMGu7JEafHi24s0FBOEavfci06186y6Va2ySQ5f05qqs+o7H4yAAXxI4gmdcBvdFPZCzJCDwx3iHNgqE7b/ggXcKtiyFSif7qKrrYL7kMNrlx0go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IC3xmFZG; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484A6ZmK006005;
-	Wed, 4 Sep 2024 20:49:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	LWxPeIqAejEe5oPCfx9IDxvc+KANAKRiwRmr9zEOadk=; b=IC3xmFZGYGZMjY7s
-	PIzk3yBHisGgtox70K/Oh3DafrmAmt+hbOpl4d1p5+5EJI4CJ3IQrRWnPizrpsLR
-	TV6Gnc84kzZMXDdVkGb003G9HmkYx+e1as1n8RRPM0nOHsYTLX1oEwxqVHcSV6vh
-	n8+ZD6bqai3JBa5H3Mnh58W3S51IJWiO9palOD4CrFvSoojIg+Hi+QjA31UQM0xJ
-	q5aWzLlasInIn/JrVH3G0x8Fu1GmpBgl7j8NduLgMq1uxpf0jves0HfLB98C5DMZ
-	qY5zgMtJXV6UIqN7Gv9rk0oH935N/wcXDaXFngtoOVk5MxzSQ3PWZNfUolptKFUp
-	Hl4AwQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41bt6742x4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Sep 2024 20:49:37 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 484KmAdj002821
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Sep 2024 20:49:35 GMT
-Received: from [10.81.25.230] (10.49.16.6) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 4 Sep 2024
- 13:48:10 -0700
-Message-ID: <195b4937-dfba-4ef9-8381-0ba2bdbd6e4c@quicinc.com>
-Date: Wed, 4 Sep 2024 13:48:09 -0700
+	s=arc-20240116; t=1725483410; c=relaxed/simple;
+	bh=ClR4OguZqjgD0a6zLxgiWicsv8WlX2RtmMFEul90H0g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XhRpbezzJqJZOXCPD6RckSEN0lM0s4tcy1lv3xKtFa+uLs19A2wZhwg4aaCdlaTT6Jpa89DNbdgBMOycrcGBaqxjBNwhOSPpq/Rg/g7YW4JEkEtavt4aW8QlapiS4vnTiaEEL9DTwv61XMqhKub98xVvEcNkw+TbeZZRkg5CqSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sejuKX8o; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87BFC4CEC2;
+	Wed,  4 Sep 2024 20:56:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725483410;
+	bh=ClR4OguZqjgD0a6zLxgiWicsv8WlX2RtmMFEul90H0g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sejuKX8o1CnnV9DTmEWu+PWGchsAIgOFc4wewuD+QgNeXYNqm3Dd5Zo9nja1TS2YN
+	 Yw2DQD2g5lkJNh1MYmOfUF7qTKn/sDxonCVrSMkmAae8u9fVXRp/p+8ybHoz6Dkux8
+	 oFXnSaXHd6gcTN1Uvl6+A7ZCYT5jrrNI3nhH4Ukv+RESjfO/mjhE9+DXWqO1jwPasw
+	 BVxvl7pqV8gGIN5SoUBwKiNl4C8ZpufKrvEGfR2VdznT1jyL716xE0pccrm2a756Od
+	 rqJx5Ru4oEaVopjY2cPVukeUB1pBVFazv/d4EKNkk2wVOeq+y4sYPueV+RlIamMw9E
+	 vDJwiF3S7A12A==
+Date: Wed, 4 Sep 2024 15:56:47 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Rajendra Nayak <quic_rjendra@quicinc.com>
+Cc: manivannan.sadhasivam@linaro.org, bp@alien8.de, tony.luck@intel.com, 
+	mchehab@kernel.org, rric@kernel.org, konradybcio@kernel.org, quic_sibis@quicinc.com, 
+	abel.vesa@linaro.org, linux-arm-msm@vger.kernel.org, linux-edac@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] EDAC/qcom: Make irq configuration optional
+Message-ID: <3rcpcypiv2cr3s66tz56lui57f7turqriwku3tvukwcejr6kh4@fkk5tyk3qgta>
+References: <20240903101510.3452734-1-quic_rjendra@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/4] PCI: qcom: Add RX margining settings for 16.0 GT/s
-Content-Language: en-US
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Johan Hovold
-	<johan@kernel.org>
-CC: Richard Zhu <hongxing.zhu@nxp.com>, Lucas Stach <l.stach@pengutronix.de>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Shawn Guo
-	<shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix
- Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>, Jingoo Han <jingoohan1@gmail.com>,
-        Chuanhua Lei <lchuanhua@maxlinear.com>,
-        Marek Vasut <marek.vasut+renesas@gmail.com>,
-        Yoshihiro Shimoda
-	<yoshihiro.shimoda.uh@renesas.com>,
-        <linux-pci@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <imx@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-        <linux-renesas-soc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <abel.vesa@linaro.org>, <johan+linaro@kernel.org>
-References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
- <20240904-pci-qcom-gen4-stability-v6-4-ec39f7ae3f62@linaro.org>
- <ZtguJs128O-N07Eg@hovoldconsulting.com>
- <20240904160422.gcyrdrzgc47w7pbd@thinkpad>
-From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-In-Reply-To: <20240904160422.gcyrdrzgc47w7pbd@thinkpad>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3G2FaZ3_2d7nIn9G5XqtHjtOBkdK_n5p
-X-Proofpoint-GUID: 3G2FaZ3_2d7nIn9G5XqtHjtOBkdK_n5p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_18,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- bulkscore=0 mlxscore=0 impostorscore=0 suspectscore=0 phishscore=0
- mlxlogscore=746 lowpriorityscore=0 spamscore=0 clxscore=1015
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409040157
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240903101510.3452734-1-quic_rjendra@quicinc.com>
 
+On Tue, Sep 03, 2024 at 03:45:10PM GMT, Rajendra Nayak wrote:
+> On most modern qualcomm SoCs, the configuration necessary to enable the
+> Tag/Data RAM related irqs being propagated to the SoC irq controller is
+> already done in firmware (in DSF or 'DDR System Firmware')
+> 
+> On some like the x1e80100, these registers aren't even accesible to the
+> kernel causing a crash when edac device is probed.
+> 
+> Hence, make the irq configuration optional in the driver and mark x1e80100
+> as the SoC on which this should be avoided.
+> 
+> Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+> Reported-by: Bjorn Andersson <andersson@kernel.org>
+> Signed-off-by: Rajendra Nayak <quic_rjendra@quicinc.com>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
+Mani, would you like me to pick this through the qcom tree?
 
-On 9/4/24 09:04, Manivannan Sadhasivam wrote:
-> On Wed, Sep 04, 2024 at 11:53:42AM +0200, Johan Hovold wrote:
->> On Wed, Sep 04, 2024 at 12:42:00PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
->>> From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
->>>
->>> Add RX lane margining settings for 16.0 GT/s (GEN 4) data rate. These
->>> settings improve link stability while operating at high date rates and
->>> helps to improve signal quality.
->>>
->>> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
->>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> [mani: dropped the code refactoring and minor changes]
->>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>> ---
->>>  drivers/pci/controller/dwc/pcie-designware.h  | 18 ++++++++++++++++
->>>  drivers/pci/controller/dwc/pcie-qcom-common.c | 31 +++++++++++++++++++++++++++
->>>  drivers/pci/controller/dwc/pcie-qcom-common.h |  1 +
->>>  drivers/pci/controller/dwc/pcie-qcom-ep.c     |  4 +++-
->>>  drivers/pci/controller/dwc/pcie-qcom.c        |  4 +++-
->>>  5 files changed, 56 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->>> index 51744ad25575..f5be99731f7e 100644
->>> --- a/drivers/pci/controller/dwc/pcie-designware.h
->>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->>> @@ -209,6 +209,24 @@
->>>  
->>>  #define PCIE_PL_CHK_REG_ERR_ADDR			0xB28
->>>  
->>> +/*
->>> + * 16.0 GT/s (GEN4) lane margining register definitions
->>
->> nit: Gen 4?
->>
->>> + */
->>> +#define GEN4_LANE_MARGINING_1_OFF		0xb80
->>
->> nit: upper case hex
->>
->>> +#define MARGINING_MAX_VOLTAGE_OFFSET		GENMASK(29, 24)
->>> +#define MARGINING_NUM_VOLTAGE_STEPS		GENMASK(22, 16)
->>> +#define MARGINING_MAX_TIMING_OFFSET		GENMASK(13, 8)
->>> +#define MARGINING_NUM_TIMING_STEPS		GENMASK(5, 0)
->>> +
->>> +#define GEN4_LANE_MARGINING_2_OFF		0xb84
->>
->> Same here
->>
->>> +#define MARGINING_IND_ERROR_SAMPLER		BIT(28)
->>> +#define MARGINING_SAMPLE_REPORTING_METHOD	BIT(27)
->>> +#define MARGINING_IND_LEFT_RIGHT_TIMING		BIT(26)
->>> +#define MARGINING_IND_UP_DOWN_VOLTAGE		BIT(25)
->>> +#define MARGINING_VOLTAGE_SUPPORTED		BIT(24)
->>> +#define MARGINING_MAXLANES			GENMASK(20, 16)
->>> +#define MARGINING_SAMPLE_RATE_TIMING		GENMASK(13, 8)
->>> +#define MARGINING_SAMPLE_RATE_VOLTAGE		GENMASK(5, 0)
->>>  /*
->>>   * iATU Unroll-specific register definitions
->>>   * From 4.80 core version the address translation will be made by unroll
->>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
->>> index dc7d93db9dc5..99b75e7f085d 100644
->>> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
->>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
->>> @@ -43,3 +43,34 @@ void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
->>>  	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
->>>  }
->>>  EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
->>> +
->>> +void qcom_pcie_common_set_16gt_rx_margining_settings(struct dw_pcie *pci)
->>
->> I'd try to find a shorter symbol name here, "settings" seems redundant
->> after "set". Perhaps just
->>
->> 	qcom_pcie_common_enable_lane_margining()
->>
->> or
->>
->> 	qcom_pcie_common_enable_16gt_lane_margining()?
->>
-> 
-> This one looks better. Since lane margining is implemented in the receiver, we
-> don't really need 'rx' in the function name.
-> 
->> if these settings are indeed specific to 16 GT/s. But perhaps it's
->> better to let the helper honour pci->max_link_speed if different
->> settings will later be needed for higher speeds:
->>
->> 	if (pcie_link_speed[pci->max_link_speed] >= PCIE_SPEED_16_0GT)
->> 		qcom_pcie_common_enable_lane_margining(pci)
->>
-> 
-> I did thought about it during the review, but this setting claims to be for 16
-> GT/s only. So I wouldn't recommend applying it to other speeds without checking 
-> with Qcom.
-> 
-> Unfortunately, I'm on vacation for 2 weeks and have limited access to Qcom
-> internal docs/chat. So won't be able to check it soon. If Shashank could check
-> it, it is fine. But on the conservative side, let's stick to 16 GT/s only?
-> 
-> - Mani
+Regards,
+Bjorn
 
-Yes Mani I think we have to stick to 16 GT/s only for now as we haven't characterized 32 GT/s yet.
-
-
+> ---
+> v2: 
+> Minor typo fixed in changelog
 > 
->>>  void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
->>> +void qcom_pcie_common_set_16gt_rx_margining_settings(struct dw_pcie *pci);
->>
->> And maybe something similar for the eq settings for symmetry.
->>
->> Johan
+>  drivers/edac/qcom_edac.c           | 8 +++++---
+>  drivers/soc/qcom/llcc-qcom.c       | 3 +++
+>  include/linux/soc/qcom/llcc-qcom.h | 2 ++
+>  3 files changed, 10 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+> index d3cd4cc54ace..96611ca09ac5 100644
+> --- a/drivers/edac/qcom_edac.c
+> +++ b/drivers/edac/qcom_edac.c
+> @@ -342,9 +342,11 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
+>  	int ecc_irq;
+>  	int rc;
+>  
+> -	rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
+> -	if (rc)
+> -		return rc;
+> +	if (!llcc_driv_data->ecc_irq_configured) {
+> +		rc = qcom_llcc_core_setup(llcc_driv_data, llcc_driv_data->bcast_regmap);
+> +		if (rc)
+> +			return rc;
+> +	}
+>  
+>  	/* Allocate edac control info */
+>  	edev_ctl = edac_device_alloc_ctl_info(0, "qcom-llcc", 1, "bank",
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 8fa4ffd3a9b5..b1c0ae9991d6 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -139,6 +139,7 @@ struct qcom_llcc_config {
+>  	int size;
+>  	bool need_llcc_cfg;
+>  	bool no_edac;
+> +	bool irq_configured;
+>  };
+>  
+>  struct qcom_sct_config {
+> @@ -718,6 +719,7 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
+>  		.need_llcc_cfg	= true,
+>  		.reg_offset	= llcc_v2_1_reg_offset,
+>  		.edac_reg_offset = &llcc_v2_1_edac_reg_offset,
+> +		.irq_configured = true,
+>  	},
+>  };
+>  
+> @@ -1345,6 +1347,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  	drv_data->cfg = llcc_cfg;
+>  	drv_data->cfg_size = sz;
+>  	drv_data->edac_reg_offset = cfg->edac_reg_offset;
+> +	drv_data->ecc_irq_configured = cfg->irq_configured;
+>  	mutex_init(&drv_data->lock);
+>  	platform_set_drvdata(pdev, drv_data);
+>  
+> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
+> index 9e9f528b1370..acad1f4cf854 100644
+> --- a/include/linux/soc/qcom/llcc-qcom.h
+> +++ b/include/linux/soc/qcom/llcc-qcom.h
+> @@ -125,6 +125,7 @@ struct llcc_edac_reg_offset {
+>   * @num_banks: Number of llcc banks
+>   * @bitmap: Bit map to track the active slice ids
+>   * @ecc_irq: interrupt for llcc cache error detection and reporting
+> + * @ecc_irq_configured: 'True' if firmware has already configured the irq propagation
+>   * @version: Indicates the LLCC version
+>   */
+>  struct llcc_drv_data {
+> @@ -139,6 +140,7 @@ struct llcc_drv_data {
+>  	u32 num_banks;
+>  	unsigned long *bitmap;
+>  	int ecc_irq;
+> +	bool ecc_irq_configured;
+>  	u32 version;
+>  };
+>  
+> -- 
+> 2.34.1
 > 
 
