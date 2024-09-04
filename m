@@ -1,203 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-30675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30676-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 02E5A96B75D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 11:51:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90AD496B725
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 11:44:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 736F6B26BDF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 09:39:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB419B270B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 09:39:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD5E01CCB5B;
-	Wed,  4 Sep 2024 09:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 208D81CCED0;
+	Wed,  4 Sep 2024 09:39:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IeBLCiIR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fIEaRZP1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C5B1CCED5;
-	Wed,  4 Sep 2024 09:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAAEA145B35;
+	Wed,  4 Sep 2024 09:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725442733; cv=none; b=hb6TZvbYiaoz9eMwOReCg9aYBxcJLKWqekVvr/N+EBWQD/5TbPsUSCMkezQ5XkqUOR1VF9aYQBpGcj1+G9uX+vjMwuTFjM4lJSdKI7wwzuQIZCzDZXATY5mJY9JlrHFfjjztlHrIrPwPxyFa0jWD5HnmILFbYCL1uHmTcOZg7C4=
+	t=1725442767; cv=none; b=Aj2RVPZcDxWNNiqzFuCy8izAV8fKYufwQAgOuQQDN2God8rwtTjVQQhsnx3gTUqDyfNWMPIyT1/5uG9hs+hyW+bON01rqnT//3WRzIoGjxxaV8kilBsyCUQC6wZYdSA/zQW4tAwszTsaMvVRetoAtaiJSui1p2dRUFw/zukLoQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725442733; c=relaxed/simple;
-	bh=KmyA68nzsmKeQqVYQzVFeMOcA8YdDjGJMWH0cfv8O4A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KKLdn5jVmTz9JYeMJnxrw37w78ujsV7fBtwSPIJTHj/XUbM8E9TbQ/zHX5ufdeRi+Jy9iOpyIybIoifFM1fBtgXOxz313sYYvp+B4Shy/Izqg65Z/Kaf8upIHGll95GVLvwWW1LEQuoips5th33auA1LvpBG//aWQMXnLcg1MbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IeBLCiIR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C31C4CEC2;
-	Wed,  4 Sep 2024 09:38:53 +0000 (UTC)
+	s=arc-20240116; t=1725442767; c=relaxed/simple;
+	bh=KYJzv/JgvF+3JCuKxVNSBMqfNqctJKRJIYxK6Z9pzek=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jH9q44xduCetRK3PRiphzlpmZvJXhqsmvcG8G5moOooV1ZGb/un1TWy4PU/QPsAQpkxNXf2+CDGaxtlyuMVIY1xfBrkqJ26SkBBVY6fdv+Jg4ecwHYBwSCrrcIjmUW6SmRPwYL9kmwsUWNULYiFTUILqJGBYAFcb1Z3s83Df6i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fIEaRZP1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B04C4CEC6;
+	Wed,  4 Sep 2024 09:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725442733;
-	bh=KmyA68nzsmKeQqVYQzVFeMOcA8YdDjGJMWH0cfv8O4A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IeBLCiIRh8c4VREeW7bQWZzbnGPRve49Ue8NudWmF/yIRW7kCkUZjRO5lJTE1Q1uY
-	 EZWFSZWwesMfu58MDUxRT73RsyShqjpSz5Q4xMeeU4uTnv8E6+It2IM7cKgJSsORbw
-	 K2VYXsjxEB8rq9o1ltg1CzHBGfQXSsD0e+dtfNq83DNSvNxqZSl5N6kzQzYGoAAhMU
-	 OEiZFNTwa63R0EzMogWoaKG/zDu82Rj4MpbYe9puFToZostf2fatOBDyxsDkFbtfzU
-	 aokbdGriHqhn8Q2ds9hTIDfRkCYcyRStjSEpmDl2Oo1vHkbCSD1y+rE1WGnXA1Ty1E
-	 O76ouKvPzex1A==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1slmTl-0000000020w-0ZZs;
-	Wed, 04 Sep 2024 11:39:09 +0200
-Date: Wed, 4 Sep 2024 11:39:09 +0200
-From: Johan Hovold <johan@kernel.org>
-To: manivannan.sadhasivam@linaro.org
-Cc: Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Chuanhua Lei <lchuanhua@maxlinear.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	abel.vesa@linaro.org, johan+linaro@kernel.org,
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Subject: Re: [PATCH v6 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
-Message-ID: <ZtgqvXGgp2sWNg5O@hovoldconsulting.com>
-References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
- <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
+	s=k20201202; t=1725442766;
+	bh=KYJzv/JgvF+3JCuKxVNSBMqfNqctJKRJIYxK6Z9pzek=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fIEaRZP1IZ5ZNKKaO5mjiWzy4/1MuwpOV8O761wu/XbQu8rAmK7KUXx+pBWdFbPbe
+	 5fMsVH2rpZc1cF1K2G7XXLoSM7AfkKcrV8klWur6EkKUc7bYUep0fjyRB+B37ZvoVo
+	 hydyFJPpc6YIBSs8MaQKva8MIBM9KjF7ItvyUOth41eBaVe3bXW/dEItJoOvuVtjPo
+	 Nhh2mIlIbQ0KwDh+l1wy7+Dlquwk7pjG7cIB3zQOc/gxbV4pzc6ppAit1PBQjK2khT
+	 rfcpBSSeiJyACV5jN50LD8D6qrQXPjibmBZNgK/nWUNK2P5tjM5DaP0AO0m1//leh4
+	 NWDdneF19HQaA==
+Message-ID: <851566fe-4802-41c7-bb35-d6d1e9cf9bdf@kernel.org>
+Date: Wed, 4 Sep 2024 11:39:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 17/19] arm64: defconfig: enable clock controller,
+ interconnect and pinctrl for QCS8300
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
+ Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Thomas Gleixner <tglx@linutronix.de>,
+ Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+ Joerg Roedel <joro@8bytes.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Robert Marko <robimarko@gmail.com>, Das Srinagesh <quic_gurus@quicinc.com>,
+ Jassi Brar <jassisinghbrar@gmail.com>, Lee Jones <lee@kernel.org>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Catalin Marinas <catalin.marinas@arm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ iommu@lists.linux.dev
+References: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
+ <20240904-qcs8300_initial_dtsi-v1-17-d0ea9afdc007@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240904-qcs8300_initial_dtsi-v1-17-d0ea9afdc007@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 04, 2024 at 12:41:59PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+On 04/09/2024 10:33, Jingyi Wang wrote:
+> Enable clock controller, interrconnect and pinctrl for QCS8300.
+
+NXP QCS8300? What is QCS8300? Which products use it? That's a defconfig
+for entire kernel, not your Qualcomm one.
+
+> It needs to be built-in for UART to provide a console.
 > 
-> During high data transmission rates such as 16.0 GT/s, there is an
-> increased risk of signal loss due to poor channel quality and interference.
-> This can impact receiver's ability to capture signals accurately. Hence,
-> signal compensation is achieved through appropriate lane equalization
-> settings at both transmitter and receiver. This will result in increased
-> PCIe signal strength.
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+> ---
+>  arch/arm64/configs/defconfig | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> [mani: dropped the code refactoring and minor changes]
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
- 
-> +#define GEN3_EQ_CONTROL_OFF			0x8a8
+> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+> index 81ca46e3ab4b..a9ba6b25a0ed 100644
+> --- a/arch/arm64/configs/defconfig
+> +++ b/arch/arm64/configs/defconfig
+> @@ -606,6 +606,7 @@ CONFIG_PINCTRL_MSM8996=y
+>  CONFIG_PINCTRL_MSM8998=y
+>  CONFIG_PINCTRL_QCM2290=y
+>  CONFIG_PINCTRL_QCS404=y
+> +CONFIG_PINCTRL_QCS8300=y
+>  CONFIG_PINCTRL_QDF2XXX=y
+>  CONFIG_PINCTRL_QDU1000=y
+>  CONFIG_PINCTRL_SA8775P=y
+> @@ -1317,6 +1318,7 @@ CONFIG_MSM_MMCC_8998=m
+>  CONFIG_QCM_GCC_2290=y
+>  CONFIG_QCM_DISPCC_2290=m
+>  CONFIG_QCS_GCC_404=y
+> +CONFIG_QCS_GCC_8300=y
+>  CONFIG_QDU_GCC_1000=y
+>  CONFIG_SC_CAMCC_8280XP=m
+>  CONFIG_SC_DISPCC_7280=m
+> @@ -1618,6 +1620,7 @@ CONFIG_INTERCONNECT_QCOM_MSM8996=y
+>  CONFIG_INTERCONNECT_QCOM_OSM_L3=m
+>  CONFIG_INTERCONNECT_QCOM_QCM2290=y
+>  CONFIG_INTERCONNECT_QCOM_QCS404=m
+> +CONFIG_INTERCONNECT_QCOM_QCS8300=y
 
-Nit: uppercase hex since that's what is used for the other offsets
+Why this cannot be a module?
 
-> +#define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
-> +#define GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE	BIT(4)
-> +#define GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC	GENMASK(23, 8)
-> +#define GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL	BIT(24)
-> +
-> +#define GEN3_EQ_FB_MODE_DIR_CHANGE_OFF          0x8ac
 
-Nit: odd indentation uses spaces, uppercase
 
-> +#define GEN3_EQ_FMDC_T_MIN_PHASE23		GENMASK(4, 0)
-> +#define GEN3_EQ_FMDC_N_EVALS			GENMASK(9, 5)
-> +#define GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA	GENMASK(13, 10)
-> +#define GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA	GENMASK(17, 14)
-> +
->  #define PCIE_PORT_MULTI_LANE_CTRL	0x8C0
->  #define PORT_MLTI_UPCFG_SUPPORT		BIT(7)
->  
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
-> new file mode 100644
-> index 000000000000..dc7d93db9dc5
-> --- /dev/null
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
-> @@ -0,0 +1,45 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/pci.h>
-> +
-> +#include "pcie-designware.h"
-> +#include "pcie-qcom-common.h"
-> +
-> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci)
-> +{
-> +	u32 reg;
-> +
-> +	/*
-> +	 * GEN3_RELATED_OFF register is repurposed to apply equalization
-> +	 * settings at various data transmission rates through registers namely
-> +	 * GEN3_EQ_*. RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF determines
-> +	 * data rate for which this equalization settings are applied.
+Best regards,
+Krzysztof
 
-*The* RATE_SHADOW_SEL bit field
-
-*the* data rate
-
-s/this/these/
-
-> +	 */
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
-> +	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
-> +	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
-> +	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK, 0x1);
-
-How does 0x1 map to gen4/16 GT?
-
-> +	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
-> +
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
-> +	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
-> +		GEN3_EQ_FMDC_N_EVALS |
-> +		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
-> +		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
-> +	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
-> +		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
-> +
-> +	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
-> +	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
-> +		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
-> +		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
-> +		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
-> +	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
-> +}
-> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_eq_settings);
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
-> new file mode 100644
-> index 000000000000..259e04b7bdf9
-> --- /dev/null
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
-> @@ -0,0 +1,8 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include "pcie-designware.h"
-
-You only need a forward declaration:
-
-	struct dw_pcie;
-
-> +
-> +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
-
-Compile guard still missing.
-
-Johan
 
