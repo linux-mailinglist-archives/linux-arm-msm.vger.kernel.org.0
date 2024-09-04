@@ -1,147 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-30611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E9B896AEF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 05:14:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E59296AF80
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 05:35:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A16F51C215D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 03:14:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16D43282B7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 03:35:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98C3A47F4D;
-	Wed,  4 Sep 2024 03:14:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EFC15339E;
+	Wed,  4 Sep 2024 03:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Qnl7N6Qo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Oxw4RyNm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0935C59164;
-	Wed,  4 Sep 2024 03:14:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5788E50A80;
+	Wed,  4 Sep 2024 03:35:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725419657; cv=none; b=XG3kv5tovkzyBLeC9PLePegkCf/gc4KiLoHSa96vH5uJZ9NhUTuPzE/NL2qe5eA/q0rJlgY8pfNyDieJS2ZBJ8H1JP0jmoQu9BsrvUebzeYNuyanfTnHRwuy/jFpzPhhY6r5RBF0rkNXsbMZJuC5v8by27522wflyhtc1yoV/jI=
+	t=1725420938; cv=none; b=WDs47FHVDz8pBaD0a5NSDm7iDH7ax+GzG7x911PNdgWRTASZpNW5Q6t25oBUyuD2jM/EX8/01yfDZ2tWvGwVLwMG2SzCphNVvRKA+LXhfBpKwp0r2xG+igKf3h0MLQ/CpaHR0NLlsPbVwR8DKVqqWrNf0SgraI+SlhZ/NkGn9KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725419657; c=relaxed/simple;
-	bh=GuX1ClcBP7lkc+WLmn/PjY3HXaZ5/ev7RgngsoyHqBY=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qdzUurkK3yRCjCkTLwmWEDFSK+V8oypHMA5xdps27Ael0OHP2moNwwYAqYRMQTCwnEpnANLumP39+/cT8yVQ4jKKA2/uCIZN4kWExE13Nkw+hv4j9nhYG3YJreTOHH3Eg3By880ciaI5b99TRXzbDh5B2wjJeFOEXyT97fg03iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Qnl7N6Qo; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4840XR3l015575;
-	Wed, 4 Sep 2024 03:14:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	o28dlcLH6mXQQ4eoxEfarQtCQ0quIOyBrKvVpvueI3k=; b=Qnl7N6QoJsejDEtb
-	qgl8jMtUm9rP5dgmk1wQfpim2AGFiZDwqpHkdRvzilSnlnewATQEW7vseGj1L8F0
-	U5q321q1A39qRYyef4UdC4HX6XBcaFixFgBsLOFBNY5zTQqk+4RlZExsZXMBiAU0
-	fgckN+5ffPvFDHdjLgaUcK7D0ebPk3cNW154u1MgIp6rCWCrFCUL0hxGtMDh775e
-	zUIVlJCralxF7YviTX67cm7XRhvtMIpL7Zk87UC/VEoqTiEx3BISzT497eMdCCLj
-	FR33oeSOIEjhhuOJhKZKCi8VLbSm0U/e8zE09j4ude1WwTeHVCs3ppD7LLW4afS8
-	poWSAg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41dt69bg8b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 04 Sep 2024 03:14:07 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4843E6Tn011364
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 4 Sep 2024 03:14:06 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 3 Sep 2024 20:14:03 -0700
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>
-CC: <linux-kernel@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <quic_sibis@quicinc.com>,
-        <johan@kernel.org>, <konradybcio@kernel.org>
-Subject: [PATCH V2 2/2] firmware: arm_scmi: Skip adding bad duplicates
-Date: Wed, 4 Sep 2024 08:43:24 +0530
-Message-ID: <20240904031324.2901114-3-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240904031324.2901114-1-quic_sibis@quicinc.com>
-References: <20240904031324.2901114-1-quic_sibis@quicinc.com>
+	s=arc-20240116; t=1725420938; c=relaxed/simple;
+	bh=qLcWIE7Fw1J7ruZJ/d/CJptuuKw68JLFc6/6jjyj7xQ=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=ID1f+ktYUY2vnlaj3PvNIFOHSy94m7e+9YrSf9Wx4kVMOzet6AHZ9CPALo7D0WdpJZ5KPRWWLUUsbpZPfujmyrO2cG2ss0RYR1he4Fb6WuBwR/GcLQ9WEmPDeOp+gkg52i8wSv2pnRj3E9kITi7d6nuPd2firoktPYv1o+WmoDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Oxw4RyNm; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 770FAC4CEC3;
+	Wed,  4 Sep 2024 03:35:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725420937;
+	bh=qLcWIE7Fw1J7ruZJ/d/CJptuuKw68JLFc6/6jjyj7xQ=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=Oxw4RyNmEhnFMTsEBmUk0IvVzvP1WaYglu45+1v+68smrL2bIhUwreMa1TBjVgh1H
+	 z3rSKx1LKrFBnF31SQZc+5EnI5h8K/m4PXJxOpcear3L4ShDFgUQFMDw/EWJZolQv4
+	 hZN/J5TqcewpO7nl523xHkmw2WZKy9/qQI7rim+vnls8f1YkS4VeKRj8Bnresr5fIE
+	 8QvyDH2fKUi5ZHEWSUjc/uunTTIkf/cBS18LaJHIf+56FBO7eUhmZnx0uZJ/drTy6j
+	 yYDSf0GxHrh80m0Rqs9ogCQXYRca9IceoxLKqi7GEWkn8UfK/+VHEY34WUqUx+jSCq
+	 NqOpx9urZkIPg==
+Date: Tue, 03 Sep 2024 22:35:36 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IHgEr2i_4Kr1xLaSqzVqYJRMSHtqOfkM
-X-Proofpoint-ORIG-GUID: IHgEr2i_4Kr1xLaSqzVqYJRMSHtqOfkM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-04_01,2024-09-03_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 adultscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409040022
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-media@vger.kernel.org, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Andi Shyti <andi.shyti@kernel.org>, 
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+ Todor Tomov <todor.too@gmail.com>, Conor Dooley <conor+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, devicetree@vger.kernel.org, 
+ linux-i2c@vger.kernel.org, Loic Poulain <loic.poulain@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Robert Foss <rfoss@kernel.org>, 
+ linux-clk@vger.kernel.org
+In-Reply-To: <20240904020448.52035-13-mailingradian@gmail.com>
+References: <20240904020448.52035-9-mailingradian@gmail.com>
+ <20240904020448.52035-13-mailingradian@gmail.com>
+Message-Id: <172542093648.3614760.12247493613483168165.robh@kernel.org>
+Subject: Re: [PATCH v4 4/7] dt-bindings: media: camss: Add
+ qcom,sdm670-camss
 
-Ensure that the bad duplicates reported by the platform firmware doesn't
-get added to the opp-tables.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- drivers/firmware/arm_scmi/perf.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+On Tue, 03 Sep 2024 22:04:53 -0400, Richard Acayan wrote:
+> As found in the Pixel 3a, the Snapdragon 670 has a camera subsystem with
+> 3 CSIDs and 3 VFEs (including 1 VFE lite). Add this camera subsystem to
+> the bindings.
+> 
+> Adapted from SC8280XP camera subsystem.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  .../bindings/media/qcom,sdm670-camss.yaml     | 318 ++++++++++++++++++
+>  1 file changed, 318 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> 
 
-diff --git a/drivers/firmware/arm_scmi/perf.c b/drivers/firmware/arm_scmi/perf.c
-index 2d77b5f40ca7..114c3dd70ede 100644
---- a/drivers/firmware/arm_scmi/perf.c
-+++ b/drivers/firmware/arm_scmi/perf.c
-@@ -386,9 +386,11 @@ process_response_opp(struct device *dev, struct perf_dom_info *dom,
- 		le16_to_cpu(r->opp[loop_idx].transition_latency_us);
- 
- 	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
--	if (ret)
-+	if (ret) {
- 		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
- 			 opp->perf, dom->info.name, ret);
-+		opp->perf = 0;
-+	}
- }
- 
- static inline void
-@@ -404,9 +406,12 @@ process_response_opp_v4(struct device *dev, struct perf_dom_info *dom,
- 		le16_to_cpu(r->opp[loop_idx].transition_latency_us);
- 
- 	ret = xa_insert(&dom->opps_by_lvl, opp->perf, opp, GFP_KERNEL);
--	if (ret)
-+	if (ret) {
- 		dev_warn(dev, "Failed to add opps_by_lvl at %d for %s - ret:%d\n",
- 			 opp->perf, dom->info.name, ret);
-+		opp->perf = 0;
-+		return;
-+	}
- 
- 	/* Note that PERF v4 reports always five 32-bit words */
- 	opp->indicative_freq = le32_to_cpu(r->opp[loop_idx].indicative_freq);
-@@ -871,6 +876,10 @@ static int scmi_dvfs_device_opps_add(const struct scmi_protocol_handle *ph,
- 		else
- 			freq = dom->opp[idx].indicative_freq * dom->mult_factor;
- 
-+		/* Skip all invalid frequencies reported by the firmware */
-+		if (!freq)
-+			continue;
-+
- 		/* All OPPs above the sustained frequency are treated as turbo */
- 		data.turbo = freq > dom->sustained_freq_khz * 1000;
- 
--- 
-2.34.1
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:0: 'gcc_camera_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:1: 'gcc_camera_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:2: 'soc_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:3: 'camnoc_axi' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:4: 'cpas_ahb' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:5: 'csi0' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:6: 'csi1' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:7: 'csi2' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:8: 'csiphy0' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:9: 'csiphy0_timer' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:10: 'csiphy1' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:11: 'csiphy1_timer' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:12: 'csiphy2' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/media/qcom,sdm670-camss.example.dtb: camss@ac65000: clock-names:13: 'csiphy2_timer' was expected
+	from schema $id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240904020448.52035-13-mailingradian@gmail.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
