@@ -1,67 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-30625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D103896B1F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 08:39:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 38A2496B209
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 08:43:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5EB56B25665
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 06:39:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BA3BCB25567
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Sep 2024 06:43:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F5413AD3F;
-	Wed,  4 Sep 2024 06:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E74CE13DDCC;
+	Wed,  4 Sep 2024 06:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SrR2+7+0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZD6yyAVS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC963126C0A;
-	Wed,  4 Sep 2024 06:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE6E13AD20;
+	Wed,  4 Sep 2024 06:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725431966; cv=none; b=PHk2NaPvr8e8IDESY0k5GtQiAam5sjYxBACzZoMUn7o5GP4eKYsm7QcyMFhVHQxseznEs7uRwm0GKia1ONWiDBVKQ4hlmrqgjPWScswSepcYdhhFqCQErCER1/+cIJmHNpJ01iZWnfsIAMDGiZvcenlqoauvkQ9dxhxkyyjLEaw=
+	t=1725432127; cv=none; b=LZh1mGaRTzgbBmypm7+kHq14qEc9VSP4yDw8JABxTQmyaZB9fo77e/k1Xggh3l+fzRdFIYAxnkEUbGuw6bVEY1wu5CiRWDjFtvWQcFoH64hM+S8DDaDyzZMSUe/PmIpCrATt/mFTzCfOMtDjWoc4QWDj0E01yRH7pFJp/9VYJwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725431966; c=relaxed/simple;
-	bh=ZP9TvyABzJYjITastypfyV+ucNqY9wFIJmCo4iIBo08=;
+	s=arc-20240116; t=1725432127; c=relaxed/simple;
+	bh=r7o5OJ6zffeVqup5ba63/AnfCP9SGWd11G8fJdwml4o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u2zvvAGIQIZcgOO/Q4EnUKfT6uR/sZDLrH14xUR8r5VmazMg/L/D7rqUBW59r9MKzksLRczv3dQXoM4feQ5KjoVkmGGGywqfZookNblM2zpm9NZw5jfWTZPsUhV4Mqo9/O+KT9F6BcKcgaeC6nzNix/vK7aa9W1LMCXB49F0HQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SrR2+7+0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A69C4CEC2;
-	Wed,  4 Sep 2024 06:39:23 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=j3DLt0NH/YKW/Ex2YNzVZxIw9lmHUwwSd40c/sTa9tINPDvgEvhLxYe37wMsr3xypWyY/kXH98Yq0bmWjxuNwyTOszEMJF0Y1D4UiCZv2VlftN013XxBSZF79QZgStEh6++/+urq8JnLtdQvzcbdKNYXB4phV512WWeGCnKxkFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZD6yyAVS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D27A2C4CEC3;
+	Wed,  4 Sep 2024 06:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725431965;
-	bh=ZP9TvyABzJYjITastypfyV+ucNqY9wFIJmCo4iIBo08=;
+	s=k20201202; t=1725432127;
+	bh=r7o5OJ6zffeVqup5ba63/AnfCP9SGWd11G8fJdwml4o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SrR2+7+0rykbsWMW0lNInPQBuHBk4WNB2VPN69MlZKODkrcKLeXi23ntBZ3Y/Z6AM
-	 rgurIOM0+HHT/cpz1XV1CIzFSI27qUNTBmlgCu4oI2iAvBgWIFvDHYAwr5WtUW+vGo
-	 pez/LT9D47f1fHGRizhg0ufavHLDoQFkxQ6uTCI9oKDSUt9VSel2UBZYfq8ShShYfO
-	 I2mr+vwAotkryAKGJH5SVJ+Z6c7xD5CQcS61Iogtq29Ns4ZY0eyfEXwMBlg+1MX/lU
-	 +X6qrg437wxBpWwiMDYwkjq0a3SD+RhqW9xXGPLR8rZNK/TY4d3o5q51rb2j/4eFFr
-	 96Ugz5bHxhEqg==
-Date: Wed, 4 Sep 2024 08:39:21 +0200
+	b=ZD6yyAVSYn+9sr3y2OcxN6znt21xvkACQJC/zfqhIpLuL6xa2ouuTaZn+M8u8Xtgp
+	 cLc/8LlkDMaWtznFcU7NQar9ekEVhS6b7ndE/duZt7MklacOEPR+yZpQsepusZ/SBN
+	 TcPEZcjK2gyQ8/AeOibqz0hkJvniXdS7pWzuCt4/UIJeUag+x24OuvR+SDVAkAd796
+	 oTLaiBLclV/dbmu8a+jIUFzVg1q1PW65sIaH3LEnaIXrdkA7DVEcHRUye1XaCd8J0Z
+	 EBYMI2O2FcT3sMbYYOxkY+JLH0AsxsBPKksVoH08ne2vHNPWY6AhdE6ZJPV8b9v7A1
+	 pW+k6QC5hY5Ag==
+Date: Wed, 4 Sep 2024 08:42:04 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Nikunj Kela <quic_nkela@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org, 
-	herbert@gondor.apana.org.au, davem@davemloft.net, sudeep.holla@arm.com, andi.shyti@kernel.org, 
-	tglx@linutronix.de, will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
-	jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org, amitk@kernel.org, 
-	thara.gopinath@gmail.com, broonie@kernel.org, cristian.marussi@arm.com, 
-	rui.zhang@intel.com, lukasz.luba@arm.com, wim@linux-watchdog.org, linux@roeck-us.net, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org, arm-scmi@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org, iommu@lists.linux.dev, 
-	linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org, linux-spi@vger.kernel.org, 
-	linux-watchdog@vger.kernel.org, kernel@quicinc.com, quic_psodagud@quicinc.com
-Subject: Re: [PATCH v2 19/21] dt-bindings: firmware: arm,scmi: allow multiple
- virtual instances
-Message-ID: <yl4raseujkl4ccponowaonowjpmjiybv5yd56pds6ep2lj2kow@gxoaxqyt2ask>
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-20-quic_nkela@quicinc.com>
+To: =?utf-8?B?SsOpcsO0bWU=?= de Bretagne <jerome.debretagne@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] dt-bindings: arm: qcom: Document Microsoft Surface
+ Pro 9 5G
+Message-ID: <3jvabmjo4tid6vkbjqbhmf2hfow7wv7dgux6txbsvxrefisgjh@d2bajvnwzj4s>
+References: <20240903224252.6207-1-jerome.debretagne@gmail.com>
+ <20240903224252.6207-2-jerome.debretagne@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,18 +62,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240903220240.2594102-20-quic_nkela@quicinc.com>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20240903224252.6207-2-jerome.debretagne@gmail.com>
 
-On Tue, Sep 03, 2024 at 03:02:38PM -0700, Nikunj Kela wrote:
-> This change extends scmi node name so as to allow multiple virtual
-> SCMI instances.
-> 
-> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+On Wed, Sep 04, 2024 at 12:42:49AM +0200, J=C3=A9r=C3=B4me de Bretagne wrot=
+e:
+> Add compatible for the SC8280XP-based Microsoft Surface Pro 9 5G,
+> using its Arcata codename.
+>=20
+> Signed-off-by: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.com>
 > ---
->  Documentation/devicetree/bindings/firmware/arm,scmi.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
