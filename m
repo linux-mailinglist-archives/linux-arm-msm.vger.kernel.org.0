@@ -1,264 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-30852-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B513296CFB6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 08:48:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8ACCF96CFC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 08:50:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6ED84288730
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 06:48:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 519032888FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 06:50:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C71C191F8D;
-	Thu,  5 Sep 2024 06:48:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 567A41922F9;
+	Thu,  5 Sep 2024 06:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jFGVs1d1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k6FStA63"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E85D18BC21;
-	Thu,  5 Sep 2024 06:48:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EA5191F6B;
+	Thu,  5 Sep 2024 06:50:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725518917; cv=none; b=iyASYbQ+xZaYPHz4mCLNsJA3TPHfgBZPdHRPqmP9gPmDhztKzwinGyTUCuueTUjT5EteZBJBm6umE942svOYxeREEzwMIiMcZ8TIeQ2vVxLopdKG9Z/amuCKz1DEH87UEvD92tuSSmET7FjeJRanaiU9cLspVIhqJIi+DO2/osc=
+	t=1725519018; cv=none; b=IIt3AgizOiVTre4APkPgdG8yfBjqA9ob5rJLnad/ZGzoAnM2PIc0jqBzLtd9h9sgE891Ej5d7u8jRamHuBxtW9f4f/kxBknGVptiP7VzT8PaLsyA5K3lm2ae0yM38kEwrFn/kUNXBQBHnyHPCiTyKNKp8j/paykfxnR/0L74h8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725518917; c=relaxed/simple;
-	bh=Ew0KXeXP7EW2ooMU99CIu6bEZN8qKZY34eH3IdlGuA0=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qpy+ZMOrkvay+nblQNoNrnD2V0bm+cqIdbbUv3uIhJLwz4IIV59neeLtlOpI6IpiNv1d2gfnYF1Js6ZZQO/UTk34Nwh3IHod7OZcBRZRTXImZkLIfS11XZ32aLQTAdV9/ZmZYji3ji9GLlE03fR9lLifL7/Crn+mDKj0ODjZbTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jFGVs1d1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4851hpZk005471;
-	Thu, 5 Sep 2024 06:48:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=tiEldIwL8eljTPuN6cDWTs
-	d/DTlYG4RsIDDy1RIqBqg=; b=jFGVs1d1yLv4xWZQ7ZVxFGzXkqmX3UFe7sGv00
-	Jg/XT8cLQ5NaDrX/cUU7Bjfnbp4m0FsBWJAm2vPp2MNB9+Caht8gK+KGOeaDuqtc
-	78QWNQ1c1eYkuHbagS8C+Rae2LjSZWPS3RVW1b6c7yOGOKmCHPUNESDeW1J9DC33
-	6ZiKZi3ZZ8MueOacs1TlC+s44tcOV7efIRxf2lhBpHL4dn0dJ46BZVTCCJWqAzK2
-	D6uxB1phSkS8Gqx54vfR7OXi/MXAoz49dIrDoLiR6lEmM0tfxzXrknX4g1/Vpa3V
-	ws3zp+ZT7v2XDSppqifjhRZrzN5VO5tG4sKrlbaar5S0nHJA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41epwe2f8t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 05 Sep 2024 06:48:30 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4856mU0J019337
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 5 Sep 2024 06:48:30 GMT
-Received: from Z2-SFF-G9-MQ.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 4 Sep 2024 23:48:27 -0700
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-To: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>, <quic_vgarodia@quicinc.com>,
-        <stanimir.k.varbanov@gmail.com>,
-        Miaoqing Pan <quic_miaoqing@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Date: Thu, 5 Sep 2024 14:48:17 +0800
-Message-ID: <20240905064817.3885953-1-quic_miaoqing@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1725519018; c=relaxed/simple;
+	bh=EGQxqnD+kJTdbSpDiqWezPqJO4plr2uZvSabvaxYSOI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qvR4HGZHYFkwswyDUi9kTLNuvsbmGtIKdvQwIItzWjTQt+l1isMGj+lZHx1xHc84yXQ3yTloYtr8mHs70KPH8M82LbwNRX8vIlPJkrizdZiUdkBJhenuey/CnRrF7N/HkD/Q6b64O03TIMljTCgMVCzqgcNSGvQJSECS6Y4psos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k6FStA63; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94AEFC4CEC4;
+	Thu,  5 Sep 2024 06:50:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725519017;
+	bh=EGQxqnD+kJTdbSpDiqWezPqJO4plr2uZvSabvaxYSOI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=k6FStA63hzOsr16OqGVMLzQIX3CqKwHZn87UzgA0l/RYmuNvEpHhxiqKpgFUe0ENW
+	 d9JFokRO/q/UJpjckbVXfaEunkJuqL1G8wHwwXX5o7Yi5tsm6FlxPdLdLzRgFrzn3l
+	 VtCGqy240WtYMHxbaaeU4jpGW88PJHFWUGVkLU6xehFdB7T66Drr+1ZVA8BTKVfRK2
+	 F6s1VdEUtOOsHL4HfrC+BNsj76QBcx8uP7K2zXT7Bu7r2bNFgi+qSDy88VZez+bwf5
+	 yjh7FySKpXZfngB8qWKH9hljPIkVigcd7AUvNb0TB0vIPYH1deXhbsJm3lrOoRups9
+	 TlsDQIRHRrmqw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sm6KB-000000001Md-17n0;
+	Thu, 05 Sep 2024 08:50:35 +0200
+Date: Thu, 5 Sep 2024 08:50:35 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Chuanhua Lei <lchuanhua@maxlinear.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	imx@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	abel.vesa@linaro.org, johan+linaro@kernel.org
+Subject: Re: [PATCH v6 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
+Message-ID: <ZtlUu3uwl06E7LJF@hovoldconsulting.com>
+References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
+ <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
+ <ZtgqvXGgp2sWNg5O@hovoldconsulting.com>
+ <20240904155233.zm3m6x3wvco35g6t@thinkpad>
+ <941d1bfb-965e-43e4-9f34-edaf2de5d661@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wTfORUGZzPt7nZn3m5HFyqNVGbZ3DSr3
-X-Proofpoint-GUID: wTfORUGZzPt7nZn3m5HFyqNVGbZ3DSr3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-05_04,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- spamscore=0 mlxscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0
- suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409050048
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <941d1bfb-965e-43e4-9f34-edaf2de5d661@quicinc.com>
 
-Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+On Wed, Sep 04, 2024 at 01:46:09PM -0700, Shashank Babu Chinta Venkata wrote:
+> On 9/4/24 08:52, Manivannan Sadhasivam wrote:
+> > On Wed, Sep 04, 2024 at 11:39:09AM +0200, Johan Hovold wrote:
+> >> On Wed, Sep 04, 2024 at 12:41:59PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> >>> From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
 
-Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 119 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
- 2 files changed, 120 insertions(+), 1 deletion(-)
+> >>> +	/*
+> >>> +	 * GEN3_RELATED_OFF register is repurposed to apply equalization
+> >>> +	 * settings at various data transmission rates through registers namely
+> >>> +	 * GEN3_EQ_*. RATE_SHADOW_SEL bit field of GEN3_RELATED_OFF determines
+> >>> +	 * data rate for which this equalization settings are applied.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 0c1b21def4b6..e5977dea1594 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -27,6 +27,83 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	vreg_conn_1p8: vreg_conn_1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_1p8";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pmm8654au_1_gpios 4 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_conn_pa: vreg_conn_pa {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_pa";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pmm8654au_1_gpios 6 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,qca6390-pmu";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+
-+		vddio-supply = <&vreg_conn_pa>;
-+		vddaon-supply = <&vreg_l2c>;
-+		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddrfa0p95-supply = <&vreg_l2c>;
-+		vddrfa1p3-supply = <&vreg_l6e>;
-+		vddrfa1p9-supply = <&vreg_s5a>;
-+		vddpcie1p3-supply = <&vreg_l6e>;
-+		vddpcie1p9-supply = <&vreg_s5a>;
-+
-+		bt-enable-gpios = <&pmm8654au_1_gpios 8 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&pmm8654au_1_gpios 7 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -453,6 +530,20 @@ &pmm8654au_1_gpios {
- 			  "USB2_PWR_EN",
- 			  "USB2_FAULT";
- 
-+	wlan_en_state: wlan-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
-+	bt_en_state: bt-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
- 	usb2_en_state: usb2-en-state {
- 		pins = "gpio9";
- 		function = "normal";
-@@ -744,6 +835,17 @@ &uart17 {
- 	pinctrl-0 = <&qup_uart17_default>;
- 	pinctrl-names = "default";
- 	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+	};
- };
- 
- &ufs_mem_hc {
-@@ -837,3 +939,20 @@ &usb_2_hsphy {
- &xo_board_clk {
- 	clock-frequency = <38400000>;
- };
-+
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index e8dbc8d820a6..8d42b5e9c7d6 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -5570,7 +5570,7 @@ pcie0: pcie@1c00000 {
- 
- 		status = "disabled";
- 
--		pcie@0 {
-+		pcieport0: pcie@0 {
- 			device_type = "pci";
- 			reg = <0x0 0x0 0x0 0x0 0x0>;
- 			bus-range = <0x01 0xff>;
--- 
-2.25.1
+> >>> +	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK, 0x1);
+> >>
+> >> How does 0x1 map to gen4/16 GT?
 
+> GEN3_RELATED_OFF has been repurposed to use with multiple data rates.
+> RATE_SHADOW_SEL_MASK on GEN3_RELATED_OFF value decides the data rate
+> of shadow registers namely GEN3_EQ_* registers. Per documentation 0x0
+> maps to 8 GT/s, 0x1 maps to 16 GT/s and 0x2 maps to 32 GT/s. 
+
+Thanks for clarifying. Perhaps these should become defines eventually
+(or the comment could be extended). There are a lot of "magic" constants
+in here.
+
+Johan
 
