@@ -1,93 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-31016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11A1096E31E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 21:26:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B11B96E321
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 21:27:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCFEB28A435
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 19:26:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A91841C22C17
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 19:27:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A3F618D658;
-	Thu,  5 Sep 2024 19:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6392618D650;
+	Thu,  5 Sep 2024 19:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AyqePELt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ED/2RzV/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC30C13D638
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 19:26:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97BC158DC0
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 19:27:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725564370; cv=none; b=aZE7bveTqYOku+PQutzkWhEWaB9yiffwD9tSlYEoRtegs6DDvwz4qvITM/f9uds1CEd9aW7Ykf6iiMwGEQv1Y55ugjLjD6oFO9WxVMm9MsXLDkI+tm7Y26yeapajZrgD7h5tbroERrgY26jLwx/1H03yojn/nvN6Iq8Jk1a4h9s=
+	t=1725564450; cv=none; b=u7PPmnqD9cBKLAl6lIMd7Nzu2zggE93s0qpOzgMduEnmZIQUHki4UHbP8Vq5WjuQmTk2892DqKL6294TJ9RJriqeJpzzCjRqtteUjh+xgLmco/elkaWBW8CqZ6yclNJeYrCNpy0VFBgscH5EYZiAo00vr4dyShiuAkeFIgKCRmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725564370; c=relaxed/simple;
-	bh=4vFgpfjtK/VPxsidTa6Wqh8BttFa+LZ9dcLOGbtAg+8=;
+	s=arc-20240116; t=1725564450; c=relaxed/simple;
+	bh=EqWO0LoKQ7fCk+H/1iilVvMhp1VzsyT7U/OqZudzFPA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d2zEvBa0rsQKBzif1+D8Msn8BJHXJlDuL1+XMMf74f2cEVarYk8Thi7ACts+KV0K59dlZABLAzcAC1iCY0kqGhqNRtZstHqjZqsiQ1p1rH5Q35glBPGstoHcUNIBDrKyMXClLoaZb8Kb2UHIeC5HaEIULWoQDb+/izOowTZCzps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AyqePELt; arc=none smtp.client-ip=209.85.167.43
+	 Content-Type:Content-Disposition:In-Reply-To; b=mBP2wS94QA+fvqIZhrNzpHy96F83L8DBXDQ+CBWA9JGUFhr/zxTA6ZSlbvy83IytJ2cYZfi+GUHmssaX+Q69G4ZegU5MU4LWIE8DvHkUsPxSRR+Oh++z+wHrTEeNsXFBYJP/JNKWbVWk79oQY8QEr+HZNVY93qk3xnA+x2hESTk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ED/2RzV/; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5353cd2fa28so1425379e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 12:26:08 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f74e468aa8so10354291fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 12:27:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725564367; x=1726169167; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725564447; x=1726169247; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=AfdgWA6UT2GtWVGKnYj43Nhc62Fa+aN7xUtJY8n+FcM=;
-        b=AyqePELtPBVkXLdmbe2+vIkks0G4IaG15ZtJx+so9etcU/hFmCyBrwJpyQPLNrvcg4
-         adVyooykzATbi2SUK1WVA3Qc17yWrwKiORHlGP6c0d8no8wXzdA5/73cPeb2Gg/EGmrw
-         n24Nf4VwjAO9XyQEgkQbyulxd1L7FwiLh/dwWyoPBG3JgHaQNllZYgls/9kGK5k4jllu
-         2u5gfEvXA49VPcrz2w7tFAVryqzry33e9GFzgSQg5To8J17YVkEL1/mQyLEukaORoSKw
-         agx20RmErQFVzDCNUf8djyXN9sgd/mz5l6XIJZvDYaC65sawCiE1L7iKgVyhHmxi/Peh
-         GF+g==
+        bh=5EIjhQdsXuElGujdT/fGQkycfsGKTi0ULqGbScXRLkg=;
+        b=ED/2RzV/usiVzUCqi0DujtF2Y1mT4TmX96u/TK9y/kAutqqojCVqrRzVB5Y070Thni
+         msWLmZHNF+Xboas5lnHv6Mtk4oBrphN/NFHmkqP1+8pV8dzGs3s0SDA7T6Z4Ee5U/VXr
+         ALOagy8I++zii28fSELKNCZS3c60vVvlYQhV6DN/9vtrQwAf3cV24EwR1HI2cwe/LUT5
+         0/LSNN7yoQx40S4pMfMVqy7YDs2QUdo2mBBq5uSZaTwDxFXMxick8AsC2+slX4mRG78S
+         A/hT2wvrCZFWw3UxFZCp6Faya17mN1a1vNZlx3R752SFSLQDB2STw0QmPeJooK28diGM
+         KnRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725564367; x=1726169167;
+        d=1e100.net; s=20230601; t=1725564447; x=1726169247;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AfdgWA6UT2GtWVGKnYj43Nhc62Fa+aN7xUtJY8n+FcM=;
-        b=AF8EphR4n576uFVjQcbk/dN0WllGgm+pDLPlePPkyUApguf+K4THWLd/fJwRTc8oD4
-         UX4sO55BYg0U5hYVoGyD3HsNEasX7nVshCEeAeuu1IqUStNbcEddQ5+FFH38M/jw3Htw
-         jJAQuUYngvM5DJKHz1wR+VdwgCczk7q30SBwGgT1tV4t35bF0CQBLZmjjJZ3l9OJOwdf
-         7chLLTgBAwCLxlEQDKZqOdQWXbY8eXTrQiL8DdGOrkRN8Je1/MtfifXLQ44xIM5ia3DM
-         0LcgtiueLaX6IuXkIBWyvjNruaNEc4XPzp2++SJTgw4W84elMxjpAnsO+/5cj2rqopFa
-         xv6w==
-X-Forwarded-Encrypted: i=1; AJvYcCUN+W7eH2h6SwNAq2LAeuMwnbMGGvGSSNO8rhH3aEYhLITLsmJ2xxoYMqdN8vP43sVHrRSPHOK6QN/1dc5O@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXEUvIDoucPA2PnxxK6ENNxLhqjIJ5SR1mFyPV18KOpTurAzZg
-	wNISbRWBm3MoyAp7syePkqmyCA8FahLWBDSPkQGeA70JzxRCCX7S6yiHqFG6k0k=
-X-Google-Smtp-Source: AGHT+IE2fxMk2SRrimdpexKNR4pqV1tl7BFlXZEtFft8Q7Xh+w/oKhS2oWrK6zsk64nUQBat8Or6bQ==
-X-Received: by 2002:a05:6512:a92:b0:535:6cde:5c4d with SMTP id 2adb3069b0e04-536587a79efmr18414e87.3.1725564366348;
-        Thu, 05 Sep 2024 12:26:06 -0700 (PDT)
+        bh=5EIjhQdsXuElGujdT/fGQkycfsGKTi0ULqGbScXRLkg=;
+        b=lB6nc4E5f4T3Okq+dhbkmDe6SRF1CCghxK0MnBoz5/5G8O4Nv/1ihVRZMFffVd/AC5
+         zkcPXN7QkAr0/HxLMJX9Oc6o3wL5JkL+mtUnWSFTY+8Cqec9w/ebizSKck7X3wzg8Jdx
+         VIzk3o1PqrZBmZ86LliUahXkd9PANfJOtoZMpd3PXX0B6a/gu+WS7HH7vMcONbrodBBG
+         FG2n9U1+5ynHEl1kBOj4KHTVPS1IROO5OCjUTcyJsar4dPnYOKRyItcyubdwP5GaDvgj
+         107HAP3/psaD6SDQ8fNKHD5aOciOqKhFhYopYlqK/mMytk0o5uduQVUxejyZBam4fuLS
+         qRjA==
+X-Forwarded-Encrypted: i=1; AJvYcCVGUtMm96W49XRDjNBeaLP5CIqmx05c/ttCuJi7G+uXn0mS+OuFqstRF4G7AMbhekI01MjpCzC1wlv14hDH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy1EjFtc9Uu5IOASg9C9fQ7Vz4Um7rUM03vJVikmgq9erLgQRoN
+	iq7hKJqvgNdUlbtMUF6ImT9lPcd2aTyLvXITKK2fwkpQgKq6bynGKsVf0gbxeLL/0WqtLkYBDs1
+	Z
+X-Google-Smtp-Source: AGHT+IGQ+cRNJ0xKiU2z0Dr9zj0XzfGZObu/j9nNfYcNhOYCXStDcXnxSVIM6qPrJFjzbrQW0OFitg==
+X-Received: by 2002:a2e:bc0c:0:b0:2ef:2b06:b686 with SMTP id 38308e7fff4ca-2f75230ccffmr847021fa.17.1725564446500;
+        Thu, 05 Sep 2024 12:27:26 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-535408593e0sm2681160e87.303.2024.09.05.12.26.05
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f66455d67fsm3381831fa.99.2024.09.05.12.27.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 12:26:05 -0700 (PDT)
-Date: Thu, 5 Sep 2024 22:26:04 +0300
+        Thu, 05 Sep 2024 12:27:25 -0700 (PDT)
+Date: Thu, 5 Sep 2024 22:27:24 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Kalle Valo <kvalo@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Dmitry Baryshkov <dbaryshkov@gmail.com>, 
-	Johan Hovold <johan@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Johan Hovold <johan@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
 	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	ath11k@lists.infradead.org
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp-crd: model the PMU of
- the on-board wcn6855
-Message-ID: <ywn7bq6j6jgokwmm3vsumkuwijplezmery5tr6z5yeblnpyjh7@djkwdbt4sl3q>
+	linux-kernel@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp-x13s: keep less
+ regulators always-on
+Message-ID: <n7scbcdbse4m4rilkegqsinallgkryayjzqojnxtr7qozgxwp7@7mgropizypbz>
 References: <20240905122023.47251-1-brgl@bgdev.pl>
- <20240905122023.47251-2-brgl@bgdev.pl>
- <6vikrqhdnkefzpahhhtz2hpi62jvcwnzclm7touwtnpxdzvgrf@uc7r6a7bbjek>
- <CAMRc=MeijX2by+MS_vq_OVx25JO6z=zNfymta35h11mbm=vmtQ@mail.gmail.com>
- <CALT56yOP+un5nkxuirJVg=gr7fo4Hqjt1ew3z-=F2J_Y_RcTqg@mail.gmail.com>
- <CAMRc=Mci-8R1Oe3Fe+1E+K-7khzwBPgn_8SQSUPXthpE4032Pw@mail.gmail.com>
- <d6d5a943-ab29-4034-b465-b62d9d1efa61@kernel.org>
- <87v7zagcyf.fsf@kernel.org>
+ <20240905122023.47251-5-brgl@bgdev.pl>
+ <Ztm6fzmoeWcCpqvi@hovoldconsulting.com>
+ <CAMRc=McDHi5EVpBjsuFE+JHgBhh84tsT6xr5PWO5yeU8zbS99Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,55 +92,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87v7zagcyf.fsf@kernel.org>
+In-Reply-To: <CAMRc=McDHi5EVpBjsuFE+JHgBhh84tsT6xr5PWO5yeU8zbS99Q@mail.gmail.com>
 
-On Thu, Sep 05, 2024 at 09:41:44PM GMT, Kalle Valo wrote:
-> Konrad Dybcio <konradybcio@kernel.org> writes:
-> 
-> > On 5.09.2024 3:00 PM, Bartosz Golaszewski wrote:
-> >> On Thu, Sep 5, 2024 at 2:56 PM Dmitry Baryshkov <dbaryshkov@gmail.com> wrote:
-> >>>
-> >>>>>
-> >>>>> As you are going to post another revision, please also add
-> >>>>>
-> >>>>> qcom,ath11k-calibration-variant
-> >>>>>
-> >>>>
-> >>>> I had it in earlier revisions. The only one we could add here would be
-> >>>> the one from X13s as QCom has not yet released the data for the CRD.
-> >>>> Johan and Konrad were against adding this here if it doesn't refer to
-> >>>> the correct one so I dropped it.
-> >>>
-> >>> As Kalle usually merges data with some delay it's not infrequent to
-> >>> have DTS which names calibration variant, but board-2.bin doesn't have
-> >>> corresponding data. The driver safely falls back to the data without
-> >>> variant if it can find it. Als  usually it's us who supply the
-> >>> calibration name.
-> >>>
-> >> 
-> >> Johan, Konrad,
-> >> 
-> >> What do you think? Do we know the exact name and should I add it or
-> >> should we wait until it's in board-2.bin?
+On Thu, Sep 05, 2024 at 08:23:39PM GMT, Bartosz Golaszewski wrote:
+> On Thu, Sep 5, 2024 at 4:04 PM Johan Hovold <johan@kernel.org> wrote:
 > >
-> > If we can agree on the string identifier with Kalle in advance, we can
-> > add it even before the boardfile drops
+> > On Thu, Sep 05, 2024 at 02:20:22PM +0200, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Remove the regulator-always-on property from the ones that used to be
+> > > implicitly needed by the on-board WCN6855 now that its PMU is modeled in
+> > > device-tree.
+> > >
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ----
+> > >  1 file changed, 4 deletions(-)
+> > >
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > index 88b31550f9df..1a9dac16c952 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > > @@ -479,7 +479,6 @@ vreg_s10b: smps10 {
+> > >                       regulator-min-microvolt = <1800000>;
+> > >                       regulator-max-microvolt = <1800000>;
+> > >                       regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > > -                     regulator-always-on;
+> > >               };
+> >
+> > What makes you think s10b is only used by wcn6855?
+> >
 > 
-> There have not been really any naming rules for the variant string, it
-> just needs to be unique so that it doesn't conflict with other variant
-> strings. What have you been thinking?
+> I didn't say that. It's used by many components but they seem to be
+> all described in DT. But I get it, the schematics show it in so many
+> places, it would be risky to not keep it on.
 
-QC_8380_CRD (following DMI / Windows name) or QC_X1E80100_CRD (following
-marketing name). Or maybe QTI_ instead of QC_. WDYT?
+Well, that depends on the consumers. If all consumers are good and
+voting, then it should be safe.
 
+> > You clearly did not check the schematics so make sure you verify the
+> > rest as well before resending.
+> >
+> > And if any of these are valid, I think this should be part of the
+> > previous patch.
+> >
 > 
-> But please Cc the ath11k list for anything ath11k related, adding it
-> now.
-> 
-> -- 
-> https://patchwork.kernel.org/project/linux-wireless/list/
-> 
-> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> At least vreg_s11b and vreg_s12b should be fine. I'm not sure when
+> I'll respin the series though, we need to first figure out whether to
+> upstream the calibration variant property and what its name should be.
 
 -- 
 With best wishes
