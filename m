@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E99AE96DAC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:49:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F56696DAEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:57:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28DD51C232C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:49:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B6051C249AC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:57:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9500319DF58;
-	Thu,  5 Sep 2024 13:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31F4819DF60;
+	Thu,  5 Sep 2024 13:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dx7HlgU8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V3vjdln7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCC419CD19;
-	Thu,  5 Sep 2024 13:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F324719C573;
+	Thu,  5 Sep 2024 13:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725544148; cv=none; b=MlKMvty32bhJdCyAw5jxOWCdD+FDY6lmX1endpLPmLJPnNN10Ie/3nnMYCHD2S89kLyTlznc52dvReqklaoi4O4jv6riNXQHkXXH5iRSj0RzuF+k9Qs1z/QLxZuJSqUtKjOWP7qf6MSbcCJ98nDwamDCtSLOCqU1W7riQe+P31U=
+	t=1725544632; cv=none; b=GqpS1nkUb+3CQGNP147zCpE5RfrG9FD5eXISwXp0ZLa/IXsWP/sOTEWjbjCuZQcPoI5SyOGwTELZ3aCDOwQH8TmISsV8fZ8UaC4mSqTfOtrIx1MS9AJnxxQVmH4ol/m2GsaYX4eV8FWn9FGkBGg6NhD2EOWySLHZzeObsc0WMQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725544148; c=relaxed/simple;
-	bh=Joq2JCaXbW4YK/rgb9cZ8tyR0mqtrR4IwUtCwP7MGGw=;
+	s=arc-20240116; t=1725544632; c=relaxed/simple;
+	bh=YwhGNWwOD7YnFzp2eQqZuiFp3983dv8ZOgPhaiQXc7g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HtS/LvZtuUR31/EgaE/yLl924DryUCwZqkRvXJDPIDn7Qi4u43tRJ6yA8KwZB6oE8bhGqhbx6IPfoJujPAqxSUxNxRlMM4vPTwjqWYzfBf2J6pkqb4fQECVF1G8hRUePKxyuZBaUoHKSV53pi+8ngBAxkf2bDsQvtvlkDpOcp7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dx7HlgU8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8CCC4CEC3;
-	Thu,  5 Sep 2024 13:49:05 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=AeoiwK/KuhiQy2TTPv/jjLZoyp5qEU47/vPimFYuHCu6n3ieA1qVrzi8ueq9SU65mcl0TVU+NBYl+AxDt09C8OyDn9EqFs+XoLW1z0fHgZhn5KDbBRcSdBJIFBm2aCYQ6th02B1vFGsOSmD+KNxKRjpaw/BJ2NI8M8aaApIMkfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V3vjdln7; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE682C4CEC3;
+	Thu,  5 Sep 2024 13:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725544148;
-	bh=Joq2JCaXbW4YK/rgb9cZ8tyR0mqtrR4IwUtCwP7MGGw=;
+	s=k20201202; t=1725544631;
+	bh=YwhGNWwOD7YnFzp2eQqZuiFp3983dv8ZOgPhaiQXc7g=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Dx7HlgU8cYt/jXg18GIF01hWkX/S6b4n0BxWjipaql3Ky2KNDy4k4PWquXitNz9US
-	 SS9wiwkeF02gCb/z/sXgboR03p6HCtQy8KxjsEU96X7FbHoMry0GUrH1CzsShEYzsW
-	 lMb1dCAkjRXuIso5dRPcCeUljflmeNl0HxIa7nlfqpE+DENu+spIVL1dCXMPx3F3Da
-	 2ie8A0q/Xjy92LWvSsV6lJ7QAZK1WqftwGqwm/Cinld2miE8PVp3hXaUoxe5pKPMFB
-	 xYEIafwRgTt5muZh/JX4nKluoNxSJHq+R2svEvd63wU/XZ8N+rAefw9JLvaE7/lfRA
-	 gCeOu4A8dluJA==
-Message-ID: <33d4671e-ae76-4746-b402-8640103c76ee@kernel.org>
-Date: Thu, 5 Sep 2024 15:49:03 +0200
+	b=V3vjdln7r6k1XOFa4pcz7LpHWEbE50GKVoUw4p48poItjMSM82bAdCoDahnkzBkr9
+	 U8K8Lq0rMH8J5JK5c0g1VlTenokujaM6UX2tVFhqlXVxt8tsbeR4lAzgr9fufsT4sW
+	 kdEfncrje4xEi6mGuos7G4yK8i+c6VO1GXkdXKxVsCgGM7p6Nm+H+m+fWLBz0wgNjN
+	 nEHiKadebk/KG+7sxxOjBC2UPudM2khxSXaSSxNzb/7vV2J0Jt1yOjDx+sExzjyv1+
+	 BSRYCXHYcDdln1eNev5gxYvDYW5cCHvYMirDvejjYazpnCoayzsSeGOHJD5vnrixcW
+	 Y0OTkw0YOqmww==
+Message-ID: <917917cc-3e78-4ab6-8fa4-82d9a6fe3fdd@kernel.org>
+Date: Thu, 5 Sep 2024 15:57:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,43 +50,64 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: Add uart18
-To: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
+Subject: Re: [PATCH v4 3/7] i2c: qcom-cci: Stop complaining about DT set clock
+ rate
+To: Richard Acayan <mailingradian@gmail.com>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240903224252.6207-1-jerome.debretagne@gmail.com>
- <20240903224252.6207-4-jerome.debretagne@gmail.com>
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Loic Poulain <loic.poulain@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-i2c@vger.kernel.org, linux-media@vger.kernel.org
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+References: <20240904020448.52035-9-mailingradian@gmail.com>
+ <20240904020448.52035-12-mailingradian@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240903224252.6207-4-jerome.debretagne@gmail.com>
+In-Reply-To: <20240904020448.52035-12-mailingradian@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 4.09.2024 12:42 AM, Jérôme de Bretagne wrote:
-> Add the node describing uart18 for sc8280xp devices.
+On 4.09.2024 4:04 AM, Richard Acayan wrote:
+> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > 
-> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
+> It is common practice in the downstream and upstream CCI dt to set CCI
+> clock rates to 19.2 MHz. It appears to be fairly common for initial code to
+> set the CCI clock rate to 37.5 MHz.
+> 
+> Applying the widely used CCI clock rates from downstream ought not to cause
+> warning messages in the upstream kernel where our general policy is to
+> usually copy downstream hardware clock rates across the range of Qualcomm
+> drivers.
+> 
+> Drop the warning it is pervasive across CAMSS users but doesn't add any
+> information or warrant any changes to the DT to align the DT clock rate to
+> the bootloader clock rate.
+> 
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Link: https://lore.kernel.org/linux-arm-msm/20240824115900.40702-1-bryan.odonoghue@linaro.org
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 14c3b1d6ad47..e068de274b56 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -1013,6 +1013,20 @@ spi18: spi@888000 {
->  				status = "disabled";
->  			};
->  
-> +			uart18: serial@888000 {
-> +				compatible = "qcom,geni-uart";
-> +				reg = <0 0x00888000 0 0x4000>;
-> +				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
 
-This should be the _S2 clock
+I.. am not sure this is really a problem? On some platforms the core
+clock is only 19.2 Mhz, but e.g. on sdm845 we have:
+
+static const struct freq_tbl ftbl_cam_cc_cci_clk_src[] = {
+        F(19200000, P_BI_TCXO, 1, 0, 0),
+        F(37500000, P_CAM_CC_PLL0_OUT_EVEN, 16, 0, 0),
+        F(50000000, P_CAM_CC_PLL0_OUT_EVEN, 12, 0, 0),
+        F(100000000, P_CAM_CC_PLL0_OUT_EVEN, 6, 0, 0),
+        { }
+};
+
+Shouldn't this be somehow dynamically calculated?
 
 Konrad
 
