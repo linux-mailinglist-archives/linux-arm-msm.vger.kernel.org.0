@@ -1,122 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-31009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1583B96E227
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 20:41:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9E3996E237
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 20:48:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 416C91C224C1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:41:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F1831F26DF5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:48:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD640187554;
-	Thu,  5 Sep 2024 18:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00AEF18859D;
+	Thu,  5 Sep 2024 18:48:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EV7haNi4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hSrUnMqh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0658821;
-	Thu,  5 Sep 2024 18:41:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942E2156F28;
+	Thu,  5 Sep 2024 18:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725561709; cv=none; b=CpOsaRnQME3O43aupgAypCrMmoZY/9wN8aQWiJM5w9ICs38OjKPk2rCqjc//vjsZfT9hx4928r5nXHqT4Ht6Uyt2M6MxWhbLLA1IlT671cHNlaMoCe3rMsQ2aqfq7g5iyd2WfAD1q+7U/bqIyJ39c7rJXlSoHgaWKSBxzCstC2A=
+	t=1725562079; cv=none; b=tKrIGIadxGbu1ivakXwQTPjCc4MpbI8qy1dZdPHIaAftcIKAd0wZwwok/Qsoc3D+v506HCIdW9vfP1RAd3iyG1iLRliBr1o1xkpBTxcbrcmpoOHPMJFE8BYaZ+/uvZLZQHVp3CxyAnZ/AGuyG9CJ0DM7SG3i3e+cP5FsaD1sAhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725561709; c=relaxed/simple;
-	bh=o9v6tfiHjwh1ItvVQA7QxJ59GhaJ+30hamTD7fOplT8=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=SX64OsrArJOD/BSweuzjiJytdNoxL0WmpC53dCb+lSjGjk17chkB1YQ6e9dm2rGbKZyxNPjI0KHAODCWsKgyUAHE69PeUS8mrfNQeNg518cwZUBu+2mEJtT3KpiyT97Os/bQSj2n6C3kSktBIUE/o/52d39hoAWlkJOqRUfAXos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EV7haNi4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33397C4CEC3;
-	Thu,  5 Sep 2024 18:41:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725561709;
-	bh=o9v6tfiHjwh1ItvVQA7QxJ59GhaJ+30hamTD7fOplT8=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=EV7haNi4o6VN3Sv+POQLZunJzxyqb0jbJNFTM36W6Y027zpPGoXAF74Tj/pdZ0kR8
-	 H6DRhMJX7kUcHB0b2JnHENE+lb0elboyCMZkE5//ooqk55pvv3VVjwyLBshyB3Ryo+
-	 p/YO0LjM9b9lorsPtZRofCZ4OkdMLCfZ0yvd6W00ufrFC++BMziq9owzSvQdjhSQM8
-	 o/0rw9CmrGrHqDMNBTQh+QbJFnSJdiMcojyXIOOaaXjUxGKNR8itL7xgsyrPlzIChe
-	 SJDoZu89a4didcjg5QZNqTqLMLa7wn+Xw9SgRFWFSi5nyUREgoCtg7mHb2zJJZ5wig
-	 v8pDzyseDzcmw==
-From: Kalle Valo <kvalo@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,  Dmitry Baryshkov
- <dbaryshkov@gmail.com>,  Johan Hovold <johan@kernel.org>,  Dmitry
- Baryshkov <dmitry.baryshkov@linaro.org>,  Bjorn Andersson
- <andersson@kernel.org>,  Rob Herring <robh@kernel.org>,  Krzysztof
- Kozlowski <krzk+dt@kernel.org>,  Conor Dooley <conor+dt@kernel.org>,
-  linux-arm-msm@vger.kernel.org,  devicetree@vger.kernel.org,
-  linux-kernel@vger.kernel.org,  Bartosz Golaszewski
- <bartosz.golaszewski@linaro.org>,
-    ath11k@lists.infradead.org
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp-crd: model the PMU of
- the on-board wcn6855
-References: <20240905122023.47251-1-brgl@bgdev.pl>
-	<20240905122023.47251-2-brgl@bgdev.pl>
-	<6vikrqhdnkefzpahhhtz2hpi62jvcwnzclm7touwtnpxdzvgrf@uc7r6a7bbjek>
-	<CAMRc=MeijX2by+MS_vq_OVx25JO6z=zNfymta35h11mbm=vmtQ@mail.gmail.com>
-	<CALT56yOP+un5nkxuirJVg=gr7fo4Hqjt1ew3z-=F2J_Y_RcTqg@mail.gmail.com>
-	<CAMRc=Mci-8R1Oe3Fe+1E+K-7khzwBPgn_8SQSUPXthpE4032Pw@mail.gmail.com>
-	<d6d5a943-ab29-4034-b465-b62d9d1efa61@kernel.org>
-Date: Thu, 05 Sep 2024 21:41:44 +0300
-In-Reply-To: <d6d5a943-ab29-4034-b465-b62d9d1efa61@kernel.org> (Konrad
-	Dybcio's message of "Thu, 5 Sep 2024 15:13:45 +0200")
-Message-ID: <87v7zagcyf.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=arc-20240116; t=1725562079; c=relaxed/simple;
+	bh=u1f+B9H2BSYGuPmARHLMMPR9FJ6EBCBY3LnhjGAiT1Y=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Cu9AQOX7tudVVah8cCOp9nF4HEJXELcGj0QTTj7nTWGSNZ/iT18WA5VqMQKP7PNoWrX8IvWz9mmHFZs1ojeb0xAUMTKEViVg46PDrfS73JkZdZsRNZ+0Pd2BVhfh0P8BmGaNwYdxOgWsJPc9FRPx4rFcHRseCWshPgzVsZAH4og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hSrUnMqh; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 485IR1Y1029920;
+	Thu, 5 Sep 2024 18:47:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=9Tv0skhcTVsQNb9pDT1RDT
+	vuRnQPYTxVr8IyeE9mhZQ=; b=hSrUnMqhJX7PMqHDFpcsjT5Cp02mnJMSkaaaDc
+	/Gwc/HB3SUagUqxxHIwMFIgsNr7GTI+vTDqZfOndpIvANZCRbwos7u/jrVx13zWE
+	UBRdV9MMzWkdzZ4duhQDhXl4Qi58cXKy5I8JpZC27cZUvqsbGZhhw6sXWRVm8N7i
+	qv42qMf+mZcB80YRO+eM/BsJQmZcJXPSmA77zyMEvuNIh65O7pvwloZnTerpvgGS
+	2x1yE0GT1LYJGKnQ9KcEwZFkcq9qQf5HnkJbiyPEpNTx319FszNjb1DuNPGEARnI
+	gjbSK0Va878Zg7QSitIFdo9fAu1sSyqqWTIR3GrYNv1pcc5w==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwu01ep-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 05 Sep 2024 18:47:54 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 485IlrNs004144
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 5 Sep 2024 18:47:53 GMT
+Received: from hu-nkela-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 5 Sep 2024 11:47:50 -0700
+From: Nikunj Kela <quic_nkela@quicinc.com>
+To: <jassisinghbrar@gmail.com>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_psodagud@quicinc.com>, Nikunj Kela <quic_nkela@quicinc.com>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3] dt-bindings: mailbox: qcom-ipcc: document the support for SA8255p
+Date: Thu, 5 Sep 2024 11:47:36 -0700
+Message-ID: <20240905184736.3763361-1-quic_nkela@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: kFP3SIINrkq3DqSa6UxJVHgQbi6OA8uo
+X-Proofpoint-GUID: kFP3SIINrkq3DqSa6UxJVHgQbi6OA8uo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-05_13,2024-09-05_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 clxscore=1015 impostorscore=0 spamscore=0
+ mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=928 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409050139
 
-Konrad Dybcio <konradybcio@kernel.org> writes:
+Add a compatible for the ipcc on SA8255p platforms.
 
-> On 5.09.2024 3:00 PM, Bartosz Golaszewski wrote:
->> On Thu, Sep 5, 2024 at 2:56=E2=80=AFPM Dmitry Baryshkov <dbaryshkov@gmai=
-l.com> wrote:
->>>
->>>>>
->>>>> As you are going to post another revision, please also add
->>>>>
->>>>> qcom,ath11k-calibration-variant
->>>>>
->>>>
->>>> I had it in earlier revisions. The only one we could add here would be
->>>> the one from X13s as QCom has not yet released the data for the CRD.
->>>> Johan and Konrad were against adding this here if it doesn't refer to
->>>> the correct one so I dropped it.
->>>
->>> As Kalle usually merges data with some delay it's not infrequent to
->>> have DTS which names calibration variant, but board-2.bin doesn't have
->>> corresponding data. The driver safely falls back to the data without
->>> variant if it can find it. Als  usually it's us who supply the
->>> calibration name.
->>>
->>=20
->> Johan, Konrad,
->>=20
->> What do you think? Do we know the exact name and should I add it or
->> should we wait until it's in board-2.bin?
->
-> If we can agree on the string identifier with Kalle in advance, we can
-> add it even before the boardfile drops
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+---
 
-There have not been really any naming rules for the variant string, it
-just needs to be unique so that it doesn't conflict with other variant
-strings. What have you been thinking?
+Changes in v3:
+	- Removed the patch from original series[1]
 
-But please Cc the ath11k list for anything ath11k related, adding it
-now.
+Changes in v2:
+	- Added Reviewed-by tag
 
---=20
-https://patchwork.kernel.org/project/linux-wireless/list/
+[1]: https://lore.kernel.org/all/20240903220240.2594102-1-quic_nkela@quicinc.com/
+---
+ Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
-hes
+diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+index 05e4e1d51713..bc108b8db9f4 100644
+--- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
++++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+@@ -25,6 +25,7 @@ properties:
+     items:
+       - enum:
+           - qcom,qdu1000-ipcc
++          - qcom,sa8255p-ipcc
+           - qcom,sa8775p-ipcc
+           - qcom,sc7280-ipcc
+           - qcom,sc8280xp-ipcc
+-- 
+2.34.1
+
 
