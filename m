@@ -1,119 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-31005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AA56096E182
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 20:06:49 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B89496E1F1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 20:24:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 547EB1F250EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:06:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E986F2895FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:23:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E42F117C203;
-	Thu,  5 Sep 2024 18:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F175A17C225;
+	Thu,  5 Sep 2024 18:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lBt5lRwO"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="z/aWqasn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CDB017A938;
-	Thu,  5 Sep 2024 18:06:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6053917A938
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 18:23:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725559596; cv=none; b=Nx6IG3hp4EAp5RDm2RC2/WdTXRoEPOcHNH+HfAdeF+Mdo8t7kwMudoajGcoKL8m9vL9GwJIRVw2DyOx+dJLv2/nIzMplB09r0TuPHwaJXjSIkPdsPt+JnpEZhhqgPaRsnFcujon1E6sJYVEN1e4XXUjmFF5OaNAvtDIbTqaWdV0=
+	t=1725560634; cv=none; b=P9h5//Z0Ku2rutVOPZ2moPUJkV1BOsuCkBMN4Ex8RgGh8WJ1G+re6Red9a1i+nrEIof0dh/nasbNC1keqzVfYUs1AyGVErzUUS1RDXk7zzDvIqrtEvwdm2lCdUtJ5fKUnU+6TD7SuSjs3iaFOMb0+h3qnmg26Z4gJy9J9TqZsxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725559596; c=relaxed/simple;
-	bh=lQbhBqzJrpbQeuZr5KFK5lqvmeYMeJD/wl3OmKcWbbQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fRH8XZflicD6LuhcE1aLn0boid6TXdacDy8bCYJRhSr7Khtw0t00V1aaDGwe7g7pthIvLSHiFLt57ystpfHtPhkIXo5h1suS8zLMnfOuw/RdD6bnamwe5UkdE6tSWCMHnEBfTiYnAaDKhR3a2gs2OD/9f2lsvSN1OIyYIIm+m0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lBt5lRwO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4859786m016184;
-	Thu, 5 Sep 2024 18:06:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4TQ/vxlC7PBywN8i6bt9nEHId2Z42EXHeP4UJLJ94FY=; b=lBt5lRwOJQz95Gmj
-	jHzDzN29v0ZB0k40AYddwc4qmGwo9V9mJZuCTPM9x9p/+PdJXMGuh4pZX73wrA/K
-	SAIz/ITvSKVvLmqVFRrFBvRAOU4Sueu173FCTPQKbONrnHKrtynvgSR0hi/+YoNn
-	bOy06fTp6d3NTByPMK2/Zx8dXVkUlACNbLJ2kmL0zTuH2dgaAAq9zQA0ontyCJfu
-	b/4s6Ck+CKlEqW8bxwNVnW1h1rSXAl0wQMrkp5UEbqcqKjblX4+R7omJl74/LPOB
-	6vRS6YXoGcjcRTPDa7SrfVlnBfJJbtwKoA9UJ8cQB/gZCl37unHKfxpe7UdqgFTm
-	ZI1IIw==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41egmrnbex-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 05 Sep 2024 18:06:30 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 485I6U26013125
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 5 Sep 2024 18:06:30 GMT
-Received: from hu-nkela-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 5 Sep 2024 11:06:27 -0700
-From: Nikunj Kela <quic_nkela@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_psodagud@quicinc.com>, Nikunj Kela <quic_nkela@quicinc.com>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 2/2] soc: qcom: socinfo: add support for SA8255P
-Date: Thu, 5 Sep 2024 11:05:56 -0700
-Message-ID: <20240905180556.3737896-3-quic_nkela@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20240905180556.3737896-1-quic_nkela@quicinc.com>
-References: <20240905180556.3737896-1-quic_nkela@quicinc.com>
+	s=arc-20240116; t=1725560634; c=relaxed/simple;
+	bh=f/31/t5k3O6xvGerABCcvxRjUn1id1UbVA9kPbTFwyo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PdrYnqhVQAZuTqFT4d2rZ7ChENWqI+3DYyw3yJ2rq1ed/7bYlo36lPhbK4vEl7TQQ/phrEEOZCvN14kUr7zHayPhHvYqA6yrI9HAoeu+Sf40YXEs5G4fIAojoH467n7LXDUCt8uK6TG51603kccJDD7it4PBc8BOUoHmSSPKfWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=z/aWqasn; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5356bb55224so1411419e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 11:23:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1725560631; x=1726165431; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PTXrlwhXw1zt8lQFSd42ZTE/ToLKGShHg8+BHiGWWNs=;
+        b=z/aWqasn+NCHxj5X5U2zyA2hTNr3BP23iecYQMuHzGueVPAf7IKUgI6F3pQ4sFR3+O
+         Cf09wFpVg7dwxX4x93okeTq6OwQHPdmGCozwuwwI1XkCcloUDUnjeclsUyF/uNvbb5rL
+         Hcq5eJuYxe27zA83sF1KldvDQHnOySgQW7BYuIWUrWsQ6v9dD+hCtUikjGXNpdsoRk9T
+         OcMhVoZFIPTgUqOWxYajDFuGvrrWjHypgmOj+5JdXjU1tec4oWQqOiQeRQ59Y6qU/GUT
+         O0botCUy9+c5ef0Y0+DkdWZAwCq54Q2+vo9efUPDZ1Sw9QWSsDiKt4GbUryvhxQoqbGp
+         NpbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725560631; x=1726165431;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PTXrlwhXw1zt8lQFSd42ZTE/ToLKGShHg8+BHiGWWNs=;
+        b=EiEFyVxQn6fki2llSgm8XjfnH6PEgCGqHxqQQPGRuLXG3fffb6z7DcNbkLz8Da61Nh
+         UZ+MA3c1XSjFsrJX7CEiKiEZfhGNvhJM70x1qo89qY8HtzuyN14lgOF1KsAo6BFIolsf
+         AnudkbDIKB+6xqodgUJy7IUcPx1Lk3N/tcr5uXhHgT7E/RBOjWgQkXzsa21lHcQsZy2i
+         JH3nW4CyrTpRkwAN+q9UnRshLymf22AGOfm81eap8BAV+AsfwWUWyGdKPVh52KWf39B4
+         cNy3H9rRSotCaDNrVNJ1kdHeNAnwRNf4ub7J1SUus1sImoH9qLj30RuzNUxkpJ1aLgWM
+         AYRw==
+X-Forwarded-Encrypted: i=1; AJvYcCUHvxxl6nKKadI9FRFfkeuaZAIeL9T8SlWk4Jpj++MphyzXelcNwUh5lVN0EuLFSz7STK74CZ6YUxrWvraI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxX2VHUjfuYskY5EuVme0RZMBzaBZaJY6tzsRN7LXnDIViNIFSu
+	iRMCWrbgFh1UQNNTBsn30FPP8nPl72p8sR9qyjIrf+FmFTpftL7055dbNatfSLgV0Fe06Mde9WX
+	nl1xdQgI8CwarNeBVewFwAGPrN3Ck59FDlv1iAw==
+X-Google-Smtp-Source: AGHT+IHiDLQvaJ4IVXwK2VyRvlFAAcwq5bTMEw79jXXUoeb0Z+oAV0I9OTCJQoWIe7envtsIcNDLvCxL0Z8pFxQr6X0=
+X-Received: by 2002:a05:6512:3f26:b0:52c:d84b:eee6 with SMTP id
+ 2adb3069b0e04-53546baac97mr15674180e87.38.1725560630677; Thu, 05 Sep 2024
+ 11:23:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ncBLmVDgaMa7aIZnucGlbWDiivbsqOW6
-X-Proofpoint-ORIG-GUID: ncBLmVDgaMa7aIZnucGlbWDiivbsqOW6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-05_12,2024-09-05_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- suspectscore=0 lowpriorityscore=0 mlxlogscore=987 priorityscore=1501
- spamscore=0 malwarescore=0 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409050134
+References: <20240905122023.47251-1-brgl@bgdev.pl> <20240905122023.47251-5-brgl@bgdev.pl>
+ <Ztm6fzmoeWcCpqvi@hovoldconsulting.com>
+In-Reply-To: <Ztm6fzmoeWcCpqvi@hovoldconsulting.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 5 Sep 2024 20:23:39 +0200
+Message-ID: <CAMRc=McDHi5EVpBjsuFE+JHgBhh84tsT6xr5PWO5yeU8zbS99Q@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp-x13s: keep less
+ regulators always-on
+To: Johan Hovold <johan@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add SocInfo support for SA8255P.
+On Thu, Sep 5, 2024 at 4:04=E2=80=AFPM Johan Hovold <johan@kernel.org> wrot=
+e:
+>
+> On Thu, Sep 05, 2024 at 02:20:22PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Remove the regulator-always-on property from the ones that used to be
+> > implicitly needed by the on-board WCN6855 now that its PMU is modeled i=
+n
+> > device-tree.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ----
+> >  1 file changed, 4 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts=
+ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index 88b31550f9df..1a9dac16c952 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -479,7 +479,6 @@ vreg_s10b: smps10 {
+> >                       regulator-min-microvolt =3D <1800000>;
+> >                       regulator-max-microvolt =3D <1800000>;
+> >                       regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+PM>;
+> > -                     regulator-always-on;
+> >               };
+>
+> What makes you think s10b is only used by wcn6855?
+>
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
----
- drivers/soc/qcom/socinfo.c | 1 +
- 1 file changed, 1 insertion(+)
+I didn't say that. It's used by many components but they seem to be
+all described in DT. But I get it, the schematics show it in so many
+places, it would be risky to not keep it on.
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 24c3971f2ef1..5c3bd59eaa69 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -424,6 +424,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(QRB2210) },
- 	{ qcom_board_id(SM8475) },
- 	{ qcom_board_id(SM8475P) },
-+	{ qcom_board_id(SA8255P) },
- 	{ qcom_board_id(SA8775P) },
- 	{ qcom_board_id(QRU1000) },
- 	{ qcom_board_id(SM8475_2) },
--- 
-2.34.1
+> You clearly did not check the schematics so make sure you verify the
+> rest as well before resending.
+>
+> And if any of these are valid, I think this should be part of the
+> previous patch.
+>
 
+At least vreg_s11b and vreg_s12b should be fine. I'm not sure when
+I'll respin the series though, we need to first figure out whether to
+upstream the calibration variant property and what its name should be.
+
+Bart
 
