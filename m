@@ -1,106 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-30929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0434796DB10
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:04:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2C5A96DB12
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:04:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A15A11F27720
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:04:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 217DD1C24551
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:04:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E948D19DF6A;
-	Thu,  5 Sep 2024 14:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0380619E7D8;
+	Thu,  5 Sep 2024 14:04:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PxVv7IEW"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mf9j8cWM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBEC919DF53;
-	Thu,  5 Sep 2024 14:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE5819DF68;
+	Thu,  5 Sep 2024 14:04:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725545069; cv=none; b=Y5pCxTfLNkEwk6xN2cqnxiLF5XBjimISMppprIUx18zGzY2GQJgyJEFtoEotQXBmsy5X1BGlkQGyN192sp8MIOk7gSjT7xY6M5MPGDIQwyYqtR3NHJQizI9EyPfgihClasAfE4ONkqyfV5pK7IDUG1Knpu2RcNKdrXbKc1er3zA=
+	t=1725545074; cv=none; b=UsnUjrdPmrmGzKRZWH6It85NDvRCcSqZrknujlK192QqkjXNsCmZTQW8LzIK+MTWYvB0deGcxI54Kmt1QjomI9x0TtqevQX+qCquWYS8bbZE1yY4Nfo9+32JazVhZRoTGn7NKhbgkdoiIiywX3gFsSy64WRC9rFmbiSuvKBMg6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725545069; c=relaxed/simple;
-	bh=0wFXhlDNi64WpkGU8ZSV9JVT552PkkVjpI/1SvVravc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i0PBbtPcWvY5AfCOlDDzAzoFcTWKF8beWhb/yhpZL7fl7IZTIl441nOFesD4vNx7w41SHn51SzWgmDg2/SY/3msw/f/mgWz0tAOKrtmyGOMjxqnuXS4ry7Kl0TIJ/8T7tdtvGZrEbP5vRSfG4XKAVlSaInML/tHeiMAG/joQUnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PxVv7IEW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26123C4CEC3;
-	Thu,  5 Sep 2024 14:04:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725545069;
-	bh=0wFXhlDNi64WpkGU8ZSV9JVT552PkkVjpI/1SvVravc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PxVv7IEW9k/CgR+5Eqynl7FqdGdFTPKiQhc7GJbQWHSB/yShYRHjm+IE+s2MTjlKg
-	 1SrdPXyR45OQVbQJOIpQIBr429QA2fWU39gHy3sm7jdvCLlLtltMfyGeAha1egnmH3
-	 vCNUcOOCwbstC8IDR3+Xo5yw+tHbigRPhGJ8zED0/NN8ntm5kkVtAJuZdugXXAI0yY
-	 amuLQx/II1V02p5dK+WVayj/VJlwy7NF9WFdkV8P8dJ1M7SnFT/bFkyqaGm6xpjoip
-	 b0oVXAB9Rk2FYai0frZjGeZwOVz4kLtnc0tLO8/lV9td8FYw3Qf+lri9LjELQOvKhC
-	 4X26vmaTRDKiA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1smD6N-000000002Il-1oQ9;
-	Thu, 05 Sep 2024 16:04:47 +0200
-Date: Thu, 5 Sep 2024 16:04:47 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp-x13s: keep less
- regulators always-on
-Message-ID: <Ztm6fzmoeWcCpqvi@hovoldconsulting.com>
-References: <20240905122023.47251-1-brgl@bgdev.pl>
- <20240905122023.47251-5-brgl@bgdev.pl>
+	s=arc-20240116; t=1725545074; c=relaxed/simple;
+	bh=BAJ9VYyEmanS+PFfwXykRirtRNrrIcKiKS3ue6Ie4zk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=l54jJFVMTZvCGf4o3LbHqUQVLuW90CpA1DsXR/C46H8K/BivGK0oi/NpvVmj2gxQutuZxWv/eNCVg7CdpXmYSPtzemgyXOxrcRxqN4s5yplu9SKAiBlZWnAGV1Elovn0EWZhTbsrzqllrNBWjceUJMz8HAQoUFs575OiW9E3aZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mf9j8cWM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 485973fZ025924;
+	Thu, 5 Sep 2024 14:03:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BAJ9VYyEmanS+PFfwXykRirtRNrrIcKiKS3ue6Ie4zk=; b=mf9j8cWMLIJg7Vzi
+	P/QGp0SO0uvpdkTf7R+8JCimi6sSEwJ4sRkcq971+j6cL+IxNOoVavaepeuNjt/R
+	dbyHKYw1FNfutJ3QdBqzfjtPiThziBjxR+BV5yKsKdX1oOs7+d8SXzZPHsnmAFl2
+	qaMYdx7/yo0RR5qMi5M6NKqq+sojkbeNaR1IIlFw0Ugj56kV2PffM8m4goOw1JSJ
+	dCGXB1bcIuKENWstC3jRYMzo2sO31kSBOzFjvExpIqCnCoAYiBMH4vJjqt2ttkQ8
+	rEtiWQszqEDBI+/mLXHJA8jDj6k9f1XKf/y6Vnrgj9GZNZ0NA0zP+3FVXa2sE3+i
+	FuEnRg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41drqe8g2m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 05 Sep 2024 14:03:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 485E3pZa014887
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 5 Sep 2024 14:03:51 GMT
+Received: from [10.110.102.234] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Sep 2024
+ 07:03:47 -0700
+Message-ID: <75768451-4c85-41fa-82b0-8847a118ea0a@quicinc.com>
+Date: Thu, 5 Sep 2024 07:03:46 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240905122023.47251-5-brgl@bgdev.pl>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+To: Krzysztof Kozlowski <krzk@kernel.org>, Andrew Lunn <andrew@lunn.ch>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <herbert@gondor.apana.org.au>,
+        <davem@davemloft.net>, <sudeep.holla@arm.com>, <andi.shyti@kernel.org>,
+        <tglx@linutronix.de>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>, <jassisinghbrar@gmail.com>, <lee@kernel.org>,
+        <linus.walleij@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
+        <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <wim@linux-watchdog.org>, <linux@roeck-us.net>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
+        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_psodagud@quicinc.com>, Praveen Talari <quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-17-quic_nkela@quicinc.com>
+ <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
+ <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
+ <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+ <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
+ <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
+ <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
+ <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
+Content-Language: en-US
+From: Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mfOtKa7pytGj7RGF-VZlk3L-_P3fsu10
+X-Proofpoint-ORIG-GUID: mfOtKa7pytGj7RGF-VZlk3L-_P3fsu10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-05_09,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2409050104
 
-On Thu, Sep 05, 2024 at 02:20:22PM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Remove the regulator-always-on property from the ones that used to be
-> implicitly needed by the on-board WCN6855 now that its PMU is modeled in
-> device-tree.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ----
->  1 file changed, 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index 88b31550f9df..1a9dac16c952 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -479,7 +479,6 @@ vreg_s10b: smps10 {
->  			regulator-min-microvolt = <1800000>;
->  			regulator-max-microvolt = <1800000>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> -			regulator-always-on;
->  		};
 
-What makes you think s10b is only used by wcn6855?
+On 9/5/2024 1:04 AM, Krzysztof Kozlowski wrote:
+> On 04/09/2024 23:06, Nikunj Kela wrote:
+>> On 9/4/2024 9:58 AM, Andrew Lunn wrote:
+>>>> Sorry, didn't realize SPI uses different subject format than other
+>>>> subsystems. Will fix in v3. Thanks
+>>> Each subsystem is free to use its own form. e.g for netdev you will
+>>> want the prefix [PATCH net-next v42] net: stmmac: dwmac-qcom-ethqos:
+>> of course they are! No one is disputing that.
+>>> This is another reason why you should be splitting these patches per
+>>> subsystem, and submitting both the DT bindings and the code changes as
+>>> a two patch patchset. You can then learn how each subsystem names its
+>>> patches.
+>> Qualcomm QUPs chips have serial engines that can be configured as
+>> UART/I2C/SPI so QUPs changes require to be pushed in one series for all
+>> 3 subsystems as they all are dependent.
+> No, they are not dependent. They have never been. Look how all other
+> upstreaming process worked in the past.
 
-You clearly did not check the schematics so make sure you verify the
-rest as well before resending.
+Top level QUP node(patch#18) includes i2c,spi,uart nodes.
+soc/qcom/qcom,geni-se.yaml validate those subnodes against respective
+yaml. The example that is added in YAML file for QUP node will not find
+sa8255p compatibles if all 4 yaml(qup, i2c, spi, serial nodes) are not
+included in the same series.
 
-And if any of these are valid, I think this should be part of the
-previous patch.
 
-Johan
+>
+> Best regards,
+> Krzysztof
+>
 
