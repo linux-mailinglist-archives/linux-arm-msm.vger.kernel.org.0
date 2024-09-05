@@ -1,83 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-30985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3327896DF73
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:23:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D7CC96DF79
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:23:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5A2C1F22AD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:23:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CCE228463D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:23:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B096F19FA8E;
-	Thu,  5 Sep 2024 16:23:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42C941A00EC;
+	Thu,  5 Sep 2024 16:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qpXuBYoN"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="m7eKKZU3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5FB1A01BA
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 16:23:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6972A101DE;
+	Thu,  5 Sep 2024 16:23:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725553386; cv=none; b=AeoJB8kyGCQ7h56hj17PRGK4k/BnKuB2Ehhkt58qLyuuMVddxFNFXQlzyDkmm03SeBpdDQE/MeFyBmV7uFyfsVahwu7p0WoIFdXa4vXlskSQsz/PYI6/c7xrhHz4S9LGtG3fnMxyAk8m2C5WnnJfQGQBHwzRLoRsB5i9ewbXw5s=
+	t=1725553428; cv=none; b=mH3S5t2zFInFZg7+gOkLD+kbIdAUvvW855g+Y7TPAeyPUw4EVTlqQwzBwlXH12zzuQMJFMcdD/4jAnMNGAE7Oc8WAC+cJwInIbxZAth6wHt/LpT6hygCShEKYvEJcdLjjqM6RU1WIq6N4z7O7uWOnxN58gb4nw6jzoE9vpKrnlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725553386; c=relaxed/simple;
-	bh=sW7uqszWU4sZLJOvGO07u1icXoKy1sNjZG27wJW95gQ=;
+	s=arc-20240116; t=1725553428; c=relaxed/simple;
+	bh=recn1lC2kohoaQMYAE2RoPCbyTRQZBnBUFWWA4Hcz4o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GZIJRi7xXS5SjOWODx9H3UNBapooM79qAKlgCFFXVrq3u6KZLxEoBQJcbkmsvCx4vZ4XkrGg7/EhOUo8vai3yNwHxNF3Rt5ZlfjrUUiS2PLZUdcgCJ0nxX9Nk7CgGJi7zdaetSWMWMsAXsJPlRHBN8Oi7Kb1zild8T16QQeq5Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qpXuBYoN; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-71788bfe60eso829324b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 09:23:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725553383; x=1726158183; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WGwxBe/iaaoqwox8h/HS48crgUAbtB3Lz0hvS0382cQ=;
-        b=qpXuBYoNENnLkm19crEElbKUC+MnI2RWt0x3W67+0oOI+/l7j11MOwlvhJkTYMq3fU
-         c5YBRQX0PE3as0cYSOVzLDc9cWppuSvCyLcqzLU+uJbBOSQmaNHKDmsgCyIBStUdevke
-         ONAEKbfGSVVD1h3iJi97EZ7m4M+KgINaxV2ieVBTF4TCt093fiQGQh8bRVXBTJnzix4r
-         Q5WT1NYgOR++vDyTArLNQvCrhsGEBvidfzI7eacndB4JTSw+v0kIy/FMz1bdYvEERK6n
-         sG+AqqQYRtg9vSc596yeqPSvybxZP6uhi0cvfFnAhTmHMaINzwRE9TGodtj08vnpI84y
-         z9zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725553383; x=1726158183;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WGwxBe/iaaoqwox8h/HS48crgUAbtB3Lz0hvS0382cQ=;
-        b=dCv7STZrbjpKhW8JuDMAx7w7AVyGip8fHG8ewcjaRGsCGuhCNRbJhUwJTMaJBcNeV0
-         L9nJCgAnTHzgFX4R5k7vX83hfEzJGukLdffOJZWMU23VhAYggX2ADlb+uTpVIAZSJhKN
-         SCj2QU+p8XlEmJfidllNnDsD0j1mJvARDMkXsqqtb5fHgee5COOWHyrofpWO4xurVlR6
-         SkBys+aiQigaQTIyzeLjEOBP/uADaTyxZXyPzJJLwyVakoCK7i7PS+3y7g5sEz0+taiw
-         OEWwlkCbLSy2WddiOcciWU1ctjenA3ixgu0YrFYZ4eyso4vn2Vm1naHlY3di90tfXyQV
-         TrLA==
-X-Forwarded-Encrypted: i=1; AJvYcCXHmUZ+kFc3TnpcL0RPISCTcyMlUvOBpUWvgkFrCGPofPOuqifrHPEiciWCdycDVe0XSB/H6s5Mb6zJvOW8@vger.kernel.org
-X-Gm-Message-State: AOJu0YyzLK10YWdmtzEVTj822dqWwe9QXknWAypI8HJiOgnFRBcNiyKW
-	RD+ly8nlxNwkMShxvNaqGSC4CHmxUv74Ke/IAjj20X9ZVn/sN3yFXVlzDYsjl60=
-X-Google-Smtp-Source: AGHT+IEstKk+LEI8X3OaN9fTZu6CZPPKQppwGBYLvxBQ/FfkUBW23FDlSvzIk3BvLCy/OE4uzgavvQ==
-X-Received: by 2002:a05:6a20:e196:b0:1cc:dfd1:2453 with SMTP id adf61e73a8af0-1cce1016eebmr24968329637.30.1725553383443;
-        Thu, 05 Sep 2024 09:23:03 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:3b5d:f081:c58f:f7e2])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7177859a369sm3510923b3a.148.2024.09.05.09.23.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 09:23:02 -0700 (PDT)
-Date: Thu, 5 Sep 2024 10:22:59 -0600
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
-To: Liu Jing <liujing@cmss.chinamobile.com>
-Cc: andersson@kernel.org, paul@crapouillou.net, matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	patrice.chotard@foss.st.com, linux-remoteproc@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] remoteproc:remove redundant dev_err message
-Message-ID: <Ztna4xyKbOJTw5C1@p14s>
-References: <20240904185417.14357-1-liujing@cmss.chinamobile.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=JsTyZbUzKKyxqupTOZVgPxXoIxKQblNBvB6W2fRoCP/PntkiC8xjxkgs4VmI7XT8/5hZGiVLhwD0fdcVSruNw91BaFnvY3MNEeHvaHwieD2AJw8RRF1Nx4ZIZ1v6A+w7vQujPUlbgdohwhqITF2gDzv+pG9MJk337ITg9apWQvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=m7eKKZU3; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=xvin4L+rFMFToiZrTayTdE7pqZB5x0weD2NGgyFYnvA=; b=m7eKKZU3taDnQq4yQOQM3t2np4
+	c30ER1jBz1mxP6IWu2z86cZUU6UG4lO4CmoGrJjIpABsOP5DO5uplP8O38gbkZU+l8wxl8VFddtx3
+	zqBRcGW7xg9COuN/NCMNrWXXrRnOZNCve4K8pHLm94AzbpSTSTvUY6I0rX5UDfeVP/f8=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1smFGZ-006hSx-35; Thu, 05 Sep 2024 18:23:27 +0200
+Date: Thu, 5 Sep 2024 18:23:27 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+	herbert@gondor.apana.org.au, davem@davemloft.net,
+	sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
+	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+	jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
+	amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
+	cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+	wim@linux-watchdog.org, linux@roeck-us.net,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org,
+	iommu@lists.linux.dev, linux-gpio@vger.kernel.org,
+	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-watchdog@vger.kernel.org, kernel@quicinc.com,
+	quic_psodagud@quicinc.com,
+	Praveen Talari <quic_ptalari@quicinc.com>
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+Message-ID: <0ba03b8e-4dd5-4234-823e-db4c457fa292@lunn.ch>
+References: <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+ <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
+ <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
+ <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
+ <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
+ <75768451-4c85-41fa-82b0-8847a118ea0a@quicinc.com>
+ <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
+ <4896510e-6e97-44e0-b3d7-7a7230f935ec@quicinc.com>
+ <b1ad1c7a-0995-48e0-8ebc-46a39a5ef4b3@kernel.org>
+ <515a2837-69c3-47b2-978b-68ad3f6ad0fc@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,160 +84,24 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240904185417.14357-1-liujing@cmss.chinamobile.com>
+In-Reply-To: <515a2837-69c3-47b2-978b-68ad3f6ad0fc@quicinc.com>
 
-On Thu, Sep 05, 2024 at 02:54:17AM +0800, Liu Jing wrote:
-> devm_ioremap_resource already contains error message, so remove
-> the redundant dev_err message
+> If the QUPs yaml changes are not included in the same series with
+> i2c,serial yaml changes, you see these errors:
 > 
-> Signed-off-by: Liu Jing <liujing@cmss.chinamobile.com>
-> 
-> diff --git a/drivers/remoteproc/da8xx_remoteproc.c b/drivers/remoteproc/da8xx_remoteproc.c
-> index 9041a0e07fb2..289d5ce9f7af 100644
-> --- a/drivers/remoteproc/da8xx_remoteproc.c
-> +++ b/drivers/remoteproc/da8xx_remoteproc.c
-> @@ -214,8 +214,6 @@ static int da8xx_rproc_get_internal_memories(struct platform_device *pdev,
->  						   mem_names[i]);
->  		drproc->mem[i].cpu_addr = devm_ioremap_resource(dev, res);
->  		if (IS_ERR(drproc->mem[i].cpu_addr)) {
-> -			dev_err(dev, "failed to parse and map %s memory\n",
-> -				mem_names[i]);
->  			return PTR_ERR(drproc->mem[i].cpu_addr);
->  		}
->  		drproc->mem[i].bus_addr = res->start;
-> diff --git a/drivers/remoteproc/ingenic_rproc.c b/drivers/remoteproc/ingenic_rproc.c
-> index 9902cce28692..b3ee5c47001d 100644
-> --- a/drivers/remoteproc/ingenic_rproc.c
-> +++ b/drivers/remoteproc/ingenic_rproc.c
-> @@ -186,7 +186,6 @@ static int ingenic_rproc_probe(struct platform_device *pdev)
->  	mem = platform_get_resource_byname(pdev, IORESOURCE_MEM, "aux");
->  	vpu->aux_base = devm_ioremap_resource(dev, mem);
->  	if (IS_ERR(vpu->aux_base)) {
-> -		dev_err(dev, "Failed to ioremap\n");
->  		return PTR_ERR(vpu->aux_base);
->  	}
->  
-> @@ -197,7 +196,6 @@ static int ingenic_rproc_probe(struct platform_device *pdev)
->  		vpu->mem_info[i].base = devm_ioremap_resource(dev, mem);
->  		if (IS_ERR(vpu->mem_info[i].base)) {
->  			ret = PTR_ERR(vpu->mem_info[i].base);
-> -			dev_err(dev, "Failed to ioremap\n");
->  			return ret;
->  		}
->  
-> diff --git a/drivers/remoteproc/keystone_remoteproc.c b/drivers/remoteproc/keystone_remoteproc.c
-> index 7e57b90bcaf8..a31f94a290c9 100644
-> --- a/drivers/remoteproc/keystone_remoteproc.c
-> +++ b/drivers/remoteproc/keystone_remoteproc.c
-> @@ -312,8 +312,6 @@ static int keystone_rproc_of_get_memories(struct platform_device *pdev,
->  						   mem_names[i]);
->  		ksproc->mem[i].cpu_addr = devm_ioremap_resource(dev, res);
->  		if (IS_ERR(ksproc->mem[i].cpu_addr)) {
-> -			dev_err(dev, "failed to parse and map %s memory\n",
-> -				mem_names[i]);
->  			return PTR_ERR(ksproc->mem[i].cpu_addr);
->  		}
->  		ksproc->mem[i].bus_addr = res->start;
-> diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
-> index e744c07507ee..cb8ad16583c7 100644
-> --- a/drivers/remoteproc/mtk_scp.c
-> +++ b/drivers/remoteproc/mtk_scp.c
-> @@ -1126,7 +1126,6 @@ static struct mtk_scp *scp_rproc_init(struct platform_device *pdev,
->  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "sram");
->  	scp->sram_base = devm_ioremap_resource(dev, res);
->  	if (IS_ERR(scp->sram_base)) {
-> -		dev_err(dev, "Failed to parse and map sram memory\n");
->  		return ERR_CAST(scp->sram_base);
->  	}
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dtb: geniqup@9c0000: serial@990000:compatible:0: 'qcom,sa8255p-geni-uart' is not one of ['qcom,geni-uart', 'qcom,geni-debug-uart']
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dtb: geniqup@9c0000: i2c@984000:compatible:0: 'qcom,sa8255p-geni-i2c' is not one of ['qcom,geni-i2c', 'qcom,geni-i2c-master-hub']
 
-There is another instance in the Mediatek driver - please address.
+So you have a couple of options:
 
-Thanks,
-Mathieu
+1) It sounds like you should get the QUP changes merged first. Then
+   submit the i2c,serial changes. Is there a reason you cannot do
+   this? Is there a mutual dependency between these two series, or
+   just a one way dependency?
 
->  
-> diff --git a/drivers/remoteproc/omap_remoteproc.c b/drivers/remoteproc/omap_remoteproc.c
-> index 9ae2e831456d..07e707776cf9 100644
-> --- a/drivers/remoteproc/omap_remoteproc.c
-> +++ b/drivers/remoteproc/omap_remoteproc.c
-> @@ -1201,8 +1201,6 @@ static int omap_rproc_of_get_internal_memories(struct platform_device *pdev,
->  		}
->  		oproc->mem[i].cpu_addr = devm_ioremap_resource(dev, res);
->  		if (IS_ERR(oproc->mem[i].cpu_addr)) {
-> -			dev_err(dev, "failed to parse and map %s memory\n",
-> -				data->mems[i].name);
->  			return PTR_ERR(oproc->mem[i].cpu_addr);
->  		}
->  		oproc->mem[i].bus_addr = res->start;
-> diff --git a/drivers/remoteproc/pru_rproc.c b/drivers/remoteproc/pru_rproc.c
-> index 327f0c7ee3d6..85b95e025c17 100644
-> --- a/drivers/remoteproc/pru_rproc.c
-> +++ b/drivers/remoteproc/pru_rproc.c
-> @@ -1047,8 +1047,6 @@ static int pru_rproc_probe(struct platform_device *pdev)
->  						   mem_names[i]);
->  		pru->mem_regions[i].va = devm_ioremap_resource(dev, res);
->  		if (IS_ERR(pru->mem_regions[i].va)) {
-> -			dev_err(dev, "failed to parse and map memory resource %d %s\n",
-> -				i, mem_names[i]);
->  			ret = PTR_ERR(pru->mem_regions[i].va);
->  			return ret;
->  		}
-> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-> index 572dcb0f055b..fe65ffa9a93f 100644
-> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> @@ -602,7 +602,6 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
->  	} else {
->  		adsp->lpass_efuse = devm_ioremap_resource(&pdev->dev, efuse_region);
->  		if (IS_ERR(adsp->lpass_efuse)) {
-> -			dev_err(adsp->dev, "failed to map efuse registers\n");
->  			return PTR_ERR(adsp->lpass_efuse);
->  		}
->  	}
-> diff --git a/drivers/remoteproc/st_slim_rproc.c b/drivers/remoteproc/st_slim_rproc.c
-> index d17719384c16..a6e50f51c794 100644
-> --- a/drivers/remoteproc/st_slim_rproc.c
-> +++ b/drivers/remoteproc/st_slim_rproc.c
-> @@ -251,7 +251,6 @@ struct st_slim_rproc *st_slim_rproc_alloc(struct platform_device *pdev,
->  
->  		slim_rproc->mem[i].cpu_addr = devm_ioremap_resource(dev, res);
->  		if (IS_ERR(slim_rproc->mem[i].cpu_addr)) {
-> -			dev_err(&pdev->dev, "devm_ioremap_resource failed\n");
->  			err = PTR_ERR(slim_rproc->mem[i].cpu_addr);
->  			goto err;
->  		}
-> @@ -262,7 +261,6 @@ struct st_slim_rproc *st_slim_rproc_alloc(struct platform_device *pdev,
->  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "slimcore");
->  	slim_rproc->slimcore = devm_ioremap_resource(dev, res);
->  	if (IS_ERR(slim_rproc->slimcore)) {
-> -		dev_err(&pdev->dev, "failed to ioremap slimcore IO\n");
->  		err = PTR_ERR(slim_rproc->slimcore);
->  		goto err;
->  	}
-> @@ -270,7 +268,6 @@ struct st_slim_rproc *st_slim_rproc_alloc(struct platform_device *pdev,
->  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "peripherals");
->  	slim_rproc->peri = devm_ioremap_resource(dev, res);
->  	if (IS_ERR(slim_rproc->peri)) {
-> -		dev_err(&pdev->dev, "failed to ioremap peripherals IO\n");
->  		err = PTR_ERR(slim_rproc->peri);
->  		goto err;
->  	}
-> diff --git a/drivers/remoteproc/wkup_m3_rproc.c b/drivers/remoteproc/wkup_m3_rproc.c
-> index 36a55f7ffa64..5648f450c018 100644
-> --- a/drivers/remoteproc/wkup_m3_rproc.c
-> +++ b/drivers/remoteproc/wkup_m3_rproc.c
-> @@ -186,8 +186,6 @@ static int wkup_m3_rproc_probe(struct platform_device *pdev)
->  						   mem_names[i]);
->  		wkupm3->mem[i].cpu_addr = devm_ioremap_resource(dev, res);
->  		if (IS_ERR(wkupm3->mem[i].cpu_addr)) {
-> -			dev_err(&pdev->dev, "devm_ioremap_resource failed for resource %d\n",
-> -				i);
->  			ret = PTR_ERR(wkupm3->mem[i].cpu_addr);
->  			goto err_put_rproc;
->  		}
-> -- 
-> 2.33.0
-> 
-> 
-> 
+2) Explain in the commit message that following errors are expected
+   because ... And explain in detail why the dependency cannot be
+   broken to avoid the errors.
+
+Andrew
 
