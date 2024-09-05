@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BDE896D728
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:32:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF4D096D73A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:33:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70E171C23360
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 11:32:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD9A6287B13
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 11:33:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCC9F1991DD;
-	Thu,  5 Sep 2024 11:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BFA1199934;
+	Thu,  5 Sep 2024 11:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MH3Vu9Nk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KtT6+K7P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8380019882C;
-	Thu,  5 Sep 2024 11:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB2A194A52;
+	Thu,  5 Sep 2024 11:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725535928; cv=none; b=CfVINWhm6gENBgTVuQGoSSY47pQezbumSoJPrXVrCZFbrCRIXW0Sj4cqLGT29aJe8ghh983B4fwagzF6qNQ0nEHRlv3ZqGqxTLjqKu60hl9ZeeCjGwRc+nr9fk8IvA1oLWx0PlkrxZ7Vrwt23jQ+QGu7k4EAAA/w3zcAkQYoHX8=
+	t=1725536024; cv=none; b=H4p1HUeWNzkUeCAIgqgKH4Rl3xVkF6Kc/xPNfh5Pwqb19rB4z1PKNC340G1w/K4a7mJe21yUM8ZVbG6wjjfVoh0SgLkEIujjchzo2Ss5d5UVPH5+nvY+3awjAfw7OmLzpIu/KN4+v1iWes21aVhqvaREljuAYy3T39xBC1xXQXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725535928; c=relaxed/simple;
-	bh=vFGbvJgagX7pycnyLSyGLOXNpMsQbEA2VPqFK/LxMVk=;
+	s=arc-20240116; t=1725536024; c=relaxed/simple;
+	bh=LXkNK7tbZpK9Bwrdl5kfMRV9eTB9+L844J1TGRnWWrc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nZMR412JR+QMz70uA/soNxlvUTiGDzd2ipAe2n3C1tCx3hZ2xSpD+Wd3WJpO3yIw049gS/vjtrGWWlZjpeuXAqXtIg7oJVQvp8eU+y89v7ZmOakrFwVn9E5yColBxo7/m7VUAmimj8MAjuqXCqE1Mk1i318t48FmTZcE3+qKkps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MH3Vu9Nk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28182C4CEC3;
-	Thu,  5 Sep 2024 11:31:57 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=mHLc5zyLZ8mTTzbo1oRYxWm7RCeCQVWz6Rd5wIUY6118TcdGeUim9fawbVzALslxbf7BBOq/d77/+iKlq4RX3aSi/L6NLAFWYPOVjt3qc3ObRWkK8wpwqovZg3P0GDux3gLmKOAs/9w4l96BP+fvYylwj9vRPe5uwJDxbi5KgNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KtT6+K7P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A25CC4CEC4;
+	Thu,  5 Sep 2024 11:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725535928;
-	bh=vFGbvJgagX7pycnyLSyGLOXNpMsQbEA2VPqFK/LxMVk=;
+	s=k20201202; t=1725536024;
+	bh=LXkNK7tbZpK9Bwrdl5kfMRV9eTB9+L844J1TGRnWWrc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MH3Vu9NkIaVJTQRY9bsxF4XNon84qFN6htU9jBkoaQ7SFxX7RTdsVJB/Q/qf4NI2A
-	 jUp9aP4Y+T27yUjaWKGGauYE7M5Si171BzXITROP99aiQ8I/FOGh9FybE+ftgc8kMR
-	 lPovjw3wz7+v4ErmLt0m8Wz+dxEpnNU549csr9aNQPt34wO7Rpg/DgNwoXSdbFUvlI
-	 jiWAB75ckfrwgUK30aji2MTlbeLSAwHd5EwIydhzaGmqf/ypZCi5HKnqygFhGx0kU0
-	 liahfy3EgC5Qx5ZS9nBBcbxkjJc+Wt7RJJbUhg2pmICo8kAnIZ6yNSY5WzHZztsoqc
-	 owEeW++rAZtdA==
-Message-ID: <8ad6d902-8d19-49a5-b12d-d0d8b0b17cb6@kernel.org>
-Date: Thu, 5 Sep 2024 13:31:56 +0200
+	b=KtT6+K7PIGT336TLuzd8AEw9SgB6Yk9RPpWk5wKPtuk2CNKfP3Sk2tPwKhojg0z+B
+	 655Qu7DlqaSi17ysvw2+xZlyDpLZ5roo85vMJ8DY1tWz9BGuubtIoxlTa3Ec6LKczS
+	 yYJgqvVZ2W9rOYHFrBBfyTbjnTGpJ+DtOm5kFRO71sJ60QfXvIsVUjo1BE0ch38mlU
+	 oFNd0prIr00Qi7Ae1MCsGhAu7roUpFCdZsdrit8Fi1XGQ+Uojh4XVO751Aei6rFLlN
+	 OZyTFVoLDdLRkszY1T13/RUOzjCm2LyaW3ngC8JGpEJgolFAP7HSn2AF2G1wIqBXOQ
+	 GTZRK6RRdp2Ug==
+Message-ID: <3878b8e1-00c5-4761-bb1f-c9aa853ec501@kernel.org>
+Date: Thu, 5 Sep 2024 13:33:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,101 +50,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/19] dt-bindings: power: rpmpd: Add QCS8300 power
- domains
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Jingyi Wang <quic_jingyw@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- Bart Van Assche <bvanassche@acm.org>, Andy Gross <agross@kernel.org>,
- Ulf Hansson <ulf.hansson@linaro.org>, Thomas Gleixner <tglx@linutronix.de>,
- Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
- Joerg Roedel <joro@8bytes.org>, Robert Marko <robimarko@gmail.com>,
- Das Srinagesh <quic_gurus@quicinc.com>, Jassi Brar
- <jassisinghbrar@gmail.com>, Lee Jones <lee@kernel.org>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Catalin Marinas <catalin.marinas@arm.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+Subject: Re: [PATCH 00/19] Add initial support for QCS8300
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-scsi@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- iommu@lists.linux.dev, Shazad Hussain <quic_shazhuss@quicinc.com>,
- Tingguo Cheng <quic_tingguoc@quicinc.com>
+ linux-arm-kernel@lists.infradead.org, Xin Liu <quic_liuxin@quicinc.com>,
+ Tingguo Cheng <quic_tingguoc@quicinc.com>,
+ Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+ Kyle Deng <quic_chunkaid@quicinc.com>
 References: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
- <20240904-qcs8300_initial_dtsi-v1-6-d0ea9afdc007@quicinc.com>
- <d5e338fe-bd38-49f7-b69f-fc27f9f87495@kernel.org>
+ <fcfaeed3-8544-4e98-9f95-f43346dc83e8@kernel.org>
+ <3535a897-8708-463d-b931-fa344a967f18@kernel.org>
+ <aa74f55b-7e14-4ca4-bd79-2104d81a0660@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <d5e338fe-bd38-49f7-b69f-fc27f9f87495@kernel.org>
+In-Reply-To: <aa74f55b-7e14-4ca4-bd79-2104d81a0660@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5.09.2024 1:30 PM, Konrad Dybcio wrote:
-> On 4.09.2024 10:33 AM, Jingyi Wang wrote:
->> From: Shazad Hussain <quic_shazhuss@quicinc.com>
->>
->> Add compatible and constants for the power domains exposed by the RPMH
->> in the Qualcomm QCS8300 platform.
->>
->> Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
->> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
->> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
->> ---
->>  .../devicetree/bindings/power/qcom,rpmpd.yaml         |  1 +
->>  include/dt-bindings/power/qcom-rpmpd.h                | 19 +++++++++++++++++++
->>  2 files changed, 20 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
->> index 929b7ef9c1bc..be1a9cb71a9b 100644
->> --- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
->> +++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
->> @@ -32,6 +32,7 @@ properties:
->>            - qcom,msm8998-rpmpd
->>            - qcom,qcm2290-rpmpd
->>            - qcom,qcs404-rpmpd
->> +          - qcom,qcs8300-rpmhpd
->>            - qcom,qdu1000-rpmhpd
->>            - qcom,qm215-rpmpd
->>            - qcom,sa8155p-rpmhpd
->> diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
->> index 608087fb9a3d..7dd7b9ebc480 100644
->> --- a/include/dt-bindings/power/qcom-rpmpd.h
->> +++ b/include/dt-bindings/power/qcom-rpmpd.h
->> @@ -4,6 +4,25 @@
->>  #ifndef _DT_BINDINGS_POWER_QCOM_RPMPD_H
->>  #define _DT_BINDINGS_POWER_QCOM_RPMPD_H
->>  
->> +/* QCS8300 Power Domain Indexes */
->> +#define QCS8300_CX	0
->> +#define QCS8300_CX_AO	1
->> +#define QCS8300_DDR	2
->> +#define QCS8300_EBI	3
->> +#define QCS8300_GFX	4
->> +#define QCS8300_LCX	5
->> +#define QCS8300_LMX	6
->> +#define QCS8300_MMCX	7
->> +#define QCS8300_MMCX_AO	8
->> +#define QCS8300_MSS	9
->> +#define QCS8300_MX	10
->> +#define QCS8300_MX_AO	11
->> +#define QCS8300_MXC	12
->> +#define QCS8300_MXC_AO	13
->> +#define QCS8300_NSP0	14
->> +#define QCS8300_NSP1	15
->> +#define QCS8300_XO	16
+On 5.09.2024 7:08 AM, Jingyi Wang wrote:
+> Hi Krzysztof,
 > 
-> Some time ago we moved RPM*h*pd to common defines.. we should
-> definitely do the same here. Please reuse the RPMPD_xxx definitions
-> from [1] and credit Rohit in the commit message, as he did some
-> processing on that to make sure they're ordered based on usage
+> On 9/4/2024 6:19 PM, Krzysztof Kozlowski wrote:
+>> On 04/09/2024 11:34, Krzysztof Kozlowski wrote:
+>>> On 04/09/2024 10:33, Jingyi Wang wrote:
+>>>> Add initial support for QCS8300 SoC and QCS8300 RIDE board.
+>>>>
+>>>> This revision brings support for:
+>>>> - CPUs with cpu idle
+>>>> - interrupt-controller with PDC wakeup support
+>>>> - gcc
+>>>> - TLMM
+>>>> - interconnect
+>>>> - qup with uart
+>>>> - smmu
+>>>> - pmic
+>>>> - ufs
+>>>> - ipcc
+>>>> - sram
+>>>> - remoteprocs including ADSP,CDSP and GPDSP
+>>>>
+>>>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>>>> ---
+>>>> patch series organized as:
+>>>> - 1-2: remoteproc binding and driver
+>>>> - 3-5: ufs binding and driver
+>>>> - 6-7: rpmhpd binding and driver
+>>>> - 8-15: bindings for other components found on the SoC
+>>>
+>>> Limit your CC list. I found like 8 unnecessary addresses for already
+>>> huge Cc list. Or organize your patches per subsystem, as we usually expect.
+>>>
+>>>> - 16-19: changes to support the device tree
+>>>>
+>>>> dependencies:
+>>>> tlmm: https://lore.kernel.org/linux-arm-msm/20240819064933.1778204-1-quic_jingyw@quicinc.com/
+>>>> gcc: https://lore.kernel.org/all/20240820-qcs8300-gcc-v1-0-d81720517a82@quicinc.com/
+>>>> interconnect: https://lore.kernel.org/linux-arm-msm/20240827151622.305-1-quic_rlaggysh@quicinc.com/
+>>>
+>>> Why? UFS cannot depend on pinctrl for example.
+>>>
+>>> This blocks testing and merging.
+>>>
+>>> Please organize properly (so decouple) your patches, so that there is no
+>>> fake dependency.
+>>
+>> Let me also add here one more thought. That's like fourth or fifth
+>> QCS/SA patchset last two weeks from Qualcomm and they repeat the same
+>> mistakes. Not correctly organized, huge cc list, same problems with
+>> bindings or drivers.
+>>
+>> I am giving much more comments to fix than review/ack tags.
+>>
+>> I am not going to review this. I will also slow down with reviewing
+>> other Qualcomm patches. Why? Because you post simultaneously, apparently
+>> you do not learn from other review, so I have to keep repeating the same.
+>>
+>> I am overwhelmed with this, so please expect two week review time from me.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> The CC list is generated from B4 tool, however, thanks for your advice and we
+> will decouple the changes to avoid this. And could you please help us to confirm
+> the better way to handle binding changes which just add one compatible, should
+> it be submitted as a single patch or submmitted together with dts patch series?
 
-Oh no, this is actually rpmhpd... drop this patch and use RPMHPD_x
-from include/dt-bindings/power/qcom,rpmhpd.h
+The tool did its job here, it's just that this series is very long and a ton
+of people ended up being involved due to bindings oneliners
 
 Konrad
 
