@@ -1,149 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-30995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C967B96E00F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:42:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9767296E094
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:57:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07FC41C2382C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:42:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2547B21FF6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:57:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75BEC1A2566;
-	Thu,  5 Sep 2024 16:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 700A41A255F;
+	Thu,  5 Sep 2024 16:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ngMFSPB2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ssw/Bo3e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CCD1A01D2
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 16:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E021A0B1E;
+	Thu,  5 Sep 2024 16:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725554521; cv=none; b=Cv+s/wgoY8KJv2sQ8rXPjbx8Viq0pSGTNHhZUW+sJ3GYZcxOlCqfg7kyC9Od2gHoqccf+2kG2U2VgraeH/LgG97vpeftbJGzHPVABytAugY8QVVUFHQPqEqrVV4YQo0GYMYISXM2pHRF/fk36WNtMGwTVi/p2eganIypsP2pFzw=
+	t=1725555421; cv=none; b=Lv/aUvvGqF1WwEJLOuNSCaFZcLIcLXk9Qc6gd5VZcDEDcz9Q7UvGBvusmiAaFTGLO8rs1Qj/xZAVOVWXHR7HhAsyeWEF97tQjGx8NSZK/1I0161k3hQNSnzUw3z0ZCFL/smsZ3I6s3qshTVlnSNadp49gP57qmz6DAZ+L2EM0gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725554521; c=relaxed/simple;
-	bh=bZqTUzHVaDU4z2945szciZArKwGaVZx4L53bE96zPk8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iTtJqbnUmNGU4OycaQdoNhKm3LqrpK7cNK/ILGTyTEeFuBzmCq2C4CJqfohl9bq+TPpc4dvmSZqIEY74Q3MJ7AnI/XePNjvqmwMJf0JoKcTPyQUj0K+DixihDNWakOuBEP+vxsFJchb4y1t8B1lMC3bH9+FTGfHANXVM66vbVXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ngMFSPB2; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53654d716d1so81957e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 09:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725554518; x=1726159318; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7CZsoyx5pAZF1TVY/oRkF4UW+jAYypgRZZCBJ43Oqws=;
-        b=ngMFSPB2sbXqIc1NWlWf57Il6juCw/w0N9SpjZHP2RJU9Ng7Qg4mpfRZxnSAQlnCxX
-         SQ450LgbIps17+odsPDTMBCaRZFtjpd90+eQITRlR5GpPpyDOVzsRAsN5Wb/eQZG97AV
-         mjWhx2Du1+QqQUCwZ1IYSpe2qgpHE6gGj199rT9BLG5veEGAqSno5XMN6I6R66xEff6k
-         icT4KHB2uW8imvhHppH6CfAkNYl0WpVwqz0seb+P4sh0vdOyrIT/GV+4D5zBUNjeMYQz
-         qU9hs2KMAgNcr4moyIPlSg1bNrdOH56CuyVZVKofUV74bT70biMYN/JO+gZogZ9L+FPI
-         pkEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725554518; x=1726159318;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7CZsoyx5pAZF1TVY/oRkF4UW+jAYypgRZZCBJ43Oqws=;
-        b=XoGYr5KMjw38JGPlKmtpvtQMhyUM/xyaELR9Ms+AfUIBdeMo47m0KRrBjrdbWOJHBY
-         hBnYRav82BsEw0KU0skQGGU8b+lC+ZTTw5qsFvupwtaYftCXRtb+lgdSbobt19L6105y
-         yu5C8aXVeMW5mdy173/0YjBeLJ8zCNQIBJdcyVkUH5sgilN/MRhdAdgA0cBXigSk/knx
-         rPdPiEVmt6FYDS1pk8WCBdV9O7uBfOvlZcVg+tcILK4ToKiMQOWt45GuvGLBUDfHYNWM
-         wghfEeCNGvBvtnJHCHM1GVrfPrky8TYB/lw41v8my6PQKSfCyQoblKoGYDC/GIVuXrIc
-         KVkA==
-X-Forwarded-Encrypted: i=1; AJvYcCVbAZrMd9ueapA1VLB9vknX5DWj8NH8YjC7Dot8BEfyi+C0HhiIr1rN7+LxSXRv5u9uxbGCg8fpNsqe05Ub@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhPFKYX3/StGUubJzenFDyLW2ZTwJza0iLEEy3dP28Rq+oghPR
-	khqci5wcyU+QVbBJeCsc3GphhJkbWXjXTXPABWP5ZmlGhLYEDK/446kwZGuC0h8=
-X-Google-Smtp-Source: AGHT+IGsGhahX9KXK8hqwaSEmtEzSk3nAz8AAkdF0O7nJJRcwuurhlZ/D92MQJH2A+rjFPdqauZCrw==
-X-Received: by 2002:a05:6512:3510:b0:536:554c:619f with SMTP id 2adb3069b0e04-536554c639emr440673e87.10.1725554517877;
-        Thu, 05 Sep 2024 09:41:57 -0700 (PDT)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53655182c91sm100674e87.306.2024.09.05.09.41.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 09:41:57 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH 6/6] arm64: dts: qcom: sm8250: Fix interrupt types of camss interrupts
-Date: Thu,  5 Sep 2024 19:41:42 +0300
-Message-ID: <20240905164142.3475873-7-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
-References: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
+	s=arc-20240116; t=1725555421; c=relaxed/simple;
+	bh=REwzquBrwTrVU2SKXUDHLjtToZtZU/lyVbTT0o3bv1U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Cv45RQDNI7JhYDB7DAxPJXyFlel6dfz9Cr7KLq9WWGOHN3bwFqZRG5CWeO2PdfB0EjlF0t00tOry7U2UUpBglqUYlxlp1ebwYWQe8Ft3GcYBTMOGnv7JXV9ZdDRnFOjRt17V9XF9TzaMM2/V2nAH+wlJ2O7q5of4Yja0zswzebM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ssw/Bo3e; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D435AC4CEC7;
+	Thu,  5 Sep 2024 16:56:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725555420;
+	bh=REwzquBrwTrVU2SKXUDHLjtToZtZU/lyVbTT0o3bv1U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ssw/Bo3eazEvp0aYQc2Ds+zgEuc/uYfNpbnYLSMwMnPN6t8iHXyQQfr/+BUz7YPWx
+	 vuErk3C56T6t/fILXOoRGIVvOr9sUC367XCSA4dugLSmvFdHmBLjaagqQUv+zbtfvM
+	 emsShXku5gskGoFAq7URQxGdXaCfnmlREgONL+UXBRs1UjzlbLWuBkSzqcjHlRhHXW
+	 KLVwuQVNz6JASMkyjx7PQI+Bx8nzaAwxIgvL9jyG+9XwdyZ9W36g6qgOSuUzTNCCd8
+	 wGlTndfuVwvFL8Zmidl7TdVVfIkKsQN7F/UlvMi2mn5hLxhTYaVzP9FrSBc7KL2d14
+	 +m6zj08k7Il2A==
+Message-ID: <f0cd5f5c-270f-4d9b-8169-be6180fc9925@kernel.org>
+Date: Thu, 5 Sep 2024 18:56:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+To: Nikunj Kela <quic_nkela@quicinc.com>, Andrew Lunn <andrew@lunn.ch>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
+ viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
+ sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
+ will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+ jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
+ amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
+ cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+ wim@linux-watchdog.org, linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
+ linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ kernel@quicinc.com, quic_psodagud@quicinc.com,
+ Praveen Talari <quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-17-quic_nkela@quicinc.com>
+ <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
+ <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
+ <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+ <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
+ <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
+ <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
+ <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
+ <75768451-4c85-41fa-82b0-8847a118ea0a@quicinc.com>
+ <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
+ <4896510e-6e97-44e0-b3d7-7a7230f935ec@quicinc.com>
+ <b1ad1c7a-0995-48e0-8ebc-46a39a5ef4b3@kernel.org>
+ <515a2837-69c3-47b2-978b-68ad3f6ad0fc@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <515a2837-69c3-47b2-978b-68ad3f6ad0fc@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The expected type of all CAMSS interrupts is edge rising, fix it in
-the CAMSS device tree node for sm8250 platform.
+On 05/09/2024 18:08, Nikunj Kela wrote:
+> 
+> On 9/5/2024 7:39 AM, Krzysztof Kozlowski wrote:
+>> On 05/09/2024 16:15, Nikunj Kela wrote:
+>>> On 9/5/2024 7:09 AM, Krzysztof Kozlowski wrote:
+>>>> On 05/09/2024 16:03, Nikunj Kela wrote:
+>>>>> On 9/5/2024 1:04 AM, Krzysztof Kozlowski wrote:
+>>>>>> On 04/09/2024 23:06, Nikunj Kela wrote:
+>>>>>>> On 9/4/2024 9:58 AM, Andrew Lunn wrote:
+>>>>>>>>> Sorry, didn't realize SPI uses different subject format than other
+>>>>>>>>> subsystems. Will fix in v3. Thanks
+>>>>>>>> Each subsystem is free to use its own form. e.g for netdev you will
+>>>>>>>> want the prefix [PATCH net-next v42] net: stmmac: dwmac-qcom-ethqos:
+>>>>>>> of course they are! No one is disputing that.
+>>>>>>>> This is another reason why you should be splitting these patches per
+>>>>>>>> subsystem, and submitting both the DT bindings and the code changes as
+>>>>>>>> a two patch patchset. You can then learn how each subsystem names its
+>>>>>>>> patches.
+>>>>>>> Qualcomm QUPs chips have serial engines that can be configured as
+>>>>>>> UART/I2C/SPI so QUPs changes require to be pushed in one series for all
+>>>>>>> 3 subsystems as they all are dependent.
+>>>>>> No, they are not dependent. They have never been. Look how all other
+>>>>>> upstreaming process worked in the past.
+>>>>> Top level QUP node(patch#18) includes i2c,spi,uart nodes.
+>>>>> soc/qcom/qcom,geni-se.yaml validate those subnodes against respective
+>>>>> yaml. The example that is added in YAML file for QUP node will not find
+>>>>> sa8255p compatibles if all 4 yaml(qup, i2c, spi, serial nodes) are not
+>>>>> included in the same series.
+>>>>>
+>>>> So where is the dependency? I don't see it. 
+>>> Ok, what is your suggestion on dt-schema check failure in that case as I
+>>> mentioned above? Shall we remove examples from yaml that we added?
+>> I don't understand what sort of failure you want to fix and why examples
+>> have any problem here. 
+> 
+> If the QUPs yaml changes are not included in the same series with
 
-Fixes: 30325603b910 ("arm64: dts: qcom: sm8250: camss: Add CAMSS block definition")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+They cannot be included in the same series. You just think that
+including here solves the problem so go ahead, simulate the merging:
+1. Bjorn applies soc/qcom/qcom,geni-se.yaml patch and tests. His tree
+MUST build, so it also must pass dt_binding_check.
+Does it pass? No.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 9d6c97d1fd9d..bd73ff97739c 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -4504,20 +4504,20 @@ camss: camss@ac6a000 {
- 				    "vfe_lite0",
- 				    "vfe_lite1";
- 
--			interrupts = <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 86 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 89 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
- 			interrupt-names = "csiphy0",
- 					  "csiphy1",
- 					  "csiphy2",
--- 
-2.45.2
+2. SPI maintainer... ah, no point even going there.
+
+> i2c,serial yaml changes, you see these errors:
+> 
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dtb: geniqup@9c0000: serial@990000:compatible:0: 'qcom,sa8255p-geni-uart' is not one of ['qcom,geni-uart', 'qcom,geni-debug-uart']
+> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/soc/qcom/qcom,geni-se.example.dtb: geniqup@9c0000: i2c@984000:compatible:0: 'qcom,sa8255p-geni-i2c' is not one of ['qcom,geni-i2c', 'qcom,geni-i2c-master-hub']
+
+Don't grow examples if not needed. Or create dependencies and ask
+maintainers to cross-merge.
+
+Best regards,
+Krzysztof
 
 
