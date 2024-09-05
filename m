@@ -1,161 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-30945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F76796DB75
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:16:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68B3396DBA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:21:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CDAC1289A2C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:16:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3EC81F2134C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686921A3BCB;
-	Thu,  5 Sep 2024 14:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E39FD53F;
+	Thu,  5 Sep 2024 14:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="tSNSKp8H"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WlNkXtMW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BBB1A2C25
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 14:13:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E75CA6B;
+	Thu,  5 Sep 2024 14:21:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725545630; cv=none; b=lAQCBYL41C9gDd2r1WFgToX+nD88k6n7WEvqJtAhZehWHytDLjfTH6JyGQxYO09idqmPxd7JaGlppwMqbf4MpayZGSOjjEhXINQbjnitIePJLd1vb0qrnwnvR+ffLzUdiLzqb8QqBwdcwx4L8sDiQYFuMffCuQENxHq1Hx4LMtc=
+	t=1725546095; cv=none; b=gSUvIJJD+EFhMqjIBtXmE6SJzv+eIqGiD/PMPMmwek+botF8ESlnK1yVuYy+VzA83FF5yvx3sA3Q3MVP76qC9ssxzIfDipkL4hlxw/kdWC3WyIOZ14HJvB5JeqqpFCADf6Cp3RGlKexDUbsYCM1VJq6TQsnGq2L8A3aWxG0JWnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725545630; c=relaxed/simple;
-	bh=HGKKWuwE3+8ouI0WFbu/VAtPy+LRBtX+ATMaNod25ho=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CK4aAbl/eQJT7U5lNHkNKQ2xArIMQqWfoQVsTpi4Ox+MiP4rXoAfiCMMuMbvSY4ipaKhG86liR4jeIkQNBeo9J0AmoyCr/D5zzDU98koLhLeWJuWXBAjgkdeI8k7bllZ5G7UGGgJkJ7t87b3FF+Zq4LeNFpP5hH+VbrueA426wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=tSNSKp8H; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42bb885f97eso11299375e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 07:13:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1725545627; x=1726150427; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=u3kylnJVXfNp6rw3d/1irQrhp19zNyQdKhcZsUU9cnk=;
-        b=tSNSKp8HDnalV6zRHxhZMOY4gpA7QoDMB/9omOeeDR5lzAUbHPEVo2XuQ8HkLBRV41
-         xpLPSB1uIjwESwzgXuz4yLoWflbFeD7ycpxKLWRKFsDSAPRRkGGUAtcuRbsnICgzT6JP
-         WgDM2C3geaKdnfl0uS+HPsFLGQ/bvm+dXtxTsgVuGrGc9T43rxwqmSOrDR22fz5TOHss
-         vczMbYJWwQcIfYkgrzw4GxAwHsp/eFk7jTgp20gnEQdGuYuTaaP1lB3Dipkptr8UXRnF
-         60pNGz/7JLkInAj2sV/IFhfv2CwShDf0u25f19Cm5zrr0ssqd//DB2f4R+bBLSIz01fX
-         YHYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725545627; x=1726150427;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=u3kylnJVXfNp6rw3d/1irQrhp19zNyQdKhcZsUU9cnk=;
-        b=uJTVqd5gUywPk+p7KsXP98vl7pwFR7ycdzcF4eCjE9HDLDDdNhVOVEBgB5QJbX4yQc
-         UqE7rDKYkV8EpTxBeWicYshMlYxPDj75y6ZvxfRVASoubNUEWKqrP/98gVNtu0AAu4JW
-         HuSypu2cmfWz5MRFElcobd+FHeLnoX05ce3hqKx6HOtexUvPvDR6WNhcPOpNXz/tcx+V
-         I19MhjRoKM6ywZGgG4Fc4z7atbF9bbsebeudA8xe9ap3nsqkVwdRrrGVsy/l6hyQ/04z
-         jTu3zrhK0B7hgQqIvl3+y+NT38AGDmR+iZy2AbhSN42kDXnc3FlqAwEVEaHd7looEyPi
-         Dp8g==
-X-Forwarded-Encrypted: i=1; AJvYcCVi6dK1LvhTD76qppN4Qrs0Ek1uQSdk3Ba6qHJ06w1/6rgBF8ilN6YlsiMnCTyJXty7MDzpe0P6/cIDt1bv@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBS4+Mj7CG34kwbzOJ7PM1V/UWDo7bwwZDkq+bnblLIxRSaKC5
-	yzHESSjUItCNVU43wq/sUpTw4Wzryt7r5W54BMwmzJKz4bA0spUlXMGN5z64Bfc=
-X-Google-Smtp-Source: AGHT+IFM7C/kDhVKsqo8gQ6poeqRmyyUiqotKRoAB2OwlkxpEQHF6JubaidKOiZBM8wLmGV88wvgwA==
-X-Received: by 2002:adf:f745:0:b0:374:bd00:d1e with SMTP id ffacd0b85a97d-377998aafbcmr3833233f8f.3.1725545626528;
-        Thu, 05 Sep 2024 07:13:46 -0700 (PDT)
-Received: from toaster.baylibre.com ([2a01:e0a:3c5:5fb1:4763:343b:23f3:f45])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3749ef81146sm19514621f8f.82.2024.09.05.07.13.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 07:13:46 -0700 (PDT)
-From: Jerome Brunet <jbrunet@baylibre.com>
-Date: Thu, 05 Sep 2024 16:13:04 +0200
-Subject: [PATCH 13/13] ASoC: spdif: extend supported rates to 768kHz
+	s=arc-20240116; t=1725546095; c=relaxed/simple;
+	bh=DXyaYUEdp9Wc5HqoVQv8h4Xdqi2x4QC9WP7/RCMuanY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oU2i2+feEojsZgVnLw3U4/bG3qAEC3Yg25sMudCwbOCYpYN9ys3E23N5QCLejBJgkaSXezpF56HxHqnCPynSpwhhSanIo0ppDovMEo+hyP3I8nPoRYfYE28Vqw27cOJUzTi1rWYJqDjex1m6cHbtwWlY+JdetJ6Xt9ba3Xn7auI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WlNkXtMW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48597n0o023730;
+	Thu, 5 Sep 2024 14:15:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PqmjsGtsdH0pPKX2Ec8nWXjou6CnajA32b/jszhvD/A=; b=WlNkXtMWL4A/p4gj
+	eimNBRrtTjZB9Z3WhjPtgq1cOmqEOBOy9PFERhTZm8vBWYo+/y1qbK/qlITSK7AP
+	1MbuDlf18GTjDMQCXuHnyhpELUbgX4LdZr7qIjTb/U2ztsyGxTLPdG+Pn4ldtncz
+	Kjw8NQwKzDlnrwdht/A+gvm85rLbq35s2CTkyrnMMpPB/9Gj8/+Nm3i9vBMLH3Dd
+	XKrZJ+X9mYfuO5svrt9X3UFhMqef5HPpXpOQ+FEUd1cQc3gagvjfUAqANWUPwNdN
+	xc5aJx0QKGkJJe1JmhdkYbgHyUH5sAT9KqFIm/iYS+hJk2KpBry/loFskPu/NKjW
+	h6/sAw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41f86ks3da-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 05 Sep 2024 14:15:53 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 485EFq25019533
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 5 Sep 2024 14:15:52 GMT
+Received: from [10.110.102.234] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Sep 2024
+ 07:15:48 -0700
+Message-ID: <4896510e-6e97-44e0-b3d7-7a7230f935ec@quicinc.com>
+Date: Thu, 5 Sep 2024 07:15:48 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+To: Krzysztof Kozlowski <krzk@kernel.org>, Andrew Lunn <andrew@lunn.ch>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <herbert@gondor.apana.org.au>,
+        <davem@davemloft.net>, <sudeep.holla@arm.com>, <andi.shyti@kernel.org>,
+        <tglx@linutronix.de>, <will@kernel.org>, <robin.murphy@arm.com>,
+        <joro@8bytes.org>, <jassisinghbrar@gmail.com>, <lee@kernel.org>,
+        <linus.walleij@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
+        <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
+        <lukasz.luba@arm.com>, <wim@linux-watchdog.org>, <linux@roeck-us.net>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
+        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_psodagud@quicinc.com>, Praveen Talari <quic_ptalari@quicinc.com>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-17-quic_nkela@quicinc.com>
+ <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
+ <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
+ <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+ <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
+ <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
+ <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
+ <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
+ <75768451-4c85-41fa-82b0-8847a118ea0a@quicinc.com>
+ <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
+Content-Language: en-US
+From: Nikunj Kela <quic_nkela@quicinc.com>
+In-Reply-To: <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240905-alsa-12-24-128-v1-13-8371948d3921@baylibre.com>
-References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-To: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
- David Rhodes <david.rhodes@cirrus.com>, 
- Richard Fitzgerald <rf@opensource.cirrus.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Cezary Rojewski <cezary.rojewski@intel.com>, 
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, 
- Liam Girdwood <liam.r.girdwood@linux.intel.com>, 
- Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
- Bard Liao <yung-chuan.liao@linux.intel.com>, 
- Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
- Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
- patches@opensource.cirrus.com, alsa-devel@alsa-project.org, 
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-sunxi@lists.linux.dev, Jerome Brunet <jbrunet@baylibre.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1441; i=jbrunet@baylibre.com;
- h=from:subject:message-id; bh=HGKKWuwE3+8ouI0WFbu/VAtPy+LRBtX+ATMaNod25ho=;
- b=owEBbQKS/ZANAwAKAeb8Dxw38tqFAcsmYgBm2byIdu+85ezuHy93WyoVP+yWVeGiEH5uiklbm
- ulYpPtqetGJAjMEAAEKAB0WIQT04VmuGPP1bV8btxvm/A8cN/LahQUCZtm8iAAKCRDm/A8cN/La
- hSFOD/9TXxTKB/AmL9i5/scP75UlZWF2gxl0FZzdSxtB9odmLY4QtohIVqBLWKF/m10g5rOpk+x
- eUR9f+9WMuTP6Ya1RfwSxUydN9Vc/CGtInW+6uPNAQq9ucANTIRbu/ZwEjpoyraXshUAXjaq6ky
- i0TlxG4s7qKuY/0ZLoQLKSylnqxgUEqxPMGe/ys5q6eqbJAF8Z5wmgu0efKW+a2HPZsFkATOaUA
- HNR5J4aoEDZ+YlNh79i9yFG5Cfv0BuZp2s7wKrE6/xbN5pe7STe2mPjnaLtLzjJunezCPpgOR5g
- zFXVHXXxuS518z0uYjIp1Lu8LsE+Hok0Yy+1hMNvd+jctg0iQWNxZ9Y8YflraJ8/HnSpZPeQJgr
- ajQDDm9amsoB6wGM7YpsQiE7GTN+cA0QMRlp30521hVu/6yeCEDqZyW+8qkdtDIt1EJb3JhMsx4
- VzLTkeMEdHtWZ2GXKlfNvNaWYnksLfi6q2C7T08h05VzXkohE8jSmP9WHeoPMFtMG8rnjXN9Rrx
- 6mwyHNApsEomVX5gx0JcJxBDpXKKW5Ny6b6KTDXQus4C+j+lF1E3NndGyGbZX2uDtBDEERybCRF
- 4Rpja3xmwdlmvg31mLCavX9pnnV9xJGyiSS0z6e4s/b2yBf/m7IIBNzHuKZY6LpRt186CTo7+ze
- OH0S7WtKYhGB5nQ==
-X-Developer-Key: i=jbrunet@baylibre.com; a=openpgp;
- fpr=F29F26CF27BAE1A9719AE6BDC3C92AAF3E60AED9
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mwTkK25Wdk3u_xGDqOaQj7Oc4I2DLIkL
+X-Proofpoint-ORIG-GUID: mwTkK25Wdk3u_xGDqOaQj7Oc4I2DLIkL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-05_09,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 phishscore=0 impostorscore=0
+ malwarescore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2407110000 definitions=main-2409050106
 
-IEC958-3 defines sampling rate up to 768 kHz.
-Such rates maybe used with high bandwidth IEC958 links, such as eARC.
 
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
----
- sound/soc/codecs/spdif_receiver.c    | 3 ++-
- sound/soc/codecs/spdif_transmitter.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+On 9/5/2024 7:09 AM, Krzysztof Kozlowski wrote:
+> On 05/09/2024 16:03, Nikunj Kela wrote:
+>> On 9/5/2024 1:04 AM, Krzysztof Kozlowski wrote:
+>>> On 04/09/2024 23:06, Nikunj Kela wrote:
+>>>> On 9/4/2024 9:58 AM, Andrew Lunn wrote:
+>>>>>> Sorry, didn't realize SPI uses different subject format than other
+>>>>>> subsystems. Will fix in v3. Thanks
+>>>>> Each subsystem is free to use its own form. e.g for netdev you will
+>>>>> want the prefix [PATCH net-next v42] net: stmmac: dwmac-qcom-ethqos:
+>>>> of course they are! No one is disputing that.
+>>>>> This is another reason why you should be splitting these patches per
+>>>>> subsystem, and submitting both the DT bindings and the code changes as
+>>>>> a two patch patchset. You can then learn how each subsystem names its
+>>>>> patches.
+>>>> Qualcomm QUPs chips have serial engines that can be configured as
+>>>> UART/I2C/SPI so QUPs changes require to be pushed in one series for all
+>>>> 3 subsystems as they all are dependent.
+>>> No, they are not dependent. They have never been. Look how all other
+>>> upstreaming process worked in the past.
+>> Top level QUP node(patch#18) includes i2c,spi,uart nodes.
+>> soc/qcom/qcom,geni-se.yaml validate those subnodes against respective
+>> yaml. The example that is added in YAML file for QUP node will not find
+>> sa8255p compatibles if all 4 yaml(qup, i2c, spi, serial nodes) are not
+>> included in the same series.
+>>
+> So where is the dependency? I don't see it. 
 
-diff --git a/sound/soc/codecs/spdif_receiver.c b/sound/soc/codecs/spdif_receiver.c
-index 862e0b654a1c..310123d2bb5f 100644
---- a/sound/soc/codecs/spdif_receiver.c
-+++ b/sound/soc/codecs/spdif_receiver.c
-@@ -28,7 +28,8 @@ static const struct snd_soc_dapm_route dir_routes[] = {
- 	{ "Capture", NULL, "spdif-in" },
- };
- 
--#define STUB_RATES	SNDRV_PCM_RATE_8000_192000
-+#define STUB_RATES	(SNDRV_PCM_RATE_8000_768000 | \
-+			 SNDRV_PCM_RATE_128000)
- #define STUB_FORMATS	(SNDRV_PCM_FMTBIT_S16_LE | \
- 			SNDRV_PCM_FMTBIT_S20_3LE | \
- 			SNDRV_PCM_FMTBIT_S24_LE  | \
-diff --git a/sound/soc/codecs/spdif_transmitter.c b/sound/soc/codecs/spdif_transmitter.c
-index 736518921555..db51a46e689d 100644
---- a/sound/soc/codecs/spdif_transmitter.c
-+++ b/sound/soc/codecs/spdif_transmitter.c
-@@ -21,7 +21,8 @@
- 
- #define DRV_NAME "spdif-dit"
- 
--#define STUB_RATES	SNDRV_PCM_RATE_8000_192000
-+#define STUB_RATES	(SNDRV_PCM_RATE_8000_768000 | \
-+			 SNDRV_PCM_RATE_128000)
- #define STUB_FORMATS	(SNDRV_PCM_FMTBIT_S16_LE | \
- 			SNDRV_PCM_FMTBIT_S20_3LE | \
- 			SNDRV_PCM_FMTBIT_S24_LE  | \
+Ok, what is your suggestion on dt-schema check failure in that case as I
+mentioned above? Shall we remove examples from yaml that we added?
 
--- 
-2.45.2
 
+> Anyway, if you insist,
+> provide reasons why this should be the only one patchset - from all
+> SoCs, all companies, all developers - getting an exception from standard
+> merging practice and from explicit rule about driver change. See
+> submitting bindings.
+>
+> This was re-iterated over and over, but you keep claiming you need some
+> sort of special treatment. If so, please provide arguments WHY this
+> requires special treatment and *all* other contributions are fine with it.
+>
+> Best regards,
+> Krzysztof
+>
 
