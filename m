@@ -1,40 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-30919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C20396DA35
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:24:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6545B96DA4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:29:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F4E11C24153
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:24:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A02001C236BE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:29:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE1AD19AA56;
-	Thu,  5 Sep 2024 13:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDA2E19D09B;
+	Thu,  5 Sep 2024 13:29:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lqn9dJfd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59AAC19AA73;
-	Thu,  5 Sep 2024 13:24:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F41F19ABDE;
+	Thu,  5 Sep 2024 13:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725542660; cv=none; b=idjN3VAGLDpxsSZz0yO/knH1CKz1XP5AWRBBxeRyQ/5dtvgPDvj6AZkU5zwJOw8rOf1G7sWSok8B/V4xL4p4MirPZTbkqjM4XSamuaF128Nj2P8yX8c4VSFc3sCOnuNw51/Dtj5sQGcIAOJawNpB/dMpXQ10TIfLhEP7FfsRjDo=
+	t=1725542954; cv=none; b=TEHqwFzmr63vhpt0AEGuEsHXw2l2tb57MX0yfCGvdK04bmDjW7YWrSJ9JbbHttshpb4N6dtPD79hTH+b7FINnjKd0bNeK2BBMyQ0BgKzJ+slf8Y8K9qYOsY9ol023FPIsyDHjHgnJNOhABnpyIjPfhOGIGC30lG3RPp5015EtgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725542660; c=relaxed/simple;
-	bh=rM/wBWPr26fVgdZjczjk5Z21mwxZ3d1vEzmRuZNZLnY=;
+	s=arc-20240116; t=1725542954; c=relaxed/simple;
+	bh=zwzF3n47IQpixX0LPHL82vmpC1WSMTGaJxZirNPv2Fo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tUTeObzEjiRo+/8sj5BR2hI+UdLDOFcN4gsI1iF2WiOdKNWzxt8wgdQppzTswosIPnPlaCqRlLW8qWodCpcH6wLavKTckM3iAFm85ZX6kb/CI1DsqdlAdoNOMJqm7143AVb22pLTGpq7mWth3bw56WyXycFHCMv30ytWMK+h9TM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7C1A5FEC;
-	Thu,  5 Sep 2024 06:24:44 -0700 (PDT)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6ED823F73F;
-	Thu,  5 Sep 2024 06:24:16 -0700 (PDT)
-Message-ID: <fb54ef8d-f769-47d5-8a9d-aa93f96d5c41@arm.com>
-Date: Thu, 5 Sep 2024 14:24:14 +0100
+	 In-Reply-To:Content-Type; b=XeopQ9z3OGUxaF34xm2/SZw8nhckROeJWFM4Tuitp0GTODYBuutJ1ks/+3eQSc8TSn8YagG5gRwqhqDB3SSsh9hbULz6njFmt0CigghOsIcBw1BVBeJD3jIIkxV71r4S5O9JMAMPATPTv98iqCXmuyTCqRH/Xd72b0rt0031fz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lqn9dJfd; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53653ee23adso665644e87.3;
+        Thu, 05 Sep 2024 06:29:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725542951; x=1726147751; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q+ZNMU+mtXMZOUXhINj9JrbPWX89/nImCgEnep73Qy4=;
+        b=lqn9dJfd/HMOqGWyYMiKqQrewWpaMLyWUqjO5OSZsVimUeOQ7TLw5HZYv87BVOiecG
+         lphV66s38t+BHNDahC9ERIm45seJJhIQdEh3WE68060fc3aahG8clMhr68UXCPP1yEAJ
+         e4qjG7K5Uu1MumW+ujgjPTEPRCZVBtf7gpxKoha25zoy1lp8sToaLJY8zw8zX7BpmQnO
+         PM+JoeCstKJbDIpVaJLkRIbQg7zNBFVqv4o9cTKvCDT//rYFA0M5PLWszfaEstlN8PcA
+         nne6moaNRHMu0vVXnlySqHXAAdLYYyFgWUj+9EPob8VV++YeO3ZEygvGg0asdgJH02PR
+         rwxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725542951; x=1726147751;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q+ZNMU+mtXMZOUXhINj9JrbPWX89/nImCgEnep73Qy4=;
+        b=vZNqrQY0MOfQ8zYF6hZYSRSy+d3NNJy4WY1Xkrc3urz0n9i9KEaTV0gsYN92KrM0wz
+         pwqwOVLYBaq2kFYeJdw22vpTC2FV6Q0P0juLfBJs0cLiuAlOso3E/pi/FPk6Umjj6jrz
+         JKoy23XCXBoNGdU0clgNzpBJ1gRlfNNqz60fJk9sHYPTTleyPjjCVUPQVeAjFODB+Wxm
+         6H5AnQiCck8s3BcbF3SSYoi+nV4AuZ9v7glb2+OujtNEzoY5OrJwXFrHlDylOqwf8ScE
+         Vy1AYjQG/ENHIiVX1PkYln2SGiOXcvcUVfDo3mebs9EXnWoR1jVgkexYLnXcNLGyYShT
+         N+ng==
+X-Forwarded-Encrypted: i=1; AJvYcCUDjo4S5pRhnacrnpNUkCjI95YbHS20imJ7KL0AhW3KmG+K4k0YGVSLT8zdFtJ/A+4sBBcImLlJDquB5zHu@vger.kernel.org, AJvYcCUNN3ali2suC2cKWr/uhNDVP7+wo+6AT5kNk7Vq1fjy3CXA3KLx4+xk6HcKFCC1i9FZWJ0Z2CFaFTS3@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwfW/X/D7Ob4GmyO5shJYmxVg+k2JEMIe3MCpYLa6A5PagGuP5
+	Ehz/u8/61IfnhhDC5Wn8pmGGYTUbYq4n7QgE21KLRNazYjWIREVRpOwwwg==
+X-Google-Smtp-Source: AGHT+IHpvTavpyMQBn+HHOCGI8ttAI6AD8ywBOR0vq50vZd3SJxLg6FLRjkiMT0p8KkNKshQDjIUsg==
+X-Received: by 2002:a05:6512:2309:b0:52e:9b9e:a6cb with SMTP id 2adb3069b0e04-53546b24bfbmr14932004e87.15.1725542950241;
+        Thu, 05 Sep 2024 06:29:10 -0700 (PDT)
+Received: from [192.168.105.194] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8a623a68ffsm136495966b.161.2024.09.05.06.29.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Sep 2024 06:29:09 -0700 (PDT)
+Message-ID: <bb1a6cd0-42aa-4452-9203-460ba768e6a0@gmail.com>
+Date: Thu, 5 Sep 2024 15:29:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,130 +76,56 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "iommu/io-pgtable-arm: Optimise non-coherent
- unmap"
-To: Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev
-Cc: linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Ashish Mhetre <amhetre@nvidia.com>, Rob Clark <robdclark@chromium.org>,
- Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
- "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <20240905124956.84932-1-robdclark@gmail.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20240905124956.84932-1-robdclark@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 3/4] soc: qcom: llcc: add errata to get bank num
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240903-qcs8300_llcc_driver-v1-0-228659bdf067@quicinc.com>
+ <20240903-qcs8300_llcc_driver-v1-3-228659bdf067@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@gmail.com>
+In-Reply-To: <20240903-qcs8300_llcc_driver-v1-3-228659bdf067@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/09/2024 1:49 pm, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
+On 3.09.2024 8:21 AM, Jingyi Wang wrote:
+> Use "num-banks" property to indicate the actual num of banks for
+> errata.
 > 
-> This reverts commit 85b715a334583488ad7fbd3001fe6fd617b7d4c0.
-> 
-> It was causing gpu smmu faults on x1e80100.
-> 
-> I _think_ what is causing this is the change in ordering of
-> __arm_lpae_clear_pte() (dma_sync_single_for_device() on the pgtable
-> memory) and io_pgtable_tlb_flush_walk().
-
-As I just commented, how do you believe the order of operations between:
-
-	__arm_lpae_clear_pte();
-  	if (!iopte_leaf()) {
-  		io_pgtable_tlb_flush_walk();
-
-and:
-  	
-  	if (!iopte_leaf()) {
-		__arm_lpae_clear_pte();
-  		io_pgtable_tlb_flush_walk();
-
-fundamentally differs?
-
-I'm not saying there couldn't be some subtle bug in the implementation 
-which we've all missed, but I still can't see an issue with the intended 
-logic.
-
->  I'm not entirely sure how
-> this patch is supposed to work correctly in the face of other
-> concurrent translations (to buffers unrelated to the one being
-> unmapped(), because after the io_pgtable_tlb_flush_walk() we can have
-> stale data read back into the tlb.
-
-Read back from where? The ex-table PTE which was already set to zero 
-before tlb_flush_walk was called?
-
-And isn't the hilariously overcomplicated TBU driver supposed to be 
-telling you exactly what happened here? Otherwise I'm going to continue 
-to seriously question the purpose of shoehorning that upstream at all...
-
-Thanks,
-Robin.
-
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
->   drivers/iommu/io-pgtable-arm.c | 31 ++++++++++++++-----------------
->   1 file changed, 14 insertions(+), 17 deletions(-)
+>  drivers/soc/qcom/llcc-qcom.c | 15 ++++++++++-----
+>  1 file changed, 10 insertions(+), 5 deletions(-)
 > 
-> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
-> index 16e51528772d..85261baa3a04 100644
-> --- a/drivers/iommu/io-pgtable-arm.c
-> +++ b/drivers/iommu/io-pgtable-arm.c
-> @@ -274,13 +274,13 @@ static void __arm_lpae_sync_pte(arm_lpae_iopte *ptep, int num_entries,
->   				   sizeof(*ptep) * num_entries, DMA_TO_DEVICE);
->   }
->   
-> -static void __arm_lpae_clear_pte(arm_lpae_iopte *ptep, struct io_pgtable_cfg *cfg, int num_entries)
-> +static void __arm_lpae_clear_pte(arm_lpae_iopte *ptep, struct io_pgtable_cfg *cfg)
->   {
-> -	for (int i = 0; i < num_entries; i++)
-> -		ptep[i] = 0;
->   
-> -	if (!cfg->coherent_walk && num_entries)
-> -		__arm_lpae_sync_pte(ptep, num_entries, cfg);
-> +	*ptep = 0;
+> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+> index 8fa4ffd3a9b5..3fb45e625d82 100644
+> --- a/drivers/soc/qcom/llcc-qcom.c
+> +++ b/drivers/soc/qcom/llcc-qcom.c
+> @@ -1275,12 +1275,17 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>  		goto err;
+>  	cfg = &cfgs->llcc_config[cfg_index];
+>  
+> -	ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
+> -	if (ret)
+> -		goto err;
+> +	if (unlikely(!of_property_read_u32(dev->of_node, "num-banks", &num_banks))) {
+> +		/* errata: get num of llcc banks. */
+> +	} else {
+> +		ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
+> +		if (ret)
+> +			goto err;
 > +
-> +	if (!cfg->coherent_walk)
-> +		__arm_lpae_sync_pte(ptep, 1, cfg);
->   }
->   
->   static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
-> @@ -653,28 +653,25 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->   		max_entries = ARM_LPAE_PTES_PER_TABLE(data) - unmap_idx_start;
->   		num_entries = min_t(int, pgcount, max_entries);
->   
-> -		/* Find and handle non-leaf entries */
-> -		for (i = 0; i < num_entries; i++) {
-> -			pte = READ_ONCE(ptep[i]);
-> +		while (i < num_entries) {
-> +			pte = READ_ONCE(*ptep);
->   			if (WARN_ON(!pte))
->   				break;
->   
-> -			if (!iopte_leaf(pte, lvl, iop->fmt)) {
-> -				__arm_lpae_clear_pte(&ptep[i], &iop->cfg, 1);
-> +			__arm_lpae_clear_pte(ptep, &iop->cfg);
->   
-> +			if (!iopte_leaf(pte, lvl, iop->fmt)) {
->   				/* Also flush any partial walks */
->   				io_pgtable_tlb_flush_walk(iop, iova + i * size, size,
->   							  ARM_LPAE_GRANULE(data));
->   				__arm_lpae_free_pgtable(data, lvl + 1, iopte_deref(pte, data));
-> +			} else if (!iommu_iotlb_gather_queued(gather)) {
-> +				io_pgtable_tlb_add_page(iop, gather, iova + i * size, size);
->   			}
-> -		}
->   
-> -		/* Clear the remaining entries */
-> -		__arm_lpae_clear_pte(ptep, &iop->cfg, i);
-> -
-> -		if (gather && !iommu_iotlb_gather_queued(gather))
-> -			for (int j = 0; j < i; j++)
-> -				io_pgtable_tlb_add_page(iop, gather, iova + j * size, size);
-> +			ptep++;
-> +			i++;
-> +		}
->   
->   		return i * size;
->   	} else if (iopte_leaf(pte, lvl, iop->fmt)) {
+> +		num_banks &= LLCC_LB_CNT_MASK;
+> +		num_banks >>= LLCC_LB_CNT_SHIFT;
+> +	}
+
+Is num-banks going to be populated by the bootloader, or hardcoded?
+
+If the latter, we may just do so in the driver, hoping no more SoCs
+have this erratum..
+
+Konrad
 
