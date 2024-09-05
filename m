@@ -1,73 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-30983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1F4F96DF55
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:14:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE07996DF6F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:23:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FFCC287F13
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:14:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3ACD81F2210A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:23:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3572C19FA60;
-	Thu,  5 Sep 2024 16:14:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="bi7BbRdO"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42A591A00CE;
+	Thu,  5 Sep 2024 16:23:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB52019DF75
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 16:14:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BBDA19FA8E;
+	Thu,  5 Sep 2024 16:22:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725552862; cv=none; b=V4yOXcB0uQ5etXpCco0mi8O2gSOvH2iR6RNoQHI8SYe3lMV+wfso1OWntg/EtgKM3thg9WczsqmtCqP26RcjBxTIw9vS7m4PjCbBqJ8lpJroIK95ikOS2Pn5FbwS+N06g46PPfmmIZ7gWtpLEk/WrhDDiJNDzYZFcGUqqbf9Vn4=
+	t=1725553380; cv=none; b=sgm6J6rdfJXF+pQMp6sFqwGjOXWABpQCboYsqUIl6+IyJNmYjqotdrtNmcFJAKpwNJl8XjuA7Rg04hcNLRYpm6ADIDGrnW61L3Y0L4ycJm44OKRaCxpFH2M2+7Sqbap7V0JT8KrTbXh1+BeX68Jgjl1BNA4KTIFLRQkNCVEORII=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725552862; c=relaxed/simple;
-	bh=pO7EaXwN+HDMElTFjT9hXVmi2mp0g0SDHVahBbNCq+o=;
+	s=arc-20240116; t=1725553380; c=relaxed/simple;
+	bh=uaScPftzw46kfudcvhqBtQpzC3pXNqXq1+GzDuS1Ax0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tRySLfyGI4w3SGWQD6gtyDt3X5Cn1CX3EpY6v88luE+NcTcfyC5v4yQntP9PioEhaau7bLpUMiPP+uozrzcWJup123oSwgeTMrCHJlXmOikYn5cmLRiuwmdhZ3ifpoBLLKT/jPA/7aIwCY+Fi5hf8IKnozgk68F7tRiSgLMEfTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=bi7BbRdO; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-371941bbfb0so657688f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 09:14:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1725552858; x=1726157658; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SQCzkFNF6R0y5OgjwiBOcxXDxjjM7SPAsOwwAJex/C0=;
-        b=bi7BbRdO/Ze4w2q9XXbUcoEFLHd+AOeSdfBswdnT2OVyJhRDywNWxj41JLpMUkQJEz
-         qm/a8MAO7+0us5UjeoXpkOXqRGztolJgML2MJcl03JTP5CGHa4LIjrL4ZmTVj36h22vP
-         1gIN+x9gm/Or2tfOmPpIEGWppAWPfxnZU6Tz/djKvR2yuUmCgsBMIRm5jiir1Dw6aG/5
-         XSIvlTPBF0cXw84SvvOblMli2DFHfGY2tMgw5ml1GsHIM6VnlZFy2jGHBEP4bZBH+eVj
-         4HsUjkjw+y7tdNbKYyvN2+gmuLQvIMgH65/zske394nebPzx5GqUGDNdnH7yZrdtDR3B
-         TqRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725552858; x=1726157658;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SQCzkFNF6R0y5OgjwiBOcxXDxjjM7SPAsOwwAJex/C0=;
-        b=Q3YVumED4//3sdcnqPgVwRPrn0G+DRpkybpvqGykSi7J+nRseGpHHW+OgxCak/PbTS
-         VHlh2B9ASoVal6hR2GLD5ca3iIwCvBtaQfKX3m8SMd9dqNynnJQr8mgk16EVLNT5G7mG
-         QUVt7CNBwlUHJ+WPYICPBs5bONw3EIRlgQfklGbE7gt6EKFSYxj9IIf1ri977QxTBeL4
-         BsDmsgMhHdCjl/2/++6Hb+fcDOr3cjxOTKFiexQ0z0FxAmTHmChaQPxTdQgH06vO+nal
-         WHHhxHw3wscsoVVsK/zFCyLsTTKqQjNCd8e3nf5bOCZPLk471ecP8r/qVZWCcMmKv9mk
-         JP5w==
-X-Gm-Message-State: AOJu0Yy7L6zElRxd9IpyUKdpzBKqTaicff3BUTcdM4YxktmUYYpxrCfL
-	5ECyyPmDTMo9cX+lD5DJ2sn8y22z0MDOxMKNSzekLxWtrKYR2fTrKj4Iqx9PuWE=
-X-Google-Smtp-Source: AGHT+IGTeRidPfzjWMeiTd2JcaXWh07h5yeyFVwKWBYencGxKEZw41jcBDd8CO30rx53dbUA3JWpWg==
-X-Received: by 2002:a5d:6991:0:b0:374:c7d1:2ac0 with SMTP id ffacd0b85a97d-3787e496687mr2221867f8f.47.1725552857141;
-        Thu, 05 Sep 2024 09:14:17 -0700 (PDT)
-Received: from [192.168.108.50] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-374c6543ee3sm12569790f8f.12.2024.09.05.09.14.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Sep 2024 09:14:16 -0700 (PDT)
-Message-ID: <747218ab-86a1-4308-b34a-98064ccdac30@freebox.fr>
-Date: Thu, 5 Sep 2024 18:14:15 +0200
+	 In-Reply-To:Content-Type; b=N4UkHGf3YC1upOClNmm7mQfkzqwF79KjuOdVwalxVrxCXjqmwgiFx+vzrYa8H/50ZKyK+xSxG4UWfhtm1YiZ5x5CQ1NjQGyFs3k5RHL0zAr3M9OMm2sra536UBqG6+aMeA5PgttavbGjsdpzCEa+0dVRq5RNCP0H3p93BEL1bew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 81016FEC;
+	Thu,  5 Sep 2024 09:23:24 -0700 (PDT)
+Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 342573F73B;
+	Thu,  5 Sep 2024 09:22:53 -0700 (PDT)
+Message-ID: <7f4ee8d7-0e17-4363-bf91-d67846157c67@arm.com>
+Date: Thu, 5 Sep 2024 17:22:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,57 +42,159 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/6] HDMI TX support in msm8998
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>,
- Pierre-Hugues Husson <phhusson@freebox.fr>,
- Jeffrey Hugo <quic_jhugo@quicinc.com>,
- Conor Dooley <conor.dooley@microchip.com>
-References: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
- <172550712143.3299484.1580127137460046609.b4-ty@linaro.org>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <172550712143.3299484.1580127137460046609.b4-ty@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH] Revert "iommu/io-pgtable-arm: Optimise non-coherent
+ unmap"
+To: Rob Clark <robdclark@gmail.com>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, Ashish Mhetre <amhetre@nvidia.com>,
+ Rob Clark <robdclark@chromium.org>, Will Deacon <will@kernel.org>,
+ Joerg Roedel <joro@8bytes.org>,
+ "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+ open list <linux-kernel@vger.kernel.org>
+References: <20240905124956.84932-1-robdclark@gmail.com>
+ <fb54ef8d-f769-47d5-8a9d-aa93f96d5c41@arm.com>
+ <CAF6AEGuv=yyVDx58iWU203BQPp-pT2SAC9yW-JMm2U+MTsGUaQ@mail.gmail.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <CAF6AEGuv=yyVDx58iWU203BQPp-pT2SAC9yW-JMm2U+MTsGUaQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 05/09/2024 05:33, Dmitry Baryshkov wrote:
-
-> On Wed, 24 Jul 2024 17:01:33 +0200, Marc Gonzalez wrote:
->
->> DT bits required for HDMI TX support in qcom APQ8098 (MSM8998 cousin)
+On 05/09/2024 2:57 pm, Rob Clark wrote:
+> On Thu, Sep 5, 2024 at 6:24 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>>
+>> On 05/09/2024 1:49 pm, Rob Clark wrote:
+>>> From: Rob Clark <robdclark@chromium.org>
+>>>
+>>> This reverts commit 85b715a334583488ad7fbd3001fe6fd617b7d4c0.
+>>>
+>>> It was causing gpu smmu faults on x1e80100.
+>>>
+>>> I _think_ what is causing this is the change in ordering of
+>>> __arm_lpae_clear_pte() (dma_sync_single_for_device() on the pgtable
+>>> memory) and io_pgtable_tlb_flush_walk().
+>>
+>> As I just commented, how do you believe the order of operations between:
+>>
+>>          __arm_lpae_clear_pte();
+>>          if (!iopte_leaf()) {
+>>                  io_pgtable_tlb_flush_walk();
+>>
+>> and:
+>>
+>>          if (!iopte_leaf()) {
+>>                  __arm_lpae_clear_pte();
+>>                  io_pgtable_tlb_flush_walk();
+>>
+>> fundamentally differs?
 > 
-> Applied, thanks!
+> from my reading of the original patch, the ordering is the same for
+> non-leaf nodes, but not for leaf nodes
+
+But tlb_flush_walk is never called for leaf entries either way, so no 
+such ordering exists... And the non-leaf path still calls 
+__arm_lpae_clear_pte() and io_pgtable_tlb_add_page() in the same order 
+relative to each other too, it's just now done for the whole range in 
+one go, after any non-leaf entries have already been dealt with.
+
+Thanks,
+Robin.
+
 > 
-> [1/6] dt-bindings: phy: add qcom,hdmi-phy-8998
->       https://gitlab.freedesktop.org/lumag/msm/-/commit/8886def25eef
-> [2/6] dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
->       https://gitlab.freedesktop.org/lumag/msm/-/commit/656810411b1d
-> [3/6] drm/msm/hdmi: add "qcom,hdmi-tx-8998" compatible
->       https://gitlab.freedesktop.org/lumag/msm/-/commit/a61eb17f40e8
-> [4/6] drm/msm: add msm8998 hdmi phy/pll support
->       https://gitlab.freedesktop.org/lumag/msm/-/commit/caedbf17c48d
-
-Hello Bjorn,
-
-Now that the binding & driver parts have been merged,
-(Thanks, Dmitry! And thanks to all reviewers)
-am I right to assume that you are supposed to pick up
-patches 5 & 6 for the msm8998 DTSI?
-(Hopefully in time for 6.12-rc1)
-
-Regards
-
+>> I'm not saying there couldn't be some subtle bug in the implementation
+>> which we've all missed, but I still can't see an issue with the intended
+>> logic.
+>>
+>>>   I'm not entirely sure how
+>>> this patch is supposed to work correctly in the face of other
+>>> concurrent translations (to buffers unrelated to the one being
+>>> unmapped(), because after the io_pgtable_tlb_flush_walk() we can have
+>>> stale data read back into the tlb.
+>>
+>> Read back from where? The ex-table PTE which was already set to zero
+>> before tlb_flush_walk was called?
+>>
+>> And isn't the hilariously overcomplicated TBU driver supposed to be
+>> telling you exactly what happened here? Otherwise I'm going to continue
+>> to seriously question the purpose of shoehorning that upstream at all...
+> 
+> I guess I could try the TBU driver.  But I already had my patchset to
+> extract the pgtable walk for gpu devcore dump, and that is telling me
+> that the CPU view of the pgtable is fine.  Which I think just leaves a
+> tlbinv problem.  If that is the case, swapping the order of leaf node
+> cpu cache ops and tlbinv ops seems like the cause.  But maybe I'm
+> missing something.
+> 
+> BR,
+> -R
+> 
+>> Thanks,
+>> Robin.
+>>
+>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
+>>> ---
+>>>    drivers/iommu/io-pgtable-arm.c | 31 ++++++++++++++-----------------
+>>>    1 file changed, 14 insertions(+), 17 deletions(-)
+>>>
+>>> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+>>> index 16e51528772d..85261baa3a04 100644
+>>> --- a/drivers/iommu/io-pgtable-arm.c
+>>> +++ b/drivers/iommu/io-pgtable-arm.c
+>>> @@ -274,13 +274,13 @@ static void __arm_lpae_sync_pte(arm_lpae_iopte *ptep, int num_entries,
+>>>                                   sizeof(*ptep) * num_entries, DMA_TO_DEVICE);
+>>>    }
+>>>
+>>> -static void __arm_lpae_clear_pte(arm_lpae_iopte *ptep, struct io_pgtable_cfg *cfg, int num_entries)
+>>> +static void __arm_lpae_clear_pte(arm_lpae_iopte *ptep, struct io_pgtable_cfg *cfg)
+>>>    {
+>>> -     for (int i = 0; i < num_entries; i++)
+>>> -             ptep[i] = 0;
+>>>
+>>> -     if (!cfg->coherent_walk && num_entries)
+>>> -             __arm_lpae_sync_pte(ptep, num_entries, cfg);
+>>> +     *ptep = 0;
+>>> +
+>>> +     if (!cfg->coherent_walk)
+>>> +             __arm_lpae_sync_pte(ptep, 1, cfg);
+>>>    }
+>>>
+>>>    static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
+>>> @@ -653,28 +653,25 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
+>>>                max_entries = ARM_LPAE_PTES_PER_TABLE(data) - unmap_idx_start;
+>>>                num_entries = min_t(int, pgcount, max_entries);
+>>>
+>>> -             /* Find and handle non-leaf entries */
+>>> -             for (i = 0; i < num_entries; i++) {
+>>> -                     pte = READ_ONCE(ptep[i]);
+>>> +             while (i < num_entries) {
+>>> +                     pte = READ_ONCE(*ptep);
+>>>                        if (WARN_ON(!pte))
+>>>                                break;
+>>>
+>>> -                     if (!iopte_leaf(pte, lvl, iop->fmt)) {
+>>> -                             __arm_lpae_clear_pte(&ptep[i], &iop->cfg, 1);
+>>> +                     __arm_lpae_clear_pte(ptep, &iop->cfg);
+>>>
+>>> +                     if (!iopte_leaf(pte, lvl, iop->fmt)) {
+>>>                                /* Also flush any partial walks */
+>>>                                io_pgtable_tlb_flush_walk(iop, iova + i * size, size,
+>>>                                                          ARM_LPAE_GRANULE(data));
+>>>                                __arm_lpae_free_pgtable(data, lvl + 1, iopte_deref(pte, data));
+>>> +                     } else if (!iommu_iotlb_gather_queued(gather)) {
+>>> +                             io_pgtable_tlb_add_page(iop, gather, iova + i * size, size);
+>>>                        }
+>>> -             }
+>>>
+>>> -             /* Clear the remaining entries */
+>>> -             __arm_lpae_clear_pte(ptep, &iop->cfg, i);
+>>> -
+>>> -             if (gather && !iommu_iotlb_gather_queued(gather))
+>>> -                     for (int j = 0; j < i; j++)
+>>> -                             io_pgtable_tlb_add_page(iop, gather, iova + j * size, size);
+>>> +                     ptep++;
+>>> +                     i++;
+>>> +             }
+>>>
+>>>                return i * size;
+>>>        } else if (iopte_leaf(pte, lvl, iop->fmt)) {
 
