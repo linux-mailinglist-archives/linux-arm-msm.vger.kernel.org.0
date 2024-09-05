@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-30958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D23396DC89
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:52:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BC4E96DC8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:52:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CED84B2689D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:52:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6AAADB219B3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:52:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46AAA19DF52;
-	Thu,  5 Sep 2024 14:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06BE319DFB6;
+	Thu,  5 Sep 2024 14:51:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fbsjkb49"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cMxzLpHj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8A719CD12;
-	Thu,  5 Sep 2024 14:51:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD1C19DF4C;
+	Thu,  5 Sep 2024 14:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725547898; cv=none; b=cDcLphPekIuUAf4UR3UT8Vs9dRsD0GxIS+88j8lXGq6UoTXRCTqw+UCsPLPJCmuEuY8e0DesDJKtpydglHagO/SOtKek64sio7ZxRrJhhMsE569aT3iRZBvnNEvGPBO3fMJHxfFDNy2XVZGcci9S0wZANjzYrjG4yoxO+uWm7tU=
+	t=1725547899; cv=none; b=n2oXRtn2R7XqZiLw/fId27TQrzbFNsWKRxpeHop6JeczYMQPn3FTyNMufi3d3YEIHCjGBFa6JnGFnCMeYgFWlcefkhmHXDYnm5DLWj4aerzyOGbb1GUVlAW7jGy23n4FmRFYhURbuLCkG+4jYn9wrGs2B8kFvW7CCNA0af7Zd7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725547898; c=relaxed/simple;
-	bh=uXlziadan9hJzafa2UxEKSmDxQDugnNERdYxm6GapoY=;
+	s=arc-20240116; t=1725547899; c=relaxed/simple;
+	bh=a/XTT96P/eYWRZ+CcJVy75ymhUdqG+xB6TCQZjQXHOs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BpYYTfUuHFyBK7BA1m1IzfJ6Ka/qP99zJtgGBV6kD+h7L8Gj9+7Iv4If70hPAxgUl7CQ+ofMg+GVG+L80fIUc/4RA1JcrSua+nraqWHhxxAw2vuQHTZ/4dAHPrZ50epejhbTF+Ba2dgRDzhNyoLLBlDqF06V5Jpx1DyLcTwYOpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fbsjkb49; arc=none smtp.client-ip=209.85.218.41
+	 In-Reply-To:To:Cc; b=GjfNz//Su4gsi94EfJw9d/mZbHh5SXVzExyguZBka5FK1Mjx4xvVBwAYW/ty6oOKE7uESyXJwqWymo2AFoM5jHPkq25T9Yu1F40M4J18YiXLOdG8Pv8aZ5kVkFyzaS2Km6piO35b1lssZTlWlbToIZPNWe5NvIrRyoCmqre/Lc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cMxzLpHj; arc=none smtp.client-ip=209.85.208.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-a86910caf9cso370569166b.1;
-        Thu, 05 Sep 2024 07:51:36 -0700 (PDT)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c3ca32974fso947418a12.3;
+        Thu, 05 Sep 2024 07:51:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725547895; x=1726152695; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725547896; x=1726152696; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=f0kNTx+9AsOZWf/8yH7sCZ+xqB2wOOoaQ6wZ/cu7hDA=;
-        b=Fbsjkb49xm24KZTh+qkSg+avsr7AmG+IEA7W7nJVIj8SLw/tCbKW/gpEMCNr1+mg1M
-         t0LuEbwAwpXDRac6lt8NAfOFVNvBWseDZovTd4L9IFj5eo/qrgtmuAESsSKAb10voFRC
-         4AfuugtFB3pb28nbuxEc8Pl5L5fkyoLpiLMiSa1a0KLtmoJ76SDq3uIVQxvTmBfMbkFM
-         iqETrKcINPTiWbMJebwgUZcXLVNh1MnYIMrXvqCa36sXhdHcKfcIQxGPOAqSPw9tur6n
-         dH2QUTH2l5Kzl+wtTxcCc9QS1EokUnturazUJXCJzVl+Ne8CyiB98EhgGmgUxxdzT6/o
-         Jslg==
+        bh=rK5yBMEf90OUINDLf+RR7pYf+kiL8PQvR5Q2LbyjkQs=;
+        b=cMxzLpHjKjyhsMkBhGxSM4bqgXpgoKnSBbEb+EYF+erJ1GbQGIDuUiGzRtq55t1+VM
+         xoS5oDMIO7+mZYLvr12f9MDN4uYHzgY41ap3Yth4ThYg1mie6AMFux/VZ4vepmel1ohJ
+         2Q+YD/XGVU5n0U8iDGaIz2g7ZwArQeLEn8XUu8TmwfWafXza2fib6CvGkzOaARs0sRmu
+         zfZZB1TL88rwZd0EiGl1qFmR8beF9e+r6rreJXmB3OTzw42m4jy6KwsLnj2otc+PGjCV
+         82LUlPUUEQpl0FXtmUmTDHavVxjtiT8LzzCkDXANSok0THyDKh0rgCQOj3ThEdzmjRL6
+         kKZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725547895; x=1726152695;
+        d=1e100.net; s=20230601; t=1725547896; x=1726152696;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=f0kNTx+9AsOZWf/8yH7sCZ+xqB2wOOoaQ6wZ/cu7hDA=;
-        b=e5eK/X5JduGG05TMoshk6tMJmk3gO7tMlrf8EXuqsDl9jkdbAHZ/lRMb6/LGHN3IwS
-         uCeyUaY/SaHCEkRMUTbUgTrG0XVvDkK75AqnoKcy9ZX0AOBiWz62QFBM9tIzSukUecBM
-         0kPHDPVdcZf5SqEjuutaXAVEbc9l6+QgQvoU3LzT9RGJViCmQoRJfruIwMOmRYfIbzel
-         dEDUgZJ5G3OxpiM5DlCDfSq6fw+yl1esigxFsASRF/m+Mtd8tRqR/L7ATOMB+gXrgx7j
-         34QfQW7ICo2zw6tDeiKVb8QkHHn1ykd6GWladA9f99gScfjnj55KNFha3gfLuWb9ld3e
-         qZ3A==
-X-Forwarded-Encrypted: i=1; AJvYcCUI7L0gaL3C0fIGX3UfDjD+y1R/tH5LeLfVfI9DCEQxtxTjg86UNVw7CLxYQ8UwrGJ3K6IF0GKN9j4=@vger.kernel.org, AJvYcCVhVUkLj+40zshzPEv8T4pSvzWKKUZLXvyPInOV/ZJaKBYYTmiIYCyAaIVVOHQdj1gcAcFE4FZGUpQAlfp+@vger.kernel.org
-X-Gm-Message-State: AOJu0YzlEEapb0O2gpmVVReDlwao5fD7cb6tbqk5Reen0hscTdftIRfq
-	retqURFRbqTjbum/FBRtIPHF6sQ76jDb/E08Xt2iYrmy3DvXyHUD
-X-Google-Smtp-Source: AGHT+IE5UQSl+WtlgnpxePBQvDH47cv/J7+XI+eIwVmdijVNuH5dElK67nTmbEB4l9EcGraswn7mNg==
-X-Received: by 2002:a17:906:ef09:b0:a77:ab9e:9202 with SMTP id a640c23a62f3a-a8a42f8af0amr597545866b.4.1725547894568;
-        Thu, 05 Sep 2024 07:51:34 -0700 (PDT)
+        bh=rK5yBMEf90OUINDLf+RR7pYf+kiL8PQvR5Q2LbyjkQs=;
+        b=WnhmJePNKZpo7fz9temvBKDMO1w34J19tjcnIpX7/R3YF+vXIef4a1LNa77DCsf5bS
+         qo0q0yVrzXg83M1j1Uce08rnoNmlSbR5A3eYy115RxHYRFsC2EMCnhKkLV6RUh/gP+kF
+         AAxNbXQqv+SEYM8JJnZ649P38VO0LidDE4N8cg4oC6Quo8Z2chj9Vj5rHh6f9TKiwLoj
+         mCCA24leCELOFyaTnDg/neC3MMhL0DgNKSSeBfh8ZYqfI9Kl3SWGG6l5Pf3kxtiNKDG+
+         PolenBqG34oj307lv1xTOZWbnh5XCWFFsCPZHkzH5I9kGLIcqdQfYusOkK9UF2+URA9U
+         js8g==
+X-Forwarded-Encrypted: i=1; AJvYcCVrEml4UhwiUlKgdJluQwnnOZOQRJ8kYIiRo7WtMGifC+ue+aZu+UEnWfJQkxeWaTBzUEBVuU/7yr1VjIff@vger.kernel.org, AJvYcCWhVe9oChX04T2McLoEUCK28aS09YZSxmwvrHsd29VIIONTHSPoVOKbF+T+FEv9J97xZxnWiMSq1ds=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxRXH81Gd/bXYy5UmyIyw34pYB1AlIhg5RoYPub27MBu2RxtES
+	zSfjebEdvSiPmDnv5yeEddSBOV1Bto/hrZYk1JPKXXZLUiD/CxMm
+X-Google-Smtp-Source: AGHT+IGG7m3iphMCYBLjg1kpWjifWUCOQ4PeH0nb4nsX7mDac3Dg9OfexwXPRgyu5GmjMvm/+qt6vA==
+X-Received: by 2002:a05:6402:50c9:b0:5c3:c51b:9bdd with SMTP id 4fb4d7f45d1cf-5c3c51b9ddemr3304156a12.18.1725547896294;
+        Thu, 05 Sep 2024 07:51:36 -0700 (PDT)
 Received: from [192.168.1.17] (host-87-16-167-153.retail.telecomitalia.it. [87.16.167.153])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc52b376sm1320732a12.7.2024.09.05.07.51.33
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc52b376sm1320732a12.7.2024.09.05.07.51.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 07:51:34 -0700 (PDT)
+        Thu, 05 Sep 2024 07:51:35 -0700 (PDT)
 From: Antonino Maniscalco <antomani103@gmail.com>
-Date: Thu, 05 Sep 2024 16:51:23 +0200
-Subject: [PATCH v3 05/10] drm/msm/A6xx: Sync relevant adreno_pm4.xml
- changes
+Date: Thu, 05 Sep 2024 16:51:24 +0200
+Subject: [PATCH v3 06/10] drm/msm/A6xx: Use posamble to reset counters on
+ preemption
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240905-preemption-a750-t-v3-5-fd947699f7bc@gmail.com>
+Message-Id: <20240905-preemption-a750-t-v3-6-fd947699f7bc@gmail.com>
 References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
 In-Reply-To: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -95,106 +95,152 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1725547882; l=3764;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1725547882; l=5328;
  i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
- bh=uXlziadan9hJzafa2UxEKSmDxQDugnNERdYxm6GapoY=;
- b=K5z6+gJ9F0BUwR3UCDyC7rv+AaTI7U2htDGXQBbB6BnTM0gnx0WfMyXwNGBhrHavVE0Iqoznh
- YCwKNM9d3zWA1YpbZcQ+DXZU8cmXrIJ/oOtvGUTOpGxobVaiDiLk++c
+ bh=a/XTT96P/eYWRZ+CcJVy75ymhUdqG+xB6TCQZjQXHOs=;
+ b=RQklsGpRSyO/4orKlM6bUbyl0cn+LEDDh6qvZghEOaoWUXTaFkxARLH0z8KRz6wgN0WP7wC5X
+ WI22+w9arIDB0a+A8xvSyqspxrtc7R3zrf3DaX25AesaHYBytdlZGRP
 X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-In mesa CP_SET_CTXSWITCH_IB is renamed to CP_SET_AMBLE and some other
-names are changed to match KGSL. Import those changes.
-
-The changes have not been merged yet in mesa but are necessary for this
-series.
+Use the postamble to reset perf counters when switching between rings,
+except when sysprof is enabled, analogously to how they are reset
+between submissions when switching pagetables.
 
 Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 ---
- .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    | 39 ++++++++++------------
- 1 file changed, 17 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 20 ++++++++++++++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  5 +++++
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 32 +++++++++++++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h   |  7 +++++--
+ 4 files changed, 61 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-index cab01af55d22..55a35182858c 100644
---- a/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-+++ b/drivers/gpu/drm/msm/registers/adreno/adreno_pm4.xml
-@@ -581,8 +581,7 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
-                 and forcibly switch to the indicated context.
- 	</doc>
- 	<value name="CP_CONTEXT_SWITCH" value="0x54" variants="A6XX"/>
--	<!-- Note, kgsl calls this CP_SET_AMBLE: -->
--	<value name="CP_SET_CTXSWITCH_IB" value="0x55" variants="A6XX-"/>
-+	<value name="CP_SET_AMBLE" value="0x55" variants="A6XX-"/>
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index ed0b138a2d66..710ec3ce2923 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -366,7 +366,8 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ static void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
+ 		struct a6xx_gpu *a6xx_gpu, struct msm_gpu_submitqueue *queue)
+ {
+-	u64 preempt_offset_priv_secure;
++	bool sysprof = refcount_read(&a6xx_gpu->base.base.sysprof_active) > 1;
++	u64 preempt_offset_priv_secure, preempt_postamble;
  
- 	<!--
- 	Seems to always have the payload:
-@@ -2013,42 +2012,38 @@ opcode: CP_LOAD_STATE4 (30) (4 dwords)
- 	</reg32>
- </domain>
+ 	OUT_PKT7(ring, CP_SET_PSEUDO_REG, 15);
  
--<domain name="CP_SET_CTXSWITCH_IB" width="32">
-+<domain name="CP_SET_AMBLE" width="32">
- 	<doc>
--                Used by the userspace driver to set various IB's which are
--                executed during context save/restore for handling
--                state that isn't restored by the
--                context switch routine itself.
--	</doc>
--	<enum name="ctxswitch_ib">
--		<value name="RESTORE_IB" value="0">
-+                Used by the userspace and kernel drivers to set various IB's
-+                which are executed during context save/restore for handling
-+                state that isn't restored by the context switch routine itself.
-+  </doc>
-+	<enum name="amble_type">
-+		<value name="PREAMBLE_AMBLE_TYPE" value="0">
- 			<doc>Executed unconditionally when switching back to the context.</doc>
- 		</value>
--		<value name="YIELD_RESTORE_IB" value="1">
-+		<value name="BIN_PREAMBLE_AMBLE_TYPE" value="1">
-                         <doc>
- 				Executed when switching back after switching
- 				away during execution of
--				a CP_SET_MARKER packet with RM6_YIELD as the
--				payload *and* the normal save routine was
--				bypassed for a shorter one. I think this is
--				connected to the "skipsaverestore" bit set by
--				the kernel when preempting.
-+				a CP_SET_MARKER packet with RM6_BIN_RENDER_END as the
-+				payload *and* skipsaverestore is set. This is
-+				expected to restore static register values not
-+				saved when skipsaverestore is set.
- 			</doc>
- 		</value>
--		<value name="SAVE_IB" value="2">
-+		<value name="POSTAMBLE_AMBLE_TYPE" value="2">
-                         <doc>
- 				Executed when switching away from the context,
- 				except for context switches initiated via
- 				CP_YIELD.
-                         </doc>
- 		</value>
--		<value name="RB_SAVE_IB" value="3">
-+		<value name="KMD_AMBLE_TYPE" value="3">
- 			<doc>
- 				This can only be set by the RB (i.e. the kernel)
- 				and executes with protected mode off, but
--				is otherwise similar to SAVE_IB.
--
--				Note, kgsl calls this CP_KMD_AMBLE_TYPE
-+				is otherwise similar to POSTAMBLE_AMBLE_TYPE.
- 			</doc>
- 		</value>
- 	</enum>
-@@ -2060,7 +2055,7 @@ opcode: CP_LOAD_STATE4 (30) (4 dwords)
- 	</reg32>
- 	<reg32 offset="2" name="2">
- 		<bitfield name="DWORDS" low="0" high="19" type="uint"/>
--		<bitfield name="TYPE" low="20" high="21" type="ctxswitch_ib"/>
-+		<bitfield name="TYPE" low="20" high="21" type="amble_type"/>
- 	</reg32>
- </domain>
+@@ -398,6 +399,23 @@ static void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
+ 	/* seems OK to set to 0 to disable it */
+ 	OUT_RING(ring, 0);
+ 	OUT_RING(ring, 0);
++
++	/* if not profiling set postamble to clear perfcounters, else clear it */
++	if (!sysprof && a6xx_gpu->preempt_postamble_len) {
++		preempt_postamble = a6xx_gpu->preempt_postamble_iova;
++
++		OUT_PKT7(ring, CP_SET_AMBLE, 3);
++		OUT_RING(ring, lower_32_bits(preempt_postamble));
++		OUT_RING(ring, upper_32_bits(preempt_postamble));
++		OUT_RING(ring, CP_SET_AMBLE_2_DWORDS(
++					a6xx_gpu->preempt_postamble_len) |
++				CP_SET_AMBLE_2_TYPE(KMD_AMBLE_TYPE));
++	} else {
++		OUT_PKT7(ring, CP_SET_AMBLE, 3);
++		OUT_RING(ring, 0);
++		OUT_RING(ring, 0);
++		OUT_RING(ring, CP_SET_AMBLE_2_TYPE(KMD_AMBLE_TYPE));
++	}
+ }
  
+ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+index da10060e38dc..b009732c08c5 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+@@ -71,6 +71,11 @@ struct a6xx_gpu {
+ 	bool uses_gmem;
+ 	bool skip_save_restore;
+ 
++	struct drm_gem_object *preempt_postamble_bo;
++	void *preempt_postamble_ptr;
++	uint64_t preempt_postamble_iova;
++	uint64_t preempt_postamble_len;
++
+ 	struct a6xx_gmu gmu;
+ 
+ 	struct drm_gem_object *shadow_bo;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+index 1caff76aca6e..ec44f44d925f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+@@ -346,6 +346,28 @@ static int preempt_init_ring(struct a6xx_gpu *a6xx_gpu,
+ 	return 0;
+ }
+ 
++static void preempt_prepare_postamble(struct a6xx_gpu *a6xx_gpu)
++{
++	u32 *postamble = a6xx_gpu->preempt_postamble_ptr;
++	u32 count = 0;
++
++	postamble[count++] = PKT7(CP_REG_RMW, 3);
++	postamble[count++] = REG_A6XX_RBBM_PERFCTR_SRAM_INIT_CMD;
++	postamble[count++] = 0;
++	postamble[count++] = 1;
++
++	postamble[count++] = PKT7(CP_WAIT_REG_MEM, 6);
++	postamble[count++] = CP_WAIT_REG_MEM_0_FUNCTION(WRITE_EQ);
++	postamble[count++] = CP_WAIT_REG_MEM_1_POLL_ADDR_LO(
++				REG_A6XX_RBBM_PERFCTR_SRAM_INIT_STATUS);
++	postamble[count++] = CP_WAIT_REG_MEM_2_POLL_ADDR_HI(0);
++	postamble[count++] = CP_WAIT_REG_MEM_3_REF(0x1);
++	postamble[count++] = CP_WAIT_REG_MEM_4_MASK(0x1);
++	postamble[count++] = CP_WAIT_REG_MEM_5_DELAY_LOOP_CYCLES(0);
++
++	a6xx_gpu->preempt_postamble_len = count;
++}
++
+ void a6xx_preempt_fini(struct msm_gpu *gpu)
+ {
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+@@ -376,6 +398,16 @@ void a6xx_preempt_init(struct msm_gpu *gpu)
+ 	a6xx_gpu->uses_gmem = 1;
+ 	a6xx_gpu->skip_save_restore = 1;
+ 
++	a6xx_gpu->preempt_postamble_ptr  = msm_gem_kernel_new(gpu->dev,
++			PAGE_SIZE, MSM_BO_WC | MSM_BO_MAP_PRIV,
++			gpu->aspace, &a6xx_gpu->preempt_postamble_bo,
++			&a6xx_gpu->preempt_postamble_iova);
++
++	preempt_prepare_postamble(a6xx_gpu);
++
++	if (IS_ERR(a6xx_gpu->preempt_postamble_ptr))
++		goto fail;
++
+ 	timer_setup(&a6xx_gpu->preempt_timer, a6xx_preempt_timer, 0);
+ 
+ 	return;
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 6b1888280a83..87098567483b 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -610,12 +610,15 @@ OUT_PKT4(struct msm_ringbuffer *ring, uint16_t regindx, uint16_t cnt)
+ 	OUT_RING(ring, PKT4(regindx, cnt));
+ }
+ 
++#define PKT7(opcode, cnt) \
++	(CP_TYPE7_PKT | (cnt << 0) | (PM4_PARITY(cnt) << 15) | \
++		((opcode & 0x7F) << 16) | (PM4_PARITY(opcode) << 23))
++
+ static inline void
+ OUT_PKT7(struct msm_ringbuffer *ring, uint8_t opcode, uint16_t cnt)
+ {
+ 	adreno_wait_ring(ring, cnt + 1);
+-	OUT_RING(ring, CP_TYPE7_PKT | (cnt << 0) | (PM4_PARITY(cnt) << 15) |
+-		((opcode & 0x7F) << 16) | (PM4_PARITY(opcode) << 23));
++	OUT_RING(ring, PKT7(opcode, cnt));
+ }
+ 
+ struct msm_gpu *a2xx_gpu_init(struct drm_device *dev);
 
 -- 
 2.46.0
