@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-30992-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30993-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4E57B96E004
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:42:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E989796E009
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:42:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08D52289523
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:42:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4CAE0B24481
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:42:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E8A11A073F;
-	Thu,  5 Sep 2024 16:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA8801A08DC;
+	Thu,  5 Sep 2024 16:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rARPfdUp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YGjuP074"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D061A01D4
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 16:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08E91A0705
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 16:41:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725554517; cv=none; b=oLYidMlUQ64Xvw1hSf56Z/BKdW7CPn3qreRPsGZjhi4N4+WKKE2TmGY3a265LBNesjKYdWzc1Pu7oIYzEREEHOgdHzA6sZYIqg12iQLhOel/HifwIRazTgh6k84z/kgWvL7XxaJFWNvHVW6McFc1jYs8qvofis115q+gl0Ngos4=
+	t=1725554518; cv=none; b=gQMhcGdAFagYbfpWJEyUW6eu0upy96jpyvaHPhxjfKno5DlWTkwnmU8liGuJ1tMbAZhlrG7BGHNOs8ZlxFplRyNZNSVPXvY7DSFt6k5vQJzL/3Ao5foHCIRhdWprV+5BV4PwytSzhCwMAOOR9NPLShshA95DA6nm3mGebFVDDVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725554517; c=relaxed/simple;
-	bh=kFJB7f55yaQbNphw3oqY4Q81daCzBOTGC5lHQafHYvM=;
+	s=arc-20240116; t=1725554518; c=relaxed/simple;
+	bh=ZcYmh+ZmZ7B7EekZigAi/a2eR9+M/ALDEEYmLd5Yqjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jo0He+API238Iu5jWBr1DbspP8puBiTcIu+kc4mispWwgW/ZBkEmOqRzGjftjCjl0wr0ZqJ5GMpFQGLA75/SOlgU3521QHZv8w8soWl4clDTc1synHY9nB18/FbUoyXwJKWhRZ19W45yO1gevBjV1dH4MXn8O6esmPyE+aBFK2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rARPfdUp; arc=none smtp.client-ip=209.85.167.49
+	 MIME-Version; b=ArY/nHnGxIuKFqDf5joSvEcEVntO0iLzCF/v20/09lvRIWWKykbNMojvmxX9dSjqLhg5VfppTi4iiwMkNfS4X/gYsN70pGqMWNZPui5TUFbIbGm/EyzujK+azBG0QFh5ac/htK8Hoi7ZTYASgacQgTeLwnFbxsA1VHP7Uixr80g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YGjuP074; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-53568285c1aso149017e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 09:41:55 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f3aced81ebso1053411fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 09:41:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725554514; x=1726159314; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725554515; x=1726159315; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rNOPLJE4duWNY1Bx/F8u179uln33M2nSGOkrTYlRXcw=;
-        b=rARPfdUpqYmyJvxGlz2XRcwo4rn99sDvzNKyqblIZweClW/bkG4tip+8MA6oiW06m0
-         96En060AwZYh56k6Sy4SglFfEWdYvg9aVFr/xay55VKOOevPayr+/w07PpzrN/VEzSiQ
-         jtR+QWUv6tFNbNSXVhAY9TZxC6D9FpR6tgTs2zObhj8Yn+Fc+7buxAQgG5j0oC4ke4wR
-         PXDp0nrgyEbMke507/0s5F1OUa0BgKqDht5UeVuBnCQmfDwXNdazYFJxK2o5cv466887
-         WA8Sr1HML0MpAH7V0KGrmOGh6yqldC+yvg2L1guYOazrpYBrGiHMdxChLJdgvUwCYPOp
-         8mRw==
+        bh=fIdYAVOJ3i+EXm56FA5vjfcUUs/p7F5KZlrsJlStDy8=;
+        b=YGjuP0744dLbVgebPCEAdIv9zo0dV2DY5yecnn4IWEfbvxkwcqD1VYqw4tKO/wW83R
+         KSJ55JItzeDR5K3Ynngm2lq5vrUfd0YL7nk0Oq7FQrdSd+g/2fDfe/K2BVEB2TWFthGO
+         D2Ef+VU7o5p0xUVexG8Du6CzfLiyJh4OJ/PCiMQqCbdqqw92gs6voxbjBYtVvpBY6kIa
+         XyFuy2+lphTg4HMlMq43U21gwqlAQt9hZtN7nIBKId8KAkdCiXn9qU6ZTWIkDEnpyQxV
+         zuCQH8V+zpxLxXjC+dw/nXObsqxM4XTPuBCfo00ttKcGpbBS/bWCngFuxgJwWIt/s98d
+         29SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725554514; x=1726159314;
+        d=1e100.net; s=20230601; t=1725554515; x=1726159315;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rNOPLJE4duWNY1Bx/F8u179uln33M2nSGOkrTYlRXcw=;
-        b=By0yp1VGSY89lPW07mf6rhs5F9ktODHXKsGV6irfmjKRhFbkoAQEaABNFaKShlTere
-         WySmOHv/aflaP0v/hRvaGc6G9gIxDBx4zD3Wtp4xcpC8CplsNdnx9EJ9IpeouGZPXXMu
-         y2OYC6xtSPZkKcvkl4MUUEwig8sx/zegsVTG1ks1lB5u+pkZk1X+jkyVvA4pLxtQ2dA8
-         NfyGh9nVgmLtT8tL5RCgb9wEp6TWvt/7KvuXCYmm9DNt0vV758ovXUn3juo3VRiEEkOQ
-         dNME5a819wKX45WrNp7Bh53gakbLTZDxn0yspOIoM0MNsWBi1PC2EzPX3/7BUjkeJb+g
-         sU4w==
-X-Forwarded-Encrypted: i=1; AJvYcCXsEoZy0u6LZbzEcZZB9oeYK4TiyD0QDY3x78d4PQop0J+7t9C7ufej/8wyX/2L0Yrqw6jlEru1jCHQY/wk@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQy0uwgy7OJ8KxqizVF2IpwxiFp6Ws92c3lguBDS98mUjUEMsM
-	dawaEgw0CuGCd1NrLcawM+/bU89tx3r3a2DJMWplWHIZ9tc0LrY8Uy6qddXAZ+Y=
-X-Google-Smtp-Source: AGHT+IFyikow6IjqDwxydm45MaAYDlfxHrgpdMFeSrYAryURJgLmes46M2fHvXabs9qAmtdGdyE94g==
-X-Received: by 2002:a05:6512:12d5:b0:52f:c22f:32a4 with SMTP id 2adb3069b0e04-53546bb9cd7mr7004911e87.6.1725554513681;
-        Thu, 05 Sep 2024 09:41:53 -0700 (PDT)
+        bh=fIdYAVOJ3i+EXm56FA5vjfcUUs/p7F5KZlrsJlStDy8=;
+        b=MgmA0x3WdO/tfrUidCF2VrXDY1I37Et84Hc5uzoaDbkHxxFJe3QlMi0UjAvMuNvoJA
+         bW7mffNZJM9LQIHCj7aoirXru/TWjZioR/IWPV3hPizusyJKzVUMZ1MBD0PDAI6g8UB9
+         lGn3+zqoNgpR2IanevumtIz5nf+D8ktkWSVgVL7HygUtKcr6o4uE+XxvzeJaXDhmCwwK
+         +BjOXYrh4V9ZU/v8xWdObHuD0RT9GMgIRtMZUnTvaODSi/7xjEyi3njFKkqUqViPvEcP
+         X8acrtbc+7kkhP7APu3+GrfLUO1ZONaIwtUTfC5/HKKUEPqJduuqZTniRgV87hDbj4Lq
+         Id6g==
+X-Forwarded-Encrypted: i=1; AJvYcCVf4krzFTl6ltMBLUTkDXNqRadz5knRgqdhjp2yXp+EyVTg0vcQ7y0cmGA653MlL5i5nd68B0mo0xqQsJAc@vger.kernel.org
+X-Gm-Message-State: AOJu0YzaxAAJBWN861QCi6w5sKy8XV/ipDPSOdK5zx6gSwRcGd8MaN7G
+	jjEvPCHVpCHk/6wTvKMyj4vfpYLAc9tlBsJQUj+v8r0QkMBeD81JSURCy7qOvh0=
+X-Google-Smtp-Source: AGHT+IHaPYR8N0CClF1WETTLERZDKKbTkAK3oh80IpePluMQLZTeqOq10lm+mzWybT7dSsY5syjlAA==
+X-Received: by 2002:a05:6512:3510:b0:536:554c:619f with SMTP id 2adb3069b0e04-536554c639emr440624e87.10.1725554514984;
+        Thu, 05 Sep 2024 09:41:54 -0700 (PDT)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53655182c91sm100674e87.306.2024.09.05.09.41.52
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53655182c91sm100674e87.306.2024.09.05.09.41.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 09:41:53 -0700 (PDT)
+        Thu, 05 Sep 2024 09:41:54 -0700 (PDT)
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To: Robert Foss <rfoss@kernel.org>,
 	Todor Tomov <todor.too@gmail.com>,
@@ -81,9 +81,9 @@ Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-media@vger.kernel.org,
 	devicetree@vger.kernel.org
-Subject: [PATCH 3/6] media: dt-bindings: media: qcom,sm8250-camss: Fix interrupt types
-Date: Thu,  5 Sep 2024 19:41:39 +0300
-Message-ID: <20240905164142.3475873-4-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 4/6] arm64: dts: qcom: sc8280xp: Fix interrupt type of camss interrupts
+Date: Thu,  5 Sep 2024 19:41:40 +0300
+Message-ID: <20240905164142.3475873-5-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
 References: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
@@ -96,53 +96,65 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 The expected type of all CAMSS interrupts is edge rising, fix it in
-the documented example from CAMSS device tree bindings for SM8250.
+the CAMSS device tree node for sc8280xp platform.
 
-Fixes: 46f8ac8497c5 ("media: dt-bindings: media: camss: Add qcom,sm8250-camss binding")
+Fixes: 5994dd60753e ("arm64: dts: qcom: sc8280xp: camss: Add CAMSS block definition")
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- .../bindings/media/qcom,sm8250-camss.yaml     | 28 +++++++++----------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 40 +++++++++++++-------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-index fa5073c0fd1e..06db2c1e6079 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8250-camss.yaml
-@@ -329,20 +329,20 @@ examples:
-             vdda-phy-supply = <&vreg_l5a_0p88>;
-             vdda-pll-supply = <&vreg_l9a_1p2>;
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 80a57aa22839..aa2678eb3bcd 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -3882,26 +3882,26 @@ camss: camss@ac5a000 {
+ 				    "vfe3",
+ 				    "csid3";
  
--            interrupts = <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
--                         <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
-+            interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 86 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 89 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
-+                         <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
-             interrupt-names = "csiphy0",
-                               "csiphy1",
-                               "csiphy2",
+-			interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 758 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 759 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 760 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 762 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
++			interrupts = <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 758 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 759 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 760 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 761 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 762 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 764 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "csid1_lite",
+ 					  "vfe_lite1",
+ 					  "csiphy3",
 -- 
 2.45.2
 
