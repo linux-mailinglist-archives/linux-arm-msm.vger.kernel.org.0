@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5923A96CF16
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 08:21:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CDAE96CF26
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 08:25:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C6A21C215F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 06:21:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 012F71F25795
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 06:25:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FF92189537;
-	Thu,  5 Sep 2024 06:21:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56D7318BC24;
+	Thu,  5 Sep 2024 06:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1VRSiwl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sLBvKMXV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEAE2BB15;
-	Thu,  5 Sep 2024 06:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FFC185941;
+	Thu,  5 Sep 2024 06:24:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725517300; cv=none; b=JXZMGWQQq7wA4JfUo90SUMxsxRCly52Hxw3Pxd2Wcr6hDQFOZPFClmUg7GagI8+BhfF7L6iv3vWTEMP28XVtI9oit2wWQVfKECj34xqH3+34T5BhrJ+lVgLEyfKm+P+b6mikV4P+Y8j7FAOfcJArOlgonsHBiCPFUEcpCk9UH20=
+	t=1725517491; cv=none; b=AcGtCHpgoIAKExRtF2CZPRC8lFZ/Asgas/wX1kug5UtwaP8T8PddMIZMvsQvmSdf+aTYfmOgMfFlua7SG0Jw6P6vbmGvNrDw/IRIu6xCppxJHm8NIkHPCtfqjonYBtxiJghhaKhcef1RXstIiLZfRtDQXHYMMmOW/2rgsQ0ZhyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725517300; c=relaxed/simple;
-	bh=sZTowVQmdtCFZcfiYVNZ4zocQ+AolAKfo4MSe7xfMwo=;
+	s=arc-20240116; t=1725517491; c=relaxed/simple;
+	bh=KOrHhDv3mtjMX2YnfCY99sAbI7nzRK5OtrRp0oa5cpM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rEu/ixsxc2OcvHf7KCBkeQ8/AC7/WbVIjItEG86KbH3/QTXt/SErrUC7NOpbJtkDfzs1+dOwJYERW0XyBATQkavxCRZmNP1rL5oS2e1OgNMMAtQjpRqTOSdVB1xzCrV8Kc6Yd3JTzdEhAWF81c2zsfQCVi/z1n0VeFZIs4pBoeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1VRSiwl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9DBC4CEC4;
-	Thu,  5 Sep 2024 06:21:37 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=EEWF7n+rUSkKEdMHKPOrZ69UqMZhBidB0B7vJkf3bARX1308sANyLhrqyRvY89reODzEzd5X+DDwkzLkq46MOzq3Xgg5X1UjyzeCpgiQRQJhW/GF2DHkdLojazP4xouqS5Bt3sscMzQed4nNgJLXJv0SUXW1MxNtC/F6BWxmTnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sLBvKMXV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B414C4CEC5;
+	Thu,  5 Sep 2024 06:24:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725517299;
-	bh=sZTowVQmdtCFZcfiYVNZ4zocQ+AolAKfo4MSe7xfMwo=;
+	s=k20201202; t=1725517491;
+	bh=KOrHhDv3mtjMX2YnfCY99sAbI7nzRK5OtrRp0oa5cpM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=N1VRSiwlaPgqhu7MnabOpaTT7B+/8mBs72Xo+IhXsVKeP2vnNPGLAf2erTMdmGIFv
-	 9KoY01i9rRnYo3G6xQzwKW4e4sXkdOsliSrrN/RZMH4OgOSLNLf/LyihZoULOLC0BA
-	 CrXfHXFovAYxIz9mXNlgjfA25H7tgoAdLKA2qRL18zaSsY8oGqkgeaFwBYnzk9mzry
-	 +1gBdWATLr6KXM0r1I0+fHT60gSjY4F28rx0CJOXzgYA7FL3ZCcyGMtKNSSVchD4pa
-	 AH1pH7xgAIBVa7UFwJSJYJ/DLPB3cfxokohz4Nau+26W80l+rSIGt2b54fgDbo7SFE
-	 tn+Yhh554k0Ng==
-Message-ID: <497c8852-8aa5-4d46-b547-9ca22f1c7673@kernel.org>
-Date: Thu, 5 Sep 2024 08:21:34 +0200
+	b=sLBvKMXVRG+E77a4MlGSjKAQUXfVKB3l3Vd/RMTKIWtG9/ax1OXcgqwWIv+rLSNLn
+	 lsiF/mtsEHgfer8CJWbX1pB5TQuuQJFH7M1bkgx8rAgyXXJ4bZjFt3xPgwaTzt0IZD
+	 zAPhe9VXl8rt4uVkuaIcEd6ftuYkJvuFkoXTdiugI6qxkMbp5LjhbXxf+pMfjJMd6g
+	 B6Yr78lLjHUga2IqVNXUzrCtXan4dv4b2LHQev+UCPy93ZeGtwEbQKqZnSXHxx9Vuz
+	 /3kb6Qz+09DG7iMTSLEU/ir8m8bwINIx5Lh5eiwC5zjjT52Q79Qau4BEkuex/xYLZA
+	 ib5QwGDYgykxg==
+Message-ID: <6652a08e-7143-4214-a864-9f27c10d7571@kernel.org>
+Date: Thu, 5 Sep 2024 08:24:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240829092418.2863659-1-quic_msavaliy@quicinc.com>
- <20240829092418.2863659-2-quic_msavaliy@quicinc.com>
- <74c13a4a-0d4b-4cbd-9a75-9933c098c3ba@kernel.org>
- <cb7613d0-586e-4089-a1b6-2405f4dc4883@quicinc.com>
- <a4bbb898-bf91-4dcb-b7da-ab032b228aa2@kernel.org>
- <dc434cb2-7eb0-48fc-967f-5ed93ad1284c@quicinc.com>
+Subject: Re: [PATCH 02/19] remoteproc: qcom: pas: Add QCS8300 remoteproc
+ support
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ Xin Liu <quic_liuxin@quicinc.com>
+References: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
+ <20240904-qcs8300_initial_dtsi-v1-2-d0ea9afdc007@quicinc.com>
+ <ecd95f82-ea98-4279-ad01-dc73d361180a@kernel.org>
+ <a0f3176d-9b2a-4fb9-9a7b-f8e778e3b427@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,41 +110,38 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <dc434cb2-7eb0-48fc-967f-5ed93ad1284c@quicinc.com>
+In-Reply-To: <a0f3176d-9b2a-4fb9-9a7b-f8e778e3b427@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/09/2024 07:43, Mukesh Kumar Savaliya wrote:
-> 
-> 
-> On 9/4/2024 11:50 PM, Krzysztof Kozlowski wrote:
->> On 04/09/2024 20:12, Mukesh Kumar Savaliya wrote:
->>>> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
->>>> people, so fix your workflow. Tools might also fail if you work on some
->>>> ancient tree (don't, instead use mainline) or work on fork of kernel
->>>> (don't, instead use mainline). Just use b4 and everything should be
->>>> fine, although remember about `b4 prep --auto-to-cc` if you added new
->>>> patches to the patchset.
->>>>
->>>> You missed at least devicetree list (maybe more), so this won't be
->>>> tested by automated tooling. Performing review on untested code might be
->>>> a waste of time.
->>>>
->>>
->>> You mean flag addition into DTSI file ? If yes, then the intention was
->>> to just enable feature support but not into mainline because it should
->>> happen per board or usecase. Please suggest if i can enable particular
->>> node with DTSI feature flag.
->>> Please correct me if my understanding on your ask went wrong.
+On 05/09/2024 06:30, Jingyi Wang wrote:
+>>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+>>> index ef82835e98a4..f92ccd4921b7 100644
+>>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+>>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+>>> @@ -1416,6 +1416,9 @@ static const struct of_device_id adsp_of_match[] = {
+>>>  	{ .compatible = "qcom,qcs404-adsp-pas", .data = &adsp_resource_init },
+>>>  	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
+>>>  	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
+>>> +	{ .compatible = "qcom,qcs8300-adsp-pas", .data = &sa8775p_adsp_resource},
+>>> +	{ .compatible = "qcom,qcs8300-cdsp-pas", .data = &sa8775p_cdsp0_resource},
+>>> +	{ .compatible = "qcom,qcs8300-gpdsp-pas", .data = &sa8775p_gpdsp0_resource},
 >>
->> How is this related?
-> "You missed at least devicetree list (maybe more)" - Do you mean to say 
-> i missed to add DTSI changes OR maintainers for DTSI ? seeking clarity 
-> to avoid confusion.
+>> What's the point of this? You have entire commit msg to explain such
+>> weird duplication. Otherwise sorry, don't duplicate unnecessarily.
+>> Devices are compatible, aren't they?
+>>
+>> Best regards,
+>> Krzysztof
+>>
+>>
+> I will drop this, could you please help us to understand what is the correct way to
+> deal such situation, do we need to update the yaml and add qcs8300 bindings or just
+> reference to sa8775p bindings in the device tree?
 
-You did not CC maintainers and necessary list. I wrote nothing about
-DTSI. You are expected to use tools, not manually come with some address
-list.
+Above diff hunk suggests that devices are compatible, so should be made
+compatible in the bindings (use fallback). There are plenty examples of
+this for all Qualcomm devices.
 
 Best regards,
 Krzysztof
