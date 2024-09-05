@@ -1,171 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-30911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EA7896D974
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:56:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C673896D98A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:00:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 728BB1C228FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 12:56:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB36E1C23BF2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:00:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E36D019B3FF;
-	Thu,  5 Sep 2024 12:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BD8819CCF3;
+	Thu,  5 Sep 2024 13:00:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mvWxL7bf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N1WULtDB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F0C19B3F9;
-	Thu,  5 Sep 2024 12:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C98C19AD7B;
+	Thu,  5 Sep 2024 13:00:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725540990; cv=none; b=aPIiRCetJoJ+uYLGmlCoAxMpsq3FWI9YuHycmQYNzF7dNO6Gy/VSfs5u2kPODa/SB2dOpdZhygoEhRVnjFHejTHDOPuoSMmDW2umUOWOXkYLNRUOSJUWvtYbo/o0HwdYOE1zowGDArgygt6WeJYOHcmt3UIB9dx2K1hc0k9r1Z4=
+	t=1725541203; cv=none; b=ebyRJn0ZitWxYbtfDWpg53Bq+u6HzwGJ5iefJbbluMedOBBBqLJeO1KKk5ZoxePGrgy4EsnrPXtIoPu7c1F4SMJK7vyxvWROVGQgaMwpQ7jRSutBC0R8mjn8a/yOYDr5SO2RnhmAncWXuAz+yUd7zzMhxH1kamnfkqNaFaYJIMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725540990; c=relaxed/simple;
-	bh=2B7W/vJwjmAA6E2m8YddgGMotUXAafmzNSXBcbWeT+o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jcStjuOOG8v5z+Yh5lwFXF01IujNGS472J0e051MCpH+qKRFQnLMpi0F7P3ZwFSqhvZzANWVpOzbp00MMfChWUCnno0qcskMwvFOesJdojAsi/WTbTKyA3WTY1g+J/bs01JjE0J+cuBDiy486duGGvEyvzZk/P9HddmldE6y+3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mvWxL7bf; arc=none smtp.client-ip=209.85.208.52
+	s=arc-20240116; t=1725541203; c=relaxed/simple;
+	bh=4uY2WQgSivZ2VQhFIdlGE0xY62rtVvkAX6QFj3t2Dqg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qVvrJ4xM9TqAuHL8ZIO3/Qj8Msk0ryvx0HB7uemD3fCcTFbLue9zRPv1YeYq+N3y7YYxmxVckUmltjJrNYuJYoYDV459Ve9J0vLUe2RrN0R0Yjt8WcLa5nAea5BttRWJYM6BhuzLIGGvKFGwWa/JeRIBCrv1j6LCH5DHBovPCAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N1WULtDB; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5c245c62362so1000422a12.0;
-        Thu, 05 Sep 2024 05:56:28 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53568ffc525so973970e87.0;
+        Thu, 05 Sep 2024 06:00:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725540987; x=1726145787; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WEEQTkpkoiKwhEO3IWsgIyRLzd4RR8yXzV/kx3uo+/4=;
-        b=mvWxL7bfY9eMCg79QMnUvSSCKlTMkxATnmv9nozGpikQWbZVJhwRYWZq7OcttWkxkx
-         kjvsBhRFRtpUpw3rS7U/m1cnk/w+/1vAAz563c8pEqc9emroRVf7oINxZ4tOf2ZPzVUW
-         NCyqGwoSZVQKCEjUYn2O3G7JlK8CUNQ1kedBOfgodE4rEg1kdMVAIYIbPjg3XmERkuYN
-         mOZiQ4rlo2AbkoKM0x/cYPRBao/AaKN4Luk+/WxsiHMkk4mYIAqELc6kVSgF3ifEgM54
-         PHoC0LB0qrt0pOQ3Cx4o+54qjpl54fXMV9e6pgPhlgnIXyjLjiwvhXcUq/noUHfdwSEq
-         SoBg==
+        d=gmail.com; s=20230601; t=1725541200; x=1726146000; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=M8aymMdGqVKINPmql7jmoZbSERwTF4J4EhSuMd5HKKg=;
+        b=N1WULtDBQSfmjlOvqE4MV/55XWIVIuvKAL6gN7icausgHiGwTI21OmUcSImpr55a0J
+         jzqwnVGPG+zFx9ovsu5TntBD812UQwdyvrrDLwIGVbfN6bJvOYNqUFjpRTrRSJtSygT3
+         GtRSZBYjcmo9yJwNCzYHOndXDnOb/dziYktJt6D1vm6hEPhuRrNAFxUylJe3jxglyhi2
+         tj6gJHlAWIFchzg4lLj3Lde38wQzMHVxu3drXzwNDRAnWsrQMkpdujAlY/u+3qPsare7
+         OXdVC6Ag/cmZovfbfv5k+88NmfqUBrj2dNMkjzPx2pFN/NvlU1ucOOM0hL01AzwPcLZE
+         VfEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725540987; x=1726145787;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WEEQTkpkoiKwhEO3IWsgIyRLzd4RR8yXzV/kx3uo+/4=;
-        b=muuS8b+cXA3ZlPz/mEEkEbZDlmCtin7PyOn2N+KFwlGVnwqz3wDC/A4AiIkMISR9Ar
-         CwHWM1tPOF8GcH+rkNCFO2CbbHljxP4bhmrlZJQ7XNhlyQ4nHXA/JcR3kSyF5VXSMwVL
-         EdsZqfreZ2Q6yaBlWhiG9FCmAHal6pljw1Ql/sRZsaTJaAtWu+OJ9dIV37h8EkWp1xQd
-         JXlEo7k8+UWKrLvR6Bu9XHzlHsKuhztXLFzHmIsoimnZuyfbIsiHNruY2rs9vZ4Xzb/P
-         6e2jvEDeSjuVJvdWusmWNtJ/sY+QczVvRXhNk96rWN+2TKrItJcgwqmJy1lOt3YGgIEz
-         W/Cw==
-X-Forwarded-Encrypted: i=1; AJvYcCV8xwth5rDrD/eVqGm55k7ZRP2YNJxoPDSQ/NAuN9w5Ar+6X9GpIM5iFChctc4IQrO73mEBn7Qwk6ixbOoo@vger.kernel.org, AJvYcCWkzAfn5ghz5I7A4Tb10a5QPbwxdHMYgGpcxDR/IyZwSLSiKnXay1cDfkHvNDBvNF31V4zHmVpeyc1F@vger.kernel.org, AJvYcCXAX/pgOXxz1Uk8bvZSQal0OJVv64iPc23ryydjIxKkMn0WpX7m6hthIl0Ll23n9fJl11lV8fUZNol7a/uBYg==@vger.kernel.org
-X-Gm-Message-State: AOJu0YwaLngwlywIFfPDrtJXNohRuAyG5ceWsAjNMrcRvOShFyK8gXsE
-	9NMseGOcQakB9fPnZAvQ/XDUE78ShRiyBnFO/p6LqpfiJeS9LTpgDcS8359sbYfHtyLJbJtGcdn
-	X47eRj3QwvbzQTqEaJmRkJEjGRsQ=
-X-Google-Smtp-Source: AGHT+IF+R0hpquFWFa3ySZj7Hw6ErCUc6Ze5564kopSBw7fF6uBXHcM0whC/yEucdamRF2kP0MYc7ucdDjF2pTLbzuM=
-X-Received: by 2002:a05:6402:354e:b0:5c2:43a0:47e3 with SMTP id
- 4fb4d7f45d1cf-5c27584b805mr4833554a12.36.1725540987284; Thu, 05 Sep 2024
- 05:56:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725541200; x=1726146000;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=M8aymMdGqVKINPmql7jmoZbSERwTF4J4EhSuMd5HKKg=;
+        b=HRGXQZSqd0nzBLQVHlnHUBxag6+smE5qgoFtfFAKGNK517BywET/iFInro9Yt0gORt
+         TmyPTCOYxrX9lhJbvDudmJbPryfJpwTFFGpc8BYgCj1hmaPGa8WMWgT9ChkSrtRucNQT
+         RwgkOhLJR3IdksppCCv5NBvgYH1FiP6X/m919sg59sOVGArGpDIjoFcRTnEDI80vL5Bc
+         25WnP4kIIMZWT6HoO6Q4vqIp7sBOPYuzmpXit+hlFy3TOTPVqRgQJnGLQlqGWgrjA0JF
+         /4xqbLoEFGb1QDKhPa3KGDG/dH3eUXsKewxuSqgmomDA7Vqwwv5pOEd7zEOk+EEHIen2
+         Y4vw==
+X-Forwarded-Encrypted: i=1; AJvYcCU1BesVHSF8o17YoFfIJyODvNKemVmoVMllct3NKuLOeI3844BlxaqafIyv2fhP1elKVmOixLYAVi2u@vger.kernel.org, AJvYcCUUYNHR7XP6/zSxk2TC1K4izRZayFMaiVPznsqmJnimi2USRxDlSK2UO6gnGFVkb0qL8HbOk8ZueiG8Ki9EHeg=@vger.kernel.org, AJvYcCV1biotWukQUt58KZ6Zbhl5xID0laHbwcQtE3NRk2/Ed/FmjnMueFcBxT/X9xfi3AaLLOyLz2L2L38=@vger.kernel.org, AJvYcCV4yTc8CLN5/VLr9GG9tjEChQXc1c07MvbHbCVB/jwTZzpB0d1onkZjjy3wk4Wb1F3DlG7ZTNqrQ/+lwMMc@vger.kernel.org, AJvYcCVUtWuc8R4XKjFJQyt5BwIV7kFwkcpfM3tVbx6z1Gz7YvEatFZYegmlebl4XI73aN8/RB+cN/M29A==@vger.kernel.org, AJvYcCVwuFXCdhzb40YdSiPxuaMmLnOxuSwvombtUKU5Sr7CMsbb+Ui1f61kv0RSQJZU500KOo86vVGMJYqG@vger.kernel.org, AJvYcCW6nkqaPXIN4LnVpf7mN3DXpI/MA1xoevRlGrsvpMkz1FUd/20RlUl7FJdMVLQBfXgphFCigGa3pyWtrde0@vger.kernel.org, AJvYcCWEecFgdqKzTvhSxrrWGWQ/OrsJyOEooA7lBacr9ioiGwBhxpVf/3P1gastEbywTjJhBQnAQUiSRn6nlT0Z@vger.kernel.org, AJvYcCWmszh4Yu7QYE7Egay+QeV7/WontReBCGcz/8KLuOE89kAcZU58n5uZzbY7j5Ozc4DUTR7NWiFV+fZeXdNw/Q==@vger.kernel.org, AJvYcCWyg27QU2Nl7cTXh2AI
+ 9wmt30uhahZ8FxtIVNwqmb/3C4ca+Ad0ESkRid9o1HN2SeQ8lkWLRPuFj0tgcw==@vger.kernel.org, AJvYcCXH3KoZtiPO9PCVq7yB7q559oPnkp5qnuWqzSCxut54Ne3+jtdkfP7cGUgImfHTNfgff9euNGBAYUvnJg==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyjn9Nn2jss0jyaki2jhQiKY7KwSX1l52bTbd5wXZ94oZfqWvcZ
+	GAXR3QsysrhS5VJp6Xomj039Efd7JeZPzBWvBTygIyCCvNV4oOPk
+X-Google-Smtp-Source: AGHT+IF9QchVfib2TGNl44/PzgjS0URPqGUjbcmYR3mRhZSVqTrRZTQB8Yjb9zSWYe+zZesnRPDrWw==
+X-Received: by 2002:ac2:4c4e:0:b0:52c:9f9e:d8e3 with SMTP id 2adb3069b0e04-53546b40c79mr12956646e87.31.1725541199344;
+        Thu, 05 Sep 2024 05:59:59 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5356cbbbe15sm242758e87.211.2024.09.05.05.59.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2024 05:59:59 -0700 (PDT)
+Date: Thu, 5 Sep 2024 15:59:57 +0300
+From: Dmitry Baryshkov <dbaryshkov@gmail.com>
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org, 
+	herbert@gondor.apana.org.au, davem@davemloft.net, sudeep.holla@arm.com, andi.shyti@kernel.org, 
+	tglx@linutronix.de, will@kernel.org, robin.murphy@arm.com, joro@8bytes.org, 
+	jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org, amitk@kernel.org, 
+	thara.gopinath@gmail.com, broonie@kernel.org, cristian.marussi@arm.com, 
+	rui.zhang@intel.com, lukasz.luba@arm.com, wim@linux-watchdog.org, linux@roeck-us.net, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org, iommu@lists.linux.dev, 
+	linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org, linux-spi@vger.kernel.org, 
+	linux-watchdog@vger.kernel.org, kernel@quicinc.com, quic_psodagud@quicinc.com
+Subject: Re: [PATCH v2 00/21] arm64: qcom: Introduce SA8255p Ride platform
+Message-ID: <rcr6bphq6qojq2cchv2vurymcio5utgaa63a5p7pry5pslab6d@q4fi2pkdxg3r>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240905122023.47251-1-brgl@bgdev.pl> <20240905122023.47251-2-brgl@bgdev.pl>
- <6vikrqhdnkefzpahhhtz2hpi62jvcwnzclm7touwtnpxdzvgrf@uc7r6a7bbjek> <CAMRc=MeijX2by+MS_vq_OVx25JO6z=zNfymta35h11mbm=vmtQ@mail.gmail.com>
-In-Reply-To: <CAMRc=MeijX2by+MS_vq_OVx25JO6z=zNfymta35h11mbm=vmtQ@mail.gmail.com>
-From: Dmitry Baryshkov <dbaryshkov@gmail.com>
-Date: Thu, 5 Sep 2024 15:56:15 +0300
-Message-ID: <CALT56yOP+un5nkxuirJVg=gr7fo4Hqjt1ew3z-=F2J_Y_RcTqg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp-crd: model the PMU of
- the on-board wcn6855
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240903220240.2594102-1-quic_nkela@quicinc.com>
 
-On Thu, 5 Sept 2024 at 15:53, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->
-> On Thu, Sep 5, 2024 at 2:50=E2=80=AFPM Dmitry Baryshkov <dbaryshkov@gmail=
-.com> wrote:
-> >
-> > On Thu, Sep 05, 2024 at 02:20:19PM GMT, Bartosz Golaszewski wrote:
-> > > From: Konrad Dybcio <konradybcio@kernel.org>
-> > >
-> > > Add nodes for the WCN6855 PMU, the WLAN module and relevant regulator=
-s
-> > > and pin functions to fully describe how the wifi is actually wired on
-> > > this platform.
-> > >
-> > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > Signed-off-by: Konrad Dybcio <konradybcio@kernel.org>
-> > > [Bartosz:
-> > >   - write the commit message,
-> > >   - rebase Konrad's commit,
-> > >   - fix one of the supplies' name]
-> > > Co-developed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 108 ++++++++++++++++++++=
-++
-> > >  1 file changed, 108 insertions(+)
-> > >
-> > > @@ -583,6 +668,23 @@ &pcie4_phy {
-> > >       status =3D "okay";
-> > >  };
-> > >
-> > > +&pcie4_port0 {
-> > > +     wifi@0 {
-> > > +             compatible =3D "pci17cb,1103";
-> > > +             reg =3D <0x10000 0x0 0x0 0x0 0x0>;
-> > > +
-> > > +             vddrfacmn-supply =3D <&vreg_pmu_rfa_cmn_0p8>;
-> > > +             vddaon-supply =3D <&vreg_pmu_aon_0p8>;
-> > > +             vddwlcx-supply =3D <&vreg_pmu_wlcx_0p8>;
-> > > +             vddwlmx-supply =3D <&vreg_pmu_wlmx_0p8>;
-> > > +             vddpcie1p8-supply =3D <&vreg_pmu_pcie_1p8>;
-> > > +             vddpcie0p9-supply =3D <&vreg_pmu_pcie_0p9>;
-> > > +             vddrfa0p8-supply =3D <&vreg_pmu_rfa_0p8>;
-> > > +             vddrfa1p2-supply =3D <&vreg_pmu_rfa_1p2>;
-> > > +             vddrfa1p8-supply =3D <&vreg_pmu_rfa_1p7>;
-> >
-> > As you are going to post another revision, please also add
-> >
-> > qcom,ath11k-calibration-variant
-> >
->
-> I had it in earlier revisions. The only one we could add here would be
-> the one from X13s as QCom has not yet released the data for the CRD.
-> Johan and Konrad were against adding this here if it doesn't refer to
-> the correct one so I dropped it.
+On Tue, Sep 03, 2024 at 03:02:19PM GMT, Nikunj Kela wrote:
+> This series enables the support for SA8255p Qualcomm SoC and Ride
+> platform. This platform uses SCMI power, reset, performance, sensor
+> protocols for resources(e.g. clocks, regulator, interconnect, phy etc.)
+> management. SA8255p is a virtual platforms that uses Qualcomm smc/hvc
+> transport driver.
+> 
+> Multiple virtual SCMI instances are being used to achieve the parallelism.
+> SCMI platform stack runs in SMP enabled VM hence allows platform to service
+> multiple resource requests in parallel. Each device is assigned its own
+> dedicated SCMI channel and Tx/Rx doorbells.
+> 
+> Resource operations are grouped together to achieve better abstraction
+> and to reduce the number of requests being sent to SCMI platform(server)
+> thus improving boot time KPIs. This design approach was presented during
+> LinaroConnect 2024 conference[1].
 
-As Kalle usually merges data with some delay it's not infrequent to
-have DTS which names calibration variant, but board-2.bin doesn't have
-corresponding data. The driver safely falls back to the data without
-variant if it can find it. Als  usually it's us who supply the
-calibration name.
+Please don't send new revisions as a reply to the previous patchset.
+Always start new thread for new submission. This is documented in your
+internal 'upstreaming' documents. If it is not, please update them.
 
->
-> Bart
->
-> > > +     };
-> > > +};
-> > > +
-> > >  &pmc8280c_lpg {
-> > >       status =3D "okay";
-> > >  };
-> >
-> > --
-> > With best wishes
-> > Dmitry
-
-
-
---=20
+-- 
 With best wishes
 Dmitry
 
