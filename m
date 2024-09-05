@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-30862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30863-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C47096D272
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 10:48:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC5E396D293
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 10:57:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E6FA1F26C53
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 08:48:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A66D3287C96
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 08:57:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33B861953A9;
-	Thu,  5 Sep 2024 08:47:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11CE1194AEE;
+	Thu,  5 Sep 2024 08:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a5F9kJBH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T4fGYAAk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013E819538A;
-	Thu,  5 Sep 2024 08:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FB61527B4;
+	Thu,  5 Sep 2024 08:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725526076; cv=none; b=ipabeDNPkuBdoOV4VbRQCBAsQwhaSz/oa2OY/iAE6Ej7Du/RnPG8i1PlzjwwZBFTxw+c4tQpi/hIf4JyVXWXLrL7SW0LOb7mefiJL/h/lFa1tNIZXAnFYk8BalGH7woQCPpfrAujEGot9H9fZhXkcoAK1KEBUgNKXcAbc3/iPl4=
+	t=1725526645; cv=none; b=X3xl41KrnXVR69R5WnPn36uKy7QJl+WkEzT1j5LsxvyxV9FO7SRk6NdUerKoJURtLYQFkD+KXxEupLmLt/zKhw5AtibsFH27id0RPRnWzjnEQWqRRSxUbKgxLg6jAWY3YZ2zdvvZ4HTRaCmURpP+9WL7fbe4pvuXV1FkXZ1FszM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725526076; c=relaxed/simple;
-	bh=DnSuif62uCCVhEeRI162fm17cbXet/3kgwd0VQ3vzW0=;
+	s=arc-20240116; t=1725526645; c=relaxed/simple;
+	bh=D0mFP2caq38JlwbGu1PkcHf6qzffPArFGJdhnoX/Jtk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KAizto+xVmXFxmF0lYq2FipCxvDcZfqr1fKcOo5UOl+opzndpNr29lc9TjOswfrg7v+QppNcLK2SvqrjcAzks0n1EcnmydEqOAqiOcfvykIjVvPmYUhAyfmHQQH89tVNV+aCOYafI2LeW5tzqrzTcPr1WnmyZmx90NAqI9PCvJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a5F9kJBH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C041CC4AF09;
-	Thu,  5 Sep 2024 08:47:55 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zlc6445BfiZe7RiOHen+DV0wabPp3xRaq5QUQBWEummIY5MgZmVhNUMsuEfGyx7dv56YMJXgAn01gWeRMscfilHqo3YL4FL2V6NSV5f62uc0A0P6dWTHj2coFVLGK+MK+6+zWc9ZIcZiyCfSd+WNYPJUW5l2AAfBHeWxqCqbiyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T4fGYAAk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69854C4CEC7;
+	Thu,  5 Sep 2024 08:57:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725526075;
-	bh=DnSuif62uCCVhEeRI162fm17cbXet/3kgwd0VQ3vzW0=;
+	s=k20201202; t=1725526644;
+	bh=D0mFP2caq38JlwbGu1PkcHf6qzffPArFGJdhnoX/Jtk=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=a5F9kJBHbKVu5NS4eqt9wfG8qyufkBzZopWKazo+jGncJNZ8epN/xCNBaC0hnkoUe
-	 MZLHoAXLXgZoFU9fLTl0ee81NBvd7cQJ+UufyCmpXruMRo57IQTkN/pL2LDrQsB7Rp
-	 XrtL8oh+Hpw8YGr5oDL3iP5MBfyuq5EYRwYl34f9C+qpc2WQxCoAhQaV/QU5SWP5Hh
-	 wwYuXOSRwrT6xh++S/aJjLb0wRjDNlujly5qE0GnVdKEaZBBUrKex3YLdZWgtWDyPQ
-	 YWi4fYo4ZaOu26/3+TAlA3EbW2rxlD4Td6S9R4psU4PawVkACOUXFov+zcNEwqAQfM
-	 MlsN2bs06o+nA==
+	b=T4fGYAAkdUytSCRkxP8cpYoD4qbG+QlMXmcLspTf1aEc0tzJfF8Zb04oEAE+mxgQd
+	 Wp0jBpUjikiMHHkCTewtg/4gSuYL72S5Lnt5A6fRxZRzuOKeltFYrwyFXzIf0Qpj9R
+	 /KvUTXP3a/mYhLghKOAyI8Wlytjp1o6d2e+07uhpwq3OzaemTaouIYwVIaZh1otX1M
+	 b7gsyfl3DTcDS6/ppH34EQtUs0hCoOOQ35s2MYxAkZ9tyzneh8Bb41Qg0wgvE0kBEh
+	 VEijbvOya+9SFTuMnxNy852DvOUoJt4yTnJaGZE+IiilKWEbts/+euY6yGmnFcrT+1
+	 9Ilfi7tRplqgQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan@kernel.org>)
-	id 1sm8A1-000000002xD-3oNJ;
-	Thu, 05 Sep 2024 10:48:13 +0200
-Date: Thu, 5 Sep 2024 10:48:13 +0200
+	id 1sm8JB-0000000033S-3VT1;
+	Thu, 05 Sep 2024 10:57:42 +0200
+Date: Thu, 5 Sep 2024 10:57:41 +0200
 From: Johan Hovold <johan@kernel.org>
 To: Doug Anderson <dianders@chromium.org>
 Cc: Johan Hovold <johan+linaro@kernel.org>,
@@ -56,11 +56,11 @@ Cc: Johan Hovold <johan+linaro@kernel.org>,
 	=?utf-8?B?TsOtY29sYXMgRiAuIFIgLiBBIC4=?= Prado <nfraprado@collabora.com>,
 	linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
 	linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 1/8] serial: qcom-geni: fix fifo polling timeout
-Message-ID: <ZtlwTQNZTdyzBChw@hovoldconsulting.com>
+Subject: Re: [PATCH 6/8] serial: qcom-geni: fix console corruption
+Message-ID: <ZtlyhQ2HNk8unxNI@hovoldconsulting.com>
 References: <20240902152451.862-1-johan+linaro@kernel.org>
- <20240902152451.862-2-johan+linaro@kernel.org>
- <CAD=FV=WDx69BqK2MmhOMfKdEUtExo1wWFMY_n3edQhSF7RoWzg@mail.gmail.com>
+ <20240902152451.862-7-johan+linaro@kernel.org>
+ <CAD=FV=XnpPnSToWV3f2Z-DWm2-1rdgYmDZeicGGRQD-_YjS2Bw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,110 +70,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=WDx69BqK2MmhOMfKdEUtExo1wWFMY_n3edQhSF7RoWzg@mail.gmail.com>
+In-Reply-To: <CAD=FV=XnpPnSToWV3f2Z-DWm2-1rdgYmDZeicGGRQD-_YjS2Bw@mail.gmail.com>
 
-On Wed, Sep 04, 2024 at 02:50:57PM -0700, Doug Anderson wrote:
+On Wed, Sep 04, 2024 at 02:51:15PM -0700, Doug Anderson wrote:
 > On Mon, Sep 2, 2024 at 8:26 AM Johan Hovold <johan+linaro@kernel.org> wrote:
 > >
-> > The qcom_geni_serial_poll_bit() can be used to wait for events like
-> > command completion and is supposed to wait for the time it takes to
-> > clear a full fifo before timing out.
-> >
-> > As noted by Doug, the current implementation does not account for start,
-> > stop and parity bits when determining the timeout. The helper also does
-> > not currently account for the shift register and the two-word
-> > intermediate transfer register.
-> >
-> > Instead of determining the fifo timeout on every call, store the timeout
-> > when updating it in set_termios() and wait for up to 19/16 the time it
-> > takes to clear the 16 word fifo to account for the shift and
-> > intermediate registers. Note that serial core has already added a 20 ms
-> > margin to the fifo timeout.
-> >
-> > Also note that the current uart_fifo_timeout() interface does
-> > unnecessary calculations on every call and also did not exists in
-> > earlier kernels so only store its result once. This also facilitates
-> > backports as earlier kernels can derive the timeout from uport->timeout,
-> > which has since been removed.
-
-> > @@ -270,22 +270,21 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
-> >  {
-> >         u32 reg;
-> >         struct qcom_geni_serial_port *port;
-> > -       unsigned int baud;
-> > -       unsigned int fifo_bits;
-> >         unsigned long timeout_us = 20000;
-> >         struct qcom_geni_private_data *private_data = uport->private_data;
-> >
-> >         if (private_data->drv) {
-> >                 port = to_dev_port(uport);
-> > -               baud = port->baud;
-> > -               if (!baud)
-> > -                       baud = 115200;
-> > -               fifo_bits = port->tx_fifo_depth * port->tx_fifo_width;
+> > +static void qcom_geni_serial_drain_fifo(struct uart_port *uport)
+> > +{
+> > +       struct qcom_geni_serial_port *port = to_dev_port(uport);
 > > +
-> >                 /*
-> > -                * Total polling iterations based on FIFO worth of bytes to be
-> > -                * sent at current baud. Add a little fluff to the wait.
-> > +                * Wait up to 19/16 the time it would take to clear a full
-> > +                * FIFO, which accounts for the three words in the shift and
-> > +                * intermediate registers.
-> > +                *
-> > +                * Note that fifo_timeout_us already has a 20 ms margin.
-> >                  */
-> > -               timeout_us = ((fifo_bits * USEC_PER_SEC) / baud) + 500;
-> > +               if (port->fifo_timeout_us)
-> > +                       timeout_us = 19 * port->fifo_timeout_us / 16;
+> > +       if (!qcom_geni_serial_main_active(uport))
+> > +               return;
 > 
-> It made me giggle a bit that part of the justification for caching
-> "fifo_timeout_us" was to avoid calculations each time through the
-> function. ...but then the code does the "19/16" math here instead of
-> just including it in the cache. ;-) ;-) ;-)
+> It seems like all callers already do the check and only ever call you
+> if the port is active. Do you really need to re-check?
 
-Heh, yeah, but I was really talking about uart_fifo_timeout() doing
-unnecessary calculations on each call (and that value used to be
-calculated once and stored for later use).
+I wanted to make the helper self-contained and work in both cases. But
+since I ended up only using this helper only in the console code and
+will need to move it anyway (under the console ifdef), perhaps I can
+consider dropping it. But then again, it's just one register read.
 
-I also realised that we need to account for the intermediate register
-after I wrote the initial commit message, and before that this was just
-a shift and add.
-
-> That being said, I'm not really a fan of the "19 / 16" anyway. The 16
-> value is calculated elsewhere in the code as:
+> > @@ -308,6 +311,17 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
+> >         return qcom_geni_serial_poll_bitfield(uport, offset, field, set ? field : 0);
+> >  }
+> >
+> > +static void qcom_geni_serial_drain_fifo(struct uart_port *uport)
+> > +{
+> > +       struct qcom_geni_serial_port *port = to_dev_port(uport);
+> > +
+> > +       if (!qcom_geni_serial_main_active(uport))
+> > +               return;
+> > +
+> > +       qcom_geni_serial_poll_bitfield(uport, SE_GENI_M_GP_LENGTH, GP_LENGTH,
+> > +                       port->tx_queued);
 > 
-> port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
-> port->tx_fifo_width = geni_se_get_tx_fifo_width(&port->se);
-> port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
-> uport->fifosize =
->   (port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
-> 
-> ...and here you're just hardcoding it to 16. Then there's also the
-> fact that the "19 / 16" will also multiply the 20 ms "slop" added by
-> uart_fifo_timeout() which doesn't seem ideal.
+> nit: indent "port->tx_queued" to match open parenthesis?
 
-Indeed, and the early console code also hardcodes this to 16.
+No, I don't use open-parenthesis alignment unless that's the
+(consistent) style of the code I'm changing (e.g. to avoid unnecessary
+realignments when symbol names change and to make a point about
+checkpatch --pedantic warnings not being part of the coding style).
+ 
+> ...also: as the kernel test robot reported, w/ certain CONFIGs this is
+> defined / not used.
 
-I don't care about the slop being 20 ms or 23.5, this is just a timeout
-for the error case.
+Yes, I need to move the helper under the console ifdef. I was just
+waiting to see if there was any further feedback before respinning.
 
-This will over count a bit if there is uart hw with 256 B fifos, but
-could potentially undercount if there is hw with less than 16 words. I'm
-not sure if such hw exists, but I'll see what I can find out.
+> Aside from the nit / robot issue, this solution looks reasonable to
+> me. It's been long enough that I've already paged out much of the past
+> digging I did into this driver, but this seems like it should work.
+> Feel free to add my Reviewed-by when the robot issue is fixed.
 
-> How about this: we just change "uport->fifosize" to account for the 3
-> extra words? So it can be:
-> 
-> ((port->tx_fifo_depth + 3) * port->tx_fifo_width) / BITS_PER_BYTE;
-> 
-> ...then the cache will be correct and everything will work out. What
-> do you think?
-
-I don't think uart_fifo_timeout traditionally accounts for the shift
-register and we wait up to *twice* the time it takes to clear to fifo
-anyway (in wait_until_sent). The intermediate register I found here
-could perhaps be considered part of the fifo however.
-
-I'll give this some more thought.
+Thanks for reviewing.
 
 Johan
 
