@@ -1,144 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-30894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30895-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BA8996D84F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:22:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E595796D86D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:26:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2030128BE2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 12:22:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 902801F26B95
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 12:26:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10ED819E7F3;
-	Thu,  5 Sep 2024 12:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CD9919D070;
+	Thu,  5 Sep 2024 12:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Vq6DTIoj"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="sjnpjkLu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128F419D8BE
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 12:20:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3A3B8C1A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 12:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725538840; cv=none; b=Gx2t3DxcUYfJos6xmRnidx0RmRKWZcBllQJYu53aY+8UwVCmhWYnzV0sGpVAI2DhCv6Y/RuI/DUKwUe1FKBY/1h0r1i3PawQ/SUuaBFRGdDgFnQ6es0+PyPSstXzyFqdcKHclVFlbFAAz0bJcSlGN3EWfMtYX40oJvr1PR/x+Ok=
+	t=1725538907; cv=none; b=KOOE2mbz1QobEiGWNZthzyfFrZbNLG0jU/Iqw5ENF0k/F5uov4gUPE91WcXJSV8Y+Ktm5oidDA9AOT4Lp4p7D/m5AbbfS+TV4LZ6B+RM1dkq92tERIbFUFUDXwfVnZQrGRZj+3SoT6MHQjLM6xWOHh/8DPWFbS7PBxwtzlpSAAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725538840; c=relaxed/simple;
-	bh=d6WJddhun4HJvMbLm+fmJ2JZlxp0djfpfRlepqwkzwA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kjdtULyakND7+xDVfAcG+DZ6Pqgg1pkIp1AY6eMJAtVREgpghgFr7d/bC5NEEF3DPv9whjKhkT/bKFLAbIlbT+7Pm48ElYlJXOmfYLL6DM9vJSHK4e9K0kJt2jjviV/rOJeBMLB4Kuj7JqQYiPFp/j+V7XcFzqkWUTW8QDoDv2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Vq6DTIoj; arc=none smtp.client-ip=209.85.128.46
+	s=arc-20240116; t=1725538907; c=relaxed/simple;
+	bh=F01XbYYcnFz3IrGJAZEt/h6KlLzKcoJy+krrnv7pnJo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=K4b1QSUosdriRzfU1V118OnwW+ELhFTL3bQcVGnY+Pw7rkQnW2aDNwOGpRCpKpCRRPRqXYHH5HQLPv1s2uFz5xyzLfPnwhq+GisfEx6S/GqcRyOs/t2oOV9/nO5gWZ6/tOcsxeNplzS75KVnOFVoXVpLeJLVAHXQFANTjQZKO+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=sjnpjkLu; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42bbd16fca8so6402125e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 05:20:37 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5353cd2fa28so822961e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 05:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1725538836; x=1726143636; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1725538903; x=1726143703; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gUTBDQ3R7lg9yjFQy51ucEUiL1cminpTXLLq8RTN/Q8=;
-        b=Vq6DTIoj6sqd6/PQ3+CxcElIFUceGY8F2+08d/BPW/XeOnvU8c0nHbJr8zRFiao6X3
-         t8WGCAhCRd3glVvBkMlMQRmOtR4/m3R95EtFN3g4arWb6F0oes/m0GYTpXYX0DZMav/K
-         rokwDnRJmC3pfXccWu0lgOp+x2JQZCQ/JHrXAc6TvIfOpcC7nxmAEMSb2fpweIPNOIfk
-         ENa0vg83d7v37S9t4zEZSdWMKaZE1zCKm173sKoDySrzFCyEmYVzU288+znYRTYmCYCi
-         Ag1D6VLv2plPQMXwib++3ENVuH7emR1gpvJNuaqz115wuTVTBlSiun3F+xr2KxcajGEX
-         4lJA==
+        bh=TACxCNrG/DopYef41PGhbtqig8LKMsOnKp3kgyqsYHs=;
+        b=sjnpjkLuw1INmoHTo4VwdOPWr86OrPYTHyFc/HZSTGlqSL6+lE7mj9xYlg75bPN8HZ
+         kzEjJLRDJiWSdnIN1+h+vysHjaN0eg5g+8sesDdqTd/0SCR2K8aCH0mCk++/fKkYUlvK
+         Kn3QfRNFsEpaMbjYffJiYlj/lCGEZ2wrhRMOeVV/oduW6/CQozNRJmqwitRz/1FF/JZ8
+         NoH7rVr1owoHGNkcpNCl2fSlAmznjPLahN+AK70aQCYIzrM/V4E7Yw6OmgzKejP5ahIx
+         TnrL547DbyQFevjgVs4vF/oPJObQD2oKnGr9Gyd8XWe1t2kcYzq4FT12R9hYGL70Rw0Z
+         zo1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725538836; x=1726143636;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1725538903; x=1726143703;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gUTBDQ3R7lg9yjFQy51ucEUiL1cminpTXLLq8RTN/Q8=;
-        b=L1mImZ8YCb8GGEjddTCX6+NngytAM42+pTr93myILrORUtd/JzASSlvRPRPJNXh0P5
-         Cp+NX20E3Pm/j1wRX3yHsAUhdtBn6elc/vPMyIeHrJsGMvDPlhImNAoYO1dG/lsMEkar
-         9Z4AgugVUC8b10naPMfvmH8F7cej3TWypePcszPicrYX1UD7a9ZPtdIMcjXu0RMnCI1i
-         nmI4OfvDPntvRpU2jq4TLBQRy5fN0/qpMM35W31A6jAMBD90ZcDDEv3NVNhbTCiMUfjh
-         yzXQjR1FCDTi1cAoi1K2ln2Ld3HJ4HjI+wq2JfSjAaplgWj5S5d5m9CZePZr/+ynrWk8
-         Od8w==
-X-Gm-Message-State: AOJu0YxdWK38cAQI/k2+5SAcfPWvxFMb2ibd3B4oxG89kFVQ+crxQxD+
-	rlIC6sCXoWzNlcTUpvynH1psfmVvJQxByvnxkzi6MP4KY7f11dEjvuocK+mOieE=
-X-Google-Smtp-Source: AGHT+IGSQzjFcSPvZhlrrAcUSpzThCnyg1YJpIfCV1RMXMl3ZVM0P7DXFNMe1faorV31A2qjyVpodA==
-X-Received: by 2002:a5d:4b81:0:b0:374:c2e9:28b8 with SMTP id ffacd0b85a97d-374ecc8f2bamr6939773f8f.18.1725538836244;
-        Thu, 05 Sep 2024 05:20:36 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:cbe4:ce99:cb33:eb1c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-374be2edf08sm14645764f8f.6.2024.09.05.05.20.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 05:20:35 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp-x13s: keep less regulators always-on
-Date: Thu,  5 Sep 2024 14:20:22 +0200
-Message-ID: <20240905122023.47251-5-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20240905122023.47251-1-brgl@bgdev.pl>
-References: <20240905122023.47251-1-brgl@bgdev.pl>
+        bh=TACxCNrG/DopYef41PGhbtqig8LKMsOnKp3kgyqsYHs=;
+        b=CoFaAqTumJuKXqrRkwMUBNn7JH8W6EHM0BahH1OqWHXC9ZjH6XubLDb+ncAZam7sbU
+         4yRURMNzo7UvPwUFXt0xBoh3l6PP3WoWiY0R9GO0Hjd+AreT2aXyOii4Fljs6FpfuYsT
+         XvINIRN/0ua9ALsiBTicBwFf5WXO4ZUkIwrSRY0S8A0gvMxgiOowlwNTQMXuZcZ8RtDh
+         AG/KF0RqlqevY732rBW47GO98ys7m1J0UhFWyTYgCklMfH9j+7l8UB2JIST1RGE3Oczy
+         Wg8Hw0ZN/KP4aDkU1c165cwq63j/dH+ug3wQukDwwiAFOjYxytYZT4FmQCkGbso7DuO+
+         xU0A==
+X-Forwarded-Encrypted: i=1; AJvYcCXVRmr5hSFmDFLMxtmL2SgABJwVJq2Tu7YDAc4ZgujFrmEMCisYQQy4cGKZ/oFSU97FwCxyGUmS9O8YrN96@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJ9aH9SmEgQif2JAYfqFfWe9xWUA0yLw/+Px3ZQXAxofwMRHFT
+	IaYlrsGh1RXkIVQYdmwbZz/eeSpPXbKZn3xxK5o16gu1SrjE1JHj64upvESdfBZR/6dVwY59Vpe
+	bzOA26sV9L8T6itOwKuoNgnDdvmltZLrJdlf7VA==
+X-Google-Smtp-Source: AGHT+IFcMMTAuv+S+5/9hcRxIAh41Pmij3mBunr6XibOfsaQXElI+A3yPmhY2q3bx6emgGpGca4XjRlTGGn+3XPVLNc=
+X-Received: by 2002:a05:6512:3e06:b0:52c:dfa0:dca0 with SMTP id
+ 2adb3069b0e04-53546ba0eabmr12703593e87.43.1725538901776; Thu, 05 Sep 2024
+ 05:21:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240903093629.16242-1-brgl@bgdev.pl> <20240903093629.16242-4-brgl@bgdev.pl>
+ <lpjfpgnbhrp3u4rqczoouf2kvktdigisi3sjhfstanw4t5g2sc@fvqana5gftds>
+In-Reply-To: <lpjfpgnbhrp3u4rqczoouf2kvktdigisi3sjhfstanw4t5g2sc@fvqana5gftds>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 5 Sep 2024 14:21:30 +0200
+Message-ID: <CAMRc=McmnXe83bsRf+uivV05Z_dv8V9ox5Rx3kGH9O1eDpka1A@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sc8280xp-x13s: model the PMU of
+ the on-board wcn6855
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Steev Klimaszewski <steev@kali.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, Sep 3, 2024 at 4:18=E2=80=AFPM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Tue, Sep 03, 2024 at 11:36:28AM GMT, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > Add a node for the PMU of the WCN6855 and rework the inputs of the wifi
+> > and bluetooth nodes to consume the PMU's outputs.
+> >
+> > Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 98 ++++++++++++++++---
+> >  1 file changed, 86 insertions(+), 12 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts=
+ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index 6a28cab97189..88b31550f9df 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -400,6 +400,67 @@ usb1_sbu_mux: endpoint {
+> >                       };
+> >               };
+> >       };
+> > +
+> > +     wcn6855-pmu {
+> > +             compatible =3D "qcom,wcn6855-pmu";
+> > +
+> > +             pinctrl-0 =3D <&wlan_en>;
+> > +             pinctrl-names =3D "default";
+> > +
+> > +             wlan-enable-gpios =3D <&tlmm 134 GPIO_ACTIVE_HIGH>;
+> > +             bt-enable-gpios =3D <&tlmm 133 GPIO_ACTIVE_HIGH>;
+> > +
+> > +             vddio-supply =3D <&vreg_s10b>;
+> > +             vddaon-supply =3D <&vreg_s12b>;
+> > +             vddpmu-supply =3D <&vreg_s12b>;
+> > +             vddrfa0p95-supply =3D <&vreg_s12b>;
+> > +             vddrfa1p3-supply =3D <&vreg_s11b>;
+> > +             vddrfa1p9-supply =3D <&vreg_s1c>;
+> > +             vddpcie1p3-supply =3D <&vreg_s11b>;
+> > +             vddpcie1p9-supply =3D <&vreg_s1c>;
+>
+> As the WiFi is now properly using the PMU, should we also remove some of
+> the regulator-always-on properties?
+>
 
-Remove the regulator-always-on property from the ones that used to be
-implicitly needed by the on-board WCN6855 now that its PMU is modeled in
-device-tree.
+I added a separate patch that doesn't seem to impact anything with the
+PMU changes applied but will be easy to revert if something does
+break.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 4 ----
- 1 file changed, 4 deletions(-)
+Bart
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 88b31550f9df..1a9dac16c952 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -479,7 +479,6 @@ vreg_s10b: smps10 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-always-on;
- 		};
- 
- 		vreg_s11b: smps11 {
-@@ -487,7 +486,6 @@ vreg_s11b: smps11 {
- 			regulator-min-microvolt = <1272000>;
- 			regulator-max-microvolt = <1272000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-always-on;
- 		};
- 
- 		vreg_s12b: smps12 {
-@@ -495,7 +493,6 @@ vreg_s12b: smps12 {
- 			regulator-min-microvolt = <984000>;
- 			regulator-max-microvolt = <984000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-always-on;
- 		};
- 
- 		vreg_l1b: ldo1 {
-@@ -545,7 +542,6 @@ vreg_s1c: smps1 {
- 			regulator-min-microvolt = <1880000>;
- 			regulator-max-microvolt = <1900000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-always-on;
- 		};
- 
- 		vreg_l1c: ldo1 {
--- 
-2.43.0
-
+> > +
+>
+> --
+> With best wishes
+> Dmitry
 
