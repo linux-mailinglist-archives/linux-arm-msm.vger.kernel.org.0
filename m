@@ -1,197 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-30982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDE1796DF4A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:12:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1F4F96DF55
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 18:14:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 870E2285D94
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:12:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FFCC287F13
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:14:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DDFA19F495;
-	Thu,  5 Sep 2024 16:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3572C19FA60;
+	Thu,  5 Sep 2024 16:14:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U1Hv/+5w"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="bi7BbRdO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B381419F48B;
-	Thu,  5 Sep 2024 16:12:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB52019DF75
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 16:14:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725552746; cv=none; b=Qji4XsfzVdAma1OVlTCJfGKlQQcaWCK7Z7yWoGcrAmirIzygAiF5kjVCXXqQ+0FrrCbqBLs9Zq+5TTvRP+Lw4BxYVy5Ux1a/L36Y1c1tBV5XyrH5qiI1e0/653Mvfsqn+nHHodUcpzu//cBIZaHfJyfpMSC/D1A2aaLacX3wAOo=
+	t=1725552862; cv=none; b=V4yOXcB0uQ5etXpCco0mi8O2gSOvH2iR6RNoQHI8SYe3lMV+wfso1OWntg/EtgKM3thg9WczsqmtCqP26RcjBxTIw9vS7m4PjCbBqJ8lpJroIK95ikOS2Pn5FbwS+N06g46PPfmmIZ7gWtpLEk/WrhDDiJNDzYZFcGUqqbf9Vn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725552746; c=relaxed/simple;
-	bh=K6RDaEN/MDPa23PcxNXoVHYubllWBbLL+J/L8CXUdyw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sx0IxNC5vIIWS9WmWbHOi+FUgaoEy12FcjQjMxKs/nBK76/01jW65/gu1Fu55eg3qrBYhRzGQnANIb/Ez1qbp/gCY8ZRoFl0/bhE2QuXni/ZLcPQr6HJKARU4rNLcyiIy634JjJBvXwsZbo4he850rxqurhxwkYW/19gN9eQbhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U1Hv/+5w; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1725552744; x=1757088744;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=K6RDaEN/MDPa23PcxNXoVHYubllWBbLL+J/L8CXUdyw=;
-  b=U1Hv/+5wOzmkUWwngYVqx9V6XEIsiAXChy/Ai6Pa2uPCTFVs0m7uRAfF
-   oE9t4IzvDC00ORGAr9sK3ne0QqMI3wugGgAgKbJyWhWN01X75+CdVoTDk
-   8XwPaXDySFsCpZhGZDghEMFRgTSeAXwqUsliC3pJDJr/Brc+06zG4NW7O
-   dJP4rH/QTEGa9HH3O/HrkdaoGAk19ySZlZmPchEpWiN2i5jsdyDTDTdSq
-   QJdG08RxJFNf4TsWmZ3xxBtOv9z+O37sDeM3H38lZp/Q5XwqmzPZo7wyH
-   yThWWa6YTjCZ3Qi+sDdnDz2SExLKRTLA1lo0keSG8eTdMzLSDf4hPaEKR
-   w==;
-X-CSE-ConnectionGUID: QQALCeruTBq1gu0XaUDYZw==
-X-CSE-MsgGUID: GGc8UxGDS5WOEowozJzQfA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11186"; a="24473880"
-X-IronPort-AV: E=Sophos;i="6.10,205,1719903600"; 
-   d="scan'208";a="24473880"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2024 09:12:21 -0700
-X-CSE-ConnectionGUID: 1358xW9WSSGJaEZg2P8u+A==
-X-CSE-MsgGUID: kJluJaoxTASmBFneGyt5dA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,205,1719903600"; 
-   d="scan'208";a="65326967"
-Received: from lkp-server01.sh.intel.com (HELO 9c6b1c7d3b50) ([10.239.97.150])
-  by fmviesa006.fm.intel.com with ESMTP; 05 Sep 2024 09:12:16 -0700
-Received: from kbuild by 9c6b1c7d3b50 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1smF5h-000A6J-2M;
-	Thu, 05 Sep 2024 16:12:13 +0000
-Date: Fri, 6 Sep 2024 00:11:51 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.linaro.org@kernel.org>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Chuanhua Lei <lchuanhua@maxlinear.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	abel.vesa@linaro.org, johan+linaro@kernel.org,
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v6 1/4] PCI: dwc: Rename 'dw_pcie::link_gen' to
- 'dw_pcie::max_link_speed'
-Message-ID: <202409060041.zY2BEBq7-lkp@intel.com>
-References: <20240904-pci-qcom-gen4-stability-v6-1-ec39f7ae3f62@linaro.org>
+	s=arc-20240116; t=1725552862; c=relaxed/simple;
+	bh=pO7EaXwN+HDMElTFjT9hXVmi2mp0g0SDHVahBbNCq+o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tRySLfyGI4w3SGWQD6gtyDt3X5Cn1CX3EpY6v88luE+NcTcfyC5v4yQntP9PioEhaau7bLpUMiPP+uozrzcWJup123oSwgeTMrCHJlXmOikYn5cmLRiuwmdhZ3ifpoBLLKT/jPA/7aIwCY+Fi5hf8IKnozgk68F7tRiSgLMEfTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=bi7BbRdO; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-371941bbfb0so657688f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 09:14:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1725552858; x=1726157658; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SQCzkFNF6R0y5OgjwiBOcxXDxjjM7SPAsOwwAJex/C0=;
+        b=bi7BbRdO/Ze4w2q9XXbUcoEFLHd+AOeSdfBswdnT2OVyJhRDywNWxj41JLpMUkQJEz
+         qm/a8MAO7+0us5UjeoXpkOXqRGztolJgML2MJcl03JTP5CGHa4LIjrL4ZmTVj36h22vP
+         1gIN+x9gm/Or2tfOmPpIEGWppAWPfxnZU6Tz/djKvR2yuUmCgsBMIRm5jiir1Dw6aG/5
+         XSIvlTPBF0cXw84SvvOblMli2DFHfGY2tMgw5ml1GsHIM6VnlZFy2jGHBEP4bZBH+eVj
+         4HsUjkjw+y7tdNbKYyvN2+gmuLQvIMgH65/zske394nebPzx5GqUGDNdnH7yZrdtDR3B
+         TqRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725552858; x=1726157658;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SQCzkFNF6R0y5OgjwiBOcxXDxjjM7SPAsOwwAJex/C0=;
+        b=Q3YVumED4//3sdcnqPgVwRPrn0G+DRpkybpvqGykSi7J+nRseGpHHW+OgxCak/PbTS
+         VHlh2B9ASoVal6hR2GLD5ca3iIwCvBtaQfKX3m8SMd9dqNynnJQr8mgk16EVLNT5G7mG
+         QUVt7CNBwlUHJ+WPYICPBs5bONw3EIRlgQfklGbE7gt6EKFSYxj9IIf1ri977QxTBeL4
+         BsDmsgMhHdCjl/2/++6Hb+fcDOr3cjxOTKFiexQ0z0FxAmTHmChaQPxTdQgH06vO+nal
+         WHHhxHw3wscsoVVsK/zFCyLsTTKqQjNCd8e3nf5bOCZPLk471ecP8r/qVZWCcMmKv9mk
+         JP5w==
+X-Gm-Message-State: AOJu0Yy7L6zElRxd9IpyUKdpzBKqTaicff3BUTcdM4YxktmUYYpxrCfL
+	5ECyyPmDTMo9cX+lD5DJ2sn8y22z0MDOxMKNSzekLxWtrKYR2fTrKj4Iqx9PuWE=
+X-Google-Smtp-Source: AGHT+IGTeRidPfzjWMeiTd2JcaXWh07h5yeyFVwKWBYencGxKEZw41jcBDd8CO30rx53dbUA3JWpWg==
+X-Received: by 2002:a5d:6991:0:b0:374:c7d1:2ac0 with SMTP id ffacd0b85a97d-3787e496687mr2221867f8f.47.1725552857141;
+        Thu, 05 Sep 2024 09:14:17 -0700 (PDT)
+Received: from [192.168.108.50] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-374c6543ee3sm12569790f8f.12.2024.09.05.09.14.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Sep 2024 09:14:16 -0700 (PDT)
+Message-ID: <747218ab-86a1-4308-b34a-98064ccdac30@freebox.fr>
+Date: Thu, 5 Sep 2024 18:14:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240904-pci-qcom-gen4-stability-v6-1-ec39f7ae3f62@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/6] HDMI TX support in msm8998
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, Arnaud Vrac <avrac@freebox.fr>,
+ Pierre-Hugues Husson <phhusson@freebox.fr>,
+ Jeffrey Hugo <quic_jhugo@quicinc.com>,
+ Conor Dooley <conor.dooley@microchip.com>
+References: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
+ <172550712143.3299484.1580127137460046609.b4-ty@linaro.org>
+Content-Language: en-US
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <172550712143.3299484.1580127137460046609.b4-ty@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Manivannan,
+On 05/09/2024 05:33, Dmitry Baryshkov wrote:
 
-kernel test robot noticed the following build errors:
+> On Wed, 24 Jul 2024 17:01:33 +0200, Marc Gonzalez wrote:
+>
+>> DT bits required for HDMI TX support in qcom APQ8098 (MSM8998 cousin)
+> 
+> Applied, thanks!
+> 
+> [1/6] dt-bindings: phy: add qcom,hdmi-phy-8998
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/8886def25eef
+> [2/6] dt-bindings: display/msm: hdmi: add qcom,hdmi-tx-8998
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/656810411b1d
+> [3/6] drm/msm/hdmi: add "qcom,hdmi-tx-8998" compatible
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/a61eb17f40e8
+> [4/6] drm/msm: add msm8998 hdmi phy/pll support
+>       https://gitlab.freedesktop.org/lumag/msm/-/commit/caedbf17c48d
 
-[auto build test ERROR on 47ac09b91befbb6a235ab620c32af719f8208399]
+Hello Bjorn,
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-dwc-Rename-dw_pcie-link_gen-to-dw_pcie-max_link_speed/20240904-151354
-base:   47ac09b91befbb6a235ab620c32af719f8208399
-patch link:    https://lore.kernel.org/r/20240904-pci-qcom-gen4-stability-v6-1-ec39f7ae3f62%40linaro.org
-patch subject: [PATCH v6 1/4] PCI: dwc: Rename 'dw_pcie::link_gen' to 'dw_pcie::max_link_speed'
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20240906/202409060041.zY2BEBq7-lkp@intel.com/config)
-compiler: clang version 18.1.5 (https://github.com/llvm/llvm-project 617a15a9eac96088ae5e9134248d8236e34b91b1)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240906/202409060041.zY2BEBq7-lkp@intel.com/reproduce)
+Now that the binding & driver parts have been merged,
+(Thanks, Dmitry! And thanks to all reviewers)
+am I right to assume that you are supposed to pick up
+patches 5 & 6 for the msm8998 DTSI?
+(Hopefully in time for 6.12-rc1)
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409060041.zY2BEBq7-lkp@intel.com/
+Regards
 
-All errors (new ones prefixed by >>):
-
->> drivers/pci/controller/dwc/pcie-spear13xx.c:236:8: error: no member named 'link_gen' in 'struct dw_pcie'
-     236 |                 pci->link_gen = 1;
-         |                 ~~~  ^
-   1 error generated.
-
-
-vim +236 drivers/pci/controller/dwc/pcie-spear13xx.c
-
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  190  
-a43f32d6472730 drivers/pci/host/pcie-spear13xx.c           Matwey V. Kornilov     2015-02-19  191  static int spear13xx_pcie_probe(struct platform_device *pdev)
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  192  {
-6a43a425a074af drivers/pci/host/pcie-spear13xx.c           Bjorn Helgaas          2016-10-06  193  	struct device *dev = &pdev->dev;
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  194  	struct dw_pcie *pci;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  195  	struct spear13xx_pcie *spear13xx_pcie;
-6a43a425a074af drivers/pci/host/pcie-spear13xx.c           Bjorn Helgaas          2016-10-06  196  	struct device_node *np = dev->of_node;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  197  	int ret;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  198  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  199  	spear13xx_pcie = devm_kzalloc(dev, sizeof(*spear13xx_pcie), GFP_KERNEL);
-20f9ece101d879 drivers/pci/host/pcie-spear13xx.c           Jingoo Han             2014-11-12  200  	if (!spear13xx_pcie)
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  201  		return -ENOMEM;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  202  
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  203  	pci = devm_kzalloc(dev, sizeof(*pci), GFP_KERNEL);
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  204  	if (!pci)
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  205  		return -ENOMEM;
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  206  
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  207  	pci->dev = dev;
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  208  	pci->ops = &dw_pcie_ops;
-442ec4c04d1235 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  209  
-c0464062bfea9c drivers/pci/dwc/pcie-spear13xx.c            Guenter Roeck          2017-02-25  210  	spear13xx_pcie->pci = pci;
-c0464062bfea9c drivers/pci/dwc/pcie-spear13xx.c            Guenter Roeck          2017-02-25  211  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  212  	spear13xx_pcie->phy = devm_phy_get(dev, "pcie-phy");
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  213  	if (IS_ERR(spear13xx_pcie->phy)) {
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  214  		ret = PTR_ERR(spear13xx_pcie->phy);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  215  		if (ret == -EPROBE_DEFER)
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  216  			dev_info(dev, "probe deferred\n");
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  217  		else
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  218  			dev_err(dev, "couldn't get pcie-phy\n");
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  219  		return ret;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  220  	}
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  221  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  222  	phy_init(spear13xx_pcie->phy);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  223  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  224  	spear13xx_pcie->clk = devm_clk_get(dev, NULL);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  225  	if (IS_ERR(spear13xx_pcie->clk)) {
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  226  		dev_err(dev, "couldn't get clk for pcie\n");
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  227  		return PTR_ERR(spear13xx_pcie->clk);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  228  	}
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  229  	ret = clk_prepare_enable(spear13xx_pcie->clk);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  230  	if (ret) {
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  231  		dev_err(dev, "couldn't enable clk for pcie\n");
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  232  		return ret;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  233  	}
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  234  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  235  	if (of_property_read_bool(np, "st,pcie-is-gen1"))
-39bc5006501cc3 drivers/pci/controller/dwc/pcie-spear13xx.c Rob Herring            2020-08-20 @236  		pci->link_gen = 1;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  237  
-9bcf0a6fdc5062 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  238  	platform_set_drvdata(pdev, spear13xx_pcie);
-9bcf0a6fdc5062 drivers/pci/dwc/pcie-spear13xx.c            Kishon Vijay Abraham I 2017-02-15  239  
-ffe82fa66afb19 drivers/pci/host/pcie-spear13xx.c           Bjorn Helgaas          2016-10-06  240  	ret = spear13xx_add_pcie_port(spear13xx_pcie, pdev);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  241  	if (ret < 0)
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  242  		goto fail_clk;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  243  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  244  	return 0;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  245  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  246  fail_clk:
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  247  	clk_disable_unprepare(spear13xx_pcie->clk);
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  248  
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  249  	return ret;
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  250  }
-51b66a6ce12570 drivers/pci/host/pcie-spear13xx.c           Pratyush Anand         2014-02-11  251  
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
