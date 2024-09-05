@@ -1,123 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-31001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5715796E10B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 19:25:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D6C296E129
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 19:35:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 157FC284C26
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 17:25:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A1625B22338
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 17:35:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13B7B1A2C2C;
-	Thu,  5 Sep 2024 17:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D5B01A0702;
+	Thu,  5 Sep 2024 17:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="VJ9ZDnhV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hulCOhoy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-001ae601.pphosted.com (mx0a-001ae601.pphosted.com [67.231.149.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A051A0B0F;
-	Thu,  5 Sep 2024 17:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.149.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C25B1A0B0F
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 17:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725557128; cv=none; b=Aw9Xv2+g3jrNbR0RbFqVxcaLlGhzquZ8+7NmhuLGp15Kr8XO6KTPr2En5qRrepmjd7f+hNOG6v3c2Gr7bJ0ArlZGQTuysw8SKaF2p2/YxFz+wqEzlFDuVHDFEbE6cACziMJGF4poaqJJqyyfiBX6cYexGVNOAHeE4EtPnFYYSfw=
+	t=1725557699; cv=none; b=rzbB5PzthG2XthZSJhXZU1XYhObGQ8RIK6Oe3vWbU2E52kq3C4DM9V8888UEx3phRXSw14tbzIWfWLyt4ExL/6+mU098nw1GsAW6Ypytc5WPkWPLSUYyxHOzfJSAv/YVQRRyuSdilH0ov34ncRJpQJ3FBIRnylqVsXEkQ101qPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725557128; c=relaxed/simple;
-	bh=oA+JaK45bIvDN0Y/g2haYI3ERCCF35W5j6c76i1XHWk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aJssFFmCW+awjd/9q3+PZW5Xoj4YFK4yJWU4YPkZz+8vXA1rm57pUSOHQxdBbPXjCDcKMKbTDqgkmP+VWssf59LNzmIkUx+Yx+yH0hnAYlMQPt79PQJpdBb5oCi7DeIXXnuUhZQQDbriN4bHBUrPfmvDdB/g1AxYf2FKsgWwTLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=VJ9ZDnhV; arc=none smtp.client-ip=67.231.149.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
-Received: from pps.filterd (m0077473.ppops.net [127.0.0.1])
-	by mx0a-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 485H6VQw012415;
-	Thu, 5 Sep 2024 12:24:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=
-	PODMain02222019; bh=2EPLvM+fTjNtBBRKdAtax43O9eQJ3gxJ5hQy/CTb4Wg=; b=
-	VJ9ZDnhVEjybUXSFuEkkY1m4J26M2uWOb4LI/E2E4ORRD0JAsVO3YQ4A8lSoKQhW
-	2PRR7L7P81m0idpUk9U5x2IzMXPDhD61QpRjoh/8Lah7udUAcTm3FJCfBPvQMN16
-	VC/KJDrsvpxfKjup2poagnIkMYEes47trH/+M8EsO8J2PAumxasdvLcB++KpAqzj
-	7xm0RgTdYoWAKEykbgFcwb+RiClNkJ+DWD2eQrMpxRRIX9hWnQgAeuHPEZm/Fsai
-	JnIEyan/xomUEYLwb5LP7qWzAztyba2nJOOLCIp8xqrGaRwHJvU+Q7qp0aujMrAz
-	F2lDsnQYRU4P454t905lBg==
-Received: from ediex02.ad.cirrus.com ([84.19.233.68])
-	by mx0a-001ae601.pphosted.com (PPS) with ESMTPS id 41c0jxehg6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 05 Sep 2024 12:24:42 -0500 (CDT)
-Received: from ediex02.ad.cirrus.com (198.61.84.81) by ediex02.ad.cirrus.com
- (198.61.84.81) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Sep 2024
- 18:24:35 +0100
-Received: from ediswmail9.ad.cirrus.com (198.61.86.93) by
- anon-ediex02.ad.cirrus.com (198.61.84.81) with Microsoft SMTP Server id
- 15.2.1544.9 via Frontend Transport; Thu, 5 Sep 2024 18:24:35 +0100
-Received: from [141.131.157.113] (macMW3KVPQQ2W.ad.cirrus.com [141.131.157.113])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTP id 6D335820244;
-	Thu,  5 Sep 2024 17:24:32 +0000 (UTC)
-Message-ID: <c2b7654b-74ae-4195-be0d-463b33af5965@opensource.cirrus.com>
-Date: Thu, 5 Sep 2024 12:24:31 -0500
+	s=arc-20240116; t=1725557699; c=relaxed/simple;
+	bh=MI2LRc6AktxdTOVKQGnfpzkt/G3bqZJj+90kchL1ybM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zqm+z4MiTlM+ZA4BExb20RdgIacuryofQ7VYG4fxCx/INkNk1heoY7a6aAREYHCrYhGnnyf7/O1Deglq5Ys2lySIqlmBIJU8ckmRZ9/U0zRgUKI6kImE3r/PtsXZdPrhGmK1h00nr4+rvGDc1Q7pzZcSfE6YweojzJtjX3H4MjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hulCOhoy; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-714187df604so1374481b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 10:34:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725557697; x=1726162497; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=eIgzal7ITyKn4Uu6UhwVaplHaAv3wUp9Qsoun/N+n+c=;
+        b=hulCOhoyJCHBTWpZY3k0dfuTPeZGDEkSROIH4NWLDKyXdLv/1pK8Ku/SWLaIR6QLgp
+         CcJzqECDc9oDWK9w95OmGKOKDDbPVue+SzU4QLtXHCzMr6/UiYM8dj+34YttIb75k8jj
+         1AICwt+dhQPVN0vEY4EBN982S/jgVjMCErT+nyH9nvUo/atk8ZEkOws2qkdYaBXKbGjx
+         J+sGiH924F+hVcjZ7Nzu7ldSVSKSHUhycocG2D8/I93BjABk67sGhTTCrevoF6IoqJQ6
+         jRkXCuY7WKRbhn2ZJhPY36JTWoAHHS1wlnJC4lFy2D5CPUxiPU4dNwz3wkB2NfIsDu6I
+         TyXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725557697; x=1726162497;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eIgzal7ITyKn4Uu6UhwVaplHaAv3wUp9Qsoun/N+n+c=;
+        b=Ilk25Be5roX7qa93Jj/BcK783RcpXCTwRCq5Otw3aBmbfsiufLAEkEO07eYPdeN5VL
+         6eEfjzNwlE+8VQPM98i6Ncpc63oY0GRtpl/dnwRrhprVSXZ3uwj0OCIQgjB4A5SD0ZEx
+         GzFBFO/1DCp6L/Thv/s5tUweOUCVW811oDsI0Yk9bNvXVxnywpQNx5Vp0/gfKi6vLTJq
+         zbKYAYPFTWSNMp+vK5IfCQLNlK4o3JWoGmfOTtUAR9uN//6+0VzSlCFEfDGqJaHKUZ3N
+         2sMfENdux1aVzURQYOGGeGiB/pnR7v5c+u3ZS486k05myUNovJAyKWo3uK8v3TYZ3wPZ
+         qTAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYSN2hD8SDHoTGyd4lhak8MvrCX56mEhRbwo+RV9/S5//HZx1ZArwOWWOaKTQSEeV8SIex5CwXz+zy49xu@vger.kernel.org
+X-Gm-Message-State: AOJu0YyX171IyaBORCQgM7ahKbzxUgoEsaHqCqV1udE/BQ1vtqAXOyDH
+	v33erextJab2pmd7xXCglKuHG9DxQ1kFHTFnkJ3/15mz9duJxHWSSw4+H76jlA==
+X-Google-Smtp-Source: AGHT+IElFJh9mBN0d10CvX+yxAjA8cHTDsSZBmgENNb/EtffZEORF9F48GUK1FqLfVaqnR4xQfoX8Q==
+X-Received: by 2002:a17:902:ea0a:b0:205:3475:63be with SMTP id d9443c01a7336-206eeb8c61amr497735ad.25.1725557696776;
+        Thu, 05 Sep 2024 10:34:56 -0700 (PDT)
+Received: from thinkpad ([120.60.52.248])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-206aea69770sm30809955ad.277.2024.09.05.10.34.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2024 10:34:56 -0700 (PDT)
+Date: Thu, 5 Sep 2024 23:04:37 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Chuanhua Lei <lchuanhua@maxlinear.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	imx@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	abel.vesa@linaro.org, johan+linaro@kernel.org,
+	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+Subject: Re: [PATCH v6 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
+Message-ID: <20240905173437.hm3hegv5zolaj7gj@thinkpad>
+References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
+ <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
+ <ZtgqvXGgp2sWNg5O@hovoldconsulting.com>
+ <20240905152742.4llkcjvvu3klmo6j@thinkpad>
+ <Ztnb-GauC_8D8N-i@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] ALSA: update sample rate definitions
-To: Jerome Brunet <jbrunet@baylibre.com>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, David Rhodes <david.rhodes@cirrus.com>,
-        Richard Fitzgerald <rf@opensource.cirrus.com>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Cezary Rojewski
-	<cezary.rojewski@intel.com>,
-        Pierre-Louis Bossart
-	<pierre-louis.bossart@linux.intel.com>,
-        Liam Girdwood
-	<liam.r.girdwood@linux.intel.com>,
-        Peter Ujfalusi
-	<peter.ujfalusi@linux.intel.com>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Ranjani Sridharan
-	<ranjani.sridharan@linux.intel.com>,
-        Kai Vehmanen
-	<kai.vehmanen@linux.intel.com>,
-        Srinivas Kandagatla
-	<srinivas.kandagatla@linaro.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        "Jernej
- Skrabec" <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>
-CC: <linux-sound@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <patches@opensource.cirrus.com>, <alsa-devel@alsa-project.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-sunxi@lists.linux.dev>
-References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-Content-Language: en-US
-From: "Rhodes, David" <drhodes@opensource.cirrus.com>
-In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: DCprltle2cLpNuwRuuh1hqg0jsfwhZ4c
-X-Proofpoint-GUID: DCprltle2cLpNuwRuuh1hqg0jsfwhZ4c
-X-Proofpoint-Spam-Reason: safe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Ztnb-GauC_8D8N-i@hovoldconsulting.com>
 
-On 9/5/24 9:12 AM, Jerome Brunet wrote:
-> This patchset adds rate definitions for 12kHz, 24kHz and 128kHz.
+On Thu, Sep 05, 2024 at 06:27:36PM +0200, Johan Hovold wrote:
+> On Thu, Sep 05, 2024 at 08:57:42PM +0530, Manivannan Sadhasivam wrote:
+> > On Wed, Sep 04, 2024 at 11:39:09AM +0200, Johan Hovold wrote:
 > 
-> It is follow-up on the series/discussion [0] about adding 128kHz for
-> spdif/eARC support. The outcome was to add 12kHz and 24kHz as well and
-> clean up the drivers that no longer require custom rules to allow these
-> rates.
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
+> > > > new file mode 100644
+> > > > index 000000000000..259e04b7bdf9
+> > > > --- /dev/null
+> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
+> > > > @@ -0,0 +1,8 @@
+> > > > +/* SPDX-License-Identifier: GPL-2.0 */
+> > > > +/*
+> > > > + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> > > > + */
+> > > > +
+> > > > +#include "pcie-designware.h"
+> > > 
+> > > You only need a forward declaration:
+> > > 
+> > > 	struct dw_pcie;
+> > > 
+> > > > +
+> > > > +void qcom_pcie_common_set_16gt_eq_settings(struct dw_pcie *pci);
+> > > 
+> > > Compile guard still missing.
+> 
+> Sorry, I meant to say *include* guard here.
+>
+
+Okay. I got confused initially.
+  
+> > Perhaps we can just get rid of the Kconfig entry and build it by default for
+> > both RC and EP drivers? I don't see a value in building it as a separate module.
+> > And we may also move more common code in the future.
+> 
+> It is already built by default for both drivers. I'm not sure what
+> you're suggesting here.
 > 
 
-Reviewed-by: David Rhodes <drhodes@opensource.cirrus.com>
+Right now it is selected by both drivers using a Kconfig symbol. But I'm
+thinking of building it by default as below:
 
-Thanks,
-David
+-obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o
+-obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o
++obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o pcie-qcom-common.o
++obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o pcie-qcom-common.o
+
+A separate Kconfig symbol is not really needed here as this file contains common
+code required by both the drivers.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
