@@ -1,136 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-30967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16B5796DDBA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 17:16:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 422A696DDCE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 17:19:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B61651F22CD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:16:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F2C62284F4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0604B195FCE;
-	Thu,  5 Sep 2024 15:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A554F19F41F;
+	Thu,  5 Sep 2024 15:19:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V4hurzOO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M+4CwHgi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C25518289A
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 15:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB5319EEC4;
+	Thu,  5 Sep 2024 15:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725549403; cv=none; b=Dczp5axCsaUbgJQ6dVYLsXjK7iqXi9P1sn+mRaS/v4NPYY7W+6zlDmH7vA+i6UO+KqCslvqlD5WMnPKxEKYWwE/HV6Glaq6SPfkzvh6nv5JlyDj3hYe08rK+Eoa5xXawGbWGvMGeLyyt3JTpTjLOxh/rWAEiBHqVyGeOHI7+bP0=
+	t=1725549540; cv=none; b=foDnxnCgAdvBdSMvZVNn7MBoaUNMEHnJE7iLSlDyHsz855mSjtC7r5sTjVuH/FXySrGEBls3ylH+24IfdvGc7llJdQIgfJoeCtvJ31Z1NxidyBMt5E4jbP/j6X/VDwV+6bLbEO2PRUdlMPOR6uMWcGSASpjuiEVk7+e/aafVmWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725549403; c=relaxed/simple;
-	bh=ekPdpG7oyzJtXPp+xFvsL02Ww7Tof9pw8p/Ac8jNKvE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qZqKtTfb+20eEgzoezWPD7X3uYj8uAZPweD7TrgG1Tx0pjCziHyjBHqrloQGYj47PX04OBVwDIAoqH5CX7Gurk70tuRS1PduHo7pekt3JRi++psjvaFB9Byw/NcUU4HfF/2dvSWRb4uw2XAuiav8NaPJ7CuVxf0hUQNWHL4EqI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V4hurzOO; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42c88128315so1198655e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 08:16:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725549399; x=1726154199; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lbqQMJHY0wP1Gv+M3FnecbwVctkR8rJv1ZT1Z1xP6vc=;
-        b=V4hurzOOG0jmrI3N7imHNPugDOKpqWArtBgEqnWVjGRC8w1tcTaEbjfXMrLxgdnjMv
-         clHxMGkjY7BnuW9W6b3VRsf09yaMJHsWkcX/oTSbDe3hxw4c5hH1aagf2BhbV64dyhoS
-         jgbQOn7iHYywxxfrzR9O4uoSXUeEA5M8WdKYJPHOZfCRJRZaogntbAbHGGi35o9fZYKm
-         bzgDzVb78RlTqkCTSyibQF7hHTRh7B8nhkwuC+oi6d/3eyi0p1FwVCRzFqzY9LLHf1UF
-         NZ3rWHWYvYRvXZKLbRXW2YLzuROWMy7k5KdRPZatIe4WteGVl9bu+VjTGxOdEjlNOZA2
-         5o7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725549399; x=1726154199;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lbqQMJHY0wP1Gv+M3FnecbwVctkR8rJv1ZT1Z1xP6vc=;
-        b=VuBnIH+6kLPufMrjC0W5MB7/kiIQnJ68ib5xpxIeHpE2nyqzSqruK++msK3HUBduS8
-         7yqbbheO0DEPVk2qqO2lRgNXywDw/I8a7aVHImi8Ir2fAopYQ7Q1+srPaUqnd4jVMGl9
-         XuXjewX9zKudYeUbHnDfIGLf8B5nEvz/fPQkW6K3uXyfOWMkhl7HABVdcvzySL1ly6CI
-         R6YctU3KRkp3h1Y77u8cT0IJONYyKtH6ak+abMJLVKhiIaxxlQ3gHBnW+ECwEUoek2vD
-         n5dzD9hmLBln9HnbtMiVd5LpTXgmFdEaGmBfRHlsop1xukGFAr++oDVZyNZgJoIyvMPs
-         x4aw==
-X-Forwarded-Encrypted: i=1; AJvYcCXwHdAHC+uJNsY3uNNkvTArd8z57U1f6WxhwxpKC4NhgJ4LkuqZQhcg/trgt2jyxnrH35a6gZfgJUGI+6PJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw55Rx6uBBCUdnbrfN6eOH2PnNj2HQI/ZnaeZyCrJYdZ77OZX8r
-	b9AdEiCkdQqt9G/OPOLap4omQxeYl8UAkTYdXgOlagIBh9v67Rz03QXcxrOvIjc=
-X-Google-Smtp-Source: AGHT+IGrqnC4Fav20HZ0B43mlW3Q7hCc6eUOmNpGzWD39vmPmtHqiCHTNhSqc6PSx7LNERIQuu47nw==
-X-Received: by 2002:a05:600c:3b21:b0:425:7ac6:96f9 with SMTP id 5b1f17b1804b1-42bbb0a2ed9mr82336185e9.0.1725549398958;
-        Thu, 05 Sep 2024 08:16:38 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bbf15b9b1sm195072195e9.10.2024.09.05.08.16.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 08:16:38 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Georgi Djakov <djakov@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] interconnect: qcom: msm8937: constify pointer to qcom_icc_node
-Date: Thu,  5 Sep 2024 17:16:36 +0200
-Message-ID: <20240905151636.280065-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1725549540; c=relaxed/simple;
+	bh=XftvF4IiPjK2WwE+rVSEl29oebRKcCfXKwCyxOExXDE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sPQQnO8oGrbbsod9oVa4fqgyfjR7QwuBnv/buIq37bJGZlJ6iZufkNoReVQhse5CIGR7eXE0gi/ww05UURJIt/ZSRAPAzpNhWumq0zFwHyxYgL6aF0R1QJ4+3Tx9+ElaxMat0RSvF1L4fN8yCwtzG6etUonsz0O2Pa+F9D0NBeU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M+4CwHgi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7899C4CED0;
+	Thu,  5 Sep 2024 15:18:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725549539;
+	bh=XftvF4IiPjK2WwE+rVSEl29oebRKcCfXKwCyxOExXDE=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=M+4CwHgivT2DGW0zGErVoUTMT6xLwgrwYCsr1fgQXJWPFxJrI57GFup7JhHHVbYuS
+	 cOIaeQUpVtpOA+Q94d2dhAOQHDgIFDjGN6u4njtwk5X8bW1cSbvB6M2T0tcZd++b/n
+	 Gmzi73N4DJ/GdFYxjYR+VdsvHCmsNo5xPOqLhYxx9sq4VI0qHN4jrMOoTCKHOOoznx
+	 NmJ4rBdQDZpvmUzcVmrOASU+YYxanTYe0PyIhG/5V4R0S9oUBzWvcmVVafa8f+UW0L
+	 Wv8dqNpSKcRa/GS7adLGSMFwHUkdZyoX5M7SDoxqSPX6Fw7QhDbRv7hSSWajF0F+ky
+	 cfPBsRm3S8EWw==
+Message-ID: <4fda9455-36ce-4260-a32d-56c14dec816e@kernel.org>
+Date: Thu, 5 Sep 2024 17:18:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/7] i2c: qcom-cci: Stop complaining about DT set clock
+ rate
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Richard Acayan <mailingradian@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Loic Poulain <loic.poulain@linaro.org>,
+ Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-i2c@vger.kernel.org, linux-media@vger.kernel.org
+References: <20240904020448.52035-9-mailingradian@gmail.com>
+ <20240904020448.52035-12-mailingradian@gmail.com>
+ <917917cc-3e78-4ab6-8fa4-82d9a6fe3fdd@kernel.org>
+ <c494152d-d4d1-45db-941a-df99b0f11e77@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <c494152d-d4d1-45db-941a-df99b0f11e77@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Pointers to struct qcom_icc_node are const.
+On 5.09.2024 4:18 PM, Vladimir Zapolskiy wrote:
+> Hi Konrad,
+> 
+> On 9/5/24 16:57, Konrad Dybcio wrote:
+>> On 4.09.2024 4:04 AM, Richard Acayan wrote:
+>>> From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>>
+>>> It is common practice in the downstream and upstream CCI dt to set CCI
+>>> clock rates to 19.2 MHz. It appears to be fairly common for initial code to
+>>> set the CCI clock rate to 37.5 MHz.
+>>>
+>>> Applying the widely used CCI clock rates from downstream ought not to cause
+>>> warning messages in the upstream kernel where our general policy is to
+>>> usually copy downstream hardware clock rates across the range of Qualcomm
+>>> drivers.
+>>>
+>>> Drop the warning it is pervasive across CAMSS users but doesn't add any
+>>> information or warrant any changes to the DT to align the DT clock rate to
+>>> the bootloader clock rate.
+>>>
+>>> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>> Link: https://lore.kernel.org/linux-arm-msm/20240824115900.40702-1-bryan.odonoghue@linaro.org
+>>> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+>>> ---
+>>
+>> I.. am not sure this is really a problem? On some platforms the core
+>> clock is only 19.2 Mhz, but e.g. on sdm845 we have:
+>>
+>> static const struct freq_tbl ftbl_cam_cc_cci_clk_src[] = {
+>>          F(19200000, P_BI_TCXO, 1, 0, 0),
+>>          F(37500000, P_CAM_CC_PLL0_OUT_EVEN, 16, 0, 0),
+>>          F(50000000, P_CAM_CC_PLL0_OUT_EVEN, 12, 0, 0),
+>>          F(100000000, P_CAM_CC_PLL0_OUT_EVEN, 6, 0, 0),
+>>          { }
+>> };
+>>
+>> Shouldn't this be somehow dynamically calculated?
+>>
+> 
+> I believe the problem fixed by the change is an unnecessary dev_warn(), in
+> addition it's unclear why the CCI clock rate shall be strictly 37500000 for
+> all "CCI v2" platforms.
+> 
+> If the latter is a necessity, then it would be better to set the rate
+> explicitly, however since it's not done for any such platforms, I would say
+> that it is not needed.
+> 
+> And if it is not needed, or a default and universal 19.2MHz rate is good
+> enough, then I would suggest to remove everything 'cci_clk_rate' related
+> from the driver, and this makes the change incomplete...
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- drivers/interconnect/qcom/msm8937.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Downstream seems to set 37500000 for all SoCs with Titan.. but I can't
+find a good reason for this.. I'll try to get some answers.
 
-diff --git a/drivers/interconnect/qcom/msm8937.c b/drivers/interconnect/qcom/msm8937.c
-index 052b14c28ef8..d9f8ba69b329 100644
---- a/drivers/interconnect/qcom/msm8937.c
-+++ b/drivers/interconnect/qcom/msm8937.c
-@@ -1175,7 +1175,7 @@ static struct qcom_icc_node slv_lpass = {
- 	.qos.qos_mode = NOC_QOS_MODE_INVALID,
- };
- 
--static struct qcom_icc_node *msm8937_bimc_nodes[] = {
-+static struct qcom_icc_node * const msm8937_bimc_nodes[] = {
- 	[MAS_APPS_PROC] = &mas_apps_proc,
- 	[MAS_OXILI] = &mas_oxili,
- 	[MAS_SNOC_BIMC_0] = &mas_snoc_bimc_0,
-@@ -1204,7 +1204,7 @@ static const struct qcom_icc_desc msm8937_bimc = {
- 	.ab_coeff = 154,
- };
- 
--static struct qcom_icc_node *msm8937_pcnoc_nodes[] = {
-+static struct qcom_icc_node * const msm8937_pcnoc_nodes[] = {
- 	[MAS_SPDM] = &mas_spdm,
- 	[MAS_BLSP_1] = &mas_blsp_1,
- 	[MAS_BLSP_2] = &mas_blsp_2,
-@@ -1268,7 +1268,7 @@ static const struct qcom_icc_desc msm8937_pcnoc = {
- 	.regmap_cfg = &msm8937_pcnoc_regmap_config,
- };
- 
--static struct qcom_icc_node *msm8937_snoc_nodes[] = {
-+static struct qcom_icc_node * const msm8937_snoc_nodes[] = {
- 	[MAS_QDSS_BAM] = &mas_qdss_bam,
- 	[MAS_BIMC_SNOC] = &mas_bimc_snoc,
- 	[MAS_PCNOC_SNOC] = &mas_pcnoc_snoc,
-@@ -1304,7 +1304,7 @@ static const struct qcom_icc_desc msm8937_snoc = {
- 	.qos_offset = 0x7000,
- };
- 
--static struct qcom_icc_node *msm8937_snoc_mm_nodes[] = {
-+static struct qcom_icc_node * const msm8937_snoc_mm_nodes[] = {
- 	[MAS_JPEG] = &mas_jpeg,
- 	[MAS_MDP] = &mas_mdp,
- 	[MAS_VENUS] = &mas_venus,
--- 
-2.43.0
-
+Konrad
 
