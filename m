@@ -1,118 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-30831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9265696CD5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 05:34:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6932C96CD75
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 05:41:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5087B2870EC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 03:34:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 25BD5288F08
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 03:41:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CAF0155C8A;
-	Thu,  5 Sep 2024 03:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5A4E1494CF;
+	Thu,  5 Sep 2024 03:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Vc1i/6aN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q+fIlPF1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B701547C4
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 03:33:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201AC1494B5;
+	Thu,  5 Sep 2024 03:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725507228; cv=none; b=FmNXfWvIHYL+yuxZmkdcF5iS/tWwq191m3mxDlLWAOGKepM43etnrOBrqgjzunNnh/2eO8CAOqFlYcqm0CddcdrmjUGI/1qxUVc3MRpDz43Hwlboba5yHBWGDXCpJ3LvLvwcDddfu24XsAweUY8yT73ogdKd4vkeKqoh7SiY1Wo=
+	t=1725507335; cv=none; b=FbjjvY4wAzrhNuu6SY28t5lf8deOPXVUikitqEdjCs2SctjKMyVawdwy1SaREniZJquvbigIfl4WXq4eC9C7Ix6epusCJZhznwt1MHVp4w5JMu24CSNOOJqPLNjlvxpJdbRqhEOyzWuXYnjI3rFvnIxRvghwdcOT8fScWG4AVNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725507228; c=relaxed/simple;
-	bh=WXwWdAN2CjuwBCuWeEweH6BIa47rfL9ZR0rsCYG9S7E=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pwp4gIPPOo52+DeHv0JmBBO9sOQYso5IMbZbQOk6TevNNr1YCrdoUcUkxjqgCpSMliyMci0llMMaYwfYIWktzoNi7twq+HScIBqRUwlJ/GeVpz2rX23Ydzb0+EyQXfOhuVDfWF4VKPds86t/Fc35iAd6Cr6zAENEgOG5HDyN4ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Vc1i/6aN; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53343bf5eddso222994e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Sep 2024 20:33:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725507225; x=1726112025; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KyUpvOqb1HnLAQIbraYek0wvreZFpF6ISG16EWHJbNQ=;
-        b=Vc1i/6aN0YNl6j2UAWO9TSPvohyORCN/cTWPZRCQQb7qUm5U1Gop2kgWy8KOrTOegO
-         LUXQL6VpmSaMHaCwcoxDWT3buaLztjzmd5tOmGMr6rkINV/REVVgyXeCpDR5baTdQGsm
-         uz+fqPUc60daz5Zzik0aK+nQSfYdyRNp7lvNpCbodRMOc7uuBp6kyth5wPwJIK1/FJJO
-         Kc/0TioZJcAD8o/i2dUn77bsyVnPFYCaJzHKgsj15Qdo5VvyAjEvexYDO/zsxnxaMNkU
-         V23jnleXHfnUhlrsvdTIuVTHDtMj1NUox+0PbV+BsHoy3YQMmcj098QgWUxq1Jeo1MHx
-         dobg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725507225; x=1726112025;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KyUpvOqb1HnLAQIbraYek0wvreZFpF6ISG16EWHJbNQ=;
-        b=HDpHf72pzRIuOkRlh0b1bwxW5pDzebhFLGgGlWUQpEctGWzkNkQlnP2oSJnMuHogvD
-         6Snvk0nZeDf7qYu69AMTGdjEgzLGQXskYujq/O0hXFksdTvqB5UrKo/+RD9378tsD1t4
-         BqiPX0TdJ/waf/ZZA40BUEfRufNf5FBwXRGdcNp4tDmDQ0U6r4hmLX1V0gXMcvIxJpl6
-         +a9Xrn2VC+CmqAbzyVw32NHYDIs+O+0g1pA+PpWdpULICpolAXxAL0lp3rltKX5N3Q2n
-         eXW81RNW4bAFSSQ03aIIjZsh5GMh+BHGluIaHDxvkPrueErsjnuxWShiM8uUZYRmDqTQ
-         ZfHw==
-X-Gm-Message-State: AOJu0Yzvf2xsToOEor9uUniKX6eI2EteCEWWHBUEcrq15xyIl2V9KRRi
-	PnT6DVGEIC+EI73/c7slU8Kvjz0U7qUpywsG7AaiBw6fYNz3W2h39DBRizLr3Ma8dSEY00d0MX3
-	F
-X-Google-Smtp-Source: AGHT+IGL24J8npgJaD6qdH/iBLmRVEB4YeGZTdlYLtr6yfSabcuuW1+0DO4dioT58qUKhW1Yg6Av3g==
-X-Received: by 2002:a05:6512:4014:b0:530:daeb:c1d4 with SMTP id 2adb3069b0e04-53546b1920fmr12600653e87.12.1725507224725;
-        Wed, 04 Sep 2024 20:33:44 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53565f6d409sm389165e87.35.2024.09.04.20.33.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Sep 2024 20:33:43 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: robdclark@gmail.com,
-	quic_abhinavk@quicinc.com,
-	sean@poorly.run,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	ruanjinjie@huawei.com,
-	Sherry Yang <sherry.yang@oracle.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/1] drm/msm: fix %s null argument error
-Date: Thu,  5 Sep 2024 06:33:38 +0300
-Message-Id: <172550712137.3299484.13467941827572106122.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20240827165337.1075904-1-sherry.yang@oracle.com>
-References: <20240827165337.1075904-1-sherry.yang@oracle.com>
+	s=arc-20240116; t=1725507335; c=relaxed/simple;
+	bh=71BZXfdBCTsAyrqUDA4M3Xj0hkLE7+Dkt0m6fJL0whI=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jng0T3OeRh4fSCHHxCGnXN6L2o+yhSsDMwDC3gU7r017nhTUvKxo6OdKW42dLeMuDOkjCSNjIaUHAWNnPo5BOH+gzlEF/Ao6dlWWr/tnlc/12NK26Z7jxDs9VFVlKS2vUYu3WQKDgWTfv1St6KBQqvZKLXmTSsbmYlbWeD/vyto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q+fIlPF1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 484MSBZn032349;
+	Thu, 5 Sep 2024 03:35:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=QJf3w+JkFSAhj424/ky9GdSZ
+	1Wc02Dx4ry4NpAboNqg=; b=Q+fIlPF1v62A9lMaLW9mBzKiHcS93QXL+rEuBE60
+	NdCb0e25PTSR8y7uBvhxVB3tWkC7zca2UBdru3Mx3orKI5Yi+JyFdIo5jblG1ACg
+	8MtYNSU077Lg41y70+JXOdSXwfxyamYzRJsikNzCxk1ehHb8JidW/6TYHTmyYCKn
+	Uo346DHmViO49wNc4D+7jWRFlnOoo/ivVFdLrcfgW5WfNEuATHGwnQMqvEKjLvRt
+	IEXid3roEK1DWrxBCXTJvKAyk/V4iFIDbgfZsI0lahnI+3xu0cD67QWeoy/DEFGR
+	rz5Sl4wTSEK0Uh9S+RKGE1O8L05ItsrPRwm/9vB0iuj9gg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41drqe6x4v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 05 Sep 2024 03:35:29 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4853ZS4U021328
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 5 Sep 2024 03:35:28 GMT
+Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 4 Sep 2024 20:35:24 -0700
+Date: Thu, 5 Sep 2024 11:35:20 +0800
+From: JieGan <quic_jiegan@quicinc.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Song Chai
+	<quic_songchai@quicinc.com>,
+        Yushan Li <quic_yushli@quicinc.com>
+Subject: Re: [PATCH v1 0/1] arm64: dts: qcom: Add coresight components for
+ x1e80100
+Message-ID: <Ztkm+IOzEtvvD4Vf@jiegan-gv.ap.qualcomm.com>
+References: <20240827072724.2585859-1-quic_jiegan@quicinc.com>
+ <f6813e5a-9b8e-4728-abb2-ad5926d6fa41@kernel.org>
+ <ZtZmwVK8h//nDXm1@jiegan-gv.ap.qualcomm.com>
+ <1be14849-ba98-432a-9686-e0189c9c7ffd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <1be14849-ba98-432a-9686-e0189c9c7ffd@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: W9U-EYGwk8c3Vb1SwrfVHq0UDzKx4fDU
+X-Proofpoint-ORIG-GUID: W9U-EYGwk8c3Vb1SwrfVHq0UDzKx4fDU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-05_02,2024-09-04_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ phishscore=0 adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 spamscore=0 mlxlogscore=649 bulkscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2407110000
+ definitions=main-2409050024
 
-
-On Tue, 27 Aug 2024 09:53:37 -0700, Sherry Yang wrote:
-> The following build error was triggered because of NULL string argument:
+On Wed, Sep 04, 2024 at 12:24:19PM +0200, Konrad Dybcio wrote:
+> On 3.09.2024 3:30 AM, JieGan wrote:
+> > On Mon, Sep 02, 2024 at 05:27:32PM +0200, Konrad Dybcio wrote:
+> >> On 27.08.2024 9:27 AM, Jie Gan wrote:
+> >>> Add coresight components for x1e80100. This change includes CTI,
+> >>> dummy sink, dynamic Funnel, Replicator, STM, TPDM, TPDA and TMC ETF.
+> >>>
+> >>> Change in V1:
+> >>> Check the dtb with dtbs_check W=1, and fix the warnings for
+> >>> the change.
+> >>>
+> >>
+> >> Applying this series and enabling CORESIGHT=m (along with all the options
+> >> in menuconfig) breaks booting on my X1E Surface Laptop 7
+> >>
+> >> Konrad
+> > 
+> > Did not observe any booting issues with our devices. Any relevant log to share?
+> > This patch also tested by my colleague.
 > 
-> BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c: In function 'mdp5_smp_dump':
-> BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
-> BUILDSTDERR:   352 |                         drm_printf(p, "%s:%d\t%d\t%s\n",
-> BUILDSTDERR:       |                                                   ^~
-> BUILDSTDERR: drivers/gpu/drm/msm/disp/mdp5/mdp5_smp.c:352:51: error: '%s' directive argument is null [-Werror=format-overflow=]
+> Sorry, it crashes too early and my device doesn't seem to have an
+> easily accessible serial port. Does any of the functionality
+> described here require an unsecured device?
 > 
-> [...]
+I just checked the devices we used to test, they are all unsecured devices.
+I also checked the dts, there are two components(known issue internally)
+will fail the booting of the secure device.
 
-Applied, thanks!
+I will disable those two components in next version. You can test it
+with next patch.
 
-[1/1] drm/msm: fix %s null argument error
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/25b85075150f
+Thanks for testing.
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> What tag did you test this patch against?
+
+next-20240820
+
+> 
+> > 
+> > Can you successfully boot without the patch?
+> 
+> Yes.
+> 
+> Konrad
+
+Thanks,
+Jie
 
