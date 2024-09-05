@@ -1,76 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-30961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90ACF96DC94
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:53:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC5A796DC97
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:53:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10065B25F38
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:53:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F19A81C2081B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:53:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 181F119EEB0;
-	Thu,  5 Sep 2024 14:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4814419F48B;
+	Thu,  5 Sep 2024 14:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JMn2z6So"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nkQ6Aw6v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C7BA19E7F9;
-	Thu,  5 Sep 2024 14:51:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDC819EEC5;
+	Thu,  5 Sep 2024 14:51:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725547903; cv=none; b=EpWA9qT0BdSwpbdJtzQlo/PmTnAqNfDdLWO3dM6WB0Az0/To4NL5tq/keqvm0ITClev2z2CqmbA7M/83t6m/ncvxLbGyiODQD090t5ba7ms7XkqLHHZ8FMto7kKxRVXPXW26PHhYEJMAeYC+k7pd07kwWE7g63upYWPnjcOCX7k=
+	t=1725547905; cv=none; b=mo29VkXaWXazEVGNEtueeYiQNu5SZpGo4IK6JAWX2nDvkPx2Z1TRpOB5PDJlfrD2EWXX6zt0yvBXmz7ugfrxHgtyv/7IO7iTZ+SRXHIyL0l9IQoiO6Io7BuNL2T3JWYqYaD93BgEpxDaRPCelIqlSaAIxdz3MDhctgUrSZx/Iak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725547903; c=relaxed/simple;
-	bh=I8Bhra+oCMavu7JjL/p4zBs7zmYCVxxAvz/Rp0feUEU=;
+	s=arc-20240116; t=1725547905; c=relaxed/simple;
+	bh=XcMZAmkU4knaQLdm3eWeeDEi3HiarURn/gAJXIVtoOk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WvHSP2CQVFX+8VdXmjJ+wuzQeku57ALuPQGudyICIDJoyVzI/XPC0hJ6csDBf3aoVOW3m8wGjIgamFFXsrb+RWfg1wkvlpMu7gXNi9a+UG+nPhT49hjhEQm8NHSqIXJmB/l5a2yqCjEm9/NtTyudfeXYoRrJalZuhEhdUVlxeJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JMn2z6So; arc=none smtp.client-ip=209.85.208.41
+	 In-Reply-To:To:Cc; b=VSkPaPr8OfBxvbYUvv7kJPp3lEI7uEVZxt/B1nQAaDDHZ6B7Wo8l7In9jpzXOR5V1WOMeb+rFu+3dSWgn4Ba6L0lDY1yfp0nNN8Tpr0CqNpZyAVJQGDBKw5X5x27MqZ/C7v6ECAcTIy+w4Oa6A/HfY6b/K86KyVDv7nTV2g1sCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nkQ6Aw6v; arc=none smtp.client-ip=209.85.167.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5c25554ec1eso1005023a12.1;
-        Thu, 05 Sep 2024 07:51:41 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53568ffc525so1173854e87.0;
+        Thu, 05 Sep 2024 07:51:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725547899; x=1726152699; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1725547901; x=1726152701; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=tf5oppR7ZrPY04ZNHiHuSxDIc4JVyX4YALpOAdUkRCM=;
-        b=JMn2z6SoqsWh0HNEgH/AQMZRygr8UJE0lI9tBaZdIy4l+YJsQNY7yP7bWKorBcW+FD
-         V1yM4awSIAfmwI/5CiXl7qHtwPCja8ZKi0Gnv3Gga8PszmPmXQgM4yeR7quoMhje/Ybo
-         qr1QVkxOYBlstWdxrP6jPwIC9aEVSNkqzJbnu2NhTm69585CsKN9TgxHN4ZgaLxVhTkp
-         MP9XAE2Ir2zn/U7ocNUoEXrsd2pXrCtsR249OQ5pmYlIIOR6dipq5uUCNLuKI9Sz3JCs
-         2GkAXsqp9lwufFyG3U7UIVMKNSUVrt2g9ykTNOY0s5UIdZImGALTVDMJxe1AdmWoVdge
-         4EUw==
+        bh=AqntLGjYPor0NbgJDgNk1OXPGF33LiTpH6N+ESpdJz4=;
+        b=nkQ6Aw6vJ6B4zuvw04B+LrjgwnT69A1W2uMdYPwaWrYiDjhj+HcjOo++ZlyVKj4IEe
+         KMwihqHQYnPRINdxDHsDvAwhtNCdCI6tOLn2LJLTTv8dC37+9SDgj2OlrbCtvxn5J6bu
+         ZWckHS5kC1BZH7/myGkqfrD5fTpMkROoKmp1A/E+W/2iaA3RKo8gBYwkE/xonYcJXqfu
+         VQgV3BeWcA8bRh8Mxz+N7u8Dd2wVsRAjLQCQpfcWtUdlh4gwJIuvdZo4E68UqRKDkVXq
+         AIxj4/u4VXtAbJm9SYJvvmREP4Dg7cZa8sW+d9nni34ZYOxy7UUquH2nGVANodV44KcL
+         ZYGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725547899; x=1726152699;
+        d=1e100.net; s=20230601; t=1725547901; x=1726152701;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tf5oppR7ZrPY04ZNHiHuSxDIc4JVyX4YALpOAdUkRCM=;
-        b=baXACOkUQ/WoH0SJd0MEA/n0vFPEhGWdwOqSV51jpB+qQ3N19DQpEZ0Uf1Bg91VTiz
-         p78N05L1NdFiIPRn6QiLTVFi3Jy7FvXeqMwluIpUE9tJk/Ip8m5xdbhC13gHkgU5Dzgz
-         GNRUo4Z1H9a64DExuHNfij5xufbT2+h9b+5lLBHdfX0hAMMPXSDagd/zdgYgZWNaIGEa
-         f/HnDE6OFOhOjMpZuaBKOONh8baYeDAK4acY4jfxPwJYu0oYnCdDJBEHgavP90K6DGKg
-         5R4Qu35gf22pTcS44UVIAtAo8AMn0IbBZCwZ/xpgB8AABPAeMVMopYpKLGdMqGvkyhRk
-         hgGw==
-X-Forwarded-Encrypted: i=1; AJvYcCUIVxfkPQGVVbyLbCf7HgtOGSuY4Kk86O3CX7BdCYClrpv1bWT5xCBPlHpwV88RAnqRS8tZkTyFBIrJBHhI@vger.kernel.org, AJvYcCUdJ7dMVeEwqnCUanOgUvUGTDzUHYq/SxJWDr4y8rD+vUhktIjREsWjgryIi1g8AZ5lMZysQtA0QhQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2sr1Ac1Cy8IQC7B5rhh8oG8wE62mRT/Bm06oGcHm9neVAYRYR
-	GTvW3BY44O1jW/yuvKyYN3g5tIBCcrxmBGLpy857VanurFcp/etO
-X-Google-Smtp-Source: AGHT+IHQgG0o6Lvo8CgGzxCxC0nzr8TQzRlSTuMdOFpflPLgPBM+rOwzsIkMd6J2HKpNXeDSdmrkNQ==
-X-Received: by 2002:a05:6402:27c9:b0:5c3:c4d9:5e1e with SMTP id 4fb4d7f45d1cf-5c3c4d96141mr4076303a12.20.1725547899514;
-        Thu, 05 Sep 2024 07:51:39 -0700 (PDT)
+        bh=AqntLGjYPor0NbgJDgNk1OXPGF33LiTpH6N+ESpdJz4=;
+        b=H4oQu67MHGEnUoPv8qJstJbUYNTuJ2ziSlJhN/T7WNKDM5yR3PoCT8cwJxc8cjBOlZ
+         AEDGqnLgptX0yXPXFA1/L786zl4X3RdVfaxjbhMnhNZYigzaQrRVsb8CaeI+9laldzF+
+         fNrpkWavlDT+MKFfYJQRcnhR1xXySDbkGt8qPNYZ2/oOBfmlyXDFUcrUmERtXEcB+adT
+         KJynf8wZM86rdNJC26bz5v/lnzk7/+t1T3PPIaMaNX3+K9GrAT3Bpx5eVpUICKquQA/h
+         MYFccfwdEBEgS4wwCRQfdtNToVazTcHAvaKpfccmrjVBwwjJliorMDL//15UGrFeQmIv
+         M3tQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVYi8IWSokavk81o2lHtNNgRqpMiNLy/ieS7i98oYFanEyY0cVOuBC/T/w/R8OQa6C5sXEVJ0/E/ntFdtXL@vger.kernel.org, AJvYcCX46TNT7IL2imc0NcI/JPiHXrdhwzp8p3gK9pbE+opG92WlGZogX0Cb/sI0VgSD1cIBzI9AAzwqmEk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxlNFPHjS9GDe5i4XSeGvremQ3I3fZJ4l/RgOECi8TMne784II
+	zoWnMPu4kXIGUTzDBFRkVY+E2MczcEPuBwGeH4yDNlVNR7mvHWKu
+X-Google-Smtp-Source: AGHT+IGuqlfnbvJEmdMPKEjrYPueG0gM/sgbEhcDtNsaxXjtL2F4Gjq53ZKSKFnr8EzM0tSP05A/IA==
+X-Received: by 2002:a05:6512:ea1:b0:52e:9c69:b25b with SMTP id 2adb3069b0e04-53546b2a85fmr13786261e87.28.1725547901198;
+        Thu, 05 Sep 2024 07:51:41 -0700 (PDT)
 Received: from [192.168.1.17] (host-87-16-167-153.retail.telecomitalia.it. [87.16.167.153])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc52b376sm1320732a12.7.2024.09.05.07.51.38
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc52b376sm1320732a12.7.2024.09.05.07.51.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 07:51:39 -0700 (PDT)
+        Thu, 05 Sep 2024 07:51:40 -0700 (PDT)
 From: Antonino Maniscalco <antomani103@gmail.com>
-Date: Thu, 05 Sep 2024 16:51:26 +0200
-Subject: [PATCH v3 08/10] drm/msm/A6XX: Add a flag to allow preemption to
- submitqueue_create
+Date: Thu, 05 Sep 2024 16:51:27 +0200
+Subject: [PATCH v3 09/10] drm/msm/A6xx: Enable preemption for A750
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240905-preemption-a750-t-v3-8-fd947699f7bc@gmail.com>
+Message-Id: <20240905-preemption-a750-t-v3-9-fd947699f7bc@gmail.com>
 References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
 In-Reply-To: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -96,92 +95,95 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>, 
  Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1725547882; l=3106;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1725547882; l=3440;
  i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
- bh=I8Bhra+oCMavu7JjL/p4zBs7zmYCVxxAvz/Rp0feUEU=;
- b=1w0Vk0UbTMSsc4jB2uyCG35rkfNX4+rVX5LoJyiiiCDZHHtp6v1xa7gk52PW7kK7tqbAQpgvh
- Q7OU5wahRgJAhMZwpF8yv7XA76BiFN7o3gn641c0Gv2Of/VkTfdRFsL
+ bh=XcMZAmkU4knaQLdm3eWeeDEi3HiarURn/gAJXIVtoOk=;
+ b=30Jegu5hUWliIXJrIkrDfYMpCrnjH799i8f13v/kXPtYWQx4tC6ag61QW8gHtR+CkiEDHIFWR
+ JIy1UIJt3/SA9N+bFLKChlaPffBDX//+W+uCx1fV3wdVDQz5g3Xb8DC
 X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-Some userspace changes are necessary so add a flag for userspace to
-advertise support for preemption when creating the submitqueue.
+Initialize with 4 rings to enable preemption.
 
-When this flag is not set preemption will not be allowed in the middle
-of the submitted IBs therefore mantaining compatibility with older
-userspace.
+For now only on A750 as other targets require testing.
 
-The flag is rejected if preemption is not supported on the target, this
-allows userspace to know whether preemption is supported.
+Add the "preemption_enabled" module parameter to override this for other
+A7xx targets.
 
 Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 ++++++++----
- drivers/gpu/drm/msm/msm_submitqueue.c |  3 +++
- include/uapi/drm/msm_drm.h            |  5 ++++-
- 3 files changed, 15 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 3 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 6 +++++-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 1 +
+ drivers/gpu/drm/msm/msm_drv.c             | 4 ++++
+ 4 files changed, 12 insertions(+), 2 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 316f23ca9167..0e3041b29419 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1240,7 +1240,8 @@ static const struct adreno_info a7xx_gpus[] = {
+ 		.gmem = 3 * SZ_1M,
+ 		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+ 		.quirks = ADRENO_QUIRK_HAS_CACHED_COHERENT |
+-			  ADRENO_QUIRK_HAS_HW_APRIV,
++			  ADRENO_QUIRK_HAS_HW_APRIV |
++			  ADRENO_QUIRK_PREEMPTION,
+ 		.init = a6xx_gpu_init,
+ 		.zapfw = "gen70900_zap.mbn",
+ 		.a6xx = &(const struct a6xx_info) {
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 710ec3ce2923..512ff443bd2e 100644
+index 512ff443bd2e..8b4fa17f6003 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -453,8 +453,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	OUT_PKT7(ring, CP_SET_MARKER, 1);
- 	OUT_RING(ring, 0x101); /* IFPC disable */
+@@ -2547,6 +2547,7 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 	struct a6xx_gpu *a6xx_gpu;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
++	extern int enable_preemption;
+ 	bool is_a7xx;
+ 	int ret;
  
--	OUT_PKT7(ring, CP_SET_MARKER, 1);
--	OUT_RING(ring, 0x00d); /* IB1LIST start */
-+	if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
-+		OUT_PKT7(ring, CP_SET_MARKER, 1);
-+		OUT_RING(ring, 0x00d); /* IB1LIST start */
-+	}
- 
- 	/* Submit the commands */
- 	for (i = 0; i < submit->nr_cmds; i++) {
-@@ -485,8 +487,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 			update_shadow_rptr(gpu, ring);
+@@ -2585,7 +2586,10 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+ 		return ERR_PTR(ret);
  	}
  
--	OUT_PKT7(ring, CP_SET_MARKER, 1);
--	OUT_RING(ring, 0x00e); /* IB1LIST end */
-+	if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
-+		OUT_PKT7(ring, CP_SET_MARKER, 1);
-+		OUT_RING(ring, 0x00e); /* IB1LIST end */
-+	}
+-	if (is_a7xx)
++	if ((enable_preemption == 1) || (enable_preemption == -1 &&
++	    (config->info->quirks & ADRENO_QUIRK_PREEMPTION)))
++		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_a7xx, 4);
++	else if (is_a7xx)
+ 		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_a7xx, 1);
+ 	else if (adreno_has_gmu_wrapper(adreno_gpu))
+ 		ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs_gmuwrapper, 1);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 87098567483b..d1cd53f05de6 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -56,6 +56,7 @@ enum adreno_family {
+ #define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
+ #define ADRENO_QUIRK_HAS_HW_APRIV		BIT(3)
+ #define ADRENO_QUIRK_HAS_CACHED_COHERENT	BIT(4)
++#define ADRENO_QUIRK_PREEMPTION			BIT(5)
  
- 	get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
- 		rbmemptr_stats(ring, index, cpcycles_end));
-diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-index 0e803125a325..9b3ffca3f3b4 100644
---- a/drivers/gpu/drm/msm/msm_submitqueue.c
-+++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-@@ -170,6 +170,9 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
- 	if (!priv->gpu)
- 		return -ENODEV;
+ /* Helper for formating the chip_id in the way that userspace tools like
+  * crashdec expect.
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 9c33f4e3f822..7c64b20f5e3b 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -58,6 +58,10 @@ static bool modeset = true;
+ MODULE_PARM_DESC(modeset, "Use kernel modesetting [KMS] (1=on (default), 0=disable)");
+ module_param(modeset, bool, 0600);
  
-+	if (flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT && priv->gpu->nr_rings == 1)
-+		return -EINVAL;
++int enable_preemption = -1;
++MODULE_PARM_DESC(enable_preemption, "Enable preemption (A7xx only) (1=on , 0=disable, -1=auto (default))");
++module_param(enable_preemption, int, 0600);
 +
- 	ret = msm_gpu_convert_priority(priv->gpu, prio, &ring_nr, &sched_prio);
- 	if (ret)
- 		return ret;
-diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-index 3fca72f73861..f37858db34e6 100644
---- a/include/uapi/drm/msm_drm.h
-+++ b/include/uapi/drm/msm_drm.h
-@@ -345,7 +345,10 @@ struct drm_msm_gem_madvise {
-  * backwards compatibility as a "default" submitqueue
-  */
- 
--#define MSM_SUBMITQUEUE_FLAGS (0)
-+#define MSM_SUBMITQUEUE_ALLOW_PREEMPT	0x00000001
-+#define MSM_SUBMITQUEUE_FLAGS		    ( \
-+		MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
-+		0)
- 
- /*
-  * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITIES-1,
+ #ifdef CONFIG_FAULT_INJECTION
+ DECLARE_FAULT_ATTR(fail_gem_alloc);
+ DECLARE_FAULT_ATTR(fail_gem_iova);
 
 -- 
 2.46.0
