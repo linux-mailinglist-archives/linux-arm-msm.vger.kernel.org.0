@@ -1,144 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-30964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1FE496DCC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:57:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F272C96DD22
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 17:05:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E9191F2217B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:57:42 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA8DD1F2173C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:05:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94F3719CD18;
-	Thu,  5 Sep 2024 14:54:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A196419DF74;
+	Thu,  5 Sep 2024 15:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dgN8GSJQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m8yZex7D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABE57344C
-	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 14:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C5619DFB9
+	for <linux-arm-msm@vger.kernel.org>; Thu,  5 Sep 2024 15:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725548090; cv=none; b=MkDeYdfD0yKXsrhWUXJeZKOZUS2hzQ3Z6iJtLMgk6zgDaWJkwcxBSIBAcayROkIuK6rafCehL22BN8ZRwu7mbaH6hj4U5oR/P2oZeHz02J3dUoAa84W0OmWUm4tXuGaBwk4P5VGhEM5v60gEhPZqymGNIcPSHchNzzxxdQKLGYI=
+	t=1725548563; cv=none; b=Y7txJF0EVca2hEBZr17pMFcZmNw4Ux1CicdcWSXFGluIv3QJk/yblpb4g8B8pomrawoGq/092/Vsv8zdZYnJCssONwfLN5Oy08p/Oww8WOKmnWYVBWWwV4wl+M77r9qYcC5c6N3BLlagDD7qMjvAKjYx+Jpu1PQyjm5wfRdyC3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725548090; c=relaxed/simple;
-	bh=tOnyJWreV7XtwFVhcFtNxD7Tqs1oW5u/vVn7bF4Xiic=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Z9NsnzN2wEyVQn23gje4hbgbVlwl5LKsAaZEnlXFksYAsfCwxoOwHf08/uZPaAfqdHX3Cc9rUqJehv08xJBeJjW4REEEe2S/mtqEMPBG+/W5kXsp8U32fAPTpKBDS3JG1YClUcsCblMjakbAIE4vSKzAToj4ASRXw4a26VQhdJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dgN8GSJQ; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1725548563; c=relaxed/simple;
+	bh=DQiGGGdIUmOGLqMSP8S8D5US+EouETuqJzqDRM2nEEw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZRH8LMqirt9OZ/Y+SLZEcznAwaJjPuxhaIAmSr+xLO5Z5DIziiX4V5pIWUhv18Zty/q48PB27K1ZTf+olyZcryfxWYqiS9bWvS7GBo78htYQUmpS3M4MSgPyiq6H5ZTHyiGeLrIuXP2TJEDJOj2NJylxHXn3mxXCuegppM0AbLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m8yZex7D; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2f3fd60259dso1045121fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 07:54:48 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42bbd3bed1bso1195425e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Sep 2024 08:02:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725548087; x=1726152887; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zElmk3sfGwQ+m2XSD0HQH0KyA41c/pIdozqVm+yLhAo=;
-        b=dgN8GSJQa9vTodxKnRqt6vzR6qVQm/ZM72M51t2nzLFrkm56ceM9XDCWJstSn0Lfv/
-         bQ4W4qZ9fHUzgUzsLg519pnMkxYLZuIBvHse2W9cNTO05e930Ta09uHC4uNfq+iu1r18
-         fguKsJ29/iLCg1b8MNDl8hz9N1pl0he13iyU62rIGSwHa24jAhzNtLA5UrjxtJcDuGul
-         DfR1nd6KV7vCoGXEhRf5MYY3LVr/XxNa3TJlue7u6d0d3JMkgDM+3a5SAlyxnOXfdxY5
-         fD8L1061NxFU9u8sbmDX6/4+qSFHvHrbMdI4PL1iVjig5qXUngQp76N/ZgJc5cAkD3xD
-         Zogw==
+        d=linaro.org; s=google; t=1725548560; x=1726153360; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=C7NNd/zrhBJckNNsMfazAJhrD8NLYgZbQToW3LVZTbw=;
+        b=m8yZex7Dbjy6Xxu9RCV6nf5qCpPAeb+w7jLuxKfskbXYoSlBvJ0aQU8thoi/G2uKz3
+         MmvUW+S6bRaQtQUpmVrwru9s4E/oN51Bv4vio2E6PXTcFu0KpO/G/ckdW9sBYjYqEv8U
+         dg0XF1jQEne9QaiKWLH3aLx3rM2Otma/Athpq0qoHwPaFUxHXwrnhDvGVQOx8umyoV5x
+         Fy4oxx7sM4cWUaTeKaiGUstgk3mFgMGgpwLQJN0g47q5jwMtsPTyd8Tpe6FSXZOnOtEF
+         i8IXdZ51Sjx4iN3UnJJ4OWqjRby/M2j/Hc0A8EMnu4rUXStyCSM+JSxKzd90m/CMmZ7c
+         iang==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725548087; x=1726152887;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zElmk3sfGwQ+m2XSD0HQH0KyA41c/pIdozqVm+yLhAo=;
-        b=VzZiqB40zaTYEuvuRoBvNbQOZOxZVZ1GCBFTjU2Kijk8/gd47BeYiC3ypUXfTj/ZzU
-         /4b3BlnzpBFT6nv8IzAohGErT9NZFoQJYhnkhV3TsGgSMpxpSSPKmGqO4YJbRAUHHCUX
-         5ji98qiQ1BEzRWivkvRgFRlFy6J/5AEzTQPlwxgcTmwHI5nezjeU8hBlS6MQFqy+hi7H
-         aIHbpcI4voUR8E6T7lAtG50oXaa94ZnsNvmhWGTPirTRy0gidDHonqFanUCz1lf0rjWD
-         W4uG90DO8bfmaymAcFm/gMP90Sbhds//WsM1WMGy2GhBDLZtl18dZvgOxcEcwuFStFvb
-         uS8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUIrEwYdtoYu/9Okqm7hYvGaC/NaLvXp9FZA2P8ebzmN54xw8eRF7mnhLPtZc+8GWl/FezoCq9F9MYynHGq@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOcw8UUEWgQupZjlTPK2UJ26Sl2ISulS+0RB0Wm7SQ17M2r/3p
-	YWZ6GrWlVFq5JdQbvvRl7JY3BH0FugrRMyftlftZkqXcjuixEhZGq9F+nMBHgCY=
-X-Google-Smtp-Source: AGHT+IE9ZOX27DWxEVj62bPqXJGKaQ29pm3tZgytTzwuMo7b4S7gCbQ5DtOrO5L9VMNnFFtkYI2SoA==
-X-Received: by 2002:a2e:b8d6:0:b0:2ef:23af:f1f2 with SMTP id 38308e7fff4ca-2f61e0c72e8mr84626971fa.9.1725548086403;
-        Thu, 05 Sep 2024 07:54:46 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f615171d51sm28554161fa.82.2024.09.05.07.54.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Sep 2024 07:54:46 -0700 (PDT)
-Message-ID: <c9e0a76c-b306-44ff-9227-9e471bd887a3@linaro.org>
-Date: Thu, 5 Sep 2024 17:54:45 +0300
+        d=1e100.net; s=20230601; t=1725548560; x=1726153360;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C7NNd/zrhBJckNNsMfazAJhrD8NLYgZbQToW3LVZTbw=;
+        b=BZGVePvCI95Q4FV9EZgu48EWXNyMwEbW0DIkRzdTCAx2P3Km5JWrcD7nx22ZtVwhhF
+         SxRA7LJVfUvkrLyeUqe//KgtKy9jyCNffXzup8eQokl1xtl/Swq+MJIp7WDgnIGgVSwQ
+         Ky5AsoP4uhp194wPDJc9hiaqFGFlyRvis2HVapCqdlgrUt3ALSt0q9sEDUeWOzFy3itE
+         u2JfzYNKguldzuceFNamORgX5/BA1tFbqLOL34clN0OWC8G9nSlXvTqWdf71BbX8jgPz
+         79yVGM/lalOQLiQHh0UcQ9BjWpA4i9FHXE5qoDKdlK8BS6dEQ10Ka7bqNqscg8FffVZ4
+         cdpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVtkJkRKqJVJ9SqaeKvGXJ+0Xs9dcFovGs3SqPaCOUVsXnULvvOCdsSWtbHXII4kHIkLwok+smHU9H8hBWg@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxj7xJHLqS3Xywp/G4VazwCfRqSlbjHPo6jaWix8kUBcdR5SN+Y
+	Y6mQ36fUlKHEk6/EDDtSn+L3MAm5cb8tLpxkY6hIQ4mLEhiDKkeX83avlO8Odfo=
+X-Google-Smtp-Source: AGHT+IHJlS5UY9DkXnqsdsszOThXDhvA3DLG7+xih+aR/w+ZrYYdsKvCAGQHHk1O73JLUcrl3hmIsg==
+X-Received: by 2002:a05:600c:1554:b0:425:6962:4253 with SMTP id 5b1f17b1804b1-42bbb43d5e4mr86867955e9.4.1725548557922;
+        Thu, 05 Sep 2024 08:02:37 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.222.82])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42bbdda3958sm203212705e9.26.2024.09.05.08.02.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2024 08:02:37 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] clk: qcom: constify static 'struct qcom_icc_hws_data'
+Date: Thu,  5 Sep 2024 17:02:35 +0200
+Message-ID: <20240905150235.276345-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/7] dt-bindings: media: camss: Add qcom,sdm670-camss
-Content-Language: en-US
-To: Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Loic Poulain <loic.poulain@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
- linux-i2c@vger.kernel.org, linux-media@vger.kernel.org
-References: <20240904020448.52035-9-mailingradian@gmail.com>
- <20240904020448.52035-13-mailingradian@gmail.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240904020448.52035-13-mailingradian@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hello Richard.
+Drivers and core code does not modify the file-scope static 'struct
+qcom_icc_hws_data', so it can be made const for code safety and
+readability.
 
-On 9/4/24 05:04, Richard Acayan wrote:
-> As found in the Pixel 3a, the Snapdragon 670 has a camera subsystem with
-> 3 CSIDs and 3 VFEs (including 1 VFE lite). Add this camera subsystem to
-> the bindings.
-> 
-> Adapted from SC8280XP camera subsystem.
-> 
-> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/clk/qcom/common.h      | 2 +-
+ drivers/clk/qcom/gcc-ipq5332.c | 2 +-
+ drivers/clk/qcom/gcc-ipq9574.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-<snip>
+diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+index 7e57f8fe8ea6..7ace5d7f5836 100644
+--- a/drivers/clk/qcom/common.h
++++ b/drivers/clk/qcom/common.h
+@@ -35,7 +35,7 @@ struct qcom_cc_desc {
+ 	size_t num_gdscs;
+ 	struct clk_hw **clk_hws;
+ 	size_t num_clk_hws;
+-	struct qcom_icc_hws_data *icc_hws;
++	const struct qcom_icc_hws_data *icc_hws;
+ 	size_t num_icc_hws;
+ 	unsigned int icc_first_node_id;
+ };
+diff --git a/drivers/clk/qcom/gcc-ipq5332.c b/drivers/clk/qcom/gcc-ipq5332.c
+index 9536b2b7d07c..00c48478c887 100644
+--- a/drivers/clk/qcom/gcc-ipq5332.c
++++ b/drivers/clk/qcom/gcc-ipq5332.c
+@@ -3622,7 +3622,7 @@ static const struct qcom_reset_map gcc_ipq5332_resets[] = {
+ 
+ #define IPQ_APPS_ID			5332	/* some unique value */
+ 
+-static struct qcom_icc_hws_data icc_ipq5332_hws[] = {
++static const struct qcom_icc_hws_data icc_ipq5332_hws[] = {
+ 	{ MASTER_SNOC_PCIE3_1_M, SLAVE_SNOC_PCIE3_1_M, GCC_SNOC_PCIE3_1LANE_M_CLK },
+ 	{ MASTER_ANOC_PCIE3_1_S, SLAVE_ANOC_PCIE3_1_S, GCC_SNOC_PCIE3_1LANE_S_CLK },
+ 	{ MASTER_SNOC_PCIE3_2_M, SLAVE_SNOC_PCIE3_2_M, GCC_SNOC_PCIE3_2LANE_M_CLK },
+diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+index 645109f75b46..0405a2473842 100644
+--- a/drivers/clk/qcom/gcc-ipq9574.c
++++ b/drivers/clk/qcom/gcc-ipq9574.c
+@@ -4384,7 +4384,7 @@ static const struct qcom_reset_map gcc_ipq9574_resets[] = {
+ 
+ #define IPQ_APPS_ID			9574	/* some unique value */
+ 
+-static struct qcom_icc_hws_data icc_ipq9574_hws[] = {
++static const struct qcom_icc_hws_data icc_ipq9574_hws[] = {
+ 	{ MASTER_ANOC_PCIE0, SLAVE_ANOC_PCIE0, GCC_ANOC_PCIE0_1LANE_M_CLK },
+ 	{ MASTER_SNOC_PCIE0, SLAVE_SNOC_PCIE0, GCC_SNOC_PCIE0_1LANE_S_CLK },
+ 	{ MASTER_ANOC_PCIE1, SLAVE_ANOC_PCIE1, GCC_ANOC_PCIE1_1LANE_M_CLK },
+-- 
+2.43.0
 
-> +
-> +            interrupts = <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-> +                         <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>;
-
-I suppose it should be IRQ_TYPE_EDGE_RISING type for all interrupts,
-please correct it here and in the dts change.
-
-Here I rely on the interrupt type requested in the camss driver.
-
-> +            interrupt-names = "csid0",
-> +                              "csid1",
-> +                              "csid2",
-> +                              "csiphy0",
-> +                              "csiphy1",
-> +                              "csiphy2",
-> +                              "vfe0",
-> +                              "vfe1",
-> +                              "vfe_lite";
-
---
-Best wishes,
-Vladimir
 
