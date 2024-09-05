@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-30925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B619696DAB4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:48:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E99AE96DAC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 15:49:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E89D01C21015
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:48:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 28DD51C232C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 13:49:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 547D719D8A9;
-	Thu,  5 Sep 2024 13:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9500319DF58;
+	Thu,  5 Sep 2024 13:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ic4Ek1ZW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dx7HlgU8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AA019D8B2;
-	Thu,  5 Sep 2024 13:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCC419CD19;
+	Thu,  5 Sep 2024 13:49:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725544064; cv=none; b=OAoIUjFlDTshlmo3Te0WRJGzJLfQ8LiwSrB8pPkF69hAkqjsYCDhLrMwH6qJM/wk9HoW8ChkkSsbDqAtcpu0fhKSP8cfUVj35VkK0flvgJYwCpyunxI6QKde9SzuJkbr1VfOvlAYZ44Ibas0P5Oomz7/tgtqtqjR5n7OxYjfvGM=
+	t=1725544148; cv=none; b=MlKMvty32bhJdCyAw5jxOWCdD+FDY6lmX1endpLPmLJPnNN10Ie/3nnMYCHD2S89kLyTlznc52dvReqklaoi4O4jv6riNXQHkXXH5iRSj0RzuF+k9Qs1z/QLxZuJSqUtKjOWP7qf6MSbcCJ98nDwamDCtSLOCqU1W7riQe+P31U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725544064; c=relaxed/simple;
-	bh=71k1Ochv2FC5okt+9RprHRdYfaZu9bLcTVyeNCoL8r0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=KOoLhUkrH9YS4RQ9Z+xE3ZUQcP0JdJEf2YOTMMeJnqjiHXB6l5MmNPtGYz/BYVCWUQemepY2UA3wtHpxFai4Pu8XLUlPJrpLfb1pjfINTdjvzgBojffIwMY4vjXHmZpMIYisg/yBjBnmyUNP+bWkoGqicp+OLOAgvAjMod4MLUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ic4Ek1ZW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9B8C4CEC3;
-	Thu,  5 Sep 2024 13:47:37 +0000 (UTC)
+	s=arc-20240116; t=1725544148; c=relaxed/simple;
+	bh=Joq2JCaXbW4YK/rgb9cZ8tyR0mqtrR4IwUtCwP7MGGw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HtS/LvZtuUR31/EgaE/yLl924DryUCwZqkRvXJDPIDn7Qi4u43tRJ6yA8KwZB6oE8bhGqhbx6IPfoJujPAqxSUxNxRlMM4vPTwjqWYzfBf2J6pkqb4fQECVF1G8hRUePKxyuZBaUoHKSV53pi+8ngBAxkf2bDsQvtvlkDpOcp7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dx7HlgU8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF8CCC4CEC3;
+	Thu,  5 Sep 2024 13:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725544063;
-	bh=71k1Ochv2FC5okt+9RprHRdYfaZu9bLcTVyeNCoL8r0=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=Ic4Ek1ZWVl2lJ8st6GLtIkODrTBG+tf6NAuQKe0HntNEZtlPOU3NhnbxBEqQsxEeO
-	 lojnuwiLsh4fDvhuRdQ3RNPP9n0j1LUmqXE9Qa5p94Dl7aVI1DUSU/eb+VD2kiVKDR
-	 nqLceoTE0a2E4rrvsOVxdOF1xtjNfyAoYv2fQ5owncvVeq56Jyi50hLnUSBUkAb+8D
-	 9bJub1/7+0vLx17fpJxoJ2twc9u/YJ3tcXmpR1afOUaUni6SYKwcglEg9B6h+F/cVB
-	 lFKYgWngayZyCwCJzcHx+jea01T583hMuwAhVq4qsqkyCt9fHmnYmYZKZZpV26P54B
-	 sArasEpU95tMA==
-Message-ID: <bf114807-c56c-4209-ab26-9e90ac00cedf@kernel.org>
-Date: Thu, 5 Sep 2024 15:47:35 +0200
+	s=k20201202; t=1725544148;
+	bh=Joq2JCaXbW4YK/rgb9cZ8tyR0mqtrR4IwUtCwP7MGGw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Dx7HlgU8cYt/jXg18GIF01hWkX/S6b4n0BxWjipaql3Ky2KNDy4k4PWquXitNz9US
+	 SS9wiwkeF02gCb/z/sXgboR03p6HCtQy8KxjsEU96X7FbHoMry0GUrH1CzsShEYzsW
+	 lMb1dCAkjRXuIso5dRPcCeUljflmeNl0HxIa7nlfqpE+DENu+spIVL1dCXMPx3F3Da
+	 2ie8A0q/Xjy92LWvSsV6lJ7QAZK1WqftwGqwm/Cinld2miE8PVp3hXaUoxe5pKPMFB
+	 xYEIafwRgTt5muZh/JX4nKluoNxSJHq+R2svEvd63wU/XZ8N+rAefw9JLvaE7/lfRA
+	 gCeOu4A8dluJA==
+Message-ID: <33d4671e-ae76-4746-b402-8640103c76ee@kernel.org>
+Date: Thu, 5 Sep 2024 15:49:03 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,69 +50,43 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/6] phy: qcom: Introduce PCIe UNIPHY 28LP driver
-To: Sricharan R <quic_srichara@quicinc.com>, bhelgaas@google.com,
- lpieralisi@kernel.org, kw@linux.com, manivannan.sadhasivam@linaro.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, vkoul@kernel.org,
- kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- p.zabel@pengutronix.de, dmitry.baryshkov@linaro.org,
- quic_nsekar@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
- robimarko@gmail.com
-References: <20240830081132.4016860-1-quic_srichara@quicinc.com>
- <20240830081132.4016860-4-quic_srichara@quicinc.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc8280xp: Add uart18
+To: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240903224252.6207-1-jerome.debretagne@gmail.com>
+ <20240903224252.6207-4-jerome.debretagne@gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240830081132.4016860-4-quic_srichara@quicinc.com>
+In-Reply-To: <20240903224252.6207-4-jerome.debretagne@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 30.08.2024 10:11 AM, Sricharan R wrote:
-> From: Nitheesh Sekar <quic_nsekar@quicinc.com>
+On 4.09.2024 12:42 AM, Jérôme de Bretagne wrote:
+> Add the node describing uart18 for sc8280xp devices.
 > 
-> Add Qualcomm PCIe UNIPHY 28LP driver support present
-> in Qualcomm IPQ5018 SoC and the phy init sequence.
-> 
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
 > ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 14c3b1d6ad47..e068de274b56 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -1013,6 +1013,20 @@ spi18: spi@888000 {
+>  				status = "disabled";
+>  			};
+>  
+> +			uart18: serial@888000 {
+> +				compatible = "qcom,geni-uart";
+> +				reg = <0 0x00888000 0 0x4000>;
+> +				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
 
-[...]
-
-> +static const struct qcom_uniphy_pcie_data ipq5018_2x1_data = {
-> +	.lanes		= 1,
-> +	.lane_offset	= 0x800,
-> +	.phy_type	= PHY_TYPE_PCIE_GEN2,
-> +	.init_seq	= ipq5018_regs,
-> +	.init_seq_num	= ARRAY_SIZE(ipq5018_regs),
-> +};
-> +
-> +static const struct qcom_uniphy_pcie_data ipq5018_2x2_data = {
-> +	.lanes		= 2,
-> +	.lane_offset	= 0x800,
-> +	.phy_type	= PHY_TYPE_PCIE_GEN2,
-> +	.init_seq	= ipq5018_regs,
-> +	.init_seq_num	= ARRAY_SIZE(ipq5018_regs),
-> +};
-
-As krzk suggested, the difference is just num-lanes
-
-[...]
-
-> +static int qcom_uniphy_pcie_power_off(struct phy *x)
-> +{
-> +	struct qcom_uniphy_pcie *phy = phy_get_drvdata(x);
-> +	
-> +	reset_control_assert(phy->resets);
-
-Is the reset line supposed to be kept asserted?
-
-[...]
-
-> +MODULE_LICENSE("Dual BSD/GPL");
-
-Was that intended?
+This should be the _S2 clock
 
 Konrad
 
