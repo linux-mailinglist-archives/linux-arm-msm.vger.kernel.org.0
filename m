@@ -1,165 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-30948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68B3396DBA4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:21:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66D2E96DB8E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:18:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3EC81F2134C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:21:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C8550B2345B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:18:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E39FD53F;
-	Thu,  5 Sep 2024 14:21:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D58D919EEB0;
+	Thu,  5 Sep 2024 14:17:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WlNkXtMW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="andDZzaP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E75CA6B;
-	Thu,  5 Sep 2024 14:21:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AB419E98F;
+	Thu,  5 Sep 2024 14:17:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725546095; cv=none; b=gSUvIJJD+EFhMqjIBtXmE6SJzv+eIqGiD/PMPMmwek+botF8ESlnK1yVuYy+VzA83FF5yvx3sA3Q3MVP76qC9ssxzIfDipkL4hlxw/kdWC3WyIOZ14HJvB5JeqqpFCADf6Cp3RGlKexDUbsYCM1VJq6TQsnGq2L8A3aWxG0JWnY=
+	t=1725545857; cv=none; b=V9GQ4Qi1GPVBbM5jFwSJHI/feKUheUNNpx9zbtaQu+P2AL6BpUSYtBiY2XEbyEQCLnC9dNnqvPTpu89JBpH7uD+IDbgroHtVFd78tInAIe9jXvX3vsIRaBcNlEAEtkM7ckFGSHjMFr/poXvfWUwm+kxATJ0lH347aOuzA3kC2QQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725546095; c=relaxed/simple;
-	bh=DXyaYUEdp9Wc5HqoVQv8h4Xdqi2x4QC9WP7/RCMuanY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oU2i2+feEojsZgVnLw3U4/bG3qAEC3Yg25sMudCwbOCYpYN9ys3E23N5QCLejBJgkaSXezpF56HxHqnCPynSpwhhSanIo0ppDovMEo+hyP3I8nPoRYfYE28Vqw27cOJUzTi1rWYJqDjex1m6cHbtwWlY+JdetJ6Xt9ba3Xn7auI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WlNkXtMW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48597n0o023730;
-	Thu, 5 Sep 2024 14:15:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PqmjsGtsdH0pPKX2Ec8nWXjou6CnajA32b/jszhvD/A=; b=WlNkXtMWL4A/p4gj
-	eimNBRrtTjZB9Z3WhjPtgq1cOmqEOBOy9PFERhTZm8vBWYo+/y1qbK/qlITSK7AP
-	1MbuDlf18GTjDMQCXuHnyhpELUbgX4LdZr7qIjTb/U2ztsyGxTLPdG+Pn4ldtncz
-	Kjw8NQwKzDlnrwdht/A+gvm85rLbq35s2CTkyrnMMpPB/9Gj8/+Nm3i9vBMLH3Dd
-	XKrZJ+X9mYfuO5svrt9X3UFhMqef5HPpXpOQ+FEUd1cQc3gagvjfUAqANWUPwNdN
-	xc5aJx0QKGkJJe1JmhdkYbgHyUH5sAT9KqFIm/iYS+hJk2KpBry/loFskPu/NKjW
-	h6/sAw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41f86ks3da-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 05 Sep 2024 14:15:53 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 485EFq25019533
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 5 Sep 2024 14:15:52 GMT
-Received: from [10.110.102.234] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Sep 2024
- 07:15:48 -0700
-Message-ID: <4896510e-6e97-44e0-b3d7-7a7230f935ec@quicinc.com>
-Date: Thu, 5 Sep 2024 07:15:48 -0700
+	s=arc-20240116; t=1725545857; c=relaxed/simple;
+	bh=VqQy8KfKmVgPTGbG8DNpb8zbYk8Nc0D2lgFnKi69kn8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s9+h0aCzrdHtgEpaScJecTir0DD5nHNqsjrljUyuplw5YC8ovpOpoPn/6xj9WrZZcb4vTnc8e4Sa3C9D25qaQ4VUAqXQ/NwRg/7p3fjTsT+llvRPk84vArTu6RaXuQBP3hekP0n7/dgm7Yq/j3dAZYy70Nq7Z1DlXfXSfeyMk8o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=andDZzaP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A541AC4CEC3;
+	Thu,  5 Sep 2024 14:17:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725545857;
+	bh=VqQy8KfKmVgPTGbG8DNpb8zbYk8Nc0D2lgFnKi69kn8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=andDZzaPhYZMZgV6Ut5i5Ns/LKGNLi/g7c0Ojq5UbJczxdxaq9euO+qT/qKkPg9PI
+	 5Q7JN9ERfhEAwiEnTLxOYYdapOFegv4+6hOlgMYYNE03nYfIWP4zyvVB/SsygAwgoh
+	 OyhO7Tp72ejapkrrhVTspxSs4mjaIqVlNxgNWE6FNvOPCq7L1bQlyQiqzTLBXURZia
+	 5tgem0TV6DR1XucnCmJK4KEptn+HnrM21FHLVbxpdRSKvpnUZ6IfnMB/d+1H7NBhGF
+	 KXxEwPniE54XJKJcpbjR3RUCe+xQQ0zp2uoWz8gLmR5ToYn3C+ORfLnAnh3xak1pU5
+	 /uJJyQFjNk67Q==
+Date: Thu, 5 Sep 2024 15:17:29 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+	David Rhodes <david.rhodes@cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>, linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@opensource.cirrus.com,
+	alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH 00/13] ALSA: update sample rate definitions
+Message-ID: <81e3d628-cfca-43b0-9af6-de2a3c606a39@sirena.org.uk>
+References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
-To: Krzysztof Kozlowski <krzk@kernel.org>, Andrew Lunn <andrew@lunn.ch>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <herbert@gondor.apana.org.au>,
-        <davem@davemloft.net>, <sudeep.holla@arm.com>, <andi.shyti@kernel.org>,
-        <tglx@linutronix.de>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <jassisinghbrar@gmail.com>, <lee@kernel.org>,
-        <linus.walleij@linaro.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <broonie@kernel.org>,
-        <cristian.marussi@arm.com>, <rui.zhang@intel.com>,
-        <lukasz.luba@arm.com>, <wim@linux-watchdog.org>, <linux@roeck-us.net>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-i2c@vger.kernel.org>,
-        <iommu@lists.linux.dev>, <linux-gpio@vger.kernel.org>,
-        <linux-serial@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-watchdog@vger.kernel.org>, <kernel@quicinc.com>,
-        <quic_psodagud@quicinc.com>, Praveen Talari <quic_ptalari@quicinc.com>
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-17-quic_nkela@quicinc.com>
- <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
- <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
- <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
- <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
- <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
- <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
- <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
- <75768451-4c85-41fa-82b0-8847a118ea0a@quicinc.com>
- <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
-Content-Language: en-US
-From: Nikunj Kela <quic_nkela@quicinc.com>
-In-Reply-To: <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mwTkK25Wdk3u_xGDqOaQj7Oc4I2DLIkL
-X-Proofpoint-ORIG-GUID: mwTkK25Wdk3u_xGDqOaQj7Oc4I2DLIkL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-05_09,2024-09-04_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 phishscore=0 impostorscore=0
- malwarescore=0 mlxlogscore=999 mlxscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2407110000 definitions=main-2409050106
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="uuNJXLNXUva0AK+X"
+Content-Disposition: inline
+In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
+X-Cookie: The horror... the horror!
 
 
-On 9/5/2024 7:09 AM, Krzysztof Kozlowski wrote:
-> On 05/09/2024 16:03, Nikunj Kela wrote:
->> On 9/5/2024 1:04 AM, Krzysztof Kozlowski wrote:
->>> On 04/09/2024 23:06, Nikunj Kela wrote:
->>>> On 9/4/2024 9:58 AM, Andrew Lunn wrote:
->>>>>> Sorry, didn't realize SPI uses different subject format than other
->>>>>> subsystems. Will fix in v3. Thanks
->>>>> Each subsystem is free to use its own form. e.g for netdev you will
->>>>> want the prefix [PATCH net-next v42] net: stmmac: dwmac-qcom-ethqos:
->>>> of course they are! No one is disputing that.
->>>>> This is another reason why you should be splitting these patches per
->>>>> subsystem, and submitting both the DT bindings and the code changes as
->>>>> a two patch patchset. You can then learn how each subsystem names its
->>>>> patches.
->>>> Qualcomm QUPs chips have serial engines that can be configured as
->>>> UART/I2C/SPI so QUPs changes require to be pushed in one series for all
->>>> 3 subsystems as they all are dependent.
->>> No, they are not dependent. They have never been. Look how all other
->>> upstreaming process worked in the past.
->> Top level QUP node(patch#18) includes i2c,spi,uart nodes.
->> soc/qcom/qcom,geni-se.yaml validate those subnodes against respective
->> yaml. The example that is added in YAML file for QUP node will not find
->> sa8255p compatibles if all 4 yaml(qup, i2c, spi, serial nodes) are not
->> included in the same series.
->>
-> So where is the dependency? I don't see it. 
+--uuNJXLNXUva0AK+X
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ok, what is your suggestion on dt-schema check failure in that case as I
-mentioned above? Shall we remove examples from yaml that we added?
+On Thu, Sep 05, 2024 at 04:12:51PM +0200, Jerome Brunet wrote:
+> This patchset adds rate definitions for 12kHz, 24kHz and 128kHz.
+>=20
+> It is follow-up on the series/discussion [0] about adding 128kHz for
+> spdif/eARC support. The outcome was to add 12kHz and 24kHz as well and
+> clean up the drivers that no longer require custom rules to allow these
+> rates.
 
+Acked-by: Mark Brown <broonie@kernel.org>
 
-> Anyway, if you insist,
-> provide reasons why this should be the only one patchset - from all
-> SoCs, all companies, all developers - getting an exception from standard
-> merging practice and from explicit rule about driver change. See
-> submitting bindings.
->
-> This was re-iterated over and over, but you keep claiming you need some
-> sort of special treatment. If so, please provide arguments WHY this
-> requires special treatment and *all* other contributions are fine with it.
->
-> Best regards,
-> Krzysztof
->
+--uuNJXLNXUva0AK+X
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbZvXkACgkQJNaLcl1U
+h9Dcdgf/ZQoGyidIWQUnoePm2VX00vw06P9W9aOo2sqjGlu4flrG6fH5N+tv92vc
+hX0ctx0G6C1f4iafWkIPCjHVecaWETi2yb/hpKpSPTy0nFrEBN06Zl02mDSa3jfs
+ngxTVhHYUMoS2ZMRR9dAy3XgnVgZS9Lccvvq52mEYaxh1G+hzi3HEDgM5oWZPEaI
+CcqzVwxRaRokIAZO3prOKdX4rMXG+Nz7kSFb/Hx9/K9H4jYwgwFyKJ2TV3H7fVYM
+767vMvyA1T3nKRZ1yiZfYWYYIf2rs0h7iQxgjH4Gzb9575MFPOiqAk4/pIYcvVKj
+hf1swcI9kcYqQrgoLzqE82HPkErNaQ==
+=WnP9
+-----END PGP SIGNATURE-----
+
+--uuNJXLNXUva0AK+X--
 
