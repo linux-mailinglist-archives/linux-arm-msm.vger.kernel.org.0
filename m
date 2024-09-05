@@ -1,205 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-30965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2EE696DCCC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:58:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE93196DC66
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:51:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C039B22BB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:58:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F29261C20A54
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:51:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F87194A52;
-	Thu,  5 Sep 2024 14:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50F7543169;
+	Thu,  5 Sep 2024 14:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=perex.cz header.i=@perex.cz header.b="HDTI48gy"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SSC/P0rz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail1.perex.cz (mail1.perex.cz [77.48.224.245])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E9873466;
-	Thu,  5 Sep 2024 14:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.48.224.245
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5D71AAD7;
+	Thu,  5 Sep 2024 14:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725548225; cv=none; b=WvC80snb38uGU1jC/XPUUMj+l13Sd0c5cGUcuV6Nz4uIhwxJxi5ZZbrupg2uTWq5apQua6O9Nwm6XH/aSXLH8SAhYJm6Krdu86wbyfRoLQcDqgbq4SgESVDrKn7yYUUCHn329XbPKya6mVAP8GIU1kudKsZEbWfumxq3CwwtMIU=
+	t=1725547889; cv=none; b=lctkDLju72ZnchQY9D/S3C3WeiNvMmpcXBvpXMmEIkChoOIra7R/Gky360aEiO8VftMBom7ER62QqS5IbJDO8ijKJYGF2OyFUmGnowYmEAi8LmDIbQe5VLu70+HiC9ZoPcOWIl0i0bUOfMBAdTHOyQttc84/8T50YD67xoMj+wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725548225; c=relaxed/simple;
-	bh=v+YLUxqSFxm+ib/oj+ESGH40/CNmBAMNdcwsjIGjz6U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ldTMWwPiNT6AClvekCWgwQxObHt9KMXZUDZgMJ6rJQrlFr5GNipcMW8nJPTS8vshzcfxUltJF4OLetj9ojfs37n9mc4Ikf0TVmeJO6+oC67M0U/N4QY0oSzSKXeEEPVak8y5WbmfxGixOHIMbHAvlVpuQLzDNS/tHeXUqBt0Ve4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=perex.cz; spf=pass smtp.mailfrom=perex.cz; dkim=pass (1024-bit key) header.d=perex.cz header.i=@perex.cz header.b=HDTI48gy; arc=none smtp.client-ip=77.48.224.245
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=perex.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perex.cz
-Received: from mail1.perex.cz (localhost [127.0.0.1])
-	by smtp1.perex.cz (Perex's E-mail Delivery System) with ESMTP id 463063DD1;
-	Thu,  5 Sep 2024 16:50:22 +0200 (CEST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.perex.cz 463063DD1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=perex.cz; s=default;
-	t=1725547822; bh=Ye4UIgaGYG9sddgPGETiBoCD7uB2XyXKCKHqUtRsfCQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=HDTI48gyNg/5KFcapBmSQlcApsyukN+aDB37PVExNCUnWRKcSTrNzxfMVOlmzbltI
-	 useZBXrXSWe1Cp767YmD4alOKMZMynx0IAF9RVAYDtWYxDz16Zrqkqd9gdA2ptpVnA
-	 2ufYMxl+Lixzk+pFcTX21PSLJb1mR/NyHyfgKUZA=
-Received: from [192.168.100.98] (unknown [192.168.100.98])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: perex)
-	by mail1.perex.cz (Perex's E-mail Delivery System) with ESMTPSA;
-	Thu,  5 Sep 2024 16:49:58 +0200 (CEST)
-Message-ID: <2858578e-cdf9-4a85-a751-0fd64c2d5d39@perex.cz>
-Date: Thu, 5 Sep 2024 16:49:56 +0200
+	s=arc-20240116; t=1725547889; c=relaxed/simple;
+	bh=0370zKmzY2AWzHv1mdoNPa7o5cPmRzdjitFQ21GHXIc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qPNC6eLguz4KPaSlwmJw7qplvVH0xzY6a+txi8Jf/yXWF/JgpPDjuUnzAZFOLEKpfwjk8HehEpt1Vw1BX6tgLdeWJp7Wv78YVYG/x0LTtIvl67XOtol0xoT6ZrLmcm1s5iLGEkpCooERxqLWGJDW+CSjuASXgDA5zkGyfw9AwC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SSC/P0rz; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5bf01bdaff0so994498a12.3;
+        Thu, 05 Sep 2024 07:51:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725547886; x=1726152686; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=khBp+7bVE0pRYL+IURNeyyKfZwQKei0LfxEqGUBU3As=;
+        b=SSC/P0rzAoylA/LA2c8EmRcc4uBVeAN0kegjjPbMpYBkxyWhbwQo/B66tcoakC5oMp
+         jogLY7eB9pY9dDKVqxnwDku07zaNzyBHONvLF3wM7c9HsrugeRh/E2bXu8pOSkPDaCIJ
+         CHaTs85njPJkNUPx0HeUKO/Izf9HbUL1HHLHOl/2Ko/OqwX95On5y/XdEN9bDkLigm84
+         mrXdQw+wmSqt4/LhiDflCZ37P/rzgV2ApU3aAA1A0DLh70WxCQZMvLzbzREWIVfcMdwW
+         0b7KWe1bH17xtwzqi4GBps7bUbyTNsXCr6hT4gTlOqGz58e0/ROFCiu9kb4DEpS7BP4N
+         tNIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725547886; x=1726152686;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=khBp+7bVE0pRYL+IURNeyyKfZwQKei0LfxEqGUBU3As=;
+        b=TR7nSNqRqtI688PAOV9Dxbgi8ysIPxaY7a26y1+JzhbB2Ano9vi8f5N12Za8hok+S8
+         uEIgSTrhLdUmFY0/f2yX1uQ9NOOWpH6kch0LwUMTHKOhb1jURLpXGk3SThG6GJEmt338
+         BI4NiMEfmQk8NH9pL67fZ1wxENfKn9PUfSL52msbgFKEopSGGaT9VPRfPsU25to5wMrM
+         wACSM9ZkiB8xyh0uYvnr8+AKn7zQbcOMkizpqK98rWI9ae9X9Y7X9YRPqRzsO8F4oIVA
+         0WvK1sG0aKsQ625xb0DUcgrkXNhuMLQm01kIPFWKFVAaprdTq6D38JywaTvdI0IzDqTH
+         2d0g==
+X-Forwarded-Encrypted: i=1; AJvYcCUG6ld5CVhvdkWYoM4guIon1NU2lpkul6N2F4/am3rK+RS55V3NtoBD3Pxa+g+gGPtorHHDSGng1KcjR54R@vger.kernel.org, AJvYcCXBCHLqPQ/0WZ9/isNprkgfIYNF0tKBWlkM/K5u3MqfBqsS9J45AUqL3dNCCUQbGocjGJN1ycYvilA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDT2LUcLPSFwpUYOy9K79EU1EpWDsjSfBi0AZllK/vooKqryIT
+	I5eDZnzpOwtvxGLx82k6s2oijXxeQgVwnRg5G4p+vl7kW4o9KRK/
+X-Google-Smtp-Source: AGHT+IFmlJ+ocz+T/WgmYTqPNQl/xNecdLVUrUif/9DJxq37qVefgp0MMq8SLucOpU0+y5Dvnw0LKQ==
+X-Received: by 2002:a05:6402:848:b0:5c0:b33d:5fcc with SMTP id 4fb4d7f45d1cf-5c21ed52b2amr20478966a12.20.1725547884673;
+        Thu, 05 Sep 2024 07:51:24 -0700 (PDT)
+Received: from [192.168.1.17] (host-87-16-167-153.retail.telecomitalia.it. [87.16.167.153])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc52b376sm1320732a12.7.2024.09.05.07.51.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Sep 2024 07:51:24 -0700 (PDT)
+From: Antonino Maniscalco <antomani103@gmail.com>
+Subject: [PATCH v3 00/10] Preemption support for A7XX
+Date: Thu, 05 Sep 2024 16:51:18 +0200
+Message-Id: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/13] ALSA: update sample rate definitions
-To: Jerome Brunet <jbrunet@baylibre.com>, Takashi Iwai <tiwai@suse.com>,
- David Rhodes <david.rhodes@cirrus.com>,
- Richard Fitzgerald <rf@opensource.cirrus.com>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Cezary Rojewski <cezary.rojewski@intel.com>,
- Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
- Liam Girdwood <liam.r.girdwood@linux.intel.com>,
- Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
- Bard Liao <yung-chuan.liao@linux.intel.com>,
- Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
- Kai Vehmanen <kai.vehmanen@linux.intel.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>
-Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@opensource.cirrus.com, alsa-devel@alsa-project.org,
- linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-sunxi@lists.linux.dev
-References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-From: Jaroslav Kysela <perex@perex.cz>
-Content-Language: en-US
-Autocrypt: addr=perex@perex.cz; keydata=
- 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
-In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGbF2WYC/33NTQ6DIBAF4KsY1p0GARW76j2aLhBGnaT+BAxpY
+ 7x70ZWLpss3ee+blQX0hIHdspV5jBRoGlOQl4zZ3owdArmUmeBCcZ0XMHvEYV5SDUxVcFigtYi
+ 10Uo1smZplxotvQ/z8Uy5p7BM/nO8iPl+/afFHDhUjTOitFJxWd27wdDraqeB7VoUJ0HyX4JIg
+ i4NonHCOs3PwrZtX3ik/nn0AAAA
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Jonathan Corbet <corbet@lwn.net>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>, 
+ Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Sharat Masetty <smasetty@codeaurora.org>
+X-Mailer: b4 0.14.1
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1725547882; l=4165;
+ i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
+ bh=0370zKmzY2AWzHv1mdoNPa7o5cPmRzdjitFQ21GHXIc=;
+ b=mCl24BQ75phDXeT/B5kU0POxdwZ7HTJ42T58Nh/mIbwJGbUETSfM0cs6ORunMLC0gHfH3LAvQ
+ ehiWRn83Kv+De33cw9aPnQ0ULw34nC1xKtqkWAePe81KAz7CSvkG2dQ
+X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
+ pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-On 05. 09. 24 16:12, Jerome Brunet wrote:
-> This patchset adds rate definitions for 12kHz, 24kHz and 128kHz.
-> 
-> It is follow-up on the series/discussion [0] about adding 128kHz for
-> spdif/eARC support. The outcome was to add 12kHz and 24kHz as well and
-> clean up the drivers that no longer require custom rules to allow these
-> rates.
-> 
-> Identifying these drivers is not straight forward, I tried my best but I
-> may have missed some. Those will continue to work anyway so it is not
-> critical. Some drivers using these rates have not been changed on
-> purpose. The reason for this may be:
-> * The driver used other uncommon rates that still don't have a definition
->    so a custom rule is still required.
-> * The constraint structure is used in some other way by the driver and
->    removing it would not help the readability or maintainability. This is
->    the case the freescale asrc drivers for example.
-> 
-> There is one change per driver so, if there is a problem later on, it will
-> easier to properly add Fixes tag.
-> 
-> The series has been tested with
-> * ARM64 defconfig - spdif 128kHz at runtime.
-> * x86_64 allmodconfig - compile test only
-> 
-> Last, the change adding IEC958 definitions has been dropped for this
-> patchset and will be resent separately
-> 
-> [0]: https://lore.kernel.org/all/20240628122429.2018059-1-jbrunet@baylibre.com/
-> 
-> ---
-> Jerome Brunet (13):
->        ALSA: pcm: add more sample rate definitions
->        ALSA: cmipci: drop SNDRV_PCM_RATE_KNOT
->        ALSA: emu10k1: drop SNDRV_PCM_RATE_KNOT
->        ALSA: hdsp: drop SNDRV_PCM_RATE_KNOT
->        ALSA: hdspm: drop SNDRV_PCM_RATE_KNOT
->        ASoC: cs35l36: drop SNDRV_PCM_RATE_KNOT
->        ASoC: cs35l41: drop SNDRV_PCM_RATE_KNOT
->        ASoC: cs53l30: drop SNDRV_PCM_RATE_KNOT
->        ASoC: Intel: avs: drop SNDRV_PCM_RATE_KNOT
->        ASoC: qcom: q6asm-dai: drop SNDRV_PCM_RATE_KNOT
->        ASoC: sunxi: sun4i-codec: drop SNDRV_PCM_RATE_KNOT
->        ASoC: cs35l34: drop useless rate contraint
->        ASoC: spdif: extend supported rates to 768kHz
-> 
->   include/sound/pcm.h                  | 31 +++++++++++++++++--------------
->   sound/core/pcm_native.c              |  6 +++---
->   sound/pci/cmipci.c                   | 32 +++++++++-----------------------
->   sound/pci/emu10k1/emupcm.c           | 31 +++++--------------------------
->   sound/pci/rme9652/hdsp.c             | 18 ++++++------------
->   sound/pci/rme9652/hdspm.c            | 16 +---------------
->   sound/soc/codecs/cs35l34.c           | 21 ---------------------
->   sound/soc/codecs/cs35l36.c           | 34 ++++++++++++----------------------
->   sound/soc/codecs/cs35l41.c           | 34 +++++++++++-----------------------
->   sound/soc/codecs/cs53l30.c           | 24 +++---------------------
->   sound/soc/codecs/spdif_receiver.c    |  3 ++-
->   sound/soc/codecs/spdif_transmitter.c |  3 ++-
->   sound/soc/intel/avs/pcm.c            | 22 ++++++----------------
->   sound/soc/qcom/qdsp6/q6asm-dai.c     | 31 ++++++++++---------------------
->   sound/soc/sunxi/sun4i-codec.c        | 28 +++++++++-------------------
->   15 files changed, 96 insertions(+), 238 deletions(-)
-> ---
-> base-commit: 785f4052380684dbcc156203c537c799e2f4be09
-> change-id: 20240905-alsa-12-24-128-8edab4c08dd4
-> 
-> Best regards,
+This series implements preemption for A7XX targets, which allows the GPU to
+switch to an higher priority ring when work is pushed to it, reducing latency
+for high priority submissions.
 
-Thanks,
+This series enables L1 preemption with skip_save_restore which requires
+the following userspace patches to function:
 
-Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
 
+A flag is added to `msm_submitqueue_create` to only allow submissions
+from compatible userspace to be preempted, therefore maintaining
+compatibility.
+
+Preemption is currently only enabled by default on A750, it can be
+enabled on other targets through the `enable_preemption` module
+parameter. This is because more testing is required on other targets.
+
+For testing on other HW it is sufficient to set that parameter to a
+value of 1, then using the branch of mesa linked above, `TU_DEBUG=hiprio`
+allows to run any application as high priority therefore preempting
+submissions from other applications.
+
+The `msm_gpu_preemption_trigger` and `msm_gpu_preemption_irq` traces
+added in this series can be used to observe preemption's behavior as
+well as measuring preemption latency.
+
+Some commits from this series are based on a previous series to enable
+preemption on A6XX targets:
+
+https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
+
+Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+---
+Changes in v3:
+- Added documentation about preemption
+- Use quirks to determine which target supports preemption
+- Add a module parameter to force disabling or enabling preemption
+- Clear postamble when profiling
+- Define A6XX_CP_CONTEXT_SWITCH_CNTL_LEVEL fields in a6xx.xml
+- Make preemption records MAP_PRIV
+- Removed user ctx record (NON_PRIV) and patch 2/9 as it's not needed
+  anymore
+- Link to v2: https://lore.kernel.org/r/20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com
+
+Changes in v2:
+- Added preept_record_size for X185 in PATCH 3/7
+- Added patches to reset perf counters
+- Dropped unused defines
+- Dropped unused variable (fixes warning)
+- Only enable preemption on a750
+- Reject MSM_SUBMITQUEUE_ALLOW_PREEMPT for unsupported targets
+- Added Akhil's Reviewed-By tags to patches 1/9,2/9,3/9
+- Added Neil's Tested-By tags
+- Added explanation for UAPI changes in commit message
+- Link to v1: https://lore.kernel.org/r/20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com
+
+---
+Antonino Maniscalco (10):
+      drm/msm: Fix bv_fence being used as bv_rptr
+      drm/msm: Add a `preempt_record_size` field
+      drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
+      drm/msm/A6xx: Implement preemption for A7XX targets
+      drm/msm/A6xx: Sync relevant adreno_pm4.xml changes
+      drm/msm/A6xx: Use posamble to reset counters on preemption
+      drm/msm/A6xx: Add traces for preemption
+      drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
+      drm/msm/A6xx: Enable preemption for A750
+      Documentation: document adreno preemption
+
+ Documentation/gpu/msm-preemption.rst               |  98 +++++
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   7 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 331 +++++++++++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              | 166 ++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c          | 430 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   9 +-
+ drivers/gpu/drm/msm/msm_drv.c                      |   4 +
+ drivers/gpu/drm/msm/msm_gpu_trace.h                |  28 ++
+ drivers/gpu/drm/msm/msm_ringbuffer.h               |   8 +
+ drivers/gpu/drm/msm/msm_submitqueue.c              |   3 +
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |   7 +-
+ .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  39 +-
+ include/uapi/drm/msm_drm.h                         |   5 +-
+ 14 files changed, 1094 insertions(+), 42 deletions(-)
+---
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+change-id: 20240815-preemption-a750-t-fcee9a844b39
+
+Best regards,
 -- 
-Jaroslav Kysela <perex@perex.cz>
-Linux Sound Maintainer; ALSA Project; Red Hat, Inc.
+Antonino Maniscalco <antomani103@gmail.com>
 
 
