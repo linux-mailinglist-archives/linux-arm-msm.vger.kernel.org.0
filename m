@@ -1,48 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-30952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-30965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD96A96DC4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:49:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2EE696DCCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 16:58:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CAD0E1C20BA6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:49:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2C039B22BB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Sep 2024 14:58:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F33738DC7;
-	Thu,  5 Sep 2024 14:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9F87194A52;
+	Thu,  5 Sep 2024 14:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rCgnBeg/"
+	dkim=pass (1024-bit key) header.d=perex.cz header.i=@perex.cz header.b="HDTI48gy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail1.perex.cz (mail1.perex.cz [77.48.224.245])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6C343169;
-	Thu,  5 Sep 2024 14:49:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E9873466;
+	Thu,  5 Sep 2024 14:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=77.48.224.245
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725547760; cv=none; b=q5U4jeY7p8tdYCLH5Jte20fC74SQZ4jitrqTqOv3qciVs2QqGD90k/w1mUqhE3TB3Z5dDCdKy1e7ofdTWyjPB2moq4NZxZVOFJ5aIYqCNLgyhY6FgieWe12Iloru/ORfQUfbMhE7a4LeokJMVoqlOMw/7cJAmnoUZFT0dcWmLQo=
+	t=1725548225; cv=none; b=WvC80snb38uGU1jC/XPUUMj+l13Sd0c5cGUcuV6Nz4uIhwxJxi5ZZbrupg2uTWq5apQua6O9Nwm6XH/aSXLH8SAhYJm6Krdu86wbyfRoLQcDqgbq4SgESVDrKn7yYUUCHn329XbPKya6mVAP8GIU1kudKsZEbWfumxq3CwwtMIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725547760; c=relaxed/simple;
-	bh=z9r0NxcFekK09jKFvUY4vj72duAS7qn2qglDPPI4PLU=;
+	s=arc-20240116; t=1725548225; c=relaxed/simple;
+	bh=v+YLUxqSFxm+ib/oj+ESGH40/CNmBAMNdcwsjIGjz6U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=loZTUiNWXSw7+rjaAoMRXg/YB9bytGQaCKJJUACdDiy3Xskm5WTYaPGyRYXxlu0D15gTlLvRokaXMwBDX18r8dSOCZ94FMNXcPTikpKr+4BCz3qQJTBZZYSSBimCZP4e3ruBex/JE35ixLplKXylPhaTm8qntSbln7A1DdZ7SfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rCgnBeg/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D68AC4CEC3;
-	Thu,  5 Sep 2024 14:49:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725547759;
-	bh=z9r0NxcFekK09jKFvUY4vj72duAS7qn2qglDPPI4PLU=;
+	 In-Reply-To:Content-Type; b=ldTMWwPiNT6AClvekCWgwQxObHt9KMXZUDZgMJ6rJQrlFr5GNipcMW8nJPTS8vshzcfxUltJF4OLetj9ojfs37n9mc4Ikf0TVmeJO6+oC67M0U/N4QY0oSzSKXeEEPVak8y5WbmfxGixOHIMbHAvlVpuQLzDNS/tHeXUqBt0Ve4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=perex.cz; spf=pass smtp.mailfrom=perex.cz; dkim=pass (1024-bit key) header.d=perex.cz header.i=@perex.cz header.b=HDTI48gy; arc=none smtp.client-ip=77.48.224.245
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=perex.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=perex.cz
+Received: from mail1.perex.cz (localhost [127.0.0.1])
+	by smtp1.perex.cz (Perex's E-mail Delivery System) with ESMTP id 463063DD1;
+	Thu,  5 Sep 2024 16:50:22 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp1.perex.cz 463063DD1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=perex.cz; s=default;
+	t=1725547822; bh=Ye4UIgaGYG9sddgPGETiBoCD7uB2XyXKCKHqUtRsfCQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rCgnBeg/2QCYhFtf0Uy4Rf0QMQd2VIyVYz3/sRkVSci1e96UTATiMm/ws9WoKeynB
-	 T49qs+s6WuUW2mszeaD3bazikT8Dl2FI1Ku1sQvnfHfgF74rZymjC34+lis8nyGX0P
-	 ItehwgG2Ue7MlNlmLSi3UrAUEw2Sek90HQHhX4LrLAiUo7fLSwgyIbuXfVp7PCjhRz
-	 8YBBd1Q1rUwp8f5T14sECowNTvz8to0Q2Och1rd67oMEL0OY7BiFbYaxoQSuSc0vjh
-	 m0cgsleMCKGC/q58QJ1h3aBM9yI22Y4DUGedudgZb7cxBmOtGfUUoP3AmpAImLvEuP
-	 5mP7hTkF/SbgA==
-Message-ID: <a2c2e365-7e47-4ad1-87dc-b5603a927cc6@kernel.org>
-Date: Thu, 5 Sep 2024 16:49:08 +0200
+	b=HDTI48gyNg/5KFcapBmSQlcApsyukN+aDB37PVExNCUnWRKcSTrNzxfMVOlmzbltI
+	 useZBXrXSWe1Cp767YmD4alOKMZMynx0IAF9RVAYDtWYxDz16Zrqkqd9gdA2ptpVnA
+	 2ufYMxl+Lixzk+pFcTX21PSLJb1mR/NyHyfgKUZA=
+Received: from [192.168.100.98] (unknown [192.168.100.98])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: perex)
+	by mail1.perex.cz (Perex's E-mail Delivery System) with ESMTPSA;
+	Thu,  5 Sep 2024 16:49:58 +0200 (CEST)
+Message-ID: <2858578e-cdf9-4a85-a751-0fd64c2d5d39@perex.cz>
+Date: Thu, 5 Sep 2024 16:49:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,136 +57,149 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
-To: Nikunj Kela <quic_nkela@quicinc.com>, Andrew Lunn <andrew@lunn.ch>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
- viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
- sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
- will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
- jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
- amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
- cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
- wim@linux-watchdog.org, linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
- arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
- linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
- linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
- kernel@quicinc.com, quic_psodagud@quicinc.com,
- Praveen Talari <quic_ptalari@quicinc.com>
-References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-1-quic_nkela@quicinc.com>
- <20240903220240.2594102-17-quic_nkela@quicinc.com>
- <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
- <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
- <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
- <516f17e6-b4b4-4f88-a39f-cc47a507716a@quicinc.com>
- <2f11f622-1a00-4558-bde9-4871cdc3d1a6@lunn.ch>
- <204f5cfe-d1ed-40dc-9175-d45f72395361@quicinc.com>
- <70c75241-b6f1-4e61-8451-26839ec71317@kernel.org>
- <75768451-4c85-41fa-82b0-8847a118ea0a@quicinc.com>
- <ce4d6ea9-0ba7-4587-b4a7-3dcb2d6bb1a6@kernel.org>
- <4896510e-6e97-44e0-b3d7-7a7230f935ec@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 00/13] ALSA: update sample rate definitions
+To: Jerome Brunet <jbrunet@baylibre.com>, Takashi Iwai <tiwai@suse.com>,
+ David Rhodes <david.rhodes@cirrus.com>,
+ Richard Fitzgerald <rf@opensource.cirrus.com>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Cezary Rojewski <cezary.rojewski@intel.com>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+ Liam Girdwood <liam.r.girdwood@linux.intel.com>,
+ Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+ Bard Liao <yung-chuan.liao@linux.intel.com>,
+ Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+ Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>
+Cc: linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@opensource.cirrus.com, alsa-devel@alsa-project.org,
+ linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-sunxi@lists.linux.dev
+References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
+From: Jaroslav Kysela <perex@perex.cz>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <4896510e-6e97-44e0-b3d7-7a7230f935ec@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Autocrypt: addr=perex@perex.cz; keydata=
+ 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
+In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 05/09/2024 16:15, Nikunj Kela wrote:
+On 05. 09. 24 16:12, Jerome Brunet wrote:
+> This patchset adds rate definitions for 12kHz, 24kHz and 128kHz.
 > 
-> On 9/5/2024 7:09 AM, Krzysztof Kozlowski wrote:
->> On 05/09/2024 16:03, Nikunj Kela wrote:
->>> On 9/5/2024 1:04 AM, Krzysztof Kozlowski wrote:
->>>> On 04/09/2024 23:06, Nikunj Kela wrote:
->>>>> On 9/4/2024 9:58 AM, Andrew Lunn wrote:
->>>>>>> Sorry, didn't realize SPI uses different subject format than other
->>>>>>> subsystems. Will fix in v3. Thanks
->>>>>> Each subsystem is free to use its own form. e.g for netdev you will
->>>>>> want the prefix [PATCH net-next v42] net: stmmac: dwmac-qcom-ethqos:
->>>>> of course they are! No one is disputing that.
->>>>>> This is another reason why you should be splitting these patches per
->>>>>> subsystem, and submitting both the DT bindings and the code changes as
->>>>>> a two patch patchset. You can then learn how each subsystem names its
->>>>>> patches.
->>>>> Qualcomm QUPs chips have serial engines that can be configured as
->>>>> UART/I2C/SPI so QUPs changes require to be pushed in one series for all
->>>>> 3 subsystems as they all are dependent.
->>>> No, they are not dependent. They have never been. Look how all other
->>>> upstreaming process worked in the past.
->>> Top level QUP node(patch#18) includes i2c,spi,uart nodes.
->>> soc/qcom/qcom,geni-se.yaml validate those subnodes against respective
->>> yaml. The example that is added in YAML file for QUP node will not find
->>> sa8255p compatibles if all 4 yaml(qup, i2c, spi, serial nodes) are not
->>> included in the same series.
->>>
->> So where is the dependency? I don't see it. 
+> It is follow-up on the series/discussion [0] about adding 128kHz for
+> spdif/eARC support. The outcome was to add 12kHz and 24kHz as well and
+> clean up the drivers that no longer require custom rules to allow these
+> rates.
 > 
-> Ok, what is your suggestion on dt-schema check failure in that case as I
-> mentioned above? Shall we remove examples from yaml that we added?
+> Identifying these drivers is not straight forward, I tried my best but I
+> may have missed some. Those will continue to work anyway so it is not
+> critical. Some drivers using these rates have not been changed on
+> purpose. The reason for this may be:
+> * The driver used other uncommon rates that still don't have a definition
+>    so a custom rule is still required.
+> * The constraint structure is used in some other way by the driver and
+>    removing it would not help the readability or maintainability. This is
+>    the case the freescale asrc drivers for example.
 > 
+> There is one change per driver so, if there is a problem later on, it will
+> easier to properly add Fixes tag.
 > 
->> Anyway, if you insist,
->> provide reasons why this should be the only one patchset - from all
->> SoCs, all companies, all developers - getting an exception from standard
->> merging practice and from explicit rule about driver change. See
->> submitting bindings.
->>
->> This was re-iterated over and over, but you keep claiming you need some
->> sort of special treatment. If so, please provide arguments WHY this
->> requires special treatment and *all* other contributions are fine with it.
+> The series has been tested with
+> * ARM64 defconfig - spdif 128kHz at runtime.
+> * x86_64 allmodconfig - compile test only
+> 
+> Last, the change adding IEC958 definitions has been dropped for this
+> patchset and will be resent separately
+> 
+> [0]: https://lore.kernel.org/all/20240628122429.2018059-1-jbrunet@baylibre.com/
+> 
+> ---
+> Jerome Brunet (13):
+>        ALSA: pcm: add more sample rate definitions
+>        ALSA: cmipci: drop SNDRV_PCM_RATE_KNOT
+>        ALSA: emu10k1: drop SNDRV_PCM_RATE_KNOT
+>        ALSA: hdsp: drop SNDRV_PCM_RATE_KNOT
+>        ALSA: hdspm: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: cs35l36: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: cs35l41: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: cs53l30: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: Intel: avs: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: qcom: q6asm-dai: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: sunxi: sun4i-codec: drop SNDRV_PCM_RATE_KNOT
+>        ASoC: cs35l34: drop useless rate contraint
+>        ASoC: spdif: extend supported rates to 768kHz
+> 
+>   include/sound/pcm.h                  | 31 +++++++++++++++++--------------
+>   sound/core/pcm_native.c              |  6 +++---
+>   sound/pci/cmipci.c                   | 32 +++++++++-----------------------
+>   sound/pci/emu10k1/emupcm.c           | 31 +++++--------------------------
+>   sound/pci/rme9652/hdsp.c             | 18 ++++++------------
+>   sound/pci/rme9652/hdspm.c            | 16 +---------------
+>   sound/soc/codecs/cs35l34.c           | 21 ---------------------
+>   sound/soc/codecs/cs35l36.c           | 34 ++++++++++++----------------------
+>   sound/soc/codecs/cs35l41.c           | 34 +++++++++++-----------------------
+>   sound/soc/codecs/cs53l30.c           | 24 +++---------------------
+>   sound/soc/codecs/spdif_receiver.c    |  3 ++-
+>   sound/soc/codecs/spdif_transmitter.c |  3 ++-
+>   sound/soc/intel/avs/pcm.c            | 22 ++++++----------------
+>   sound/soc/qcom/qdsp6/q6asm-dai.c     | 31 ++++++++++---------------------
+>   sound/soc/sunxi/sun4i-codec.c        | 28 +++++++++-------------------
+>   15 files changed, 96 insertions(+), 238 deletions(-)
+> ---
+> base-commit: 785f4052380684dbcc156203c537c799e2f4be09
+> change-id: 20240905-alsa-12-24-128-8edab4c08dd4
+> 
+> Best regards,
 
-You did not respond to above about explaining why this patchset needs
-special treatment, so I assume there is no exception here to be granted
-so any new version will follow standard process (see submitting bindings
-/ writing bindings).
+Thanks,
 
-Best regards,
-Krzysztof
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
+
+-- 
+Jaroslav Kysela <perex@perex.cz>
+Linux Sound Maintainer; ALSA Project; Red Hat, Inc.
 
 
