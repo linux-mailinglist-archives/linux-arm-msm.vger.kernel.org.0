@@ -1,155 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-31064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 888FA96EBC4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B718196EBD5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:21:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3250B1F27716
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:17:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E4A61F22614
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:21:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D557F14375A;
-	Fri,  6 Sep 2024 07:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BD6F14A605;
+	Fri,  6 Sep 2024 07:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D3vI11jn"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a10YbZlr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A6F40879;
-	Fri,  6 Sep 2024 07:17:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E6E17C9B;
+	Fri,  6 Sep 2024 07:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725607065; cv=none; b=VJCUcKzL3yjn7SzhGoAo0U0sB89YIEL4TgHAjFcRKw3M0ktGJUvUmB6l7aMdZP8gdDSNZ48lVELPFh/Df8oUYHEe5PeR/Kl+SZq5zre2nSiwlxLapmFq2+HgQworY/9VgQolJLpqebMxJQofRvngzDmwBojK06n+uCgXC2H/rt0=
+	t=1725607269; cv=none; b=FVJ3fT4S5c7uODBwQlyL1Gc5CN41OJz8dyPRVh4Jt9bTRNpWQt+0ZnOyO+iU5DGJuOVoB00vUZzFoLHp34Gx1z9eR2/LgzxvpOQ73QAYcPlZ+zXMfi0x0ZBn+xrGrJh7KcwI094afehyeELAZGLd6Gqye0OOeBffGHmYv5ERAmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725607065; c=relaxed/simple;
-	bh=WgZ7zR8zKn5zumPzuMyTEMOyPSBrys9J6Q+8kLgo2xQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=koyrTaNHfGofs2yohcGiEMqiACXQGv2S6uVtlvyQmqJwYeM6hlc43My9xfbm1rtwbVkoYAfc9k2OmSOenn/JKHLqj1dURvsJ4qOgPXVx9K30s+D6TiM3vUoy65QV85kOefsGanJdOFWVArk1vwGjZkY9tm2i6vNqw7nhjoVOCes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D3vI11jn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 485IPpnH019562;
-	Fri, 6 Sep 2024 07:17:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xjBkVuHx5tmNXoe8jTAz2MZ+SIuGr4IBJ4WvYnMmroQ=; b=D3vI11jn+ZiefM4m
-	ZvYVo+CRCSF7vmeHAgJDeqrpPuSeDGR2DuwBIzT3jyb64d6Ji8G4zT3mlMUGf9XB
-	vVn3Cr1NMb/PJ+omuN7h06EUBqaAeEl5UrhEC6q6jbsOUVpAUxXwZvs19rwi1yeJ
-	1sox9fO5AReUyAfAxiiVaUZAOQgz062I+lfQFRyTtpL635uIHJ3yCkLMehtMkfhr
-	sjL9rkHBJ0MixNODwDGonUyLFHgx1HtRPeQtbihGf2S9L4PB0325vHk4XhNNve2i
-	R8G5Otb2EoAzhn6Kh1pckzrK4Rhi0nhkRRWxbmra5nnyvMyGX3jt0B3848P5q5LQ
-	A7JZtA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwu1dek-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Sep 2024 07:17:37 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4867HbVq026270
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Sep 2024 07:17:37 GMT
-Received: from [10.151.41.25] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Sep 2024
- 00:17:34 -0700
-Message-ID: <8f64a4ab-abf5-4afe-bc4f-725fc89d27ec@quicinc.com>
-Date: Fri, 6 Sep 2024 12:47:31 +0530
+	s=arc-20240116; t=1725607269; c=relaxed/simple;
+	bh=XH2QzjP1CufEq8D/+0yCvenvO3KuEuFwhuTKcq7Vxz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HofZW//Ibn9t8j5BNQt9qhmM8XBzsolKGRmlzDOL2UyppFe4RdnCA9X3QiziKTsuJjkIeVqHfqPYpV7eusxKWSCnps2p+YK5Pt3Q2FjM0HdSSzUawRmfnLwUqe/Ws4owW8+5oKeVcdVeCvwvWe0WJfV9+OfJGIAiaSatEaZpzFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a10YbZlr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4984FC4CEC4;
+	Fri,  6 Sep 2024 07:21:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725607269;
+	bh=XH2QzjP1CufEq8D/+0yCvenvO3KuEuFwhuTKcq7Vxz0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=a10YbZlrC+BkaBwuH8U8LtN0ZB3KbrVXgtag0KdHoq3/qt+tPPotLhyGEaAmy73x+
+	 WcHqA5ncjVzF2JRLrtuubpDHf0ABaIQd+gRUZLBVcHvhaNCfqqMjyaXFGjN/gWXmBa
+	 P349v9CGW8rFADmaC++KQvVa0BQWymFy7i4IKiSSZJVwzxJDQJg2uguJGtEpTgPLgf
+	 o0uAK4daqQhswhX8k7CKjVCYAQume/uP0BL0ptsVDaItKTois/53B/MV7C2WthT58o
+	 kk4/U0KQqJZKgokzptTxgcHM9M0m205K0IvXztv2t50WITZn8qb2FZ/+G/ejtUN8qR
+	 3j3JUVYuDRO1Q==
+Date: Fri, 6 Sep 2024 09:21:04 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-i2c@vger.kernel.org, linux-media@vger.kernel.org, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v4 0/7] Add SDM670 camera subsystem
+Message-ID: <vjfddnykgeihdjlp5wzaeu4d4qn2boc22hufe2ceajt5wazznb@nysgwxk4ksdm>
+References: <20240904020448.52035-9-mailingradian@gmail.com>
+ <tthbaop6bkyvebpibiyvyct4khrd5o4apdbipqdthnidxmu2cx@m726xv4ocblg>
+ <ZtpqrANbJurWNOzV@radian>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ath11k: allow missing memory-regions
-To: Caleb Connolly <caleb.connolly@linaro.org>,
-        Jeff Johnson
-	<jjohnson@kernel.org>, Kalle Valo <kvalo@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <ath11k@lists.infradead.org>,
-        <linux-wireless@vger.kernel.org>
-References: <20240904095815.1572186-2-caleb.connolly@linaro.org>
-Content-Language: en-US
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-In-Reply-To: <20240904095815.1572186-2-caleb.connolly@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Fkny-sO44lEgSpwv8d--Zod8DZd72V0k
-X-Proofpoint-GUID: Fkny-sO44lEgSpwv8d--Zod8DZd72V0k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-05_17,2024-09-05_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0
- clxscore=1011 mlxscore=0 mlxlogscore=898 phishscore=0 impostorscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409060051
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZtpqrANbJurWNOzV@radian>
 
-On 9/4/2024 3:27 PM, Caleb Connolly wrote:
-> On SC7280 platforms which are running with TrustZone, it is not
-> necessary to manually map the memory regions used by the wifi hardware.
-> However, ath11k will currently fail to load unless both memory regions
-> are specified.
-> 
-> This breaks wifi on the rb3gen2 which only specifies the firmware memory
-> region and does not use the CE region.
-> 
-> Adjust the order of operations in ath11k_ahb_fw_resources_init() to
-> check for the wifi-firmware subnode before attempting to parse the
-> memory regions.
-> 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
-> Cc: linux-arm-msm@vger.kernel.org
-> ---
->  drivers/net/wireless/ath/ath11k/ahb.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-> index 634d385fd9ad..e24f8da565db 100644
-> --- a/drivers/net/wireless/ath/ath11k/ahb.c
-> +++ b/drivers/net/wireless/ath/ath11k/ahb.c
-> @@ -999,20 +999,20 @@ static int ath11k_ahb_fw_resources_init(struct ath11k_base *ab)
->  	 */
->  	if (!ab->hw_params.fixed_fw_mem)
->  		return 0;
->  
-> -	ret = ath11k_ahb_setup_msa_resources(ab);
-> -	if (ret) {
-> -		ath11k_err(ab, "failed to setup msa resources\n");
-> -		return ret;
-> -	}
-> -
->  	node = of_get_child_by_name(host_dev->of_node, "wifi-firmware");
->  	if (!node) {
->  		ab_ahb->fw.use_tz = true;
->  		return 0;
->  	}
->  
-> +	ret = ath11k_ahb_setup_msa_resources(ab);
-> +	if (ret) {
-> +		ath11k_err(ab, "failed to setup msa resources\n");
-> +		return ret;
-> +	}
-> +
->  	info.fwnode = &node->fwnode;
->  	info.parent = host_dev;
->  	info.name = node->name;
->  	info.dma_mask = DMA_BIT_MASK(32);
+Hi Richard,
 
+On Thu, Sep 05, 2024 at 10:36:28PM GMT, Richard Acayan wrote:
+> On Thu, Sep 05, 2024 at 10:09:34PM +0200, Andi Shyti wrote:
+> > Hi Richard,
+> > 
+> > On Tue, Sep 03, 2024 at 10:04:49PM GMT, Richard Acayan wrote:
+> > > This adds support for the camera subsystem on the Snapdragon 670.
+> > > 
+> > > As of next-20240902, camss seems to be a bit broken, but the same series
+> > > works on stable (although it is much less reliable now that the CCI clock
+> > > frequency is not being assigned).
+> > 
+> > I am not understanding this bit: is this series making it better
+> > or not? Can you please clarify what is broken, what is less
+> > reliable and what works?
+> 
+> When applying this camss series and some camera sensor patches on
+> linux-next, the Pixel 3a seems to hang when camera capture starts.
+> 
+> When applying the same patches on stable, the camera does not cause the
+> Pixel 3a to hang.
+> 
+> When these device tree properties from the previous series were removed:
+> 
+> 			assigned-clocks = <&camcc CAM_CC_CCI_CLK>;
+> 			assigned-clock-rates = <37500000>;
+> 
+> the CCI would sometimes fail to probe with the error:
+> 
+> 	[   51.572732] i2c-qcom-cci ac4a000.cci: deferred probe timeout, ignoring dependency
+> 	[   51.572769] i2c-qcom-cci ac4a000.cci: probe with driver i2c-qcom-cci failed with error -110
+> 
+> On further testing, the rate can be set to 19.2 MHz, and there would be
+> no failure (or rather, it wouldn't happen often enough for me to witness
+> it).
+> 
+> > Besides, I'm reading that this series has not been tested and it
+> > makes it difficult for me to take this in, considering that you
+> > are adding a new support.
+> 
+> Of course. This revision of the series wasn't submitted to rush into
+> v6.12-rc1. It can wait until everything is resolved.
+> 
+> When device tree maintainers comment "not tested" on the documentation,
+> it usually means that `make dt_bindings_check DT_SCHEMA_FILES=...` gives
+> errors or warnings (even though the device tree and driver may work on
+> the hardware). It's a separate test and one of the things I haven't
+> scripted into my workflow, although it's still a responsibility.
 
-ath11k_ahb_setup_msa_resources(ab), will only read the device-tree and
-save the memory addresses/size form device-tree to ab_ahb->fw.
-These saved address, only used if "wifi-firmware" node is defined.
-This the node "wifi-firmware" is not defined it is considered to be
-running with TrustZone, and saved addresses are not of use.
+OK, thanks for clarifying. Then, please, next time, to avoid
+confusion, make it an RFC; or, if the series is in an advanced
+state with little things to improve, state it clearly in the
+cover letter or after the '---' section.
 
-This changes looks fine.
+For now, thanks a lot, I will keep the R-b's for the time being
+(unless the reviewers are against) and I will wait for you to
+know the outcome of the tests.
+
+Andi
 
