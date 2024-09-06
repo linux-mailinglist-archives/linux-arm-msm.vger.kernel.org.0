@@ -1,162 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-31078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CE4F96EF62
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C56DA96EF6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:37:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78C0E1F244F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:36:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47C5C1F240B6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:37:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E25841C86F9;
-	Fri,  6 Sep 2024 09:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADBD21C871D;
+	Fri,  6 Sep 2024 09:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TD/XxqRe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jd8ihtF9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2036C1C86F3
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 09:36:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182341C870C
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 09:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725615394; cv=none; b=C/aiKb2NWImhUpA/LVQ7lfAe34bFeXCBN04E4LYUK4RSKyim/7INVs6sEGE2BhvvL13c0fhgn8DQLevVdNFDP6cBplLinHOasAQHx8fhwFK9wVh4YPtu/Kw8GLeOdhM15ZpEtQuGdOVznZWNjV2CMB/m4OSL9VVm0iYqLR215x8=
+	t=1725615449; cv=none; b=h6gduZ9cTqO3KgjV6XnpCatjFdT/WanLZqB0Lkjcq8/DWM4B2ckDVsXUVofnidSkJWN0xIk22CiienZopGffB7YXWgA6h39pDdLQLFGJZeiBe6e6LQEkbdlTD4vftkiwBfMJobtwzaqU+JBMzpzUHrr1XfTswJh94miQe1wx1Gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725615394; c=relaxed/simple;
-	bh=p8TKYd9n7gZAwbCnrosjFG2oQ1QDhkATvk+6BeIB7G0=;
+	s=arc-20240116; t=1725615449; c=relaxed/simple;
+	bh=LWOgOZVRTlI0I+kz30Uk3gnI+5CCKpMpfD0zAOW0w5o=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WM/rZNt8ZKs2Wwtib/Vu4X5bnCySWlCN/dZp2Ha3G6QKIvxMw/jGLEcYlficTJwQodw1MF+o2RWH+wfJ9z1tqJjZmZqj1fkY9GEbH771C3t/wbyA4da0zgxXK7Gaw+jsuC6odvJAuDVBpAuHcST6p2NPmQsnpgZq4mOTdPhOzrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TD/XxqRe; arc=none smtp.client-ip=209.85.128.172
+	 To:Cc:Content-Type; b=DLNlIsTu/y7c81UBXuZlT0md7nUSr7tvKt4q4xWiP7Pw1gNJSNCO05znCBT/YEkYiOHyUgftgMRFw0qylFgPtWnuzVL7hCW3M81/jKhZA5avEtRZKn6HWbCQUqqb5gBCOl+bjtx66gMy1gzIDfpICXx6VGpT7/XrudBARU5tnIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jd8ihtF9; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6d4f1d9951fso16971127b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 02:36:32 -0700 (PDT)
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6db449f274fso6323907b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 02:37:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725615392; x=1726220192; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=t9RjLyHC8jLYAxkxwbHI+OlYMfMmm4fKIBxKkIZmylA=;
-        b=TD/XxqRevEegPir2KTkccOWjqLlL4N4JzawlLxDwXg+o9pN9FM5tA51NZW9MGu5yGY
-         pgMa5kjLAo2/3XSSgvdlGdV7qTOtrD2Y3vvpdjU/Hg6CH7B2prte0L0mOw+YChEPB7X0
-         NxSoCu7r6/TCoiJN/0AOFi8wNDCNHaeQl7I685g4YjclTFj10ZR6rWsx74+nfHceeMkl
-         zCU1ttY0x6T+Nxrd3ME6sLhV58QLYNzHadh/oeKihnIzEI3VWKwhPm4vvBLZ7I66f5cv
-         R94JdjaE7V7+7jMMJk+po0pheWso7tZUFnQX1Hf51ErivXsFlQKLY22HNo2xAg/Xr4QD
-         dXpw==
+        d=linaro.org; s=google; t=1725615447; x=1726220247; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w/nsrHcczWHZSZRkMXgJlPhYYjECdjwNlK3z7QSwRB0=;
+        b=jd8ihtF9M/rSaDe4k3pztC3A4cqffhs+3614oqVhUla9KFlNgcjBLmaYro4UWPHW5j
+         /nEjgegZuxznQvTlfr8Y3ikGjzNuBMnPCwz/7lvWdsyYbGk1q2B0AHjCahWAqj4iRsoM
+         ENT/E0kRFXQEc+403nCZTR25LNcbuAQGY4q9Q7R15BBbP8e+P7Uyjx9cE8uyxtWMU2Fa
+         K12Ce8/XeZmx2lYNf2sYOdCWCHvRDpDYimbqYcIJqYVjzuIRmdptzpMjCjK41ipScLZr
+         osbJcuxLgyvaVhr9z0bt3NDdyq0w9g1776S/4I0ujiB3+jtxW6BQ8cQU9nqy2XUaTojp
+         Tu8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725615392; x=1726220192;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=t9RjLyHC8jLYAxkxwbHI+OlYMfMmm4fKIBxKkIZmylA=;
-        b=kYTEGNA0XIVO5WlyYbvJhpb2powHJ23RqH7tAFDymEkJ00fiRZKb8krt+2CfVOrxmZ
-         v3cKtdgz2MgQVhj3FBFFih6VlSG4yFqPP6kui98b9hWX5eIJypD2zYysL+f1zNx5h7pT
-         HtBKAEasyk0lYyOya4qgurrIySyPu0TDFD9H3J6/+UnhNUx/LQqVRSkN7IZj0ATEZ2Qd
-         9iBuTgavq8CcFc5KM1SZeYfu511F67MC1ETSfz/m0R3krvt/1Xslq8eQ6hBHNB0fVmhj
-         EUmCvFj2Oe/Nqv/xkXNTNgfwYzVP58qZwKpu2o9znLqUyvPmBivVFh8uilt5fRhDFiRX
-         ebrA==
-X-Forwarded-Encrypted: i=1; AJvYcCXwDo8s1jMFIbtgsUMX7v8ZKAsSrfWS9x9YJXQaWjbo/fJmIbYGUlwSJv8qT40ufaPc9HJSsA4jseL8Y+yN@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDSExKQGw6G4kNpv+ilCRKdpzXK/bKL1gQJlCGZUf0yifve/pK
-	cCCAF5kwzcHBD84+ubp/JM1qegnpXg4NefCZF/dzL3hIFEiGkYzIGC+ZQ4/eOus8IHABg4+1+Lf
-	YmxO6ETxYDM65f6hGpM0CljDqj5zuPqKDdm4Ppg==
-X-Google-Smtp-Source: AGHT+IEAXuLLtOrs6st8U8IFlSA7Hb1+mq58uwmSQKom7Bg9TkfvbOQJ9tJHSpVM8ugPgTF4bhcibOWF88qjBAWpuH0=
-X-Received: by 2002:a05:690c:ec6:b0:6db:31f6:a812 with SMTP id
- 00721157ae682-6db44d6249amr27514547b3.4.1725615391941; Fri, 06 Sep 2024
- 02:36:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1725615447; x=1726220247;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w/nsrHcczWHZSZRkMXgJlPhYYjECdjwNlK3z7QSwRB0=;
+        b=QImoCjIixSaEOSpzMJYZ9j+R0Y8Run9J0yoBrv65O1iMgQEw/nTah7usCFFPtbFA17
+         3+hazYYW5sC6RdR5bXSZ3ruxYUBaeAx8AVJhxCaetSZ2VPwcRHw+tX9o7f2FxqrioiBr
+         7XKeVvNXct9q9R1WK+gu3uKqSdSGfmy2SPjullTVwgYRFsZAQHVlHNfToohBYGovRnle
+         Y8tkLXLUbtQkGNKqyFW8BDhAW3LCSoHrGH2Dm0lr81A2+R+Jp1R++fAA0TSSAA70u71y
+         293euha7boBb1iKl5GNKFGUgns4W1OGs5COU1hFgYp3j1WGKivTEIzQQOdjQbPEQf+lL
+         FY7g==
+X-Forwarded-Encrypted: i=1; AJvYcCVoI3LYZWtHJDxTa2I2xNy+SmhA5fNAulXCRzt5lwxrp2qSeBxou/bJ7Of9qfwaqoJKVfGjKvP178MGy5Ak@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDZ1KoFR5wXeoih5bP2CPWsdompJGZZ8Qkcv2bg3KYYEmiaAWS
+	GfY/JME9bbf1Vwk9n+vO2RY8as09hPB63tf+/hx6IqBQoPaSHkYyOXdBv0Mv0lWYuTFLyOwOoHk
+	h4zC+APCFn3cwtBZJtzCvBaxC5k73krfRj+Mtdg==
+X-Google-Smtp-Source: AGHT+IFZN9hYbTcxM1YGXAqx6TijY45qpQ4RcpRodCBMlcZqtSKVL4Cgbh2pPzb7plTG0Lq3ULZUkDoC4pvzYMrTbRQ=
+X-Received: by 2002:a05:690c:d8c:b0:64b:2f31:296b with SMTP id
+ 00721157ae682-6db44d69aa3mr25692997b3.4.1725615447013; Fri, 06 Sep 2024
+ 02:37:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
- <20240904-qcs8300_initial_dtsi-v1-17-d0ea9afdc007@quicinc.com>
- <851566fe-4802-41c7-bb35-d6d1e9cf9bdf@kernel.org> <d5b13f14-ce66-496c-8182-aad840e0d5cb@quicinc.com>
- <wzjv6xvthoz3z4fimxfc6gzm6ptepkuwlzjm6xy3klmtpr3bvf@k7yxdc7hryju> <c674b8ff-6fdb-419d-86f4-69a940eccc2f@quicinc.com>
-In-Reply-To: <c674b8ff-6fdb-419d-86f4-69a940eccc2f@quicinc.com>
+References: <20240905122023.47251-1-brgl@bgdev.pl> <20240905122023.47251-2-brgl@bgdev.pl>
+ <6vikrqhdnkefzpahhhtz2hpi62jvcwnzclm7touwtnpxdzvgrf@uc7r6a7bbjek>
+ <CAMRc=MeijX2by+MS_vq_OVx25JO6z=zNfymta35h11mbm=vmtQ@mail.gmail.com>
+ <CALT56yOP+un5nkxuirJVg=gr7fo4Hqjt1ew3z-=F2J_Y_RcTqg@mail.gmail.com>
+ <CAMRc=Mci-8R1Oe3Fe+1E+K-7khzwBPgn_8SQSUPXthpE4032Pw@mail.gmail.com>
+ <d6d5a943-ab29-4034-b465-b62d9d1efa61@kernel.org> <87v7zagcyf.fsf@kernel.org>
+ <ywn7bq6j6jgokwmm3vsumkuwijplezmery5tr6z5yeblnpyjh7@djkwdbt4sl3q> <CAMRc=Mfj3gpgV0N__oB8kF5pk4PrDwP1CqeUgUbvTwyo7p=7bQ@mail.gmail.com>
+In-Reply-To: <CAMRc=Mfj3gpgV0N__oB8kF5pk4PrDwP1CqeUgUbvTwyo7p=7bQ@mail.gmail.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 6 Sep 2024 12:36:20 +0300
-Message-ID: <CAA8EJpoxEZEZD3hhfpS6MeizqDVDDBjJOGo3X2BrLiEoZHDuoQ@mail.gmail.com>
-Subject: Re: [PATCH 17/19] arm64: defconfig: enable clock controller,
- interconnect and pinctrl for QCS8300
-To: Jingyi Wang <quic_jingyw@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org
+Date: Fri, 6 Sep 2024 12:37:16 +0300
+Message-ID: <CAA8EJppi5Zy82=ZUZ67DW-40Qm7aMerNLu_Mzh3HiUBWqPiHVw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] arm64: dts: qcom: sc8280xp-crd: model the PMU of
+ the on-board wcn6855
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kalle Valo <kvalo@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Dmitry Baryshkov <dbaryshkov@gmail.com>, Johan Hovold <johan@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, ath11k@lists.infradead.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 6 Sept 2024 at 09:15, Jingyi Wang <quic_jingyw@quicinc.com> wrote:
+On Fri, 6 Sept 2024 at 10:45, Bartosz Golaszewski <brgl@bgdev.pl> wrote:
 >
-> Hi Dmitry,
+> On Thu, Sep 5, 2024 at 9:26=E2=80=AFPM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > On Thu, Sep 05, 2024 at 09:41:44PM GMT, Kalle Valo wrote:
+> > > Konrad Dybcio <konradybcio@kernel.org> writes:
+> > >
+> > > > On 5.09.2024 3:00 PM, Bartosz Golaszewski wrote:
+> > > >> On Thu, Sep 5, 2024 at 2:56=E2=80=AFPM Dmitry Baryshkov <dbaryshko=
+v@gmail.com> wrote:
+> > > >>>
+> > > >>>>>
+> > > >>>>> As you are going to post another revision, please also add
+> > > >>>>>
+> > > >>>>> qcom,ath11k-calibration-variant
+> > > >>>>>
+> > > >>>>
+> > > >>>> I had it in earlier revisions. The only one we could add here wo=
+uld be
+> > > >>>> the one from X13s as QCom has not yet released the data for the =
+CRD.
+> > > >>>> Johan and Konrad were against adding this here if it doesn't ref=
+er to
+> > > >>>> the correct one so I dropped it.
+> > > >>>
+> > > >>> As Kalle usually merges data with some delay it's not infrequent =
+to
+> > > >>> have DTS which names calibration variant, but board-2.bin doesn't=
+ have
+> > > >>> corresponding data. The driver safely falls back to the data with=
+out
+> > > >>> variant if it can find it. Als  usually it's us who supply the
+> > > >>> calibration name.
+> > > >>>
+> > > >>
+> > > >> Johan, Konrad,
+> > > >>
+> > > >> What do you think? Do we know the exact name and should I add it o=
+r
+> > > >> should we wait until it's in board-2.bin?
+> > > >
+> > > > If we can agree on the string identifier with Kalle in advance, we =
+can
+> > > > add it even before the boardfile drops
+> > >
+> > > There have not been really any naming rules for the variant string, i=
+t
+> > > just needs to be unique so that it doesn't conflict with other varian=
+t
+> > > strings. What have you been thinking?
+> >
+> > QC_8380_CRD (following DMI / Windows name) or QC_X1E80100_CRD (followin=
+g
+> > marketing name). Or maybe QTI_ instead of QC_. WDYT?
+> >
 >
-> On 9/6/2024 11:18 AM, Dmitry Baryshkov wrote:
-> > On Thu, Sep 05, 2024 at 12:54:35PM GMT, Jingyi Wang wrote:
-> >>
-> >>
-> >> On 9/4/2024 5:39 PM, Krzysztof Kozlowski wrote:
-> >>> On 04/09/2024 10:33, Jingyi Wang wrote:
-> >>>> Enable clock controller, interrconnect and pinctrl for QCS8300.
-> >>>
-> >>> NXP QCS8300? What is QCS8300? Which products use it? That's a defconfig
-> >>> for entire kernel, not your Qualcomm one.
-> >>>
-> >> Will describe it in more detail.
-> >>>> It needs to be built-in for UART to provide a console.
-> >>>>
-> >>>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
-> >>>> ---
-> >>>>  arch/arm64/configs/defconfig | 3 +++
-> >>>>  1 file changed, 3 insertions(+)
-> >>>>
-> >>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> >>>> index 81ca46e3ab4b..a9ba6b25a0ed 100644
-> >>>> --- a/arch/arm64/configs/defconfig
-> >>>> +++ b/arch/arm64/configs/defconfig
-> >>>> @@ -606,6 +606,7 @@ CONFIG_PINCTRL_MSM8996=y
-> >>>>  CONFIG_PINCTRL_MSM8998=y
-> >>>>  CONFIG_PINCTRL_QCM2290=y
-> >>>>  CONFIG_PINCTRL_QCS404=y
-> >>>> +CONFIG_PINCTRL_QCS8300=y
-> >>>>  CONFIG_PINCTRL_QDF2XXX=y
-> >>>>  CONFIG_PINCTRL_QDU1000=y
-> >>>>  CONFIG_PINCTRL_SA8775P=y
-> >>>> @@ -1317,6 +1318,7 @@ CONFIG_MSM_MMCC_8998=m
-> >>>>  CONFIG_QCM_GCC_2290=y
-> >>>>  CONFIG_QCM_DISPCC_2290=m
-> >>>>  CONFIG_QCS_GCC_404=y
-> >>>> +CONFIG_QCS_GCC_8300=y
-> >>>>  CONFIG_QDU_GCC_1000=y
-> >>>>  CONFIG_SC_CAMCC_8280XP=m
-> >>>>  CONFIG_SC_DISPCC_7280=m
-> >>>> @@ -1618,6 +1620,7 @@ CONFIG_INTERCONNECT_QCOM_MSM8996=y
-> >>>>  CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-> >>>>  CONFIG_INTERCONNECT_QCOM_QCM2290=y
-> >>>>  CONFIG_INTERCONNECT_QCOM_QCS404=m
-> >>>> +CONFIG_INTERCONNECT_QCOM_QCS8300=y
-> >>>
-> >>> Why this cannot be a module?
-> >>>
-> >>>
-> >> I think the commit-msg "It needs to be built-in for UART to provide a console." can
-> >> explain that, could you please help to share your insights on that?
-> >
-> > Unless loading these modules from initramfs doesn't work, please use =m.
-> > The drivers that are enabled here are going to be enabled for everybody
-> > using arm64 defconfig, taking up memory on their platforms, etc.
-> >
-> We had previous discussion here about why these drivers needs to be built-in to support
-> debug-uart:
-> https://lore.kernel.org/linux-arm-msm/c11fd3c2-770a-4d40-8cf3-d8bc81f7c480@kernel.org/
-> I will mention more details in the commit message of this patch.
+> Is there any central authority listing these names? Or are they just
+> agreed upon on the mailing list? I honestly don't know where they come
+> from.
 
-Yes, please. Explicitly mention that this is required to get UART to work.
+I think on ath12k these names come from ACPI tables. On all previous
+devices it is just being agreed upon. Kalle is the central authority.
 
--- 
+
+--=20
 With best wishes
 Dmitry
 
