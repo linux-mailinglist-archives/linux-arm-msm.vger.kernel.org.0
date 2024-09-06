@@ -1,40 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C964496F43D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:25:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD0F596F443
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:26:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5CD0428194A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:25:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56DFD1F247BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:26:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D7621CBEA1;
-	Fri,  6 Sep 2024 12:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C9D1CCB3F;
+	Fri,  6 Sep 2024 12:26:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsGAieDv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B0851C9ED2;
-	Fri,  6 Sep 2024 12:24:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57021CC179;
+	Fri,  6 Sep 2024 12:26:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725625488; cv=none; b=EOptQCDijvYzbvCUwO8MSCvW5LHSJP1Y2b3jGQTaqEry56VdlTJVkcv/+bag1MWTWipkViGXXOYyrS7dTkb1u7sJBbOMhQKqejQSOlCZnDm/sBn1U/UwvXQRAWvzZj9idEt5eKnTvRAQn1nsIrfvMguCsif7FX+1jQcQEPi8DCM=
+	t=1725625562; cv=none; b=u/lbnY3c1a15lvQP7CPWQhtw7X0DpKSyZRoM6rnpd8T65ke3J75v+L82tTEtFid3rLaZE1XN+N8qmY1+Gxc5ch8Az4cLBGmrD1+JtpWzsAgid4R12KEsCSh/Qv4UTzqCbM7lrv5q9PCmC8utwI62WIm2HvGFFcxSNV9ke1eaiD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725625488; c=relaxed/simple;
-	bh=afDotwk1goIpE4/B9AcsfhwAPXbo1B75M+DlwUkKNE4=;
+	s=arc-20240116; t=1725625562; c=relaxed/simple;
+	bh=HTgyfXZ08GiT+mWhZjz50yynkk6nenvx3sv2iUFDbZQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oPOc/N6vySadWoK/EWehD2vqU0+BqVp76b1+l7HCeW080gSOCn5Rjf7xLOcLsy2zozfAnnVjoOweJzsy3CCx8bk9rXoILMR0niwWTbKz6QU7OnPqcs0XFXEvQaX3YMCz8Ire6kIs/ZwALjxDxjq4SnqiQgznNMx6MTkr2XuY5hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 84D70113E;
-	Fri,  6 Sep 2024 05:25:11 -0700 (PDT)
-Received: from [10.1.36.41] (010265703453.arm.com [10.1.36.41])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EFE513F73B;
-	Fri,  6 Sep 2024 05:24:42 -0700 (PDT)
-Message-ID: <a30d3968-5fb8-423d-9524-0e694930a6b1@arm.com>
-Date: Fri, 6 Sep 2024 13:24:37 +0100
+	 In-Reply-To:Content-Type; b=s4WhxHvnHRALKO+JhE0yJhYYRBkT8X5ir5En4xV8/bu0EY9qe/bq394PPxdz0yVOJBmWewXmGJgC/EymLD2TdLU2+zb72FpgMhQTvGLp8/2ZTPC3pclb23n0rnv6YkpV3jWvkSDQSK3/yXc3BcL+drw0uWMufwdLvz5n95uWw80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsGAieDv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E92C4CEC4;
+	Fri,  6 Sep 2024 12:25:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725625562;
+	bh=HTgyfXZ08GiT+mWhZjz50yynkk6nenvx3sv2iUFDbZQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=DsGAieDv2h2cdYlSkyvTnlPfx2CwyTBrxd9Z1Z2UhxX36mLqTxFoRsgbEqa9cqLfo
+	 sB4zMm2EGFAiaspMzFAcCDpXuLilUfUQZnjK5yENZFfFhDuA0svTFqA97AoggfjO7B
+	 t9YZO4KkfYfQ1KoGj6i+qx+ljkFrw15zEdPPae/IpJWNITqhTcK9oX2e/TlZ68G288
+	 VhCx72/ZjiFK1h3HMug2b8ejq9uS46uzYKTUd/GGrzbwImm5/Zo0Yj6bThGgxQuj0d
+	 +FWJzbLsdyNp/BmcHezKb5M6cQCF0LCkQeRv6+8uFUcs57ivcT8C97BrByzvb4yKpq
+	 K1LaNTZXc4OEA==
+Message-ID: <98e7dc28-4413-4247-bad1-98b529f6d62d@kernel.org>
+Date: Fri, 6 Sep 2024 14:25:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,91 +50,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "iommu/io-pgtable-arm: Optimise non-coherent
- unmap"
-To: Rob Clark <robdclark@gmail.com>
-Cc: Will Deacon <will@kernel.org>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Ashish Mhetre <amhetre@nvidia.com>, Rob Clark <robdclark@chromium.org>,
- Joerg Roedel <joro@8bytes.org>,
- "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <20240905124956.84932-1-robdclark@gmail.com>
- <20240905155330.GA15246@willie-the-truck>
- <53f13813-a515-475a-836d-0b6017a117eb@arm.com>
- <CAF6AEGs3aRXbnnhD84GBbz9wJmyNR=dA3hbGuMLcM22Vs8CU_g@mail.gmail.com>
- <CAF6AEGsqdxO4+kaz6jOLBS_syjEkZg-7Veqh3j-o=RiGNcBH8A@mail.gmail.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <CAF6AEGsqdxO4+kaz6jOLBS_syjEkZg-7Veqh3j-o=RiGNcBH8A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Subject: Re: [V1 RESEND] arm64: dts: qcom: sa8775p: Add UART node
+To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
+ konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+ linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
+References: <20240827083252.5817-1-quic_vdadhani@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240827083252.5817-1-quic_vdadhani@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 2024-09-05 6:10 pm, Rob Clark wrote:
-> On Thu, Sep 5, 2024 at 10:00 AM Rob Clark <robdclark@gmail.com> wrote:
->>
->> On Thu, Sep 5, 2024 at 9:27 AM Robin Murphy <robin.murphy@arm.com> wrote:
->>>
->>> On 05/09/2024 4:53 pm, Will Deacon wrote:
->>>> Hi Rob,
->>>>
->>>> On Thu, Sep 05, 2024 at 05:49:56AM -0700, Rob Clark wrote:
->>>>> From: Rob Clark <robdclark@chromium.org>
->>>>>
->>>>> This reverts commit 85b715a334583488ad7fbd3001fe6fd617b7d4c0.
->>>>>
->>>>> It was causing gpu smmu faults on x1e80100.
->>>>>
->>>>> I _think_ what is causing this is the change in ordering of
->>>>> __arm_lpae_clear_pte() (dma_sync_single_for_device() on the pgtable
->>>>> memory) and io_pgtable_tlb_flush_walk().  I'm not entirely sure how
->>>>> this patch is supposed to work correctly in the face of other
->>>>> concurrent translations (to buffers unrelated to the one being
->>>>> unmapped(), because after the io_pgtable_tlb_flush_walk() we can have
->>>>> stale data read back into the tlb.
->>>>>
->>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>>>> ---
->>>>>    drivers/iommu/io-pgtable-arm.c | 31 ++++++++++++++-----------------
->>>>>    1 file changed, 14 insertions(+), 17 deletions(-)
->>>>
->>>> Please can you try the diff below, instead?
->>>
->>> Given that the GPU driver's .tlb_add_page is a no-op, I can't see this
->>> making a difference. In fact, given that msm_iommu_pagetable_unmap()
->>> still does a brute-force iommu_flush_iotlb_all() after io-pgtable
->>> returns, and in fact only recently made .tlb_flush_walk start doing
->>> anything either for the sake of the map path, I'm now really wondering
->>> how this patch has had any effect at all... :/
->>
->> Yeah..  and unfortunately the TBU code only supports two devices so
->> far, so I can't easily repro with TBU enabled atm.  Hmm..
->> __arm_lpae_unmap() is also called in the ->map() path, although not
->> sure how that changes things.
+On 27/08/2024 10:32, Viken Dadhaniya wrote:
+> Add missing UART configuration for sa8775.
 > 
-> Ok, an update.. after a reboot, still with this patch reverted, I once
-> again see faults.  So I guess that vindicates the original patch, and
-> leaves me still searching..
+> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
+>  1 file changed, 231 insertions(+)
 > 
-> fwiw, fault info from the gpu devcore:
-> 
-> -------------
-> fault-info:
->    - ttbr0=0000000919306000
->    - iova=0000000100c17000
->    - dir=WRITE
->    - type=UNKNOWN
->    - source=CP
-> pgtable-fault-info:
->    - ttbr0: 000000090ca40000
->    - asid: 0
->    - ptes: 000000095db47003 000000095db48003 0000000914c8f003 00000008fd7f0f47
-> -------------
-> 
-> the 'ptes' part shows the table walk, which looks ok to me..
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index e8dbc8d820a6..0c95a23aecec 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -1,6 +1,7 @@
 
-But is it the right pagetable at all, given that the "ttbr0" values 
-appear to be indicating different places?
 
-Robin.
+Please don't grow the file. At least not with above explanation. There
+is no sa8775p according to what I have been just told.
+
+We achieved consensus allowing sa8775p to stay, but now Qualcomm changes
+point of view and insists on new approach of dropping sa8775p. Therefore
+this change does not make much sense in the new approach.
+
+Best regards,
+Krzysztof
+
 
