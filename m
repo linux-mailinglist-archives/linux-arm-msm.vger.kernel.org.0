@@ -1,208 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-31066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31067-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB6AF96EBEE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:27:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C57996EC2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:39:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8A5A1C21761
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:27:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D954DB2371C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:39:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 881D814BF8D;
-	Fri,  6 Sep 2024 07:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 222B6154C0A;
+	Fri,  6 Sep 2024 07:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0bdCY3yK";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Eyqhmktm";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0bdCY3yK";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Eyqhmktm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cB0wo8oG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCC0149C4B;
-	Fri,  6 Sep 2024 07:26:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2C414C5B5
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 07:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725607581; cv=none; b=uk1qdykj+OkVGKzhfQCGC8g+cD5eM2GV2ekVYZQAgJzJLrsC6dnMhUsS6YHyxWzn2UKsCQ+Mfp4OPV4jT2XcYq6xPR/dpqaCVQzkXSasXY7DNj+Eg9t5Rmj+lQkKK8kK1hl0eFodBOJ5X2B6MEjUF4aEStdbBeUs92NmlM/xKxk=
+	t=1725608343; cv=none; b=e2GJ7kz3VPAU5LeNOhpvkSiAN8ljO3YYTd/3eJPJ0BG46/x1g0Ybp2m49o11WWecpv67AR7Cmjc4OEbxsqfkdzP6Ey3sOL9S5PWqJjWPPN0BC7zoyWdZd6pjMynwmaHbWNRo5J+8Tt+cJvBrsBEgY8oVtRTyE+cpVfwJiJ1jAvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725607581; c=relaxed/simple;
-	bh=w24ClMpk/3FWOO/uXiViU0olb2BuJQQrGQS/6CnBfuE=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jbB1svccCTYW7hEm4A7L3Rw8bKVpRyPzxWjpbSMKoQVJLpXlkuKmv4aVMOSCwRliqQVaNG+f4AM4qjQC0OiBUTsmwIgSYDmeo4DSbaASaQLThmECOineeO7dqS9jh3Q0vsTMxpvg7PuRUJY6rwVSkV+yZ3fkct4k05uXzCu8Slc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0bdCY3yK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Eyqhmktm; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0bdCY3yK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Eyqhmktm; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 0786C1F896;
-	Fri,  6 Sep 2024 07:26:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1725607578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
-	b=0bdCY3yKGm8H/78zikBOmnv7J25+SU5hegtuofsLGKVl7Kmn32ajD46MIeamJytzFXGFLy
-	hFsTIqfcv8HhbeeTJpiPSwzFKSt9W5DW8LwKnH6vP3K+8h/LRTusEHbnph/otzjRy8OZVq
-	V8YVw8wobPDbmOYC+EeWEDUojry7QLE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1725607578;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
-	b=EyqhmktmWFiZJmZW8M/wUVN8guG1vJe0G6sWL8OW3r9Rxm1DVjHnSTVToLVfVZbdSRUEOq
-	UI+ULZ/FmGxqD7BQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1725607578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
-	b=0bdCY3yKGm8H/78zikBOmnv7J25+SU5hegtuofsLGKVl7Kmn32ajD46MIeamJytzFXGFLy
-	hFsTIqfcv8HhbeeTJpiPSwzFKSt9W5DW8LwKnH6vP3K+8h/LRTusEHbnph/otzjRy8OZVq
-	V8YVw8wobPDbmOYC+EeWEDUojry7QLE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1725607578;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
-	b=EyqhmktmWFiZJmZW8M/wUVN8guG1vJe0G6sWL8OW3r9Rxm1DVjHnSTVToLVfVZbdSRUEOq
-	UI+ULZ/FmGxqD7BQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5E2B61395F;
-	Fri,  6 Sep 2024 07:26:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id CgfEFZmu2mYgNAAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Fri, 06 Sep 2024 07:26:17 +0000
-Date: Fri, 06 Sep 2024 09:27:03 +0200
-Message-ID: <87h6atfdiw.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Jerome Brunet <jbrunet@baylibre.com>
-Cc: Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@opensource.cirrus.com,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH 00/13] ALSA: update sample rate definitions
-In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1725608343; c=relaxed/simple;
+	bh=/VfN5TZBKFESX0ktdJnLpkP+3s1XJrbvW7+e2JjstSQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JMghxj7WmLQtA8pb2S+INt3F1Zm52tNx32j1kIropDG1Obe/y9f+CQ3alpnLBOlHtQXgd1ls9Bf0i0PxToiWvytTWY6vFngXyHg5U/WeIgpM1TuSqUmN2Yqqil8o2dsvuhKhaBbCL+/QvmWnYZ4TYtui9zImLt8jm9R+jos7Eio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cB0wo8oG; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-374b25263a3so785994f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 00:39:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725608339; x=1726213139; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xz9IdLmzy/T20GbDRPSYjXR1GKGx3xeoUvnivTDuQzM=;
+        b=cB0wo8oGQ4gkqzsJUvwKF2bKsP3JPyJcvK8bOlIjlrk+jEwF2DTaekiQ5x9nIxU/UZ
+         HaCsFa7RX/okxuGsDJAAUa9wIbIqORlQfJwHEEqjhATDZFBZXnh4K0gjB8TM9nBNytTH
+         Lpx4ZaujIBV1Y4PChxe/m+H3cnhkvFDulli0meNFfyNDTGKB6IYEnbfb+WZVDITwgwyf
+         Mtg9oW5A2dL3K3TxhVhVOTy8lY0hnWAOlVabsmGFF1FagxFC2iQ5AdRCVdjFdzQ4DQI1
+         aRafG/lG6ZWwZAaCW2b0/DfSRhZ0jDCKGlajtSZAp+/RjNDaPd4p0xjNgqps9c0zsTCp
+         8UzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725608339; x=1726213139;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xz9IdLmzy/T20GbDRPSYjXR1GKGx3xeoUvnivTDuQzM=;
+        b=rDHXlZyeOQ0BjchzlQ7yeQocq6tIqXc0T33MplZ0sbPVQpjg3EUe3RDbgDM9vc7rj8
+         YzrhXgjm7qQnali1St2f8riFR3cOg8vcMo75yRZf8wJ4X8IZ+uWy46JQ0nlgjPeHG01s
+         4ELO/e/w9jOBYrbp/HcGDukH+wcjYeK1aDX28DE2XFpNsL3OZtUwLVE2BDr5yl4NPl+p
+         QzsV7//FYlVccg0cnLVeqNbpDieTx9q1QzJ3b5No+LDvjK5qiIOTSJoglWQYrVKr+2QK
+         yDjzqLZpoQlaITcBp68ddAm+2AQhOCZ+XGchE7f2qtNCOmWqXB0VWklCEpo56WYkSuVp
+         X2Vg==
+X-Forwarded-Encrypted: i=1; AJvYcCUz8+rrSm9v9l47nuz2oXhNq2DU/J67I7N5+LwiXABOt4jTDsx6T0DMiyw15HeZXNq6QaI1x503YjZgBuNZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1R7MJgZ9SkJx9uYKtOz9LQ6i8Lg1kD5mNf8vnkgfwzpl0CnX6
+	oN4VmlB1sO+dKhKK1qiLYv1f0FZy1VgYoYsZp9vhZtB9XhKrk6wcUM3E0RjvbOU=
+X-Google-Smtp-Source: AGHT+IGFHwFQ99mHOKHLLsrCtuLnOv+VrrxaTcWgKFCATGwuZhLv7Zk5Z474pGF9RhYDinH0QTPZug==
+X-Received: by 2002:a5d:5f4a:0:b0:374:c269:df79 with SMTP id ffacd0b85a97d-374c269e0d7mr16000044f8f.22.1725608338871;
+        Fri, 06 Sep 2024 00:38:58 -0700 (PDT)
+Received: from [192.168.10.46] (146725694.box.freepro.com. [130.180.211.218])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3749eea60e2sm21002351f8f.62.2024.09.06.00.38.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Sep 2024 00:38:58 -0700 (PDT)
+Message-ID: <64758ccf-7ad4-4490-b938-864ade9ae74c@linaro.org>
+Date: Fri, 6 Sep 2024 09:38:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spam-Score: -1.80
-X-Spamd-Result: default: False [-1.80 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[perex.cz,suse.com,cirrus.com,opensource.cirrus.com,gmail.com,kernel.org,intel.com,linux.intel.com,linaro.org,csie.org,sholland.org,vger.kernel.org,alsa-project.org,lists.infradead.org,lists.linux.dev];
-	RCVD_TLS_ALL(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
-X-Spam-Flag: NO
-X-Spam-Level: 
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 12/21] dt-bindings: thermal: tsens: document support on
+ SA8255p
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org, rafael@kernel.org,
+ viresh.kumar@linaro.org, herbert@gondor.apana.org.au, davem@davemloft.net,
+ sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
+ will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+ jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
+ amitk@kernel.org, thara.gopinath@gmail.com, broonie@kernel.org,
+ cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+ wim@linux-watchdog.org, linux@roeck-us.net, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, linux-crypto@vger.kernel.org,
+ arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-i2c@vger.kernel.org, iommu@lists.linux.dev,
+ linux-gpio@vger.kernel.org, linux-serial@vger.kernel.org,
+ linux-spi@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ kernel@quicinc.com, quic_psodagud@quicinc.com,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-13-quic_nkela@quicinc.com>
+Content-Language: en-US
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20240903220240.2594102-13-quic_nkela@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, 05 Sep 2024 16:12:51 +0200,
-Jerome Brunet wrote:
+On 04/09/2024 00:02, Nikunj Kela wrote:
+> Add compatible for sensors representing support on SA8255p.
 > 
-> This patchset adds rate definitions for 12kHz, 24kHz and 128kHz.
-> 
-> It is follow-up on the series/discussion [0] about adding 128kHz for
-> spdif/eARC support. The outcome was to add 12kHz and 24kHz as well and
-> clean up the drivers that no longer require custom rules to allow these
-> rates.
-> 
-> Identifying these drivers is not straight forward, I tried my best but I
-> may have missed some. Those will continue to work anyway so it is not
-> critical. Some drivers using these rates have not been changed on
-> purpose. The reason for this may be:
-> * The driver used other uncommon rates that still don't have a definition
->   so a custom rule is still required.
-> * The constraint structure is used in some other way by the driver and
->   removing it would not help the readability or maintainability. This is
->   the case the freescale asrc drivers for example.
-> 
-> There is one change per driver so, if there is a problem later on, it will
-> easier to properly add Fixes tag.
-> 
-> The series has been tested with
-> * ARM64 defconfig - spdif 128kHz at runtime.
-> * x86_64 allmodconfig - compile test only
-> 
-> Last, the change adding IEC958 definitions has been dropped for this
-> patchset and will be resent separately
-> 
-> [0]: https://lore.kernel.org/all/20240628122429.2018059-1-jbrunet@baylibre.com/
-> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
 > ---
-> Jerome Brunet (13):
->       ALSA: pcm: add more sample rate definitions
->       ALSA: cmipci: drop SNDRV_PCM_RATE_KNOT
->       ALSA: emu10k1: drop SNDRV_PCM_RATE_KNOT
->       ALSA: hdsp: drop SNDRV_PCM_RATE_KNOT
->       ALSA: hdspm: drop SNDRV_PCM_RATE_KNOT
->       ASoC: cs35l36: drop SNDRV_PCM_RATE_KNOT
->       ASoC: cs35l41: drop SNDRV_PCM_RATE_KNOT
->       ASoC: cs53l30: drop SNDRV_PCM_RATE_KNOT
->       ASoC: Intel: avs: drop SNDRV_PCM_RATE_KNOT
->       ASoC: qcom: q6asm-dai: drop SNDRV_PCM_RATE_KNOT
->       ASoC: sunxi: sun4i-codec: drop SNDRV_PCM_RATE_KNOT
->       ASoC: cs35l34: drop useless rate contraint
->       ASoC: spdif: extend supported rates to 768kHz
 
-A nice cleanup series.
-Applied all now to for-next branch.
+Applied, thanks
 
 
-Thanks!
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Takashi
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
