@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-31095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7209E96F25C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:07:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4B8B96F260
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:07:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E5BB6B20BAB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:06:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 773F7284323
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:07:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A966E1CB134;
-	Fri,  6 Sep 2024 11:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 954AB1CB12B;
+	Fri,  6 Sep 2024 11:07:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YQL3zS7M"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NF8NI09a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FB71CA69D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 11:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D621C870E;
+	Fri,  6 Sep 2024 11:07:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725620813; cv=none; b=hL0HkjG3CIn+RdWmAUgeRHsf7NVIv8y53cRdD63bqjTzVfRNORng0aRliyjNcqSZzxItUzgmB5Ai1jUSMX2Z4CNagV8brim1LYP4HktAuNYPJ1ECsu9lIoTGW/AEt0St/vxMk8SPp8hVD4uAg2jIublvkjqUQUJ4nCqVGgyR618=
+	t=1725620853; cv=none; b=VvS/pSV0kMsKasLdXsT7gAqqxcvggflS9L5nJi99LoNU+X+sbpvZ6fxKeH3slc0DnbGCROqNQZOYcQ5WPihSdaEfZjDtrrQyqf5dUsw31L45+lEaogiLHt5HDrPklvrJAGLFg9xu1pxuUNWk4V5HQ2Xkq+BhpXz2Z1l3foPzycE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725620813; c=relaxed/simple;
-	bh=h1vwEP0cuQMdp14/UgZnixBfsliTd6QLTnCPDcR39+4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sMBBtgEjMIMLxuZ8O5El8JDKriLPFYtJo/MQg2rh614tKL0G6h5Pq8M3LGK+wfu6cw/mnkxY4F71yide8COp1QmFe3LZpi4GPdKWkioXkt9MizWNkdxMxPJmrNQQboTndrPwVCwwNALbPlpdUy9QtiIx6x1BVD3RLo3/GXW845U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YQL3zS7M; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53568285c1aso294602e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 04:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725620810; x=1726225610; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ChifwwOuuB/6xRZn3gwrFiT8292fujEUOwkXOINezS8=;
-        b=YQL3zS7MlzL25qOts7El5GxwoB7jYUVANnbHeCXfTdPRp8dMOMs+s1qcRrSy5Rzy2e
-         cgTKvjcq6WikNiomL0jzbkbd3xW61zoT9iCjT8u7HSS4vwKjNU679irxoleCPN0RfN7N
-         ScR/HXkhEWem3jCy2wM3b86BCrLOeTpsCqa9VsPsh4BorqfKcK9J8OK7m1lvgKF2ABuW
-         p0uU8ApW76xBt3hSwCT9rAaClOqC5GzoiEO8fEEAGCTmX/uJzgrzu9b2Bu0DjO55xIqd
-         4Ia7zT9nzOjb9C2CCdplXIfL+jI/R2j68Mcw+BTGJrYNOCgIXomiwOjtA46NueX/V7rd
-         BxgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725620810; x=1726225610;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ChifwwOuuB/6xRZn3gwrFiT8292fujEUOwkXOINezS8=;
-        b=ZxekwT84S5ziYFwTbEDxuMcbx2fVxVHQuBmbaItbog7BCjzYT06MwNLKUjVqL9sKhB
-         GuO2JbQjLqki75rJrNlqpmjeHX4pBG5KBd6bCWHU9TNKN1saFOR3oxJrgh8zvidmnemX
-         Sqjpeaw+7uUH8oJ/XT95jcIdpSXDfhobHXfMYEh0E2JFWXPwOplWa2X0n7qTavnnHWmJ
-         0we5T0qJDEdq2lYsa7ry72pzMfTrNdp4vnr+vpuNzjrJIbphlB01dCCpsRqzNakwp172
-         7EWwGO5lWn7+hFh9KJuzMVcGRZBFFHp/8BpORBOtr0F9AgmGayt85eSAzcuRzecHTOd0
-         SKSw==
-X-Forwarded-Encrypted: i=1; AJvYcCV+BELHLf8eyD4UsuK/8AKE5j8IUd6CTKA7/WWM1orx2j+1KpqrL8xZwFFWNiVAtuIIiX0GFPPZTcHaxWWx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6GlIsJsIrKeH5mSYoVb7LaYoY9MNcraLzH2vmedI3vbENtBII
-	AVm0MHMXD/jCYyFrtNbiXHKj0ujo7I9529hFUIHrGrUisQCi+qLgtHgFQyeNXvx5HZDLB5GNvXB
-	b
-X-Google-Smtp-Source: AGHT+IFHkE3GGJigRGGkkRpsgVp6469WptDk6ts3BfHIOiLZVXKNnY2eY3gLz53vzL007VIPxDGuIg==
-X-Received: by 2002:a05:6512:b25:b0:535:4144:f9d3 with SMTP id 2adb3069b0e04-536588197c5mr723241e87.11.1725620809618;
-        Fri, 06 Sep 2024 04:06:49 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53655aa72adsm257995e87.304.2024.09.06.04.06.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2024 04:06:49 -0700 (PDT)
-Message-ID: <9f64102b-407d-482b-bd0b-b158fd7b255d@linaro.org>
-Date: Fri, 6 Sep 2024 14:06:48 +0300
+	s=arc-20240116; t=1725620853; c=relaxed/simple;
+	bh=pKfwTF6c2QaD2+GpcjqyKDyU9aL3RZoYsLTxYFJU9n0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=RGbNLkOD5RAAQBbQ0BwuRra2FmH5cPCNlqZwDzWtAPZEOm9hZKaUDIm9bgERiCStda6swHwGaOMmikf6av2XPew8CZ0iHZMdGxuIlhuvz7RjQD0q8gD4fC9CXsChX69haA/lcKiWUhaB50pwc5GhG7p5mk01lFYgH05k06sY0KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NF8NI09a; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4868WSZL021614;
+	Fri, 6 Sep 2024 11:07:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+hZPgsc0UonS5+Y7zpgIk0QEA80noiDkCUkzS9NO9hI=; b=NF8NI09aXY2Oprpy
+	1ngwIqdr2/UkNpUS7EovbtaId631TOeXZMtwg1xrIZ+7uWgmfMe3EZ1i5PWxLdmX
+	apvlotxTZDU96KjTR4kn5T0uNF/+7UXKagUOB88xLJYeBErdoz8x649yGJZ+21VT
+	blIn1fLQbeuVagVllIei9kwQ7d3otrKCqPbytgHYJ1Xki+gVdUYdMr6GInEsaWje
+	az8VxkPdbeKzE+hwD86A/T7bdaSHfUorVcoWTE4FMh+X34W04eB4DNJxu/a3uxpd
+	ZZS9pz+Fb2A0pIOtmijr9Gx93Ivs8oRMNeIWQuRIlIE/1UR9CJ6beLH25zTsDyCX
+	ZKW7pg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwu22dv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Sep 2024 11:07:24 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 486B7NSF022570
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 6 Sep 2024 11:07:23 GMT
+Received: from [10.218.23.250] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Sep 2024
+ 04:07:18 -0700
+Message-ID: <bc9c90c0-0b5a-4459-aeea-606f946a7fe7@quicinc.com>
+Date: Fri, 6 Sep 2024 16:37:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,47 +65,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] media: dt-bindings: media: qcom,sc8280xp-camss: Fix
- interrupt types
+Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: Replace divide operator with
+ comparison
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+        "Imran
+ Shaik" <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        kernel test robot <lkp@intel.com>,
+        Dan Carpenter <dan.carpenter@linaro.org>
+References: <20240813094035.974317-1-quic_skakitap@quicinc.com>
+ <4d314b61-7483-4ceb-ac72-10dbd7e4522a@linaro.org>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
- <20240905164142.3475873-2-vladimir.zapolskiy@linaro.org>
- <run5ffs6udya6a2opphkt2chenjgelnlmnjtyeyulinpuxacmn@im72ytiz33q3>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <run5ffs6udya6a2opphkt2chenjgelnlmnjtyeyulinpuxacmn@im72ytiz33q3>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+In-Reply-To: <4d314b61-7483-4ceb-ac72-10dbd7e4522a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CRY9L6z4zJiuVOqJ33iSpxfpCap_aUtg
+X-Proofpoint-ORIG-GUID: CRY9L6z4zJiuVOqJ33iSpxfpCap_aUtg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-05_17,2024-09-05_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409060081
 
-Hi Krzysztof,
+Hi Vladimir,
 
-On 9/6/24 13:31, Krzysztof Kozlowski wrote:
-> On Thu, Sep 05, 2024 at 07:41:37PM +0300, Vladimir Zapolskiy wrote:
->> The expected type of all CAMSS interrupts is edge rising, fix it in
->> the documented example from CAMSS device tree bindings for sc8280xp.
-> 
-> Subject: drop duplicated media. One media is enough (the first).
-> 
 
-thank you for review, here I've attemted to follow the established practice.
+On 8/14/2024 1:31 AM, Vladimir Zapolskiy wrote:
+> On 8/13/24 12:40, Satya Priya Kakitapalli wrote:
+>> In zonda_pll_adjust_l_val() replace the divide operator with comparison
+>> operator since comparisons are faster than divisions.
+>>
+>> Fixes: f4973130d255 ("clk: qcom: clk-alpha-pll: Update set_rate for 
+>> Zonda PLL")
+>
+> Apparently the change is not a fix, therefore I believe the Fixes tag
+> shall be removed.
+>
+>> Reported-by: kernel test robot <lkp@intel.com>
+>> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+>> Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
+>> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+>> ---
+>>   drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c 
+>> b/drivers/clk/qcom/clk-alpha-pll.c
+>> index 2f620ccb41cb..fd8a82bb3690 100644
+>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>> @@ -2126,7 +2126,7 @@ static void zonda_pll_adjust_l_val(unsigned 
+>> long rate, unsigned long prate, u32
+>>       remainder = do_div(quotient, prate);
+>>       *l = quotient;
+>
+> Since it's not a fix, but a simplification, you may wish to remove
+> an unnecessary 'quotient' local variable:
+>
+> remainder = do_div(rate, prate);
+>
 
-% git log -n 500 --oneline Documentation/devicetree/bindings/media/ | grep "media:.*media:" | wc -l
-166
+I tried removing the quotient variable, but it is leading to below build 
+errors on arm32 architectures, so I will add the quotient variable back 
+on V3,  to make the pointer type compatible for both arm32 and arm64.
 
-So 1/3 of relevant commits to the folder have the duplicated "media:"
-in the subject, the reason is not totally clear to me, thus I've just
-inflowed into the same.
 
---
-Best wishes,
-Vladimir
+error: passing argument 1 of '__div64_32' from incompatible pointer type 
+[-Werror=incompatible-pointer-types]
+   238 |   __rem = __div64_32(&(n), __base);
+
+
+expected 'uint64_t *' {aka 'long long unsigned int *'} but argument is 
+of type 'long unsigned int *'
+    24 | static inline uint32_t __div64_32(uint64_t *n, uint32_t base)
+
+
+>>   -    if ((remainder * 2) / prate)
+>> +    if ((remainder * 2) >= prate)
+>>           *l = *l + 1;
+>
+> *l = rate + (u32)(remainder * 2 >= prate);
+>
+> I hope the assignment above is quite clear...
+>
+>>   }
+>
+> With the review comments above implemented, feel free to add to v2
+>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>
+> -- 
+> Best wishes,
+> Vladimir
 
