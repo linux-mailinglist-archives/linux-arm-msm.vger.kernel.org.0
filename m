@@ -1,90 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-31059-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EED2496EAE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:46:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86D8D96EAEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:47:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2469D1C23343
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 06:46:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45F0B28525A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 06:47:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F129E140E2E;
-	Fri,  6 Sep 2024 06:45:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63C333EA71;
+	Fri,  6 Sep 2024 06:47:30 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0691132C8E;
-	Fri,  6 Sep 2024 06:45:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CC813B590;
+	Fri,  6 Sep 2024 06:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725605137; cv=none; b=fT0A0xbu5qRE8XW8XwzMA2ouAKyFYE4HQBtfvoW4DwKatQMDP8NZ1UvOOAr9sIgyCROQPX51Rwqpuqrr6NHSEZgId7qIT593zJLMYIxjcuDNut2OgH0Ovqq5pCC9WZe60ksWuJWKfSTN8PPX85zX3IKz2vZvHLbC11zuRHLdKtg=
+	t=1725605250; cv=none; b=gs4U28dwlY8KnEu2bYYFzDbTSlbCq0F+oE/PfskhXhe7roUe2BcKT3mwsl8OGxryUKJcpnA74VgWfQXv/xbgaFbATQRjpMawApBpTW4ksbq+iwRfTlUrSLw7+UTt2RTcMJlOw/ZBNuH8per22pibQNj3kbzo7bXmaTP9GxrlsXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725605137; c=relaxed/simple;
-	bh=uYjOGa3VtGMRrhghkKk2iPbeHSLdyHnO9YTPtcNX96g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P+JwIBAD4EfDjctbfCU219LaHJWGgPIOLWAc7bO+8ct/EGJQkAQI6GNpZvOix26N/3YYA2SnlbUM3nxIpggkpI7iV3Q84IdEyTcE10wcO/O+aGQMuo4a2JCbAhTxMwL9GY39X8Q8GS7wgEjrhQVlB+ML95SE1LOL606M8b7Vu4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=linux.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3df121f7088so1131192b6e.2;
-        Thu, 05 Sep 2024 23:45:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725605122; x=1726209922;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5T85lsqg22tVtMmtXn3JYYmM/q9PNsgafh749qOHSM4=;
-        b=BgjymSMvEjCs7QDuw66mvgVIr9e4wwjK0IN9WfIttq1l5USRECvggQb4g3oRlDGHDo
-         fDD258uXyA8BGveviZhR6TPlPxow8p8ckq1x+IYM3O0d9YF5Wp2jlGebU+2ZzdlAFSxy
-         hqf9pFD4kVB9cMcN089m/yf+0e66l1rO/hgRC33BfQJxs2k4t2DKe93DrIOF0O3UPctK
-         a6o2CiBuygVkPr2itbQeafO4KfF3f5iV1SqgTTxmTxicwGAQh3KI4mLAGdH//leiqjCo
-         XIebHjxIirwrTTeNa2FC+SiLdxsfpqbRi5yBHmDIO6RBaykEXiXTxKuv1//M+kotLoLl
-         2XGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUm+hAb5a4bVOfMCBJtdsrx/Leq+DbqaRpJBx/DVEVGdOL/r5YsbTk8hqb/yJdLogm7bXVw4r1uTiZjpB2m@vger.kernel.org, AJvYcCWHmEXgp04/zCa/6+9UMtOyJQjaLy6ptuIjyJpfQxznmUD7sEMhsAki66frnkxz00ByxtFZo59Cy+1+@vger.kernel.org, AJvYcCX0zsghh/5wBV0/axfevLM42gjVvlSyiyCXjzyQfZyESY/LHRQHN5TW3o7JGZY1gyD7UlLqCL8Jli6NKLx1@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywb8EySr6QAy5gaOFBoepQALBlI75pwSWr7c/LLFxaM1rQj4KoD
-	P1jRsnRUHlML4e/7d5Kkhcni54o4WH442WZ1kygkuzUx59YWwV2bjnj8viC03vs=
-X-Google-Smtp-Source: AGHT+IFNkKQb3Z8RcOSTqku7m1PX+2hNBRQaN7GSD9zVi7VDsJEB42s1cVtz6dMANyxBgwovd7aRyA==
-X-Received: by 2002:a05:6808:2022:b0:3e0:1222:b1b8 with SMTP id 5614622812f47-3e02a031e36mr2394426b6e.38.1725605121941;
-        Thu, 05 Sep 2024 23:45:21 -0700 (PDT)
-Received: from localhost (fpd11144dd.ap.nuro.jp. [209.17.68.221])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d4fbda7b5csm4331241a12.70.2024.09.05.23.45.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Sep 2024 23:45:21 -0700 (PDT)
-Date: Fri, 6 Sep 2024 15:45:19 +0900
-From: Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-To: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
-Cc: bhelgaas@google.com, quic_krichai@quicinc.com,
-	quic_vbadigan@quicinc.com, linux-arm-msm@vger.kernel.org,
-	"open list:PCI SUBSYSTEM" <linux-pci@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1] PCI: Add ACS quirk for Qualcomm SA8775P
-Message-ID: <20240906064519.GD679795@rocinante>
-References: <20240906052228.1829485-1-quic_skananth@quicinc.com>
+	s=arc-20240116; t=1725605250; c=relaxed/simple;
+	bh=C7HBGYnur8m2vEPU7j62/VTlQdK9omSEY2LO+REggrQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Eoo4SokuGW4ToYnB41Ge2SBiVn6xfqHJmAMtYxRizssgmk8a4BUvVW13+f1e9BHtWqnY0M6SCH/wJIiDPgYprSDjLGxQT5oSMftkcUcmKSuA/fhVJeZs5gEovE5k6yrlJgHLSR3dipxHpG8ll/Epbcm0Z7azs+eHVZDrvq6MTpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4X0RZ0696zzpVVQ;
+	Fri,  6 Sep 2024 14:45:28 +0800 (CST)
+Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
+	by mail.maildlp.com (Postfix) with ESMTPS id 47E141800F2;
+	Fri,  6 Sep 2024 14:47:24 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemh500013.china.huawei.com (7.202.181.146) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 6 Sep 2024 14:47:23 +0800
+Message-ID: <2fd2b482-3d87-b95e-570a-10bee284d2da@huawei.com>
+Date: Fri, 6 Sep 2024 14:47:22 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240906052228.1829485-1-quic_skananth@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v2 1/2] spi: geni-qcom: Fix incorrect free_irq() sequence
+Content-Language: en-US
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, <broonie@kernel.org>,
+	<vkoul@kernel.org>, <akashast@codeaurora.org>, <dianders@chromium.org>,
+	<linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>
+References: <20240906031345.1052241-1-ruanjinjie@huawei.com>
+ <20240906031345.1052241-2-ruanjinjie@huawei.com>
+ <cff36a59-6f4f-4ae9-b5b9-e6e1ae822e41@quicinc.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <cff36a59-6f4f-4ae9-b5b9-e6e1ae822e41@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemh500013.china.huawei.com (7.202.181.146)
 
-Hello,
 
-> The Qualcomm SA8775P root ports don't advertise an ACS capability, but they
-> do provide ACS-like features to disable peer transactions and validate bus
-> numbers in requests.
+
+On 2024/9/6 12:27, Mukesh Kumar Savaliya wrote:
+> Hi Jinjie,
 > 
-> Add an ACS quirk for the SA8775P.
+> On 9/6/2024 8:43 AM, Jinjie Ruan wrote:
+>> In spi_geni_remove(), the IRQ will still remain and it's interrupt
+>> handler
+>> may use the dma channel after release dma channel and before free irq,
+>> which is not secure, fix it.
+>>
+> What's the possibility of having irq if spi_geni_release_dma_chan(mas)
+> is completed ? As such controller is already unregistered so transfer
+> request can't come.
 
-Applied to quirks, thank you!
+The irq is not freed, the IRQ can come and then it may enter the irq
+handler with the registered one.
 
-[1/1] PCI: Add ACS quirk for Qualcomm SA8775P
-      https://git.kernel.org/pci/pci/c/026f84d3fa62
-
-	Krzysztof
+>> Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
+>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>> ---
+>>   drivers/spi/spi-geni-qcom.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+>> index 37ef8c40b276..fc2819effe2d 100644
+>> --- a/drivers/spi/spi-geni-qcom.c
+>> +++ b/drivers/spi/spi-geni-qcom.c
+>> @@ -1170,9 +1170,10 @@ static void spi_geni_remove(struct
+>> platform_device *pdev)
+>>       /* Unregister _before_ disabling pm_runtime() so we stop
+>> transfers */
+>>       spi_unregister_controller(spi);
+>>   +    free_irq(mas->irq, spi);
+>> +
+>>       spi_geni_release_dma_chan(mas);
+>>   -    free_irq(mas->irq, spi);
+>>       pm_runtime_disable(&pdev->dev);
+>>   }
+>>   
+> 
 
