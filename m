@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D5CC96F479
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:43:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A9ECD96F481
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:46:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CDA6284BC0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:43:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDF201C20E83
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:46:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 421B41CCB31;
-	Fri,  6 Sep 2024 12:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6387E1E49B;
+	Fri,  6 Sep 2024 12:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QG1z5GrJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fGWH9N5z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CA158853;
-	Fri,  6 Sep 2024 12:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADAE2745B
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 12:46:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725626631; cv=none; b=l9ofblZWdajRA3iZcE4QiXxDQxB3TWM2qBDPEgR2i1Qtdb3oePIynDN/TQX33B/Lhy4pe1b3kpd05gZGXolVAvHAyQZyDENV0AlVb7k5dxsGroST44rp87T3j4r+aWbyy/A/aiTHdo5Qb1tpl3OUOpgbBUSW6lCnspVUviPW6so=
+	t=1725626781; cv=none; b=rmKdS2vB9sid5Ok9c45B2QtrwOJNR5kqXHTOVZ6PmgEUouBafwzbNyMnjtp7PnZNOKQiToFcQdcdqrb2u0giNUZJefYTml2guIP04t2nT2+WHqt5qwzOLKu8m983vlZyczBAj803vZ+tAQh/fKp/B8l/uB0Eu5MO/ZHNYgowph8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725626631; c=relaxed/simple;
-	bh=8GR8naY7SiCV9GslsafSrk9SY+U1n6ZldmQgMUb+4ts=;
+	s=arc-20240116; t=1725626781; c=relaxed/simple;
+	bh=hC/tGF8cSl4flBiWeSmMpIIt69LufoFugG+Yk1h7n3s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qQtjFK0pNJrzogKlZIAyUalYG20vZqWlTeCtGtLwS++0Ii7hDr4CB5IJzllKygnsg5iKgukn711qQUY2tpLSCRGDb23kNqjnTc29lMzpHqcbTrNtviKGE8UBYMJBnc5xbyEirKQx0WVO7xMZoeK+Z4xP8wKd8Vm2EL2nCTc5b4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QG1z5GrJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12955C4CEC4;
-	Fri,  6 Sep 2024 12:43:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725626630;
-	bh=8GR8naY7SiCV9GslsafSrk9SY+U1n6ZldmQgMUb+4ts=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=QG1z5GrJrdutIcfkbSH/dm9bjLAkE4vidFOPYzFYbsBix2eQOCN64Y0hxrM/IYKQd
-	 uKcdCYBAvJAKrtwjfIk//Hn30OuBVLlmLABsGe7lpyrA5UlgRVBzNMieMlqn76dxM4
-	 xoZxcGPuN7hsFcpWN6Yfee4QWGwo2rMF/4cAd1cw6/bzZxkECJp+9Js4d5RP80USKf
-	 Lkd7BV8RwKrU9sNqNztzWhYB3nBlKrnz0O+o9q0Vgsor9YdkkEGCqqSzxpB9ylQoEc
-	 6Iys6UvW+a4kzrvR5K5f26xUbLwjVTT6Y3kUkm8UUu+OgCzwwVFDU7pBTO0CiKNLhI
-	 hatgmkKH1kXxw==
-Message-ID: <5796baca-3347-44c7-8f0e-568c7177ec73@kernel.org>
-Date: Fri, 6 Sep 2024 14:43:43 +0200
+	 In-Reply-To:Content-Type; b=SFO4runv+1y7HlyOPhtbyavha2LRujOV4UaeHMAlm7wTO1rPAz9OgZo92lIk0EG1WXyxtcy9BvHIuQT7p4obG2sz6us0Lzbm2XNm13mCLYIC6zxvtfMBD7LEFA7/ZqY2pqFwdsIAYdxS5dQAgDkIVISuSarM9AYl10duCydc5CA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fGWH9N5z; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f3aced81ebso1948171fa.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 05:46:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725626777; x=1726231577; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LIRBLYQ4+mKh3KvEse9INuFPvpdgYruUAOkgTL5XFS0=;
+        b=fGWH9N5zfA2Dtwt5RuDLJNA5dsPA1GjBwVyhWIHFKCBb7e0878kF+TWDgefsmrk9V/
+         M4KXwBYqDNqKUxn1r5nVmOLnArUe4hxENAoKKI5n7Gj8N6RHLLxq1CRH/W/sjnDDCY3/
+         RXRZg7ceFu3UvosIdPJeKz1LAaXy6R05QB3mJ/X/lrqMqbGjo0mOU9joj7nXReBPwiCM
+         DG7bzsLtrtmHOVnTJKX3skkDoeJdXT8vZNRaNjClNYdUIoOAEd3okAv+Y+HmErhxbKYG
+         7V9RHRKJlH/UnQJyqcAG3hZ6phwTaF7g6ViXAbS619Uv61en5ox+W8RuFzyYIF/xnlSX
+         8VRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725626777; x=1726231577;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LIRBLYQ4+mKh3KvEse9INuFPvpdgYruUAOkgTL5XFS0=;
+        b=En9rZFmvzn5vwmtOtRt/HlsFy/HAQvjYF4dcsaiKIXP9J+vW9MYvPcjnOXkU6E4Xda
+         dfk49jskgK4a0TLS6VLYC6BOJbjj6fDEng7sa64ELnoZ41FVHfC0WJO8TXnX1gZMzORQ
+         UmF3nQwu0mYAAbkqNCp5qTAFMhuraedbf5M0zaecF13yV+ZRuUUvyf47/TlItSqTph2K
+         ReAzgIMw99bVqUuJjPr26lO/o7JcCON/ZhFEA8Iqh3f4kBwT9NAwb91/qbwg+dlW8LSw
+         QaJbmkHxegiJMTDYXhLdxvoRD1k0FYLw7/iA0GHjpXK9sBo4xo3+TCh4KqHFXL3kYIw0
+         PD2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWQvnA70qoMuEe1Ld452QPe6CWUdOdTye7Q0g71YlApJvMwIXBanoD5Cm2U0mJIvFv2emqSb3Oy7YIMNX6o@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH/+2zNWXsJfXe9KGyxn0S757y7eTyxHu9bLX5S2qqQAel0mLq
+	nboRBYYY7dEOP6HAOUprF3J67PsZ3OkYJG4v3imt4Y8DWZ1jV3lx3fdhNG+44TI=
+X-Google-Smtp-Source: AGHT+IH7TcjPOhUnSCOztxx0ezKCT+YBhSK1/HnVI58kj/H9R25mEbT+/4axuFgUNssPy7mS67UILQ==
+X-Received: by 2002:a05:651c:541:b0:2ef:27fa:1fc4 with SMTP id 38308e7fff4ca-2f751ea5828mr10045711fa.1.1725626776719;
+        Fri, 06 Sep 2024 05:46:16 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f615171f9dsm30793331fa.97.2024.09.06.05.46.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Sep 2024 05:46:16 -0700 (PDT)
+Message-ID: <3ebb955d-ca25-4bbc-bf55-1b3cf2e20525@linaro.org>
+Date: Fri, 6 Sep 2024 15:46:15 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,95 +76,71 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] media: dt-bindings: media: qcom,sc8280xp-camss: Fix
- interrupt types
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
- <20240905164142.3475873-2-vladimir.zapolskiy@linaro.org>
- <run5ffs6udya6a2opphkt2chenjgelnlmnjtyeyulinpuxacmn@im72ytiz33q3>
- <9f64102b-407d-482b-bd0b-b158fd7b255d@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH V3] clk: qcom: clk-alpha-pll: Simplify the
+ zonda_pll_adjust_l_val()
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <9f64102b-407d-482b-bd0b-b158fd7b255d@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Taniya Das <quic_tdas@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Dan Carpenter <dan.carpenter@linaro.org>, Jon Hunter <jonathanh@nvidia.com>,
+ kernel test robot <lkp@intel.com>
+References: <20240906113905.641336-1-quic_skakitap@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240906113905.641336-1-quic_skakitap@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/09/2024 13:06, Vladimir Zapolskiy wrote:
-> Hi Krzysztof,
-> 
-> On 9/6/24 13:31, Krzysztof Kozlowski wrote:
->> On Thu, Sep 05, 2024 at 07:41:37PM +0300, Vladimir Zapolskiy wrote:
->>> The expected type of all CAMSS interrupts is edge rising, fix it in
->>> the documented example from CAMSS device tree bindings for sc8280xp.
->>
->> Subject: drop duplicated media. One media is enough (the first).
->>
-> 
-> thank you for review, here I've attemted to follow the established practice.
-> 
-> % git log -n 500 --oneline Documentation/devicetree/bindings/media/ | grep "media:.*media:" | wc -l
-> 166
-> 
-> So 1/3 of relevant commits to the folder have the duplicated "media:"
-> in the subject, the reason is not totally clear to me, thus I've just
-> inflowed into the same.
+Hi Satya Priya,
 
-People like to repeat same mistakes, but just because 166 times someone
-did a mistake, is not a reason to do the same.
+On 9/6/24 14:39, Satya Priya Kakitapalli wrote:
+> In zonda_pll_adjust_l_val() replace the divide operator with comparison
+> operator to fix below build error and smatch warning.
+> 
+> drivers/clk/qcom/clk-alpha-pll.o: In function `clk_zonda_pll_set_rate':
+> clk-alpha-pll.c:(.text+0x45dc): undefined reference to `__aeabi_uldivmod'
+> 
+> smatch warnings:
+> drivers/clk/qcom/clk-alpha-pll.c:2129 zonda_pll_adjust_l_val() warn: replace
+> divide condition '(remainder * 2) / prate' with '(remainder * 2) >= prate'
+> 
+> Fixes: f4973130d255 ("clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL")
+> Reported-by: Jon Hunter <jonathanh@nvidia.com>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
+> Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 
-Best regards,
-Krzysztof
+thank you for the updates.
 
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+
+> ---
+>   drivers/clk/qcom/clk-alpha-pll.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index 019713c38f25..f9105443d7db 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -2176,10 +2176,8 @@ static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32
+>   
+>   	quotient = rate;
+>   	remainder = do_div(quotient, prate);
+> -	*l = quotient;
+>   
+> -	if ((remainder * 2) / prate)
+> -		*l = *l + 1;
+> +	*l = rate + (u32)(remainder * 2 >= prate);
+>   }
+>   
+>   static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+
+--
+Best wishes,
+Vladimir
 
