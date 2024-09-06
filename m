@@ -1,149 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-31099-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31100-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B456A96F27E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:13:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC21296F2D8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:22:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEF841C21440
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:13:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 291E61F21D1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:22:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C58EB1CB308;
-	Fri,  6 Sep 2024 11:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 021521CB153;
+	Fri,  6 Sep 2024 11:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nSCERZGk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="izoomxaF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0569C1CB15A
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 11:12:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516DA1A2C39;
+	Fri,  6 Sep 2024 11:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725621172; cv=none; b=OBTd2G8d0pVmbxVyFEqr+pZy4ksdd2jK7v1GmU2aD/hbJuiavz5CBjvAEPHglfxpuTDjipKnQih/kB+LlIjMlJQoehQaAzJTEO/qEDBZZfAUxKoqsknGFljavmBkn5dznxjge7FUD9rCWT7pUzuCXRfVwYxELVSCVP5/GHBguYs=
+	t=1725621731; cv=none; b=TVLMfjSaf0Y8yliKvcF7cIXH/liHXjd0imXK82ANpWS1LB231BTmV9x85LpbjKmV9abZr4Rls4/aZBVQA0TXTAnf3SznGAXtM5vf/ZQec6jSjjFNOsBXGvKx9VWX3fNjowpmXz3B83Bfp6Y0uFc25eOrBxNPWkDv1TC1LNvLUrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725621172; c=relaxed/simple;
-	bh=MUYgtSDvau8hrT7a0AiTdq77TL2MkPI9OzTL0d2OnSQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GrJLmecbt6lZtFEx7eA4/Pi2gDp7Xq5eRBY88x0wl1DfzyHMWYIb1671QB7QpZbYI3GUdyJs7KS2P8eJV+kMIYLMrUAbpdkEBnhqGG7NVBAfTMuMk9KFsm62ddaz/c/+ZWnZ56wbPJaXv55wQoN3cGXRhWccklZPdRVomxVykqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nSCERZGk; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c260b19f71so2070098a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 04:12:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725621169; x=1726225969; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nfzckFpKc9LJFRwS9irFl84GC7WbAq3dwTai8aMxnY4=;
-        b=nSCERZGkdaOGF9+eyHtxCBysaJZEnQSzZMs5DFMXmM1ieht8qOuiuKvk5cAl/5721j
-         JHoFW6H4+9KKgWrK64FI01VIU8jZQJkRkD+lIbmUuL25Fwst8BNDylxO9ZlYhj0WI5wg
-         ixhWtWPIKIdV4Z/5R0ctoczkOS6ZixbdpT/piDOCq1Lg8S+aurgvi/WGA/a6+QKgo5DX
-         5C+7Gy1/2n5WubmRB7wMK5daqhHMQzQmDebx1p1QdVJAEK8QSF1ZXtQ3C2uCCuyW9/xd
-         btGBTocEON3MCH2irzlhvxdi5FTLiVZ1N5QKhnT6KAPgMgAuI5bgJX4s0s8mAUdnlmFU
-         UV7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725621169; x=1726225969;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nfzckFpKc9LJFRwS9irFl84GC7WbAq3dwTai8aMxnY4=;
-        b=Vk6zU1Db+1QiH7oZqzNUY92qa4LN7TBfOEgLOU/kliBO+YNJF0JwrJnaK7oIhXVOq4
-         6gS30XeS+PzNKNlizGD6IL5j4Jd4AN28vyhoN7QZM9+Eu1NIv7k3J0aMDUdU11IDapf+
-         SgqdiBI52CThQGqbXFPsHgQyoDJP8uUfsLKzLF1LM4KHoEYcmZSiaZkxukJnDD0BIOw4
-         Fc3pAF+E9A309l8D1bwsT9WXE3x9PKOwqVkkm6bv8lHvJATzfvjZQvJRr/7ka7OF6p00
-         fQMJ6FXc2wFxioDE287uSPGrKt/xwGydAZf1U4AA84fo7d3iytoeUQ514zLfQOqLg0BE
-         n3sA==
-X-Forwarded-Encrypted: i=1; AJvYcCU12peb4ATEbSbFMfjtomEzd/yxKYxzBw9PkZ/R1bdzNQjWvpzgsD8VPFW8O0JiL2l00qBFY1YH1utx/NdF@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJCv2eO8Seqp9WmYIXwsp7igsvewGOaqMvsOSfwiCFm9w82/oX
-	XNXoTtR/SZHjdszcoa1QAimdqcHaa5LiETv0BzwiaKgJWISnMFmDQFnCocuLoZE=
-X-Google-Smtp-Source: AGHT+IFumS/Hy62OgRzIQHTeJZmU1kmKVGC2MsfN9/QLaLaj15G0R5vXD/hPYLrh1WnbXKOSAf8ciA==
-X-Received: by 2002:a05:6402:5203:b0:5c2:6311:8478 with SMTP id 4fb4d7f45d1cf-5c3dc7bb4e1mr1403995a12.25.1725621169162;
-        Fri, 06 Sep 2024 04:12:49 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3cc699f7esm2318819a12.60.2024.09.06.04.12.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Sep 2024 04:12:48 -0700 (PDT)
-Message-ID: <8c7168ed-5036-4f89-b821-10a970c1ffb5@linaro.org>
-Date: Fri, 6 Sep 2024 12:12:47 +0100
+	s=arc-20240116; t=1725621731; c=relaxed/simple;
+	bh=DIxBGDSeqBdcFrUZdpfXvroU3VRN/KMjEXH0aBe0Qus=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FGIpKQAEKZGRjuCCbrMDnUxqxWgrA2EmlrHFN8vxGkbXVYRP+Q0gbejCxaVYWZgAr1vyWsugWfQckEpCSgui+QlNIIR5cmGvRwbp3KAw6avmnDJMorCEwCCl3Uz+AhYcBEKIjOhO1UBd4WI+ANEgFW6Nk6QZNyyQrX6S7q1ISGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=izoomxaF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4868d8f5021851;
+	Fri, 6 Sep 2024 11:22:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	hFyTPzSSSpYuSPbFJVK8p1zZuvXN7Rw7OI0AWDshio4=; b=izoomxaFfxENicYY
+	szgh+D+/RQNwpQq8LMAzINSrUBRiT6pXQzbEDmnt8RCHB+amICKDV7XLiDuHfjRq
+	f56Ln+/ODdLPqYn08VwsyQv0+RLYbU0aEcTYBunun6hwE/vNioJiE6/Pfofyo1mI
+	WAIiU/uNwlN2/YQx3XQwMYS8hR1oFqSL4a3qVFPXL9DT2i2Khrhc+trgqRFjTgkw
+	VOx2jGgepXrhW1QGSLDiAa3JpUXo0ObMP/Gp02M4H20OQ7v8ULcEm2ypCB9qd3nd
+	bipHv8plAOZfwXlD9pa51uzczYjc7r+ri/IIaZFL/FMBLleEy7IOGIsXggeUE1F9
+	7tFhFg==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwu23q8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Sep 2024 11:22:03 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 486BM2Ij006467
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 6 Sep 2024 11:22:02 GMT
+Received: from [10.204.100.69] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Sep 2024
+ 04:21:59 -0700
+Message-ID: <f88d8596-c6a0-356e-060e-81d68f038995@quicinc.com>
+Date: Fri, 6 Sep 2024 16:51:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] arm64: dts: qcom: sm8250: Fix interrupt types of
- camss interrupts
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
- <20240905164142.3475873-7-vladimir.zapolskiy@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 04/29] media: iris: initialize power resources
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
+ <20240827-iris_v3-v3-4-c5fdbbe65e70@quicinc.com>
+ <81fd218f-aa0f-4710-b832-cab927bfab9d@kernel.org>
+ <ba747923-38de-5c05-9220-762c5272ec74@quicinc.com>
+ <76ffb882-10f9-4737-afa2-9bb60248835d@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240905164142.3475873-7-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <76ffb882-10f9-4737-afa2-9bb60248835d@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 56HZryFSPw8cdcJnK8OVKgT3VpHgvXY4
+X-Proofpoint-ORIG-GUID: 56HZryFSPw8cdcJnK8OVKgT3VpHgvXY4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-05_17,2024-09-05_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0 suspectscore=0
+ impostorscore=0 clxscore=1011 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409060083
 
-On 05/09/2024 17:41, Vladimir Zapolskiy wrote:
-> The expected type of all CAMSS interrupts is edge rising, fix it in
-> the CAMSS device tree node for sm8250 platform.
-> 
-> Fixes: 30325603b910 ("arm64: dts: qcom: sm8250: camss: Add CAMSS block definition")
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8250.dtsi | 28 ++++++++++++++--------------
->   1 file changed, 14 insertions(+), 14 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 9d6c97d1fd9d..bd73ff97739c 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -4504,20 +4504,20 @@ camss: camss@ac6a000 {
->   				    "vfe_lite0",
->   				    "vfe_lite1";
->   
-> -			interrupts = <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 86 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
-> -				     <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupts = <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 86 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 89 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
-> +				     <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
->   			interrupt-names = "csiphy0",
->   					  "csiphy1",
->   					  "csiphy2",
+Hi Krzysztof,
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On 9/5/2024 5:27 PM, Krzysztof Kozlowski wrote:
+> On 05/09/2024 13:53, Dikshita Agarwal wrote:
+>>
+>>
+>> On 8/27/2024 4:21 PM, Krzysztof Kozlowski wrote:
+>>> On 27/08/2024 12:05, Dikshita Agarwal via B4 Relay wrote:
+>>>> From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>>>
+>>>> Add support for initializing Iris "resources", which are clocks,
+>>>> interconnects, power domains, reset clocks, and clock frequencies
+>>>> used for iris hardware.
+>>>>
+>>>> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>>>> ---
+>>>
+>>> ...
+>>>
+>>>> +struct iris_platform_data sm8550_data = {
+>>>> +	.icc_tbl = sm8550_icc_table,
+>>>> +	.icc_tbl_size = ARRAY_SIZE(sm8550_icc_table),
+>>>> +	.clk_rst_tbl = sm8550_clk_reset_table,
+>>>> +	.clk_rst_tbl_size = ARRAY_SIZE(sm8550_clk_reset_table),
+>>>> +	.pmdomain_tbl = sm8550_pmdomain_table,
+>>>> +	.pmdomain_tbl_size = ARRAY_SIZE(sm8550_pmdomain_table),
+>>>> +	.opp_pd_tbl = sm8550_opp_pd_table,
+>>>> +	.opp_pd_tbl_size = ARRAY_SIZE(sm8550_opp_pd_table),
+>>>> +	.clk_tbl = sm8550_clk_table,
+>>>> +	.clk_tbl_size = ARRAY_SIZE(sm8550_clk_table),
+>>>> +};
+>>>> diff --git a/drivers/media/platform/qcom/iris/iris_probe.c b/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> index 0a54fdaa1ab5..2616a31224f9 100644
+>>>> --- a/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> +++ b/drivers/media/platform/qcom/iris/iris_probe.c
+>>>> @@ -69,6 +69,19 @@ static int iris_probe(struct platform_device *pdev)
+>>>>  	if (core->irq < 0)
+>>>>  		return core->irq;
+>>>>  
+>>>> +	core->iris_platform_data = of_device_get_match_data(core->dev);
+>>>> +	if (!core->iris_platform_data) {
+>>>> +		ret = -ENODEV;
+>>>> +		dev_err_probe(core->dev, ret, "init platform failed\n");
+>>>
+>>> That's not even possible. I would suggest dropping entire if. But if yoi
+>>> insist, then without this weird redundant code. return -EINVAL.
+>>>
+>> Its possible if platform data is not initialized and this is only place we
+>> check it, there is no further NULL check for the same.
+> 
+> It is possible? Then point me to the code line. Or present some code
+> flow leading to it.
+Lets go with return -EINVAL in this if block.
+
+> 
+>>>> +		return ret;
+>>>> +	}
+>>>> +
+>>>> +	ret = iris_init_resources(core);
+>>>> +	if (ret) {
+>>>> +		dev_err_probe(core->dev, ret, "init resource failed\n");
+>>>> +		return ret;
+>>>
+>>> How many same errors are you printing? Not mentioning that syntax of
+>>> dev_errp_rpboe is different...
+>> We have these errors at multiple points to know at what point the probe
+>> failed which is useful while debugging probe failures.
+> 
+> Duplicating is not helpful.
+> 
+>> But Sure we will revisit this code and fix the syntax of dev_err_probe.
+> 
+>>>
+>>>
+>>>> +	}
+>>>> +
+>>>>  	ret = v4l2_device_register(dev, &core->v4l2_dev);
+>>>>  	if (ret)
+>>>>  		return ret;
+>>>> @@ -88,8 +101,14 @@ static int iris_probe(struct platform_device *pdev)
+>>>>  }
+>>>>  
+>>>>  static const struct of_device_id iris_dt_match[] = {
+>>>> -	{ .compatible = "qcom,sm8550-iris", },
+>>>> -	{ .compatible = "qcom,sm8250-venus", },
+>>>> +	{
+>>>> +		.compatible = "qcom,sm8550-iris",
+>>>> +		.data = &sm8550_data,
+>>>> +	},
+>>>> +	{
+>>>> +		.compatible = "qcom,sm8250-venus",
+>>>> +		.data = &sm8250_data,
+>>>
+>>> You just added this. No, please do not add code which is immediatly
+>>> incorrect.
+>> It's not incorrect, in earlier patch we only added the compatible strings
+>> and with this patch introducing the platform data and APIs to get it.
+> 
+> It is incorrect to immediately remove it. You keep arguing on basic
+> stuff. Sorry, but that is not how it works. If you add code and
+> IMMEDIATELY remove it, then it means the code was not needed. Or was not
+> correct. Choose one.
+I think it is not removing it. It is adding platform data to compatibles
+introduced in previous patch. Maybe it appears as if it is removing it.
+> 
+> ...
+> 
+>>>
+>>> This should be just part of of main unit file, next to probe. It is
+>>> unusual to see probe parts not next to probe. Sorry, that's wrong.
+>>>
+>> All the APIs handling(init/enable/disable) the different resources (PM
+>> domains, OPP, clocks, buses) are kept in this iris_resource.c file hence
+>> this API to init all those resources is kept here to not load iris_probe.c
+>> file.
+> 
+> You introduce your own coding style and as an argument you use just "I
+> do this".
+> 
+> The expected is to see resource initialization next to probe. Repeating
+> what your code does, is not helping me to understand your design choice.
+I see your point and it would be good to have the resources initialized as part
+of probe.
+
+> Best regards,
+> Krzysztof
+
+Regards,
+Vikash
+
 
