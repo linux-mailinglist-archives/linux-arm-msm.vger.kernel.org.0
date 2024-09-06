@@ -1,86 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-31069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F89F96ED0E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 10:02:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A42AE96ED5A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 10:14:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B4231C22AE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:02:36 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D07FC1C221FA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:14:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FA55156864;
-	Fri,  6 Sep 2024 08:01:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ae7PY2sX"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6B32156C4B;
+	Fri,  6 Sep 2024 08:14:53 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBBD156677;
-	Fri,  6 Sep 2024 08:01:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B4B153835;
+	Fri,  6 Sep 2024 08:14:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725609713; cv=none; b=JroZ64TWefKX8mX1ld3KBd6VzkoXpiVIjjqd7yEXyR3syMi4nXMMEhpklub2gmOmRDzvwgF2nyAOtewpO1hBAlnsRMjgkFEq1kOuV1aMoVXlywVLi8um+Pxrm+U1gi8lMMP/hziFZSaVYdB0hPoorDq4Bef7DVsmA3O9EDFxiG4=
+	t=1725610493; cv=none; b=DqeYfYr+XKgZmIAY1Tv8WpZ/flWIcP2gjzqxjJF6+BirqXraOX+7LuqczHma3nx7ZHdcGbNoE09iG742id1KBWC9fHGVxLy1LzihKuOwBnbAGMWpdP2Py5FxKV9R2oHp0H572J0O/QFczR3lN+bgulMG9c6SEQzuMeychif+szo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725609713; c=relaxed/simple;
-	bh=A73/f2cF8wsLXqf9u1MYyL/XHsVItL+vlFVV1EmpWV8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=U5q0+Q3eiD154BlfJJkechdpii9DJIG6ZT178nDxoo1LyAEpUM6/wbcuv/ri5qt8uhgJWLYmJGMd5SHlJaf2IifTBiMAptl1+ZpyRoDna6QQrVADkfRfeVyk7XpIuYNVwnvhHLlOLM1qWBM3QZMQ4e6VZ+1QDQFqav8BELfSpZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ae7PY2sX; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42c7b5b2d01so17518605e9.3;
-        Fri, 06 Sep 2024 01:01:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725609710; x=1726214510; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hkyikhZMpOT8gzw/xg+wgtlCLgPqat5O+1E0+bcDLIQ=;
-        b=ae7PY2sXCaVmU3BNZrO9zOZ9/D3lDKTrnUo02pI8APKbEFgj59lccuEYsJbyKbE1GX
-         A4EMt6IE+3+PeU4cK712tixlEervLx0NhgZVaQwW903YBrWqyzbgBXh/TrGwwDVtwhPc
-         tUFDRcTYVTV5VhWDcOt+t3PeP8eWojC8FQirq6PYhcE+1kaTPtBzRo10jLAn5H3QcGN4
-         ZZTsfdtwwEQsZkvLMEDu+3k9cUSaOZop3DedE8hypeeXte5WNN+dHL3vJFhJPn4GeO/M
-         1+L+80oTkvru2YgRrKU3jJYQbSRButNep4fkHcQZuZWdH7HhK0Tv1P+LZnlBpKc0CcbG
-         y1nA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725609710; x=1726214510;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hkyikhZMpOT8gzw/xg+wgtlCLgPqat5O+1E0+bcDLIQ=;
-        b=W/Rbl4+5c7qSBrBF4pz+BjnaP1PX+TkNv+kumsTUudo3Y3j44R2dvXaymK3EUfF0Hp
-         2Qp6jU7DaeYZkoXUCnxI+Tpsy+9men9kSdeiyVKWaGnUHhgNpK6NJ9TsT9j7HsmTTHra
-         w6F56sDrUnX54T25a6sJiCpDHo825K6325z363vilWjfzEZjh8sNFHOBofHkT1vUeHwI
-         mYawuPWMwhUloCVfMmyow/PMsL7+Z0IvGZ0g//ZZrRrSCtndbmWuLSOEka7Ku/kJtpvF
-         5XaulBtaSnFAiNPqI9k1xmTjStOcqBRfObKYZv0Cf4FiHzlpaVhLT5VtlMyzU+oMpBiv
-         P9YQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+V2ZDJQmgynu7QLMb91dsZJOs6Q9AIgXgyNFeOkpb2xdFEZLu9KDmYK+uAzmwZJDh+XfPzXy/VE97Rjx2@vger.kernel.org, AJvYcCUQpTPjbzoJNe6of4/Ut8sKwCGF2sjkQ+8Mw7FjJy0kRAL0eHIudes24QZn+Qe1ecvGe60DPqycFzr7vEGc7So=@vger.kernel.org, AJvYcCVbSvCPkQzGqrf/AJmv5Vlpq7fkc7nh3d7LfCeNG1QwBH/sIsxYnOgOLOeF4S+8qCHbBggeotFPr1ki@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzKtVeAlHc8ukZsokBRF36R6fD604bSshqtTMbbG7MRg1HTpyG
-	HVptbD5iYZXpXPTZXArYLzyq7PQIbSHaXBYmI768FBdpMsilRT3A8gOsObyv
-X-Google-Smtp-Source: AGHT+IE9zvSX1pGjBvhr0lwumfMe5aPctcurwZt1TsZp7JV2U5tLPlrVh/c7rhSvpwdty9ypTHJMZw==
-X-Received: by 2002:a05:600c:510e:b0:426:545b:ec00 with SMTP id 5b1f17b1804b1-42c9f98b589mr14070935e9.19.1725609709052;
-        Fri, 06 Sep 2024 01:01:49 -0700 (PDT)
-Received: from void.void ([141.226.13.165])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42ca05c29bfsm11954555e9.5.2024.09.06.01.01.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 01:01:48 -0700 (PDT)
-From: Andrew Kreimer <algonell@gmail.com>
-To: Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Carl Vanderlip <quic_carlv@quicinc.com>,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>
-Cc: linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	kernel-janitors@vger.kernel.org,
-	Andrew Kreimer <algonell@gmail.com>
-Subject: [PATCH] accel/qaic: Fix a typo
-Date: Fri,  6 Sep 2024 11:00:59 +0300
-Message-ID: <20240906080136.4423-1-algonell@gmail.com>
-X-Mailer: git-send-email 2.46.0
+	s=arc-20240116; t=1725610493; c=relaxed/simple;
+	bh=Po6TAV+1S7sZ7uUKdRyt7P3lKgnQe0ynVUMTE7iGkEY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AT9CFmvq9FK/4Lmz+jvunOrgd0w3RojOLPHn7Yk8DOE8msbl6GiZfZbKvaLo6YE2lUjF4MHoXKfLaIvn59KSRNbDD86zXhMme5PZBic37gdZYNbz+OXSjiuZ/NoEQjS7Xg7IBhbzWh8Hljo72H9tCqazdHApgNKxdAUutmX31DM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.17])
+	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4X0TRJ3BH9z20nRx;
+	Fri,  6 Sep 2024 16:09:48 +0800 (CST)
+Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
+	by mail.maildlp.com (Postfix) with ESMTPS id 922161A0188;
+	Fri,  6 Sep 2024 16:14:47 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemh500013.china.huawei.com
+ (7.202.181.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 6 Sep
+ 2024 16:14:46 +0800
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <laurentiu.palcu@oss.nxp.com>, <l.stach@pengutronix.de>,
+	<maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+	<tzimmermann@suse.de>, <airlied@gmail.com>, <daniel@ffwll.ch>,
+	<shawnguo@kernel.org>, <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
+	<festevam@gmail.com>, <p.zabel@pengutronix.de>, <robdclark@gmail.com>,
+	<sean@poorly.run>, <konradybcio@kernel.org>, <quic_abhinavk@quicinc.com>,
+	<dmitry.baryshkov@linaro.org>, <marijn.suijten@somainline.org>,
+	<thierry.reding@gmail.com>, <mperttunen@nvidia.com>, <jonathanh@nvidia.com>,
+	<agx@sigxcpu.org>, <gregkh@linuxfoundation.org>, <jordan@cosmicpenguin.net>,
+	<dri-devel@lists.freedesktop.org>, <imx@lists.linux.dev>,
+	<linux-arm-kernel@lists.infradead.org>, <freedreno@lists.freedesktop.org>,
+	<linux-tegra@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH 0/5] drm: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Fri, 6 Sep 2024 16:23:20 +0800
+Message-ID: <20240906082325.2677621-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,28 +63,33 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemh500013.china.huawei.com (7.202.181.146)
 
-Fix a typo in documentation.
+As commit cbe16f35bee6 ("genirq: Add IRQF_NO_AUTOEN for request_irq/nmi()")
+said, reqeust_irq() and then disable_irq() is unsafe. In the small time gap
+between request_irq() and disable_irq(), interrupts can still come.
 
-Signed-off-by: Andrew Kreimer <algonell@gmail.com>
----
- Documentation/accel/qaic/qaic.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+IRQF_NO_AUTOEN flag can be used by drivers to request_irq(). It prevents
+the automatic enabling of the requested interrupt in the same
+safe way. With that the usage can be simplified and corrected.
 
-diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
-index efb7771273bb..628bf2f7a416 100644
---- a/Documentation/accel/qaic/qaic.rst
-+++ b/Documentation/accel/qaic/qaic.rst
-@@ -93,7 +93,7 @@ commands (does not impact QAIC).
- uAPI
- ====
- 
--QAIC creates an accel device per phsyical PCIe device. This accel device exists
-+QAIC creates an accel device per physical PCIe device. This accel device exists
- for as long as the PCIe device is known to Linux.
- 
- The PCIe device may not be in the state to accept requests from userspace at
+Jinjie Ruan (5):
+  drm/atomic: Use IRQF_NO_AUTOEN flag in request_irq()
+  drm/imx/dcss: Use IRQF_NO_AUTOEN flag in request_irq()
+  drm/imx/ipuv3: Use IRQF_NO_AUTOEN flag in request_irq()
+  drm/tegra: dpaux: Use IRQF_NO_AUTOEN flag in request_irq()
+  drm/msm/adreno: Use IRQF_NO_AUTOEN flag in request_irq()
+
+ drivers/gpu/drm/imx/dcss/dcss-crtc.c   | 6 ++----
+ drivers/gpu/drm/imx/dcss/dcss-dtg.c    | 4 +---
+ drivers/gpu/drm/imx/ipuv3/ipuv3-crtc.c | 6 ++----
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c  | 4 +---
+ drivers/gpu/drm/tegra/dpaux.c          | 4 +---
+ 5 files changed, 7 insertions(+), 17 deletions(-)
+
 -- 
-2.46.0
+2.34.1
 
 
