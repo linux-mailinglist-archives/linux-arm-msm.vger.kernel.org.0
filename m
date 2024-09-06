@@ -1,113 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-31170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32E5796FBCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 21:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 69FF296FBE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 21:14:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6AF22841CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 19:06:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15C47282087
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 19:14:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 640911CDA1B;
-	Fri,  6 Sep 2024 19:06:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D61DF1D048B;
+	Fri,  6 Sep 2024 19:14:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="FVx3eV8z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hAngnSiW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C482613D899;
-	Fri,  6 Sep 2024 19:06:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA521C7B68;
+	Fri,  6 Sep 2024 19:14:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725649585; cv=none; b=YcIwBJacDtouxvsP8wIK+stvX9ULW4hWaxAWtNka7zYiQj+0p6kGI8m90iE+nGE6zYVBYx+ELr8KOqTVmBaKA/rSqwbBM4Dnp55SRVunB8vDs30Zkufgq57xIezhu+clcSxJ0J+oCEBvRIqta2mVpe+oFno2nwsIx63XR85grUY=
+	t=1725650071; cv=none; b=turl/jy9ArScD49uKzERET8iDCRyti0Mii9ILaF7BOPdqC88+nPlUAq1Nb+HAUsUGC05L73c74ncAOjzS/em/EfpzTefQg+BaNZcP9+N/ON9WLUjZtXRSmqTJsNoWOhyqgFo/krVD1NogfxoQKn7TzvhlQEVueYmLUDIGki6dtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725649585; c=relaxed/simple;
-	bh=nr6OX5UedFpgxYakr+FAYRZIVUTAKAr0Ym9FJ7B5DNI=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=qq+bY+0zxLfYims6090NfLlq31BksxOgNOFSVtOjyMcJIqeVOIhwCsmxewAFwJwn/a/3MYxXRgSl+zV3cJoBOlcKyla6INZVTYZTwl6BZSvV6LSIdR5W9ChT0S7/9derfsU//fSBmVzoDDQ2RmfNl0s2nfwKlt2zAn7LWZsuiRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=FVx3eV8z; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1725649557; x=1726254357; i=markus.elfring@web.de;
-	bh=tiX2YP3egz3aDYEiqN04/pLGavK4NnAFCP8ntbEUtO4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=FVx3eV8zyGY86PThuNOZ/UWwKbP48MBxkx9f8utvAPN9sQIAKYkfPR8hUBS1Ot8Y
-	 8+sdxH0ZfoXBEaSmRSbuV0VTWuviKJw++tM7fTtsr4V0/c66eO6JRmuRUN1ibXNtY
-	 U/qZi/e/mM9tHS5b0CvDPjQcCHxsBaVYavHU9GtmYbENjegmNaqqdmdRkmxTBmtNM
-	 qmf0DHmoFsxW1LIU0+EM+273JZM1aEw/ngexSMdr8nVzZT0VIbKjuBOfhVjy6Rdv8
-	 DGxxRiHzXYwuS0S6Q2Hg1wNWoESywKl6y3fZzCoQbcK5ZUHifpHFY1724IaxS+StL
-	 R06aQbNhrdzO3u9GMg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.84.95]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MKdLK-1sTtVZ2ii4-00XRoT; Fri, 06
- Sep 2024 21:05:57 +0200
-Message-ID: <08d9a783-2de1-4658-b617-5e6e6947ac2b@web.de>
-Date: Fri, 6 Sep 2024 21:05:44 +0200
+	s=arc-20240116; t=1725650071; c=relaxed/simple;
+	bh=ZvJZWzdz4jNdMO3kOKAhwF0UfgUENPl360oLYkkdpSw=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=aJ9i/RHZrMcPqdXqp24gqugWbjhYKeWxlPs4Vvn/ScDiHOaXUQOX7rC0E23f/r2xxrPJbW10J+tiuGo2iXz0DVjbZye68PRp9dM7tFF2FLf1GqLzGkssnJfT6rcMfJXNTeMN5yRo+Sb+GFi1gk/E09XePiXCpo2Yk74us7rwXfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hAngnSiW; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4868sjVC024778;
+	Fri, 6 Sep 2024 19:14:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=FW9JLL9skAXPxLyeTf+kco
+	n76yi61/xeR0qeqfGZIo0=; b=hAngnSiWtogbQAfRdZcBB8s0JEEYeLyI9ymB+e
+	vIfzFiW/33C2MJh9SD/+k8+onMtQpYsjgs06enjY7VsK+s2DGgZumhdLYxuB/2km
+	eg//DdJ6H7qm28XZ+tuXiqzWQtrRkl0B/pk6FcEjjy5GzBu+9Qo+bqFz2vC6wTqg
+	wtgl4jZGktKz7cduIbPs034jW4rdyXxzIhq7xKqjMuxMSP7mQzbbeu9hPhbzNKQ5
+	Why/oE4ZOtJVC02sr6O86brm3Ae2HWa4uLjy5OpEGNPwRDNwizvxWTCSYEosplPv
+	YQcbgxjlErZtgx6p4KK33tuKfu50A9VGEAzzlhMxOBGveaPA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fj03b4ug-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Sep 2024 19:14:20 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 486JEG2M012919;
+	Fri, 6 Sep 2024 19:14:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 41bv8mxxyg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Sep 2024 19:14:16 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 486JEGOT012914;
+	Fri, 6 Sep 2024 19:14:16 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 486JEFH4012909
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Sep 2024 19:14:16 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id 00FFE240F3; Sat,  7 Sep 2024 00:44:14 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+        vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
+        Frank.Li@nxp.com, konradybcio@kernel.org
+Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: [PATCH v2 0/4] Enable shared SE support over I2C
+Date: Sat,  7 Sep 2024 00:44:06 +0530
+Message-Id: <20240906191410.4104243-1-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
- Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: LKML <linux-kernel@vger.kernel.org>
-References: <20240827-iris_v3-v3-5-c5fdbbe65e70@quicinc.com>
-Subject: Re: [PATCH v3 05/29] media: iris: implement iris v4l2 file ops
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20240827-iris_v3-v3-5-c5fdbbe65e70@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:kOT5rk8SrRtRtib6YRMMzjISI8NWVzWAqga/vXC5ot8h2UzXvzq
- JARjg7GAEzgT+SnhOTMsGMdV+SFw1a8yk3J/G/bkDHVVI6B3AGadE/QE4xFRjZ4A18CXmil
- 1xZPBrPiAbiEqy35AvfhlA6ETSUYxMYz6FVIXKHJoqL6CekTVo0l56+aPWujjegoisVzlBN
- ccRYPwiS85cfrQIGJse5g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/ODuNcg3LSo=;lYa8jdaHlEtgHfAfnYzz0F+9BHv
- iAKVzgaSzQ2UGPQ7n3WtpUTLCu27GWvo+VQNpEJLNYgw0dynez2zx48QSjMnG18rhzdB1AWor
- 0Iw/45MahnghVeAhE5VpOTrN/6iUEDY+9w2v6qYjSHDYn1gkQO6Zap2mm0aYXse9a+kAxZUMx
- 5YEyO1xhHpGnhMckG8hXFaqOfLktlkCFarb2wMLPJE5eV2p6aZOME7GaHdyLGpkyh3qjUjWw2
- nCmZ0VBtOMAxWqkGeIrrdlQ7DcJ670mli6FwoL+UfmKQSzJN7tF8oFpzpt2MLpccpXFf0g3hm
- djpgKFLIY/xx9bw5CZfKCu0c/NSz5HQ6KG2hicSvxbJn45BjMPgZu0W0LuMTUNN4VhnCUN1ti
- LOTZ3Xb38aHerEx1JdOIRQ95ZiP16xnKfr2JxiUWNLjfUTz7rrXDl4A2ilkoQvF3/Cyou7UUO
- 0H9TZYHKMBIv+k04+0sSmdsWaWuirJVy27IAnGB4smyXGfqVPfIEpamK1QhGJgPAHkndAoR4W
- 16wc5zwe3KJvOi0+DqB6Ne+ZqfErrDEfmRy86qPNU5J8E/wGLAOTOdAkP07VQ2vWfuSWWoKKa
- 60QfsoeDnG5D7NuOn+wX/BVqLLhDWeWV2bVtKuX9E0WhYUYZebTnb5ytfTyaUQcYChrpN7qkE
- iBXdNOcZKxqmZrQCDzagD6vxTJ6oTLc5Wm4nTkw7dkahLzuHb8eQi+WE0HeLekkvwSjGg0teh
- 8PnojDKYArmRVPXW4HBuwZ4h3oJl8aHk8rY4i18Lp+0bZjAMZYOlgPvUlclpFRnXzmaCDUy4V
- nf85wGKrWet3ZFUCZGtGT9hA==
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: kNJkQDQEvelD5F3nBq0hlLibNHD80gFM
+X-Proofpoint-ORIG-GUID: kNJkQDQEvelD5F3nBq0hlLibNHD80gFM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_04,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=746
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ malwarescore=0 priorityscore=1501 bulkscore=0 clxscore=1011 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409060141
 
-=E2=80=A6
-> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-> @@ -0,0 +1,174 @@
-=E2=80=A6
-> ++int iris_close(struct file *filp)
-> +{
-=E2=80=A6
-> +	mutex_lock(&inst->lock);
-> +	iris_v4l2_fh_deinit(inst);
-> +	mutex_unlock(&inst->lock);
-=E2=80=A6
+This Series adds support to share QUP (Qualcomm Unified peripheral)
+based I2C SE (Serial Engine) controller between two subsystems.
+Each subsystem should have its own dedicated GPII (General Purpose -
+Interface Instance) acting as pipe between SE and GSI (Generic SW -
+Interface) DMA HW engine.
 
-Under which circumstances would you become interested to apply a statement
-like =E2=80=9Cguard(mutex)(&inst->lock);=E2=80=9D?
-https://elixir.bootlin.com/linux/v6.11-rc6/source/include/linux/mutex.h#L1=
-96
+Subsystem must acquire Lock over the SE so that it gets uninterrupted
+control till it unlocks the SE. It also makes sure the commonly shared
+TLMM GPIOs are not touched which can impact other subsystem or cause
+any interruption. Generally, GPIOs are being unconfigured during
+suspend time.
 
-Regards,
-Markus
+GSI DMA engine is capable to perform requested transfer operations
+from any of the I2C client in a seamless way and its transparent to
+the subsystems. Make sure to enable “qcom,shared-se” flag only while
+enabling this feature. I2C client should add in its respective parent
+node.
+
+Example : 
+Two clients from different SS can share an I2C SE for same slave device
+OR their owned slave devices.
+Assume I2C Slave EEPROM device connected with I2C controller.
+Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
+This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
+
+
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+---
+
+Link to V1: https://lore.kernel.org/lkml/cb7613d0-586e-4089-a1b6-2405f4dc4883@quicinc.com/T/
+
+Changes in V2:
+ - Enhanced commit log grammatically for PATCH v1 3/4 as suggested by Bryan.
+ - Updated Cover letter along with acronyms expansion.
+ - Added maintainers list from other subsystems for review, which was missing.
+   Thanks to Krzysztof for pointing out.
+ - Added cover letter with an example of Serial Engine sharing.
+ - Addressed review comments for all the patches.
+
+---
+
+Mukesh Kumar Savaliya (4):
+  dt-bindindgs: i2c: qcom,i2c-geni: Document shared flag
+  dma: gpi: Add Lock and Unlock TRE support to access SE exclusively
+  soc: qcom: geni-se: Export function geni_se_clks_off()
+  i2c: i2c-qcom-geni: Enable i2c controller sharing between two
+    subsystems
+
+ .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  4 ++
+ drivers/dma/qcom/gpi.c                        | 37 ++++++++++++++++++-
+ drivers/i2c/busses/i2c-qcom-geni.c            | 29 +++++++++++----
+ drivers/soc/qcom/qcom-geni-se.c               |  4 +-
+ include/linux/dma/qcom-gpi-dma.h              |  6 +++
+ include/linux/soc/qcom/geni-se.h              |  3 ++
+ 6 files changed, 74 insertions(+), 9 deletions(-)
+
+-- 
+2.25.1
+
 
