@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51BEC96F432
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:24:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE14796F43B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:25:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 040CA1F25292
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:24:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3FE49B23A22
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:25:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ED161CC8B4;
-	Fri,  6 Sep 2024 12:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1DF991CDA1B;
+	Fri,  6 Sep 2024 12:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mELDJiWN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fbrBMMFF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC012C853;
-	Fri,  6 Sep 2024 12:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00EC156C5E;
+	Fri,  6 Sep 2024 12:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725625463; cv=none; b=rzyeF09PXciOJZ4WpyEGf5P/fnCkCuZTOL2UjJTstAA4rp73Zq8f+IJV9EKoWibPeAkjg2tkmVS4vraqB9xRdsn4ygKL/C976frbtNwOrFVuf8F0ssPwUGs78mLAXPXLvycDEhv2iwzFVA0qMBxEA2ku7HVM1OewEcffPIPvKgY=
+	t=1725625485; cv=none; b=OZ5gqxpypqOAxYIy+WZzzj+CUYUXiJ46I1Ezbiat9zqbVraC1p/UwLHdRy1bDimcqPLHTRX1t39iaO1zm9mob3Fbjo1eFtv4gTe1xmB88m0jIG4HVuwRLNIIvocNarl1+Cb4M9G/9p/fDX0zZcO/lbJ6zVX3zk5+Lt8y8SSw3yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725625463; c=relaxed/simple;
-	bh=AW4MoUh1nwyJJad4ay+W3r7GtpLN9hrfCtuvZ6Y351s=;
+	s=arc-20240116; t=1725625485; c=relaxed/simple;
+	bh=uBH201Q/uQoLc1MasN4OKlmUhjw6E1tFIlXSjdcH8AM=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PEJIObBaGNqF348nZo87yU0yLUDUjr1/A0sbK5SrTlzwylz0KhsEXzFRIgKV+cvvNMYJFJrouuCO6XktAw6GQe7iJHfntliE9uDHmODfFq0EGrpVKeAQr6WHJ7+UaMw7t9pLGXDUw0T+Mv3GAiUmVl5cmgJBgnecZgS84Kl/XMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mELDJiWN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6278C4CEC8;
-	Fri,  6 Sep 2024 12:24:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ThLOG7Hosh1JX1ad6/hlFO2hnvU50bBh7NN4GtJw1Vk6p/nCDomTGpoSh665E3kGKbh4MhP9gRdH0mx3G7MqIPzUDQN3HEq1A72hAyCdlnesrkPacAZmVBDif4393broFg+WV+kpfzU5mtxywOLp4h39mSdy1w9HLWf7t97VFRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fbrBMMFF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61548C4CEC4;
+	Fri,  6 Sep 2024 12:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725625462;
-	bh=AW4MoUh1nwyJJad4ay+W3r7GtpLN9hrfCtuvZ6Y351s=;
+	s=k20201202; t=1725625484;
+	bh=uBH201Q/uQoLc1MasN4OKlmUhjw6E1tFIlXSjdcH8AM=;
 	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=mELDJiWNxE6MOx8b0iO9A4uCkKIpz1rK0VnSCaTBBuBLkhMute4gE26beiFt0DR8+
-	 nkZJcovIXMTZYKOlqSR3MM7VG+rDoEGt2RSbw5aeGpOe8NCguo4yTQklc9v3C9ttcX
-	 5ZHKFNi3p761JVZ6Ax1bUOY15351TICpPN4txvfUIR3+XPO7KnIz3sjQFu3nHxkDBL
-	 jwjtqWEsACCT1tYEBskuAoLtsUgS6d2ZT4dE5N1ckVmyYOfq50WHhw3y4Ea+omv0Dk
-	 IB7oguJKACXAGFGIspJDjfYMe28JIYDNnV2CTCkIOKWD9bTjJyQ2Uf6RlMWN/+m/TB
-	 Nb8Q7Myl+is6A==
-Message-ID: <5d6c455f-7fbc-4e2f-a537-907f26a4ef59@kernel.org>
-Date: Fri, 6 Sep 2024 14:24:15 +0200
+	b=fbrBMMFFcDUI0Kc0aXofipA9eFiBm3bZSuang8EauPYN7dGXR2KqIBk0H6cGvMhdZ
+	 iY7ZOdw2TQ+hOCKKCmS2W73HE4RYP0+HGk06v5VgD8/S6tN2770czwI98YTgKtazoR
+	 5PKOpdcNbFRn/Aa3TaqnRxEkF+sWlk8OKepSpnIhzTEUuoWCEZqEZ7k6LP6UfNiIet
+	 aRtKEt0AcsINR8GoXoIzQVycdZvFQG+nQiB1flYPpsuLNVeHKdgF6Km0N+/R8zgL+4
+	 b8iXySp69UILpJZS1uVX2cP/EqBvO45fQ05BcjtScNaEMrP9ISvcPpN1NpFWv6Gj23
+	 t7R3qsqgn3KCA==
+Message-ID: <65d129b5-088e-4cdb-a2fa-62448cfd2ad6@kernel.org>
+Date: Fri, 6 Sep 2024 14:24:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] dt-bindings: clock: qcom: Add SA8775P camera clock
- controller
+Subject: Re: [PATCH v4 5/8] dt-bindings: clock: qcom: Add SA8775P display
+ clock controllers
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Taniya Das <quic_tdas@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
@@ -64,8 +64,8 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com>
- <20240816-sa8775p-mm-v3-v1-3-77d53c3c0cef@quicinc.com>
- <57672tyb6pij3h7ensq4itbhnw3lr4wahfttc2fdcj4twbqpta@pwskxpet4nsh>
+ <20240816-sa8775p-mm-v3-v1-5-77d53c3c0cef@quicinc.com>
+ <5kaz5wcvxhjtny5yy5i2e63ylzpor74lknvtvdkgpygxkf7yim@m6p5zof755lp>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -110,17 +110,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <57672tyb6pij3h7ensq4itbhnw3lr4wahfttc2fdcj4twbqpta@pwskxpet4nsh>
+In-Reply-To: <5kaz5wcvxhjtny5yy5i2e63ylzpor74lknvtvdkgpygxkf7yim@m6p5zof755lp>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 18/08/2024 20:02, Krzysztof Kozlowski wrote:
-> On Fri, Aug 16, 2024 at 12:01:45PM +0530, Taniya Das wrote:
->> Add device tree bindings for the camera clock controller
+> On Fri, Aug 16, 2024 at 12:01:47PM +0530, Taniya Das wrote:
+>> Add device tree bindings for the display clock controllers
 >> on Qualcomm SA8775P platform.
 >>
 >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 >> ---
+>>  .../bindings/clock/qcom,sa8775p-dispcc.yaml        | 79 ++++++++++++++++++++
+>>  include/dt-bindings/clock/qcom,sa8775p-dispcc.h    | 87 ++++++++++++++++++++++
+>>  2 files changed, 166 insertions(+)
+>>
 > 
 > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
