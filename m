@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD0F596F443
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:26:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D5CC96F479
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:43:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56DFD1F247BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:26:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CDA6284BC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:43:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8C9D1CCB3F;
-	Fri,  6 Sep 2024 12:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 421B41CCB31;
+	Fri,  6 Sep 2024 12:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsGAieDv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QG1z5GrJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57021CC179;
-	Fri,  6 Sep 2024 12:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132CA158853;
+	Fri,  6 Sep 2024 12:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725625562; cv=none; b=u/lbnY3c1a15lvQP7CPWQhtw7X0DpKSyZRoM6rnpd8T65ke3J75v+L82tTEtFid3rLaZE1XN+N8qmY1+Gxc5ch8Az4cLBGmrD1+JtpWzsAgid4R12KEsCSh/Qv4UTzqCbM7lrv5q9PCmC8utwI62WIm2HvGFFcxSNV9ke1eaiD8=
+	t=1725626631; cv=none; b=l9ofblZWdajRA3iZcE4QiXxDQxB3TWM2qBDPEgR2i1Qtdb3oePIynDN/TQX33B/Lhy4pe1b3kpd05gZGXolVAvHAyQZyDENV0AlVb7k5dxsGroST44rp87T3j4r+aWbyy/A/aiTHdo5Qb1tpl3OUOpgbBUSW6lCnspVUviPW6so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725625562; c=relaxed/simple;
-	bh=HTgyfXZ08GiT+mWhZjz50yynkk6nenvx3sv2iUFDbZQ=;
+	s=arc-20240116; t=1725626631; c=relaxed/simple;
+	bh=8GR8naY7SiCV9GslsafSrk9SY+U1n6ZldmQgMUb+4ts=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=s4WhxHvnHRALKO+JhE0yJhYYRBkT8X5ir5En4xV8/bu0EY9qe/bq394PPxdz0yVOJBmWewXmGJgC/EymLD2TdLU2+zb72FpgMhQTvGLp8/2ZTPC3pclb23n0rnv6YkpV3jWvkSDQSK3/yXc3BcL+drw0uWMufwdLvz5n95uWw80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsGAieDv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E92C4CEC4;
-	Fri,  6 Sep 2024 12:25:58 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qQtjFK0pNJrzogKlZIAyUalYG20vZqWlTeCtGtLwS++0Ii7hDr4CB5IJzllKygnsg5iKgukn711qQUY2tpLSCRGDb23kNqjnTc29lMzpHqcbTrNtviKGE8UBYMJBnc5xbyEirKQx0WVO7xMZoeK+Z4xP8wKd8Vm2EL2nCTc5b4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QG1z5GrJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12955C4CEC4;
+	Fri,  6 Sep 2024 12:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725625562;
-	bh=HTgyfXZ08GiT+mWhZjz50yynkk6nenvx3sv2iUFDbZQ=;
+	s=k20201202; t=1725626630;
+	bh=8GR8naY7SiCV9GslsafSrk9SY+U1n6ZldmQgMUb+4ts=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DsGAieDv2h2cdYlSkyvTnlPfx2CwyTBrxd9Z1Z2UhxX36mLqTxFoRsgbEqa9cqLfo
-	 sB4zMm2EGFAiaspMzFAcCDpXuLilUfUQZnjK5yENZFfFhDuA0svTFqA97AoggfjO7B
-	 t9YZO4KkfYfQ1KoGj6i+qx+ljkFrw15zEdPPae/IpJWNITqhTcK9oX2e/TlZ68G288
-	 VhCx72/ZjiFK1h3HMug2b8ejq9uS46uzYKTUd/GGrzbwImm5/Zo0Yj6bThGgxQuj0d
-	 +FWJzbLsdyNp/BmcHezKb5M6cQCF0LCkQeRv6+8uFUcs57ivcT8C97BrByzvb4yKpq
-	 K1LaNTZXc4OEA==
-Message-ID: <98e7dc28-4413-4247-bad1-98b529f6d62d@kernel.org>
-Date: Fri, 6 Sep 2024 14:25:56 +0200
+	b=QG1z5GrJrdutIcfkbSH/dm9bjLAkE4vidFOPYzFYbsBix2eQOCN64Y0hxrM/IYKQd
+	 uKcdCYBAvJAKrtwjfIk//Hn30OuBVLlmLABsGe7lpyrA5UlgRVBzNMieMlqn76dxM4
+	 xoZxcGPuN7hsFcpWN6Yfee4QWGwo2rMF/4cAd1cw6/bzZxkECJp+9Js4d5RP80USKf
+	 Lkd7BV8RwKrU9sNqNztzWhYB3nBlKrnz0O+o9q0Vgsor9YdkkEGCqqSzxpB9ylQoEc
+	 6Iys6UvW+a4kzrvR5K5f26xUbLwjVTT6Y3kUkm8UUu+OgCzwwVFDU7pBTO0CiKNLhI
+	 hatgmkKH1kXxw==
+Message-ID: <5796baca-3347-44c7-8f0e-568c7177ec73@kernel.org>
+Date: Fri, 6 Sep 2024 14:43:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,13 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [V1 RESEND] arm64: dts: qcom: sa8775p: Add UART node
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com
-References: <20240827083252.5817-1-quic_vdadhani@quicinc.com>
+Subject: Re: [PATCH 1/6] media: dt-bindings: media: qcom,sc8280xp-camss: Fix
+ interrupt types
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20240905164142.3475873-1-vladimir.zapolskiy@linaro.org>
+ <20240905164142.3475873-2-vladimir.zapolskiy@linaro.org>
+ <run5ffs6udya6a2opphkt2chenjgelnlmnjtyeyulinpuxacmn@im72ytiz33q3>
+ <9f64102b-407d-482b-bd0b-b158fd7b255d@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -102,31 +111,32 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240827083252.5817-1-quic_vdadhani@quicinc.com>
+In-Reply-To: <9f64102b-407d-482b-bd0b-b158fd7b255d@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/08/2024 10:32, Viken Dadhaniya wrote:
-> Add missing UART configuration for sa8775.
+On 06/09/2024 13:06, Vladimir Zapolskiy wrote:
+> Hi Krzysztof,
 > 
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
->  1 file changed, 231 insertions(+)
+> On 9/6/24 13:31, Krzysztof Kozlowski wrote:
+>> On Thu, Sep 05, 2024 at 07:41:37PM +0300, Vladimir Zapolskiy wrote:
+>>> The expected type of all CAMSS interrupts is edge rising, fix it in
+>>> the documented example from CAMSS device tree bindings for sc8280xp.
+>>
+>> Subject: drop duplicated media. One media is enough (the first).
+>>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index e8dbc8d820a6..0c95a23aecec 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -1,6 +1,7 @@
+> thank you for review, here I've attemted to follow the established practice.
+> 
+> % git log -n 500 --oneline Documentation/devicetree/bindings/media/ | grep "media:.*media:" | wc -l
+> 166
+> 
+> So 1/3 of relevant commits to the folder have the duplicated "media:"
+> in the subject, the reason is not totally clear to me, thus I've just
+> inflowed into the same.
 
-
-Please don't grow the file. At least not with above explanation. There
-is no sa8775p according to what I have been just told.
-
-We achieved consensus allowing sa8775p to stay, but now Qualcomm changes
-point of view and insists on new approach of dropping sa8775p. Therefore
-this change does not make much sense in the new approach.
+People like to repeat same mistakes, but just because 166 times someone
+did a mistake, is not a reason to do the same.
 
 Best regards,
 Krzysztof
