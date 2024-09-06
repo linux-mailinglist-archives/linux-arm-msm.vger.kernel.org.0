@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7297D96F98E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 18:50:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E001396F998
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 18:53:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F17F91F2415B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 16:50:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 956761F23E06
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 16:53:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B97F41D416C;
-	Fri,  6 Sep 2024 16:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EC971D4152;
+	Fri,  6 Sep 2024 16:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tqp2lsMf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bYpfnRDy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848D01C9DE7;
-	Fri,  6 Sep 2024 16:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E691CBE8A;
+	Fri,  6 Sep 2024 16:53:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725641398; cv=none; b=nD3fhmCKcIGf2tg9QP6Ur50ej+4UqOAQX0rd6oM1P30XM60KaU8pSZ2988bdNGXXU3oe8dMKQ50G8HldTKH97MtVOw7Wriw6+l768F5+FcXbx2tm4jV3+Df01FAOmAwDqBVYo1iQ6TN+E5eBkwuxhXGURy1n73zMCSz5dwMFanI=
+	t=1725641593; cv=none; b=jBJ2ocpQqLRiSIJ+2Pexi3YXtjd7QDeKrtHOBWLen0kXjk2J9uC3bOH3VDX1FuGarrxoz9Xn/KHE9AIWAgA2QAn0A891isYbs3TLoq+CASByQfpOyoZS0W3Z6/679X4KeYGQmDl9VlNdbUnWrY/MPVNkDccg7PJkhuRpHy+Scgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725641398; c=relaxed/simple;
-	bh=rvkOObMwKZqhY0B7qN9MKTKZ1iNMcgZ3QwdiGBh3uHk=;
+	s=arc-20240116; t=1725641593; c=relaxed/simple;
+	bh=a9sqh9Q4BPnTzOZC5wLfEd0HUMtnvmdib2G2N8ZtQJA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fO2l3Tzi22AenqjrR3qB3vZijQtmHvBiVGXGLrwxI6kX1t1rH22drox0xkeHP8jXCkYX0Iq/undk8Wdabv0GPULgIDsNzsubFnjVH+tVocB13z4YXlqzVcYvULGE0pcngj1wKngN/GpQo5DoIF/W/ToCMDLrGtI55o+2XsFwLXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tqp2lsMf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74475C4CEC4;
-	Fri,  6 Sep 2024 16:49:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=n4F/xSB8IssXskMnIfour9RlrEidvSTJ555a/9kElzFNjNvaBrkryfzpZ7+83glF+ADPQ7puAkoQt0/yPQQMRmMMLNC0vj3khM4BqtKGSt1MHTwqVqAlch7/fcIRMQ23TTkx4RCCym0x7CMpd+7FvznNR4PyJpJTKR9odAeRuqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bYpfnRDy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4438C4CEC4;
+	Fri,  6 Sep 2024 16:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725641398;
-	bh=rvkOObMwKZqhY0B7qN9MKTKZ1iNMcgZ3QwdiGBh3uHk=;
+	s=k20201202; t=1725641592;
+	bh=a9sqh9Q4BPnTzOZC5wLfEd0HUMtnvmdib2G2N8ZtQJA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Tqp2lsMfWHUl05YPaWjs2VmwbihaBBdqGw1repcS3Yego+7CC2pnuGQoKV6YmSfxf
-	 Iue3HcsfEjwRMKk5Od9xEKl+9pE71pU8xv2GIMEiNrIXr/mLUaJDTbT46IOrDjwK7i
-	 wx2vSxbINrcYfVdxAYUyLKTSI6zulP0k9u5dolkRZuHT7zviyG7tFB6qm1rEfgSRM8
-	 c2ejz8PiQzWH0nyqkATjLb9tAvg8hIgutsjKZr17UAAwJdX15t991iwEVgVFaSjl4b
-	 tmEPOKdT+5jj5ARekHwkLVCaJscY86eMNOMY+2tId1IGwL1deieLtmsrEBCg/XX2Po
-	 jxQHWA/5qE/9A==
-Message-ID: <f649c854-a250-43cf-ae01-82bbb011e7e0@kernel.org>
-Date: Fri, 6 Sep 2024 18:49:49 +0200
+	b=bYpfnRDyLgZakeocZum1WUtLvzz7Lb5Ol2iCjRX0ASJGoTA60QV49AyNiONrM70is
+	 sIHJBetiz+4TOEuHYo1DHvTabhe0zZerELMI8iZu+KUgbofRB041ggi6orY8hVUfRv
+	 aXs4Eld4J2TVdhivv/fKE++MoueEb4B+/U/klQEdwXnPjgkqAotFcI29IAdp4BgI7d
+	 Dq2IU580syAuwi8ycXEH2UqmUrVG54bkwwgTykK5BCCKHaFlerCOjuyUgsBweKlkqs
+	 jKve+GNJrEmeZUS5QguL0PC4K5muiaZGSukZK5Z03kt0T82LW6b7w1YxgUyN62iEmx
+	 35bZ4ohZ0LE/w==
+Message-ID: <70b31319-aa9d-402e-a345-b3be54ac628a@kernel.org>
+Date: Fri, 6 Sep 2024 18:53:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -118,44 +118,12 @@ Content-Transfer-Encoding: 7bit
 On 06/09/2024 17:15, Raviteja Laggyshetty wrote:
 > QCS8300 SoC has several bus fabrics that could be controlled
 > and tuned dynamically according to the bandwidth demand.
-
-You got quite precise review about subject, which you partially
-implemented and then added something more redundant. Look, this is
-supposed to be device name. Add QCS8300 RPMh NoC. Drop redundant
-information.
-
-
-
 > 
 > Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-> ---
->  .../interconnect/qcom,qcs8300-rpmh.yaml       |  72 +++++++
->  .../interconnect/qcom,qcs8300-rpmh.h          | 189 ++++++++++++++++++
->  2 files changed, 261 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,qcs8300-rpmh.yaml
->  create mode 100644 include/dt-bindings/interconnect/qcom,qcs8300-rpmh.h
-> 
-> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,qcs8300-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,qcs8300-rpmh.yaml
-> new file mode 100644
-> index 000000000000..2759b003ebcf
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/interconnect/qcom,qcs8300-rpmh.yaml
-> @@ -0,0 +1,72 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/interconnect/qcom,qcs8300-rpmh.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. RPMh Network-On-Chip Interconnect on QCS8300
 
-Isn't this just "Qualcomm"? How is in most of other bindings?
+With the fixes in subject and binding title:
 
-I asked not to send us your downstream stuff. I said it about driver,
-though... so repeat here: Do not send downstream code, but work on
-upstream and use upstream style. This applies to all patches: drivers,
-DTS, bindings, everything. So which upstream binding was used as
-template for this one here?
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
