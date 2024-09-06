@@ -1,40 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-31139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73D0C96F820
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 17:25:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7617F96F8E5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 17:58:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2F54C2867C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 15:25:29 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31C6F281691
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 15:58:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5ACA71D2F48;
-	Fri,  6 Sep 2024 15:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E94FF1D4150;
+	Fri,  6 Sep 2024 15:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="quFOWuR9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9415A1D0DCB;
-	Fri,  6 Sep 2024 15:25:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20E31D3638
+	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 15:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725636326; cv=none; b=DhX/bAgf/QaamTk0WWgKT/xuJXvA+Y24NkOv5XMRlCtHA4+hr7TZd8+ym0U9eZsdmdCby9XKT0IAvjvUIYjphhc16kva5qB8ae8Uabtel6NMm5isOwUBN1UqYdFBFR2DYa+WWD1NkXzLvkPMgoVs48brvfmFv6Uk9tBG5TY0Nek=
+	t=1725638189; cv=none; b=F9Y4V5GOaxcotghwn6knRxMUK3SH8B4C1weCiklEBCkw1yJYdVkvSem+ElddTm1FTff4FgY5sjT2J0MWWIemDrV6bgcnuaAShNxAMg5C5E3iyz/oekcpyvAEOE70E3FcjVULWvtUJwS96jcyls+eVgosdBC9BXo51NlN7eKh/Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725636326; c=relaxed/simple;
-	bh=NljnRnbutnsxF1J9z4hLJYKWZghTvG8RmywBz2ykkPM=;
+	s=arc-20240116; t=1725638189; c=relaxed/simple;
+	bh=4cg8BWc+R6nIy9hv+UKxy2CN9dth+ZpDiVs7xRNz7MQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=N/u7LWWCGc3xZsiX1UAoq8SWH97j4Bil5N+iz+eNoM4Akbm5uXPiWqB3jFXiIB5HPcDgNZ6iFfsn3V0EgoY+PfPkmH+upJf/0P1PoiSz7R6gPNoOrvypXIEZ3v7uNV/vKSfy0vqCiUmONnvNR3/GpmYfzDVIKhUTCfkhdcnVIg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EA5FEFEC;
-	Fri,  6 Sep 2024 08:25:49 -0700 (PDT)
-Received: from [10.1.196.40] (e121345-lin.cambridge.arm.com [10.1.196.40])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EFFDF3F73F;
-	Fri,  6 Sep 2024 08:25:20 -0700 (PDT)
-Message-ID: <8e17f1ac-0178-454b-b9dc-bb14ad6c465b@arm.com>
-Date: Fri, 6 Sep 2024 16:25:19 +0100
+	 In-Reply-To:Content-Type; b=EUUVaQWDO5+G4mG8EUAfru3H+CVQaCognoQ21Pi7HSRpEimQZ2EIO8NgjUdzNV/VUTLw1IEREka8ZCuI8/nn0HyZwBtofovKXZ0yGq8/2zTyrZEcCPM7BCg79fF4F65t6NquxiSqV1SGc+g5O7ltGOsByLG+vKMMwJNBoIgBPeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=quFOWuR9; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-53568285c1aso334597e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 08:56:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725638185; x=1726242985; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dWoWkKXcwQY4B/OesPC+cf/kmi3mDig7H7BN4yK6Ob0=;
+        b=quFOWuR96oVuiGT6QPl5Fr1IccZaJkv+FM70KKebhGP3PQLR375amyVUIiWwbPI4vz
+         inxECC2M1YPFf5nJkg2xprsjfEZpcSGSi0NK7rxrjhgxrGXZeOyvrVxf9GyIJBszDsFx
+         Ks5EUrKMi8Me8DT2P2rJbwaODj1FZjJH8pRcwbe4iXuB5DFGgcRUFqOlM+uHeQzDu0mF
+         YAg4rK5bDWRgaEs061eVfi8I8HQosWZGHa7yHj28WaKS6KR0q/KTlPYFuZ+xpaFQIVKE
+         C6twBFTQZy/YVH7/hMzwTGN/Mgmh6uHk2NEnZQLMtUhDhs+hObHkNOdG6SZ60ySsK4C+
+         xAtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725638185; x=1726242985;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dWoWkKXcwQY4B/OesPC+cf/kmi3mDig7H7BN4yK6Ob0=;
+        b=m/MjkUBUO4mHLGTYANXEq1zMqRTOVgY9ai16DEgysYzV8AXTXPNVU+p0pHr7HoUztS
+         JFmoXmy0Nll39QVb8+/nrY6gB+mFyV1hd5nnVCepdQYhhHAR5uAGXcPhW0bM+Bhg9ZcP
+         5hY5kvJWx0HGqwErrkryile5emhrk0fanYZ/vktEsCq+I+N77l0ojq4KQkGstQvgmwGi
+         WC/fZAqGEAUiY/vwbp0a+6c2qKymsyk8lJmOHM+Xe350dgWVHEEjGrtLw6wGn0rmTRvh
+         47tZ5lVTS6raqudhREcJN42NQdFp6UrphT/kr0T9au1HPsa+2Q2+zsA3D7yEDYYBx28H
+         fxJw==
+X-Gm-Message-State: AOJu0YziSZVXUAG1Zoracdfxevtj2HooIcV6RAJO85Gzm6b1BrIShWHD
+	/mPMnJjHkzvMpe7nsjF8aTaU4KOA7bGDJtEuNCEk8ralPwfbGCwRfFrJiT5H2hc=
+X-Google-Smtp-Source: AGHT+IHh37EyeaRel9WOT+5cYxUN6vbPMzhO5ZvdhSAMl9nsZgy9x61BK3F6TLnHqCmkvobrxQ92oQ==
+X-Received: by 2002:a05:6512:acf:b0:52c:ce28:82bf with SMTP id 2adb3069b0e04-536587b3f3amr1186678e87.5.1725638184796;
+        Fri, 06 Sep 2024 08:56:24 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53569471e85sm679367e87.139.2024.09.06.08.56.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Sep 2024 08:56:24 -0700 (PDT)
+Message-ID: <9ed92660-5f42-4a1a-9261-b8800133972a@linaro.org>
+Date: Fri, 6 Sep 2024 18:56:22 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,93 +75,258 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Revert "iommu/io-pgtable-arm: Optimise non-coherent
- unmap"
-To: Will Deacon <will@kernel.org>
-Cc: Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Ashish Mhetre <amhetre@nvidia.com>, Rob Clark <robdclark@chromium.org>,
- Joerg Roedel <joro@8bytes.org>,
- "moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <20240905124956.84932-1-robdclark@gmail.com>
- <20240905155330.GA15246@willie-the-truck>
- <53f13813-a515-475a-836d-0b6017a117eb@arm.com>
- <20240906105656.GA16124@willie-the-truck>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <20240906105656.GA16124@willie-the-truck>
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+Content-Language: en-US
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20240812144131.369378-8-quic_depengs@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 06/09/2024 11:56 am, Will Deacon wrote:
-> On Thu, Sep 05, 2024 at 05:27:28PM +0100, Robin Murphy wrote:
->> On 05/09/2024 4:53 pm, Will Deacon wrote:
->>> On Thu, Sep 05, 2024 at 05:49:56AM -0700, Rob Clark wrote:
->>>> From: Rob Clark <robdclark@chromium.org>
->>>>
->>>> This reverts commit 85b715a334583488ad7fbd3001fe6fd617b7d4c0.
->>>>
->>>> It was causing gpu smmu faults on x1e80100.
->>>>
->>>> I _think_ what is causing this is the change in ordering of
->>>> __arm_lpae_clear_pte() (dma_sync_single_for_device() on the pgtable
->>>> memory) and io_pgtable_tlb_flush_walk().  I'm not entirely sure how
->>>> this patch is supposed to work correctly in the face of other
->>>> concurrent translations (to buffers unrelated to the one being
->>>> unmapped(), because after the io_pgtable_tlb_flush_walk() we can have
->>>> stale data read back into the tlb.
->>>>
->>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>>> ---
->>>>    drivers/iommu/io-pgtable-arm.c | 31 ++++++++++++++-----------------
->>>>    1 file changed, 14 insertions(+), 17 deletions(-)
->>>
->>> Please can you try the diff below, instead?
->>
->> Given that the GPU driver's .tlb_add_page is a no-op, I can't see this
->> making a difference. In fact, given that msm_iommu_pagetable_unmap() still
->> does a brute-force iommu_flush_iotlb_all() after io-pgtable returns, and in
->> fact only recently made .tlb_flush_walk start doing anything either for the
->> sake of the map path, I'm now really wondering how this patch has had any
->> effect at all... :/
-> 
-> Hmm, yup. Looks like Rob has come back to say the problem lies elsewhere
-> anyway.
-> 
-> One thing below though...
-> 
->>>
->>> Will
->>>
->>> --->8
->>>
->>> diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
->>> index 0e67f1721a3d..0a32e9499e2c 100644
->>> --- a/drivers/iommu/io-pgtable-arm.c
->>> +++ b/drivers/iommu/io-pgtable-arm.c
->>> @@ -672,7 +672,7 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
->>>                   /* Clear the remaining entries */
->>>                   __arm_lpae_clear_pte(ptep, &iop->cfg, i);
->>> -               if (gather && !iommu_iotlb_gather_queued(gather))
->>> +               if (!iommu_iotlb_gather_queued(gather))
->>
->> Note that this would reintroduce the latent issue which was present
->> originally, wherein iommu_iotlb_gather_queued(NULL) is false, but if we
->> actually allow a NULL gather to be passed to io_pgtable_tlb_add_page() it
->> may end up being dereferenced (e.g. in arm-smmu-v3).
-> 
-> I think there is still something to fix here. arm_lpae_init_pte() can
-> pass a NULL gather to __arm_lpae_unmap() and I don't think skipping the
-> invalidation is correct in that case. Either the drivers need to handle
-> that or we shouldn't be passing NULL.
-> 
-> What do you think?
+Hi Depeng,
 
-The subtlety there is that in that case it's always a non-leaf PTE, so 
-all that goes back to the driver is io_pgtable_tlb_flush_walk() and the 
-gather is never used.
+On 8/12/24 17:41, Depeng Shao wrote:
+> Add bindings for qcom,sm8550-camss in order to support the camera
+> subsystem for sm8550.
+> 
+> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
+> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
+> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
 
-Thanks,
-Robin.
+there are a few more things, which I noticed.
+
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        camss: camss@ace4000 {
+> +            compatible = "qcom,sm8550-camss";
+> +
+> +            reg = <0 0x0acb7000 0 0xd00>,
+> +                  <0 0x0acb9000 0 0xd00>,
+> +                  <0 0x0acbb000 0 0xd00>,
+> +                  <0 0x0acca000 0 0xa00>,
+> +                  <0 0x0acce000 0 0xa00>,
+> +                  <0 0x0acb6000 0 0x1000>,
+> +                  <0 0x0ace4000 0 0x2000>,
+> +                  <0 0x0ace6000 0 0x2000>,
+> +                  <0 0x0ace8000 0 0x2000>,
+> +                  <0 0x0acea000 0 0x2000>,
+> +                  <0 0x0acec000 0 0x2000>,
+> +                  <0 0x0acee000 0 0x2000>,
+> +                  <0 0x0acf0000 0 0x2000>,
+> +                  <0 0x0acf2000 0 0x2000>,
+> +                  <0 0x0ac62000 0 0xf000>,
+> +                  <0 0x0ac71000 0 0xf000>,
+> +                  <0 0x0ac80000 0 0xf000>,
+> +                  <0 0x0accb000 0 0x2800>,
+> +                  <0 0x0accf000 0 0x2800>;
+
+Please sort the list above in numerical order, this will change positions
+of "vfe_lite0", "vfe_lite1" etc.
+
+Another note, since it's not possible to map less than a page, so I believe
+it might make sense to align all sizes to 0x1000.
+
+> +            reg-names = "csid0",
+> +                        "csid1",
+> +                        "csid2",
+> +                        "csid_lite0",
+> +                        "csid_lite1",
+> +                        "csid_top",
+> +                        "csiphy0",
+> +                        "csiphy1",
+> +                        "csiphy2",
+> +                        "csiphy3",
+> +                        "csiphy4",
+> +                        "csiphy5",
+> +                        "csiphy6",
+> +                        "csiphy7",
+> +                        "vfe0",
+> +                        "vfe1",
+> +                        "vfe2",
+> +                        "vfe_lite0",
+> +                        "vfe_lite1";
+> +
+> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+> +                     <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +                     <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
+> +                     <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
+> +                     <&camcc CAM_CC_CPAS_IFE_0_CLK>,
+> +                     <&camcc CAM_CC_CPAS_IFE_1_CLK>,
+> +                     <&camcc CAM_CC_CPAS_IFE_2_CLK>,
+> +                     <&camcc CAM_CC_CSID_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY0_CLK>,
+> +                     <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY1_CLK>,
+> +                     <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY2_CLK>,
+> +                     <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY3_CLK>,
+> +                     <&camcc CAM_CC_CSI3PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY4_CLK>,
+> +                     <&camcc CAM_CC_CSI4PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY5_CLK>,
+> +                     <&camcc CAM_CC_CSI5PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY6_CLK>,
+> +                     <&camcc CAM_CC_CSI6PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY7_CLK>,
+> +                     <&camcc CAM_CC_CSI7PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
+> +                     <&camcc CAM_CC_IFE_0_CLK>,
+> +                     <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
+> +                     <&camcc CAM_CC_IFE_1_CLK>,
+> +                     <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
+> +                     <&camcc CAM_CC_IFE_2_CLK>,
+> +                     <&camcc CAM_CC_IFE_2_FAST_AHB_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_CSID_CLK>,
+> +                     <&gcc GCC_CAMERA_HF_AXI_CLK>;
+
+Could you please put the &gcc provided clock as the first one in the list?
+
+> +
+> +            clock-names = "camnoc_axi",
+> +                          "cpas_ahb",
+> +                          "cpas_fast_ahb_clk",
+> +                          "cpas_ife_lite",
+> +                          "cpas_vfe0",
+> +                          "cpas_vfe1",
+> +                          "cpas_vfe2",
+> +                          "csid",
+> +                          "csiphy0",
+> +                          "csiphy0_timer",
+> +                          "csiphy1",
+> +                          "csiphy1_timer",
+> +                          "csiphy2",
+> +                          "csiphy2_timer",
+> +                          "csiphy3",
+> +                          "csiphy3_timer",
+> +                          "csiphy4",
+> +                          "csiphy4_timer",
+> +                          "csiphy5",
+> +                          "csiphy5_timer",
+> +                          "csiphy6",
+> +                          "csiphy6_timer",
+> +                          "csiphy7",
+> +                          "csiphy7_timer",
+> +                          "csiphy_rx",
+> +                          "vfe0",
+> +                          "vfe0_fast_ahb",
+> +                          "vfe1",
+> +                          "vfe1_fast_ahb",
+> +                          "vfe2",
+> +                          "vfe2_fast_ahb",
+> +                          "vfe_lite",
+> +                          "vfe_lite_ahb",
+> +                          "vfe_lite_cphy_rx",
+> +                          "vfe_lite_csid",
+> +                          "gcc_axi_hf";
+> +
+> +            interconnects = <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_CAMERA_CFG 0>,
+> +                            <&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>,
+> +                            <&mmss_noc MASTER_CAMNOC_ICP 0 &mc_virt SLAVE_EBI1 0>,
+> +                            <&mmss_noc MASTER_CAMNOC_SF 0 &mc_virt SLAVE_EBI1 0>;
+> +            interconnect-names = "ahb",
+> +                                 "hf_0_mnoc",
+> +                                 "icp_mnoc",
+> +                                 "sf_0_mnoc";
+
+Just a note for myself, interconnect names lost "cam_" prefix, and it should
+be fine.
+
+> +
+> +            interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 431 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 376 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 89 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 278 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 277 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 377 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +            interrupt-names = "csid0",
+> +                              "csid1",
+> +                              "csid2",
+> +                              "csid_lite0",
+> +                              "csid_lite1",
+> +                              "csiphy0",
+> +                              "csiphy1",
+> +                              "csiphy2",
+> +                              "csiphy3",
+> +                              "csiphy4",
+> +                              "csiphy5",
+> +                              "csiphy6",
+> +                              "csiphy7",
+> +                              "vfe0",
+> +                              "vfe1",
+> +                              "vfe2",
+> +                              "vfe_lite0",
+> +                              "vfe_lite1";
+> +
+> +            iommus = <&apps_smmu 0x800 0x20>;
+> +
+> +            power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
+> +                            <&camcc CAM_CC_IFE_1_GDSC>,
+> +                            <&camcc CAM_CC_IFE_2_GDSC>,
+> +                            <&camcc CAM_CC_TITAN_TOP_GDSC>;
+> +
+> +            power-domain-names = "ife0",
+> +                                 "ife1",
+> +                                 "ife2",
+> +                                 "top";
+> +
+> +            vdda-phy-supply = <&vreg_l1e_0p88>;
+> +            vdda-pll-supply = <&vreg_l3e_1p2>;
+> +
+> +            ports {
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+
+In case of a single child node #address-cells/#size-cells could be omitted,
+if I'm not mistaken about it...
+
+> +                port@0 {
+> +                    reg = <0>;
+> +                    #address-cells = <1>;
+> +                    #size-cells = <0>;
+
+Same as above.
+
+> +
+> +                    csiphy_ep0: endpoint@0 {
+> +                        reg = <0>;
+> +                        clock-lanes = <7>;
+> +                        data-lanes = <0 1>;
+> +                        remote-endpoint = <&sensor_ep>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +    };
+
+--
+Best wishes,
+Vladimir
 
