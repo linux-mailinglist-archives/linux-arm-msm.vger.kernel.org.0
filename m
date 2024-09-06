@@ -1,162 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-31054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31055-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EED796E94C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:33:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6861396E95C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:40:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B0ACA1F24FA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 05:33:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2002B286058
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 05:40:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B53B8248C;
-	Fri,  6 Sep 2024 05:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E48185628;
+	Fri,  6 Sep 2024 05:40:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BSH0sl9k"
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="VlptsF3J"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772F5819;
-	Fri,  6 Sep 2024 05:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866CA2628C;
+	Fri,  6 Sep 2024 05:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725600816; cv=none; b=H/+97hoZhTKMdoGmK2EgCx1sr2PcSshEch8cOgvxOT0JTYvd3JK+MVBqYGNcIjGvl3H0Ohi89wlChi+VtJFOZmJd0TXRHz/lTdqRI6QUQICdA6gMoPMcfaBiJz/fg9opu8g7Fn157De3j4NuAOrgBk0sWuQOSwfAp+twiHnUj2s=
+	t=1725601246; cv=none; b=aUgffcdqYMtDA946gIMPORXFiSU2Ze/H2TCScV/5jPHhes7/vmXq/kTHhDY32O5a6e4EkisHkUDo1DXvX2ynW2dq37tOYVEDEU16/vtKjm0NJtyOKmMXDDCcDCKwdEJ9heaA0KZS2X/qT1UwEBjPSCmW2sVbibUYg7GV07LMntw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725600816; c=relaxed/simple;
-	bh=+wqXwlOJLYUva84G6ipGlzWPUA2uIFHCxaVbBOcdlNA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GDFLnqW96mX/IZpHgI+b+qITujP7ZoytnMit+nXlvtwDoXCB7k30Ax5cUKYDfguUgRrEOdX5KDmbEW9AL7ApHT43oUM9OuLhO8AKVG0smML2/r6srUOa/MK8nxQr0GD3AoWHqNl6044NoouD+m7s2FjsX/ne0kf3pRPm7Sc3QMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BSH0sl9k; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 485IQ34K009992;
-	Fri, 6 Sep 2024 05:33:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AQ6010Ge4eWitT4DPpgKOhbf3PTApvBDUYpOt802MW8=; b=BSH0sl9kHEZqCmKz
-	oDAMBaSqta4qWZziQcJoxBi9Iqq+27mdbEYVfX1Alx3A6gVJ8nr2u8HJvzgh4ySk
-	1e8cdq0p0oE6zZHMepWL0Sq4CBInw6DdX1eYU1FqbWwvXxMPGu/XKnwCruZjozwI
-	5ySL0ChpVlGp81fEB2VeDfFRlAiK16JYCdlx0L2n52c84vPzfk17mbdF2w0EXYGj
-	YRGvbvoVZcul1YIpJmsEjI7LYYS4Orox0QguMAIePmGQM/LCk8Ci+jYg6VuZNYyE
-	dVBHxBmIHv9SxHCoMJ2UitPejI3zuYRZRw+CMsX0AK24pzhI+f6ZJ6XAUdVd3Y/v
-	s7Wh2Q==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwrs65d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Sep 2024 05:33:27 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4865XQ70028293
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Sep 2024 05:33:26 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 5 Sep 2024
- 22:33:23 -0700
-Message-ID: <1e814bd1-0ae6-494a-8453-4de23639c5a7@quicinc.com>
-Date: Fri, 6 Sep 2024 13:33:20 +0800
+	s=arc-20240116; t=1725601246; c=relaxed/simple;
+	bh=Cniav45urdpVNzapqVqrBdTz6uLrtoPLIOl7/GG06PM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YdNQcELLMjAVD+HOf2FTOvGhOkyKgkngZYlPE9GFaLfolbB8nG5cNt0ZWn9ZM1fUEx/8GN6Q3w3PM2fE580h4MULDwEC4UZP8LANsB4Hd0F73R1xvv2ztcdW/L8LDmdGyM/P7rCv6UM/x8su/BU0yT9x8WqYe9zqknS2yCV41i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=VlptsF3J; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1725601229;
+	bh=Um2fielNufiPq2gPF+cakRDGheYfuE60dnAlgqaba+4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version;
+	b=VlptsF3JjbCh+zw7R23THL+asQr2yCm8+ot2y6+ZS41sf0P2y5MoAz8AjOwZzI33p
+	 Oes0w1cLqgls+dqB5AXMEEpxyQlxswec2/MrgknftN1iYKq04QdMcDUEgWGEq5G3TV
+	 5ev8/Um/EpQiThubn8bN15U11J6jygRMafgdv2k0=
+X-QQ-mid: bizesmtp89t1725601217t86fmi1u
+X-QQ-Originating-IP: pp2HEb8VFRV3OyePs+K/oTB0T0vJNpih3CUIsTHdOR4=
+Received: from localhost.localdomain ( [113.57.152.160])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 06 Sep 2024 13:40:11 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 3399184416924761505
+From: WangYuli <wangyuli@uniontech.com>
+To: aaro.koskinen@iki.fi,
+	andreas@kemnade.info,
+	khilman@baylibre.com,
+	rogerq@kernel.org,
+	tony@atomide.com,
+	linux@armlinux.org.uk,
+	jgg@ziepe.ca,
+	leon@kernel.org,
+	wangyuli@uniontech.com,
+	gustavoars@kernel.org,
+	mitr@volny.cz,
+	dmitry.torokhov@gmail.com,
+	miquel.raynal@bootlin.com,
+	richard@nod.at,
+	vigneshr@ti.com,
+	anil.gurumurthy@qlogic.com,
+	sudarsana.kalluru@qlogic.com,
+	James.Bottomley@HansenPartnership.com,
+	martin.petersen@oracle.com,
+	obdclark@gmail.com,
+	quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	daniel@ffwll.ch
+Cc: linux-omap@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-rdma@vger.kernel.org,
+	linux-input@vger.kernel.org,
+	linux-mtd@lists.infradead.org,
+	linux-scsi@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	abhinavk@codeaurora.org,
+	architt@codeaurora.org,
+	chandanu@codeaurora.org,
+	jsanka@codeaurora.org,
+	jcrouse@codeaurora.org,
+	ryadav@codeaurora.org,
+	skolluku@codeaurora.org,
+	seanpaul@chromium.org,
+	robdclark@gmail.com,
+	anil_ravindranath@pmc-sierra.com,
+	standby24x7@gmail.com,
+	jkosina@suse.cz,
+	don.hiatt@intel.com,
+	ira.weiny@intel.com,
+	dasaratharaman.chandramouli@intel.com,
+	dledford@redhat.com,
+	eric.piel@tremplin-utc.net,
+	akpm@linux-foundation.org,
+	dtor@mail.ru,
+	vijaykumar@bravegnu.org,
+	dwmw2@infradead.org,
+	kgudipat@brocade.com,
+	James.Bottomley@suse.de,
+	guanwentao@uniontech.com,
+	zhanjun@uniontech.com
+Subject: [PATCH] treewide: Correct the typo 'retun'
+Date: Fri,  6 Sep 2024 13:40:08 +0800
+Message-ID: <63D0F870EE8E87A0+20240906054008.390188-1-wangyuli@uniontech.com>
+X-Mailer: git-send-email 2.43.4
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/19] remoteproc: qcom: pas: Add QCS8300 remoteproc
- support
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        Xin Liu
-	<quic_liuxin@quicinc.com>
-References: <20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com>
- <20240904-qcs8300_initial_dtsi-v1-2-d0ea9afdc007@quicinc.com>
- <ecd95f82-ea98-4279-ad01-dc73d361180a@kernel.org>
- <a0f3176d-9b2a-4fb9-9a7b-f8e778e3b427@quicinc.com>
- <6652a08e-7143-4214-a864-9f27c10d7571@kernel.org>
-Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <6652a08e-7143-4214-a864-9f27c10d7571@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: E8-igjlDLuh_9zjMNe7ZmOg1oOgpCeP9
-X-Proofpoint-GUID: E8-igjlDLuh_9zjMNe7ZmOg1oOgpCeP9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-05_17,2024-09-05_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0
- malwarescore=0 bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
- impostorscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409060039
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: bizesmtp:uniontech.com:qybglogicsvrgz:qybglogicsvrgz8a-1
 
+There are some spelling mistakes of 'retun' in comments which
+should be instead of 'return'.
 
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+---
+ arch/arm/mach-omap2/omap-mpuss-lowpower.c | 2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  | 2 +-
+ drivers/infiniband/core/sa_query.c        | 2 +-
+ drivers/input/misc/wistron_btns.c         | 2 +-
+ drivers/mtd/nand/raw/nandsim.c            | 2 +-
+ drivers/scsi/bfa/bfa_fcs.c                | 2 +-
+ drivers/scsi/pmcraid.c                    | 2 +-
+ 7 files changed, 7 insertions(+), 7 deletions(-)
 
-On 9/5/2024 2:24 PM, Krzysztof Kozlowski wrote:
-> On 05/09/2024 06:30, Jingyi Wang wrote:
->>>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->>>> index ef82835e98a4..f92ccd4921b7 100644
->>>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->>>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->>>> @@ -1416,6 +1416,9 @@ static const struct of_device_id adsp_of_match[] = {
->>>>  	{ .compatible = "qcom,qcs404-adsp-pas", .data = &adsp_resource_init },
->>>>  	{ .compatible = "qcom,qcs404-cdsp-pas", .data = &cdsp_resource_init },
->>>>  	{ .compatible = "qcom,qcs404-wcss-pas", .data = &wcss_resource_init },
->>>> +	{ .compatible = "qcom,qcs8300-adsp-pas", .data = &sa8775p_adsp_resource},
->>>> +	{ .compatible = "qcom,qcs8300-cdsp-pas", .data = &sa8775p_cdsp0_resource},
->>>> +	{ .compatible = "qcom,qcs8300-gpdsp-pas", .data = &sa8775p_gpdsp0_resource},
->>>
->>> What's the point of this? You have entire commit msg to explain such
->>> weird duplication. Otherwise sorry, don't duplicate unnecessarily.
->>> Devices are compatible, aren't they?
->>>
->>> Best regards,
->>> Krzysztof
->>>
->>>
->> I will drop this, could you please help us to understand what is the correct way to
->> deal such situation, do we need to update the yaml and add qcs8300 bindings or just
->> reference to sa8775p bindings in the device tree?
-> 
-> Above diff hunk suggests that devices are compatible, so should be made
-> compatible in the bindings (use fallback). There are plenty examples of
-> this for all Qualcomm devices.
-> 
-> Best regards,
-> Krzysztof
-> 
-
-The usage of binding seems inconsistent across different Qualcomm drivers. Could you please
-confirm that when you mentioned "use fallback", do you mean binding like this?
-
-      - items:
-          - enum:
-              - qcom,sm8550-sndcard
-              - qcom,sm8650-sndcard
-          - const: qcom,sm8450-sndcard
-
-https://www.kernel.org/doc/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
-
-Thanks,
-Jingyi
-
+diff --git a/arch/arm/mach-omap2/omap-mpuss-lowpower.c b/arch/arm/mach-omap2/omap-mpuss-lowpower.c
+index 7ad74db951f6..f18ef45e2fe1 100644
+--- a/arch/arm/mach-omap2/omap-mpuss-lowpower.c
++++ b/arch/arm/mach-omap2/omap-mpuss-lowpower.c
+@@ -333,7 +333,7 @@ int omap4_hotplug_cpu(unsigned int cpu, unsigned int power_state)
+ 	omap_pm_ops.scu_prepare(cpu, power_state);
+ 
+ 	/*
+-	 * CPU never retuns back if targeted power state is OFF mode.
++	 * CPU never returns back if targeted power state is OFF mode.
+ 	 * CPU ONLINE follows normal CPU ONLINE ptah via
+ 	 * omap4_secondary_startup().
+ 	 */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+index b26d5fe40c72..febc3e764a63 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+@@ -231,7 +231,7 @@ struct dpu_crtc_state {
+ 	container_of(x, struct dpu_crtc_state, base)
+ 
+ /**
+- * dpu_crtc_frame_pending - retun the number of pending frames
++ * dpu_crtc_frame_pending - return the number of pending frames
+  * @crtc: Pointer to drm crtc object
+  */
+ static inline int dpu_crtc_frame_pending(struct drm_crtc *crtc)
+diff --git a/drivers/infiniband/core/sa_query.c b/drivers/infiniband/core/sa_query.c
+index 8175dde60b0a..53571e6b3162 100644
+--- a/drivers/infiniband/core/sa_query.c
++++ b/drivers/infiniband/core/sa_query.c
+@@ -1420,7 +1420,7 @@ enum opa_pr_supported {
+ /*
+  * opa_pr_query_possible - Check if current PR query can be an OPA query.
+  *
+- * Retuns PR_NOT_SUPPORTED if a path record query is not
++ * Returns PR_NOT_SUPPORTED if a path record query is not
+  * possible, PR_OPA_SUPPORTED if an OPA path record query
+  * is possible and PR_IB_SUPPORTED if an IB path record
+  * query is possible.
+diff --git a/drivers/input/misc/wistron_btns.c b/drivers/input/misc/wistron_btns.c
+index 5c4956678cd0..39d6f642cd19 100644
+--- a/drivers/input/misc/wistron_btns.c
++++ b/drivers/input/misc/wistron_btns.c
+@@ -1075,7 +1075,7 @@ static void wistron_led_init(struct device *parent)
+ 	}
+ 
+ 	if (leds_present & FE_MAIL_LED) {
+-		/* bios_get_default_setting(MAIL) always retuns 0, so just turn the led off */
++		/* bios_get_default_setting(MAIL) always returns 0, so just turn the led off */
+ 		wistron_mail_led.brightness = LED_OFF;
+ 		if (led_classdev_register(parent, &wistron_mail_led))
+ 			leds_present &= ~FE_MAIL_LED;
+diff --git a/drivers/mtd/nand/raw/nandsim.c b/drivers/mtd/nand/raw/nandsim.c
+index 179b28459b4b..df48b7d01d16 100644
+--- a/drivers/mtd/nand/raw/nandsim.c
++++ b/drivers/mtd/nand/raw/nandsim.c
+@@ -1381,7 +1381,7 @@ static inline union ns_mem *NS_GET_PAGE(struct nandsim *ns)
+ }
+ 
+ /*
+- * Retuns a pointer to the current byte, within the current page.
++ * Returns a pointer to the current byte, within the current page.
+  */
+ static inline u_char *NS_PAGE_BYTE_OFF(struct nandsim *ns)
+ {
+diff --git a/drivers/scsi/bfa/bfa_fcs.c b/drivers/scsi/bfa/bfa_fcs.c
+index 5023c0ab4277..e52ce9b01f49 100644
+--- a/drivers/scsi/bfa/bfa_fcs.c
++++ b/drivers/scsi/bfa/bfa_fcs.c
+@@ -1431,7 +1431,7 @@ bfa_cb_lps_flogo_comp(void *bfad, void *uarg)
+  *	param[in]	vf_id - VF_ID
+  *
+  *	return
+- *	If lookup succeeds, retuns fcs vf object, otherwise returns NULL
++ *	If lookup succeeds, returns fcs vf object, otherwise returns NULL
+  */
+ bfa_fcs_vf_t   *
+ bfa_fcs_vf_lookup(struct bfa_fcs_s *fcs, u16 vf_id)
+diff --git a/drivers/scsi/pmcraid.c b/drivers/scsi/pmcraid.c
+index a2a084c8075e..72a4c6e3d0c8 100644
+--- a/drivers/scsi/pmcraid.c
++++ b/drivers/scsi/pmcraid.c
+@@ -4009,7 +4009,7 @@ static void pmcraid_tasklet_function(unsigned long instance)
+  * This routine un-registers registered interrupt handler and
+  * also frees irqs/vectors.
+  *
+- * Retun Value
++ * Return Value
+  *	None
+  */
+ static
+-- 
+2.43.4
 
 
