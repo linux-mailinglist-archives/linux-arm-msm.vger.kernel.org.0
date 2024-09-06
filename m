@@ -1,113 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-31131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C678096F752
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 16:48:40 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7905D96F75A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 16:49:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54370B2389F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:48:38 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AE6E8B2544C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:49:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D749E1C9EA1;
-	Fri,  6 Sep 2024 14:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 218E61D1F7C;
+	Fri,  6 Sep 2024 14:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JcronXvx"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OaD/ctsQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2854B1DFED;
-	Fri,  6 Sep 2024 14:48:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92B81D1F70;
+	Fri,  6 Sep 2024 14:49:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725634116; cv=none; b=qLPSNNr4S04GhoiD2XzYeOPusHoBadfXa5mqbij3tpG8yY+3yYL4VhA7IjVe5GnLveqxdPKKIMBX3UcVDGRQV+RIroXwAeq63KgFfGyrSSJe9HXfPf3aIdEW570xzvyL+nTkbxfER5DTCRsOlSwiNMVWFzM78jb0bgpeYjuLDbU=
+	t=1725634152; cv=none; b=rEkNlnsmU7ew8HVwI+49lNFiGwFNKM1QAmfB5wExmrV5YPY2QyJr05G27ph6MVrfTd9sO3ZXSJt9Xvat+0mNn+rX22fhzXnnDvc4jsDNx01DKFpnxRx4oGFcpbYDUW+1yxwTJQVha3YoT4j6pjadMHzwtaUX14li7jOnjpvFE0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725634116; c=relaxed/simple;
-	bh=e4GihuxjY3vq4Gf7efzEhySvDQVsUfgnSxus+q6w9mU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MFMKm1P8Dm8xck2tPiii0J03dkRwXDmOpUfJ5xQShyFXhxD8bm76aGOd2fpcce4PJx8Oe38au8BIyyCjd0glIq04k82JU9D5QQzwTHNDUFH6om9ZsCMfCglOcCcaREvUaSWNOw9ZIPXPu1qkPxLZVRSc3CxdqfqtY1kx/umNKU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JcronXvx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4868nYpI028679;
-	Fri, 6 Sep 2024 14:48:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fzcv8pUBe0hyPv1CXrZbBMCtmJQh55CjwDqiQkwKLeY=; b=JcronXvxYsyd/qpJ
-	yVelI1vYZCZz11+kwynSfIKkmsXjwMzhsCkOxk8sshFJCwT74SzezkkIgivRZ6hG
-	WSlYr0R+Fwva9RAQTB0wQ0hxqcz820ix5m+AGeEV3OtU2tQ1q08mFhY2RYNrH9SV
-	IokJJO5oT+CfPoAQulsAPlzhAKHNlbnf0rD7lx+nqbHk97EECOD1SIO8Jy9swDm9
-	eK4zGjnVFuwQwnbkkGTDgH4W4TMgPNfeaZ+asLqal7kTzCLurWF9yVwqLRF8f1dD
-	pQzKvWFdr74guBcckvvRKhnuHpDhXGoXERBB549v7fi1jp8miaZuMy7jyaaNw/Cv
-	eAllJQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwu2hk1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Sep 2024 14:48:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 486EmRtT007315
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 6 Sep 2024 14:48:27 GMT
-Received: from [10.111.181.108] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 6 Sep 2024
- 07:48:27 -0700
-Message-ID: <f2cc8048-2302-40dd-add9-e3ddcd5557c9@quicinc.com>
-Date: Fri, 6 Sep 2024 07:48:26 -0700
+	s=arc-20240116; t=1725634152; c=relaxed/simple;
+	bh=q8NFAWndytiAyShc0RsLlL4YDsYpowOBThyUoQqO95s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SCW5WKJ2quooCRxmma8vpaxZAUhNAB/RHJ3JNnAdhg9jZoXBglFybMAyD8i5rRFeqTWtlvkLrrWJwHEJvl0LfeIuNNkRZbPJ0irvmNVtLyjbP3z0PiPG/lfOrbL42bUd/EjbxxAn4UDdPW9Rt5N+9M3w5XphYGeK60k2CvKueZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OaD/ctsQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C872C4CEC6;
+	Fri,  6 Sep 2024 14:49:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725634151;
+	bh=q8NFAWndytiAyShc0RsLlL4YDsYpowOBThyUoQqO95s=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OaD/ctsQ4iXV0nrrBeprUpDNN1sNKukqG5wifippuTa4rHRjuJpdK/TrFPcXxzTAJ
+	 0j0FCL9XPfj6DfxlvbrdEArx5OeRhJv9PxUGM0ywA0hBFpnNyxLV9ipG/H6UxfN5mw
+	 LOYgISlNE1Evk+Ele42Te9tlIDrAiwQuLN601Gv1S3nDTfYxz6zwtMZDIGaHlDfitK
+	 tu9xxdAN4w06DN04yZDy6Cbn2WJkteUm73zD/iawT+h//cohpXHZJEhwHwxN7YUZZ/
+	 +kzppUP86j/FZbLB5Hbni2hADgcU2PTdZWGcojSto3Ye0ZU/KT8NpeR6VyGf3kONoP
+	 eTv7flitAbWsg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1smaHD-000000005ly-40G9;
+	Fri, 06 Sep 2024 16:49:32 +0200
+Date: Fri, 6 Sep 2024 16:49:31 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v3 4/4] arm64: dts: qcom: sc8280xp-x13s: keep less
+ regulators always-on
+Message-ID: <ZtsWe6IDKU4rvHIT@hovoldconsulting.com>
+References: <20240905122023.47251-1-brgl@bgdev.pl>
+ <20240905122023.47251-5-brgl@bgdev.pl>
+ <Ztm6fzmoeWcCpqvi@hovoldconsulting.com>
+ <CAMRc=McDHi5EVpBjsuFE+JHgBhh84tsT6xr5PWO5yeU8zbS99Q@mail.gmail.com>
+ <n7scbcdbse4m4rilkegqsinallgkryayjzqojnxtr7qozgxwp7@7mgropizypbz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ath11k: allow missing memory-regions
-To: Caleb Connolly <caleb.connolly@linaro.org>,
-        Jeff Johnson
-	<jjohnson@kernel.org>, Kalle Valo <kvalo@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <ath11k@lists.infradead.org>,
-        <linux-wireless@vger.kernel.org>
-References: <20240904095815.1572186-2-caleb.connolly@linaro.org>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <20240904095815.1572186-2-caleb.connolly@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: OYknvDksipTpsuZAFt9D0lPXqKnz5oO-
-X-Proofpoint-GUID: OYknvDksipTpsuZAFt9D0lPXqKnz5oO-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_03,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 clxscore=1011 impostorscore=0 spamscore=0
- mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=716 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409060108
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <n7scbcdbse4m4rilkegqsinallgkryayjzqojnxtr7qozgxwp7@7mgropizypbz>
 
-On 9/4/2024 2:57 AM, Caleb Connolly wrote:
-> On SC7280 platforms which are running with TrustZone, it is not
-> necessary to manually map the memory regions used by the wifi hardware.
-> However, ath11k will currently fail to load unless both memory regions
-> are specified.
+On Thu, Sep 05, 2024 at 10:27:24PM +0300, Dmitry Baryshkov wrote:
+> On Thu, Sep 05, 2024 at 08:23:39PM GMT, Bartosz Golaszewski wrote:
+> > On Thu, Sep 5, 2024 at 4:04 PM Johan Hovold <johan@kernel.org> wrote:
+> > > On Thu, Sep 05, 2024 at 02:20:22PM +0200, Bartosz Golaszewski wrote:
+> > > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > >
+> > > > Remove the regulator-always-on property from the ones that used to be
+> > > > implicitly needed by the on-board WCN6855 now that its PMU is modeled in
+> > > > device-tree.
+
+> > > What makes you think s10b is only used by wcn6855?
+> > 
+> > I didn't say that. It's used by many components but they seem to be
+> > all described in DT. But I get it, the schematics show it in so many
+> > places, it would be risky to not keep it on.
 > 
-> This breaks wifi on the rb3gen2 which only specifies the firmware memory
-> region and does not use the CE region.
-> 
-> Adjust the order of operations in ath11k_ahb_fw_resources_init() to
-> check for the wifi-firmware subnode before attempting to parse the
-> memory regions.
-> 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Well, that depends on the consumers. If all consumers are good and
+> voting, then it should be safe.
 
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Right. But in this case, not all consumers are described in DT (e.g.
+ddr) and this is effectively an always-on rail.
 
-
+Johan
 
