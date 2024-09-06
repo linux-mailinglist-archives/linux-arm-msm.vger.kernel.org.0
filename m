@@ -1,234 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-31168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2028396FB0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 20:13:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1593296FBBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 21:02:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF31128BD79
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 18:13:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63A24B2850A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 19:02:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3E0221C162;
-	Fri,  6 Sep 2024 18:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6D287D3F1;
+	Fri,  6 Sep 2024 19:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="iKGxZmgn"
+	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="Nk3e5N3H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B4AA1EB92D
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 18:07:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A02A1B85F6;
+	Fri,  6 Sep 2024 19:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725646079; cv=none; b=mgKG8PPDgSs/oNZjYZDW/NHyx0NYbXiITU10YK1C1v5BLRz1Ul/8An4+7yOIECbEGj/QWxXMxNKUokGYHfpxj0aif8LOvbTmXjiR99aOuTeSaEPUkaAzq11tdN4ir/J8yGwPPZVV3zdIK+zCDO820mgO6gAmBKDfb8NPIpAvkiY=
+	t=1725649318; cv=none; b=JKOCljz6V1zC0g4KGkUkoB5QNyCOJiROSmIpBBittda0sHR10tXp3SiCvBk/kT5yZ2Ddn9AZLgKJtgdtGj+w/9TgXq8kuoj77ybHylu2XHUOEs+8DXKQHx5M/J2CHM7OJ+fuiUAwL2gyfX1ffa6zAbiRBK1Gt/yCrs3x8UQMMBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725646079; c=relaxed/simple;
-	bh=yN3UyiSFYgnUZ7NwiyFNFYXW8dahCqci8HzGdQLvfDU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cRt5irFmQhoqodfhVygM7tq9Ya4bJdcC+S4/WgUJyfzblGmRHf+zDlpfFtHmrWuS4qk9r+PBmfvL3vC6cl6EAyJ44vtWQO1TjXv9AlWeAOOt9M4+zsZiav85UfYG4HAmS/1GIUyQpBD4aWaHMQTenW7ewn8VCG7Nq+7O2lbZSVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=iKGxZmgn; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-374c4c6cb29so1964264f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 11:07:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1725646073; x=1726250873; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0F4M8TV9wbFiPgmY2At1z2Y50uIr5nXzL3lGpc2+c2g=;
-        b=iKGxZmgnr+Y4UG5MbVP0wL9J4HlbC6XQz1N0T2yut3bRpi5hFv219/BTISvk2AYXQx
-         vxoNxxjUcVcTWD+wQAPVgOQlirriUcIkbIf/lWQj/aPV85L/Oix58ZwbGL7Euk3x3IRY
-         bMszi5obo0REIqJli38Tu92a7EJlVfO7Y5QTsvmy8p4s0re1WFM0aKk4QhBmeVQ1DMxX
-         mZ29HqFuuoEpqe7aTwRT02zUW6PA2KnoXzWq+p5OvkFTLfTSoNvvigcsziX6nbyJYyZj
-         ATKGMLWjpQXYVe7OhG9c+WuBscbF4AjezNgCPHtxirDc50AGHBOIDhnI6RxK4Z41tenh
-         Kmrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725646073; x=1726250873;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0F4M8TV9wbFiPgmY2At1z2Y50uIr5nXzL3lGpc2+c2g=;
-        b=bXGiqpM8pxwdtfNpxV97O3D+KTeHYBYZDv51H6dPGKzr3Uo+xl7NtAlYLQyfl9jRwK
-         za1PUPZV/tpFXTDfYDWIs7gWBJou+9/BkLsIKCv2Yr7RCVihyYYIyWZ+srkEvMSNOmYn
-         dGh1Q/vWZ+3cDmlvcV+I/jovwgbZxYCxcxr9uRMHb/aadcV3aZA3JR/5gSveZhYO37qj
-         Z0bUPPsOEZg5LANe9j/aXjfDcxMcBiMo/s14iJHo2d3kvFSVqvF/pkQJ3Jlj+ghwyday
-         DuXNbq8pOvJNriaD4ionZ3hNo+MAdE3TLXv7qG0yd07dFB9t96FSZlZB4LRy1aGDEbSs
-         Hymw==
-X-Forwarded-Encrypted: i=1; AJvYcCVtgUlOgpcnSJ12QngBfneykWyWKOETmN/1KIwTHSasdS0+SYGT5dkvvBVGcBMtVw7mIdq6Peos2xYIjy7e@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw++4C4YcQehwtm66HX72TcF+BRCXecL9Dfn4UFmgj0TSQb7w12
-	v/C37z5aLGPV1GIsmODZPr/Non5BHcDdhHpGG8NlwGqds++K1B6Zvoh3RzUZum8=
-X-Google-Smtp-Source: AGHT+IFzLgUC8XDV/1hmeSArnp6cG4xAw+z/Gpqq5CLLSznnGIQotYfc6wYotVA2fo3sOEb29ZstZQ==
-X-Received: by 2002:a5d:5cc5:0:b0:374:bcdc:6257 with SMTP id ffacd0b85a97d-37892466eecmr69710f8f.54.1725646073049;
-        Fri, 06 Sep 2024 11:07:53 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:b9fc:a1e7:588c:1e37])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42cac8543dbsm5880485e9.42.2024.09.06.11.07.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Sep 2024 11:07:52 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Fri, 06 Sep 2024 20:07:20 +0200
-Subject: [PATCH v6 17/17] ufs: host: add support for generating, importing
- and preparing wrapped keys
+	s=arc-20240116; t=1725649318; c=relaxed/simple;
+	bh=gYGgNpO0Dc6WIwYRmkqCcOZG3hyCLUye2imyMbj+fM0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uPPmpOWwdLJVyJOB+V+2c7PeToB6Gpc6/PysZpAXKYs+B3k12K6k9tcYusTSEMFF0AaHOMXXLyuV8rrwv8b7Ij1CFc+qTIqyOjIh/XH2Kmgj6nvzvR5b8A1L5Uf9tAQPyjreo5PTzZ+QxRmZkSq6CJ5PSnzrEvECv+dhX6DK7T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=Nk3e5N3H; arc=none smtp.client-ip=45.79.88.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
+DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 69A2142B32
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
+	t=1725649316; bh=XJsz4WENGfSRSt3I6YJl8iWcScYb0NwDimb1QPg0fFw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=Nk3e5N3Hbf9quV9UlHJ0LR+iyxuYKD6U7HMmZ0QDSI2wb06xxNXRZzwk2to7hPVp3
+	 W6nTfI0AqqQc7rLQOrIXkSc55fZ+IJSFO/3AJILYm6qwQtnChcHGSoaY4nRzezl18v
+	 aEMoPY/QZr/BMKk0hDED2GzhxWq761YoYEDSb4MLOIFQezuko1q5S4sagoJJA+iWYr
+	 N2PgxzbJ5cOS+iPGSOlBgaLJh7B2hmdVaurfcsr8/WU7Ddpjk3RhoW5UCT/2Ezvi0+
+	 tunYc/UZwBcDoeG2potIo/nn3VhjVRx0zd6rVby6oeNdert7A0D+KxJCtVhJRmetKI
+	 efGNEL+/xIs8w==
+Received: from localhost (c-24-9-249-71.hsd1.co.comcast.net [24.9.249.71])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ms.lwn.net (Postfix) with ESMTPSA id 69A2142B32;
+	Fri,  6 Sep 2024 19:01:56 +0000 (UTC)
+From: Jonathan Corbet <corbet@lwn.net>
+To: Andrew Kreimer <algonell@gmail.com>, Jeffrey Hugo
+ <quic_jhugo@quicinc.com>, Carl Vanderlip <quic_carlv@quicinc.com>, Pranjal
+ Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>, Oded Gabbay
+ <ogabbay@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel-janitors@vger.kernel.org, Andrew Kreimer <algonell@gmail.com>
+Subject: Re: [PATCH] accel/qaic: Fix a typo
+In-Reply-To: <20240906080136.4423-1-algonell@gmail.com>
+References: <20240906080136.4423-1-algonell@gmail.com>
+Date: Fri, 06 Sep 2024 13:01:55 -0600
+Message-ID: <87zfokd2sc.fsf@trenco.lwn.net>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240906-wrapped-keys-v6-17-d59e61bc0cb4@linaro.org>
-References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
-In-Reply-To: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
-To: Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>, 
- Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>, 
- Mikulas Patocka <mpatocka@redhat.com>, 
- Adrian Hunter <adrian.hunter@intel.com>, 
- Asutosh Das <quic_asutoshd@quicinc.com>, 
- Ritesh Harjani <ritesh.list@gmail.com>, 
- Ulf Hansson <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
- "Martin K. Petersen" <martin.petersen@oracle.com>, 
- Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>, 
- Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-block@vger.kernel.org, linux-doc@vger.kernel.org, 
- linux-kernel@vger.kernel.org, dm-devel@lists.linux.dev, 
- linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
- linux-fscrypt@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Om Prakash Singh <quic_omprsing@quicinc.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4227;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=lAz64p9mYL3e8mxedYIAwwas8wL0VPUBWm79cF7quNM=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBm20TbMJe/MV01X+lyorGFEGKGia63YS2Jy7eb9
- ezOsWi8dIqJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZttE2wAKCRARpy6gFHHX
- cniYD/9kh0S4qtv/43wWiE+pb51WOIqUAF2VV1lMlkcDal89KQicHRAFEysMOaGZV3IB9LJovkl
- zun/fHymbSr6EW7nt/jveOpN9bUjsDt+Nf/CTzIn9ETQnIl+LuY02w8BPJVT9GS4A+qNKLM7U8e
- IQOKp8W8CN+q0MaibQB62vkLR69gkgft5gS84yPkhtl/0BIB8te0E67jWGOZbn/lTHGTClWb49W
- ZLswNjG7DMpuMvK642zxWIfo4PCj1Vmqyfl/1/Fi5hIIRXtyTuCAwhW8gbagPDkdY1tWZlpEN7M
- iEqOYZfZjZ7tNCNIG961mMTlUtfeG2arec4VjAZvSAh5FqFrYfQu6tV998bSnlCenTwefnhNu0R
- g/qk/vll1+34iVAKSHy4woo/18eiQAu1/9XkS1pm/wlVUCq5Yx3jIFXaMoRDYRGDR1z0PqoWSOj
- kI+exVmGTR/dFwuDqs0fuofn3Sy3RsV4Ls1kYWpOFPltnH4nfDQvRi13r6GaxWEAXfY9n+MG3wN
- IHoBp/LJmtrgm/cr6+Qyy7JRd6QmDM3b6GGfzUfakN5WLoY+xpGRXINAUuteZH7uknccu7EDPEb
- Z4x8mNDldMcoZ9ldM3R+omc4LduppLdJ5ppa9mD4k13l3mh4sWVpV1Iq9lncHmvIjGSj0Fu5BRU
- 9wAF+McJ/TiP3xw==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
+Content-Type: text/plain
 
-From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+Andrew Kreimer <algonell@gmail.com> writes:
 
-Extend the UFS core ops to include callbacks for generating, importing
-and prepating HW wrapped keys using the lower-level block crypto
-operations and implement them for QCom UFS.
+> Fix a typo in documentation.
+>
+> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+> ---
+>  Documentation/accel/qaic/qaic.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
+> index efb7771273bb..628bf2f7a416 100644
+> --- a/Documentation/accel/qaic/qaic.rst
+> +++ b/Documentation/accel/qaic/qaic.rst
+> @@ -93,7 +93,7 @@ commands (does not impact QAIC).
+>  uAPI
+>  ====
+>  
+> -QAIC creates an accel device per phsyical PCIe device. This accel device exists
+> +QAIC creates an accel device per physical PCIe device. This accel device exists
+>  for as long as the PCIe device is known to Linux.
 
-Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/ufs/host/ufs-qcom.c | 34 ++++++++++++++++++++++++++++++++++
- include/ufs/ufshcd.h        | 11 +++++++++++
- 2 files changed, 45 insertions(+)
+Applied, thanks.
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 77fb5e66e4be..fd8952473f4b 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -195,10 +195,41 @@ static int ufs_qcom_ice_derive_sw_secret(struct ufs_hba *hba, const u8 wkey[],
- 	return qcom_ice_derive_sw_secret(host->ice, wkey, wkey_size, sw_secret);
- }
- 
-+static int ufs_qcom_ice_generate_key(struct ufs_hba *hba,
-+				     u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_generate_key(host->ice, lt_key);
-+}
-+
-+static int ufs_qcom_ice_prepare_key(struct ufs_hba *hba,
-+				    const u8 *lt_key, size_t lt_key_size,
-+				    u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_prepare_key(host->ice, lt_key, lt_key_size,
-+				    eph_key);
-+}
-+
-+static int ufs_qcom_ice_import_key(struct ufs_hba *hba,
-+				   const u8 *imp_key, size_t imp_key_size,
-+				   u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE])
-+{
-+	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-+
-+	return qcom_ice_import_key(host->ice, imp_key, imp_key_size,
-+				   lt_key);
-+}
-+
- #else
- 
- #define ufs_qcom_ice_program_key NULL
- #define ufs_qcom_ice_derive_sw_secret NULL
-+#define ufs_qcom_ice_generate_key NULL
-+#define ufs_qcom_ice_prepare_key NULL
-+#define ufs_qcom_ice_import_key NULL
- 
- static inline void ufs_qcom_ice_enable(struct ufs_qcom_host *host)
- {
-@@ -1830,6 +1861,9 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
- 	.config_scaling_param = ufs_qcom_config_scaling_param,
- 	.program_key		= ufs_qcom_ice_program_key,
- 	.derive_sw_secret	= ufs_qcom_ice_derive_sw_secret,
-+	.generate_key		= ufs_qcom_ice_generate_key,
-+	.prepare_key		= ufs_qcom_ice_prepare_key,
-+	.import_key		= ufs_qcom_ice_import_key,
- 	.reinit_notify		= ufs_qcom_reinit_notify,
- 	.mcq_config_resource	= ufs_qcom_mcq_config_resource,
- 	.get_hba_mac		= ufs_qcom_get_hba_mac,
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index b8b1763df022..a94b3d872bcc 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -324,6 +324,9 @@ struct ufs_pwr_mode_info {
-  * @config_scaling_param: called to configure clock scaling parameters
-  * @program_key: program or evict an inline encryption key
-  * @derive_sw_secret: derive sw secret from a wrapped key
-+ * @generate_key: generate a storage key and return longterm wrapped key
-+ * @prepare_key: unwrap longterm key and return ephemeral wrapped key
-+ * @import_key: import sw storage key and return longterm wrapped key
-  * @fill_crypto_prdt: initialize crypto-related fields in the PRDT
-  * @event_notify: called to notify important events
-  * @reinit_notify: called to notify reinit of UFSHCD during max gear switch
-@@ -376,6 +379,14 @@ struct ufs_hba_variant_ops {
- 	int	(*derive_sw_secret)(struct ufs_hba *hba, const u8 wkey[],
- 				    unsigned int wkey_size,
- 				    u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE]);
-+	int	(*generate_key)(struct ufs_hba *hba,
-+				u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
-+	int	(*prepare_key)(struct ufs_hba *hba,
-+			       const u8 *lt_key, size_t lt_key_size,
-+			       u8 eph_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
-+	int	(*import_key)(struct ufs_hba *hba,
-+			      const u8 *imp_key, size_t imp_key_size,
-+			      u8 lt_key[BLK_CRYPTO_MAX_HW_WRAPPED_KEY_SIZE]);
- 	int	(*fill_crypto_prdt)(struct ufs_hba *hba,
- 				    const struct bio_crypt_ctx *crypt_ctx,
- 				    void *prdt, unsigned int num_segments);
-
--- 
-2.43.0
-
+jon
 
