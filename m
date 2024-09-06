@@ -1,108 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-31060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86D8D96EAEE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:47:34 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFC4096EAF2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:48:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45F0B28525A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 06:47:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61140B21250
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 06:48:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63C333EA71;
-	Fri,  6 Sep 2024 06:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B959012C475;
+	Fri,  6 Sep 2024 06:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOIczusQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CC813B590;
-	Fri,  6 Sep 2024 06:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8346F3EA71;
+	Fri,  6 Sep 2024 06:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725605250; cv=none; b=gs4U28dwlY8KnEu2bYYFzDbTSlbCq0F+oE/PfskhXhe7roUe2BcKT3mwsl8OGxryUKJcpnA74VgWfQXv/xbgaFbATQRjpMawApBpTW4ksbq+iwRfTlUrSLw7+UTt2RTcMJlOw/ZBNuH8per22pibQNj3kbzo7bXmaTP9GxrlsXY=
+	t=1725605325; cv=none; b=syZh5iWg916vIkdKs9NGX6Sg/m3nuIlPTU+rVE5DC5cqh5Khb3TfXUVBQehGIn/fgkfuP7Af/N60sHoRlOAgpA7G6iPPKlczVbNX7yTtBYdx74vsAWM5ixvBXvEUoOsjLyFwRzOFwdkWHWnhg1xrdOrfIwL+uB4nrEGGmMvXjGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725605250; c=relaxed/simple;
-	bh=C7HBGYnur8m2vEPU7j62/VTlQdK9omSEY2LO+REggrQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Eoo4SokuGW4ToYnB41Ge2SBiVn6xfqHJmAMtYxRizssgmk8a4BUvVW13+f1e9BHtWqnY0M6SCH/wJIiDPgYprSDjLGxQT5oSMftkcUcmKSuA/fhVJeZs5gEovE5k6yrlJgHLSR3dipxHpG8ll/Epbcm0Z7azs+eHVZDrvq6MTpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.19.162.254])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4X0RZ0696zzpVVQ;
-	Fri,  6 Sep 2024 14:45:28 +0800 (CST)
-Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
-	by mail.maildlp.com (Postfix) with ESMTPS id 47E141800F2;
-	Fri,  6 Sep 2024 14:47:24 +0800 (CST)
-Received: from [10.67.109.254] (10.67.109.254) by
- kwepemh500013.china.huawei.com (7.202.181.146) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Fri, 6 Sep 2024 14:47:23 +0800
-Message-ID: <2fd2b482-3d87-b95e-570a-10bee284d2da@huawei.com>
-Date: Fri, 6 Sep 2024 14:47:22 +0800
+	s=arc-20240116; t=1725605325; c=relaxed/simple;
+	bh=nGb8XxbR7FTLc/dIcFXasGyv/0FcYxflx3mwiODWW0c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EWVy31iUps0rLH4PDLLYpNKtm7jpP6D0XZ/iFTG67s9ZW9a0wGLRHPkcivrSeVXtpOMLv/nbhrQWIDp7r4AeePuIoPZ9DsY4kgN2gcj4jAcbJfUF6DjehKevjysOF47xmIbJ1C/ztg88Bmqm7PbAq631UZ7xbc4anSoAHgOuKj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOIczusQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D76C4CEC4;
+	Fri,  6 Sep 2024 06:48:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725605325;
+	bh=nGb8XxbR7FTLc/dIcFXasGyv/0FcYxflx3mwiODWW0c=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=AOIczusQjztFmfGBOGL8PH/zIGGSMEuyk0eGnLJwDxbhKs3NtjKDUtyi7s9Dbw+GI
+	 Mb5BTIF50Nu8L7y6Lfzsd1RoqTP5zG5jS6J1I3Q/zyXZ3SrIIOsFt+HbBhvYFyARVB
+	 u518shT9HZk1jzZq0270PBjkrb2jnN/rikfE3sQEyf2l0girKC1NnyZN47AZauzdzG
+	 IRo2YzVITl1tCYYwMnOYPnepCcBo3sia1aVd6u4vwF24Ipcnus5ZR69FL6zBOSUDjg
+	 G0Pcv2+6Swf32EIlEldguVu3F5gtO2VrPfrs/rRZRn4giUfIA2IyY4Yc+p+4VB0gQk
+	 vHpQC9Tysfhow==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1smSmF-000000004Ee-3z23;
+	Fri, 06 Sep 2024 08:49:04 +0200
+Date: Fri, 6 Sep 2024 08:49:03 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Chuanhua Lei <lchuanhua@maxlinear.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	imx@lists.linux.dev, linux-kernel@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	abel.vesa@linaro.org, johan+linaro@kernel.org,
+	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+Subject: Re: [PATCH v6 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
+Message-ID: <Ztql31KXrBQ1I5JV@hovoldconsulting.com>
+References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
+ <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
+ <ZtgqvXGgp2sWNg5O@hovoldconsulting.com>
+ <20240905152742.4llkcjvvu3klmo6j@thinkpad>
+ <Ztnb-GauC_8D8N-i@hovoldconsulting.com>
+ <20240905173437.hm3hegv5zolaj7gj@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH v2 1/2] spi: geni-qcom: Fix incorrect free_irq() sequence
-Content-Language: en-US
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, <broonie@kernel.org>,
-	<vkoul@kernel.org>, <akashast@codeaurora.org>, <dianders@chromium.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>
-References: <20240906031345.1052241-1-ruanjinjie@huawei.com>
- <20240906031345.1052241-2-ruanjinjie@huawei.com>
- <cff36a59-6f4f-4ae9-b5b9-e6e1ae822e41@quicinc.com>
-From: Jinjie Ruan <ruanjinjie@huawei.com>
-In-Reply-To: <cff36a59-6f4f-4ae9-b5b9-e6e1ae822e41@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemh500013.china.huawei.com (7.202.181.146)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240905173437.hm3hegv5zolaj7gj@thinkpad>
 
-
-
-On 2024/9/6 12:27, Mukesh Kumar Savaliya wrote:
-> Hi Jinjie,
+On Thu, Sep 05, 2024 at 11:04:37PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Sep 05, 2024 at 06:27:36PM +0200, Johan Hovold wrote:
+> > On Thu, Sep 05, 2024 at 08:57:42PM +0530, Manivannan Sadhasivam wrote:
+ 
+> > > Perhaps we can just get rid of the Kconfig entry and build it by default for
+> > > both RC and EP drivers? I don't see a value in building it as a separate module.
+> > > And we may also move more common code in the future.
+> > 
+> > It is already built by default for both drivers. I'm not sure what
+> > you're suggesting here.
 > 
-> On 9/6/2024 8:43 AM, Jinjie Ruan wrote:
->> In spi_geni_remove(), the IRQ will still remain and it's interrupt
->> handler
->> may use the dma channel after release dma channel and before free irq,
->> which is not secure, fix it.
->>
-> What's the possibility of having irq if spi_geni_release_dma_chan(mas)
-> is completed ? As such controller is already unregistered so transfer
-> request can't come.
-
-The irq is not freed, the IRQ can come and then it may enter the irq
-handler with the registered one.
-
->> Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
->> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
->> ---
->>   drivers/spi/spi-geni-qcom.c | 3 ++-
->>   1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
->> index 37ef8c40b276..fc2819effe2d 100644
->> --- a/drivers/spi/spi-geni-qcom.c
->> +++ b/drivers/spi/spi-geni-qcom.c
->> @@ -1170,9 +1170,10 @@ static void spi_geni_remove(struct
->> platform_device *pdev)
->>       /* Unregister _before_ disabling pm_runtime() so we stop
->> transfers */
->>       spi_unregister_controller(spi);
->>   +    free_irq(mas->irq, spi);
->> +
->>       spi_geni_release_dma_chan(mas);
->>   -    free_irq(mas->irq, spi);
->>       pm_runtime_disable(&pdev->dev);
->>   }
->>   
+> Right now it is selected by both drivers using a Kconfig symbol. But I'm
+> thinking of building it by default as below:
 > 
+> -obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o
+> -obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o
+> +obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o pcie-qcom-common.o
+> +obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o pcie-qcom-common.o
+> 
+> A separate Kconfig symbol is not really needed here as this file contains common
+> code required by both the drivers.
+
+But the separate Kconfig symbol will only be enabled via either PCI
+driver's option (e.g. can't be enabled on its own).
+
+I'm also not sure if the above works if you build one driver as a module
+and the other into the kernel (yes, I still intend to resubmit my patch
+for making the rc driver modular).
+
+Johan
 
