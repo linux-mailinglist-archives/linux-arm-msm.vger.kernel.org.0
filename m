@@ -1,117 +1,199 @@
-Return-Path: <linux-arm-msm+bounces-31061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFC4096EAF2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:48:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B04D96EAFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 08:50:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61140B21250
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 06:48:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 114C4B210FB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 06:50:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B959012C475;
-	Fri,  6 Sep 2024 06:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOIczusQ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D77747316E;
+	Fri,  6 Sep 2024 06:50:27 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga06-in.huawei.com (szxga06-in.huawei.com [45.249.212.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8346F3EA71;
-	Fri,  6 Sep 2024 06:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508FF3B1A2;
+	Fri,  6 Sep 2024 06:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.32
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725605325; cv=none; b=syZh5iWg916vIkdKs9NGX6Sg/m3nuIlPTU+rVE5DC5cqh5Khb3TfXUVBQehGIn/fgkfuP7Af/N60sHoRlOAgpA7G6iPPKlczVbNX7yTtBYdx74vsAWM5ixvBXvEUoOsjLyFwRzOFwdkWHWnhg1xrdOrfIwL+uB4nrEGGmMvXjGc=
+	t=1725605427; cv=none; b=p04gxcMoA3XkqYoybB7mGPWVhfygC1hRfdGX8gnL8zTMDlbDYu55N2CX5mu3tk+IvUShyNvKjTO6prnMN0IMuOGNP6dgJKMY4/7s0Cv88wlMiUkNJpFOA1Zug4GMgG/jZybRiBYOnQBgWui0+Jc2EZNSKJpQRU6j5k4hkttZwuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725605325; c=relaxed/simple;
-	bh=nGb8XxbR7FTLc/dIcFXasGyv/0FcYxflx3mwiODWW0c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EWVy31iUps0rLH4PDLLYpNKtm7jpP6D0XZ/iFTG67s9ZW9a0wGLRHPkcivrSeVXtpOMLv/nbhrQWIDp7r4AeePuIoPZ9DsY4kgN2gcj4jAcbJfUF6DjehKevjysOF47xmIbJ1C/ztg88Bmqm7PbAq631UZ7xbc4anSoAHgOuKj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOIczusQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D76C4CEC4;
-	Fri,  6 Sep 2024 06:48:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725605325;
-	bh=nGb8XxbR7FTLc/dIcFXasGyv/0FcYxflx3mwiODWW0c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AOIczusQjztFmfGBOGL8PH/zIGGSMEuyk0eGnLJwDxbhKs3NtjKDUtyi7s9Dbw+GI
-	 Mb5BTIF50Nu8L7y6Lfzsd1RoqTP5zG5jS6J1I3Q/zyXZ3SrIIOsFt+HbBhvYFyARVB
-	 u518shT9HZk1jzZq0270PBjkrb2jnN/rikfE3sQEyf2l0girKC1NnyZN47AZauzdzG
-	 IRo2YzVITl1tCYYwMnOYPnepCcBo3sia1aVd6u4vwF24Ipcnus5ZR69FL6zBOSUDjg
-	 G0Pcv2+6Swf32EIlEldguVu3F5gtO2VrPfrs/rRZRn4giUfIA2IyY4Yc+p+4VB0gQk
-	 vHpQC9Tysfhow==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1smSmF-000000004Ee-3z23;
-	Fri, 06 Sep 2024 08:49:04 +0200
-Date: Fri, 6 Sep 2024 08:49:03 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Richard Zhu <hongxing.zhu@nxp.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Chuanhua Lei <lchuanhua@maxlinear.com>,
-	Marek Vasut <marek.vasut+renesas@gmail.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	linux-pci@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	imx@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	abel.vesa@linaro.org, johan+linaro@kernel.org,
-	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
-Subject: Re: [PATCH v6 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
-Message-ID: <Ztql31KXrBQ1I5JV@hovoldconsulting.com>
-References: <20240904-pci-qcom-gen4-stability-v6-0-ec39f7ae3f62@linaro.org>
- <20240904-pci-qcom-gen4-stability-v6-3-ec39f7ae3f62@linaro.org>
- <ZtgqvXGgp2sWNg5O@hovoldconsulting.com>
- <20240905152742.4llkcjvvu3klmo6j@thinkpad>
- <Ztnb-GauC_8D8N-i@hovoldconsulting.com>
- <20240905173437.hm3hegv5zolaj7gj@thinkpad>
+	s=arc-20240116; t=1725605427; c=relaxed/simple;
+	bh=API5qIVT7NrbR6L7Sk+dKK0IMozp2IcnGRmYRMuPx7g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tHds/wn/07Tx2uzNMhZxOjM87tX3m0Lv5nHDpvb85pUrlK/zfHSW0orCK/wu4KjV04aPXPhepxDfySLLz+zXpUDTWB9XqDkdZ+wui2OTT9jMKzUrtO+OOa128PASvEkb4hfwFShHhMki7BzECw7GAUWZr0mhKvxQwqs7GeNDrFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.162.112])
+	by szxga06-in.huawei.com (SkyGuard) with ESMTP id 4X0RdJ2B5Rz1xwnl;
+	Fri,  6 Sep 2024 14:48:20 +0800 (CST)
+Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
+	by mail.maildlp.com (Postfix) with ESMTPS id DAE2C1400DB;
+	Fri,  6 Sep 2024 14:50:21 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemh500013.china.huawei.com (7.202.181.146) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 6 Sep 2024 14:50:20 +0800
+Message-ID: <06ae4c9c-8fa5-7d60-f8cb-49f7bc02fe87@huawei.com>
+Date: Fri, 6 Sep 2024 14:50:19 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240905173437.hm3hegv5zolaj7gj@thinkpad>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v2 2/2] spi: spi-geni-qcom: Fix missing undo runtime PM
+ changes at driver exit time
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <broonie@kernel.org>, <vkoul@kernel.org>, <akashast@codeaurora.org>,
+	<dianders@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-spi@vger.kernel.org>
+References: <20240906031345.1052241-1-ruanjinjie@huawei.com>
+ <20240906031345.1052241-3-ruanjinjie@huawei.com>
+ <hnos3f34ejabyw2yxtpxifskhklunvnufgsuilghjeuzipqkxi@udw5xfeum37a>
+ <050a6434-00f9-4bba-a122-52c3a23fcf70@huawei.com>
+ <CAA8EJpod2OzNEoquSGuJXLUx8-r+J0_YjPzv5pFDFHum9siisQ@mail.gmail.com>
+ <3d48b7c3-6dba-b113-9207-f3daa874253e@huawei.com>
+ <CAA8EJppbuMGjo3PHBnmHF5yXFOBUon50ZSKKzWFqGs3qgFmR3g@mail.gmail.com>
+ <a314d448-abb7-1a9c-5c45-7fce9aa69362@huawei.com>
+ <CAA8EJprUPLfzwfJCgeWJ_G4QYKmG=Y304hmFxBZJOhMWxt18dQ@mail.gmail.com>
+ <6bc7fa5e-ab59-996c-905f-7448d3090290@huawei.com>
+ <CAA8EJpr3YG-zdNn0yur0UAWCppLUH3hE4xugjj6CyE2=hksLYw@mail.gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <CAA8EJpr3YG-zdNn0yur0UAWCppLUH3hE4xugjj6CyE2=hksLYw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemh500013.china.huawei.com (7.202.181.146)
 
-On Thu, Sep 05, 2024 at 11:04:37PM +0530, Manivannan Sadhasivam wrote:
-> On Thu, Sep 05, 2024 at 06:27:36PM +0200, Johan Hovold wrote:
-> > On Thu, Sep 05, 2024 at 08:57:42PM +0530, Manivannan Sadhasivam wrote:
- 
-> > > Perhaps we can just get rid of the Kconfig entry and build it by default for
-> > > both RC and EP drivers? I don't see a value in building it as a separate module.
-> > > And we may also move more common code in the future.
-> > 
-> > It is already built by default for both drivers. I'm not sure what
-> > you're suggesting here.
+
+
+On 2024/9/6 12:03, Dmitry Baryshkov wrote:
+> On Fri, 6 Sept 2024 at 07:02, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>
+>>
+>>
+>> On 2024/9/6 11:52, Dmitry Baryshkov wrote:
+>>> On Fri, 6 Sept 2024 at 06:51, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>>>
+>>>>
+>>>>
+>>>> On 2024/9/6 11:43, Dmitry Baryshkov wrote:
+>>>>> On Fri, 6 Sept 2024 at 06:41, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>> On 2024/9/6 11:36, Dmitry Baryshkov wrote:
+>>>>>>> On Fri, 6 Sept 2024 at 06:31, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 2024/9/6 11:15, Dmitry Baryshkov wrote:
+>>>>>>>>> On Fri, Sep 06, 2024 at 11:13:45AM GMT, Jinjie Ruan wrote:
+>>>>>>>>>> It's important to undo pm_runtime_use_autosuspend() with
+>>>>>>>>>> pm_runtime_dont_use_autosuspend() at driver exit time unless driver
+>>>>>>>>>> initially enabled pm_runtime with devm_pm_runtime_enable()
+>>>>>>>>>> (which handles it for you).
+>>>>>>>>>>
+>>>>>>>>>> Hence, call pm_runtime_dont_use_autosuspend() at driver exit time
+>>>>>>>>>> to fix it.
+>>>>>>>>>>
+>>>>>>>>>> Fixes: cfdab2cd85ec ("spi: spi-geni-qcom: Set an autosuspend delay of 250 ms")
+>>>>>>>>>> ---
+>>>>>>>>>> v2:
+>>>>>>>>>> - Fix it directly instead of use devm_pm_runtime_enable().
+>>>>>>>>>
+>>>>>>>>> Why?
+>>>>>>>>
+>>>>>>>> The devm* sequence will have some problem, which will not consistent
+>>>>>>>> with the former.
+>>>>>>>>
+>>>>>>>> Link:
+>>>>>>>> https://lore.kernel.org/all/CAD=FV=VyDk-e2KNiuiBcACFAdrQmihOH6X6BSpGB+T1MsgsiKw@mail.gmail.com/
+>>>>>>>
+>>>>>>> That comment was for devm_request_irq(), not devm_pm_runtime_enable().
+>>>>>>
+>>>>>>
+>>>>>> In the very least, ** parch #2 needs to come before this one and that
+>>>>>> would help, but it won't fix everything **. Specifically in order to
+>>>>>> keep the order proper you'll need to use devm_add_action_or_reset() to
+>>>>>> "devm-ize" the freeing of the DMA channels.
+>>>>>
+>>>>> This is patch #2. so I don't understand your comment. Moreover you
+>>>>> don't have to use devm for each and every possible item. However I
+>>>>> think it makes sense for pm_runtime in this case.
+>>>>
+>>>> You are right, only use devm_pm_runtime_enable() here, there is no
+>>>> change for the resource release sequence, but I have a cleanup patch
+>>>> ready to replace all these with devm*, which depends on the 2 fix patch.
+>>>
+>>> You can use the devm_pm_runtime_enable() here and land the rest of the
+>>> cleanups afterwards.
+>>
+>> But Doug suggest that the bug fix patch should not contain "-next", but
+>> the cleanup patch is "-next", which let me split them 🤣
 > 
-> Right now it is selected by both drivers using a Kconfig symbol. But I'm
-> thinking of building it by default as below:
+> Using devm_pm_runtime_enable() is a bugfix too, if done properly.
+
+Thank you! I'll fix it with devm_pm_runtime_enable() in v3 in the first
+patch according to your suggestion.
+
 > 
-> -obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o
-> -obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o
-> +obj-$(CONFIG_PCIE_QCOM) += pcie-qcom.o pcie-qcom-common.o
-> +obj-$(CONFIG_PCIE_QCOM_EP) += pcie-qcom-ep.o pcie-qcom-common.o
+>>
+>>>
+>>>>
+>>>>>
+>>>>>>
+>>>>>>
+>>>>>>>
+>>>>>>>>
+>>>>>>>>>
+>>>>>>>>>> ---
+>>>>>>>>>>  drivers/spi/spi-geni-qcom.c | 2 ++
+>>>>>>>>>>  1 file changed, 2 insertions(+)
+>>>>>>>>>>
+>>>>>>>>>> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+>>>>>>>>>> index fc2819effe2d..38857edbc785 100644
+>>>>>>>>>> --- a/drivers/spi/spi-geni-qcom.c
+>>>>>>>>>> +++ b/drivers/spi/spi-geni-qcom.c
+>>>>>>>>>> @@ -1158,6 +1158,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+>>>>>>>>>>  spi_geni_release_dma:
+>>>>>>>>>>      spi_geni_release_dma_chan(mas);
+>>>>>>>>>>  spi_geni_probe_runtime_disable:
+>>>>>>>>>> +    pm_runtime_dont_use_autosuspend(dev);
+>>>>>>>>>>      pm_runtime_disable(dev);
+>>>>>>>>>>      return ret;
+>>>>>>>>>>  }
+>>>>>>>>>> @@ -1174,6 +1175,7 @@ static void spi_geni_remove(struct platform_device *pdev)
+>>>>>>>>>>
+>>>>>>>>>>      spi_geni_release_dma_chan(mas);
+>>>>>>>>>>
+>>>>>>>>>> +    pm_runtime_dont_use_autosuspend(&pdev->dev);
+>>>>>>>>>>      pm_runtime_disable(&pdev->dev);
+>>>>>>>>>>  }
+>>>>>>>>>>
+>>>>>>>>>> --
+>>>>>>>>>> 2.34.1
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>
+>>>>>>>
+>>>>>>>
+>>>>>
+>>>>>
+>>>>>
+>>>
+>>>
+>>>
 > 
-> A separate Kconfig symbol is not really needed here as this file contains common
-> code required by both the drivers.
-
-But the separate Kconfig symbol will only be enabled via either PCI
-driver's option (e.g. can't be enabled on its own).
-
-I'm also not sure if the above works if you build one driver as a module
-and the other into the kernel (yes, I still intend to resubmit my patch
-for making the rc driver modular).
-
-Johan
+> 
+> 
 
