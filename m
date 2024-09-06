@@ -1,120 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-31102-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C6B596F320
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:33:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A59B296F33B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:39:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 315411F21EB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:33:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D067A1C2373B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 11:39:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F08ED1CB306;
-	Fri,  6 Sep 2024 11:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4DEF1C8FDF;
+	Fri,  6 Sep 2024 11:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iT7na9vS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="nWjxBUa6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619E715852B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  6 Sep 2024 11:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAEF15852B;
+	Fri,  6 Sep 2024 11:39:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725622408; cv=none; b=EbcyXjCkMtpvJfw1stgBRQesjUF3QSyyOb5ny98uWR6PIoIn/QVLRfveMM10KDmOC1VU2NL10eRSzdGMHDMtRznqrgz8bLiU2POKyVW/PELQmHs7KQ+eVpnYBMLusVwmrkcUgSkBIS6nf9if9FkZy0D7pD1XSK6KWUGuGACUnIk=
+	t=1725622789; cv=none; b=q6Nfh5O9yg9B8H7ULsou/LF8NJlgN3z6G9WUleuwCKJq0uax/0EmmrAi0efsK8WPtzX3wN7qEWxa1ILlGg+PoYtvwrCuZwagQCVvbVXz6lEDgqQrGJUaMausKAUmO45a7H651R/n3BVwP8asCrkW5ExuGPijX1JNyvHamSYU78Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725622408; c=relaxed/simple;
-	bh=a1oiwHXhTP5k1qDN8Kz5shKpgHS7gkdYtvq/dlluG9A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=k5VPSaXVtrs5qwbzJCIt94woth9CZF4qcuIjaPwVVW220fIDAdh5ytci1ME/5jqnN1lRu6LjCa8qENYmvcLYCahydfj4gWfF9od9UlqnxbKH7Smsv7w0V8zi4m/i0tzgVipSK8vjgTqXWoTyYpfzD1nr5/4IZlqH5/3jt+olj7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iT7na9vS; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6d47d860fc4so15388167b3.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Sep 2024 04:33:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725622406; x=1726227206; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=a1oiwHXhTP5k1qDN8Kz5shKpgHS7gkdYtvq/dlluG9A=;
-        b=iT7na9vSVMNMOa4G0amg5V2y+C3JlFr5Dz0ewo8hhVHtJ0l68SilcsGyW/t2RwOauC
-         NExXmexDyAe0HVgooQO2lIYOEXCOQJJQE6gM/KZrwncqI761m4EkYJgOJBKwxag6nBog
-         rjPKoR+/pr4qnqTRS6I6GgXMa0Jzzm6ECGGtlhvYiRt5agiiA1Xr69p1Goti2GnRm4R4
-         6fe+4fTh7acfuSjwjls+PETbbMa3pTyH1Yiw1DWZ7jA/P+nk6qKF5cSuSbNie5txJeaL
-         TDosmEygY5hRYdWX+W8zHFuMEsXRhtNXjadAXlff9g3wyZvdjfBkpDM8juXtKPJagaVS
-         aEAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725622406; x=1726227206;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=a1oiwHXhTP5k1qDN8Kz5shKpgHS7gkdYtvq/dlluG9A=;
-        b=fCDEWEVipKM8LwkXc2Rrh9xpz6H0bY1H8VMu4Ld5hcWEKi0H8OZLMd0ZD6KkBJQMyF
-         MkZGeE7dApZEJAi0EDVrWFKMQolWALZanqN3E86+Gh17gsrn/wooX4T2oTRt9a79SBrR
-         1pLp/7q85qIJ5wZ+ujntMRQ0fVO50ZIwtlc9++nlgqXiL5gI8KgZ2mHjXeXA0xIM0o4d
-         WI/LcHrhVhE1GLkmS3cC46h3SiCwjyEwafZ10SxD1LvLEhQVvU943sBPzs+rrRuNtfk2
-         ReqYYoT65Bxg7X6/mq2LZ8wESphTYJLTBwXQ3NanE6PlFzzZuub3QLKZjUcvtUwsv5+k
-         G1/A==
-X-Forwarded-Encrypted: i=1; AJvYcCVytyXCjdp2rDUvEaIcrDbA8kfWcjnugZa4+7lF01XotfNdctH53wovvNXqoqrBXQ2Aho0L6DICFOGQdtBL@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYkrEXSvDrhHehjRdElhv1F+gTg3vFaldOrqAYoeXfsf/HF+QI
-	ScJ/dLUkecv1xIenQKZinuV2lL28BwyVOrhlQK9s7QKUmuDNwmgg8gwD7uxs21NbL6EM/XvfoB8
-	j+PBxl5WLHXbpwXuQhfruUfXOQs115YbK+HxFQZxRB0ICXTniMso=
-X-Google-Smtp-Source: AGHT+IGkcx0LnZHoHukMiwPH2fOzPIp/adODmKyPix5sHHzkQiP21pFZVgYcCTOOmpTmXp2A5oULIb0ksyDmO2p8kGw=
-X-Received: by 2002:a05:690c:6384:b0:6af:125a:1c6a with SMTP id
- 00721157ae682-6db452d6a58mr25663227b3.41.1725622406397; Fri, 06 Sep 2024
- 04:33:26 -0700 (PDT)
+	s=arc-20240116; t=1725622789; c=relaxed/simple;
+	bh=nR2isP9SzO3DZ0IhO9CCigww6hmPc5ghtYeDS7Ux/g8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=u7tCm8rifu2HV6kLGqE0eYEfRPndKJdXtyceBbF3FMT5hmvCp+vVPdnRQYjCVNsy8PA8TDXGLrZbXkDBZuBimCS1b72nH7B6RXzHEmoNVjiYQ1zJ0iyyNk85gmQm5O21FvbLUjRcdkYz2vDIFlpKQ7eF/0hCkfTqTHKZsyhZ87I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=nWjxBUa6; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4868eltj009479;
+	Fri, 6 Sep 2024 11:39:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=iKSTQRVXAjAYk0vB+VbvH9
+	XYTepoF7oCutS3spRWovY=; b=nWjxBUa6TZTApa3ESELcTt4zit+bUUSrHwyll/
+	msHWTlPKaTYcu7jKcgzasWmdSSDEOuNJb7xH+pMQPaX/UWEIG7mcf6oiNeJWISjs
+	h48HloHX7dpRfFpNbYkcvjmzdPmqnAQoOnQ01u9QZOzFltvEY+zDKozetuVA4d42
+	3sUPSFdEaw2iFliOY4ieU2N3sUBkumEZpNm7F1pruLRlp3Knp3i+Zy49vL+I47l8
+	0Y144bd827gxUpaox4RgkxIRJgmkEFkz/YKSIPxKzx7CBMVTGqpXD1v2lWqy5cWk
+	Ag59wvX3j3mnLz1VcHlHovLpWOPkVbSNJyypNoG2ui1+ozqQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41fhwrt5p7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Sep 2024 11:39:41 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 486Bdegj012913
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 6 Sep 2024 11:39:40 GMT
+Received: from hu-skakitap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 6 Sep 2024 04:39:36 -0700
+From: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+	<sboyd@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Satya Priya Kakitapalli
+	<quic_skakitap@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Ajit Pandey
+	<quic_ajipan@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        "Dan
+ Carpenter" <dan.carpenter@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        Jon Hunter <jonathanh@nvidia.com>,
+        "kernel
+ test robot" <lkp@intel.com>
+Subject: [PATCH V3] clk: qcom: clk-alpha-pll: Simplify the zonda_pll_adjust_l_val()
+Date: Fri, 6 Sep 2024 17:09:05 +0530
+Message-ID: <20240906113905.641336-1-quic_skakitap@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com>
-In-Reply-To: <692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Fri, 6 Sep 2024 13:33:15 +0200
-Message-ID: <CACMJSes4cnCNUHiZUr4CF-K2c8-1VYzuh=T8JDi_erqfShkuZA@mail.gmail.com>
-Subject: Re: [REGRESSION] firmware: qcom: scm: smc: switch to using the SCM allocator
-To: Rudraksha Gupta <guptarud@gmail.com>
-Cc: regressions@lists.linux.dev, brgl@bgdev.pl, andersson@kernel.org, 
-	konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, robimarko@gmail.com, quic_gurus@quicinc.com, 
-	luzmaximilian@gmail.com, catalin.marinas@arm.com, will@kernel.org, 
-	srinivas.kandagatla@linaro.org, arnd@arndb.de, quic_eberman@quicinc.com, 
-	elder@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	kernel@quicinc.com, ahalaney@redhat.com, quic_djaggi@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: d0yfOX_VjtyYl2xHa4V5VIv2t0LHPGcb
+X-Proofpoint-GUID: d0yfOX_VjtyYl2xHa4V5VIv2t0LHPGcb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_01,2024-09-05_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 clxscore=1011 priorityscore=1501 phishscore=0
+ malwarescore=0 bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409060084
 
-On Sun, 25 Aug 2024 at 08:51, Rudraksha Gupta <guptarud@gmail.com> wrote:
->
-> Hello all,
->
->
-> Found a regression with a platform that has the msm8960 SoC. Was hoping
-> to code up a fix myself, but I'm not adept in ARM architecture or the
-> Linux kernel, so I'm just reporting it here. Reverting this commit seems
-> to fix it as well. Please let me know if there is anything else I should
-> provide for this regression report.
->
-> #regzbot introduced 449d0d84bcd8246b508d07995326d13c54488b8c
->
-> Error: https://pastebin.com/SDRENUGk
->
-> Defconfig: https://pastebin.com/CRDjC39a
->
+In zonda_pll_adjust_l_val() replace the divide operator with comparison
+operator to fix below build error and smatch warning.
 
-Looks like qcom_scm_get_tzmem_pool() returns NULL. Not sure how this
-happens. Can you confirm that the QCom SCM driver probed correctly?
+drivers/clk/qcom/clk-alpha-pll.o: In function `clk_zonda_pll_set_rate':
+clk-alpha-pll.c:(.text+0x45dc): undefined reference to `__aeabi_uldivmod'
 
-Bart
+smatch warnings:
+drivers/clk/qcom/clk-alpha-pll.c:2129 zonda_pll_adjust_l_val() warn: replace
+divide condition '(remainder * 2) / prate' with '(remainder * 2) >= prate'
 
-> Platform:
-> https://wiki.postmarketos.org/wiki/Samsung_Galaxy_Express_SGH-I437_(samsung-expressatt)
->
->
-> Thanks,
-> Rudraksha
->
+Fixes: f4973130d255 ("clk: qcom: clk-alpha-pll: Update set_rate for Zonda PLL")
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/202408110724.8pqbpDiD-lkp@intel.com/
+Signed-off-by: Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+---
+ drivers/clk/qcom/clk-alpha-pll.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index 019713c38f25..f9105443d7db 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -2176,10 +2176,8 @@ static void zonda_pll_adjust_l_val(unsigned long rate, unsigned long prate, u32
+ 
+ 	quotient = rate;
+ 	remainder = do_div(quotient, prate);
+-	*l = quotient;
+ 
+-	if ((remainder * 2) / prate)
+-		*l = *l + 1;
++	*l = rate + (u32)(remainder * 2 >= prate);
+ }
+ 
+ static int clk_zonda_pll_set_rate(struct clk_hw *hw, unsigned long rate,
+-- 
+2.25.1
+
 
