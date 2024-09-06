@@ -1,49 +1,49 @@
-Return-Path: <linux-arm-msm+bounces-31120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82C3D96F524
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 15:15:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B10AF96F51F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 15:15:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13CC6B21EB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:15:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 673DF1F248EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 13:15:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DC361CEAB8;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40B4E1CE71E;
 	Fri,  6 Sep 2024 13:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oBTJYYoH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iRUcpMXB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133201CDA31;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132D71CBEBC;
 	Fri,  6 Sep 2024 13:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725628499; cv=none; b=Ca46Myj6awd71Z6E5LxbR1VTvhdKuif+gHl4cnmVjT+G+FNFFnqJ3Q8cFwOXU9Ituxj+NUZpu3vpaqVhMT03Qqr9WQMfv9P7jAs5ddDZ15i8DCI6PebpN01nD/0zpw67bCiBzlD3xC3zRvfk3HayBYtloRJ4vUptdgeTz8ASSdw=
+	t=1725628499; cv=none; b=b1eup7Gkl+eJ+IcAvNVbIldWyLkphcp/RN9hARYsSlkaVOaaew+RotiAnHwaF8N+I983hfCbSF0BD9b/0FVBkhJCHMISAvOnIVCJZtpETr23GOiMGi1BKunAVhOUi9KNbZd9KfRzTRD3NePu7Tf0TKsmqdqb/3lzu52gT1U8Yug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1725628499; c=relaxed/simple;
-	bh=OK2YrfdKa62Py+C20Rb0AQbYDFeK3Ek1BUPv36lR1dk=;
+	bh=uETuHjFu0CoXVLoeHxFZ1qxPWkCWtwZT2Bq3e+jgwPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ofJ08UDFvOIeLW6WxY9+LCdy/R95NEPZNiF1VA3hp2EVIxgLrmcu+z1nvt6t2z8pbgg6rEkucJLGvhXYoMa3uVPN5Zl5Wg64POnLGpkOweRKLpP441aHk3oMbzne47NwP5zMkMG+MCnS27i+z9d8mEAn/kHvnExwnsp4Iz/Cl8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oBTJYYoH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B2AC4AF0C;
+	 MIME-Version:Content-Type; b=H5FHOeLGDWYDeEbt/3UaUuacvdrcK+WTwXiu47ONSLeGGt1brXACcHNFE7d9MGkT/nKuleB96jB8W88hjCr++st/Aj2wq7ZXZjTRUMa+bUQG0MpF9u5Cci0dH+EmMfjp0qK8vMcxwyK59hPleNTlCr1plnXPjXF0CiyxZNyyIyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iRUcpMXB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964CEC4CEC8;
 	Fri,  6 Sep 2024 13:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1725628498;
-	bh=OK2YrfdKa62Py+C20Rb0AQbYDFeK3Ek1BUPv36lR1dk=;
+	bh=uETuHjFu0CoXVLoeHxFZ1qxPWkCWtwZT2Bq3e+jgwPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBTJYYoHT1eigofGwuy+od7mnUeVyV8jx2SE+ZrMlRvDeHHvZLPqRPVnQGHBRU21d
-	 q+GIzQdhbpEBBzqclxC5rV5J/8dZSqz4jaeG+0R74RfMUcb0Sz9Srf6zLqnD49A8jK
-	 fMN+/ylcvRWRXiE1taEPahbHFHKWxl009euBqVvinqLV0yqP8kV37MaLGHBjQNqSqO
-	 TKNAAt/JOC1IAbLU8ZBOO8gc4ZLZ/vVaEi14n4hjlUHtjaqasoef62oir5HsLL0SuD
-	 KisxYYC2npCpxUXHPA93GkWJWJH23QmmGBR8v9RLin8e8jjpOrrrpXLNE/q6Ov3ss+
-	 n1k1vWvKsbhOQ==
+	b=iRUcpMXBkDcFKCPXlsR5GkNyvCI+N3fqALSfXBIjJlfW2G098nyZXtKNkqD6d9VD0
+	 VmH81reDQYG0DhsaybwOuRweMn4s05sq+pxSY2GTwLyHmZSdsYDcJ+4MeddGOjDM55
+	 4SxHipI7VouaQnn5+oiSzkHb+YMlgUUVj1J8fZnRa5tp7PCjRkgHVn2lDvTTzHRO/X
+	 qjS98xS54X/aYH2eWbv898bNYDoTyw4MvFhs4BSB0sagTgfrG/Sr4UeTDjpVptI1jb
+	 kW2HmTelG4aW5BPod9WgYrxtWF+v7EMHa6HUKU9qVsEDqVZ0ZAOewdsrqN9wGAZlF4
+	 V8cPqtTC4xdTQ==
 Received: from johan by xi.lan with local (Exim 4.97.1)
 	(envelope-from <johan+linaro@kernel.org>)
-	id 1smYo3-000000006Ai-1gcp;
+	id 1smYo3-000000006Ak-20vh;
 	Fri, 06 Sep 2024 15:15:19 +0200
 From: Johan Hovold <johan+linaro@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
@@ -55,12 +55,11 @@ Cc: Jiri Slaby <jirislaby@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-serial@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Stephen Boyd <swboyd@chromium.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 4/8] serial: qcom-geni: fix arg types for qcom_geni_serial_poll_bit()
-Date: Fri,  6 Sep 2024 15:13:32 +0200
-Message-ID: <20240906131336.23625-5-johan+linaro@kernel.org>
+Subject: [PATCH v2 5/8] serial: qcom-geni: introduce qcom_geni_serial_poll_bitfield()
+Date: Fri,  6 Sep 2024 15:13:33 +0200
+Message-ID: <20240906131336.23625-6-johan+linaro@kernel.org>
 X-Mailer: git-send-email 2.44.2
 In-Reply-To: <20240906131336.23625-1-johan+linaro@kernel.org>
 References: <20240906131336.23625-1-johan+linaro@kernel.org>
@@ -75,35 +74,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-The "offset" passed in should be unsigned since it's always a positive
-offset from our memory mapped IO.
+With a small modification the qcom_geni_serial_poll_bit() function
+could be used to poll more than just a single bit. Let's generalize
+it. We'll make the qcom_geni_serial_poll_bit() into just a wrapper of
+the general function.
 
-The "field" should be u32 since we're anding it with a 32-bit value
-read from the device.
-
-Suggested-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240610152420.v4.4.I24a0de52dd7336908df180fa6b698e001f3aff82@changeid
+Link: https://lore.kernel.org/r/20240610152420.v4.5.Ic6411eab8d9d37acc451705f583fb535cd6dadb2@changeid
 Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/qcom_geni_serial.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index b88435c0ea50..54052c68555d 100644
+index 54052c68555d..7bbd70c30620 100644
 --- a/drivers/tty/serial/qcom_geni_serial.c
 +++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -266,7 +266,7 @@ static bool qcom_geni_serial_secondary_active(struct uart_port *uport)
+@@ -265,8 +265,8 @@ static bool qcom_geni_serial_secondary_active(struct uart_port *uport)
+ 	return readl(uport->membase + SE_GENI_STATUS) & S_GENI_CMD_ACTIVE;
  }
  
- static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
--				int offset, int field, bool set)
-+				      unsigned int offset, u32 field, bool set)
+-static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
+-				      unsigned int offset, u32 field, bool set)
++static bool qcom_geni_serial_poll_bitfield(struct uart_port *uport,
++					   unsigned int offset, u32 field, u32 val)
  {
  	u32 reg;
  	struct qcom_geni_serial_port *port;
+@@ -286,7 +286,7 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
+ 	timeout_us = DIV_ROUND_UP(timeout_us, 10) * 10;
+ 	while (timeout_us) {
+ 		reg = readl(uport->membase + offset);
+-		if ((bool)(reg & field) == set)
++		if ((reg & field) == val)
+ 			return true;
+ 		udelay(10);
+ 		timeout_us -= 10;
+@@ -294,6 +294,12 @@ static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
+ 	return false;
+ }
+ 
++static bool qcom_geni_serial_poll_bit(struct uart_port *uport,
++				      unsigned int offset, u32 field, bool set)
++{
++	return qcom_geni_serial_poll_bitfield(uport, offset, field, set ? field : 0);
++}
++
+ static void qcom_geni_serial_setup_tx(struct uart_port *uport, u32 xmit_size)
+ {
+ 	u32 m_cmd;
 -- 
 2.44.2
 
