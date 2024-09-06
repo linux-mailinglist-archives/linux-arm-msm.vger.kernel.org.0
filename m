@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4D2D96F42B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:22:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51BEC96F432
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 14:24:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3854A1F25329
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:22:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 040CA1F25292
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 12:24:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28BA51CBEA1;
-	Fri,  6 Sep 2024 12:22:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6ED161CC8B4;
+	Fri,  6 Sep 2024 12:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L4pM93fq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mELDJiWN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00241C8FA6;
-	Fri,  6 Sep 2024 12:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC012C853;
+	Fri,  6 Sep 2024 12:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725625371; cv=none; b=OrrdQc1fuS+GJJxsrNb87e6r2h0ErjstTW90hV4g1Df7KUTIfx00JyJdBPbNZlLiBIJIAPpd1ULO1iHWQQ7yzLa6OzmBS7BB+1Js2cg+hJcrbg8G+ecDJjAQii1+SAyAL4L2UL4HFaR+KNXWWa7rhObevxBE53Zn5ssNYJ7VoaU=
+	t=1725625463; cv=none; b=rzyeF09PXciOJZ4WpyEGf5P/fnCkCuZTOL2UjJTstAA4rp73Zq8f+IJV9EKoWibPeAkjg2tkmVS4vraqB9xRdsn4ygKL/C976frbtNwOrFVuf8F0ssPwUGs78mLAXPXLvycDEhv2iwzFVA0qMBxEA2ku7HVM1OewEcffPIPvKgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725625371; c=relaxed/simple;
-	bh=903Y2/P42uqE8vhBIvO5wIN2QsMnZgv3YNQ/YWSAn7Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oji7I7r/PI5XutN7zIO40oXMQbr9vb/OX3R66qbPMf8n8wA0dXJeSEalCgnOieXyg949ryiGUc6KNSfYApZ9w27W2gcl62ciXmxezAnTOK6bdeB8y5bKYbzDFvsIGtlGfmnDhSwNtSHHAovcBRqjwFYa9urMMVfcdtdBHh8taYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L4pM93fq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E0BC4CEC4;
-	Fri,  6 Sep 2024 12:22:45 +0000 (UTC)
+	s=arc-20240116; t=1725625463; c=relaxed/simple;
+	bh=AW4MoUh1nwyJJad4ay+W3r7GtpLN9hrfCtuvZ6Y351s=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=PEJIObBaGNqF348nZo87yU0yLUDUjr1/A0sbK5SrTlzwylz0KhsEXzFRIgKV+cvvNMYJFJrouuCO6XktAw6GQe7iJHfntliE9uDHmODfFq0EGrpVKeAQr6WHJ7+UaMw7t9pLGXDUw0T+Mv3GAiUmVl5cmgJBgnecZgS84Kl/XMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mELDJiWN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6278C4CEC8;
+	Fri,  6 Sep 2024 12:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725625370;
-	bh=903Y2/P42uqE8vhBIvO5wIN2QsMnZgv3YNQ/YWSAn7Y=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=L4pM93fqNdZdIxxMxpEXrG3FQPjrvPCP40RlhNqsSNuCK0i/Yje8DlYZjzUqdUWPg
-	 do3/n8OFC69685YL8hEB1G+UxkKTlMVCv/60g7F7bCTMqKa22DSNi8ARcLWtOdNLQo
-	 EspFFStIt8SEMTt/WS/WjUdm8hHpDwoINJ/v0V/SRK9msYmYjVLL454R006ChVRdJ+
-	 4wuQjgAqnMUsAoKCEHRbLMK+wy7gmsq+O7hQ4S9HfCTG8PQSgUfsBtUxfAbRfCTDHv
-	 YDQKtSihgyQ+WvGbmg1gu0L96oAPJ8Sis+53SXEXBOIvnHHgqXI8I46fLPm0UychTK
-	 TbOXM8OBD4cKA==
-Message-ID: <f5b768b3-37ad-4bdf-9cb6-b39b14c8ee45@kernel.org>
-Date: Fri, 6 Sep 2024 14:22:42 +0200
+	s=k20201202; t=1725625462;
+	bh=AW4MoUh1nwyJJad4ay+W3r7GtpLN9hrfCtuvZ6Y351s=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=mELDJiWNxE6MOx8b0iO9A4uCkKIpz1rK0VnSCaTBBuBLkhMute4gE26beiFt0DR8+
+	 nkZJcovIXMTZYKOlqSR3MM7VG+rDoEGt2RSbw5aeGpOe8NCguo4yTQklc9v3C9ttcX
+	 5ZHKFNi3p761JVZ6Ax1bUOY15351TICpPN4txvfUIR3+XPO7KnIz3sjQFu3nHxkDBL
+	 jwjtqWEsACCT1tYEBskuAoLtsUgS6d2ZT4dE5N1ckVmyYOfq50WHhw3y4Ea+omv0Dk
+	 IB7oguJKACXAGFGIspJDjfYMe28JIYDNnV2CTCkIOKWD9bTjJyQ2Uf6RlMWN/+m/TB
+	 Nb8Q7Myl+is6A==
+Message-ID: <5d6c455f-7fbc-4e2f-a537-907f26a4ef59@kernel.org>
+Date: Fri, 6 Sep 2024 14:24:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p: pmic: enable rtc
-To: Tingguo Cheng <quic_tingguoc@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com, quic_kotarake@quicinc.com,
- quic_kamalw@quicinc.com, quic_skakitap@quicinc.com, quic_fenglinw@quicinc.com
-References: <20240902104302.3959670-1-quic_tingguoc@quicinc.com>
+Subject: Re: [PATCH v4 3/8] dt-bindings: clock: qcom: Add SA8775P camera clock
+ controller
 From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ quic_imrashai@quicinc.com, quic_jkona@quicinc.com,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com>
+ <20240816-sa8775p-mm-v3-v1-3-77d53c3c0cef@quicinc.com>
+ <57672tyb6pij3h7ensq4itbhnw3lr4wahfttc2fdcj4twbqpta@pwskxpet4nsh>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -103,22 +110,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240902104302.3959670-1-quic_tingguoc@quicinc.com>
+In-Reply-To: <57672tyb6pij3h7ensq4itbhnw3lr4wahfttc2fdcj4twbqpta@pwskxpet4nsh>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/09/2024 12:43, Tingguo Cheng wrote:
-> Add RTC node, the RTC is controlled by PMIC device via spmi bus.
+On 18/08/2024 20:02, Krzysztof Kozlowski wrote:
+> On Fri, Aug 16, 2024 at 12:01:45PM +0530, Taniya Das wrote:
+>> Add device tree bindings for the camera clock controller
+>> on Qualcomm SA8775P platform.
+>>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> ---
 > 
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> index 1369c3d43f86..47d05b897d5a 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-pmics.dtsi
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Un-reviewed.
 
 We achieved consensus allowing sa8775p to stay, but now Qualcomm changes
 point of view and insists on new approach of dropping sa8775p. Therefore
