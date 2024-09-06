@@ -1,131 +1,208 @@
-Return-Path: <linux-arm-msm+bounces-31065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B718196EBD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:21:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB6AF96EBEE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 09:27:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6E4A61F22614
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:21:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8A5A1C21761
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 07:27:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BD6F14A605;
-	Fri,  6 Sep 2024 07:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 881D814BF8D;
+	Fri,  6 Sep 2024 07:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a10YbZlr"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0bdCY3yK";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Eyqhmktm";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="0bdCY3yK";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Eyqhmktm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8E6E17C9B;
-	Fri,  6 Sep 2024 07:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCC0149C4B;
+	Fri,  6 Sep 2024 07:26:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725607269; cv=none; b=FVJ3fT4S5c7uODBwQlyL1Gc5CN41OJz8dyPRVh4Jt9bTRNpWQt+0ZnOyO+iU5DGJuOVoB00vUZzFoLHp34Gx1z9eR2/LgzxvpOQ73QAYcPlZ+zXMfi0x0ZBn+xrGrJh7KcwI094afehyeELAZGLd6Gqye0OOeBffGHmYv5ERAmk=
+	t=1725607581; cv=none; b=uk1qdykj+OkVGKzhfQCGC8g+cD5eM2GV2ekVYZQAgJzJLrsC6dnMhUsS6YHyxWzn2UKsCQ+Mfp4OPV4jT2XcYq6xPR/dpqaCVQzkXSasXY7DNj+Eg9t5Rmj+lQkKK8kK1hl0eFodBOJ5X2B6MEjUF4aEStdbBeUs92NmlM/xKxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725607269; c=relaxed/simple;
-	bh=XH2QzjP1CufEq8D/+0yCvenvO3KuEuFwhuTKcq7Vxz0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HofZW//Ibn9t8j5BNQt9qhmM8XBzsolKGRmlzDOL2UyppFe4RdnCA9X3QiziKTsuJjkIeVqHfqPYpV7eusxKWSCnps2p+YK5Pt3Q2FjM0HdSSzUawRmfnLwUqe/Ws4owW8+5oKeVcdVeCvwvWe0WJfV9+OfJGIAiaSatEaZpzFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a10YbZlr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4984FC4CEC4;
-	Fri,  6 Sep 2024 07:21:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725607269;
-	bh=XH2QzjP1CufEq8D/+0yCvenvO3KuEuFwhuTKcq7Vxz0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=a10YbZlrC+BkaBwuH8U8LtN0ZB3KbrVXgtag0KdHoq3/qt+tPPotLhyGEaAmy73x+
-	 WcHqA5ncjVzF2JRLrtuubpDHf0ABaIQd+gRUZLBVcHvhaNCfqqMjyaXFGjN/gWXmBa
-	 P349v9CGW8rFADmaC++KQvVa0BQWymFy7i4IKiSSZJVwzxJDQJg2uguJGtEpTgPLgf
-	 o0uAK4daqQhswhX8k7CKjVCYAQume/uP0BL0ptsVDaItKTois/53B/MV7C2WthT58o
-	 kk4/U0KQqJZKgokzptTxgcHM9M0m205K0IvXztv2t50WITZn8qb2FZ/+G/ejtUN8qR
-	 3j3JUVYuDRO1Q==
-Date: Fri, 6 Sep 2024 09:21:04 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Richard Acayan <mailingradian@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Todor Tomov <todor.too@gmail.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-i2c@vger.kernel.org, linux-media@vger.kernel.org, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Subject: Re: [PATCH v4 0/7] Add SDM670 camera subsystem
-Message-ID: <vjfddnykgeihdjlp5wzaeu4d4qn2boc22hufe2ceajt5wazznb@nysgwxk4ksdm>
-References: <20240904020448.52035-9-mailingradian@gmail.com>
- <tthbaop6bkyvebpibiyvyct4khrd5o4apdbipqdthnidxmu2cx@m726xv4ocblg>
- <ZtpqrANbJurWNOzV@radian>
+	s=arc-20240116; t=1725607581; c=relaxed/simple;
+	bh=w24ClMpk/3FWOO/uXiViU0olb2BuJQQrGQS/6CnBfuE=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=jbB1svccCTYW7hEm4A7L3Rw8bKVpRyPzxWjpbSMKoQVJLpXlkuKmv4aVMOSCwRliqQVaNG+f4AM4qjQC0OiBUTsmwIgSYDmeo4DSbaASaQLThmECOineeO7dqS9jh3Q0vsTMxpvg7PuRUJY6rwVSkV+yZ3fkct4k05uXzCu8Slc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0bdCY3yK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Eyqhmktm; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=0bdCY3yK; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Eyqhmktm; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 0786C1F896;
+	Fri,  6 Sep 2024 07:26:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1725607578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
+	b=0bdCY3yKGm8H/78zikBOmnv7J25+SU5hegtuofsLGKVl7Kmn32ajD46MIeamJytzFXGFLy
+	hFsTIqfcv8HhbeeTJpiPSwzFKSt9W5DW8LwKnH6vP3K+8h/LRTusEHbnph/otzjRy8OZVq
+	V8YVw8wobPDbmOYC+EeWEDUojry7QLE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1725607578;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
+	b=EyqhmktmWFiZJmZW8M/wUVN8guG1vJe0G6sWL8OW3r9Rxm1DVjHnSTVToLVfVZbdSRUEOq
+	UI+ULZ/FmGxqD7BQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1725607578; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
+	b=0bdCY3yKGm8H/78zikBOmnv7J25+SU5hegtuofsLGKVl7Kmn32ajD46MIeamJytzFXGFLy
+	hFsTIqfcv8HhbeeTJpiPSwzFKSt9W5DW8LwKnH6vP3K+8h/LRTusEHbnph/otzjRy8OZVq
+	V8YVw8wobPDbmOYC+EeWEDUojry7QLE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1725607578;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hqoweOcBDbSA+7HZiUYq5Pgtsyq80P3DQd88C5/WAT4=;
+	b=EyqhmktmWFiZJmZW8M/wUVN8guG1vJe0G6sWL8OW3r9Rxm1DVjHnSTVToLVfVZbdSRUEOq
+	UI+ULZ/FmGxqD7BQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5E2B61395F;
+	Fri,  6 Sep 2024 07:26:17 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id CgfEFZmu2mYgNAAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Fri, 06 Sep 2024 07:26:17 +0000
+Date: Fri, 06 Sep 2024 09:27:03 +0200
+Message-ID: <87h6atfdiw.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Jerome Brunet <jbrunet@baylibre.com>
+Cc: Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	David Rhodes <david.rhodes@cirrus.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Chen-Yu Tsai <wens@csie.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Samuel Holland <samuel@sholland.org>,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@opensource.cirrus.com,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH 00/13] ALSA: update sample rate definitions
+In-Reply-To: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
+References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZtpqrANbJurWNOzV@radian>
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Score: -1.80
+X-Spamd-Result: default: False [-1.80 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[25];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	FREEMAIL_CC(0.00)[perex.cz,suse.com,cirrus.com,opensource.cirrus.com,gmail.com,kernel.org,intel.com,linux.intel.com,linaro.org,csie.org,sholland.org,vger.kernel.org,alsa-project.org,lists.infradead.org,lists.linux.dev];
+	RCVD_TLS_ALL(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Flag: NO
+X-Spam-Level: 
 
-Hi Richard,
+On Thu, 05 Sep 2024 16:12:51 +0200,
+Jerome Brunet wrote:
+> 
+> This patchset adds rate definitions for 12kHz, 24kHz and 128kHz.
+> 
+> It is follow-up on the series/discussion [0] about adding 128kHz for
+> spdif/eARC support. The outcome was to add 12kHz and 24kHz as well and
+> clean up the drivers that no longer require custom rules to allow these
+> rates.
+> 
+> Identifying these drivers is not straight forward, I tried my best but I
+> may have missed some. Those will continue to work anyway so it is not
+> critical. Some drivers using these rates have not been changed on
+> purpose. The reason for this may be:
+> * The driver used other uncommon rates that still don't have a definition
+>   so a custom rule is still required.
+> * The constraint structure is used in some other way by the driver and
+>   removing it would not help the readability or maintainability. This is
+>   the case the freescale asrc drivers for example.
+> 
+> There is one change per driver so, if there is a problem later on, it will
+> easier to properly add Fixes tag.
+> 
+> The series has been tested with
+> * ARM64 defconfig - spdif 128kHz at runtime.
+> * x86_64 allmodconfig - compile test only
+> 
+> Last, the change adding IEC958 definitions has been dropped for this
+> patchset and will be resent separately
+> 
+> [0]: https://lore.kernel.org/all/20240628122429.2018059-1-jbrunet@baylibre.com/
+> 
+> ---
+> Jerome Brunet (13):
+>       ALSA: pcm: add more sample rate definitions
+>       ALSA: cmipci: drop SNDRV_PCM_RATE_KNOT
+>       ALSA: emu10k1: drop SNDRV_PCM_RATE_KNOT
+>       ALSA: hdsp: drop SNDRV_PCM_RATE_KNOT
+>       ALSA: hdspm: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: cs35l36: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: cs35l41: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: cs53l30: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: Intel: avs: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: qcom: q6asm-dai: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: sunxi: sun4i-codec: drop SNDRV_PCM_RATE_KNOT
+>       ASoC: cs35l34: drop useless rate contraint
+>       ASoC: spdif: extend supported rates to 768kHz
 
-On Thu, Sep 05, 2024 at 10:36:28PM GMT, Richard Acayan wrote:
-> On Thu, Sep 05, 2024 at 10:09:34PM +0200, Andi Shyti wrote:
-> > Hi Richard,
-> > 
-> > On Tue, Sep 03, 2024 at 10:04:49PM GMT, Richard Acayan wrote:
-> > > This adds support for the camera subsystem on the Snapdragon 670.
-> > > 
-> > > As of next-20240902, camss seems to be a bit broken, but the same series
-> > > works on stable (although it is much less reliable now that the CCI clock
-> > > frequency is not being assigned).
-> > 
-> > I am not understanding this bit: is this series making it better
-> > or not? Can you please clarify what is broken, what is less
-> > reliable and what works?
-> 
-> When applying this camss series and some camera sensor patches on
-> linux-next, the Pixel 3a seems to hang when camera capture starts.
-> 
-> When applying the same patches on stable, the camera does not cause the
-> Pixel 3a to hang.
-> 
-> When these device tree properties from the previous series were removed:
-> 
-> 			assigned-clocks = <&camcc CAM_CC_CCI_CLK>;
-> 			assigned-clock-rates = <37500000>;
-> 
-> the CCI would sometimes fail to probe with the error:
-> 
-> 	[   51.572732] i2c-qcom-cci ac4a000.cci: deferred probe timeout, ignoring dependency
-> 	[   51.572769] i2c-qcom-cci ac4a000.cci: probe with driver i2c-qcom-cci failed with error -110
-> 
-> On further testing, the rate can be set to 19.2 MHz, and there would be
-> no failure (or rather, it wouldn't happen often enough for me to witness
-> it).
-> 
-> > Besides, I'm reading that this series has not been tested and it
-> > makes it difficult for me to take this in, considering that you
-> > are adding a new support.
-> 
-> Of course. This revision of the series wasn't submitted to rush into
-> v6.12-rc1. It can wait until everything is resolved.
-> 
-> When device tree maintainers comment "not tested" on the documentation,
-> it usually means that `make dt_bindings_check DT_SCHEMA_FILES=...` gives
-> errors or warnings (even though the device tree and driver may work on
-> the hardware). It's a separate test and one of the things I haven't
-> scripted into my workflow, although it's still a responsibility.
+A nice cleanup series.
+Applied all now to for-next branch.
 
-OK, thanks for clarifying. Then, please, next time, to avoid
-confusion, make it an RFC; or, if the series is in an advanced
-state with little things to improve, state it clearly in the
-cover letter or after the '---' section.
 
-For now, thanks a lot, I will keep the R-b's for the time being
-(unless the reviewers are against) and I will wait for you to
-know the outcome of the tests.
+Thanks!
 
-Andi
+Takashi
 
