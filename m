@@ -1,95 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-31169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1593296FBBF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 21:02:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32E5796FBCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 21:06:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 63A24B2850A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 19:02:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E6AF22841CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Sep 2024 19:06:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6D287D3F1;
-	Fri,  6 Sep 2024 19:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 640911CDA1B;
+	Fri,  6 Sep 2024 19:06:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b="Nk3e5N3H"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="FVx3eV8z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ms.lwn.net (ms.lwn.net [45.79.88.28])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A02A1B85F6;
-	Fri,  6 Sep 2024 19:01:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.79.88.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C482613D899;
+	Fri,  6 Sep 2024 19:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725649318; cv=none; b=JKOCljz6V1zC0g4KGkUkoB5QNyCOJiROSmIpBBittda0sHR10tXp3SiCvBk/kT5yZ2Ddn9AZLgKJtgdtGj+w/9TgXq8kuoj77ybHylu2XHUOEs+8DXKQHx5M/J2CHM7OJ+fuiUAwL2gyfX1ffa6zAbiRBK1Gt/yCrs3x8UQMMBo=
+	t=1725649585; cv=none; b=YcIwBJacDtouxvsP8wIK+stvX9ULW4hWaxAWtNka7zYiQj+0p6kGI8m90iE+nGE6zYVBYx+ELr8KOqTVmBaKA/rSqwbBM4Dnp55SRVunB8vDs30Zkufgq57xIezhu+clcSxJ0J+oCEBvRIqta2mVpe+oFno2nwsIx63XR85grUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725649318; c=relaxed/simple;
-	bh=gYGgNpO0Dc6WIwYRmkqCcOZG3hyCLUye2imyMbj+fM0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uPPmpOWwdLJVyJOB+V+2c7PeToB6Gpc6/PysZpAXKYs+B3k12K6k9tcYusTSEMFF0AaHOMXXLyuV8rrwv8b7Ij1CFc+qTIqyOjIh/XH2Kmgj6nvzvR5b8A1L5Uf9tAQPyjreo5PTzZ+QxRmZkSq6CJ5PSnzrEvECv+dhX6DK7T4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net; spf=pass smtp.mailfrom=lwn.net; dkim=pass (2048-bit key) header.d=lwn.net header.i=@lwn.net header.b=Nk3e5N3H; arc=none smtp.client-ip=45.79.88.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lwn.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lwn.net
-DKIM-Filter: OpenDKIM Filter v2.11.0 ms.lwn.net 69A2142B32
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=lwn.net; s=20201203;
-	t=1725649316; bh=XJsz4WENGfSRSt3I6YJl8iWcScYb0NwDimb1QPg0fFw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=Nk3e5N3Hbf9quV9UlHJ0LR+iyxuYKD6U7HMmZ0QDSI2wb06xxNXRZzwk2to7hPVp3
-	 W6nTfI0AqqQc7rLQOrIXkSc55fZ+IJSFO/3AJILYm6qwQtnChcHGSoaY4nRzezl18v
-	 aEMoPY/QZr/BMKk0hDED2GzhxWq761YoYEDSb4MLOIFQezuko1q5S4sagoJJA+iWYr
-	 N2PgxzbJ5cOS+iPGSOlBgaLJh7B2hmdVaurfcsr8/WU7Ddpjk3RhoW5UCT/2Ezvi0+
-	 tunYc/UZwBcDoeG2potIo/nn3VhjVRx0zd6rVby6oeNdert7A0D+KxJCtVhJRmetKI
-	 efGNEL+/xIs8w==
-Received: from localhost (c-24-9-249-71.hsd1.co.comcast.net [24.9.249.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ms.lwn.net (Postfix) with ESMTPSA id 69A2142B32;
-	Fri,  6 Sep 2024 19:01:56 +0000 (UTC)
-From: Jonathan Corbet <corbet@lwn.net>
-To: Andrew Kreimer <algonell@gmail.com>, Jeffrey Hugo
- <quic_jhugo@quicinc.com>, Carl Vanderlip <quic_carlv@quicinc.com>, Pranjal
- Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>, Oded Gabbay
- <ogabbay@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel-janitors@vger.kernel.org, Andrew Kreimer <algonell@gmail.com>
-Subject: Re: [PATCH] accel/qaic: Fix a typo
-In-Reply-To: <20240906080136.4423-1-algonell@gmail.com>
-References: <20240906080136.4423-1-algonell@gmail.com>
-Date: Fri, 06 Sep 2024 13:01:55 -0600
-Message-ID: <87zfokd2sc.fsf@trenco.lwn.net>
+	s=arc-20240116; t=1725649585; c=relaxed/simple;
+	bh=nr6OX5UedFpgxYakr+FAYRZIVUTAKAr0Ym9FJ7B5DNI=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=qq+bY+0zxLfYims6090NfLlq31BksxOgNOFSVtOjyMcJIqeVOIhwCsmxewAFwJwn/a/3MYxXRgSl+zV3cJoBOlcKyla6INZVTYZTwl6BZSvV6LSIdR5W9ChT0S7/9derfsU//fSBmVzoDDQ2RmfNl0s2nfwKlt2zAn7LWZsuiRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=FVx3eV8z; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1725649557; x=1726254357; i=markus.elfring@web.de;
+	bh=tiX2YP3egz3aDYEiqN04/pLGavK4NnAFCP8ntbEUtO4=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=FVx3eV8zyGY86PThuNOZ/UWwKbP48MBxkx9f8utvAPN9sQIAKYkfPR8hUBS1Ot8Y
+	 8+sdxH0ZfoXBEaSmRSbuV0VTWuviKJw++tM7fTtsr4V0/c66eO6JRmuRUN1ibXNtY
+	 U/qZi/e/mM9tHS5b0CvDPjQcCHxsBaVYavHU9GtmYbENjegmNaqqdmdRkmxTBmtNM
+	 qmf0DHmoFsxW1LIU0+EM+273JZM1aEw/ngexSMdr8nVzZT0VIbKjuBOfhVjy6Rdv8
+	 DGxxRiHzXYwuS0S6Q2Hg1wNWoESywKl6y3fZzCoQbcK5ZUHifpHFY1724IaxS+StL
+	 R06aQbNhrdzO3u9GMg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.84.95]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MKdLK-1sTtVZ2ii4-00XRoT; Fri, 06
+ Sep 2024 21:05:57 +0200
+Message-ID: <08d9a783-2de1-4658-b617-5e6e6947ac2b@web.de>
+Date: Fri, 6 Sep 2024 21:05:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: LKML <linux-kernel@vger.kernel.org>
+References: <20240827-iris_v3-v3-5-c5fdbbe65e70@quicinc.com>
+Subject: Re: [PATCH v3 05/29] media: iris: implement iris v4l2 file ops
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240827-iris_v3-v3-5-c5fdbbe65e70@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:kOT5rk8SrRtRtib6YRMMzjISI8NWVzWAqga/vXC5ot8h2UzXvzq
+ JARjg7GAEzgT+SnhOTMsGMdV+SFw1a8yk3J/G/bkDHVVI6B3AGadE/QE4xFRjZ4A18CXmil
+ 1xZPBrPiAbiEqy35AvfhlA6ETSUYxMYz6FVIXKHJoqL6CekTVo0l56+aPWujjegoisVzlBN
+ ccRYPwiS85cfrQIGJse5g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:/ODuNcg3LSo=;lYa8jdaHlEtgHfAfnYzz0F+9BHv
+ iAKVzgaSzQ2UGPQ7n3WtpUTLCu27GWvo+VQNpEJLNYgw0dynez2zx48QSjMnG18rhzdB1AWor
+ 0Iw/45MahnghVeAhE5VpOTrN/6iUEDY+9w2v6qYjSHDYn1gkQO6Zap2mm0aYXse9a+kAxZUMx
+ 5YEyO1xhHpGnhMckG8hXFaqOfLktlkCFarb2wMLPJE5eV2p6aZOME7GaHdyLGpkyh3qjUjWw2
+ nCmZ0VBtOMAxWqkGeIrrdlQ7DcJ670mli6FwoL+UfmKQSzJN7tF8oFpzpt2MLpccpXFf0g3hm
+ djpgKFLIY/xx9bw5CZfKCu0c/NSz5HQ6KG2hicSvxbJn45BjMPgZu0W0LuMTUNN4VhnCUN1ti
+ LOTZ3Xb38aHerEx1JdOIRQ95ZiP16xnKfr2JxiUWNLjfUTz7rrXDl4A2ilkoQvF3/Cyou7UUO
+ 0H9TZYHKMBIv+k04+0sSmdsWaWuirJVy27IAnGB4smyXGfqVPfIEpamK1QhGJgPAHkndAoR4W
+ 16wc5zwe3KJvOi0+DqB6Ne+ZqfErrDEfmRy86qPNU5J8E/wGLAOTOdAkP07VQ2vWfuSWWoKKa
+ 60QfsoeDnG5D7NuOn+wX/BVqLLhDWeWV2bVtKuX9E0WhYUYZebTnb5ytfTyaUQcYChrpN7qkE
+ iBXdNOcZKxqmZrQCDzagD6vxTJ6oTLc5Wm4nTkw7dkahLzuHb8eQi+WE0HeLekkvwSjGg0teh
+ 8PnojDKYArmRVPXW4HBuwZ4h3oJl8aHk8rY4i18Lp+0bZjAMZYOlgPvUlclpFRnXzmaCDUy4V
+ nf85wGKrWet3ZFUCZGtGT9hA==
 
-Andrew Kreimer <algonell@gmail.com> writes:
+=E2=80=A6
+> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+> @@ -0,0 +1,174 @@
+=E2=80=A6
+> ++int iris_close(struct file *filp)
+> +{
+=E2=80=A6
+> +	mutex_lock(&inst->lock);
+> +	iris_v4l2_fh_deinit(inst);
+> +	mutex_unlock(&inst->lock);
+=E2=80=A6
 
-> Fix a typo in documentation.
->
-> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
-> ---
->  Documentation/accel/qaic/qaic.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/accel/qaic/qaic.rst b/Documentation/accel/qaic/qaic.rst
-> index efb7771273bb..628bf2f7a416 100644
-> --- a/Documentation/accel/qaic/qaic.rst
-> +++ b/Documentation/accel/qaic/qaic.rst
-> @@ -93,7 +93,7 @@ commands (does not impact QAIC).
->  uAPI
->  ====
->  
-> -QAIC creates an accel device per phsyical PCIe device. This accel device exists
-> +QAIC creates an accel device per physical PCIe device. This accel device exists
->  for as long as the PCIe device is known to Linux.
+Under which circumstances would you become interested to apply a statement
+like =E2=80=9Cguard(mutex)(&inst->lock);=E2=80=9D?
+https://elixir.bootlin.com/linux/v6.11-rc6/source/include/linux/mutex.h#L1=
+96
 
-Applied, thanks.
-
-jon
+Regards,
+Markus
 
