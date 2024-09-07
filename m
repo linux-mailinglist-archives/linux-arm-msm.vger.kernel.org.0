@@ -1,74 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-31193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31194-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C15F970104
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 10:49:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5E0697010A
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 10:52:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A25E1C21C5C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 08:49:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DFC91F230E4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 08:52:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 716FF14C59C;
-	Sat,  7 Sep 2024 08:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16E9814C59C;
+	Sat,  7 Sep 2024 08:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHlTNK0d"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="kduA/FtM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F29E14A0A8;
-	Sat,  7 Sep 2024 08:49:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A549A42A96;
+	Sat,  7 Sep 2024 08:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725698947; cv=none; b=DrxR9I38/JenPnho4QK7gBhyp+Dr52Kfr7Ow53j9Omwm7ylxYlElEjy8zBgeASy2n1mBcMfFBZxhB9/0iU7nC31escs1amaZZZT0mhIgfeuSFgG7bPxV1cdNLk28AqB/QuNV9rX/EpHlpm4EfaGOwuiwpAgJy/IRozXHdNImLmA=
+	t=1725699142; cv=none; b=D/6h/KrsG5hTi807Dvcob99KKVRup1c5Zt+ueEfu7ccjMifzbBsnNO7lxshe788SXA3ed5oxjn0r3USlGwdt++WqdeLKxi1MIwZxxaUdGvu2LWBGf8YeVxP9VOp8Tzehblo3nOoS3X+KRaEUKyZzIkFS3h5meBDwoPFufYhnLK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725698947; c=relaxed/simple;
-	bh=GsoRJJo2DovteJwgux5pAslpP9M+k1P5bnIdIwLRxiY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=j2bH3Bjv8qtgNS8c34s5tYdsjIqiiPqsc9mRxK6KLWXj9yt9nWTQSlVHQ8tSj3TKARZ9bzzCU660BuMtvCIP/amb6ILPmcAdCA/khRUskjbNJgmmXqIyC1IbhxouU1du2KwXSwRcxX/UDAw39kgzFq8FRD/ssXZlNF7FbxjRLq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VHlTNK0d; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-7d5119d6fedso1502679a12.0;
-        Sat, 07 Sep 2024 01:49:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725698945; x=1726303745; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BH4+XkdgytSrJblSRrneWrEK0xYxzEsMEgsFyL/DakE=;
-        b=VHlTNK0d4Z0vZxgqSTtwBNsZE2yxbA0/hJjRCttIM14PPB8k3RpXrb3+ffh1IbfhVN
-         hJIsgt3DksqOqVbmor4OblEE+fyVPfKyktwQX1obbd4BTOe96LJsp8Wb2YWopo9e6k/J
-         Sr5HyW4IhCGNtOYbRn2dvhFjGmEPfLxsuU4VJnPMDwCB0vtcGX93RDjGIQWAXd3OsFUw
-         V4oaetLE/Z6WbDZMMI/T5w3vJ/ythZ4hPJIKhtb6L8ieO8XkHqeVELste33v5NPMZpzd
-         nRfKdi0f7OXP6CdKmvIBh1yB6sBPybCOxteX9EwEGnm1B/atsjR7LiC5DIfhv/VdVCtc
-         4GKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725698945; x=1726303745;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BH4+XkdgytSrJblSRrneWrEK0xYxzEsMEgsFyL/DakE=;
-        b=hevrcGl20ePA5UYLc83zlndU3hNaRCnIq6vrIsIfNFvOzI/seF36Xve0vXEx5fmqzz
-         XXKWiW7h41Kh452ODR8lKVeZ6M4Mp8enSDRJb/7kXjF9XX6Rn7syuBsr91Zz9qNcRE62
-         zxZdUXo9V/rwDEL9jGRd/Pn1tRUG2Fq3o8TEGFELgePacGVj9pIrdfcZyLCAD/ukZwMg
-         amOR0V0avv8VTHgHE8v280UhuyB9Tqnujy+HLorIqqXkp6+nYz5JTcxkfpEnRyBfHOMj
-         Rap9pEm3G9oJeZi3hGsTOIISXLw3y4mbAmS/sLs13PQ2z4VsCjZ293kDJ+nV2tQrFBl+
-         C3jQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVgc2xmfi2BDIpr/b9rPqM8e22eNFRRGCWpNVCJfxNpqLn35A5mkesyFVZ5XjcnXpo1tc9gRYxsBAfhfB4x@vger.kernel.org, AJvYcCWGVOA1XUKxni4t9THOJ91pQDZuUjglhEgZN1P1IcE8JqpgxBKlyVFVJ+EIjKmAPnSpEm0KyfPG3OkgXxbp6g==@vger.kernel.org, AJvYcCXS5z2eZeNo0wCQKY7NWLV2PCjOMqgMRgJV6kGT0vCGb+mS1NYsl8QyQ3yvW8geYkpjYQ6H2lRe/FVK@vger.kernel.org
-X-Gm-Message-State: AOJu0YyQJYY773cVoOsx8sL8iHX1TiW2LBK8MahUKLtwUCllljRsh9cf
-	kkEIVmtY3+OervX9Gt9LZn40yx3e0kwXGhzVY31omajbOb11PMky
-X-Google-Smtp-Source: AGHT+IGCGj8ZHxZZBVZ5qtVU3o3i0MvF8PEs2OGGek2eT1vVe3uzcBcxT+hQr2L/GhZcLEwtMSq4tQ==
-X-Received: by 2002:a17:90b:4ac7:b0:2d8:3f7a:edf2 with SMTP id 98e67ed59e1d1-2da8ede7effmr18570786a91.12.1725698945158;
-        Sat, 07 Sep 2024 01:49:05 -0700 (PDT)
-Received: from ?IPV6:2601:644:8502:9460:d6be:d9ff:fe52:7e82? ([2601:644:8502:9460:d6be:d9ff:fe52:7e82])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7d823cf3b60sm615133a12.28.2024.09.07.01.49.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Sep 2024 01:49:04 -0700 (PDT)
-Message-ID: <68b0476f-dfa1-44cb-a01a-f4afbaaa98e5@gmail.com>
-Date: Sat, 7 Sep 2024 01:49:02 -0700
+	s=arc-20240116; t=1725699142; c=relaxed/simple;
+	bh=pjrV93iPRdrrx5VHqRXoPjQvj8ExvW1rekDeQHuUuY8=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=tD0wsS7B0HtzL8r4PE+EbltwqXrv8QJIDSeEpjfDnORXsVwItqfgqa5+VA1tWdmIvRKO0ziHG4tQuhzI9u1OED2UCAMVJNUgijr5DwPiitlbKKfNII+cbk5O1ACWNAAHuXiTT1Hteb2GXsu+eI0ZBLWrwmY3yhfUNVjkjH2isxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=kduA/FtM; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1725699127; x=1726303927; i=markus.elfring@web.de;
+	bh=pjrV93iPRdrrx5VHqRXoPjQvj8ExvW1rekDeQHuUuY8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=kduA/FtMco+lRQKB61g0UxzRw5OkpRgmJHVliq4H3SLkuOqUdzLmyPtwjSRTBvmM
+	 XiIdDc/fZnHzuL3dFCM5X7BimEP9DnD64yvgJLG5Z5qxhXaw/YpZYyzHlw/hCAULZ
+	 e0gfaJU+fB90+Kbh9kh+khhzbUTLBSLg8r5yb9GItbwkjZdQmY+ejXUfDALWV8fC9
+	 6CU1Nm/+flEoFEKuHTE4Fx7NF7GMeis/fQt6PSrgrd9zk06X2omUsfYDO9gVqbc9D
+	 K+2MQ0JLOmXQ4na/5qy2PmTKlvovqGFltXcF3323GKZ0VSNV+UM1NEQPIRWIOHHjR
+	 TF5Ah1TCASfawobj1g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.84.95]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MumJF-1rx5y0392x-015h1T; Sat, 07
+ Sep 2024 10:52:07 +0200
+Message-ID: <1df7c433-5e25-4bd8-b8fe-547d66984832@web.de>
+Date: Sat, 7 Sep 2024 10:52:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,51 +57,52 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [REGRESSION] firmware: qcom: scm: smc: switch to using the SCM
- allocator
-From: Rudraksha Gupta <guptarud@gmail.com>
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Cc: regressions@lists.linux.dev, brgl@bgdev.pl, andersson@kernel.org,
- konrad.dybcio@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, robimarko@gmail.com, quic_gurus@quicinc.com,
- luzmaximilian@gmail.com, catalin.marinas@arm.com, will@kernel.org,
- srinivas.kandagatla@linaro.org, arnd@arndb.de, quic_eberman@quicinc.com,
- elder@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- kernel@quicinc.com, ahalaney@redhat.com, quic_djaggi@quicinc.com
-References: <692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com>
- <CACMJSes4cnCNUHiZUr4CF-K2c8-1VYzuh=T8JDi_erqfShkuZA@mail.gmail.com>
- <1f889bba-0c89-45db-b360-b21d6bba7772@gmail.com>
-Content-Language: en-US
-In-Reply-To: <1f889bba-0c89-45db-b360-b21d6bba7772@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
+ <krzk+dt@kernel.org>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc: LKML <linux-kernel@vger.kernel.org>
+References: <20240827-iris_v3-v3-5-c5fdbbe65e70@quicinc.com>
+Subject: Re: [PATCH v3 05/29] media: iris: implement iris v4l2 file ops
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240827-iris_v3-v3-5-c5fdbbe65e70@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:BZrxj9QBCWf6FdROIregyd7V26nTuUrF5mSFSXmvGzjKThV077u
+ eWcs+EpDFa9idjVWTtV7jBJ0kE7rkc4uGqvqp7kCF2cVMxxNOT/qKv1RiHoWOnTp2TPRB1L
+ aw8OhuefUZI5W8Xpt7plqJvmaYthPgYW6hBRhmQrGuWCkkEJ9P4CJ2jKvAPddo/fYJRcP3D
+ RkDk5KANbTxJrLB/9sKMg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:FMeaFPTIjns=;r+kkv/9decl4Pf7BmXCLXnQ62I5
+ ePbCfODK1xs2l6xR5OBAOlemvZbwd1Xe5Cv0x+84+QG26ApLTM4x6i/bwQK0o2V9tvxJoAKhB
+ BZQcqlRm1B9ZCG6HcF5LCOMQLiUsialJ1YzOHJdplGiCSFbMiTEjPbuLr0CbFcanc5AAu+OKT
+ eGsY0ZE79kpCi7VnF134XXKxWJ2uiScuhufMkcs7uKiO2HMgI1kkjexEY3O9E3/ipY0V0Ij+O
+ zQ6pj9kWzke/BUOgwwnjak5zC2piod5BR1jh/F94z8r4vOQUfU85BUrZthQJjrPySsPfuh86Q
+ jz9OsrxrwIYQT8b7zfKREOF/2QYoNPKv07XypJMSuQmprGpXWSy6rJ4TOZaMWX4NX7VodJHiK
+ ZHVcP+rudTdaNSY6nAJdvJFNQ7jSfranAvOmsferPimdHsCr7Wpn/tkzT9eO6MO+7FqZ6NMa3
+ 9aONDHdYBl9D6Itt7xbdmwzjDWuhP+hxdZbQBuPGsNo+sGJpQoymR6dTX5NvknVRqkQCgVrmm
+ gS9BnT2enHgki3f+c10iXKgADKuYrgTlp5t7kZyFNoOAF1VNkdP8T5G5AUCtKTPzrJ1t+6Y/T
+ nkqA8l9aYOtrnWWETjLsN3eAgasDZETiJ9JCGEVivDm/GNF4ekGhWYR+sV69SiS64RvA8ClzQ
+ wVPIXamx/JXP1Yo6IfavWBh6+l0rtnzc1Y3N+Cp5j1DOMsmBwtAOTLvdd1hQbr9rftdTSeFjG
+ GFDL1ZPlC5mjxZklqqvmMh4UYrhEyDDE/vc0u3yHl/1357mLlQoVWxwpfFdEFHcWXPFyPki1D
+ UF4GASeaxAHsArtqavabzosA==
 
-> Looks like qcom_scm_get_tzmem_pool() returns NULL. Not sure how this
-> happens. Can you confirm that the QCom SCM driver probed correctly?
+=E2=80=A6
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1.h
+> @@ -0,0 +1,13 @@
+=E2=80=A6
+> +#ifndef _IRIS_HFI_GEN1_H_
+> +#define _IRIS_HFI_GEN1_H_
+=E2=80=A6
 
-Thanks for looking into this! Please let me know how I can help!
+I suggest to omit leading underscores from such identifiers.
+https://wiki.sei.cmu.edu/confluence/display/c/DCL37-C.+Do+not+declare+or+d=
+efine+a+reserved+identifier
 
-
-I've been building the driver into the kernel I believe. Here's the 
-relevant line in the config:
-
-$ rg -i "scm"
-samsung/expressatt/linux.defconfig
-1615:# CONFIG_ARM_SCMI_PROTOCOL is not set
-1627:CONFIG_QCOM_SCM=y
-1628:# CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is not set
-
-
-It seems like the scm driver is being probed:
-
-~ # dmesg | grep scm
-[    0.066438] qcom_scm: convention: smc legacy
-[    0.362543] bus: 'platform': add driver qcom_scm
-
-
-Also here is the complete dmesg output (Had to paste in pastebin as it 
-made the email bigger than 100 KB):
-
-https://pastebin.com/4iWKvZ8z
+Regards,
+Markus
 
