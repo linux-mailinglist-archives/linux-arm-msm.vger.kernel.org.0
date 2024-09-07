@@ -1,318 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-31207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31208-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6025A97036A
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 19:52:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 236829703B4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 20:48:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2E8D6B2062B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 17:52:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A60751F2106F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 18:48:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5D21161319;
-	Sat,  7 Sep 2024 17:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A152166F0C;
+	Sat,  7 Sep 2024 18:48:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y471n6mo"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lrSf4eKe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FCD217571
-	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Sep 2024 17:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD10947A
+	for <linux-arm-msm@vger.kernel.org>; Sat,  7 Sep 2024 18:48:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725731548; cv=none; b=c3C51DArKL593C4fR4ddT5E/U5UO1NPpxFSSKuILuNNtWefRY3QdSSXwFn+YGvhj5aVfyGfdVkx1jLQoJPGi7qAXvnfWcg43Y1rBT9bXhe2woy7s8PD1LVFscGho9UhuHG0ckY6/2dxRUKFmXMumRgA4d/HLwHhleIhsG26Pn8Y=
+	t=1725734904; cv=none; b=qz0UuALEFfs/Hl5zI87Hr6vO3kgaUSeGyaXCpbkSa9ai6eiBlUbd3POuv35wo4y/UUOfbK7EfLxUpDRQ+Cc1cZgpGOEOCVpvRIteHZN78F+SpREEQSbdEFENe69HXQVFzIadCADm1CQVJ18lp7Nd4J/MasUbZfryfIiy03r3Eg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725731548; c=relaxed/simple;
-	bh=wdfXapGzOxZQkBuhCe8zCnKWGB0UNMRpMvwy7Ho1EbQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GZfVcQBROy/hcGqaUClJ8vFPabczZAe9Xe3VTC/wXeaJFzDoipSh0oWLg2cRMagoSRvhioekwdKR2zYpLDvtABfGKTbwwYsBvZOJhgwbkHH61JeQ1EbyaUcYAvqitO2X0EE0hiDlYwogyP7icbZjx7iDBkhDDYOw3nwW8py3Zgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y471n6mo; arc=none smtp.client-ip=209.85.219.174
+	s=arc-20240116; t=1725734904; c=relaxed/simple;
+	bh=j2MGhLcuLoVLWg4I2MuE84ebYpICQobwJaU/0pV8mPM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=lKDaoKy2axXzi0Mdd6OIYfx3OWxeOkFl4sNwF3t3NRgI1nGKiDbAZtJSQ8gDxgvBiwaHoQcrFfqoQ0rRcICawVckm6A0rhwy1QsdGfl3OkDupqgYSolroS7tBZN8fbyHf//HLxk1NyuJiZ4EmNHdPb7zUdJ5UaRzeqMb6xp1drs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lrSf4eKe; arc=none smtp.client-ip=209.85.208.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e1d0e1bffc8so3049779276.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Sep 2024 10:52:26 -0700 (PDT)
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2f75c6ed397so6384871fa.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Sep 2024 11:48:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725731545; x=1726336345; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=pmfUXum+hMGBOXSX617klpzb0zjjyzayHt/KE016mEU=;
-        b=y471n6moWgrzJMSUolzNlgQCRKdo/USMCVk5P56B3b03HJOhynowFHigLhtEn81P7u
-         umw08QWZcqLdIKmrRLH3WvjLse9j/g12+U74l0SvevqWzFOLa4/1tgcPfEI17yqHieHi
-         vXqnpd/nl8DMlcR8aMJHdpH7yB6Yfuikp1Gj5kgUHFOIeMBuil4bclgOesD8FCXCB31N
-         Nnn57WBgOG9j4FJRbf5yysq9Qc8qUVcaX/5dDOTFgzycKqCckzDLhBqgZwzthazsid6f
-         Z/EOews9VFqgMfsN+uvCfuKXdoYLd0nAwaNIzTAkx/63KIo6tMpLuHgrq4ksbkVRKJXD
-         /EXw==
+        d=linaro.org; s=google; t=1725734900; x=1726339700; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Bp2f3Cd3xUZZx5mV8or2w5DKaQxEUtdkX4okocf5JKQ=;
+        b=lrSf4eKeCGw0Zbt9xC6Ytpy9WweIfTbF0LE9YUJF3knYkZoIf92YhVPTjIasxJEywT
+         uVI8f64tnmx6Y8y4WgVBmtGjyAeHAbvjsqcyzii7N/YUIrPmGedJ3ooh9rbTl+XDu5QA
+         4Lzgmw/7AkVXaS2ZKIGDvdNbNL+8gjj0s/83IweZtq48F3seUjrpxxkxZ+Cg0PDcB/DW
+         d8oXE3dX8+CZYkGRaM1IKmi8rzKYdJSuYkz17UakWFLkOsfkNdgNbCcAXXr7BDx3/fmm
+         EwhzXBH7nPrSdNA6IXHwva5FQhpc4dW4Q+YWcPrImzP5FDjmMI5PJQOo1JkKq/puRUro
+         Kxng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725731545; x=1726336345;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1725734900; x=1726339700;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pmfUXum+hMGBOXSX617klpzb0zjjyzayHt/KE016mEU=;
-        b=lf+Sw70rQmWOgZ55QuBopGrUDVUimX4IxosouUAA5oyED7GnNQHlQTMSrnNfK1W9Ey
-         /1YX9VyH62dPKD4WoW8DZeA20gTZEdbEFC/oV1c4KWrKopaaUQE+/rWH0sWmwJc7V7Qs
-         p7Oym2fPmYuwHnKx+cvHuAFWMxSgrRZsF1Lf/uhhm5ixxeJVIAAssXUzUN4KWPZPJSa0
-         EEYPDU8lcx2lCBdKuG8hiIxIxaR7SDbFF+OLBcVgXDqFtk0aJRFHInBpObOnvjk8l/af
-         QnARChmgTj2Meiby6N89vviWel90+bUt5ScOINejN+nzDBnrTQXBLC6MXywxXvSpfz90
-         SQAg==
-X-Forwarded-Encrypted: i=1; AJvYcCX63B7K3Yjt2jBpJI771EjOAoBsk/iPChOiyIuvzn/zrlgMAYo5LNYlz5kTk762gEB250cB+46DwK1TqTUP@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsuZ1GJFCtoJf995cQisodnb8JYRWsBu944e7UIACvV/fQeS/A
-	5mydHKVkudSqlwVMOVoHhD9XkilNdDxxHa4SPwQRW/Kztryvm6i8TtWjVsZUErRUPUCH8787xuO
-	WlSjmG9AJxNq4JxN1WyPv5qEKCMgP974IZ4kO5A==
-X-Google-Smtp-Source: AGHT+IESE/nI8Bxzeh7UNT9DbmSMYE6dgAE/AysGBHexnA1PwCtiJcPuwdEeKbrhyv24ijKDBUrx3TYJPr8W6PNDuVw=
-X-Received: by 2002:a05:690c:f:b0:64a:90fe:911e with SMTP id
- 00721157ae682-6db45154290mr63873167b3.31.1725731544986; Sat, 07 Sep 2024
- 10:52:24 -0700 (PDT)
+        bh=Bp2f3Cd3xUZZx5mV8or2w5DKaQxEUtdkX4okocf5JKQ=;
+        b=eKQXLhIRBb9EZNFSmMZGh3HpCgFU6LA1qc/1zExseOR6A2EFetc2MxodKGpKYf7Vaa
+         /rE9Xz6gQP5C8co/6v2KjQm+1x/njUohRgLRfcko7OiFGQtb2Rc8sjHMl83rQVeMnMOo
+         YlNlFTH6Omd60uzip+30v68NWMQr9kmgtjqlmQcaMCut3gJ0ejzeNA1iPLw0MmRcbKtk
+         ZFM+3pW3axelFM75UZ9Z0AYJit6jLCL2QdN2otXeqZpmuN7J5fEui6ZamDXvf7boq1Oh
+         /p5Sxrma9DS++eoCSrDjpiT/aFyW7nVWQ7EXaFYMC7MejqGiT3feClNtVa7hZhG4VwSH
+         5eGg==
+X-Forwarded-Encrypted: i=1; AJvYcCUzPT5oVrPbPMt1EgnT2ztTjBGGmSN5yKoCi7acGsC69ysUmJBLXyKEW1niFijn2A6E/FkPayvIxLcqZCfs@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPaQ29GIu3Z5hFZwhpWi13hBcAO2I+kwCwQWbYAld9j9bJbQ4G
+	w0OPqpoXKIag8+fByfLylO6Gis8jhKB5E4lrhEk9YKvLGTvlndmBvb+WmnpA+0A=
+X-Google-Smtp-Source: AGHT+IGO0WNu0PFOcRrTUtNd5FKi2izDYAt1p3P/Gtjx0bVcVZuQjc3v0I9yiOFDdx9qV8/gFlWDQg==
+X-Received: by 2002:a2e:4c19:0:b0:2ef:2c0f:283e with SMTP id 38308e7fff4ca-2f751ec89bamr35682181fa.12.1725734899190;
+        Sat, 07 Sep 2024 11:48:19 -0700 (PDT)
+Received: from umbar.lan ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c0b1af3sm2271861fa.129.2024.09.07.11.48.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Sep 2024 11:48:18 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 0/7] arm64: qcom: sda660-ifc6560: enable GPU and WiFi
+ support
+Date: Sat, 07 Sep 2024 21:48:11 +0300
+Message-Id: <20240907-sdm660-wifi-v1-0-e316055142f8@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240907-phy-qcom-edp-enable-runtime-pm-v1-1-8b9ee4210e1e@linaro.org>
-In-Reply-To: <20240907-phy-qcom-edp-enable-runtime-pm-v1-1-8b9ee4210e1e@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 7 Sep 2024 20:52:14 +0300
-Message-ID: <CAA8EJpqw6pB4d_zQyYdhq9_prLnh+mLMdRSzJ+5EvAjT9wi86A@mail.gmail.com>
-Subject: Re: [PATCH] phy: qcom: edp: Add runtime PM support
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, Johan Hovold <johan@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOuf3GYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxMDEwNj3eKUXDMzA93yzLRM3URTi1QL8ySLNPMUQyWgjoKi1LTMCrBp0bG
+ 1tQAf8W+jXQAAAA==
+To: Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>, 
+ Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, ath11k@lists.infradead.org, 
+ Kalle Valo <kvalo@kernel.org>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1756;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=j2MGhLcuLoVLWg4I2MuE84ebYpICQobwJaU/0pV8mPM=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBm3J/s3aD3giiWStxq0Uq71R3ZAHngRAI9exh4S
+ gvabAQfWrKJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZtyf7AAKCRCLPIo+Aiko
+ 1WpICAClKoPTaFjA24SOWFpGheQP76MScFD8h1Cc7JoNZyGlm/c9t3JtblTAopntkVLPeWJ3e/R
+ weoly+63q++LVTgHBNDieyj/sKCanLvE/GbQdmsaQfZUhorPpYC2nivqtNLjxEduVwDZNQ0Oivd
+ e2g9mjU/97PGn+LIx9M4O8IzAYqd5z125QWqX2An9MwNmzZZkfYd1NsuKzQMFqXSPl0oSU8CnfQ
+ RdgDEKYZJQfPFWInCTMpMc6D68DYCBhrkvC/z0jyFvcOeuXdAGl2xFzObLWF4eK4cWmETcQseuC
+ NgOMqyDQ4aXXsSqhzTnVB0VWFvFE5f7tVAq6VeA9Z2nrxz51
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Sat, 7 Sept 2024 at 18:25, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> Enable runtime PM support by adding proper ops which will handle the
-> clocks and regulators. These resources will now be handled on power_on and
-> power_off instead of init and exit PHY ops. Also enable these resources on
-> probe in order to balance out the disabling that is happening right after.
-> Prevent runtime PM from being ON by default as well.
->
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-edp.c | 105 ++++++++++++++++++++++++++----------
->  1 file changed, 77 insertions(+), 28 deletions(-)
->
-> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> index da2b32fb5b45..3affeef261bf 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> @@ -192,14 +192,6 @@ static int qcom_edp_phy_init(struct phy *phy)
->         int ret;
->         u8 cfg8;
->
-> -       ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
-> -       if (ret)
-> -               return ret;
-> -
-> -       ret = clk_bulk_prepare_enable(ARRAY_SIZE(edp->clks), edp->clks);
-> -       if (ret)
-> -               goto out_disable_supplies;
-> -
->         writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
->                DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
->                edp->edp + DP_PHY_PD_CTL);
-> @@ -246,11 +238,6 @@ static int qcom_edp_phy_init(struct phy *phy)
->         msleep(20);
->
->         return 0;
-> -
-> -out_disable_supplies:
-> -       regulator_bulk_disable(ARRAY_SIZE(edp->supplies), edp->supplies);
-> -
-> -       return ret;
->  }
->
->  static int qcom_edp_set_voltages(struct qcom_edp *edp, const struct phy_configure_opts_dp *dp_opts)
-> @@ -721,6 +708,8 @@ static int qcom_edp_phy_power_on(struct phy *phy)
->         u32 val;
->         u8 cfg1;
->
-> +       pm_runtime_get_sync(&phy->dev);
-> +
->         ret = edp->cfg->ver_ops->com_power_on(edp);
->         if (ret)
->                 return ret;
-> @@ -841,6 +830,8 @@ static int qcom_edp_phy_power_off(struct phy *phy)
->
->         writel(DP_PHY_PD_CTL_PSR_PWRDN, edp->edp + DP_PHY_PD_CTL);
->
-> +       pm_runtime_put(&phy->dev);
-> +
->         return 0;
->  }
->
-> @@ -856,23 +847,12 @@ static int qcom_edp_phy_set_mode(struct phy *phy, enum phy_mode mode, int submod
->         return 0;
->  }
->
-> -static int qcom_edp_phy_exit(struct phy *phy)
-> -{
-> -       struct qcom_edp *edp = phy_get_drvdata(phy);
-> -
-> -       clk_bulk_disable_unprepare(ARRAY_SIZE(edp->clks), edp->clks);
-> -       regulator_bulk_disable(ARRAY_SIZE(edp->supplies), edp->supplies);
-> -
-> -       return 0;
-> -}
-> -
->  static const struct phy_ops qcom_edp_ops = {
->         .init           = qcom_edp_phy_init,
->         .configure      = qcom_edp_phy_configure,
->         .power_on       = qcom_edp_phy_power_on,
->         .power_off      = qcom_edp_phy_power_off,
->         .set_mode       = qcom_edp_phy_set_mode,
-> -       .exit           = qcom_edp_phy_exit,
->         .owner          = THIS_MODULE,
->  };
->
-> @@ -1036,6 +1016,32 @@ static int qcom_edp_clks_register(struct qcom_edp *edp, struct device_node *np)
->         return devm_of_clk_add_hw_provider(edp->dev, of_clk_hw_onecell_get, data);
->  }
->
-> +static int __maybe_unused qcom_edp_runtime_suspend(struct device *dev)
-> +{
-> +       struct qcom_edp *edp = dev_get_drvdata(dev);
-> +
-> +       dev_err(dev, "Suspending DP phy\n");
+Follow the MSM8998 example and limit num_context_banks on SDM630 /
+SDM660 platforms. This allows Linux to make use of the A2NOC and KGSL
+SMMU, making it possible to enable GPU and WiFi on those platforms, and,
+in particular, Inforce IFC6560 SBC.
 
-Debug leftovers?
+Note, while WiFI starts up and can work for a short amount of time, MSS
+starts crashing with the following message:
 
-> +
-> +       clk_bulk_disable_unprepare(ARRAY_SIZE(edp->clks), edp->clks);
-> +       regulator_bulk_disable(ARRAY_SIZE(edp->supplies), edp->supplies);
-> +
-> +       return 0;
-> +}
-> +
-> +static int __maybe_unused qcom_edp_runtime_resume(struct device *dev)
-> +{
-> +       struct qcom_edp *edp = dev_get_drvdata(dev);
-> +       int ret;
-> +
-> +       dev_err(dev, "Resuming DP phy\n");
+qcom-q6v5-mss 4080000.remoteproc: fatal error received: dog_hb.c:266:Task starvation: diag, ping: 4, triage with owner(d.dump 0xde5825
 
-Debug leftovers?
+Note2: DTS changes should be applied only after IOMMU chages get merged.
+If it is not possible to get IOMMU changes into 6.12 in its last days of
+the merge window, I'd kindly ask for the immutable branch from the iommu
+subsys to be submerged into MSM tree.
 
-> +
-> +       ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return clk_bulk_prepare_enable(ARRAY_SIZE(edp->clks), edp->clks);
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (7):
+      iommu/arm-smmu-qcom: apply num_context_bank fixes for SDM630 / SDM660
+      arm64: dts: qcom: sdm630: enable GPU SMMU and GPUCC
+      arm64: dts: qcom: sda660-ifc6560: enable GPU
+      arm64: dts: qcom: sda660-ifc6560: fix l10a voltage ranges
+      arm64: dts: qcom: sdm630: enable A2NOC and LPASS SMMU
+      arm64: dts: qcom: sdm630: add WiFI device node
+      arm64: dts: qcom: sda660-ifc6560: enable mDSP and WiFi devices
 
-Missing error handling
+ .../arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 32 +++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi               | 38 ++++++++++++++++++----
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         | 11 +++++++
+ 3 files changed, 73 insertions(+), 8 deletions(-)
+---
+base-commit: f70cb2e8ce3f8883a526a28f93b7744d1a1a9ce0
+change-id: 20240403-sdm660-wifi-a58e87b8f7d1
 
-> +}
-> +
->  static int qcom_edp_phy_probe(struct platform_device *pdev)
->  {
->         struct phy_provider *phy_provider;
-> @@ -1091,20 +1097,57 @@ static int qcom_edp_phy_probe(struct platform_device *pdev)
->                 return ret;
->         }
->
-> -       ret = qcom_edp_clks_register(edp, pdev->dev.of_node);
-> -       if (ret)
-> +       ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
-> +       if (ret) {
-> +               dev_err(dev, "failed to enable regulators, err=%d\n", ret);
->                 return ret;
-> +       }
-> +
-> +       ret = clk_bulk_prepare_enable(ARRAY_SIZE(edp->clks), edp->clks);
-> +       if (ret) {
-> +               dev_err(dev, "failed to enable clocks, err=%d\n", ret);
-> +               goto err_disable_regulators;
-> +       }
-
-Please use pm_runtime_get_sync() instead().
-
-> +
-> +       ret = qcom_edp_clks_register(edp, pdev->dev.of_node);
-> +       if (ret) {
-> +               dev_err(dev, "failed to register PHY clocks, err=%d\n", ret);
-> +               goto err_disable_clocks;
-> +       }
->
->         edp->phy = devm_phy_create(dev, pdev->dev.of_node, &qcom_edp_ops);
->         if (IS_ERR(edp->phy)) {
->                 dev_err(dev, "failed to register phy\n");
-> -               return PTR_ERR(edp->phy);
-> +               ret = PTR_ERR(edp->phy);
-> +               goto err_disable_clocks;
->         }
->
-> +       pm_runtime_set_active(dev);
-> +       ret = devm_pm_runtime_enable(dev);
-
-If this handles earlier, you don't need to call pm_runtime_set_active() manually
-
-> +       if (ret)
-> +               goto err_disable_clocks;
-> +       /*
-> +        * Prevent runtime pm from being ON by default. Users can enable
-> +        * it using power/control in sysfs.
-
-why?
-
-> +        */
-> +       pm_runtime_forbid(dev);
-> +
-> +       dev_set_drvdata(dev, edp);
->         phy_set_drvdata(edp->phy, edp);
->
->         phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
-> -       return PTR_ERR_OR_ZERO(phy_provider);
-> +       if (IS_ERR(phy_provider))
-> +               goto err_disable_clocks;
-> +
-> +       return 0;
-> +
-> +err_disable_clocks:
-> +       clk_bulk_disable_unprepare(ARRAY_SIZE(edp->clks), edp->clks);
-> +
-> +err_disable_regulators:
-> +       regulator_bulk_disable(ARRAY_SIZE(edp->supplies), edp->supplies);
-
-Ideally this should be handled by pm_runtime. Or at least by pm_runtime_put().
-
-> +
-> +       return ret;
->  }
->
->  static const struct of_device_id qcom_edp_phy_match_table[] = {
-> @@ -1117,10 +1160,16 @@ static const struct of_device_id qcom_edp_phy_match_table[] = {
->  };
->  MODULE_DEVICE_TABLE(of, qcom_edp_phy_match_table);
->
-> +static const struct dev_pm_ops qcom_edp_pm_ops = {
-> +       SET_RUNTIME_PM_OPS(qcom_edp_runtime_suspend,
-> +                          qcom_edp_runtime_resume, NULL)
-> +};
-> +
->  static struct platform_driver qcom_edp_phy_driver = {
->         .probe          = qcom_edp_phy_probe,
->         .driver = {
->                 .name   = "qcom-edp-phy",
-> +               .pm     = &qcom_edp_pm_ops,
->                 .of_match_table = qcom_edp_phy_match_table,
->         },
->  };
->
-> ---
-> base-commit: 9aaeb87ce1e966169a57f53a02ba05b30880ffb8
-> change-id: 20240907-phy-qcom-edp-enable-runtime-pm-6fad07af8947
->
-> Best regards,
-> --
-> Abel Vesa <abel.vesa@linaro.org>
->
-
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
