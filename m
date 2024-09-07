@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31195-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31196-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BB59970142
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 11:05:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45470970147
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 11:07:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9A9A1C21C8B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 09:05:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5CAF51C21CEA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Sep 2024 09:07:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D75F14EC5D;
-	Sat,  7 Sep 2024 09:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 902471514DC;
+	Sat,  7 Sep 2024 09:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B8rECbeg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dAzINJ6h"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DBF1B85FE;
-	Sat,  7 Sep 2024 09:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A8014B094;
+	Sat,  7 Sep 2024 09:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725699902; cv=none; b=MhFV9nKEDHy2sAy0tdZcW/whube0z9KH+qG2cKPmQkQWlpIw99v5+vGMHQEoATIiuyLiG6CAZbCGbPncEeM5VkbL+TPSQl+1fzKB6etsQ+5u5d7HXSo+lBTVIZ9xO+p+N12SHfpl7UASRfqNh+WlqsSpZGoNFk045oPjNAgfuy8=
+	t=1725700075; cv=none; b=GBWlFJ0hSF6qUtm5VBye/dkAiP0KEnduDpg+haMd2bmwWWu+/9zuPnkGBPWHAP4QeOLmvjQo8jiP8BFQNyo4OPZ+MPK5rWP0lVaqpbeq837oH58Jf+yprPkDL9543EckCIlUnsPITA9rbQQolnExMhDadGvC4VFF6rwiqPsOhj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725699902; c=relaxed/simple;
-	bh=Oc4c9658hATv4jpuLXLCt063YPY9lTknyxbmtFbeoTc=;
+	s=arc-20240116; t=1725700075; c=relaxed/simple;
+	bh=DxFZRsW+AZZBSAZT0A4Mpaler5iftVr7G/9wqCUcvWc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ejdPN48bovxS1VWe13EDrGfLZXM1NVqW20+GgIhJJ34RPbYQhDh4HtpaylFRl2SI9zmQsYp6TynYnUoSML7a5xZ425F5SeeeNr/ws2VWwuwJ1zfK0ejHlVcGrL/ky1uehql6Rdvq14N43lOq+LRms5YA+joGVfo5h7NlXirarcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B8rECbeg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B36C4CEC2;
-	Sat,  7 Sep 2024 09:04:55 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=cj6Ft5+ADxRSnoWJMp+6aRILaCgDg7iUkWWNR4PhrZmDZf48wAxcnlPyJJOGYY6GnQo0sVsDLjPbI1oYWdPX6em1E3i8GtcgDi1snRgrgDEZjkQZr08Z8xF05UK7h4hppgDWkO5Gq3dmBHkKxOnaYG4E5/nqPWSWTBSPWGuIJrw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dAzINJ6h; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36230C4CEC2;
+	Sat,  7 Sep 2024 09:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725699901;
-	bh=Oc4c9658hATv4jpuLXLCt063YPY9lTknyxbmtFbeoTc=;
+	s=k20201202; t=1725700074;
+	bh=DxFZRsW+AZZBSAZT0A4Mpaler5iftVr7G/9wqCUcvWc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=B8rECbegIStIkBXs2dnFpBTEixrAchtTB3AgZvojyJCNNxfX4as89qUgOqLe+/tc/
-	 /lle5EfnXwQf+xTO/lk2kWrw+s7rmOpw7GB3lqM2XYwveqsMk5Ku+oGO7/5iS1bKvS
-	 kGuG/CLZYVAfGxcyhjwTwPHov3SubXq2c0ZkWGhyILbLAbiU/TcSxTpSvYdy1fKOcl
-	 VMi+XR6Tm726IseRtMizRtBMFqA8rz2tP6ke14lSjVIgT+OFLjgYf/Tg8cX3nzhmeq
-	 j5lIAwSK+i1rswYTzTGv3wD+yO3iWefuHR1hUxd6MhJ73ohd4hDpOSuKsz4EcZ6ytk
-	 CZb6/HhqLkpoQ==
-Message-ID: <6a6fc102-a18c-4ae3-9104-59eb3172f407@kernel.org>
-Date: Sat, 7 Sep 2024 11:04:53 +0200
+	b=dAzINJ6heOeB9/94GaOk8W36pYTm8ATvlD0bf7pgR5hea4me2txh/b7YM5DKFift6
+	 xA/svDW62YSHeHxXKg9hERQrw9h5RSa0RS3KXt5tdBYfvySM8XxAFXiVFtMU785jDk
+	 twJwtm0gP+Z8fAYZ8pMFUadGTkk1czR0f0l8xvUXddhepjMNTDCh4d3kNjnn116uGX
+	 oNGFnAwevnp1NSegmIOYAhhScH7RYtnufAblqdQ7Jyfhl5Am//581BPG2rOBHDhwo0
+	 SE6FPeUY59F3U9cGn3t9WdmcVqDqUO9xtwc7xFQGUvBE2xtiTjwIWyBATVj6GZruAV
+	 ifS5x7BlpU9VA==
+Message-ID: <75c7baa9-1403-42bc-9034-192d53adb95c@kernel.org>
+Date: Sat, 7 Sep 2024 11:07:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
- Frank.Li@nxp.com, konradybcio@kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
- <20240906191438.4104329-2-quic_msavaliy@quicinc.com>
+Subject: Re: [PATCH v3 04/29] media: iris: initialize power resources
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
+ <20240827-iris_v3-v3-4-c5fdbbe65e70@quicinc.com>
+ <81fd218f-aa0f-4710-b832-cab927bfab9d@kernel.org>
+ <ba747923-38de-5c05-9220-762c5272ec74@quicinc.com>
+ <76ffb882-10f9-4737-afa2-9bb60248835d@kernel.org>
+ <f88d8596-c6a0-356e-060e-81d68f038995@quicinc.com>
+ <c7fd8c50-d5d9-4210-8253-457d7523eb30@kernel.org>
+ <463caa4f-c32c-d74c-a8c6-1afbc22a877d@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,65 +112,57 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240906191438.4104329-2-quic_msavaliy@quicinc.com>
+In-Reply-To: <463caa4f-c32c-d74c-a8c6-1afbc22a877d@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
-> Adds qcom,shared-se flag usage. Use this when particular I2C serial
-> controller needs to be shared between two subsystems.
-
-<form letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC (and consider --no-git-fallback argument). It might
-happen, that command when run on an older kernel, gives you outdated
-entries. Therefore please be sure you base your patches on recent Linux
-kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-</form letter>
-
-You already got this comment, so how many times it has to be repeated?
-Your process is just wrong if you do not use the tools for this.
-	
-
+On 06/09/2024 21:47, Vikash Garodia wrote:
+> Hi,
 > 
-> SE = Serial Engine, meant for I2C controller here.
-> TRE = Transfer Ring Element, refers to Queued Descriptor.
-> 
-> Example :
-> Two clients from different SS can share an I2C SE for same slave device
+> On 9/6/2024 5:34 PM, Krzysztof Kozlowski wrote:
+>> On 06/09/2024 13:21, Vikash Garodia wrote:
+>>>>>>
+>>>>>>> +	}
+>>>>>>> +
+>>>>>>>  	ret = v4l2_device_register(dev, &core->v4l2_dev);
+>>>>>>>  	if (ret)
+>>>>>>>  		return ret;
+>>>>>>> @@ -88,8 +101,14 @@ static int iris_probe(struct platform_device *pdev)
+>>>>>>>  }
+>>>>>>>  
+>>>>>>>  static const struct of_device_id iris_dt_match[] = {
+>>>>>>> -	{ .compatible = "qcom,sm8550-iris", },
+>>>>>>> -	{ .compatible = "qcom,sm8250-venus", },
+>>>>>>> +	{
+>>>>>>> +		.compatible = "qcom,sm8550-iris",
+>>>>>>> +		.data = &sm8550_data,
+>>>>>>> +	},
+>>>>>>> +	{
+>>>>>>> +		.compatible = "qcom,sm8250-venus",
+>>>>>>> +		.data = &sm8250_data,
+>>>>>>
+>>>>>> You just added this. No, please do not add code which is immediatly
+>>>>>> incorrect.
+>>>>> It's not incorrect, in earlier patch we only added the compatible strings
+>>>>> and with this patch introducing the platform data and APIs to get it.
+>>>>
+>>>> It is incorrect to immediately remove it. You keep arguing on basic
+>>>> stuff. Sorry, but that is not how it works. If you add code and
+>>>> IMMEDIATELY remove it, then it means the code was not needed. Or was not
+>>>> correct. Choose one.
+>>> I think it is not removing it. It is adding platform data to compatibles
+>>> introduced in previous patch. Maybe it appears as if it is removing it.
+>>
+>> I know how the diff works.
+> Perhaps, i have misunderstood. Are you suggesting to add compat data and
+> compatible string together in single patch rather than splitting it in 2 patches
+> ? If so, that would essentially end up squashing patch #3 and #4. Let me know if
+> that would address your comment and we will plan to do that.
 
-What is SS?
-
-> OR their owned slave devices.
-> Assume I2C Slave EEPROM device connected with I2C controller.
-> Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
-> This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
-> 
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
-> index 9f66a3bb1f80..ae423127f736 100644
-> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
-> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
-> @@ -60,6 +60,10 @@ properties:
->    power-domains:
->      maxItems: 1
->  
-> +  qcom,shared-se:
-> +    description: True if I2C needs to be shared between two or more subsystems.
-
-What is a subsystem? With commit msg I still do not understand this.
-Maybe presence of hwlock defines it anyway, so this is redundant?
+You are supposed to organize your patches so they have logical order. I
+already explained why this order is wrong. What's more, previous patch
+of two equal compatibles does not have much value. Devices cannot work
+and code is confusing.
 
 Best regards,
 Krzysztof
