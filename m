@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D08A9709A6
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Sep 2024 22:14:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC00F9709AE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Sep 2024 22:25:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 083FB1F215C7
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Sep 2024 20:14:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9ABDB280CE2
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Sep 2024 20:25:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48207176231;
-	Sun,  8 Sep 2024 20:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D20AB175562;
+	Sun,  8 Sep 2024 20:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lfYhhrkw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PtWCMkS1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6CE3DBB6;
-	Sun,  8 Sep 2024 20:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44AA4085D;
+	Sun,  8 Sep 2024 20:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725826460; cv=none; b=t/shn8K3ExfFsVG49RX072ag4PeKdrZ+3u8OtahOfjgDwKQKAqq23gNksPLNfGi0r418++LY4Nfi80acxKMCj0H6fJ/riH/+I9ouYWIcg1bIHpE3Df4v2akkpm/m7Re3YURFxUNufB5psab9M3abqqS6GLa9wAixg7jpq5xqdm0=
+	t=1725827122; cv=none; b=A8Vgb0PLECN1Kny/z+eiEOhwH83ZfUCQZtwWr9Ess3hFj+iSgB8HqO5LPrBf+XdVy/lIcz2VwZkVn8mmXTyUmk1sVmO5R42VXhfjp0idsxXjPEqlcR8Wg32x6VSm0iBV6JmQidAwhDF88PlHSHOV1K8I2l7SS1mL0FJBbQmCvs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725826460; c=relaxed/simple;
-	bh=A1cKXL9IHIxE98OKHVR2/EtMbL7WXNEhAZJ6jMUklDQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=JSxxdcPHJifG574dQ/uP30CarK1s5XxegJPcy79o6PYkol/m1AJzhrYAUoi8Y9hphtZYK1TJkzAJ0rGjLRLFDcU+70KCkrZyi4iEcYWOjpW+g3pu3/71guqnFQO9Wt2CISafob1+Bx9X/fh10B1Z9Co4C0s+HrFz3qBvWUoDczk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lfYhhrkw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2861EC4CEC3;
-	Sun,  8 Sep 2024 20:14:17 +0000 (UTC)
+	s=arc-20240116; t=1725827122; c=relaxed/simple;
+	bh=0VRhpP5xdkxgmvVcGZ2MfZKlfoCzgv0FqivnGSj9w0k=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hwtBag968Td+vyltFZEU9DA4n9vn3d2XPtdTvwwbZZD7Kmxo5JRVMbltJKIBYCsmkCDgSwu/inZNxhLUpN7xgMyOb/gMTBjtbmv5pK2a8WxWm/z9lqb5vbGk/kBxOHvfgdXn09kDjUWkbiEiOIFTJyLFo0xDYKkPNUQkGU0cfg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PtWCMkS1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C86C4CEC3;
+	Sun,  8 Sep 2024 20:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725826459;
-	bh=A1cKXL9IHIxE98OKHVR2/EtMbL7WXNEhAZJ6jMUklDQ=;
+	s=k20201202; t=1725827122;
+	bh=0VRhpP5xdkxgmvVcGZ2MfZKlfoCzgv0FqivnGSj9w0k=;
 	h=From:Date:Subject:To:Cc:From;
-	b=lfYhhrkwDpkb9booIRg4cj4ykUJ/tCVWtPI/G4D0pLe6xPL6C11bjKWS/jEgAqzrx
-	 1zuYAj7NxgWJD1/+k3UXwCvacRtEl/v6TfRqv2wyYLyMHn2VLjuTaRrloVGyhStSOr
-	 jBauFdQ04sT0T96IKulV93j8coyw67Yzvv84gKf1pWVLZOIJ7ctC51rtD3t4t4qJp2
-	 X8kYiQ2/VJUcJVmcY0pcL8JjpH/9105LNQph+iwR/8dliRkRI7l/4bNRIkcsv+lDFR
-	 VOVfTODZ0qzrdPQljeTeSIuUtD5f90Fs0PwR6CrUCkhYMg/BLjUp/6A1i9pvRYC4Is
-	 kNUc3/HmW3g2g==
+	b=PtWCMkS1uSVfB7yhehAn9xtCo9+2VTbRkYvVLL7i7bhF+glgLJNwgAQyl/HdoAiNU
+	 CScWu9iiHV+WZrxOT6hj4XdkF/LbLz/b67TkL5eQ2coDO1Hn4xzmdTiAgk2O4dxsbg
+	 tMUNySXfaBbtHN9wE4P8ibHvRgN1Qdn25woMeolWiEj4XCT9HdFc9BHqPDujNYeJsk
+	 9N0C8+RSJWqn1jOni7smEDl4IqHXmiVfwOfs72AqDGZ5vlmglFG7GMOjTXKMLuCS7C
+	 m6j9nbsK6D4GL2aaLR0ZSu/KbMh1rGeQNVHa6aSkDM2ScgCIitQEvHucO+n0/F4MhL
+	 VukTGIGfdw5bg==
 From: Simon Horman <horms@kernel.org>
-Date: Sun, 08 Sep 2024 21:14:14 +0100
-Subject: [PATCH] MAINTAINERS: Qualcomm SoC: Match reserved-memory bindings
+Date: Sun, 08 Sep 2024 21:25:16 +0100
+Subject: [PATCH] dt-bindings: input: update reference to m8921-keypad.yaml
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -51,52 +51,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240908-qcom-glob-v1-1-94a390f36744@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAJUF3mYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDSwML3cLk/Fzd9Jz8JF2zVGMjE0PTNPM0szQloPqCotS0zAqwWdGxtbU
- AvQ4EulsAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Message-Id: <20240908-keypad-wakeup-ref-v1-1-762e4641468a@kernel.org>
+X-B4-Tracking: v=1; b=H4sIACsI3mYC/x2MSQqAMAwAvyI5G6hVcPmKeIg11SBoaXGj+HeLx
+ xmYiRDYCwfosgieTwmybwmKPAOz0DYzypQYtNKValWDKz+OJrxo5cOhZ4vKaDvWZUvEBlLnkpT
+ 7f/bD+34Hz4BmYwAAAA==
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org
 X-Mailer: b4 0.14.0
 
-commit 8b90269ee6d7 ("MAINTAINERS: Split Qualcomm SoC and linux-arm-msm
-entries") included an entry for .../bindings/reserved-memory/qcom.
-However, it appears that this should have been a glob as although
-there are files that start with that path, no file matches that exact
-path.
+commit 53ed3233e6b5 ("dt-bindings: input: qcom,pm8921-keypad: convert to
+YAML format") resulted in a renaming of the output .txt file from
+qcom,pm8xxx-keypad.txt to qcom,pm8921-keypad.yaml.
 
-Address this by making the entry a glob.
+This patch makes a corresponding update to the link to that .txt file
+in wakeup-source.txt.
 
-Flagged by make htmldocs as:
-Warning: MAINTAINERS references a file that doesn't exist: Documentation/devicetree/bindings/reserved-memory/qcom
+Flagged by make htmldocs:
+Warning: Documentation/devicetree/bindings/power/wakeup-source.txt references a file that doesn't exist: Documentation/devicetree/bindings/input/qcom,pm8xxx-keypad.txt
 
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: devicetree@vger.kernel.org
 Signed-off-by: Simon Horman <horms@kernel.org>
 ---
- MAINTAINERS | 2 +-
+ Documentation/devicetree/bindings/power/wakeup-source.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7b599269a821..da7594a32ae1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2754,7 +2754,7 @@ F:	Documentation/devicetree/bindings/arm/qcom.yaml
- F:	Documentation/devicetree/bindings/bus/qcom*
- F:	Documentation/devicetree/bindings/cache/qcom,llcc.yaml
- F:	Documentation/devicetree/bindings/firmware/qcom,scm.yaml
--F:	Documentation/devicetree/bindings/reserved-memory/qcom
-+F:	Documentation/devicetree/bindings/reserved-memory/qcom*
- F:	Documentation/devicetree/bindings/soc/qcom/
- F:	arch/arm/boot/dts/qcom/
- F:	arch/arm/configs/qcom_defconfig
+diff --git a/Documentation/devicetree/bindings/power/wakeup-source.txt b/Documentation/devicetree/bindings/power/wakeup-source.txt
+index a6c8978964aa..128b55be67b7 100644
+--- a/Documentation/devicetree/bindings/power/wakeup-source.txt
++++ b/Documentation/devicetree/bindings/power/wakeup-source.txt
+@@ -26,7 +26,7 @@ List of legacy properties and respective binding document
+ 3. "linux,wakeup"		Documentation/devicetree/bindings/input/gpio-matrix-keypad.txt
+ 				Documentation/devicetree/bindings/mfd/tc3589x.txt
+ 				Documentation/devicetree/bindings/input/touchscreen/ads7846.txt
+-4. "linux,keypad-wakeup"	Documentation/devicetree/bindings/input/qcom,pm8xxx-keypad.txt
++4. "linux,keypad-wakeup"	Documentation/devicetree/bindings/input/qcom,pm8921-keypad.yaml
+ 5. "linux,input-wakeup"		Documentation/devicetree/bindings/input/samsung,s3c6410-keypad.yaml
+ 6. "nvidia,wakeup-source"	Documentation/devicetree/bindings/input/nvidia,tegra20-kbc.txt
+ 
 
 
