@@ -1,122 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-31287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0CD49716C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:25:22 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B12749716D1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:26:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9754C1F23260
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:25:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4190DB268E3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:26:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B04801B5ECA;
-	Mon,  9 Sep 2024 11:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CE851B5EA2;
+	Mon,  9 Sep 2024 11:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKjvFpH9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hj2gR8Gq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673501B5EC1;
-	Mon,  9 Sep 2024 11:24:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2541B3B0F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 11:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725881068; cv=none; b=qT1EmpALMXIKgqIZfQHQ0doaOMW9uQafSivh77r48WMR4ilH3VUWB3tb5eG3hxqxpjrixxwYBfUB0lUbbd+5/uoGw7FpMFyzI5gWbUCmPOSRcjmPvXyo/W6hedG9Ddt5RMCqN3ANUUMU8b2f9gOK11L8fVw+j+57ruKdmcNgN3g=
+	t=1725881114; cv=none; b=J/Sqx/UZ06J5sP6/BHIzS0CiUhL33mNjkzybJc4NEC8QMXYBwAbjDKS4XqF07nfH7azHmem2mcn4Xie29fPbVDSNXQKJKuO7g7EZr4k+3pWPgquYvbSJNuqwPxqRhqridoXrGDmP4OitLnTOxUn3k384na4wFvjHhb5l0oCzT14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725881068; c=relaxed/simple;
-	bh=NOXjUpcY8hYNWLF1WhCDUlTQ0y37JVq1LQvC9dM8LHs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I8HZrjdyJlceK4KOe6erMNXYh8uQYjmtsZkWmGjW9PZCJb0bp/lFjAEU0K3FbWNyQlRq4qh1gn+fssYsvl/jW1x0/Gm8u13J/qWpdbTlmv5v0YqWyxI8XIxhSC0QGvogr3imiapOw5I/4y2JXxgpx08DDa0wGzxBtqqAg+29RnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKjvFpH9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EDF5C4CEC5;
-	Mon,  9 Sep 2024 11:24:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725881067;
-	bh=NOXjUpcY8hYNWLF1WhCDUlTQ0y37JVq1LQvC9dM8LHs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=VKjvFpH9PHRu582HpZ3MNhR/HiW1lNHcyeG+egqQKhQRhFwMFZ7mkzQ3m0pZyMJtN
-	 v0WfQMAk4iHgw3ZgvIEAti7mIQtEsnSBbBC8EUthPwf5rWX0hmNlTm+rCD8zkZ+9dg
-	 +UpcEvfFvJ3UgYZYFiR1bTD7D7AUx9syc8LN/FP9I3pgfCd+/B5ALbOZwqCfPSXKnW
-	 4Ckuh3gV6uidK+H62wvAudqZsFZ2bENjjyvXkbNmfSYw2+wrR6QDpLk80wKejxCiSH
-	 ygDsfHi/Wr/xKSLmyQvsYyz/CJgue4yuOTXev37XuvieL/ZgfP5kdPXGeze8EUJ0jm
-	 ZVJY2fchySb7Q==
-Message-ID: <a79e30d7-1c11-4dc1-bf1a-4a4577b30b0a@kernel.org>
-Date: Mon, 9 Sep 2024 13:24:15 +0200
+	s=arc-20240116; t=1725881114; c=relaxed/simple;
+	bh=BFlzT05PQJJDS6WUMpHqs1A1QFrjjs5SQdN2X9/eAcA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MyBq8KS3uIPfAy0e3Av2InH/qw3CIGm8c1zKOt5c9KCKjNoUdc9EIt0mCuJp09wbEDP12PDM0k5dB0seBVT30tx19mmu9lt8ipB6nqCCRlmhUvQkviH7n+E1JEbjaxIAW3KrfSOJA9jzBKWWyvBQ7Z9TIju77eqC7N0r+YL8grg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hj2gR8Gq; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6daf1c4aa86so37456237b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 04:25:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725881112; x=1726485912; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OpDNkm0dS8Pmjc3q7OtWCuq9xNsSuYsSijjbAHrD43k=;
+        b=hj2gR8Gq6+DHmJJQLsaMPkx7vJkWHinonkdgjy8lQfE0dG7MwdKgcTZGoN8lspOlGo
+         MVm1jIPegd9BPWuGZU5UeYmJRq5Lbl0ffCwOfYvxEKpUBXVqq1Q8Ijg1h5DiRSkKndTe
+         oQpqe3BDT/wvT3Xlh5CpI4S1IkWoC5BkECuTnT0+g7/8CvIAV5SvcWrTAIpsmLmsHe2v
+         pAerH+IJvrSkGJYLEwpwxiGN95rfx1bGDQYROOEiR5IQlARUugovN1HP/1VaMdWZieap
+         XOfPekt10J+hAMOYoKvmre3Y2tX+LiMCqKbhDRTn6zlmWn2O839beUokBmpNx+OW/ROa
+         Ag8g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725881112; x=1726485912;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OpDNkm0dS8Pmjc3q7OtWCuq9xNsSuYsSijjbAHrD43k=;
+        b=Q1tEHkm6uRPuQbYWCj91aCIP8h/3R3qrBFqJa7MQN3FycYYgonr3+8VUqDMLa4LZn2
+         XUF7UQBFtsgKk+f0fcjMJO6d0bu4LE7ojapU1nlKU65UKY2K94rscJg4LpvccjT7ZZaX
+         zpbkKiwSezrk3qoO5TLEcIHUEt/SMds6k3Fv5stoyZaym5WoFdgC1KErlX8hz6Kcc3df
+         3ovmz8Q7ZVMIMsempf3JmTTs6ih71iwDdcOF1kmkGVteoJiYo/XON+1GJ/ueariOSxGO
+         pEn323rUzrYP5zwl3IXQe3DgprwotFB+c4ICqaQ3P6E+Pz9lys48JC0HOzErTAQyixfb
+         5x1g==
+X-Forwarded-Encrypted: i=1; AJvYcCVMyQ7/SycipnvA5B2BssFtYmsdoW2R8T/fC5k6jaSiAHsaYIKTZYPl31JMuVdnpoV3m74oYosOri+DunYv@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBXFEHNKUcu1ZQ50YNuypzVVpLba/KxOuCVdOdvcE20n/BJva5
+	U2VIhgr5XV9pYwoHZ3TTPmy8NJ2uQVdJppviOZ0Eb4/pVVnZYt+VeVWUv3/unll8if7NrQi0k17
+	MM/vBYyL2rOoKQGDv2UB/DBqKjyKI0Q2CCxN7jQ==
+X-Google-Smtp-Source: AGHT+IGVWKFrtsCq0XAJNDTpJCkeUpuZkVj85lqCpCtbm1eC6mA7YuhdlDQM5pTaOZwXdhStu1bIUwPbyKm4Z7k9kso=
+X-Received: by 2002:a05:690c:67c1:b0:6d9:90f3:1a79 with SMTP id
+ 00721157ae682-6db451544f3mr141002197b3.32.1725881111691; Mon, 09 Sep 2024
+ 04:25:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 07/17] firmware: qcom: scm: add calls for creating,
- preparing and importing keys
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Jens Axboe <axboe@kernel.dk>,
- Jonathan Corbet <corbet@lwn.net>, Alasdair Kergon <agk@redhat.com>,
- Mike Snitzer <snitzer@kernel.org>, Mikulas Patocka <mpatocka@redhat.com>,
- Adrian Hunter <adrian.hunter@intel.com>,
- Asutosh Das <quic_asutoshd@quicinc.com>,
- Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson
- <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>,
- Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Gaurav Kashyap <quic_gaurkash@quicinc.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-block@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, dm-devel@lists.linux.dev,
- linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-fscrypt@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
- <20240906-wrapped-keys-v6-7-d59e61bc0cb4@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240906-wrapped-keys-v6-7-d59e61bc0cb4@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20240908-adreno-fix-cpas-v1-1-57697a0d747f@linaro.org> <c77ab7a8-49aa-447b-b7ac-18dd5c2eeecb@kernel.org>
+In-Reply-To: <c77ab7a8-49aa-447b-b7ac-18dd5c2eeecb@kernel.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 9 Sep 2024 14:25:00 +0300
+Message-ID: <CAA8EJpr4sMEmywD3qO8co1ZN3jG5w=dsfDYYmY90baRne3dHSA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: allow returning NULL from crete_address_space
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Bjorn Andersson <andersson@kernel.org>, Jordan Crouse <jordan@cosmicpenguin.net>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 6.09.2024 8:07 PM, Bartosz Golaszewski wrote:
-> From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> 
-> Storage encryption has two IOCTLs for creating, importing and preparing
-> keys for encryption. For wrapped keys, these IOCTLs need to interface
-> with Qualcomm's Trustzone. Add the following keys:
-> 
-> generate_key:
->   This is used to generate and return a longterm wrapped key. Trustzone
->   achieves this by generating a key and then wrapping it using the
->   Hawrdware Key Manager (HWKM), returning a wrapped keyblob.
-> 
-> import_key:
->   The functionality is similar to generate, but here: a raw key is
->   imported into the HWKM and a longterm wrapped keyblob is returned.
-> 
-> prepare_key:
->   The longterm wrapped key from the import or generate calls is made
->   further secure by rewrapping it with a per-boot, ephemeral wrapped key
->   before installing it in the kernel for programming into ICE.
-> 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> [Bartosz:
->   improve kerneldocs,
->   fix hex values coding style,
->   rewrite commit message]
-> Co-developed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
+On Mon, 9 Sept 2024 at 13:34, Konrad Dybcio <konradybcio@kernel.org> wrote:
+>
+> On 8.09.2024 7:59 PM, Dmitry Baryshkov wrote:
+> > Under some circumstance
+>
+> Under what circumstances?
+>
+> This branch is only taken if there's a .create_private_address_space
+> callback and it only seems to be there on a[67]xx.
 
-same question as patch 6, lgtm otherwise
+Existing code doesn't. I stumbled upon it while debugging private
+address space translation. And that's why I wrote 'it might be
+required' rather than 'the function returns'.
+So yes, there is no issue with the current code. And at the same time
+not having this in place makes debugging more difficult.
 
-Konrad
+
+> a6xx_create_address_space returns:
+>
+> - an ERR_PTR if msm_iommu_pagetable_create() fails
+> - retval of msm_gem_address_space_create() otherwise
+>    - retval of msm_iommu_pagetable_create() is nullchecked here
+>      again because we apparently we want to be double sure
+>    - err_ptr(-enomem) is returned if allocating aspace fails
+>    - otherwise aspace is allocated somewhere
+>
+> Konrad
+
+
+
+-- 
+With best wishes
+Dmitry
 
