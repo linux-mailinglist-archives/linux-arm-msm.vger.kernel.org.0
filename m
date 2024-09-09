@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03CCC971860
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:40:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EC04971882
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:44:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B3683284462
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:40:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3E2662846E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:44:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 010FB1B5EA3;
-	Mon,  9 Sep 2024 11:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 507D11B5EC4;
+	Mon,  9 Sep 2024 11:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uP3Mdw9x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U5rCuUt/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11041B583E;
-	Mon,  9 Sep 2024 11:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214BA13BAF1;
+	Mon,  9 Sep 2024 11:44:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725882040; cv=none; b=oqeJeEQno53vjA5CqurpqOtdmCwLMaDOKGwkbdEYNRazNpK5fg62HLBcC9G5IXUWYoQSJAqDplAIHq3snKYaEtdS6yaZf18suFumn/Gc0+txIEkTsjSdCeWyu41GSMh+3VLOB2VxtgfZupPHjkf0bPK2MKfIFZ5oDDfT5H8P3oM=
+	t=1725882282; cv=none; b=hW8MzaVM3PuCpzNonVgACwlrXa9hjC0LnW5en70HIK/wmfc4QFsvZ6UXb4XKZmEmoxrigbAYhGs8TZioL3wLGP4YnqXwF5JKZqegJ4+WgbzWXOdajPBGH/f6tf8prr7aqQYcCug0x0IhL0ZSrhCkJZquVE+wy5V4nD+n7mMSa7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725882040; c=relaxed/simple;
-	bh=FECvUa62XYAhauGPX0bNJRvN06psBjXU5Mu1nsIE7S4=;
+	s=arc-20240116; t=1725882282; c=relaxed/simple;
+	bh=f+NSGq6TljgaNwZQR7G5fjeuCWVRffzY5N1ZKOCGWRs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hPX0DC0HKo47goQo60JyZ5sABuDzbW3Hu62r7sZAhswwg89SrwcLg3S2Yino5YDkRo5SS4aR4F/HF/BlKhxwbQJRYhKDKLic0crqzLOnyhKhEysF3+ZD/apK3h6q0WlnRv4MTjqNUGEqQi+St31ryXZ9eZvczjLDiyRP9VnrsIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uP3Mdw9x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA43AC4CEC5;
-	Mon,  9 Sep 2024 11:40:34 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Hd1FpBjDhcvAhsj2tM54ga7kZsfiq3BApvQnVHODrFvL6hHK7b6+6OKj6Qks2hwGMtz5t2wQ/OpiOfGnoMMx8caXthysijtbMYEOwn1faEoHAtpCiV/DECUP4KDw8lHk1DgmTwb92Of/vbC9bqGF/g1ZzGzoLlpWfzIAVU+ygNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U5rCuUt/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D665C4CEC5;
+	Mon,  9 Sep 2024 11:44:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725882040;
-	bh=FECvUa62XYAhauGPX0bNJRvN06psBjXU5Mu1nsIE7S4=;
+	s=k20201202; t=1725882281;
+	bh=f+NSGq6TljgaNwZQR7G5fjeuCWVRffzY5N1ZKOCGWRs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uP3Mdw9xbCJOrYpy52XRlxODeyAu4atg8NQTX01qHHZGqtjf/155APDqsWqB3uEbX
-	 b5rtUTC1y/WDL7ksLzmsXvzKOAnwRICxVc2lWNyWbPwo5ZmzMFLLZNBAZmICcJs4Ql
-	 OZqnmCDYXp/4/MHpPEzjZ6sS+VNzY8H/ZOAZVugYN/V93X1EfXhoZ/EZfWAj+r0PW0
-	 Fgi9kIrtamOqmMGgzxEpIxKSc0R4FUtngtHre3Sf1BCnZ6qQDcrtJLBwUwAI8d4qzC
-	 8MEO4EfoZcsWqfxOFC+hlxkso/EHQRJJafFAjd3yPkVFt9miDJs89lGDHirnlcmvrG
-	 UDvpuPH10H7tQ==
-Message-ID: <be9460a4-0f19-4acb-9b81-5a3d61eeb28f@kernel.org>
-Date: Mon, 9 Sep 2024 13:40:32 +0200
+	b=U5rCuUt/Kr5K4UckaJ73ypDTLTtixWFzKt3lquC/DY09gjkA3/Nzoio4x4Whgr6va
+	 vu6s5/ffO1xDlTlN0O71toCg5d6yY3DKQswqMCug3OKn8Mkk/w5kr/Jpp2J8/urKOz
+	 ZfOwLz+ck0/pJB2Jxf1jD3yzGdJyMeE5fbKLQDrl1YBtPbotH5RILg3qPKCyyeEFvP
+	 kcSNg1hMkb8yyqcIztk16N+kAeu8UzbXWkU4qtU9k0y9/tptbj5i59cylHNpuIC/b5
+	 u+NohObw3VMX2zk+tywKp83wOhoKvMU3RRSKJWSDcA5FfN1UmZRoztPsIrfaGvQpDQ
+	 4jDYni0nYYGzg==
+Message-ID: <19c749c5-2afd-4623-861a-ad30606c2722@kernel.org>
+Date: Mon, 9 Sep 2024 13:44:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,95 +50,102 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/7] arm64: dts: qcom: sda660-ifc6560: enable mDSP and
- WiFi devices
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Rob Clark <robdclark@gmail.com>, Will Deacon <will@kernel.org>,
- Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: iommu@lists.linux.dev, linux-arm-msm@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, ath11k@lists.infradead.org,
- Kalle Valo <kvalo@kernel.org>
-References: <20240907-sdm660-wifi-v1-0-e316055142f8@linaro.org>
- <20240907-sdm660-wifi-v1-7-e316055142f8@linaro.org>
+Subject: Re: [PATCH 3/3] interconnect: qcom: Add EPSS L3 support on SA8775P
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+ Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240904171209.29120-1-quic_rlaggysh@quicinc.com>
+ <20240904171209.29120-4-quic_rlaggysh@quicinc.com>
 Content-Language: en-US
 From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240907-sdm660-wifi-v1-7-e316055142f8@linaro.org>
+In-Reply-To: <20240904171209.29120-4-quic_rlaggysh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7.09.2024 8:48 PM, Dmitry Baryshkov wrote:
-> Enable the onboard WiFi device present on the Inforce IFC6560 SBC.
-> Pretty much like MSM8998 this device also doesn't generate the
-> MSA_READY_IND indication.
+On 4.09.2024 7:12 PM, Raviteja Laggyshetty wrote:
+> Add Epoch Subsystem (EPSS) L3 interconnect provider support on
+> SA8775P SoCs.
 > 
-> For the reference:
-> 
-> ath10k_snoc 18800000.wifi: qmi chip_id 0x30214 chip_family 0x4001 board_id 0xff soc_id 0x40050000
-> ath10k_snoc 18800000.wifi: qmi fw_version 0x101d01da fw_build_timestamp 2018-07-26 21:42 fw_build_id QC_IMAGE_VERSION_STRING=WLAN.HL.1.0.1.c2-00474-QCAHLSWMTPLZ-1
-> ath10k_snoc 18800000.wifi: qmi not waiting for msa_ready indicator
-> ath10k_snoc 18800000.wifi: wcn3990 hw1.0 target 0x00000008 chip_id 0x00000000 sub 0000:0000
-> ath10k_snoc 18800000.wifi: kconfig debug 1 debugfs 0 tracing 0 dfs 0 testmode 0
-> ath10k_snoc 18800000.wifi: firmware ver  api 5 features wowlan,mgmt-tx-by-reference,non-bmi crc32 b3d4b790
-> ath10k_snoc 18800000.wifi: htt-ver 3.54 wmi-op 4 htt-op 3 cal file max-sta 32 raw 0 hwcrypto 1
-> ath10k_snoc 18800000.wifi: invalid MAC address; choosing random
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
+> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
 > ---
-> Cc: ath11k@lists.infradead.org
-> Cc: Kalle Valo <kvalo@kernel.org>
-> ---
->  .../arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
+>  drivers/interconnect/qcom/osm-l3.c | 27 +++++++++++++++++++++++++++
+>  1 file changed, 27 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-> index 09bc010ce56a..7948c8f6ab64 100644
-> --- a/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-> +++ b/arch/arm64/boot/dts/qcom/sda660-inforce-ifc6560.dts
-> @@ -252,6 +252,11 @@ &qusb2phy1 {
->  	vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+> diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
+> index 61a8695a9adc..e97d61a9d8d7 100644
+> --- a/drivers/interconnect/qcom/osm-l3.c
+> +++ b/drivers/interconnect/qcom/osm-l3.c
+> @@ -1,6 +1,7 @@
+>  // SPDX-License-Identifier: GPL-2.0
+>  /*
+>   * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #include <linux/args.h>
+> @@ -74,6 +75,11 @@ enum {
+>  	OSM_L3_SLAVE_NODE,
 >  };
 >  
-> +&remoteproc_mss {
-> +	firmware-name = "qcom/sda660/mba.mbn", "qcom/sda660/modem.mbn";
-> +	status = "okay";
+> +enum {
+> +	EPSS_L3_CL1_MASTER_NODE = 20000,
+> +	EPSS_L3_CL1_SLAVE_NODE,
 > +};
 > +
->  &rpm_requests {
->  	regulators-0 {
->  		compatible = "qcom,rpm-pm660-regulators";
-> @@ -291,6 +296,11 @@ vreg_l1a_1p225: l1 {
->  			regulator-allow-set-load;
->  		};
->  
-> +		vreg_l5a_0p8: l5 {
-> +			regulator-min-microvolt = <848000>;
-> +			regulator-max-microvolt = <848000>;
-> +		};
-> +
->  		vreg_l6a_1p3: l6 {
->  			regulator-min-microvolt = <1304000>;
->  			regulator-max-microvolt = <1368000>;
-> @@ -489,3 +499,15 @@ &usb3_qmpphy {
->  	vdda-pll-supply = <&vreg_l10a_1p8>;
->  	status = "okay";
+>  #define DEFINE_QNODE(_name, _id, _buswidth, ...)			\
+>  	static const struct qcom_osm_l3_node _name = {			\
+>  		.name = #_name,						\
+> @@ -99,6 +105,15 @@ static const struct qcom_osm_l3_node * const epss_l3_nodes[] = {
+>  	[SLAVE_EPSS_L3_SHARED] = &epss_l3_slave,
 >  };
+>  
+> +DEFINE_QNODE(epss_l3_cl1_master, EPSS_L3_CL1_MASTER_NODE, 32,
+> +	     EPSS_L3_CL1_SLAVE_NODE);
+> +DEFINE_QNODE(epss_l3_cl1_slave, EPSS_L3_CL1_SLAVE_NODE, 32);
 > +
-> +&wifi {
-> +	status = "okay";
+> +static const struct qcom_osm_l3_node * const epss_l3_cl1_nodes[] = {
+> +	[MASTER_EPSS_L3_APPS] = &epss_l3_cl1_master,
+> +	[SLAVE_EPSS_L3_SHARED] = &epss_l3_cl1_slave,
+> +};
+> +
+>  static const struct qcom_osm_l3_desc osm_l3 = {
+>  	.nodes = osm_l3_nodes,
+>  	.num_nodes = ARRAY_SIZE(osm_l3_nodes),
+> @@ -115,6 +130,14 @@ static const struct qcom_osm_l3_desc epss_l3_perf_state = {
+>  	.reg_perf_state = EPSS_REG_PERF_STATE,
+>  };
+>  
+> +static const struct qcom_osm_l3_desc epss_l3_cl1_perf_state = {
+> +	.nodes = epss_l3_cl1_nodes,
+> +	.num_nodes = ARRAY_SIZE(epss_l3_cl1_nodes),
+> +	.lut_row_size = EPSS_LUT_ROW_SIZE,
+> +	.reg_freq_lut = EPSS_REG_FREQ_LUT,
+> +	.reg_perf_state = EPSS_REG_PERF_STATE,
+> +};
 
-You placed status last in the addition above but not here :P
+This is a bad workaround for the unfortunate interconnect API choices
+(conflicting ICC IDs), in no way specific to this platform
 
-with that fixed:
+> +
+>  static const struct qcom_osm_l3_desc epss_l3_l3_vote = {
+>  	.nodes = epss_l3_nodes,
+>  	.num_nodes = ARRAY_SIZE(epss_l3_nodes),
+> @@ -284,6 +307,10 @@ static const struct of_device_id osm_l3_of_match[] = {
+>  	{ .compatible = "qcom,sm8150-osm-l3", .data = &osm_l3 },
+>  	{ .compatible = "qcom,sc8180x-osm-l3", .data = &osm_l3 },
+>  	{ .compatible = "qcom,sm8250-epss-l3", .data = &epss_l3_perf_state },
+> +	{ .compatible = "qcom,sa8775p-epss-l3-cl0",
+> +	  .data = &epss_l3_perf_state },
 
+Reuse qcom,sm8250-epss-l3, like:
 
-
-Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+compatible = "qcom,foobar-epss-l3", "qcom,sm8250-epss-l3";
 
 Konrad
 
