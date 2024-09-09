@@ -1,262 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-31245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A25839712BE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 10:58:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DC559712ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:05:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 088ABB22DDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 08:58:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 19902286BA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 09:05:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DC951B2ECC;
-	Mon,  9 Sep 2024 08:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BB4E1B29D0;
+	Mon,  9 Sep 2024 09:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d5MHBE/6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9nIJuEM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE661B29D5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 08:58:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C471B29CA
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 09:05:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725872318; cv=none; b=ojb17BVLXqx7Q8mgwsoQxwohmbI4hSUZtftZGNc1Lc9MrIRf2uHWQwR5xhnV14cCNhhSWMNAvvftP3+JK8wQbSKjiMKPY+uxyinNcL806Vo99Bz/ww8g2GWbuBV5463EtvUVXMksaUeN9tLLIBZGHhGEA86K+phainDRcdO1SWw=
+	t=1725872737; cv=none; b=Jwg6zBOwvxjAE+4Z/xDa2XmZie+gLEwXNbBDSHHABu/eoeMxTa1kTYIETq5AU83oKuLefw2kO3qlCLUGXT75z4kgfDte/P6yHKnn2QsUT/ELwFpN8Jj+puDMC+nyxVfuTSn5ImgmmkgvvLSGoN7Idhwl5gFvUhobDXCbWPrWFzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725872318; c=relaxed/simple;
-	bh=hMgy8bX6Ok+Sly2wQ3k/uCmFxdR1J21buj1Oj+8Tu2k=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=od2VB5ztjkqT3Yv11NjL98Hlzl/+A+6jzB3kLQU+NwUVlMyHPmveOjhAvqqoDHLm6JFAbBs9oYF/eIgbmAh0HhhGKWCRe/5RosEBECo9ldgEhSXPZtMdLP9dXqH224nsjiCBCHFqxL4DJSwinqB20s73R0vn30huwX6cwEjwpA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d5MHBE/6; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1725872737; c=relaxed/simple;
+	bh=BB3/H5ySqRyu6/77CobU02zoSYGnRaT8/VTpD8q1nkM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mJ0w/nrufCn79pxNwkxb1bJWfMgEV9nIaBZSsngWn5MtbiwjOIBkS9QFViZBk5l+gqphJvQKHpYPzQ0PNi0Ey3SobRNjj8/vm9+aGzxFjiBXM4SQXMjrsfRi9CYRAtTLjQiCSRXXsQkBpNtJRsud5qIrVMy8XAnaWpb9AYbgH5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S9nIJuEM; arc=none smtp.client-ip=209.85.128.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42ba9b47f4eso23089225e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 01:58:35 -0700 (PDT)
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6d9f0cf5ae3so46657257b3.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 02:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725872314; x=1726477114; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PMvHs5Ab7mHAlvlrWenHe3/+itZxK87jYym+SorE/SA=;
-        b=d5MHBE/6nV+q3S16jwp9mTU0YKD+3PL9RxdDFilnfCN/sOL49WpQqSGFjp9mHijrqZ
-         tUJ6Bqi5A/qSqJMJ9rZAN89zezDJkGTapOpIWrbZekkWsUUEGcuV4lJ3yUmdfu5Nrn3A
-         OuPFDb1O/BCL8Fq09KwiIQXoYHCwWZCAL2Pu8yF1ypVLz8Nf7OgO6+MBiabzU4nTsC4r
-         IdGvmNbwl5Rswb88gxKHjUo+vwYYI/0n6jX9ErZqraaQ96ws/0MOlqybPi8ZWVXFjkiI
-         4HVO6B9QP4pnDVl91nPIk4v7HJwNqIF3qseXJg9mlimPEix/a8XejffrsL/nkMhiG4Ew
-         BMFA==
+        d=linaro.org; s=google; t=1725872734; x=1726477534; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=j2t8R4xfnSC9w9Cn08xrD7PLm+PTwWMORf6NFYOH81c=;
+        b=S9nIJuEMT4dVh0P4tUIwaCATrYrzoRETQ4/HdZTDqoglVs+gMU8OSXQPwyLkbDZ8BJ
+         DmTUaLUaLnqXeY5BeTOfLsgqymqUAKYot214KfI3u7Vluk8m8vdg4b2VY6IeiqmHS9vq
+         7g6ZxYs83syCWeaCd4phgJ/Wz/fwLrA5qioLfMdTDaZazgvkTHmuHzOjI6KiAoFlCGmC
+         wpl8zLxamWt00ctZCTSq1F2p3bNkf1NaRcU0zqfWXTGmNFh1ADHCk1vECGL0vBeL5x0c
+         wZetgMZpeRPTFq0Vhzk7k5ubgKOKWXTILIM5SMaqCu82fO0Ui4zLfel95u4k1AmEL0y1
+         SdzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725872314; x=1726477114;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PMvHs5Ab7mHAlvlrWenHe3/+itZxK87jYym+SorE/SA=;
-        b=QzgU5E4PIHNX09+BPiejLUy0qno3N97f2rHpcXiJ3D365UV98AzjIT5fWzyiqAIHsn
-         EyiWlOBXiV99BxB5sbUoC9Zmt8i1Y1yhzCxtJTexkTrQJ2UDvN2YCyOgiIl1U+koyoUU
-         m8/9ao3GrLmaQ2cTUGn2IE7kWNCCSozPoYIbQWXIJA5Ma6LH/vtSMu3yk5uYMTJswA7l
-         JxPoyyXvDhIhy5r55+uYoRQVl4nqZ/LwCLIwwYi4E8POfTYNRkNGxI209SA8gwh6fagS
-         uchwKrGwx/4ROsBZsNmSF7Ba3L697PcMr0z5ddhg6vlpjLPGm7DwNHhgug4ElRZcycnx
-         6alA==
-X-Forwarded-Encrypted: i=1; AJvYcCWWQwb5C+MOkGybL11Hxwx+fmPXZRIfMfbbqcjVGKVzKyORAIqIX1m7er5sEUM8S2ozQZfJK8NZqpyqmKoG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdGaKhABjJ1N0WeXXMu4x4Dia5Mv77mAyjd4MxmNkn9vkXC0G7
-	72DFgKeK3NWDl13mUlqnMJSp7GM+45TSjZnC//w62hGy7tue5FoFeq0mCYcsqzU=
-X-Google-Smtp-Source: AGHT+IG6v8/1xNArCrOhm5mi79N9gIxXGtQTCtPLSsLWPvDJATIAkCocS/kMp98RIRO0ro21ssL4Yw==
-X-Received: by 2002:a05:600c:468a:b0:428:b4a:7001 with SMTP id 5b1f17b1804b1-42c95be865emr103023695e9.15.1725872313704;
-        Mon, 09 Sep 2024 01:58:33 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:63a3:6883:a358:b850? ([2a01:e0a:982:cbb0:63a3:6883:a358:b850])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956654f4sm5446815f8f.43.2024.09.09.01.58.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Sep 2024 01:58:33 -0700 (PDT)
-Message-ID: <66953e65-2468-43b8-9ccf-54671613c4ab@linaro.org>
-Date: Mon, 9 Sep 2024 10:58:30 +0200
+        d=1e100.net; s=20230601; t=1725872734; x=1726477534;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j2t8R4xfnSC9w9Cn08xrD7PLm+PTwWMORf6NFYOH81c=;
+        b=NvaQPt1LOinu4s7NSgLhPn/+jJ1ezF52HtSqAybUBbVrmzXcxY99oj1vxWqfyAcMn8
+         qv8tCDO548zAYCNzSrPxVkLn/ES5siOnY/OFwOtdL0UUwgbHruYrcBdaYbrFV8wlsfzf
+         K8YuBb05LJAfpqdCMQUp56EPYqNS4wsGmFUV6IJduQo5+uIKCnAJTw8pXeXXyLolHC+2
+         HKmddos12jMU6F0GTuyOKq0QaPM1nczgytnK5GyEfDU9c4OeRDGypvq5Gm6gznB3BumM
+         zgVdH9Gg9bOnYCHpLXZ4Vh4FP6Oqu4wcMbKVn5IyoNiCdWToMGoNTXD5NrkUmRNG6JNy
+         lFYw==
+X-Forwarded-Encrypted: i=1; AJvYcCUQYhHISMUhAEY2pq8O0GRAOjb6G3JRAGYcoePPa2JmXXBugheojlyPxGJIPNRceHflfujewkE0uYKkEUUx@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzSzNoi/Rw4GPWJvv+fLzSv6xEPkLmL/GxfPDyaKs3tDpjuPWr
+	cXD9hHhj6hj6cqi/3q8gcsIMp9NK4GZJenmpYPpjrVA/c0a5q9Do6NxUWCdiv+hRLNpyBBN2maV
+	y1+8WfJeqS8F3jCwz+u3TXrZ3TJ+NREeA2VZ0aA==
+X-Google-Smtp-Source: AGHT+IG0rmU+PJ1sUsI9xaYzlyO0fuHlZgEClWUHvIo++2qG8J7dLhkan6PH1kB/kHCDTDrPTR3yTt3ldtPN97UpiV0=
+X-Received: by 2002:a05:690c:d1a:b0:6db:2753:cd9c with SMTP id
+ 00721157ae682-6db45273f36mr119317517b3.44.1725872734530; Mon, 09 Sep 2024
+ 02:05:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v6 09/17] soc: qcom: ice: add HWKM support to the ICE
- driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>,
- Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>,
- Mikulas Patocka <mpatocka@redhat.com>,
- Adrian Hunter <adrian.hunter@intel.com>,
- Asutosh Das <quic_asutoshd@quicinc.com>,
- Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson
- <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>,
- Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Gaurav Kashyap <quic_gaurkash@quicinc.com>, linux-block@vger.kernel.org,
- linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
- dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org,
- linux-scsi@vger.kernel.org, linux-fscrypt@vger.kernel.org,
- linux-fsdevel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
- <20240906-wrapped-keys-v6-9-d59e61bc0cb4@linaro.org>
- <7uoq72bpiqmo2olwpnudpv3gtcowpnd6jrifff34ubmfpijgc6@k6rmnalu5z4o>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <7uoq72bpiqmo2olwpnudpv3gtcowpnd6jrifff34ubmfpijgc6@k6rmnalu5z4o>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com>
+ <CACMJSes4cnCNUHiZUr4CF-K2c8-1VYzuh=T8JDi_erqfShkuZA@mail.gmail.com>
+ <1f889bba-0c89-45db-b360-b21d6bba7772@gmail.com> <68b0476f-dfa1-44cb-a01a-f4afbaaa98e5@gmail.com>
+ <vtdrxh57zxpu6xktzehcpx7hkaqclg5kya5jojrbkmo76yswxx@libmc5evobkb>
+In-Reply-To: <vtdrxh57zxpu6xktzehcpx7hkaqclg5kya5jojrbkmo76yswxx@libmc5evobkb>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Mon, 9 Sep 2024 11:05:23 +0200
+Message-ID: <CACMJSeuONLsWy3rQnLsOxm-Qqgcmd67XNhCMPvTd=UtgYoPfzg@mail.gmail.com>
+Subject: Re: [REGRESSION] firmware: qcom: scm: smc: switch to using the SCM allocator
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rudraksha Gupta <guptarud@gmail.com>, regressions@lists.linux.dev, brgl@bgdev.pl, 
+	andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, robimarko@gmail.com, 
+	quic_gurus@quicinc.com, luzmaximilian@gmail.com, catalin.marinas@arm.com, 
+	will@kernel.org, srinivas.kandagatla@linaro.org, arnd@arndb.de, 
+	quic_eberman@quicinc.com, elder@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, ahalaney@redhat.com, 
+	quic_djaggi@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 07/09/2024 00:07, Dmitry Baryshkov wrote:
-> On Fri, Sep 06, 2024 at 08:07:12PM GMT, Bartosz Golaszewski wrote:
->> From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
->>
->> Qualcomm's ICE (Inline Crypto Engine) contains a proprietary key
->> management hardware called Hardware Key Manager (HWKM). Add HWKM support
->> to the ICE driver if it is available on the platform. HWKM primarily
->> provides hardware wrapped key support where the ICE (storage) keys are
->> not available in software and instead protected in hardware.
->>
->> When HWKM software support is not fully available (from Trustzone), there
->> can be a scenario where the ICE hardware supports HWKM, but it cannot be
->> used for wrapped keys. In this case, raw keys have to be used without
->> using the HWKM. We query the TZ at run-time to find out whether wrapped
->> keys support is available.
->>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
->> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->> ---
->>   drivers/soc/qcom/ice.c | 152 +++++++++++++++++++++++++++++++++++++++++++++++--
->>   include/soc/qcom/ice.h |   1 +
->>   2 files changed, 149 insertions(+), 4 deletions(-)
->>
->>   int qcom_ice_enable(struct qcom_ice *ice)
->>   {
->> +	int err;
->> +
->>   	qcom_ice_low_power_mode_enable(ice);
->>   	qcom_ice_optimization_enable(ice);
->>   
->> -	return qcom_ice_wait_bist_status(ice);
->> +	if (ice->use_hwkm)
->> +		qcom_ice_enable_standard_mode(ice);
->> +
->> +	err = qcom_ice_wait_bist_status(ice);
->> +	if (err)
->> +		return err;
->> +
->> +	if (ice->use_hwkm)
->> +		qcom_ice_hwkm_init(ice);
->> +
->> +	return err;
->>   }
->>   EXPORT_SYMBOL_GPL(qcom_ice_enable);
->>   
->> @@ -150,6 +282,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
->>   		return err;
->>   	}
->>   
->> +	if (ice->use_hwkm) {
->> +		qcom_ice_enable_standard_mode(ice);
->> +		qcom_ice_hwkm_init(ice);
->> +	}
->>   	return qcom_ice_wait_bist_status(ice);
->>   }
->>   EXPORT_SYMBOL_GPL(qcom_ice_resume);
->> @@ -157,6 +293,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
->>   int qcom_ice_suspend(struct qcom_ice *ice)
->>   {
->>   	clk_disable_unprepare(ice->core_clk);
->> +	ice->hwkm_init_complete = false;
->>   
->>   	return 0;
->>   }
->> @@ -206,6 +343,12 @@ int qcom_ice_evict_key(struct qcom_ice *ice, int slot)
->>   }
->>   EXPORT_SYMBOL_GPL(qcom_ice_evict_key);
->>   
->> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice)
->> +{
->> +	return ice->use_hwkm;
->> +}
->> +EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
->> +
->>   static struct qcom_ice *qcom_ice_create(struct device *dev,
->>   					void __iomem *base)
->>   {
->> @@ -240,6 +383,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
->>   		engine->core_clk = devm_clk_get_enabled(dev, NULL);
->>   	if (IS_ERR(engine->core_clk))
->>   		return ERR_CAST(engine->core_clk);
->> +	engine->use_hwkm = qcom_scm_has_wrapped_key_support();
-> 
-> This still makes the decision on whether to use HW-wrapped keys on
-> behalf of a user. I suppose this is incorrect. The user must be able to
-> use raw keys even if HW-wrapped keys are available on the platform. One
-> of the examples for such use-cases is if a user prefers to be able to
-> recover stored information in case of a device failure (such recovery
-> will be impossible if SoC is damaged and HW-wrapped keys are used).
+On Sat, 7 Sept 2024 at 11:57, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Sat, Sep 07, 2024 at 01:49:02AM GMT, Rudraksha Gupta wrote:
+> > > Looks like qcom_scm_get_tzmem_pool() returns NULL. Not sure how this
+> > > happens. Can you confirm that the QCom SCM driver probed correctly?
+> >
+> > Thanks for looking into this! Please let me know how I can help!
+> >
+> >
+> > I've been building the driver into the kernel I believe. Here's the relevant
+> > line in the config:
+> >
+> > $ rg -i "scm"
+> > samsung/expressatt/linux.defconfig
+> > 1615:# CONFIG_ARM_SCMI_PROTOCOL is not set
+> > 1627:CONFIG_QCOM_SCM=y
+> > 1628:# CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is not set
+> >
+> >
+> > It seems like the scm driver is being probed:
+> >
+> > ~ # dmesg | grep scm
+> > [    0.066438] qcom_scm: convention: smc legacy
+> > [    0.362543] bus: 'platform': add driver qcom_scm
+>
+> The scm driver is added, but it is not probed as there is no SCM node in
+> DT. I'll send and RFT patch to add it. However the issue still persists:
+> the driver should not crash if there is no SCM device on a system.
+> qcom_scm_*_alloc should fall back if there is no SCM.
+>
 
-Isn't that already the case ? the BLK_CRYPTO_KEY_TYPE_HW_WRAPPED size is
-here to select HW-wrapped key, otherwise the ol' raw key is passed.
-Just look the next patch.
+Ugh, so some SCM calls seem to expect that they can get called without
+the SCM driver. It's not very intuitive, I would expect that the
+driver must be up for SCM to work at all.
 
-Or did I miss something ?
+I think we should fall back to using kzalloc() in such cases as
+there's no struct device to use with the DMA alloc APIs. I'll prepare
+a patch.
 
-Neil
-
-> 
->>   
->>   	if (!qcom_ice_check_supported(engine))
->>   		return ERR_PTR(-EOPNOTSUPP);
->> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
->> index 9dd835dba2a7..1f52e82e3e1c 100644
->> --- a/include/soc/qcom/ice.h
->> +++ b/include/soc/qcom/ice.h
->> @@ -34,5 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
->>   			 const struct blk_crypto_key *bkey,
->>   			 u8 data_unit_size, int slot);
->>   int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
->> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
->>   struct qcom_ice *of_qcom_ice_get(struct device *dev);
->>   #endif /* __QCOM_ICE_H__ */
->>
->> -- 
->> 2.43.0
->>
-> 
-
+Bart
 
