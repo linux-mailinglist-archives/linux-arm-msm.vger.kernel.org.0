@@ -1,316 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-31302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D42B9718B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:53:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0AD39718AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:52:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 133C1284B60
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:53:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9FAEB1F23D3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:52:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D1A1B86E7;
-	Mon,  9 Sep 2024 11:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECF291B78FB;
+	Mon,  9 Sep 2024 11:51:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oVILtiVM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KDX195re"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B6B1B86D6;
-	Mon,  9 Sep 2024 11:51:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35CB1B6525;
+	Mon,  9 Sep 2024 11:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725882711; cv=none; b=E1ZS8KMwpAPioTq8MZXYt5RhNpT7dArLaAtRP0KKpHZhpEOcwdxwwV+82OGxyLAGZo30JDuk19QaNkMMNgwh13VpkYA4nizwIKWK8SaXaf449Evbn2P4/vFtRfpfc0hgTisMuytKFCrzoZYdYNul+w/taHPqVLDYDoQcYTmNpa0=
+	t=1725882707; cv=none; b=vEkYDnVifbrlJFbFQZ3PaHbo/28viZ2VSvC1gpgfGqCvsjQaI7Q3EhrELd5Yx8kN8kYLXyxJ34XIjJGhfa6rTHT6D/1nX5GL2w/CtiGqMw/FqOJjEmIKnINDzi6iSpqTN+i1b7Ar8nK4zIh5F6cdcpzYeNpeJtQi2QhVzY5z2G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725882711; c=relaxed/simple;
-	bh=YQ5U22xEPnW/cEnU9qruz0AbAVoyZQZomw6i6ZtcwkE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UxQiEK3iEXfZZS/VOPTpJFYjtqGi+1b1Im19aUdFy3iuB0HE4pBPbselX4gE9FuJZtIKw00wklUy/VyP4RIhXj61isK8mMSdDPOXjT9YLfsQwyHLl2L9TMMY1nScgV7mUXML3TQ/5EC7jGKXRbsozNTLHJDGO6Z5JoT2S9FRbuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oVILtiVM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4899Jtrk030397;
-	Mon, 9 Sep 2024 11:51:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qhqiYbD/RYVLfSTUpXhfOEdedQo4iJVxk+QeQnDjeRw=; b=oVILtiVM5q44EiC7
-	rQUFJSeQI1uqleM9RS6wqUUlme0FIhUNjTQpupKiQ2zp+9qcnU6/ygx9dhp3DLTU
-	C/ktw/zEaY677iWAGt2ebHT3+EZQo10tO+FB+C6iHbKUWB/0SDm/K8a26BXmdIoj
-	pFff29/LpCGiH6yAAMrmvudBwO94vxis5Jir6GMIl8nd7La9yKJRvkY0X7gd+i0l
-	AX+55DLvMrjwYtTxkp5bOEXXPr3hecllnHxYBLafuXq9ukOUjzHBQcLkrhsVkYEs
-	6J7RESZeMV4HLNucvT3R0WQGTm1bmJ+XtBGrKef7B230/nnJm0Z9NyBowkb8m/b2
-	h7AgMg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy72tp88-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Sep 2024 11:51:33 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 489BpVKB013539
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Sep 2024 11:51:31 GMT
-Received: from [10.216.25.122] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Sep 2024
- 04:51:25 -0700
-Message-ID: <6bdfb6fc-f375-bf03-7d39-8711c0bee40e@quicinc.com>
-Date: Mon, 9 Sep 2024 17:21:22 +0530
+	s=arc-20240116; t=1725882707; c=relaxed/simple;
+	bh=0JyaXQcVV7hV6+TsoSX2pVLz4WSNcsP5lbx3ypUfRNY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QxN7GDkbeXhxYJddC2LU7A2X58mncQB30ZEtkaPkWIHkW3WpWaBif7/Tv6/JC9uzV3K++BAfdV3XlftxzJ90tmZK81kYjH35JNxQtNwdKwQaYOoiNMaDbhMUc1T1ZnoTsZXkqtaSUNUZzpbcaKcsjOlhm/C/xAFAWDU1Zt2h1RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KDX195re; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54DBEC4CEC7;
+	Mon,  9 Sep 2024 11:51:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725882706;
+	bh=0JyaXQcVV7hV6+TsoSX2pVLz4WSNcsP5lbx3ypUfRNY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=KDX195re/Wb8hzBE3AWZJzabPkZjsDHLVwHFV0SCsWdSvZr8I2P7USdXFqva9tP9Y
+	 ukl8bMwjb1RQgdwX1h8f5jCiB7Gl6T+yd7oR3iUcsnjaIR0Z4drxbMybUJO954lZTy
+	 NiyiUeAVKW5bG3A9BE/0+X2hlsloMBfpMREn4TK+4OcFXji4mBrky8LZbBp0qsxh6I
+	 ecrhqKiN2qd3shH3eqmj97oR8JOWtnv16BPizbTJ73Qom+N94JsxSvNsEJKpD5jiLV
+	 p/WtDVZEEGCwezhB9sJ7GKRJf0pks9SdEtDG/LhkffmbzxqP7nby/WGd40bl1l5sI5
+	 BufwvRr/w0RCA==
+Message-ID: <88e20936-0400-47a3-8909-24e3609e714e@kernel.org>
+Date: Mon, 9 Sep 2024 13:51:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH v2 3/8] arm64: dts: qcom: qcs6490-rb3gen2: Add node for
- qps615
-To: Caleb Connolly <caleb.connolly@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>
-CC: <andersson@kernel.org>, <quic_vbadigan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Bartosz
- Golaszewski" <bartosz.golaszewski@linaro.org>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-3-9560b7c71369@quicinc.com>
- <1932646a-b138-48f3-99bc-17354a773586@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 10/17] soc: qcom: ice: add support for hardware wrapped
+ keys
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Jens Axboe <axboe@kernel.dk>,
+ Jonathan Corbet <corbet@lwn.net>, Alasdair Kergon <agk@redhat.com>,
+ Mike Snitzer <snitzer@kernel.org>, Mikulas Patocka <mpatocka@redhat.com>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ Asutosh Das <quic_asutoshd@quicinc.com>,
+ Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson
+ <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>,
+ Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Gaurav Kashyap <quic_gaurkash@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-block@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, dm-devel@lists.linux.dev,
+ linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-fscrypt@vger.kernel.org, linux-fsdevel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Om Prakash Singh <quic_omprsing@quicinc.com>
+References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
+ <20240906-wrapped-keys-v6-10-d59e61bc0cb4@linaro.org>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <1932646a-b138-48f3-99bc-17354a773586@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <20240906-wrapped-keys-v6-10-d59e61bc0cb4@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZNN7Rvbh86t0p1FtahQD6R7IwOYx3u18
-X-Proofpoint-GUID: ZNN7Rvbh86t0p1FtahQD6R7IwOYx3u18
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1011 bulkscore=0
- malwarescore=0 adultscore=0 mlxlogscore=999 suspectscore=0
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409090094
 
-
-
-On 9/9/2024 4:59 PM, Caleb Connolly wrote:
-> Hi Krishna,
+On 6.09.2024 8:07 PM, Bartosz Golaszewski wrote:
+> From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
 > 
-> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
->> Add QPS615 PCIe switch node which has 3 downstream ports and in one
->> downstream port two embedded ethernet devices are present.
->>
->> Power to the QPS615 is supplied through two LDO regulators, controlled
->> by two GPIOs, these are added as fixed regulators.
->>
->> Add i2c device node which is used to configure the switch.
->>
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 121 +++++++++++++++++++++++++++
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi         |   2 +-
->>   2 files changed, 122 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index 0d45662b8028..59d209768636 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> @@ -202,6 +202,30 @@ vph_pwr: vph-pwr-regulator {
->>   		regulator-min-microvolt = <3700000>;
->>   		regulator-max-microvolt = <3700000>;
->>   	};
->> +
->> +	vdd_ntn_0p9: regulator-vdd-ntn-0p9 {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "VDD_NTN_0P9";
->> +		gpio = <&pm8350c_gpios 2 GPIO_ACTIVE_HIGH>;
->> +		regulator-min-microvolt = <899400>;
->> +		regulator-max-microvolt = <899400>;
->> +		enable-active-high;
->> +		pinctrl-0 = <&ntn_0p9_en>;
->> +		pinctrl-names = "default";
->> +		regulator-enable-ramp-delay = <4300>;
->> +	};
->> +
->> +	vdd_ntn_1p8: regulator-vdd-ntn-1p8 {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "VDD_NTN_1P8";
->> +		gpio = <&pm8350c_gpios 3 GPIO_ACTIVE_HIGH>;
->> +		regulator-min-microvolt = <1800000>;
->> +		regulator-max-microvolt = <1800000>;
->> +		enable-active-high;
->> +		pinctrl-0 = <&ntn_1p8_en>;
->> +		pinctrl-names = "default";
->> +		regulator-enable-ramp-delay = <10000>;
->> +	};
->>   };
->>   
->>   &apps_rsc {
->> @@ -595,6 +619,12 @@ lt9611_out: endpoint {
->>   			};
->>   		};
->>   	};
->> +
->> +	qps615_switch: pcie-switch@77 {
->> +		compatible = "qcom,qps615";
->> +		reg = <0x77>;
->> +		status = "okay";
->> +	};
->>   };
->>   
->>   &i2c1 {
->> @@ -688,6 +718,75 @@ &pmk8350_rtc {
->>   	status = "okay";
->>   };
->>   
->> +&pcie1 {
->> +	status = "okay";
->> +};
+> Now that HWKM support has been added to ICE, extend the ICE driver to
+> support hardware wrapped keys programming coming in from the storage
+> controllers (UFS and eMMC). This is similar to raw keys where the call is
+> forwarded to Trustzone, however we also need to clear and re-enable
+> CFGE before and after programming the key.
 > 
-> Isn't it also necessary to configure the phy as well? It's also default
-> disabled and has two regulators.
+> Derive software secret support is also added by forwarding the call to
+> the corresponding SCM API.
 > 
-There is one more patch series which does this.
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
 
-https://lore.kernel.org/linux-arm-msm/20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com/T/
+[...]
 
-sorry for this I should have included this in cover letter.
 
-I will squash those changes to this series or will update the cover
-letter.
-- Krishna Chaitanya.
+> +static int qcom_ice_program_wrapped_key(struct qcom_ice *ice,
+> +					const struct blk_crypto_key *key,
+> +					u8 data_unit_size, int slot)
+> +{
+> +	union crypto_cfg cfg;
+> +	int hwkm_slot;
+> +	int err;
+> +
+> +	hwkm_slot = translate_hwkm_slot(ice, slot);
+> +
+> +	memset(&cfg, 0, sizeof(cfg));
 
-> Kind regards >> +
->> +&pcieport {
->> +	pcie@0,0 {
->> +		compatible = "pci1179,0623";
->> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
->> +		#address-cells = <3>;
->> +		#size-cells = <2>;
->> +
->> +		device_type = "pci";
->> +		ranges;
->> +
->> +		vddc-supply = <&vdd_ntn_0p9>;
->> +		vdd18-supply = <&vdd_ntn_1p8>;
->> +		vdd09-supply = <&vdd_ntn_0p9>;
->> +		vddio1-supply = <&vdd_ntn_1p8>;
->> +		vddio2-supply = <&vdd_ntn_1p8>;
->> +		vddio18-supply = <&vdd_ntn_1p8>;
->> +
->> +		qcom,qps615-controller = <&qps615_switch>;
->> +
->> +		reset-gpios = <&pm8350c_gpios 1 GPIO_ACTIVE_LOW>;
->> +
->> +		pcie@1,0 {
->> +			reg = <0x20800 0x0 0x0 0x0 0x0>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			device_type = "pci";
->> +			ranges;
->> +		};
->> +
->> +		pcie@2,0 {
->> +			reg = <0x21000 0x0 0x0 0x0 0x0>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +
->> +			device_type = "pci";
->> +			ranges;
->> +		};
->> +
->> +		pcie@3,0 {
->> +			reg = <0x21800 0x0 0x0 0x0 0x0>;
->> +			#address-cells = <3>;
->> +			#size-cells = <2>;
->> +			device_type = "pci";
->> +			ranges;
->> +
->> +			pcie@0,0 {
->> +				reg = <0x50000 0x0 0x0 0x0 0x0>;
->> +				#address-cells = <3>;
->> +				#size-cells = <2>;
->> +				device_type = "pci";
->> +				ranges;
->> +			};
->> +
->> +			pcie@0,1 {
->> +				reg = <0x50100 0x0 0x0 0x0 0x0>;
->> +				#address-cells = <3>;
->> +				#size-cells = <2>;
->> +				device_type = "pci";
->> +				ranges;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->>   &qupv3_id_0 {
->>   	status = "okay";
->>   };
->> @@ -812,6 +911,28 @@ lt9611_rst_pin: lt9611-rst-state {
->>   	};
->>   };
->>   
->> +&pm8350c_gpios {
->> +	ntn_0p9_en: ntn-0p9-en-state {
->> +		pins = "gpio2";
->> +		function = "normal";
->> +
->> +		bias-disable;
->> +		input-disable;
->> +		output-enable;
->> +		power-source = <0>;
->> +	};
->> +
->> +	ntn_1p8_en: ntn-1p8-en-state {
->> +		pins = "gpio3";
->> +		function = "normal";
->> +
->> +		bias-disable;
->> +		input-disable;
->> +		output-enable;
->> +		power-source = <0>;
->> +	};
->> +};
->> +
->>   &tlmm {
->>   	lt9611_irq_pin: lt9611-irq-state {
->>   		pins = "gpio24";
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 3d8410683402..3840f056b7f2 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -2279,7 +2279,7 @@ pcie1: pcie@1c08000 {
->>   
->>   			status = "disabled";
->>   
->> -			pcie@0 {
->> +			pcieport: pcie@0 {
->>   				device_type = "pci";
->>   				reg = <0x0 0x0 0x0 0x0 0x0>;
->>   				bus-range = <0x01 0xff>;
->>
-> 
+union crypto_cfg cfg = { 0 };
+
+?
+
+> +	cfg.dusize = data_unit_size;
+> +	cfg.capidx = QCOM_SCM_ICE_CIPHER_AES_256_XTS;
+> +	cfg.cfge = 0x80;
+
+Or just partially initialize it at declaration time?
+
+Also, what's 0x80?
+
+Konrad
 
