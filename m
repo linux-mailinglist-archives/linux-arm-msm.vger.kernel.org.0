@@ -1,85 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-31377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31378-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DC40972472
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 23:21:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 919119724D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 00:00:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D9AF1C230EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 21:21:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46B402844CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 22:00:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1345818C351;
-	Mon,  9 Sep 2024 21:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E128018C035;
+	Mon,  9 Sep 2024 22:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FKV7PFNo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NQxyacZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14D9189F2F;
-	Mon,  9 Sep 2024 21:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1CC17085C;
+	Mon,  9 Sep 2024 22:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725916858; cv=none; b=MtYCqa5W2nnK1KozcwOZrOKCToRKwe4swXTmOWHabx7R8+xn8uEwIq5jaLBMe5hAObHxGyqrqI6fGKtOJctcPHa7Vp95eWE1jmLc/wOwSfvTHNoc5gjvySc4OlvUjjEAjFDcGWiaL8PLZd+wwetpLFH0cj4w40XoutcIq3e0meI=
+	t=1725919241; cv=none; b=KPI93kEssoG1zSpMEpEmXPquuB49ToTcgYOnFbjV6CBt7qYLKb5MEsIRnep6IRz9AJv+FFIM2dtCvGbfgEdJPhZZc0oO+44ucFxC7OdQPrXXdTEGPGlGjWmvoegdnlRy13Nn7XSM6+l+//4YRHkqKYjGu+xGaBDK1nmY/IlEOuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725916858; c=relaxed/simple;
-	bh=tK0vooX06fNMJDsOaDbjgFNdPUmm25HgOZttNw444Wc=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=dNQ4Na63UWlfDf3BQomFp0i6v+lp/o4IiGcPi6qV735FWJV7oHLUkdjqx7UH5eymp1gOwG8obzysAGXxPRU4ZYx/n5T2Fe7xttPFDwynuE0ldXSUoTnRJmNJ6CworiL97bvZ5hUEbjmFEiPTJYolZrxVDBEH76HYa8RzNw3XBFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FKV7PFNo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A2BC4CEC5;
-	Mon,  9 Sep 2024 21:20:57 +0000 (UTC)
+	s=arc-20240116; t=1725919241; c=relaxed/simple;
+	bh=JGqxWA1KpqkAc55m1tTC6BCwYiBtn9t2WlYbKLNP9PA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=t7LTXBUPaCpQdJxHG8SxPM471MOStfjEMmgVhfFTSHGkq3ACgq+APyboa9FzIZJAnDgICCdN7sBdIXBRuqtHIIF6zuSXMC7Co2tinYkIw12v9oaz/whXBOcG0cs26YHEwJYV7Hf4pZIBUOTM39HeTvDnDITYrucP8n4HGZAeJFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NQxyacZq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22797C4CEC5;
+	Mon,  9 Sep 2024 22:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725916857;
-	bh=tK0vooX06fNMJDsOaDbjgFNdPUmm25HgOZttNw444Wc=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=FKV7PFNoHKTi30ShjIpCoZkwRE9t9Bfen1obWZlTvE/7kBYKoIEn31C3N39nYrzLS
-	 wV2jGW6w3KN0K3zsvrErlzYPWwBetvWrY2f307qC1q/3r6J+/p1zFtPeTYhXIBOgN0
-	 eciafNUixANNFxl6vSdZtqlBS5a9LmNMRn55+D94diIDR7T0G/PHhYyWeO5X33k4FG
-	 eTc+U7uq9LECMV+8qgZJNyPQQ3B1/4G+QyMY4iVu63qvL0PddnNwd/KXYnczd4Jcm4
-	 IDC2sERGEVlUEXtxEBNhzMRj5ryAeR0lohVqt8NWNujt4iZz2fJvqK4Z8M+XAaInC8
-	 wBai1QZE/xkAA==
-Message-ID: <ca22b69fe6311ba87a7dcca9948a62a7.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1725919241;
+	bh=JGqxWA1KpqkAc55m1tTC6BCwYiBtn9t2WlYbKLNP9PA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NQxyacZqx2mx4EIfylMDD80N8nKpi6Z4sD/6j/wb42m457LVQ7pSUYuqK9GwJ591u
+	 PbP+1nkeIN/X9dNDZ+QlCx7QuEuRErypeBcRu04QZcCVboJCDgqIAoCZlUQIoaZ3ry
+	 7yEiOmZB03zKzR2vJjhBoA1r0BTUqVtYhw9gX5VdjH7qmXrvgfaT7Ux6Om8uea3lgk
+	 k3uIZrrYN8N0cpQA3ftiduW3sSUipu5n8RYtU192usneRZ8bZN3ZxBrr1R26ApGpSO
+	 22OhK7XfNoCuee+oiepdl8ebEpfvTsT05+vRXrdkfbAMAYGjE2ObeU03mP7wkJrL0L
+	 3oNMpguap45Qw==
+Date: Mon, 9 Sep 2024 23:00:30 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Nikunj Kela <quic_nkela@quicinc.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, andersson@kernel.org,
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+	herbert@gondor.apana.org.au, davem@davemloft.net,
+	sudeep.holla@arm.com, andi.shyti@kernel.org, tglx@linutronix.de,
+	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
+	jassisinghbrar@gmail.com, lee@kernel.org, linus.walleij@linaro.org,
+	amitk@kernel.org, thara.gopinath@gmail.com,
+	cristian.marussi@arm.com, rui.zhang@intel.com, lukasz.luba@arm.com,
+	wim@linux-watchdog.org, linux@roeck-us.net,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-crypto@vger.kernel.org, arm-scmi@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org,
+	iommu@lists.linux.dev, linux-gpio@vger.kernel.org,
+	linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
+	linux-watchdog@vger.kernel.org, kernel@quicinc.com,
+	quic_psodagud@quicinc.com,
+	Praveen Talari <quic_ptalari@quicinc.com>
+Subject: Re: [PATCH v2 16/21] dt-bindings: spi: document support for SA8255p
+Message-ID: <70673636-5b44-4b61-865c-83f9c5d3501d@sirena.org.uk>
+References: <20240828203721.2751904-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-1-quic_nkela@quicinc.com>
+ <20240903220240.2594102-17-quic_nkela@quicinc.com>
+ <sdxhnqvdbcpmbp3l7hcnsrducpa5zrgbmkykwfluhrthqhznxi@6i4xiqrre3qg>
+ <b369bd73-ce2f-4373-8172-82c0cca53793@quicinc.com>
+ <9a655c1c-97f6-4606-8400-b3ce1ed3c8bf@kernel.org>
+ <d206e315-3324-4814-b98d-027c3af6ebb6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240909144026.870565-2-u.kleine-koenig@baylibre.com>
-References: <20240909144026.870565-2-u.kleine-koenig@baylibre.com>
-Subject: Re: [PATCH] clk: Switch back to struct platform_driver::remove()
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, linux-arm-kernel@lists.infradead.org, linux-samsung-soc@vger.kernel.org, arm-scmi@vger.kernel.org, imx@lists.linux.dev, linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org
-To: Michael Turquette <mturquette@baylibre.com>, Uwe =?utf-8?q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Date: Mon, 09 Sep 2024 14:20:55 -0700
-User-Agent: alot/0.10
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+4FsY8uVcR5U7FtS"
+Content-Disposition: inline
+In-Reply-To: <d206e315-3324-4814-b98d-027c3af6ebb6@quicinc.com>
+X-Cookie: Anything is possible, unless it's not.
 
-Quoting Uwe Kleine-K=C3=B6nig (2024-09-09 07:40:25)
-> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
-> return void") .remove() is (again) the right callback to implement for
-> platform drivers.
->=20
-> Convert all clk drivers to use .remove(), with the eventual goal to drop
-> struct platform_driver::remove_new(). As .remove() and .remove_new() have
-> the same prototypes, conversion is done by just changing the structure
-> member name in the driver initializer.
->=20
-> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@baylibre.com>
-> ---
-> Hello,
->=20
-> I was lazy and created a single patch for all of clk. Please tell me if
-> I should split per vendor (or per-driver). Given that touches so many
-> drivers, I also stripped the individual maintainers and just kept the
-> mailing lists. I hope this doesn't prevent people to give feedback, but
-> otherwise the Cc: list gets Huge.
->=20
 
-I'll apply it on top of clk-next right before sending the main clk PR to
-Linus.
+--+4FsY8uVcR5U7FtS
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+On Mon, Sep 09, 2024 at 01:29:37PM -0700, Nikunj Kela wrote:
+
+> Now I am confused which prefix format shall I use? first spi or first
+> dt-bindings?
+
+spi: first.
+
+--+4FsY8uVcR5U7FtS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmbfb/0ACgkQJNaLcl1U
+h9DmmAf9G79iJqbIo+rLvhxVQG/V00Xz3Y1hZjGbPTyKNQIuiSThwS/ZexjpAnky
+dxPN6CKinfv2CcaHSqAfTaiOX7e41E6yQe0MhZRHgvnp9GWDwzFR+vo/Jkf7vOvk
+FdHkgDxP+8DqOEk/JvSsuUbeWBm8+6SYmz3aY49ZDdTM/AWXoLpfIuRG9HHI4oC0
+pcewKeElbb4mm8XtAESmg+SfofXpaXXqWnzrqGfKnG2Jhz2SYaDIbLUzRrIcMyQC
+UkUJzcsdp019ZGJl0xUhb05YlxUPnZ2vQ1OJaDh/15NkTWCoSTdDX1WTWjHtmjfB
+soCaA83E+/cUHrHnZjH7ZOZFfA0F2A==
+=OtuN
+-----END PGP SIGNATURE-----
+
+--+4FsY8uVcR5U7FtS--
 
