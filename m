@@ -1,154 +1,316 @@
-Return-Path: <linux-arm-msm+bounces-31300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BFA79718AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:52:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D42B9718B8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:53:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31238284B0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:52:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 133C1284B60
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:53:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B5811B78F7;
-	Mon,  9 Sep 2024 11:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D1A1B86E7;
+	Mon,  9 Sep 2024 11:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZXBrXwPT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oVILtiVM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825D41B5EB0
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 11:51:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0B6B1B86D6;
+	Mon,  9 Sep 2024 11:51:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725882683; cv=none; b=JvVbEgvbrPaQAkwQQhmyU4yxn21+TORGvYOk5wF3WggP8JFofPmGYOR9dQsvnt08ZHhGvgmZ/h52sM+7D/mJ680LVdlvgCowSYFSWq2bA9tZeU52zYJKB68cbUEwIfg2hwiYyWfahlA6CSZbnZaYH0XVSDvTvHqYkrFGyWBU1Ck=
+	t=1725882711; cv=none; b=E1ZS8KMwpAPioTq8MZXYt5RhNpT7dArLaAtRP0KKpHZhpEOcwdxwwV+82OGxyLAGZo30JDuk19QaNkMMNgwh13VpkYA4nizwIKWK8SaXaf449Evbn2P4/vFtRfpfc0hgTisMuytKFCrzoZYdYNul+w/taHPqVLDYDoQcYTmNpa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725882683; c=relaxed/simple;
-	bh=BbWjoQ45d+g8AqhbdV0mu/mdMLVinfQ53fl8AVSz1Io=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ohReC7QlSmNXvRjy9TTsFhbq5tD6fGT6sRq0fGCd81cRPYw+TitGACSNJR3AGsAlVUfxcAvmiR0XrJj4vtrErNhWGBaNPMwGjI6pclNGATMZ/x3yWEkDWDyAuBuK5aZPiPOmnQzFRUPFxyj7l8JodLvXIup24W1D3cBy3WpODgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZXBrXwPT; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6d7073a39dcso46408117b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 04:51:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725882680; x=1726487480; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2DW9+4+5dkfE7I6UYkBdI6PKZkJx34MPOXwo0S6pwi4=;
-        b=ZXBrXwPTcTDP2CwflXldP/MtoXpUZLNF4twAtf2ZQC9GXjLdFf7VGclL8iCtO7wJ5Z
-         GOrnQTYLL7wgcQnkKYvCFWER/dJTjOzW/ARn4idKZTmNk1MlmMxDJIB0Lyx7kCHwfwfS
-         QK6uZstiCoq19FLx6vcYLXMCBj5ub8TohHXHFwzevr5t1Pb1txuYnBTWNIjo+kTmvLby
-         o2My44kHiYtWVbjjw8P6nsJkdv7Ok3BXPPhX/D+cSW9atKeBELzmQyZjzCseaTnJ0EGh
-         6a279C/f+0MOITPQpf36v1XJ9qTSpP8MyhkolqAqizhBV73MDnoXUXpAjr8NQN2kqWa9
-         PHyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725882680; x=1726487480;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2DW9+4+5dkfE7I6UYkBdI6PKZkJx34MPOXwo0S6pwi4=;
-        b=YJ19cSrhCqk2BU3ZC5d99Rb+O32VhYT1UEmUG7b2Ay/wZSZJb8LNlgd/EGeL0+u2AW
-         gu1/9W3lXDPUvEKqKuoxr8WEFRR+r2g8s8eoZOGc6ylsRm39Y/DvBcAxOysleHJWdSea
-         0McObs9yhFNOUpKSw9ZMsXY/L/X15ATvs5vClo67hhfab2WewoMjL96pdq/XKR6FOmL8
-         nTngQn2a0mUpE8M20Ql+Ps8LNpq3Hoffc7jIdZbS9M4dyZG4mprQiA8+x8cBRu/cY3f3
-         EIY2kUxXIEaZYtGrwWrsv9FVAZiM15snjYoIgvul7s+ZQOcD1QXR+sdVnTXCuAZaE91H
-         /Ibw==
-X-Forwarded-Encrypted: i=1; AJvYcCWKm5zeOdwwAWSs7Joh4zX0m3RoV/wupK750tYUs88qnk3305FTpWhoy+b9mR+fjsGiRP4F5j9KIZE4e8w4@vger.kernel.org
-X-Gm-Message-State: AOJu0YwFdt8lUy0ByOQ87IEWrE4s4qyzFWE8ztUnDMhGI2IlKHLV+PCR
-	80whzF4Vm2Y2Y8HvuXKT62q63YhgAXPYT94w1cezVsL/ADSln0Urj0DMReLeCzAej61XOShYkAq
-	4AremxvjggT5Y5iU+8m/ubmqWMTtcvn2xVpspVq56UIeSkleh
-X-Google-Smtp-Source: AGHT+IEMTaW+rWSxBziYnJcShG+IJ94pyw+lUFZaTrGyjB3BTvwxhatfwf6+foBYAXccdSu//5Pp4I9bSN82zQLDkXE=
-X-Received: by 2002:a05:690c:3384:b0:6d5:6718:e5d2 with SMTP id
- 00721157ae682-6db25f48dc7mr130087127b3.3.1725882680477; Mon, 09 Sep 2024
- 04:51:20 -0700 (PDT)
+	s=arc-20240116; t=1725882711; c=relaxed/simple;
+	bh=YQ5U22xEPnW/cEnU9qruz0AbAVoyZQZomw6i6ZtcwkE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=UxQiEK3iEXfZZS/VOPTpJFYjtqGi+1b1Im19aUdFy3iuB0HE4pBPbselX4gE9FuJZtIKw00wklUy/VyP4RIhXj61isK8mMSdDPOXjT9YLfsQwyHLl2L9TMMY1nScgV7mUXML3TQ/5EC7jGKXRbsozNTLHJDGO6Z5JoT2S9FRbuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oVILtiVM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4899Jtrk030397;
+	Mon, 9 Sep 2024 11:51:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qhqiYbD/RYVLfSTUpXhfOEdedQo4iJVxk+QeQnDjeRw=; b=oVILtiVM5q44EiC7
+	rQUFJSeQI1uqleM9RS6wqUUlme0FIhUNjTQpupKiQ2zp+9qcnU6/ygx9dhp3DLTU
+	C/ktw/zEaY677iWAGt2ebHT3+EZQo10tO+FB+C6iHbKUWB/0SDm/K8a26BXmdIoj
+	pFff29/LpCGiH6yAAMrmvudBwO94vxis5Jir6GMIl8nd7La9yKJRvkY0X7gd+i0l
+	AX+55DLvMrjwYtTxkp5bOEXXPr3hecllnHxYBLafuXq9ukOUjzHBQcLkrhsVkYEs
+	6J7RESZeMV4HLNucvT3R0WQGTm1bmJ+XtBGrKef7B230/nnJm0Z9NyBowkb8m/b2
+	h7AgMg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy72tp88-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 09 Sep 2024 11:51:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 489BpVKB013539
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 9 Sep 2024 11:51:31 GMT
+Received: from [10.216.25.122] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Sep 2024
+ 04:51:25 -0700
+Message-ID: <6bdfb6fc-f375-bf03-7d39-8711c0bee40e@quicinc.com>
+Date: Mon, 9 Sep 2024 17:21:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240909073141.951494-1-ruanjinjie@huawei.com>
- <20240909073141.951494-4-ruanjinjie@huawei.com> <45m7oruivszoiesijmdr66oeatvr3ff6ores4lx4kbus2ti552@5sobv4hk7laa>
- <5487bcb2-7792-e3b3-5972-d224df61b9da@huawei.com>
-In-Reply-To: <5487bcb2-7792-e3b3-5972-d224df61b9da@huawei.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 9 Sep 2024 14:51:09 +0300
-Message-ID: <CAA8EJpp2H4uGieVXj8varne2H3sAJhponApj0-baM1rcaOTCBA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] spi: geni-qcom: Use devm functions to simplify code
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: broonie@kernel.org, akashast@codeaurora.org, dianders@chromium.org, 
-	vkoul@kernel.org, linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Mon, 9 Sept 2024 at 14:46, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
->
->
->
-> On 2024/9/9 17:49, Dmitry Baryshkov wrote:
-> > On Mon, Sep 09, 2024 at 03:31:41PM GMT, Jinjie Ruan wrote:
-> >> Use devm_pm_runtime_enable(), devm_request_irq() and
-> >> devm_spi_register_controller() to simplify code.
-> >>
-> >> And also register a callback spi_geni_release_dma_chan() with
-> >> devm_add_action_or_reset(), to release dma channel in both error
-> >> and device detach path, which can make sure the release sequence is
-> >> consistent with the original one.
-> >>
-> >> 1. Unregister spi controller.
-> >> 2. Free the IRQ.
-> >> 3. Free DMA chans
-> >> 4. Disable runtime PM.
-> >>
-> >> So the remove function can also be removed.
-> >>
-> >> Suggested-by: Doug Anderson <dianders@chromium.org>
-> >> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> >> ---
-> >> v3:
-> >> - Land the rest of the cleanups afterwards.
-> >> ---
-> >>  drivers/spi/spi-geni-qcom.c | 37 +++++++++++++------------------------
-> >>  1 file changed, 13 insertions(+), 24 deletions(-)
-> >>
-> >> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> >> index 6f4057330444..8b0039d14605 100644
-> >> --- a/drivers/spi/spi-geni-qcom.c
-> >> +++ b/drivers/spi/spi-geni-qcom.c
-> >> @@ -632,8 +632,10 @@ static int spi_geni_grab_gpi_chan(struct spi_geni_master *mas)
-> >>      return ret;
-> >>  }
-> >>
-> >> -static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
-> >> +static void spi_geni_release_dma_chan(void *data)
-> >>  {
-> >> +    struct spi_geni_master *mas = data;
-> >> +
-> >>      if (mas->rx) {
-> >>              dma_release_channel(mas->rx);
-> >>              mas->rx = NULL;
-> >> @@ -1132,6 +1134,12 @@ static int spi_geni_probe(struct platform_device *pdev)
-> >>      if (ret)
-> >>              return ret;
-> >>
-> >> +    ret = devm_add_action_or_reset(dev, spi_geni_release_dma_chan, spi);
-> >
-> > This should be mas, not spi.
-> >
-> > Doesn't looks like this was tested. Please correct me if I'm wrong.
->
-> Yes, you are right, the data should be struct spi_geni_master, which is
-> mas. Sorry, only compile passed.
-
-Please perform a runtime test or mention it in the cover letter that
-it was only compile-tested.
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2 3/8] arm64: dts: qcom: qcs6490-rb3gen2: Add node for
+ qps615
+To: Caleb Connolly <caleb.connolly@linaro.org>,
+        Lorenzo Pieralisi
+	<lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?=
+	<kw@linux.com>,
+        Rob Herring <robh@kernel.org>, Bjorn Helgaas
+	<bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <cros-qcom-dts-watchers@chromium.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, Jingoo Han <jingoohan1@gmail.com>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>
+CC: <andersson@kernel.org>, <quic_vbadigan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Bartosz
+ Golaszewski" <bartosz.golaszewski@linaro.org>
+References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
+ <20240803-qps615-v2-3-9560b7c71369@quicinc.com>
+ <1932646a-b138-48f3-99bc-17354a773586@linaro.org>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <1932646a-b138-48f3-99bc-17354a773586@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ZNN7Rvbh86t0p1FtahQD6R7IwOYx3u18
+X-Proofpoint-GUID: ZNN7Rvbh86t0p1FtahQD6R7IwOYx3u18
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1011 bulkscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409090094
 
 
 
--- 
-With best wishes
-Dmitry
+On 9/9/2024 4:59 PM, Caleb Connolly wrote:
+> Hi Krishna,
+> 
+> On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
+>> Add QPS615 PCIe switch node which has 3 downstream ports and in one
+>> downstream port two embedded ethernet devices are present.
+>>
+>> Power to the QPS615 is supplied through two LDO regulators, controlled
+>> by two GPIOs, these are added as fixed regulators.
+>>
+>> Add i2c device node which is used to configure the switch.
+>>
+>> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 121 +++++++++++++++++++++++++++
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi         |   2 +-
+>>   2 files changed, 122 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> index 0d45662b8028..59d209768636 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+>> @@ -202,6 +202,30 @@ vph_pwr: vph-pwr-regulator {
+>>   		regulator-min-microvolt = <3700000>;
+>>   		regulator-max-microvolt = <3700000>;
+>>   	};
+>> +
+>> +	vdd_ntn_0p9: regulator-vdd-ntn-0p9 {
+>> +		compatible = "regulator-fixed";
+>> +		regulator-name = "VDD_NTN_0P9";
+>> +		gpio = <&pm8350c_gpios 2 GPIO_ACTIVE_HIGH>;
+>> +		regulator-min-microvolt = <899400>;
+>> +		regulator-max-microvolt = <899400>;
+>> +		enable-active-high;
+>> +		pinctrl-0 = <&ntn_0p9_en>;
+>> +		pinctrl-names = "default";
+>> +		regulator-enable-ramp-delay = <4300>;
+>> +	};
+>> +
+>> +	vdd_ntn_1p8: regulator-vdd-ntn-1p8 {
+>> +		compatible = "regulator-fixed";
+>> +		regulator-name = "VDD_NTN_1P8";
+>> +		gpio = <&pm8350c_gpios 3 GPIO_ACTIVE_HIGH>;
+>> +		regulator-min-microvolt = <1800000>;
+>> +		regulator-max-microvolt = <1800000>;
+>> +		enable-active-high;
+>> +		pinctrl-0 = <&ntn_1p8_en>;
+>> +		pinctrl-names = "default";
+>> +		regulator-enable-ramp-delay = <10000>;
+>> +	};
+>>   };
+>>   
+>>   &apps_rsc {
+>> @@ -595,6 +619,12 @@ lt9611_out: endpoint {
+>>   			};
+>>   		};
+>>   	};
+>> +
+>> +	qps615_switch: pcie-switch@77 {
+>> +		compatible = "qcom,qps615";
+>> +		reg = <0x77>;
+>> +		status = "okay";
+>> +	};
+>>   };
+>>   
+>>   &i2c1 {
+>> @@ -688,6 +718,75 @@ &pmk8350_rtc {
+>>   	status = "okay";
+>>   };
+>>   
+>> +&pcie1 {
+>> +	status = "okay";
+>> +};
+> 
+> Isn't it also necessary to configure the phy as well? It's also default
+> disabled and has two regulators.
+> 
+There is one more patch series which does this.
+
+https://lore.kernel.org/linux-arm-msm/20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com/T/
+
+sorry for this I should have included this in cover letter.
+
+I will squash those changes to this series or will update the cover
+letter.
+- Krishna Chaitanya.
+
+> Kind regards >> +
+>> +&pcieport {
+>> +	pcie@0,0 {
+>> +		compatible = "pci1179,0623";
+>> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+>> +		#address-cells = <3>;
+>> +		#size-cells = <2>;
+>> +
+>> +		device_type = "pci";
+>> +		ranges;
+>> +
+>> +		vddc-supply = <&vdd_ntn_0p9>;
+>> +		vdd18-supply = <&vdd_ntn_1p8>;
+>> +		vdd09-supply = <&vdd_ntn_0p9>;
+>> +		vddio1-supply = <&vdd_ntn_1p8>;
+>> +		vddio2-supply = <&vdd_ntn_1p8>;
+>> +		vddio18-supply = <&vdd_ntn_1p8>;
+>> +
+>> +		qcom,qps615-controller = <&qps615_switch>;
+>> +
+>> +		reset-gpios = <&pm8350c_gpios 1 GPIO_ACTIVE_LOW>;
+>> +
+>> +		pcie@1,0 {
+>> +			reg = <0x20800 0x0 0x0 0x0 0x0>;
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +
+>> +			device_type = "pci";
+>> +			ranges;
+>> +		};
+>> +
+>> +		pcie@2,0 {
+>> +			reg = <0x21000 0x0 0x0 0x0 0x0>;
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +
+>> +			device_type = "pci";
+>> +			ranges;
+>> +		};
+>> +
+>> +		pcie@3,0 {
+>> +			reg = <0x21800 0x0 0x0 0x0 0x0>;
+>> +			#address-cells = <3>;
+>> +			#size-cells = <2>;
+>> +			device_type = "pci";
+>> +			ranges;
+>> +
+>> +			pcie@0,0 {
+>> +				reg = <0x50000 0x0 0x0 0x0 0x0>;
+>> +				#address-cells = <3>;
+>> +				#size-cells = <2>;
+>> +				device_type = "pci";
+>> +				ranges;
+>> +			};
+>> +
+>> +			pcie@0,1 {
+>> +				reg = <0x50100 0x0 0x0 0x0 0x0>;
+>> +				#address-cells = <3>;
+>> +				#size-cells = <2>;
+>> +				device_type = "pci";
+>> +				ranges;
+>> +			};
+>> +		};
+>> +	};
+>> +};
+>> +
+>>   &qupv3_id_0 {
+>>   	status = "okay";
+>>   };
+>> @@ -812,6 +911,28 @@ lt9611_rst_pin: lt9611-rst-state {
+>>   	};
+>>   };
+>>   
+>> +&pm8350c_gpios {
+>> +	ntn_0p9_en: ntn-0p9-en-state {
+>> +		pins = "gpio2";
+>> +		function = "normal";
+>> +
+>> +		bias-disable;
+>> +		input-disable;
+>> +		output-enable;
+>> +		power-source = <0>;
+>> +	};
+>> +
+>> +	ntn_1p8_en: ntn-1p8-en-state {
+>> +		pins = "gpio3";
+>> +		function = "normal";
+>> +
+>> +		bias-disable;
+>> +		input-disable;
+>> +		output-enable;
+>> +		power-source = <0>;
+>> +	};
+>> +};
+>> +
+>>   &tlmm {
+>>   	lt9611_irq_pin: lt9611-irq-state {
+>>   		pins = "gpio24";
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 3d8410683402..3840f056b7f2 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -2279,7 +2279,7 @@ pcie1: pcie@1c08000 {
+>>   
+>>   			status = "disabled";
+>>   
+>> -			pcie@0 {
+>> +			pcieport: pcie@0 {
+>>   				device_type = "pci";
+>>   				reg = <0x0 0x0 0x0 0x0 0x0>;
+>>   				bus-range = <0x01 0xff>;
+>>
+> 
 
