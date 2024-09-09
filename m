@@ -1,136 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-31304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92BF19718C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:56:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57D779718D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:01:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 32C761F230A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:56:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D29E1F23BEB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 12:01:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C20AC1B5ED9;
-	Mon,  9 Sep 2024 11:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bhHzZQ7n"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9672217798F;
+	Mon,  9 Sep 2024 12:01:10 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga04-in.huawei.com (szxga04-in.huawei.com [45.249.212.190])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD2E13BAF1;
-	Mon,  9 Sep 2024 11:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066FA1531E0;
+	Mon,  9 Sep 2024 12:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.190
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725882983; cv=none; b=dbPZW1xjenvgofKT8nolDMas8Ipyv0JevhQmo/y8ojnnLeRRdAXzCwRmO4qPOsEx3S348rGodbb+aYlz1SfdJVxa9++ZAlQIw7+VrHi1YkFo4rIxdlDEMOKPLfjcnPbEn7lLrMAFut0UrD4/KxitYz5u0xrRGPlvJEJdTio0OCw=
+	t=1725883270; cv=none; b=m2yhDV+3qUuMTbISFi/iKr8+jTnEwo82lhLRE25Tu57A533llSQ5xm6yAdZeYbQyvYPXWTfBqmnZabWGnpGp/mILfCElkYaPoeYq3exE5yx9niV3hkMM7Px8VKt8qldqJmuEPGoRXcG/CUhAWfk98QWLXNpBx9BHKrRXoAQpeLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725882983; c=relaxed/simple;
-	bh=/YtRu2MORuw03OqntPGRgVqgK255CA2LiMaiIADwXrk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UA1F3fDpM6mGTSYs8+SJjrlTzro/O3if+mFyFnEorj2uFOZdxkvT+l1Hdbbdrjq9Ztl1ShRFavsWk363T8B0+/DV670wZq2A3X7lJ1BkYa9L5dyUCKaWMd2Ton37vBGlY7f+zDgy2pUYb0Ala2CenUng2cIxV4erMNUnNsNf6io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bhHzZQ7n; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAF93C4CEC5;
-	Mon,  9 Sep 2024 11:56:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725882983;
-	bh=/YtRu2MORuw03OqntPGRgVqgK255CA2LiMaiIADwXrk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=bhHzZQ7n7PMR2BNbizOYSxL+P4Zy5IkWjJpzjaiNOE1d+Id4GRkgYxIX2MGfzgt6g
-	 48a53xifmqGRExB/4QwUBAy86hBjnHe+VL9RW6fLIJjIPGM5doT7wWYsq/aTQn485F
-	 007XJGBf3SsAHsDESrFeo2UjYBX+vXAkocffLiKGQLcZTMiWItkSLVVpPAXUnlwka7
-	 s+ET6l0Ls0+jcDCsd9txQ5ii3Qir13AWZ1183IQXF9Dz1U2ySN+zRNIHd8SV+a8vYJ
-	 sV3rj/7D0++1O4uBmTRetLtwCfBOlWys5ApTCypm/5Wgve6bSNXEUb3QEsWA9Cfs6J
-	 xVefcKeJVyzzQ==
-Message-ID: <85cb5092-fbc9-4fa7-99ca-e9b26c7a61b6@kernel.org>
-Date: Mon, 9 Sep 2024 13:56:11 +0200
+	s=arc-20240116; t=1725883270; c=relaxed/simple;
+	bh=QEkWlOa9N1d1NpCDAXD30Izdi7PSKFUJNb7W0U0Ec7U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YOFnBssvn4wYmZD+8fQbdMllYljox2jJLj4zP41ALMC/8yFk8I+TeFES+GKO/17jIXWDylwdJN7DldzGh2KCjYTtF7GY6SSWAAkbzl8mx4Fu/JgkhmUBVOnJHbs0CsBAgNP5wY8SNJSLLao/oPc8M8vBSp2w/KPPB5bXunzglPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.190
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+	by szxga04-in.huawei.com (SkyGuard) with ESMTP id 4X2QQF12l5z2Dbw1;
+	Mon,  9 Sep 2024 20:00:37 +0800 (CST)
+Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
+	by mail.maildlp.com (Postfix) with ESMTPS id EF3DD18002B;
+	Mon,  9 Sep 2024 20:01:03 +0800 (CST)
+Received: from [10.67.109.254] (10.67.109.254) by
+ kwepemh500013.china.huawei.com (7.202.181.146) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Mon, 9 Sep 2024 20:01:03 +0800
+Message-ID: <57b11c6e-8b19-b722-f842-b99aed9fdd42@huawei.com>
+Date: Mon, 9 Sep 2024 20:01:02 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 16/17] ufs: host: add a callback for deriving software
- secrets and use it
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Jens Axboe <axboe@kernel.dk>,
- Jonathan Corbet <corbet@lwn.net>, Alasdair Kergon <agk@redhat.com>,
- Mike Snitzer <snitzer@kernel.org>, Mikulas Patocka <mpatocka@redhat.com>,
- Adrian Hunter <adrian.hunter@intel.com>,
- Asutosh Das <quic_asutoshd@quicinc.com>,
- Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson
- <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>,
- Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
- "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
- "Martin K. Petersen" <martin.petersen@oracle.com>,
- Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>,
- Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
- Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Gaurav Kashyap <quic_gaurkash@quicinc.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-block@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-kernel@vger.kernel.org, dm-devel@lists.linux.dev,
- linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org,
- linux-fscrypt@vger.kernel.org, linux-fsdevel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
- <20240906-wrapped-keys-v6-16-d59e61bc0cb4@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH v3 3/3] spi: geni-qcom: Use devm functions to simplify
+ code
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20240906-wrapped-keys-v6-16-d59e61bc0cb4@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <broonie@kernel.org>, <akashast@codeaurora.org>, <dianders@chromium.org>,
+	<vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20240909073141.951494-1-ruanjinjie@huawei.com>
+ <20240909073141.951494-4-ruanjinjie@huawei.com>
+ <45m7oruivszoiesijmdr66oeatvr3ff6ores4lx4kbus2ti552@5sobv4hk7laa>
+ <5487bcb2-7792-e3b3-5972-d224df61b9da@huawei.com>
+ <CAA8EJpp2H4uGieVXj8varne2H3sAJhponApj0-baM1rcaOTCBA@mail.gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+In-Reply-To: <CAA8EJpp2H4uGieVXj8varne2H3sAJhponApj0-baM1rcaOTCBA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
+ kwepemh500013.china.huawei.com (7.202.181.146)
 
-On 6.09.2024 8:07 PM, Bartosz Golaszewski wrote:
-> From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+
+
+On 2024/9/9 19:51, Dmitry Baryshkov wrote:
+> On Mon, 9 Sept 2024 at 14:46, Jinjie Ruan <ruanjinjie@huawei.com> wrote:
+>>
+>>
+>>
+>> On 2024/9/9 17:49, Dmitry Baryshkov wrote:
+>>> On Mon, Sep 09, 2024 at 03:31:41PM GMT, Jinjie Ruan wrote:
+>>>> Use devm_pm_runtime_enable(), devm_request_irq() and
+>>>> devm_spi_register_controller() to simplify code.
+>>>>
+>>>> And also register a callback spi_geni_release_dma_chan() with
+>>>> devm_add_action_or_reset(), to release dma channel in both error
+>>>> and device detach path, which can make sure the release sequence is
+>>>> consistent with the original one.
+>>>>
+>>>> 1. Unregister spi controller.
+>>>> 2. Free the IRQ.
+>>>> 3. Free DMA chans
+>>>> 4. Disable runtime PM.
+>>>>
+>>>> So the remove function can also be removed.
+>>>>
+>>>> Suggested-by: Doug Anderson <dianders@chromium.org>
+>>>> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+>>>> ---
+>>>> v3:
+>>>> - Land the rest of the cleanups afterwards.
+>>>> ---
+>>>>  drivers/spi/spi-geni-qcom.c | 37 +++++++++++++------------------------
+>>>>  1 file changed, 13 insertions(+), 24 deletions(-)
+>>>>
+>>>> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+>>>> index 6f4057330444..8b0039d14605 100644
+>>>> --- a/drivers/spi/spi-geni-qcom.c
+>>>> +++ b/drivers/spi/spi-geni-qcom.c
+>>>> @@ -632,8 +632,10 @@ static int spi_geni_grab_gpi_chan(struct spi_geni_master *mas)
+>>>>      return ret;
+>>>>  }
+>>>>
+>>>> -static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
+>>>> +static void spi_geni_release_dma_chan(void *data)
+>>>>  {
+>>>> +    struct spi_geni_master *mas = data;
+>>>> +
+>>>>      if (mas->rx) {
+>>>>              dma_release_channel(mas->rx);
+>>>>              mas->rx = NULL;
+>>>> @@ -1132,6 +1134,12 @@ static int spi_geni_probe(struct platform_device *pdev)
+>>>>      if (ret)
+>>>>              return ret;
+>>>>
+>>>> +    ret = devm_add_action_or_reset(dev, spi_geni_release_dma_chan, spi);
+>>>
+>>> This should be mas, not spi.
+>>>
+>>> Doesn't looks like this was tested. Please correct me if I'm wrong.
+>>
+>> Yes, you are right, the data should be struct spi_geni_master, which is
+>> mas. Sorry, only compile passed.
 > 
-> Add a new UFS core callback for deriving software secrets from hardware
-> wrapped keys and implement it in QCom UFS.
+> Please perform a runtime test or mention it in the cover letter that
+> it was only compile-tested.
+
+Thank you! I'll add this information next version.
+
 > 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
->  drivers/ufs/host/ufs-qcom.c | 15 +++++++++++++++
->  include/ufs/ufshcd.h        |  1 +
->  2 files changed, 16 insertions(+)
 > 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index 366fd62a951f..77fb5e66e4be 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -182,9 +182,23 @@ static int ufs_qcom_ice_program_key(struct ufs_hba *hba,
->  		return qcom_ice_evict_key(host->ice, slot);
->  }
->  
-> +/*
-> + * Derive a software secret from a hardware wrapped key. The key is unwrapped in
-> + * hardware from trustzone and a software key/secret is then derived from it.
-> + */
-> +static int ufs_qcom_ice_derive_sw_secret(struct ufs_hba *hba, const u8 wkey[],
-> +					 unsigned int wkey_size,
-> +					 u8 sw_secret[BLK_CRYPTO_SW_SECRET_SIZE])
-> +{
-> +	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
-> +
-> +	return qcom_ice_derive_sw_secret(host->ice, wkey, wkey_size, sw_secret);
-> +}
-
-There's platforms with multiple UFS hosts (e.g. 8280 has one with the
-intention to be used for an onboard flash and one for a UFS card (they're
-like microSD except they're UFS and not MMC).. We need to handle that
-somehow too.
-
-My uneducated guess would be that the encryption infra is there for the
-primary host only and that it would be the one assumed by SCM calls.
-
-I thiiiink it should be enough not to add a `qcom,ice` property in the
-DT for the secondary slot, but please somebody else take another look
-here
-
-Konrad
+> 
 
