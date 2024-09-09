@@ -1,90 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-31314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91A14971A18
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:56:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70C72971A2A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:57:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 225ACB23AF0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 12:55:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E73DE1F23D43
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 12:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 128431B86CF;
-	Mon,  9 Sep 2024 12:55:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E5221B9B51;
+	Mon,  9 Sep 2024 12:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="E3MRwOE5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kQzRz1gJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 253F31B86DA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 12:54:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E2F1B9B41
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 12:57:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725886501; cv=none; b=OLo72maN7W3shXix4Po04vrZqveLoo0ZkdI/Es7F+umZfhbcQMjIpRHQUNXKS7Ve6dxmTPipngZISBVDPhmb4PxMoo3m2fvNZEjRnGqqsOvQ3otl9S1ruYmowq4RcIOJZWtN1h8adyM3alJSeO8EhV9/tKthfpurhM1tJKAbpmU=
+	t=1725886633; cv=none; b=eOtYHrkrd8zXZLTeBCjlmbBIhQfcWIi+63b3TzYiIHMVsgiVLIvCrP6EEKQRmuQiQLWQF2vEhwUTtCXzJdrBQAnom3xpheTbH41iTYD3+vxARoNgHY7fsHluqKwOVSld2qJXaiQ3eBhCXopF+lpw85UwLuFnlAscpsCKw5G8/kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725886501; c=relaxed/simple;
-	bh=UDGhkNI0M7kuGd7p3qibJwxvklGXI2aQI7UyDV0e0gU=;
+	s=arc-20240116; t=1725886633; c=relaxed/simple;
+	bh=VJrDj21vOIS62JlQsT0v0+UaclTuE4zpD/NzqT9l+xA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ir3CdBf/l00WrNh1KeG2IrT5czYpyWf90888dH5wP5RYjaiZMxnzpKZluqtnOJvGahMw70kXCEY5ZO45Hx+yQk2BQS6FHrw1tb5eAYONXMQ63mTf4uo6AwUl9EXRqIJQdI66jOD7Q+Rx0CwW+JcSnqKiRMyEzaSI+mLD/kmSAnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=E3MRwOE5; arc=none smtp.client-ip=209.85.167.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=YrLBxf42Y2IZ2VGestG+v1orlfFOymYKmVSqDS6y+SR+XIs0EpjF+ZzS6SH8xQlgAd+OLIU4VT/75xJEPK+yHCwwm9J+TKh/KDXCzkpMfyVD55cDFRvZqeU4UL5S8Wy52odrYyC86SZynDhgEnOD1uJI374D7A9/1HJTiGBAXsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kQzRz1gJ; arc=none smtp.client-ip=209.85.167.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-53567b4c3f4so4335680e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 05:54:58 -0700 (PDT)
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso7947109e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 05:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725886497; x=1726491297; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725886629; x=1726491429; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aoQfWC0WIgkU+JAyFpv435nDlVdA+1zeJRTTK20PmCM=;
-        b=E3MRwOE5lcx68jGoZ/xmXUezUz3PFrVOF0IRXawCioRQ8fJf9i1ZBDM6lZVE9dUhJ9
-         TaSQZWEBYH24ppcdkavClIn9oUAukJxWJ0QhP4MT+Xp20Mj5GrEMgL5R8oJd1paSSjbx
-         yB50yDaGwCEnDSJd0Yam03jszjYZ0CK/8gLOjIwYOBOIZBV2BU+tx6C71Y+jqTgTl+pe
-         ueh5NyqOolFEXMG+vJA5n2Fu4mOpPZ25mSAugV84N3RtIM24df+eZ0+rjLaba4ZMRI/M
-         D65nCleFkhjdUJcdDYpAakDoZBQAXvjWJSwrz8C/HNz5qWK1H6fmExBBMclV9vZxUjTH
-         8eWA==
+        bh=NdmWO/y6gEncx0yc/KC1ZIgIx6TLjxCgyEgLMmNM1FU=;
+        b=kQzRz1gJtuaDoUuZCDWXVo1RLgWTeZPeLr841Le/PBOGCvzGNnUNcL51dQs5zShCP4
+         YyNIACLuNg0Rie2LLMecj474nY+h0+Bp5ay/08FlQQ/7NYkKVQWEiQtUBl/uk0025Bjo
+         ulj0KlkQduawJS1CEFlHTw9a0ytB95jF+kTYwFrThda2t75M9g4PMM/A0xLAkUexu4uL
+         4x4Zyi7PjMH+eGHo3BSw+FTBP0bDrB/7hMisVIRD3hu3Tfizye7kD8D56+LnfG3xUHdm
+         hli+QOqde2W42z86xhcz7tvDOqqaeT7pdWAeDXL5Z5PVqeeoBPuqNIwKIH+J+C1LdvWv
+         1i1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725886497; x=1726491297;
+        d=1e100.net; s=20230601; t=1725886629; x=1726491429;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=aoQfWC0WIgkU+JAyFpv435nDlVdA+1zeJRTTK20PmCM=;
-        b=sQDK8SJ7kRvpd3d6ozxbCLK2yb6WVwchhEnWBa/ekB4hBzryMitGxLhVSyepOHyPC1
-         44ZBl/0fV5I5TW1+AGF1ywJ93SjnCgv2xB92ucHJrB8CVGvK0S1fPc/mIcrfmQ3YpxMB
-         0OC3S4iIKaww7Y08hT8cgQKE/BkF8qQCLVQz8qAn54wRidtRBXsa2hvH9XwqhZMRuQLF
-         0NE4tYMUiO7UgRfjNUyG2q2zUvW6IqyLqHOGcxHteRtrkbRob+nxglblkcPGeWMFkmHD
-         SMrQfqBHbl0/B4tNzKrwZAo5e3trI0iXoYWQjg2bMD9iwFMgZBZv+6plJvllcyOxbKLy
-         lnaw==
-X-Forwarded-Encrypted: i=1; AJvYcCXMq5+zJ4kFdYSPVF4+qu6zy8m4xa9dBEQWKQ+fu0yZIhlOYK9BRitZSFtod3P4IAnmXcl+eV2m6fzCpvIA@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxw3d49/g8S3JNNgfpASezHbVk42/W+ZmFvxfGNZpKlCyPd9FJE
-	UOrDJklMDFmJVE4+EbjA/WE0r8G3T6aw0CkZUaWGX/njZ03SezzmVdih37grUbI=
-X-Google-Smtp-Source: AGHT+IHY52MM53GPC09wbzWz1Cyp8hhoW/Xua4ApC2+jwFWkiSNQK0NA6BgYergsTF3VF6CAWDJ8WQ==
-X-Received: by 2002:a05:6512:1289:b0:52e:9fda:f18a with SMTP id 2adb3069b0e04-536587f5be1mr8339084e87.44.1725886496363;
-        Mon, 09 Sep 2024 05:54:56 -0700 (PDT)
+        bh=NdmWO/y6gEncx0yc/KC1ZIgIx6TLjxCgyEgLMmNM1FU=;
+        b=IYV4Xkpb35uUDjleQmSXBauaMO7u6JwQA69E/iCok2iENI7dl762gBfbtC4jPKt3gn
+         ngo0VhemtIFO4UY+9a08i1J3ojfrFrLxV7qcfOwwhWZELjqOSo2Im6xa41y1LqP1xPJA
+         56pNrDlOALsEH5Mw/5hET7hEQbSqRHpOaCmweCHMH1DUM4dYaGuEEhKYhc/m+bbAIMPa
+         zTS9exqTAtiGZuT3KOUy17TrJikl/F6Pblw1CnIpLgLLkzUD8UB/xK3Ni4d9V70Zh/sT
+         wFCDCd9X6FDj6BXPTz42pDABWllxcPZbXVz64IMXZGEBiLHZlNQZZsOI3XB9GFAhKRu5
+         vBTw==
+X-Forwarded-Encrypted: i=1; AJvYcCUH77WA8vJG7Y12jBaOq5vfo2gUbmjPDz5VM6t1l1DTLy+11qA++5Bubo7FlY7FeJfDIPWpq74NoU2aA4VI@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXt+0Vt1M0MICA+kOagWF8wZPE2l8tMrf3VdZNTnU9QIjl5szk
+	qm1ExgMmA8qCpbpH83F7TLovq1GhhCPjAXw4H6SVnsBmOMtRlU6tANAioOASDn8=
+X-Google-Smtp-Source: AGHT+IGg6lD6GrF9orDPwQmF2EnUQWjg+tjIcVSrbmI3BFu/hSrE5+5/oRxQV8ihfoTz1okFEZmoYw==
+X-Received: by 2002:a05:6512:2313:b0:533:40dc:8248 with SMTP id 2adb3069b0e04-536587a5453mr8033269e87.11.1725886628058;
+        Mon, 09 Sep 2024 05:57:08 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f90d8c1sm760815e87.292.2024.09.09.05.54.55
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f90d44asm749391e87.247.2024.09.09.05.57.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 05:54:55 -0700 (PDT)
-Date: Mon, 9 Sep 2024 15:54:54 +0300
+        Mon, 09 Sep 2024 05:57:07 -0700 (PDT)
+Date: Mon, 9 Sep 2024 15:57:06 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Caleb Connolly <caleb.connolly@linaro.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, cros-qcom-dts-watchers@chromium.org, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Jingoo Han <jingoohan1@gmail.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, andersson@kernel.org, quic_vbadigan@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 3/8] arm64: dts: qcom: qcs6490-rb3gen2: Add node for
- qps615
-Message-ID: <pb3imt73gsa5gecqeazwltwnuiq25jxhppl4wjhmd3dghhtvgz@wovxp2a7t54u>
-References: <20240803-qps615-v2-0-9560b7c71369@quicinc.com>
- <20240803-qps615-v2-3-9560b7c71369@quicinc.com>
- <1932646a-b138-48f3-99bc-17354a773586@linaro.org>
- <6bdfb6fc-f375-bf03-7d39-8711c0bee40e@quicinc.com>
+To: Kalle Valo <kvalo@kernel.org>
+Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>, ath11k@lists.infradead.org, 
+	Dmitry Baryshkov <dbaryshkov@gmail.com>, linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
+	agross@kernel.org, andersson@kernel.org, linux-kernel@vger.kernel.org, 
+	konrad.dybcio@linaro.org, mchehab@kernel.org, quic_vgarodia@quicinc.com, 
+	stanimir.k.varbanov@gmail.com
+Subject: Re: [PATCH] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
+Message-ID: <5mz7b4tou6iohqkdt5igt4cajt4hzvibvphcyo7bzk3uf7jg45@unijiusqdpga>
+References: <20240905064817.3885953-1-quic_miaoqing@quicinc.com>
+ <d6mt6i4a6xa3juvn4gzytuhsot2kx7dn4wmm3kmgwywfj2hcau@leecyxx36wql>
+ <87a1a50f-f485-4a4f-91fc-34fa19312519@quicinc.com>
+ <6to5p2dgsu6pvebkmkliojv5kfhnairigd46tmbraimxij7ddu@h6ziv7uwjeeq>
+ <871q1tgj1f.fsf@kernel.org>
+ <CAA8EJpp9=tm1WAEc22-DZtTZsErqAiZM-0Cu-kc18E92frdYYA@mail.gmail.com>
+ <87wmjlf1vf.fsf@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,102 +91,110 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6bdfb6fc-f375-bf03-7d39-8711c0bee40e@quicinc.com>
+In-Reply-To: <87wmjlf1vf.fsf@kernel.org>
 
-On Mon, Sep 09, 2024 at 05:21:22PM GMT, Krishna Chaitanya Chundru wrote:
+On Mon, Sep 09, 2024 at 03:27:48PM GMT, Kalle Valo wrote:
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 > 
+> > On Mon, 9 Sept 2024 at 14:31, Kalle Valo <kvalo@kernel.org> wrote:
+> >
+> >>
+> >> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+> >>
+> >> > On Fri, Sep 06, 2024 at 08:19:28AM GMT, Miaoqing Pan wrote:
+> >> >
+> >> >>
+> >> >>
+> >> >> On 9/5/2024 8:49 PM, Dmitry Baryshkov wrote:
+> >> >> > On Thu, Sep 05, 2024 at 02:48:17PM GMT, Miaoqing Pan wrote:
+> >> >> > > Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
+> >> >> > > board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+> >> >> > >
+> >> >> > > Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+> >> >> > > ---
+> >> >> > >   arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 119 +++++++++++++++++++++
+> >> >> > >   arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
+> >> >> > >   2 files changed, 120 insertions(+), 1 deletion(-)
+> >> >> > >
+> >> >> > > @@ -837,3 +939,20 @@ &usb_2_hsphy {
+> >> >> > >   &xo_board_clk {
+> >> >> > >          clock-frequency = <38400000>;
+> >> >> > >   };
+> >> >> > > +
+> >> >> > > +&pcieport0 {
+> >> >> > > +        wifi@0 {
+> >> >> > > +                compatible = "pci17cb,1101";
+> >> >> > > +                reg = <0x10000 0x0 0x0 0x0 0x0>;
+> >> >> > > +
+> >> >> > > +                vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> >> >> > > +                vddaon-supply = <&vreg_pmu_aon_0p59>;
+> >> >> > > +                vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> >> >> > > +                vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> >> >> > > +                vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+> >> >> > > +                vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+> >> >> > > +                vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+> >> >> > > +                vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+> >> >> > > +                vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+> >> >> >
+> >> >> > Please add
+> >> >> >
+> >> >> > qcom,ath11k-calibration-variant = "name";
+> >> >>
+> >> >> No need, here the WiFi node is for 'drivers/pci/pwrctl', not ath11k driver.
+> >> >
+> >> > NAK, nodes describe hardware, not drivers. And we have had enough issues
+> >> > with the WCN wifi having collisions on the board-id / chip-id / etc.
+> >> >
+> >> > Maybe we should make calibration-data required for the DT-based systems?
+> >> > Kalle, WDYT?
+> >>
+> >> I don't know exactly what hardware you are referring so this is just a
+> >> quick and vague answer, take all this as grain of salt.
+> >>
+> >> I don't have any numbers but I'm assuming most of the
+> >> ath10k/ath11k/ath12k devices have the calibration data stored in OTP
+> >> inside the chip. There are also devices which store the calibration
+> >> outside the chip, for example in DT, but my understanding is that they
+> >> are a minority.
+> >
+> > Please excuse me, the comment was about the
+> > qcom,athNk-calibration-variant
 > 
-> On 9/9/2024 4:59 PM, Caleb Connolly wrote:
-> > Hi Krishna,
-> > 
-> > On 03/08/2024 05:22, Krishna chaitanya chundru wrote:
-> > > Add QPS615 PCIe switch node which has 3 downstream ports and in one
-> > > downstream port two embedded ethernet devices are present.
-> > > 
-> > > Power to the QPS615 is supplied through two LDO regulators, controlled
-> > > by two GPIOs, these are added as fixed regulators.
-> > > 
-> > > Add i2c device node which is used to configure the switch.
-> > > 
-> > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 121 +++++++++++++++++++++++++++
-> > >   arch/arm64/boot/dts/qcom/sc7280.dtsi         |   2 +-
-> > >   2 files changed, 122 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > index 0d45662b8028..59d209768636 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-> > > @@ -202,6 +202,30 @@ vph_pwr: vph-pwr-regulator {
-> > >   		regulator-min-microvolt = <3700000>;
-> > >   		regulator-max-microvolt = <3700000>;
-> > >   	};
-> > > +
-> > > +	vdd_ntn_0p9: regulator-vdd-ntn-0p9 {
-> > > +		compatible = "regulator-fixed";
-> > > +		regulator-name = "VDD_NTN_0P9";
-> > > +		gpio = <&pm8350c_gpios 2 GPIO_ACTIVE_HIGH>;
-> > > +		regulator-min-microvolt = <899400>;
-> > > +		regulator-max-microvolt = <899400>;
-> > > +		enable-active-high;
-> > > +		pinctrl-0 = <&ntn_0p9_en>;
-> > > +		pinctrl-names = "default";
-> > > +		regulator-enable-ramp-delay = <4300>;
-> > > +	};
-> > > +
-> > > +	vdd_ntn_1p8: regulator-vdd-ntn-1p8 {
-> > > +		compatible = "regulator-fixed";
-> > > +		regulator-name = "VDD_NTN_1P8";
-> > > +		gpio = <&pm8350c_gpios 3 GPIO_ACTIVE_HIGH>;
-> > > +		regulator-min-microvolt = <1800000>;
-> > > +		regulator-max-microvolt = <1800000>;
-> > > +		enable-active-high;
-> > > +		pinctrl-0 = <&ntn_1p8_en>;
-> > > +		pinctrl-names = "default";
-> > > +		regulator-enable-ramp-delay = <10000>;
-> > > +	};
-> > >   };
-> > >   &apps_rsc {
-> > > @@ -595,6 +619,12 @@ lt9611_out: endpoint {
-> > >   			};
-> > >   		};
-> > >   	};
-> > > +
-> > > +	qps615_switch: pcie-switch@77 {
-> > > +		compatible = "qcom,qps615";
-> > > +		reg = <0x77>;
-> > > +		status = "okay";
-> > > +	};
-> > >   };
-> > >   &i2c1 {
-> > > @@ -688,6 +718,75 @@ &pmk8350_rtc {
-> > >   	status = "okay";
-> > >   };
-> > > +&pcie1 {
-> > > +	status = "okay";
-> > > +};
-> > 
-> > Isn't it also necessary to configure the phy as well? It's also default
-> > disabled and has two regulators.
-> > 
-> There is one more patch series which does this.
+> Ah :) In case you were wondering, I was talking above about
+> qcom,ath10k-calibration-data property which is the full calibration
+> data, board files are not used at all in that case. So please ignore all
+> that I said.
 > 
-> https://lore.kernel.org/linux-arm-msm/20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com/T/
+> > the property used to identify the BDF within board-2.bin. Currently
+> > it is optional, which leads to developers omitting it. I think it's
+> > worth making it a required property for new DT devices, making sure
+> > that we don't have an issue with the plenty of boards programmed to
+> > use 0xff as the board_id. Or just using the same ID, but different BDF
+> > files.
 > 
-> sorry for this I should have included this in cover letter.
+> This is also a quick answer, the merge window is getting close and we
+> are finalising the ath12k MLO support so not much free time right now.
 > 
-> I will squash those changes to this series or will update the cover
-> letter.
+> Some chipsets do provide unique information for the ath10k/ath11k/ath12k
+> driver to choose the correct board file, but I guess they are mostly
+> mobile chipsets. Though not even all mobile chipsets provide that, as
+> you are painfully aware. For AP chipsets it seems to be a rule that they
+> don't provide unique information to choose the board file and a variant
+> field is always needed. So I think there is a point in your proposal.
 
-It was sent in February, you have received feedback and several
-suggestions on how to change it. After that you've never reposted it.
+Ack, thanks :-)
 
-So, no, it is not possible to depend on that series or to include it in
-this patchset. Please follow the thread and rework that patch.
-
-> - Krishna Chaitanya.
 > 
+> Backward compatibility is important but I think we already handle that,
+> at least in ath11k, as it's first try with variant field and then
+> without variant. But this needs more investigation on both ath11k and
+> ath12k. I hope for ath10k we would not need to touch the driver anymore.
+> 
+> Can we revisit this in few weeks, after MLO is in better shape, and
+> maybe you could start a new thread?
+
+Sure. Let's agree that I'll send a patch after -rc1, if I don't forget
+about it.
 
 -- 
 With best wishes
