@@ -1,135 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-31246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DC559712ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:05:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB3FD97132C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:18:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 19902286BA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 09:05:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 374EF1F257CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 09:18:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4BB4E1B29D0;
-	Mon,  9 Sep 2024 09:05:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0FDE1B29B3;
+	Mon,  9 Sep 2024 09:18:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9nIJuEM"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Pq9sWnfm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C471B29CA
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 09:05:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C21F1B253B;
+	Mon,  9 Sep 2024 09:18:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725872737; cv=none; b=Jwg6zBOwvxjAE+4Z/xDa2XmZie+gLEwXNbBDSHHABu/eoeMxTa1kTYIETq5AU83oKuLefw2kO3qlCLUGXT75z4kgfDte/P6yHKnn2QsUT/ELwFpN8Jj+puDMC+nyxVfuTSn5ImgmmkgvvLSGoN7Idhwl5gFvUhobDXCbWPrWFzU=
+	t=1725873505; cv=none; b=txRuRz1JjJHMrZibdYP0JRbanT1fk7U3sCrT0EC05vl4ikXGTkbtapYLOJN2Yta04JPvaSCS/U11qtuOfeR2zYn+zOyc4/ljerD8VbVPfL9t+XNu2uOFPvteL7hqCYWhy/l/ZbwRcrrWIM9hbiPjS5LhIn16Lzl/FUMVKr6Ffl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725872737; c=relaxed/simple;
-	bh=BB3/H5ySqRyu6/77CobU02zoSYGnRaT8/VTpD8q1nkM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mJ0w/nrufCn79pxNwkxb1bJWfMgEV9nIaBZSsngWn5MtbiwjOIBkS9QFViZBk5l+gqphJvQKHpYPzQ0PNi0Ey3SobRNjj8/vm9+aGzxFjiBXM4SQXMjrsfRi9CYRAtTLjQiCSRXXsQkBpNtJRsud5qIrVMy8XAnaWpb9AYbgH5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S9nIJuEM; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6d9f0cf5ae3so46657257b3.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 02:05:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725872734; x=1726477534; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j2t8R4xfnSC9w9Cn08xrD7PLm+PTwWMORf6NFYOH81c=;
-        b=S9nIJuEMT4dVh0P4tUIwaCATrYrzoRETQ4/HdZTDqoglVs+gMU8OSXQPwyLkbDZ8BJ
-         DmTUaLUaLnqXeY5BeTOfLsgqymqUAKYot214KfI3u7Vluk8m8vdg4b2VY6IeiqmHS9vq
-         7g6ZxYs83syCWeaCd4phgJ/Wz/fwLrA5qioLfMdTDaZazgvkTHmuHzOjI6KiAoFlCGmC
-         wpl8zLxamWt00ctZCTSq1F2p3bNkf1NaRcU0zqfWXTGmNFh1ADHCk1vECGL0vBeL5x0c
-         wZetgMZpeRPTFq0Vhzk7k5ubgKOKWXTILIM5SMaqCu82fO0Ui4zLfel95u4k1AmEL0y1
-         SdzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725872734; x=1726477534;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j2t8R4xfnSC9w9Cn08xrD7PLm+PTwWMORf6NFYOH81c=;
-        b=NvaQPt1LOinu4s7NSgLhPn/+jJ1ezF52HtSqAybUBbVrmzXcxY99oj1vxWqfyAcMn8
-         qv8tCDO548zAYCNzSrPxVkLn/ES5siOnY/OFwOtdL0UUwgbHruYrcBdaYbrFV8wlsfzf
-         K8YuBb05LJAfpqdCMQUp56EPYqNS4wsGmFUV6IJduQo5+uIKCnAJTw8pXeXXyLolHC+2
-         HKmddos12jMU6F0GTuyOKq0QaPM1nczgytnK5GyEfDU9c4OeRDGypvq5Gm6gznB3BumM
-         zgVdH9Gg9bOnYCHpLXZ4Vh4FP6Oqu4wcMbKVn5IyoNiCdWToMGoNTXD5NrkUmRNG6JNy
-         lFYw==
-X-Forwarded-Encrypted: i=1; AJvYcCUQYhHISMUhAEY2pq8O0GRAOjb6G3JRAGYcoePPa2JmXXBugheojlyPxGJIPNRceHflfujewkE0uYKkEUUx@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzSzNoi/Rw4GPWJvv+fLzSv6xEPkLmL/GxfPDyaKs3tDpjuPWr
-	cXD9hHhj6hj6cqi/3q8gcsIMp9NK4GZJenmpYPpjrVA/c0a5q9Do6NxUWCdiv+hRLNpyBBN2maV
-	y1+8WfJeqS8F3jCwz+u3TXrZ3TJ+NREeA2VZ0aA==
-X-Google-Smtp-Source: AGHT+IG0rmU+PJ1sUsI9xaYzlyO0fuHlZgEClWUHvIo++2qG8J7dLhkan6PH1kB/kHCDTDrPTR3yTt3ldtPN97UpiV0=
-X-Received: by 2002:a05:690c:d1a:b0:6db:2753:cd9c with SMTP id
- 00721157ae682-6db45273f36mr119317517b3.44.1725872734530; Mon, 09 Sep 2024
- 02:05:34 -0700 (PDT)
+	s=arc-20240116; t=1725873505; c=relaxed/simple;
+	bh=bvfjSC5phQoKuCouGkBJTQXwhIYeaiEJfkF1aQTCjb4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=M1EXABbdXcPEHP7J2irOdf/43uqky70CmFAfOkhcK01mAqG5CqDOs+Pt/7F1mKxVbkeiDeoi0C8Cc7S2k9SUM5Zh7KIMtLZZr4D1pqAwykeHicbSfFTpeqdHWAHRH9GMdIgvgaqchMYrn2uJ/5iK3TafExb/3MEwiAcBjhO9fDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Pq9sWnfm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 488Nm1Oh021078;
+	Mon, 9 Sep 2024 09:18:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	L/IJrSHy7E4FooCJHAm7B+K/qE7+a22FjpwLDSTK1Oc=; b=Pq9sWnfmUITZXqz3
+	Ye4QsQ+bm4x4i+5JpJrfN4CXjtOE6b/e5HSx6JoX9Nd8l8/mEVb+K1QDo4MVMhPX
+	N+ikxXhdi6G+etu5jNs5zWow//AvcOOV1W39t5K3voCJUORjiq70v8hUk7P8v+gL
+	mrZNSmQQ8envru54tNdbq/VoOrshtFnmeD5c36FYSSKrNbqHLinza2RPTJALxqRv
+	mNsFzQi8gK0ozuzvBOx2byIx5aNhOVdhGwG46hlzEjCqdsbnFij8zLdttuNoTRRp
+	4FeC2wQ3lkHqruwq0RSChVRsHq3mukme8wlZVA/qCg5nKTyFRPpadjVF3A2ZNL6R
+	tBetZw==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy6p2afs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 09 Sep 2024 09:18:13 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4899ICIm007772
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 9 Sep 2024 09:18:12 GMT
+Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Sep 2024
+ 02:18:07 -0700
+Message-ID: <3bd27b6d-74b8-4f7b-b3eb-64682442bbda@quicinc.com>
+Date: Mon, 9 Sep 2024 14:48:04 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com>
- <CACMJSes4cnCNUHiZUr4CF-K2c8-1VYzuh=T8JDi_erqfShkuZA@mail.gmail.com>
- <1f889bba-0c89-45db-b360-b21d6bba7772@gmail.com> <68b0476f-dfa1-44cb-a01a-f4afbaaa98e5@gmail.com>
- <vtdrxh57zxpu6xktzehcpx7hkaqclg5kya5jojrbkmo76yswxx@libmc5evobkb>
-In-Reply-To: <vtdrxh57zxpu6xktzehcpx7hkaqclg5kya5jojrbkmo76yswxx@libmc5evobkb>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Mon, 9 Sep 2024 11:05:23 +0200
-Message-ID: <CACMJSeuONLsWy3rQnLsOxm-Qqgcmd67XNhCMPvTd=UtgYoPfzg@mail.gmail.com>
-Subject: Re: [REGRESSION] firmware: qcom: scm: smc: switch to using the SCM allocator
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rudraksha Gupta <guptarud@gmail.com>, regressions@lists.linux.dev, brgl@bgdev.pl, 
-	andersson@kernel.org, konrad.dybcio@linaro.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, robimarko@gmail.com, 
-	quic_gurus@quicinc.com, luzmaximilian@gmail.com, catalin.marinas@arm.com, 
-	will@kernel.org, srinivas.kandagatla@linaro.org, arnd@arndb.de, 
-	quic_eberman@quicinc.com, elder@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, kernel@quicinc.com, ahalaney@redhat.com, 
-	quic_djaggi@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
+ between two subsystems
+To: <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
+        <andersson@kernel.org>, <andi.shyti@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>,
+        <devicetree@vger.kernel.org>, <vkoul@kernel.org>, <linux@treblig.org>,
+        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
+        <konradybcio@kernel.org>
+CC: <quic_vdadhani@quicinc.com>
+References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
+ <20240906191438.4104329-5-quic_msavaliy@quicinc.com>
+ <b3a5dd54-90ba-4d75-9650-efbff12cddeb@linaro.org>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <b3a5dd54-90ba-4d75-9650-efbff12cddeb@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: -sJyNF0Pcpq-AtjnklkLCs46O_uGJGZ0
+X-Proofpoint-GUID: -sJyNF0Pcpq-AtjnklkLCs46O_uGJGZ0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ bulkscore=0 lowpriorityscore=0 mlxlogscore=999 spamscore=0 phishscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409090073
 
-On Sat, 7 Sept 2024 at 11:57, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On Sat, Sep 07, 2024 at 01:49:02AM GMT, Rudraksha Gupta wrote:
-> > > Looks like qcom_scm_get_tzmem_pool() returns NULL. Not sure how this
-> > > happens. Can you confirm that the QCom SCM driver probed correctly?
-> >
-> > Thanks for looking into this! Please let me know how I can help!
-> >
-> >
-> > I've been building the driver into the kernel I believe. Here's the relevant
-> > line in the config:
-> >
-> > $ rg -i "scm"
-> > samsung/expressatt/linux.defconfig
-> > 1615:# CONFIG_ARM_SCMI_PROTOCOL is not set
-> > 1627:CONFIG_QCOM_SCM=y
-> > 1628:# CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT is not set
-> >
-> >
-> > It seems like the scm driver is being probed:
-> >
-> > ~ # dmesg | grep scm
-> > [    0.066438] qcom_scm: convention: smc legacy
-> > [    0.362543] bus: 'platform': add driver qcom_scm
->
-> The scm driver is added, but it is not probed as there is no SCM node in
-> DT. I'll send and RFT patch to add it. However the issue still persists:
-> the driver should not crash if there is no SCM device on a system.
-> qcom_scm_*_alloc should fall back if there is no SCM.
->
+Hi Neil,
 
-Ugh, so some SCM calls seem to expect that they can get called without
-the SCM driver. It's not very intuitive, I would expect that the
-driver must be up for SCM to work at all.
-
-I think we should fall back to using kzalloc() in such cases as
-there's no struct device to use with the DMA alloc APIs. I'll prepare
-a patch.
-
-Bart
+On 9/9/2024 2:24 PM, neil.armstrong@linaro.org wrote:
+> Hi,
+> 
+> On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
+>> Add support to share I2C SE by two Subsystems in a mutually exclusive 
+>> way.
+>> Use  "qcom,shared-se" flag in a particular i2c instance node if the
+>> usecase requires i2c controller to be shared.
+>>
+>> I2C driver just need to mark first_msg and last_msg flag to help indicate
+>> GPI driver to  take lock and unlock TRE there by protecting from 
+>> concurrent
+>> access from other EE or Subsystem.
+>>
+>> gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
+>> Unlock TRE for the respective transfer operations.
+>>
+>> Since the GPIOs are also shared for the i2c bus between two SS, do not
+>> touch GPIO configuration during runtime suspend and only turn off the
+>> clocks. This will allow other SS to continue to transfer the data
+>> without any disturbance over the IO lines.
+> 
+> This doesn't answer my question about what would be the behavior if one
+> use uses, for example, GPI DMA, and the Linux kernel FIFO mode or SE DMA ?
+> 
+Shared usecase is not supported for non GSI mode (FIFO and DMA), it 
+should be static usecase. Dynamic sharing from two clients of two 
+subsystems is only for GSI mode. Hope this helps ?
+> Because it seems to "fix" only the GPI DMA shared case.
+> 
+> Neil
+> 
+>>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 29 ++++++++++++++++++++++-------
+>>   1 file changed, 22 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
+>> b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index eebb0cbb6ca4..ee2e431601a6 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -1,5 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0
+>>   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+>> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>>   #include <linux/acpi.h>
+>>   #include <linux/clk.h>
+>> @@ -99,6 +100,7 @@ struct geni_i2c_dev {
+>>       struct dma_chan *rx_c;
+>>       bool gpi_mode;
+>>       bool abort_done;
+>> +    bool is_shared;
+>>   };
+>>   struct geni_i2c_desc {
+>> @@ -602,6 +604,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg msgs[], i
+>>       peripheral.clk_div = itr->clk_div;
+>>       peripheral.set_config = 1;
+>>       peripheral.multi_msg = false;
+>> +    peripheral.shared_se = gi2c->is_shared;
+>>       for (i = 0; i < num; i++) {
+>>           gi2c->cur = &msgs[i];
+>> @@ -612,6 +615,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg msgs[], i
+>>           if (i < num - 1)
+>>               peripheral.stretch = 1;
+>> +        peripheral.first_msg = (i == 0);
+>> +        peripheral.last_msg = (i == num - 1);
+>>           peripheral.addr = msgs[i].addr;
+>>           ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+>> @@ -631,8 +636,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev 
+>> *gi2c, struct i2c_msg msgs[], i
+>>           dma_async_issue_pending(gi2c->tx_c);
+>>           time_left = wait_for_completion_timeout(&gi2c->done, 
+>> XFER_TIMEOUT);
+>> -        if (!time_left)
+>> +        if (!time_left) {
+>> +            dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d 
+>> addr:0x%x\n",
+>> +                        gi2c->cur->flags, gi2c->cur->addr);
+>>               gi2c->err = -ETIMEDOUT;
+>> +        }
+>>           if (gi2c->err) {
+>>               ret = gi2c->err;
+>> @@ -800,6 +808,11 @@ static int geni_i2c_probe(struct platform_device 
+>> *pdev)
+>>           gi2c->clk_freq_out = KHZ(100);
+>>       }
+>> +    if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
+>> +        gi2c->is_shared = true;
+>> +        dev_dbg(&pdev->dev, "Shared SE Usecase\n");
+>> +    }
+>> +
+>>       if (has_acpi_companion(dev))
+>>           ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
+>> @@ -962,14 +975,16 @@ static int __maybe_unused 
+>> geni_i2c_runtime_suspend(struct device *dev)
+>>       struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+>>       disable_irq(gi2c->irq);
+>> -    ret = geni_se_resources_off(&gi2c->se);
+>> -    if (ret) {
+>> -        enable_irq(gi2c->irq);
+>> -        return ret;
+>> -
+>> +    if (gi2c->is_shared) {
+>> +        geni_se_clks_off(&gi2c->se);
+>>       } else {
+>> -        gi2c->suspended = 1;
+>> +        ret = geni_se_resources_off(&gi2c->se);
+>> +        if (ret) {
+>> +            enable_irq(gi2c->irq);
+>> +            return ret;
+>> +        }
+>>       }
+>> +    gi2c->suspended = 1;
+>>       clk_disable_unprepare(gi2c->core_clk);
+> 
+> 
 
