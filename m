@@ -1,76 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D6C2971A4D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:04:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DB78971A99
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:16:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A0D21F237C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:04:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C7821F237BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:16:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB0191B5EB2;
-	Mon,  9 Sep 2024 13:04:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D67B51B86DB;
+	Mon,  9 Sep 2024 13:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="atZ9rt2l"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SSI/Tq8D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7001B78F7
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A07A1B78F3;
+	Mon,  9 Sep 2024 13:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725887072; cv=none; b=EE20mEsUO3EJo4A6kW+pFhrX9l+K/5Kpxrzq8Pq45vET3b5ztEjm4wf7S2/EiPlyS4cWEHGpXmj3g0WlP2KQWxiJ0AnGxWXVgTWGa3gaGt68XV01hDgPRrmBCEg85WhqupQc79+QJXcjvyMinxLtTtdu7cVXC69tuuNs1FxlSeE=
+	t=1725887757; cv=none; b=Q/BGUnK3/RNcDU4ww1P2WiI/pf8sLXwJ8F+OZa4HSXL9kaqhySANOU8e2EuVSvkxnCginIqff3U5EU2g1mYJVv+zsWuhcioKZTiGNjHyP3plmiBgFQib324SsTPGAUmb2hEZWlh0Qw1JGpK57L+9dK/DuCIhGJnNxDA8Thbpe5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725887072; c=relaxed/simple;
-	bh=lx2CYDYSR1CbT/CmMmbFTKQTc/fLR1QO5Ubs+QXtE/I=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=S2ODLAXRnIq/61x9tg+As7DgDl7FZTIoedCD6BY6nZzW94guZAnF/TH+d8WADLVKH82ETuc6UNSefHszFYpGqaYqvKjvy8ecTOGKtwJrNFF9VS1tn3zXsWMeCSLLFys7R//tP+WaUjYlQGd6yOUcEB2KIesdiL4/34ZZTvkv/8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=atZ9rt2l; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-375e5c12042so2397902f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:04:29 -0700 (PDT)
+	s=arc-20240116; t=1725887757; c=relaxed/simple;
+	bh=Uez7NMTuT0WM2kZIIpZ8ADHwHBh3bf3xYBsPyrz0j1c=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rFtEOiLYAyrTxgqw6HQQQ8LHBPKSVPI2lKs+tKUpSl26tn31vOagSIXIfX/z3F2vPGVD9rT9d4WWybPsbf2aGTUsxSUu+yt9Kmc9RPIzvSxkNRNWJFD8gNAgtkC+KS78bPDryrZwAR5u/7aG7BgkApdpGsK/1MYe/UdJRkxI8dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SSI/Tq8D; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5c3c3b63135so4560551a12.3;
+        Mon, 09 Sep 2024 06:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725887068; x=1726491868; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n5JRzxSbj4JDQk1DvAF0xquTVL5OLgOLKN07OgcC5X4=;
-        b=atZ9rt2lAnSRS/EyOlWjpUghBJRVwnVmX/Dmg7PJ5wJ3oICEMd88FJPpq8XRSwV/AU
-         c87d4fRjnkMm+mUs9W40jPzH7Tb32pVdc6WWttJMGIWd94DTl32PzrSm4nLxX7kNhpxu
-         BEkvDpKfDrnV4LCkGcopE8LORDGJrKmuShbbwB/16Sk6NfqoyuKXC29MvyQMOsr0/8CV
-         xHtvbVNjgLc344lYXFjp0sN+6dGZPS56L+emA8PUA9nPBmGC/mdsz2ba52MMvoWTEqyN
-         tK8m6DHIF6P09EGXHJ0Wa/MoDHYFYqSNI2CRM7Z134fwdGYzaUhfiqUBkOXbF/FUkKdR
-         eTiw==
+        d=gmail.com; s=20230601; t=1725887754; x=1726492554; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0szTpntTikg706FgJTsH1S+zClPIdKgVR1ySeBMMIEA=;
+        b=SSI/Tq8D2cisDcND4mSqGhpFn8ito/MSJZQnVpNi0Y6f63SGckAZHp/mx6XEC05+Js
+         9DyFlFC2hG6j44d/n5tE2JBecFl4Bs37SLqCSegDxoJMEDi7FIajB+sXJZPIwCqskyIL
+         jtAtXxjUTWba+PhLXhBi6Wb69tV5B39QOMw1W8HmmuntZj66drsjgDCWgIqcwQCQq7Gu
+         JjsYf6MjtsR3UcY96m2NHcBRJnl94SF4eah11UZ7YsDLRNeori5haNm//J4QeNCjalLO
+         +0mP2fI7sRyR9nNuWWVVNZtWW0yGukhKsuZvb7yrh8cxMHDhMPLDWpvj4I4g9irrUIVl
+         QRqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725887068; x=1726491868;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=n5JRzxSbj4JDQk1DvAF0xquTVL5OLgOLKN07OgcC5X4=;
-        b=KJrCVgGrb19/b7CqusZBcD1tn6zOuzbSsmF0F/UPVQiGt88u0bai/Az2qjjTfppKIm
-         dpk9saReyJGMQao8AW3IWo1g95PrDlZ+pJqAO6yNc72asaaGXEdbQq/BWNKWqhSXes3+
-         +TbbYT5SJlXKtdwOrbFmZIBxdM5dMc6MJghlVQwHlzJLj/db6a5FwBzGlbp67u5KJZuE
-         7Pcb1HAD0cHejmjQZvdgr0seyUkUfbh/di82JaiJopUciOTcn9l18xGp4fe9wniG+68R
-         bv7+iQYzmt2TsvMviCB0Q1Lm3a+Bb2dobM9yGVqxr8fwZBhM57P7AUz6fZ81COFK5qxQ
-         yCvw==
-X-Forwarded-Encrypted: i=1; AJvYcCWSAAPod6gmMC8UaK3c09TnK9l9Vq9ebV1UD73ahw/ClNKqr+hSxiVDH4IiMxo8rMa5vEgUtavWfmC6P3Qf@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWRUXBWZ0YjleBHBDh4tgz6qn4K88sAOvP6RsSc+G8hlfafyUD
-	bzZyABfOShi5QZFqyPgc7RO5yr/nOk1txPSmHW6FRfYCVmI7bo6ruwofICQPdYU=
-X-Google-Smtp-Source: AGHT+IH3gxY1z/lOYMSHoUdy0ssWQK8afuRORmstaN/fY3SrpIwZPg8k+EH1IZysvKPtqjBSYN/Q8Q==
-X-Received: by 2002:a05:6000:a84:b0:35f:122e:bd8c with SMTP id ffacd0b85a97d-378895ca7fbmr7310933f8f.17.1725887067538;
-        Mon, 09 Sep 2024 06:04:27 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:63a3:6883:a358:b850? ([2a01:e0a:982:cbb0:63a3:6883:a358:b850])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956d2ee6sm5973948f8f.83.2024.09.09.06.04.26
+        d=1e100.net; s=20230601; t=1725887754; x=1726492554;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0szTpntTikg706FgJTsH1S+zClPIdKgVR1ySeBMMIEA=;
+        b=h+KsOSJOH6QHMcqAU2IyXVB/Y0hzeZdipjz8Pr8+ESR1dPwZf1AimoZPIuEM0GUkeF
+         rZmVCujmUOsZopeAUmhpNA1XVepdhIBH0miVCKBJHyZMau1X1+X97ncBhfrqveLg86fC
+         +UOuk1y+Cyh2ugmX12bBmNUFKFnM25lHxR/epncvbfeCgJ8cTN25VbuebK8lIPQFLyt5
+         ZGno6P7LsyYi2QEvj2spcvG/ziA2zIp36jQvMPFA5ojizyDoJJjmQlYl+lI1/NICkDYo
+         QVOvTqs1XghgseN+yVec7vQy92JpPWC38716erSZIAC/jBEQN61CWeNlvWB92diRKTJ6
+         NdaA==
+X-Forwarded-Encrypted: i=1; AJvYcCUcEQdZ9C9uZHsSbYXFWMF2JxMSgI8rqNMqzMUYRxDiyjpaLfuyoIG7rMBI0xhkLZGcRGMHlfLtEK0vbbki@vger.kernel.org, AJvYcCVv9+VhFScMW7x/hygzbIwkr4eqQh+VkcgpY/CloW4wQ0LLdw3Pp//5UiNyYPk+CgTGoPdHjFPRuJuj@vger.kernel.org, AJvYcCXmbR+eDiNwQNJ6MXAE6KRNoLV5akxJH1cs4aScENtcH3X7GvHik76c3J+rjv9wKpVXpFbpu7tEbGje/6mw@vger.kernel.org
+X-Gm-Message-State: AOJu0YzezKEloZI5WvT82CZks8c74LRQEG4H0TtvVTXu7RnmFtziXbtf
+	+cnv/apvK/fFHo5OzGkNzpkA72UYhrmGPWq6yozYfpQcKQg9HhTg
+X-Google-Smtp-Source: AGHT+IF/r30Dk3ePhvp2ter/2dqTi0m3U1rU/oX1maS5tjBZG1A0aRxKAkqme9+zXHINhvtdF0T8dA==
+X-Received: by 2002:a05:6402:5193:b0:5c3:c520:b019 with SMTP id 4fb4d7f45d1cf-5c3dc7c7154mr8327573a12.34.1725887752685;
+        Mon, 09 Sep 2024 06:15:52 -0700 (PDT)
+Received: from [192.168.1.17] (host-95-246-172-178.retail.telecomitalia.it. [95.246.172.178])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3ebd468a1sm2988829a12.26.2024.09.09.06.15.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Sep 2024 06:04:27 -0700 (PDT)
-Message-ID: <3dddd226-c726-434e-8828-c12f76a71752@linaro.org>
-Date: Mon, 9 Sep 2024 15:04:26 +0200
+        Mon, 09 Sep 2024 06:15:52 -0700 (PDT)
+Message-ID: <df85bf24-651c-4a35-929b-4de6c05555a1@gmail.com>
+Date: Mon, 9 Sep 2024 15:15:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,183 +76,162 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
- between two subsystems
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
- Frank.Li@nxp.com, konradybcio@kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
- <20240906191438.4104329-5-quic_msavaliy@quicinc.com>
- <b3a5dd54-90ba-4d75-9650-efbff12cddeb@linaro.org>
- <3bd27b6d-74b8-4f7b-b3eb-64682442bbda@quicinc.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <3bd27b6d-74b8-4f7b-b3eb-64682442bbda@quicinc.com>
+Subject: Re: [PATCH v3 04/10] drm/msm/A6xx: Implement preemption for A7XX
+ targets
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ Sharat Masetty <smasetty@codeaurora.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
+ <20240905-preemption-a750-t-v3-4-fd947699f7bc@gmail.com>
+ <20240906195444.owz4eralirekr7r7@hu-akhilpo-hyd.qualcomm.com>
+Content-Language: en-US
+From: Antonino Maniscalco <antomani103@gmail.com>
+In-Reply-To: <20240906195444.owz4eralirekr7r7@hu-akhilpo-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 09/09/2024 11:18, Mukesh Kumar Savaliya wrote:
-> Hi Neil,
+On 9/6/24 9:54 PM, Akhil P Oommen wrote:
+> On Thu, Sep 05, 2024 at 04:51:22PM +0200, Antonino Maniscalco wrote:
+>> This patch implements preemption feature for A6xx targets, this allows
+>> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
+>> hardware as such supports multiple levels of preemption granularities,
+>> ranging from coarse grained(ringbuffer level) to a more fine grained
+>> such as draw-call level or a bin boundary level preemption. This patch
+>> enables the basic preemption level, with more fine grained preemption
+>> support to follow.
+>>
+>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+>> ---
+>>   drivers/gpu/drm/msm/Makefile              |   1 +
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 293 +++++++++++++++++++++-
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 161 ++++++++++++
+...
 > 
-> On 9/9/2024 2:24 PM, neil.armstrong@linaro.org wrote:
->> Hi,
->>
->> On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
->>> Add support to share I2C SE by two Subsystems in a mutually exclusive way.
->>> Use  "qcom,shared-se" flag in a particular i2c instance node if the
->>> usecase requires i2c controller to be shared.
->>>
->>> I2C driver just need to mark first_msg and last_msg flag to help indicate
->>> GPI driver to  take lock and unlock TRE there by protecting from concurrent
->>> access from other EE or Subsystem.
->>>
->>> gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
->>> Unlock TRE for the respective transfer operations.
->>>
->>> Since the GPIOs are also shared for the i2c bus between two SS, do not
->>> touch GPIO configuration during runtime suspend and only turn off the
->>> clocks. This will allow other SS to continue to transfer the data
->>> without any disturbance over the IO lines.
->>
->> This doesn't answer my question about what would be the behavior if one
->> use uses, for example, GPI DMA, and the Linux kernel FIFO mode or SE DMA ?
->>
-> Shared usecase is not supported for non GSI mode (FIFO and DMA), it should be static usecase. Dynamic sharing from two clients of two subsystems is only for GSI mode. Hope this helps ?
+> we can use the lighter smp variant here.
+> 
+>> +
+>> +		if (a6xx_gpu->cur_ring == ring)
+>> +			gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
+>> +		else
+>> +			ring->skip_inline_wptr = true;
+>> +	} else {
+>> +		ring->skip_inline_wptr = true;
+>> +	}
+>> +
+>> +	spin_unlock_irqrestore(&ring->preempt_lock, flags);
+>>   }
+>>   
+>>   static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
+>> @@ -138,12 +231,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+> 
+> set_pagetable checks "cur_ctx_seqno" to see if pt switch is needed or
+> not. This is currently not tracked separately for each ring. Can you
+> please check that?
 
-Sure, this is why I proposed on v1 cover letter reply to add:
-==============><=====================================================================
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index ee2e431601a6..a15825ea56de 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -885,7 +885,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
-          else
-                  fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
+I totally missed that. Thanks for catching it!
 
--       if (fifo_disable) {
-+       if (gi2c->is_shared || fifo_disable) {
-                  /* FIFO is disabled, so we can only use GPI DMA */
-                  gi2c->gpi_mode = true;
-                  ret = setup_gpi_dma(gi2c);
-==============><=====================================================================
+> 
+> I wonder why that didn't cause any gpu errors in testing. Not sure if I
+> am missing something.
+> 
 
-Thanks,
-Neil
+I think this is because, so long as a single context doesn't submit to 
+two different rings with differenr priorities, we will only be incorrect 
+in the sense that we emit more page table switches than necessary and 
+never less. However untrusted userspace could create a context that 
+submits to two different rings and that would lead to execution in the 
+wrong context so we must fix this.
 
->> Because it seems to "fix" only the GPI DMA shared case.
+>>   
+>>   	/*
+>>   	 * Write the new TTBR0 to the memstore. This is good for debugging.
+>> +	 * Needed for preemption
+>>   	 */
+>> -	OUT_PKT7(ring, CP_MEM_WRITE, 4);
+>> +	OUT_PKT7(ring, CP_MEM_WRITE, 5);
+>>   	OUT_RING(ring, CP_MEM_WRITE_0_ADDR_LO(lower_32_bits(memptr)));
+>>   	OUT_RING(ring, CP_MEM_WRITE_1_ADDR_HI(upper_32_bits(memptr)));
+>>   	OUT_RING(ring, lower_32_bits(ttbr));
+>> -	OUT_RING(ring, (asid << 16) | upper_32_bits(ttbr));
+>> +	OUT_RING(ring, upper_32_bits(ttbr));
+>> +	OUT_RING(ring, ctx->seqno);
+>>   
+>>   	/*
+>>   	 * Sync both threads after switching pagetables and enable BR only
+>> @@ -268,6 +363,43 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>>   	a6xx_flush(gpu, ring);
+>>   }
+...
+>> +	struct a6xx_preempt_record *record_ptr =
+>> +		a6xx_gpu->preempt[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE;
+>> +	u64 ttbr0 = ring->memptrs->ttbr0;
+>> +	u32 context_idr = ring->memptrs->context_idr;
+>> +
+>> +	smmu_info_ptr->ttbr0 = ttbr0;
+>> +	smmu_info_ptr->context_idr = context_idr;
+>> +	record_ptr->wptr = get_wptr(ring);
+>> +
+>> +	/*
+>> +	 * The GPU will write the wptr we set above when we preempt. Reset
+>> +	 * skip_inline_wptr to make sure that we don't write WPTR to the same
+>> +	 * thing twice. It's still possible subsequent submissions will update
+>> +	 * wptr again, in which case they will set the flag to true. This has
+>> +	 * to be protected by the lock for setting the flag and updating wptr
+>> +	 * to be atomic.
+>> +	 */
+>> +	ring->skip_inline_wptr = false;
+>> +
+>> +	spin_unlock_irqrestore(&ring->preempt_lock, flags);
+>> +
+>> +	gpu_write64(gpu,
+>> +		REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO,
+>> +		a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_SMMU_INFO);
+>> +
+>> +	gpu_write64(gpu,
+>> +		REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
+>> +		a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE);
+>> +
+>> +	preempt_offset_priv_secure =
+>> +		PREEMPT_OFFSET_PRIV_SECURE(adreno_gpu->info->preempt_record_size);
+>> +	gpu_write64(gpu,
+>> +		REG_A6XX_CP_CONTEXT_SWITCH_PRIV_SECURE_RESTORE_ADDR,
+>> +		a6xx_gpu->preempt_iova[ring->id] + preempt_offset_priv_secure);
+> 
+> Secure buffers are not supported currently, so we can skip this and the
+> context record allocation. Anyway this has to be a separate buffer
+> mapped in secure pagetable which don't currently have. We can skip the
+> same in pseudo register packet too.
+>
+
+Mmm it would appear that not setting it causes an hang very early. I'll 
+see if I can find out more about what is going on.
+
+>> +
+>> +	a6xx_gpu->next_ring = ring;
+>> +
+...
+>>   
+>>   struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 >>
->> Neil
+>> -- 
+>> 2.46.0
 >>
->>>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> ---
->>>   drivers/i2c/busses/i2c-qcom-geni.c | 29 ++++++++++++++++++++++-------
->>>   1 file changed, 22 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->>> index eebb0cbb6ca4..ee2e431601a6 100644
->>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->>> @@ -1,5 +1,6 @@
->>>   // SPDX-License-Identifier: GPL-2.0
->>>   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
->>> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>>   #include <linux/acpi.h>
->>>   #include <linux/clk.h>
->>> @@ -99,6 +100,7 @@ struct geni_i2c_dev {
->>>       struct dma_chan *rx_c;
->>>       bool gpi_mode;
->>>       bool abort_done;
->>> +    bool is_shared;
->>>   };
->>>   struct geni_i2c_desc {
->>> @@ -602,6 +604,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->>>       peripheral.clk_div = itr->clk_div;
->>>       peripheral.set_config = 1;
->>>       peripheral.multi_msg = false;
->>> +    peripheral.shared_se = gi2c->is_shared;
->>>       for (i = 0; i < num; i++) {
->>>           gi2c->cur = &msgs[i];
->>> @@ -612,6 +615,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->>>           if (i < num - 1)
->>>               peripheral.stretch = 1;
->>> +        peripheral.first_msg = (i == 0);
->>> +        peripheral.last_msg = (i == num - 1);
->>>           peripheral.addr = msgs[i].addr;
->>>           ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
->>> @@ -631,8 +636,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->>>           dma_async_issue_pending(gi2c->tx_c);
->>>           time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
->>> -        if (!time_left)
->>> +        if (!time_left) {
->>> +            dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
->>> +                        gi2c->cur->flags, gi2c->cur->addr);
->>>               gi2c->err = -ETIMEDOUT;
->>> +        }
->>>           if (gi2c->err) {
->>>               ret = gi2c->err;
->>> @@ -800,6 +808,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>>           gi2c->clk_freq_out = KHZ(100);
->>>       }
->>> +    if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
->>> +        gi2c->is_shared = true;
->>> +        dev_dbg(&pdev->dev, "Shared SE Usecase\n");
->>> +    }
->>> +
->>>       if (has_acpi_companion(dev))
->>>           ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
->>> @@ -962,14 +975,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
->>>       struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
->>>       disable_irq(gi2c->irq);
->>> -    ret = geni_se_resources_off(&gi2c->se);
->>> -    if (ret) {
->>> -        enable_irq(gi2c->irq);
->>> -        return ret;
->>> -
->>> +    if (gi2c->is_shared) {
->>> +        geni_se_clks_off(&gi2c->se);
->>>       } else {
->>> -        gi2c->suspended = 1;
->>> +        ret = geni_se_resources_off(&gi2c->se);
->>> +        if (ret) {
->>> +            enable_irq(gi2c->irq);
->>> +            return ret;
->>> +        }
->>>       }
->>> +    gi2c->suspended = 1;
->>>       clk_disable_unprepare(gi2c->core_clk);
->>
->>
+
+Best regards,
+-- 
+Antonino Maniscalco <antomani103@gmail.com>
 
 
