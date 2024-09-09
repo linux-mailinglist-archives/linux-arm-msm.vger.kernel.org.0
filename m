@@ -1,143 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-31345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 63191971D20
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 16:50:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60B7E971D1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 16:50:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20C6F283ADA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:50:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C30F1C233D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:50:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0691BBBD9;
-	Mon,  9 Sep 2024 14:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C10C61BBBD3;
+	Mon,  9 Sep 2024 14:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b="aEb/jlSX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="caE5/RNT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-001ae601.pphosted.com (mx0b-001ae601.pphosted.com [67.231.152.168])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D4C1B81D8;
-	Mon,  9 Sep 2024 14:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.152.168
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956221BBBC3;
+	Mon,  9 Sep 2024 14:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725893436; cv=none; b=nz1GwonpPlVq+ADBhGifkeF2Matm1LBnejsSgl9++13k0tkcZKUqCw22kb7SpsRfNNU3434xzfGlRLKPMC0ZjRh6YaQgA47r/v2id1RTWIS57nEur5/IdhjR1E5ZrV63XgZh0w84PWY+uzVZIX33D1P5tzcEsiPC4KF6ETzpfD4=
+	t=1725893409; cv=none; b=gsTdkRo7KANaWJ7C8Lz7HdSsbISG6UjQpqtpe/gQKH5gY1coMungayhWD859wk0+q8l0mlypqG73J5dR8SO54VsiAtcCoLXqzHWsHzsSbJoY94SW9Ovh92XnJ7ysJM7OI4sWS4Nnh/Wz/We91sjsqbke8LFz/cTrT1+B/yln9lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725893436; c=relaxed/simple;
-	bh=zYUb39rxLloRBDzZo4+kzlIgM65YSGPIz0TgH8WfP6g=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZoVZBwTeX6/QhR+SUI+OOJCv8EYuk/ua9wAbn608oSh6cHy1tjgZi7MWcyiLdze5hSVqnFR0KbyYKkfZUbsm2kMMUBlFPOcHFLL8O7W9oDt8l602V+CWXQ2UMiouyNQfQLYEittBJn8B34a2zXC0wghzZP74awgIIBXrqFxGCPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com; spf=pass smtp.mailfrom=opensource.cirrus.com; dkim=pass (2048-bit key) header.d=cirrus.com header.i=@cirrus.com header.b=aEb/jlSX; arc=none smtp.client-ip=67.231.152.168
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=opensource.cirrus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=opensource.cirrus.com
-Received: from pps.filterd (m0077474.ppops.net [127.0.0.1])
-	by mx0b-001ae601.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4894kdKO029438;
-	Mon, 9 Sep 2024 09:50:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cirrus.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=PODMain02222019; bh=7H3hIEPlOVkieGvBf2
-	c0DYfFeVzq19u7SSW0qmjXnjY=; b=aEb/jlSXCbHQwhREJ7dfRikrM9wtb0MIQR
-	dCpj/YRqATTCq7HNraKv1bdCEN9NkoXzlUg9+0nTzQb4MNv1kXC69nv0AJ7md5jJ
-	OaAMvxFIIXS7hcLmWLy3Um2yW6xZcKcdQpwRWqt/lcDmk5xWVAkov9EbUAXSoUft
-	wkpyA4aLmufarwAX+WwPPhzlwRkxySUcNtJuO3zwEZ4CCpCRbuSTvH3kPVWd4A2V
-	TLXmd2BYYz9bUCKRZgUjoI6JY8jX7WBTlwHT0sLHLK19ZzmK0azR6RtMMaWWbLo7
-	0dsJ6jgrQJL31mHGKrBfC6HflOIeP8zeaDWihcVMCryDYz809wEA==
-Received: from ediex01.ad.cirrus.com ([84.19.233.68])
-	by mx0b-001ae601.pphosted.com (PPS) with ESMTPS id 41gk8hstw1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Sep 2024 09:50:05 -0500 (CDT)
-Received: from ediex01.ad.cirrus.com (198.61.84.80) by ediex01.ad.cirrus.com
- (198.61.84.80) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 9 Sep 2024
- 15:49:48 +0100
-Received: from ediswmail9.ad.cirrus.com (198.61.86.93) by
- anon-ediex01.ad.cirrus.com (198.61.84.80) with Microsoft SMTP Server id
- 15.2.1544.9 via Frontend Transport; Mon, 9 Sep 2024 15:49:48 +0100
-Received: from opensource.cirrus.com (ediswmail9.ad.cirrus.com [198.61.86.93])
-	by ediswmail9.ad.cirrus.com (Postfix) with ESMTPS id D332F820249;
-	Mon,  9 Sep 2024 14:49:48 +0000 (UTC)
-Date: Mon, 9 Sep 2024 15:49:47 +0100
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
-To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-CC: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi
- Iwai <tiwai@suse.com>,
-        Pierre-Louis Bossart
-	<pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale
-	<sanyog.r.kale@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
-        <kernel@quicinc.com>, <quic_pkumpatl@quicinc.com>
-Subject: Re: [PATCH v1 0/4] Add static channel mapping between soundwire
- master and slave
-Message-ID: <Zt8LC4IY7DGq8Qom@opensource.cirrus.com>
-References: <20240909105547.2691015-1-quic_mohs@quicinc.com>
+	s=arc-20240116; t=1725893409; c=relaxed/simple;
+	bh=E55QCe1LlO+SgbpQ8x5M5ZFRadQoSvxYJkVZCOdkJ8M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mWxB1rc54PkiyGIxKnKKm981oKD246TjKj7OLAcBcLYWc/aPusDzrrEGBowqh1IdPqZ4H4vCRe3Q59Z5zUZJqsLeTGIU0bWYQ16KewgFdyEhwtqitCeTvu9imQqbRMgMsCpOIr93eX7k0w7L6UoKoFC//BtBQ6mRix9Xyo1rUXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=caE5/RNT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CF6C4CEC5;
+	Mon,  9 Sep 2024 14:50:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725893409;
+	bh=E55QCe1LlO+SgbpQ8x5M5ZFRadQoSvxYJkVZCOdkJ8M=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=caE5/RNTOUOsQsj8LWstsX0UOrUi2jXtTVmUSgE0NSXCn1ylC4knk6tA3GzsVdO0L
+	 OGM4P/yJlj/iV5nNgz9Zay3U0ENwIFNRAC3lw+4sNQIvaIM8BqSkm7ANQ8RFGc2G25
+	 X16ImJ5hGf8Ml/26fhUB9tleasW6LHXdeRHVTfQDPzfktf2V3yQz8+GwHYYN/JLCwK
+	 epTfR0BJS9jHfhoEWfX4fjqvqJS3DTtc3E8TsHITLxhudD8Xl7pWZLNlO7IrFf95AE
+	 1+aJ+4ntWXUFaOdDWPM5YZb8JbdXfa4epw+jLt6+JOgM3H0cmTrKhPdYQ6uQ0gJ0Hy
+	 USV/12/5rovqw==
+Date: Mon, 9 Sep 2024 15:50:03 +0100
+From: Will Deacon <will@kernel.org>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	Ashish Mhetre <amhetre@nvidia.com>,
+	Rob Clark <robdclark@chromium.org>, Joerg Roedel <joro@8bytes.org>,
+	"moderated list:ARM SMMU DRIVERS" <linux-arm-kernel@lists.infradead.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] Revert "iommu/io-pgtable-arm: Optimise non-coherent
+ unmap"
+Message-ID: <20240909145003.GB19863@willie-the-truck>
+References: <20240905124956.84932-1-robdclark@gmail.com>
+ <20240905155330.GA15246@willie-the-truck>
+ <53f13813-a515-475a-836d-0b6017a117eb@arm.com>
+ <20240906105656.GA16124@willie-the-truck>
+ <8e17f1ac-0178-454b-b9dc-bb14ad6c465b@arm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240909105547.2691015-1-quic_mohs@quicinc.com>
-X-Proofpoint-GUID: qG5DD1sdYl7BYNL1JLvRQwR3HMwgcMJo
-X-Proofpoint-ORIG-GUID: qG5DD1sdYl7BYNL1JLvRQwR3HMwgcMJo
-X-Proofpoint-Spam-Reason: safe
+In-Reply-To: <8e17f1ac-0178-454b-b9dc-bb14ad6c465b@arm.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-On Mon, Sep 09, 2024 at 04:25:43PM +0530, Mohammad Rafi Shaik wrote:
-> Add static channel map support between soundwire master and slave.
-> This patch series will resolve channel mask mismatch between master and slave.
+On Fri, Sep 06, 2024 at 04:25:19PM +0100, Robin Murphy wrote:
+> On 06/09/2024 11:56 am, Will Deacon wrote:
+> > On Thu, Sep 05, 2024 at 05:27:28PM +0100, Robin Murphy wrote:
+> > > On 05/09/2024 4:53 pm, Will Deacon wrote:
+> > > > On Thu, Sep 05, 2024 at 05:49:56AM -0700, Rob Clark wrote:
+> > > > > From: Rob Clark <robdclark@chromium.org>
+> > > > > 
+> > > > > This reverts commit 85b715a334583488ad7fbd3001fe6fd617b7d4c0.
+> > > > > 
+> > > > > It was causing gpu smmu faults on x1e80100.
+> > > > > 
+> > > > > I _think_ what is causing this is the change in ordering of
+> > > > > __arm_lpae_clear_pte() (dma_sync_single_for_device() on the pgtable
+> > > > > memory) and io_pgtable_tlb_flush_walk().  I'm not entirely sure how
+> > > > > this patch is supposed to work correctly in the face of other
+> > > > > concurrent translations (to buffers unrelated to the one being
+> > > > > unmapped(), because after the io_pgtable_tlb_flush_walk() we can have
+> > > > > stale data read back into the tlb.
+> > > > > 
+> > > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> > > > > ---
+> > > > >    drivers/iommu/io-pgtable-arm.c | 31 ++++++++++++++-----------------
+> > > > >    1 file changed, 14 insertions(+), 17 deletions(-)
+> > > > 
+> > > > Please can you try the diff below, instead?
+> > > 
+> > > Given that the GPU driver's .tlb_add_page is a no-op, I can't see this
+> > > making a difference. In fact, given that msm_iommu_pagetable_unmap() still
+> > > does a brute-force iommu_flush_iotlb_all() after io-pgtable returns, and in
+> > > fact only recently made .tlb_flush_walk start doing anything either for the
+> > > sake of the map path, I'm now really wondering how this patch has had any
+> > > effect at all... :/
+> > 
+> > Hmm, yup. Looks like Rob has come back to say the problem lies elsewhere
+> > anyway.
+> > 
+> > One thing below though...
+> > 
+> > > > 
+> > > > Will
+> > > > 
+> > > > --->8
+> > > > 
+> > > > diff --git a/drivers/iommu/io-pgtable-arm.c b/drivers/iommu/io-pgtable-arm.c
+> > > > index 0e67f1721a3d..0a32e9499e2c 100644
+> > > > --- a/drivers/iommu/io-pgtable-arm.c
+> > > > +++ b/drivers/iommu/io-pgtable-arm.c
+> > > > @@ -672,7 +672,7 @@ static size_t __arm_lpae_unmap(struct arm_lpae_io_pgtable *data,
+> > > >                   /* Clear the remaining entries */
+> > > >                   __arm_lpae_clear_pte(ptep, &iop->cfg, i);
+> > > > -               if (gather && !iommu_iotlb_gather_queued(gather))
+> > > > +               if (!iommu_iotlb_gather_queued(gather))
+> > > 
+> > > Note that this would reintroduce the latent issue which was present
+> > > originally, wherein iommu_iotlb_gather_queued(NULL) is false, but if we
+> > > actually allow a NULL gather to be passed to io_pgtable_tlb_add_page() it
+> > > may end up being dereferenced (e.g. in arm-smmu-v3).
+> > 
+> > I think there is still something to fix here. arm_lpae_init_pte() can
+> > pass a NULL gather to __arm_lpae_unmap() and I don't think skipping the
+> > invalidation is correct in that case. Either the drivers need to handle
+> > that or we shouldn't be passing NULL.
+> > 
+> > What do you think?
 > 
-> Scenario: wcd937x AMIC2 usecase
-> 
->                           Master                 Slave (wcd937x)
->                      +--------------+           +--------------+
->                      |  +--------+  |           |  +--------+  |
->          AMIC1 ----->|  | PORT1  |  |           |  |   TX1  |  |<-----------AMIC1
->          AMIC2 ----->|  |        |  |           |  |        |  |
->                      |  +--------+  |           |  +--------+  |
->                      |              |           |              |
->          AMIC3 ----->|  +--------+  |           |  +--------+  |
->                      |  |  PORT2 |  |           |  |   TX2  |  |<-----------AMIC2
->                      |  |        |  |           |  |        |  |<-----------AMIC3
->                      |  +--------+  |           |  +--------+  |
->                      |              |           |              |
->                      |  +--------+  |           |  +--------+  |
->  DMIC0...DMIC3------>|  |  PORT3 |  |           |  |   TX3  |  |<-----------DMIC0...DMIC3
->                      |  |        |  |           |  |        |  |<-----------MBHC
->                      |  +--------+  |           |  +--------+  |
->                      |              |           |              |
->                      |  +--------+  |           |  +--------+  |
->  DMIC4...DMIC37----->|  |  PORT4 |  |           |  |   TX4  |  |<-----------DMIC4...DMIC7
->                      |  |        |  |           |  |        |  |
->                      |  +--------+  |           |  +--------+  |
->                      |              |           |              |
->                      +------------- +           +--------------+
-> 
-> For AMIC2 usecase, The Slave need to configure TX2 Port with channel mask 1 and
-> for Master required PORT1 with channel mask 2,
-> 
-> In existing design master and slave configured with same channel mask, it will fail
-> AMIC2 usecase.
+> The subtlety there is that in that case it's always a non-leaf PTE, so all
+> that goes back to the driver is io_pgtable_tlb_flush_walk() and the gather
+> is never used.
 
-Apologies but I am not really following what exactly the issue is
-here? How do these ports map to DAI links? It looks like you are
-attempting to have AMIC2 produced by one DAI link, but consumed
-by another?
+Beautiful...
 
-Thanks,
-Charles
+Will
 
