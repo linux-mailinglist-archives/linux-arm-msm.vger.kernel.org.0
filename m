@@ -1,48 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 363C0971FA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 18:55:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5027C972066
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 19:24:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AAB1DB21EA9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 16:55:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CD4E51F24654
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 17:24:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FC9316DEB4;
-	Mon,  9 Sep 2024 16:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76395176252;
+	Mon,  9 Sep 2024 17:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7UvMHUj"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DZ2l1zNU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370981531E6;
-	Mon,  9 Sep 2024 16:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A2E178CC8;
+	Mon,  9 Sep 2024 17:24:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725900892; cv=none; b=DzZCfn0k6A0njmWXvpjXSGokTuxyHaWr/SWVpgw2vIEmJo4gO3UlJw1Iz3bduW63/3OToo94Ne0mRfeANbeZts0a1BWgCr7qRsuZq4xBfoMiQdNKq4o/BQnhiCslWu9M88otPiaqnLfPcYKfTCR/bM5Z9NtOaT6MK5ASw1SpZ9Q=
+	t=1725902664; cv=none; b=RnTyghTsYTP7AO+mwvcGPurb5bn3GaZiCi8X3cWzKbGoFBFGezIYQBH/GRJtnEkk5/43EAAW2+E8kAT/CesgQ6rFZ8wHMaQCt7HVl/r7Hka6VsGYvo4lWKBimNqFyrW2Sem7M82O/QbTCPeRgsg/6PXK/y/AWEQ6WNauF6WqBaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725900892; c=relaxed/simple;
-	bh=khOg0vy+cZfoTumZA0p/tgO+DPMa31FPkMcBgkBS+Ww=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ksqZzAdP6AUnDYVSbakeHvl1AILMI0uuLJbB+GFc5X0VUTOhViubfjPnWxyYar8jhYxmo8/8u3iTz/6JhfFMQZhePnTHKCCfMoxq0dFIxLmf6zdbSyCFUyIigC0qxqbz5PzAptzpSVwuGWAiOoj9wgrIhWUQP7PSwBaFwgnXCjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7UvMHUj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F2CC4CEC5;
-	Mon,  9 Sep 2024 16:54:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725900891;
-	bh=khOg0vy+cZfoTumZA0p/tgO+DPMa31FPkMcBgkBS+Ww=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=q7UvMHUj06uOMZ1NptucOtIDHnmxGSl8X0Pwm3OPegB40gCsIFjlki3xctmHlWfbz
-	 6dCGL7Qfs9XUCmXMHRGLId2BZZg4Cx+18q9HiJQJ9nuQ6Gd5DZhz9dNqu4eZ1wSA2I
-	 EG0OAddASoermgQeslkrygqjDHQwgNJQ6bSYwP8qMiFgjhGf7KdqLVbqQ66+tNqnJr
-	 LOWYYOdviW0jV88axfP6f1FeJv5Fru4RG2JvS+GyI6X/nNILxvoCoDl1kwhSWbMGId
-	 BhOBGzDlxVlErarBDiZM2yHdYnLfDcY5UwcFcKwo0w2+fi4LcjaT/S9dBskSflx8nU
-	 sPXRlCHaKgB7A==
-Message-ID: <f54aa204-3cea-4a8f-af62-46916849aba0@kernel.org>
-Date: Mon, 9 Sep 2024 18:54:46 +0200
+	s=arc-20240116; t=1725902664; c=relaxed/simple;
+	bh=7jiSeWv8650EDek+o8j6WiWCPM2M1ozrJNSg8x76fhs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=kd93qcDm9mvSPnuUwSVOi95raQkceBIjoSWnY2U431YboNXsuJqNw+0QrUBIfjo5VUFU50FmuqIDN4Ps2YHzwv+f7vW0d52pm6q02/Rk7uLkamt0fvXY228OrJPG9Y/+D48QrFe8/jtbQivlL/4kCxtRayjldt7OKJbuZdNaviI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DZ2l1zNU; arc=none smtp.client-ip=209.85.167.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5365c512b00so3913269e87.3;
+        Mon, 09 Sep 2024 10:24:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1725902660; x=1726507460; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SzINnm2Ya0afTbpAAfgnl7iTn2CTj7St4+vT2jNDuJQ=;
+        b=DZ2l1zNUlOYQzUy7ZPy99rFnxiwb3SPEs2pkP61q+f7IppUlOQhj7ITkzgz91BBUY7
+         jCk5WLHM4/VT6gxleDKOGj6MIJk5GMiQ6NkpLha+FgS6jdaYN0tRrn74pkU0vnXlZUqd
+         qn9U6EwZPw7SqDUBDaKP7a1WsbOoii9Ys5fwbfsxZeOkXAldZMAAgkh7v5PEkeqq/tPD
+         hyrDadJdXISmFmlZN+jM0B8efMtELRQTHjJiWEAQC68RDf/o4MXYq0r/swRNCHu2fQj0
+         UlWj6L7DUR+VLQeC433klcUfjXHEWH2OsQP5KYcqjPhbryeZut/L7xE8LLEBVQPFiPLf
+         NMZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725902660; x=1726507460;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SzINnm2Ya0afTbpAAfgnl7iTn2CTj7St4+vT2jNDuJQ=;
+        b=MRpBTfLqNI/k3Lf5qbWHqNN+BaztcHjGKH5YhWrGSjK6ARE17L9EQTrhjvGvDBy068
+         zjebBqqBAAUWxrYo+UXho/HF4HEMo2ijorT6BEsUj+SEXhOtUqzS1UNxoiBinN5RBgsY
+         i7mHdPnfOiRBZ9+C8JpcgprA/6Oww94HoiJSdhkuXRR+Wqwr/XmtyTuSPgH5SsR29N9n
+         TvXg2dwLu6xEnaYe/uZBEBF9esv55vFIWnE5w/Mu0vwYXJSytcHn5wycm05thI4o3xg+
+         xGjAElH7zvJTs62NEbQQGxmayD3keycjXz6odmJVaUb9L+Q/DdyYXT/0x2QeJqHkTNTq
+         bmMg==
+X-Forwarded-Encrypted: i=1; AJvYcCV1V5AGnBJHTtybw2zJi5HrDQEhAInR+FR866AVxpLqJ1xdgW7yepYQ02FQuaQRkFKKIn9HeeG9IUHzeobh@vger.kernel.org, AJvYcCX7Na98hunSYXus5/kbVzGkDH2ZoZG37Sv9kfPdVdWcmBJl1TNAQN1Nddy3qyQduesxarzu+fDb47G+@vger.kernel.org, AJvYcCXTsq0gfnTeNKvaj3z99wEnnEvZbWxw81W2CopfHgPbpcymt5ipLmZYOYlGylcade4VLm8ej2vHetnpEsp7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw+y7prkY6tuNU01LS22aYlw2HZEe+xKRlTpGZJVl5Ii5QRFvXU
+	WNdfTCHrECWkxBtBGWalhPzGA8FcaEiKoLrDQNANiGAC/rscSnAC
+X-Google-Smtp-Source: AGHT+IFkmOYlKeogDazf8XMnSUXgNmiAwvfoh3FwHyhTcsMIT75dT3NSUUQNHfQeSC4vcrbssokFxg==
+X-Received: by 2002:a05:6512:b24:b0:535:3d15:e718 with SMTP id 2adb3069b0e04-536587fcf0fmr8663373e87.50.1725902659411;
+        Mon, 09 Sep 2024 10:24:19 -0700 (PDT)
+Received: from [192.168.1.17] (host-95-246-172-178.retail.telecomitalia.it. [95.246.172.178])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3ebd52010sm3275587a12.43.2024.09.09.10.24.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Sep 2024 10:24:17 -0700 (PDT)
+Message-ID: <86b02057-3e25-45c4-afaf-597394132a37@gmail.com>
+Date: Mon, 9 Sep 2024 19:24:16 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,91 +76,176 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcs6490-rb3gen2: describe secondary
- USB port
-To: Caleb Connolly <caleb.connolly@linaro.org>,
- Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org,
- Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240904-b4-rb3gen2-usb2-v1-0-b858e681195e@linaro.org>
- <20240904-b4-rb3gen2-usb2-v1-3-b858e681195e@linaro.org>
- <01ec1a78-4fe9-42d9-9ed2-8f6b8cb2e8fa@kernel.org>
- <7f98c987-0f9a-4ff5-9296-c6fdfc37e4c1@kernel.org>
- <98222e56-d382-409c-9c17-a99cab08ec94@linaro.org>
+Subject: Re: [PATCH v3 04/10] drm/msm/A6xx: Implement preemption for A7XX
+ targets
+From: Antonino Maniscalco <antomani103@gmail.com>
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ Sharat Masetty <smasetty@codeaurora.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
+ <20240905-preemption-a750-t-v3-4-fd947699f7bc@gmail.com>
+ <20240906195444.owz4eralirekr7r7@hu-akhilpo-hyd.qualcomm.com>
+ <df85bf24-651c-4a35-929b-4de6c05555a1@gmail.com>
 Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <98222e56-d382-409c-9c17-a99cab08ec94@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <df85bf24-651c-4a35-929b-4de6c05555a1@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 09/09/2024 13:00, Caleb Connolly wrote:
->>>>  
->>>> +	connector-usb2 {
->>>> +		compatible = "gpio-usb-b-connector";
->>>> +		vbus-gpio = <&pm7325_gpios 9 GPIO_ACTIVE_HIGH>;
->>>> +		id-gpio = <&tlmm 61 GPIO_ACTIVE_HIGH>;
+On 9/9/24 3:15 PM, Antonino Maniscalco wrote:
+> On 9/6/24 9:54 PM, Akhil P Oommen wrote:
+>> On Thu, Sep 05, 2024 at 04:51:22PM +0200, Antonino Maniscalco wrote:
+>>> This patch implements preemption feature for A6xx targets, this allows
+>>> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
+>>> hardware as such supports multiple levels of preemption granularities,
+>>> ranging from coarse grained(ringbuffer level) to a more fine grained
+>>> such as draw-call level or a bin boundary level preemption. This patch
+>>> enables the basic preemption level, with more fine grained preemption
+>>> support to follow.
 >>>
->>> I don't think this is right, what's the revision of the board you have?
-> 
-> Still don't have schematics, this is based on downstream Qualcomm Linux.
+>>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+>>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+>>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+>>> ---
+>>>   drivers/gpu/drm/msm/Makefile              |   1 +
+>>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 293 +++++++++++++++++++++-
+>>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 161 ++++++++++++
+> ...
 >>
->> For sure any 'gpio' property is NAK and there is no way this passed
->> checks...
+>> we can use the lighter smp variant here.
+>>
+>>> +
+>>> +        if (a6xx_gpu->cur_ring == ring)
+>>> +            gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
+>>> +        else
+>>> +            ring->skip_inline_wptr = true;
+>>> +    } else {
+>>> +        ring->skip_inline_wptr = true;
+>>> +    }
+>>> +
+>>> +    spin_unlock_irqrestore(&ring->preempt_lock, flags);
+>>>   }
+>>>   static void get_stats_counter(struct msm_ringbuffer *ring, u32 
+>>> counter,
+>>> @@ -138,12 +231,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu 
+>>> *a6xx_gpu,
+>>
+>> set_pagetable checks "cur_ctx_seqno" to see if pt switch is needed or
+>> not. This is currently not tracked separately for each ring. Can you
+>> please check that?
 > 
-> ahh, gpios not gpio right?
+> I totally missed that. Thanks for catching it!
+> 
+>>
+>> I wonder why that didn't cause any gpu errors in testing. Not sure if I
+>> am missing something.
+>>
+> 
+> I think this is because, so long as a single context doesn't submit to 
+> two different rings with differenr priorities, we will only be incorrect 
+> in the sense that we emit more page table switches than necessary and 
+> never less. However untrusted userspace could create a context that 
+> submits to two different rings and that would lead to execution in the 
+> wrong context so we must fix this.
+> 
+>>>       /*
+>>>        * Write the new TTBR0 to the memstore. This is good for 
+>>> debugging.
+>>> +     * Needed for preemption
+>>>        */
+>>> -    OUT_PKT7(ring, CP_MEM_WRITE, 4);
+>>> +    OUT_PKT7(ring, CP_MEM_WRITE, 5);
+>>>       OUT_RING(ring, CP_MEM_WRITE_0_ADDR_LO(lower_32_bits(memptr)));
+>>>       OUT_RING(ring, CP_MEM_WRITE_1_ADDR_HI(upper_32_bits(memptr)));
+>>>       OUT_RING(ring, lower_32_bits(ttbr));
+>>> -    OUT_RING(ring, (asid << 16) | upper_32_bits(ttbr));
+>>> +    OUT_RING(ring, upper_32_bits(ttbr));
+>>> +    OUT_RING(ring, ctx->seqno);
+>>>       /*
+>>>        * Sync both threads after switching pagetables and enable BR only
+>>> @@ -268,6 +363,43 @@ static void a6xx_submit(struct msm_gpu *gpu, 
+>>> struct msm_gem_submit *submit)
+>>>       a6xx_flush(gpu, ring);
+>>>   }
+> ...
+>>> +    struct a6xx_preempt_record *record_ptr =
+>>> +        a6xx_gpu->preempt[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE;
+>>> +    u64 ttbr0 = ring->memptrs->ttbr0;
+>>> +    u32 context_idr = ring->memptrs->context_idr;
+>>> +
+>>> +    smmu_info_ptr->ttbr0 = ttbr0;
+>>> +    smmu_info_ptr->context_idr = context_idr;
+>>> +    record_ptr->wptr = get_wptr(ring);
+>>> +
+>>> +    /*
+>>> +     * The GPU will write the wptr we set above when we preempt. Reset
+>>> +     * skip_inline_wptr to make sure that we don't write WPTR to the 
+>>> same
+>>> +     * thing twice. It's still possible subsequent submissions will 
+>>> update
+>>> +     * wptr again, in which case they will set the flag to true. 
+>>> This has
+>>> +     * to be protected by the lock for setting the flag and updating 
+>>> wptr
+>>> +     * to be atomic.
+>>> +     */
+>>> +    ring->skip_inline_wptr = false;
+>>> +
+>>> +    spin_unlock_irqrestore(&ring->preempt_lock, flags);
+>>> +
+>>> +    gpu_write64(gpu,
+>>> +        REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO,
+>>> +        a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_SMMU_INFO);
+>>> +
+>>> +    gpu_write64(gpu,
+>>> +        REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
+>>> +        a6xx_gpu->preempt_iova[ring->id] + 
+>>> PREEMPT_OFFSET_PRIV_NON_SECURE);
+>>> +
+>>> +    preempt_offset_priv_secure =
+>>> +        
+>>> PREEMPT_OFFSET_PRIV_SECURE(adreno_gpu->info->preempt_record_size);
+>>> +    gpu_write64(gpu,
+>>> +        REG_A6XX_CP_CONTEXT_SWITCH_PRIV_SECURE_RESTORE_ADDR,
+>>> +        a6xx_gpu->preempt_iova[ring->id] + preempt_offset_priv_secure);
+>>
+>> Secure buffers are not supported currently, so we can skip this and the
+>> context record allocation. Anyway this has to be a separate buffer
+>> mapped in secure pagetable which don't currently have. We can skip the
+>> same in pseudo register packet too.
+>>
+> 
+> Mmm it would appear that not setting it causes an hang very early. I'll 
+> see if I can find out more about what is going on.
 
-Yes.
+Actually it was a mistake I had made when testing. The secure record 
+will be gone from the next revision.
 
 > 
-> sorry, should have caught this.
-
-dtbs_check :)
+>>> +
+>>> +    a6xx_gpu->next_ring = ring;
+>>> +
+> ...
+>>>   struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
+>>>
+>>> -- 
+>>> 2.46.0
+>>>
+> 
+> Best regards,
 
 Best regards,
-Krzysztof
+-- 
+Antonino Maniscalco <antomani103@gmail.com>
 
 
