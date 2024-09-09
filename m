@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-31244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EB849712A7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 10:54:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A25839712BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 10:58:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA6E61F21EBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 08:54:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 088ABB22DDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 08:58:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913501B1D7E;
-	Mon,  9 Sep 2024 08:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DC951B2ECC;
+	Mon,  9 Sep 2024 08:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wmLUSfCe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d5MHBE/6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B3D14B94A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 08:54:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE661B29D5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 08:58:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725872092; cv=none; b=fFevcqvKJ0BHgD0IVPi29Wkt2kznTKbCmH4OTvc+GfqoH3Egim/xi/RdJayUfqvuyu1YF5BKakT8jDeNO8LRc9hIqcEIQFXqGv6G5XhtqAdD7x6w4OU7gp5xvCfax4VgbSr4mAdTjGDOmVYcJQtUoSi8lf4urzdhR7afV/4Ik6Y=
+	t=1725872318; cv=none; b=ojb17BVLXqx7Q8mgwsoQxwohmbI4hSUZtftZGNc1Lc9MrIRf2uHWQwR5xhnV14cCNhhSWMNAvvftP3+JK8wQbSKjiMKPY+uxyinNcL806Vo99Bz/ww8g2GWbuBV5463EtvUVXMksaUeN9tLLIBZGHhGEA86K+phainDRcdO1SWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725872092; c=relaxed/simple;
-	bh=9NW2eWgUEPYGMgqTTAJOulDxRDM5ZibU1CDb2TG/UIU=;
+	s=arc-20240116; t=1725872318; c=relaxed/simple;
+	bh=hMgy8bX6Ok+Sly2wQ3k/uCmFxdR1J21buj1Oj+8Tu2k=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=bfpCgNGpgbcbSzWerTFsGeF43ebz6q1RlxTlJxwID7yJ8UMlbW8mRm7q/n/bMxbDutgvLqkAAXcOqR8KZlHYbM4MS9WxPRZ1iNdvsiPUWIgDUFEfs3rLkeb6BM8/KgtptnIilo3bOUS6o5vPExKzkgSF6WBrnymP1xecMtdRnWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wmLUSfCe; arc=none smtp.client-ip=209.85.218.46
+	 In-Reply-To:Content-Type; b=od2VB5ztjkqT3Yv11NjL98Hlzl/+A+6jzB3kLQU+NwUVlMyHPmveOjhAvqqoDHLm6JFAbBs9oYF/eIgbmAh0HhhGKWCRe/5RosEBECo9ldgEhSXPZtMdLP9dXqH224nsjiCBCHFqxL4DJSwinqB20s73R0vn30huwX6cwEjwpA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d5MHBE/6; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a8d64b27c45so33925266b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 01:54:50 -0700 (PDT)
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42ba9b47f4eso23089225e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 01:58:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725872089; x=1726476889; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725872314; x=1726477114; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yG/d1qUdxYTFFDjEy58VtD5KHrMD8xW4N/b1u+y2Cz0=;
-        b=wmLUSfCeZfx5N1YW7DQI+Nx8gTyE0MzE5qmzP1M15eOOtXLDV4Hx5iuyOHZLrv2CTq
-         vsHCI4TeqFki44NEgXxIXmP9ciBb3ewhCVw+EVx4pxTVtnwLSjQRu3mxrqJxrbj/NHLr
-         0te7IOIx5G2dFhmGPh69O3s+QYQtLp9NbGDgr71U+pPHHveP8j8XuuT7CRAkXOfQVBXO
-         eP47SrE3tjLWvwXKXmAmoFpmksml42PSF0gMH0GBqRB+G0VKjIUh+9gcneJZ/DJ7PTDa
-         qIjwXMrAQpoAKmMOGw6WdBerr9Mc/KtHoc2hWoMxAy+79FMXt6ScumW+Oa9+YgKUGBru
-         kWqw==
+        bh=PMvHs5Ab7mHAlvlrWenHe3/+itZxK87jYym+SorE/SA=;
+        b=d5MHBE/6nV+q3S16jwp9mTU0YKD+3PL9RxdDFilnfCN/sOL49WpQqSGFjp9mHijrqZ
+         tUJ6Bqi5A/qSqJMJ9rZAN89zezDJkGTapOpIWrbZekkWsUUEGcuV4lJ3yUmdfu5Nrn3A
+         OuPFDb1O/BCL8Fq09KwiIQXoYHCwWZCAL2Pu8yF1ypVLz8Nf7OgO6+MBiabzU4nTsC4r
+         IdGvmNbwl5Rswb88gxKHjUo+vwYYI/0n6jX9ErZqraaQ96ws/0MOlqybPi8ZWVXFjkiI
+         4HVO6B9QP4pnDVl91nPIk4v7HJwNqIF3qseXJg9mlimPEix/a8XejffrsL/nkMhiG4Ew
+         BMFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725872089; x=1726476889;
+        d=1e100.net; s=20230601; t=1725872314; x=1726477114;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=yG/d1qUdxYTFFDjEy58VtD5KHrMD8xW4N/b1u+y2Cz0=;
-        b=nYVpnm47sw1UazzvypJyv3HpPWrdmZYdDAgywalwYusGaCyCbrZzhDBQVTu1kVgRCC
-         XtLrwoJdfmjkNHJtsPdrsT3k9fQmIk9pvmBthyVynOQz8LPDA0Z+SVHXnogUjZxlAuZR
-         TJiyq6QHfKuU9VL4eZ/Ba5BGlX48k1PrvYUmcYa6atjm7vI4va6unsl+I8lPDIRjyRRN
-         A5keoCXqrSfDaKHKthnFuR8vM12BfBrVwl/Vv3fbuToEPnwoJexPp5OdnEVHUnS32GZC
-         bWZ1K8Jlv8dE0rayLcl0zYQXaZahP350aZwfO0vOfcXz/L/tcb6N6xCP+jZw03yVwtdL
-         nsSA==
-X-Forwarded-Encrypted: i=1; AJvYcCXklFlFIzvhtKmT2g7WZJOiIQNMsl5kBBw5TJOZydW03AYJodp6EqGQgcygPiwJ/4WyXhbp2uE/K2joBctP@vger.kernel.org
-X-Gm-Message-State: AOJu0YydRxC8fbXz11yvt2r00ACzjqtRHRJx2PAF6EJZcygcTLbsm4Cs
-	WR55TI3X25JXccek+I4NOLx1qzqQLZgMSL20GSiifWJZ2FVLfrG74uV4ehpOUlc=
-X-Google-Smtp-Source: AGHT+IEvfzk/SxAXufH/seMQzMP3N3vvMRUKKCoLzWJKRZt4xOsE+GdEic8FWJngVTj/WRC44oGsQA==
-X-Received: by 2002:a17:906:da85:b0:a7a:9f0f:ab2c with SMTP id a640c23a62f3a-a8a8866090amr889703866b.29.1725872088318;
-        Mon, 09 Sep 2024 01:54:48 -0700 (PDT)
+        bh=PMvHs5Ab7mHAlvlrWenHe3/+itZxK87jYym+SorE/SA=;
+        b=QzgU5E4PIHNX09+BPiejLUy0qno3N97f2rHpcXiJ3D365UV98AzjIT5fWzyiqAIHsn
+         EyiWlOBXiV99BxB5sbUoC9Zmt8i1Y1yhzCxtJTexkTrQJ2UDvN2YCyOgiIl1U+koyoUU
+         m8/9ao3GrLmaQ2cTUGn2IE7kWNCCSozPoYIbQWXIJA5Ma6LH/vtSMu3yk5uYMTJswA7l
+         JxPoyyXvDhIhy5r55+uYoRQVl4nqZ/LwCLIwwYi4E8POfTYNRkNGxI209SA8gwh6fagS
+         uchwKrGwx/4ROsBZsNmSF7Ba3L697PcMr0z5ddhg6vlpjLPGm7DwNHhgug4ElRZcycnx
+         6alA==
+X-Forwarded-Encrypted: i=1; AJvYcCWWQwb5C+MOkGybL11Hxwx+fmPXZRIfMfbbqcjVGKVzKyORAIqIX1m7er5sEUM8S2ozQZfJK8NZqpyqmKoG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwdGaKhABjJ1N0WeXXMu4x4Dia5Mv77mAyjd4MxmNkn9vkXC0G7
+	72DFgKeK3NWDl13mUlqnMJSp7GM+45TSjZnC//w62hGy7tue5FoFeq0mCYcsqzU=
+X-Google-Smtp-Source: AGHT+IG6v8/1xNArCrOhm5mi79N9gIxXGtQTCtPLSsLWPvDJATIAkCocS/kMp98RIRO0ro21ssL4Yw==
+X-Received: by 2002:a05:600c:468a:b0:428:b4a:7001 with SMTP id 5b1f17b1804b1-42c95be865emr103023695e9.15.1725872313704;
+        Mon, 09 Sep 2024 01:58:33 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:63a3:6883:a358:b850? ([2a01:e0a:982:cbb0:63a3:6883:a358:b850])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25ce96d9sm307445466b.157.2024.09.09.01.54.47
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956654f4sm5446815f8f.43.2024.09.09.01.58.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Sep 2024 01:54:48 -0700 (PDT)
-Message-ID: <b3a5dd54-90ba-4d75-9650-efbff12cddeb@linaro.org>
-Date: Mon, 9 Sep 2024 10:54:48 +0200
+        Mon, 09 Sep 2024 01:58:33 -0700 (PDT)
+Message-ID: <66953e65-2468-43b8-9ccf-54671613c4ab@linaro.org>
+Date: Mon, 9 Sep 2024 10:58:30 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,20 +78,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
- between two subsystems
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
- Frank.Li@nxp.com, konradybcio@kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
- <20240906191438.4104329-5-quic_msavaliy@quicinc.com>
+Subject: Re: [PATCH v6 09/17] soc: qcom: ice: add HWKM support to the ICE
+ driver
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>,
+ Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>,
+ Mikulas Patocka <mpatocka@redhat.com>,
+ Adrian Hunter <adrian.hunter@intel.com>,
+ Asutosh Das <quic_asutoshd@quicinc.com>,
+ Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson
+ <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>,
+ "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+ "Martin K. Petersen" <martin.petersen@oracle.com>,
+ Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>,
+ Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>,
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Gaurav Kashyap <quic_gaurkash@quicinc.com>, linux-block@vger.kernel.org,
+ linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org,
+ linux-scsi@vger.kernel.org, linux-fscrypt@vger.kernel.org,
+ linux-fsdevel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
+ <20240906-wrapped-keys-v6-9-d59e61bc0cb4@linaro.org>
+ <7uoq72bpiqmo2olwpnudpv3gtcowpnd6jrifff34ubmfpijgc6@k6rmnalu5z4o>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -118,125 +135,128 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20240906191438.4104329-5-quic_msavaliy@quicinc.com>
+In-Reply-To: <7uoq72bpiqmo2olwpnudpv3gtcowpnd6jrifff34ubmfpijgc6@k6rmnalu5z4o>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi,
-
-On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
-> Add support to share I2C SE by two Subsystems in a mutually exclusive way.
-> Use  "qcom,shared-se" flag in a particular i2c instance node if the
-> usecase requires i2c controller to be shared.
+On 07/09/2024 00:07, Dmitry Baryshkov wrote:
+> On Fri, Sep 06, 2024 at 08:07:12PM GMT, Bartosz Golaszewski wrote:
+>> From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+>>
+>> Qualcomm's ICE (Inline Crypto Engine) contains a proprietary key
+>> management hardware called Hardware Key Manager (HWKM). Add HWKM support
+>> to the ICE driver if it is available on the platform. HWKM primarily
+>> provides hardware wrapped key support where the ICE (storage) keys are
+>> not available in software and instead protected in hardware.
+>>
+>> When HWKM software support is not fully available (from Trustzone), there
+>> can be a scenario where the ICE hardware supports HWKM, but it cannot be
+>> used for wrapped keys. In this case, raw keys have to be used without
+>> using the HWKM. We query the TZ at run-time to find out whether wrapped
+>> keys support is available.
+>>
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
+>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+>> ---
+>>   drivers/soc/qcom/ice.c | 152 +++++++++++++++++++++++++++++++++++++++++++++++--
+>>   include/soc/qcom/ice.h |   1 +
+>>   2 files changed, 149 insertions(+), 4 deletions(-)
+>>
+>>   int qcom_ice_enable(struct qcom_ice *ice)
+>>   {
+>> +	int err;
+>> +
+>>   	qcom_ice_low_power_mode_enable(ice);
+>>   	qcom_ice_optimization_enable(ice);
+>>   
+>> -	return qcom_ice_wait_bist_status(ice);
+>> +	if (ice->use_hwkm)
+>> +		qcom_ice_enable_standard_mode(ice);
+>> +
+>> +	err = qcom_ice_wait_bist_status(ice);
+>> +	if (err)
+>> +		return err;
+>> +
+>> +	if (ice->use_hwkm)
+>> +		qcom_ice_hwkm_init(ice);
+>> +
+>> +	return err;
+>>   }
+>>   EXPORT_SYMBOL_GPL(qcom_ice_enable);
+>>   
+>> @@ -150,6 +282,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
+>>   		return err;
+>>   	}
+>>   
+>> +	if (ice->use_hwkm) {
+>> +		qcom_ice_enable_standard_mode(ice);
+>> +		qcom_ice_hwkm_init(ice);
+>> +	}
+>>   	return qcom_ice_wait_bist_status(ice);
+>>   }
+>>   EXPORT_SYMBOL_GPL(qcom_ice_resume);
+>> @@ -157,6 +293,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
+>>   int qcom_ice_suspend(struct qcom_ice *ice)
+>>   {
+>>   	clk_disable_unprepare(ice->core_clk);
+>> +	ice->hwkm_init_complete = false;
+>>   
+>>   	return 0;
+>>   }
+>> @@ -206,6 +343,12 @@ int qcom_ice_evict_key(struct qcom_ice *ice, int slot)
+>>   }
+>>   EXPORT_SYMBOL_GPL(qcom_ice_evict_key);
+>>   
+>> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice)
+>> +{
+>> +	return ice->use_hwkm;
+>> +}
+>> +EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
+>> +
+>>   static struct qcom_ice *qcom_ice_create(struct device *dev,
+>>   					void __iomem *base)
+>>   {
+>> @@ -240,6 +383,7 @@ static struct qcom_ice *qcom_ice_create(struct device *dev,
+>>   		engine->core_clk = devm_clk_get_enabled(dev, NULL);
+>>   	if (IS_ERR(engine->core_clk))
+>>   		return ERR_CAST(engine->core_clk);
+>> +	engine->use_hwkm = qcom_scm_has_wrapped_key_support();
 > 
-> I2C driver just need to mark first_msg and last_msg flag to help indicate
-> GPI driver to  take lock and unlock TRE there by protecting from concurrent
-> access from other EE or Subsystem.
-> 
-> gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
-> Unlock TRE for the respective transfer operations.
-> 
-> Since the GPIOs are also shared for the i2c bus between two SS, do not
-> touch GPIO configuration during runtime suspend and only turn off the
-> clocks. This will allow other SS to continue to transfer the data
-> without any disturbance over the IO lines.
+> This still makes the decision on whether to use HW-wrapped keys on
+> behalf of a user. I suppose this is incorrect. The user must be able to
+> use raw keys even if HW-wrapped keys are available on the platform. One
+> of the examples for such use-cases is if a user prefers to be able to
+> recover stored information in case of a device failure (such recovery
+> will be impossible if SoC is damaged and HW-wrapped keys are used).
 
-This doesn't answer my question about what would be the behavior if one
-use uses, for example, GPI DMA, and the Linux kernel FIFO mode or SE DMA ?
+Isn't that already the case ? the BLK_CRYPTO_KEY_TYPE_HW_WRAPPED size is
+here to select HW-wrapped key, otherwise the ol' raw key is passed.
+Just look the next patch.
 
-Because it seems to "fix" only the GPI DMA shared case.
+Or did I miss something ?
 
 Neil
 
 > 
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> ---
->   drivers/i2c/busses/i2c-qcom-geni.c | 29 ++++++++++++++++++++++-------
->   1 file changed, 22 insertions(+), 7 deletions(-)
+>>   
+>>   	if (!qcom_ice_check_supported(engine))
+>>   		return ERR_PTR(-EOPNOTSUPP);
+>> diff --git a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h
+>> index 9dd835dba2a7..1f52e82e3e1c 100644
+>> --- a/include/soc/qcom/ice.h
+>> +++ b/include/soc/qcom/ice.h
+>> @@ -34,5 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
+>>   			 const struct blk_crypto_key *bkey,
+>>   			 u8 data_unit_size, int slot);
+>>   int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
+>> +bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
+>>   struct qcom_ice *of_qcom_ice_get(struct device *dev);
+>>   #endif /* __QCOM_ICE_H__ */
+>>
+>> -- 
+>> 2.43.0
+>>
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index eebb0cbb6ca4..ee2e431601a6 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -1,5 +1,6 @@
->   // SPDX-License-Identifier: GPL-2.0
->   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
->   
->   #include <linux/acpi.h>
->   #include <linux/clk.h>
-> @@ -99,6 +100,7 @@ struct geni_i2c_dev {
->   	struct dma_chan *rx_c;
->   	bool gpi_mode;
->   	bool abort_done;
-> +	bool is_shared;
->   };
->   
->   struct geni_i2c_desc {
-> @@ -602,6 +604,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->   	peripheral.clk_div = itr->clk_div;
->   	peripheral.set_config = 1;
->   	peripheral.multi_msg = false;
-> +	peripheral.shared_se = gi2c->is_shared;
->   
->   	for (i = 0; i < num; i++) {
->   		gi2c->cur = &msgs[i];
-> @@ -612,6 +615,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->   		if (i < num - 1)
->   			peripheral.stretch = 1;
->   
-> +		peripheral.first_msg = (i == 0);
-> +		peripheral.last_msg = (i == num - 1);
->   		peripheral.addr = msgs[i].addr;
->   
->   		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> @@ -631,8 +636,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->   		dma_async_issue_pending(gi2c->tx_c);
->   
->   		time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
-> -		if (!time_left)
-> +		if (!time_left) {
-> +			dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
-> +						gi2c->cur->flags, gi2c->cur->addr);
->   			gi2c->err = -ETIMEDOUT;
-> +		}
->   
->   		if (gi2c->err) {
->   			ret = gi2c->err;
-> @@ -800,6 +808,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
->   		gi2c->clk_freq_out = KHZ(100);
->   	}
->   
-> +	if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
-> +		gi2c->is_shared = true;
-> +		dev_dbg(&pdev->dev, "Shared SE Usecase\n");
-> +	}
-> +
->   	if (has_acpi_companion(dev))
->   		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
->   
-> @@ -962,14 +975,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
->   	struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
->   
->   	disable_irq(gi2c->irq);
-> -	ret = geni_se_resources_off(&gi2c->se);
-> -	if (ret) {
-> -		enable_irq(gi2c->irq);
-> -		return ret;
-> -
-> +	if (gi2c->is_shared) {
-> +		geni_se_clks_off(&gi2c->se);
->   	} else {
-> -		gi2c->suspended = 1;
-> +		ret = geni_se_resources_off(&gi2c->se);
-> +		if (ret) {
-> +			enable_irq(gi2c->irq);
-> +			return ret;
-> +		}
->   	}
-> +	gi2c->suspended = 1;
->   
->   	clk_disable_unprepare(gi2c->core_clk);
->   
 
 
