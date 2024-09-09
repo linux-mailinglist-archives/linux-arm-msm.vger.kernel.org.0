@@ -1,202 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-31315-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31316-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70C72971A2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:57:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D6C2971A4D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:04:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E73DE1F23D43
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 12:57:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A0D21F237C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:04:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E5221B9B51;
-	Mon,  9 Sep 2024 12:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB0191B5EB2;
+	Mon,  9 Sep 2024 13:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kQzRz1gJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="atZ9rt2l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E2F1B9B41
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 12:57:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7001B78F7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:04:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725886633; cv=none; b=eOtYHrkrd8zXZLTeBCjlmbBIhQfcWIi+63b3TzYiIHMVsgiVLIvCrP6EEKQRmuQiQLWQF2vEhwUTtCXzJdrBQAnom3xpheTbH41iTYD3+vxARoNgHY7fsHluqKwOVSld2qJXaiQ3eBhCXopF+lpw85UwLuFnlAscpsCKw5G8/kI=
+	t=1725887072; cv=none; b=EE20mEsUO3EJo4A6kW+pFhrX9l+K/5Kpxrzq8Pq45vET3b5ztEjm4wf7S2/EiPlyS4cWEHGpXmj3g0WlP2KQWxiJ0AnGxWXVgTWGa3gaGt68XV01hDgPRrmBCEg85WhqupQc79+QJXcjvyMinxLtTtdu7cVXC69tuuNs1FxlSeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725886633; c=relaxed/simple;
-	bh=VJrDj21vOIS62JlQsT0v0+UaclTuE4zpD/NzqT9l+xA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YrLBxf42Y2IZ2VGestG+v1orlfFOymYKmVSqDS6y+SR+XIs0EpjF+ZzS6SH8xQlgAd+OLIU4VT/75xJEPK+yHCwwm9J+TKh/KDXCzkpMfyVD55cDFRvZqeU4UL5S8Wy52odrYyC86SZynDhgEnOD1uJI374D7A9/1HJTiGBAXsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kQzRz1gJ; arc=none smtp.client-ip=209.85.167.43
+	s=arc-20240116; t=1725887072; c=relaxed/simple;
+	bh=lx2CYDYSR1CbT/CmMmbFTKQTc/fLR1QO5Ubs+QXtE/I=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=S2ODLAXRnIq/61x9tg+As7DgDl7FZTIoedCD6BY6nZzW94guZAnF/TH+d8WADLVKH82ETuc6UNSefHszFYpGqaYqvKjvy8ecTOGKtwJrNFF9VS1tn3zXsWMeCSLLFys7R//tP+WaUjYlQGd6yOUcEB2KIesdiL4/34ZZTvkv/8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=atZ9rt2l; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso7947109e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 05:57:10 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-375e5c12042so2397902f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:04:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725886629; x=1726491429; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NdmWO/y6gEncx0yc/KC1ZIgIx6TLjxCgyEgLMmNM1FU=;
-        b=kQzRz1gJtuaDoUuZCDWXVo1RLgWTeZPeLr841Le/PBOGCvzGNnUNcL51dQs5zShCP4
-         YyNIACLuNg0Rie2LLMecj474nY+h0+Bp5ay/08FlQQ/7NYkKVQWEiQtUBl/uk0025Bjo
-         ulj0KlkQduawJS1CEFlHTw9a0ytB95jF+kTYwFrThda2t75M9g4PMM/A0xLAkUexu4uL
-         4x4Zyi7PjMH+eGHo3BSw+FTBP0bDrB/7hMisVIRD3hu3Tfizye7kD8D56+LnfG3xUHdm
-         hli+QOqde2W42z86xhcz7tvDOqqaeT7pdWAeDXL5Z5PVqeeoBPuqNIwKIH+J+C1LdvWv
-         1i1w==
+        d=linaro.org; s=google; t=1725887068; x=1726491868; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n5JRzxSbj4JDQk1DvAF0xquTVL5OLgOLKN07OgcC5X4=;
+        b=atZ9rt2lAnSRS/EyOlWjpUghBJRVwnVmX/Dmg7PJ5wJ3oICEMd88FJPpq8XRSwV/AU
+         c87d4fRjnkMm+mUs9W40jPzH7Tb32pVdc6WWttJMGIWd94DTl32PzrSm4nLxX7kNhpxu
+         BEkvDpKfDrnV4LCkGcopE8LORDGJrKmuShbbwB/16Sk6NfqoyuKXC29MvyQMOsr0/8CV
+         xHtvbVNjgLc344lYXFjp0sN+6dGZPS56L+emA8PUA9nPBmGC/mdsz2ba52MMvoWTEqyN
+         tK8m6DHIF6P09EGXHJ0Wa/MoDHYFYqSNI2CRM7Z134fwdGYzaUhfiqUBkOXbF/FUkKdR
+         eTiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725886629; x=1726491429;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NdmWO/y6gEncx0yc/KC1ZIgIx6TLjxCgyEgLMmNM1FU=;
-        b=IYV4Xkpb35uUDjleQmSXBauaMO7u6JwQA69E/iCok2iENI7dl762gBfbtC4jPKt3gn
-         ngo0VhemtIFO4UY+9a08i1J3ojfrFrLxV7qcfOwwhWZELjqOSo2Im6xa41y1LqP1xPJA
-         56pNrDlOALsEH5Mw/5hET7hEQbSqRHpOaCmweCHMH1DUM4dYaGuEEhKYhc/m+bbAIMPa
-         zTS9exqTAtiGZuT3KOUy17TrJikl/F6Pblw1CnIpLgLLkzUD8UB/xK3Ni4d9V70Zh/sT
-         wFCDCd9X6FDj6BXPTz42pDABWllxcPZbXVz64IMXZGEBiLHZlNQZZsOI3XB9GFAhKRu5
-         vBTw==
-X-Forwarded-Encrypted: i=1; AJvYcCUH77WA8vJG7Y12jBaOq5vfo2gUbmjPDz5VM6t1l1DTLy+11qA++5Bubo7FlY7FeJfDIPWpq74NoU2aA4VI@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXt+0Vt1M0MICA+kOagWF8wZPE2l8tMrf3VdZNTnU9QIjl5szk
-	qm1ExgMmA8qCpbpH83F7TLovq1GhhCPjAXw4H6SVnsBmOMtRlU6tANAioOASDn8=
-X-Google-Smtp-Source: AGHT+IGg6lD6GrF9orDPwQmF2EnUQWjg+tjIcVSrbmI3BFu/hSrE5+5/oRxQV8ihfoTz1okFEZmoYw==
-X-Received: by 2002:a05:6512:2313:b0:533:40dc:8248 with SMTP id 2adb3069b0e04-536587a5453mr8033269e87.11.1725886628058;
-        Mon, 09 Sep 2024 05:57:08 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f90d44asm749391e87.247.2024.09.09.05.57.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 05:57:07 -0700 (PDT)
-Date: Mon, 9 Sep 2024 15:57:06 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Kalle Valo <kvalo@kernel.org>
-Cc: Miaoqing Pan <quic_miaoqing@quicinc.com>, ath11k@lists.infradead.org, 
-	Dmitry Baryshkov <dbaryshkov@gmail.com>, linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	agross@kernel.org, andersson@kernel.org, linux-kernel@vger.kernel.org, 
-	konrad.dybcio@linaro.org, mchehab@kernel.org, quic_vgarodia@quicinc.com, 
-	stanimir.k.varbanov@gmail.com
-Subject: Re: [PATCH] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Message-ID: <5mz7b4tou6iohqkdt5igt4cajt4hzvibvphcyo7bzk3uf7jg45@unijiusqdpga>
-References: <20240905064817.3885953-1-quic_miaoqing@quicinc.com>
- <d6mt6i4a6xa3juvn4gzytuhsot2kx7dn4wmm3kmgwywfj2hcau@leecyxx36wql>
- <87a1a50f-f485-4a4f-91fc-34fa19312519@quicinc.com>
- <6to5p2dgsu6pvebkmkliojv5kfhnairigd46tmbraimxij7ddu@h6ziv7uwjeeq>
- <871q1tgj1f.fsf@kernel.org>
- <CAA8EJpp9=tm1WAEc22-DZtTZsErqAiZM-0Cu-kc18E92frdYYA@mail.gmail.com>
- <87wmjlf1vf.fsf@kernel.org>
+        d=1e100.net; s=20230601; t=1725887068; x=1726491868;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=n5JRzxSbj4JDQk1DvAF0xquTVL5OLgOLKN07OgcC5X4=;
+        b=KJrCVgGrb19/b7CqusZBcD1tn6zOuzbSsmF0F/UPVQiGt88u0bai/Az2qjjTfppKIm
+         dpk9saReyJGMQao8AW3IWo1g95PrDlZ+pJqAO6yNc72asaaGXEdbQq/BWNKWqhSXes3+
+         +TbbYT5SJlXKtdwOrbFmZIBxdM5dMc6MJghlVQwHlzJLj/db6a5FwBzGlbp67u5KJZuE
+         7Pcb1HAD0cHejmjQZvdgr0seyUkUfbh/di82JaiJopUciOTcn9l18xGp4fe9wniG+68R
+         bv7+iQYzmt2TsvMviCB0Q1Lm3a+Bb2dobM9yGVqxr8fwZBhM57P7AUz6fZ81COFK5qxQ
+         yCvw==
+X-Forwarded-Encrypted: i=1; AJvYcCWSAAPod6gmMC8UaK3c09TnK9l9Vq9ebV1UD73ahw/ClNKqr+hSxiVDH4IiMxo8rMa5vEgUtavWfmC6P3Qf@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWRUXBWZ0YjleBHBDh4tgz6qn4K88sAOvP6RsSc+G8hlfafyUD
+	bzZyABfOShi5QZFqyPgc7RO5yr/nOk1txPSmHW6FRfYCVmI7bo6ruwofICQPdYU=
+X-Google-Smtp-Source: AGHT+IH3gxY1z/lOYMSHoUdy0ssWQK8afuRORmstaN/fY3SrpIwZPg8k+EH1IZysvKPtqjBSYN/Q8Q==
+X-Received: by 2002:a05:6000:a84:b0:35f:122e:bd8c with SMTP id ffacd0b85a97d-378895ca7fbmr7310933f8f.17.1725887067538;
+        Mon, 09 Sep 2024 06:04:27 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:63a3:6883:a358:b850? ([2a01:e0a:982:cbb0:63a3:6883:a358:b850])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956d2ee6sm5973948f8f.83.2024.09.09.06.04.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 09 Sep 2024 06:04:27 -0700 (PDT)
+Message-ID: <3dddd226-c726-434e-8828-c12f76a71752@linaro.org>
+Date: Mon, 9 Sep 2024 15:04:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87wmjlf1vf.fsf@kernel.org>
+User-Agent: Mozilla Thunderbird
+From: neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
+ between two subsystems
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+ konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+ vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
+ Frank.Li@nxp.com, konradybcio@kernel.org
+Cc: quic_vdadhani@quicinc.com
+References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
+ <20240906191438.4104329-5-quic_msavaliy@quicinc.com>
+ <b3a5dd54-90ba-4d75-9650-efbff12cddeb@linaro.org>
+ <3bd27b6d-74b8-4f7b-b3eb-64682442bbda@quicinc.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <3bd27b6d-74b8-4f7b-b3eb-64682442bbda@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 09, 2024 at 03:27:48PM GMT, Kalle Valo wrote:
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On 09/09/2024 11:18, Mukesh Kumar Savaliya wrote:
+> Hi Neil,
 > 
-> > On Mon, 9 Sept 2024 at 14:31, Kalle Valo <kvalo@kernel.org> wrote:
-> >
-> >>
-> >> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
-> >>
-> >> > On Fri, Sep 06, 2024 at 08:19:28AM GMT, Miaoqing Pan wrote:
-> >> >
-> >> >>
-> >> >>
-> >> >> On 9/5/2024 8:49 PM, Dmitry Baryshkov wrote:
-> >> >> > On Thu, Sep 05, 2024 at 02:48:17PM GMT, Miaoqing Pan wrote:
-> >> >> > > Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-> >> >> > > board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
-> >> >> > >
-> >> >> > > Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-> >> >> > > ---
-> >> >> > >   arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 119 +++++++++++++++++++++
-> >> >> > >   arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
-> >> >> > >   2 files changed, 120 insertions(+), 1 deletion(-)
-> >> >> > >
-> >> >> > > @@ -837,3 +939,20 @@ &usb_2_hsphy {
-> >> >> > >   &xo_board_clk {
-> >> >> > >          clock-frequency = <38400000>;
-> >> >> > >   };
-> >> >> > > +
-> >> >> > > +&pcieport0 {
-> >> >> > > +        wifi@0 {
-> >> >> > > +                compatible = "pci17cb,1101";
-> >> >> > > +                reg = <0x10000 0x0 0x0 0x0 0x0>;
-> >> >> > > +
-> >> >> > > +                vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-> >> >> > > +                vddaon-supply = <&vreg_pmu_aon_0p59>;
-> >> >> > > +                vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-> >> >> > > +                vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-> >> >> > > +                vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-> >> >> > > +                vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-> >> >> > > +                vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-> >> >> > > +                vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-> >> >> > > +                vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-> >> >> >
-> >> >> > Please add
-> >> >> >
-> >> >> > qcom,ath11k-calibration-variant = "name";
-> >> >>
-> >> >> No need, here the WiFi node is for 'drivers/pci/pwrctl', not ath11k driver.
-> >> >
-> >> > NAK, nodes describe hardware, not drivers. And we have had enough issues
-> >> > with the WCN wifi having collisions on the board-id / chip-id / etc.
-> >> >
-> >> > Maybe we should make calibration-data required for the DT-based systems?
-> >> > Kalle, WDYT?
-> >>
-> >> I don't know exactly what hardware you are referring so this is just a
-> >> quick and vague answer, take all this as grain of salt.
-> >>
-> >> I don't have any numbers but I'm assuming most of the
-> >> ath10k/ath11k/ath12k devices have the calibration data stored in OTP
-> >> inside the chip. There are also devices which store the calibration
-> >> outside the chip, for example in DT, but my understanding is that they
-> >> are a minority.
-> >
-> > Please excuse me, the comment was about the
-> > qcom,athNk-calibration-variant
-> 
-> Ah :) In case you were wondering, I was talking above about
-> qcom,ath10k-calibration-data property which is the full calibration
-> data, board files are not used at all in that case. So please ignore all
-> that I said.
-> 
-> > the property used to identify the BDF within board-2.bin. Currently
-> > it is optional, which leads to developers omitting it. I think it's
-> > worth making it a required property for new DT devices, making sure
-> > that we don't have an issue with the plenty of boards programmed to
-> > use 0xff as the board_id. Or just using the same ID, but different BDF
-> > files.
-> 
-> This is also a quick answer, the merge window is getting close and we
-> are finalising the ath12k MLO support so not much free time right now.
-> 
-> Some chipsets do provide unique information for the ath10k/ath11k/ath12k
-> driver to choose the correct board file, but I guess they are mostly
-> mobile chipsets. Though not even all mobile chipsets provide that, as
-> you are painfully aware. For AP chipsets it seems to be a rule that they
-> don't provide unique information to choose the board file and a variant
-> field is always needed. So I think there is a point in your proposal.
+> On 9/9/2024 2:24 PM, neil.armstrong@linaro.org wrote:
+>> Hi,
+>>
+>> On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
+>>> Add support to share I2C SE by two Subsystems in a mutually exclusive way.
+>>> Use  "qcom,shared-se" flag in a particular i2c instance node if the
+>>> usecase requires i2c controller to be shared.
+>>>
+>>> I2C driver just need to mark first_msg and last_msg flag to help indicate
+>>> GPI driver to  take lock and unlock TRE there by protecting from concurrent
+>>> access from other EE or Subsystem.
+>>>
+>>> gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
+>>> Unlock TRE for the respective transfer operations.
+>>>
+>>> Since the GPIOs are also shared for the i2c bus between two SS, do not
+>>> touch GPIO configuration during runtime suspend and only turn off the
+>>> clocks. This will allow other SS to continue to transfer the data
+>>> without any disturbance over the IO lines.
+>>
+>> This doesn't answer my question about what would be the behavior if one
+>> use uses, for example, GPI DMA, and the Linux kernel FIFO mode or SE DMA ?
+>>
+> Shared usecase is not supported for non GSI mode (FIFO and DMA), it should be static usecase. Dynamic sharing from two clients of two subsystems is only for GSI mode. Hope this helps ?
 
-Ack, thanks :-)
+Sure, this is why I proposed on v1 cover letter reply to add:
+==============><=====================================================================
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index ee2e431601a6..a15825ea56de 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -885,7 +885,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
+          else
+                  fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
 
-> 
-> Backward compatibility is important but I think we already handle that,
-> at least in ath11k, as it's first try with variant field and then
-> without variant. But this needs more investigation on both ath11k and
-> ath12k. I hope for ath10k we would not need to touch the driver anymore.
-> 
-> Can we revisit this in few weeks, after MLO is in better shape, and
-> maybe you could start a new thread?
+-       if (fifo_disable) {
++       if (gi2c->is_shared || fifo_disable) {
+                  /* FIFO is disabled, so we can only use GPI DMA */
+                  gi2c->gpi_mode = true;
+                  ret = setup_gpi_dma(gi2c);
+==============><=====================================================================
 
-Sure. Let's agree that I'll send a patch after -rc1, if I don't forget
-about it.
+Thanks,
+Neil
 
--- 
-With best wishes
-Dmitry
+>> Because it seems to "fix" only the GPI DMA shared case.
+>>
+>> Neil
+>>
+>>>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> ---
+>>>   drivers/i2c/busses/i2c-qcom-geni.c | 29 ++++++++++++++++++++++-------
+>>>   1 file changed, 22 insertions(+), 7 deletions(-)
+>>>
+>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> index eebb0cbb6ca4..ee2e431601a6 100644
+>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> @@ -1,5 +1,6 @@
+>>>   // SPDX-License-Identifier: GPL-2.0
+>>>   // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+>>> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>>   #include <linux/acpi.h>
+>>>   #include <linux/clk.h>
+>>> @@ -99,6 +100,7 @@ struct geni_i2c_dev {
+>>>       struct dma_chan *rx_c;
+>>>       bool gpi_mode;
+>>>       bool abort_done;
+>>> +    bool is_shared;
+>>>   };
+>>>   struct geni_i2c_desc {
+>>> @@ -602,6 +604,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+>>>       peripheral.clk_div = itr->clk_div;
+>>>       peripheral.set_config = 1;
+>>>       peripheral.multi_msg = false;
+>>> +    peripheral.shared_se = gi2c->is_shared;
+>>>       for (i = 0; i < num; i++) {
+>>>           gi2c->cur = &msgs[i];
+>>> @@ -612,6 +615,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+>>>           if (i < num - 1)
+>>>               peripheral.stretch = 1;
+>>> +        peripheral.first_msg = (i == 0);
+>>> +        peripheral.last_msg = (i == num - 1);
+>>>           peripheral.addr = msgs[i].addr;
+>>>           ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
+>>> @@ -631,8 +636,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
+>>>           dma_async_issue_pending(gi2c->tx_c);
+>>>           time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
+>>> -        if (!time_left)
+>>> +        if (!time_left) {
+>>> +            dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
+>>> +                        gi2c->cur->flags, gi2c->cur->addr);
+>>>               gi2c->err = -ETIMEDOUT;
+>>> +        }
+>>>           if (gi2c->err) {
+>>>               ret = gi2c->err;
+>>> @@ -800,6 +808,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>>           gi2c->clk_freq_out = KHZ(100);
+>>>       }
+>>> +    if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
+>>> +        gi2c->is_shared = true;
+>>> +        dev_dbg(&pdev->dev, "Shared SE Usecase\n");
+>>> +    }
+>>> +
+>>>       if (has_acpi_companion(dev))
+>>>           ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
+>>> @@ -962,14 +975,16 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
+>>>       struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
+>>>       disable_irq(gi2c->irq);
+>>> -    ret = geni_se_resources_off(&gi2c->se);
+>>> -    if (ret) {
+>>> -        enable_irq(gi2c->irq);
+>>> -        return ret;
+>>> -
+>>> +    if (gi2c->is_shared) {
+>>> +        geni_se_clks_off(&gi2c->se);
+>>>       } else {
+>>> -        gi2c->suspended = 1;
+>>> +        ret = geni_se_resources_off(&gi2c->se);
+>>> +        if (ret) {
+>>> +            enable_irq(gi2c->irq);
+>>> +            return ret;
+>>> +        }
+>>>       }
+>>> +    gi2c->suspended = 1;
+>>>       clk_disable_unprepare(gi2c->core_clk);
+>>
+>>
+
 
