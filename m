@@ -1,255 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-31341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8493971BD6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:56:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A39FD971CE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 16:40:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 36FD91F23416
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:56:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8BC43B21AEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 14:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3BE31BE24F;
-	Mon,  9 Sep 2024 13:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 168E51BAEE7;
+	Mon,  9 Sep 2024 14:40:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I8wfYX8t"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e811aRvq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D411BDAB7
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673071BAEE0;
+	Mon,  9 Sep 2024 14:40:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725889926; cv=none; b=WBxEogafCN9TOC2f775VpRoun/T0r7pqB6PnNZWZvryPVlpAT2HXEaOq9TEouP/VqKkkveuB3cOspeD/W5066e0dhVP+22MQQPtSex2pctlLsW1qA22hCiK+1rmYfpnQext6g0I3olgKetD7YCiYzX/Kq7EY8lkVvY63vlISfKw=
+	t=1725892822; cv=none; b=pA0FnQVwezSiHUSUoEaGjR6DBMV5gkDyPmPmCNwMnfvSnd5z9G8L36V4vqH01LveVDLOPjYpmZs5N8bd7nRE51Ujotgt/PiQsGBhuTnFRiHseJKt++lZYOO0pgMXLX2ZVJfxdG98Cfy7fTwRSizq9kHRc/Ovc278D8pt4fDzVQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725889926; c=relaxed/simple;
-	bh=pT3vklV3r+mZAGNAtUkG8vU9TQS654l0/1TCGybfK8Q=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K9J3sEAYDH+Y+y+qU5ogqvGaclWGbpz6D/CNvl+NI7l8D8KqiDD1YLBCsieY6U7zGllx3esJSIYsSe/VDfEUbVf98YZKfmTJqQ+/YimzoRQCnpVP6lUl6vWQURUxnLuGx/jNrUViTFPTPHGd6pyFZ/CxQcWJYHqWdT3dd7bBbEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I8wfYX8t; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8a87c7c68dso12367566b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:52:04 -0700 (PDT)
+	s=arc-20240116; t=1725892822; c=relaxed/simple;
+	bh=Jc+ZsSx86eZg9sUzrN9bm8FO1FtzH3dV9nqloyRxL7Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RuZz9epid71T2tek6lAhXZ64V7MFVI2t4hx7rlIMKqrHMF179Mqf3/+eG7hwBFSp01rtBCaWUmwMZ3cSH5bTjbGzXFNYRGHFwqMFrpG+517qXpNbsg/ktL2wXIh1jR9mMBqt9UPjYQwF1Anrg808zsq8zd0QSRg+u/ZTWD+yE3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e811aRvq; arc=none smtp.client-ip=209.85.166.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-82ade877fbeso87552539f.0;
+        Mon, 09 Sep 2024 07:40:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725889923; x=1726494723; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D4QKaI+3WBHRSwPufs3rtV0LI1aQyhehd6Wi2dpHTGg=;
-        b=I8wfYX8tfs3bIUlo+wVdT9N2bWdXNilZsA16A0aBYWQvU41B9k4wGQKA7PSt/SuTnE
-         i9h68NKghMh/rW7+nwbDgntYi1OEtloe+Btx+m24cPiF0IlMcJJv0sMe7VDlBHUKEerh
-         56RnAjrf0KXE0Cl6M5YnZUZm5sDfpHF1J8fQDpLH2mhvg2srThDWZ0tA157GRz94L50Y
-         2znr2H3wn18tyU2Lt57f6MRaTJFS23Yx7BqdfnbAhgjfsLELZO8ddkX5IvMGRkJFP067
-         +XCKDco8sKxlpDKsY4MQnXkGVo7c3oiaCAHLTf0sNpq6PafIT9QxsMpF6hSngEZy2sKP
-         hyqw==
+        d=gmail.com; s=20230601; t=1725892819; x=1726497619; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yADGgFh0Qr9khviAqSL4T0j/ayR5ihAosN0nFeWJtFw=;
+        b=e811aRvqFQ8cLujjZjd/rCaZL4xPeseRISEj6++0WfqLJl7LKhMX5ndMmZXI9cGnLp
+         S/ITxGYj56RIYmY0PU/dla1oySpIpVnlPwK2UrgLjw0a9PQ7Mn73hRrH4zBF0/4G1Y9C
+         7EuXPcXGqFEo1WVF7JxbQ7N54i2hUK4U41RnLOJR2N3i8G0MZR9Jjz/guw7yUbd7ARwU
+         YMacT+XKN61stEMv3qzcZ0LOiYcMCjBeH4JDGepKmUtHG0JAqBgeUWZBHHbFjTEf2Bgz
+         SO6858VXXgXaVG//kWas0p2UIxbtIW5NPZHGpkfh5s4KIAaF8TXjIlYvTe0sJf34HxOh
+         uxRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725889923; x=1726494723;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1725892819; x=1726497619;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=D4QKaI+3WBHRSwPufs3rtV0LI1aQyhehd6Wi2dpHTGg=;
-        b=i6BDQ3UeO4EX6m8Lj5w1AVb/ofxdS2mrBXSoSKW2VUfmSNTTEf23rghoIqdFrOa4Ru
-         M9QOjWJ2xhMeGcGrvN80PmdyRTOUx5PcxC/Kw0ff5H7X3TCB+SNN2BwbomTF69jB0mZo
-         xxDvMt00tu3WLZ7WZR9RE5488tUNtpKXs76XYnU7y49c0CW9+/KVFFbkoGH5FtUFo1q4
-         kGJ5my0C09d8S4gUifKl9s/hJM85Cksx5WcRifMljjumtAnw0b9RRm+ouTD41gRsecb8
-         PVHmxhxCicRCks1bzyQBJV/h891vpP5L4qYOw6E1Ne+HrCmsTsxtn+UjWmC47qviO2w7
-         wIkA==
-X-Forwarded-Encrypted: i=1; AJvYcCX4liibggj7B1jUePt/hTdjnu9B4vZdG1AXEBldg94oMlcHKWbJrWde0VRVefygwmssnHVHSuXw7T9nxOOz@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVl+hcbjWJ8mUgNhvxvdOiYPYYq/P5bBeXWCO9m3oekA2Uhvqv
-	u46G3GZ4N/u0s4CodpxPhNmGPzT6ri24xBb0cxFiDVyg0Q7go7FKcvPpnlpgUJc=
-X-Google-Smtp-Source: AGHT+IFkB5FwZ6RP2VpeDYDu58V07W5VhL+BMyppWhQzRBjqI5M81sTuW26HDIwx4LByUJ7TdWVeBw==
-X-Received: by 2002:a17:907:608a:b0:a8a:7189:2106 with SMTP id a640c23a62f3a-a8a88803359mr291596666b.6.1725889922892;
-        Mon, 09 Sep 2024 06:52:02 -0700 (PDT)
-Received: from [127.0.1.1] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf3ad6sm345344566b.148.2024.09.09.06.52.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 06:52:02 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 09 Sep 2024 15:51:28 +0200
-Subject: [PATCH 17/17] regulator: max77650: Use container_of and constify
- static data
+        bh=yADGgFh0Qr9khviAqSL4T0j/ayR5ihAosN0nFeWJtFw=;
+        b=f5PmAm1cBngFv/0G0SMe/KXB40lbnI2mmcqXlwqM1RPGV4/NiuqxEXg+BpYfGKN6tT
+         4kUaXA3TpA4Jcs8s8KmpDj+1K6iGWAAWzKEnFpl4o89dg4TmXFH6ocn5+N6Ao+yXJvTe
+         /EJWK1o0FF3LFEljrahHMJBke95Z5gBaHRnhrN0lGJWnEI+emgzRxftaQ3iizxoa31Mf
+         immdw5h8AR39bkoOfXnN7iftr9q+29R69kfxk+00upSjlD6BeW/1Qd/cHmLDy5hqXfac
+         COMm5kSK59co+0wQinOPv7fNsNw1RF831jUezj9uWtVK6QkLYibol1tAQ2GAx+LrvKhT
+         ig7w==
+X-Forwarded-Encrypted: i=1; AJvYcCVBu/YFzYIqvGmTl265kGx/ucNUZjK8Nabt9Mw+/SFD6pp6/vnXNpS2LwcUKkubApsHPeRfsp1vTtUWyk4w@vger.kernel.org, AJvYcCVlNB6Z9GQoXNQ/oiosVrEx4bGeGos9lsoLQFkJ9YHFOeH3K7tlWkYn36x58X9qGjXdslFC7fhxzwWRdPFA@vger.kernel.org, AJvYcCWBQRRVGoRSl47mZfxOag7fqif3NlKfzqwFNEkTEP8S0JHgYJO+vm8WXTLnTc7+tG0n99bFgBrpUbYq@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTD0r78y0s3bo5lrhLrlAOpSIt/OWrEuLDVFzfwEr3Q58CIqBd
+	RPpyxB11AkL31uKOlVZX/l4x1QRrKlTUB/Z4TIjonAEPsWeizNuVS/LjlEd78eSNL0Yuz+CNsnO
+	3GnB3Ji1wnyeXRtWg7UtsnK5EG8A=
+X-Google-Smtp-Source: AGHT+IG/zidy3pUha3J4vBn+TgE6JlPVQqsYOcZPn1/PZgtYteEn9j/NJ/+ZfxxiFMsg3wdTfHQX1c5/CxyHbAkt+Ic=
+X-Received: by 2002:a05:6e02:1d06:b0:3a0:4a63:e7ac with SMTP id
+ e9e14a558f8ab-3a04f0ccccfmr140661735ab.18.1725892819444; Mon, 09 Sep 2024
+ 07:40:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240909-regulator-const-v1-17-8934704a5787@linaro.org>
-References: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
-In-Reply-To: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
-To: Support Opensource <support.opensource@diasemi.com>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
- linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5091;
- i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=pT3vklV3r+mZAGNAtUkG8vU9TQS654l0/1TCGybfK8Q=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm3v1nXIJdWNbRtDH6jLRbfKirVbrDR9hrPibYD
- A0gRNKrWKKJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZt79ZwAKCRDBN2bmhouD
- 14qVEACRgLsVdWDXrS20GsTp4A3Ag89uPdX4Lm1yhjam8q9PHA1EcqEd03qyD9++DH9J+ze5ujx
- c9LiuV8Y4yAXbrIxGmNWOpx5u/7JoGvGjwsAKmG4P+E5hnO96bKsupFq0ZONfubtSA7efMP65qw
- xfW4XKiQcPq3KaXujdFdgnhdkG8ultcDksYS2ZU/MB3hiiFytZi6dddp7Mfzx7BEHgs7yF4s9m8
- yoigsGsbquv2hbcCDnb1ytwDxR+un6SE33cXwUfo5pNBXAW92nmpQbtbWykifj6vIMjV6CmbraR
- 52C5s+4gdyII3bdtf4HvUTcz66Asm+/9ihcxYClBn5HiA6lUefRTJjN5zqznTDK0L3zPULYVR2h
- WbLPZiHzj8UDkLW4aGaclTo/gCX5gAgyzDPphNHbsFx185jVuudPHcW7xU1b+9qMguFXzZIwSlp
- 5tmlv7aRCC/dGhe1JG9DX3G6ICnQW968kLzlnqDcw6EEHsON1+e8XB/FzHZM2TpHLPTUcRdr5D/
- 1o0NHLpdQEnvyS5eZKbx08DylInn6xnZ9QbOZ4sYmBITYGcD8Ou4rdHa/lZHhBW1+E0C4QUP16t
- fLQaiHp2fnlt+GpZXPFrbgCuNfgB6MoliRVSldN2+bWRS5k1sbw8oTaQWBmbqNuZRtcbE5JSIsL
- 1RjfoAwiIZmG/ZA==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
- fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
+ <20240905-preemption-a750-t-v3-4-fd947699f7bc@gmail.com> <20240906195444.owz4eralirekr7r7@hu-akhilpo-hyd.qualcomm.com>
+ <df85bf24-651c-4a35-929b-4de6c05555a1@gmail.com> <CACu1E7GSMQHa6258hV2OwS5nTGh+kTeZ-qQPMfGTy5YVP5kX3g@mail.gmail.com>
+In-Reply-To: <CACu1E7GSMQHa6258hV2OwS5nTGh+kTeZ-qQPMfGTy5YVP5kX3g@mail.gmail.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Mon, 9 Sep 2024 07:40:07 -0700
+Message-ID: <CAF6AEGvv60CS43dCijsUCzELLn=t1PJQVCzMx01cFJsNJ1Uk9g@mail.gmail.com>
+Subject: Re: [PATCH v3 04/10] drm/msm/A6xx: Implement preemption for A7XX targets
+To: Connor Abbott <cwabbott0@gmail.com>
+Cc: Antonino Maniscalco <antomani103@gmail.com>, Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	Sharat Masetty <smasetty@codeaurora.org>, Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Switch from rdev_get_drvdata() to container_of(), so the static
-'struct max77650_regulator_desc' holding 'struct regulator_desc' can
-be made const for code safety.
+On Mon, Sep 9, 2024 at 6:43=E2=80=AFAM Connor Abbott <cwabbott0@gmail.com> =
+wrote:
+>
+> On Mon, Sep 9, 2024 at 2:15=E2=80=AFPM Antonino Maniscalco
+> <antomani103@gmail.com> wrote:
+> >
+> > On 9/6/24 9:54 PM, Akhil P Oommen wrote:
+> > > On Thu, Sep 05, 2024 at 04:51:22PM +0200, Antonino Maniscalco wrote:
+> > >> This patch implements preemption feature for A6xx targets, this allo=
+ws
+> > >> the GPU to switch to a higher priority ringbuffer if one is ready. A=
+6XX
+> > >> hardware as such supports multiple levels of preemption granularitie=
+s,
+> > >> ranging from coarse grained(ringbuffer level) to a more fine grained
+> > >> such as draw-call level or a bin boundary level preemption. This pat=
+ch
+> > >> enables the basic preemption level, with more fine grained preemptio=
+n
+> > >> support to follow.
+> > >>
+> > >> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+> > >> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+> > >> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QR=
+D
+> > >> ---
+> > >>   drivers/gpu/drm/msm/Makefile              |   1 +
+> > >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 293 ++++++++++++++++++=
++++-
+> > >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 161 ++++++++++++
+> > ...
+> > >
+> > > we can use the lighter smp variant here.
+> > >
+> > >> +
+> > >> +            if (a6xx_gpu->cur_ring =3D=3D ring)
+> > >> +                    gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
+> > >> +            else
+> > >> +                    ring->skip_inline_wptr =3D true;
+> > >> +    } else {
+> > >> +            ring->skip_inline_wptr =3D true;
+> > >> +    }
+> > >> +
+> > >> +    spin_unlock_irqrestore(&ring->preempt_lock, flags);
+> > >>   }
+> > >>
+> > >>   static void get_stats_counter(struct msm_ringbuffer *ring, u32 cou=
+nter,
+> > >> @@ -138,12 +231,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu=
+ *a6xx_gpu,
+> > >
+> > > set_pagetable checks "cur_ctx_seqno" to see if pt switch is needed or
+> > > not. This is currently not tracked separately for each ring. Can you
+> > > please check that?
+> >
+> > I totally missed that. Thanks for catching it!
+> >
+> > >
+> > > I wonder why that didn't cause any gpu errors in testing. Not sure if=
+ I
+> > > am missing something.
+> > >
+> >
+> > I think this is because, so long as a single context doesn't submit to
+> > two different rings with differenr priorities, we will only be incorrec=
+t
+> > in the sense that we emit more page table switches than necessary and
+> > never less. However untrusted userspace could create a context that
+> > submits to two different rings and that would lead to execution in the
+> > wrong context so we must fix this.
+>
+> FWIW, in Mesa in the future we may want to expose multiple Vulkan
+> queues per device. Then this would definitely blow up.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+This will actually be required by future android versions, with the
+switch to vk hwui backend (because apparently locking is hard, the
+solution was to use different queue's for different threads)
 
----
+https://gitlab.freedesktop.org/mesa/mesa/-/issues/11326
 
-[RFT]: Not tested, only built.
----
- drivers/regulator/max77650-regulator.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
-
-diff --git a/drivers/regulator/max77650-regulator.c b/drivers/regulator/max77650-regulator.c
-index 94abfbb2bc1e..7368f54f046d 100644
---- a/drivers/regulator/max77650-regulator.c
-+++ b/drivers/regulator/max77650-regulator.c
-@@ -43,8 +43,6 @@ struct max77650_regulator_desc {
- 	unsigned int regB;
- };
- 
--static struct max77650_regulator_desc max77651_SBB1_desc;
--
- static const unsigned int max77651_sbb1_volt_range_sel[] = {
- 	0x0, 0x1, 0x2, 0x3
- };
-@@ -66,11 +64,11 @@ static const unsigned int max77650_current_limit_table[] = {
- 
- static int max77650_regulator_is_enabled(struct regulator_dev *rdev)
- {
--	struct max77650_regulator_desc *rdesc;
-+	const struct max77650_regulator_desc *rdesc;
- 	struct regmap *map;
- 	int val, rv, en;
- 
--	rdesc = rdev_get_drvdata(rdev);
-+	rdesc = container_of(rdev->desc, struct max77650_regulator_desc, desc);
- 	map = rdev_get_regmap(rdev);
- 
- 	rv = regmap_read(map, rdesc->regB, &val);
-@@ -84,10 +82,10 @@ static int max77650_regulator_is_enabled(struct regulator_dev *rdev)
- 
- static int max77650_regulator_enable(struct regulator_dev *rdev)
- {
--	struct max77650_regulator_desc *rdesc;
-+	const struct max77650_regulator_desc *rdesc;
- 	struct regmap *map;
- 
--	rdesc = rdev_get_drvdata(rdev);
-+	rdesc = container_of(rdev->desc, struct max77650_regulator_desc, desc);
- 	map = rdev_get_regmap(rdev);
- 
- 	return regmap_update_bits(map, rdesc->regB,
-@@ -97,10 +95,10 @@ static int max77650_regulator_enable(struct regulator_dev *rdev)
- 
- static int max77650_regulator_disable(struct regulator_dev *rdev)
- {
--	struct max77650_regulator_desc *rdesc;
-+	const struct max77650_regulator_desc *rdesc;
- 	struct regmap *map;
- 
--	rdesc = rdev_get_drvdata(rdev);
-+	rdesc = container_of(rdev->desc, struct max77650_regulator_desc, desc);
- 	map = rdev_get_regmap(rdev);
- 
- 	return regmap_update_bits(map, rdesc->regB,
-@@ -145,7 +143,7 @@ static const struct regulator_ops max77651_SBB1_regulator_ops = {
- 	.set_active_discharge	= regulator_set_active_discharge_regmap,
- };
- 
--static struct max77650_regulator_desc max77650_LDO_desc = {
-+static const struct max77650_regulator_desc max77650_LDO_desc = {
- 	.desc = {
- 		.name			= "ldo",
- 		.of_match		= of_match_ptr("ldo"),
-@@ -171,7 +169,7 @@ static struct max77650_regulator_desc max77650_LDO_desc = {
- 	.regB		= MAX77650_REG_CNFG_LDO_B,
- };
- 
--static struct max77650_regulator_desc max77650_SBB0_desc = {
-+static const struct max77650_regulator_desc max77650_SBB0_desc = {
- 	.desc = {
- 		.name			= "sbb0",
- 		.of_match		= of_match_ptr("sbb0"),
-@@ -201,7 +199,7 @@ static struct max77650_regulator_desc max77650_SBB0_desc = {
- 	.regB		= MAX77650_REG_CNFG_SBB0_B,
- };
- 
--static struct max77650_regulator_desc max77650_SBB1_desc = {
-+static const struct max77650_regulator_desc max77650_SBB1_desc = {
- 	.desc = {
- 		.name			= "sbb1",
- 		.of_match		= of_match_ptr("sbb1"),
-@@ -231,7 +229,7 @@ static struct max77650_regulator_desc max77650_SBB1_desc = {
- 	.regB		= MAX77650_REG_CNFG_SBB1_B,
- };
- 
--static struct max77650_regulator_desc max77651_SBB1_desc = {
-+static const struct max77650_regulator_desc max77651_SBB1_desc = {
- 	.desc = {
- 		.name			= "sbb1",
- 		.of_match		= of_match_ptr("sbb1"),
-@@ -264,7 +262,7 @@ static struct max77650_regulator_desc max77651_SBB1_desc = {
- 	.regB		= MAX77650_REG_CNFG_SBB1_B,
- };
- 
--static struct max77650_regulator_desc max77650_SBB2_desc = {
-+static const struct max77650_regulator_desc max77650_SBB2_desc = {
- 	.desc = {
- 		.name			= "sbb2",
- 		.of_match		= of_match_ptr("sbb2"),
-@@ -294,7 +292,7 @@ static struct max77650_regulator_desc max77650_SBB2_desc = {
- 	.regB		= MAX77650_REG_CNFG_SBB2_B,
- };
- 
--static struct max77650_regulator_desc max77651_SBB2_desc = {
-+static const struct max77650_regulator_desc max77651_SBB2_desc = {
- 	.desc = {
- 		.name			= "sbb2",
- 		.of_match		= of_match_ptr("sbb2"),
-@@ -326,8 +324,8 @@ static struct max77650_regulator_desc max77651_SBB2_desc = {
- 
- static int max77650_regulator_probe(struct platform_device *pdev)
- {
--	struct max77650_regulator_desc **rdescs;
--	struct max77650_regulator_desc *rdesc;
-+	const struct max77650_regulator_desc **rdescs;
-+	const struct max77650_regulator_desc *rdesc;
- 	struct regulator_config config = { };
- 	struct device *dev, *parent;
- 	struct regulator_dev *rdev;
-@@ -376,7 +374,6 @@ static int max77650_regulator_probe(struct platform_device *pdev)
- 
- 	for (i = 0; i < MAX77650_REGULATOR_NUM_REGULATORS; i++) {
- 		rdesc = rdescs[i];
--		config.driver_data = rdesc;
- 
- 		rdev = devm_regulator_register(dev, &rdesc->desc, &config);
- 		if (IS_ERR(rdev))
-
--- 
-2.43.0
-
+BR,
+-R
 
