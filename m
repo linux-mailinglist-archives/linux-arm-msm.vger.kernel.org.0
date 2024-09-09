@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-31261-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31262-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCCF297143E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:47:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0541897144A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 11:48:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 658C2B22EC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 09:47:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B84E7284548
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 09:48:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1D9E1B3B26;
-	Mon,  9 Sep 2024 09:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 095441B3F11;
+	Mon,  9 Sep 2024 09:47:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bbK5qVmw"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CzDiPhRp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FE01B3B23
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 09:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396F81B3B3B
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 09:47:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725875125; cv=none; b=u27kBw28rZ/TzIvWZxUMJtWzP9odIqONlSazm05On7QDWr4y3BqejH67OP/5jBM77n1y21cE4eXrjwhDUNz37NHRWr4OlUOfqZ/L3YblcyfGE/S+RI62RPbWL8efVY9KwoJxaQfXwtVxucox0QbRCIFZHchmongN6afVWRYkcuE=
+	t=1725875236; cv=none; b=Enp4uIWGwdZ65/k0e24XSwM6+TgmUZooAF2B+bnF8lnv9VA99eDIMxg+kclgrx2ou46zM7iB3BqaB5Xma1hdBV7JPKYi4SF6xtH2cDndP/tWVIbaB0mvQ6kwcPQDY0IyRRVIGZkj4GRrsCMUnvocEsErd/u4uNe++UCckydA35w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725875125; c=relaxed/simple;
-	bh=GnnRCpZVq2X1JDH9jD+/G2ACm1S8JXfbtnAfz+3rWKQ=;
+	s=arc-20240116; t=1725875236; c=relaxed/simple;
+	bh=n4M+GovN7tZhfg+mdxK6bHXPPX2EsrI3HZxhNQ1buqA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j0S26Rmf59aRVzkDSJHHo12QcthopI0VPCtYMhtwnPsPy1W6NET8YqH58T0KgoXhBD3MMB1gpp7VBxDNKrSKbV5BKEexrRqfX/rfS3Wi1SxFrT6ClOwUS0ivFfBM01xRRf74Mx9IgJ9YbLUY4rxFEn1rrajsGLMK3/OxOU9flwo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bbK5qVmw; arc=none smtp.client-ip=209.85.167.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=iTZVhhmtSwRtqU9TsMBVqxsnC9/dIK4iFDfvpmI6pH9bPYRxGGrRFqUBxPrqEH9uzTcQIT+utd6TqySccTqRcScQeSJs0hmfv7QQMllKZRuqznLzo0OCNCY2z9xfbFFzES2qcbeno4iRwMwsCdzunqHOpPLajj1YUIB27xJYzH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CzDiPhRp; arc=none smtp.client-ip=209.85.208.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5333b2fbedaso7596576e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 02:45:23 -0700 (PDT)
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f761cfa5d8so15861071fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 02:47:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725875122; x=1726479922; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725875233; x=1726480033; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AX+qWUEl4qvHchK9WiUGhJ8YcoviFbmZ6OHD06M6LpY=;
-        b=bbK5qVmw2DAVHd5NwaJ39CKLhapZsPtazhlwJMnUZ+MwE55b4/+ll0y3EkJIfNT5v+
-         BKUKPTpRC6jkU1McZZbZ8T+YXNu0heCgLgb0LJkQiCM6qfuVDKf235tmNYr9r+QQaIGn
-         CBiFwMHnMO8duVexhTtk500RTWpNEm7MHmNDzvb3NoxDjIoNn/wp2j3WkD2ZWrzY9DrL
-         BaxjqgBAQZWz3Lb0po0gb2exmWF1Ku3tj6LK4wqnmbuYFnV8HhVMOKfxj+mDERQEEUg7
-         bmyPZaKr8LS+AC5qlc86Q9s9i9b7j7LyIS/iThCFzeoRpOcEfEG7zWMm7vefTmRBS7em
-         JaPQ==
+        bh=SAj1wvN+zxJHeEeDfh62ag2eR23Fcrip29/NVH4laPA=;
+        b=CzDiPhRpruzs3scqGCBVKgoZQ7RzvKNsnCrzzHuEzu72TqXQP6DGQNKBOXPzF+NtNI
+         BwC565ow9HN8I1O6tNnHtGHCY+bD0PGfOFaeUgxNtz5GUJlZbf9UWBh/dRDjGfyadpOf
+         4MLzwJ6HeCYFFOlZyKwC02dWkx/r2j0bh00WLDwl2Q59CrYpzligsN/lAOpa3Y4AdqR8
+         C0o23aBkR9gARJ4qoq9VEXNjnuVnjnGNnQNqm7Q5EDwEAFV/gnjkMXLFUtUk84Vc5Fnd
+         wXyNzkSIdu7hh8tIfrjVkGITwZCzqHlNyZ4Ozd+MLucj8c16KVymodxsFau2DWuKCS4b
+         1BXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725875122; x=1726479922;
+        d=1e100.net; s=20230601; t=1725875233; x=1726480033;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AX+qWUEl4qvHchK9WiUGhJ8YcoviFbmZ6OHD06M6LpY=;
-        b=DJmi3N0C9m34J5CEi7RTbJcEpMwz1K5i8wY9L5iOYwkVES53AIMPQcQaF9Xee8/bbQ
-         B5axDGVuIIUnvNawlMoec7isQF+70RKrq88f8YieSNMUx1gmREqnSnE5kMu+VHKjPtMq
-         mW+M0REDb+qW6RtD1CHKu6EjWnDdpbYYBol1oadCFSBEBUkAGIgHBJcIX1EarfGKRvCT
-         7Lgg7GBkP8L56BpndtAn/EWltjlgUKA1XVt+3tUpVDV6+X3H+iPZ2ApgBXMm0zMaI0J/
-         hLAX/nEDoqUAzioNEdWjeox9xVqNzqlOGeHItoyQQVWPSDNrLbIq6rm/g+hSQ56neg8r
-         OBOw==
-X-Forwarded-Encrypted: i=1; AJvYcCW0tavF+ka1T5LV4enUC/VKORPIu5o5W49Ez3Vx9y/fXFnyvTPzNmGpi49A+l6IKQ+oZbSn/rKZfprvNfgQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy7ekqpBYKHrsLt60EJmsZpCz5iA98WjejiWuHjuHb01LrdRMFq
-	jWclclww7bnwZXox2MjTp0iYjWTtnyewOY0l7o4q3uvUcJZXU+mRApJ4T0pymZM=
-X-Google-Smtp-Source: AGHT+IHdf/Swn2REUiirGgiZlsVzxHynFgW8MF5+sSjhKD0Ffob+MA01ZDe6vv0aCi8IkWfLDJz4TQ==
-X-Received: by 2002:a05:6512:3b10:b0:533:4656:d4cd with SMTP id 2adb3069b0e04-536587c641fmr8195958e87.33.1725875121427;
-        Mon, 09 Sep 2024 02:45:21 -0700 (PDT)
+        bh=SAj1wvN+zxJHeEeDfh62ag2eR23Fcrip29/NVH4laPA=;
+        b=e3XT8LWD7J+8cawoWUN/1zfWB4EARsh/2zEOTe1P2zVttFefaZZIBRE49VAhRs5MRd
+         EJ88IvEva7jn5JXPfx6fGmr4qYEnvTH2QTs+MofftS4gR5/qi3DXeMJBoMIplWbWzA53
+         vOrI+dXuMkQzw5xK6tWW1phCQhMQXggts8jL64Ou+pVCaka8TUmRmsWXibo+nBWb2PnD
+         bY412DDEKmuW5asVJEv0+ShwWj87lE2+obgr5c24CdaCiM7y2/OipuudFu5FJw3BGqp8
+         2RoBo/zspjYUgbh0aPgrIA1QhxQWS3iitwx1kZxev9aR4WmGjdTtOT/lL4OMBw/zbY5/
+         gWsg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhlwxqLql2ZY+8HPWerWEaZS1IK9upOjOleT6b5Z4a3AjsOLJNQ2N9HNiuK9pbAXsC8MOLxo/Ibg4jORS2@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVn0bZkKbp364McIcZW3XJyGwTyDiR9cS6+vrvcqe+egL5XbiF
+	WY47OWbCi2cwHiOXkxxWjWLrCMj/e3JsP20BG2vgXeqri/Kizt5fCX/tBUtms2g=
+X-Google-Smtp-Source: AGHT+IFZ64jJ5mD8lby7aJudxo1hABUCgb3NXgoVtTSzdGdQteWjQTiBrXa28ODVcj7A5bgcyzZiCg==
+X-Received: by 2002:a05:651c:1991:b0:2ec:568e:336e with SMTP id 38308e7fff4ca-2f751eaee1bmr84195191fa.1.1725875232771;
+        Mon, 09 Sep 2024 02:47:12 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f86fff0sm710516e87.82.2024.09.09.02.45.20
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75bfe817asm7501321fa.23.2024.09.09.02.47.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 02:45:21 -0700 (PDT)
-Date: Mon, 9 Sep 2024 12:45:19 +0300
+        Mon, 09 Sep 2024 02:47:12 -0700 (PDT)
+Date: Mon, 9 Sep 2024 12:47:10 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Jinjie Ruan <ruanjinjie@huawei.com>
 Cc: broonie@kernel.org, akashast@codeaurora.org, dianders@chromium.org, 
 	vkoul@kernel.org, linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/3] spi: geni-qcom: Undo runtime PM changes at driver
- exit time
-Message-ID: <pxv36kfon3zdwa2els6d65kgpiyn35ogcylo2z6ay7jrzyb6x2@jblxqzvf6qpu>
+Subject: Re: [PATCH v3 2/3] spi: geni-qcom: Fix incorrect free_irq() sequence
+Message-ID: <kmpyep53hlqavoipgvkab3d3xkg5dt7olsflveemkdwkekiajn@s6xrdddwpnqi>
 References: <20240909073141.951494-1-ruanjinjie@huawei.com>
- <20240909073141.951494-2-ruanjinjie@huawei.com>
+ <20240909073141.951494-3-ruanjinjie@huawei.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,32 +84,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240909073141.951494-2-ruanjinjie@huawei.com>
+In-Reply-To: <20240909073141.951494-3-ruanjinjie@huawei.com>
 
-On Mon, Sep 09, 2024 at 03:31:39PM GMT, Jinjie Ruan wrote:
-> It's important to undo pm_runtime_use_autosuspend() with
-> pm_runtime_dont_use_autosuspend() at driver exit time unless driver
-> initially enabled pm_runtime with devm_pm_runtime_enable()
-> (which handles it for you).
+On Mon, Sep 09, 2024 at 03:31:40PM GMT, Jinjie Ruan wrote:
+> In spi_geni_remove(), the free_irq() sequence is different from that
+> on the probe error path. And the IRQ will still remain and it's interrupt
+> handler may use the dma channel after release dma channel and before free
+> irq, which is not secure, fix it.
 > 
-> Hence, switch to devm_pm_runtime_enable() to fix it, so the
-> pm_runtime_disable() in probe error path and remove function
-> can be removed.
-> 
-> Fixes: cfdab2cd85ec ("spi: spi-geni-qcom: Set an autosuspend delay of 250 ms")
+> Fixes: b59c122484ec ("spi: spi-geni-qcom: Add support for GPI dma")
 > Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 > v3:
-> - Fix it with devm_pm_runtime_enable() as Dmitry suggested.
-> - Adjust to be the first patch.
-> - Add suggested-by.
-> v2:
-> - Fix it directly instead of use devm_pm_runtime_enable().
+> - Rebased on the devm_pm_runtime_enable() patch.
+> - Update the commit message.
 > ---
->  drivers/spi/spi-geni-qcom.c | 13 ++++++-------
->  1 file changed, 6 insertions(+), 7 deletions(-)
-> 
+>  drivers/spi/spi-geni-qcom.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+This matches the code in spi_geni_probe().
+
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
