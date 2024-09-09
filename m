@@ -1,1180 +1,278 @@
-Return-Path: <linux-arm-msm+bounces-31231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A826970A8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 00:42:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1D4E970C53
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 05:36:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8D6F1C21375
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Sep 2024 22:42:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF7221C21B3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 03:36:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6B9D185B54;
-	Sun,  8 Sep 2024 22:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5154F1AD3FC;
+	Mon,  9 Sep 2024 03:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g5ERaXF2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TERqLrQs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532D117CA0B;
-	Sun,  8 Sep 2024 22:41:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F45249F5;
+	Mon,  9 Sep 2024 03:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725835262; cv=none; b=Mc7g7i7z+W0H5dKT0Os/O0lHiuv+mMAJ8HzN/wq2PCD+9S3hWbF8yLBstRMeYyUMOK+f6kf0CXi4QIidXyWjqidOH1b5iudYR+83eL27AMGzE2brgisIEP8oA8RAdZrv33gR+WoY6EuGuKKp6gq4kh31MuzWDHSKfxbElSvAX+w=
+	t=1725852962; cv=none; b=daRwj8JAtD/mxQi9JM0UlM3mo3i8HQJwqNW27vjQAORJr+1uBkCuTZVix6CmZ6n2QGzbgMXGik7cEjhRevYTGz7Zh6gYumD4nEP51/Gey64TTGOq/uQqAXV36AHBriAT9nFe/2R0sKKqOTloLDXChyfCVkVYOk+O2bVTEYd1Ipo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725835262; c=relaxed/simple;
-	bh=5lEzgH4gcOfAPZqBLDzgYelOJw4dcJ5Aoh0MxCJAomk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=neD4UTW5riQuot9T/mkDw9oYkbo4q+Zi5yqw10MQUlfS8c5Hn9bFDVYLd425YXZiuWTTqrA1PXllU3p/lQPRlyimGBFKb2vMsFC7JOr/hUeeV4UxIAwUNAAAnvegBOv48xES4JbHPOWpHtJBLVkls94/HySdUHLiuoDb9Mg1Za8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g5ERaXF2; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42cb7a2e4d6so3492815e9.0;
-        Sun, 08 Sep 2024 15:41:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1725835259; x=1726440059; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s53jAfF4QTF8A1ejwMeZ+GCOrZUcGmjZXFDkJUyMUas=;
-        b=g5ERaXF291CdGQxvgT0QuNrPH0SoK4XEjHwiQvyNlkqCgkDUHGAFs+Y31icT2Uzzwj
-         rVpEhIUxyFrxIIU17akMyaDyrWzK0ivKFCeFNbujt8Tyon1JZcVzZzN6swHlRnmEclGN
-         ZbcO5WMV6gRh1f21MX2IOITlRKEHeHCJVJpkALEvvsUZVdUWAY3wNZdT0DUYcNv3bVmj
-         VfYoqe3GJt4eZjn+tiFkyaAFCJxUEUNc9yHIEjqx0piAvpIHHRVucUmyuDYWsLNJLFPA
-         4luAGhi+L1pWxBlPBAp49liewxPiGBfJyFpZIG8RepRk/sfh3GwmuUHLKzLUAciStMJJ
-         KmeA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725835259; x=1726440059;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s53jAfF4QTF8A1ejwMeZ+GCOrZUcGmjZXFDkJUyMUas=;
-        b=tHBMlAa5k02y2riYbe/fOl4HmK+DqS3xMiydznm43Wah+zcPwnGzt0w9GtRSQCRr6z
-         jOBag3CcHEnxzbrxGX6BESoL7g1E2Qh2nYGYgshIaWB4kjKpdeVEjo0yIxaGXSfdJtXP
-         6eYJXWT98uKckI/N8qJ5kx+Q3ILc1sD4tSudYRV5e/6KKz0kWVTsTLTjNKYLmaBxVHif
-         clBTiBIncuHpD9EaEuxUp7SFCSckwMsALF0oelv/AJATnmcdIYxK3Rk/4+VmDodgeO/F
-         Erij88g/IR0DFmpdx8qBWI5VOFq9T8YMea/aCNq3LkKcMxho2oJ/WAP6y5nMo0DN1jdI
-         u16g==
-X-Forwarded-Encrypted: i=1; AJvYcCUh4lAyy9VAP/vYgOQY72h6wdkvHwwstrNp1+8cqDKEwGiEwsk8rQ8iE2ysISXHTWaBsCPEG5Clo20tkWpo@vger.kernel.org, AJvYcCWNitPiuif3lgTDCifCxGLDRcKuy3nMxqO8sFU0sSVgmjhv/++wSc8ZZErudcatK+1DKZ9MNcAkW3CV@vger.kernel.org, AJvYcCXDCunRLM8UsLjYdGdH3i08mD7Wiz4VU+z5OVl6TDm2XHZbJN7CoijBZmoIimXKn3X2UiF7G3QnEArQHGhbnQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmfZ0XDpAadBiMGdhD3ZJXKFNo8L1FjV65sQLpORtM4KzrkR9k
-	bhE86HT7cQD+AVTi2NIGm2EIqPcH5t8yVibS8XruKJz7lNkqDTQ=
-X-Google-Smtp-Source: AGHT+IGu3CBT/Zh4kTAKuTTP5h1e82i3w6oiUvkQ1QGhxQ84KKos306HwH1D90mc3T8q8vSvieJRYw==
-X-Received: by 2002:a5d:4b84:0:b0:371:9154:597 with SMTP id ffacd0b85a97d-3788954f967mr6167918f8f.0.1725835258466;
-        Sun, 08 Sep 2024 15:40:58 -0700 (PDT)
-Received: from surface.home (2a01cb080508df00ca9665fffed23409.ipv6.abo.wanadoo.fr. [2a01:cb08:508:df00:ca96:65ff:fed2:3409])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42ca0600651sm90883925e9.32.2024.09.08.15.40.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Sep 2024 15:40:57 -0700 (PDT)
-From: =?UTF-8?q?J=C3=A9r=C3=B4me=20de=20Bretagne?= <jerome.debretagne@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v2 5/5] arm64: dts: qcom: sc8280xp: Add Microsoft Surface Pro 9 5G
-Date: Mon,  9 Sep 2024 00:35:05 +0200
-Message-ID: <20240908223505.21011-6-jerome.debretagne@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240908223505.21011-1-jerome.debretagne@gmail.com>
-References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
+	s=arc-20240116; t=1725852962; c=relaxed/simple;
+	bh=m/DXLgTWRmspi5mWj1LnGpJzbpTlcOGfPoTaEnVXmGo=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VyGS08VsczJ5clfvZmVXXqre1PFv5s+hpt5Ly/NpVHT/7X1y6JC1zi39GTM1zMSNp58hvhKQUJw8O1OL6xrTqLD+NOs5la+JSmj2RWlIKF5k+UZ4cAkFs2uHqiOBTQIkmjVA9e5yK9shgIBI1FbEMlvAQD27BqCVdbJFj5+qe0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TERqLrQs; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 488NjB5N015985;
+	Mon, 9 Sep 2024 03:35:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=EXFs6WBCMRcwfj80q5hSN8
+	9/j1417LnNAoWQ2jx06Hg=; b=TERqLrQsLOayWCmgHdewsEuF2B4fYq6qTsCQ8Y
+	aabwO7kgRMbm7QU0tHeSqXqO/6d6Maq7vML8NElq7PFWV2fi1eCnSqzRPJvG44SF
+	zqPXHGdigmBgjR2o0A5hKQKAAjCtCqvNycrNrD6CE8q61jzA7N6Cngm/qZz7j6sV
+	6ChVZ/sV3cN75WQ1PzoaFIX9zqEYW5/Yy98en1haVfKic7tHybO+TkYktZqLUIAr
+	NmIIg5wVv5bf8r5VQJha6ILeSAoXPSQ2112p6oADH+B5MKw4EQ5kg9IzIm39cS8H
+	f/eeJgB8IC2zK1Grl5rQmWROvSlrtIlislRgrk53Mqq1IiIQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy72sjjc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 09 Sep 2024 03:35:20 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4893ZIe3003296
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 9 Sep 2024 03:35:19 GMT
+Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 8 Sep 2024 20:35:13 -0700
+From: Jie Gan <quic_jiegan@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+Subject: [PATCH v5 0/5] Coresight: Add Coresight TMC Control Unit driver
+Date: Mon, 9 Sep 2024 11:34:53 +0800
+Message-ID: <20240909033458.3118238-1-quic_jiegan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 33QDULXl2XCf78XiJ542j1G_X-yrs6Tz
+X-Proofpoint-GUID: 33QDULXl2XCf78XiJ542j1G_X-yrs6Tz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409090026
 
-Add an initial devicetree for the Microsoft Surface Pro 9 5G, based
-on SC8280XP.
+The Coresight TMC Control Unit(CTCU) device hosts miscellaneous configuration
+registers to control various features related to TMC ETR device.
 
-It enables the support for Wi-Fi, NVMe, the two USB Type-C ports,
-Bluetooth, 5G cellular modem, audio output (via Bluetooth headsets
-or USB audio), external display via DisplayPort over Type-C (only
-the bottom USB Type-C port is working so far), charging, the Surface
-Aggregator Module (SAM) to get keyboard and touchpad working with
-Surface Type Cover accessories.
+The CTCU device works as a helper device physically connected to the TMC ETR device.
+---------------------------------------------------------
+             |ETR0|             |ETR1|
+              . \                 / .
+              .  \               /  .
+              .   \             /   .
+              .    \           /    .
+---------------------------------------------------
+ETR0ATID0-ETR0ATID3     CTCU    ETR1ATID0-ETR1ATID3
+---------------------------------------------------
+Each ETR has four ATID registers with 128 bits long in total.
+e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
 
-Some key features not supported yet:
-- built-in display (but software fallback is working with efifb
-  when blacklisting the msm module)
-- built-in display touchscreen
-- external display with the top USB Type-C port
-- speakers and microphones
-- physical volume up and down keys
-- LID switch detection
+Based on the trace id which is programed in CTCU ATID register of
+specific ETR, trace data with that trace id can get into ETR's buffer
+while other trace data gets ignored. The number of CTCU ATID registers
+depends on the number of defined TMC ETR devices. For example, two TMC
+ETR devices need eight ATID registers. ETR0 with ETR0ATID0-ETR0ATID3
+and ETR1 with ETR1ATID0-ETRATID3.
 
-This devicetree is based on the other SC8280XP ones, for the Lenovo
-ThinkPad X13s and the Qualcomm CRD.
+The significant challenge in enabling the data filter function is how
+to collect the trace ID of the source device. The introduction of
+trace_id callback function addresses this challenge. The callback function
+collects trace ID of the device and return it back. The trace ID will be
+stored in the structure called cs_sink_data and transmitted to helper
+and sink devices.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |    1 +
- .../dts/qcom/sc8280xp-microsoft-arcata.dts    | 1032 +++++++++++++++++
- 2 files changed, 1033 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
+The cs_sink_data structure is created to address how to transmit
+parameters needs by coresight_enable_path/coresight_disbale_path
+functions.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0e5c810304fb..feebd1af5fe6 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -184,6 +184,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sc8180x-lenovo-flex-5g.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc8180x-primus.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-crd.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-lenovo-thinkpad-x13s.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sc8280xp-microsoft-arcata.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sda660-inforce-ifc6560.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm450-lenovo-tbx605f.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm450-motorola-ali.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-new file mode 100644
-index 000000000000..a31742471f51
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-arcata.dts
-@@ -0,0 +1,1032 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2024, Jérôme de Bretagne <jerome.debretagne@gmail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "sc8280xp.dtsi"
-+#include "sc8280xp-pmics.dtsi"
-+
-+/ {
-+	model = "Microsoft Surface Pro 9 5G";
-+	compatible = "microsoft,arcata", "qcom,sc8280xp";
-+
-+	aliases {
-+		serial0 = &uart18;
-+		serial1 = &uart2;
-+	};
-+
-+	wcd938x: audio-codec {
-+		compatible = "qcom,wcd9380-codec";
-+
-+		pinctrl-0 = <&wcd_default>;
-+		pinctrl-names = "default";
-+
-+		reset-gpios = <&tlmm 106 GPIO_ACTIVE_LOW>;
-+
-+		vdd-buck-supply = <&vreg_s10b>;
-+		vdd-rxtx-supply = <&vreg_s10b>;
-+		vdd-io-supply = <&vreg_s10b>;
-+		vdd-mic-bias-supply = <&vreg_bob>;
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		#sound-dai-cells = <1>;
-+	};
-+
-+	pmic-glink {
-+		compatible = "qcom,sc8280xp-pmic-glink", "qcom,pmic-glink";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		/* Left-side top port */
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_con0_hs: endpoint {
-+						remote-endpoint = <&usb_0_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_con0_ss: endpoint {
-+						remote-endpoint = <&usb_0_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_con0_sbu: endpoint {
-+						remote-endpoint = <&usb0_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+
-+		/* Left-side bottom port */
-+		connector@1 {
-+			compatible = "usb-c-connector";
-+			reg = <1>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_con1_hs: endpoint {
-+						remote-endpoint = <&usb_1_dwc3_hs>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_con1_ss: endpoint {
-+						remote-endpoint = <&usb_1_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_con1_sbu: endpoint {
-+						remote-endpoint = <&usb1_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
-+	vreg_nvme: regulator-nvme {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VCC3_SSD";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 135 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&nvme_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VPH_VCC3R9";
-+		regulator-min-microvolt = <3900000>;
-+		regulator-max-microvolt = <3900000>;
-+
-+		regulator-always-on;
-+	};
-+
-+	vreg_wlan: regulator-wlan {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VCC_WLAN_3R9";
-+		regulator-min-microvolt = <3900000>;
-+		regulator-max-microvolt = <3900000>;
-+
-+		gpio = <&pmr735a_gpios 1 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&hastings_reg_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	vreg_wwan: regulator-wwan {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "VCC3B_WAN";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&pmc8280_2_gpios 1 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&wwan_sw_en>;
-+		pinctrl-names = "default";
-+
-+		regulator-boot-on;
-+	};
-+
-+	reserved-memory {
-+		gpu_mem: gpu-mem@8bf00000 {
-+			reg = <0 0x8bf00000 0 0x2000>;
-+			no-map;
-+		};
-+
-+		linux,cma {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x8000000>;
-+			reusable;
-+			linux,cma-default;
-+		};
-+	};
-+
-+	thermal-zones {
-+		skin-temp-thermal {
-+			polling-delay-passive = <250>;
-+
-+			thermal-sensors = <&pmk8280_adc_tm 5>;
-+
-+			trips {
-+				skin_temp_alert0: trip-point0 {
-+					temperature = <55000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+
-+				skin_temp_alert1: trip-point1 {
-+					temperature = <58000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+
-+				skin-temp-crit {
-+					temperature = <73000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+
-+			cooling-maps {
-+				map0 {
-+					trip = <&skin_temp_alert0>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+
-+				map1 {
-+					trip = <&skin_temp_alert1>;
-+					cooling-device = <&CPU4 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU5 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-+							 <&CPU7 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+				};
-+			};
-+		};
-+	};
-+
-+	usb0-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		enable-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
-+		select-gpios = <&tlmm 164 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb0_sbu_default>;
-+		pinctrl-names = "default";
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			usb0_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_con0_sbu>;
-+			};
-+		};
-+	};
-+
-+	usb1-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		enable-gpios = <&tlmm 48 GPIO_ACTIVE_LOW>;
-+		select-gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&usb1_sbu_default>;
-+		pinctrl-names = "default";
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			usb1_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_con1_sbu>;
-+			};
-+		};
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8350-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vdd-l1-l4-supply = <&vreg_s12b>;
-+		vdd-l2-l7-supply = <&vreg_bob>;
-+		vdd-l3-l5-supply = <&vreg_s11b>;
-+		vdd-l6-l9-l10-supply = <&vreg_s12b>;
-+		vdd-l8-supply = <&vreg_s12b>;
-+
-+		vreg_s10b: smps10 {
-+			regulator-name = "vreg_s10b";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_s11b: smps11 {
-+			regulator-name = "vreg_s11b";
-+			regulator-min-microvolt = <1272000>;
-+			regulator-max-microvolt = <1272000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_s12b: smps12 {
-+			regulator-name = "vreg_s12b";
-+			regulator-min-microvolt = <984000>;
-+			regulator-max-microvolt = <984000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_l3b: ldo3 {
-+			regulator-name = "vreg_l3b";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+		};
-+
-+		vreg_l4b: ldo4 {
-+			regulator-name = "vreg_l4b";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6b: ldo6 {
-+			regulator-name = "vreg_l6b";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-boot-on;
-+			regulator-always-on;	// FIXME: VDD_A_EDP_0_0P9
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8350c-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-bob-supply = <&vreg_vph_pwr>;
-+		vdd-l1-l12-supply = <&vreg_s1c>;
-+		vdd-l2-l8-supply = <&vreg_s1c>;
-+		vdd-l3-l4-l5-l7-l13-supply = <&vreg_bob>;
-+		vdd-l6-l9-l11-supply = <&vreg_bob>;
-+		vdd-l10-supply = <&vreg_s11b>;
-+
-+		vreg_s1c: smps1 {
-+			regulator-name = "vreg_s1c";
-+			regulator-min-microvolt = <1880000>;
-+			regulator-max-microvolt = <1900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_l1c: ldo1 {
-+			regulator-name = "vreg_l1c";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12c: ldo12 {
-+			regulator-name = "vreg_l12c";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13c: ldo13 {
-+			regulator-name = "vreg_l13c";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-name = "vreg_bob";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+			regulator-always-on;
-+		};
-+	};
-+
-+	regulators-2 {
-+		compatible = "qcom,pm8350-rpmh-regulators";
-+		qcom,pmic-id = "d";
-+
-+		vdd-l1-l4-supply = <&vreg_s11b>;
-+		vdd-l2-l7-supply = <&vreg_bob>;
-+		vdd-l3-l5-supply = <&vreg_s11b>;
-+		vdd-l6-l9-l10-supply = <&vreg_s12b>;
-+		vdd-l8-supply = <&vreg_s12b>;
-+
-+		vreg_l3d: ldo3 {
-+			regulator-name = "vreg_l3d";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4d: ldo4 {
-+			regulator-name = "vreg_l4d";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6d: ldo6 {
-+			regulator-name = "vreg_l6d";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7d: ldo7 {
-+			regulator-name = "vreg_l7d";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9d: ldo9 {
-+			regulator-name = "vreg_l9d";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&dispcc0 {
-+	status = "okay";
-+};
-+
-+&dispcc1 {
-+	status = "okay";
-+};
-+
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		memory-region = <&gpu_mem>;
-+		firmware-name = "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcdxkmsuc8280.mbn";
-+	};
-+};
-+
-+&mdss0 {
-+	status = "okay";
-+};
-+
-+&mdss0_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss0_dp0_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_0_qmpphy_dp_in>;
-+};
-+
-+&mdss0_dp1 {
-+	status = "okay";
-+};
-+
-+&mdss0_dp1_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_1_qmpphy_dp_in>;
-+};
-+
-+&pcie2a {
-+	perst-gpios = <&tlmm 143 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 145 GPIO_ACTIVE_LOW>;
-+
-+	vddpe-3v3-supply = <&vreg_nvme>;
-+
-+	pinctrl-0 = <&pcie2a_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie2a_phy {
-+	vdda-phy-supply = <&vreg_l6d>;
-+	vdda-pll-supply = <&vreg_l4d>;
-+
-+	status = "okay";
-+};
-+
-+&pcie3a {
-+	perst-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
-+
-+	vddpe-3v3-supply = <&vreg_wwan>;
-+
-+	pinctrl-0 = <&pcie3a_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie3a_phy {
-+	vdda-phy-supply = <&vreg_l6d>;
-+	vdda-pll-supply = <&vreg_l4d>;
-+
-+	status = "okay";
-+};
-+
-+&pcie4 {
-+	max-link-speed = <2>;
-+
-+	perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
-+
-+	vddpe-3v3-supply = <&vreg_wlan>;
-+
-+	pinctrl-0 = <&pcie4_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+};
-+
-+&pcie4_port0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1103";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		qcom,ath11k-calibration-variant = "MS_SP9_5G";
-+	};
-+};
-+
-+&pcie4_phy {
-+	vdda-phy-supply = <&vreg_l6d>;
-+	vdda-pll-supply = <&vreg_l4d>;
-+
-+	status = "okay";
-+};
-+
-+&pmk8280_pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pmk8280_pon_resin {
-+	status = "okay";
-+};
-+
-+&pmk8280_rtc {
-+	nvmem-cells = <&rtc_offset>;
-+	nvmem-cell-names = "offset";
-+
-+	status = "okay";
-+};
-+
-+&pmk8280_sdam_6 {
-+	status = "okay";
-+
-+	rtc_offset: rtc-offset@bc {
-+		reg = <0xbc 0x4>;
-+	};
-+};
-+
-+&qup0 {
-+	status = "okay";
-+};
-+
-+&qup1 {
-+	status = "okay";
-+};
-+
-+&qup2 {
-+	status = "okay";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/sc8280xp/MICROSOFT/SurfacePro9/qcadsp8280.mbn";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_nsp0 {
-+	firmware-name = "qcom/sc8280xp/MICROSOFT/SurfacePro9/qccdsp8280.mbn";
-+
-+	status = "okay";
-+};
-+
-+&rxmacro {
-+	status = "okay";
-+};
-+
-+&sound {
-+	compatible = "qcom,sc8280xp-sndcard";
-+	model = "SC8280XP-MICROSOFT-SURFACE-PRO-9-5G";
-+	audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
-+			"SpkrRight IN", "WSA_SPK2 OUT",
-+			"IN1_HPHL", "HPHL_OUT",
-+			"IN2_HPHR", "HPHR_OUT",
-+			"AMIC2", "MIC BIAS2",
-+			"VA DMIC0", "MIC BIAS1",
-+			"VA DMIC1", "MIC BIAS1",
-+			"VA DMIC2", "MIC BIAS3",
-+			"VA DMIC0", "VA MIC BIAS1",
-+			"VA DMIC1", "VA MIC BIAS1",
-+			"VA DMIC2", "VA MIC BIAS3",
-+			"TX SWR_ADC1", "ADC2_OUTPUT";
-+
-+	wcd-playback-dai-link {
-+		link-name = "WCD Playback";
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd938x 0>, <&swr1 0>, <&rxmacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wcd-capture-dai-link {
-+		link-name = "WCD Capture";
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd938x 1>, <&swr2 0>, <&txmacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	wsa-dai-link {
-+		link-name = "WSA Playback";
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
-+		};
-+
-+		codec {
-+			sound-dai = <&swr0 0>, <&wsamacro 0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+	};
-+
-+	va-dai-link {
-+		link-name = "VA Capture";
-+
-+		cpu {
-+			sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6apm>;
-+		};
-+
-+		codec {
-+			sound-dai = <&vamacro 0>;
-+		};
-+	};
-+};
-+
-+&swr0 {
-+	status = "okay";
-+};
-+
-+&swr1 {
-+	status = "okay";
-+
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		qcom,tx-port-mapping = <1 1 2 3>;
-+	};
-+};
-+
-+&txmacro {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	pinctrl-0 = <&uart2_default>;
-+	pinctrl-names = "default";
-+
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddio-supply = <&vreg_s10b>;
-+		vddbtcxmx-supply = <&vreg_s12b>;
-+		vddrfacmn-supply = <&vreg_s12b>;
-+		vddrfa0p8-supply = <&vreg_s12b>;
-+		vddrfa1p2-supply = <&vreg_s11b>;
-+		vddrfa1p7-supply = <&vreg_s1c>;
-+
-+		max-speed = <3200000>;
-+
-+		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&bt_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&uart18 {
-+	status = "okay";
-+
-+	embedded-controller {
-+		compatible = "microsoft,surface-sam";
-+
-+		interrupts-extended = <&tlmm 85 IRQ_TYPE_EDGE_RISING>;
-+
-+		current-speed = <4000000>;
-+
-+		pinctrl-0 = <&ssam_state>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&usb_0 {
-+	status = "okay";
-+};
-+
-+&usb_0_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_0_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_con0_hs>;
-+};
-+
-+&usb_0_hsphy {
-+	vdda-pll-supply = <&vreg_l9d>;
-+	vdda18-supply = <&vreg_l1c>;
-+	vdda33-supply = <&vreg_l7d>;
-+
-+	status = "okay";
-+};
-+
-+&usb_0_qmpphy {
-+	vdda-phy-supply = <&vreg_l9d>;
-+	vdda-pll-supply = <&vreg_l4d>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_0_qmpphy_dp_in {
-+	remote-endpoint = <&mdss0_dp0_out>;
-+};
-+
-+&usb_0_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_con0_ss>;
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_dwc3_hs {
-+	remote-endpoint = <&pmic_glink_con1_hs>;
-+};
-+
-+&usb_1_hsphy {
-+	vdda-pll-supply = <&vreg_l4b>;
-+	vdda18-supply = <&vreg_l1c>;
-+	vdda33-supply = <&vreg_l13c>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vreg_l4b>;
-+	vdda-pll-supply = <&vreg_l3b>;
-+
-+	orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy_dp_in {
-+	remote-endpoint = <&mdss0_dp1_out>;
-+};
-+
-+&usb_1_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_con1_ss>;
-+};
-+
-+&vamacro {
-+	pinctrl-0 = <&dmic01_default>, <&dmic23_default>;
-+	pinctrl-names = "default";
-+
-+	vdd-micb-supply = <&vreg_s10b>;
-+
-+	qcom,dmic-sample-rate = <4800000>;
-+
-+	status = "okay";
-+};
-+
-+&wsamacro {
-+	status = "okay";
-+};
-+
-+&xo_board_clk {
-+	clock-frequency = <38400000>;
-+};
-+
-+/* PINCTRL */
-+
-+&lpass_tlmm {
-+	status = "okay";
-+};
-+
-+&pmc8280_2_gpios {
-+	wwan_sw_en: wwan-sw-en-state {
-+		pins = "gpio1";
-+		function = "normal";
-+	};
-+};
-+
-+&pmr735a_gpios {
-+	hastings_reg_en: hastings-reg-en-state {
-+		pins = "gpio1";
-+		function = "normal";
-+	};
-+};
-+
-+&tlmm {
-+	bt_default: bt-default-state {
-+		hstp-bt-en-pins {
-+			pins = "gpio133";
-+			function = "gpio";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+
-+		hstp-sw-ctrl-pins {
-+			pins = "gpio132";
-+			function = "gpio";
-+			bias-pull-down;
-+		};
-+	};
-+
-+	nvme_reg_en: nvme-reg-en-state {
-+		pins = "gpio135";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	pcie2a_default: pcie2a-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio142";
-+			function = "pcie2a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio143";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio145";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+	       };
-+	};
-+
-+	pcie3a_default: pcie3a-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio150";
-+			function = "pcie3a_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio151";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio148";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	pcie4_default: pcie4-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio140";
-+			function = "pcie4_clkreq";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		perst-n-pins {
-+			pins = "gpio141";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		wake-n-pins {
-+			pins = "gpio139";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+
-+	ssam_state: ssam-state-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
-+	uart2_default: uart2-default-state {
-+		cts-pins {
-+			pins = "gpio121";
-+			function = "qup2";
-+			bias-bus-hold;
-+		};
-+
-+		rts-pins {
-+			pins = "gpio122";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		rx-pins {
-+			pins = "gpio124";
-+			function = "qup2";
-+			bias-pull-up;
-+		};
-+
-+		tx-pins {
-+			pins = "gpio123";
-+			function = "qup2";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	usb0_sbu_default: usb0-sbu-state {
-+		oe-n-pins {
-+			pins = "gpio101";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+			output-high;
-+		};
-+
-+		sel-pins {
-+			pins = "gpio164";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+		};
-+	};
-+
-+	usb1_sbu_default: usb1-sbu-state {
-+		oe-n-pins {
-+			pins = "gpio48";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+			output-high;
-+		};
-+
-+		sel-pins {
-+			pins = "gpio47";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+		};
-+	};
-+
-+	wcd_default: wcd-default-state {
-+		reset-pins {
-+			pins = "gpio106";
-+			function = "gpio";
-+			bias-disable;
-+		};
-+	};
-+};
+Here is an example of the struct cs_sink_data:
+struct cs_sink_data {
+        struct perf_output_handle  *handle; //used by perf mode
+        struct coresight_device    *sink;   //used to retrieve atid_offset
+        u32                        traceid; //traceid needed by CTCU
+};
+
+The atid_offset mentioned before is the offset to ATID register in CTCU
+device.
+
+Enabling the source device will configure one bit in the ATID register based
+on its trace ID.
+Disabling the source devices will reset the bit in the AITD register
+based on its trace ID.
+
+Useage:
+Enable:
+STM device with trace ID 5 and ETR0 is activated.
+Bitmap before the enablement:
+ETR0ATID0:
+31..................543210
+==========================
+0000000000000000000000...0
+==========================
+
+Bitmap after the enablement:
+31..................543210
+==========================
+0000000000000...0000100000
+==========================
+
+The bit 5 of the ETR0ATID0 register is configured to 1 when enabling the
+STM device.
+
+Disable:
+STM device with trace ID 5 and ETR0 is activated.
+Bitmap before the disablement:
+ETR0ATID0:
+31................6543210
+=========================
+000000000010111...0100000
+=========================
+
+Bitmap after the disablement
+ETR0ATID0:
+31................6543210
+=========================
+000000000010111...0000000
+=========================
+
+The bit 5 of the ETR0ATID0 register is reset to 0 when disabling the STM
+device.
+
+Previous discussion for V1:
+https://lore.kernel.org/lkml/20240618072726.3767974-1-quic_jiegan@quicinc.com/T/#t
+
+Changes in V2:
+1. Rename the device to Coresight Control Unit.
+2. Introduce the trace_id function pointer to address the challeng how to
+properly collect the trace ID of the device.
+3. Introduce a new way to define the qcom,ccu-atid-offset property in
+device tree.
+4. Disabling the filter function blocked on acquiring the ATID-offset,
+which will be addressed in a separate patch once it’s ready.
+
+Previous discussion for V2:
+https://lore.kernel.org/linux-arm-msm/20240705090049.1656986-1-quic_jiegan@quicinc.com/T/#t
+
+Changes in V3:
+1. Rename the device to Coresight TMC Control Unit(CTCU).
+2. Introduce a new way to define the platform related configs. The new
+   structure, qcom_ctcu_config, is used to store configurations specific
+   to a platform. Each platform should have its own qcom_ctcu_config structure.
+3. In perf mode, the ETM devices allocate their trace IDs using the
+   perf_sink_id_map. In sysfs mode, the ETM devices allocate their trace
+   IDs using the id_map_default.
+4. Considering the scenario where both ETR devices might be enabled simultaneously
+   with multiple sources, retrieving and using trace IDs instead of id_map is more effective
+   for the CTCU device in sysfs mode. For example, We can configure one ETR as sink for high
+   throughput trace data like ETM and another ETR for low throughput trace data like STM.
+   In this case, STM data won’t be flushed out by ETM data quickly. However, if we use id_map to
+   manage the trace IDs, we need to create a separate id_map for each ETR device. Addtionally, We
+   would need to iterate through the entire id_map for each configuration.
+5. Add support for apb's clock name "apb". If the function fails to obtain the clock with
+   the name "apb_pclk", it will attempt to acquire the clock with the name "apb".
+
+Previous discussion for V3:
+https://lore.kernel.org/linux-arm-kernel/20240812024141.2867655-1-quic_jiegan@quicinc.com/
+
+Changes in V4:
+1. Add TMC description in binding file.
+2. Restrict the number of ports for the CTCU device to a range of 0 to 1 in the binding file,
+because the maximum number of CTCU devices is 2 for existing projects.
+
+Changes in V5:
+1. Fix the format issue for description paragrah in dt binding file.
+2. Previous discussion for why use "in-ports" property instead of "ports".
+Please help to comment this point if the platform driver must be fixed before
+submit this patch series.
+https://lore.kernel.org/linux-arm-msm/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com/
+
+Jie Gan (5):
+  Coresight: Add support for new APB clock name
+  Coresight: Add trace_id function to retrieving the trace ID
+  dt-bindings: arm: Add Coresight TMC Control Unit hardware
+  Coresight: Add Coresight TMC Control Unit driver
+  arm64: dts: qcom: Add CTCU and ETR nodes for SA8775p
+
+ .../bindings/arm/qcom,coresight-ctcu.yaml     |  84 +++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 160 ++++++++++
+ drivers/hwtracing/coresight/Kconfig           |   8 +
+ drivers/hwtracing/coresight/Makefile          |   1 +
+ drivers/hwtracing/coresight/coresight-core.c  |  59 +++-
+ drivers/hwtracing/coresight/coresight-ctcu.c  | 292 ++++++++++++++++++
+ drivers/hwtracing/coresight/coresight-ctcu.h  |  21 ++
+ drivers/hwtracing/coresight/coresight-etb10.c |   3 +-
+ .../hwtracing/coresight/coresight-etm-perf.c  |  37 ++-
+ .../coresight/coresight-etm3x-core.c          |  30 ++
+ .../coresight/coresight-etm4x-core.c          |  29 ++
+ drivers/hwtracing/coresight/coresight-priv.h  |  13 +-
+ drivers/hwtracing/coresight/coresight-stm.c   |  22 ++
+ drivers/hwtracing/coresight/coresight-sysfs.c |  24 +-
+ .../hwtracing/coresight/coresight-tmc-etf.c   |   3 +-
+ .../hwtracing/coresight/coresight-tmc-etr.c   |   6 +-
+ drivers/hwtracing/coresight/coresight-tpda.c  |  20 ++
+ drivers/hwtracing/coresight/coresight-trbe.c  |   4 +-
+ drivers/hwtracing/coresight/ultrasoc-smb.c    |   3 +-
+ include/linux/coresight.h                     |  16 +-
+ 20 files changed, 807 insertions(+), 28 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
+
 -- 
-2.45.2
+2.34.1
 
 
