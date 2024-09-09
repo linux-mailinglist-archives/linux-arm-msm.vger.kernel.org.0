@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-31340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F08BE971BD1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:56:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8493971BD6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:56:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 728B61F22FA6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:56:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 36FD91F23416
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:56:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F7B61BDABE;
-	Mon,  9 Sep 2024 13:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3BE31BE24F;
+	Mon,  9 Sep 2024 13:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TTMniVFR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I8wfYX8t"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB451BDA99
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D411BDAB7
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725889925; cv=none; b=cfo1cdbCXRxr1SbkLgzRAtf3RnlMxOLWtKK8UNcAwBB9Og1JNLsceP4rGI3U747EDXIEEhhcBUYIAURrMS/NSRbSxOLry7IJJNiuYKanCH9PLG+1c8WWb5ECfJPmzp4gCqKqCq2HRqKm444/ThxOSjTdW1/yIu9vAQSpPZQeErM=
+	t=1725889926; cv=none; b=WBxEogafCN9TOC2f775VpRoun/T0r7pqB6PnNZWZvryPVlpAT2HXEaOq9TEouP/VqKkkveuB3cOspeD/W5066e0dhVP+22MQQPtSex2pctlLsW1qA22hCiK+1rmYfpnQext6g0I3olgKetD7YCiYzX/Kq7EY8lkVvY63vlISfKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725889925; c=relaxed/simple;
-	bh=QfpMH8xpX7M5v1cNMdTuKAFwaOO0ijMMMrIuqJNJ7Fc=;
+	s=arc-20240116; t=1725889926; c=relaxed/simple;
+	bh=pT3vklV3r+mZAGNAtUkG8vU9TQS654l0/1TCGybfK8Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Wo4Bum1t/0AhVYdylLhFWs7A/488nklQwaAeBFqV68k0Yvf+fxZzbvMIHOvPL+sKDT8q4wEWHJ1TLmRHqso7HXGjnhaMziOYCp7HccmUEL8jOYI2HmxqkHP/P+6p8vjqcpcR+6aEZq5BPGwVqORryfem22UN8/lW+r0EXk1YlJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TTMniVFR; arc=none smtp.client-ip=209.85.218.51
+	 In-Reply-To:To:Cc; b=K9J3sEAYDH+Y+y+qU5ogqvGaclWGbpz6D/CNvl+NI7l8D8KqiDD1YLBCsieY6U7zGllx3esJSIYsSe/VDfEUbVf98YZKfmTJqQ+/YimzoRQCnpVP6lUl6vWQURUxnLuGx/jNrUViTFPTPHGd6pyFZ/CxQcWJYHqWdT3dd7bBbEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I8wfYX8t; arc=none smtp.client-ip=209.85.218.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8a92e8c840so38153366b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:52:03 -0700 (PDT)
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8a87c7c68dso12367566b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725889921; x=1726494721; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1725889923; x=1726494723; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HEAviafQzNR7Z9t5hpM5VZEKV85C26CtMxeL00PENiQ=;
-        b=TTMniVFRkH7FAW64HG0nVKhi7SVcFNDUXg/BNNoI1aifgw0L6hVZrZSjOeCqXl61+b
-         ES93oSt+YKovm1dUCxenX1Ed4egEPg7QwncUpVRDh27M1HDGQBp9MeNp/ihpUahajpQV
-         5wiyiswV8+/mzom0u6rJe1rgK9l9Ps9X6qAtZ3CHvUPZqccX3ejAuvga+yzic24Z0mf4
-         EneCVg9LXZNS2wGiw3Tx6UZ5QBUwnWInbd0O7kSTHMHMmkrC3oDXM6PgwhIhjC0nQwSN
-         QTwXu6a6+vFof0P2Yr4fn5GRDD7bMqfyeGdfJGwj4amB06T4cjRzvs2EjTT9Sa4CIX9W
-         SJng==
+        bh=D4QKaI+3WBHRSwPufs3rtV0LI1aQyhehd6Wi2dpHTGg=;
+        b=I8wfYX8tfs3bIUlo+wVdT9N2bWdXNilZsA16A0aBYWQvU41B9k4wGQKA7PSt/SuTnE
+         i9h68NKghMh/rW7+nwbDgntYi1OEtloe+Btx+m24cPiF0IlMcJJv0sMe7VDlBHUKEerh
+         56RnAjrf0KXE0Cl6M5YnZUZm5sDfpHF1J8fQDpLH2mhvg2srThDWZ0tA157GRz94L50Y
+         2znr2H3wn18tyU2Lt57f6MRaTJFS23Yx7BqdfnbAhgjfsLELZO8ddkX5IvMGRkJFP067
+         +XCKDco8sKxlpDKsY4MQnXkGVo7c3oiaCAHLTf0sNpq6PafIT9QxsMpF6hSngEZy2sKP
+         hyqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725889921; x=1726494721;
+        d=1e100.net; s=20230601; t=1725889923; x=1726494723;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HEAviafQzNR7Z9t5hpM5VZEKV85C26CtMxeL00PENiQ=;
-        b=ipdwbjDEHNfJ6TvEPgUo2ZEKGopuS0ktnXe3VLzYGg4tFxo/bEqEeXvOwtytePb5uF
-         1R/dD7aa/iIb86IFNOl5oPCX6ofyy78dQOx+IASCE7qRPWZuA1scJpgDZgkPRflLdJFf
-         iFcRf2Q5q57yKzrrXr6uz4OEWm/n+eRjLjGXlZcuezhPKzfNfPUzU008+Ap91J6AfbdB
-         dgAcrb/8ggwdo4Su3WY+n3uO0lCKSGbpRNjoDkippYTdqvU6LB8ajlVZ2MGLnXkGebn8
-         Sw01M3rAiZe8+Tt6Vs+z62YuDhIQGg8G8FPb51flSBN0l+mPWuk6O3d9AQ+EAXnM8j8L
-         49mQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVJQkcBp/J2EQL7srI3G98OyPFHFjlTLQ4CTFP8MmaMKKdXz05sROnCA8L8PCpi1HWxX5Vm17SoO3cq7LNb@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTmZxBFaqyI6Vq23pvzChrG4mf8lOJW7lASAjpNoUNm9TGUAdp
-	VjsRVbrF0iN6lRkWnQ5HLGsc95vXGb5YS1xVgvNfEO+lz3PoTQlkeTxx+YvHcGg=
-X-Google-Smtp-Source: AGHT+IGUrqfpjeRf1rMAe7mjAkRWErGkoP/w4iRCRemp+gCnfBdE5Yx7pYFApwpFKe1jn6l3HlkbcA==
-X-Received: by 2002:a17:907:3d8b:b0:a80:a193:a509 with SMTP id a640c23a62f3a-a8a885bdde7mr356155466b.2.1725889921408;
-        Mon, 09 Sep 2024 06:52:01 -0700 (PDT)
+        bh=D4QKaI+3WBHRSwPufs3rtV0LI1aQyhehd6Wi2dpHTGg=;
+        b=i6BDQ3UeO4EX6m8Lj5w1AVb/ofxdS2mrBXSoSKW2VUfmSNTTEf23rghoIqdFrOa4Ru
+         M9QOjWJ2xhMeGcGrvN80PmdyRTOUx5PcxC/Kw0ff5H7X3TCB+SNN2BwbomTF69jB0mZo
+         xxDvMt00tu3WLZ7WZR9RE5488tUNtpKXs76XYnU7y49c0CW9+/KVFFbkoGH5FtUFo1q4
+         kGJ5my0C09d8S4gUifKl9s/hJM85Cksx5WcRifMljjumtAnw0b9RRm+ouTD41gRsecb8
+         PVHmxhxCicRCks1bzyQBJV/h891vpP5L4qYOw6E1Ne+HrCmsTsxtn+UjWmC47qviO2w7
+         wIkA==
+X-Forwarded-Encrypted: i=1; AJvYcCX4liibggj7B1jUePt/hTdjnu9B4vZdG1AXEBldg94oMlcHKWbJrWde0VRVefygwmssnHVHSuXw7T9nxOOz@vger.kernel.org
+X-Gm-Message-State: AOJu0YzVl+hcbjWJ8mUgNhvxvdOiYPYYq/P5bBeXWCO9m3oekA2Uhvqv
+	u46G3GZ4N/u0s4CodpxPhNmGPzT6ri24xBb0cxFiDVyg0Q7go7FKcvPpnlpgUJc=
+X-Google-Smtp-Source: AGHT+IFkB5FwZ6RP2VpeDYDu58V07W5VhL+BMyppWhQzRBjqI5M81sTuW26HDIwx4LByUJ7TdWVeBw==
+X-Received: by 2002:a17:907:608a:b0:a8a:7189:2106 with SMTP id a640c23a62f3a-a8a88803359mr291596666b.6.1725889922892;
+        Mon, 09 Sep 2024 06:52:02 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf3ad6sm345344566b.148.2024.09.09.06.52.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf3ad6sm345344566b.148.2024.09.09.06.52.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 06:52:00 -0700 (PDT)
+        Mon, 09 Sep 2024 06:52:02 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Mon, 09 Sep 2024 15:51:27 +0200
-Subject: [PATCH 16/17] regulator: hi6421v530: Use container_of and constify
+Date: Mon, 09 Sep 2024 15:51:28 +0200
+Subject: [PATCH 17/17] regulator: max77650: Use container_of and constify
  static data
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240909-regulator-const-v1-16-8934704a5787@linaro.org>
+Message-Id: <20240909-regulator-const-v1-17-8934704a5787@linaro.org>
 References: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
 In-Reply-To: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
 To: Support Opensource <support.opensource@diasemi.com>, 
@@ -91,26 +91,26 @@ Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2454;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5091;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=QfpMH8xpX7M5v1cNMdTuKAFwaOO0ijMMMrIuqJNJ7Fc=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm3v1mbrrIu6Do6kppOFM21iGEOSQnx+wr6TRGX
- MTTtX77+QKJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZt79ZgAKCRDBN2bmhouD
- 17PsD/49SlTRgOuT9opobBE999Eo0XMLtC18q26ggdv3vW/9xY53TZacc1sfclw2LWcHUPAzpMk
- v2yz16QkZK0z0MiqCpwIM3z7/b4Idk/YJQxNscRM645bKHaNxlYeBVQgXRpX/rgPYKwne7RRCzS
- 2G8wCmaSA7KTQ4OK0I/VX1B1w1PVLAdlTp1DajYRjpFMQyCbeGMx1dw2pHFCVEZnGklOtB+JXZw
- F24rxvpdFzaZTvbSrR8OA3Qr0AbdGSNsvBjJxWxMKNmeXehb9q4X7PeP6NMEWyZuZahJhIwjPuK
- 4GjDbix7naxDG3LRLFvXQVBTd3tTtlrmarGiqUrWr48TKoOIiXQ9+3DhtiZbU0jen/scVfhLIXN
- JLmEHol/WBUI0ziNAnJcMtWHmUDZeQZgehGHviTxSEQvRoCRJi8cR8jVrPFXBOeWXUp5+cELP7+
- e9OPitc1nA9XIsdv9Is1SNjUSSH8fQGeNLDqzfSNPLkGqGDi8HE/QlkfwsNJ27ITARLbditccpc
- 3OaBBhaAb6Ejc/HnYwA1EcFNkR+iwRN8RBLJqsGC7GVr9tfTtG1CZDKj8B9TfcLpEpCBvVTcmUd
- wa85RJKRg3BgCuNk3/bEnS44Ywg8avfJ5Q66Hu84715P6hvPDUVsjB8PJSrlaN477J5Bxa2URNo
- S2rXdeUiFplSo8w==
+ bh=pT3vklV3r+mZAGNAtUkG8vU9TQS654l0/1TCGybfK8Q=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm3v1nXIJdWNbRtDH6jLRbfKirVbrDR9hrPibYD
+ A0gRNKrWKKJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZt79ZwAKCRDBN2bmhouD
+ 14qVEACRgLsVdWDXrS20GsTp4A3Ag89uPdX4Lm1yhjam8q9PHA1EcqEd03qyD9++DH9J+ze5ujx
+ c9LiuV8Y4yAXbrIxGmNWOpx5u/7JoGvGjwsAKmG4P+E5hnO96bKsupFq0ZONfubtSA7efMP65qw
+ xfW4XKiQcPq3KaXujdFdgnhdkG8ultcDksYS2ZU/MB3hiiFytZi6dddp7Mfzx7BEHgs7yF4s9m8
+ yoigsGsbquv2hbcCDnb1ytwDxR+un6SE33cXwUfo5pNBXAW92nmpQbtbWykifj6vIMjV6CmbraR
+ 52C5s+4gdyII3bdtf4HvUTcz66Asm+/9ihcxYClBn5HiA6lUefRTJjN5zqznTDK0L3zPULYVR2h
+ WbLPZiHzj8UDkLW4aGaclTo/gCX5gAgyzDPphNHbsFx185jVuudPHcW7xU1b+9qMguFXzZIwSlp
+ 5tmlv7aRCC/dGhe1JG9DX3G6ICnQW968kLzlnqDcw6EEHsON1+e8XB/FzHZM2TpHLPTUcRdr5D/
+ 1o0NHLpdQEnvyS5eZKbx08DylInn6xnZ9QbOZ4sYmBITYGcD8Ou4rdHa/lZHhBW1+E0C4QUP16t
+ fLQaiHp2fnlt+GpZXPFrbgCuNfgB6MoliRVSldN2+bWRS5k1sbw8oTaQWBmbqNuZRtcbE5JSIsL
+ 1RjfoAwiIZmG/ZA==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
 Switch from rdev_get_drvdata() to container_of(), so the static
-'struct hi6421v530_regulator_info' holding 'struct regulator_desc' can
+'struct max77650_regulator_desc' holding 'struct regulator_desc' can
 be made const for code safety.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
@@ -119,56 +119,135 @@ Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 [RFT]: Not tested, only built.
 ---
- drivers/regulator/hi6421v530-regulator.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/regulator/max77650-regulator.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/regulator/hi6421v530-regulator.c b/drivers/regulator/hi6421v530-regulator.c
-index a9c6c077f50d..b3ebd1624814 100644
---- a/drivers/regulator/hi6421v530-regulator.c
-+++ b/drivers/regulator/hi6421v530-regulator.c
-@@ -91,7 +91,7 @@ static const struct regulator_ops hi6421v530_ldo_ops;
+diff --git a/drivers/regulator/max77650-regulator.c b/drivers/regulator/max77650-regulator.c
+index 94abfbb2bc1e..7368f54f046d 100644
+--- a/drivers/regulator/max77650-regulator.c
++++ b/drivers/regulator/max77650-regulator.c
+@@ -43,8 +43,6 @@ struct max77650_regulator_desc {
+ 	unsigned int regB;
+ };
  
- /* HI6421V530 regulator information */
+-static struct max77650_regulator_desc max77651_SBB1_desc;
+-
+ static const unsigned int max77651_sbb1_volt_range_sel[] = {
+ 	0x0, 0x1, 0x2, 0x3
+ };
+@@ -66,11 +64,11 @@ static const unsigned int max77650_current_limit_table[] = {
  
--static struct hi6421v530_regulator_info hi6421v530_regulator_info[] = {
-+static const struct hi6421v530_regulator_info hi6421v530_regulator_info[] = {
- 	HI6421V530_LDO(LDO3, ldo_3_voltages, 0x061, 0xf, 0x060, 0x2,
- 		   20000, 0x6),
- 	HI6421V530_LDO(LDO9, ldo_9_11_voltages, 0x06b, 0x7, 0x06a, 0x2,
-@@ -107,10 +107,10 @@ static struct hi6421v530_regulator_info hi6421v530_regulator_info[] = {
- static unsigned int hi6421v530_regulator_ldo_get_mode(
- 					struct regulator_dev *rdev)
+ static int max77650_regulator_is_enabled(struct regulator_dev *rdev)
  {
--	struct hi6421v530_regulator_info *info;
-+	const struct hi6421v530_regulator_info *info;
- 	unsigned int reg_val;
+-	struct max77650_regulator_desc *rdesc;
++	const struct max77650_regulator_desc *rdesc;
+ 	struct regmap *map;
+ 	int val, rv, en;
  
--	info = rdev_get_drvdata(rdev);
-+	info = container_of(rdev->desc, struct hi6421v530_regulator_info, rdesc);
- 	regmap_read(rdev->regmap, rdev->desc->enable_reg, &reg_val);
+-	rdesc = rdev_get_drvdata(rdev);
++	rdesc = container_of(rdev->desc, struct max77650_regulator_desc, desc);
+ 	map = rdev_get_regmap(rdev);
  
- 	if (reg_val & (info->mode_mask))
-@@ -122,10 +122,10 @@ static unsigned int hi6421v530_regulator_ldo_get_mode(
- static int hi6421v530_regulator_ldo_set_mode(struct regulator_dev *rdev,
- 						unsigned int mode)
+ 	rv = regmap_read(map, rdesc->regB, &val);
+@@ -84,10 +82,10 @@ static int max77650_regulator_is_enabled(struct regulator_dev *rdev)
+ 
+ static int max77650_regulator_enable(struct regulator_dev *rdev)
  {
--	struct hi6421v530_regulator_info *info;
-+	const struct hi6421v530_regulator_info *info;
- 	unsigned int new_mode;
+-	struct max77650_regulator_desc *rdesc;
++	const struct max77650_regulator_desc *rdesc;
+ 	struct regmap *map;
  
--	info = rdev_get_drvdata(rdev);
-+	info = container_of(rdev->desc, struct hi6421v530_regulator_info, rdesc);
- 	switch (mode) {
- 	case REGULATOR_MODE_NORMAL:
- 		new_mode = 0;
-@@ -172,7 +172,6 @@ static int hi6421v530_regulator_probe(struct platform_device *pdev)
- 	for (i = 0; i < ARRAY_SIZE(hi6421v530_regulator_info); i++) {
- 		config.dev = pdev->dev.parent;
- 		config.regmap = pmic->regmap;
--		config.driver_data = &hi6421v530_regulator_info[i];
+-	rdesc = rdev_get_drvdata(rdev);
++	rdesc = container_of(rdev->desc, struct max77650_regulator_desc, desc);
+ 	map = rdev_get_regmap(rdev);
  
- 		rdev = devm_regulator_register(&pdev->dev,
- 				&hi6421v530_regulator_info[i].rdesc,
+ 	return regmap_update_bits(map, rdesc->regB,
+@@ -97,10 +95,10 @@ static int max77650_regulator_enable(struct regulator_dev *rdev)
+ 
+ static int max77650_regulator_disable(struct regulator_dev *rdev)
+ {
+-	struct max77650_regulator_desc *rdesc;
++	const struct max77650_regulator_desc *rdesc;
+ 	struct regmap *map;
+ 
+-	rdesc = rdev_get_drvdata(rdev);
++	rdesc = container_of(rdev->desc, struct max77650_regulator_desc, desc);
+ 	map = rdev_get_regmap(rdev);
+ 
+ 	return regmap_update_bits(map, rdesc->regB,
+@@ -145,7 +143,7 @@ static const struct regulator_ops max77651_SBB1_regulator_ops = {
+ 	.set_active_discharge	= regulator_set_active_discharge_regmap,
+ };
+ 
+-static struct max77650_regulator_desc max77650_LDO_desc = {
++static const struct max77650_regulator_desc max77650_LDO_desc = {
+ 	.desc = {
+ 		.name			= "ldo",
+ 		.of_match		= of_match_ptr("ldo"),
+@@ -171,7 +169,7 @@ static struct max77650_regulator_desc max77650_LDO_desc = {
+ 	.regB		= MAX77650_REG_CNFG_LDO_B,
+ };
+ 
+-static struct max77650_regulator_desc max77650_SBB0_desc = {
++static const struct max77650_regulator_desc max77650_SBB0_desc = {
+ 	.desc = {
+ 		.name			= "sbb0",
+ 		.of_match		= of_match_ptr("sbb0"),
+@@ -201,7 +199,7 @@ static struct max77650_regulator_desc max77650_SBB0_desc = {
+ 	.regB		= MAX77650_REG_CNFG_SBB0_B,
+ };
+ 
+-static struct max77650_regulator_desc max77650_SBB1_desc = {
++static const struct max77650_regulator_desc max77650_SBB1_desc = {
+ 	.desc = {
+ 		.name			= "sbb1",
+ 		.of_match		= of_match_ptr("sbb1"),
+@@ -231,7 +229,7 @@ static struct max77650_regulator_desc max77650_SBB1_desc = {
+ 	.regB		= MAX77650_REG_CNFG_SBB1_B,
+ };
+ 
+-static struct max77650_regulator_desc max77651_SBB1_desc = {
++static const struct max77650_regulator_desc max77651_SBB1_desc = {
+ 	.desc = {
+ 		.name			= "sbb1",
+ 		.of_match		= of_match_ptr("sbb1"),
+@@ -264,7 +262,7 @@ static struct max77650_regulator_desc max77651_SBB1_desc = {
+ 	.regB		= MAX77650_REG_CNFG_SBB1_B,
+ };
+ 
+-static struct max77650_regulator_desc max77650_SBB2_desc = {
++static const struct max77650_regulator_desc max77650_SBB2_desc = {
+ 	.desc = {
+ 		.name			= "sbb2",
+ 		.of_match		= of_match_ptr("sbb2"),
+@@ -294,7 +292,7 @@ static struct max77650_regulator_desc max77650_SBB2_desc = {
+ 	.regB		= MAX77650_REG_CNFG_SBB2_B,
+ };
+ 
+-static struct max77650_regulator_desc max77651_SBB2_desc = {
++static const struct max77650_regulator_desc max77651_SBB2_desc = {
+ 	.desc = {
+ 		.name			= "sbb2",
+ 		.of_match		= of_match_ptr("sbb2"),
+@@ -326,8 +324,8 @@ static struct max77650_regulator_desc max77651_SBB2_desc = {
+ 
+ static int max77650_regulator_probe(struct platform_device *pdev)
+ {
+-	struct max77650_regulator_desc **rdescs;
+-	struct max77650_regulator_desc *rdesc;
++	const struct max77650_regulator_desc **rdescs;
++	const struct max77650_regulator_desc *rdesc;
+ 	struct regulator_config config = { };
+ 	struct device *dev, *parent;
+ 	struct regulator_dev *rdev;
+@@ -376,7 +374,6 @@ static int max77650_regulator_probe(struct platform_device *pdev)
+ 
+ 	for (i = 0; i < MAX77650_REGULATOR_NUM_REGULATORS; i++) {
+ 		rdesc = rdescs[i];
+-		config.driver_data = rdesc;
+ 
+ 		rdev = devm_regulator_register(dev, &rdesc->desc, &config);
+ 		if (IS_ERR(rdev))
 
 -- 
 2.43.0
