@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-31324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F7A6971BAA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:51:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC9CC971BB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 15:52:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A807A1C231D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:51:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 10B7D1C21722
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 13:52:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99A11B9B5D;
-	Mon,  9 Sep 2024 13:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6404C1BA293;
+	Mon,  9 Sep 2024 13:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BDV+0XBT"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gBqgWF87"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CE41B9B51
-	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:51:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 871991BA26C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  9 Sep 2024 13:51:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725889901; cv=none; b=c6pmGgUtSiKRvW5l3WHMqDnE0I1uGxaKS10m35Twtkkwn0tyT/okbAyfXH/S+rUDBfJ5g+bhVjY0lPAWo57Ukem+JrdeE4WMlOFgxsDUTs6AIti+UHA1EtZ4uICAJQUhzhhcXvuePEZBDmnzH1Co4jQtXvk/uZIFoZ9pd9Uhke8=
+	t=1725889904; cv=none; b=lnfmBmnoQh+mH9b5h9gFTlWXYi6JzV2hu/Tva9NGprffKfbrgaUUo9AJssy94uxASa8J/vFChC/HBCgYo0XNo3DBMiVld4gORRUNhmjc2qvXF0VKqW+FnL/DrJM47GkBLfFGyWOQkFEVXMGsGTnMrz3UsESawmH5II8aAUR8nrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725889901; c=relaxed/simple;
-	bh=zUHhg/UyzRf/dZcnGmfWPB4ecX+Ntlv/UdMU1qsMFhE=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=g56yv4ikJqiR7J6E/WfF5ydgdPxERsKyQiwyvZUYt5EIZNFfYvFZeetPhUObjXs3eUKwqQfINilRjZr8z9G3+beFnLTpJ8oBNQS+xLY8KDidF/wQ1XAlztoK9E+/SvnPiRzSn8IJrzLvzGOMvPuciQwtjxQEGehNO5jgsjF86Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BDV+0XBT; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1725889904; c=relaxed/simple;
+	bh=8TsG7I4Aag1KJIfppBSqZ8uVGEQPJnXHOI9sdDJkZWs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=VeiOnOqNiVYs6jCcCk1UzAyr5kNVm00jZhXy3qmEhKSCE1f9UNL9Ny+uMLnWW5r+6kP1YX1LimNeEal9q7GyD4XVWva31k5w/WB2/OHiZr1NWjkAb/Oj7e+I55AH7T/NFAvBSU+IoxkUYA+52Par9o4QrRSxUsm8lYwQCbFiRCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gBqgWF87; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a8d2bd7dcd4so8395766b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:51:39 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a8a7dddd2c3so30090666b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Sep 2024 06:51:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1725889898; x=1726494698; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xIf1wAbIzj4CuxkxfofvazjN5/qDj/bgJx/cWPTX0TU=;
-        b=BDV+0XBTUxkG7bC0jqKPU5sDkWVjJvr01NMnpn2FXLKd1uUEyUpd8OVdOL4WH1CjJn
-         Mrr00+BMXiE66R0mALv6kXHSIYnb7h8JDiKGoHOmqkqXAmtMMRGOzPFnq9wM9F+d3diF
-         XIH3ybP19IGza21+oG7G5DqjwNFHtbj/+PqMRq5YxKvW1AP1Gn1x/HK1+HdsnNMID9bm
-         NMS94OiU2RhCBxII7Canvro2w+C+wIbZvgztygGXXkGr8/yJWUTZPKom2AZxnyQoYbiB
-         t79B8Xz7F5tvVQTOz5va+XzGuNwFSO3d8SFCESPQk2o+5LrFXOoao1BVwY9+D+mtpfIs
-         Hzng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725889898; x=1726494698;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1725889900; x=1726494700; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xIf1wAbIzj4CuxkxfofvazjN5/qDj/bgJx/cWPTX0TU=;
-        b=G0sXmX7t7qgfqcJuyKCuBzZeRI9YB51KbHqlNPBucuuqE3+LFXIFNBuhIF5hpQ3lnN
-         z4yCXfl+8j4y2K1CiI9qK74S8Tu5UOzf6SOEgLJ6hMFnrDftrM6TkzVO36tZuJeETRpS
-         FfG45m3T4Y1k47W+bmXqbUyDXuPj8ZUv524Fm9LIlRRVPl2I3/taWRQa/v8fyzKoQjOc
-         YLCufkh6ZmSNlqmvkTPyKJ0PXdzCC307Q2W/bDQuYLxKyE0oI0DAIz/r48Js+iKcZmin
-         Bq6f07/T6bjPIgWey6JkWxhY5GRjvFyrzf1GNalIY8fyWcBrL8140K9AttfpDbfMkn+e
-         PPkg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0GEAJPOTcp3gTCzmq/CJjPL9jN5XhjTqDrer28VUGcCNDOhpDPZDfCCdWx7sF7gt0K9Ddna1PcoVItGKO@vger.kernel.org
-X-Gm-Message-State: AOJu0YySSfXKc4TXlLORcGYuRXXL/EEYovP/VNvyh+RDyQmepYmrWLyT
-	IN4V9nW5IrcdBhs3YrUuKMJrSIbiruN95wmQtY+1KA78ZROjRB0aGiYf+o1ZBLw=
-X-Google-Smtp-Source: AGHT+IF9Mh+MgE0b3Jf7kgDpkQxsvludlLfJmIJC1bDwVRLgk1OMrtfUfpR0kKiqTATr3BREdjGX6A==
-X-Received: by 2002:a17:906:c148:b0:a86:a4cf:a197 with SMTP id a640c23a62f3a-a8a887fcbe0mr296077966b.5.1725889897492;
-        Mon, 09 Sep 2024 06:51:37 -0700 (PDT)
+        bh=V74UlEO/iR2Z+cYu5ZNF8RMi5oBAw+IToxt2LjZmjGY=;
+        b=gBqgWF87Z9RnQhQzTOYJyONj4Vlj2QyEORatHSHsDwh5yE82KGr1CPxaTaNCnDJLOR
+         WNm4k3/A9700Ym02QOg0fb6moM2BGrHZsi286UuPXQ9rIAH8DnzTyNAWMAxU6g4zOTCd
+         hC/gI5hIhvutEh15g7ymS9l77gjI27KUwwIqZTQdmxafByZleQ255zXWtWcN/y7dJBt8
+         3j6bzzlx/zwsGMR671aHqCyLhUhLIcPPA5gTn1/swX9Cl8RJZ5K1kMEGFaYEnU6EVgs9
+         L3Nb1sIzqHQyZakvV6Y9FgOJdhDLorE+CEvX54clhHfG9PE1yH/44N+oI7Kw+2yQgyf1
+         xWOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725889900; x=1726494700;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V74UlEO/iR2Z+cYu5ZNF8RMi5oBAw+IToxt2LjZmjGY=;
+        b=tGgriehMC92eqwajZHdxJFQRuf+pdS4aDtT7u0s3QV2kLTeMnuDBp4DclDjVBWP8ay
+         2Y7sX9xmSyMPkcoQ+XATJPdajNkW4rkTIBzsHdhwR2Y2OHtN+737St2x62c55jMmWaGs
+         tpxrsQnZS3tb6VIQ7QCrYk76NisxOlg3RZPqaDOrPyKB8rWyCH3t7q+Zt+LFBft7fEqF
+         z8Afq79Oe2P3DoJKADbYvR8nNlUEfbFcyGCc08yYcyoChg8vQxmOm2yNYJj2fGHcUjfn
+         gaZJzLQp7kPEmMCY+3akikb9+WUnVdSct9K/aKSbVNx+/w4pEK9fe/uXqbYL5dubX/kv
+         zunQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVMNQXTpigibShJtf+92RYkKoM9OhpX8lCKI6zrga521dW3zNdEAgwwZ3vRpvycw4Mj3SWgtNmocR4OFpmu@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8XhWgdn3QKqlAeP3MX1roJ+Y88guL8lp2r0rDd8ydxBS+IrOa
+	yQCcqrvXvFXQc6V0c4htNET7Jxcw5ztN4tFm2H3Q8rtOnyoONEyl1/Q8rMg5M/E=
+X-Google-Smtp-Source: AGHT+IEvFrbQZvkEd16b+cebKNNqLJEpYUuxolVRkSwJ8SAfHDa79KyoDYaIwBLAfAfowNG3uPOfjQ==
+X-Received: by 2002:a17:906:f5aa:b0:a8d:2624:1a83 with SMTP id a640c23a62f3a-a8d2624256emr211069766b.14.1725889898953;
+        Mon, 09 Sep 2024 06:51:38 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.222.82])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf3ad6sm345344566b.148.2024.09.09.06.51.36
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf3ad6sm345344566b.148.2024.09.09.06.51.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Sep 2024 06:51:37 -0700 (PDT)
+        Mon, 09 Sep 2024 06:51:38 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 00/17] regulator: Few constifications of static data
-Date: Mon, 09 Sep 2024 15:51:11 +0200
-Message-Id: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
+Date: Mon, 09 Sep 2024 15:51:12 +0200
+Subject: [PATCH 01/17] regulator: da9052: Constify static data
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +78,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE/93mYC/x3MMQqAMAxA0atIZgOxVESvIg5aowaklVRFkN7d4
- viG/1+IrMIRuuIF5VuiBJ9RlQW4bfQro8zZYMhYaqlF5fXaxzMouuDjiVNDszPG1jQR5OpQXuT
- 5j/2Q0gf6uJlQYQAAAA==
+Message-Id: <20240909-regulator-const-v1-1-8934704a5787@linaro.org>
+References: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
+In-Reply-To: <20240909-regulator-const-v1-0-8934704a5787@linaro.org>
 To: Support Opensource <support.opensource@diasemi.com>, 
  Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
  Matthias Brugger <matthias.bgg@gmail.com>, 
@@ -89,74 +90,120 @@ Cc: linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2263;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3897;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=zUHhg/UyzRf/dZcnGmfWPB4ecX+Ntlv/UdMU1qsMFhE=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm3v1VgRQNlylPub6yNjTD+zg1dZZuybYlU3O5P
- dYuhnlzbSCJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZt79VQAKCRDBN2bmhouD
- 18H6EACQOmd1uI3uaTvI5UKYLHpsmpK02EBrdx7JfUDu7mYQKIwkyaQ7/NZTXgYa3NeSubtpWqS
- CYbu3d4cN9X5LRMnP/JfMWvN5nPjCJ9yezEZ1IlOJtorpsV4QDmQzpx7jhK4TVWVOT3H2EFdHf+
- Qhsg7Ra3zq3eQbpakhFmlWTVpiCXjAQ8ewaszVTwD2mhmqP8rn8IQCPWY0GBz1/zrFdwRMUSc1N
- VDt/txtsgO+LhT06oBFGSgqoMmEc+hzbAHhKWP/lqErty136Vq+GXJqRfmFwtbIDq/W6PI9lVj9
- LrZGJI/T7x7FhrH5V2t2MvvXERnKJMd1yscboisw+JYX/L6PMT0uqXRxF2Oiok92GZXua7D3gpQ
- KG/LN6HH0YYWc+KVxGaikAADasjgiO10L9qOwEONgUsBx8z44TncZMgPRAqUuuadqj91gi448lM
- xC2+L5ablOxm7cUiGaKaPgeSaZQK7MtJPbpuBhFq7jDN3It20DFo90EF0+qwO8a+S3Y0jLfYnuX
- lLJASJvsh5c7KTi54zRhQY5H6elWKfnkvjsM6jtWVrI/DbJSF/wsoIke4n0rYXEDmg1UG+7NU7t
- WQLd1Dr6580QziSbr9Z1VjK64AdhO5rmijvUVs3Bc6dwmjGCb1No0vYDv664QDCk8T0v5mVFnt2
- wSjVdO9X45kDo+A==
+ bh=8TsG7I4Aag1KJIfppBSqZ8uVGEQPJnXHOI9sdDJkZWs=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm3v1ZDiVz4RaFZ9OBGUmyELamJcU43wcaBdMnp
+ 7IbKy42NI+JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZt79WQAKCRDBN2bmhouD
+ 1yUaD/4uEeY8qieO9UVWcfXUAM+yl+Ah/eISeRWtTgnULmCJznpSj1re/9hypLugcAre2+xitID
+ Tq8ncG/lwdIQRCidg0yWXhmYTBM0IBnVwqPdTTS5aawbalrzDgmhH7kOl7hnmK3NwAjYipICwVc
+ Yf1S5t0yj3dvSYPe8m4cScsFw8Yr1F1xjyMhMZefDWSgOwAUSlhI60QMpc33YtRegPIiWFTquuA
+ bwzd3/+R94rpat8S/FDs0drkfSVcnGk2Ex9sYsd1gv5/koShUW2LT2su58Pxk74uJdEVNfF63CB
+ i1q+bSTWMacll2wHjWYP2BupjluZtzu+6SHjjvn77ba1cexeY+yc3f4P0IGFhcU5IyrxaXGUhrj
+ aTOaasOe3DZVrqd1B9iMU4B7FfCjA5QYSKNtTRqFEVhj19/BLtpp8IZj+lLCikhk82YTEynAF71
+ 9oh66ez1QhjOsm6PiIee6uzFOMVQjdzOAzcMO1riGr2NltOGAgFULtIAVkZ7zP1rOUV5EYq8Qm2
+ Vdwqhs8uM8Q81U+AwEozboyxkthdl79nY6dwR2ANzIomtERLiQH3owdNeOjdXK7nlkbajN5TrRf
+ Ott2t9N1PMbBZd1t6MISLvamkah9kJWWx7VCEEjtsC7VXLrMdaCBLyi9BlpEOczRz1Hmnqdr+I7
+ MqltipNYXK0CDcA==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Hi,
+Driver does not modify static data with regulators description (struct
+da9052_regulator_info), so make it const for code safety.
 
-Few cleanups (safer code), built tested.  Last two patches should
-probably be tested.
-
-Best regards,
-Krzysztof
-
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Krzysztof Kozlowski (17):
-      regulator: da9052: Constify static data
-      regulator: da9055: Constify static data
-      regulator: da9063: Constify static data
-      regulator: da9121: Constify static data
-      regulator: da9211: Constify static data
-      regulator: hi6421: Constify static data
-      regulator: hi6421v600: Constify static data
-      regulator: tps65023: Constify static data
-      regulator: max77826: Drop unused 'rdesc' in 'struct max77826_regulator_info'
-      regulator: max77826: Constify static data
-      regulator: mtk-dvfsrc: Constify static data
-      regulator: pcap: Constify static data
-      regulator: pfuze100: Constify static data
-      regulator: qcom-refgen: Constify static data
-      regulator: hi6421v530: Drop unused 'eco_microamp'
-      regulator: hi6421v530: Use container_of and constify static data
-      regulator: max77650: Use container_of and constify static data
+ drivers/regulator/da9052-regulator.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
- drivers/regulator/da9052-regulator.c      | 22 +++++++++++-----------
- drivers/regulator/da9055-regulator.c      | 28 ++++++++++++++--------------
- drivers/regulator/da9063-regulator.c      |  2 +-
- drivers/regulator/da9121-regulator.c      | 20 ++++++++++----------
- drivers/regulator/da9211-regulator.c      |  2 +-
- drivers/regulator/hi6421-regulator.c      | 14 +++++++-------
- drivers/regulator/hi6421v530-regulator.c  | 27 +++++++++++----------------
- drivers/regulator/hi6421v600-regulator.c  | 10 +++++-----
- drivers/regulator/max77650-regulator.c    | 31 ++++++++++++++-----------------
- drivers/regulator/max77826-regulator.c    |  4 +---
- drivers/regulator/mtk-dvfsrc-regulator.c  | 10 +++++-----
- drivers/regulator/pcap-regulator.c        | 12 ++++++------
- drivers/regulator/pfuze100-regulator.c    | 10 +++++-----
- drivers/regulator/qcom-refgen-regulator.c |  4 ++--
- drivers/regulator/tps65023-regulator.c    |  6 +++---
- 15 files changed, 96 insertions(+), 106 deletions(-)
----
-base-commit: fd9058d56c6de25c2d3215db4e2e950a7965ffd2
-change-id: 20240909-regulator-const-b70dc22450b0
+diff --git a/drivers/regulator/da9052-regulator.c b/drivers/regulator/da9052-regulator.c
+index ab6f5d61b173..fbebe538a648 100644
+--- a/drivers/regulator/da9052-regulator.c
++++ b/drivers/regulator/da9052-regulator.c
+@@ -67,11 +67,11 @@ struct da9052_regulator_info {
+ 
+ struct da9052_regulator {
+ 	struct da9052 *da9052;
+-	struct da9052_regulator_info *info;
++	const struct da9052_regulator_info *info;
+ 	struct regulator_dev *rdev;
+ };
+ 
+-static int verify_range(struct da9052_regulator_info *info,
++static int verify_range(const struct da9052_regulator_info *info,
+ 			 int min_uV, int max_uV)
+ {
+ 	if (min_uV > info->max_uV || max_uV < info->min_uV)
+@@ -151,7 +151,7 @@ static int da9052_list_voltage(struct regulator_dev *rdev,
+ 				unsigned int selector)
+ {
+ 	struct da9052_regulator *regulator = rdev_get_drvdata(rdev);
+-	struct da9052_regulator_info *info = regulator->info;
++	const struct da9052_regulator_info *info = regulator->info;
+ 	int id = rdev_get_id(rdev);
+ 	int volt_uV;
+ 
+@@ -175,7 +175,7 @@ static int da9052_map_voltage(struct regulator_dev *rdev,
+ 			      int min_uV, int max_uV)
+ {
+ 	struct da9052_regulator *regulator = rdev_get_drvdata(rdev);
+-	struct da9052_regulator_info *info = regulator->info;
++	const struct da9052_regulator_info *info = regulator->info;
+ 	int id = rdev_get_id(rdev);
+ 	int ret, sel;
+ 
+@@ -206,7 +206,7 @@ static int da9052_regulator_set_voltage_sel(struct regulator_dev *rdev,
+ 					    unsigned int selector)
+ {
+ 	struct da9052_regulator *regulator = rdev_get_drvdata(rdev);
+-	struct da9052_regulator_info *info = regulator->info;
++	const struct da9052_regulator_info *info = regulator->info;
+ 	int id = rdev_get_id(rdev);
+ 	int ret;
+ 
+@@ -237,7 +237,7 @@ static int da9052_regulator_set_voltage_time_sel(struct regulator_dev *rdev,
+ 						 unsigned int new_sel)
+ {
+ 	struct da9052_regulator *regulator = rdev_get_drvdata(rdev);
+-	struct da9052_regulator_info *info = regulator->info;
++	const struct da9052_regulator_info *info = regulator->info;
+ 	int id = rdev_get_id(rdev);
+ 	int ret = 0;
+ 
+@@ -327,7 +327,7 @@ static const struct regulator_ops da9052_ldo_ops = {
+ 	.activate_bit = (abits),\
+ }
+ 
+-static struct da9052_regulator_info da9052_regulator_info[] = {
++static const struct da9052_regulator_info da9052_regulator_info[] = {
+ 	DA9052_DCDC(BUCK1, buck1, 25, 500, 2075, 6, 6, DA9052_SUPPLY_VBCOREGO),
+ 	DA9052_DCDC(BUCK2, buck2, 25, 500, 2075, 6, 6, DA9052_SUPPLY_VBPROGO),
+ 	DA9052_DCDC(BUCK3, buck3, 25, 950, 2525, 6, 6, DA9052_SUPPLY_VBMEMGO),
+@@ -344,7 +344,7 @@ static struct da9052_regulator_info da9052_regulator_info[] = {
+ 	DA9052_LDO(LDO10, ldo10, 50, 1200, 3600, 6, 6, 0),
+ };
+ 
+-static struct da9052_regulator_info da9053_regulator_info[] = {
++static const struct da9052_regulator_info da9053_regulator_info[] = {
+ 	DA9052_DCDC(BUCK1, buck1, 25, 500, 2075, 6, 6, DA9052_SUPPLY_VBCOREGO),
+ 	DA9052_DCDC(BUCK2, buck2, 25, 500, 2075, 6, 6, DA9052_SUPPLY_VBPROGO),
+ 	DA9052_DCDC(BUCK3, buck3, 25, 950, 2525, 6, 6, DA9052_SUPPLY_VBMEMGO),
+@@ -361,10 +361,10 @@ static struct da9052_regulator_info da9053_regulator_info[] = {
+ 	DA9052_LDO(LDO10, ldo10, 50, 1200, 3600, 6, 6, 0),
+ };
+ 
+-static inline struct da9052_regulator_info *find_regulator_info(u8 chip_id,
+-								 int id)
++static inline const struct da9052_regulator_info *find_regulator_info(u8 chip_id,
++								      int id)
+ {
+-	struct da9052_regulator_info *info;
++	const struct da9052_regulator_info *info;
+ 	int i;
+ 
+ 	switch (chip_id) {
 
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+2.43.0
 
 
