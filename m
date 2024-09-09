@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-31270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 422FD9715C8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 12:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A1389715CB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 12:57:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 100741C22A73
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 10:57:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A62F71C22D22
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Sep 2024 10:57:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F8211B581A;
-	Mon,  9 Sep 2024 10:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED3CD1B530E;
+	Mon,  9 Sep 2024 10:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Le7RifJl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NuzOYVSp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890801B533E;
-	Mon,  9 Sep 2024 10:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636BE1B5300;
+	Mon,  9 Sep 2024 10:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725879424; cv=none; b=ebLOiGJkeYcXVUtyE9Sy9xMuaXV0A67MjSQKeFXdtnKlS2vKbdyIu7YepxvZgdhJd8qniHwaD94Y//hPsbDbKci/K0zApq4auTswLzDkBcHT7ehujIIXgcgQUAdtBfEhvaxqQFJfY25PnrV5c4+a31twd20PLFiYksD0VEiD1A4=
+	t=1725879433; cv=none; b=Sx09L1opGSFV+sT26arth/vBdWA0rcfvunTq1wdWFuqj2q+jfw3IKSjK7aD5U21Y/MnfA5xpeG/PoJ3OtXPBHlb4L9JMlDA15X3I75Z7cqIu1YAZPbKaBvDFkB6n03L54EbOhUn5+DBvgePsqyNBj0t4W7RXlpLLJI87mR3rhqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725879424; c=relaxed/simple;
-	bh=FwGWC34J0BSS9eRkEcPVl6s6DaKQBtK3urjmjwtiixQ=;
+	s=arc-20240116; t=1725879433; c=relaxed/simple;
+	bh=8Vd/OSojNgrcBBDFLqFIisQRt6JC3d7ABI1zc+MA35w=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GMvmq8J/9z7SMZ+YJRkJKch4jXfUY3iOG7iZ/QbkYGYVjE7oNcBHiKrVcPDAVTAdTWZzXgyMcBUoxWoW6m2LnpaPETXc+FpgXnt0N8oSmIvofx0h2WNxt35sD/AwK04KwL8079/Wq61j2l5HtWSjmLBAZnMhvc6WDFwijtQrjxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Le7RifJl; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=bOE6otSn7YUE0QaF5BA+IEuzSc3D+681ZTvPcamcnDbTF+mN90WMtvtXas8eu+Kd9ZFXpuPePZIaaAiBOcNfYND/YV+butBG/g4pPq+f9ThYiVTPfmdNUDdAUfOVbgy0Qkuh7EL7MZ9PqGrud1qzCtIsH2bLECZC4eGAmD+LQ/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NuzOYVSp; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4899JpMZ026363;
-	Mon, 9 Sep 2024 10:56:49 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4899K7pu031036;
+	Mon, 9 Sep 2024 10:57:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ox0BgJVMaAfBw4Bd5/ID1MmEDGKGCNbq2C5Vj0HEJa4=; b=Le7RifJlBrKI0VJf
-	pc9wbWZIY++0CeTkTP7m4F5sl/GTKBFE+UEd2N5Sk7XVQPo5KOzeEF7zWNx4lGbO
-	WMEv1ZofVGDauPqTUxOoxxcObtfOjOEe/Uq7JkycvAuf1kfrhKEV+BcM9b98NegV
-	J8GVlk7VRKWR31m8vyFFiCLlX7SF2pEuRH2yfoYgi9CyHd29dgadBLm957f2nXcJ
-	/liYWCGKGkeJDrp42BrgEGnDYGLgiB7Un4yRfVvcyBiGG/f22usu3CavJuP/K0VX
-	ik0/s4gQCY4PLBs8Oizzam9vGNUJXGv2kxWLLvt0ii6mu2pxxqzMZbeoBrt4fGa+
-	4Xzeow==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41he5dsr6y-1
+	ihbuH8ZE0WoVokeOq+71+6Vox3J6l793D//UVXzSd8A=; b=NuzOYVSpSghN7evz
+	wxYLZeyDXCrIAiAHYMyAbH8UlsNkAJfjNtwZhOk+mgOTCUIAdmGvu22Ls9OJFms/
+	uSh5JRcaukSvycxrWQsylSgtNVGDKQV9kuClttUmRVEWDEAQIz7nCX6lOq3waafB
+	7Vnkim53nk8obFLdOPjX1PzqgVOX/J/4NJPkDiucXYjhR+JZoH7kscKUcInlwuKZ
+	Mkhm3Z/MO34/kDa0Am1pBijYAuD38UBPsGA+M3kzrcMNlkd6Dsuyg89JUhh05UQV
+	ySpBN/Gt8uHfPYiC0pzoF5A7y0lzMRy6+vQ4pUOMa7bvLQzbPNzN7TZeL+XmRITb
+	T/6lQw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy5rahf5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 09 Sep 2024 10:56:49 +0000 (GMT)
+	Mon, 09 Sep 2024 10:56:59 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 489AumZx003371
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 489Auwvv016942
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 9 Sep 2024 10:56:48 GMT
+	Mon, 9 Sep 2024 10:56:58 GMT
 Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 9 Sep 2024 03:56:40 -0700
+ 15.2.1544.9; Mon, 9 Sep 2024 03:56:50 -0700
 From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Liam Girdwood
@@ -77,9 +77,9 @@ CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
         <linux-kernel@vger.kernel.org>, <quic_rohkumar@quicinc.com>,
         <kernel@quicinc.com>, <quic_pkumpatl@quicinc.com>,
         Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [PATCH v1 2/4] soundwire: stream: Add set_master_channel_map() to set static channel mapping
-Date: Mon, 9 Sep 2024 16:25:45 +0530
-Message-ID: <20240909105547.2691015-3-quic_mohs@quicinc.com>
+Subject: [PATCH v1 3/4] soundwire: qcom: Add static channel mapping support in soundwire master
+Date: Mon, 9 Sep 2024 16:25:46 +0530
+Message-ID: <20240909105547.2691015-4-quic_mohs@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20240909105547.2691015-1-quic_mohs@quicinc.com>
 References: <20240909105547.2691015-1-quic_mohs@quicinc.com>
@@ -95,80 +95,78 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LepE_-l8i2T62ysaYHDJqI7Qz8TRRY31
-X-Proofpoint-GUID: LepE_-l8i2T62ysaYHDJqI7Qz8TRRY31
+X-Proofpoint-GUID: 2N1-ngBqMyy-wj7nDpgNQfaJBVAndt6B
+X-Proofpoint-ORIG-GUID: 2N1-ngBqMyy-wj7nDpgNQfaJBVAndt6B
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409090086
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ clxscore=1015 malwarescore=0 bulkscore=0 lowpriorityscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 mlxlogscore=999 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409090087
 
-Add set_master_channel_map() to set the static channel map between
-master and slave. Patch change will resolve the channel mask mismatch
-between the master and slave.
-
-The sdw_set_channel_map_stream() will triggered by a slave with active
-port number and channel mask.
+Add static channel mapping support in soundwire master.
+The qcom_swrm_set_channel_map() will update the master channel mask
+based on master port number.
 
 Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 ---
- drivers/soundwire/stream.c    | 16 ++++++++++++++++
- include/linux/soundwire/sdw.h |  5 +++++
- 2 files changed, 21 insertions(+)
+ drivers/soundwire/qcom.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/soundwire/stream.c b/drivers/soundwire/stream.c
-index f275143d7b18..8cfea2ccb5bd 100644
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1972,6 +1972,22 @@ int sdw_stream_remove_master(struct sdw_bus *bus,
- }
- EXPORT_SYMBOL(sdw_stream_remove_master);
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index aed57002fd0e..65ed1ff7888f 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -156,6 +156,7 @@ struct qcom_swrm_port_config {
+ 	u8 word_length;
+ 	u8 blk_group_count;
+ 	u8 lane_control;
++	u8 ch_mask;
+ };
  
-+int sdw_set_channel_map_stream(struct sdw_stream_runtime *stream,
-+			       int *ch_mask, unsigned int active_port_num)
-+{
-+	struct sdw_master_runtime *m_rt;
-+	struct sdw_bus *bus;
+ /*
+@@ -1048,8 +1049,14 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
+ {
+ 	u32 reg = SWRM_DP_PORT_CTRL_BANK(enable_ch->port_num, bank);
+ 	struct qcom_swrm_ctrl *ctrl = to_qcom_sdw(bus);
++	struct qcom_swrm_port_config *pcfg;
+ 	u32 val;
+ 
++	pcfg = &ctrl->pconfig[enable_ch->port_num];
 +
-+	list_for_each_entry(m_rt, &stream->master_list, stream_node) {
-+		bus = m_rt->bus;
-+		if (bus->ops->set_master_channel_map)
-+			bus->ops->set_master_channel_map(bus, ch_mask, active_port_num);
-+	}
++	if (pcfg->ch_mask != SWR_INVALID_PARAM && pcfg->ch_mask != 0)
++		enable_ch->ch_mask = pcfg->ch_mask;
++
+ 	ctrl->reg_read(ctrl, reg, &val);
+ 
+ 	if (enable_ch->enable)
+@@ -1060,6 +1067,16 @@ static int qcom_swrm_port_enable(struct sdw_bus *bus,
+ 	return ctrl->reg_write(ctrl, reg, val);
+ }
+ 
++static int qcom_swrm_set_channel_map(struct sdw_bus *bus, int *ch_mask, unsigned int port_num)
++{
++	struct qcom_swrm_ctrl *ctrl = to_qcom_sdw(bus);
++
++	if (ch_mask && port_num)
++		ctrl->pconfig[port_num].ch_mask = ch_mask[port_num];
 +
 +	return 0;
 +}
-+EXPORT_SYMBOL(sdw_set_channel_map_stream);
 +
- /**
-  * sdw_stream_add_slave() - Allocate and add master/slave runtime to a stream
-  *
-diff --git a/include/linux/soundwire/sdw.h b/include/linux/soundwire/sdw.h
-index 5e0dd47a0412..264450763bab 100644
---- a/include/linux/soundwire/sdw.h
-+++ b/include/linux/soundwire/sdw.h
-@@ -857,6 +857,8 @@ struct sdw_master_ops {
- 			(struct sdw_bus *bus);
- 	int (*set_bus_conf)(struct sdw_bus *bus,
- 			struct sdw_bus_params *params);
-+	int (*set_master_channel_map)(struct sdw_bus *bus, int *ch_mask,
-+				      unsigned int port_num);
- 	int (*pre_bank_switch)(struct sdw_bus *bus);
- 	int (*post_bank_switch)(struct sdw_bus *bus);
- 	u32 (*read_ping_status)(struct sdw_bus *bus);
-@@ -1049,6 +1051,9 @@ int sdw_bus_exit_clk_stop(struct sdw_bus *bus);
- int sdw_compare_devid(struct sdw_slave *slave, struct sdw_slave_id id);
- void sdw_extract_slave_id(struct sdw_bus *bus, u64 addr, struct sdw_slave_id *id);
+ static const struct sdw_master_port_ops qcom_swrm_port_ops = {
+ 	.dpn_set_port_params = qcom_swrm_port_params,
+ 	.dpn_set_port_transport_params = qcom_swrm_transport_params,
+@@ -1070,6 +1087,7 @@ static const struct sdw_master_ops qcom_swrm_ops = {
+ 	.read_prop = qcom_swrm_read_prop,
+ 	.xfer_msg = qcom_swrm_xfer_msg,
+ 	.pre_bank_switch = qcom_swrm_pre_bank_switch,
++	.set_master_channel_map = qcom_swrm_set_channel_map,
+ };
  
-+int sdw_set_channel_map_stream(struct sdw_stream_runtime *stream,
-+			       int *ch_mask, unsigned int active_port_num);
-+
- #if IS_ENABLED(CONFIG_SOUNDWIRE)
- 
- int sdw_stream_add_slave(struct sdw_slave *slave,
+ static int qcom_swrm_compute_params(struct sdw_bus *bus)
 -- 
 2.25.1
 
