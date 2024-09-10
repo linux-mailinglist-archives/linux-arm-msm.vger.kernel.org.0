@@ -1,162 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-31391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8366D972C5D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 10:40:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75BBD972D08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 11:10:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34F211F25C91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 08:40:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A1281C247AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 09:10:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3BD5183CB0;
-	Tue, 10 Sep 2024 08:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E894C187876;
+	Tue, 10 Sep 2024 09:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VZfHL4E5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YIA5RpCS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA46C183CDD;
-	Tue, 10 Sep 2024 08:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1515A140E5F;
+	Tue, 10 Sep 2024 09:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725957641; cv=none; b=MLVAvcl2gBrCgq4zg0XXjDYFb1oELwFyLSBpVoPOT95OXL2goiLqmnEbNADXaMxp9G4Dp6IvCnnT3KNmE8+71e0KVwbMyy7lD0GfH+/iWRboGexp8kzt4hc4hnY0zoaDDKwxK4WWjL206nWUAvwmq7XnKXOSZ/z+naMvPRHx6wo=
+	t=1725959452; cv=none; b=IhFT4VU5pdyVIpIdWRbQkumIBsO13teFzdpNz4Ic01Z1rFI+cYDoekX2otNX6srjTT6iYI52G6spZiEi2c9FM4OcN6yPoeiPjo0cf6cop7yGA9Pf2bEpIjydWy3meDJBuCjUV8gC/QeAN2W/3h05vyl8dWuu6HVQRlrHZT4+D9I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725957641; c=relaxed/simple;
-	bh=fsRDU8wvHNbE3TrTlHlzeag4AIzuPwRtsz4XLaVWCOo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z7LBiYSn059GxO/Ari+DXos2AVLlmzzZqLGH9T4bR/WH1JTVA9Qx0Cfyq3HvGXLLFWx8vd9SCPOfv8/tEP3s0vfMZvIuimnMc+1V2uKfz8GOFWbS/prY2dqIaDodlPwI2V5iuCliXCPg7wdFc/x+emJgRXQw9luDN1T0JezvfRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VZfHL4E5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3341C4CEC3;
-	Tue, 10 Sep 2024 08:40:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725957641;
-	bh=fsRDU8wvHNbE3TrTlHlzeag4AIzuPwRtsz4XLaVWCOo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=VZfHL4E58gsKWGd76dFjLQ6ho7Ez6+TYzBWDhMAgxL2bQ7jeHIusX1C+aLUCTQy3P
-	 27c1hMl1uXWVbJid/oN4YIYABYcxxN43sTL1Ptygw4kUEXVHe66rwUBuzDY3eqwZZA
-	 zw3Cu6YBFs6+RuKYsr4h7I9aYxIgWVBJ/7YWPR6K8vIM51XJWN0vb2gR1jx+NGwDTh
-	 ParUag1s4e7/z2HXRSBSCWbNWoZhhUjg3nq4MObIhmLJxfp4bYZc66Y3ENfrpFtTS4
-	 BuDvDjwWOMQkgzM3ACF3hAZL+/UqIL2IIYQUQfY6JhKmq1YQ7unA3aU+0yPxHEyure
-	 0hg6a8UeI3UfQ==
-Date: Tue, 10 Sep 2024 10:40:38 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: dri-devel@lists.freedesktop.org, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, robdclark@gmail.com, dmitry.baryshkov@linaro.org, 
-	quic_jesszhan@quicinc.com, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] drm: allow encoder mode_set even when connectors
- change for crtc
-Message-ID: <20240910-liberal-platinum-scorpion-d43cff@houat>
-References: <20240905221124.2587271-1-quic_abhinavk@quicinc.com>
- <20240909-neat-stoic-hamster-cbbe42@houat>
- <33f29f1c-157a-424e-89c6-c1549a2d6403@quicinc.com>
+	s=arc-20240116; t=1725959452; c=relaxed/simple;
+	bh=bi/3v78hirM3CCLx1Jpr2y1u/zazwAgieEY9QencFgI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=l2h0FJNtLLQH8VSNi20jHJBY+8jmdwu+E0U4/lc0E06zroYU/Y8tmdseqHswAz/hDW1IHuNfnfqgP7yW6nBHrLQhcZ84gYlSisyBjypWLi42CHrKuzYggEA4O9BxKzAKH3jH7fjt96jH+hG6SQRna/i+TFjuMZ+8rZbBlsDbe7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YIA5RpCS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48A8jBcm030328;
+	Tue, 10 Sep 2024 09:10:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WGQiJqaXiZiLwnAudLqZ+P+0iP2TDw7Rp39R8v6pVR0=; b=YIA5RpCS/Az6Zii7
+	lADT8QwVVnJJq8BO/GUFvk5cPyAeKTCuI5kJp9IkczZClbI04+i2LS3rd4c9qaxZ
+	eR527AJ6GBCHS4GEYtZyfGdnvrYhB9Yl0DlsOjV2WFwSUzfxTeg1CEPAfZORv6Qm
+	qa1T8YvHujXr7DKc+UtmX3KsdyXmwvw0BnC3qFxIT/EdzGee6L7tfgwyDKrimW5F
+	hDtcNQ5UKwk8pMI1PwiPBnZfHB9SkPvprxIhtZOxJxiT7LaLQ8uuG6MNPsWvrWDq
+	epeBNcGe8ujIHbr0DYaXzR/XAc0nWjHcRyF67YTi2UDGcaIugQnC57imrJZInLJ9
+	EM+kFQ==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41j6gmsmjq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Sep 2024 09:10:34 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48A9AY9t007678
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 10 Sep 2024 09:10:34 GMT
+Received: from [10.218.13.83] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Sep
+ 2024 02:10:28 -0700
+Message-ID: <9cc7d427-34c6-45c2-a747-f71112833773@quicinc.com>
+Date: Tue, 10 Sep 2024 14:39:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="7jrcqjaerdfyqd4f"
-Content-Disposition: inline
-In-Reply-To: <33f29f1c-157a-424e-89c6-c1549a2d6403@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Krzysztof Kozlowski <krzk@kernel.org>, <konrad.dybcio@linaro.org>,
+        <andersson@kernel.org>, <andi.shyti@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <conor+dt@kernel.org>, <agross@kernel.org>,
+        <devicetree@vger.kernel.org>, <vkoul@kernel.org>, <linux@treblig.org>,
+        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
+        <konradybcio@kernel.org>
+CC: <quic_vdadhani@quicinc.com>
+References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
+ <20240906191438.4104329-2-quic_msavaliy@quicinc.com>
+ <6a6fc102-a18c-4ae3-9104-59eb3172f407@kernel.org>
+Content-Language: en-US
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <6a6fc102-a18c-4ae3-9104-59eb3172f407@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: c1eYqJJ2a6EHb30zuLNgvoUuQjQCFeiE
+X-Proofpoint-GUID: c1eYqJJ2a6EHb30zuLNgvoUuQjQCFeiE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ clxscore=1015 phishscore=0 mlxlogscore=999 lowpriorityscore=0
+ suspectscore=0 mlxscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409100069
 
+Thanks Krzysztof.
 
---7jrcqjaerdfyqd4f
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/7/2024 2:34 PM, Krzysztof Kozlowski wrote:
+> On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
+>> Adds qcom,shared-se flag usage. Use this when particular I2C serial
+>> controller needs to be shared between two subsystems.
+> 
+> <form letter>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC (and consider --no-git-fallback argument). It might
+> happen, that command when run on an older kernel, gives you outdated
+> entries. Therefore please be sure you base your patches on recent Linux
+> kernel.
+> 
+> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
+> people, so fix your workflow. Tools might also fail if you work on some
+> ancient tree (don't, instead use mainline) or work on fork of kernel
+> (don't, instead use mainline). Just use b4 and everything should be
+> fine, although remember about `b4 prep --auto-to-cc` if you added new
+> patches to the patchset.
+> </form letter>
+> 
+> You already got this comment, so how many times it has to be repeated?
+> Your process is just wrong if you do not use the tools for this.
+> 
+Sorry, I was already using scripts/get_maintainer.pl but i kept everyone 
+into To list (That's my mistake here). I shall keep maintainers in TO 
+list and rest in CC list.
 
-Hi,
-
-On Mon, Sep 09, 2024 at 12:59:47PM GMT, Abhinav Kumar wrote:
-> On 9/9/2024 6:37 AM, Maxime Ripard wrote:
-> > Hi,
-> >=20
-> > On Thu, Sep 05, 2024 at 03:11:24PM GMT, Abhinav Kumar wrote:
-> > > In certain use-cases, a CRTC could switch between two encoders
-> > > and because the mode being programmed on the CRTC remains
-> > > the same during this switch, the CRTC's mode_changed remains false.
-> > > In such cases, the encoder's mode_set also gets skipped.
-> > >=20
-> > > Skipping mode_set on the encoder for such cases could cause an issue
-> > > because even though the same CRTC mode was being used, the encoder
-> > > type could have changed like the CRTC could have switched from a
-> > > real time encoder to a writeback encoder OR vice-versa.
-> > >=20
-> > > Allow encoder's mode_set to happen even when connectors changed on a
-> > > CRTC and not just when the mode changed.
-> > >=20
-> > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >=20
-> > The patch and rationale looks sane to me, but we should really add kunit
-> > tests for that scenarii.
-> >=20
->=20
-> Thanks for the review.
->=20
-> We have a IGT for recreating this scenario and thats how this issue was
-> captured
->=20
-> kms_writeback --run-subtest writeback-check-output -c <primary display mo=
-de>
->=20
-> We had added an option ( 'c' - custom mode) a couple of yrs ago to allow
-> writeback to be tested using any mode the user passes in (https://lore.ke=
-rnel.org/r/all/YuJhGkkxah9U6FGx@platvala-desk.ger.corp.intel.com/T/)
->=20
-> If we pass in the same resolution as the primary RT display, this scenario
-> always happens as the CRTC switches between RT encoder and WB encoder. Ho=
-pe
-> that addresses some of the concern.
-
-Unless it can easily be run in some sort of CI loop by anyone
-contributing to that part of the kernel, it doesn't.
-
-Don't get me wrong, it's a great feature, but it doesn't help making
-sure that issue never creeps back in.
-
-> Regarding KUnit tests, I have a couple of questions:
->=20
-> 1) This is more of a run-time scenario where CRTC switch happens, does th=
-is
-> qualify for a KUnit or perhaps I am missing something.
-
-We've been using kunit to perform integration tests in the kernel too,
-so I would say that it definitely qualifies.
-
-> 2) Is there any existing KUnit test file under drm/tests for validating
-> drm_atomic_helper_commit_modeset_disables() /
-> drm_atomic_helper_commit_modeset_enables() path because this will fall un=
-der
-> that bucket. I didnt find any matching case where we can extend this.
-
-We don't have that at the moment, but we shouldn't be too far off. The
-HDMI framework I contributed some months ago for example has all the
-mode checking infrastructure in kunit. So you already have some way to
-create a driver, a new state, modify that state and check it.
-
-The only thing missing in your case is being able to commit it and check
-that it has run, which shouldn't be too hard
-
-Maxime
-
---7jrcqjaerdfyqd4f
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZuAGAQAKCRAnX84Zoj2+
-dpLoAXkBK8JwrsVQuf2LqGLxeVqzaRJ7su/AdURL0fGlvmHKMl3Gkfnx6EVK9WHW
-GYEp1HsBgJDp26/ccf7xUubr49cUDSZdR0n193929c9G9IRMkPKs7AJzrsWJDWu0
-Vo4Ay1itUw==
-=GnqI
------END PGP SIGNATURE-----
-
---7jrcqjaerdfyqd4f--
+Question: With <Form Letter> , are you asking to add letter in this 
+first patch ? I have cover letter, but it will get removed when patch 
+gets merged. Please help suggest and clarify.
+> 
+>>
+>> SE = Serial Engine, meant for I2C controller here.
+>> TRE = Transfer Ring Element, refers to Queued Descriptor.
+>>
+>> Example :
+>> Two clients from different SS can share an I2C SE for same slave device
+> 
+> What is SS?
+> 
+SS = Subsystem (EE - Execution Environment, can be Apps 
+processor/TZ/Modem/ADSP etc). Let me add this too in next patch.
+>> OR their owned slave devices.
+>> Assume I2C Slave EEPROM device connected with I2C controller.
+>> Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
+>> This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
+>>
+>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> index 9f66a3bb1f80..ae423127f736 100644
+>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>> @@ -60,6 +60,10 @@ properties:
+>>     power-domains:
+>>       maxItems: 1
+>>   
+>> +  qcom,shared-se:
+>> +    description: True if I2C needs to be shared between two or more subsystems.
+> 
+> What is a subsystem? With commit msg I still do not understand this.
+SS = Subsystem (EE - Execution Environment, can be Apps 
+processor/TZ/Modem/ADSP etc). Let me add EE too with full form.
+> Maybe presence of hwlock defines it anyway, so this is redundant?
+No, this flag is required. As hwlock comes into picture if this flag is 
+defined. So flag is acting as a condition to take hwlock TRE 
+descriptor(transfer ring element). Hope i could answer your query.
+> Best regards,
+> Krzysztof
+> 
 
