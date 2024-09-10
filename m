@@ -1,114 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-31387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2EDA972B04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 09:42:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA935972B19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 09:45:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67114B21A62
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 07:42:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 719A51F25280
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 07:45:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B508C17F4F1;
-	Tue, 10 Sep 2024 07:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB61A181B8D;
+	Tue, 10 Sep 2024 07:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="KXVpYS7Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pLaJL4I2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B7C17E8EA;
-	Tue, 10 Sep 2024 07:41:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCCD118005B;
+	Tue, 10 Sep 2024 07:45:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725954089; cv=none; b=kpP8LNkWOPOr55BKHE7RJlDjqo45SZGBp/Sbbx4f39SP+KTu+33Ktsn13iaLdbjjR6O3gBFZcsXquxFrDdqM5nBEDIR28FdejZB8egtc2jbUZ5V+uxhFtbPRIKspXiXaNyJJw/m/5MKogapOTMTKjgvpLPbT+a/qWm+6nRl+ULo=
+	t=1725954329; cv=none; b=h41rRnr4F0l6jGQJqYNSudHMFcPPBRxVv9fDlujbmpFSzNe/qmD7m3t+dTj1BizpWTs8ebO9OnBBVZxo4io5C0IOp0LkxJQOOiWPoOz7632ivF6sUy+rrjjMUbGRxZFlt9XU3+Wa18RZoOTDSRkoIouLNVFOqYVcMHZaUeNHVsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725954089; c=relaxed/simple;
-	bh=0I1CyWm23D97I4eXjHRqIKBJl40TlwGc17YBFqRaG4g=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nosG3/k/jDL5j7w1HqDmy1aVyFC9gTaRoADzw2a+DASHacwe+Vut9lcXzmLlKKIsbwERz7gS2GTLClSxNi+t/GmZH/JhZyq+ntatYwJfmohhRPJtYO0f4nVMyrR1Ss9AWegkZ+b5UXeEfCB3gwMwPY1Os6OLO9FzYou8SfLKiUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=KXVpYS7Z; arc=none smtp.client-ip=217.70.183.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 2E6D9FF80C;
-	Tue, 10 Sep 2024 07:41:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1725954083;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=af5m1sT62PlbZm1pnjn+q6UsEmjHIWOgLofQJKFpyhE=;
-	b=KXVpYS7ZX2ePDbG+y3lo9eckSGGfA548IHJNPUXZGhUOZb2sgUBHTeHO4+5uTbB1AuXwHY
-	Xr9/3WnHY6310FIbWrgpVZ/fBUeL5rj71mvsXN08h0VGmVP5JVr09PnunH0SGwhPsLw31P
-	OOiOgOLi+r1l02asILsOSoeOKMFVXmLOqrAzxBXYpsDP0Tk9AdEb8wsATx4Xd/+2FoKCDi
-	zpyxa78EdvVQSG/ILI8y6m6hJnPJdxnkJQPudLjaxnlN6mlIyerOgVe7ovKpGzwC8pgfb5
-	IW09mctNs2rYqw2tD/JjuFKJ8xszlIR6/ZKcKQTLt3UcO4nWm+WvCJuGisR8yg==
-Date: Tue, 10 Sep 2024 09:41:20 +0200
-From: Miquel Raynal <miquel.raynal@bootlin.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
- <conor+dt@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
- <richard@nod.at>, <vigneshr@ti.com>, <manivannan.sadhasivam@linaro.org>,
- <esben@geanix.com>, <linux-arm-msm@vger.kernel.org>,
- <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
-Subject: Re: [PATCH v8 0/8] Add QPIC SPI NAND driver
-Message-ID: <20240910094120.19348fea@xps-13>
-In-Reply-To: <bb1397c3-2327-e211-f7eb-cac4b126424e@quicinc.com>
-References: <20240820104239.1774600-1-quic_mdalam@quicinc.com>
-	<5169761b-422d-70ab-ba53-a898cb7bfa2f@quicinc.com>
-	<20240903150826.749b8560@xps-13>
-	<bb1397c3-2327-e211-f7eb-cac4b126424e@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.41; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1725954329; c=relaxed/simple;
+	bh=A3iT3UI6JBnawx1kR183QC48x7S8QfaDWO3AeTsDm8Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=colSTFLFcZFSI6zwzhEsmUPN04lopJg02bQ9Uh/8f1hPwyZCxk8RaRuS3MC1lcDnNQU+nDzszPBKLuytrArT0LQwYDTgyI6K6xZhqrLeaxoaWqYh/mUNQV7nJCvz9l9bwS1jKrNtAfi4WEbjQP3RkwrWo4Q1QhOTRmfxOjrQn5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pLaJL4I2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7164FC4CEC6;
+	Tue, 10 Sep 2024 07:45:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1725954329;
+	bh=A3iT3UI6JBnawx1kR183QC48x7S8QfaDWO3AeTsDm8Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pLaJL4I2aJXLRPZC/BfopQSW1B9zauaDiNO8jVrQ/9KX7TebFEuzyroiZdz6Odtav
+	 nQg68cJj+lOxNHfW6mwWO38ctNPzJRFVzw2m45P3nwilhOc2vipK7XyA1HjrOeM83/
+	 Zt+WBy2/BHiOyfV2JmL9megPEo85W6n/ZjyZVmHHpMlGQrSOPm7O7MHU+9i74KjxNd
+	 smEgNXg3I3pJ9TmatdNkCeq7PaDJ528tIVEdUqyYdnHL4m54SDJzVgUez/dbTU1hjX
+	 qJJm9YBjKgc0fXEm/Zd90ikgvExXGOkxHX9PDIMjgsZWKEdfjIwgPWWCweZi473giv
+	 psu5nJuzCMjRA==
+Date: Tue, 10 Sep 2024 09:45:25 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Vinod Koul <vkoul@kernel.org>, Bard Liao <yung-chuan.liao@linux.intel.com>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, Sanyog Kale <sanyog.r.kale@intel.com>, 
+	linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org, linux-sound@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_rohkumar@quicinc.com, 
+	kernel@quicinc.com, quic_pkumpatl@quicinc.com
+Subject: Re: [PATCH v1 1/4] ASoC: dt-bindings: wcd938x-sdw: Add static
+ channel mapping support
+Message-ID: <jkczvc3lclyr74mecvy5dr737sjyiotepamsoz35wtnmx3cigi@vuvyovfecbvc>
+References: <20240909105547.2691015-1-quic_mohs@quicinc.com>
+ <20240909105547.2691015-2-quic_mohs@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-GND-Sasl: miquel.raynal@bootlin.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20240909105547.2691015-2-quic_mohs@quicinc.com>
 
-Hi,
+On Mon, Sep 09, 2024 at 04:25:44PM +0530, Mohammad Rafi Shaik wrote:
+> Add static channel mapping between master and slave rx/tx ports.
+> 
 
-> >>>    >>       I have addressed your comments to v6 and further posted t=
-ill v8. =20
-> >>       Could you please let me know if this is fine.
-> >>       and how to get this merged ? =20
-> >=20
-> > There are still kernel test robot reports, so this means there are
-> > issues in your code that I don't need to point out explicitly, but I am
-> > actively waiting for them to be fixed. =20
->=20
-> I have fixed most of the sparse warnings after converting __le32 to u32.
-> However am not able to address the following sparse warnings
->=20
-> 	drivers/mtd/nand/raw/qcom_nandc.c:1401:29: sparse: warning: cast to rest=
-ricted __le32
-> 	drivers/mtd/nand/raw/qcom_nandc.c:1587:30: sparse: warning: cast to rest=
-ricted __le32
-> 	drivers/mtd/nand/raw/qcom_nandc.c:1588:31: sparse: warning: cast to rest=
-ricted __le32
-> 	drivers/mtd/nand/raw/qcom_nandc.c:1589:34: sparse: warning: cast to rest=
-ricted __le32
-> 	drivers/mtd/nand/raw/qcom_nandc.c:2479:47: sparse:    got restricted __l=
-e32 [usertype]
-> 	drivers/mtd/nand/raw/qcom_nandc.c:2480:47: sparse:    got restricted __l=
-e32 [usertype]
-> 	drivers/mtd/nand/raw/qcom_nandc.c:2616:25: sparse: warning: cast to rest=
-ricted __le32
-> 	drivers/mtd/nand/raw/qcom_nandc.c:2672:32: sparse: warning: cast to rest=
-ricted __le32
+I see ongoing discussion, so if these property stay, grow the
+description here to explain how this describes hardware or which part of
+hardware you are covering.
 
-The rule is: you cannot add new warnings.
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> ---
+>  .../bindings/sound/qcom,wcd937x-sdw.yaml      | 28 +++++++++++++++++++
+>  1 file changed, 28 insertions(+)
 
-For existing warnings in the driver, I'd anyway advise to solve them.
-Without the actual code I cannot help.
+Best regards,
+Krzysztof
 
-Thanks,
-Miqu=C3=A8l
 
