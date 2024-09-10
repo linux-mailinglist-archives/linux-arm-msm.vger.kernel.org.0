@@ -1,305 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-31379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58EF2972666
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 02:52:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E8359726E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 04:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A13A5B2356C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 00:51:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09CA81C22441
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 02:02:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67E7560275;
-	Tue, 10 Sep 2024 00:51:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 829961804F;
+	Tue, 10 Sep 2024 02:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ehxsuuz1"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cIepPNDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456696CDC8;
-	Tue, 10 Sep 2024 00:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA921538A;
+	Tue, 10 Sep 2024 02:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725929510; cv=none; b=jJuSeK1w0jyJAdkU9N8TGF/8C+W9LiaTHNu79MSVmhW9dmy2v4xCgA3xI2rsKAa32DfCZV3GW6ReLOwmw8rm9m4EtbA02qPRGcHwWjAhnnh9vgOyKR1jhFdJdm7vD9QyDII+eoyEQKk2tMglYzgZ4fdpIRbEiQDr/sMieLPq5Ls=
+	t=1725933727; cv=none; b=OHG7vm+dnGCrJ+g42ef7ZeJD4vHIreWHnB3PzbnnwnWocgUYK8/9SU0Xn1mRrwLeHI/Kpmnq55VJ1RLePGJsMSQZH5jJbjhAQ+3FpXti4FAud4Y+kj7pQVrKjF4hzihOdlKIO6KVW8o+kmEmVgMww9C0mA67ZtKrv5/30hz9euA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725929510; c=relaxed/simple;
-	bh=Csud0RlnT8anqQHc+ZyO/EriLFaA42PrHHzw0yHBLTE=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=GONtSH0YG2CwszQwm3u9+PvnG8M1fhE4BGEBxmBygpYDrIjY7WYgatq+O3LsB9LX99ok5hiAurN3nxAg7gelqluz9ByYlTEnVuTb/RhwY89vBUk1wvOFaRnGJXDNOpu+9rfUmqN3rRCjYUiEXHNW47h4ocimRaZusiMiypYuV1A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ehxsuuz1; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1725933727; c=relaxed/simple;
+	bh=U+uufWjSRpTa3OT5NOCQdDsTdOAdkomdyUI5AprDGIw=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gTJxQk5Fvk4r4TnNqn+U2YjzalLoSQlYj4rBkKaodeMEOtaUCBaELHij0jeJoESHBAMbDsUZf1M/r5eO78qi6dPYvh+seuOfjFdA3AfER0jFHCY2fIQD6lMoBw6tBYMkS/W6840bVbOOpgD+nyEHDRdOeBoRIxO/NCguUVS5fxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cIepPNDb; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 489DRRc4020315;
-	Tue, 10 Sep 2024 00:51:21 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 489DRSEP020319;
+	Tue, 10 Sep 2024 02:02:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4oKJPKyj6ZvcvxK2qU5p0TjHabQ19gP7gUp081B6C18=; b=ehxsuuz1bDpMQpPF
-	zRBpvPc8/fYHOhEz2iEXiboyDzIOmSfCRQe265TkDmzZ458PjP0T8p4KJzSIzZ5e
-	Pt+X+CwKhskaGHVs7TUCZvsepOW7HNvpegUJjORRI7xlx8QYX2Zz3RPnZ4cbcQdW
-	qAfW3yEaSJ2rUPc7Dg6s1lx3MMm7XOSiniWUt/Pf79LMY6btPTM2cI/2q1AKlt1d
-	tepVi0hjlgsdFMRXDlC4HnrgHOUYFvBsNPu4rt1isv+wvyLh+ve6wxbmKv8RTHrP
-	CqCi8wTqU+WFPwoqtCnq8g9A+7YdWZd2LkYjNFa5anstKG541NYP71MUMrsS3Xhn
-	xlAXXg==
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=jbOeq+6X1/4MAP644ULCEDj5
+	PCIgL+8MAXcB5WCKTL0=; b=cIepPNDbfQh+8h2jqOUf3iJGFk671yM0MqdDly8B
+	tLI9sk0qMOk/DayzGjucm0eqsfx/THdftyWeIm7F+D0BX/FrJZKDGJCTayOwQg9O
+	pYWKNmuiDt+Lx6+VT/RTw0e7qXG/Wru6R9/cd0oxoxtghr3rV0lN7duxdNm5r1Xy
+	0AWOUYsd1EL6gCl37+JJ2AIB8zc72p87hyMM7z+XzINXhR61mffUPH8nKFYVV5NO
+	vGo2f8BsZ1g5IylrHsSbBeFDbBo5YE9XoLuB/ZqZn7ykrENkLMt6KSkdLOhIiFaC
+	wI5xhA3BbAkY05FSgwGyyFKku4/UfRpcHqawFsyW9BGvjQ==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41he5duhdb-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41he5dun3w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Sep 2024 00:51:20 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48A0pJGp011420
+	Tue, 10 Sep 2024 02:02:02 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48A221FD000818
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Sep 2024 00:51:19 GMT
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Tue, 10 Sep 2024 02:02:01 GMT
+Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 9 Sep 2024 17:51:19 -0700
-Received: from nalasex01a.na.qualcomm.com ([fe80::d989:a8e3:9d0f:9869]) by
- nalasex01a.na.qualcomm.com ([fe80::d989:a8e3:9d0f:9869%4]) with mapi id
- 15.02.1544.009; Mon, 9 Sep 2024 17:51:19 -0700
-From: "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>
-To: "dmitry.baryshkov@linaro.org" <dmitry.baryshkov@linaro.org>,
-        "Neil
- Armstrong" <neil.armstrong@linaro.org>
-CC: Bartosz Golaszewski <brgl@bgdev.pl>, Jens Axboe <axboe@kernel.dk>,
-        Jonathan Corbet <corbet@lwn.net>, Alasdair Kergon <agk@redhat.com>,
-        "Mike
- Snitzer" <snitzer@kernel.org>,
-        Mikulas Patocka <mpatocka@redhat.com>,
-        "Adrian
- Hunter" <adrian.hunter@intel.com>,
-        Asutosh Das <quic_asutoshd@quicinc.com>,
-        Ritesh Harjani <ritesh.list@gmail.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>,
-        "James E.J. Bottomley"
-	<James.Bottomley@hansenpartnership.com>,
-        "Martin K. Petersen"
-	<martin.petersen@oracle.com>,
-        Eric Biggers <ebiggers@kernel.org>,
-        "Theodore
- Y. Ts'o" <tytso@mit.edu>, Jaegeuk Kim <jaegeuk@kernel.org>,
-        Alexander Viro
-	<viro@zeniv.linux.org.uk>,
-        Christian Brauner <brauner@kernel.org>, Jan Kara
-	<jack@suse.cz>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        "manivannan.sadhasivam@linaro.org"
-	<manivannan.sadhasivam@linaro.org>,
-        "Gaurav Kashyap (QUIC)"
-	<quic_gaurkash@quicinc.com>,
-        "linux-block@vger.kernel.org"
-	<linux-block@vger.kernel.org>,
-        "linux-doc@vger.kernel.org"
-	<linux-doc@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>,
-        "dm-devel@lists.linux.dev"
-	<dm-devel@lists.linux.dev>,
-        "linux-mmc@vger.kernel.org"
-	<linux-mmc@vger.kernel.org>,
-        "linux-scsi@vger.kernel.org"
-	<linux-scsi@vger.kernel.org>,
-        "linux-fscrypt@vger.kernel.org"
-	<linux-fscrypt@vger.kernel.org>,
-        "linux-fsdevel@vger.kernel.org"
-	<linux-fsdevel@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org"
-	<linux-arm-msm@vger.kernel.org>,
-        bartosz.golaszewski
-	<bartosz.golaszewski@linaro.org>
-Subject: RE: [PATCH v6 09/17] soc: qcom: ice: add HWKM support to the ICE
- driver
-Thread-Topic: [PATCH v6 09/17] soc: qcom: ice: add HWKM support to the ICE
- driver
-Thread-Index: AQHbAIeyLfp38xTz0EaUtiNODewOx7JLxo0AgAPangCAAAy4AIAA/Xzw
-Date: Tue, 10 Sep 2024 00:51:18 +0000
-Message-ID: <98cc8d71d5d9476297a54774c382030d@quicinc.com>
-References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
- <20240906-wrapped-keys-v6-9-d59e61bc0cb4@linaro.org>
- <7uoq72bpiqmo2olwpnudpv3gtcowpnd6jrifff34ubmfpijgc6@k6rmnalu5z4o>
- <66953e65-2468-43b8-9ccf-54671613c4ab@linaro.org>
- <ivibs6qqxhbikaevys3iga7s73xq6dzq3u43gwjri3lozkrblx@jxlmwe5wiq7e>
-In-Reply-To: <ivibs6qqxhbikaevys3iga7s73xq6dzq3u43gwjri3lozkrblx@jxlmwe5wiq7e>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ 15.2.1544.9; Mon, 9 Sep 2024 19:01:57 -0700
+Date: Tue, 10 Sep 2024 10:01:53 +0800
+From: JieGan <quic_jiegan@quicinc.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Song Chai
+	<quic_songchai@quicinc.com>,
+        Yushan Li <quic_yushli@quicinc.com>
+Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: Add coresight nodes for x1e80100
+Message-ID: <Zt+okXSkE63O/PYk@jiegan-gv.ap.qualcomm.com>
+References: <20240905103825.2154633-1-quic_jiegan@quicinc.com>
+ <20240905103825.2154633-2-quic_jiegan@quicinc.com>
+ <734452da-6a3e-4063-ab42-607ac8dd10ac@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <734452da-6a3e-4063-ab42-607ac8dd10ac@kernel.org>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: QH7Gmo-QPx85xU5L5kGW3w4npqSQk_1K
-X-Proofpoint-GUID: QH7Gmo-QPx85xU5L5kGW3w4npqSQk_1K
+X-Proofpoint-ORIG-GUID: _u4yqcohsHPVvv9wbKit1bHhFF32KtQS
+X-Proofpoint-GUID: _u4yqcohsHPVvv9wbKit1bHhFF32KtQS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1011
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
  priorityscore=1501 suspectscore=0 lowpriorityscore=0 impostorscore=0
  malwarescore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
  mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409100004
+ engine=8.19.0-2408220000 definitions=main-2409100013
 
-Hello Dmitry and Neil
+On Mon, Sep 09, 2024 at 10:05:08PM +0200, Konrad Dybcio wrote:
+> On 5.09.2024 12:38 PM, Jie Gan wrote:
+> > Add following coresight components for x1e80100 platform.
+> > It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
+> > TPDM, TPDA and TMC ETF.
+> > 
+> > Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> > Tested-by: Yushan Li <quic_yushli@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1516 ++++++++++++++++++++++++
+> >  1 file changed, 1516 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index 74b694e74705..9d6f3098e144 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -305,6 +305,19 @@ CLUSTER_CL5: cluster-sleep-1 {
+> >  		};
+> >  	};
+> >  
+> > +	dummy-sink {
+> > +		compatible = "arm,coresight-dummy-sink";
+> > +
+> > +		in-ports {
+> > +			port {
+> > +				eud_in: endpoint {
+> > +					remote-endpoint =
+> > +					<&swao_rep_out1>;
+> 
+> Don't be scared to keep the lines 100-long, easier to read that way
+>
+sure, will fix in next version.
+ 
+> [...]
+> 
+> > +		tpda@10004000 {
+> > +			compatible = "qcom,coresight-tpda", "arm,primecell";
+> > +			reg = <0x0 0x10004000 0x0 0x1000>;
+> > +
+> > +			clocks = <&aoss_qmp>;
+> > +			clock-names = "apb_pclk";
+> > +
+> > +			out-ports {
+> > +				port {
+> > +					qdss_tpda_out: endpoint {
+> > +						remote-endpoint =
+> > +						<&funnel0_in6>;
+> > +					};
+> > +				};
+> > +			};
+> > +
+> > +			in-ports {
+> 
+> 'i' < 'o', please sort things alphabetically if there's no other sorting key
+> as per Documentation/devicetree/bindings/dts-coding-style.rst
+> 
+Will sort with alphabet order for "in-ports" and "out-ports" property.
 
-On Monday, September 9, 2024 2:44 AM PDT, Dmitry Baryshkov wrote:
-> On Mon, Sep 09, 2024 at 10:58:30AM GMT, Neil Armstrong wrote:
-> > On 07/09/2024 00:07, Dmitry Baryshkov wrote:
-> > > On Fri, Sep 06, 2024 at 08:07:12PM GMT, Bartosz Golaszewski wrote:
-> > > > From: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> > > >
-> > > > Qualcomm's ICE (Inline Crypto Engine) contains a proprietary key
-> > > > management hardware called Hardware Key Manager (HWKM). Add
-> HWKM
-> > > > support to the ICE driver if it is available on the platform. HWKM
-> > > > primarily provides hardware wrapped key support where the ICE
-> > > > (storage) keys are not available in software and instead protected =
-in
-> hardware.
-> > > >
-> > > > When HWKM software support is not fully available (from
-> > > > Trustzone), there can be a scenario where the ICE hardware
-> > > > supports HWKM, but it cannot be used for wrapped keys. In this
-> > > > case, raw keys have to be used without using the HWKM. We query
-> > > > the TZ at run-time to find out whether wrapped keys support is
-> available.
-> > > >
-> > > > Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> > > > Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
-> > > > Signed-off-by: Bartosz Golaszewski
-> > > > <bartosz.golaszewski@linaro.org>
-> > > > ---
-> > > >   drivers/soc/qcom/ice.c | 152
-> +++++++++++++++++++++++++++++++++++++++++++++++--
-> > > >   include/soc/qcom/ice.h |   1 +
-> > > >   2 files changed, 149 insertions(+), 4 deletions(-)
-> > > >
-> > > >   int qcom_ice_enable(struct qcom_ice *ice)
-> > > >   {
-> > > > + int err;
-> > > > +
-> > > >           qcom_ice_low_power_mode_enable(ice);
-> > > >           qcom_ice_optimization_enable(ice);
-> > > > - return qcom_ice_wait_bist_status(ice);
-> > > > + if (ice->use_hwkm)
-> > > > +         qcom_ice_enable_standard_mode(ice);
-> > > > +
-> > > > + err =3D qcom_ice_wait_bist_status(ice); if (err)
-> > > > +         return err;
-> > > > +
-> > > > + if (ice->use_hwkm)
-> > > > +         qcom_ice_hwkm_init(ice);
-> > > > +
-> > > > + return err;
-> > > >   }
-> > > >   EXPORT_SYMBOL_GPL(qcom_ice_enable);
-> > > > @@ -150,6 +282,10 @@ int qcom_ice_resume(struct qcom_ice *ice)
-> > > >                   return err;
-> > > >           }
-> > > > + if (ice->use_hwkm) {
-> > > > +         qcom_ice_enable_standard_mode(ice);
-> > > > +         qcom_ice_hwkm_init(ice); }
-> > > >           return qcom_ice_wait_bist_status(ice);
-> > > >   }
-> > > >   EXPORT_SYMBOL_GPL(qcom_ice_resume);
-> > > > @@ -157,6 +293,7 @@ EXPORT_SYMBOL_GPL(qcom_ice_resume);
-> > > >   int qcom_ice_suspend(struct qcom_ice *ice)
-> > > >   {
-> > > >           clk_disable_unprepare(ice->core_clk);
-> > > > + ice->hwkm_init_complete =3D false;
-> > > >           return 0;
-> > > >   }
-> > > > @@ -206,6 +343,12 @@ int qcom_ice_evict_key(struct qcom_ice *ice,
-> int slot)
-> > > >   }
-> > > >   EXPORT_SYMBOL_GPL(qcom_ice_evict_key);
-> > > > +bool qcom_ice_hwkm_supported(struct qcom_ice *ice) {  return
-> > > > +ice->use_hwkm; }
-> EXPORT_SYMBOL_GPL(qcom_ice_hwkm_supported);
-> > > > +
-> > > >   static struct qcom_ice *qcom_ice_create(struct device *dev,
-> > > >                                           void __iomem *base)
-> > > >   {
-> > > > @@ -240,6 +383,7 @@ static struct qcom_ice *qcom_ice_create(struct
-> device *dev,
-> > > >                   engine->core_clk =3D devm_clk_get_enabled(dev, NU=
-LL);
-> > > >           if (IS_ERR(engine->core_clk))
-> > > >                   return ERR_CAST(engine->core_clk);
-> > > > + engine->use_hwkm =3D qcom_scm_has_wrapped_key_support();
-> > >
-> > > This still makes the decision on whether to use HW-wrapped keys on
-> > > behalf of a user. I suppose this is incorrect. The user must be able
-> > > to use raw keys even if HW-wrapped keys are available on the
-> > > platform. One of the examples for such use-cases is if a user
-> > > prefers to be able to recover stored information in case of a device
-> > > failure (such recovery will be impossible if SoC is damaged and HW-
-> wrapped keys are used).
-> >
-> > Isn't that already the case ? the BLK_CRYPTO_KEY_TYPE_HW_WRAPPED
-> size
-> > is here to select HW-wrapped key, otherwise the ol' raw key is passed.
-> > Just look the next patch.
-> >
-> > Or did I miss something ?
->=20
-> That's a good question. If use_hwkm is set, ICE gets programmed to use
-> hwkm (see qcom_ice_hwkm_init() call above). I'm not sure if it is expecte=
-d
-> to work properly if after such a call we pass raw key.
->=20
+> [...]
+> 
+> > +		tpda@10c2b000 {
+> > +			compatible = "qcom,coresight-tpda", "arm,primecell";
+> > +			reg = <0x0 0x10c2b000 0x0 0x1000>;
+> > +
+> > +			clocks = <&aoss_qmp>;
+> > +			clock-names = "apb_pclk";
+> > +
+> > +			out-ports {
+> > +				port {
+> > +					dlct1_tpda_out: endpoint {
+> > +						remote-endpoint =
+> > +						<&dlct1_funnel_in0>;
+> > +					};
+> > +				};
+> > +			};
+> > +
+> > +			in-ports {
+> > +				#address-cells = <1>;
+> > +				#size-cells = <0>;
+> > +
+> > +				port@4 {
+> > +					reg = <4>;
+> > +					dlct1_tpda_in4: endpoint {
+> 
+> Please keep a new line between the last property (reg here) and the
+> following subnode
+> 
+Will fix in next version.
 
-Once ICE has moved to a HWKM mode, the firmware key programming currently d=
-oes not support raw keys.
-This support is being added for the next Qualcomm chipset in Trustzone to s=
-upport both at he same time, but that will take another year or two to hit =
-the market.
-Until that time, due to TZ (firmware) limitations , the driver can only sup=
-port one or the other.
+> I was able to confirm that this patch doesn't break booting on the
+> Surface laptop anymore.
+> 
+> Konrad
 
-We also cannot keep moving ICE modes, due to the HWKM enablement being a on=
-e-time configurable value at boot.
+Thanks for testing!
 
-> >
-> > Neil
-> >
-> > >
-> > > >           if (!qcom_ice_check_supported(engine))
-> > > >                   return ERR_PTR(-EOPNOTSUPP); diff --git
-> > > > a/include/soc/qcom/ice.h b/include/soc/qcom/ice.h index
-> > > > 9dd835dba2a7..1f52e82e3e1c 100644
-> > > > --- a/include/soc/qcom/ice.h
-> > > > +++ b/include/soc/qcom/ice.h
-> > > > @@ -34,5 +34,6 @@ int qcom_ice_program_key(struct qcom_ice *ice,
-> > > >                            const struct blk_crypto_key *bkey,
-> > > >                            u8 data_unit_size, int slot);
-> > > >   int qcom_ice_evict_key(struct qcom_ice *ice, int slot);
-> > > > +bool qcom_ice_hwkm_supported(struct qcom_ice *ice);
-> > > >   struct qcom_ice *of_qcom_ice_get(struct device *dev);
-> > > >   #endif /* __QCOM_ICE_H__ */
-> > > >
-> > > > --
-> > > > 2.43.0
-> > > >
-> > >
-> >
->=20
-> --
-> With best wishes
-> Dmitry
+Thanks,
+Jie
 
-Regards,
-Gaurav
 
