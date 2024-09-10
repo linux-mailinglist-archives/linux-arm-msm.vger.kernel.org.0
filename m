@@ -1,98 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-31418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1069E973951
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 16:05:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3508C973A74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 16:48:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2E0E2885BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 14:05:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A1ED1C247A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 14:48:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B9E5196455;
-	Tue, 10 Sep 2024 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5134519580B;
+	Tue, 10 Sep 2024 14:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="BE34pvKS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="J6hzT6QG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 622D518CC1B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 14:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432A3193085
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 14:45:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725977071; cv=none; b=Kl3C4wA2nuXdGbP/r0VWSXRhZAe9eES7p/hbLD8SLQoDKjkjAzBNInZ3Ytxw1I+rU+jJTh4+k+gKDR0x3qrck6LzBEL9jEoabROFaHxzTYARB431y0HVqPZQk3zILaQRPDvQ6eF0TkaE+12M4OlnBai4zL8Ugt4vF4tE1SBbZGI=
+	t=1725979510; cv=none; b=KhzLo9BjpXl+tTnHT25525RWmtGW7QaelzZldPt60ckp8lYbRcydAOM2Jptdyk4pPQE3zwzb+xBELeJZTtE/mX5DDirQ40Hf8kFZNl76RyoLuDWISc2ca+jIcd0soP/vR/4pZyedWixycSK49UyW4tL8FQs0CnXPnhrg9dooZyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725977071; c=relaxed/simple;
-	bh=7IIv/TCiQuGv1kywlmbVKDSltSq7ug1hjpzEtjh4c/M=;
+	s=arc-20240116; t=1725979510; c=relaxed/simple;
+	bh=RX3KHDriwLTHhMB1/Y/4WKB1LnCFaqzNXHSC987q6o4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XtSJceo0CU5yOxPVxRsZx/OkbpAiWfDcgvQTyneQttnNN6z26OqJAlWhi0vE+uAjLXQFX93vXU/czdZIzLKvCnGZBlLc2CTjlMqtk7Pd38M+TUt56XJ3hwJ0YojySHSS/InBDqj3wih3/5DuuC3CkGc4qciiEV+CzwzNxUAAK3E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=BE34pvKS; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1725977068;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=wVYD4N62UqAhpHQm7sf1NxFCYsljgVEeGS+EzoqlJE0=;
-	b=BE34pvKSaT70GzdhLns12USLo6+ebjy7ZcaCL4U3qez2yxW5dxvybEh9ASZQrgeB6C1jK1
-	Czdfgm2vl7XGQgTyOntprinWuvavXhHzguyLObZ1cQhNuzPvRbbCR7qzPTZo0AB5E2aYFO
-	eVDODSv7N6oyi7jzvAo+5S3YGLFevhE=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-353-bv95JhiGM3SD-Y8EXEIjbA-1; Tue, 10 Sep 2024 10:04:26 -0400
-X-MC-Unique: bv95JhiGM3SD-Y8EXEIjbA-1
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7a9a7eed5b2so771188685a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 07:04:26 -0700 (PDT)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cz2jnuTO/eMF23XKHsNgVVRXqpz730clY6NOvdUj32X5AQayncRW4wKS29PXqcvPg/TqG38CJDlny0vgYTNTrF/5A3NMA42qzCUtET1jvMjArp1JnWYZMuNBfX4szK/8P7qiDPQ+eFVQolYWbqIaLd1TkiSkAhZ29z3EBjOcIsY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=J6hzT6QG; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-535be093a43so1183753e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 07:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1725979506; x=1726584306; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fyheDlGANeq6Wl6O+ghUD4wV0JahjuF+9A+tjmIT3aI=;
+        b=J6hzT6QGHGsMK0V1dovdb2ozCbQuTJ/NafZrcVrbXy9II6HoG3Vun9eUMnHhdXVamk
+         llqGr0ws9Ww5YlcsniB7a+EHsc0L7vsGl2I6PcnwzPgNCgSUzfLYya6ebqPnrJyS4NML
+         B8wjNAD+RlQCBPOkjFWi0TKTLVLput6qqH2UOyECZjcahZL9UHcE4MpiEr51ujyRG8jJ
+         TKoPdIBaHxoxGS5IcdpWfxoAp0wEpdVkMpW2UN0Kq5thYQFWzkB2OeU4bIiIfk8ie+fz
+         nhnm24eRnEUIOrxiN8aUuuS8FieQzhYM3FAkH6kKhQaHhhi4oT9G8kHZ6sNWmXS5Th4y
+         KEag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725977065; x=1726581865;
+        d=1e100.net; s=20230601; t=1725979506; x=1726584306;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wVYD4N62UqAhpHQm7sf1NxFCYsljgVEeGS+EzoqlJE0=;
-        b=MozE/aVUfZWyD6qcHgRi9+p16iH/03r5qjwqqIeJ5nfHKX8l2pch2/qGJ9/bY02Q/2
-         igUtIb3CXw2yJT1GtluhKqGox+yLmC25G/6hjeFEwCR1eJXCw/xFQXOkWlEQn8T6RurW
-         wMF4PX13VaEWLgEOjLViEAwRt3gmJCf/WOeikkCbqkfodFiJ2P2YHdyrk/PaPqS7o8dc
-         0dYOoNqJwas6+Rh82tzIVWouFF70TfbPJusWQZRcaWaxca9nxkMEMmdusxBejulE7gim
-         IpI19ASnYQid8NWTaA1+oPVcKJ3B/M2M/aJzDhAoflye6ouZ608rKtbh1zwy2fdmuelb
-         J3nA==
-X-Forwarded-Encrypted: i=1; AJvYcCWYmKR0MY4t0SamxPH1PpTPIm5lR4HC5yFiOvFH+qmsrN2fiyBufcorV2hmbzZzBN0RxRRC6xGWmpaBitF+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4pNeNCweoujBH8clYkm9fsiB0I9cDPlfSkOj8QtlkGPm/wzDG
-	jmCqC2o/X3YEBoQ/HVePO9570QMxJJde8GO7gFYMsWpzkXdu1hOcjzYZVp3WSVScH8yx6dNZX3h
-	lluYEWoqIZHC1geZqf42jK6G0NsLdUs35WgvdX36N2j9drLlA/N1fYcuv6GR1TZs=
-X-Received: by 2002:a05:620a:4106:b0:7a9:a744:f9b0 with SMTP id af79cd13be357-7a9bf95d81dmr510767285a.2.1725977065439;
-        Tue, 10 Sep 2024 07:04:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgXAGMf5OXe+BFXu00quJBvXmiHAnCbYBL7DVhW0+OpqjaYfAmdX2DFJorJf2F1JO2aZaOcw==
-X-Received: by 2002:a05:620a:4106:b0:7a9:a744:f9b0 with SMTP id af79cd13be357-7a9bf95d81dmr510760885a.2.1725977064867;
-        Tue, 10 Sep 2024 07:04:24 -0700 (PDT)
-Received: from x1gen2nano ([2600:1700:1ff0:d0e0::33])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6c5347747d7sm30159556d6.126.2024.09.10.07.04.22
+        bh=fyheDlGANeq6Wl6O+ghUD4wV0JahjuF+9A+tjmIT3aI=;
+        b=pXZv/gqQySGBsgyjtblylGb1SdzE1y3TW2uGEw0cDvtL2YosjWkwhXR6ZNFuEOavTt
+         UT0pG1DWU4nIjJNj25Og01T/lPnUNHebgh6jJUNDP458griHr3/LrN7RaMxlzgGF7rmB
+         A/nWM98Q/II8s6pGwLfGF7SkV/6qNvoLblFrQTYb5XmOnFn4u9aI4gp+0gvmzk0AGl0n
+         non1lCMk15+TGWbrDh+4oQpk+liU1UdAZDra2cdGFgPNA6OVTLLR/5QkNY0QqqHEUf0W
+         G6+rKX3lTV5t57mKAK+yniOfG/HuvWo9eyRzO9Pq7kYeaYwcZxyfayvXCeooNA04fSaP
+         1uxw==
+X-Forwarded-Encrypted: i=1; AJvYcCWiAQbuBnC7mO0cLYWsuESb5FjZq2IL5NXjqFooCMkf263M2VrqSaU+GygI8NCkbz8bSuMfauAnD4UMGC4r@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrY1DP2JuC3m0OQsJrFXdKSIqZw+WOmkPOMdJKzbLbB2inptO/
+	zCa78/43B6LYyLCsgAAH2CNuVqTA4XkIpFCb0PuUr1AxPCM23vSNZF8RE8F9H6KcJ5woHx3RaAI
+	a
+X-Google-Smtp-Source: AGHT+IGkucxQAPF17vtiwykU1NzQbKTsUYePLM268UsuU7sXnhSJr57nWX2ddN1l8A7ibNcX6hceFQ==
+X-Received: by 2002:a05:6512:2385:b0:52e:9f17:841a with SMTP id 2adb3069b0e04-536587a4006mr11605403e87.6.1725979505297;
+        Tue, 10 Sep 2024 07:45:05 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f90d8ebsm1190511e87.281.2024.09.10.07.45.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Sep 2024 07:04:23 -0700 (PDT)
-Date: Tue, 10 Sep 2024 09:04:20 -0500
-From: Andrew Halaney <ahalaney@redhat.com>
-To: Suraj Jaiswal <jsuraj@qti.qualcomm.com>
-Cc: "Suraj Jaiswal (QUIC)" <quic_jsuraj@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, "bhupesh.sharma@linaro.org" <bhupesh.sharma@linaro.org>, 
-	Andy Gross <agross@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, "David S. Miller" <davem@davemloft.net>, 
-	Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, 
-	Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Jose Abreu <joabreu@synopsys.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	"netdev@vger.kernel.org" <netdev@vger.kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-stm32@st-md-mailman.stormreply.com" <linux-stm32@st-md-mailman.stormreply.com>, Prasad Sodagudi <psodagud@quicinc.com>, 
-	Rob Herring <robh@kernel.org>, kernel <kernel@quicinc.com>
-Subject: Re: [PATCH net] net: stmmac: Stop using a single dma_map() for
- multiple descriptors
-Message-ID: <ypfbzhjyqqwwzciifkwvhimrolg6haiysqmxamkhnryez4npxx@l4blfw43sxgt>
-References: <20240902095436.3756093-1-quic_jsuraj@quicinc.com>
- <yy2prsz3tjqwjwxgsrumt3qt2d62gdvjwqsti3favtfmf7m5qs@eychxx5qz25f>
- <CYYPR02MB9788F524C9A5B3471871E055E79A2@CYYPR02MB9788.namprd02.prod.outlook.com>
+        Tue, 10 Sep 2024 07:45:04 -0700 (PDT)
+Date: Tue, 10 Sep 2024 17:45:03 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Vignesh Raman <vignesh.raman@collabora.com>
+Cc: freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+	linux-arm-msm@vger.kernel.org, robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
+	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
+	Daniel Stone <daniels@collabora.com>, Helen Mae Koike Fornazier <helen.koike@collabora.com>, 
+	Sergi Blanch Torne <sergi.blanch.torne@collabora.com>, Guilherme Alcarde Gallo <guilherme.gallo@collabora.com>
+Subject: Re: drm-ci: flaky tests for msm driver testing
+Message-ID: <2t263tpqv53kqs3dv46x6obkh2cpw7jxj54hnyhxtbiu6tew33@c7ec7yhobqqv>
+References: <661483c8-ad82-400d-bcd8-e94986d20d7d@collabora.com>
+ <c96d719b-1d26-4f16-812f-ede92da3869f@collabora.com>
+ <64bc4bcf-de51-4e60-a9f7-1295a1e64c65@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,160 +88,125 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CYYPR02MB9788F524C9A5B3471871E055E79A2@CYYPR02MB9788.namprd02.prod.outlook.com>
+In-Reply-To: <64bc4bcf-de51-4e60-a9f7-1295a1e64c65@collabora.com>
 
-Hey Suraj,
-
-Your email client didn't seem to quote my response in your latest reply,
-so its difficult to figure out what you're writing vs me below. It also
-seems to have messed with the line breaks so I'm manually redoing those.
-
-Please see if you can figure out how to make that happen for further
-replies!
-
-More comments below...
-
-On Tue, Sep 10, 2024 at 12:47:08PM GMT, Suraj Jaiswal wrote:
+On Tue, Sep 10, 2024 at 08:48:09AM GMT, Vignesh Raman wrote:
+> Hi Maintainers,
 > 
+> On 12/07/24 11:35, Vignesh Raman wrote:
+> > Hi Maintainers,
+> > 
+> > On 28/05/24 11:39, Vignesh Raman wrote:
+> > > Hi Maintainers,
+> > > 
+> > > There are some flaky tests reported for msm driver testing in drm-ci
+> > > for the below boards.
+> > > 
+> > > *)
+> > > # Board Name: apq8096-db820c
+> > > # IGT Version: 1.28-g0df7b9b97
+> > > # Linux Version: 6.9.0-rc7
+> > > # Failure Rate: 50
+> > > dumb_buffer@create-clear
+> > > 
+> > > *)
+> > > # Board Name: sc7180-trogdor-kingoftown
+> > > # IGT Version: 1.28-g0df7b9b97
+> > > # Linux Version: 6.9.0-rc7
+> > > # Failure Rate: 50
+> > > msm_mapping@shadow
+> > > msm_shrink@copy-gpu-oom-32
+> > > msm_shrink@copy-gpu-oom-8
+> > > 
+> > > *)
+> > > # Board Name: sc7180-trogdor-lazor-limozeen-nots-r5
+> > > # IGT Version: 1.28-g0df7b9b97
+> > > # Linux Version: 6.9.0-rc7
+> > > # Failure Rate: 50
+> > > msm_mapping@shadow
+> > > 
+> > > *)
+> > > # Board Name: sdm845-cheza-r3
+> > > # IGT Version: 1.28-g0df7b9b97
+> > > # Linux Version: 6.9.0-rc7
+> > > # Failure Rate: 50
+> > > kms_cursor_legacy@basic-flip-after-cursor-atomic
+> > > kms_cursor_legacy@basic-flip-after-cursor-legacy
+> > > kms_cursor_legacy@basic-flip-after-cursor-varying-size
+> > > kms_cursor_legacy@basic-flip-before-cursor-varying-size
+> > > kms_cursor_legacy@flip-vs-cursor-atomic-transitions
+> > > kms_cursor_legacy@flip-vs-cursor-atomic-transitions-varying-size
+> > > kms_cursor_legacy@flip-vs-cursor-varying-size
+> > > kms_cursor_legacy@short-flip-after-cursor-atomic-transitions
+> > > kms_cursor_legacy@short-flip-after-cursor-atomic-transitions-varying-size
+> > > kms_cursor_legacy@short-flip-after-cursor-toggle
+> > > kms_cursor_legacy@short-flip-before-cursor-atomic-transitions
+> > > kms_cursor_legacy@short-flip-before-cursor-atomic-transitions-varying-size
+> > > msm_shrink@copy-gpu-32
+> > > msm_shrink@copy-gpu-oom-32
+> > > 
+> > > Will add these tests in,
+> > > drivers/gpu/drm/ci/xfails/msm-apq8096-flakes.txt
+> > > drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
+> > > drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
+> > > drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
+> > > 
+> > > (https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/gpu/automated_testing.rst#n70)
+> > > 
+> > > Please could you have a look at these test results and let us know
+> > > if you need more information. Thank you.
+> > 
+> > There are some flaky tests reported for msm driver testing in drm-ci
+> > with the recent IGT uprev (https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/0e7f4e6a20d550252c4f355d5a303b1d9c8ff052)
+> > 
+> > *)
+> > # Board Name: sc7180-trogdor-lazor-limozeen-nots-r5
+> > # Bug Report: https://lore.kernel.org/linux-arm-msm/661483c8-ad82-400d-bcd8-e94986d20d7d@collabora.com/T/#u
+> > # Failure Rate: 100
+> > # IGT Version: 1.28-gf13702b8e
+> > # Linux Version: 6.10.0-rc5
+> > kms_lease@page-flip-implicit-plane
+> > 
+> > *)
+> > # Board Name: sdm845-cheza-r3
+> > # Bug Report: https://lore.kernel.org/linux-arm-msm/661483c8-ad82-400d-bcd8-e94986d20d7d@collabora.com/T/#u
+> > # Failure Rate: 50
+> > # IGT Version: 1.28-gf13702b8e
+> > # Linux Version: 6.10.0-rc5
+> > kms_cursor_legacy@short-flip-before-cursor-toggle
+> > kms_cursor_legacy@flip-vs-cursor-toggle
+> > msm/msm_shrink@copy-mmap-oom-8s
+> > 
+> > The expectation files have been updated with these tests,
+> > https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
+> > 
+> > https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
 > 
-> -----Original Message-----
-> From: Andrew Halaney <ahalaney@redhat.com> 
-> Sent: Wednesday, September 4, 2024 3:47 AM
-> To: Suraj Jaiswal (QUIC) <quic_jsuraj@quicinc.com>
-> Cc: Vinod Koul <vkoul@kernel.org>; bhupesh.sharma@linaro.org; Andy Gross <agross@kernel.org>; Bjorn Andersson <andersson@kernel.org>; Konrad Dybcio <konrad.dybcio@linaro.org>; David S. Miller <davem@davemloft.net>; Eric Dumazet <edumazet@google.com>; Jakub Kicinski <kuba@kernel.org>; Rob Herring <robh+dt@kernel.org>; Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>; Conor Dooley <conor+dt@kernel.org>; Alexandre Torgue <alexandre.torgue@foss.st.com>; Jose Abreu <joabreu@synopsys.com>; Maxime Coquelin <mcoquelin.stm32@gmail.com>; netdev@vger.kernel.org; linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org; linux-kernel@vger.kernel.org; linux-stm32@st-md-mailman.stormreply.com; Prasad Sodagudi <psodagud@quicinc.com>; Rob Herring <robh@kernel.org>; kernel <kernel@quicinc.com>
-> Subject: Re: [PATCH net] net: stmmac: Stop using a single dma_map() for multiple descriptors
+> There are some flaky tests reported for msm driver testing in drm-ci with
+> the recent IGT uprev.
 > 
-> WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
+> # Board Name: sdm845-cheza-r3
+> # Failure Rate: 50
+> # IGT Version: 1.28-ga73311079
+> # Linux Version: 6.11.0-rc2
+> kms_lease@page-flip-implicit-plane
 > 
-> On Mon, Sep 02, 2024 at 03:24:36PM GMT, Suraj Jaiswal wrote:
-> > Currently same page address is shared
-> > between multiple buffer addresses and causing smmu fault for other 
-> > descriptor if address hold by one descriptor got cleaned.
-> > Allocate separate buffer address for each descriptor for TSO path so 
-> > that if one descriptor cleared it should not clean other descriptor 
-> > address.
-
-snip...
-
-> >
-> >  static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int 
-> > queue) @@ -4351,25 +4380,17 @@ static netdev_tx_t stmmac_tso_xmit(struct sk_buff *skb, struct net_device *dev)
-> >               pay_len = 0;
-> >       }
-> >
-> > -     stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
-> > +     if (stmmac_tso_allocator(priv, (skb->data + proto_hdr_len),
-> > +                              tmp_pay_len, nfrags == 0, queue, false))
-> > +             goto dma_map_err;
+> # Board Name: sdm845-cheza-r3
+> # Failure Rate: 50
+> # IGT Version: 1.28-ga73311079
+> # Linux Version: 6.11.0-rc5
+> kms_flip@flip-vs-expired-vblank
 > 
-> Changing the second argument here is subtly changing the dma_cap.addr64 <= 32
-> case right before this. Is that intentional?
+> The expectation files have been updated with these tests,
 > 
-> i.e., prior, pretend des = 0 (side note but des is a very confusing variable
-> name for "dma address" when there's also mentions of desc meaning "descriptor"
-> in the DMA ring). In the <= 32 case, we'd call stmmac_tso_allocator(priv, 0)
-> and in the else case we'd call stmmac_tso_allocator(priv, 0 + proto_hdr_len).
+> https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
 > 
-> With this change in both cases its called with the (not-yet-dma-mapped)
-> skb->data + proto_hdr_len always (i.e. like the else case).
-> 
-> Honestly, the <= 32 case reads weird to me without this patch. It seems some
-> of the buffer is filled but des is not properly incremented?
-> 
-> I don't know how this hardware is supposed to be programmed (no databook
-> access) but that seems fishy (and like a separate bug, which would be nice to
-> squash if so in its own patch). Would you be able to explain the logic there
-> to me if it does make sense to you?
-> 
+> Please could you have a look at these test results and let us know if you
+> need more information. Thank you.
 
-> <Suraj> des can not be 0 . des 0 means dma_map_single() failed and it will return.
-> If we see if des calculation (first->des1 = cpu_to_le32(des + proto_hdr_len);)
-> and else case des calculator ( des += proto_hdr_len;) it is adding proto_hdr_len
-> to the memory that we after mapping skb->data using dma_map_single.
-> Same way we added proto_hdr_len in second argument . 
+Thanks for the info. We will discuss this internally.
 
-
-0 was just an example, and a confusing one, sorry. Let me paste the original
-fishy code that I think you've modified the behavior for. Here's the
-original:
-
-	if (priv->dma_cap.addr64 <= 32) {
-		first->des0 = cpu_to_le32(des);
-
-		/* Fill start of payload in buff2 of first descriptor */
-		if (pay_len)
-			first->des1 = cpu_to_le32(des + proto_hdr_len);
-
-		/* If needed take extra descriptors to fill the remaining payload */
-		tmp_pay_len = pay_len - TSO_MAX_BUFF_SIZE;
-	} else {
-		stmmac_set_desc_addr(priv, first, des);
-		tmp_pay_len = pay_len;
-		des += proto_hdr_len;
-		pay_len = 0;
-	}
-
-	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
-
-Imagine the <= 32 case. Let's say des is address 0 (just for simplicity
-sake, let's assume that's valid). That means:
-
-    first->des0 = des;
-    first->des1 = des + proto_hdr_len;
-    stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue)
-
-    if des is 0, proto_hdr_len is 64, then that means
-
-    first->des0 = 0
-    first->des1 = 64
-    stmmac_tso_allocator(priv, 0, tmp_pay_len, (nfrags == 0), queue)
-
-That seems fishy to me. We setup up the first descriptor with the
-beginning of des, and then the code goes and sets up more descriptors
-(stmmac_tso_allocator()) starting with the same des again?
-
-Should we be adding the payload length (TSO_MAX_BUFF_SIZE I suppose
-based on the tmp_pay_len = pay_len - TSO_MAX_BUFFSIZE above)? It seems
-that <= 32 results in duplicate data in both the "first" descriptor
-programmed above, and in the "second" descriptor programmed in
-stmmac_tso_allocator(). Also, since tmp_pay_len is decremented, but des
-isn't, it seems that stmmac_tso_allocator() would not put all of the
-buffer in the descriptors and would leave the last TSO_MAX_BUFF_SIZE
-bytes out?
-
-I highlight all of this because with your change here we get the
-following now in the <= 32 case:
-
-    first->des0 = des
-    first->des1 = des + proto_hdr_len
-    stmmac_tso_allocator(priv, des + proto_hdr_len, ...)
-
-which is a subtle change in the call to stmmac_tso_allocator, meaning
-a subtle change in the descriptor programming.
-
-Both seem wrong for the <= 32 case, but I'm "reading between the lines"
-with how these descriptors are programmed (I don't have the docs to back
-this up, I'm inferring from the code). It seems to me that in the <= 32
-case we should have:
-
-    first->des0 = des
-    first->des1 = des + proto_hdr_len
-    stmmac_tso_allocator(priv, des + TSO_MAX_BUF_SIZE, ...)
-
-or similar depending on if that really makes sense with how des0/des1 is
-used (the handling is different in stmmac_tso_allocator() for <= 32,
-only des0 is used so I'm having a tough time figuring out how much of
-the des is actually programmed in des0 + des1 above without knowing the
-hardware better).
-
-Does that make sense? The prior code seems fishy to me, your change
-seems to unintentionally change that fhsy part, but it still seems fishy
-to me. I don't think you should be changing that code's behavior in that
-patch, if you think it's right then we should continue with the current
-behavior prior to your patch, and if you think its wrong we should
-probably fix that *prior* to this patch in your series.
-
-Thanks,
-Andrew
-
+-- 
+With best wishes
+Dmitry
 
