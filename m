@@ -1,209 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-31398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11A09972FC1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 11:54:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66BC8973067
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 12:01:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 768761F21319
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 09:54:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 773671C24310
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 10:01:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A32618CC1D;
-	Tue, 10 Sep 2024 09:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6C6F18C912;
+	Tue, 10 Sep 2024 09:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i6vvpYv6"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="gDEaBBBa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F4418C914;
-	Tue, 10 Sep 2024 09:54:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD5118C343
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 09:59:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725962051; cv=none; b=hSCjQl+yPa7vzuA9EVJcbEmB5wENa71MUeLIj3XogKaFDpkFhOO0ASefcw4Nrlk4+HKlXolP2BwyKFQSUQig5+V9klHQyCEwcJLxPSn3aeyOs+zusTzjb+YrEaEz9CtIGVdTdUEy7aGf7x8rIcblOYwJb404MXsEZa7JghCdZ4E=
+	t=1725962380; cv=none; b=cAFfduc0XLbVn9vm5+O+dyZuvEddjnLucpGYVs2/jXRsRmseSHh1jdDsf0KcXhH6y8RpFIWTGJH6CjiNxGPpdVpAx9RdlYpdSnNW1hl6o5p3NiLnuzNhfA2/8Q4Ip9cw4tIDuQtTvTMAGx9qR2+sSzA0V8Jqoena71t30S+1kqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725962051; c=relaxed/simple;
-	bh=o+cNj60wCCmzXHOvj60mxWGaujKjMQ2WA9gXXGiMS+g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AbeQb2b9FlIEMeGaDCykssmKykt8sGbPSFkDAbr/taG83DPZVDqp/iVZ55BwsCE4MPCMEiArdV8cvqRvI+qG0eqtU5npj4NMAT/N9kWq4grPLLrD3cZZ4PsCx4mol63yxllDAlcyxQJOiuxq10DfGG4Lpqnu5uWMvt0lu++2hMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i6vvpYv6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73577C4CEC3;
-	Tue, 10 Sep 2024 09:54:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1725962050;
-	bh=o+cNj60wCCmzXHOvj60mxWGaujKjMQ2WA9gXXGiMS+g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=i6vvpYv63/nCh3R/WgxCyMoFhuQAK9/EE7ZzzcWwlsc0wK1qK24QRfcMl9dVez1iB
-	 SwoTNuMo+nEQ94cdBGulT7RM5diKd4pWH9rdqwMGiHOGJ3QbtYx/AY5l/93zRhMG5y
-	 KR93IVgUz3mDRRFfL5q2uV/nk7S0kxNUx5OSYcgSr5snlSN4YK9jbdc7yEw3Pear0+
-	 aFgiJD5zknWKI+EMj25nakIMvlwGyBIRv0iqvGPvDVLtMMajnkuc6uuhbMcDJb61bZ
-	 zPudzFWX91qFcXlC0udLKRfshdRJHvg0kP7n6KZzDTRYJUmo8bg93GdVoBpMTPMg2d
-	 ADFJTM1Udt4Fw==
-Message-ID: <bb9e6ba2-4aeb-40ee-b123-9c59a0efa098@kernel.org>
-Date: Tue, 10 Sep 2024 11:54:01 +0200
+	s=arc-20240116; t=1725962380; c=relaxed/simple;
+	bh=cPN+c5d1qbghZwAgbLbBKbGa0droBLNlCAHDEF+wklI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sicK/L2CXiQ9BsNCDkix0Js3II9f23rD6REjDCJx7dm2UXsoMNOr3C+cs5MyV7WMP3nAX/2gZ+gCjdSJYwGE7efui4g5z17MwGu2PHFQyNnTT0GCprhl2TEfnDz1+bs1DpwYbyRuCKOrkoqrLYC5uacB2UW/iZvZhTpFUUo0lUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=gDEaBBBa; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-374c962e5adso2971113f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 02:59:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1725962375; x=1726567175; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OxZS7VLlvlNcdBPu4dATlqzqCH0SG09iCapcqr1ry4w=;
+        b=gDEaBBBaUoUF56F+rRo9PuyFWwCDXHMu9g8K4zUwzDGwMpXycdSh6VN8oSHKoKmQDX
+         CBycD7ciOZ1IR/0FyHTBJwSQFgwXanXz3ol8xbl5RK83QGEK0N3oWqobPdcp8bRdgAsN
+         zJRHd79Wx0r0r8VkECdsWZb8CG0MTWwIVMwwCsEcAmeXjwPTxuTluhZM7GsBiOTSBwrj
+         GicQeuUF2tjHfHAcuM2wfkPOGx4ZbqH0giOqp7i7zEgqh4hK1Pa1zjBQx5YIUhcLJEEI
+         cCWTNWPXEUubsUXMUR3rMj8TS/LnZJsaKYVFX+QI/MiP7LRzRAcFnOJ6btWsJUUwXo6H
+         JbkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1725962375; x=1726567175;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OxZS7VLlvlNcdBPu4dATlqzqCH0SG09iCapcqr1ry4w=;
+        b=h5jYOeFCmMRInG9JAwUlbqQIhS03NXeLWyGFmYST8h5nE2ryRPHvbQFhTHk2i38tO+
+         N8yOMYPguRrnPPtgLv66V1BsZIrsK7yXTRdYXPFwcrwM5AAsVU9skDLEg/7kEQjbF4Tk
+         mIf2FxrdR5qkdMcqcFfcPBjlGr7yaOYZ57II5u3hPTgHrmmRA2gdff5qMiGGWrtRoSil
+         Eixgsu94uUDrx5ZfYRuVOTL6QNOySM+T+bp7v6LVNAEsrCTsKJfCiTegLFZAxUMx6HWp
+         OsTNNtB/h6Thr9CKx2P66poXSqbue5JSip/VzS9HvdJTZ1eWx+1yH7zBj4k/AdnywB6S
+         F6yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6jJhZz8ell2r4r4+hYYy/nxhvo9AU6+WWOyr1G4ipo+QzXWTSV/z+2qxXl44zvTGQi0eRmkawne7TLApL@vger.kernel.org
+X-Gm-Message-State: AOJu0YwJM9Ks0Io3ZE1tejgWQUsIx2tsowGtTIH1z/wpnHCPnS6GNACD
+	aY77dEKKuRlmmBjXAKl1xp2DX+xGFs99+cszUZ58e8K080fOCXkI/jGJKBCgOV8=
+X-Google-Smtp-Source: AGHT+IEtmAPvqyyaWuRoKy32eCJyGneGNTbPJN2tRd224P8AECPcesi7ike/qTX7P5GRwYiq+pSdJw==
+X-Received: by 2002:a5d:46ca:0:b0:374:c3e4:d6e3 with SMTP id ffacd0b85a97d-378a89fd45fmr1331874f8f.5.1725962375253;
+        Tue, 10 Sep 2024 02:59:35 -0700 (PDT)
+Received: from localhost (p5dc68d3d.dip0.t-ipconnect.de. [93.198.141.61])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3789564a072sm8465192f8f.2.2024.09.10.02.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Sep 2024 02:59:34 -0700 (PDT)
+Date: Tue, 10 Sep 2024 11:59:33 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: dmitry.baryshkov@linaro.org, Sebastian Reichel <sre@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzk@kernel.org>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Chanwoo Choi <cw00.choi@samsung.com>, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-input@vger.kernel.org, 
+	linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v4 27/28] gcc-sdm845: Add general purpose clock ops
+Message-ID: <uevafpb6r7rfutiqrm5asfvv7zfxcb3acrlxqpispele5er52x@eegonpzqlm7j>
+References: <20240719-starqltechn_integration_upstream-v4-0-a7f644821941@gmail.com>
+ <20240719-starqltechn_integration_upstream-v4-27-a7f644821941@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
- flag
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
- konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
- vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
- Frank.Li@nxp.com, konradybcio@kernel.org
-Cc: quic_vdadhani@quicinc.com
-References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
- <20240906191438.4104329-2-quic_msavaliy@quicinc.com>
- <6a6fc102-a18c-4ae3-9104-59eb3172f407@kernel.org>
- <9cc7d427-34c6-45c2-a747-f71112833773@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <9cc7d427-34c6-45c2-a747-f71112833773@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="d2rlzxmgwshy2k4w"
+Content-Disposition: inline
+In-Reply-To: <20240719-starqltechn_integration_upstream-v4-27-a7f644821941@gmail.com>
 
-On 10/09/2024 11:09, Mukesh Kumar Savaliya wrote:
-> Thanks Krzysztof.
-> 
-> On 9/7/2024 2:34 PM, Krzysztof Kozlowski wrote:
->> On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
->>> Adds qcom,shared-se flag usage. Use this when particular I2C serial
->>> controller needs to be shared between two subsystems.
->>
->> <form letter>
->> Please use scripts/get_maintainers.pl to get a list of necessary people
->> and lists to CC (and consider --no-git-fallback argument). It might
->> happen, that command when run on an older kernel, gives you outdated
->> entries. Therefore please be sure you base your patches on recent Linux
->> kernel.
->>
->> Tools like b4 or scripts/get_maintainer.pl provide you proper list of
->> people, so fix your workflow. Tools might also fail if you work on some
->> ancient tree (don't, instead use mainline) or work on fork of kernel
->> (don't, instead use mainline). Just use b4 and everything should be
->> fine, although remember about `b4 prep --auto-to-cc` if you added new
->> patches to the patchset.
->> </form letter>
->>
->> You already got this comment, so how many times it has to be repeated?
->> Your process is just wrong if you do not use the tools for this.
->>
-> Sorry, I was already using scripts/get_maintainer.pl but i kept everyone 
-> into To list (That's my mistake here). I shall keep maintainers in TO 
-> list and rest in CC list.
 
-No, To or Cc does not matter. Your list is just incomplete.
+--d2rlzxmgwshy2k4w
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> Question: With <Form Letter> , are you asking to add letter in this 
-> first patch ? I have cover letter, but it will get removed when patch 
-> gets merged. Please help suggest and clarify.
+Hello,
 
-No, it's just template. Form letter... I am just bored to repeat the
-same comment.
+On Fri, Jul 19, 2024 at 03:55:04PM +0300, Dzmitry Sankouski wrote:
+> SDM845 has "General Purpose" clocks that can be muxed to
+> SoC pins to clock various external devices.
+> Those clocks may be used as e.g. PWM sources for external peripherals.
+>=20
+> GPCLK can in theory have arbitrary value depending on the use case, so
+> the concept of frequency tables, used in rcg2 clock driver, is not
+> efficient, because it allows only defined frequencies.
+>=20
+> Introduce clk_rcg2_gp_ops, which automatically calculate clock
+> mnd values for arbitrary clock rate.
+>=20
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
+>  drivers/clk/qcom/clk-rcg.h    |   1 +
+>  drivers/clk/qcom/clk-rcg2.c   | 162 ++++++++++++++++++++++++++++++++++++=
+++++--
+>  drivers/clk/qcom/gcc-sdm845.c |  19 ++---
+>  drivers/pwm/pwm-clk.c         |   5 ++
 
->>
->>>
->>> SE = Serial Engine, meant for I2C controller here.
->>> TRE = Transfer Ring Element, refers to Queued Descriptor.
->>>
->>> Example :
->>> Two clients from different SS can share an I2C SE for same slave device
->>
->> What is SS?
->>
-> SS = Subsystem (EE - Execution Environment, can be Apps 
-> processor/TZ/Modem/ADSP etc). Let me add this too in next patch.
+I don't understand why a change to some qcom clk implementation detail
+needs a change to drivers/pwm/pwm-clk.c in the same commit. I guess if
+the change to drivers/pwm/pwm-clk.c is needed it should better go into a
+separate patch with an appropriate commit log?!
 
-Yes, please explain in the binding itself.
+Best regards
+Uwe
 
->>> OR their owned slave devices.
->>> Assume I2C Slave EEPROM device connected with I2C controller.
->>> Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
->>> This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
->>>
->>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
->>>   1 file changed, 4 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> index 9f66a3bb1f80..ae423127f736 100644
->>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
->>> @@ -60,6 +60,10 @@ properties:
->>>     power-domains:
->>>       maxItems: 1
->>>   
->>> +  qcom,shared-se:
->>> +    description: True if I2C needs to be shared between two or more subsystems.
->>
->> What is a subsystem? With commit msg I still do not understand this.
-> SS = Subsystem (EE - Execution Environment, can be Apps 
-> processor/TZ/Modem/ADSP etc). Let me add EE too with full form.
->> Maybe presence of hwlock defines it anyway, so this is redundant?
-> No, this flag is required. As hwlock comes into picture if this flag is 
+--d2rlzxmgwshy2k4w
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Flag is required? By what? Sorry, you push your downstream solution to us.
+-----BEGIN PGP SIGNATURE-----
 
-> defined. So flag is acting as a condition to take hwlock TRE 
-> descriptor(transfer ring element). Hope i could answer your query.
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmbgGIIACgkQj4D7WH0S
+/k7x2AgAluuv/f/FtpsMhu/tAKjHUOr1Y+1vUefo+pFCKzhUDjMyHMtIz8by9GsE
+1pZ9fiw/to0h6iyEctQmMN3sqoMqkEwL4aKMYb9WOopkDgY36I7oAWjXs4mio6Ed
+DPguLwTovw/p+OJMmgb/ndu5GNyQCb9AsmjekXGIx4ZVDJPX3pc8v/DX5HQj2y3x
+sCi8NmmXABsckLz42oxrky2ZGcNmFddqBJxJdgjVcXfa5BEetdtLnUhmtmhiKyJy
+g1rWCprL53Lj1ZWKLdQgu6yiNCQK9LS45ETRzHX8idzAODnagfx6by+X58QljgMg
+i72ZlH212j1K035K3UHJar7Lo0D7FQ==
+=xssr
+-----END PGP SIGNATURE-----
 
-Hm, not sure, maybe indeed hwlock would not be enough. However I think
-existing binding misses hwlock property.
-
-Best regards,
-Krzysztof
-
+--d2rlzxmgwshy2k4w--
 
