@@ -1,193 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-31427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68D66973DB1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 18:50:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27840973DBF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 18:50:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 21FD3287DAC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 16:50:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A69F1C252E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 16:50:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0B81A08B0;
-	Tue, 10 Sep 2024 16:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 534EB1A0B1E;
+	Tue, 10 Sep 2024 16:50:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LhtGBZYG"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FRadL2fu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20A01755C;
-	Tue, 10 Sep 2024 16:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9F11A0729;
+	Tue, 10 Sep 2024 16:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725986997; cv=none; b=tU2xpn1gGoXD+kNRI+YOnHL+DINxASfUa9GDiLoVJ3/+YrWYwU7SUFyaRAezJOH0ecjQrAsew5vnsTb3wkwSR+GL8YLzmTItZlzJFZ08AfHAXBdr8TJMreJ87+GaiQx5jGpBYpXMA8EE5PoXUkfXKg4iXZ6qpXAt9aHRTLaC44I=
+	t=1725987049; cv=none; b=dEBgvbgF9effUTyJCQfJvPw47i6w69n4ydA9xM5IFub62dg/48A2Euj6h0jkB15e6vYnDqOkhaaB0J5lymwzEJqBQgyUM6QzrAUZyXha90BD9QuMXzdRdhaU4x0aORgk30RDvrB3FzibzZeCNvp7EUlV9a7k2Vl4+shDlBjtGzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725986997; c=relaxed/simple;
-	bh=uxgMH7b0EWvShKsmwqp9C31Gfd13bQCVUD/EFJt8Dkg=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rWf11eN1KdAyjAbMoF/chrQ3um4K4XKb6ep6yMHRjzRzcZ/7YdC2s8D0Hlr5haEZ35VtnHsiUT3wkWMExCQBIS+7Uy9IeSw8Vi0dPpnrO4DyiYYRbHoSPEBQJ/0XydXVDv1lW1Ysjjdtrh/CQ9SBmSzSoN4BuA9rLN28g8COPjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LhtGBZYG; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1725987049; c=relaxed/simple;
+	bh=hn32+nLIPsJdBZLDtjJUW1S+s9pXJdgyRmyAbrJ3xvA=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VbnN9SLMDMQC3UPtEiQkOf7w0pM5F2+DuDIUUcq82G/WbqBY6EfG+d3UWvi+PoyFOmlWdcpj/z57wa/Xs4v32h1NxvUs70l9Nzd4VIA9Uj2SKQyNF0mVdznbwTGiPx5eY0mhVOo8Z+8iDHrUegHbJeJ45MNWV7pvwK3jSfTC4Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FRadL2fu; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48AEGH1R026724;
-	Tue, 10 Sep 2024 16:49:16 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48AEV8oC000514;
+	Tue, 10 Sep 2024 16:50:43 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WRfTqMixwBg5SoLzyK2dFDLuqgG8kDpuG6PKjOadqIA=; b=LhtGBZYGnYBflcZh
-	uS6/VzRRzlEEmcZnqfHKQNhZJfM0HhoGdVvfn3BBbOU0RvgHXgIffquZiI4Iw9UQ
-	hztowMOu8Xaz+8qWy+92vbDqx1geC8j2oreu6A6BgTSyvhfK7eq12HYkKYFJ9Jw7
-	bZXFsURKSd1Fi2YSlTYMW+WCn2TZEd54DpXb2YwCVgeb5y3l2gGNo0L69LHYH9yH
-	G6zzMJRYwetsl2Khs34oOMNmiGy5pJQOVxWxw3cV0DPC481Czz0J3/vMk08TLYri
-	dVnU6gvTu2P2lMNDiRR5im3EJ6CtlRYHlFHPnfM+hSxWPvknZR8YjesSmBUHiH2Z
-	k9B0Tw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy6e6rbt-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=wSySHV0OBt861k7egZN9XT
+	ajNDWSLjiqaFWg2xR1lp8=; b=FRadL2furQ7V+akIQc32T0Pb8Y5aANAHiRfk2G
+	kmbuMPCyNcKE5KtJ+AnzwzXE97MPKulmycbPgzCyhsw70vzVEmu+Mc0D+lknCNqA
+	aBBwXrdiBfi0pVdiDE/RJCDLckdiYJbWzA8oTsZC6t1V2pAcaIVU2xJd9g8rsuCn
+	CgPE9KmCim0e/f8n/edJHFoA+Uh3DnW8oaJMAdF0xP3S6YLF5yDc/P9FgZx11se7
+	7qt6Hqxiae43dgTwNDP82IPn74sC17oEtY418O4/yZ4CYntqkQEZg3q2OnxJ6+CQ
+	qmZCLawWKrbfAhQwlEPvvufVEaEL775LQRYHz12yVkppWwCw==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy516nve-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Sep 2024 16:49:15 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48AGnDmR004165
+	Tue, 10 Sep 2024 16:50:42 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48AGofkV013112
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Sep 2024 16:49:14 GMT
-Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Tue, 10 Sep 2024 16:50:41 GMT
+Received: from hu-nkela-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 10 Sep 2024 09:49:08 -0700
-Date: Tue, 10 Sep 2024 22:19:04 +0530
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>
-CC: Connor Abbott <cwabbott0@gmail.com>,
-        Antonino Maniscalco
-	<antomani103@gmail.com>,
-        Sean Paul <sean@poorly.run>, Konrad Dybcio
-	<konrad.dybcio@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Daniel
- Vetter" <daniel@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jonathan Corbet <corbet@lwn.net>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        "Neil
- Armstrong" <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3 04/10] drm/msm/A6xx: Implement preemption for A7XX
- targets
-Message-ID: <20240910164904.7ibuhbkcwh3jdzdd@hu-akhilpo-hyd.qualcomm.com>
-References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
- <20240905-preemption-a750-t-v3-4-fd947699f7bc@gmail.com>
- <20240906195444.owz4eralirekr7r7@hu-akhilpo-hyd.qualcomm.com>
- <df85bf24-651c-4a35-929b-4de6c05555a1@gmail.com>
- <CACu1E7GSMQHa6258hV2OwS5nTGh+kTeZ-qQPMfGTy5YVP5kX3g@mail.gmail.com>
- <CAF6AEGvv60CS43dCijsUCzELLn=t1PJQVCzMx01cFJsNJ1Uk9g@mail.gmail.com>
+ 15.2.1544.9; Tue, 10 Sep 2024 09:50:38 -0700
+From: Nikunj Kela <quic_nkela@quicinc.com>
+To: <andersson@kernel.org>, <linus.walleij@linaro.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, <quic_psodagud@quicinc.com>,
+        Nikunj Kela
+	<quic_nkela@quicinc.com>
+Subject: [PATCH v4] dt-bindings: pinctrl: Add SA8255p TLMM
+Date: Tue, 10 Sep 2024 09:50:26 -0700
+Message-ID: <20240910165026.2406338-1-quic_nkela@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGvv60CS43dCijsUCzELLn=t1PJQVCzMx01cFJsNJ1Uk9g@mail.gmail.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: mQtTwW6fkpMvxOSgBMwIcuWuwxw0wPov
-X-Proofpoint-ORIG-GUID: mQtTwW6fkpMvxOSgBMwIcuWuwxw0wPov
+X-Proofpoint-ORIG-GUID: wqvEGwXEne_Gy9-MOaI775I1m-Nm1CMQ
+X-Proofpoint-GUID: wqvEGwXEne_Gy9-MOaI775I1m-Nm1CMQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
- bulkscore=0 clxscore=1015 mlxscore=0 lowpriorityscore=0 impostorscore=0
- mlxlogscore=999 spamscore=0 adultscore=0 priorityscore=1501 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409100125
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ suspectscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409100125
 
-On Mon, Sep 09, 2024 at 07:40:07AM -0700, Rob Clark wrote:
-> On Mon, Sep 9, 2024 at 6:43 AM Connor Abbott <cwabbott0@gmail.com> wrote:
-> >
-> > On Mon, Sep 9, 2024 at 2:15 PM Antonino Maniscalco
-> > <antomani103@gmail.com> wrote:
-> > >
-> > > On 9/6/24 9:54 PM, Akhil P Oommen wrote:
-> > > > On Thu, Sep 05, 2024 at 04:51:22PM +0200, Antonino Maniscalco wrote:
-> > > >> This patch implements preemption feature for A6xx targets, this allows
-> > > >> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
-> > > >> hardware as such supports multiple levels of preemption granularities,
-> > > >> ranging from coarse grained(ringbuffer level) to a more fine grained
-> > > >> such as draw-call level or a bin boundary level preemption. This patch
-> > > >> enables the basic preemption level, with more fine grained preemption
-> > > >> support to follow.
-> > > >>
-> > > >> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
-> > > >> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> > > >> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> > > >> ---
-> > > >>   drivers/gpu/drm/msm/Makefile              |   1 +
-> > > >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 293 +++++++++++++++++++++-
-> > > >>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 161 ++++++++++++
-> > > ...
-> > > >
-> > > > we can use the lighter smp variant here.
-> > > >
-> > > >> +
-> > > >> +            if (a6xx_gpu->cur_ring == ring)
-> > > >> +                    gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
-> > > >> +            else
-> > > >> +                    ring->skip_inline_wptr = true;
-> > > >> +    } else {
-> > > >> +            ring->skip_inline_wptr = true;
-> > > >> +    }
-> > > >> +
-> > > >> +    spin_unlock_irqrestore(&ring->preempt_lock, flags);
-> > > >>   }
-> > > >>
-> > > >>   static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
-> > > >> @@ -138,12 +231,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
-> > > >
-> > > > set_pagetable checks "cur_ctx_seqno" to see if pt switch is needed or
-> > > > not. This is currently not tracked separately for each ring. Can you
-> > > > please check that?
-> > >
-> > > I totally missed that. Thanks for catching it!
-> > >
-> > > >
-> > > > I wonder why that didn't cause any gpu errors in testing. Not sure if I
-> > > > am missing something.
-> > > >
-> > >
-> > > I think this is because, so long as a single context doesn't submit to
-> > > two different rings with differenr priorities, we will only be incorrect
-> > > in the sense that we emit more page table switches than necessary and
-> > > never less. However untrusted userspace could create a context that
-> > > submits to two different rings and that would lead to execution in the
-> > > wrong context so we must fix this.
+Add compatible for TLMM block representing support on SA8255p.
 
-Yep, it would be a security bug!
+SA8255p uses the same TLMM block as SA8775p however the ownership
+of pins are split between Firmware VM and Linux VM on SA8255p. For
+example, pins used by UART are owned and configured by Firmware VM
+while pins used by ethernet are owned and configured by Linux VM.
+Therefore, adding a sa8255p specific compatible to mark the difference.
 
--Akhil
+Signed-off-by: Nikunj Kela <quic_nkela@quicinc.com>
+---
 
-> >
-> > FWIW, in Mesa in the future we may want to expose multiple Vulkan
-> > queues per device. Then this would definitely blow up.
-> 
-> This will actually be required by future android versions, with the
-> switch to vk hwui backend (because apparently locking is hard, the
-> solution was to use different queue's for different threads)
-> 
-> https://gitlab.freedesktop.org/mesa/mesa/-/issues/11326
-> 
-> BR,
-> -R
+Changes in v4:
+	- Removed items tag
+
+Changes in v3:
+        - Removed the patch from original series[1]
+        - Fixed mising spaces schema errors
+
+Changes in v2:
+        - Modified subject line
+        - Fixed schema to include fallback
+
+[1]: https://lore.kernel.org/all/20240903220240.2594102-1-quic_nkela@quicinc.com/
+---
+ .../devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml     | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
+index e9abbf2c0689..2520ae8b965d 100644
+--- a/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sa8775p-tlmm.yaml
+@@ -17,7 +17,12 @@ allOf:
+ 
+ properties:
+   compatible:
+-    const: qcom,sa8775p-tlmm
++    oneOf:
++      - items:
++          - enum:
++              - qcom,sa8255p-tlmm
++          - const: qcom,sa8775p-tlmm
++      - const: qcom,sa8775p-tlmm
+ 
+   reg:
+     maxItems: 1
+-- 
+2.34.1
+
 
