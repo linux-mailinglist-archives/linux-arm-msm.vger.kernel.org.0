@@ -1,200 +1,200 @@
-Return-Path: <linux-arm-msm+bounces-31380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E8359726E0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 04:02:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84F1497279A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 05:18:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09CA81C22441
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 02:02:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 739F0B22D98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 03:18:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 829961804F;
-	Tue, 10 Sep 2024 02:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5354114D718;
+	Tue, 10 Sep 2024 03:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cIepPNDb"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=vignesh.raman@collabora.com header.b="BQxSpvV9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA921538A;
-	Tue, 10 Sep 2024 02:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725933727; cv=none; b=OHG7vm+dnGCrJ+g42ef7ZeJD4vHIreWHnB3PzbnnwnWocgUYK8/9SU0Xn1mRrwLeHI/Kpmnq55VJ1RLePGJsMSQZH5jJbjhAQ+3FpXti4FAud4Y+kj7pQVrKjF4hzihOdlKIO6KVW8o+kmEmVgMww9C0mA67ZtKrv5/30hz9euA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725933727; c=relaxed/simple;
-	bh=U+uufWjSRpTa3OT5NOCQdDsTdOAdkomdyUI5AprDGIw=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gTJxQk5Fvk4r4TnNqn+U2YjzalLoSQlYj4rBkKaodeMEOtaUCBaELHij0jeJoESHBAMbDsUZf1M/r5eO78qi6dPYvh+seuOfjFdA3AfER0jFHCY2fIQD6lMoBw6tBYMkS/W6840bVbOOpgD+nyEHDRdOeBoRIxO/NCguUVS5fxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cIepPNDb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 489DRSEP020319;
-	Tue, 10 Sep 2024 02:02:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=jbOeq+6X1/4MAP644ULCEDj5
-	PCIgL+8MAXcB5WCKTL0=; b=cIepPNDbfQh+8h2jqOUf3iJGFk671yM0MqdDly8B
-	tLI9sk0qMOk/DayzGjucm0eqsfx/THdftyWeIm7F+D0BX/FrJZKDGJCTayOwQg9O
-	pYWKNmuiDt+Lx6+VT/RTw0e7qXG/Wru6R9/cd0oxoxtghr3rV0lN7duxdNm5r1Xy
-	0AWOUYsd1EL6gCl37+JJ2AIB8zc72p87hyMM7z+XzINXhR61mffUPH8nKFYVV5NO
-	vGo2f8BsZ1g5IylrHsSbBeFDbBo5YE9XoLuB/ZqZn7ykrENkLMt6KSkdLOhIiFaC
-	wI5xhA3BbAkY05FSgwGyyFKku4/UfRpcHqawFsyW9BGvjQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41he5dun3w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Sep 2024 02:02:02 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48A221FD000818
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 10 Sep 2024 02:02:01 GMT
-Received: from jiegan-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 9 Sep 2024 19:01:57 -0700
-Date: Tue, 10 Sep 2024 10:01:53 +0800
-From: JieGan <quic_jiegan@quicinc.com>
-To: Konrad Dybcio <konradybcio@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Song Chai
-	<quic_songchai@quicinc.com>,
-        Yushan Li <quic_yushli@quicinc.com>
-Subject: Re: [PATCH v3 1/1] arm64: dts: qcom: Add coresight nodes for x1e80100
-Message-ID: <Zt+okXSkE63O/PYk@jiegan-gv.ap.qualcomm.com>
-References: <20240905103825.2154633-1-quic_jiegan@quicinc.com>
- <20240905103825.2154633-2-quic_jiegan@quicinc.com>
- <734452da-6a3e-4063-ab42-607ac8dd10ac@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6209613A40C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 03:18:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1725938312; cv=pass; b=QdtdbNiqxbA6EEotW+dMW5KPNH2xwf7ufEiwt9O+/6vMQVlrB5O2aB59cPNUA62iZ2caRSGhKtu/SoTJIFGLTR6npAlL9PiHT3tAx/SfcXNFa3Yuw4GU+69rvgoaUBKy5KmPGu6+qYDkmHGtSozx0EcJMZLCiIADmS0sWdmxqBU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1725938312; c=relaxed/simple;
+	bh=gOE3mhIWKGa1YL/dDqzvf75hJj8GVM7WexL2cqORZoU=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=I71IEbnewrYWTT5QMDF2UtD9nmq5J9eOyUjHVBc0XIrd/HxL+vnSuZ6No1Xltq4yIz1G3bt14pH2famyx3np5l6wHhCVJc4g4YNwdFOGdASN4LlzW0EeNiUvQoB+01tLNTzMzf0b3rxQRzLdY6UkAAFw1fLlY+DQS8SgQPr5Nr4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=vignesh.raman@collabora.com header.b=BQxSpvV9; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1725938298; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=VtqSFNbvf928VOWfGCBQfRRCv3+VORszN9+RYtZf4MoCqQKRyzxAYTiP/oF/zSz3EXx2yAZI63TcHgaZ28Eb7xZr0RV10ZNz58bgPy0+tD0glIETDirBT155k+nanEjhKj7bjLU4l1BQM4AeBznIOrH+lQekl09SHN7Q2VhNmOk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1725938298; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=zMNgk/4ul36ty1KhK1x7zRnURtnot5pmmHU7u4Zm8jM=; 
+	b=iLWCo3/ajouoadXqSC+64xrgpDZ/0DKAX24OOUewf38/4vA4Orxk30eDlANQi89pdkTZnX9kktnokEJkkSoFbaG4YmjfeCjIOLIbTCf8xZ3urgp5pkSDlKLBygjryZBBfh1SATcDYbJb0dCJwMKxpNpApTtkGvAsTS9kC+pVTEI=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=vignesh.raman@collabora.com;
+	dmarc=pass header.from=<vignesh.raman@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1725938298;
+	s=zohomail; d=collabora.com; i=vignesh.raman@collabora.com;
+	h=Message-ID:Date:Date:MIME-Version:Subject:Subject:From:From:To:To:Cc:Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=zMNgk/4ul36ty1KhK1x7zRnURtnot5pmmHU7u4Zm8jM=;
+	b=BQxSpvV9Z3y2YpL/qH7qEptaokZujRj7WbxQflp8GOwDPh7OOQqSOrO90E34sXqY
+	BkirA/UEIkyhwTu85sZu2UDkUGwLMNqJElxzcHkRGaedDCvTpawyDmVsdetLP7E1Vzp
+	6cU7zO/ZcLCNijpPM3MgLbYrPiNqHdnpC7gIZJxA=
+Received: by mx.zohomail.com with SMTPS id 1725938296652565.1949948862483;
+	Mon, 9 Sep 2024 20:18:16 -0700 (PDT)
+Message-ID: <64bc4bcf-de51-4e60-a9f7-1295a1e64c65@collabora.com>
+Date: Tue, 10 Sep 2024 08:48:09 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <734452da-6a3e-4063-ab42-607ac8dd10ac@kernel.org>
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _u4yqcohsHPVvv9wbKit1bHhFF32KtQS
-X-Proofpoint-GUID: _u4yqcohsHPVvv9wbKit1bHhFF32KtQS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409100013
+User-Agent: Mozilla Thunderbird
+Subject: Re: drm-ci: flaky tests for msm driver testing
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org
+Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, sean@poorly.run,
+ marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
+ Daniel Stone <daniels@collabora.com>,
+ Helen Mae Koike Fornazier <helen.koike@collabora.com>,
+ Sergi Blanch Torne <sergi.blanch.torne@collabora.com>,
+ Guilherme Alcarde Gallo <guilherme.gallo@collabora.com>
+References: <661483c8-ad82-400d-bcd8-e94986d20d7d@collabora.com>
+ <c96d719b-1d26-4f16-812f-ede92da3869f@collabora.com>
+Content-Language: en-US
+In-Reply-To: <c96d719b-1d26-4f16-812f-ede92da3869f@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ZohoMailClient: External
 
-On Mon, Sep 09, 2024 at 10:05:08PM +0200, Konrad Dybcio wrote:
-> On 5.09.2024 12:38 PM, Jie Gan wrote:
-> > Add following coresight components for x1e80100 platform.
-> > It includes CTI, dummy sink, dynamic Funnel, Replicator, STM,
-> > TPDM, TPDA and TMC ETF.
-> > 
-> > Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
-> > Tested-by: Yushan Li <quic_yushli@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1516 ++++++++++++++++++++++++
-> >  1 file changed, 1516 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > index 74b694e74705..9d6f3098e144 100644
-> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> > @@ -305,6 +305,19 @@ CLUSTER_CL5: cluster-sleep-1 {
-> >  		};
-> >  	};
-> >  
-> > +	dummy-sink {
-> > +		compatible = "arm,coresight-dummy-sink";
-> > +
-> > +		in-ports {
-> > +			port {
-> > +				eud_in: endpoint {
-> > +					remote-endpoint =
-> > +					<&swao_rep_out1>;
-> 
-> Don't be scared to keep the lines 100-long, easier to read that way
->
-sure, will fix in next version.
- 
-> [...]
-> 
-> > +		tpda@10004000 {
-> > +			compatible = "qcom,coresight-tpda", "arm,primecell";
-> > +			reg = <0x0 0x10004000 0x0 0x1000>;
-> > +
-> > +			clocks = <&aoss_qmp>;
-> > +			clock-names = "apb_pclk";
-> > +
-> > +			out-ports {
-> > +				port {
-> > +					qdss_tpda_out: endpoint {
-> > +						remote-endpoint =
-> > +						<&funnel0_in6>;
-> > +					};
-> > +				};
-> > +			};
-> > +
-> > +			in-ports {
-> 
-> 'i' < 'o', please sort things alphabetically if there's no other sorting key
-> as per Documentation/devicetree/bindings/dts-coding-style.rst
-> 
-Will sort with alphabet order for "in-ports" and "out-ports" property.
+Hi Maintainers,
 
-> [...]
+On 12/07/24 11:35, Vignesh Raman wrote:
+> Hi Maintainers,
 > 
-> > +		tpda@10c2b000 {
-> > +			compatible = "qcom,coresight-tpda", "arm,primecell";
-> > +			reg = <0x0 0x10c2b000 0x0 0x1000>;
-> > +
-> > +			clocks = <&aoss_qmp>;
-> > +			clock-names = "apb_pclk";
-> > +
-> > +			out-ports {
-> > +				port {
-> > +					dlct1_tpda_out: endpoint {
-> > +						remote-endpoint =
-> > +						<&dlct1_funnel_in0>;
-> > +					};
-> > +				};
-> > +			};
-> > +
-> > +			in-ports {
-> > +				#address-cells = <1>;
-> > +				#size-cells = <0>;
-> > +
-> > +				port@4 {
-> > +					reg = <4>;
-> > +					dlct1_tpda_in4: endpoint {
+> On 28/05/24 11:39, Vignesh Raman wrote:
+>> Hi Maintainers,
+>>
+>> There are some flaky tests reported for msm driver testing in drm-ci 
+>> for the below boards.
+>>
+>> *)
+>> # Board Name: apq8096-db820c
+>> # IGT Version: 1.28-g0df7b9b97
+>> # Linux Version: 6.9.0-rc7
+>> # Failure Rate: 50
+>> dumb_buffer@create-clear
+>>
+>> *)
+>> # Board Name: sc7180-trogdor-kingoftown
+>> # IGT Version: 1.28-g0df7b9b97
+>> # Linux Version: 6.9.0-rc7
+>> # Failure Rate: 50
+>> msm_mapping@shadow
+>> msm_shrink@copy-gpu-oom-32
+>> msm_shrink@copy-gpu-oom-8
+>>
+>> *)
+>> # Board Name: sc7180-trogdor-lazor-limozeen-nots-r5
+>> # IGT Version: 1.28-g0df7b9b97
+>> # Linux Version: 6.9.0-rc7
+>> # Failure Rate: 50
+>> msm_mapping@shadow
+>>
+>> *)
+>> # Board Name: sdm845-cheza-r3
+>> # IGT Version: 1.28-g0df7b9b97
+>> # Linux Version: 6.9.0-rc7
+>> # Failure Rate: 50
+>> kms_cursor_legacy@basic-flip-after-cursor-atomic
+>> kms_cursor_legacy@basic-flip-after-cursor-legacy
+>> kms_cursor_legacy@basic-flip-after-cursor-varying-size
+>> kms_cursor_legacy@basic-flip-before-cursor-varying-size
+>> kms_cursor_legacy@flip-vs-cursor-atomic-transitions
+>> kms_cursor_legacy@flip-vs-cursor-atomic-transitions-varying-size
+>> kms_cursor_legacy@flip-vs-cursor-varying-size
+>> kms_cursor_legacy@short-flip-after-cursor-atomic-transitions
+>> kms_cursor_legacy@short-flip-after-cursor-atomic-transitions-varying-size
+>> kms_cursor_legacy@short-flip-after-cursor-toggle
+>> kms_cursor_legacy@short-flip-before-cursor-atomic-transitions
+>> kms_cursor_legacy@short-flip-before-cursor-atomic-transitions-varying-size
+>> msm_shrink@copy-gpu-32
+>> msm_shrink@copy-gpu-oom-32
+>>
+>> Will add these tests in,
+>> drivers/gpu/drm/ci/xfails/msm-apq8096-flakes.txt
+>> drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-kingoftown-flakes.txt
+>> drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
+>> drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
+>>
+>> (https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/Documentation/gpu/automated_testing.rst#n70)
+>>
+>> Please could you have a look at these test results and let us know if 
+>> you need more information. Thank you.
 > 
-> Please keep a new line between the last property (reg here) and the
-> following subnode
+> There are some flaky tests reported for msm driver testing in drm-ci 
+> with the recent IGT uprev 
+> (https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/0e7f4e6a20d550252c4f355d5a303b1d9c8ff052)
 > 
-Will fix in next version.
-
-> I was able to confirm that this patch doesn't break booting on the
-> Surface laptop anymore.
+> *)
+> # Board Name: sc7180-trogdor-lazor-limozeen-nots-r5
+> # Bug Report: 
+> https://lore.kernel.org/linux-arm-msm/661483c8-ad82-400d-bcd8-e94986d20d7d@collabora.com/T/#u
+> # Failure Rate: 100
+> # IGT Version: 1.28-gf13702b8e
+> # Linux Version: 6.10.0-rc5
+> kms_lease@page-flip-implicit-plane
 > 
-> Konrad
+> *)
+> # Board Name: sdm845-cheza-r3
+> # Bug Report: 
+> https://lore.kernel.org/linux-arm-msm/661483c8-ad82-400d-bcd8-e94986d20d7d@collabora.com/T/#u
+> # Failure Rate: 50
+> # IGT Version: 1.28-gf13702b8e
+> # Linux Version: 6.10.0-rc5
+> kms_cursor_legacy@short-flip-before-cursor-toggle
+> kms_cursor_legacy@flip-vs-cursor-toggle
+> msm/msm_shrink@copy-mmap-oom-8s
+> 
+> The expectation files have been updated with these tests,
+> https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/drivers/gpu/drm/ci/xfails/msm-sc7180-trogdor-lazor-limozeen-flakes.txt
+> 
+> https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
 
-Thanks for testing!
+There are some flaky tests reported for msm driver testing in drm-ci 
+with the recent IGT uprev.
 
-Thanks,
-Jie
+# Board Name: sdm845-cheza-r3
+# Failure Rate: 50
+# IGT Version: 1.28-ga73311079
+# Linux Version: 6.11.0-rc2
+kms_lease@page-flip-implicit-plane
 
+# Board Name: sdm845-cheza-r3
+# Failure Rate: 50
+# IGT Version: 1.28-ga73311079
+# Linux Version: 6.11.0-rc5
+kms_flip@flip-vs-expired-vblank
+
+The expectation files have been updated with these tests,
+
+https://gitlab.freedesktop.org/drm/misc/kernel/-/blob/drm-misc-next/drivers/gpu/drm/ci/xfails/msm-sdm845-flakes.txt
+
+Please could you have a look at these test results and let us know if 
+you need more information. Thank you.
+
+Regards,
+Vignesh
 
