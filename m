@@ -1,146 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-31424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6639E973CC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 17:54:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EBC4973CE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 18:04:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D9285B20D64
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 15:54:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 235D41F24E27
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Sep 2024 16:04:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D81EB19C54A;
-	Tue, 10 Sep 2024 15:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25C7419EEB4;
+	Tue, 10 Sep 2024 16:04:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="fLorXbFF"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="zukOn88a"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C29D14F12C
-	for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 15:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A812198824;
+	Tue, 10 Sep 2024 16:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1725983692; cv=none; b=AmV/UXBA+kmrmwEx01qjYQbupQrD8Ug1rErfuz6ctoNbp8uFxDkyCgG3aBp4KnvVEbxqy71YQYfYniyg5YfGJdsI6s5JWHpDWH67TbkqPHLjsEOuVZhM2kH5AAbS+1PhC1xdmnNN+guhnOX9QR6+V3ylhs9yIOrmmer+ST5sbkQ=
+	t=1725984263; cv=none; b=SGh4wSjx460wDXpjmv50JdrVyJq/ldytcjpRy7aCtxXVJMtR41cwIV+x/OGG6AUiYKLeOx/qXwIYHgqscgGXvNpAhMAas+MWwGfVpTnbgLJJeVqxkBUVj9xY0byPJs0831urQzRDaoq+9C3yZBbvxsbZAd+DDPCcgs5v/wUY/Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1725983692; c=relaxed/simple;
-	bh=b281JWnfVo+p46J0D3RZLd1UIMJeIh/xP6vwav6HPIU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XJ1cbsrlGRj2dhEqtOP75KSQGdnt/koMtQBGQSp8M9LwRmugghL0oqKYj4NSDu+Np8oh/dTUyMvoCgElD2UTIawgTAvuHspA2IsrxWzTr8d+9J4y6KKacUWUIcSJe39HauQfbtYwlaf0HMz/wiu/N9OqMq45jWdT4EsNpuSoVN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=fLorXbFF; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42cba0dc922so16757735e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Sep 2024 08:54:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1725983687; x=1726588487; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6PxrvNA8ZTQVOz0CWahQR48w5Gv7e/oF6A+jLaE/Ydo=;
-        b=fLorXbFF5GZfU1c4arIcHQ1MtXVCJK98N0jBRjjR0VpYQHYuYRcqYex1UAJAbYkWe9
-         Qpn3bgsWzEdwjBW7aspAAW7TS8DRsOM/px4Uy1s79Ht3E8/kGApdGwwnAao096ELvob4
-         5iv+0NatICrKPFvhZwfT1lObq4lKLS8imcAjsA3Jf8kTUOOKvBeyO+urj3aMEEbBdJ5t
-         qIVOz44yq1+HOEobzKw0g2h2rRcerZbU4LCpTMf4D425gjrtGXAvhjLoRsdftXGlGjKw
-         5d3HI2o61j94ivEL19Xo1JKwomAplpE1GtJBN4zgjR/rZ3s5s4O0eg4BmDGuFwxQN0tB
-         qvzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1725983687; x=1726588487;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6PxrvNA8ZTQVOz0CWahQR48w5Gv7e/oF6A+jLaE/Ydo=;
-        b=xE2Y3RNMLWFN7Qi62xa6wCHh2oQpoVUvd3guwygR2dD5YbM7I9lcxOXEnR6ff0ef9M
-         dnOlmiMX5BMemDYMIJe3RxcNY7ZUnHEZYs5/O3qWOfw2b9PrzklBhvalg6D3ftwnRHes
-         Kh2bbziGZHGLYSa4rvJ/kQ/t9pLyFXBVeXM9CxeoSjH4R4KWlUJ0JCy+kEp/Lkq4SqB7
-         qc9D7ahJeRXPqePzRkYek0u4HBz27FjiIJnvcMIBmbQUb4ZQBSZTc3/skhns7GIqQkGn
-         wAxETJf9YiH6F+kkKLw6oJ7WQVPFSEP6wm+jCiegX7lzelpgJqFCk29lSe3+3w96VxzW
-         RAIw==
-X-Forwarded-Encrypted: i=1; AJvYcCX3wfAFGFGM1uYVut7QfthzJkLm4J834A5uWg7HUY7/PBhFgd7V3yuVaz9kVimU3UGA9O9NCFvsoL0Bhc7Q@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN0vvsRnHvoednRiNb94f0hj+vRPIb/iwYFSfgh+8Hu/0EBBtO
-	OTjRSqdkT+AJ82speoFBYMD266SjyJAhn4txbWLxKg/3rrq7uViyMNOdB+RHBjQ=
-X-Google-Smtp-Source: AGHT+IEb0qA5EpGtNaNVZJscuK0KLM4oa8DNMmxJuy4xu6oN9fz+YV9+rQWeonEJ5VU15eSCcYGm4A==
-X-Received: by 2002:a05:600c:3d11:b0:426:5e91:3920 with SMTP id 5b1f17b1804b1-42cad87f264mr87685255e9.29.1725983686172;
-        Tue, 10 Sep 2024 08:54:46 -0700 (PDT)
-Received: from [192.168.108.50] (freebox.vlq16.iliad.fr. [213.36.7.13])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42cc1375c6esm20178245e9.1.2024.09.10.08.54.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Sep 2024 08:54:45 -0700 (PDT)
-Message-ID: <19ac4e25-7609-4d92-8687-585c6ea00c79@freebox.fr>
-Date: Tue, 10 Sep 2024 17:54:44 +0200
+	s=arc-20240116; t=1725984263; c=relaxed/simple;
+	bh=lyEi07OYy0HDwQcI/tVSb6icCUDckoGveROhmrvlc/o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WNQshbJpOrJgKKUJ8IOfiLPmTOKLrMDzC2m5U/nd4kck35FL47/e1rJYfRUsIjE98lFztNm87w56D86EwW983MVNw6x4ft1DmUEEEMY5bOmOrYXXrfetGEmWlOI08dD0L/7yWhNQ5g3Xj3MSq95kFf3nGhGtYDtScSHE/qn6nac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=zukOn88a; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=0q5V/HDrRh41vRS9Fz5fpK96NnFQDgfsGbq54/gK0tY=; b=zukOn88ac0n/yjjixjNa40s1sv
+	llWM2qRl4mMc7Pt+CvyOs+4A69pme6vbBNYLQIwmPi6z30w7pltfk3vgXyypj59QFxu/A1OPmheEI
+	36XfzYEZitalx1+rI9X5TDGBB6Bkj1NjOPFfWvmcIo+G9qYrMBcT3oj3k2MQsRPxMnGw=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1so3LY-0077mS-Af; Tue, 10 Sep 2024 18:04:04 +0200
+Date: Tue, 10 Sep 2024 18:04:04 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Suraj Jaiswal <jsuraj@qti.qualcomm.com>
+Cc: Andrew Halaney <ahalaney@redhat.com>,
+	"Suraj Jaiswal (QUIC)" <quic_jsuraj@quicinc.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	"bhupesh.sharma@linaro.org" <bhupesh.sharma@linaro.org>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"linux-stm32@st-md-mailman.stormreply.com" <linux-stm32@st-md-mailman.stormreply.com>,
+	Prasad Sodagudi <psodagud@quicinc.com>,
+	Rob Herring <robh@kernel.org>, kernel <kernel@quicinc.com>
+Subject: Re: [PATCH net] net: stmmac: Stop using a single dma_map() for
+ multiple descriptors
+Message-ID: <417420b8-3010-4223-a683-55a0daf3b962@lunn.ch>
+References: <20240902095436.3756093-1-quic_jsuraj@quicinc.com>
+ <yy2prsz3tjqwjwxgsrumt3qt2d62gdvjwqsti3favtfmf7m5qs@eychxx5qz25f>
+ <CYYPR02MB9788D9D0D2424B4F8361A736E79A2@CYYPR02MB9788.namprd02.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] drm/msmi: annotate pll_cmp_to_fdata() with
- __maybe_unused
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Jani Nikula <jani.nikula@intel.com>, Arnaud Vrac <avrac@freebox.fr>
-Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, Nathan Chancellor <nathan@kernel.org>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- linux-arm-msm@vger.kernel.org
-References: <cover.1725962479.git.jani.nikula@intel.com>
- <3553b1db35665e6ff08592e35eb438a574d1ad65.1725962479.git.jani.nikula@intel.com>
- <4ag2efwiizn5bnskauekqwfhgl4gioafcvetpvsmbdgg37bdja@3g6tt4rlfwcb>
-Content-Language: en-US
-From: Marc Gonzalez <mgonzalez@freebox.fr>
-In-Reply-To: <4ag2efwiizn5bnskauekqwfhgl4gioafcvetpvsmbdgg37bdja@3g6tt4rlfwcb>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CYYPR02MB9788D9D0D2424B4F8361A736E79A2@CYYPR02MB9788.namprd02.prod.outlook.com>
 
-On 10/09/2024 16:51, Dmitry Baryshkov wrote:
-
-> On Tue, Sep 10, 2024 at 01:03:43PM GMT, Jani Nikula wrote:
->
->> Building with clang and and W=1 leads to warning about unused
->> pll_cmp_to_fdata(). Fix by annotating it with __maybe_unused.
->>
->> See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
->> inline functions for W=1 build").
->>
->> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+> On Mon, Sep 02, 2024 at 03:24:36PM GMT, Suraj Jaiswal wrote:
+> > Currently same page address is shared
+> > between multiple buffer addresses and causing smmu fault for other 
+> > descriptor if address hold by one descriptor got cleaned.
+> > Allocate separate buffer address for each descriptor for TSO path so 
+> > that if one descriptor cleared it should not clean other descriptor 
+> > address.
 > 
-> I think this function can be dropped. Marc, your call, as an author of
-> the patch?
+> I think maybe you mean something like:
+> 
+>     Currently in the TSO case a page is mapped with dma_map_single(), and then
+>     the resulting dma address is referenced (and offset) by multiple
+>     descriptors until the whole region is programmed into the descriptors.
+> 
+>     This makes it possible for stmmac_tx_clean() to dma_unmap() the first of the
+>     already processed descriptors, while the rest are still being processed
+>     by the DMA engine. This leads to an iommu fault due to the DMA engine using
+>     unmapped memory as seen below:
+> 
+>     <insert splat>
+> 
+>     You can reproduce this easily by <reproduction steps>.
+> 
+>     To fix this, let's map each descriptor's memory reference individually.
+>     This way there's no risk of unmapping a region that's still being
+>     referenced by the DMA engine in a later descriptor.
+> 
+> That's a bit nitpicky wording wise, but your first sentence is hard for me to follow (buffer addresses seems to mean descriptor?). I think showing a splat and mentioning how to reproduce is always a bonus as well.
 
-( Why is the patch prefixed "drm/msmi", is "msmi" a typo? )
+What might also be interesting is some benchmark
+numbers. dma_map_single() is not always cheap, since it has to flush
+the cache. I've no idea if only the first call is expensive, and all
+the subsequent calls are cheap? Depending on how expensive it is, some
+sort of refcounting might be cheaper?
 
--> For the record, Arnaud is the driver's author.
-
-pll_cmp_to_fdata() was used in hdmi_8998_pll_recalc_rate()
-in a commented code block which was later removed.
-
-Thus, yes, it is safe to completely delete the unused function.
-I'm surprised gcc didn't catch that...
-
-Regards
-
-
->> ---
->>  drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
->> index 0e3a2b16a2ce..c0bf1f35539e 100644
->> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
->> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
->> @@ -153,7 +153,7 @@ static inline u32 pll_get_pll_cmp(u64 fdata, unsigned long ref_clk)
->>  	return dividend - 1;
->>  }
->>  
->> -static inline u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
->> +static inline __maybe_unused u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
->>  {
->>  	u64 fdata = ((u64)pll_cmp) * ref_clk * 10;
->>  
->> -- 
->> 2.39.2
-
-
+     Andrew
 
