@@ -1,305 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-31486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42903974FFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 12:44:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 910A6975008
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 12:48:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F09D728D60B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 10:44:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E4B21F21829
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 10:48:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90149184559;
-	Wed, 11 Sep 2024 10:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0004218454F;
+	Wed, 11 Sep 2024 10:48:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Aeihv0HH";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Yzf7Y6ka";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Aeihv0HH";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Yzf7Y6ka"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kmbDiOe9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882585FDA7;
-	Wed, 11 Sep 2024 10:44:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDF6183CCD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 10:48:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726051450; cv=none; b=As4e+JKY1k5vAYZcC10TKHSveKAJeM4lJUGNeargJ3Czr/srHUzhNefDJE02rPY5n7UcX+V6XTcdeU7lEVUPOUf+Cwcm6Bmjs8Z3Y7p4Mv0L0+rhoFnNB8vpf9GAnJq9QzP84EG5+4PgBOtijmPFj1cGR8gPXp5lIa7aOiN6JZc=
+	t=1726051722; cv=none; b=EnXLxcxNIbDPNSpZX0OQGvT3Hw2rhwgvckXnAj6BVPN06cXeowjgHxiSn9BfR+ntTsmVf+OwE4iNwYN/WhpvJzCJIP8jrpuA927ucftcr2pdbUb6NYpVjexu5tQTtJBsL3qBrZzrbhlOROrejOOeI6QgQBzXSUO2hOg1+fh1TVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726051450; c=relaxed/simple;
-	bh=7AsBCsS/59a8F0z05r63Y3E5yQ7F5CoVReprEgvkxpc=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VCwNizBW14DfJ+vNGE6Ka+Zn23fXnrXxtDrXF+5YeOUvyWGMdXfzBdVjrNx2F/HMUhn+iutRLKRXPazkOpVkLX6+m4wUq+ZflVk3kSL/cyTY7rCt5ppl4uu6z/JoYiR/7trsp/BvM5Yt07QqqEipspG3iOQRaOCQuO/IK+2ABHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Aeihv0HH; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Yzf7Y6ka; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Aeihv0HH; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Yzf7Y6ka; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id B69B51F8A4;
-	Wed, 11 Sep 2024 10:44:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1726051446; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rt8214iZGJ+rgT2zb9WcfZopNGbCd8uw2z33esuoDzU=;
-	b=Aeihv0HHQkAziZbiYjZJblYGNdXlURyv0q6u7Bu6WdrRblBlNpOrLMK17tdZBaIqUrskRu
-	CmW2+51fhgl1WK9mQ+Ekb4/gWhUoNeykgC4tWTUqGwdxgooqq4qcdyfN7dz2aacOfNa03f
-	RPJs/v6+sKieATdwBRN9/u63IJG4jGQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1726051446;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rt8214iZGJ+rgT2zb9WcfZopNGbCd8uw2z33esuoDzU=;
-	b=Yzf7Y6ka/0l8V1Zmq/JV78PnFBLPOdzrrP7lLxoNi2cRysJXhvIywZ7mdfO7J83ZYSk6GB
-	uBmSuwcL0EKU6wBA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Aeihv0HH;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Yzf7Y6ka
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1726051446; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rt8214iZGJ+rgT2zb9WcfZopNGbCd8uw2z33esuoDzU=;
-	b=Aeihv0HHQkAziZbiYjZJblYGNdXlURyv0q6u7Bu6WdrRblBlNpOrLMK17tdZBaIqUrskRu
-	CmW2+51fhgl1WK9mQ+Ekb4/gWhUoNeykgC4tWTUqGwdxgooqq4qcdyfN7dz2aacOfNa03f
-	RPJs/v6+sKieATdwBRN9/u63IJG4jGQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1726051446;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Rt8214iZGJ+rgT2zb9WcfZopNGbCd8uw2z33esuoDzU=;
-	b=Yzf7Y6ka/0l8V1Zmq/JV78PnFBLPOdzrrP7lLxoNi2cRysJXhvIywZ7mdfO7J83ZYSk6GB
-	uBmSuwcL0EKU6wBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 12323132CB;
-	Wed, 11 Sep 2024 10:44:06 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id powuA3Z04WZACwAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Wed, 11 Sep 2024 10:44:06 +0000
-Date: Wed, 11 Sep 2024 12:44:53 +0200
-Message-ID: <87zfoe31wa.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Cc: Jerome Brunet <jbrunet@baylibre.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Liam Girdwood <liam.r.girdwood@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@opensource.cirrus.com,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH 01/13] ALSA: pcm: add more sample rate definitions
-In-Reply-To: <87ed5q4kbe.wl-tiwai@suse.de>
-References: <20240905-alsa-12-24-128-v1-0-8371948d3921@baylibre.com>
-	<20240905-alsa-12-24-128-v1-1-8371948d3921@baylibre.com>
-	<1ab3efaa-863c-4dd0-8f81-b50fd9775fad@linux.intel.com>
-	<87ed5q4kbe.wl-tiwai@suse.de>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1726051722; c=relaxed/simple;
+	bh=DaYoPeJg9shuCtx4J1jS+goJUrZrFxkVlSXl6dreLv0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eMfZE5dY2cqIh/OB4pQQHRNlw50Gd37aW/gzkKJlWI5jwINNj0hvalCYIO0cFtlbK4PQSsYmslBpo7B4bIkk1SoNKkVuGs6EywzAb2ZbUzA3G4Er5wxYy6At/NegedlGCx9yyxXf6U9A66rIhtlGK+UAgSgzsr9CJUDUbuuaGHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kmbDiOe9; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-535be093a43so2504753e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 03:48:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726051719; x=1726656519; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xfOyw78Q7NNMTmln4lOFjsc2BJzJJyhZKXZ24axVdKQ=;
+        b=kmbDiOe9yuyvgoiqx/32ejPtvqGWjZURAKk6YLMJe2daVekcyqVMOXpN5MFA2mzKLb
+         4dWwgsEiXKy0spk6c3pNMLDb7Z7a+HMrX7cmf6PxI+hzhAQbyZlUCrNH8XvFl22Ons9B
+         rl83cQPlu6fFE/zPtUFKlLOupfaz6AADsDiSx0HTpyK0k4MoTLyn7XiSMaCaN7yWW/HT
+         w2cBj1RKz4GLwjeCt+dhJZXA0fiktrYdsS76rxFl3PTnFQgds3IcNwnyEStyPo8wG96s
+         KdZPgpAn86cwn2aEMVTeQP7iywE1c6bvC/ooHwY3a6d4sSuEsmpQC4FT5M6WwiRoFpTh
+         jcvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726051719; x=1726656519;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xfOyw78Q7NNMTmln4lOFjsc2BJzJJyhZKXZ24axVdKQ=;
+        b=G0g+/5Gn5N1LU6vzDK+Vqd1Sr+oLwKYOhTpRFilMHk12EaUV2hYfiJrRJqr1N5cIwf
+         VhZ6fxxbbK60MtSg0frBZOiQtG9lLbP2CYBb6ja+HybvV2ISMXrZ96ZVtPSMR6yhLCmA
+         ZaE1kEGSBucn5eo3ghMPfVzZKE/LXAP/uvcrvfcIdnFmsVBjxnvMZfCpwV2YZL1Am7DU
+         OZgjO0yXuji1ytWOJ+TWAZtU+r8xqGD35vqk9YSG2VxZhWwFlnHgzazeXRTsD14X6+dz
+         m9b8C4qcyrcyAMxTva/cR7rc0wuddmPpxEoMDAVb9D0wUeUJrssUCzULo33HQkhcO+Hw
+         73aw==
+X-Forwarded-Encrypted: i=1; AJvYcCUUnHtLFojCIcTKB3dW+whPBoo4xmrCsaPJ78TBOS+b7Vd05hJZjIx/2E4I5fAl71z4VIB5yvLoF9kVz0uw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwusCebJoxUaQqYi7i7DBEu55cvGTkHKeVqTl72Su6S7Sm7RPY
+	JbytgLBbbGTm376PDlGvAIflvpJPnHLJ78An/3OIITfE/Jw5ArZgR2GzX3hXRPQ=
+X-Google-Smtp-Source: AGHT+IFmPMxpL0sfW2aEQVWqW2rvHHyXYZsNZluRoWH8pk2J0ZkdsSyNGv+Nxad6h/EbFiV9iGvsOg==
+X-Received: by 2002:a05:6512:1107:b0:52e:be84:225c with SMTP id 2adb3069b0e04-53673b6b445mr1852457e87.33.1726051718895;
+        Wed, 11 Sep 2024 03:48:38 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f870baasm1520467e87.96.2024.09.11.03.48.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Sep 2024 03:48:38 -0700 (PDT)
+Date: Wed, 11 Sep 2024 13:48:36 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+Cc: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>, Danila Tikhonov <danila@jiaxyga.com>, 
+	Adam Skladowski <a39.skl@gmail.com>, Vladimir Lypak <vladimir.lypak@gmail.com>, 
+	Andrew Halaney <ahalaney@redhat.com>, Odelu Kukatla <quic_okukatla@quicinc.com>, 
+	Mike Tipton <quic_mdtipton@quicinc.com>, linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V3 2/2] interconnect: qcom: add QCS8300 interconnect
+ provider driver
+Message-ID: <3xjvx2kwrlruhhxw4aald26qjf5fzikay2ypzr3mwv75mlmf5q@lmn2o64npfg2>
+References: <20240910101013.3020-1-quic_rlaggysh@quicinc.com>
+ <20240910101013.3020-3-quic_rlaggysh@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Rspamd-Queue-Id: B69B51F8A4
-X-Spam-Score: -4.01
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	DWL_DNSWL_MED(-2.00)[suse.de:dkim];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[25];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	FREEMAIL_CC(0.00)[baylibre.com,perex.cz,suse.com,cirrus.com,opensource.cirrus.com,gmail.com,kernel.org,intel.com,linux.intel.com,linaro.org,csie.org,sholland.org,vger.kernel.org,alsa-project.org,lists.infradead.org,lists.linux.dev];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[baylibre.com:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240910101013.3020-3-quic_rlaggysh@quicinc.com>
 
-On Wed, 11 Sep 2024 11:21:41 +0200,
-Takashi Iwai wrote:
+On Tue, Sep 10, 2024 at 10:10:13AM GMT, Raviteja Laggyshetty wrote:
+> Add driver for the Qualcomm interconnect buses found in QCS8300
+> based platforms. The topology consists of several NoCs that are
+> controlled by a remote processor that collects the aggregated
+> bandwidth for each master-slave pairs.
 > 
-> On Wed, 11 Sep 2024 11:09:59 +0200,
-> Pierre-Louis Bossart wrote:
-> > 
-> > 
-> > 
-> > On 9/5/24 16:12, Jerome Brunet wrote:
-> > > This adds a sample rate definition for 12kHz, 24kHz and 128kHz.
-> > > 
-> > > Admittedly, just a few drivers are currently using these sample
-> > > rates but there is enough of a recurrence to justify adding a definition
-> > > for them and remove some custom rate constraint code while at it.
-> > > 
-> > > The new definitions are not added to the interval definitions, such as
-> > > SNDRV_PCM_RATE_8000_44100, because it would silently add new supported
-> > > rates to drivers that may or may not support them. For sure the drivers
-> > > have not been tested for these new rates so it is better to leave them out
-> > > of interval definitions.
-> > > 
-> > > That being said, the added rates are multiples of well know rates families,
-> > > it is very likely that a lot of devices out there actually supports them.
-> > > 
-> > > Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-> > > ---
-> > >  include/sound/pcm.h     | 31 +++++++++++++++++--------------
-> > >  sound/core/pcm_native.c |  6 +++---
-> > >  2 files changed, 20 insertions(+), 17 deletions(-)
-> > > 
-> > > diff --git a/include/sound/pcm.h b/include/sound/pcm.h
-> > > index 732121b934fd..c993350975a9 100644
-> > > --- a/include/sound/pcm.h
-> > > +++ b/include/sound/pcm.h
-> > > @@ -109,20 +109,23 @@ struct snd_pcm_ops {
-> > >  #define SNDRV_PCM_RATE_5512		(1U<<0)		/* 5512Hz */
-> > >  #define SNDRV_PCM_RATE_8000		(1U<<1)		/* 8000Hz */
-> > >  #define SNDRV_PCM_RATE_11025		(1U<<2)		/* 11025Hz */
-> > > -#define SNDRV_PCM_RATE_16000		(1U<<3)		/* 16000Hz */
-> > > -#define SNDRV_PCM_RATE_22050		(1U<<4)		/* 22050Hz */
-> > > -#define SNDRV_PCM_RATE_32000		(1U<<5)		/* 32000Hz */
-> > > -#define SNDRV_PCM_RATE_44100		(1U<<6)		/* 44100Hz */
-> > > -#define SNDRV_PCM_RATE_48000		(1U<<7)		/* 48000Hz */
-> > > -#define SNDRV_PCM_RATE_64000		(1U<<8)		/* 64000Hz */
-> > > -#define SNDRV_PCM_RATE_88200		(1U<<9)		/* 88200Hz */
-> > > -#define SNDRV_PCM_RATE_96000		(1U<<10)	/* 96000Hz */
-> > > -#define SNDRV_PCM_RATE_176400		(1U<<11)	/* 176400Hz */
-> > > -#define SNDRV_PCM_RATE_192000		(1U<<12)	/* 192000Hz */
-> > > -#define SNDRV_PCM_RATE_352800		(1U<<13)	/* 352800Hz */
-> > > -#define SNDRV_PCM_RATE_384000		(1U<<14)	/* 384000Hz */
-> > > -#define SNDRV_PCM_RATE_705600		(1U<<15)	/* 705600Hz */
-> > > -#define SNDRV_PCM_RATE_768000		(1U<<16)	/* 768000Hz */
-> > > +#define SNDRV_PCM_RATE_12000		(1U<<3)		/* 12000Hz */
-> > > +#define SNDRV_PCM_RATE_16000		(1U<<4)		/* 16000Hz */
-> > > +#define SNDRV_PCM_RATE_22050		(1U<<5)		/* 22050Hz */
-> > > +#define SNDRV_PCM_RATE_24000		(1U<<6)		/* 24000Hz */
-> > > +#define SNDRV_PCM_RATE_32000		(1U<<7)		/* 32000Hz */
-> > > +#define SNDRV_PCM_RATE_44100		(1U<<8)		/* 44100Hz */
-> > > +#define SNDRV_PCM_RATE_48000		(1U<<9)		/* 48000Hz */
-> > > +#define SNDRV_PCM_RATE_64000		(1U<<10)	/* 64000Hz */
-> > > +#define SNDRV_PCM_RATE_88200		(1U<<11)	/* 88200Hz */
-> > > +#define SNDRV_PCM_RATE_96000		(1U<<12)	/* 96000Hz */
-> > > +#define SNDRV_PCM_RATE_128000		(1U<<13)	/* 128000Hz */
-> > > +#define SNDRV_PCM_RATE_176400		(1U<<14)	/* 176400Hz */
-> > > +#define SNDRV_PCM_RATE_192000		(1U<<15)	/* 192000Hz */
-> > > +#define SNDRV_PCM_RATE_352800		(1U<<16)	/* 352800Hz */
-> > > +#define SNDRV_PCM_RATE_384000		(1U<<17)	/* 384000Hz */
-> > > +#define SNDRV_PCM_RATE_705600		(1U<<18)	/* 705600Hz */
-> > > +#define SNDRV_PCM_RATE_768000		(1U<<19)	/* 768000Hz */
-> > >  
-> > >  #define SNDRV_PCM_RATE_CONTINUOUS	(1U<<30)	/* continuous range */
-> > >  #define SNDRV_PCM_RATE_KNOT		(1U<<31)	/* supports more non-continuous rates */
-> > > diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-> > > index 44381514f695..7461a727615c 100644
-> > > --- a/sound/core/pcm_native.c
-> > > +++ b/sound/core/pcm_native.c
-> > > @@ -2418,13 +2418,13 @@ static int snd_pcm_hw_rule_sample_bits(struct snd_pcm_hw_params *params,
-> > >  	return snd_interval_refine(hw_param_interval(params, rule->var), &t);
-> > >  }
-> > >  
-> > > -#if SNDRV_PCM_RATE_5512 != 1 << 0 || SNDRV_PCM_RATE_192000 != 1 << 12
-> > > +#if SNDRV_PCM_RATE_5512 != 1 << 0 || SNDRV_PCM_RATE_768000 != 1 << 19
-> > >  #error "Change this table"
-> > >  #endif
-> > >  
-> > >  static const unsigned int rates[] = {
-> > > -	5512, 8000, 11025, 16000, 22050, 32000, 44100,
-> > > -	48000, 64000, 88200, 96000, 176400, 192000, 352800, 384000, 705600, 768000
-> > > +	5512, 8000, 11025, 12000, 16000, 22050, 24000, 32000, 44100, 48000, 64000,
-> > > +	88200, 96000, 128000, 176400, 192000, 352800, 384000, 705600, 768000,
-> > >  };
-> > >  
-> > >  const struct snd_pcm_hw_constraint_list snd_pcm_known_rates = {
-> > 
-> > Wondering if this is backwards compatible with the alsa-lib definitions,
-> > specifically the topology parts which did unfortunately have a list of
-> > rates that will map to a different index now:
-> > 
-> > 
-> > typedef enum _snd_pcm_rates {
-> > 	SND_PCM_RATE_UNKNOWN = -1,
-> > 	SND_PCM_RATE_5512 = 0,
-> > 	SND_PCM_RATE_8000,
-> > 	SND_PCM_RATE_11025,
-> > 	SND_PCM_RATE_16000,
-> > 	SND_PCM_RATE_22050,
-> > 	SND_PCM_RATE_32000,
-> > 	SND_PCM_RATE_44100,
-> > 	SND_PCM_RATE_48000,
-> > 	SND_PCM_RATE_64000,
-> > 	SND_PCM_RATE_88200,
-> > 	SND_PCM_RATE_96000,
-> > 	SND_PCM_RATE_176400,
-> > 	SND_PCM_RATE_192000,
-> > 	SND_PCM_RATE_CONTINUOUS = 30,
-> > 	SND_PCM_RATE_KNOT = 31,
-> > 	SND_PCM_RATE_LAST = SND_PCM_RATE_KNOT,
-> > } snd_pcm_rates_t;
-> 
-> As far as I understand correctly, those rate bits used for topology
-> are independent from the bits used for PCM core, although it used to
-> be the same.  Maybe better to rename (such as SND_TPLG_RATE_*) so that
-> it's clearer only for topology stuff.
-> 
-> But it'd be better if anyone can double-check.
+> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+> ---
+>  drivers/interconnect/qcom/Kconfig   |   11 +
+>  drivers/interconnect/qcom/Makefile  |    2 +
+>  drivers/interconnect/qcom/qcs8300.c | 2088 +++++++++++++++++++++++++++
+>  drivers/interconnect/qcom/qcs8300.h |  177 +++
+>  4 files changed, 2278 insertions(+)
+>  create mode 100644 drivers/interconnect/qcom/qcs8300.c
+>  create mode 100644 drivers/interconnect/qcom/qcs8300.h
 
-... and I double-check by myself and proved I was wrong :-<
+The driver looks pretty close to sa8775p one. Would it make sense to
+have a single driver instead? Or would it complicate things
+significantly?
 
-In soc-topology.c, set_stream_info() takes the
-snd_soc_pcm_stream.rates bits as is from the given topology data,
-so the changes of the bits can break this.
-
-The topology takes both rates and formats bits.  The formats are a
-part of uapi, but the rates aren't.  We should move those into uapi,
-if any...
-
-
-Takashi
+-- 
+With best wishes
+Dmitry
 
