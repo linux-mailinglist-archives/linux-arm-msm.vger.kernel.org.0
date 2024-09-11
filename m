@@ -1,116 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-31500-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31505-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8464897511B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 13:53:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90D5E975140
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 13:55:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6FDA1C21CBE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 11:53:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BAC5B1C221B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 11:55:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0013187342;
-	Wed, 11 Sep 2024 11:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F17918785C;
+	Wed, 11 Sep 2024 11:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d/fdVFS6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d3LCIl0B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F161865E2;
-	Wed, 11 Sep 2024 11:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB843185B6F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 11:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726055610; cv=none; b=jKK0R1jZb5Hbk+YXnzrYTT0lbYuouKLVQeCONQsfTHeCRx9803/WGwCfGQKdGYomtmG9Ij7C9B1ArxbAoIMgB7sqdD/gZDq1wCwxZE0Wiev/cuHN081WWs1iXDvTotMAcIw8kO6T52wVtgNRt9/Kbz1zUq9Nh6FOmn5elDQT5Zk=
+	t=1726055740; cv=none; b=UI5tDx9wNl7VOLaWVXCkhMDOjLz5A+8v/wBkVPERuUWVoSY4EH0NdYxsPh+E/olayY1DZ0HhAFf9npHB3RMuBwNEsSvDpSBCQFY6jYmfdDMq6EL3EzDOBoIZ0WgIV3MAQpunZf/1eIzIWDoIRrcs4WDkw/CVpvOGaS6vXtXH89U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726055610; c=relaxed/simple;
-	bh=IZP0j0URHKg34Z+uDXsss8wvd9andjBbgzMWCUodLmI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P84tqGEyia/f1MwR5y1NOkoCdN2/du75x1Do+KWAVYa8uiM6+kKNX0eGXNy0N5aHaESjU7SVdeSn+FzJY/393obfzql1R9K6jp9b6Qj5rVHYfafiszifGi4BqKstbEWidUD1yQsahczW3VHFTVCPuGn+1dyXQ+E6IqqS60jjrew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d/fdVFS6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CDBC4CEC6;
-	Wed, 11 Sep 2024 11:53:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726055610;
-	bh=IZP0j0URHKg34Z+uDXsss8wvd9andjBbgzMWCUodLmI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/fdVFS6XEQFeADxLTiFke6jAgpiRerRJ5wROxrE+lBd1o2RdSV9MdHWHj+uZSyTk
-	 Aa5yFtJdtYvhZ4UHC/ds5w2sYPQ0PCVu9jxL/RF53gk2LT+9lPc9u1lgvqFH1Gsrn3
-	 c3payVXt+6GIJOX1elOndTTHvUAJIy+zVsKuaWTD2xC7SOBeLISnYqnwBe2lLhFGNF
-	 0+Uhf8XscvoLCz/oFnKyiQrLcR8fUIm+ySWeCnI56xoHqp156zYYl8Qnj4Wj3SSaWb
-	 wfejaQED14F7pR9NtI+WP9HlZuMqUSWrvavnVe9boWENRN6WyK9eTdpgmG2WSqV+E6
-	 WT0MlbEwtZn8g==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1soLuv-000000002rS-2cQ7;
-	Wed, 11 Sep 2024 13:53:49 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 4/4] phy: qcom: qmp-usb: move driver data initialisation earlier
-Date: Wed, 11 Sep 2024 13:52:53 +0200
-Message-ID: <20240911115253.10920-5-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.44.2
-In-Reply-To: <20240911115253.10920-1-johan+linaro@kernel.org>
-References: <20240911115253.10920-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1726055740; c=relaxed/simple;
+	bh=Zn3zRJvXUaDfbrJCNeevk0c7vO7Dfl2QKD/gE4nDtVc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PRWANxGlLnZ0A99DUALzK28D/77ASS/hGmh2rwfWbnIp5vn/BAhm4uONwDS4WeQHWsxUzKesREH9q4jXrrtkGb2oVuEP1phtf2bCcJgKfQvYGgVnFoAUvTmw3Fnc413HvkEHTZZxn+SUGEumWrK3yJnJfV5g0VzbwJ3tBZSy8o0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d3LCIl0B; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f75aaaade6so47281781fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 04:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726055737; x=1726660537; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=w9xRxPXR7MYLf3EpSXwpqv7QhwbhzS7poxIdBzlqzpo=;
+        b=d3LCIl0BCOpeAcajH7zj8bv9FfXZtYUuLvfmzF5DJ/gUwcZzryX5tVFQ57kt4xHHbp
+         B1JvVQssow8FbYUOCHymnwQGdLEDU3ClHQ0YA+wwIDEmiEJu477tjAXRtot4ZOLXoS4M
+         GOiSkmhfyC3VaOr8CYCgLtgbTakYR7mXBvSDTMWZz1vo/4LTa8XKoJl2xHGlL0rvUPj9
+         1yQQzZ0uaOXLdo9tXLZngea31qbtzXObnG9pBBwNjMrkhuJcdJ4oF7Xka7XSulDxSWmi
+         0w/P5ziwBQ0rBKFl88/iZUsFIZ8BbTvjVptN9nxZsuqN9U9+MUy4H84V34EAvPr3vDpD
+         7GaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726055737; x=1726660537;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w9xRxPXR7MYLf3EpSXwpqv7QhwbhzS7poxIdBzlqzpo=;
+        b=thXLE5DGP8iWcKFmkNgJFL+NqzFNuA4b3dLpdB20O5dnKyS1HLm+jnSstvAEoHzlIh
+         VdT+8G4y2Hvp//nGgUS1aC8nMrjW9tHIn/tPSHo4UwZshejwR1rE9EgMDy4m7tKdJdM+
+         RN5R9tPIrXC6Fe9Arhw01QD5yQ7xA+FgHcYph2m/ajRNMQYn35VJHszJ5BGK7vpazUy/
+         9a5HD72Y855M+r9NRLI3/2LyYBDm6QChf1hBkprSC5gf4RFFOrEcSD4aaX6UkETnzjxU
+         oABSeOcrnz+P7dopf1wpalrakr7JXxPSypXyEClX8EzrptT7iSqkQPrqPNAE4+cID4AB
+         6qoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX1W4sfZ8ZBEKG3yaHy1eafjLa9hhlP5SjfZu7Al8aPI2AuD/eU/yY+DCfpNdeA4qncuz3ZQ+FpaRdLJOyD@vger.kernel.org
+X-Gm-Message-State: AOJu0YyD6sB6pBExjEfBeU4pqaKS9s2wKgKdB1wIMp1LU+IBN5r5/iE+
+	w4KZfemNM1H9TnwQujrAqhiHQAjsmkzI2XgSpxe1RBbbXdAqzcqijlbFXVD0uLVENUojjFmOGsc
+	V
+X-Google-Smtp-Source: AGHT+IHMGJNyPUGz02EM1TBSiYL2OAdcojSToq3FajDA4bNtBXDFAOhbR/GKBAMhNG+aMlDMEcrs7w==
+X-Received: by 2002:a05:6512:3510:b0:535:6033:265f with SMTP id 2adb3069b0e04-5365881027emr7647509e87.58.1726055736272;
+        Wed, 11 Sep 2024 04:55:36 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f903cbasm1538550e87.203.2024.09.11.04.55.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Sep 2024 04:55:35 -0700 (PDT)
+Date: Wed, 11 Sep 2024 14:55:34 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Elliot Berman <quic_eberman@quicinc.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Andrew Halaney <ahalaney@redhat.com>, Rudraksha Gupta <guptarud@gmail.com>, 
+	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 2/2] firmware: qcom: scm: fall back to kcalloc() for no
+ SCM device bound
+Message-ID: <azkfnnz3pmabhnongejtomab7ytoshpdyoutyawf3j6lodmbog@q3ywqp377p4b>
+References: <20240909-tzmem-null-ptr-v1-0-96526c421bac@linaro.org>
+ <20240909-tzmem-null-ptr-v1-2-96526c421bac@linaro.org>
+ <20240909131842193-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <CAA8EJpqSKbKJ=y0LAigGdj7_uk+5mezDgnzV5XEzwbxRJgpN1w@mail.gmail.com>
+ <CAMRc=MefTjz=h6jzE5vE-yaHnyM601Ts8XYZqEYnOsidfQEavA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MefTjz=h6jzE5vE-yaHnyM601Ts8XYZqEYnOsidfQEavA@mail.gmail.com>
 
-Commit 44aff8e31080 ("phy: qcom-qmp-combo: clean up probe
-initialisation") removed most users of the platform device driver data,
-but mistakenly also removed the initialisation despite the data still
-being used in the runtime PM callbacks.
+On Wed, Sep 11, 2024 at 01:41:58PM GMT, Bartosz Golaszewski wrote:
+> On Tue, Sep 10, 2024 at 1:06 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > >
+> > > I'm a little concerned about this check. I didn't think making SCM calls
+> > > without the SCM device probed was possible until this report. We do
+> > > worry about that in the downstream kernel. So, I'm not sure if this
+> > > scenario is currently possible in the upstream kernel.
+> >
+> > MSM8960 and MSM8660 don't have SCM devices. For MSM8960 it should be
+> > trivial to get it, c&p from apq8064 should. For MSM8660 it might be a
+> > bit harder. But even if we add such nodes, we shouldn't break existing
+> > DT files.
+> >
+> 
+> I'm wondering about how to approach an eventual refactoring and I'm
+> thinking that for platforms that are known to have DTs out there
+> without the node, we could exceptionally instantiate the SCM device
+> when the module is loaded? And then modify the driver to require the
+> provider to have an actual struct device attached.
 
-The initialisation was soon after restored by commit 83a0bbe39b17 ("phy:
-qcom-qmp-combo: add support for updated sc8280xp binding") but now
-happens slightly later during probe. This should not cause any trouble
-currently as runtime PM needs to be enabled manually through sysfs and
-the platform device would not be suspended before the PHY has been
-registered anyway.
+Might make sense. We should be able to test in on APQ8060 = MSM8660.
 
-Move the driver data initialisation to avoid a NULL-pointer dereference
-on runtime suspend if runtime PM is ever enabled by default in this
-driver.
-
-Fixes: 44aff8e31080 ("phy: qcom-qmp-combo: clean up probe initialisation")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index c478bf74817a..ddecf34968fd 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -3649,6 +3649,7 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	qmp->dev = dev;
-+	dev_set_drvdata(dev, qmp);
- 
- 	qmp->orientation = TYPEC_ORIENTATION_NORMAL;
- 
-@@ -3725,8 +3726,6 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 
- 	phy_set_drvdata(qmp->dp_phy, qmp);
- 
--	dev_set_drvdata(dev, qmp);
--
- 	if (usb_np == dev->of_node)
- 		phy_provider = devm_of_phy_provider_register(dev, qmp_combo_phy_xlate);
- 	else
 -- 
-2.44.2
-
+With best wishes
+Dmitry
 
