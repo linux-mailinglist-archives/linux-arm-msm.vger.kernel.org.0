@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31468-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31469-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AF5E974DF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 11:08:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93D78974DF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 11:08:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC07E1F259C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 09:08:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6BCE1C21E29
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 09:08:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1B4F183CC3;
-	Wed, 11 Sep 2024 09:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AC90184548;
+	Wed, 11 Sep 2024 09:07:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="c4UMVTIK"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="fEnJWyf8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9311183CA8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 09:07:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AC416DEA7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 09:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726045636; cv=none; b=OHiG+DHclCPP+tiJd6bYLG0JCraS9EuxZYcFkUv2Emggzc4AyfE3+VMm6RoJJyhMXjYay/sKjUu5e2pX/PKkoEV8TPf21Fe8SQ3UMVHhynm/xM179OfZ+6E8QgH4VSIp5dz8FcYr4h+9Nys/74TGy46rqtkFcejrHAk8AVhmTO0=
+	t=1726045638; cv=none; b=gn2DtzuB4ciUt+BL0rvG82pKQS0IvuUQc6mkUr5Nvgqjqlb2vMnIFPQLzEY3aec8CTO/HKAeCw9cq2ct1nA3vR7woMpMUzg0i783BstiLLafymw3q0WjrWJDRpjNXNziy22e1MMLxUBK/OfvfRw9Gs5oaUnmll8FGOOirOGPa40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726045636; c=relaxed/simple;
-	bh=R6yW4YG4S3q4OJYcPBRVoJ8e7yojYNz0eg+ErHZJRC0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Q3TSwl5UezboDcsM9ARx4FyN4Ts2vBLhmL6KRJIaRVWd000B0b/YMCBmh0j7sNU1Tg0RGLnKztoAAEF/wk4Gnon07SIT0Fa28dpJkkx8XOnSQmAsi8rYYL1gBloy2urldXIMCRiXgCG6fT7dabBsGFw0C/y5vKbedccbTXiIdls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=c4UMVTIK; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1726045638; c=relaxed/simple;
+	bh=esOhHdSW3GYG4bDgOTaZ8aIxvJkfujR+IQ+ftKEU+as=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=hlVVHuBgnmxJFCQ7SVYGagiRT/6ayUXx1RDFKDdiUo73nTj9cWhT2b1EpxWqSjkaaDMPIPBgE9DNdbyWH3QuUA/DGT3y8YMRDu5Phk6l2yWzpFsnhjEv96gBgew+/l3TYTL/7aGECepS4H4Jp+cK0CHHoQ/yCC/MPnlaXMOU2Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=fEnJWyf8; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-374c5bab490so388324f8f.1
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-374b25263a3so3969014f8f.0
         for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 02:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1726045633; x=1726650433; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fuHe3oR0rUVRewpF2jcmqfhf5y3otrAzlSWC7VenP28=;
-        b=c4UMVTIKHGDI7Ob3xP45NbHryFs7oE3ZzazaqVijoWizFVmapL6rY0DG03d2isX7k2
-         iNpq7eMgFVpLXyeJ64kOF6kZ0dTfoTpnxt/eItERpLzopRcGTUc5uUYB+zT15zRCBABc
-         x3fdrxX3f7HuNYX1mATUkjQpOwbzY42yo4OvgU2EucebV2WISXh04TQKASxGsjtS/72X
-         tqHqknJu6wF/BTYYBDXa+tTUngGHYB38YjSvb2aUdEKBBKYgm8QFOTQc+mpqWFCOuwiw
-         qn1l7jb2DD55t+JVaAOmmyTS3tZzB20FYC+FZWFiyYrAF/fAnTRgKtt7iUynM9pGqvxL
-         UvtQ==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=05zG+KaVF69ctZg0Bv54vLcj+DDRJ4oFWnu1GNWBi1k=;
+        b=fEnJWyf8y1zc96DGnM0UomUa7rAHfrmGWiUUpRjmjc4mpHWb3Q6XTM7twSORpnyZ7N
+         KS3nBIECE39z7du6wqpUrgrdypkT7qaFMNLrS36gnrYNtfwhWPeUS6Mll+31gTCx/ZoI
+         t6zSFq9eycb/Wm/kfTK8reterixPy3Htvj5RbwurcievshFnM6YMro8rYewWMoCwghHv
+         VzLjxBBlOW2dFqeEP5Z2teS2ybbi/sFWubXEXfZr2hWY+419eNZ6K4Ej9lxoOrGbzlg5
+         oXpQYIIQDWjTpeq1FL/plhRFwmJ3LmAnWLwb6uCjwqOBkducSkC2lTrvEhjFzTZTZ8rj
+         osoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1726045633; x=1726650433;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fuHe3oR0rUVRewpF2jcmqfhf5y3otrAzlSWC7VenP28=;
-        b=NSJhKaTTTQSex6/jo2jx4EEp3REfc9ukh8b+/qSMrWjOIEOssvrBTeeXssNoffRQGf
-         8sQFvDfzi17jxGiYcpKVFzuWJkyeQr060FDClI7QwKvlscXXaEMYtcQTvNugYHBnyxyz
-         y542TWrxBwPCkQ+dLwcYp2JeYQIFAqzlB/c2aajmbAmv9jWzniGVBpX7J2tVVdgk7M7G
-         We2sTQUyHeN/ojAoQGAJ8HAgLA6prN75QLeFWQsxCXhNzEyxC2HkPW3cpwywHDbZJlAz
-         wlUMRLJ1VrHp2PP6aG+xhs+6u86BcehtZx2l1VIm2kn4E2/oMpArXnlEvJ42ZrKcRQL6
-         Sgwg==
-X-Gm-Message-State: AOJu0YxTDT2GlG4IHi0H6yP6LpF2wEFsTm/m2+h5P1WlbLZMDd77XxSv
-	xKtFPvqZLcqUn61X8Y/JE9U/2gd5tjy5VOc1qJUfFBUDSjUcY6sfoRs1d56AcSw=
-X-Google-Smtp-Source: AGHT+IFo3nZoyglrUhHP5B/FuNucZTRJAzUFbDxrsYwdM2YrVLpuTW6C7iC19WoncuRUHg8J8BiCVg==
-X-Received: by 2002:adf:e448:0:b0:374:c878:21f7 with SMTP id ffacd0b85a97d-378a8a11f62mr3379279f8f.10.1726045632321;
-        Wed, 11 Sep 2024 02:07:12 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=05zG+KaVF69ctZg0Bv54vLcj+DDRJ4oFWnu1GNWBi1k=;
+        b=hegvQYuIuPGDcKMLzQ/kZSRndOavOOYAOG1IY8Yj1Bz40vIiBsxt+5OeA7247DicWX
+         5cCF6tqS1NU7k1zwzU/007fIhwKVjM72X9Edjd/sLo5gskm0YJ9+8W/AAE6bxR3X2oEy
+         jQtHwDCePbyhNnCXZgeFNHXMoTXbxuFvfWoiQQzBkDKB4C2EB2IL+1PhpVDwuyNmXjgW
+         k4iBLmLsHvMSzOuFtb/earsT6W6dqvoHlpgSuJRfn6zsphsjEcXxpMQJ5Wn5/MSxh7O4
+         SVw6nP+KZs+FfM6lfM+A9RSc1H6PHQzj2T9rKfp+rjuuk6ShrvHHqAWPiHuUD/aE68DT
+         u6zw==
+X-Gm-Message-State: AOJu0Yzbpb0fj5/FfAIH8+5qQ+UILq0fmiI9IPzJsLPvMLYeg5FmER71
+	1DMq018bkfjIqyfLeWi4Hh5mBsbnbdr9D1G5X/H5pql1MdlR/RqJgPRnGnJ/LUo=
+X-Google-Smtp-Source: AGHT+IF+Y80/Fy9Xw33GsPPPORhNGEe/YCmSlFhWcJOkn1iXNoQasv82Gka4D9L4IpozUSlX+6lRCA==
+X-Received: by 2002:a5d:4584:0:b0:374:c95e:1636 with SMTP id ffacd0b85a97d-378949f7c06mr8453359f8f.21.1726045633317;
+        Wed, 11 Sep 2024 02:07:13 -0700 (PDT)
 Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:5389:6cf0:60c4:3842])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37895649b88sm11029201f8f.6.2024.09.11.02.07.08
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37895649b88sm11029201f8f.6.2024.09.11.02.07.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Sep 2024 02:07:09 -0700 (PDT)
+        Wed, 11 Sep 2024 02:07:12 -0700 (PDT)
 From: Bartosz Golaszewski <brgl@bgdev.pl>
-Subject: [PATCH v2 0/2] firmware: qcom: scm: fix SMC calls on ARM32
-Date: Wed, 11 Sep 2024 11:07:02 +0200
-Message-Id: <20240911-tzmem-null-ptr-v2-0-7c61b1a1b463@linaro.org>
+Date: Wed, 11 Sep 2024 11:07:03 +0200
+Subject: [PATCH v2 1/2] firmware: qcom: scm: fix a NULL-pointer dereference
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,9 +77,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALZd4WYC/3XMQQ6CMBCF4auQWTumNEioK+9BWNS2wiSlJVMkK
- undrexd/i953w7JMbkE12oHdhsliqGEPFVgJh1Gh2RLgxSyEUooXD+zmzE8vcdlZZRaWWtV1ym
- toZwWdg96HWA/lJ4orZHfh7/Vv/UvtdUoULUX2ZpG1ndtbp6C5niOPMKQc/4CwzFUM60AAAA=
+Message-Id: <20240911-tzmem-null-ptr-v2-1-7c61b1a1b463@linaro.org>
+References: <20240911-tzmem-null-ptr-v2-0-7c61b1a1b463@linaro.org>
+In-Reply-To: <20240911-tzmem-null-ptr-v2-0-7c61b1a1b463@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, 
  Andrew Halaney <ahalaney@redhat.com>, 
@@ -89,47 +90,55 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=918;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1161;
  i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=R6yW4YG4S3q4OJYcPBRVoJ8e7yojYNz0eg+ErHZJRC0=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBm4V25OyTpUg4qkhRCNpLn9JC7f1tabUg+CLBYp
- AJ6Jwsp3iKJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZuFduQAKCRARpy6gFHHX
- cpUGD/wMK6Ye3KuuWkDSFK6GTJf+SwM1cIRBfYNBSjqfECtIQnhg17Ccc30OWpDR0qyhljpGGxH
- XeWdGQzIkkarl8rcjrW9Hokp5PxBvHTS+dmyqY5a1JuJ8dhmOgkwoaSodovlg7jsl05Ka5HQNjE
- VN0t4Df6J8hRf5gv2Kvpnjf81qpACoAvrtq+I3JZpohZFSrM4n8E2+LRaVp47Wcmmv1cKAwOyt5
- 6xH/O0wcWXiaaogHRI/ouqsMD+fxmJyKn/Q91JCFbN8trNi2a+ktU3fcSVOlIA1upAb2zSmGQeU
- QpG95zRLXOtMEyjUozoPbAFCI+8xxmpgAU0OBoZxRs1EyAE4gPGkzg/JMWZMJ5Q0kshoD8HetGu
- 777jIxRrvDPRWLoN7I8urtEft+9o38XjhtCXehSqPyRgaPTxYw0yxht0zHunjXOzihZcWppSIe7
- mUVyfCpeCFYBRihOnkdnPWQcu+EezI2WYKlCzVdSvijbABtMSRKyHl5EyfSYUQ+PDn+6hji9S8y
- nM9BerG7h6PoJkeJMr+oxNtVPJk7SOc2ngGZcXkNW0k1vW5RM4v6P1AAIL8YsSwrQxsjFPruFkZ
- 0Tb7cCBL4Dw/Lx09fqOBDLDQzt0GjNY24DBOwEqCuMNKDAl+Go9c/Rp9IKKEr21kyObUYnzBQiJ
- vGOdGBS+gx8MRVg==
+ bh=mGZy4q/oW8UzoOdspQ2PE/4+hSe74fQuun548/q4F44=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBm4V28JZ/VEfTnaD7nNBoB3frcKuGLB9ARP4bWY
+ bWaYUI16HGJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZuFdvAAKCRARpy6gFHHX
+ cpWmD/4mJG0x9Wtf91kBXu54OS8ukIUVtB3Olonnh6WlFUS6GbattKh4M/Zgmi0rn2SiTCLHUPu
+ /hijbeXzEVURratLEVqcPpCEOIvVr4g8oR0LYpbvIURqHhPrpBt8de9PQ6y2WoD6NpeN0eED/vP
+ L3RK3UH2yddZJA7yikXmiT7lovvM0/N7TZppP8bBXqq+oxV23yaB9QyKFfYmctDa7FZQkI8CGpt
+ IMitrLQz4TFn00+pmx2/07vIkQu0wL2+6026OxHDTAriQx+SLkKSDjaEA6G+SADjQrwjNylUrez
+ LowDn4rV3FAPfqAzAw2Rwgfpu8tHGPkHRjw6+TWIuaA/qFNMdEuIg8aIntBqz7VDFouw3NN+7l+
+ 1sdY9T5ajf6sgUTPm8mm9sFDyKFjMT9s/MgtijCj0+5D4KxaBSsT/kFN/wXKaflvT9Itb++Jz1W
+ nO710wrpUQknR8xNg9fjpz/RhBc5cjgcK0w1TNxlMGLFT8oQHySz7H5OUyMzkCQR1TLY1IiCD+o
+ m4U5b7aQSE4Gqr8httoq9f7zit3nit/xVS8Znvq+6YgCr0bTLkd9Ze8qGsEYj0+HG0+2obs8JBb
+ MkGME+1TTmQirZSG3DsjLUyCxAfOLbHbOE0Oficm1h9sDeZ6zx/sBO+y1ElwJtprqYWZ6RAFdLZ
+ wVAxtssmyqJmj5Q==
 X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
  fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-The new TZ Mem allocator assumes the SCM driver is always probed which
-apparently isn't the case on older platforms. Add a proper workaround.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
+Some SCM calls can be invoked with __scm being NULL (the driver may not
+have been and will not be probed as there's no SCM entry in device-tree).
+Make sure we don't dereference a NULL pointer.
+
+Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
+Reported-by: Rudraksha Gupta <guptarud@gmail.com>
+Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Tested-by: Rudraksha Gupta <guptarud@gmail.com>
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
-Changes in v2:
-- use likely() for the more likely branch in smc_args_free()
-- Link to v1: https://lore.kernel.org/r/20240909-tzmem-null-ptr-v1-0-96526c421bac@linaro.org
+ drivers/firmware/qcom/qcom_scm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
----
-Bartosz Golaszewski (2):
-      firmware: qcom: scm: fix a NULL-pointer dereference
-      firmware: qcom: scm: fall back to kcalloc() for no SCM device bound
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 10986cb11ec0..8bac4915c211 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -216,7 +216,7 @@ static DEFINE_SPINLOCK(scm_query_lock);
+ 
+ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void)
+ {
+-	return __scm->mempool;
++	return __scm ? __scm->mempool : NULL;
+ }
+ 
+ static enum qcom_scm_convention __get_convention(void)
 
- drivers/firmware/qcom/qcom_scm-smc.c | 28 ++++++++++++++++++++++++----
- drivers/firmware/qcom/qcom_scm.c     |  2 +-
- 2 files changed, 25 insertions(+), 5 deletions(-)
----
-base-commit: 6708132e80a2ced620bde9b9c36e426183544a23
-change-id: 20240909-tzmem-null-ptr-2a9ddd9889aa
-
-Best regards,
 -- 
-Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+2.43.0
 
 
