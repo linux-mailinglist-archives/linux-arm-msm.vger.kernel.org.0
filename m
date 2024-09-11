@@ -1,127 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-31480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31481-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D60D974F5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 12:09:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BE0A974FA7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 12:23:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A75D42879CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 10:09:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5BD4287C9D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 10:23:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55257186E5C;
-	Wed, 11 Sep 2024 10:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D9AAC2EB10;
+	Wed, 11 Sep 2024 10:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QwrYMkfG"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S7AuUFhw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C021714C0;
-	Wed, 11 Sep 2024 10:08:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220291802DD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 10:23:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726049332; cv=none; b=Lrl8M4vEcfqYnG5uQ38WlkY80pt1UMbh58Sw6z2iSH9DEjYyXJeVupfw2KE+m48oibbUl7hhXGhDA5hZn61hoVlqfQMIGohQPsHSB3isy3jGUr54JOBxu0VjWpgj2dVvzuLJWODwM//0PwKCliM1QILeXT8/cbe0ZZUcp7BicsQ=
+	t=1726050214; cv=none; b=VT7z25atfc9hShReQ12Ns1xLNEiy70mK1ZkZjTukeP30PFdmUUFpXW9J5qKK42tAfQS5SgW+s0hxkcOMM28N1bB8mKk0BsS+Gdx3JDdY6kA58fq9KxTfclymEMNlutnaGdCtDQi3P4zHhTZhvwffnT3Hi90FilT73gcAj47ewL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726049332; c=relaxed/simple;
-	bh=qTJ82PQjLvL8u2V4TMNByXMBYT7qRQANe3FkGeSvNzE=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=tkKCpuV3v2SFGm48yAC9z3QqkaG1koKN5pMpm4oqCv2gpiWZdj9sdDN2vgEWpzLQLoV5TowZST5mPJNvndqGC03XeBkIIQLUlZbrvJ28xzvpjljjoSCHbeh5iJJZYcf1+5ohT+Fp/lVBeeq1zpMEPfBoeR183uzpKBtA5iWhKi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QwrYMkfG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48B3jAVl020308;
-	Wed, 11 Sep 2024 10:08:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=Px7rKOdAod4MFc+KpUi3fQucCOz5Bl9/HE5U/ALqwTk=; b=Qw
-	rYMkfGU+xZGCpauf4CM6q9+WLC32IPWa8KVpb6lD4iYeSVtcxc3m2mv2LH4EOwxR
-	Nr9XQe+bRaJ5ndjWsyUbWQHpLZPnHbCJCGuVr41TTh0KFUuHCv4pNc4KGG/g9n4f
-	OocmZPNsGEbyEciuPTpf6eIybOpVFyvWdyCf9nXO2ZOKs8wOE7sVzDWE7s9A/HfZ
-	LFCDXJeefiILozAE61/OCKTfUezY35qJVRrIpbXefS23nsFDz9aWfPmP4e81qZb+
-	2xgccjat7a/fB30rugOp3qWMqgcUuwvbSL5o6OQyuQMuMVrnQJwJnkJMUHN+rFcV
-	ABjjVumKUMy/cQpL5sRQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41he5e0d83-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 11 Sep 2024 10:08:25 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48BA8L74019431;
-	Wed, 11 Sep 2024 10:08:21 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 41h168s1su-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Wed, 11 Sep 2024 10:08:21 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48BA8KYG019406;
-	Wed, 11 Sep 2024 10:08:20 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-mukhopad-hyd.qualcomm.com [10.147.244.250])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 48BA8KDl019399;
-	Wed, 11 Sep 2024 10:08:20 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3978529)
-	id 9AFED5000B9; Wed, 11 Sep 2024 15:38:18 +0530 (+0530)
-From: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org,
-        andersson@kernel.org, simona@ffwll.ch, dmitry.baryshkov@linaro.org,
-        abel.vesa@linaro.org, robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
-        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, quic_khsieh@quicinc.com, konrad.dybcio@linaro.org,
-        quic_parellan@quicinc.com, quic_bjorande@quicinc.com
-Cc: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        quic_riteshk@quicinc.com, quic_vproddut@quicinc.com
-Subject: [PATCH 4/5] dt-bindings: display: msm: dp-controller: document SA8775P compatible
-Date: Wed, 11 Sep 2024 15:38:12 +0530
-Message-Id: <20240911100813.338-5-quic_mukhopad@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240911100813.338-1-quic_mukhopad@quicinc.com>
-References: <20240911100813.338-1-quic_mukhopad@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: y2Pajn2Dckseyp9GTtxXsy4aOi6IOds4
-X-Proofpoint-GUID: y2Pajn2Dckseyp9GTtxXsy4aOi6IOds4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 impostorscore=0
- malwarescore=0 mlxscore=0 phishscore=0 bulkscore=0 adultscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409110074
+	s=arc-20240116; t=1726050214; c=relaxed/simple;
+	bh=5K4tAcFBHvPTFN8Wakkvp/Wjtxx7ZDotyHbB7iJQI5E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TJAFurhAU45G5Gm4wVjdcXWkDEmUdj9RccPrqtALUVpc1mkEUlBi8RQqxK4lUMypq+IviCqtiyi3R+jqFhdM0yV7Ewg2xurMbkbo50pk1if/Rn2CdvJHSZKDRy0Eabtv3ESUWRp8x+VJDnBvZxXBBIrTpKjRXUPOXmYhqxKaceo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S7AuUFhw; arc=none smtp.client-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1726050213; x=1757586213;
+  h=from:to:cc:subject:in-reply-to:references:date:
+   message-id:mime-version;
+  bh=5K4tAcFBHvPTFN8Wakkvp/Wjtxx7ZDotyHbB7iJQI5E=;
+  b=S7AuUFhwjO6QM8RU2bzxbO8gTXya8oJneThi1jqMZoSKMR4ADOB7vMR2
+   qqcnrq7ugA8aiiddT/60xyPREDcmlSOnGHF9+tdNu/Ku6VtCnatFPurR+
+   MiwrW9v2E7POvkQ+rP9snU7eC7I25MT0gKlY46/FaXQiL/l+Kiog7nxja
+   73WTxQsj/jWtGc4G58Mb6HjIPbwYP52hwcobKDTAzs3eCy1GMaPIuN2e+
+   7gSeEuBPFMHICfEm3WWEbeGTY5wYKpJCsm+FyceEfGyJSX/fZgnGSKpeb
+   p0b7YQAAA1jCoQjelRMlmb1dpOySoJ0AAL7yn3RbZQOcbu6Uuwzavi2vu
+   A==;
+X-CSE-ConnectionGUID: PDxjiEgPRVW9VZR94/jGbw==
+X-CSE-MsgGUID: EbdTV4MhTvaxI8+TQF/e2A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11191"; a="24986955"
+X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; 
+   d="scan'208";a="24986955"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2024 03:23:32 -0700
+X-CSE-ConnectionGUID: CK2HXmxAT3KuAAFMtdSU6w==
+X-CSE-MsgGUID: 2zqkdFhVQKGTCdjHtZvtsw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,219,1719903600"; 
+   d="scan'208";a="104781745"
+Received: from bergbenj-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.246.181])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Sep 2024 03:23:27 -0700
+From: Jani Nikula <jani.nikula@intel.com>
+To: Marc Gonzalez <mgonzalez@freebox.fr>, Dmitry Baryshkov
+ <dmitry.baryshkov@linaro.org>, Arnaud Vrac <avrac@freebox.fr>
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, Nathan Chancellor <nathan@kernel.org>, Rob
+ Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten
+ <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 7/8] drm/msmi: annotate pll_cmp_to_fdata() with
+ __maybe_unused
+In-Reply-To: <19ac4e25-7609-4d92-8687-585c6ea00c79@freebox.fr>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <cover.1725962479.git.jani.nikula@intel.com>
+ <3553b1db35665e6ff08592e35eb438a574d1ad65.1725962479.git.jani.nikula@intel.com>
+ <4ag2efwiizn5bnskauekqwfhgl4gioafcvetpvsmbdgg37bdja@3g6tt4rlfwcb>
+ <19ac4e25-7609-4d92-8687-585c6ea00c79@freebox.fr>
+Date: Wed, 11 Sep 2024 13:23:23 +0300
+Message-ID: <878qvyjxpg.fsf@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Add compatible string for the DisplayPort controller found on the
-Qualcomm SA8775P platform.
+On Tue, 10 Sep 2024, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+> On 10/09/2024 16:51, Dmitry Baryshkov wrote:
+>
+>> On Tue, Sep 10, 2024 at 01:03:43PM GMT, Jani Nikula wrote:
+>>
+>>> Building with clang and and W=1 leads to warning about unused
+>>> pll_cmp_to_fdata(). Fix by annotating it with __maybe_unused.
+>>>
+>>> See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
+>>> inline functions for W=1 build").
+>>>
+>>> Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+>> 
+>> I think this function can be dropped. Marc, your call, as an author of
+>> the patch?
+>
+> ( Why is the patch prefixed "drm/msmi", is "msmi" a typo? )
 
-Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
----
- Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
- 1 file changed, 1 insertion(+)
+Whoops, a typo.
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-index 97993feda193..a212f335d5ff 100644
---- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -17,6 +17,7 @@ properties:
-   compatible:
-     oneOf:
-       - enum:
-+          - qcom,sa8775p-dp
-           - qcom,sc7180-dp
-           - qcom,sc7280-dp
-           - qcom,sc7280-edp
+>
+> -> For the record, Arnaud is the driver's author.
+>
+> pll_cmp_to_fdata() was used in hdmi_8998_pll_recalc_rate()
+> in a commented code block which was later removed.
+>
+> Thus, yes, it is safe to completely delete the unused function.
+> I'm surprised gcc didn't catch that...
+
+Thanks, I'll change this to drop the function.
+
+GCC doesn't catch unused static inlines, while Clang does.
+
+BR,
+Jani.
+
+
+>
+> Regards
+>
+>
+>>> ---
+>>>  drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
+>>> index 0e3a2b16a2ce..c0bf1f35539e 100644
+>>> --- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
+>>> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
+>>> @@ -153,7 +153,7 @@ static inline u32 pll_get_pll_cmp(u64 fdata, unsigned long ref_clk)
+>>>  	return dividend - 1;
+>>>  }
+>>>  
+>>> -static inline u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
+>>> +static inline __maybe_unused u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
+>>>  {
+>>>  	u64 fdata = ((u64)pll_cmp) * ref_clk * 10;
+>>>  
+>>> -- 
+>>> 2.39.2
+>
+>
+
 -- 
-2.17.1
-
+Jani Nikula, Intel
 
