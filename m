@@ -1,68 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-31516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38EA29754D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 15:59:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC4B59755C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 16:41:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6BDDE1C2229B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 13:59:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A9571C22C03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Sep 2024 14:41:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87F3119CC15;
-	Wed, 11 Sep 2024 13:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2433C1A305C;
+	Wed, 11 Sep 2024 14:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UD+JfgpX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pfRI8rZk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538D2193073;
-	Wed, 11 Sep 2024 13:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EAC19FA86;
+	Wed, 11 Sep 2024 14:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726063046; cv=none; b=jzdwzClHEY+VQSDOXK8XklvbC8j8OVm5ElO66EM5dLUtLuabq4wZJu0BT75syXi0dSsYuOPfX0pM/EzwPHtOoVUVfqRZFBOStsyMzDokiKlVu0DrnprqswgHKWLNitXkvgZ1ZYwT+gbuJjYEWWAxVD8KPOeIQjS5fBzn/auqQdU=
+	t=1726065557; cv=none; b=DwA/yAFTH0MuyzNs2OyaBeZKLm5wefwWbJ4Exdq9mQ6MkzoYlm2SR3a7144EpUXJshGQOteKvkFb07KvZ4VYciAG8RNKIM/WhU5b9aq5tgPH/tLRH5OLeM4zym1B6g7NG9xKpLiZm3w7awAnwR9FkXc7T/lD2HznYjMsR45KJ8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726063046; c=relaxed/simple;
-	bh=wImPhwLYU/yulcxrj5+8ZyqsYcLtMANEgV3hK2znSPQ=;
+	s=arc-20240116; t=1726065557; c=relaxed/simple;
+	bh=RIl2vqs1rYnlBT7Pma3eLUwMyWxA2WhBMmHCl3yi23w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PV1kmHuGojcCWBkA7F/PRxZOSEQDqkysVTM1/h5RQmJ+1aL+aZROI6XoV0DPACPVSHcIlMX8HhV64fu2XQCFw4c392CZIwhs884yNYfSbx3DPKX0HSPDDkEImRHnfhZ8to7W1Mc1OzP2O3dVLkAW8N5xmdl2FB3Gd4Saa1G1LIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UD+JfgpX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB085C4CEC0;
-	Wed, 11 Sep 2024 13:57:24 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qa56kvUYDTk5tFtGkUJ2FZ6eLCRbdt/MaopCB8rxglh6EYrUloTelPpzdzkXwMbwNjriAkxTvOn3wZ/jpkUvcd9TZp0N8GgwpZJW6OHFDfoOXEemStgb5LEXbfaM3u5XByPjxY7gDbhG7z4lXLiUUOsGYRmGLvXl43hS3F8hnXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pfRI8rZk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DAF5C4CEC0;
+	Wed, 11 Sep 2024 14:39:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726063044;
-	bh=wImPhwLYU/yulcxrj5+8ZyqsYcLtMANEgV3hK2znSPQ=;
+	s=k20201202; t=1726065556;
+	bh=RIl2vqs1rYnlBT7Pma3eLUwMyWxA2WhBMmHCl3yi23w=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UD+JfgpXDztEgCkJASvgkXlKDpBY7O/zUfiXxQjWF5fesIf2oRxejlq0sVkdJ/T2x
-	 EOZlP00Mq8EBL+Z9Cnu3ngPOudndqugnFpz/mgcE85GiDC70dQgI4H9z8XzAVQ4wgE
-	 cABE/HrI3TgmjGfPfxheihxIteQaeQ8x21j0HtViYYCUV0+1GVwtyX+oKA942zz/0b
-	 xO1R/Lo+/AvifHzVLKbqCbT+76tEdh7ZHnXLCkPU07gWkYR0yRJd5XjVLsFaeY0IIf
-	 SX8Gc6qCyKxbcJgqQVfubgWQrSbym/ZM/N4n7680FQe31CdVCIAO7odZxkYIU7m9N0
-	 zqe6l5vJuVeIw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1soNqo-000000006KZ-2LiB;
-	Wed, 11 Sep 2024 15:57:43 +0200
-Date: Wed, 11 Sep 2024 15:57:42 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Rob Herring <robh@kernel.org>,
+	b=pfRI8rZkJxendEAuv296Bmdk4n5+LS0TrKnAdyRfGNFbRry3Cc8V9v5w+OCkGJquL
+	 Hb546cSEeEqrKuwYHwWehHT2yTVW98jjqaDMA2oxWTAzXZj2dTJQ4VNRLRWKlGd/IR
+	 OWAaxEZubpLkhCWdAa+cNhOrTYIRCu9bKeg6dZHw059FTJ/DSq5YRTPASqFenV9eeM
+	 4S9PsqZCziq4X2OTpXMXrT/JP4OJmtNUPuIhfExVz26KcvEUBsLz7VU7QleKH9r7jZ
+	 RNEj2iKswTHfK4auCiezX/d9k3TPpLeStgf4y139By85RbAPGzkLlstoIn7TI6aFLL
+	 QQM3q9B00ajcw==
+Date: Wed, 11 Sep 2024 09:39:15 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Jie Gan <quic_jiegan@quicinc.com>
+Cc: Tingwei Zhang <quic_tingweiz@quicinc.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Tao Zhang <quic_taozha@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	devicetree@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Song Chai <quic_songchai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>, coresight@lists.linaro.org,
+	James Clark <james.clark@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	linux-arm-msm@vger.kernel.org,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	linux-kernel@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	Yuanfang Zhang <quic_yuanfang@quicinc.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: PCI: qcom: Allow 'vddpe-3v3-supply' again
-Message-ID: <ZuGh1pdPVSYZ4gy_@hovoldconsulting.com>
-References: <Zsb_1YDo96J_AGkI@hovoldconsulting.com>
- <20240911135106.GA629136@bhelgaas>
+	Jinlong Mao <quic_jinlmao@quicinc.com>,
+	Mike Leach <mike.leach@linaro.org>
+Subject: Re: [PATCH v5 3/5] dt-bindings: arm: Add Coresight TMC Control Unit
+ hardware
+Message-ID: <172606555436.153197.17103030569267503329.robh@kernel.org>
+References: <20240909033458.3118238-1-quic_jiegan@quicinc.com>
+ <20240909033458.3118238-4-quic_jiegan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,36 +76,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240911135106.GA629136@bhelgaas>
+In-Reply-To: <20240909033458.3118238-4-quic_jiegan@quicinc.com>
 
-On Wed, Sep 11, 2024 at 08:51:06AM -0500, Bjorn Helgaas wrote:
-> On Thu, Aug 22, 2024 at 11:07:33AM +0200, Johan Hovold wrote:
-> > On Tue, Jul 23, 2024 at 05:13:28PM +0200, Johan Hovold wrote:
-> > > Commit 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to
-> > > dedicated schema") incorrectly removed 'vddpe-3v3-supply' from the
-> > > bindings, which results in DT checker warnings like:
-> > > 
-> > > 	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dtb: pcie@600000: Unevaluated properties are not allowed ('vddpe-3v3-supply' was unexpected)
-> > >         from schema $id: http://devicetree.org/schemas/pci/qcom,pcie.yaml#
-> > > 
-> > > Note that this property has been part of the Qualcomm PCIe bindings
-> > > since 2018 and would need to be deprecated rather than simply removed if
-> > > there is a desire to replace it with 'vpcie3v3' which is used for some
-> > > non-Qualcomm controllers.
-> > > 
-> > > Fixes: 756485bfbb85 ("dt-bindings: PCI: qcom,pcie-sc7280: Move SC7280 to dedicated schema")
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > 
-> > Can someone pick this one up for 6.11?
+
+On Mon, 09 Sep 2024 11:34:56 +0800, Jie Gan wrote:
+> Add binding file to specify how to define a Coresight TMC
+> Control Unit device in device tree.
 > 
-> I applied this to pci/dt-bindings for v6.12.
+> It is responsible for controlling the data filter function
+> based on the source device's Trace ID for TMC ETR device.
+> The trace data with that Trace id can get into ETR's buffer
+> while other trace data gets ignored.
 > 
-> v6.11 is possible but we'd need a bit of a story to justify it.
-> 756485bfbb85 appeared in v6.9, and the commit log says it fixes a DT
-> checker warning, which don't make it sound like this is urgent.  Is
-> there more to it that would make this v6.11 material?
+> Signed-off-by: Jie Gan <quic_jiegan@quicinc.com>
+> ---
+>  .../bindings/arm/qcom,coresight-ctcu.yaml     | 84 +++++++++++++++++++
+>  1 file changed, 84 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+> 
 
-No, merging for 6.12 is fine (e.g. this late in the cycle). Thanks.
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
-Johan
 
