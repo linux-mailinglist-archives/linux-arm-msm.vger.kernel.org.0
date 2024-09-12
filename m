@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-31577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F6499763AB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 09:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 581FC9763B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 09:58:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52EF81F22D0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 07:57:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E83E1F24AC4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 07:58:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3501F19005A;
-	Thu, 12 Sep 2024 07:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E928918FDB3;
+	Thu, 12 Sep 2024 07:58:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V1WIYOmy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PiP00cxs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEEC018FC89
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 07:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174F418FDCD
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 07:57:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726127809; cv=none; b=S+jUayqv/8D7YUSl2z6eUe8/uTQ2b+k2akZlzQEv8lpf6cgVuVNskdZZCJT6coARzFuHiZmpYjxuaxCMRhUxtpiMZOpgiCdzUszBEN6jHkTIW2BfKCGARwswYN8FW4q2/JP3P4R01j60NY+4a3xdgkDesbEluRcGo9v0puGmmCQ=
+	t=1726127880; cv=none; b=bicef2eDbMKsWBuaHYTVOusujlkDa8SUj0uwe5I4h1Lv3XX2M3/rhCUz2YiRX8vuWE0S/LApQS1s2L3bGLGvuBPabIjnNSy46krikOP15sxlVc9o4iEbsZ6yjmX1Sa+2ow6rgnz3Bs/zMI0n7QQOk/7HfULFoeMKzri4knebBEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726127809; c=relaxed/simple;
-	bh=ixO4eAmSsyxYP705i69Tpb+LkysSM4JEOUqvDo0Heu0=;
+	s=arc-20240116; t=1726127880; c=relaxed/simple;
+	bh=sZk6X7+//cwv/reHFb1+fYSu1dtTTnDz3WHzFmKDqGo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GaLddiNbXfM0SWoqzWNQ1845T9ZCldVBh7jfUtGzOIZCLlE3DlymYyrumZtUcyxNBgXPx4SD2iP9RDrAlWu+cRKxEhiChdOL1zjq7TUQbFo7xTmX0d2MlNQad37lT9uzBfBjl3d6DRnA10S44rpxKkspVIv0zNT3MMloNm54mG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V1WIYOmy; arc=none smtp.client-ip=209.85.208.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=BansXKpiX6vJzdLKP6b5ez1jLOuQ3B5VTrtpKMgegpvhvKkLffkiVXxI/GjZnugfnMKm0LVbkIuLVluT0VHq5SyUiCDKwWVWPGyPmmZdaANKoJwJZ9wT0eYzI/N6wCZD0McYq/XCqSgLnJvK5DJqOjhJk9CG6zzsmsYcQPPkSCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PiP00cxs; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f758f84dfbso6135991fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 00:56:45 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-53568ffc525so824881e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 00:57:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726127804; x=1726732604; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1726127877; x=1726732677; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rzUy16PQ8SDXmHcug8jXm/7h574vKZnBpTKJTICvI5k=;
-        b=V1WIYOmyvSEUhyx5B/vR/Gwh9FEp7kZBcDYs4ifdZSaiJywhDOBs08UeGXCKMkqZ+p
-         rsn/5+A6eNJCtChho/5dK8kAfQoSxMSKadZr2gTi73uH1LQ2/CPw5DVGgzrCP3SHeUiY
-         49aNA8MOs1XR1WElidhx8YQAe8PAVboVQp81c8fZotmoOjSBkkb8vdMd928bPrGpP49v
-         b2aGxxiNrUAAIikjEn+tHb00E0LByb7Cb6Gh7ILk+NDz3GeCpyQVgU5/E2RRBdyEvtlI
-         c5HkkRJmt6K2SbDk8xCc/Efke4g9zS/q+NOPi6YQcS7cqkNpVvuYBuOR/dU64eeiID0O
-         nIIA==
+        bh=Ox1m01XCLNWbr8nh6dVZJd3HpwbkC9RDWpp/m3khnEc=;
+        b=PiP00cxszBkSVR8aWGB8sioB8h4ds02sT4Or5bw72J00BsDTwf+SEB8MbxtXvTDinT
+         T1PajXcSzzgb/SloPzb15ykIJYiHSMdUaUkXwXKAC9+OS+GAnZBaTwDV/VsrckjoLBOh
+         litBOvER/fcVpMXHVGAeBjFGnBbHEUaJMFzyLnOnoiG1WnMV539jXju6UdgYf/Zd87ZT
+         isGv2USKzzEUkMn5tNnhA8//nWgg/0AK7naZncJS8lMz1w72+b49U2R45kanWLhS36D8
+         HtR6XLtPDQiIwo24tXArcodmmsQLd2RyBsu2VXr+jMbMbVqfxoAzNcxNmvjTia8TV278
+         4qxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726127804; x=1726732604;
+        d=1e100.net; s=20230601; t=1726127877; x=1726732677;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rzUy16PQ8SDXmHcug8jXm/7h574vKZnBpTKJTICvI5k=;
-        b=iuK7tZwe5B6YAa0G88p/9V3OkV8i9nw9bYApwn+783pE/u9aIG80mrcsHK2FBmHu8D
-         yAGzWb1q8Z+Dv6KUPlrqmCCIOrZ68ASLtU5+wCbd0VifJ0TY7p4nKnZmP+dmL3c7C+0b
-         I4an/j9xWcvAU0j0KUQ3sjPAo7RcXRO4d1UTgypq3e319V0bHLyBqdAUlmbmCFLVyGIB
-         RIRCvnDeFlVQQYyX9XR3gMpkN9U/EkPW7zb+WNUq0+59OE4nNi4sh33zV9JJZR87x8Bz
-         Qonf8MTLaPONa3FvVtsUBEJ2csRv05FgoLzIWBqY+686dNRU5023/dnnA0DeAFSRPnPd
-         U9MQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUTyUEduBF05KrWceF/mzJSPmmcw1/q7JJiu23a9R8JmxIhJLpLRs8ZQYz+htJi/vidndVLvUC6VIg4HvlM@vger.kernel.org
-X-Gm-Message-State: AOJu0YyiH7/mf0sLoYlV+DuJtj6/ek3kzRs24XYadRc1pFA4d/FdZkGu
-	c7kaQtRGXPZaJl26Qkq/WE1hGtuj00omIGy6f8ddUvSp0bhvm57srePeH1IxTHo=
-X-Google-Smtp-Source: AGHT+IEO+oaR2J+/C5HWt9j3Jqj2WBAglLEJ+Odvyq26KObdZCTNoi/+ljmrdSm1pK1NNmf0NzUFaQ==
-X-Received: by 2002:a2e:be91:0:b0:2ef:2016:262e with SMTP id 38308e7fff4ca-2f787ca97e6mr12162111fa.0.1726127803444;
-        Thu, 12 Sep 2024 00:56:43 -0700 (PDT)
+        bh=Ox1m01XCLNWbr8nh6dVZJd3HpwbkC9RDWpp/m3khnEc=;
+        b=e/QTCQB6xN5s8G0tqR27UFDZDnFDIeSLSeWo8mcrMxKGd4L+Axp6kX1YYUz5pljZTu
+         wrzU9x8EaCqcKHTlkPPpo7bF+2GLkOZDT9kZ2vKIUtE951NKTG9xPugpTa/WuRFW7IdX
+         fPwjlhW/fk94qO/5fC/YO6mJvX+SDa7zuABzMoplwkS+kNBiAucKo9IiQdrhCD2U/Ce0
+         iML2Q9Xgi6VsGGhTDRhTvQGaTi1+syY7QtD+mDK7nidtkFfWVPDsK0JdWeKUo6d36vOF
+         2szyW1Wlew0uyvaQ8URjjXFiYhYuIGI/eCK/GljaP59WuBMjg8dpiAYHpZzzY36xRi0n
+         XmiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUOj4+1d+eGVbQ7ALdlY6kB8X69WGyuScTuKuQwT0IPd5CjmZaRLWV8iSHldTB65G8ZOYzoFcrXd+H+/5EJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC0sbcw9RtuH7081frH1kae/njm87QQElfbbfdqQX3+S9mbSTX
+	AWLSmqwveZTW4y1o3dLejYdgfWXgJSDaNJBD8t9KLgSsrmE1WwDe9A4aMwbnsAM=
+X-Google-Smtp-Source: AGHT+IEMx5McwfR5w48GvyKDso1IkapKp/bxkvo0CGrrFUuAGOcvr7DDSK6O5G6wN5uQdo3VlohPbw==
+X-Received: by 2002:a05:6512:39c7:b0:536:545c:bbf6 with SMTP id 2adb3069b0e04-53678fb1dc9mr956157e87.1.1726127876818;
+        Thu, 12 Sep 2024 00:57:56 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f75c07c897sm18188401fa.75.2024.09.12.00.56.42
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f903ca4sm1825185e87.192.2024.09.12.00.57.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Sep 2024 00:56:43 -0700 (PDT)
-Date: Thu, 12 Sep 2024 10:56:41 +0300
+        Thu, 12 Sep 2024 00:57:56 -0700 (PDT)
+Date: Thu, 12 Sep 2024 10:57:54 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Mahadevan <quic_mahap@quicinc.com>
 Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
@@ -78,9 +78,10 @@ Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
 	andersson@kernel.org, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	quic_kalyant@quicinc.com, quic_jmadiset@quicinc.com, quic_vpolimer@quicinc.com
-Subject: Re: [PATCH 0/5] Add display support for Qualcomm SA8775P platform
-Message-ID: <7fcbvouzb7gq6lclrkgs6pxondvj5wvutyw3swg55ugvzfpvd4@2ph7x7ulxoyv>
+Subject: Re: [PATCH 3/5] drm/msm: mdss: Add SA8775P support
+Message-ID: <5uttdpchtd7wjzppve3e3hby2s4adft2tv7ceshyuarir3ppiq@u2fcdqs4uqr2>
 References: <20240912071437.1708969-1-quic_mahap@quicinc.com>
+ <20240912071437.1708969-4-quic_mahap@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,44 +90,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240912071437.1708969-1-quic_mahap@quicinc.com>
+In-Reply-To: <20240912071437.1708969-4-quic_mahap@quicinc.com>
 
-On Thu, Sep 12, 2024 at 12:44:32PM GMT, Mahadevan wrote:
-> Add support for mdss and dpu driver on Qualcomm SA8775P platform.
+On Thu, Sep 12, 2024 at 12:44:35PM GMT, Mahadevan wrote:
+> Add support for MDSS on SA8775P.
+
+Patch subject doesn't follow existing practice.
+
 > 
+> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
 > ---
-> This series depends on following series:
-> https://lore.kernel.org/all/20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com/
+>  drivers/gpu/drm/msm/msm_mdss.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+> index faa88fd6eb4d..272207573dbb 100644
+> --- a/drivers/gpu/drm/msm/msm_mdss.c
+> +++ b/drivers/gpu/drm/msm/msm_mdss.c
+> @@ -684,6 +684,15 @@ static const struct msm_mdss_data sm8350_data = {
+>  	.reg_bus_bw = 74000,
+>  };
+>  
+> +static const struct msm_mdss_data sa8775p_data = {
+> +	.ubwc_enc_version = UBWC_4_0,
+> +	.ubwc_dec_version = UBWC_4_0,
+> +	.ubwc_swizzle = 4,
+> +	.ubwc_static = 1,
+> +	.highest_bank_bit = 0,
+> +	.macrotile_mode = 1,
 
-As such, it probably can not be merged before 6.14 (the mentioned series
-will go on 6.13, we usually don't do cross-tree merges into drm). Please
-rework the bindings to drop the dependency (it is possible, use fake
-nodes instead of using dispcc + ID). Then you can specify that only the
-DTS patch depends on the dispcc support, allowing driver changes to go
-in first.
+Missing .reg_bus_bw
 
-> ---
-> 
-> Mahadevan (5):
->   dt-bindings: display/msm: Document MDSS on SA8775P
->   dt-bindings: display/msm: Document the DPU for SA8775P
->   drm/msm: mdss: Add SA8775P support
->   drm/msm/dpu: Add SA8775P support
->   arm64: dts: qcom: sa8775p: add display dt nodes
-> 
->  .../display/msm/qcom,sa8775p-dpu.yaml         | 120 +++++
->  .../display/msm/qcom,sa8775p-mdss.yaml        | 225 ++++++++
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  85 +++
->  .../msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h   | 485 ++++++++++++++++++
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   3 +-
->  drivers/gpu/drm/msm/msm_mdss.c                |  10 +
->  8 files changed, 931 insertions(+), 3 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sa8775p-dpu.yaml
->  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
->  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-> 
+> +};
+> +
+>  static const struct msm_mdss_data sm8550_data = {
+>  	.ubwc_enc_version = UBWC_4_0,
+>  	.ubwc_dec_version = UBWC_4_3,
+> @@ -725,6 +734,7 @@ static const struct of_device_id mdss_dt_match[] = {
+>  	{ .compatible = "qcom,sm8250-mdss", .data = &sm8250_data },
+>  	{ .compatible = "qcom,sm8350-mdss", .data = &sm8350_data },
+>  	{ .compatible = "qcom,sm8450-mdss", .data = &sm8350_data },
+> +	{ .compatible = "qcom,sa8775p-mdss", .data = &sa8775p_data },
+>  	{ .compatible = "qcom,sm8550-mdss", .data = &sm8550_data },
+>  	{ .compatible = "qcom,sm8650-mdss", .data = &sm8550_data},
+>  	{ .compatible = "qcom,x1e80100-mdss", .data = &x1e80100_data},
 > -- 
 > 2.34.1
 > 
