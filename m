@@ -1,55 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-31562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D52F97615A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:19:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1865E976173
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:25:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C9732286886
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 06:19:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8A5B1F2213E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 06:25:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF0CE2D7B8;
-	Thu, 12 Sep 2024 06:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 627AA18A6DE;
+	Thu, 12 Sep 2024 06:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Djeotmfi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uUTly5UI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B0F1878;
-	Thu, 12 Sep 2024 06:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26222146A6F;
+	Thu, 12 Sep 2024 06:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726121972; cv=none; b=igZ9Wt0a39Wp9gNqLbHgta1h2D7J47ZykMHNxlaLxOJvck1xbMuenc184uAZ4Fv0mqL+ms7n0wSimDw1vc0NAgb0zwz54f0ogiNQLVUE23PBCyYRwU15HCXdiZYj+fNXzZxo0WCUgyTNi1RaszVt2fsM398c0KHMzB13eiVhxak=
+	t=1726122319; cv=none; b=RTprIwDr5BiMveSwJckEvk0Ic6nyY37KaCmiuFIRP0codZ+lbOVFPPbYhwjiNGZ9Cn2U8HbP+PQf6gzviZU0WuPcEo51Qtb3HGJZWCJr1nFOnCuQVvthWis1zm5msylKRBdiveCznvEXPYg/J2/98fA2TDV8MI3WsiDcU60oYds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726121972; c=relaxed/simple;
-	bh=jMxnTDCVFJ7N6GMUoCTIlzYXhXyiHznJYAfTwzYxni8=;
+	s=arc-20240116; t=1726122319; c=relaxed/simple;
+	bh=ziEohxVPR+6bo8E2GFrPEF7zYu5BBVJvQxhslGXTv9U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ktGV9STBS2FRrSrWBApZuoA4uXT27jz7TW3mKMI4Re2xv0Mk1R/vWJFznay91kCUNexuJSjK+KutTGDsfvVcw8QHT1My9v9XWn3SJFdhKL3BqhYScNl4K6F3JwKmM0btkC6dWF9JwrYlp0NHg6rN1pDtnWzlcwhyFocfy6JZepE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Djeotmfi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DBBC4CEC3;
-	Thu, 12 Sep 2024 06:19:31 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=N5u1Nb3rjuaZAwv5/JCmHbmOFxVlORnILgZPbJGzVGl+Ongin0hpIE1Zsp/PF9HVy1rO++GscXyBQa2JcRU8aV7FmtNiQmVQH8NMhF2iSWwWiIaGkMJFbkvQrWOxh8hd1u/rV+ts0PlWt0K6ynMDA2zT5jQJYexk4Ig4Tsdbtcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uUTly5UI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C52C4CEC3;
+	Thu, 12 Sep 2024 06:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726121972;
-	bh=jMxnTDCVFJ7N6GMUoCTIlzYXhXyiHznJYAfTwzYxni8=;
+	s=k20201202; t=1726122318;
+	bh=ziEohxVPR+6bo8E2GFrPEF7zYu5BBVJvQxhslGXTv9U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DjeotmfiMXVzgoR+s/PJ+UFBX1r2gpczUnIY5GfqPa5s8pTx0Z6ga5logrzblf1WD
-	 +PFM4+Az2F6WcwUo0QYFeujdUgZkBbAaOlytN9vK0py+fspi7/XyeQnD/NjVm0c+0b
-	 UNb5AuDebSrTno5omR5hTmRYFwVcd/dKObn5zeUfrS0IMme5pPqmb6ebFzs7YFIAAc
-	 Wml2DvOTOf8WlKbuq11t60Xq3s/fAYVpillKAwYes5brTWqe3xJvJqBg+JDLDOnD7h
-	 e6np9J7Lbp0DpZwLDSnET8mbCU2ZfsEZMlpSqFrvOC89XJHjxQUQNPFQI2t61XOExl
-	 XyUUAVfYgFBLQ==
-Date: Thu, 12 Sep 2024 08:19:28 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: swboyd@chromium.org, wsa@kernel.org, sdharia@codeaurora.org, 
-	girishm@codeaurora.org, dianders@chromium.org, linux-arm-msm@vger.kernel.org, 
-	linux-i2c@vger.kernel.org
-Subject: Re: [PATCH] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
-Message-ID: <g4g6w56k6hljjs7m73bntdqgm23nnpt3dkrytnoyxquqa5fa4o@xnxwctua3vti>
-References: <20240912033459.3013904-1-ruanjinjie@huawei.com>
+	b=uUTly5UIMz6Dw0IHDbiFScj9NujeUIwbml9jqt1KLsHAG68Ugb4gWH4JXwIOV5nMF
+	 awiXUIbHHi4jprEHHd6HVDIVi5gVmLNyO5qoCysHtElQkA8H/Kti/kOG/RVm1aV9jL
+	 QZjwQ5DboOgbAEoKuAnBI6jwtYxJegrCTfVWxdDw3qW7QKwZKMK8N/JATey95rnP86
+	 FitucbCq56b58b3TGFNcXbSYnSzYT2XhruiSgGSfZk4nOgLs5Ickg8IFkvYEarKKks
+	 5Kkw0WmFMY5h8voaTpgSyIe3Dxlv1teEhSTX0f1DIszmtOmudjlk4rQuvPi+eAgmmG
+	 6vWl/02ItogQA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sodGq-0000000050K-42TT;
+	Thu, 12 Sep 2024 08:25:37 +0200
+Date: Thu, 12 Sep 2024 08:25:36 +0200
+From: Johan Hovold <johan@kernel.org>
+To: manivannan.sadhasivam@linaro.org, Bjorn Helgaas <bhelgaas@google.com>
+Cc: Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Chuanhua Lei <lchuanhua@maxlinear.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Pratyush Anand <pratyush.anand@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, abel.vesa@linaro.org,
+	johan+linaro@kernel.org,
+	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
+	linux-tegra@vger.kernel.org, Frank Li <Frank.Li@nxp.com>
+Subject: Re: [PATCH v7 0/4] PCI: qcom: Add 16.0 GT/s equalization and
+ margining settings
+Message-ID: <ZuKJYGVwXrvAuRIv@hovoldconsulting.com>
+References: <20240911-pci-qcom-gen4-stability-v7-0-743f5c1fd027@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,20 +81,42 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240912033459.3013904-1-ruanjinjie@huawei.com>
+In-Reply-To: <20240911-pci-qcom-gen4-stability-v7-0-743f5c1fd027@linaro.org>
 
-Hi Jinjie,
+On Wed, Sep 11, 2024 at 08:56:25PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> This series adds 16.0 GT/s specific equalization and RX lane margining settings
+> to the Qcom RC and EP drivers. This series is mandatory for the stable operation
+> of the PCIe link at 16.0 GT/s on the Qcom platforms.
 
-On Thu, Sep 12, 2024 at 11:34:59AM GMT, Jinjie Ruan wrote:
-> disable_irq() after request_irq() still has a time gap in which
-> interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-> disable IRQ auto-enable when request IRQ.
+> Manivannan Sadhasivam (2):
+>       PCI: dwc: Rename 'dw_pcie::link_gen' to 'dw_pcie::max_link_speed'
+>       PCI: dwc: Always cache the maximum link speed value in dw_pcie::max_link_speed
 > 
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+> Shashank Babu Chinta Venkata (2):
+>       PCI: qcom: Add equalization settings for 16.0 GT/s
+>       PCI: qcom: Add RX lane margining settings for 16.0 GT/s
 
-merged to i2c/i2c-host-fixes.
+Thanks for respinning, Mani.
 
-Thanks,
-Andi
+Bjorn, it would be great to have these in 6.12 since we're currently
+seeing lots of NVMe link errors on x1e80100 platforms (e.g. the Lenovo
+ThinkPad T14s) without them.
+
+These errors are also blocking the enabling of using the GIC ITS for
+interrupts since that will cause all these AER reports to spam the
+logs. So if you pick this one up, please consider also picking up:
+
+	https://lore.kernel.org/lkml/20240711090250.20827-1-johan+linaro@kernel.org/
+
+[ Note that the later added PCIe5 RC does not currently support ITS. ]
+
+Also note that users of these machines have been running with ITS
+support enabled for months now when using my x1e80100 wip branches, such
+as:
+
+	https://github.com/jhovold/linux/tree/wip/x1e80100-6.11-rc7
+
+So this is all quite well-tested by now.
+
+Johan
 
