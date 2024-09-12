@@ -1,131 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-31549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87267976038
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 07:06:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3047C976101
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:08:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BBAC1F2310C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 05:06:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 62E121C220F3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 06:08:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36E7B2C190;
-	Thu, 12 Sep 2024 05:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D676D188926;
+	Thu, 12 Sep 2024 06:08:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pJXy0BZs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bR+X1+RV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F89980B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 05:06:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9953254765;
+	Thu, 12 Sep 2024 06:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726117608; cv=none; b=lC0HJ3Fd/TUiYjYpN/SRyEURRM4mzXh+Q6AVaK0VWF18ZPn2rRerqrRncZoqsZKi7POx73FQsKPCpFLb/HI0T/zndsuvfdUTYQDScXcr/NjGNrX/OmDH2F0drIDPkBiRBljpi0jijTE1MPvQfDKaK39O1gFD/79VAprvullgCw8=
+	t=1726121321; cv=none; b=hc801QCSz2HZbQ2DVn9RV8xqNgdfdJNCOGad/FEwUIqUpCs3MMtOd1yc7JLp4zb7lkChbpwUs7jyqN/hzHqK2HPQlGagdjR45ng8/bs1YDo25pPx8/EwDQ5zshg8Ex51OkemJFNzvPUVURp1wAaGykA8AAVjfdLo9Qj3jTxKeuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726117608; c=relaxed/simple;
-	bh=2xvzjT4dSbsg2ca75RZWrZFakdrpq4/4OFC66iOgqrA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=kUHpC4dxciNtaaJ7RWjX9lRYp75fL7MzVyUQegWS6QDOYB1o0A8m6tVgwP/qvUPIkZzkrT9b3d10PWM3D8CZ4iekXE9X5cAWuZw5IU+DSuG+eytgY01kvFnea6M/3MHZp+r0kNuJGLnPNKvy7x0Oy8rFdG47QV/FeuoeBnIBVPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pJXy0BZs; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-53567019df6so70583e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Sep 2024 22:06:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726117604; x=1726722404; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dhaj3N3I8dBKCbVeu0u/BT29RxFxQBADjkDC/gT+hV4=;
-        b=pJXy0BZsvxcp820tp4myRbTogZUtqB3P5XSinL04h4xxKtP4ZSZbW5CzKtiqgZsh97
-         O1VyHlSZM4//gP1GMQ2aSpzTWP8aDdWV9ao1uaOmVllffxm+c4DGqs81VBjqZ27GHt2h
-         8IoOVXVlztKF6wX5iXvYGzkhos/9FLzWVGqbc9wJhDOmfJZFrAgv+ijJ5LaYVY9pzS9Z
-         GgvgYXuxPdXd+G6JhGOCtt0UtmBLTIjSUeVIKjD9kNr1CLxzNc/3COOISCbS3oyowPZn
-         L0GxydTMl8skaIQuh+L3Uu4wukHdCWuK7ftWCp4wiUU/lleGmg0wP9itkbz6u+0eNqVS
-         8EHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726117604; x=1726722404;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dhaj3N3I8dBKCbVeu0u/BT29RxFxQBADjkDC/gT+hV4=;
-        b=lVfk1oGoaJJPDlGbZVIxJHis7ofoTQQcRYeQ7+OsRuvz6OszQF4CnqsykXJVJrNuje
-         fbkFvJPfyb/shWl4nrNtoxRvQUJnXqcabwXUNH4DLpDDTl1WI9xpagb1XUFJESCEVR/N
-         fc2QdGyFhjI/kbxQslxbdTUXmRliC80x21YhPt5qJf1TUs0e6UVuUy2lR9l5hG1QImhr
-         7KAnLQVPX2RVYGKDUMyJbkKkvkp+R0RjpnkNHOD1xs5dhqg6ZhAqd2zPd1Gh+08+VVP9
-         4oDlGZ7/wFrDbrJp58fO1vSi7A+hz5yJoZixxz+EFyYeoycuzo2m276kKeM0fJQsjxFn
-         McyA==
-X-Forwarded-Encrypted: i=1; AJvYcCUBgZWXT5xUXwapfzM+KeFSc9NPjeGq7bxa+3W+YpUkXZ4/g4YiE2JLjtEbLlRN+CZZP7zY7t9zNavShkmj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyggXJdrHUEG+kZVkcS4zP5Jou2+TmZt9mPrEN4/0GH6lsgEYoE
-	MpFDmKIPhwnuwZE3ma6sWkg5lI6npz+/gBQOJr+bvs9wCisB9arvJVaQ/Blk+xA=
-X-Google-Smtp-Source: AGHT+IG1zAhxqCSnphVS4knrQ7lzHdY0hkkCl/xfW2+M2LrSeIS20G5k+mnES++w75TRcLNSM/0jNg==
-X-Received: by 2002:a05:6512:282a:b0:535:4144:e682 with SMTP id 2adb3069b0e04-53678fffd64mr200928e87.11.1726117604333;
-        Wed, 11 Sep 2024 22:06:44 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f86fcb4sm1791631e87.74.2024.09.11.22.06.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Sep 2024 22:06:43 -0700 (PDT)
-Message-ID: <9dd00bbc-9a4b-4e00-8bdf-757221813f04@linaro.org>
-Date: Thu, 12 Sep 2024 08:06:37 +0300
+	s=arc-20240116; t=1726121321; c=relaxed/simple;
+	bh=CY+w8MGLCF1lNDY9i5VuksfT3MLxRmKIvyYXHo83aqs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ublZwImcLi+HYrBigZVLmP5lrk7vdneZSthXB+lnOGXIkkQT87KcIrU2p2cb9GehQF2cnyNx+mwMfu48RgRw0jwZVgJ89gW1W7FKS6ON2qL8eB3BR5PcK9NAgMEfvBguMP511Q37fNzAdaCZqz7lGcDGQFCyxnV+ak5pfXnZSPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bR+X1+RV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1913AC4CEC6;
+	Thu, 12 Sep 2024 06:08:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726121321;
+	bh=CY+w8MGLCF1lNDY9i5VuksfT3MLxRmKIvyYXHo83aqs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bR+X1+RVqQQ2F2cyE8P03ue21ERSFfflNLx1E8Zo8/RZMs+aifnS5jUOcqrGsi3tK
+	 ko2onP43JX4lTJnb81zWYR3IYJaAV07azvxb0T/Lw68GjLetFlPG+C/tpzcp2R8QAr
+	 k8hqPsNcImUIu4+yXpFxcD6pXXx7LroBvtMgKlvl+rJEQX4W6KvdaMXxdSZsxBrRqB
+	 PODjFDAitdH1sop5wNHQYXwHA50vFoWAMGIZZcjaOthAwwUICaTDy6BNXudRhsInt8
+	 OYdu+FOMoBjSueXdNxuQY2FEfKz9ndERcaXUugvBfK5QtAxXuMNC7f00hLMGJdV0j0
+	 lvi4sGzYbCDSw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sod0l-000000004gw-0JHU;
+	Thu, 12 Sep 2024 08:08:59 +0200
+Date: Thu, 12 Sep 2024 08:08:59 +0200
+From: Johan Hovold <johan@kernel.org>
+To: manivannan.sadhasivam@linaro.org
+Cc: Richard Zhu <hongxing.zhu@nxp.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Chuanhua Lei <lchuanhua@maxlinear.com>,
+	Marek Vasut <marek.vasut+renesas@gmail.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Pratyush Anand <pratyush.anand@gmail.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>, linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, abel.vesa@linaro.org,
+	johan+linaro@kernel.org,
+	Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>,
+	linux-tegra@vger.kernel.org
+Subject: Re: [PATCH v7 3/4] PCI: qcom: Add equalization settings for 16.0 GT/s
+Message-ID: <ZuKFe6XvZwQOjBJ8@hovoldconsulting.com>
+References: <20240911-pci-qcom-gen4-stability-v7-0-743f5c1fd027@linaro.org>
+ <20240911-pci-qcom-gen4-stability-v7-3-743f5c1fd027@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
-Content-Language: en-US
-To: Jinjie Ruan <ruanjinjie@huawei.com>, andi.shyti@kernel.org,
- swboyd@chromium.org, wsa@kernel.org, sdharia@codeaurora.org,
- girishm@codeaurora.org, dianders@chromium.org,
- linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org
-References: <20240912033459.3013904-1-ruanjinjie@huawei.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240912033459.3013904-1-ruanjinjie@huawei.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240911-pci-qcom-gen4-stability-v7-3-743f5c1fd027@linaro.org>
 
-On 9/12/24 06:34, Jinjie Ruan wrote:
-> disable_irq() after request_irq() still has a time gap in which
-> interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
-> disable IRQ auto-enable when request IRQ.
+On Wed, Sep 11, 2024 at 08:56:28PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
 > 
-> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
-> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-> ---
->   drivers/i2c/busses/i2c-qcom-geni.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
+> During high data transmission rates such as 16.0 GT/s, there is an
+> increased risk of signal loss due to poor channel quality and interference.
+> This can impact receiver's ability to capture signals accurately. Hence,
+> signal compensation is achieved through appropriate lane equalization
+> settings at both transmitter and receiver. This will result in increased
+> PCIe signal strength.
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 06e836e3e877..4c9050a4d58e 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -818,15 +818,13 @@ static int geni_i2c_probe(struct platform_device *pdev)
->   	init_completion(&gi2c->done);
->   	spin_lock_init(&gi2c->lock);
->   	platform_set_drvdata(pdev, gi2c);
-> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
-> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
->   			       dev_name(dev), gi2c);
->   	if (ret) {
->   		dev_err(dev, "Request_irq failed:%d: err:%d\n",
->   			gi2c->irq, ret);
->   		return ret;
->   	}
-> -	/* Disable the interrupt so that the system can enter low-power mode */
-> -	disable_irq(gi2c->irq);
->   	i2c_set_adapdata(&gi2c->adap, gi2c);
->   	gi2c->adap.dev.parent = dev;
->   	gi2c->adap.dev.of_node = dev->of_node;
+> While at it, let's also modify the pcie-tegra194 driver to make use of the
+> common GEN3_EQ_CONTROL_OFF definitions in pcie-designware.h.
+> 
+> Signed-off-by: Shashank Babu Chinta Venkata <quic_schintav@quicinc.com>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> [mani: dropped the code refactoring and minor changes]
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Thank you for the change.
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-
---
-Best wishes,
-Vladimir
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
