@@ -1,141 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-31587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8173976460
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 10:22:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BDA7976479
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 10:29:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D1E41F25065
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:22:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA4001F24651
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:29:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4AA6A191499;
-	Thu, 12 Sep 2024 08:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ABF2018A6A9;
+	Thu, 12 Sep 2024 08:29:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iQ6WmGfq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sWdnb8CX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF47190682
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 08:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2AE1A28D;
+	Thu, 12 Sep 2024 08:29:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726129354; cv=none; b=rUT9fiPy2hxwesX24Gwdhs4LK/LznE71VCs75rb9mqtUTY1grQVfo2R2MuDXZmqLQJrUFOaKvO8vO/SmrRvK2+UuvlCBNRuKixjP0F49giDmFXK9LP8WwpYzfJAwx+GaCpPkWp5dVTfSf5//caSX/MmEIa3vu7lIcS0d2pfaTY0=
+	t=1726129790; cv=none; b=sSOPctaP/oVa/Y2SvCffzSAOhmPxOHdDcEgl2UXEg1YVVDHhYH3HTJ/oS0i7bKHWnA76hFe5v6TTxXCwSg4SZRzzsvYnaSt4rDixXpRJCI+zuf4z5DIsBbT0+s4vSM4gO+I6XoHZ/yMuky7JJgzo+fVXrYZCts2PI8wh8Z04GIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726129354; c=relaxed/simple;
-	bh=fxk0ADnO7AYMfVAA4gttR0iy6g40PU6xW5oQpU3fVoE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CHPifa22cGwMr39RSWSWc68G1NOb9F1XEJHR1qa9rJsiek9a2k8HT5NpHvs8ZEVf3cWqC83SVwOd6VtaVIQ1aNJ+nzFPgCSpq8Jn+tYFr/W2D2Rgspx1Ya5AIkRrr8zeFOq3Lf0Muk3h67dDFzKqZ/ZcJT7udgHd0M5sEPBH2h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iQ6WmGfq; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5356a0a56f4so122327e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 01:22:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726129350; x=1726734150; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mePICWeS9/hXtfqs7iQrU4vgAXNr6sPz0xlhgJSQNUM=;
-        b=iQ6WmGfq5NEW7YhwxSaLSel95LhMshK8mEretsWZI5MihQP0mevOlnNwMJygGr95E2
-         4j57pliz3OnWTZJHWA19K0Zc69QgBs1VTj0/qCKIgjUFjqX8IvZqsYMtJZQyWYJtlYUQ
-         kLa4IMchh5XAte6GTh3822AKKBGKJPHZJdTVQDuNHP4vPOM/6fNYUlt7EmNFtkVinHZ/
-         21lZgNmj/e2vld+hEpLP0OcLsyckLTZjfL2aKdAchf5ew12Eq2KU379SAMUq7kH/dCdj
-         MkCHSQmF1RSNGK03Ni6jNFTVB9mSqYkIk1wBKpBdaOFcMyDy3mdsxZqR9+vmAE9KHlGA
-         2yOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726129350; x=1726734150;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mePICWeS9/hXtfqs7iQrU4vgAXNr6sPz0xlhgJSQNUM=;
-        b=fPCg8pWD9vy8RjV1D6iwStaWi9sYHoHW3h+F0aqvRbhbwCmq04zwREOIAqQEy0iHQw
-         hfABwqHXavKzjSBGsHiUX3ky7f+0SaUfW5hnljv3fNHJdxaIw9F1AfkPDTnLjOb9up4o
-         QQVyRZf7usKz70RI7c0QrHrkzAq4bKFPjrZs0OQ3OQSu4i5+rBCF2y4JMBrLsWAkbxE9
-         UvHlrT7j1doTZVxJbI3bqrDRAuOr5zJeiuSdDPWAeABliCcSIhq7Vy1L1hhbs/8qEXSq
-         wCZvyRzwW7t6S5u2cg0gGzqOW5ZLFsIVNTqT0r9y3wsEZDDndUdGYlZ2xsPWfNIGEOJD
-         jAng==
-X-Gm-Message-State: AOJu0YwHdhwQpcKHJOarQP2W1vc4dBGhnsT7p+p3xRcs0+Gc8CZJwVDz
-	IobrXw9AWk2ttaqO4DrEbGMVu1eooDakE9tk3QHLAEiQYZb+YUm6xoycGY/22zQ4R7Y0hZzvYa0
-	N
-X-Google-Smtp-Source: AGHT+IFHpYz3MtFNhhk0qE4MQvJloavhfM+9b9Iwh0c9t2QbQKCzNxYvsVOPmoH00u63FcpYNGMucA==
-X-Received: by 2002:a05:6512:3e08:b0:52f:c438:883c with SMTP id 2adb3069b0e04-53678fab60amr315905e87.1.1726129350250;
-        Thu, 12 Sep 2024 01:22:30 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f8cb796sm1854010e87.171.2024.09.12.01.22.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Sep 2024 01:22:29 -0700 (PDT)
-Message-ID: <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
-Date: Thu, 12 Sep 2024 11:22:28 +0300
+	s=arc-20240116; t=1726129790; c=relaxed/simple;
+	bh=vVZSVYNNMpsxf/Mtb1DzmqrGNnMqIEIm+Nt2IKnA8hA=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=DlQhBSrkoFVCGjg5aWFAQ3AHJ8MCXTLcoE/P0PS+4H3NxoQCDYLFsiKY87OVL7SCStCsB101+5qyg7Fzug53ymVK/dpN5AUlAyF9PP4AwTfX1u2h00gNrSIgDFVSojIkNFnKzoj/WnxJTgfIp7cIFRpTTiiSdM8Ig9fIGsVr5aE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sWdnb8CX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BCFEC4CEC3;
+	Thu, 12 Sep 2024 08:29:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726129790;
+	bh=vVZSVYNNMpsxf/Mtb1DzmqrGNnMqIEIm+Nt2IKnA8hA=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=sWdnb8CXle8EwZQtK4FF2OPZiO4WYQ+RQ0yo731sacd6+s9mXxQkLvJR41dZJLHR5
+	 ku1BzgEoYxHHcVg9eIRn9Z0MrgaYViDkjpaq3AQLvODziVTMB+jfMBOz45mNR4JbpC
+	 hIVnQqQx54h9mSjhfscWiRH4TVXlV9xw1ffrSWIXtARfD/oabDu/C6rhGUsCco9iYn
+	 8OgavysBhYcM677c8qTtpjdsvUGDcLOlJLauSgOfdo2XwN7IAVWVoYnnRVVPrF8Pz7
+	 3ebkCbIpvxUv7Rp50WELU2xHRUrEXQ9wUhklmQODO6Fawg2QlY1TkzbGMHH/ud68Wf
+	 014aV9hnrDymQ==
+Date: Thu, 12 Sep 2024 03:29:48 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-Content-Language: en-US
-To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240812144131.369378-8-quic_depengs@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Mahadevan <quic_mahap@quicinc.com>
+Cc: andersson@kernel.org, dmitry.baryshkov@linaro.org, sean@poorly.run, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ quic_jmadiset@quicinc.com, quic_vpolimer@quicinc.com, 
+ neil.armstrong@linaro.org, swboyd@chromium.org, mailingradian@gmail.com, 
+ quic_abhinavk@quicinc.com, freedreno@lists.freedesktop.org, 
+ danila@jiaxyga.com, quic_kalyant@quicinc.com, 
+ maarten.lankhorst@linux.intel.com, tzimmermann@suse.de, mripard@kernel.org, 
+ konrad.dybcio@linaro.org, linux-arm-msm@vger.kernel.org, 
+ marijn.suijten@somainline.org, robdclark@gmail.com, krzk+dt@kernel.org, 
+ dri-devel@lists.freedesktop.org, daniel@ffwll.ch, quic_jesszhan@quicinc.com, 
+ conor+dt@kernel.org, airlied@gmail.com, bigfoot@classfun.cn
+In-Reply-To: <20240912071437.1708969-2-quic_mahap@quicinc.com>
+References: <20240912071437.1708969-1-quic_mahap@quicinc.com>
+ <20240912071437.1708969-2-quic_mahap@quicinc.com>
+Message-Id: <172612978700.2592228.2560116576416075874.robh@kernel.org>
+Subject: Re: [PATCH 1/5] dt-bindings: display/msm: Document MDSS on SA8775P
 
-Hi Depeng,
 
-I do have one more ask for a change.
-
-On 8/12/24 17:41, Depeng Shao wrote:
-> Add bindings for qcom,sm8550-camss in order to support the camera
-> subsystem for sm8550.
+On Thu, 12 Sep 2024 12:44:33 +0530, Mahadevan wrote:
+> Document the MDSS hardware found on the Qualcomm SA8775P platform.
 > 
-> Co-developed-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Yongsheng Li <quic_yon@quicinc.com>
-> Signed-off-by: Depeng Shao <quic_depengs@quicinc.com>
+> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
+> ---
+>  .../display/msm/qcom,sa8775p-mdss.yaml        | 225 ++++++++++++++++++
+>  1 file changed, 225 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+> 
 
-<snip>
+My bot found errors running 'make dt_binding_check' on your patch:
 
-> +
-> +  vdda-phy-supply:
-> +    description:
-> +      Phandle to a regulator supply to PHY core block.
-> +
-> +  vdda-pll-supply:
-> +    description:
-> +      Phandle to 1.2V regulator supply to PHY refclk pll block.
-> +
+yamllint warnings/errors:
 
-Here the supplies should be split into ones, which are specific to CSI blocks,
-and I believe they shall be set as optional.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml: ^display-controller@[0-9a-f]+$: Missing additionalProperties/unevaluatedProperties constraint
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml: ^displayport-controller@[0-9a-f]+$: Missing additionalProperties/unevaluatedProperties constraint
+Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.example.dts:24:18: fatal error: dt-bindings/clock/qcom,sa8775p-dispcc.h: No such file or directory
+   24 |         #include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[2]: *** [scripts/Makefile.lib:442: Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1432: dt_binding_check] Error 2
+make: *** [Makefile:224: __sub-make] Error 2
 
-The proposed names are:
+doc reference errors (make refcheckdocs):
 
-vdda-phy-01-supply
-vdda-pll-01-supply
-vdda-phy-23-supply
-vdda-pll-23-supply
-vdda-phy-46-supply
-vdda-pll-46-supply
-vdda-phy-57-supply
-vdda-pll-57-supply
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240912071437.1708969-2-quic_mahap@quicinc.com
 
-I understand that what I ask is much more clumsy, and it could be seen even as
-unneeded, however it'll be the right set of properties to describe the CAMSS IP
-in this respect.
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
---
-Best wishes,
-Vladimir
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
