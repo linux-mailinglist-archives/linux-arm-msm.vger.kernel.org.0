@@ -1,427 +1,343 @@
-Return-Path: <linux-arm-msm+bounces-31620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7378976F91
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 19:31:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 43C2C976E8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 18:18:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2FC351F243E1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 17:30:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B6ADE1F2468A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 16:18:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED95F13DBBC;
-	Thu, 12 Sep 2024 17:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A6251448DC;
+	Thu, 12 Sep 2024 16:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b="VvpeRMt1"
+	dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b="AMJpXWq7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-00823401.pphosted.com (mx0b-00823401.pphosted.com [148.163.152.46])
+Received: from mx0a-00823401.pphosted.com (mx0a-00823401.pphosted.com [148.163.148.104])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ECC1EB2A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 17:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.152.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726162255; cv=fail; b=IYyVzn0XtrJlNDvqNSJPnSCF2MMPdDaWgfD4FMcj7PHeyqQm8QZrqc5WBtuwqghUBxkHsIwgxzBcuZKRcLZAw87wI4lCCLWLReoNFGw2eGwJSjf+uwBiItbkyxEvLd3W5tKhnwkgR3uhews1xHNjeOYpGJA58rKKQ8lGMY8AlmA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726162255; c=relaxed/simple;
-	bh=hq7paIgPhR1NCJiGmZcYYGp9U9n+79NcqYBuP1S4V8Q=;
-	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=fUv9fsp23LnZdPaZlbZo0Syoai+rs6t1flKrd9Kl3hhccrf/wH8Akxk9/0T71BWbZGvm8mWkxIH2nv/4ZXTOcXhLJzDtv78x4kQiOPrMuVM33OnFtoV/TMLSz2EZcbZ5fFAmnnkcCeYLCVzV3dia48ZFf83nUhkMKiw2C/Lgbdk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com; spf=pass smtp.mailfrom=motorola.com; dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b=VvpeRMt1; arc=fail smtp.client-ip=148.163.152.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4180158AC4
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 16:18:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.148.104
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1726157896; cv=none; b=BlHpLYO63OZI4oCutgeQtxBCA9osmgyG6IsxpwkKdaeCiiv3Gf1yopyRKFm4xCcPpugiVn6s0gSK5lcoLkgcWD9GR9F+qeNU0ggNRxanh5yHQlM4PWqpYuNdKNZPPvIiyG5TOq6A03bhuoxfcerr6imJ1Vao9rg29nc+jCeszHw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1726157896; c=relaxed/simple;
+	bh=fj1lkCVfDe5e7dKEkwdMnxbYBtwPsQCxAhuEtgr7HWs=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=kZeJBsSO6gN8HtT1ecAFV7JRfTLMBQq4gGytto12hNEZ4VYbly8/tUIRsvxSKRWGlZ0LuigDPs6OuffVDIk4v/bxUpKMf1284duJ4/JzjuuTJ0XSRXuS8zdMRXFTmSj3CFk4E5Dv2ujdsJFrt2Qr1Po8PEMWGofO9FIRND2E3Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com; spf=pass smtp.mailfrom=motorola.com; dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b=AMJpXWq7; arc=none smtp.client-ip=148.163.148.104
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=motorola.com
-Received: from pps.filterd (m0355090.ppops.net [127.0.0.1])
-	by m0355090.ppops.net (8.18.1.2/8.18.1.2) with ESMTP id 48CCdlSE031464;
-	Thu, 12 Sep 2024 16:02:59 GMT
+Received: from pps.filterd (m0355086.ppops.net [127.0.0.1])
+	by mx0a-00823401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CDEVj3007810
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 16:18:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=motorola.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=DKIM202306; bh=hq7paIgPhR1NCJiGmZcYY
-	Gp9U9n+79NcqYBuP1S4V8Q=; b=VvpeRMt11IPUydthsGi0OMT0TLg/Elovli/ok
-	R4T33HiqDPMNpjn9t2/B8Q41vqG8e3j+kEHQmJ/oAbIWFk++IcqynOiwwlGFzwTa
-	olNKmbWW1R3MzMfBWXrF7sl4HcMIsM5SQMHQrYTzm+VwMFhjQiK+KI0O8Bk8YuA/
-	p1JrGr3tNOgNoLNzUmtKTqom9R6uBkh7VtloZyynWeL5FnnCKcuVvuWRNxYJgMCz
-	mvNQ4pyNmiPMqFMt49lNWxIaLLkaisIxw7DvHrPsnI46VjDDOEtw0SGDLDel2sv4
-	3caO3NYp39JvbxV/Mox1Ja6DWgkLQ63bBiddxa4dcdpAOPP6w==
-Received: from hk3pr03cu002.outbound.protection.outlook.com (mail-eastasiaazlp17011024.outbound.protection.outlook.com [40.93.128.24])
-	by m0355090.ppops.net (PPS) with ESMTPS id 41h25rn59v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Sep 2024 16:02:58 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Y/ze5p00UZ/VrSLTCJ17lsvfwjUb+OeMjD2hgPkYWl5+zF5UzMIbVQNMBFHY9Xl6DKqocrff40fh4t3GDs4HZiDqDFGqJMfZwSBjkGqtse6ItG9fZPFkTGSgj1XSyrbZeGc3h7rppDi8i2jOWjKctKzJikoZ9ZkbJLkYMbIH/Z57tmIqg52GYv6TpaDBp2S9GJAiNaOuwz9zEfrzKC+j6438KJi9uyVm6OPkpSSb625wpuyANmkA2c6whFKW9xXTzeGsq94H06XmUX5y1bWyKls9scbV4NHlCgnDsPFSog2HyIe3SPCYHoqPJEHJFnbU6PDkfrKte+CzyIgtFhVzGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hq7paIgPhR1NCJiGmZcYYGp9U9n+79NcqYBuP1S4V8Q=;
- b=bvTw0m+jzA2AkQ9/EeQ+nt1PC0TR2IADgnxL44nbCbsdwhB+q08K+l2Z6zTNmrkcI5RbEtq3/Ly2xD81k+sO5RXPa/vh4LBReosEp4Ne3dDkmRMS5etLciskEYode5Xm3J8J6ouciAeV2bhfe4W3065vJQjnIrP2oSPXjbIZ7VMp5U5wpOQajEDGUP9XlQewB7r0D23k6UYG7Ov8340NjRcYIPcX2HfdlhcrVAkWUVidha0BXup/+c3ufacQuHYDU9KG4IyDD8g/s8ESkAzGL/KCUr30lG2wFAXIvCSJWa+i3f91xJgTCSxVrzMJl6h01PY7xrrRl/3nd0ApTbhGyw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=motorola.com; dmarc=pass action=none header.from=motorola.com;
- dkim=pass header.d=motorola.com; arc=none
-Received: from SEZPR03MB6786.apcprd03.prod.outlook.com (2603:1096:101:66::5)
- by SEZPR03MB7472.apcprd03.prod.outlook.com (2603:1096:101:12b::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.23; Thu, 12 Sep
- 2024 16:02:54 +0000
-Received: from SEZPR03MB6786.apcprd03.prod.outlook.com
- ([fe80::18e4:458e:7dea:e842]) by SEZPR03MB6786.apcprd03.prod.outlook.com
- ([fe80::18e4:458e:7dea:e842%3]) with mapi id 15.20.7939.022; Thu, 12 Sep 2024
- 16:02:53 +0000
+	content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=DKIM202306; bh=fj1lkCVfDe5e7dKEkwdMn
+	xbYBtwPsQCxAhuEtgr7HWs=; b=AMJpXWq7yOcdL4npnmoXZ8vkRAyedevwRrElR
+	aTlDF2Av2vD1XtN94s8wH9fS4E/0cx6NHJfIn3Uu895G0D9+wI98TAfmUqYsFlez
+	PFJ7YrhiKhIikbbWBlNWO8ZyydY0WnHf7m2k/bBHF/CUvye4XJ3uM85oIfeASmKF
+	HdI1sr2554wFsBdsZH5uiBgVvduImWPs3mpvVe0to5HVVm+PvFO7AuJN0dxm2qUe
+	5tPMwrC+4QrnmeXTQfEIrrNQA0sYh29xwAzd1Z1Ree5lRcSrc4eZ9LzGjgENRyuR
+	qumyHas2gN5lLp3cdjGDTOjnhNebRm6U5mP634qvvfjCaJO2A==
+Received: from iadlppfpol2.lenovo.com ([104.232.228.81])
+	by mx0a-00823401.pphosted.com (PPS) with ESMTPS id 41h4khuy53-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 16:18:12 +0000 (GMT)
+Received: from va32lmmrp01.lenovo.com (unknown [10.62.177.113])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by iadlppfpol2.lenovo.com (Postfix) with ESMTPS id 4X4N0345nfzYkjdK
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 16:18:11 +0000 (UTC)
+Received: from ilclasset02 (ilclasset02.mot.com [100.64.49.13])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: mbland)
+	by va32lmmrp01.lenovo.com (Postfix) with ESMTPSA id 4X4N036wSnz2VZ19
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 16:18:11 +0000 (UTC)
+Date: Thu, 12 Sep 2024 11:18:10 -0500
 From: Maxwell Bland <mbland@motorola.com>
-To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-CC: Andrew Wheeler <awheeler@motorola.com>,
-        =?gb2312?B?U2FtbXkgQlMyIFF1ZSB8IOPasfPJ+g==?= <quebs2@motorola.com>,
-        Neill
- Kapron <nkapron@google.com>, Todd Kjos <tkjos@google.com>,
-        Viktor Martensson
-	<vmartensson@google.com>,
-        Andy Lutomirski <luto@amacapital.net>,
-        "keescook@chromium.org" <keescook@chromium.org>,
-        Will Drewry
-	<wad@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        kernel-team <kernel-team@android.com>
+To: linux-arm-msm@vger.kernel.org
 Subject: [RFC] Proposal: Static SECCOMP Policies
-Thread-Topic: [RFC] Proposal: Static SECCOMP Policies
-Thread-Index: AQHbBSz1wYxrt9yqNUa8P2GZ+zXs0g==
-Date: Thu, 12 Sep 2024 16:02:53 +0000
-Message-ID:
- <SEZPR03MB6786D45BE387F2B378E71A84B4642@SEZPR03MB6786.apcprd03.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR03MB6786:EE_|SEZPR03MB7472:EE_
-x-ms-office365-filtering-correlation-id: 3c00f524-8bd8-416d-8b9c-08dcd3445c3f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam:
- BCL:0;ARA:13230040|376014|7416014|1800799024|366016|3613699012|38070700018;
-x-microsoft-antispam-message-info:
- =?gb2312?B?UklMZHRJY25OT2xjdjFncm1HeW9vS3FWUnkwMFJtK2ZjY3VkMjBxSEZLdnJx?=
- =?gb2312?B?UDZ4aGRmZnlkdUpRWUFVcklRTFhEc3ZWUlVWN3FBMXdGbzVCYlZpS2tQa2k4?=
- =?gb2312?B?MnU2OUR1RURwOEcvSHpQMUJhb2xFU3puT0dXSjBhaU4wTTlFaDRWVUVpenZP?=
- =?gb2312?B?YnVMejNkcnB2UUVlSHlYYUdrSFZpZ2xyUkkwWDNudjBjKzVPclFHUHF0Q0Jm?=
- =?gb2312?B?dVY5ckhMdGpzWGlSR1JGRWtHVmNxSTRZTzhPQW9yb01TVEtYZUdFVjBsOWQ3?=
- =?gb2312?B?blp1eWlMaWdYR3VPREFDTEgzeHR6VUdDaloxL2dHLzNNQ1FzVlpnNDFKQ091?=
- =?gb2312?B?bVZYMW5pMFFJeUFvbVMxMUpndm5sWkFKUk5XaEhGYTI3YVBOL0pHMElLL2xv?=
- =?gb2312?B?Q1RWbHRLakJJQ0RMUm9reHZoOG1DMVVQV01lcVkvQnVnVVhpNSt6ZytkNDZM?=
- =?gb2312?B?TVk4RHl2TEx4YmdGYkdRcmx6SExFVlczdDJUY0pIR1FmT1IwOTBva0FZdnlE?=
- =?gb2312?B?dmo2Q1Z1V2pGNmtXNk95eVBLeTlTM0tXYnJNc2lPcXErdVBnVFVMaWttQVJ0?=
- =?gb2312?B?enhnMGlEdnAvdUtwSDFTUmZidk1vOXN0SHJaY1g5eHg0dUthbmNINTh1bzZj?=
- =?gb2312?B?NEdUalV4WHh0TkJhbXBJVFh2V1ZWd093R0ZvRS9ma1ZPdUIrenkzcjd3R1R1?=
- =?gb2312?B?QUN3Q2l5dG1XSC9rSDBmNFJzMUMycEZzODA5QVM0T3pBVnZJK2hwNjJkMG1R?=
- =?gb2312?B?dHBhNG9TWG80RnJsaVJwNEVRUlpXYXV3UGdzblY3NHlVb1NydzNqaS9yMmNY?=
- =?gb2312?B?NTdrNG9iOUo3dWx3NWtGL3ZmL3AyNkpSOTF2U3hMNFdGNVBScTF4bjdsdW9t?=
- =?gb2312?B?U2VYUllOVmp4Z2hKbElyOXlRTkIzU3FPeHZybGdWaGtSdDd5a2tPSmhwZ0p5?=
- =?gb2312?B?L2hBMm9uR3YyNFhwTUxESUQxa1E0Qm5ITVJ1R0lhMGlEQUNoeG9GN3Bpemkw?=
- =?gb2312?B?elk2UEsrTEl3dDA0Y2R2Znhlbi9xMDA0c1Nac29TeXpUbE82eCthck8yOWRK?=
- =?gb2312?B?a3VGTmdNaHJWZi85VVFTSlpaSFBPTzd2ck53VjB2Y0RucUkwcC9UMy9LMDNz?=
- =?gb2312?B?Y2xGbk1TNjcwMzRhTnBMOGMxNC84UzZLOGpWYWlsZ21qSThoakkvbHlFNHFq?=
- =?gb2312?B?b1hKMGNUMGNkc3ZONnFKYnVNZnArUEdmeERZMVRHNmhSd1NaWlJjVk9hMFJR?=
- =?gb2312?B?bnZZTVVqSDhCSVNYVkdPWkVBSjhxV2JjeGhvTGRNdVNwRFBEM0t4R2Zpb0VF?=
- =?gb2312?B?d3N1bk1kc0NQcXkyZzVHcmxkdFFFaXJaTmxCWWcrVWt2cWdDaVh3N2pQQ0p0?=
- =?gb2312?B?TWNsaWxLYWZRRU93Yzhsdk5wSHdJMG9DY1FJZUJvbnM5ZHl2SktBMXZvc21l?=
- =?gb2312?B?Z2FrVWgvcmxXNTRVVHNsUGtBUGVDV1lvL3FBQnhQMGpya2lScXlvaUlkK05K?=
- =?gb2312?B?Y0t6L1NCNHpRb3UwTFpabkgyYlRBeVpWbWVoclFzMW1jYVZjNHhkWmhSUDRs?=
- =?gb2312?B?UzVzOUdUVEJBeGlKUTY2cy9wdXo1Y1ZHM3dvMitFL1ExWGFaWE1vZXMwbHF4?=
- =?gb2312?B?Q1Z3YXhqRFJWeG1kanJ5SDN0Wk02eWdXc1AxVlRNc0h3U2EwV2JnMWxKZC9l?=
- =?gb2312?B?eVduVHFYTmlhOXVKOTgvc3MwYi8yNjl1THRhZU5wV1U0ZFNiLzd2Mm1hKzlN?=
- =?gb2312?B?VjBYbzVhN0dBUno1b05JNmh4Vy95TDFhWWNZcWwyL1Vsa1pXOGFOVkt0cXE5?=
- =?gb2312?B?OXUwQTJ5MUJTYlU2ZnNmRGp1b0tqRjA5VGgxZUhFN2IwRExDc3pvcHpmS3A2?=
- =?gb2312?Q?kDxYarlAHOA97?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR03MB6786.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(3613699012)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?gb2312?B?WitUamJKc3B5YVFHY05MRVFaSS9Xb0MvM0krWTFYWEtDRzdTMFVjbUs5andR?=
- =?gb2312?B?YjJydkNLR1E3dElCemdMeEJUbmFxdzZMam02ZWdNcWloTURiMDhzNXdYcEt4?=
- =?gb2312?B?YmRVajBVSCsya29iYjlRQnZyYkZLdFh5NlZjcmF6a3VaU29wdlM5L0RhL3FQ?=
- =?gb2312?B?Nk9NSmJ0VG1zMERYY3VzbGZBbnFpVmF2cmw3a1pyVW9ZRUcxdGRSTEVzK3Iz?=
- =?gb2312?B?V3U2QzM3TllaRmpkY3lqZGlJZGFmUitkUlBCcmVUWUx6YmR3WVlEVU1vSU9a?=
- =?gb2312?B?TDNmeDlUOXpDWHEwbkN6ZkVIcCt2a2tpZXdtTm84ckRDSVg2YWlGQXJqQnBK?=
- =?gb2312?B?TUlWOUR6ckhqUEtwZ015SjhzR3dCY0Y4bU0zQ2ZMMDg2L2VaRGZXRUJPdldO?=
- =?gb2312?B?U2FyaWFCVUlhQ0ZST1NtMk45V1A3M3NZTGU3am9MSjVoYWRwVFJJRDVjLzE0?=
- =?gb2312?B?NjNzVENJaWN1TmxkYXVzc3JCWWozclpOQ1lISDdicWlkSE4rWWJmRjR0VGxV?=
- =?gb2312?B?clFCZkl4STBwK29oTWljTUpQU0U5dld4aTQxNi8zSlo1S3BpN01CcFVUWFNO?=
- =?gb2312?B?WS9rcnQ4bEVXWEFIbDZCUjdyUFg0T1kvZW1ueXpzMmtEZi9KNE9oT1ZJbVlr?=
- =?gb2312?B?Z0hGUURXUkNRTUk0dFBQbG9zZjdHZDRvL25GNzZsQ0s3azNaYjlwbWh0UVVH?=
- =?gb2312?B?ekF5T210NkZtWUlEbE9sN1o1Zk1VeGdBY1RrT1ZZUVN3NjRxSnp0QXUxd05W?=
- =?gb2312?B?b0g3Y1BDTjEzVnN6QjBOUWtNRlF0ZUhObnlvK1RWUHdlSnpwVzZ6NGRKendD?=
- =?gb2312?B?ZWdVUEk2K3k3dlZVM0UvMUx1Z05LdG1RcmNVMVNBbXNWbWhSd0Q4MkgzYlcz?=
- =?gb2312?B?OXhQNmVnNm04SDI2bmpXb28waGphaFZWMm9YZ0dxWlMrd21BaEIwdmdmUC8r?=
- =?gb2312?B?eFVTZTd3NVI1S3VlZ24wR3lmOFhoKzFwVGozNG9lYTdWNHJOUUh6UDlxRUZU?=
- =?gb2312?B?cnM4ZmcyN215UmVrSEtST3JpRk9Xb3h4YUlFLzBFZUxza1l3TTAwdDV3TnAx?=
- =?gb2312?B?dnByUTI5N0dVd2xDeXo2VGRYMlF6NWV1dVlZaG83QlRUeW12dENpZWFZd0Rm?=
- =?gb2312?B?MGd5L1FrSkY3VUNvTlIxdmhpNDhLVzRaWHppSktLOEFKL0hBNlJjV3JBS2hD?=
- =?gb2312?B?NjE2emZQeDh6Y3Z4ZkhzbkZkQTVBVktHQ2lpVE5IU0FxU2hubEY5OEtERDNr?=
- =?gb2312?B?ZUo2WEJNOW96NWt6Y0hqYnBQdFZMaTlDZDFxQk92eTBLeTd0Y1duV2x5WEhZ?=
- =?gb2312?B?a0p1bDhCdzhCSGkvSVVHTHJMWG8zcFkwU0ZzVjdFcXdIU2gyL3pzbFc4RUJM?=
- =?gb2312?B?cmhheWhSS3dZSU43OUVlaVJ2MTl2ZDhzUjBSMjVnWlMwNW1WSWhCM2Znd1Np?=
- =?gb2312?B?TEluQ3djVy9yS3M3NHIzZDFqcmFIZDFxYlN1M2tsL2hiUTA1TmxtM0lTUlpQ?=
- =?gb2312?B?VkQ2cmpjTVVUa3lnZTg4TE1rQWZJOWYvZy9CODF5OE9mcm5HUHh6WEpCVmN4?=
- =?gb2312?B?UjBJQmJJdG1zQS9PeVpIa1ZXNGV2ZmdLd0JRcTJkOXo2SjZQaW0wbEtpYUIx?=
- =?gb2312?B?MU56U2FobkZEOWtkWlVGKzUvM0JEL0pqaDNLZVB3MUFTUkI2SU9SVEp1cllN?=
- =?gb2312?B?Qm8zWnVpNjJ1U0x4b244MnNQVWd2RFVrV0kzQUNxZG5KUkhHRmdqZUtwcWVX?=
- =?gb2312?B?UXdOTHZSbG5Dc0pQTTRBaC8rR0FrQUwwOUV6Q2FTNGFHdVFSZFpqajJnK3Y3?=
- =?gb2312?B?Z2F3TmFaK2ZFYnRubFZFbDlpRWRxV0pZYnAycWNUZitWaFJFTHVwbFpDVFhj?=
- =?gb2312?B?ZnBDYzdpR2wweCt1TENsaFhUY3VmOFNFOFczV0tOY2gvUnZKZ2I0UW01bHlV?=
- =?gb2312?B?Y0NZdTd1cmN6cTFDbnh2Q2d4OXI5Q3pMTTJVWWFISExIc1RxUzM3c2oxdVhz?=
- =?gb2312?B?RW9nOFBmQW5KeEJ2TkZyM2RHMmI5NnJhNXdxODlNYWoveCtJWlNibStpaEVu?=
- =?gb2312?B?b0ZqRzhUNk52L2wrc0MrZnh4Y1llSVR3ck9UZFUrVlNsT3hES05tZUdwc2JL?=
- =?gb2312?Q?m5T0=3D?=
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+Message-ID: <34wibre45ntwhswsbulhj3gv2e2vrztb3rm6dnmnup2uaq4c6d@hjeugb7t75g4>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: motorola.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR03MB6786.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3c00f524-8bd8-416d-8b9c-08dcd3445c3f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2024 16:02:53.8073
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 5c7d0b28-bdf8-410c-aa93-4df372b16203
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zc54fTCkWo2sdi7208qOd8q/kdhzD52vembhW6ljlCMGs5S3/lsFKjzwqf4Lep9vm/cJVeOY9CPiY45/spIl0A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR03MB7472
-X-Proofpoint-GUID: DgZ95IWnOTUSagqIoaheCdbpdoRnO8Y6
-X-Proofpoint-ORIG-GUID: DgZ95IWnOTUSagqIoaheCdbpdoRnO8Y6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: MxwxiW_nUupJtAoILnHXGAKJGZmtXfDT
+X-Proofpoint-ORIG-GUID: MxwxiW_nUupJtAoILnHXGAKJGZmtXfDT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 clxscore=1015 mlxscore=0 phishscore=0 spamscore=0
- malwarescore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
- bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409120118
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 mlxlogscore=999 mlxscore=0 impostorscore=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 clxscore=1015 adultscore=0
+ malwarescore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409120120
 
-KFJlc2VuZGluZyBhcyBwbGFpbnRleHQgZm9yIG1zbS1rZXJuZWwgbWFpbGluZyBsaXN0LgpPcmln
-aW5hbCBtZXNzYWdlIHdhcyBpbnRlbmRlZCBmb3IgYW5kcm9pZCBrZXJuZWwgdGVhbQp0aG91Z2gg
-bXNtLWtlcm5lbCBzaG91bGQgYmUgYXdhcmUuKQoKSGkgS2VybmVsIFRlYW0sCgorIEtlZXMsIEFu
-ZHksIGFuZCBXaWxsIHNpbmNlIHRoZWlyIGlucHV0IG1heSBiZSB2YWx1YWJsZS4KCkl0IGhhcyBi
-ZWVuIGEgd2hpbGUhICh+OSBtb250aHMgdG8gYmUgZXhhY3QpLiBUaGlzIEphbnVhcnksIEkgc2Vu
-dCBvdXQgYSBzbWFsbAptZXNzYWdlIG9uIEJQRiBjb2RlIGxvYWRpbmcgKCJ1bnByaXZpbGVnZWQg
-QlBGIGNvbnNpZGVyZWQgaGFybWZ1bCIgb3Igc29tZXRoaW5nCmxpa2UgdGhhdCkuIEluIGl0LCBJ
-IG5vdGVkIG5ldyBCUEYgcHJvZ3JhbXMgYXJlIGNvbXBpbGVkIGFsbCB0aGUgdGltZSBhbmQKdGhy
-b3duIGludG8gdGhlIGtlcm5lbC4gQXQgdGhlIHRpbWUsIEkgZGlkIG5vdCBrbm93IHRoZXNlIHBy
-b2dyYW1zIHdlcmUganVzdApjb21waWxlZCBzZWNjb21wIGZpbHRlciBwb2xpY2llcywgbG9hZGVk
-IGluIGFzIG5ldyBCUEYgcHJvZ3JhbXMgY29udGludW91c2x5CnRocm91Z2ggdGhlIGxpYm1pbmlq
-YWlsIGludGVyZmFjZSBhcyB3ZWxsIGFzIGRpcmVjdCBzeXNjYWxsLiBBcyBvZiB0d28gZGF5cwph
-Z28sIEkgbm93IGtub3cgdGhpcyAoYW5kIG5vdyB5b3UgZG8gdG9vLCBpZiBub3QgYWxyZWFkeSku
-CgpPSywgeWVzLCBzeXNjYWxsIGZpbHRlcmluZyBpcyB2ZXJ5IGltcG9ydGFudCwgYnV0IHRoaXMg
-aXMgY3JlYXRpbmcgYSBjYXRjaC0yMgppc3N1ZS4gRm9yIG9uZSwgc2VlIHN0ZXAgKDQpIHVuZGVy
-ICJFeHBsb2l0YXRpb24gb3ZlcnZpZXciIGZvcgpodHRwczovL3d3dy5xdWFseXMuY29tLzIwMjEv
-MDcvMjAvY3ZlLTIwMjEtMzM5MDkvc2VxdW9pYS1sb2NhbC1wcml2aWxlZ2UtZXNjYWxhdGlvbi1s
-aW51eC50eHQuClNlY29uZCwgdGhpcyBtaW5vciBsYWNrIG9mIGNhY2hpbmcgaXMgYWRkaW5nIGxv
-YWQgdGltZSB0byBtb3JlIHRoYW4gOTAKYmluYXJpZXMvc2VydmljZXMgb24gdGhlIHN0YW5kYXJk
-IFFDT00gYmFzZWxpbmWhqkknbGwgYWRtaXQsIGl0IGlzIHByb2JhYmx5Cm5lZ2xpZ2libGUgaW4g
-dGhlIGdyYW5kIHNjaGVtZSBvZiB0aGluZ3MgKGEgcXVpY2sgYXBwcm94aW1hdGlvbiBwdXRzIHRo
-ZSBkYXRhCm9wZXJhdGVkIG9uIGFyb3VuZCAwLjExODggTUIpLiBCdXQgbW9zdCBpbXBvcnRhbnRs
-eSwgdGhpcmQsIHdpdGhvdXQgc29tZSBkZWdyZWUKb2YgcHJvdmVuYW5jZSwgSSBoYXZlIG5vIHdh
-eSBvZiB0ZWxsaW5nIGlmIHNvbWVvbmUgaGFzIGluamVjdGVkIG1hbGljaW91cyBjb2RlCmludG8g
-dGhlIGtlcm5lbCwgYW5kIHVuZm9ydHVuYXRlbHkgZXZlbiBrbm93aW5nIHRoZSBjb3JyZWN0IGJ5
-dGVzIGlzIHN0aWxsCiJpZmZ5IiwgYXMgaW4gb3JkZXIgdG8gcHJldmVudCBKSVQgc3ByYXkgYXR0
-YWNrcywgZWFjaCBvZiB0aGVzZSBmaWx0ZXJzIGlzCm9mZnNldCBieSBzb21lIHJhbmRvbSBudW1i
-ZXIgb2YgdWludDMyX3QncywgbWFraW5nIGV2ZXJ5IDQtYnl0ZSBzaGlmdCBvZiB0aGUKZmlsdGVy
-IGEgInZhbGlkIiBjb2RlcGFnZSB0byBiZSBsb2FkZWQgYXQgcnVudGltZS4KCllvdSBtaWdodCBi
-ZSB0aGlua2luZywgImJ1dCB3YWl0LCBiaW9uaWMncyBsaWJjIG9ubHkgZGVmaW5lcyBhIGNvdXBs
-ZSBvZgpyZXN0cmljdGVkIHBvbGljaWVzLCBwcmltYXJ5IGFuZCBzZWNvbmRhcnkgZm9yIHN5c3Rl
-bSBhbmQgdXNlciBhcHBzCnJlc3BlY3RpdmVseS4iIEkga25vdyEgRm9yIHRoZSBtb3N0IHBhcnQs
-IGFwcHMgZmFsbCBpbnRvIGVpdGhlciB3aGF0IEkgcHJlc3VtZQppcyB0aGUgZGVmYXVsdCBhcHAv
-c3lzdGVtIHBvbGljaWVzLCBidXQgdGhlcmUgYXJlIGxvdHMgb2YgUUNPTSBiaW5hcmllcyBhbmQK
-b3RoZXIgbWFnaWMgcHJvZ3JhbXMgKGRvbGJ5IGRheCkgdGhhdCBhcmUgc2VuZGluZyB1cCB0aGVz
-ZSBwcm9ncmFtcyBhcyB3ZWxsLgpJJ20gc2VlaW5nIG1vcmUgdGhhbiAyMCBkaWZmZXJlbnQgcHJv
-Z3JhbXMgZm9yIGFyb3VuZCBhIG1pbnV0ZSdzIHdvcnRoIG9mCnJ1bnRpbWUuIE9uZSBleGFtcGxl
-IGlzIGF0dGFjaGVkIGF0IHRoZSBlbmQuCgpTbywgdGhlIHByb3Bvc2FsOiBhICJDT05GSUdfU0VD
-Q09NTVBfU1RBVElDX1BPTElDWSIgZm9yIHNlY2NvbXAuIFRoaXMKd291bGQgY2hhbmdlIHRoZSBB
-bmRyb2lkIGtlcm5lbCdzIGdlbmVyaWMgU1lTX3NlY2NvbXAgY2FsbCwgd2hpY2ggdGFrZXMgaW4g
-YQpmaWx0ZXIgd2l0aCBhbiBhcnJheSBvZiBCUEYgaW5zdHJ1Y3Rpb25zLCB0byBpbnN0ZWFkIHJl
-ZmVyZW5jZSBhbiBJRCB3aGljaApjb3JyZXNwb25kcyB0byBhIGZpeGVkIGZpbGUgb24gL3N5cy9i
-cGYvc2VjY29tcCBvciBzb21ldGhpbmcgbGlrZSB0aGF0LiBUaGUKc2FuZGJveGluZyBiZWhhdmlv
-ciBvZiB0aGVzZSBhcHBzIHNob3VsZCBiZSBrbm93biBhdCBjb21waWxlLXRpbWUsIGV2ZW4gaWYK
-dGhlcmUgYXJlIG11bHRpcGxlICJwZXJtaXNzaW9uIHNldCB0eXBlcyIgdGhhdCBtYXkgbmVlZCB0
-byBiZSBkaXNwYXRjaGVkLiBVc2VyCmFwcHMgc2hvdWxkIGFsd2F5cyBoYXZlIGEgc2luZ2xlLCBm
-aXhlZCBwb2xpY3kuIFRoaXMgd2F5IGl0IGlzIHBvc3NpYmxlIHRvIHNheQpmb3IgZXZlcnkgY29k
-ZSBwYWdlIGxvYWRlZCBpbnRvIHRoZSBrZXJuZWwgd2hlcmUgaXQgY2FtZSBmcm9tIGFuZCB3aGF0
-IGl0CnNob3VsZCBsb29rIGxpa2UuCgpVbmZvcnR1bmF0ZWx5LCBJIGRvIG5vdCBrbm93IE1vdG9y
-b2xhIGhhcyBlbm91Z2ggIndlaWdodCIgdG8gY29udmluY2UgUUNPTSB0bwpkbyB0aGUgcmlnaHQg
-Zm91bmRhdGlvbmFsIHRoaW5nIGhlcmUsIG9yIHRvICJkZWZpbmUiIHRoZSBzZWNjb21wIEFQSXMg
-Zm9yCkFuZHJvaWQsIHNvIGl0IHdvdWxkIGJlIGdvb2QgdG8gaGF2ZSBHb29nbGUncyBidXkgaW4s
-IGtub3cgaWYgdGhlcmUgYXJlIHBsYW5zCnRvIGZpeCB0aGlzIGlzc3VlLCBvciBzb21lIGRpc2N1
-c3Npb24gb2YgaG93IHRvIGJlc3QgZml4IHRoZSBwcm9ibGVtPyBJZgphbnl0aGluZywgYSBjb250
-YWN0IGF0IFFDT00gdGhhdCBtaWdodCBiZSBhYmxlIHRvIGFjdHVhbGx5IGh1bnQgZG93biBhbmQK
-ZG9jdW1lbnQgdmFsaWQgYnl0ZXMgZm9yIHRoZXNlIHBvbGljaWVzPwoKVGhlIGVuZCBnb2FsIGlz
-IHNpbXBsZTogd2hlbiB3ZSBzZWUgYSBjb2RlIHBhZ2UgaXMgYWxsb2NhdGVkIGluIHRoZSBrZXJu
-ZWwsIHdlCmNhbiBiZSBzdXJlIHRoYXQgKDEpIGl0IGlzbid0IG1hbGljaW91cyBhbmQgKDIpIGhh
-cyBub3QgYmVlbiBtb2RpZmllZCBpbgp0cmFuc2l0LiBJJ20gZmluZSBwdXR0aW5nIGNvZGUgd2hl
-cmUgbXkgbW91dGggaXMsIGJ1dCByaWdodCBub3cgdGhhdCBjb2RlCndvdWxkIGludm9sdmUgaGF2
-aW5nIHRvIGZpbmdlcnByaW50IHRoZSBzaWduYXR1cmVzIGxvYWRlZCBieSBRdWFsY29tbQpjb21w
-b25lbnRzIGV2ZXJ5IHRpbWUgYSBuZXcgb25lIGlzIHJlbGVhc2VkLCBvciBwaW5naW5nIEdvb2ds
-ZSB3aXRoIGEgaHVnZQpwYXRjaCBjaGFuZ2luZyBob3cgc2VjY29tcCB3b3JrcyB3aXRoIG5vIGlk
-ZWEgb2Ygd2hhdCByZXF1aXJlbWVudHMgUUNPTSBtYXkKaGF2ZSBvbiBzZWNjb21wIHBvbGljeSBn
-ZW5lcmF0aW9uLgoKVGhvdWdodHM/IElzIHRoaXMgZG9hYmxlLCBhbmQgaWYgbm90LCB3aHk/IEkn
-ZCBhbHNvIGxvdmUgaGVscCB3aXRoIHRoZSBjb2RlIGFuZAphZGFwdGluZyBleGlzdGluZyBtaW5p
-amFpbCBjb2RlIHRvIHVzZSBhIG5ldywgbW9yZSBpbnRlZ3JpdHktcHJlc2VydmluZwppbnRlcmZh
-Y2UuIElmIEkgYW0gbWlzdGFrZW4gYW5kIGl0IGlzIHBvc3NpYmxlIHRvIGdyYWIgb3V0IHZhbGlk
-IEJQRiBwb2xpY3kKY29kZSBhdCBjb21waWxlIHRpbWUsIHBsZWFzZSBsZXQgbWUga25vdyBob3ch
-CgpSZWdhcmRzLApNYXh3ZWxsIEJsYW5kCgpTdGFuZGFyZCBmaWx0ZXIsIChmcm9tLCBmb3IgZXhh
-bXBsZSwgY29tLmdvb2dsZS5hbmRyb2lkLmdtcykKImFjMDAwMDAwMDAwMDAwMDBhYzc3MDAwMDAw
-MDAwMDAwYmYxNjAwMDAwMDAwMDAwMDYxNjAwNDAwMDAwMDAwMDBiNDAyMDAwMGI3MDAwMGMwMWQy
-MDAyMDAwMDAwMDAwMGI0MDAwMDAwMDAwMDAwMDA5NTAwMDAwMDAwMDAwMDAwNjE2MDAwMDAwMDAw
-MDAwMDU1MDAwMjAwY2IwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAw
-MjAwMTkwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwY2UwMDAw
-MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYzYwMDAwMDBiNDAwMDAw
-MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNDIwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
-OTUwMDAwMDAwMDAwMDAwMDU1MDAwMTAwZGUwMDAwMDAwNTAwN2IwMDAwMDAwMDAwNTUwMDAyMDBk
-NzAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBkODAwMDAwMGI0
-MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAxMDBlMjAwMDAwMDA1MDA4ZjAwMDAw
-MDAwMDA1NTAwMDIwMGE3MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAw
-MDIwMDM4MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDYyMDAw
-MDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDM5MDAwMDAwYjQwMDAw
-MDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDNmMDAwMDAwYjQwMDAwMDAwMDAwZmY3
-Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDQwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAw
-MDAwMDAwMDA1NTAwMDIwMDUwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1
-NTAwMDIwMDRlMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDJj
-MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDQzMDAwMDAwYjQw
-MDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDFkMDAwMDAwYjQwMDAwMDAwMDAw
-ZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDMwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAw
-MDAwMDAwMDAwMDA1NTAwMDIwMDcxMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAw
-MDA1NTAwMDIwMGFlMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIw
-MGEzMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDg2MDAwMDAw
-YjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDQyMDAwMDAwYjQwMDAwMDAw
-MDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMGU5MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1
-MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDNlMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAw
-MDAwMDA1NTAwMDIwMDg3MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAw
-MDIwMDE5MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDVjMDAw
-MDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDE2MDEwMDAwYjQwMDAw
-MDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMGRjMDAwMDAwYjQwMDAwMDAwMDAwZmY3
-Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDYwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAw
-MDAwMDAwMDA1NTAwMDIwMGRkMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1
-NTAwMDIwMDc4MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDVl
-MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDhiMDAwMDAwYjQw
-MDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDgwMDAwMDAwYjQwMDAwMDAwMDAw
-ZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMGNiMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAw
-MDAwMDAwMDAwMDA1NTAwMDEwMGM2MDAwMDAwMDUwMDRjMDAwMDAwMDAwMDU1MDAwMjAwNWQwMDAw
-MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYWMwMDAwMDBiNDAwMDAw
-MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODQwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
-OTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwOGMwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAw
-MDAwMDAwMDU1MDAwMjAwM2QwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1
-MDAwMjAwMTcwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMGI0MDAwMDAwMDAw
-MDAzMDA5NTAwMDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMDYxNjAyMDAwMDAwMDAwMDA2MzBh
-ZmNmZjAwMDAwMDAwNjE2MDI0MDAwMDAwMDAwMDYzMGFmOGZmMDAwMDAwMDA0NTAwMDMwMDAwMDAw
-MDAwNjFhMGZjZmYwMDAwMDAwMDQ1MDAwMTAwMDQwMDAwMDAwNTAwMDEwMDAwMDAwMDAwMDUwMDAx
-MDAwMDAwMDAwMDA1MDAwZTAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDIwMDAwMDAwMDAw
-MDYzMGFmY2ZmMDAwMDAwMDA2MTYwMjQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDQ1MDAwMzAw
-MDAwMDAwMDA2MWEwZmNmZjAwMDAwMDAwNDUwMDAxMDAwMjAwMDAwMDA1MDAwMTAwMDAwMDAwMDAw
-NTAwMDEwMDAwMDAwMDAwMDUwMDAzMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAw
-MDAwMzAwOTUwMDAwMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUw
-MDAwMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDA2MTYwMjAwMDAwMDAwMDAwNjMwYWZjZmYwMDAw
-MDAwMDYxNjAyNDAwMDAwMDAwMDA2MzBhZjhmZjAwMDAwMDAwNDUwMDAzMDAwMDAwMDAwMDYxYTBm
-Y2ZmMDAwMDAwMDA0NTAwMDEwMDA0MDAwMDAwMDUwMDAxMDAwMDAwMDAwMDA1MDAwMTAwMDAwMDAw
-MDAwNTAwMGUwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMDYxNjAyMDAwMDAwMDAwMDA2MzBhZmNm
-ZjAwMDAwMDAwNjE2MDI0MDAwMDAwMDAwMDYzMGFmOGZmMDAwMDAwMDA0NTAwMDMwMDAwMDAwMDAw
-NjFhMGZjZmYwMDAwMDAwMDQ1MDAwMTAwMDIwMDAwMDAwNTAwMDEwMDAwMDAwMDAwMDUwMDAxMDAw
-MDAwMDAwMDA1MDAwMzAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwYjQwMDAwMDAwMDAwMDMwMDk1
-MDAwMDAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAw
-MDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDEwMDAwMDAwMDAwMDYzMGFmY2ZmMDAwMDAwMDA2MTYw
-MTQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDU1MDAwMjAwMDAwMDAwMDA2MWEwZmNmZjAwMDAw
-MDAwMTUwMDAxMDAwMTAwMDAwMDA1MDAwMTAwMDAwMDAwMDAwNTAwMDMwMDAwMDAwMDAwMDUwMDAw
-MDAwMDAwMDAwMGI0MDAwMDAwMDAwMDAzMDA5NTAwMDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAw
-MGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwIiwKVW5rbm93biBmaWx0ZXIgKGZyb20g
-UUNPTSdzIC92ZW5kb3IvYmluL3Flc2RrLXNlY21hbmFnZXIpCiAiYWMwMDAwMDAwMDAwMDAwMGFj
-NzcwMDAwMDAwMDAwMDBiZjE2MDAwMDAwMDAwMDAwNjE2MDA0MDAwMDAwMDAwMGI0MDIwMDAwYjcw
-MDAwYzAxZDIwMDIwMDAwMDAwMDAwYjQwMDAwMDAwMDAwMDAwMDk1MDAwMDAwMDAwMDAwMDA2MTYw
-MDAwMDAwMDAwMDAwNTUwMDAyMDBjYjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAw
-MDAwNTUwMDAyMDAxOTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAy
-MDBjZTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBjNjAwMDAw
-MGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDA0MjAwMDAwMGI0MDAwMDAw
-MDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAxMDBkZTAwMDAwMDA1MDA3ZTAwMDAwMDAwMDA1
-NTAwMDEwMGUyMDAwMDAwMDUwMDk4MDAwMDAwMDAwMDU1MDAwMjAwZDcwMDAwMDBiNDAwMDAwMDAw
-MDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYTcwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUw
-MDAwMDAwMDAwMDAwMDU1MDAwMjAwNjIwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAw
-MDAwMDU1MDAwMjAwMWQwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAw
-MjAwMzgwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwM2YwMDAw
-MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwMzkwMDAwMDBiNDAwMDAw
-MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNTAwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
-OTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNGUwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAw
-MDAwMDAwMDU1MDAwMjAwNGYwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1
-MDAwMjAwZDgwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNDMw
-MDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwMmMwMDAwMDBiNDAw
-MDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODcwMDAwMDBiNDAwMDAwMDAwMDBm
-ZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODYwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAw
-MDAwMDAwMDAwMDU1MDAwMjAwMzAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAw
-MDU1MDAwMjAwYWUwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAw
-MTYwMTAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwMTkwMDAwMDBi
-NDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNDIwMDAwMDBiNDAwMDAwMDAw
-MDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwZGMwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUw
-MDAwMDAwMDAwMDAwMDU1MDAwMjAwNWUwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAw
-MDAwMDU1MDAwMjAwN2IwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAw
-MjAwNWQwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYWMwMDAw
-MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODQwMDAwMDBiNDAwMDAw
-MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYTMwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
-OTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAw
-MDAwMDAwMDU1MDAwMjAwNzgwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1
-MDAwMjAwZGQwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMTAwYzYw
-MDAwMDAwNTAwNTgwMDAwMDAwMDAwNTUwMDAyMDA2MDAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAw
-MDAwMDAwMDAwMDAwNTUwMDAyMDA4YjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAw
-MDAwNTUwMDAyMDBjYjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAy
-MDA3MTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDA0MDAwMDAw
-MGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDAzYjAwMDAwMGI0MDAwMDAw
-MDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBlOTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5
-NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBiMjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAw
-MDAwMDAwNTUwMDAyMDA4YzAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUw
-MDAyMDBkODAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwYjQwMDAwMDAwMDAw
-MDMwMDk1MDAwMDAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDIwMDAwMDAwMDAwMDYzMGFm
-Y2ZmMDAwMDAwMDA2MTYwMjQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDQ1MDAwMzAwMDAwMDAw
-MDA2MWEwZmNmZjAwMDAwMDAwNDUwMDAxMDAwNDAwMDAwMDA1MDAwMTAwMDAwMDAwMDAwNTAwMDEw
-MDAwMDAwMDAwMDUwMDBlMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDA2MTYwMjAwMDAwMDAwMDAw
-NjMwYWZjZmYwMDAwMDAwMDYxNjAyNDAwMDAwMDAwMDA2MzBhZjhmZjAwMDAwMDAwNDUwMDAzMDAw
-MDAwMDAwMDYxYTBmY2ZmMDAwMDAwMDA0NTAwMDEwMDAyMDAwMDAwMDUwMDAxMDAwMDAwMDAwMDA1
-MDAwMTAwMDAwMDAwMDAwNTAwMDMwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMGI0MDAwMDAwMDAw
-MDAzMDA5NTAwMDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAw
-MDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMDYxNjAyMDAwMDAwMDAwMDA2MzBhZmNmZjAwMDAw
-MDAwNjE2MDI0MDAwMDAwMDAwMDYzMGFmOGZmMDAwMDAwMDA0NTAwMDMwMDAwMDAwMDAwNjFhMGZj
-ZmYwMDAwMDAwMDQ1MDAwMTAwMDQwMDAwMDAwNTAwMDEwMDAwMDAwMDAwMDUwMDAxMDAwMDAwMDAw
-MDA1MDAwZTAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDIwMDAwMDAwMDAwMDYzMGFmY2Zm
-MDAwMDAwMDA2MTYwMjQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDQ1MDAwMzAwMDAwMDAwMDA2
-MWEwZmNmZjAwMDAwMDAwNDUwMDAxMDAwMjAwMDAwMDA1MDAwMTAwMDAwMDAwMDAwNTAwMDEwMDAw
-MDAwMDAwMDUwMDAzMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAwMDAwMzAwOTUw
-MDAwMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAw
-MDAwMDA1MDAwMDAwMDAwMDAwMDA2MTYwMTAwMDAwMDAwMDAwNjMwYWZjZmYwMDAwMDAwMDYxNjAx
-NDAwMDAwMDAwMDA2MzBhZjhmZjAwMDAwMDAwNTUwMDAyMDAwMDAwMDAwMDYxYTBmY2ZmMDAwMDAw
-MDAxNTAwMDEwMDAxMDAwMDAwMDUwMDAxMDAwMDAwMDAwMDA1MDAwMzAwMDAwMDAwMDAwNTAwMDAw
-MDAwMDAwMDAwYjQwMDAwMDAwMDAwMDMwMDk1MDAwMDAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAw
-YjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDAiLAoKTGlzdCBvZiBzZXJ2aWNlcyBsb2Fk
-aW5nIHNlY2NvbXAgZmlsdGVycyBwdWxsZWQgZnJvbSBvbmUgcnVuIG9mIHRoZSBwaG9uZToKY29t
-Lmdvb2dsZS5hbmRyb2lkLmRlc2tjbG9jawovdmVuZG9yL2Jpbi9xZXNkay1zZWNtYW5hZ2VyCm1l
-ZGlhLmh3Y29kZWMvdmVuZG9yLnF0aS5tZWRpYS5jMkAxLjAtc2VydmljZQptZWRpYS5hdWRpby5x
-Yy5jb2RlYy5xdGkubWVkaWEuYzJhdWRpb0AxLjAtc2VydmljZQovdmVuZG9yL2Jpbi92ZW5kb3Iu
-cXRpLnFzcG1oYWwtc2VydmljZQovdmVuZG9yL2Jpbi9xc2FwX3NlbnNvcnMKbWVkaWEuZXh0cmFj
-dG9yYWV4dHJhY3Rvcgovc3lzdGVtX2V4dC9iaW4vcGVyZnNlcnZpY2UKL3ZlbmRvci9iaW4vd2Zk
-aGRjcGhhbHNlcnZpY2UKL3ZlbmRvci9iaW4vd2lmaWRpc3BsYXloYWxzZXJ2aWNlCi92ZW5kb3Iv
-YmluL3FzYXBfZGNmZAovdmVuZG9yL2Jpbi9xbXMKL3ZlbmRvci9iaW4vcXNhcF9sb2NhdGlvbgov
-dmVuZG9yL2Jpbi9xc2FwX3FhcGVzZXJ2aWNlCi92ZW5kb3IvYmluL3dmZHZuZHNlcnZpY2UKbWVk
-aWEuc3djb2RlY29pZC5tZWRpYS5zd2NvZGVjL2Jpbi9tZWRpYXN3Y29kZWMKL3ZlbmRvci9iaW4v
-aHcvcWNyaWxOcmQKcXNhcF9xbXNfMTNxbXMxNgpxc2FwX3Ftc18yNHFtczE3Ci92ZW5kb3IvYmlu
-L0FURldELWRhZW1vbgovdmVuZG9yL2Jpbi9ody9zeHJzZXJ2aWNlCi92ZW5kb3IvYmluL2h3L3Fj
-cmlsTnJkLWMyCnN5c3RlbV9zZXJ2ZXIKL3ZlbmRvci9iaW4vcW1pX21vdGV4dF9ob29rMTAxMzE3
-MAovdmVuZG9yL2Jpbi9xbWlfbW90ZXh0X2hvb2sxMDEzMTcxCi92ZW5kb3IvYmluL2ltc19ydHBf
-ZGFlbW9uCmNvbS5hbmRyb2lkLnN5c3RlbXVpCndlYnZpZXdfenlnb3RlCmNvbS5kb2xieS5kYXhz
-ZXJ2aWNlCnZlbmRvci5xdGkucWVzZGsuc3lzc2VydmljZQpvcmcuY29kZWF1cm9yYS5pbXMKY29t
-LmFuZHJvaWQuc2UKY29tLmFuZHJvaWQucGhvbmUKY29tLnF0aS5xY2MKY29tLmdvb2dsZS5hbmRy
-b2lkLmV4dC5zZXJ2aWNlcwpjb20uZ29vZ2xlLmFuZHJvaWQuZ21zCmNvbS5nb29nbGUuYW5kcm9p
-ZC5ldWljYwpjb20uZ29vZ2xlLmFuZHJvaWQuZ29vZ2xlcXVpY2tzZWFyY2hib3g6aW50ZXJhY3Rv
-cgpjb20uZ29vZ2xlLmFuZHJvaWQuYXBwcy5tZXNzYWdpbmc6cmNzCmNvbS5hbmRyb2lkLm5mYwpj
-b20ucXVhbGNvbW0ucXRpLndvcmtsb2FkY2xhc3NpZmllcgpjb20ucXVhbGNvbW0ubG9jYXRpb24K
-Y29tLmdvb2dsZS5hbmRyb2lkLmdtcy51bnN0YWJsZQpjb20udGh1bmRlcmNvbW0uYXIuY29yZQpj
-b20uYW5kcm9pZC52ZW5kaW5nOmJhY2tncm91bmQKY29tLmFuZHJvaWQudmVuZGluZzpxdWlja19s
-YXVuY2gKY29tLmFuZHJvaWQuZHluc3lzdGVtCmNvbS5hbmRyb2lkLm1hbmFnZWRwcm92aXNpb25p
-bmcKY29tLmFuZHJvaWQuc2hlbGw=
+(
+Resending via neomutt as plaintext since I think mlmmj may be filtering,
+please keep in mind this was originally intended for android kernel team
+and the set of CC's on replies should be:
+
+"Andrew Wheeler" <awheeler@motorola.com>;
+"Sammy Que" <quebs2@motorola.com>;
+Neill Kapron <nkapron@google.com>;
+Todd Kjos <tkjos@google.com>;
+Viktor Martensson <vmartensson@google.com>;
+Andy Lutomirski <luto@amacapital.net>;
+keescook@chromium.org <keescook@chromium.org>;
+Will Drewry <wad@chromium.org>;
+Andy Gross <agross@kernel.org>;
+Bjorn Andersson <andersson@kernel.org>;
+Konrad Dybcio <konrad.dybcio@somainline.org>;
+kernel-team <kernel-team@android.com>
+)
+
+Apologies if this is a "duplicate".
+
+Am sending to msm-kernel since this list should also be somewhat aware
+and may have engineer with knowledge on generated seccomp sandbox code.
+Thanks! (-:
+
+Hi Kernel Team,
+
++ Kees, Andy, and Will since their input may be valuable.
+
+It has been a while! (~9 months to be exact). This January, I sent out a sm=
+all
+message on BPF code loading ("unprivileged BPF considered harmful" or somet=
+hing
+like that). In it, I noted new BPF programs are compiled all the time and
+thrown into the kernel. At the time, I did not know these programs were just
+compiled seccomp filter policies, loaded in as new BPF programs continuously
+through the libminijail interface as well as direct syscall. As of two days
+ago, I now know this (and now you do too, if not already).
+
+OK, yes, syscall filtering is very important, but this is creating a catch-=
+22
+issue. For one, see step (4) under "Exploitation overview" for
+https://www.qualys.com/2021/07/20/cve-2021-33909/sequoia-local-privilege-es=
+calation-linux.txt.
+Second, this minor lack of caching is adding load time to more than 90
+binaries/services on the standard QCOM baseline=E2=80=94I'll admit, it is p=
+robably
+negligible in the grand scheme of things (a quick approximation puts the da=
+ta
+operated on around 0.1188 MB). But most importantly, third, without some de=
+gree
+of provenance, I have no way of telling if someone has injected malicious c=
+ode
+into the kernel, and unfortunately even knowing the correct bytes is still
+"iffy", as in order to prevent JIT spray attacks, each of these filters is
+offset by some random number of uint32_t's, making every 4-byte shift of the
+filter a "valid" codepage to be loaded at runtime.
+
+You might be thinking, "but wait, bionic's libc only defines a couple of
+restricted policies, primary and secondary for system and user apps
+respectively." I know! For the most part, apps fall into either what I pres=
+ume
+is the default app/system policies, but there are lots of QCOM binaries and
+other magic programs (dolby dax) that are sending up these programs as well.
+I'm seeing more than 20 different programs for around a minute's worth of
+runtime. One example is attached at the end.
+
+So, the proposal: a "CONFIG_SECCOMMP_STATIC_POLICY" for seccomp. This
+would change the Android kernel's generic SYS_seccomp call, which takes in a
+filter with an array of BPF instructions, to instead reference an ID which
+corresponds to a fixed file on /sys/bpf/seccomp or something like that. The
+sandboxing behavior of these apps should be known at compile-time, even if
+there are multiple "permission set types" that may need to be dispatched. U=
+ser
+apps should always have a single, fixed policy. This way it is possible to =
+say
+for every code page loaded into the kernel where it came from and what it
+should look like.
+
+Unfortunately, I do not know Motorola has enough "weight" to convince QCOM =
+to
+do the right foundational thing here, or to "define" the seccomp APIs for
+Android, so it would be good to have Google's buy in, know if there are pla=
+ns
+to fix this issue, or some discussion of how to best fix the problem? If
+anything, a contact at QCOM that might be able to actually hunt down and
+document valid bytes for these policies?
+
+The end goal is simple: when we see a code page is allocated in the kernel,=
+ we
+can be sure that (1) it isn't malicious and (2) has not been modified in
+transit. I'm fine putting code where my mouth is, but right now that code
+would involve having to fingerprint the signatures loaded by Qualcomm
+components every time a new one is released, or pinging Google with a huge
+patch changing how seccomp works with no idea of what requirements QCOM may
+have on seccomp policy generation.
+
+Thoughts? Is this doable, and if not, why? I'd also love help with the code=
+ and
+adapting existing minijail code to use a new, more integrity-preserving
+interface. If I am mistaken and it is possible to grab out valid BPF policy
+code at compile time, please let me know how!
+
+Regards,
+Maxwell Bland
+
+Standard filter, (from, for example, com.google.android.gms)
+"ac00000000000000ac77000000000000bf160000000000006160040000000000b4020000b7=
+0000c01d20020000000000b4000000000000009500000000000000616000000000000055000=
+200cb000000b40000000000ff7f95000000000000005500020019000000b40000000000ff7f=
+950000000000000055000200ce000000b40000000000ff7f950000000000000055000200c60=
+00000b40000000000ff7f95000000000000005500020042000000b40000000000ff7f950000=
+000000000055000100de00000005007b000000000055000200d7000000b40000000000ff7f9=
+50000000000000055000200d8000000b40000000000ff7f950000000000000055000100e200=
+000005008f000000000055000200a7000000b40000000000ff7f95000000000000005500020=
+038000000b40000000000ff7f95000000000000005500020062000000b40000000000ff7f95=
+000000000000005500020039000000b40000000000ff7f9500000000000000550002003f000=
+000b40000000000ff7f95000000000000005500020040000000b40000000000ff7f95000000=
+000000005500020050000000b40000000000ff7f9500000000000000550002004e000000b40=
+000000000ff7f9500000000000000550002002c000000b40000000000ff7f95000000000000=
+005500020043000000b40000000000ff7f9500000000000000550002001d000000b40000000=
+000ff7f95000000000000005500020030000000b40000000000ff7f95000000000000005500=
+020071000000b40000000000ff7f950000000000000055000200ae000000b40000000000ff7=
+f950000000000000055000200a3000000b40000000000ff7f95000000000000005500020086=
+000000b40000000000ff7f95000000000000005500020042000000b40000000000ff7f95000=
+0000000000055000200e9000000b40000000000ff7f9500000000000000550002003e000000=
+b40000000000ff7f95000000000000005500020087000000b40000000000ff7f95000000000=
+000005500020019000000b40000000000ff7f9500000000000000550002005c000000b40000=
+000000ff7f95000000000000005500020016010000b40000000000ff7f95000000000000005=
+5000200dc000000b40000000000ff7f95000000000000005500020060000000b40000000000=
+ff7f950000000000000055000200dd000000b40000000000ff7f95000000000000005500020=
+078000000b40000000000ff7f9500000000000000550002005e000000b40000000000ff7f95=
+00000000000000550002008b000000b40000000000ff7f95000000000000005500020080000=
+000b40000000000ff7f950000000000000055000200cb000000b40000000000ff7f95000000=
+0000000055000100c600000005004c0000000000550002005d000000b40000000000ff7f950=
+000000000000055000200ac000000b40000000000ff7f950000000000000055000200840000=
+00b40000000000ff7f9500000000000000550002008c000000b40000000000ff7f950000000=
+0000000550002003d000000b40000000000ff7f95000000000000005500020017000000b400=
+00000000ff7f9500000000000000b4000000000003009500000000000000050000000000000=
+06160200000000000630afcff000000006160240000000000630af8ff000000004500030000=
+00000061a0fcff0000000045000100040000000500010000000000050001000000000005000=
+e000000000005000000000000006160200000000000630afcff000000006160240000000000=
+630af8ff00000000450003000000000061a0fcff00000000450001000200000005000100000=
+00000050001000000000005000300000000000500000000000000b400000000000300950000=
+00000000000500000000000000b40000000000ff7f950000000000000005000000000000006=
+160200000000000630afcff000000006160240000000000630af8ff00000000450003000000=
+000061a0fcff0000000045000100040000000500010000000000050001000000000005000e0=
+00000000005000000000000006160200000000000630afcff00000000616024000000000063=
+0af8ff00000000450003000000000061a0fcff0000000045000100020000000500010000000=
+000050001000000000005000300000000000500000000000000b40000000000030095000000=
+000000000500000000000000b40000000000ff7f95000000000000000500000000000000616=
+0100000000000630afcff000000006160140000000000630af8ff0000000055000200000000=
+0061a0fcff00000000150001000100000005000100000000000500030000000000050000000=
+0000000b40000000000030095000000000000000500000000000000b40000000000ff7f9500=
+000000000000",
+Unknown filter (from QCOM's /vendor/bin/qesdk-secmanager)
+ "ac00000000000000ac77000000000000bf160000000000006160040000000000b4020000b=
+70000c01d20020000000000b400000000000000950000000000000061600000000000005500=
+0200cb000000b40000000000ff7f95000000000000005500020019000000b40000000000ff7=
+f950000000000000055000200ce000000b40000000000ff7f950000000000000055000200c6=
+000000b40000000000ff7f95000000000000005500020042000000b40000000000ff7f95000=
+0000000000055000100de00000005007e000000000055000100e20000000500980000000000=
+55000200d7000000b40000000000ff7f950000000000000055000200a7000000b4000000000=
+0ff7f95000000000000005500020062000000b40000000000ff7f9500000000000000550002=
+001d000000b40000000000ff7f95000000000000005500020038000000b40000000000ff7f9=
+500000000000000550002003f000000b40000000000ff7f9500000000000000550002003900=
+0000b40000000000ff7f95000000000000005500020050000000b40000000000ff7f9500000=
+000000000550002004e000000b40000000000ff7f9500000000000000550002004f000000b4=
+0000000000ff7f950000000000000055000200d8000000b40000000000ff7f9500000000000=
+0005500020043000000b40000000000ff7f9500000000000000550002002c000000b4000000=
+0000ff7f95000000000000005500020087000000b40000000000ff7f9500000000000000550=
+0020086000000b40000000000ff7f95000000000000005500020030000000b40000000000ff=
+7f950000000000000055000200ae000000b40000000000ff7f9500000000000000550002001=
+6010000b40000000000ff7f95000000000000005500020019000000b40000000000ff7f9500=
+0000000000005500020042000000b40000000000ff7f950000000000000055000200dc00000=
+0b40000000000ff7f9500000000000000550002005e000000b40000000000ff7f9500000000=
+000000550002007b000000b40000000000ff7f9500000000000000550002005d000000b4000=
+0000000ff7f950000000000000055000200ac000000b40000000000ff7f9500000000000000=
+5500020084000000b40000000000ff7f950000000000000055000200a3000000b4000000000=
+0ff7f95000000000000005500020080000000b40000000000ff7f9500000000000000550002=
+0078000000b40000000000ff7f950000000000000055000200dd000000b40000000000ff7f9=
+50000000000000055000100c600000005005800000000005500020060000000b40000000000=
+ff7f9500000000000000550002008b000000b40000000000ff7f95000000000000005500020=
+0cb000000b40000000000ff7f95000000000000005500020071000000b40000000000ff7f95=
+000000000000005500020040000000b40000000000ff7f9500000000000000550002003b000=
+000b40000000000ff7f950000000000000055000200e9000000b40000000000ff7f95000000=
+0000000055000200b2000000b40000000000ff7f9500000000000000550002008c000000b40=
+000000000ff7f950000000000000055000200d8000000b40000000000ff7f95000000000000=
+00b400000000000300950000000000000005000000000000006160200000000000630afcff0=
+00000006160240000000000630af8ff00000000450003000000000061a0fcff000000004500=
+0100040000000500010000000000050001000000000005000e0000000000050000000000000=
+06160200000000000630afcff000000006160240000000000630af8ff000000004500030000=
+00000061a0fcff0000000045000100020000000500010000000000050001000000000005000=
+300000000000500000000000000b40000000000030095000000000000000500000000000000=
+b40000000000ff7f950000000000000005000000000000006160200000000000630afcff000=
+000006160240000000000630af8ff00000000450003000000000061a0fcff00000000450001=
+00040000000500010000000000050001000000000005000e000000000005000000000000006=
+160200000000000630afcff000000006160240000000000630af8ff00000000450003000000=
+000061a0fcff000000004500010002000000050001000000000005000100000000000500030=
+0000000000500000000000000b40000000000030095000000000000000500000000000000b4=
+0000000000ff7f950000000000000005000000000000006160100000000000630afcff00000=
+0006160140000000000630af8ff00000000550002000000000061a0fcff0000000015000100=
+01000000050001000000000005000300000000000500000000000000b400000000000300950=
+00000000000000500000000000000b40000000000ff7f9500000000000000",
+
+List of services loading seccomp filters pulled from one run of the phone:
+com.google.android.deskclock
+/vendor/bin/qesdk-secmanager
+media.hwcodec/vendor.qti.media.c2@1.0-service
+media.audio.qc.codec.qti.media.c2audio@1.0-service
+/vendor/bin/vendor.qti.qspmhal-service
+/vendor/bin/qsap_sensors
+media.extractoraextractor
+/system_ext/bin/perfservice
+/vendor/bin/wfdhdcphalservice
+/vendor/bin/wifidisplayhalservice
+/vendor/bin/qsap_dcfd
+/vendor/bin/qms
+/vendor/bin/qsap_location
+/vendor/bin/qsap_qapeservice
+/vendor/bin/wfdvndservice
+media.swcodecoid.media.swcodec/bin/mediaswcodec
+/vendor/bin/hw/qcrilNrd
+qsap_qms_13qms16
+qsap_qms_24qms17
+/vendor/bin/ATFWD-daemon
+/vendor/bin/hw/sxrservice
+/vendor/bin/hw/qcrilNrd-c2
+system_server
+/vendor/bin/qmi_motext_hook1013170
+/vendor/bin/qmi_motext_hook1013171
+/vendor/bin/ims_rtp_daemon
+com.android.systemui
+webview_zygote
+com.dolby.daxservice
+vendor.qti.qesdk.sysservice
+org.codeaurora.ims
+com.android.se
+com.android.phone
+com.qti.qcc
+com.google.android.ext.services
+com.google.android.gms
+com.google.android.euicc
+com.google.android.googlequicksearchbox:interactor
+com.google.android.apps.messaging:rcs
+com.android.nfc
+com.qualcomm.qti.workloadclassifier
+com.qualcomm.location
+com.google.android.gms.unstable
+com.thundercomm.ar.core
+com.android.vending:background
+com.android.vending:quick_launch
+com.android.dynsystem
+com.android.managedprovisioning
+com.android.shell
 
