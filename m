@@ -1,196 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-31660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFC2E977445
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 00:22:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8722F977471
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 00:41:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 61BEB1F2521A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 22:22:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B95AC1C21ACE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 22:41:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92D561C244F;
-	Thu, 12 Sep 2024 22:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E42F41C2326;
+	Thu, 12 Sep 2024 22:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZY5QZvqZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AQg2PY7C"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 648E018EFED;
-	Thu, 12 Sep 2024 22:22:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5378D19F13D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 22:41:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726179752; cv=none; b=P4IW7ZG0O+zYeXc3WXHr/ARzJ+3m8kqBbUus66orO0lfGk6NndY9L2vtQamX+zMR8ZHZRLrj49sKgoml7mi6dKPHtnYaDrUxIPQeGhpkc4KJTbI2Qw7SehD3MXJmph+CykY0/e7EtAMhKlotqfcsFXUhewRqWOjii44VgZFdlOE=
+	t=1726180884; cv=none; b=kZHEmJk0FXk6UIOp3hC+VUVaDhO61WskihXiAOtIq5uE4jvFmXjueeHySXv4SNpGRq2RoG06GMYMD0w17FP55aTWtbMkbTlVAYqkOKGFrl4epNrICZFrWoiJs4GfZPwSQJUUYBpJ+1jQIPBCEv9SPTzkX5tn/bggnLkRHtr3MaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726179752; c=relaxed/simple;
-	bh=hVc2+1JhJrTDAc90j+3UZdmeysg/R73KqlkXDprBFz8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l7IzAop4A0H4nxy+zPr0A83JqsgLdVOFJgbS1sZwm/bJTlpI9VS+VtZEqcFuuTtXYt08Z26vJ+/JU+o1S2YZZaTjJYYced7SuiBIOBs7U4cbtmIVrnNos2fj6phfzO8MMldiwwOplKhHsha7djEYFNyQTXnT61zeyOYZg+67Xkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZY5QZvqZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE8D4C4AF09;
-	Thu, 12 Sep 2024 22:22:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726179752;
-	bh=hVc2+1JhJrTDAc90j+3UZdmeysg/R73KqlkXDprBFz8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=ZY5QZvqZXLUlUqEJETl9eoV3ckuLiTSYf50KU/bs+HKqWJtOeYuyn4Ur6SjAOVOSl
-	 qdLqij56rf9Pw+lZkHvBwYTpTrQPQVEHYmZTt66M/HKxQgP67y2rNiPuGsIJb4CNk9
-	 O66iTMW6AE0lQ9FU3beNP/vbtYeqHTuvfvSVA+fpjjLcgNEdpJ1of0S1rggSlay1RN
-	 Dbu8rrsBDcME0JutWUMmJAdyg6/uyw5ZtGUNstYeEt3d/uhkK+wWTqOjuCeT5PeVft
-	 psAB7k5lSA4+xL4Uk/hzOSYx5GFiapCQ8OaSHTMui3YhIbB6TBLIp28YgbbKSBIxGA
-	 PC2mB4QH/Uddw==
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-536584f6c84so1980938e87.0;
-        Thu, 12 Sep 2024 15:22:31 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUGL7OzSGXQyR33mTj8JRQETU/TWkTqTqzd0Tq0wd/pp9bdp2LY3kGwwf0fDgxHYvJ0qzkd3RtroijW1FP7@vger.kernel.org, AJvYcCVO98Sjg99vjjXEBUcXn7dh4ZB48iqnvxvaM/8Jul+WLtq8wrCpuI6d3jPdSNY2AkqHaZeQ13s+0geu@vger.kernel.org, AJvYcCVW4T5pKTW6XgWZoKK7iDqMu29IttxQI4QihHD0IrZ+IVins5oXo/Gr5HYvQFiQuuEvT7ArtVRSg1gl@vger.kernel.org, AJvYcCWKeTR5i6nDXDaV4fMtA+1P7fafwx/BSxVPlSUaNSpjtnSe9ZQ8ib8PfBoZXi0+eQA994Ln5qytSXU/ST/bdQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+laNdiPgjHzvPsTVJsSpMb1KsbeXzNbDcGIIOWEzrdkuzntJ6
-	PUfxxb3UugOaRjb9kkWiuNyNA1GDTD3V4bd3kh4NcQEujSS2pvmPymr1dK/Sv5Ny9DuCGPDpyKb
-	SU7pOJDgONHvE17V8HKKzmBHxibc=
-X-Google-Smtp-Source: AGHT+IH/wdIIuZ88OoM/jf7dlzTynCo2+ye8Eysc2JxBu22F5fKIu3OjeOJ+ZEntKBGxxv54+qUvrqHi68b4qG6OKGc=
-X-Received: by 2002:a05:6512:3b06:b0:52f:ca2b:1d33 with SMTP id
- 2adb3069b0e04-53678fc23e7mr2060932e87.20.1726179750638; Thu, 12 Sep 2024
- 15:22:30 -0700 (PDT)
+	s=arc-20240116; t=1726180884; c=relaxed/simple;
+	bh=83FRIciaYxd4kR2zydflIuCoy19wOn9CZxtVeMD8VBo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=P6KsXuA6hOFtDKtbA8syNiy1YzE3FusBKAZrydwfKN2uSqTg2pEQh/eXOoU5M5frFCVDu/O0Rw8FhLWqakcmKoB4w8FujloDNyhhBgYTyTfw8WZKYTYiTL1yfvkZG2rmgDbVoU5geUUXuAlUy6/NzeJTONy6xOMvtoxGlVXRL68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AQg2PY7C; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a8d100e9ce0so180325566b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 15:41:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726180882; x=1726785682; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xNDlhV58wBhSa/sob2kg5n7aKktE1uzHBusvuCkow1w=;
+        b=AQg2PY7CPdKxKkHxG0yzQjdQMCilhrSF1+fhvgo7RP15twTs5dfiAEyr9AftOLL1xH
+         /X02dDDjOug91y69AcJjxUglgaTZWG82ZU12fQOY9VPmhcSKNpkikCdFzSnkxPMLvOlY
+         BuiBsLYDPj+RyJGfq/oTSf2iJLFkxrU14KabX+c4raolDm7Nw8jk9tIG8uf8s0/msMLc
+         kedPQRKbiwLkLtmlv0Pndseelsdz+Rc4To8EY73C9g6fg4zSD1XG/s3/CqoFP9saKnwE
+         W4KYYXu0HVbeSihKO/4YxR/zdoQTdhfqPreR2lw+3FTMwkZshhoTNFuku9mgdFxEqwi+
+         MrMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726180882; x=1726785682;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xNDlhV58wBhSa/sob2kg5n7aKktE1uzHBusvuCkow1w=;
+        b=exM0xmQLmKISNb26Wk0fbx44RY8RgivDxSJIGhWkoZymItS8hvt98DJ42RLBq6+TRs
+         c0E1dGa1wxW9EbTfItpX4NTMYHWmBp/tN6tmYHlJZuLIUMEpwlG/JUeUQSSfSIAh/J9+
+         TC/RpllgKOp/mvet8dBfw5XJUT1flRVyBohTNiwinIZhmzOUpRNuhYlz84/BGy4Q4N5V
+         Jqimsm0m7XKq3Aymvw642amox6Y6OIirPjWfuBsaBmZvClQpl5UboPcY79XEhg1Yvgsb
+         2xT4M8BeUrZqWvkbvGtRLnUlRR4M2qhKS6JdxHuIR6PEyZIWuPKy511ykATGwotjCCNR
+         jvqA==
+X-Gm-Message-State: AOJu0YwVuDLrlp2qyO42c6vUDpPfcFjoPaROgyn8or4Z7jD3szTWTeB6
+	L5Sky6HmrsPUb0lM0nvXXuR1Dt8qJ4YTD14ACHsJnB6j3JzOssmiPLDc+3W3QZk=
+X-Google-Smtp-Source: AGHT+IGA5yjrEWk1PSxqy8vtu0MjP53IILiSojOtFrNd7+uS3pLsENvcjv9WSXRmLXsQ8nsIeABxrg==
+X-Received: by 2002:a17:906:fe47:b0:a8d:6712:2ddd with SMTP id a640c23a62f3a-a902941d681mr419093066b.2.1726180881569;
+        Thu, 12 Sep 2024 15:41:21 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25ce86cfsm800946066b.150.2024.09.12.15.41.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Sep 2024 15:41:21 -0700 (PDT)
+Message-ID: <6562a958-47e9-4a49-b235-fe8deba3c051@linaro.org>
+Date: Thu, 12 Sep 2024 23:41:20 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com> <20240811-dwc3-refactor-v2-5-91f370d61ad2@quicinc.com>
-In-Reply-To: <20240811-dwc3-refactor-v2-5-91f370d61ad2@quicinc.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Fri, 13 Sep 2024 07:21:54 +0900
-X-Gmail-Original-Message-ID: <CAK7LNASGJDoprCrjbyifAKzjyKv6_OewP1n7+so1-q-5kmn8DA@mail.gmail.com>
-Message-ID: <CAK7LNASGJDoprCrjbyifAKzjyKv6_OewP1n7+so1-q-5kmn8DA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/7] usb: dwc3: qcom: Don't reply on drvdata during probe
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Felipe Balbi <balbi@kernel.org>, Wesley Cheng <quic_wcheng@quicinc.com>, 
-	Saravana Kannan <saravanak@google.com>, Thinh Nguyen <Thinh.Nguyen@synopsys.com>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Bjorn Andersson <quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+ <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
+ <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
+ <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
+ <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
+ <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Regarding the patch subject,
-do you mean "Don't rely on drvdata" instead of
-"Don't reply on drvdata"?
+On 12/09/2024 21:57, Vladimir Zapolskiy wrote:
+>> 3. Required not optional in the yaml
+>>
+>>      => You can't use the PHY without its regulators
+> 
+> No, the supplies shall be optional, since it's absolutely possible to have
+> such a board, where supplies are merely not connected to the SoC.
 
+For any _used_ PHY both supplies are certainly required.
 
+That's what the yaml/dts check for this should achieve.
 
-
-
-
-
-On Mon, Aug 12, 2024 at 12:07=E2=80=AFPM Bjorn Andersson <andersson@kernel.=
-org> wrote:
->
-> From: Bjorn Andersson <quic_bjorande@quicinc.com>
->
-> With the upcoming transition to a model where DWC3 core and glue operate
-> on a single struct device the drvdata datatype will change to be owned
-> by the core.
->
-> The drvdata is however used by the Qualcomm DWC3 glue to pass the qcom
-> glue context around before the core is allocated.
->
-> Remove this problem, and clean up the code, by passing the dwc3_qcom
-> struct around during probe, instead of acquiring it from the drvdata.
->
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  drivers/usb/dwc3/dwc3-qcom.c | 17 ++++++++---------
->  1 file changed, 8 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-> index 88fb6706a18d..33de03f2d782 100644
-> --- a/drivers/usb/dwc3/dwc3-qcom.c
-> +++ b/drivers/usb/dwc3/dwc3-qcom.c
-> @@ -546,9 +546,10 @@ static int dwc3_qcom_request_irq(struct dwc3_qcom *q=
-com, int irq,
->         return ret;
->  }
->
-> -static int dwc3_qcom_setup_port_irq(struct platform_device *pdev, int po=
-rt_index, bool is_multiport)
-> +static int dwc3_qcom_setup_port_irq(struct dwc3_qcom *qcom,
-> +                                   struct platform_device *pdev,
-> +                                   int port_index, bool is_multiport)
->  {
-> -       struct dwc3_qcom *qcom =3D platform_get_drvdata(pdev);
->         const char *irq_name;
->         int irq;
->         int ret;
-> @@ -633,9 +634,8 @@ static int dwc3_qcom_find_num_ports(struct platform_d=
-evice *pdev)
->         return DWC3_QCOM_MAX_PORTS;
->  }
->
-> -static int dwc3_qcom_setup_irq(struct platform_device *pdev)
-> +static int dwc3_qcom_setup_irq(struct dwc3_qcom *qcom, struct platform_d=
-evice *pdev)
->  {
-> -       struct dwc3_qcom *qcom =3D platform_get_drvdata(pdev);
->         bool is_multiport;
->         int ret;
->         int i;
-> @@ -644,7 +644,7 @@ static int dwc3_qcom_setup_irq(struct platform_device=
- *pdev)
->         is_multiport =3D (qcom->num_ports > 1);
->
->         for (i =3D 0; i < qcom->num_ports; i++) {
-> -               ret =3D dwc3_qcom_setup_port_irq(pdev, i, is_multiport);
-> +               ret =3D dwc3_qcom_setup_port_irq(qcom, pdev, i, is_multip=
-ort);
->                 if (ret)
->                         return ret;
->         }
-> @@ -699,9 +699,8 @@ static int dwc3_qcom_clk_init(struct dwc3_qcom *qcom,=
- int count)
->         return 0;
->  }
->
-> -static int dwc3_qcom_of_register_core(struct platform_device *pdev)
-> +static int dwc3_qcom_of_register_core(struct dwc3_qcom *qcom, struct pla=
-tform_device *pdev)
->  {
-> -       struct dwc3_qcom        *qcom =3D platform_get_drvdata(pdev);
->         struct device_node      *np =3D pdev->dev.of_node, *dwc3_np;
->         struct device           *dev =3D &pdev->dev;
->         int                     ret;
-> @@ -782,7 +781,7 @@ static int dwc3_qcom_probe(struct platform_device *pd=
-ev)
->                 goto clk_disable;
->         }
->
-> -       ret =3D dwc3_qcom_setup_irq(pdev);
-> +       ret =3D dwc3_qcom_setup_irq(qcom, pdev);
->         if (ret) {
->                 dev_err(dev, "failed to setup IRQs, err=3D%d\n", ret);
->                 goto clk_disable;
-> @@ -797,7 +796,7 @@ static int dwc3_qcom_probe(struct platform_device *pd=
-ev)
->         if (ignore_pipe_clk)
->                 dwc3_qcom_select_utmi_clk(qcom);
->
-> -       ret =3D dwc3_qcom_of_register_core(pdev);
-> +       ret =3D dwc3_qcom_of_register_core(qcom, pdev);
->         if (ret) {
->                 dev_err(dev, "failed to register DWC3 Core, err=3D%d\n", =
-ret);
->                 goto clk_disable;
->
-> --
-> 2.45.2
->
->
+---
+bod
 
 
---
-Best Regards
-Masahiro Yamada
 
