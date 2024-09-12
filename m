@@ -1,75 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31609-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83C0B976B15
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 15:48:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5860B976B1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 15:49:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 44E28281FFF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 13:48:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90740B21B66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 13:49:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F0BA1A4E9F;
-	Thu, 12 Sep 2024 13:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62693D556;
+	Thu, 12 Sep 2024 13:49:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JyvWCATG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m1wa281v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51E51A4F1F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 13:48:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6E51A4E89;
+	Thu, 12 Sep 2024 13:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726148914; cv=none; b=badyc9y2+BrJr2QlpYr5GplB087wjIdCMtiEsae0BR7ktR2WdMqwdvCYOl7CSAZzdwpeSsnZNTWb/IZcE0yAAME5yEIoIgmA4iOKk1uxropghIjqG6jNcrnmickWIlesYmywVth3LfSJVY+XpfGIFPhfcNsRWBKAbdXCbOZ3MZQ=
+	t=1726148960; cv=none; b=JNAsNzgvySTNZFIkdEn/Dg2rVK5B8zE5ypSPwHgrGNbx50l54uXLkjLtocfWxjIVICjEOTeXEFHyVd+4xT8BQhjiNS2GeZQJw3VZArSNoQr284qtgFvsQBfnDsgNAm3bWO6bxLF6qM+Q7jcy7C4L12MecuHOmQaIAgeu/+kaDis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726148914; c=relaxed/simple;
-	bh=xGmSZvJPMA6/WDsG5Nu532RgUOS4u5eT+NtzLeebeXs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MCDHPwyQV7+wsKy6MXyTDu3iJjPgTwyCyUNWjULWmAyOFeBI6bBa+JGhSerh6s/oeCVbUzGmsHUkvo608GUu6DNcfsJrWl1oZfArmpUyoOkHv/ccIZSTqaK4cQGamTwwf6wFhmvth8O55swlW1HI53jp73lWECu3btA8mvXPW8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JyvWCATG; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42cd74c0d16so9414365e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 06:48:31 -0700 (PDT)
+	s=arc-20240116; t=1726148960; c=relaxed/simple;
+	bh=Od9UKycpshIbATZhQuQC5iHEP2oUpXFxbIlY9kQ4Z68=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=soDl3Si/+ul61QwAXeU90lELtuUS5FIjxn9kX2EezMiSgxxJNQLbr3IemB1JZWKgZoKo1wiBTHJr1xXzi4qEcuDosRcjjnpIqmPprtDDKbBTeCsB5daQr/uydethytPmtPysq7oR+irqAzwgtWCQ2d/AAIN6ITSHzbtd6jm7Wgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m1wa281v; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8a789c4fc5so350658466b.0;
+        Thu, 12 Sep 2024 06:49:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726148910; x=1726753710; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Rbwy09Mt6M+UVIdl4w21jxB17U9+FB7plRA5s10UoaA=;
-        b=JyvWCATGXwMjfqeHMrbzZmUbE3EL/yHBo44lcSE5SdJ/+Pot/lsPmFJpRG61lMpj3r
-         8YhTPKl3Tzc5hWctV6JiDb1PS2EcXrwXUcqrY9BfsKSlHjfd2rdpgvjN3t0ZzPL1Pz92
-         4YL4xmchuRrp+CcBtPscignireNljpTh0w+T/LQJ+xUwto3eUMqqcSgZyXQUTRS9GlrK
-         RMKuD7j1VwK2kNPQ1+85r8D0OrxFlMSjR0jnuJS0DsapJ91zRDXUNq+NvWiJ7abzajlQ
-         EYzCC2MJA1QXyBx8/r9YA5RHUp63gNs3LtA2WEUFIhaalUqR6tAoT0bNsUyWWhp7pYJM
-         BFxA==
+        d=gmail.com; s=20230601; t=1726148957; x=1726753757; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a2OjWKLmyq0FeFvsJuG2LPAGav69Q4+sdvymKC2ChyU=;
+        b=m1wa281vV8BaSJn1TbmYf/4SUwV6Put3H9zTyUnMYCH9+EvtAeARB/2SKWBw6Pq59J
+         4T9GIXeHLlwsRCDxFknbTxg2kgaHm++u0RysQWgOw/W4R7EFUj+h9VMto2wvn34bYSHv
+         D0/tW20qp0kq7pUIICxTyV9jZoYWIexXmmYI15uPXWJm0BcqIQa2SrWwTS9dM0foj60Q
+         ON5wrmUQXOkq5EiZ/rtUEdv/73w/asQztqVSHSN9h1jgPtArnZldso9PGwhR6fzwvl5o
+         dhff4wGgduA3CTxTbU5cb0NSyzQiVO8Zbrh6MwyDswM28cagMNvSR+uO+EqExWI5C9D1
+         x1Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726148910; x=1726753710;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Rbwy09Mt6M+UVIdl4w21jxB17U9+FB7plRA5s10UoaA=;
-        b=KNo+PKHvFx78WguL9I43ttcMSNJBeNjImnpDPtMAEmq0tyaNqeAlyt9ocSzdft0Fnt
-         ZR7Al4F+ZtlwG7cpds1EiFXCkeNKx3FiXx4uPbtg5HEId+h50JaZ+Fa94TknyVnfRvXB
-         IDltlYH6S1SwX4QgxCizX1Zjt+SB0oN8y2YW//gBbqXsnY1BITo04A43PL0Z+QNDJwbH
-         tO/p3SSitkIYDZJlJ1z2RQ77P+5WJGKWRPw6NPk9QXicICfgDRqbghd+X89ofjL1wCrR
-         //euv0nGHdRvbcWwsbeFRrHP4fhtg8biiDNkroqGt1+LNN1fN4Jg2zEVSX6TlPt0RGhR
-         GYLA==
-X-Gm-Message-State: AOJu0Yz5cZJOgelNLICIuBiVG2Uc4DT5plzg121yqjI3OzrkOGBGN2wv
-	rYLUlgItagAs83Y4PR9zBgKircenE52NmR5+Jwq1ufylVUtiVhG4JLdtCd1cBVE=
-X-Google-Smtp-Source: AGHT+IEjEDquT/aJgXoom8sDLR++VADiuZhuI/LJsjJSdWAMIa+jxBJ8AUa1I3E93mENrXnqOyJi6A==
-X-Received: by 2002:a05:600c:5127:b0:42c:a574:6360 with SMTP id 5b1f17b1804b1-42cdb5790c1mr24484905e9.29.1726148909401;
-        Thu, 12 Sep 2024 06:48:29 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:ab97:5a37:ff38:488e? ([2a01:e0a:982:cbb0:ab97:5a37:ff38:488e])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956ddbbbsm14253237f8f.93.2024.09.12.06.48.28
+        d=1e100.net; s=20230601; t=1726148957; x=1726753757;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=a2OjWKLmyq0FeFvsJuG2LPAGav69Q4+sdvymKC2ChyU=;
+        b=C5jurI/zB4pQn7WeibO+QBMDuTWZ3O/yvfmHG0detFLBpYp/tk5R4z9yqGdGfndzqE
+         hUE9OhMsNbeIyYIClxm6Bkbr0tpXd3CPuvt/P0dZTsoMqYbgXJk0Eq4mEw1yD0IsbYW/
+         IfnZKRNAB2ihV/LzSwRLwRmW7h9v5arBQ+6Rwza//13sD/bIUvCjwVpMLu8ZEDpq5INm
+         Q5+s6qx2eEtTHZewCzoFuYCOUWXI/h3oJuwATHwwCMUmg7wmU+O530k2zFIriosinNRM
+         AHmVknaGN+wKiN5ieJsIHeOBTehE7cIyJHdxbSJXoUBvBOq+uiTfbxm5ChpkaHoEbBET
+         An7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVxQt+26U3+F4c1c+fQGTIDYvWWY48IbW2CIk/QwaL6WKrN7UhjraAvpo/vtR5px8OkCdBEzBbidCLAREJW@vger.kernel.org, AJvYcCX0q3R/myxYNLH7iahRSymCspbGOG+tTnnl2K0mb+hM9FnUe7yHg6GizhkJ5CbmxMCMbZ/x1pQjMeU83MlT@vger.kernel.org, AJvYcCXZE3Co0y43MTH1vtk29kuBWj4DjXIcKEvkL3lMvMQuBlg7HP0FI+JdVLxrD5jE2ocks7yyaWQsCOMA@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIqOUOeKcAeL+ZOalG5BYKm/cOGF3Pshp7C7m1PL3OstcfXugl
+	fcrTrN0F4PeFtvHuoBj1hIe4cS6hMPTB60zfiUNuO/OzR6Y6kFEV
+X-Google-Smtp-Source: AGHT+IFgwyMDp/MZic/cfpTexvX05RgAKFVg3x47fitCbcG38c/untHaUT2m9nTNxOkCOe8V0IaNlg==
+X-Received: by 2002:a17:907:6d20:b0:a8d:592d:f56 with SMTP id a640c23a62f3a-a8ffae3a29fmr789264166b.31.1726148956571;
+        Thu, 12 Sep 2024 06:49:16 -0700 (PDT)
+Received: from [192.168.1.17] (host-87-20-168-161.retail.telecomitalia.it. [87.20.168.161])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25833c90sm749673066b.25.2024.09.12.06.49.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Sep 2024 06:48:28 -0700 (PDT)
-Message-ID: <6d78c1de-00bf-4aea-b0c6-a147faa40a8f@linaro.org>
-Date: Thu, 12 Sep 2024 15:48:27 +0200
+        Thu, 12 Sep 2024 06:49:16 -0700 (PDT)
+Message-ID: <83141e2a-c132-4dc0-ad23-344f745b7010@gmail.com>
+Date: Thu, 12 Sep 2024 15:49:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,135 +76,165 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
- <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
+Subject: Re: [PATCH v3 00/10] Preemption support for A7XX
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Sharat Masetty <smasetty@codeaurora.org>
+References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
+ <20240906195827.at7tgesx55xt6k5o@hu-akhilpo-hyd.qualcomm.com>
+Content-Language: en-US
+From: Antonino Maniscalco <antomani103@gmail.com>
+In-Reply-To: <20240906195827.at7tgesx55xt6k5o@hu-akhilpo-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 12/09/2024 13:41, Bryan O'Donoghue wrote:
-> On 12/09/2024 09:22, Vladimir Zapolskiy wrote:
->>> +
->>> +  vdda-phy-supply:
->>> +    description:
->>> +      Phandle to a regulator supply to PHY core block.
->>> +
->>> +  vdda-pll-supply:
->>> +    description:
->>> +      Phandle to 1.2V regulator supply to PHY refclk pll block.
->>> +
+On 9/6/24 9:58 PM, Akhil P Oommen wrote:
+> On Thu, Sep 05, 2024 at 04:51:18PM +0200, Antonino Maniscalco wrote:
+>> This series implements preemption for A7XX targets, which allows the GPU to
+>> switch to an higher priority ring when work is pushed to it, reducing latency
+>> for high priority submissions.
 >>
->> Here the supplies should be split into ones, which are specific to CSI blocks,
->> and I believe they shall be set as optional.
-> 
-> In principle I agree with that, each CSIPHY should have its own vdda-phy and vdda-pll regulator specified.
-> 
-> In practice though I don't believe its necessary, below.
-> 
->> The proposed names are:
+>> This series enables L1 preemption with skip_save_restore which requires
+>> the following userspace patches to function:
 >>
->> vdda-phy-01-supply
->> vdda-pll-01-supply
->> vdda-phy-23-supply
->> vdda-pll-23-supply
->> vdda-phy-46-supply
->> vdda-pll-46-supply
->> vdda-phy-57-supply
->> vdda-pll-57-supply
+>> https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
+>>
+>> A flag is added to `msm_submitqueue_create` to only allow submissions
+>> from compatible userspace to be preempted, therefore maintaining
+>> compatibility.
+>>
+>> Preemption is currently only enabled by default on A750, it can be
+>> enabled on other targets through the `enable_preemption` module
+>> parameter. This is because more testing is required on other targets.
+>>
+>> For testing on other HW it is sufficient to set that parameter to a
+>> value of 1, then using the branch of mesa linked above, `TU_DEBUG=hiprio`
+>> allows to run any application as high priority therefore preempting
+>> submissions from other applications.
+>>
+>> The `msm_gpu_preemption_trigger` and `msm_gpu_preemption_irq` traces
+>> added in this series can be used to observe preemption's behavior as
+>> well as measuring preemption latency.
+>>
+>> Some commits from this series are based on a previous series to enable
+>> preemption on A6XX targets:
+>>
+>> https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
+>>
+>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 > 
-> In principle, you're right, we need to expand the name set here.
+> Antonino, can you please test this once with per-process pt disabled to
+> ensure that is not broken? It is handy sometimes while debugging.
+> We just need to remove "adreno-smmu" compatible string from gpu smmu
+> node in DT.
 > 
->> I understand that what I ask is much more clumsy, and it could be seen even as
->> unneeded, however it'll be the right set of properties to describe the CAMSS IP
->> in this respect
-> I think the following naming would be better as it matches the power-grid naming in the docs.
-> 
-> csiphyX-vdda-phy-supply
-> csiphyX-vdda-pll-supply
-> 
-> =>
-> 
-> // voltage domain = vdd_a_csi_01_09 = regulator l1e
-> csiphy0-vdda-phy-supply = <&vreg_l1e_0p9>;
-> 
-> // voltage domain = vdd_a_csi_01_1p2 = regulator l3e
-> csiphy0-vdda-pll-supply = <&vreg_l3e_1p2>;
-> 
-> //
-> csiphy1-vdda-phy-supply = <&vreg_l1e_0p9>;
-> csiphy1-vdda-pll-supply = <&vreg_l3e_1p2>;
-> 
-> Where X indicates the CSIPHY number.
-> 
-> So in fact, in practice we don't need to differentiate these entries.
-> 
-> Checking x1e80100 ...
-> 
-> csiphy0
-> 
-> vdda-phy-supply = <&vreg_l2c_0p9>;
-> vdda-pll-supply = <&vreg_l1c_1p2>;
-> 
-> This is also the case for csiphy 1/2/4
-> 
-> So, I _don't_ believe this is work we need to do, since its the same regulator for each PHY.
 
-Except when it's not the case, like on the SM8650 HDK:
-VDD_A_CSI_01_0P9	=> VREG_L2I_0P88
-VDD_A_CSI_01_1P2	=> VREG_L3I_1P2
-VDD_A_CSI_24_0P9	=> VREG_L1I_0P88
-VDD_A_CSI_24_1P2	=> VREG_L3I_1P2
-VDD_A_CSI_35_0P9	=> VREG_L2I_0P88
-VDD_A_CSI_35_1P2	=> VREG_L3I_1P2
+Removing that from the DT causes a crash inside 
+`msm_iommu_pagetable_create` as it seems `create_private_address_space` 
+is assigned unconditionally in a6xx_gpu.c . I tested it with the 
+following change:
 
-the 1P2 all uses VREG_L3I_1P2, while the 0P9 are using VREG_L2I_0P88 or VREG_L1I_0P88
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 9e5a83b885f0..4111f5fd9721 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -832,11 +832,11 @@ msm_gpu_create_private_address_space(struct 
+msm_gpu *gpu, struct task_struct *ta
+          * If the target doesn't support private address spaces then return
+          * the global one
+          */
+-       if (gpu->funcs->create_private_address_space) {
+-               aspace = gpu->funcs->create_private_address_space(gpu);
+-               if (!IS_ERR(aspace))
+-                       aspace->pid = get_pid(task_pid(task));
+-       }
++       /* if (gpu->funcs->create_private_address_space) { */
++       /*      aspace = gpu->funcs->create_private_address_space(gpu); */
++       /*      if (!IS_ERR(aspace)) */
++       /*              aspace->pid = get_pid(task_pid(task)); */
++       /* } */
 
-Not declaring the exact supplies is pure lazyness, it will bounce back at our faces at some point.
+         if (IS_ERR_OR_NULL(aspace))
+                 aspace = msm_gem_address_space_get(gpu->aspace);
 
-Neil
+and it appears to work.
 
+> -Akhil.
 > 
-> ---
-> bod
+>> ---
+>> Changes in v3:
+>> - Added documentation about preemption
+>> - Use quirks to determine which target supports preemption
+>> - Add a module parameter to force disabling or enabling preemption
+>> - Clear postamble when profiling
+>> - Define A6XX_CP_CONTEXT_SWITCH_CNTL_LEVEL fields in a6xx.xml
+>> - Make preemption records MAP_PRIV
+>> - Removed user ctx record (NON_PRIV) and patch 2/9 as it's not needed
+>>    anymore
+>> - Link to v2: https://lore.kernel.org/r/20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com
+>>
+>> Changes in v2:
+>> - Added preept_record_size for X185 in PATCH 3/7
+>> - Added patches to reset perf counters
+>> - Dropped unused defines
+>> - Dropped unused variable (fixes warning)
+>> - Only enable preemption on a750
+>> - Reject MSM_SUBMITQUEUE_ALLOW_PREEMPT for unsupported targets
+>> - Added Akhil's Reviewed-By tags to patches 1/9,2/9,3/9
+>> - Added Neil's Tested-By tags
+>> - Added explanation for UAPI changes in commit message
+>> - Link to v1: https://lore.kernel.org/r/20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com
+>>
+>> ---
+>> Antonino Maniscalco (10):
+>>        drm/msm: Fix bv_fence being used as bv_rptr
+>>        drm/msm: Add a `preempt_record_size` field
+>>        drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
+>>        drm/msm/A6xx: Implement preemption for A7XX targets
+>>        drm/msm/A6xx: Sync relevant adreno_pm4.xml changes
+>>        drm/msm/A6xx: Use posamble to reset counters on preemption
+>>        drm/msm/A6xx: Add traces for preemption
+>>        drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
+>>        drm/msm/A6xx: Enable preemption for A750
+>>        Documentation: document adreno preemption
+>>
+>>   Documentation/gpu/msm-preemption.rst               |  98 +++++
+>>   drivers/gpu/drm/msm/Makefile                       |   1 +
+>>   drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   7 +-
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 331 +++++++++++++++-
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h              | 166 ++++++++
+>>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c          | 430 +++++++++++++++++++++
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   9 +-
+>>   drivers/gpu/drm/msm/msm_drv.c                      |   4 +
+>>   drivers/gpu/drm/msm/msm_gpu_trace.h                |  28 ++
+>>   drivers/gpu/drm/msm/msm_ringbuffer.h               |   8 +
+>>   drivers/gpu/drm/msm/msm_submitqueue.c              |   3 +
+>>   drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |   7 +-
+>>   .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  39 +-
+>>   include/uapi/drm/msm_drm.h                         |   5 +-
+>>   14 files changed, 1094 insertions(+), 42 deletions(-)
+>> ---
+>> base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+>> change-id: 20240815-preemption-a750-t-fcee9a844b39
+>>
+>> Best regards,
+>> -- 
+>> Antonino Maniscalco <antomani103@gmail.com>
+>>
+
+Best regards,
+-- 
+Antonino Maniscalco <antomani103@gmail.com>
 
 
