@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31600-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1D74976805
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 13:41:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 645799768D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 14:14:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AC7FFB230E8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 11:41:35 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CC93CB218D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 12:14:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7878019F40D;
-	Thu, 12 Sep 2024 11:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFB2D1A2567;
+	Thu, 12 Sep 2024 12:14:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c2PiO1QY"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="Omj+yh6P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBD418A6A9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 11:41:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D7D29CF6
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 12:14:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726141289; cv=none; b=Dp3uiMRtmxujWlxcbNwa36ahP3Td689UcJa++P+ERoe7p8JAg17zj3nmfi23CIzEtLP/1zYDE0p0tsSHUjno9fRZvgLpwDCTY+DPLbNIiQsJkeWXFp7FmUTX/TInKS0GcOeliq4kLXNy7r9+DOtz3EWwegy9UrPqnAnlIVIfADs=
+	t=1726143256; cv=none; b=QdTdpOOCrjn0Av2hw0VYwm1mDD5kWDCy2ogujuqGTEf45NSGAYz7cA8Nx/uHPJg/klhIVSuJiDrLrhrpLzikpw5PMJ9en82IwsSW2BBpqdjCaQ1JRbfoQ+hJNa0L08DdeotAfOR0S6TyCe7HlyWowQ7v4PQyNV5/Q+vXx6UXY9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726141289; c=relaxed/simple;
-	bh=Heof43DyvfqRJlRi0bBeyPYxJf13DtSSsWQ+FAooBOQ=;
+	s=arc-20240116; t=1726143256; c=relaxed/simple;
+	bh=UtIt931CJLYI0RgFqHsG1BIIxNiEzyf9O54ny+H/o7E=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=leEXAxNx7A/KheZTcADZBJ7VLf/9S3GJFmUAAPAOI5OVJJczazb8sE1wlWxgmVIUs/SrCEi/LaOYzu19zf/17lompcbNJGK6lo1CdiRSMckkYX/AeDMCa4f3njANiCuqKZMpcD7flzQJxm7zvs2hKjBG3IeaWxetWFPFdLY/v30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c2PiO1QY; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5c3c30e663fso994443a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 04:41:27 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=DkGH4m2IumVjDYs5ltgnQUKHqfozo3u/sw6L1FOQoko0tWDl2jB/oa/5obvi9PjinMt+UZL9y++mQ0LkRXWdbR2DQ32XPTrmBQOhNIyikquShfox31aQe/TAisWmE2MnfUHxS/41fEXK1RWX3bxsKvauXc0Dp87NBZaRX8xY/wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=Omj+yh6P; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42cb60aff1eso8386685e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 05:14:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726141286; x=1726746086; darn=vger.kernel.org;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1726143252; x=1726748052; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tzc1SB9FR1O0Hrrsa6BC4Sqb7TXAInj7HgbZ9sPm2/s=;
-        b=c2PiO1QYeAB6e+2rWgvYegE4mql9jjepoLT8xkXpkTHe+mqD1bnVT42vtPN3u8cnVf
-         iPKmDyY3NdYm9rvL3SyDj/4H/TQB//fteLoXsRxg9YS9s73dVTy2mpTEcuYNpABZpbHn
-         jfXyIWmi+MBX5NkuoNro8/cEdw8uAKzeyituls1+ggbnxKFyNyqgPPu42vnKLM97XouD
-         pZp0nsG0sGl4hGwb/8qnApcTBsbgb/z00HdaqQf5ew60j3X8PFEWCzIEiEGJ1MRsoDDT
-         ZYFERopwb2aj2zuusC9Nw2QZKTKUmog3pkR8CjWMiFdxCh+8Pb4SOwmh6xafEEcKsOBN
-         MQ1g==
+        bh=bORY3HlP0kOQCmx0LKjYAH7NpqjR028coTgUAD9TUQA=;
+        b=Omj+yh6PCwvcBAugTGwajAl/oES0Tx+FQM6fLSDn/mtVtDidrqgEwned12n6eNuLuA
+         oGnUDa8xiC+hGAkCWIhzheNu4vnvJFGoT7QE9WKXeGFKNPinWqQPwL33j8/1F8eR5de7
+         81WrWFoyZSHwq15K7RG30ROOeQg5CgwU1snIX7vvmZtD5tDHauIEXyYu1ofJYjxz3LLK
+         cQwbJKpt75eJqLI6BlNjZ2XpmfHbi7rzN8WMlPnCTs7gCcH3MjkdVoDijgVKEoNT1c1D
+         oMkWf+0zC2vk+8Sqyk80vosYA8hahZJ5AeXJ4HbE3sHAabfdQVTE3mugqS6kb2pVaJN5
+         1ATQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726141286; x=1726746086;
+        d=1e100.net; s=20230601; t=1726143252; x=1726748052;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tzc1SB9FR1O0Hrrsa6BC4Sqb7TXAInj7HgbZ9sPm2/s=;
-        b=h/GTrmIiQlFwjXK/Fp4cozq5VWDBjMhFCiG1yuQaZePfjNKxJB+CYXwKXeADO3RRG/
-         cx7tc99WpvgrH7RXFA+Vnvc3sfi/bFSGUKicnRmpEnyueCOJl/U+1zRj5Ta/CVa2BOlv
-         xFSDHkUCCM09mk6tEDUuQVHe/VkOrwaUaQaYqTrvVEdKxLbZ8m3H4OQBhxYtajRnZ82F
-         1XGmrJRHcxmhAT3C+S6/NJWOot+oQTAl9yCulQQ97ytEZ4/8/Pm5t46Co2+dUKFZdexv
-         ZKbausaQtYGGH4gNJqmr47113gxYrkqyMTGqxW+WRwGDqmVYbF5QRTMfzbXGOiEyCh6o
-         TFEg==
-X-Gm-Message-State: AOJu0Yw45drJG/eMw6pwRL2f9VSls8Klz1J51SsQthTwjpZ9bnznHrnY
-	u9QWMfZWiOegKAs3Fmw6e0rpsH2i9o1VvnFV/go1ivE27Gu8la/bnFRUuo0W6qcFEz3huILBXk2
-	R
-X-Google-Smtp-Source: AGHT+IF2wx3/sCQSoXraGqXOBRLBye6JAmeptMCNWTKtJqhL/MIXqZonIUqoAEP5C6ftg/j1PBtCNw==
-X-Received: by 2002:a17:907:e6e8:b0:a86:7ddf:2909 with SMTP id a640c23a62f3a-a90294fcf3bmr253511866b.14.1726141285775;
-        Thu, 12 Sep 2024 04:41:25 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25ce9ed6sm729090166b.165.2024.09.12.04.41.24
+        bh=bORY3HlP0kOQCmx0LKjYAH7NpqjR028coTgUAD9TUQA=;
+        b=v2pQv67nQfWUGLal1TCCxwaWFqV7HGaDrhB3iLph1lOLoxZ8/FJxXRxWAyQ1iSxAbD
+         pJSTffgVQD/wKfgxLn88sUQxtZfQmjf+ZBmGdVNr4L6hq21EsKe6Buy9OMDwuM5S8JJp
+         ET91mY+sZd0fEiXCD1GhrF4EjBaoI9hnUUbO8HSau4V1Tg14skqNF9gyLEeCI8/aPbBl
+         5X3Az09c2Fw80KhMI9Fr2CE8tskS/M25YOAxSHoPuxpofgKj5LmczODNVfwbWeFrLG/7
+         HQXuU9NEAceasBc7exd+0QKE+ah6EQCQUGUh6uYXr9SDKDWyXXv/6vd4YioHtqdK9ITQ
+         aSnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUT6Pxh0ITba75+v/AU88QdqwymKdc5VDMfi8Q3FTy6ydT+atQG1iQZr9goOSdoqBs6mIycvPImU8q8iEwz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyohY/Kjg6jPKVtqrGQIsEEeSw4FLH0eFGPEa4KTLKPSvJQ9JJO
+	xATDkmY0ERvQ8yIwtu7+7RmfMX5rb3TRsSqYSMR7NBMcXgRBBezAPVNthS0YpJY=
+X-Google-Smtp-Source: AGHT+IHEBljsXZHgMq2X1DZ+waGkIVs7/2emM2n8fTffmGwuJ7pI0ZvONKQFZiDu5gqGP2V4v0tYJw==
+X-Received: by 2002:adf:f3ce:0:b0:374:c621:62a6 with SMTP id ffacd0b85a97d-378c2d5b297mr1483853f8f.47.1726143251095;
+        Thu, 12 Sep 2024 05:14:11 -0700 (PDT)
+Received: from [192.168.108.50] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42cb2a08a1dsm152643165e9.1.2024.09.12.05.14.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Sep 2024 04:41:25 -0700 (PDT)
-Message-ID: <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
-Date: Thu, 12 Sep 2024 12:41:23 +0100
+        Thu, 12 Sep 2024 05:14:10 -0700 (PDT)
+Message-ID: <c2ed3380-82c3-43a3-9c01-534b08333f95@freebox.fr>
+Date: Thu, 12 Sep 2024 14:14:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,97 +76,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
+Subject: Re: [PATCH 7/8] drm/msmi: annotate pll_cmp_to_fdata() with
+ __maybe_unused
+To: Jani Nikula <jani.nikula@intel.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Arnaud Vrac <avrac@freebox.fr>
+Cc: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, Nathan Chancellor <nathan@kernel.org>,
+ Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org
+References: <cover.1725962479.git.jani.nikula@intel.com>
+ <3553b1db35665e6ff08592e35eb438a574d1ad65.1725962479.git.jani.nikula@intel.com>
+ <4ag2efwiizn5bnskauekqwfhgl4gioafcvetpvsmbdgg37bdja@3g6tt4rlfwcb>
+ <19ac4e25-7609-4d92-8687-585c6ea00c79@freebox.fr> <878qvyjxpg.fsf@intel.com>
+ <9028f858-8c6d-4292-a6aa-27eedff3ac8b@freebox.fr> <87ed5pgm2i.fsf@intel.com>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+In-Reply-To: <87ed5pgm2i.fsf@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 12/09/2024 09:22, Vladimir Zapolskiy wrote:
->> +
->> +  vdda-phy-supply:
->> +    description:
->> +      Phandle to a regulator supply to PHY core block.
->> +
->> +  vdda-pll-supply:
->> +    description:
->> +      Phandle to 1.2V regulator supply to PHY refclk pll block.
->> +
+On 12/09/2024 13:15, Jani Nikula wrote:
+> On Thu, 12 Sep 2024, Marc Gonzalez wrote:
+>> On 11/09/2024 12:23, Jani Nikula wrote:
+>>> On Tue, 10 Sep 2024, Marc Gonzalez wrote:
+>>>> On 10/09/2024 16:51, Dmitry Baryshkov wrote:
+>>>>> On Tue, Sep 10, 2024 at 01:03:43PM GMT, Jani Nikula wrote:
+>>>>>> See also commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
+>>>>>> inline functions for W=1 build").
 > 
-> Here the supplies should be split into ones, which are specific to CSI 
-> blocks,
-> and I believe they shall be set as optional.
-
-In principle I agree with that, each CSIPHY should have its own vdda-phy 
-and vdda-pll regulator specified.
-
-In practice though I don't believe its necessary, below.
-
-> The proposed names are:
+> [snip]
 > 
-> vdda-phy-01-supply
-> vdda-pll-01-supply
-> vdda-phy-23-supply
-> vdda-pll-23-supply
-> vdda-phy-46-supply
-> vdda-pll-46-supply
-> vdda-phy-57-supply
-> vdda-pll-57-supply
+>>> GCC doesn't catch unused static inlines, while Clang does.
+>>
+>> It makes no sense to me that adding "inline" would prevent
+>> GCC from diagnosing the issue... GCC should simply ignore
+>> the "inline" keyword when definition is not in a header file
+>> (maybe they don't store "origin").
+> 
+> Please just read the commit message for the commit I reference above for
+> details. There's not much more I could say about it.
 
-In principle, you're right, we need to expand the name set here.
+OK, I read 6863f5643dd7.
 
-> I understand that what I ask is much more clumsy, and it could be seen 
-> even as
-> unneeded, however it'll be the right set of properties to describe the 
-> CAMSS IP
-> in this respect
-I think the following naming would be better as it matches the 
-power-grid naming in the docs.
+My remark still stands.
 
-csiphyX-vdda-phy-supply
-csiphyX-vdda-pll-supply
+GCC's decision to not warn for unused static inline functions
+in source files (not headers) is questionable at best.
 
-=>
+(For the record, I think clang is the devil's spawn.)
 
-// voltage domain = vdd_a_csi_01_09 = regulator l1e
-csiphy0-vdda-phy-supply = <&vreg_l1e_0p9>;
+Regards
 
-// voltage domain = vdd_a_csi_01_1p2 = regulator l3e
-csiphy0-vdda-pll-supply = <&vreg_l3e_1p2>;
-
-//
-csiphy1-vdda-phy-supply = <&vreg_l1e_0p9>;
-csiphy1-vdda-pll-supply = <&vreg_l3e_1p2>;
-
-Where X indicates the CSIPHY number.
-
-So in fact, in practice we don't need to differentiate these entries.
-
-Checking x1e80100 ...
-
-csiphy0
-
-vdda-phy-supply = <&vreg_l2c_0p9>;
-vdda-pll-supply = <&vreg_l1c_1p2>;
-
-This is also the case for csiphy 1/2/4
-
-So, I _don't_ believe this is work we need to do, since its the same 
-regulator for each PHY.
-
----
-bod
 
