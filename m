@@ -1,1325 +1,427 @@
-Return-Path: <linux-arm-msm+bounces-31617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8EB48976E20
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 17:48:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A7378976F91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 19:31:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C80081F21130
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 15:48:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2FC351F243E1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 17:30:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFF3518DF90;
-	Thu, 12 Sep 2024 15:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED95F13DBBC;
+	Thu, 12 Sep 2024 17:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IKKAb1qh"
+	dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b="VvpeRMt1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00823401.pphosted.com (mx0b-00823401.pphosted.com [148.163.152.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF6A126BE2;
-	Thu, 12 Sep 2024 15:48:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726156133; cv=none; b=DxczLdvymzJcvV0TPX2I0Sd65XrhP+gHvhfZrFEjanyRRSjPsIAMYt7DGPuJtOGQ/E00U5azL2JKzYalpBcViOn4F+ESX64pvSOvZSUO7PPWNkjOdtXYo7ny9bFzAlgdKdOLZ7x6lasyyqHaKtxabsHrCKzxxQaoz9DADSKYKWY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726156133; c=relaxed/simple;
-	bh=D80WTlgORgw3ShPkBStrlFATaM6n2WamiQ7hsRi0sQM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LHAoCT7nMfceEC2oie4ui2x7fY+6wKTpjHFPR7i3fPqwTtdX8lembyg8mx08DnjVRheViX9yZzNvp8hcIA1Dg7njZnMe5GV+ZSw8vf5hcl2mUWrUICuKb4EPWYtWXc0QljfrdHX6r61d83GhmSXbHlHAKxqpEeDPJzZl9AcCDLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IKKAb1qh; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a8a706236bfso86498866b.0;
-        Thu, 12 Sep 2024 08:48:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726156129; x=1726760929; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YYFago+wbINKp5Gru/EA9WgqcQtf5dgh1S3lMxjSV1k=;
-        b=IKKAb1qh6Ljghxnu0kU1o9vQheLtRen7Oxpk+YumH0loF5/JKGdahRfVisxYJDrze7
-         sEBpl1IaFGOYJoLLe60x+33Z6/4gg157LuuuBj+nRpbAyK83sc9V3oozhFKWy5cpS0hN
-         KA9BOPN5YSxLXHMrMhGqucvQ+JidfTGuLCq3IyKfgHnWS6Y6OWCHdyJjXs4SGqZBxnBJ
-         wk3rkBXmEKUKlsFytoxklqyWhvLJpoIiJJ3i3XOtt3Hj84r3VJche+qvtuaBdra8B9qS
-         ruTqNSpiRdvGQKgDL9M+aHGkMS30ddzMR+vDH+VRcCsXoBhbXUhYJG8llGDrPJCEAh23
-         ky7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726156129; x=1726760929;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YYFago+wbINKp5Gru/EA9WgqcQtf5dgh1S3lMxjSV1k=;
-        b=fmRZ+s/UXe9oGc1FWK5wp3vZ3UFHIrIUOSs+IA717Pxl7GgyVLHVPl7xbRfUZbvFEY
-         wuinFnBZEO0AgVuEVqDXcUmnoViJ5VSsFLty3APuJBiwh9UUy6pht2IEaqGAQ0g88t/R
-         N9LvlYqwh8d4SxHpqQyWNE0LEzyMGUF3ggwTTzqPCvoU75szCILsvmqw1Znj70hTVuiU
-         Uw0/pjSyu/pJMMbIvaMRD9KX524/RJoHb1VPvn4v+9xc74xXdYI3DXHLb9tsguqUutER
-         fY46JNPVqGEjeefVp+Em6u1N3J25pHzzAjfyzE6/0XbrVa4mkyfe3gwhKS3tLrg69Z50
-         VH7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUuhqVypdc0fotuchQjeOvob+odcB6Lv41SymjlUj0JhqRJRFoW1BTNVDT86YHTWcOXUEIBQLZao8NU@vger.kernel.org, AJvYcCXcjBiloFK7o0mX65qHrlpkKyEIY7dxfUtvdCRJN0D6rxWBvrF/GJpOXZtYPTGFN2yJ9GRGNQOTqMwEQ7JE@vger.kernel.org, AJvYcCXnMfnNVFETP8Y/voolgqI+wIayUz2gLkX16ZwysU5g+iOE6x3v/VQijUCDkXfQPaP+wFbMxY8A6MlCc4f/@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQillUN4IGNMWBKuaX6Qc8IZ2j9nsQXLZUOQ48EmN2ZDO6kReY
-	KrUoL9gW0czI6VbBL0sjif8bzEZh6VJbCUEKagOGqij8qALC3+yL
-X-Google-Smtp-Source: AGHT+IEqCmbabTR8nKCjE1cWAdYcf5aS4itdAfbWnyryoWIfqhtivG6YKUAk06wzCP9J5VBJE/RN5w==
-X-Received: by 2002:a05:6402:35cb:b0:5c2:5d34:a45a with SMTP id 4fb4d7f45d1cf-5c413e058f5mr3699133a12.2.1726156127955;
-        Thu, 12 Sep 2024 08:48:47 -0700 (PDT)
-Received: from [192.168.1.17] (host-87-20-168-161.retail.telecomitalia.it. [87.20.168.161])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c3ebd41c7dsm6652586a12.13.2024.09.12.08.48.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Sep 2024 08:48:47 -0700 (PDT)
-Message-ID: <ddb77c12-0f17-49c4-9b89-c1fa26238fd8@gmail.com>
-Date: Thu, 12 Sep 2024 17:48:45 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ECC1EB2A
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 17:30:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=148.163.152.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1726162255; cv=fail; b=IYyVzn0XtrJlNDvqNSJPnSCF2MMPdDaWgfD4FMcj7PHeyqQm8QZrqc5WBtuwqghUBxkHsIwgxzBcuZKRcLZAw87wI4lCCLWLReoNFGw2eGwJSjf+uwBiItbkyxEvLd3W5tKhnwkgR3uhews1xHNjeOYpGJA58rKKQ8lGMY8AlmA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1726162255; c=relaxed/simple;
+	bh=hq7paIgPhR1NCJiGmZcYYGp9U9n+79NcqYBuP1S4V8Q=;
+	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=fUv9fsp23LnZdPaZlbZo0Syoai+rs6t1flKrd9Kl3hhccrf/wH8Akxk9/0T71BWbZGvm8mWkxIH2nv/4ZXTOcXhLJzDtv78x4kQiOPrMuVM33OnFtoV/TMLSz2EZcbZ5fFAmnnkcCeYLCVzV3dia48ZFf83nUhkMKiw2C/Lgbdk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com; spf=pass smtp.mailfrom=motorola.com; dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b=VvpeRMt1; arc=fail smtp.client-ip=148.163.152.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=motorola.com
+Received: from pps.filterd (m0355090.ppops.net [127.0.0.1])
+	by m0355090.ppops.net (8.18.1.2/8.18.1.2) with ESMTP id 48CCdlSE031464;
+	Thu, 12 Sep 2024 16:02:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=motorola.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=DKIM202306; bh=hq7paIgPhR1NCJiGmZcYY
+	Gp9U9n+79NcqYBuP1S4V8Q=; b=VvpeRMt11IPUydthsGi0OMT0TLg/Elovli/ok
+	R4T33HiqDPMNpjn9t2/B8Q41vqG8e3j+kEHQmJ/oAbIWFk++IcqynOiwwlGFzwTa
+	olNKmbWW1R3MzMfBWXrF7sl4HcMIsM5SQMHQrYTzm+VwMFhjQiK+KI0O8Bk8YuA/
+	p1JrGr3tNOgNoLNzUmtKTqom9R6uBkh7VtloZyynWeL5FnnCKcuVvuWRNxYJgMCz
+	mvNQ4pyNmiPMqFMt49lNWxIaLLkaisIxw7DvHrPsnI46VjDDOEtw0SGDLDel2sv4
+	3caO3NYp39JvbxV/Mox1Ja6DWgkLQ63bBiddxa4dcdpAOPP6w==
+Received: from hk3pr03cu002.outbound.protection.outlook.com (mail-eastasiaazlp17011024.outbound.protection.outlook.com [40.93.128.24])
+	by m0355090.ppops.net (PPS) with ESMTPS id 41h25rn59v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Sep 2024 16:02:58 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Y/ze5p00UZ/VrSLTCJ17lsvfwjUb+OeMjD2hgPkYWl5+zF5UzMIbVQNMBFHY9Xl6DKqocrff40fh4t3GDs4HZiDqDFGqJMfZwSBjkGqtse6ItG9fZPFkTGSgj1XSyrbZeGc3h7rppDi8i2jOWjKctKzJikoZ9ZkbJLkYMbIH/Z57tmIqg52GYv6TpaDBp2S9GJAiNaOuwz9zEfrzKC+j6438KJi9uyVm6OPkpSSb625wpuyANmkA2c6whFKW9xXTzeGsq94H06XmUX5y1bWyKls9scbV4NHlCgnDsPFSog2HyIe3SPCYHoqPJEHJFnbU6PDkfrKte+CzyIgtFhVzGQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hq7paIgPhR1NCJiGmZcYYGp9U9n+79NcqYBuP1S4V8Q=;
+ b=bvTw0m+jzA2AkQ9/EeQ+nt1PC0TR2IADgnxL44nbCbsdwhB+q08K+l2Z6zTNmrkcI5RbEtq3/Ly2xD81k+sO5RXPa/vh4LBReosEp4Ne3dDkmRMS5etLciskEYode5Xm3J8J6ouciAeV2bhfe4W3065vJQjnIrP2oSPXjbIZ7VMp5U5wpOQajEDGUP9XlQewB7r0D23k6UYG7Ov8340NjRcYIPcX2HfdlhcrVAkWUVidha0BXup/+c3ufacQuHYDU9KG4IyDD8g/s8ESkAzGL/KCUr30lG2wFAXIvCSJWa+i3f91xJgTCSxVrzMJl6h01PY7xrrRl/3nd0ApTbhGyw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=motorola.com; dmarc=pass action=none header.from=motorola.com;
+ dkim=pass header.d=motorola.com; arc=none
+Received: from SEZPR03MB6786.apcprd03.prod.outlook.com (2603:1096:101:66::5)
+ by SEZPR03MB7472.apcprd03.prod.outlook.com (2603:1096:101:12b::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7939.23; Thu, 12 Sep
+ 2024 16:02:54 +0000
+Received: from SEZPR03MB6786.apcprd03.prod.outlook.com
+ ([fe80::18e4:458e:7dea:e842]) by SEZPR03MB6786.apcprd03.prod.outlook.com
+ ([fe80::18e4:458e:7dea:e842%3]) with mapi id 15.20.7939.022; Thu, 12 Sep 2024
+ 16:02:53 +0000
+From: Maxwell Bland <mbland@motorola.com>
+To: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+CC: Andrew Wheeler <awheeler@motorola.com>,
+        =?gb2312?B?U2FtbXkgQlMyIFF1ZSB8IOPasfPJ+g==?= <quebs2@motorola.com>,
+        Neill
+ Kapron <nkapron@google.com>, Todd Kjos <tkjos@google.com>,
+        Viktor Martensson
+	<vmartensson@google.com>,
+        Andy Lutomirski <luto@amacapital.net>,
+        "keescook@chromium.org" <keescook@chromium.org>,
+        Will Drewry
+	<wad@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        kernel-team <kernel-team@android.com>
+Subject: [RFC] Proposal: Static SECCOMP Policies
+Thread-Topic: [RFC] Proposal: Static SECCOMP Policies
+Thread-Index: AQHbBSz1wYxrt9yqNUa8P2GZ+zXs0g==
+Date: Thu, 12 Sep 2024 16:02:53 +0000
+Message-ID:
+ <SEZPR03MB6786D45BE387F2B378E71A84B4642@SEZPR03MB6786.apcprd03.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR03MB6786:EE_|SEZPR03MB7472:EE_
+x-ms-office365-filtering-correlation-id: 3c00f524-8bd8-416d-8b9c-08dcd3445c3f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|376014|7416014|1800799024|366016|3613699012|38070700018;
+x-microsoft-antispam-message-info:
+ =?gb2312?B?UklMZHRJY25OT2xjdjFncm1HeW9vS3FWUnkwMFJtK2ZjY3VkMjBxSEZLdnJx?=
+ =?gb2312?B?UDZ4aGRmZnlkdUpRWUFVcklRTFhEc3ZWUlVWN3FBMXdGbzVCYlZpS2tQa2k4?=
+ =?gb2312?B?MnU2OUR1RURwOEcvSHpQMUJhb2xFU3puT0dXSjBhaU4wTTlFaDRWVUVpenZP?=
+ =?gb2312?B?YnVMejNkcnB2UUVlSHlYYUdrSFZpZ2xyUkkwWDNudjBjKzVPclFHUHF0Q0Jm?=
+ =?gb2312?B?dVY5ckhMdGpzWGlSR1JGRWtHVmNxSTRZTzhPQW9yb01TVEtYZUdFVjBsOWQ3?=
+ =?gb2312?B?blp1eWlMaWdYR3VPREFDTEgzeHR6VUdDaloxL2dHLzNNQ1FzVlpnNDFKQ091?=
+ =?gb2312?B?bVZYMW5pMFFJeUFvbVMxMUpndm5sWkFKUk5XaEhGYTI3YVBOL0pHMElLL2xv?=
+ =?gb2312?B?Q1RWbHRLakJJQ0RMUm9reHZoOG1DMVVQV01lcVkvQnVnVVhpNSt6ZytkNDZM?=
+ =?gb2312?B?TVk4RHl2TEx4YmdGYkdRcmx6SExFVlczdDJUY0pIR1FmT1IwOTBva0FZdnlE?=
+ =?gb2312?B?dmo2Q1Z1V2pGNmtXNk95eVBLeTlTM0tXYnJNc2lPcXErdVBnVFVMaWttQVJ0?=
+ =?gb2312?B?enhnMGlEdnAvdUtwSDFTUmZidk1vOXN0SHJaY1g5eHg0dUthbmNINTh1bzZj?=
+ =?gb2312?B?NEdUalV4WHh0TkJhbXBJVFh2V1ZWd093R0ZvRS9ma1ZPdUIrenkzcjd3R1R1?=
+ =?gb2312?B?QUN3Q2l5dG1XSC9rSDBmNFJzMUMycEZzODA5QVM0T3pBVnZJK2hwNjJkMG1R?=
+ =?gb2312?B?dHBhNG9TWG80RnJsaVJwNEVRUlpXYXV3UGdzblY3NHlVb1NydzNqaS9yMmNY?=
+ =?gb2312?B?NTdrNG9iOUo3dWx3NWtGL3ZmL3AyNkpSOTF2U3hMNFdGNVBScTF4bjdsdW9t?=
+ =?gb2312?B?U2VYUllOVmp4Z2hKbElyOXlRTkIzU3FPeHZybGdWaGtSdDd5a2tPSmhwZ0p5?=
+ =?gb2312?B?L2hBMm9uR3YyNFhwTUxESUQxa1E0Qm5ITVJ1R0lhMGlEQUNoeG9GN3Bpemkw?=
+ =?gb2312?B?elk2UEsrTEl3dDA0Y2R2Znhlbi9xMDA0c1Nac29TeXpUbE82eCthck8yOWRK?=
+ =?gb2312?B?a3VGTmdNaHJWZi85VVFTSlpaSFBPTzd2ck53VjB2Y0RucUkwcC9UMy9LMDNz?=
+ =?gb2312?B?Y2xGbk1TNjcwMzRhTnBMOGMxNC84UzZLOGpWYWlsZ21qSThoakkvbHlFNHFq?=
+ =?gb2312?B?b1hKMGNUMGNkc3ZONnFKYnVNZnArUEdmeERZMVRHNmhSd1NaWlJjVk9hMFJR?=
+ =?gb2312?B?bnZZTVVqSDhCSVNYVkdPWkVBSjhxV2JjeGhvTGRNdVNwRFBEM0t4R2Zpb0VF?=
+ =?gb2312?B?d3N1bk1kc0NQcXkyZzVHcmxkdFFFaXJaTmxCWWcrVWt2cWdDaVh3N2pQQ0p0?=
+ =?gb2312?B?TWNsaWxLYWZRRU93Yzhsdk5wSHdJMG9DY1FJZUJvbnM5ZHl2SktBMXZvc21l?=
+ =?gb2312?B?Z2FrVWgvcmxXNTRVVHNsUGtBUGVDV1lvL3FBQnhQMGpya2lScXlvaUlkK05K?=
+ =?gb2312?B?Y0t6L1NCNHpRb3UwTFpabkgyYlRBeVpWbWVoclFzMW1jYVZjNHhkWmhSUDRs?=
+ =?gb2312?B?UzVzOUdUVEJBeGlKUTY2cy9wdXo1Y1ZHM3dvMitFL1ExWGFaWE1vZXMwbHF4?=
+ =?gb2312?B?Q1Z3YXhqRFJWeG1kanJ5SDN0Wk02eWdXc1AxVlRNc0h3U2EwV2JnMWxKZC9l?=
+ =?gb2312?B?eVduVHFYTmlhOXVKOTgvc3MwYi8yNjl1THRhZU5wV1U0ZFNiLzd2Mm1hKzlN?=
+ =?gb2312?B?VjBYbzVhN0dBUno1b05JNmh4Vy95TDFhWWNZcWwyL1Vsa1pXOGFOVkt0cXE5?=
+ =?gb2312?B?OXUwQTJ5MUJTYlU2ZnNmRGp1b0tqRjA5VGgxZUhFN2IwRExDc3pvcHpmS3A2?=
+ =?gb2312?Q?kDxYarlAHOA97?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:zh-cn;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR03MB6786.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(3613699012)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?gb2312?B?WitUamJKc3B5YVFHY05MRVFaSS9Xb0MvM0krWTFYWEtDRzdTMFVjbUs5andR?=
+ =?gb2312?B?YjJydkNLR1E3dElCemdMeEJUbmFxdzZMam02ZWdNcWloTURiMDhzNXdYcEt4?=
+ =?gb2312?B?YmRVajBVSCsya29iYjlRQnZyYkZLdFh5NlZjcmF6a3VaU29wdlM5L0RhL3FQ?=
+ =?gb2312?B?Nk9NSmJ0VG1zMERYY3VzbGZBbnFpVmF2cmw3a1pyVW9ZRUcxdGRSTEVzK3Iz?=
+ =?gb2312?B?V3U2QzM3TllaRmpkY3lqZGlJZGFmUitkUlBCcmVUWUx6YmR3WVlEVU1vSU9a?=
+ =?gb2312?B?TDNmeDlUOXpDWHEwbkN6ZkVIcCt2a2tpZXdtTm84ckRDSVg2YWlGQXJqQnBK?=
+ =?gb2312?B?TUlWOUR6ckhqUEtwZ015SjhzR3dCY0Y4bU0zQ2ZMMDg2L2VaRGZXRUJPdldO?=
+ =?gb2312?B?U2FyaWFCVUlhQ0ZST1NtMk45V1A3M3NZTGU3am9MSjVoYWRwVFJJRDVjLzE0?=
+ =?gb2312?B?NjNzVENJaWN1TmxkYXVzc3JCWWozclpOQ1lISDdicWlkSE4rWWJmRjR0VGxV?=
+ =?gb2312?B?clFCZkl4STBwK29oTWljTUpQU0U5dld4aTQxNi8zSlo1S3BpN01CcFVUWFNO?=
+ =?gb2312?B?WS9rcnQ4bEVXWEFIbDZCUjdyUFg0T1kvZW1ueXpzMmtEZi9KNE9oT1ZJbVlr?=
+ =?gb2312?B?Z0hGUURXUkNRTUk0dFBQbG9zZjdHZDRvL25GNzZsQ0s3azNaYjlwbWh0UVVH?=
+ =?gb2312?B?ekF5T210NkZtWUlEbE9sN1o1Zk1VeGdBY1RrT1ZZUVN3NjRxSnp0QXUxd05W?=
+ =?gb2312?B?b0g3Y1BDTjEzVnN6QjBOUWtNRlF0ZUhObnlvK1RWUHdlSnpwVzZ6NGRKendD?=
+ =?gb2312?B?ZWdVUEk2K3k3dlZVM0UvMUx1Z05LdG1RcmNVMVNBbXNWbWhSd0Q4MkgzYlcz?=
+ =?gb2312?B?OXhQNmVnNm04SDI2bmpXb28waGphaFZWMm9YZ0dxWlMrd21BaEIwdmdmUC8r?=
+ =?gb2312?B?eFVTZTd3NVI1S3VlZ24wR3lmOFhoKzFwVGozNG9lYTdWNHJOUUh6UDlxRUZU?=
+ =?gb2312?B?cnM4ZmcyN215UmVrSEtST3JpRk9Xb3h4YUlFLzBFZUxza1l3TTAwdDV3TnAx?=
+ =?gb2312?B?dnByUTI5N0dVd2xDeXo2VGRYMlF6NWV1dVlZaG83QlRUeW12dENpZWFZd0Rm?=
+ =?gb2312?B?MGd5L1FrSkY3VUNvTlIxdmhpNDhLVzRaWHppSktLOEFKL0hBNlJjV3JBS2hD?=
+ =?gb2312?B?NjE2emZQeDh6Y3Z4ZkhzbkZkQTVBVktHQ2lpVE5IU0FxU2hubEY5OEtERDNr?=
+ =?gb2312?B?ZUo2WEJNOW96NWt6Y0hqYnBQdFZMaTlDZDFxQk92eTBLeTd0Y1duV2x5WEhZ?=
+ =?gb2312?B?a0p1bDhCdzhCSGkvSVVHTHJMWG8zcFkwU0ZzVjdFcXdIU2gyL3pzbFc4RUJM?=
+ =?gb2312?B?cmhheWhSS3dZSU43OUVlaVJ2MTl2ZDhzUjBSMjVnWlMwNW1WSWhCM2Znd1Np?=
+ =?gb2312?B?TEluQ3djVy9yS3M3NHIzZDFqcmFIZDFxYlN1M2tsL2hiUTA1TmxtM0lTUlpQ?=
+ =?gb2312?B?VkQ2cmpjTVVUa3lnZTg4TE1rQWZJOWYvZy9CODF5OE9mcm5HUHh6WEpCVmN4?=
+ =?gb2312?B?UjBJQmJJdG1zQS9PeVpIa1ZXNGV2ZmdLd0JRcTJkOXo2SjZQaW0wbEtpYUIx?=
+ =?gb2312?B?MU56U2FobkZEOWtkWlVGKzUvM0JEL0pqaDNLZVB3MUFTUkI2SU9SVEp1cllN?=
+ =?gb2312?B?Qm8zWnVpNjJ1U0x4b244MnNQVWd2RFVrV0kzQUNxZG5KUkhHRmdqZUtwcWVX?=
+ =?gb2312?B?UXdOTHZSbG5Dc0pQTTRBaC8rR0FrQUwwOUV6Q2FTNGFHdVFSZFpqajJnK3Y3?=
+ =?gb2312?B?Z2F3TmFaK2ZFYnRubFZFbDlpRWRxV0pZYnAycWNUZitWaFJFTHVwbFpDVFhj?=
+ =?gb2312?B?ZnBDYzdpR2wweCt1TENsaFhUY3VmOFNFOFczV0tOY2gvUnZKZ2I0UW01bHlV?=
+ =?gb2312?B?Y0NZdTd1cmN6cTFDbnh2Q2d4OXI5Q3pMTTJVWWFISExIc1RxUzM3c2oxdVhz?=
+ =?gb2312?B?RW9nOFBmQW5KeEJ2TkZyM2RHMmI5NnJhNXdxODlNYWoveCtJWlNibStpaEVu?=
+ =?gb2312?B?b0ZqRzhUNk52L2wrc0MrZnh4Y1llSVR3ck9UZFUrVlNsT3hES05tZUdwc2JL?=
+ =?gb2312?Q?m5T0=3D?=
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/10] drm/msm/A6xx: Implement preemption for A7XX
- targets
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>,
- Connor Abbott <cwabbott0@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- Sharat Masetty <smasetty@codeaurora.org>,
- Neil Armstrong <neil.armstrong@linaro.org>
-References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
- <20240905-preemption-a750-t-v3-4-fd947699f7bc@gmail.com>
- <20240906195444.owz4eralirekr7r7@hu-akhilpo-hyd.qualcomm.com>
- <CACu1E7Fsu3e-agx8QBZhXd83BuDSrdKCsruPfTSH5OKRuEsRLw@mail.gmail.com>
- <20240910164358.q3ytpik3qr4ovd3e@hu-akhilpo-hyd.qualcomm.com>
-Content-Language: en-US
-From: Antonino Maniscalco <antomani103@gmail.com>
-In-Reply-To: <20240910164358.q3ytpik3qr4ovd3e@hu-akhilpo-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: motorola.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR03MB6786.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3c00f524-8bd8-416d-8b9c-08dcd3445c3f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Sep 2024 16:02:53.8073
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 5c7d0b28-bdf8-410c-aa93-4df372b16203
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: zc54fTCkWo2sdi7208qOd8q/kdhzD52vembhW6ljlCMGs5S3/lsFKjzwqf4Lep9vm/cJVeOY9CPiY45/spIl0A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR03MB7472
+X-Proofpoint-GUID: DgZ95IWnOTUSagqIoaheCdbpdoRnO8Y6
+X-Proofpoint-ORIG-GUID: DgZ95IWnOTUSagqIoaheCdbpdoRnO8Y6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 clxscore=1015 mlxscore=0 phishscore=0 spamscore=0
+ malwarescore=0 mlxlogscore=999 suspectscore=0 priorityscore=1501
+ bulkscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409120118
 
-On 9/10/24 6:43 PM, Akhil P Oommen wrote:
-> On Mon, Sep 09, 2024 at 01:22:22PM +0100, Connor Abbott wrote:
->> On Fri, Sep 6, 2024 at 9:03 PM Akhil P Oommen <quic_akhilpo@quicinc.com> wrote:
->>>
->>> On Thu, Sep 05, 2024 at 04:51:22PM +0200, Antonino Maniscalco wrote:
->>>> This patch implements preemption feature for A6xx targets, this allows
->>>> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
->>>> hardware as such supports multiple levels of preemption granularities,
->>>> ranging from coarse grained(ringbuffer level) to a more fine grained
->>>> such as draw-call level or a bin boundary level preemption. This patch
->>>> enables the basic preemption level, with more fine grained preemption
->>>> support to follow.
->>>>
->>>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
->>>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
->>>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
->>>> ---
->>>>   drivers/gpu/drm/msm/Makefile              |   1 +
->>>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 293 +++++++++++++++++++++-
->>>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 161 ++++++++++++
->>>>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 391 ++++++++++++++++++++++++++++++
->>>>   drivers/gpu/drm/msm/msm_ringbuffer.h      |   7 +
->>>>   5 files changed, 844 insertions(+), 9 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
->>>> index f5e2838c6a76..32e915109a59 100644
->>>> --- a/drivers/gpu/drm/msm/Makefile
->>>> +++ b/drivers/gpu/drm/msm/Makefile
->>>> @@ -23,6 +23,7 @@ adreno-y := \
->>>>        adreno/a6xx_gpu.o \
->>>>        adreno/a6xx_gmu.o \
->>>>        adreno/a6xx_hfi.o \
->>>> +     adreno/a6xx_preempt.o \
->>>>
->>>>   adreno-$(CONFIG_DEBUG_FS) += adreno/a5xx_debugfs.o \
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>> index 32a4faa93d7f..ed0b138a2d66 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>> @@ -16,6 +16,83 @@
->>>>
->>>>   #define GPU_PAS_ID 13
->>>>
->>>> +/* IFPC & Preemption static powerup restore list */
->>>> +static const uint32_t a7xx_pwrup_reglist[] = {
->>>> +     REG_A6XX_UCHE_TRAP_BASE,
->>>> +     REG_A6XX_UCHE_TRAP_BASE + 1,
->>>> +     REG_A6XX_UCHE_WRITE_THRU_BASE,
->>>> +     REG_A6XX_UCHE_WRITE_THRU_BASE + 1,
->>>> +     REG_A6XX_UCHE_GMEM_RANGE_MIN,
->>>> +     REG_A6XX_UCHE_GMEM_RANGE_MIN + 1,
->>>> +     REG_A6XX_UCHE_GMEM_RANGE_MAX,
->>>> +     REG_A6XX_UCHE_GMEM_RANGE_MAX + 1,
->>>> +     REG_A6XX_UCHE_CACHE_WAYS,
->>>> +     REG_A6XX_UCHE_MODE_CNTL,
->>>> +     REG_A6XX_RB_NC_MODE_CNTL,
->>>> +     REG_A6XX_RB_CMP_DBG_ECO_CNTL,
->>>> +     REG_A7XX_GRAS_NC_MODE_CNTL,
->>>> +     REG_A6XX_RB_CONTEXT_SWITCH_GMEM_SAVE_RESTORE,
->>>> +     REG_A6XX_UCHE_GBIF_GX_CONFIG,
->>>> +     REG_A6XX_UCHE_CLIENT_PF,
->>>
->>> REG_A6XX_TPL1_DBG_ECO_CNTL1 here. A friendly warning, missing a register
->>> in this list (and the below list) will lead to a very frustrating debug.
->>>
->>>> +};
->>>> +
->>>> +static const uint32_t a7xx_ifpc_pwrup_reglist[] = {
->>>> +     REG_A6XX_TPL1_NC_MODE_CNTL,
->>>> +     REG_A6XX_SP_NC_MODE_CNTL,
->>>> +     REG_A6XX_CP_DBG_ECO_CNTL,
->>>> +     REG_A6XX_CP_PROTECT_CNTL,
->>>> +     REG_A6XX_CP_PROTECT(0),
->>>> +     REG_A6XX_CP_PROTECT(1),
->>>> +     REG_A6XX_CP_PROTECT(2),
->>>> +     REG_A6XX_CP_PROTECT(3),
->>>> +     REG_A6XX_CP_PROTECT(4),
->>>> +     REG_A6XX_CP_PROTECT(5),
->>>> +     REG_A6XX_CP_PROTECT(6),
->>>> +     REG_A6XX_CP_PROTECT(7),
->>>> +     REG_A6XX_CP_PROTECT(8),
->>>> +     REG_A6XX_CP_PROTECT(9),
->>>> +     REG_A6XX_CP_PROTECT(10),
->>>> +     REG_A6XX_CP_PROTECT(11),
->>>> +     REG_A6XX_CP_PROTECT(12),
->>>> +     REG_A6XX_CP_PROTECT(13),
->>>> +     REG_A6XX_CP_PROTECT(14),
->>>> +     REG_A6XX_CP_PROTECT(15),
->>>> +     REG_A6XX_CP_PROTECT(16),
->>>> +     REG_A6XX_CP_PROTECT(17),
->>>> +     REG_A6XX_CP_PROTECT(18),
->>>> +     REG_A6XX_CP_PROTECT(19),
->>>> +     REG_A6XX_CP_PROTECT(20),
->>>> +     REG_A6XX_CP_PROTECT(21),
->>>> +     REG_A6XX_CP_PROTECT(22),
->>>> +     REG_A6XX_CP_PROTECT(23),
->>>> +     REG_A6XX_CP_PROTECT(24),
->>>> +     REG_A6XX_CP_PROTECT(25),
->>>> +     REG_A6XX_CP_PROTECT(26),
->>>> +     REG_A6XX_CP_PROTECT(27),
->>>> +     REG_A6XX_CP_PROTECT(28),
->>>> +     REG_A6XX_CP_PROTECT(29),
->>>> +     REG_A6XX_CP_PROTECT(30),
->>>> +     REG_A6XX_CP_PROTECT(31),
->>>> +     REG_A6XX_CP_PROTECT(32),
->>>> +     REG_A6XX_CP_PROTECT(33),
->>>> +     REG_A6XX_CP_PROTECT(34),
->>>> +     REG_A6XX_CP_PROTECT(35),
->>>> +     REG_A6XX_CP_PROTECT(36),
->>>> +     REG_A6XX_CP_PROTECT(37),
->>>> +     REG_A6XX_CP_PROTECT(38),
->>>> +     REG_A6XX_CP_PROTECT(39),
->>>> +     REG_A6XX_CP_PROTECT(40),
->>>> +     REG_A6XX_CP_PROTECT(41),
->>>> +     REG_A6XX_CP_PROTECT(42),
->>>> +     REG_A6XX_CP_PROTECT(43),
->>>> +     REG_A6XX_CP_PROTECT(44),
->>>> +     REG_A6XX_CP_PROTECT(45),
->>>> +     REG_A6XX_CP_PROTECT(46),
->>>> +     REG_A6XX_CP_PROTECT(47),
->>>> +     REG_A6XX_CP_AHB_CNTL,
->>>> +};
->>>> +
->>>> +
->>>>   static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
->>>>   {
->>>>        struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> @@ -68,6 +145,8 @@ static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>>>
->>>>   static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>>>   {
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>>        uint32_t wptr;
->>>>        unsigned long flags;
->>>>
->>>> @@ -81,12 +160,26 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>>>        /* Make sure to wrap wptr if we need to */
->>>>        wptr = get_wptr(ring);
->>>>
->>>> -     spin_unlock_irqrestore(&ring->preempt_lock, flags);
->>>> -
->>>>        /* Make sure everything is posted before making a decision */
->>>>        mb();
->>>
->>> This looks unnecessary.
->>>
->>>>
->>>> -     gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
->>>> +     /* Update HW if this is the current ring and we are not in preempt*/
->>>> +     if (!a6xx_in_preempt(a6xx_gpu)) {
->>>> +             /*
->>>> +              * Order the reads of the preempt state and cur_ring. This
->>>> +              * matches the barrier after writing cur_ring.
->>>> +              */
->>>> +             rmb();
->>>
->>> we can use the lighter smp variant here.
->>>
->>>> +
->>>> +             if (a6xx_gpu->cur_ring == ring)
->>>> +                     gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
->>>> +             else
->>>> +                     ring->skip_inline_wptr = true;
->>>> +     } else {
->>>> +             ring->skip_inline_wptr = true;
->>>> +     }
->>>> +
->>>> +     spin_unlock_irqrestore(&ring->preempt_lock, flags);
->>>>   }
->>>>
->>>>   static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
->>>> @@ -138,12 +231,14 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
->>>
->>> set_pagetable checks "cur_ctx_seqno" to see if pt switch is needed or
->>> not. This is currently not tracked separately for each ring. Can you
->>> please check that?
->>>
->>> I wonder why that didn't cause any gpu errors in testing. Not sure if I
->>> am missing something.
->>>
->>>>
->>>>        /*
->>>>         * Write the new TTBR0 to the memstore. This is good for debugging.
->>>> +      * Needed for preemption
->>>>         */
->>>> -     OUT_PKT7(ring, CP_MEM_WRITE, 4);
->>>> +     OUT_PKT7(ring, CP_MEM_WRITE, 5);
->>>>        OUT_RING(ring, CP_MEM_WRITE_0_ADDR_LO(lower_32_bits(memptr)));
->>>>        OUT_RING(ring, CP_MEM_WRITE_1_ADDR_HI(upper_32_bits(memptr)));
->>>>        OUT_RING(ring, lower_32_bits(ttbr));
->>>> -     OUT_RING(ring, (asid << 16) | upper_32_bits(ttbr));
->>>> +     OUT_RING(ring, upper_32_bits(ttbr));
->>>> +     OUT_RING(ring, ctx->seqno);
->>>>
->>>>        /*
->>>>         * Sync both threads after switching pagetables and enable BR only
->>>> @@ -268,6 +363,43 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>        a6xx_flush(gpu, ring);
->>>>   }
->>>>
->>>> +static void a6xx_emit_set_pseudo_reg(struct msm_ringbuffer *ring,
->>>> +             struct a6xx_gpu *a6xx_gpu, struct msm_gpu_submitqueue *queue)
->>>> +{
->>>> +     u64 preempt_offset_priv_secure;
->>>> +
->>>> +     OUT_PKT7(ring, CP_SET_PSEUDO_REG, 15);
->>>> +
->>>> +     OUT_RING(ring, SMMU_INFO);
->>>> +     /* don't save SMMU, we write the record from the kernel instead */
->>>> +     OUT_RING(ring, 0);
->>>> +     OUT_RING(ring, 0);
->>>> +
->>>> +     /* privileged and non secure buffer save */
->>>> +     OUT_RING(ring, NON_SECURE_SAVE_ADDR);
->>>> +     OUT_RING(ring, lower_32_bits(
->>>> +             a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE));
->>>> +     OUT_RING(ring, upper_32_bits(
->>>> +             a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE));
->>>> +     OUT_RING(ring, SECURE_SAVE_ADDR);
->>>> +     preempt_offset_priv_secure =
->>>> +             PREEMPT_OFFSET_PRIV_SECURE(a6xx_gpu->base.info->preempt_record_size);
->>>> +     OUT_RING(ring, lower_32_bits(
->>>> +             a6xx_gpu->preempt_iova[ring->id] + preempt_offset_priv_secure));
->>>> +     OUT_RING(ring, upper_32_bits(
->>>> +             a6xx_gpu->preempt_iova[ring->id] + preempt_offset_priv_secure));
->>>> +
->>>> +     /* user context buffer save, seems to be unnused by fw */
->>>> +     OUT_RING(ring, NON_PRIV_SAVE_ADDR);
->>>> +     OUT_RING(ring, 0);
->>>> +     OUT_RING(ring, 0);
->>>> +
->>>> +     OUT_RING(ring, COUNTER);
->>>> +     /* seems OK to set to 0 to disable it */
->>>> +     OUT_RING(ring, 0);
->>>> +     OUT_RING(ring, 0);
->>>> +}
->>>> +
->>>>   static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>   {
->>>>        unsigned int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
->>>> @@ -283,6 +415,13 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>        OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
->>>>        OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);
->>>>
->>>> +     /*
->>>> +      * If preemption is enabled, then set the pseudo register for the save
->>>> +      * sequence
->>>> +      */
->>>> +     if (gpu->nr_rings > 1)
->>>> +             a6xx_emit_set_pseudo_reg(ring, a6xx_gpu, submit->queue);
->>>
->>> Can we move this after set_pagetable()?
->>>
->>>> +
->>>>        a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
->>>>
->>>>        get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
->>>> @@ -376,6 +515,8 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>        OUT_RING(ring, upper_32_bits(rbmemptr(ring, bv_fence)));
->>>>        OUT_RING(ring, submit->seqno);
->>>>
->>>> +     a6xx_gpu->last_seqno[ring->id] = submit->seqno;
->>>> +
->>>>        /* write the ringbuffer timestamp */
->>>>        OUT_PKT7(ring, CP_EVENT_WRITE, 4);
->>>>        OUT_RING(ring, CACHE_CLEAN | CP_EVENT_WRITE_0_IRQ | BIT(27));
->>>> @@ -389,10 +530,32 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>        OUT_PKT7(ring, CP_SET_MARKER, 1);
->>>>        OUT_RING(ring, 0x100); /* IFPC enable */
->>>>
->>>> +     /* If preemption is enabled */
->>>> +     if (gpu->nr_rings > 1) {
->>>> +             /* Yield the floor on command completion */
->>>> +             OUT_PKT7(ring, CP_CONTEXT_SWITCH_YIELD, 4);
->>>> +
->>>> +             /*
->>>> +              * If dword[2:1] are non zero, they specify an address for
->>>> +              * the CP to write the value of dword[3] to on preemption
->>>> +              * complete. Write 0 to skip the write
->>>> +              */
->>>> +             OUT_RING(ring, 0x00);
->>>> +             OUT_RING(ring, 0x00);
->>>> +             /* Data value - not used if the address above is 0 */
->>>> +             OUT_RING(ring, 0x01);
->>>> +             /* generate interrupt on preemption completion */
->>>> +             OUT_RING(ring, 0x00);
->>>> +     }
->>>> +
->>>> +
->>>>        trace_msm_gpu_submit_flush(submit,
->>>>                gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER));
->>>>
->>>>        a6xx_flush(gpu, ring);
->>>> +
->>>> +     /* Check to see if we need to start preemption */
->>>> +     a6xx_preempt_trigger(gpu);
->>>>   }
->>>>
->>>>   static void a6xx_set_hwcg(struct msm_gpu *gpu, bool state)
->>>> @@ -588,6 +751,89 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>>>                  adreno_gpu->ubwc_config.min_acc_len << 23 | hbb_lo << 21);
->>>>   }
->>>>
->>>> +static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     struct adreno_reglist_list reglist[2];
->>>> +     void *ptr = a6xx_gpu->pwrup_reglist_ptr;
->>>> +     struct cpu_gpu_lock *lock = ptr;
->>>> +     u32 *dest = (u32 *)&lock->regs[0];
->>>> +     int i, j;
->>>> +
->>> This sequence is required only once. We can use a flag to check and bail out
->>> next time.
->>>
->>>> +     lock->gpu_req = lock->cpu_req = lock->turn = 0;
->>>> +     lock->ifpc_list_len = ARRAY_SIZE(a7xx_ifpc_pwrup_reglist);
->>>> +     lock->preemption_list_len = ARRAY_SIZE(a7xx_pwrup_reglist);
->>>> +
->>>> +     /* Static IFPC-only registers */
->>>> +     reglist[0].regs = a7xx_ifpc_pwrup_reglist;
->>>> +     reglist[0].count = ARRAY_SIZE(a7xx_ifpc_pwrup_reglist);
->>>> +     lock->ifpc_list_len = reglist[0].count;
->>>> +
->>>> +     /* Static IFPC + preemption registers */
->>>> +     reglist[1].regs = a7xx_pwrup_reglist;
->>>> +     reglist[1].count = ARRAY_SIZE(a7xx_pwrup_reglist);
->>>> +     lock->preemption_list_len = reglist[1].count;
->>>> +
->>>> +     /*
->>>> +      * For each entry in each of the lists, write the offset and the current
->>>> +      * register value into the GPU buffer
->>>> +      */
->>>> +     for (i = 0; i < 2; i++) {
->>>> +             const u32 *r = reglist[i].regs;
->>>> +
->>>> +             for (j = 0; j < reglist[i].count; j++) {
->>>> +                     *dest++ = r[j];
->>>> +                     *dest++ = gpu_read(gpu, r[j]);
->>>> +             }
->>>> +     }
->>>> +
->>>> +     /*
->>>> +      * The overall register list is composed of
->>>> +      * 1. Static IFPC-only registers
->>>> +      * 2. Static IFPC + preemption registers
->>>> +      * 3. Dynamic IFPC + preemption registers (ex: perfcounter selects)
->>>> +      *
->>>> +      * The first two lists are static. Size of these lists are stored as
->>>> +      * number of pairs in ifpc_list_len and preemption_list_len
->>>> +      * respectively. With concurrent binning, Some of the perfcounter
->>>> +      * registers being virtualized, CP needs to know the pipe id to program
->>>> +      * the aperture inorder to restore the same. Thus, third list is a
->>>> +      * dynamic list with triplets as
->>>> +      * (<aperture, shifted 12 bits> <address> <data>), and the length is
->>>> +      * stored as number for triplets in dynamic_list_len.
->>>> +      */
->>>> +     lock->dynamic_list_len = 0;
->>>> +}
->>>> +
->>>> +static int a7xx_preempt_start(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     struct msm_ringbuffer *ring = gpu->rb[0];
->>>> +
->>>> +     if (gpu->nr_rings <= 1)
->>>> +             return 0;
->>>> +
->>>> +     /* Turn CP protection off */
->>>> +     OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
->>>> +     OUT_RING(ring, 0);
->>>> +
->>>> +     a6xx_emit_set_pseudo_reg(ring, a6xx_gpu, NULL);
->>>> +
->>>> +     /* Yield the floor on command completion */
->>>> +     OUT_PKT7(ring, CP_CONTEXT_SWITCH_YIELD, 4);
->>>> +     OUT_RING(ring, 0x00);
->>>> +     OUT_RING(ring, 0x00);
->>>> +     OUT_RING(ring, 0x01);
->>>
->>> Looks like kgsl use 0x00 here. Not sure if that matters!
->>>
->>>> +     /* Generate interrupt on preemption completion */
->>>> +     OUT_RING(ring, 0x00);
->>>> +
->>>> +     a6xx_flush(gpu, ring);
->>>> +
->>>> +     return a6xx_idle(gpu, ring) ? 0 : -EINVAL;
->>>> +}
->>>> +
->>>>   static int a6xx_cp_init(struct msm_gpu *gpu)
->>>>   {
->>>>        struct msm_ringbuffer *ring = gpu->rb[0];
->>>> @@ -619,6 +865,8 @@ static int a6xx_cp_init(struct msm_gpu *gpu)
->>>>
->>>>   static int a7xx_cp_init(struct msm_gpu *gpu)
->>>>   {
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>>        struct msm_ringbuffer *ring = gpu->rb[0];
->>>>        u32 mask;
->>>>
->>>> @@ -626,6 +874,8 @@ static int a7xx_cp_init(struct msm_gpu *gpu)
->>>>        OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
->>>>        OUT_RING(ring, BIT(27));
->>>>
->>>> +     a7xx_patch_pwrup_reglist(gpu);
->>>> +
->>>
->>> Looks out of place. I guess you kept it here to avoid an extra a7x
->>> check. At least we should move this before the above pm4 packets.
->>>
->>>>        OUT_PKT7(ring, CP_ME_INIT, 7);
->>>>
->>>>        /* Use multiple HW contexts */
->>>> @@ -656,11 +906,11 @@ static int a7xx_cp_init(struct msm_gpu *gpu)
->>>>
->>>>        /* *Don't* send a power up reg list for concurrent binning (TODO) */
->>>>        /* Lo address */
->>>> -     OUT_RING(ring, 0x00000000);
->>>> +     OUT_RING(ring, lower_32_bits(a6xx_gpu->pwrup_reglist_iova));
->>>>        /* Hi address */
->>>> -     OUT_RING(ring, 0x00000000);
->>>> +     OUT_RING(ring, upper_32_bits(a6xx_gpu->pwrup_reglist_iova));
->>>>        /* BIT(31) set => read the regs from the list */
->>>> -     OUT_RING(ring, 0x00000000);
->>>> +     OUT_RING(ring, BIT(31));
->>>>
->>>>        a6xx_flush(gpu, ring);
->>>>        return a6xx_idle(gpu, ring) ? 0 : -EINVAL;
->>>> @@ -784,6 +1034,16 @@ static int a6xx_ucode_load(struct msm_gpu *gpu)
->>>>                msm_gem_object_set_name(a6xx_gpu->shadow_bo, "shadow");
->>>>        }
->>>>
->>>> +     a6xx_gpu->pwrup_reglist_ptr = msm_gem_kernel_new(gpu->dev, PAGE_SIZE,
->>>> +                                                      MSM_BO_WC  | MSM_BO_MAP_PRIV,
->>>> +                                                      gpu->aspace, &a6xx_gpu->pwrup_reglist_bo,
->>>> +                                                      &a6xx_gpu->pwrup_reglist_iova);
->>>> +
->>>> +     if (IS_ERR(a6xx_gpu->pwrup_reglist_ptr))
->>>> +             return PTR_ERR(a6xx_gpu->pwrup_reglist_ptr);
->>>> +
->>>> +     msm_gem_object_set_name(a6xx_gpu->pwrup_reglist_bo, "pwrup_reglist");
->>>> +
->>>>        return 0;
->>>>   }
->>>>
->>>> @@ -1127,6 +1387,8 @@ static int hw_init(struct msm_gpu *gpu)
->>>>        if (a6xx_gpu->shadow_bo) {
->>>>                gpu_write64(gpu, REG_A6XX_CP_RB_RPTR_ADDR,
->>>>                        shadowptr(a6xx_gpu, gpu->rb[0]));
->>>> +             for (unsigned int i = 0; i < gpu->nr_rings; i++)
->>>> +                     a6xx_gpu->shadow[i] = 0;
->>>>        }
->>>>
->>>>        /* ..which means "always" on A7xx, also for BV shadow */
->>>> @@ -1135,6 +1397,8 @@ static int hw_init(struct msm_gpu *gpu)
->>>>                            rbmemptr(gpu->rb[0], bv_rptr));
->>>>        }
->>>>
->>>> +     a6xx_preempt_hw_init(gpu);
->>>> +
->>>>        /* Always come up on rb 0 */
->>>>        a6xx_gpu->cur_ring = gpu->rb[0];
->>>>
->>>> @@ -1180,6 +1444,10 @@ static int hw_init(struct msm_gpu *gpu)
->>>>   out:
->>>>        if (adreno_has_gmu_wrapper(adreno_gpu))
->>>>                return ret;
->>>> +
->>>> +     /* Last step - yield the ringbuffer */
->>>> +     a7xx_preempt_start(gpu);
->>>> +
->>>>        /*
->>>>         * Tell the GMU that we are done touching the GPU and it can start power
->>>>         * management
->>>> @@ -1557,8 +1825,13 @@ static irqreturn_t a6xx_irq(struct msm_gpu *gpu)
->>>>        if (status & A6XX_RBBM_INT_0_MASK_SWFUSEVIOLATION)
->>>>                a7xx_sw_fuse_violation_irq(gpu);
->>>>
->>>> -     if (status & A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS)
->>>> +     if (status & A6XX_RBBM_INT_0_MASK_CP_CACHE_FLUSH_TS) {
->>>>                msm_gpu_retire(gpu);
->>>> +             a6xx_preempt_trigger(gpu);
->>>> +     }
->>>> +
->>>> +     if (status & A6XX_RBBM_INT_0_MASK_CP_SW)
->>>> +             a6xx_preempt_irq(gpu);
->>>>
->>>>        return IRQ_HANDLED;
->>>>   }
->>>> @@ -2331,6 +2604,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>>>                                a6xx_fault_handler);
->>>>
->>>>        a6xx_calc_ubwc_config(adreno_gpu);
->>>> +     /* Set up the preemption specific bits and pieces for each ringbuffer */
->>>> +     a6xx_preempt_init(gpu);
->>>>
->>>>        return gpu;
->>>>   }
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>> index e3e5c53ae8af..da10060e38dc 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
->>>> @@ -12,6 +12,31 @@
->>>>
->>>>   extern bool hang_debug;
->>>>
->>>> +struct cpu_gpu_lock {
->>>> +     uint32_t gpu_req;
->>>> +     uint32_t cpu_req;
->>>> +     uint32_t turn;
->>>> +     union {
->>>> +             struct {
->>>> +                     uint16_t list_length;
->>>> +                     uint16_t list_offset;
->>>> +             };
->>>> +             struct {
->>>> +                     uint8_t ifpc_list_len;
->>>> +                     uint8_t preemption_list_len;
->>>> +                     uint16_t dynamic_list_len;
->>>> +             };
->>>> +     };
->>>> +     uint64_t regs[62];
->>>> +};
->>>> +
->>>> +struct adreno_reglist_list {
->>>> +     /** @reg: List of register **/
->>>> +     const u32 *regs;
->>>> +     /** @count: Number of registers in the list **/
->>>> +     u32 count;
->>>> +};
->>>> +
->>>>   /**
->>>>    * struct a6xx_info - a6xx specific information from device table
->>>>    *
->>>> @@ -31,6 +56,20 @@ struct a6xx_gpu {
->>>>        uint64_t sqe_iova;
->>>>
->>>>        struct msm_ringbuffer *cur_ring;
->>>> +     struct msm_ringbuffer *next_ring;
->>>> +
->>>> +     struct drm_gem_object *preempt_bo[MSM_GPU_MAX_RINGS];
->>>> +     void *preempt[MSM_GPU_MAX_RINGS];
->>>> +     uint64_t preempt_iova[MSM_GPU_MAX_RINGS];
->>>> +     uint32_t last_seqno[MSM_GPU_MAX_RINGS];
->>>> +
->>>> +     atomic_t preempt_state;
->>>> +     spinlock_t eval_lock;
->>>> +     struct timer_list preempt_timer;
->>>> +
->>>> +     unsigned int preempt_level;
->>>> +     bool uses_gmem;
->>>> +     bool skip_save_restore;
->>>>
->>>>        struct a6xx_gmu gmu;
->>>>
->>>> @@ -38,6 +77,10 @@ struct a6xx_gpu {
->>>>        uint64_t shadow_iova;
->>>>        uint32_t *shadow;
->>>>
->>>> +     struct drm_gem_object *pwrup_reglist_bo;
->>>> +     void *pwrup_reglist_ptr;
->>>> +     uint64_t pwrup_reglist_iova;
->>>> +
->>>>        bool has_whereami;
->>>>
->>>>        void __iomem *llc_mmio;
->>>> @@ -49,6 +92,105 @@ struct a6xx_gpu {
->>>>
->>>>   #define to_a6xx_gpu(x) container_of(x, struct a6xx_gpu, base)
->>>>
->>>> +/*
->>>> + * In order to do lockless preemption we use a simple state machine to progress
->>>> + * through the process.
->>>> + *
->>>> + * PREEMPT_NONE - no preemption in progress.  Next state START.
->>>> + * PREEMPT_START - The trigger is evaluating if preemption is possible. Next
->>>> + * states: TRIGGERED, NONE
->>>> + * PREEMPT_FINISH - An intermediate state before moving back to NONE. Next
->>>> + * state: NONE.
->>>> + * PREEMPT_TRIGGERED: A preemption has been executed on the hardware. Next
->>>> + * states: FAULTED, PENDING
->>>> + * PREEMPT_FAULTED: A preemption timed out (never completed). This will trigger
->>>> + * recovery.  Next state: N/A
->>>> + * PREEMPT_PENDING: Preemption complete interrupt fired - the callback is
->>>> + * checking the success of the operation. Next state: FAULTED, NONE.
->>>> + */
->>>> +
->>>> +enum a6xx_preempt_state {
->>>> +     PREEMPT_NONE = 0,
->>>> +     PREEMPT_START,
->>>> +     PREEMPT_FINISH,
->>>> +     PREEMPT_TRIGGERED,
->>>> +     PREEMPT_FAULTED,
->>>> +     PREEMPT_PENDING,
->>>> +};
->>>> +
->>>> +/*
->>>> + * struct a6xx_preempt_record is a shared buffer between the microcode and the
->>>> + * CPU to store the state for preemption. The record itself is much larger
->>>> + * (2112k) but most of that is used by the CP for storage.
->>>> + *
->>>> + * There is a preemption record assigned per ringbuffer. When the CPU triggers a
->>>> + * preemption, it fills out the record with the useful information (wptr, ring
->>>> + * base, etc) and the microcode uses that information to set up the CP following
->>>> + * the preemption.  When a ring is switched out, the CP will save the ringbuffer
->>>> + * state back to the record. In this way, once the records are properly set up
->>>> + * the CPU can quickly switch back and forth between ringbuffers by only
->>>> + * updating a few registers (often only the wptr).
->>>> + *
->>>> + * These are the CPU aware registers in the record:
->>>> + * @magic: Must always be 0xAE399D6EUL
->>>> + * @info: Type of the record - written 0 by the CPU, updated by the CP
->>>> + * @errno: preemption error record
->>>> + * @data: Data field in YIELD and SET_MARKER packets, Written and used by CP
->>>> + * @cntl: Value of RB_CNTL written by CPU, save/restored by CP
->>>> + * @rptr: Value of RB_RPTR written by CPU, save/restored by CP
->>>> + * @wptr: Value of RB_WPTR written by CPU, save/restored by CP
->>>> + * @_pad: Reserved/padding
->>>> + * @rptr_addr: Value of RB_RPTR_ADDR_LO|HI written by CPU, save/restored by CP
->>>> + * @rbase: Value of RB_BASE written by CPU, save/restored by CP
->>>> + * @counter: GPU address of the storage area for the preemption counters
->>>
->>> doc missing for bv_rptr_addr.
->>>
->>>> + */
->>>> +struct a6xx_preempt_record {
->>>> +     u32 magic;
->>>> +     u32 info;
->>>> +     u32 errno;
->>>> +     u32 data;
->>>> +     u32 cntl;
->>>> +     u32 rptr;
->>>> +     u32 wptr;
->>>> +     u32 _pad;
->>>> +     u64 rptr_addr;
->>>> +     u64 rbase;
->>>> +     u64 counter;
->>>> +     u64 bv_rptr_addr;
->>>> +};
->>>> +
->>>> +#define A6XX_PREEMPT_RECORD_MAGIC 0xAE399D6EUL
->>>> +
->>>> +#define PREEMPT_RECORD_SIZE_FALLBACK(size) \
->>>> +     ((size) == 0 ? 4192 * SZ_1K : (size))
->>>> +
->>>> +#define PREEMPT_OFFSET_SMMU_INFO 0
->>>> +#define PREEMPT_OFFSET_PRIV_NON_SECURE (PREEMPT_OFFSET_SMMU_INFO + 4096)
->>>> +#define PREEMPT_OFFSET_PRIV_SECURE(size) \
->>>> +     (PREEMPT_OFFSET_PRIV_NON_SECURE + PREEMPT_RECORD_SIZE_FALLBACK(size))
->>>> +#define PREEMPT_SIZE(size) \
->>>> +     (PREEMPT_OFFSET_PRIV_SECURE(size) + PREEMPT_RECORD_SIZE_FALLBACK(size))
->>>> +
->>>> +/*
->>>> + * The preemption counter block is a storage area for the value of the
->>>> + * preemption counters that are saved immediately before context switch. We
->>>> + * append it on to the end of the allocation for the preemption record.
->>>> + */
->>>> +#define A6XX_PREEMPT_COUNTER_SIZE (16 * 4)
->>>> +
->>>> +#define A6XX_PREEMPT_USER_RECORD_SIZE (192 * 1024)
->>>
->>> Unused.
->>>
->>>> +
->>>> +struct a7xx_cp_smmu_info {
->>>> +     u32 magic;
->>>> +     u32 _pad4;
->>>> +     u64 ttbr0;
->>>> +     u32 asid;
->>>> +     u32 context_idr;
->>>> +     u32 context_bank;
->>>> +};
->>>> +
->>>> +#define GEN7_CP_SMMU_INFO_MAGIC 0x241350d5UL
->>>> +
->>>>   /*
->>>>    * Given a register and a count, return a value to program into
->>>>    * REG_CP_PROTECT_REG(n) - this will block both reads and writes for
->>>> @@ -106,6 +248,25 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
->>>>   int a6xx_gmu_wrapper_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node);
->>>>   void a6xx_gmu_remove(struct a6xx_gpu *a6xx_gpu);
->>>>
->>>> +void a6xx_preempt_init(struct msm_gpu *gpu);
->>>> +void a6xx_preempt_hw_init(struct msm_gpu *gpu);
->>>> +void a6xx_preempt_trigger(struct msm_gpu *gpu);
->>>> +void a6xx_preempt_irq(struct msm_gpu *gpu);
->>>> +void a6xx_preempt_fini(struct msm_gpu *gpu);
->>>> +int a6xx_preempt_submitqueue_setup(struct msm_gpu *gpu,
->>>> +             struct msm_gpu_submitqueue *queue);
->>>> +void a6xx_preempt_submitqueue_close(struct msm_gpu *gpu,
->>>> +             struct msm_gpu_submitqueue *queue);
->>>> +
->>>> +/* Return true if we are in a preempt state */
->>>> +static inline bool a6xx_in_preempt(struct a6xx_gpu *a6xx_gpu)
->>>> +{
->>>> +     int preempt_state = atomic_read(&a6xx_gpu->preempt_state);
->>>
->>> I think we should keep a matching barrier before the 'read' similar to the one used in the
->>> set_preempt_state helper.
->>
->> Good idea, but for the one case we found where it matters (the
->> a6xx_flush() vs. updating the ring in a6xx_preempt_irq() race) the
->> barrier needs to be after the read. The sequence is something like:
->>
->> Thread A:
->>
->> a6xx_gpu->cur_ring = a6xx_gpu->next_ring;
->> a6xx_gpu->preempt_state = PREEMPT_FINISH;
->>
->> Thread B:
->>
->> read a6xx_gpu->preempt_state;
->> read a6xx_gpu->cur_ring;
->>
->> And if the read to preempt_state returns PREEMPT_FINISH, then we need
->> cur_ring to reflect the ring we switched to. (I discovered this the
->> hard way from debugging deadlocks...)
->>
->> So, maybe add a smp_rmb() before and after, then drop the explicit
->> barrier in a6xx_flush()?
-> 
-> Ack. I think it is better to use a helper similar to set_preempt_state()
-> and consistently use that everywhere.
-
-Do you mean something for setting cur_ring? There is only one place 
-where that would be used (besides two other places where the initial 
-value is set).
-
-> 
->>
->>>
->>>> +
->>>> +     return !(preempt_state == PREEMPT_NONE ||
->>>> +                     preempt_state == PREEMPT_FINISH);
->>>> +}
->>>> +
->>>>   void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp,
->>>>                       bool suspended);
->>>>   unsigned long a6xx_gmu_get_freq(struct msm_gpu *gpu);
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
->>>> new file mode 100644
->>>> index 000000000000..1caff76aca6e
->>>> --- /dev/null
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
->>>> @@ -0,0 +1,391 @@
->>>> +// SPDX-License-Identifier: GPL-2.0
->>>> +/* Copyright (c) 2018, The Linux Foundation. All rights reserved. */
->>>> +/* Copyright (c) 2023 Collabora, Ltd. */
->>>> +/* Copyright (c) 2024 Valve Corporation */
->>>> +
->>>> +#include "msm_gem.h"
->>>> +#include "a6xx_gpu.h"
->>>> +#include "a6xx_gmu.xml.h"
->>>> +#include "msm_mmu.h"
->>>> +
->>>> +/*
->>>> + * Try to transition the preemption state from old to new. Return
->>>> + * true on success or false if the original state wasn't 'old'
->>>> + */
->>>> +static inline bool try_preempt_state(struct a6xx_gpu *a6xx_gpu,
->>>> +             enum a6xx_preempt_state old, enum a6xx_preempt_state new)
->>>> +{
->>>> +     enum a6xx_preempt_state cur = atomic_cmpxchg(&a6xx_gpu->preempt_state,
->>>> +             old, new);
->>>> +
->>>> +     return (cur == old);
->>>> +}
->>>> +
->>>> +/*
->>>> + * Force the preemption state to the specified state.  This is used in cases
->>>> + * where the current state is known and won't change
->>>> + */
->>>> +static inline void set_preempt_state(struct a6xx_gpu *gpu,
->>>> +             enum a6xx_preempt_state new)
->>>> +{
->>>> +     /*
->>>> +      * preempt_state may be read by other cores trying to trigger a
->>>> +      * preemption or in the interrupt handler so barriers are needed
->>>> +      * before...
->>>> +      */
->>>> +     smp_mb__before_atomic();
->>>> +     atomic_set(&gpu->preempt_state, new);
->>>> +     /* ... and after*/
->>>> +     smp_mb__after_atomic();
->>>> +}
->>>> +
->>>> +/* Write the most recent wptr for the given ring into the hardware */
->>>> +static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>>> +{
->>>> +     unsigned long flags;
->>>> +     uint32_t wptr;
->>>> +
->>>> +     if (!ring)
->>>
->>> Is this ever true?
->>>
->>>> +             return;
->>>> +
->>>> +     spin_lock_irqsave(&ring->preempt_lock, flags);
->>>> +
->>>> +     if (ring->skip_inline_wptr) {
->>>> +             wptr = get_wptr(ring);
->>>> +
->>>> +             gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
->>>> +
->>>> +             ring->skip_inline_wptr = false;
->>>> +     }
->>>> +
->>>> +     spin_unlock_irqrestore(&ring->preempt_lock, flags);
->>>> +}
->>>> +
->>>> +/* Return the highest priority ringbuffer with something in it */
->>>> +static struct msm_ringbuffer *get_next_ring(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +
->>>> +     unsigned long flags;
->>>> +     int i;
->>>> +
->>>> +     for (i = 0; i < gpu->nr_rings; i++) {
->>>> +             bool empty;
->>>> +             struct msm_ringbuffer *ring = gpu->rb[i];
->>>> +
->>>> +             spin_lock_irqsave(&ring->preempt_lock, flags);
->>>> +             empty = (get_wptr(ring) == gpu->funcs->get_rptr(gpu, ring));
->>>> +             if (!empty && ring == a6xx_gpu->cur_ring)
->>>> +                     empty = ring->memptrs->fence == a6xx_gpu->last_seqno[i];
->>>> +             spin_unlock_irqrestore(&ring->preempt_lock, flags);
->>>> +
->>>> +             if (!empty)
->>>> +                     return ring;
->>>> +     }
->>>> +
->>>> +     return NULL;
->>>> +}
->>>> +
->>>> +static void a6xx_preempt_timer(struct timer_list *t)
->>>> +{
->>>> +     struct a6xx_gpu *a6xx_gpu = from_timer(a6xx_gpu, t, preempt_timer);
->>>> +     struct msm_gpu *gpu = &a6xx_gpu->base.base;
->>>> +     struct drm_device *dev = gpu->dev;
->>>> +
->>>> +     if (!try_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED, PREEMPT_FAULTED))
->>>> +             return;
->>>> +
->>>> +     dev_err(dev->dev, "%s: preemption timed out\n", gpu->name);
->>>> +     kthread_queue_work(gpu->worker, &gpu->recover_work);
->>>> +}
->>>> +
->>>> +void a6xx_preempt_irq(struct msm_gpu *gpu)
->>>> +{
->>>> +     uint32_t status;
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     struct drm_device *dev = gpu->dev;
->>>> +
->>>> +     if (!try_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED, PREEMPT_PENDING))
->>>> +             return;
->>>> +
->>>> +     /* Delete the preemption watchdog timer */
->>>> +     del_timer(&a6xx_gpu->preempt_timer);
->>>> +
->>>> +     /*
->>>> +      * The hardware should be setting the stop bit of CP_CONTEXT_SWITCH_CNTL
->>>> +      * to zero before firing the interrupt, but there is a non zero chance
->>>> +      * of a hardware condition or a software race that could set it again
->>>> +      * before we have a chance to finish. If that happens, log and go for
->>>> +      * recovery
->>>> +      */
->>>> +     status = gpu_read(gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL);
->>>> +     if (unlikely(status & A6XX_CP_CONTEXT_SWITCH_CNTL_STOP)) {
->>>> +             DRM_DEV_ERROR(&gpu->pdev->dev,
->>>> +                                       "!!!!!!!!!!!!!!!! preemption faulted !!!!!!!!!!!!!! irq\n");
->>>> +             set_preempt_state(a6xx_gpu, PREEMPT_FAULTED);
->>>> +             dev_err(dev->dev, "%s: Preemption failed to complete\n",
->>>> +                     gpu->name);
->>>> +             kthread_queue_work(gpu->worker, &gpu->recover_work);
->>>> +             return;
->>>> +     }
->>>> +
->>>> +     a6xx_gpu->cur_ring = a6xx_gpu->next_ring;
->>>> +     a6xx_gpu->next_ring = NULL;
->>>> +
->>>> +     /* Make sure the write to cur_ring is posted before the change in state */
->>>> +     wmb();
->>>
->>> Not needed. set_preempt_state has the necessary barrier.
->>>
->>>> +
->>>> +     set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
->>>> +
->>>> +     update_wptr(gpu, a6xx_gpu->cur_ring);
->>>> +
->>>> +     set_preempt_state(a6xx_gpu, PREEMPT_NONE);
->>>> +
->>>> +     /*
->>>> +      * Retrigger preemption to avoid a deadlock that might occur when preemption
->>>> +      * is skipped due to it being already in flight when requested.
->>>> +      */
->>>> +     a6xx_preempt_trigger(gpu);
->>>> +}
->>>> +
->>>> +void a6xx_preempt_hw_init(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     int i;
->>>> +
->>>> +     /* No preemption if we only have one ring */
->>>> +     if (gpu->nr_rings == 1)
->>>> +             return;
->>>> +
->>>> +     for (i = 0; i < gpu->nr_rings; i++) {
->>>> +             struct a6xx_preempt_record *record_ptr =
->>>> +                     a6xx_gpu->preempt[i] + PREEMPT_OFFSET_PRIV_NON_SECURE;
->>>> +             record_ptr->wptr = 0;
->>>> +             record_ptr->rptr = 0;
->>>> +             record_ptr->rptr_addr = shadowptr(a6xx_gpu, gpu->rb[i]);
->>>> +             record_ptr->info = 0;
->>>> +             record_ptr->data = 0;
->>>> +             record_ptr->rbase = gpu->rb[i]->iova;
->>>> +     }
->>>> +
->>>> +     /* Write a 0 to signal that we aren't switching pagetables */
->>>> +     gpu_write64(gpu, REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO, 0);
->>>> +
->>>> +     /* Enable the GMEM save/restore feature for preemption */
->>>> +     gpu_write(gpu, REG_A6XX_RB_CONTEXT_SWITCH_GMEM_SAVE_RESTORE, 0x1);
->>>> +
->>>> +     /* Reset the preemption state */
->>>> +     set_preempt_state(a6xx_gpu, PREEMPT_NONE);
->>>> +
->>>> +     spin_lock_init(&a6xx_gpu->eval_lock);
->>>> +
->>>> +     /* Always come up on rb 0 */
->>>> +     a6xx_gpu->cur_ring = gpu->rb[0];
->>>> +}
->>>> +
->>>> +void a6xx_preempt_trigger(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     u64 preempt_offset_priv_secure;
->>>> +     unsigned long flags;
->>>> +     struct msm_ringbuffer *ring;
->>>> +     unsigned int cntl;
->>>> +
->>>> +     if (gpu->nr_rings == 1)
->>>> +             return;
->>>> +
->>>> +     /*
->>>> +      * Lock to make sure another thread attempting preemption doesn't skip it
->>>> +      * while we are still evaluating the next ring. This makes sure the other
->>>> +      * thread does start preemption if we abort it and avoids a soft lock.
->>>> +      */
->>>> +     spin_lock_irqsave(&a6xx_gpu->eval_lock, flags);
->>>> +
->>>> +     /*
->>>> +      * Try to start preemption by moving from NONE to START. If
->>>> +      * unsuccessful, a preemption is already in flight
->>>> +      */
->>>> +     if (!try_preempt_state(a6xx_gpu, PREEMPT_NONE, PREEMPT_START)) {
->>>> +             spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
->>>> +             return;
->>>> +     }
->>>> +
->>>> +     cntl = A6XX_CP_CONTEXT_SWITCH_CNTL_LEVEL(a6xx_gpu->preempt_level);
->>>> +
->>>> +     if (a6xx_gpu->skip_save_restore)
->>>> +             cntl |= A6XX_CP_CONTEXT_SWITCH_CNTL_SKIP_SAVE_RESTORE;
->>>> +
->>>> +     if (a6xx_gpu->uses_gmem)
->>>> +             cntl |= A6XX_CP_CONTEXT_SWITCH_CNTL_USES_GMEM;
->>>> +
->>>> +     cntl |= A6XX_CP_CONTEXT_SWITCH_CNTL_STOP;
->>>> +
->>>> +     /* Get the next ring to preempt to */
->>>> +     ring = get_next_ring(gpu);
->>>> +
->>>> +     /*
->>>> +      * If no ring is populated or the highest priority ring is the current
->>>> +      * one do nothing except to update the wptr to the latest and greatest
->>>> +      */
->>>> +     if (!ring || (a6xx_gpu->cur_ring == ring)) {
->>>> +             set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
->>>> +             update_wptr(gpu, a6xx_gpu->cur_ring);
->>>> +             set_preempt_state(a6xx_gpu, PREEMPT_NONE);
->>>> +             spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
->>>> +             return;
->>>> +     }
->>>> +
->>>> +     spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
->>>> +
->>>> +     spin_lock_irqsave(&ring->preempt_lock, flags);
->>>> +
->>>> +     struct a7xx_cp_smmu_info *smmu_info_ptr =
->>>> +             a6xx_gpu->preempt[ring->id] + PREEMPT_OFFSET_SMMU_INFO;
->>>> +     struct a6xx_preempt_record *record_ptr =
->>>> +             a6xx_gpu->preempt[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE;
->>>> +     u64 ttbr0 = ring->memptrs->ttbr0;
->>>> +     u32 context_idr = ring->memptrs->context_idr;
->>>> +
->>>> +     smmu_info_ptr->ttbr0 = ttbr0;
->>>> +     smmu_info_ptr->context_idr = context_idr;
->>>> +     record_ptr->wptr = get_wptr(ring);
->>>> +
->>>> +     /*
->>>> +      * The GPU will write the wptr we set above when we preempt. Reset
->>>> +      * skip_inline_wptr to make sure that we don't write WPTR to the same
->>>> +      * thing twice. It's still possible subsequent submissions will update
->>>> +      * wptr again, in which case they will set the flag to true. This has
->>>> +      * to be protected by the lock for setting the flag and updating wptr
->>>> +      * to be atomic.
->>>> +      */
->>>> +     ring->skip_inline_wptr = false;
->>>> +
->>>> +     spin_unlock_irqrestore(&ring->preempt_lock, flags);
->>>> +
->>>> +     gpu_write64(gpu,
->>>> +             REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO,
->>>> +             a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_SMMU_INFO);
->>>> +
->>>> +     gpu_write64(gpu,
->>>> +             REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
->>>> +             a6xx_gpu->preempt_iova[ring->id] + PREEMPT_OFFSET_PRIV_NON_SECURE);
->>>> +
->>>> +     preempt_offset_priv_secure =
->>>> +             PREEMPT_OFFSET_PRIV_SECURE(adreno_gpu->info->preempt_record_size);
->>>> +     gpu_write64(gpu,
->>>> +             REG_A6XX_CP_CONTEXT_SWITCH_PRIV_SECURE_RESTORE_ADDR,
->>>> +             a6xx_gpu->preempt_iova[ring->id] + preempt_offset_priv_secure);
->>>
->>> Secure buffers are not supported currently, so we can skip this and the
->>> context record allocation. Anyway this has to be a separate buffer
->>> mapped in secure pagetable which don't currently have. We can skip the
->>> same in pseudo register packet too.
->>>
->>>> +
->>>> +     a6xx_gpu->next_ring = ring;
->>>> +
->>>> +     /* Start a timer to catch a stuck preemption */
->>>> +     mod_timer(&a6xx_gpu->preempt_timer, jiffies + msecs_to_jiffies(10000));
->>>> +
->>>> +     /* Set the preemption state to triggered */
->>>> +     set_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED);
->>>> +
->>>> +     /* Make sure any previous writes to WPTR are posted */
->>>> +     gpu_read(gpu, REG_A6XX_CP_RB_WPTR);
->>>> +
->>>> +     /* Make sure everything is written before hitting the button */
->>>> +     wmb();
->>>
->>> This and the above read back looks unnecessary. All writes to gpu are
->>> ordered anyway.
->>
->> I thought the whole reason for
->> https://lore.kernel.org/linux-kernel/20240508-topic-adreno-v1-1-1babd05c119d@linaro.org/
->> is that memory-mapped writes to different GPU registers are *not*
->> necessarily ordered from the GPU's perspective (even if they are from
->> the CPU). That's why I suggested the readback. Or am I missing
->> something?
-> 
-> Lets consider that GBIF unhalt sequence as an exception. Generally, we
-> can consider writes to gpu registers to be ordered.
-> 
-> -Akhil.
-> 
->>
->>>
->>>> +
->>>> +     /* Trigger the preemption */
->>>> +     gpu_write(gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl);
->>>> +}
->>>> +
->>>> +static int preempt_init_ring(struct a6xx_gpu *a6xx_gpu,
->>>> +             struct msm_ringbuffer *ring)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->>>> +     struct msm_gpu *gpu = &adreno_gpu->base;
->>>> +     struct drm_gem_object *bo = NULL;
->>>> +     phys_addr_t ttbr;
->>>> +     u64 iova = 0;
->>>> +     void *ptr;
->>>> +     int asid;
->>>> +
->>>> +     ptr = msm_gem_kernel_new(gpu->dev,
->>>> +             PREEMPT_SIZE(adreno_gpu->info->preempt_record_size),
->>>> +             MSM_BO_WC | MSM_BO_MAP_PRIV, gpu->aspace, &bo, &iova);
->>>
->>> set a name?
->>>
->>>> +
->>>> +     memset(ptr, 0, PREEMPT_SIZE(adreno_gpu->info->preempt_record_size));
->>>> +
->>>> +     if (IS_ERR(ptr))
->>>> +             return PTR_ERR(ptr);
->>>> +
->>>> +     a6xx_gpu->preempt_bo[ring->id] = bo;
->>>> +     a6xx_gpu->preempt_iova[ring->id] = iova;
->>>> +     a6xx_gpu->preempt[ring->id] = ptr;
->>>> +
->>>> +     struct a7xx_cp_smmu_info *smmu_info_ptr = ptr + PREEMPT_OFFSET_SMMU_INFO;
->>>> +     struct a6xx_preempt_record *record_ptr = ptr + PREEMPT_OFFSET_PRIV_NON_SECURE;
->>>> +
->>>> +     msm_iommu_pagetable_params(gpu->aspace->mmu, &ttbr, &asid);
->>>> +
->>>> +     smmu_info_ptr->magic = GEN7_CP_SMMU_INFO_MAGIC;
->>>> +     smmu_info_ptr->ttbr0 = ttbr;
->>>> +     smmu_info_ptr->asid = 0xdecafbad;
->>>> +     smmu_info_ptr->context_idr = 0;
->>>> +
->>>> +     /* Set up the defaults on the preemption record */
->>>> +     record_ptr->magic = A6XX_PREEMPT_RECORD_MAGIC;
->>>> +     record_ptr->info = 0;
->>>> +     record_ptr->data = 0;
->>>> +     record_ptr->rptr = 0;
->>>> +     record_ptr->wptr = 0;
->>>> +     record_ptr->cntl = MSM_GPU_RB_CNTL_DEFAULT;
->>>> +     record_ptr->rbase = ring->iova;
->>>> +     record_ptr->counter = 0;
->>>> +     record_ptr->bv_rptr_addr = rbmemptr(ring, bv_rptr);
->>>> +
->>>> +     return 0;
->>>> +}
->>>> +
->>>> +void a6xx_preempt_fini(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     int i;
->>>> +
->>>> +     for (i = 0; i < gpu->nr_rings; i++)
->>>> +             msm_gem_kernel_put(a6xx_gpu->preempt_bo[i], gpu->aspace);
->>>> +}
->>>> +
->>>> +void a6xx_preempt_init(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     int i;
->>>> +
->>>> +     /* No preemption if we only have one ring */
->>>> +     if (gpu->nr_rings <= 1)
->>>> +             return;
->>>> +
->>>> +     for (i = 0; i < gpu->nr_rings; i++) {
->>>> +             if (preempt_init_ring(a6xx_gpu, gpu->rb[i]))
->>>> +                     goto fail;
->>>> +     }
->>>> +
->>>> +     /* TODO: make this configurable? */
->>>> +     a6xx_gpu->preempt_level = 1;
->>>> +     a6xx_gpu->uses_gmem = 1;
->>>> +     a6xx_gpu->skip_save_restore = 1;
->>>> +
->>>> +     timer_setup(&a6xx_gpu->preempt_timer, a6xx_preempt_timer, 0);
->>>> +
->>>> +     return;
->>>> +fail:
->>>
->>> Log an error so that preemption is not disabled silently?
->>>
->>>> +     /*
->>>> +      * On any failure our adventure is over. Clean up and
->>>> +      * set nr_rings to 1 to force preemption off
->>>> +      */
->>>> +     a6xx_preempt_fini(gpu);
->>>> +     gpu->nr_rings = 1;
->>>> +
->>>> +     return;
->>>> +}
->>>> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
->>>> index 40791b2ade46..7dde6a312511 100644
->>>> --- a/drivers/gpu/drm/msm/msm_ringbuffer.h
->>>> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
->>>> @@ -36,6 +36,7 @@ struct msm_rbmemptrs {
->>>>
->>>>        volatile struct msm_gpu_submit_stats stats[MSM_GPU_SUBMIT_STATS_COUNT];
->>>>        volatile u64 ttbr0;
->>>> +     volatile u32 context_idr;
->>>>   };
->>>>
->>>>   struct msm_cp_state {
->>>> @@ -100,6 +101,12 @@ struct msm_ringbuffer {
->>>>         * preemption.  Can be aquired from irq context.
->>>>         */
->>>>        spinlock_t preempt_lock;
->>>> +
->>>> +     /*
->>>> +      * Whether we skipped writing wptr and it needs to be updated in the
->>>> +      * future when the ring becomes current.
->>>> +      */
->>>> +     bool skip_inline_wptr;
->>>
->>> nit: does 'restore_wptr' makes more sense? Or something better?  Basically, name it based
->>> on the future action?
->>>
->>> -Akhil
->>>
->>>>   };
->>>>
->>>>   struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
->>>>
->>>> --
->>>> 2.46.0
->>>>
-
-Best regards,
--- 
-Antonino Maniscalco <antomani103@gmail.com>
-
+KFJlc2VuZGluZyBhcyBwbGFpbnRleHQgZm9yIG1zbS1rZXJuZWwgbWFpbGluZyBsaXN0LgpPcmln
+aW5hbCBtZXNzYWdlIHdhcyBpbnRlbmRlZCBmb3IgYW5kcm9pZCBrZXJuZWwgdGVhbQp0aG91Z2gg
+bXNtLWtlcm5lbCBzaG91bGQgYmUgYXdhcmUuKQoKSGkgS2VybmVsIFRlYW0sCgorIEtlZXMsIEFu
+ZHksIGFuZCBXaWxsIHNpbmNlIHRoZWlyIGlucHV0IG1heSBiZSB2YWx1YWJsZS4KCkl0IGhhcyBi
+ZWVuIGEgd2hpbGUhICh+OSBtb250aHMgdG8gYmUgZXhhY3QpLiBUaGlzIEphbnVhcnksIEkgc2Vu
+dCBvdXQgYSBzbWFsbAptZXNzYWdlIG9uIEJQRiBjb2RlIGxvYWRpbmcgKCJ1bnByaXZpbGVnZWQg
+QlBGIGNvbnNpZGVyZWQgaGFybWZ1bCIgb3Igc29tZXRoaW5nCmxpa2UgdGhhdCkuIEluIGl0LCBJ
+IG5vdGVkIG5ldyBCUEYgcHJvZ3JhbXMgYXJlIGNvbXBpbGVkIGFsbCB0aGUgdGltZSBhbmQKdGhy
+b3duIGludG8gdGhlIGtlcm5lbC4gQXQgdGhlIHRpbWUsIEkgZGlkIG5vdCBrbm93IHRoZXNlIHBy
+b2dyYW1zIHdlcmUganVzdApjb21waWxlZCBzZWNjb21wIGZpbHRlciBwb2xpY2llcywgbG9hZGVk
+IGluIGFzIG5ldyBCUEYgcHJvZ3JhbXMgY29udGludW91c2x5CnRocm91Z2ggdGhlIGxpYm1pbmlq
+YWlsIGludGVyZmFjZSBhcyB3ZWxsIGFzIGRpcmVjdCBzeXNjYWxsLiBBcyBvZiB0d28gZGF5cwph
+Z28sIEkgbm93IGtub3cgdGhpcyAoYW5kIG5vdyB5b3UgZG8gdG9vLCBpZiBub3QgYWxyZWFkeSku
+CgpPSywgeWVzLCBzeXNjYWxsIGZpbHRlcmluZyBpcyB2ZXJ5IGltcG9ydGFudCwgYnV0IHRoaXMg
+aXMgY3JlYXRpbmcgYSBjYXRjaC0yMgppc3N1ZS4gRm9yIG9uZSwgc2VlIHN0ZXAgKDQpIHVuZGVy
+ICJFeHBsb2l0YXRpb24gb3ZlcnZpZXciIGZvcgpodHRwczovL3d3dy5xdWFseXMuY29tLzIwMjEv
+MDcvMjAvY3ZlLTIwMjEtMzM5MDkvc2VxdW9pYS1sb2NhbC1wcml2aWxlZ2UtZXNjYWxhdGlvbi1s
+aW51eC50eHQuClNlY29uZCwgdGhpcyBtaW5vciBsYWNrIG9mIGNhY2hpbmcgaXMgYWRkaW5nIGxv
+YWQgdGltZSB0byBtb3JlIHRoYW4gOTAKYmluYXJpZXMvc2VydmljZXMgb24gdGhlIHN0YW5kYXJk
+IFFDT00gYmFzZWxpbmWhqkknbGwgYWRtaXQsIGl0IGlzIHByb2JhYmx5Cm5lZ2xpZ2libGUgaW4g
+dGhlIGdyYW5kIHNjaGVtZSBvZiB0aGluZ3MgKGEgcXVpY2sgYXBwcm94aW1hdGlvbiBwdXRzIHRo
+ZSBkYXRhCm9wZXJhdGVkIG9uIGFyb3VuZCAwLjExODggTUIpLiBCdXQgbW9zdCBpbXBvcnRhbnRs
+eSwgdGhpcmQsIHdpdGhvdXQgc29tZSBkZWdyZWUKb2YgcHJvdmVuYW5jZSwgSSBoYXZlIG5vIHdh
+eSBvZiB0ZWxsaW5nIGlmIHNvbWVvbmUgaGFzIGluamVjdGVkIG1hbGljaW91cyBjb2RlCmludG8g
+dGhlIGtlcm5lbCwgYW5kIHVuZm9ydHVuYXRlbHkgZXZlbiBrbm93aW5nIHRoZSBjb3JyZWN0IGJ5
+dGVzIGlzIHN0aWxsCiJpZmZ5IiwgYXMgaW4gb3JkZXIgdG8gcHJldmVudCBKSVQgc3ByYXkgYXR0
+YWNrcywgZWFjaCBvZiB0aGVzZSBmaWx0ZXJzIGlzCm9mZnNldCBieSBzb21lIHJhbmRvbSBudW1i
+ZXIgb2YgdWludDMyX3QncywgbWFraW5nIGV2ZXJ5IDQtYnl0ZSBzaGlmdCBvZiB0aGUKZmlsdGVy
+IGEgInZhbGlkIiBjb2RlcGFnZSB0byBiZSBsb2FkZWQgYXQgcnVudGltZS4KCllvdSBtaWdodCBi
+ZSB0aGlua2luZywgImJ1dCB3YWl0LCBiaW9uaWMncyBsaWJjIG9ubHkgZGVmaW5lcyBhIGNvdXBs
+ZSBvZgpyZXN0cmljdGVkIHBvbGljaWVzLCBwcmltYXJ5IGFuZCBzZWNvbmRhcnkgZm9yIHN5c3Rl
+bSBhbmQgdXNlciBhcHBzCnJlc3BlY3RpdmVseS4iIEkga25vdyEgRm9yIHRoZSBtb3N0IHBhcnQs
+IGFwcHMgZmFsbCBpbnRvIGVpdGhlciB3aGF0IEkgcHJlc3VtZQppcyB0aGUgZGVmYXVsdCBhcHAv
+c3lzdGVtIHBvbGljaWVzLCBidXQgdGhlcmUgYXJlIGxvdHMgb2YgUUNPTSBiaW5hcmllcyBhbmQK
+b3RoZXIgbWFnaWMgcHJvZ3JhbXMgKGRvbGJ5IGRheCkgdGhhdCBhcmUgc2VuZGluZyB1cCB0aGVz
+ZSBwcm9ncmFtcyBhcyB3ZWxsLgpJJ20gc2VlaW5nIG1vcmUgdGhhbiAyMCBkaWZmZXJlbnQgcHJv
+Z3JhbXMgZm9yIGFyb3VuZCBhIG1pbnV0ZSdzIHdvcnRoIG9mCnJ1bnRpbWUuIE9uZSBleGFtcGxl
+IGlzIGF0dGFjaGVkIGF0IHRoZSBlbmQuCgpTbywgdGhlIHByb3Bvc2FsOiBhICJDT05GSUdfU0VD
+Q09NTVBfU1RBVElDX1BPTElDWSIgZm9yIHNlY2NvbXAuIFRoaXMKd291bGQgY2hhbmdlIHRoZSBB
+bmRyb2lkIGtlcm5lbCdzIGdlbmVyaWMgU1lTX3NlY2NvbXAgY2FsbCwgd2hpY2ggdGFrZXMgaW4g
+YQpmaWx0ZXIgd2l0aCBhbiBhcnJheSBvZiBCUEYgaW5zdHJ1Y3Rpb25zLCB0byBpbnN0ZWFkIHJl
+ZmVyZW5jZSBhbiBJRCB3aGljaApjb3JyZXNwb25kcyB0byBhIGZpeGVkIGZpbGUgb24gL3N5cy9i
+cGYvc2VjY29tcCBvciBzb21ldGhpbmcgbGlrZSB0aGF0LiBUaGUKc2FuZGJveGluZyBiZWhhdmlv
+ciBvZiB0aGVzZSBhcHBzIHNob3VsZCBiZSBrbm93biBhdCBjb21waWxlLXRpbWUsIGV2ZW4gaWYK
+dGhlcmUgYXJlIG11bHRpcGxlICJwZXJtaXNzaW9uIHNldCB0eXBlcyIgdGhhdCBtYXkgbmVlZCB0
+byBiZSBkaXNwYXRjaGVkLiBVc2VyCmFwcHMgc2hvdWxkIGFsd2F5cyBoYXZlIGEgc2luZ2xlLCBm
+aXhlZCBwb2xpY3kuIFRoaXMgd2F5IGl0IGlzIHBvc3NpYmxlIHRvIHNheQpmb3IgZXZlcnkgY29k
+ZSBwYWdlIGxvYWRlZCBpbnRvIHRoZSBrZXJuZWwgd2hlcmUgaXQgY2FtZSBmcm9tIGFuZCB3aGF0
+IGl0CnNob3VsZCBsb29rIGxpa2UuCgpVbmZvcnR1bmF0ZWx5LCBJIGRvIG5vdCBrbm93IE1vdG9y
+b2xhIGhhcyBlbm91Z2ggIndlaWdodCIgdG8gY29udmluY2UgUUNPTSB0bwpkbyB0aGUgcmlnaHQg
+Zm91bmRhdGlvbmFsIHRoaW5nIGhlcmUsIG9yIHRvICJkZWZpbmUiIHRoZSBzZWNjb21wIEFQSXMg
+Zm9yCkFuZHJvaWQsIHNvIGl0IHdvdWxkIGJlIGdvb2QgdG8gaGF2ZSBHb29nbGUncyBidXkgaW4s
+IGtub3cgaWYgdGhlcmUgYXJlIHBsYW5zCnRvIGZpeCB0aGlzIGlzc3VlLCBvciBzb21lIGRpc2N1
+c3Npb24gb2YgaG93IHRvIGJlc3QgZml4IHRoZSBwcm9ibGVtPyBJZgphbnl0aGluZywgYSBjb250
+YWN0IGF0IFFDT00gdGhhdCBtaWdodCBiZSBhYmxlIHRvIGFjdHVhbGx5IGh1bnQgZG93biBhbmQK
+ZG9jdW1lbnQgdmFsaWQgYnl0ZXMgZm9yIHRoZXNlIHBvbGljaWVzPwoKVGhlIGVuZCBnb2FsIGlz
+IHNpbXBsZTogd2hlbiB3ZSBzZWUgYSBjb2RlIHBhZ2UgaXMgYWxsb2NhdGVkIGluIHRoZSBrZXJu
+ZWwsIHdlCmNhbiBiZSBzdXJlIHRoYXQgKDEpIGl0IGlzbid0IG1hbGljaW91cyBhbmQgKDIpIGhh
+cyBub3QgYmVlbiBtb2RpZmllZCBpbgp0cmFuc2l0LiBJJ20gZmluZSBwdXR0aW5nIGNvZGUgd2hl
+cmUgbXkgbW91dGggaXMsIGJ1dCByaWdodCBub3cgdGhhdCBjb2RlCndvdWxkIGludm9sdmUgaGF2
+aW5nIHRvIGZpbmdlcnByaW50IHRoZSBzaWduYXR1cmVzIGxvYWRlZCBieSBRdWFsY29tbQpjb21w
+b25lbnRzIGV2ZXJ5IHRpbWUgYSBuZXcgb25lIGlzIHJlbGVhc2VkLCBvciBwaW5naW5nIEdvb2ds
+ZSB3aXRoIGEgaHVnZQpwYXRjaCBjaGFuZ2luZyBob3cgc2VjY29tcCB3b3JrcyB3aXRoIG5vIGlk
+ZWEgb2Ygd2hhdCByZXF1aXJlbWVudHMgUUNPTSBtYXkKaGF2ZSBvbiBzZWNjb21wIHBvbGljeSBn
+ZW5lcmF0aW9uLgoKVGhvdWdodHM/IElzIHRoaXMgZG9hYmxlLCBhbmQgaWYgbm90LCB3aHk/IEkn
+ZCBhbHNvIGxvdmUgaGVscCB3aXRoIHRoZSBjb2RlIGFuZAphZGFwdGluZyBleGlzdGluZyBtaW5p
+amFpbCBjb2RlIHRvIHVzZSBhIG5ldywgbW9yZSBpbnRlZ3JpdHktcHJlc2VydmluZwppbnRlcmZh
+Y2UuIElmIEkgYW0gbWlzdGFrZW4gYW5kIGl0IGlzIHBvc3NpYmxlIHRvIGdyYWIgb3V0IHZhbGlk
+IEJQRiBwb2xpY3kKY29kZSBhdCBjb21waWxlIHRpbWUsIHBsZWFzZSBsZXQgbWUga25vdyBob3ch
+CgpSZWdhcmRzLApNYXh3ZWxsIEJsYW5kCgpTdGFuZGFyZCBmaWx0ZXIsIChmcm9tLCBmb3IgZXhh
+bXBsZSwgY29tLmdvb2dsZS5hbmRyb2lkLmdtcykKImFjMDAwMDAwMDAwMDAwMDBhYzc3MDAwMDAw
+MDAwMDAwYmYxNjAwMDAwMDAwMDAwMDYxNjAwNDAwMDAwMDAwMDBiNDAyMDAwMGI3MDAwMGMwMWQy
+MDAyMDAwMDAwMDAwMGI0MDAwMDAwMDAwMDAwMDA5NTAwMDAwMDAwMDAwMDAwNjE2MDAwMDAwMDAw
+MDAwMDU1MDAwMjAwY2IwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAw
+MjAwMTkwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwY2UwMDAw
+MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYzYwMDAwMDBiNDAwMDAw
+MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNDIwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
+OTUwMDAwMDAwMDAwMDAwMDU1MDAwMTAwZGUwMDAwMDAwNTAwN2IwMDAwMDAwMDAwNTUwMDAyMDBk
+NzAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBkODAwMDAwMGI0
+MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAxMDBlMjAwMDAwMDA1MDA4ZjAwMDAw
+MDAwMDA1NTAwMDIwMGE3MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAw
+MDIwMDM4MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDYyMDAw
+MDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDM5MDAwMDAwYjQwMDAw
+MDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDNmMDAwMDAwYjQwMDAwMDAwMDAwZmY3
+Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDQwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAw
+MDAwMDAwMDA1NTAwMDIwMDUwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1
+NTAwMDIwMDRlMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDJj
+MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDQzMDAwMDAwYjQw
+MDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDFkMDAwMDAwYjQwMDAwMDAwMDAw
+ZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDMwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAw
+MDAwMDAwMDAwMDA1NTAwMDIwMDcxMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAw
+MDA1NTAwMDIwMGFlMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIw
+MGEzMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDg2MDAwMDAw
+YjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDQyMDAwMDAwYjQwMDAwMDAw
+MDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMGU5MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1
+MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDNlMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAw
+MDAwMDA1NTAwMDIwMDg3MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAw
+MDIwMDE5MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDVjMDAw
+MDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDE2MDEwMDAwYjQwMDAw
+MDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMGRjMDAwMDAwYjQwMDAwMDAwMDAwZmY3
+Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDYwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAw
+MDAwMDAwMDA1NTAwMDIwMGRkMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1
+NTAwMDIwMDc4MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDVl
+MDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDhiMDAwMDAwYjQw
+MDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMDgwMDAwMDAwYjQwMDAwMDAwMDAw
+ZmY3Zjk1MDAwMDAwMDAwMDAwMDA1NTAwMDIwMGNiMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAw
+MDAwMDAwMDAwMDA1NTAwMDEwMGM2MDAwMDAwMDUwMDRjMDAwMDAwMDAwMDU1MDAwMjAwNWQwMDAw
+MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYWMwMDAwMDBiNDAwMDAw
+MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODQwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
+OTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwOGMwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAw
+MDAwMDAwMDU1MDAwMjAwM2QwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1
+MDAwMjAwMTcwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMGI0MDAwMDAwMDAw
+MDAzMDA5NTAwMDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMDYxNjAyMDAwMDAwMDAwMDA2MzBh
+ZmNmZjAwMDAwMDAwNjE2MDI0MDAwMDAwMDAwMDYzMGFmOGZmMDAwMDAwMDA0NTAwMDMwMDAwMDAw
+MDAwNjFhMGZjZmYwMDAwMDAwMDQ1MDAwMTAwMDQwMDAwMDAwNTAwMDEwMDAwMDAwMDAwMDUwMDAx
+MDAwMDAwMDAwMDA1MDAwZTAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDIwMDAwMDAwMDAw
+MDYzMGFmY2ZmMDAwMDAwMDA2MTYwMjQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDQ1MDAwMzAw
+MDAwMDAwMDA2MWEwZmNmZjAwMDAwMDAwNDUwMDAxMDAwMjAwMDAwMDA1MDAwMTAwMDAwMDAwMDAw
+NTAwMDEwMDAwMDAwMDAwMDUwMDAzMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAw
+MDAwMzAwOTUwMDAwMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUw
+MDAwMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDA2MTYwMjAwMDAwMDAwMDAwNjMwYWZjZmYwMDAw
+MDAwMDYxNjAyNDAwMDAwMDAwMDA2MzBhZjhmZjAwMDAwMDAwNDUwMDAzMDAwMDAwMDAwMDYxYTBm
+Y2ZmMDAwMDAwMDA0NTAwMDEwMDA0MDAwMDAwMDUwMDAxMDAwMDAwMDAwMDA1MDAwMTAwMDAwMDAw
+MDAwNTAwMGUwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMDYxNjAyMDAwMDAwMDAwMDA2MzBhZmNm
+ZjAwMDAwMDAwNjE2MDI0MDAwMDAwMDAwMDYzMGFmOGZmMDAwMDAwMDA0NTAwMDMwMDAwMDAwMDAw
+NjFhMGZjZmYwMDAwMDAwMDQ1MDAwMTAwMDIwMDAwMDAwNTAwMDEwMDAwMDAwMDAwMDUwMDAxMDAw
+MDAwMDAwMDA1MDAwMzAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwYjQwMDAwMDAwMDAwMDMwMDk1
+MDAwMDAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwYjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAw
+MDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDEwMDAwMDAwMDAwMDYzMGFmY2ZmMDAwMDAwMDA2MTYw
+MTQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDU1MDAwMjAwMDAwMDAwMDA2MWEwZmNmZjAwMDAw
+MDAwMTUwMDAxMDAwMTAwMDAwMDA1MDAwMTAwMDAwMDAwMDAwNTAwMDMwMDAwMDAwMDAwMDUwMDAw
+MDAwMDAwMDAwMGI0MDAwMDAwMDAwMDAzMDA5NTAwMDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAw
+MGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwIiwKVW5rbm93biBmaWx0ZXIgKGZyb20g
+UUNPTSdzIC92ZW5kb3IvYmluL3Flc2RrLXNlY21hbmFnZXIpCiAiYWMwMDAwMDAwMDAwMDAwMGFj
+NzcwMDAwMDAwMDAwMDBiZjE2MDAwMDAwMDAwMDAwNjE2MDA0MDAwMDAwMDAwMGI0MDIwMDAwYjcw
+MDAwYzAxZDIwMDIwMDAwMDAwMDAwYjQwMDAwMDAwMDAwMDAwMDk1MDAwMDAwMDAwMDAwMDA2MTYw
+MDAwMDAwMDAwMDAwNTUwMDAyMDBjYjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAw
+MDAwNTUwMDAyMDAxOTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAy
+MDBjZTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBjNjAwMDAw
+MGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDA0MjAwMDAwMGI0MDAwMDAw
+MDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAxMDBkZTAwMDAwMDA1MDA3ZTAwMDAwMDAwMDA1
+NTAwMDEwMGUyMDAwMDAwMDUwMDk4MDAwMDAwMDAwMDU1MDAwMjAwZDcwMDAwMDBiNDAwMDAwMDAw
+MDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYTcwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUw
+MDAwMDAwMDAwMDAwMDU1MDAwMjAwNjIwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAw
+MDAwMDU1MDAwMjAwMWQwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAw
+MjAwMzgwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwM2YwMDAw
+MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwMzkwMDAwMDBiNDAwMDAw
+MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNTAwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
+OTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNGUwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAw
+MDAwMDAwMDU1MDAwMjAwNGYwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1
+MDAwMjAwZDgwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNDMw
+MDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwMmMwMDAwMDBiNDAw
+MDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODcwMDAwMDBiNDAwMDAwMDAwMDBm
+ZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODYwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAw
+MDAwMDAwMDAwMDU1MDAwMjAwMzAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAw
+MDU1MDAwMjAwYWUwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAw
+MTYwMTAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwMTkwMDAwMDBi
+NDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwNDIwMDAwMDBiNDAwMDAwMDAw
+MDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwZGMwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUw
+MDAwMDAwMDAwMDAwMDU1MDAwMjAwNWUwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAw
+MDAwMDU1MDAwMjAwN2IwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAw
+MjAwNWQwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYWMwMDAw
+MDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODQwMDAwMDBiNDAwMDAw
+MDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwYTMwMDAwMDBiNDAwMDAwMDAwMDBmZjdm
+OTUwMDAwMDAwMDAwMDAwMDU1MDAwMjAwODAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAw
+MDAwMDAwMDU1MDAwMjAwNzgwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1
+MDAwMjAwZGQwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAwMDAwMDU1MDAwMTAwYzYw
+MDAwMDAwNTAwNTgwMDAwMDAwMDAwNTUwMDAyMDA2MDAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAw
+MDAwMDAwMDAwMDAwNTUwMDAyMDA4YjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAw
+MDAwNTUwMDAyMDBjYjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAy
+MDA3MTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDA0MDAwMDAw
+MGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDAzYjAwMDAwMGI0MDAwMDAw
+MDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBlOTAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5
+NTAwMDAwMDAwMDAwMDAwNTUwMDAyMDBiMjAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAw
+MDAwMDAwNTUwMDAyMDA4YzAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwNTUw
+MDAyMDBkODAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAwMDAwMDAwMDAwMDAwYjQwMDAwMDAwMDAw
+MDMwMDk1MDAwMDAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDIwMDAwMDAwMDAwMDYzMGFm
+Y2ZmMDAwMDAwMDA2MTYwMjQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDQ1MDAwMzAwMDAwMDAw
+MDA2MWEwZmNmZjAwMDAwMDAwNDUwMDAxMDAwNDAwMDAwMDA1MDAwMTAwMDAwMDAwMDAwNTAwMDEw
+MDAwMDAwMDAwMDUwMDBlMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDA2MTYwMjAwMDAwMDAwMDAw
+NjMwYWZjZmYwMDAwMDAwMDYxNjAyNDAwMDAwMDAwMDA2MzBhZjhmZjAwMDAwMDAwNDUwMDAzMDAw
+MDAwMDAwMDYxYTBmY2ZmMDAwMDAwMDA0NTAwMDEwMDAyMDAwMDAwMDUwMDAxMDAwMDAwMDAwMDA1
+MDAwMTAwMDAwMDAwMDAwNTAwMDMwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMGI0MDAwMDAwMDAw
+MDAzMDA5NTAwMDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMGI0MDAwMDAwMDAwMGZmN2Y5NTAw
+MDAwMDAwMDAwMDAwMDUwMDAwMDAwMDAwMDAwMDYxNjAyMDAwMDAwMDAwMDA2MzBhZmNmZjAwMDAw
+MDAwNjE2MDI0MDAwMDAwMDAwMDYzMGFmOGZmMDAwMDAwMDA0NTAwMDMwMDAwMDAwMDAwNjFhMGZj
+ZmYwMDAwMDAwMDQ1MDAwMTAwMDQwMDAwMDAwNTAwMDEwMDAwMDAwMDAwMDUwMDAxMDAwMDAwMDAw
+MDA1MDAwZTAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAwNjE2MDIwMDAwMDAwMDAwMDYzMGFmY2Zm
+MDAwMDAwMDA2MTYwMjQwMDAwMDAwMDAwNjMwYWY4ZmYwMDAwMDAwMDQ1MDAwMzAwMDAwMDAwMDA2
+MWEwZmNmZjAwMDAwMDAwNDUwMDAxMDAwMjAwMDAwMDA1MDAwMTAwMDAwMDAwMDAwNTAwMDEwMDAw
+MDAwMDAwMDUwMDAzMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAwMDAwMzAwOTUw
+MDAwMDAwMDAwMDAwMDA1MDAwMDAwMDAwMDAwMDBiNDAwMDAwMDAwMDBmZjdmOTUwMDAwMDAwMDAw
+MDAwMDA1MDAwMDAwMDAwMDAwMDA2MTYwMTAwMDAwMDAwMDAwNjMwYWZjZmYwMDAwMDAwMDYxNjAx
+NDAwMDAwMDAwMDA2MzBhZjhmZjAwMDAwMDAwNTUwMDAyMDAwMDAwMDAwMDYxYTBmY2ZmMDAwMDAw
+MDAxNTAwMDEwMDAxMDAwMDAwMDUwMDAxMDAwMDAwMDAwMDA1MDAwMzAwMDAwMDAwMDAwNTAwMDAw
+MDAwMDAwMDAwYjQwMDAwMDAwMDAwMDMwMDk1MDAwMDAwMDAwMDAwMDAwNTAwMDAwMDAwMDAwMDAw
+YjQwMDAwMDAwMDAwZmY3Zjk1MDAwMDAwMDAwMDAwMDAiLAoKTGlzdCBvZiBzZXJ2aWNlcyBsb2Fk
+aW5nIHNlY2NvbXAgZmlsdGVycyBwdWxsZWQgZnJvbSBvbmUgcnVuIG9mIHRoZSBwaG9uZToKY29t
+Lmdvb2dsZS5hbmRyb2lkLmRlc2tjbG9jawovdmVuZG9yL2Jpbi9xZXNkay1zZWNtYW5hZ2VyCm1l
+ZGlhLmh3Y29kZWMvdmVuZG9yLnF0aS5tZWRpYS5jMkAxLjAtc2VydmljZQptZWRpYS5hdWRpby5x
+Yy5jb2RlYy5xdGkubWVkaWEuYzJhdWRpb0AxLjAtc2VydmljZQovdmVuZG9yL2Jpbi92ZW5kb3Iu
+cXRpLnFzcG1oYWwtc2VydmljZQovdmVuZG9yL2Jpbi9xc2FwX3NlbnNvcnMKbWVkaWEuZXh0cmFj
+dG9yYWV4dHJhY3Rvcgovc3lzdGVtX2V4dC9iaW4vcGVyZnNlcnZpY2UKL3ZlbmRvci9iaW4vd2Zk
+aGRjcGhhbHNlcnZpY2UKL3ZlbmRvci9iaW4vd2lmaWRpc3BsYXloYWxzZXJ2aWNlCi92ZW5kb3Iv
+YmluL3FzYXBfZGNmZAovdmVuZG9yL2Jpbi9xbXMKL3ZlbmRvci9iaW4vcXNhcF9sb2NhdGlvbgov
+dmVuZG9yL2Jpbi9xc2FwX3FhcGVzZXJ2aWNlCi92ZW5kb3IvYmluL3dmZHZuZHNlcnZpY2UKbWVk
+aWEuc3djb2RlY29pZC5tZWRpYS5zd2NvZGVjL2Jpbi9tZWRpYXN3Y29kZWMKL3ZlbmRvci9iaW4v
+aHcvcWNyaWxOcmQKcXNhcF9xbXNfMTNxbXMxNgpxc2FwX3Ftc18yNHFtczE3Ci92ZW5kb3IvYmlu
+L0FURldELWRhZW1vbgovdmVuZG9yL2Jpbi9ody9zeHJzZXJ2aWNlCi92ZW5kb3IvYmluL2h3L3Fj
+cmlsTnJkLWMyCnN5c3RlbV9zZXJ2ZXIKL3ZlbmRvci9iaW4vcW1pX21vdGV4dF9ob29rMTAxMzE3
+MAovdmVuZG9yL2Jpbi9xbWlfbW90ZXh0X2hvb2sxMDEzMTcxCi92ZW5kb3IvYmluL2ltc19ydHBf
+ZGFlbW9uCmNvbS5hbmRyb2lkLnN5c3RlbXVpCndlYnZpZXdfenlnb3RlCmNvbS5kb2xieS5kYXhz
+ZXJ2aWNlCnZlbmRvci5xdGkucWVzZGsuc3lzc2VydmljZQpvcmcuY29kZWF1cm9yYS5pbXMKY29t
+LmFuZHJvaWQuc2UKY29tLmFuZHJvaWQucGhvbmUKY29tLnF0aS5xY2MKY29tLmdvb2dsZS5hbmRy
+b2lkLmV4dC5zZXJ2aWNlcwpjb20uZ29vZ2xlLmFuZHJvaWQuZ21zCmNvbS5nb29nbGUuYW5kcm9p
+ZC5ldWljYwpjb20uZ29vZ2xlLmFuZHJvaWQuZ29vZ2xlcXVpY2tzZWFyY2hib3g6aW50ZXJhY3Rv
+cgpjb20uZ29vZ2xlLmFuZHJvaWQuYXBwcy5tZXNzYWdpbmc6cmNzCmNvbS5hbmRyb2lkLm5mYwpj
+b20ucXVhbGNvbW0ucXRpLndvcmtsb2FkY2xhc3NpZmllcgpjb20ucXVhbGNvbW0ubG9jYXRpb24K
+Y29tLmdvb2dsZS5hbmRyb2lkLmdtcy51bnN0YWJsZQpjb20udGh1bmRlcmNvbW0uYXIuY29yZQpj
+b20uYW5kcm9pZC52ZW5kaW5nOmJhY2tncm91bmQKY29tLmFuZHJvaWQudmVuZGluZzpxdWlja19s
+YXVuY2gKY29tLmFuZHJvaWQuZHluc3lzdGVtCmNvbS5hbmRyb2lkLm1hbmFnZWRwcm92aXNpb25p
+bmcKY29tLmFuZHJvaWQuc2hlbGw=
 
