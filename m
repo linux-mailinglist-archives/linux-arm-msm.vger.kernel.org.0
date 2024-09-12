@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5860B976B1F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 15:49:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D3DE1976BBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 16:16:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 90740B21B66
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 13:49:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC40D1C21C39
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 14:16:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B62693D556;
-	Thu, 12 Sep 2024 13:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D1641A0BE6;
+	Thu, 12 Sep 2024 14:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m1wa281v"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C5iivF/H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6E51A4E89;
-	Thu, 12 Sep 2024 13:49:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D096A2209B;
+	Thu, 12 Sep 2024 14:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726148960; cv=none; b=JNAsNzgvySTNZFIkdEn/Dg2rVK5B8zE5ypSPwHgrGNbx50l54uXLkjLtocfWxjIVICjEOTeXEFHyVd+4xT8BQhjiNS2GeZQJw3VZArSNoQr284qtgFvsQBfnDsgNAm3bWO6bxLF6qM+Q7jcy7C4L12MecuHOmQaIAgeu/+kaDis=
+	t=1726150566; cv=none; b=LNbn96GIog3BVtAoE632t2ZTGGFpAuYXSyZZ78xdLnE897X92W0VqmT/DrrR9s9rWKTHY2LMGQiN+iJGFoKWSsDbjdQykOSDJER/bPzJVUusUYd2LAEA1/Ivvx9LJklpJ9t2EMw0q8EaTw7AnqN0yXWhEw/RnMhxEfQ4uvASvMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726148960; c=relaxed/simple;
-	bh=Od9UKycpshIbATZhQuQC5iHEP2oUpXFxbIlY9kQ4Z68=;
+	s=arc-20240116; t=1726150566; c=relaxed/simple;
+	bh=fVIETZv+H9p1/it8eBQidsDxsQ++8d/hnRorBQfS3C0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=soDl3Si/+ul61QwAXeU90lELtuUS5FIjxn9kX2EezMiSgxxJNQLbr3IemB1JZWKgZoKo1wiBTHJr1xXzi4qEcuDosRcjjnpIqmPprtDDKbBTeCsB5daQr/uydethytPmtPysq7oR+irqAzwgtWCQ2d/AAIN6ITSHzbtd6jm7Wgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m1wa281v; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8a789c4fc5so350658466b.0;
-        Thu, 12 Sep 2024 06:49:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726148957; x=1726753757; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=a2OjWKLmyq0FeFvsJuG2LPAGav69Q4+sdvymKC2ChyU=;
-        b=m1wa281vV8BaSJn1TbmYf/4SUwV6Put3H9zTyUnMYCH9+EvtAeARB/2SKWBw6Pq59J
-         4T9GIXeHLlwsRCDxFknbTxg2kgaHm++u0RysQWgOw/W4R7EFUj+h9VMto2wvn34bYSHv
-         D0/tW20qp0kq7pUIICxTyV9jZoYWIexXmmYI15uPXWJm0BcqIQa2SrWwTS9dM0foj60Q
-         ON5wrmUQXOkq5EiZ/rtUEdv/73w/asQztqVSHSN9h1jgPtArnZldso9PGwhR6fzwvl5o
-         dhff4wGgduA3CTxTbU5cb0NSyzQiVO8Zbrh6MwyDswM28cagMNvSR+uO+EqExWI5C9D1
-         x1Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726148957; x=1726753757;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a2OjWKLmyq0FeFvsJuG2LPAGav69Q4+sdvymKC2ChyU=;
-        b=C5jurI/zB4pQn7WeibO+QBMDuTWZ3O/yvfmHG0detFLBpYp/tk5R4z9yqGdGfndzqE
-         hUE9OhMsNbeIyYIClxm6Bkbr0tpXd3CPuvt/P0dZTsoMqYbgXJk0Eq4mEw1yD0IsbYW/
-         IfnZKRNAB2ihV/LzSwRLwRmW7h9v5arBQ+6Rwza//13sD/bIUvCjwVpMLu8ZEDpq5INm
-         Q5+s6qx2eEtTHZewCzoFuYCOUWXI/h3oJuwATHwwCMUmg7wmU+O530k2zFIriosinNRM
-         AHmVknaGN+wKiN5ieJsIHeOBTehE7cIyJHdxbSJXoUBvBOq+uiTfbxm5ChpkaHoEbBET
-         An7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVxQt+26U3+F4c1c+fQGTIDYvWWY48IbW2CIk/QwaL6WKrN7UhjraAvpo/vtR5px8OkCdBEzBbidCLAREJW@vger.kernel.org, AJvYcCX0q3R/myxYNLH7iahRSymCspbGOG+tTnnl2K0mb+hM9FnUe7yHg6GizhkJ5CbmxMCMbZ/x1pQjMeU83MlT@vger.kernel.org, AJvYcCXZE3Co0y43MTH1vtk29kuBWj4DjXIcKEvkL3lMvMQuBlg7HP0FI+JdVLxrD5jE2ocks7yyaWQsCOMA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIqOUOeKcAeL+ZOalG5BYKm/cOGF3Pshp7C7m1PL3OstcfXugl
-	fcrTrN0F4PeFtvHuoBj1hIe4cS6hMPTB60zfiUNuO/OzR6Y6kFEV
-X-Google-Smtp-Source: AGHT+IFgwyMDp/MZic/cfpTexvX05RgAKFVg3x47fitCbcG38c/untHaUT2m9nTNxOkCOe8V0IaNlg==
-X-Received: by 2002:a17:907:6d20:b0:a8d:592d:f56 with SMTP id a640c23a62f3a-a8ffae3a29fmr789264166b.31.1726148956571;
-        Thu, 12 Sep 2024 06:49:16 -0700 (PDT)
-Received: from [192.168.1.17] (host-87-20-168-161.retail.telecomitalia.it. [87.20.168.161])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25833c90sm749673066b.25.2024.09.12.06.49.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Sep 2024 06:49:16 -0700 (PDT)
-Message-ID: <83141e2a-c132-4dc0-ad23-344f745b7010@gmail.com>
-Date: Thu, 12 Sep 2024 15:49:14 +0200
+	 In-Reply-To:Content-Type; b=akXpZsAiOK7w79NsgXPt2eGuJdE0jvanBPYzKRqhNAxI9Xyg62nFFeB4LgT4ShtdsH7EbXIrLZ7Thh4LnDlbqrOPEfksqpe6eI4KamyvFOtEuvLuVep1kBAx6AVpaG5rgCyC4B/kh5zgTHnlvekH2x/Y7QC8pEWQnlA1uz5Puvg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C5iivF/H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01140C4CEC3;
+	Thu, 12 Sep 2024 14:15:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726150566;
+	bh=fVIETZv+H9p1/it8eBQidsDxsQ++8d/hnRorBQfS3C0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=C5iivF/H28ePrgwhxHcJmm5659Weo5AOrMMA8JYewHHjPvLnFa1WK8qNA3N8PDkOQ
+	 a+B+BDhF1/6uutnd7lfbpL7pQ/Lva37UDKBL9nFH5NS0kKxTz3BsKrkmz6ry8pZWq2
+	 vcCGtfxmqeLEBCsXl5zT/gBAGAvPWfszDuEa9kL7xeSXmsmALu9SmW67RH9yqvZK09
+	 KEOs3zgz97YFc4ieuqrxbdpL9STATh9GVf/0VA+4f+ZrjX2GYl4mAPTZaC7fKMd5Tv
+	 GBIvWetuVlpCqFCzgDLCIntn+VXI+9mVe3azFPsfxvmIgVm+7Oh54tdOiieXRNWLJ2
+	 uPBNa0b009Lzg==
+Message-ID: <d5468dd2-0f81-4d89-a3bd-a546b2395ca6@kernel.org>
+Date: Thu, 12 Sep 2024 16:15:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,165 +50,74 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/10] Preemption support for A7XX
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Sharat Masetty <smasetty@codeaurora.org>
-References: <20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com>
- <20240906195827.at7tgesx55xt6k5o@hu-akhilpo-hyd.qualcomm.com>
+Subject: Re: [PATCH 8/8] PCI: qcom: Add support to PCIe slot power supplies
+To: Qiang Yu <quic_qianyu@quicinc.com>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, vkoul@kernel.org,
+ kishon@kernel.org, robh@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org,
+ quic_msarkar@quicinc.com, quic_devipriy@quicinc.com, kw@linux.com,
+ lpieralisi@kernel.org, neil.armstrong@linaro.org,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+ linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20240827063631.3932971-1-quic_qianyu@quicinc.com>
+ <20240827063631.3932971-9-quic_qianyu@quicinc.com>
+ <CAA8EJpq5KergZ8czg4F=EYMLANoOeBsiSVoO-zAgfG0ezQrKCQ@mail.gmail.com>
+ <20240827165826.moe6cnemeheos6jn@thinkpad>
+ <26f2845f-2e29-4887-9f33-0b5b2a06adb6@quicinc.com>
+ <20240911153228.7ajcqicxnu2afhbp@thinkpad>
+ <9222ef18-2eef-4ba3-95aa-fae540c06925@quicinc.com>
 Content-Language: en-US
-From: Antonino Maniscalco <antomani103@gmail.com>
-In-Reply-To: <20240906195827.at7tgesx55xt6k5o@hu-akhilpo-hyd.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <9222ef18-2eef-4ba3-95aa-fae540c06925@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 9/6/24 9:58 PM, Akhil P Oommen wrote:
-> On Thu, Sep 05, 2024 at 04:51:18PM +0200, Antonino Maniscalco wrote:
->> This series implements preemption for A7XX targets, which allows the GPU to
->> switch to an higher priority ring when work is pushed to it, reducing latency
->> for high priority submissions.
->>
->> This series enables L1 preemption with skip_save_restore which requires
->> the following userspace patches to function:
->>
->> https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
->>
->> A flag is added to `msm_submitqueue_create` to only allow submissions
->> from compatible userspace to be preempted, therefore maintaining
->> compatibility.
->>
->> Preemption is currently only enabled by default on A750, it can be
->> enabled on other targets through the `enable_preemption` module
->> parameter. This is because more testing is required on other targets.
->>
->> For testing on other HW it is sufficient to set that parameter to a
->> value of 1, then using the branch of mesa linked above, `TU_DEBUG=hiprio`
->> allows to run any application as high priority therefore preempting
->> submissions from other applications.
->>
->> The `msm_gpu_preemption_trigger` and `msm_gpu_preemption_irq` traces
->> added in this series can be used to observe preemption's behavior as
->> well as measuring preemption latency.
->>
->> Some commits from this series are based on a previous series to enable
->> preemption on A6XX targets:
->>
->> https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
->>
->> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+On 12.09.2024 3:39 PM, Qiang Yu wrote:
 > 
-> Antonino, can you please test this once with per-process pt disabled to
-> ensure that is not broken? It is handy sometimes while debugging.
-> We just need to remove "adreno-smmu" compatible string from gpu smmu
-> node in DT.
-> 
-
-Removing that from the DT causes a crash inside 
-`msm_iommu_pagetable_create` as it seems `create_private_address_space` 
-is assigned unconditionally in a6xx_gpu.c . I tested it with the 
-following change:
-
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 9e5a83b885f0..4111f5fd9721 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -832,11 +832,11 @@ msm_gpu_create_private_address_space(struct 
-msm_gpu *gpu, struct task_struct *ta
-          * If the target doesn't support private address spaces then return
-          * the global one
-          */
--       if (gpu->funcs->create_private_address_space) {
--               aspace = gpu->funcs->create_private_address_space(gpu);
--               if (!IS_ERR(aspace))
--                       aspace->pid = get_pid(task_pid(task));
--       }
-+       /* if (gpu->funcs->create_private_address_space) { */
-+       /*      aspace = gpu->funcs->create_private_address_space(gpu); */
-+       /*      if (!IS_ERR(aspace)) */
-+       /*              aspace->pid = get_pid(task_pid(task)); */
-+       /* } */
-
-         if (IS_ERR_OR_NULL(aspace))
-                 aspace = msm_gem_address_space_get(gpu->aspace);
-
-and it appears to work.
-
-> -Akhil.
-> 
->> ---
->> Changes in v3:
->> - Added documentation about preemption
->> - Use quirks to determine which target supports preemption
->> - Add a module parameter to force disabling or enabling preemption
->> - Clear postamble when profiling
->> - Define A6XX_CP_CONTEXT_SWITCH_CNTL_LEVEL fields in a6xx.xml
->> - Make preemption records MAP_PRIV
->> - Removed user ctx record (NON_PRIV) and patch 2/9 as it's not needed
->>    anymore
->> - Link to v2: https://lore.kernel.org/r/20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com
+> On 9/11/2024 11:32 PM, Manivannan Sadhasivam wrote:
+>> On Wed, Sep 11, 2024 at 04:17:41PM +0800, Qiang Yu wrote:
+>>> On 8/28/2024 12:58 AM, Manivannan Sadhasivam wrote:
+>>>> On Tue, Aug 27, 2024 at 02:44:09PM +0300, Dmitry Baryshkov wrote:
+>>>>> On Tue, 27 Aug 2024 at 09:36, Qiang Yu <quic_qianyu@quicinc.com> wrote:
+>>>>>> On platform x1e80100 QCP, PCIe3 is a standard x8 form factor. Hence, add
+>>>>>> support to use 3.3v, 3.3v aux and 12v regulators.
+>>>>> First of all, I don't see corresponding bindings change.
+>>>>>
+>>>>> Second, these supplies power up the slot, not the host controller
+>>>>> itself. As such these supplies do not belong to the host controller
+>>>>> entry. Please consider using the pwrseq framework instead.
+>>>>>
+>>>> Indeed. For legacy reasons, slot power supplies were populated in the host
+>>>> bridge node itself until recently Rob started objecting it [1]. And it makes
+>>>> real sense to put these supplies in the root port node and handle them in the
+>>>> relevant driver.
+>>>>
+>>>> I'm still evaluating whether the handling should be done in the portdrv or
+>>>> pwrctl driver, but haven't reached the conclusion. Pwrctl seems to be the ideal
+>>>> choice, but I see a few issues related to handling the OF node for the root
+>>>> port.
+>>>>
+>>>> Hope I'll come to a conclusion in the next few days and will update this thread.
+>>>>
+>>>> - Mani
+>>>>
+>>>> [1] https://lore.kernel.org/lkml/20240604235806.GA1903493-robh@kernel.org/
+>>> Hi Mani, do you have any updates?
+>>>
+>> I'm working with Bartosz to add a new pwrctl driver for rootports. And we are
+>> debugging an issue currently. Unfortunately, the progress is very slow as I'm on
+>> vacation still.
 >>
->> Changes in v2:
->> - Added preept_record_size for X185 in PATCH 3/7
->> - Added patches to reset perf counters
->> - Dropped unused defines
->> - Dropped unused variable (fixes warning)
->> - Only enable preemption on a750
->> - Reject MSM_SUBMITQUEUE_ALLOW_PREEMPT for unsupported targets
->> - Added Akhil's Reviewed-By tags to patches 1/9,2/9,3/9
->> - Added Neil's Tested-By tags
->> - Added explanation for UAPI changes in commit message
->> - Link to v1: https://lore.kernel.org/r/20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com
+>> Will post the patches once it got resolved.
 >>
->> ---
->> Antonino Maniscalco (10):
->>        drm/msm: Fix bv_fence being used as bv_rptr
->>        drm/msm: Add a `preempt_record_size` field
->>        drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
->>        drm/msm/A6xx: Implement preemption for A7XX targets
->>        drm/msm/A6xx: Sync relevant adreno_pm4.xml changes
->>        drm/msm/A6xx: Use posamble to reset counters on preemption
->>        drm/msm/A6xx: Add traces for preemption
->>        drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
->>        drm/msm/A6xx: Enable preemption for A750
->>        Documentation: document adreno preemption
->>
->>   Documentation/gpu/msm-preemption.rst               |  98 +++++
->>   drivers/gpu/drm/msm/Makefile                       |   1 +
->>   drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   7 +-
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 331 +++++++++++++++-
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h              | 166 ++++++++
->>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c          | 430 +++++++++++++++++++++
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   9 +-
->>   drivers/gpu/drm/msm/msm_drv.c                      |   4 +
->>   drivers/gpu/drm/msm/msm_gpu_trace.h                |  28 ++
->>   drivers/gpu/drm/msm/msm_ringbuffer.h               |   8 +
->>   drivers/gpu/drm/msm/msm_submitqueue.c              |   3 +
->>   drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |   7 +-
->>   .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  39 +-
->>   include/uapi/drm/msm_drm.h                         |   5 +-
->>   14 files changed, 1094 insertions(+), 42 deletions(-)
->> ---
->> base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
->> change-id: 20240815-preemption-a750-t-fcee9a844b39
->>
->> Best regards,
->> -- 
->> Antonino Maniscalco <antomani103@gmail.com>
->>
+>> - Mani
+> OK, thanks for your update.
 
-Best regards,
--- 
-Antonino Maniscalco <antomani103@gmail.com>
+Qiang, you can still resubmit the rest of the patches without having
+to wait on that to be resolved
 
+Konrad
 
