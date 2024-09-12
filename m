@@ -1,178 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-31539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BEAD975EB2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 04:02:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 139D6975F02
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 04:40:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41F91285003
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 02:02:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB534285460
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 02:40:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA65E28382;
-	Thu, 12 Sep 2024 02:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C23426F2FD;
+	Thu, 12 Sep 2024 02:40:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QT1C/bUb"
+	dkim=pass (2048-bit key) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.b="ciVd/Z3g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE3D2A1CF;
-	Thu, 12 Sep 2024 02:01:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27D746F2E8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 02:40:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.29.241.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726106522; cv=none; b=BEn042lMoxMxH+2oJdzDF9sV0jVYcIfDRIcpiOi8J3Wy/ywNhNYZbzepyiYEg66DFeZFXdzJHqaC/cztYh887MROPKL17HDVfB+SaYvM+e9zpjUYRKaV/MAJ0si9Hx3ZRMIeo/ToW3NJD967nLRbHTolAldy4p+zfBVfQTVBhKE=
+	t=1726108835; cv=none; b=PUPomBRyvRuhFCIb5VloVtH7iBa5VrbADxlGLSNWXXzcTM7QBSzucKEs0gcrHJVsmQ2JvU6DRYXTO7HpdmJNYbfgObtupCPF6VKAyflVDdjhkAZ+UkiADL3Jf0nXvopHtfPQLHJAnJRY4h74Pn3pJVbfefkoHNpW5oKWddEqsY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726106522; c=relaxed/simple;
-	bh=7JOMGHPGl9bZpl9dgy1+02bXme1tNRDP9Oj1y+Mp9K4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=cvyG23EaME+iqJiZC+pnwlaGolPlaCAjDmnoo2FSNMyqyoc+KtZVDZfiwoWwTs4NCfzsflObeZFx0ES628Stx1CQA5vBlJMharqsYC614rNT5M+W+OocFDhMmYC7DaY/TPZgaAQ/zXgw0fPnwRQPRQ9Zgzk3DFZEv4nTOGmUCFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QT1C/bUb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48BEm0mV008622;
-	Thu, 12 Sep 2024 02:01:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	R9uxWCoTZQ9l46bFxytwAFQkW6irJNtC1UxAD6uZ9uM=; b=QT1C/bUbY+bHy1YT
-	C+Ocp8ek4LKHWLGt5clrlq+AqwTPWJFw/CIiFiq3KlEnzsprZCrknLSldnlbzCs7
-	QMa0ThJG240ZIDQJUElJUhZglXxGtTaYwweNA9toJFQXphlr3HaC55Y3p9NWrODD
-	8CjqRis/LrWFF8N7y8JJ31v3Gf13kptMH2KFk3a0v5KBVIHPeSMwJPaMMJGZCHxj
-	rG37H87dMr5zAevW78EZghZliIX/rrbWMXpFAXm8Qs5EziARisjHB6rhQwo+/xdH
-	hlLlWfBr0croD+KWXuHYIPYYTix5WNUVKcQ9IHQdYVW1Av0KZxIeV8Gx4hYGJtdK
-	YJrurg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy733m2x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Sep 2024 02:01:55 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48C21sBb030061
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Sep 2024 02:01:54 GMT
-Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Sep
- 2024 19:01:48 -0700
-Message-ID: <8e5364f8-eaa3-4f70-b298-70a21e716f90@quicinc.com>
-Date: Thu, 12 Sep 2024 10:01:46 +0800
+	s=arc-20240116; t=1726108835; c=relaxed/simple;
+	bh=c6C5+9co9bNXfuUc3JS4ckFeninBzAqCfURuN1k4pZA=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=MT6dJTzMstF5jv9VXho0DlwO+p49T9g0f+cFsIDPeo1FMLSTejO9ILi76V26hbM9ymPNb5T7pMi33VRAgtVsQmCW7dUR8Jia7RgVveZ5xzYfJ1gVAqs7ox6+pjBOUNVhzhkZX2Wr2TZk+CiY540IoAPI8ic/U599xC3E0TxFAcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au; spf=pass smtp.mailfrom=codeconstruct.com.au; dkim=pass (2048-bit key) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.b=ciVd/Z3g; arc=none smtp.client-ip=203.29.241.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codeconstruct.com.au
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codeconstruct.com.au
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1726108832;
+	bh=c6C5+9co9bNXfuUc3JS4ckFeninBzAqCfURuN1k4pZA=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=ciVd/Z3gf/OUc0zm1DiU4yeFezG8V+ULE6dwuNu4o8IKQvceXfHurAM7PCm6lAH0C
+	 luKNIdL1sCeQSGwUk79BGusCagPxiWjfMlnwvtkFIjPzXulNmyr7wa2JJ0WRgGJsAN
+	 vgjd8M9yXIitofy6wcOVq28uVvCNoUm8IWN5owoNOATMtGFfzsb1DcmJ/5QM5UlQDS
+	 6Abdano821Kg/CFtrGPa3/11x7fg9TSBJw1GREyuER9YI3xV4VWqhIl7Cm8iCuH3/8
+	 mIpjGyKBaV98jFQIWez73s6nKp1nidPUMR/z0pGNyK9dden+Guk8QW3lwwGMLo/tYj
+	 o+WUQmPeoWr5w==
+Received: from [192.168.68.112] (ppp118-210-89-8.adl-adc-lon-bras32.tpg.internode.on.net [118.210.89.8])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id A315B650D6;
+	Thu, 12 Sep 2024 10:40:31 +0800 (AWST)
+Message-ID: <354f8d1c5ef517337c9f9a74e70580a8d97fc159.camel@codeconstruct.com.au>
+Subject: Re: [PATCH 2/4] soc: aspeed: Simplify code with dev_err_probe()
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Zhang Zekun <zhangzekun11@huawei.com>, andersson@kernel.org, 
+	konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, joel@jms.id.au, 
+	linux-aspeed@lists.ozlabs.org
+Cc: chenjun102@huawei.com
+Date: Thu, 12 Sep 2024 12:10:30 +0930
+In-Reply-To: <20240909122921.12627-3-zhangzekun11@huawei.com>
+References: <20240909122921.12627-1-zhangzekun11@huawei.com>
+	 <20240909122921.12627-3-zhangzekun11@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: document the QCS615 Top Level
- Mode Multiplexer
-To: Rob Herring <robh@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Linus Walleij
-	<linus.walleij@linaro.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20240910-add_qcs615_pinctrl_driver-v1-0-36f4c0d527d8@quicinc.com>
- <20240910-add_qcs615_pinctrl_driver-v1-1-36f4c0d527d8@quicinc.com>
- <20240911151818.GA283533-robh@kernel.org>
-From: Lijuan Gao <quic_lijuang@quicinc.com>
-In-Reply-To: <20240911151818.GA283533-robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Qx0pBzmCki2RXxuwV4hV_dyjEJbLbZcB
-X-Proofpoint-GUID: Qx0pBzmCki2RXxuwV4hV_dyjEJbLbZcB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- malwarescore=0 adultscore=0 mlxlogscore=999 suspectscore=0
- priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409120014
 
+On Mon, 2024-09-09 at 20:29 +0800, Zhang Zekun wrote:
+> Use dev_err_probe() directly in the driver probe phase, and we
+> don't need to judge if the error code is not equal to -EPROBE_DEFER.
+> This can simplify the code a bit.
+>=20
+> Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
 
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-在 9/11/2024 11:18 PM, Rob Herring 写道:
-> On Tue, Sep 10, 2024 at 06:26:14PM +0800, Lijuan Gao wrote:
->> Document the Top Level Mode Multiplexer on the QCS615 Platform.
->> It concisely explains the pin multiplexing and configuration in
->> the device tree, and includes simple examples of typical device
->> tree snippets, making it easier for designers to configure and
->> manage chip pins.
->>
->> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
->> ---
->>   .../bindings/pinctrl/qcom,qcs615-tlmm.yaml         | 123 +++++++++++++++++++++
->>   1 file changed, 123 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,qcs615-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,qcs615-tlmm.yaml
->> new file mode 100644
->> index 000000000000..2bfb0a453880
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,qcs615-tlmm.yaml
->> @@ -0,0 +1,123 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/pinctrl/qcom,qcs615-tlmm.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Technologies, Inc. QCS615 TLMM block
->> +
->> +maintainers:
->> +  - Lijuan Gao <quic_lijuang@quicinc.com>
->> +
->> +description:
->> +  Top Level Mode Multiplexer pin controller in Qualcomm QCS615 SoC.
->> +
->> +allOf:
->> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
->> +
->> +properties:
->> +  compatible:
->> +    const: qcom,qcs615-tlmm
->> +
->> +  reg:
->> +    maxItems: 3
->> +
->> +  reg-names:
->> +    items:
->> +      - const: east
->> +      - const: west
->> +      - const: south
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  gpio-reserved-ranges:
->> +    minItems: 1
->> +    maxItems: 62
->> +
->> +  gpio-line-names:
->> +    maxItems: 123
->> +
->> +patternProperties:
->> +  "-state$":
->> +    oneOf:
->> +      - $ref: "#/$defs/qcom-qcs615-tlmm-state"
->> +      - patternProperties:
-> 
-> Needs 'type: object' before patternProperties.
-> > Otherwise,
-> 
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
-Well noted.
-
-
--- 
-Thx and BRs
-Lijuan Gao
 
