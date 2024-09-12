@@ -1,136 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-31561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E98A976155
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:19:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D52F97615A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 08:19:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D5F81F240A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 06:19:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C9732286886
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 06:19:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B79D18BB8B;
-	Thu, 12 Sep 2024 06:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF0CE2D7B8;
+	Thu, 12 Sep 2024 06:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hvGEfIkR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Djeotmfi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC932189F20;
-	Thu, 12 Sep 2024 06:18:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7B0F1878;
+	Thu, 12 Sep 2024 06:19:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726121939; cv=none; b=pj9LzStBRL4PpR0mRtCSQGO5Gd4mPlXd2i/NibHbjsUfFnMFiMFg0PWE3wmAmQ0VEi+9aa0hA7dDmVPt6tk0Kg2DMff1gD5hg21WMNKDsx9IoZNSJ20lj0flC4u4aK4BBwY//0HuIjmOuSZM8KhHps82qkJ/yoJWoki92rtb6/A=
+	t=1726121972; cv=none; b=igZ9Wt0a39Wp9gNqLbHgta1h2D7J47ZykMHNxlaLxOJvck1xbMuenc184uAZ4Fv0mqL+ms7n0wSimDw1vc0NAgb0zwz54f0ogiNQLVUE23PBCyYRwU15HCXdiZYj+fNXzZxo0WCUgyTNi1RaszVt2fsM398c0KHMzB13eiVhxak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726121939; c=relaxed/simple;
-	bh=aizWbA2LabtwDk1tx+RW3EiHD254TxdEs6qeqX43M6Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=nEDNw5+xFQJHrsOJmxYW6QcNcNoOLS60L9foPbuJxE5b2+TGfwRI7A6Qt7UXBT8EeGVdRUTlkNYuGi6nG4eJpekmdJxRenUiOZi000KhASVFVxL4tM2NNlCDRvQurS78ofSc0K66KDRyRHPX2XgH9mECx3kPhmhJIzeWtMHLo2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hvGEfIkR; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48C2L3Hc000707;
-	Thu, 12 Sep 2024 06:18:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bcpWMPBrKfFYTh0DDOkCavKCNrnvqAK6zb2Ig0d+Fkk=; b=hvGEfIkRisWXRd0N
-	YqyA4I3BGzw3JDSi8A7i/Z0RiCuM0qDIUQjWPRcTeqSnZGjTqgHA2Yrs4CSn+svi
-	XVrDQCSoIzNcxE6F6M/bcw+Ui0+u3KWxn64PSJkaoKiVugXxUWVY+1buIULlF7j0
-	y7aEUM/9tBvH4979YZ29/nNUuVjrYrwGV3DIRk9iXHjR3v7kVthHRpts0iuf32Ap
-	idM9cfc0+K52kC5ocachOabEIh05fULmqJ6yyEyp8+uV/hTimy1CWtHUrenRW1tg
-	Nc9AkjrSwRqbgek2n7xtZ4LeyMPacgIDGWICFs/Ugxuab3p04LJbHdSfkLlkOfZZ
-	m7QT7w==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gybpv0wp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Sep 2024 06:18:36 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48C6IZ0f028712
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 12 Sep 2024 06:18:35 GMT
-Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 11 Sep
- 2024 23:18:30 -0700
-Message-ID: <25975ae0-a8b3-a633-f3ee-c338de7a09a4@quicinc.com>
-Date: Thu, 12 Sep 2024 11:48:27 +0530
+	s=arc-20240116; t=1726121972; c=relaxed/simple;
+	bh=jMxnTDCVFJ7N6GMUoCTIlzYXhXyiHznJYAfTwzYxni8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ktGV9STBS2FRrSrWBApZuoA4uXT27jz7TW3mKMI4Re2xv0Mk1R/vWJFznay91kCUNexuJSjK+KutTGDsfvVcw8QHT1My9v9XWn3SJFdhKL3BqhYScNl4K6F3JwKmM0btkC6dWF9JwrYlp0NHg6rN1pDtnWzlcwhyFocfy6JZepE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Djeotmfi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DBBC4CEC3;
+	Thu, 12 Sep 2024 06:19:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726121972;
+	bh=jMxnTDCVFJ7N6GMUoCTIlzYXhXyiHznJYAfTwzYxni8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DjeotmfiMXVzgoR+s/PJ+UFBX1r2gpczUnIY5GfqPa5s8pTx0Z6ga5logrzblf1WD
+	 +PFM4+Az2F6WcwUo0QYFeujdUgZkBbAaOlytN9vK0py+fspi7/XyeQnD/NjVm0c+0b
+	 UNb5AuDebSrTno5omR5hTmRYFwVcd/dKObn5zeUfrS0IMme5pPqmb6ebFzs7YFIAAc
+	 Wml2DvOTOf8WlKbuq11t60Xq3s/fAYVpillKAwYes5brTWqe3xJvJqBg+JDLDOnD7h
+	 e6np9J7Lbp0DpZwLDSnET8mbCU2ZfsEZMlpSqFrvOC89XJHjxQUQNPFQI2t61XOExl
+	 XyUUAVfYgFBLQ==
+Date: Thu, 12 Sep 2024 08:19:28 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: swboyd@chromium.org, wsa@kernel.org, sdharia@codeaurora.org, 
+	girishm@codeaurora.org, dianders@chromium.org, linux-arm-msm@vger.kernel.org, 
+	linux-i2c@vger.kernel.org
+Subject: Re: [PATCH] i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()
+Message-ID: <g4g6w56k6hljjs7m73bntdqgm23nnpt3dkrytnoyxquqa5fa4o@xnxwctua3vti>
+References: <20240912033459.3013904-1-ruanjinjie@huawei.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 0/8] Add QPIC SPI NAND driver
-Content-Language: en-US
-To: Miquel Raynal <miquel.raynal@bootlin.com>
-CC: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <esben@geanix.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>
-References: <20240820104239.1774600-1-quic_mdalam@quicinc.com>
- <5169761b-422d-70ab-ba53-a898cb7bfa2f@quicinc.com>
- <20240903150826.749b8560@xps-13>
- <bb1397c3-2327-e211-f7eb-cac4b126424e@quicinc.com>
- <20240910094120.19348fea@xps-13>
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20240910094120.19348fea@xps-13>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IkTYh_XMnR4e3VNSGJGPxyNdcCA3yKzG
-X-Proofpoint-GUID: IkTYh_XMnR4e3VNSGJGPxyNdcCA3yKzG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=0 phishscore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=905 clxscore=1015 bulkscore=0
- impostorscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409120043
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240912033459.3013904-1-ruanjinjie@huawei.com>
 
+Hi Jinjie,
 
+On Thu, Sep 12, 2024 at 11:34:59AM GMT, Jinjie Ruan wrote:
+> disable_irq() after request_irq() still has a time gap in which
+> interrupts can come. request_irq() with IRQF_NO_AUTOEN flag will
+> disable IRQ auto-enable when request IRQ.
+> 
+> Fixes: 37692de5d523 ("i2c: i2c-qcom-geni: Add bus driver for the Qualcomm GENI I2C controller")
+> Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
 
-On 9/10/2024 1:11 PM, Miquel Raynal wrote:
-> Hi,
-> 
->>>>>     >>       I have addressed your comments to v6 and further posted till v8.
->>>>        Could you please let me know if this is fine.
->>>>        and how to get this merged ?
->>>
->>> There are still kernel test robot reports, so this means there are
->>> issues in your code that I don't need to point out explicitly, but I am
->>> actively waiting for them to be fixed.
->>
->> I have fixed most of the sparse warnings after converting __le32 to u32.
->> However am not able to address the following sparse warnings
->>
->> 	drivers/mtd/nand/raw/qcom_nandc.c:1401:29: sparse: warning: cast to restricted __le32
->> 	drivers/mtd/nand/raw/qcom_nandc.c:1587:30: sparse: warning: cast to restricted __le32
->> 	drivers/mtd/nand/raw/qcom_nandc.c:1588:31: sparse: warning: cast to restricted __le32
->> 	drivers/mtd/nand/raw/qcom_nandc.c:1589:34: sparse: warning: cast to restricted __le32
->> 	drivers/mtd/nand/raw/qcom_nandc.c:2479:47: sparse:    got restricted __le32 [usertype]
->> 	drivers/mtd/nand/raw/qcom_nandc.c:2480:47: sparse:    got restricted __le32 [usertype]
->> 	drivers/mtd/nand/raw/qcom_nandc.c:2616:25: sparse: warning: cast to restricted __le32
->> 	drivers/mtd/nand/raw/qcom_nandc.c:2672:32: sparse: warning: cast to restricted __le32
-> 
-> The rule is: you cannot add new warnings.
-> 
-> For existing warnings in the driver, I'd anyway advise to solve them.
-> Without the actual code I cannot help.
-I have fixed all the warnings and posted next revision.
-> 
-> Thanks,
-> Miquèl
+merged to i2c/i2c-host-fixes.
+
+Thanks,
+Andi
 
