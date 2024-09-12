@@ -1,121 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-31614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06058976D3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 17:12:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83F6D976D60
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 17:15:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 388E81C23441
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 15:12:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A0141F2115F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 15:15:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A60E21BDAA5;
-	Thu, 12 Sep 2024 15:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 190E61B985F;
+	Thu, 12 Sep 2024 15:12:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ayz2gAiZ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rdvdfyad"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2D5D1BC9E5;
-	Thu, 12 Sep 2024 15:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B501BD004
+	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 15:12:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726153842; cv=none; b=XoLU9QEiBC+fPKZHsmUKWDevARqJFh93RpGG9Ltt6z0u0aD12Ac5PyV2spZPVKY5jYRPRAAo1jTwFAyEHkQaHn9Lab4Lq0Rv/0/xq8F0vz1uf/qyv0kXFJ8IvKqY+zvhiCadzBvXneIscfiNAvj0of1ymJapFXBjYPLhzr8Mb2I=
+	t=1726153923; cv=none; b=Rq8UewvYgmqnXkPBRnpiv23rquHmWcQzI/DnHWPFonhoCMWgf1GtvIXqs5HeUxCFDchhXapi3bjpSsb1z/OVJqtqX9kBwMWXs6z6VCaDsF0hoFJy7la6YiqOhx8y8m3opyZzATZWZxnU9/HYGS30Ox8sUGnsBpwIecHX/KR53P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726153842; c=relaxed/simple;
-	bh=eZRjSMsxglbYBnMIMLlotaha1L4NwpH1XZvQRqSngjU=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=oC4C1Qy8O3ljw37+N3DMJvfudgW3nLtJaLbyg6uZ7WmbaTPKa6fKBSo+hJ/BaMeodPinj74d7u2FOkIzKzE2FppU6o97bjnoaxfTemQUqF3fOGnpZ+N8QP02iaO4S71dUuYuAgmRD5ybeJiPipY1E6gaz9uUR+tYfwGp9UoF8Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ayz2gAiZ; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42cbaf9bfdbso9235485e9.0;
-        Thu, 12 Sep 2024 08:10:40 -0700 (PDT)
+	s=arc-20240116; t=1726153923; c=relaxed/simple;
+	bh=JLkUVGiDvOxyxYbcuHoP7hUeOJR66jvK9ErDIQ+bqQo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UiddkIdSzVntyQc8k4Yanx1RR3Tv/zxs2BWnb2wmgwvQN58QEI49jkfuhXLKOcnyki/EZQkr5dhHZ5u320CvhozCGy6xsmuXiqKi3uwplffmlmtWaSfEEHVcowHjXz7Mp3Vt4KLRk34CH3cT1KQAmt/QiM7QRDXpaMjzZrp+E18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rdvdfyad; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c3ca32974fso1212829a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 08:12:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726153839; x=1726758639; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=I8WoX8P+epnSNshOLCzpXpl70K1Lwft4iav6FmplCPE=;
-        b=Ayz2gAiZJd8P4b9koAUSOWKIjs7iIS9Yp719Q6mglJJ8bCs2Kxx/hDdyHwUsZiBxpZ
-         7ZfJXyXbXsaXmM8ein9CS1yiySflhTnogL73ijv9/8adGz8bM5i5LGFpfUIlhUg/Vkvh
-         Frpmt4HirY2cJtwl+umwiIZ0A/wlOYgGq/FlvGVMP/4JJeWTdlSfSjgQnxMFASc5+Zho
-         HDxZ3cgw6sV+H0S9xZFZZF/KkJBqEAhRtWIUGJ6GYyw0f5RFFzaTWd5jZALdA7b1+EWE
-         JZ0u9SJCjKDEgz9+R30qyykQeM1VKmAe7PITDP4vgEVzDc7Nzh/K+ED3PWVznXR71KYq
-         CtEA==
+        d=linaro.org; s=google; t=1726153920; x=1726758720; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Pp2nKxgKyUUwRWYFUOJ32ePs5kEKlqwCPYig/SVKyzI=;
+        b=rdvdfyadfBnWQezC9Le4YIPyW//fToBKX9EMT3tS5VKTKZaTc95arLGJz5Zm06ZNbJ
+         fMfXaPM0rWgOCmjJeItXN9ibEn1NY0CjA23/QXYElNPTv8qwHvOgfC08b0TBM934fggE
+         +ioxKAvH3igXJoHk3d40o5ctzspuqXxactnX/ZlYE2bfBXKnsIgtFdH0xhKHroNb7Ds4
+         Y8FGyfaFjHL8JsDK3ztNccHso0IXmVgr1gVnpcftizr0wdB/M3+HOvJuNUTGqXRa2KJx
+         I1P1Pvv4gwQiMO4CVl0XS22ENu/UM24yud3Zsxr3cdK3xWZ9SHV+/8Hn2uf1tBEJhkuU
+         6TGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726153839; x=1726758639;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I8WoX8P+epnSNshOLCzpXpl70K1Lwft4iav6FmplCPE=;
-        b=eYQWOP2+k3u1c4emPTem+MaINMAhEr7nBStLBbMCxA2LNyyNinGbwGuqubGb99mPF7
-         cTUU4e502liQG0icdfSigB5C18uBG4kPCFVQI05EAVqlsUiWVveDKMX8AYKbJpL5bJpj
-         5Cjg1nWbffySnTOBieR2fa2Sm3AJYEOXVUfGq9wyra4YBRyg9R7/PJ5nJfbYkJnVdoDv
-         Z6+m6FPPpSEfTYRmVbjf8ogxKL7ToxDwSFTAADsIMzz0IMjxMtRGbBFS5KodTIwIGYUj
-         /eGHNvmoqzTYqFZ95SuliXO87CrPsVZUxBv/cvycPjN5xlDLaXTS7P2cUjg64sX+jM+g
-         xUiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVXGyglfTeytP4N1qt9LUrhPCoiS/9L/pM1cN22CpNIrJlA8/Ere7b7r2CBg8ialVU46XY9iNblCFTcxrQK@vger.kernel.org, AJvYcCW9WhLlWgUafTcrenayO+wjQZ4pHYiufUQdJCeEUvO+7Okpvdp6BqscC2YpUFyDzQah7p+G1fxV/Ng88sB5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz4YPK50NQUZreHSPjpJ/8JCAUpRH04Hzd38pPVsOyQ3Wd8vZuL
-	dai0CFG8fQy+64/y3wXja5s66BlfnxaVj7PoX0o+2otNTbimbMZ5zczPdjYq
-X-Google-Smtp-Source: AGHT+IGpzTJbDNIVU4M1s3fHFXgywLBRPXTVSrJBFZCSKpEuUnw1QKzJPLNOIAsdnhNmKiA4JsiELw==
-X-Received: by 2002:a05:600c:1c02:b0:42c:b58d:98ad with SMTP id 5b1f17b1804b1-42cdb547f2emr24890885e9.14.1726153838851;
-        Thu, 12 Sep 2024 08:10:38 -0700 (PDT)
-Received: from localhost (craw-09-b2-v4wan-169726-cust2117.vm24.cable.virginm.net. [92.238.24.70])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378956d3700sm14661524f8f.88.2024.09.12.08.10.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Sep 2024 08:10:37 -0700 (PDT)
-From: Colin Ian King <colin.i.king@gmail.com>
-To: Rob Clark <robdclark@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org
-Cc: kernel-janitors@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH][next] drm/msm8998: make const arrays ratio_list and band_list static
-Date: Thu, 12 Sep 2024 16:10:37 +0100
-Message-Id: <20240912151037.592477-1-colin.i.king@gmail.com>
-X-Mailer: git-send-email 2.39.2
+        d=1e100.net; s=20230601; t=1726153920; x=1726758720;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pp2nKxgKyUUwRWYFUOJ32ePs5kEKlqwCPYig/SVKyzI=;
+        b=kz+oOF/+tn5pmOaaB1XueJ/1V7zmOOsWrdq3aC/fpALQQniQ7evtwO3Heq/Mjvls/v
+         2A/5no6wq+ocd+bJJIWPH6NPYDqD0rWdniWJBjYRdNgBIuswWQo8/J7WB+KfUJ3F8dxD
+         4qzBSUgP06YGvDxUdJAIqEd3HJy/CCWnVTG/wXZkclGEkKdh2tCXhN09LH62nFAxRMZL
+         Nt+VMBH9TodmW8UqQXwfHla0Ppgn36iOAoyZTC5NofRXWkmwocs3+U/8PcIBnJ0vMxlL
+         7UACmocfgBEuGori321ufHRjL0vy0w8AciFMl0NfUgvXAlU2gx3nsW7QLtQmU/zmaWm5
+         CcPA==
+X-Gm-Message-State: AOJu0YxrXQ3p9RuIHUF7Rlbk3jxeqcUI0LGQZqFAx5UlbCcyfR3EU+yi
+	6UHE1WWtGY7MuU02EvDcsjcBMg2hXwPnvaa7Huk2vVwJXEBiMRrDhlOa1Z991pc=
+X-Google-Smtp-Source: AGHT+IGX4l9aTFwCHKggFIiy76YIi1Ok8DrhJuyxt3k/Eo8HbzkG8vJ1RfkPD3Mt7v//+e2YZTzpQA==
+X-Received: by 2002:a17:907:7255:b0:a8a:18f9:269f with SMTP id a640c23a62f3a-a902966f353mr261081266b.60.1726153919502;
+        Thu, 12 Sep 2024 08:11:59 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25a2844fsm761034366b.88.2024.09.12.08.11.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Sep 2024 08:11:59 -0700 (PDT)
+Message-ID: <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
+Date: Thu, 12 Sep 2024 16:11:58 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
+ todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
+ krzk+dt@kernel.org, conor+dt@kernel.org,
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+ <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
+ <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
+ <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Don't populate the const read-only arrays ratio_list and band_list on the
-stack at run time, instead make them static.
+On 12/09/2024 13:44, Vladimir Zapolskiy wrote:
+>> csiphy0
+>>
+>> vdda-phy-supply = <&vreg_l2c_0p9>;
+>> vdda-pll-supply = <&vreg_l1c_1p2>;
+>>
+>> This is also the case for csiphy 1/2/4
+>>
+>> So, I _don't_ believe this is work we need to do, since its the same
+>> regulator for each PHY.
+> 
+> This is board specific, and even if the separation is not needed on the 
+> boards
+> you have just checked, still it may be needed on some boards, which are 
+> not yet
+> checked/not yet known.
 
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
+There is a Power Grid Analysis document which specifies these rails @ 
+the SoC level and assumes you've used the Qcom PMIC to power, moreover 
+the PGA re-uses the same regulator over and over again.
+
+You _could_ provide that power from your own PMIC which provides the 
+same voltage range as the Qcom PMIC you haven't used. Even if you did 
+provide that from your own PMIC you'd have to provide _separate_ rails 
+for the various CSIPHYs before it would be required to have a per PHY 
+rail requirement on this SoC.
+
+Are people really powering these SoCs with their own PMICs ?
+No probably not.
+
+Should we add the support for it anyway ?
+Maybe.
+
+So to reiterate:
+
+1. csiphyX-vdda-phy-supply
+    csiphyX-vdda-pll-supply
+
+    In the dts and yaml
+
+    => The names should be generic from the perspective of the driver
+
+2. camss.c::csiphy_res_sm8550
+    [0].regulators = { "csiphy0-vdda-phy-supply",
+                       "csiphy0-vdda-pll-supply" }
+    ...
+
+    [N].regulators = { "csiphyN-vdda-phy-supply",
+                       "csiphyN-vdda-pll-supply" }
+
+    => The regulators for the PHY should be defined in the
+       PHY resources description
+
+3. Required not optional in the yaml
+
+    => You can't use the PHY without its regulators
+
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-index 0e3a2b16a2ce..3f8f73e31ddb 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_phy_8998.c
-@@ -166,9 +166,8 @@ static inline u64 pll_cmp_to_fdata(u32 pll_cmp, unsigned long ref_clk)
- #define HDMI_MHZ_TO_HZ ((u64)1000000)
- static int pll_get_post_div(struct hdmi_8998_post_divider *pd, u64 bclk)
- {
--	u32 const ratio_list[] = {1, 2, 3, 4, 5, 6,
--				     9, 10, 12, 15, 25};
--	u32 const band_list[] = {0, 1, 2, 3};
-+	static const u32 ratio_list[] = {1, 2, 3, 4, 5, 6, 9, 10, 12, 15, 25};
-+	static const u32 band_list[] = {0, 1, 2, 3};
- 	u32 const sz_ratio = ARRAY_SIZE(ratio_list);
- 	u32 const sz_band = ARRAY_SIZE(band_list);
- 	u32 const cmp_cnt = 1024;
--- 
-2.39.2
-
+bod
 
