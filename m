@@ -1,154 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-31591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D761976578
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 11:25:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B55429765CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 11:37:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FF481C23265
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 09:25:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E8CA1F24E7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Sep 2024 09:37:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD535192B68;
-	Thu, 12 Sep 2024 09:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 908AC19599C;
+	Thu, 12 Sep 2024 09:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="srPxKL99"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bN6QmF1A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27951990D2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 09:25:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B503E18BB9E;
+	Thu, 12 Sep 2024 09:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726133102; cv=none; b=rq/hCC5G36xtZDqvlk7UzG5NjaUL1ZuFhJe799sk6COaim2z3jucpNbNn13P+ndXV22XdOnn33GKjM+JAnKDZ4Oj0OiZYvwKNDfeswLbk+pmFMbVrgZLRBCIwNqoTici7LPo/Zawkn7RPF6t0EqZns0AJWEh4z7lV3RpiKuPjDo=
+	t=1726133815; cv=none; b=ULIi44ZQ5taQ5XNZLf8eRnsqK9ov99Z/oGR/tA0GnkzRkKH3vNQlqBcfJiushl/lZc3K057kJxuZ8NXh36vliGDIPi7Kee8V4gqsv0ur2nHIhqabvvkRfJkkdiy1DgMX0qQ1ngP73PuFmL/NQ9zYqFHUlduBMvSsldj6lGilWSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726133102; c=relaxed/simple;
-	bh=NAzMHzuJWM8nH3OXunx4yush9WV1uVfllcYFBLZn6gQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=DH3xpaktx3Y7ZvjUYj8eLV4P4/7NuYGDyzwQa2NFbo83SgeJufmVbCC+LNOGPGdIDMv/sXvsyIIqhjk0iNFQ1ZvixYhT48NOfTiYGsGI8XdN4Dbw3hwHoU+pXMfjNQ5hygNDgh+P5fnRqkuphVLJWQssuTYDKswCJ3FpVqVwESc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=srPxKL99; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-53658f30749so866497e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 02:25:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726133099; x=1726737899; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GpopKbBFXAHhWa9QLLG1ddO0QWw2hR2VGF0Wh9AlkY4=;
-        b=srPxKL99NJpdvs+IG9Ze5NonWfUPXT0NtaLN1X2sHusnKGmc2UviYSFi58BBrrrhHE
-         sG36jk/XWGRPe2za1e6XYfwqSCiyckSkmuJL4h7Tfx39l7z4aLS7+IEO6mWvUsRf9oiG
-         CCgRZhPN8iIzCZPk66aIFpBiWdrxNUcJvtkyko4E26cQyyhCNNKVrc8q1vGo/p58/754
-         It2m7bE6KDW0cN8RdGuc4lFo6OG3EYcBYgH2xmHkl9GS5uVImWpL2ARThYDsNFWTGleg
-         3ybSqCTFRUZRMVhw4U8nyhjqJ/m5CuQfW8BDvkmAtYBkFsLF0YKOD/Xe7Lj24s514wDr
-         +DDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726133099; x=1726737899;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GpopKbBFXAHhWa9QLLG1ddO0QWw2hR2VGF0Wh9AlkY4=;
-        b=d1to8QxgK3ZYtCCawQOJorvaK5JdkJEFUnRXl9ubNh6MtNSRQ9qUFk+r3XWFhG4+Um
-         qSbv45wScw9QfqlBTEkrfm75Rrn7FmUEiX0nyAfbX//vMyqMuwIkWiIy/e/jVVirfChl
-         DV4SbkalCSP0GL9JyAVcboIdaXXagJ1POKL83ZWE/Nf88LcoFFHzCaoMxLBIFlpECXIQ
-         tXviVbyBw/RDXlhVfGRKoznQLCw0KU8AWt96g0yNGUrUoHXHH/etV7smjd7MhuQS2Hut
-         jxnfUwNgdRvT/agw7M2GCsha3y5pfKFZfEsB6aYv/r1RtUiDjoLCh5uBLab95bUhAi/W
-         t3nA==
-X-Forwarded-Encrypted: i=1; AJvYcCUZn78f1EO9RD9JXkuqqHB5l1Ia55vHUtWDNxJeBcndeX8AaST/s5Rh6g4u4iUS2irS3agagomSWYtp8QWw@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXrPsPw7JOLuLDQnVRTg7Mmj5cSYoK0v962AGyBQhE6JDaVoC0
-	bl05v67cOtUSZzYeId0zNYmfi4bCBwhiG2X7jAanWf7wZYv3gJgF9W4CsxOtpdw=
-X-Google-Smtp-Source: AGHT+IG82jMyQ7wL5C8tk96NqAby3fRz9Y6tWyh4WnCQ6s7pnhi/1ZVHnnYOHdN50DZ+iFs8EdxxAQ==
-X-Received: by 2002:a05:6512:a87:b0:52c:d626:77aa with SMTP id 2adb3069b0e04-53678ff4d11mr1182482e87.58.1726133097994;
-        Thu, 12 Sep 2024 02:24:57 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f903bfasm1866919e87.206.2024.09.12.02.24.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Sep 2024 02:24:57 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>
-Cc: ath11k@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [RFC] Qualcomm RB3 Gen2 WiFi firmware pull
-Date: Thu, 12 Sep 2024 12:24:57 +0300
-Message-Id: <20240912092457.1887906-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
+	s=arc-20240116; t=1726133815; c=relaxed/simple;
+	bh=KDL+n7rCwG1RTUcVhoSb8MCzFMSQY2K4mQLbggQD9FY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=X6q8IDigpm5y4n+my6C6kZoy1hfHfcPIqYy/gMub0v74XcGYlgNkEA7RKBzGOBP0oBJ2HiGSiUhGaULSw4HDjI1ABedN8IATJ34uzbXnhtE4Be2cSpMbwBnSaFaNnFHOPulpfIWEwxxjWhYkJMDgE3NjBR2jElqAhRnC3/ApQC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bN6QmF1A; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48C2L9lf014104;
+	Thu, 12 Sep 2024 09:36:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ELMXg0a3PNL9x8cGliR9W3qoMFSOuRXZfpyNfKP19HA=; b=bN6QmF1AnqUGzlp6
+	iTxOPcXR/S4LUlCjtPk/+aP4ohUV0Lxt79CMTXhIShSJIRuOC9fVrOlZkJMyY/Li
+	h6oLsmWkpeNvn6xqBGByQtNr1/BRXpTNkc4g8+FuEjWChdQYE2A6gl8JSpubft0+
+	kn677eT9878MeAfXlFVeHKqXYWnMF7XgLcp7EGtD75Djs6thzJxT2wB19kv8z+UF
+	yfXGgwHdNqgfRG6s0AAIfOEKwEnCzp21bmCXeS+mRnto9zx2OgkpWFkPjmU5EDkP
+	jyewsUUfwuGy0hXKgtDn+ZYG/Uom8R0BNQX1+0USfB+jDIEVGZ5Ac712oVmEG/Rd
+	I+S3Zg==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy8p4qnf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Sep 2024 09:36:35 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48C9aYPD002170
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 12 Sep 2024 09:36:34 GMT
+Received: from [10.204.67.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 12 Sep
+ 2024 02:36:25 -0700
+Message-ID: <274c267f-f3d4-42cf-915e-44a7c76f2489@quicinc.com>
+Date: Thu, 12 Sep 2024 15:06:22 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] phy: qcom: edp: Introduce aux_cfg array for version
+ specific aux settings
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <konradybcio@kernel.org>,
+        <andersson@kernel.org>, <simona@ffwll.ch>, <abel.vesa@linaro.org>,
+        <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <maarten.lankhorst@linux.intel.com>,
+        <mripard@kernel.org>, <tzimmermann@suse.de>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <quic_khsieh@quicinc.com>,
+        <konrad.dybcio@linaro.org>, <quic_parellan@quicinc.com>,
+        <quic_bjorande@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <quic_riteshk@quicinc.com>,
+        <quic_vproddut@quicinc.com>
+References: <20240911100813.338-1-quic_mukhopad@quicinc.com>
+ <20240911100813.338-3-quic_mukhopad@quicinc.com>
+ <CAA8EJppLFWpf0QSmzAo5nqu=iMALyKzxEvy7sD5R0LDYSbA_7w@mail.gmail.com>
+From: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+In-Reply-To: <CAA8EJppLFWpf0QSmzAo5nqu=iMALyKzxEvy7sD5R0LDYSbA_7w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: O9nQmlSGNOHMwTHyVu8MYKBsq1JE8owZ
+X-Proofpoint-ORIG-GUID: O9nQmlSGNOHMwTHyVu8MYKBsq1JE8owZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ impostorscore=0 mlxscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ mlxlogscore=999 lowpriorityscore=0 adultscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409120067
 
-Hello,
 
-I'm planning to send the following pull request to linux-firmware, adding WiFi
-DSP firmware for the RB3 Gen2 board. However before doing that I wanted to
-check if it's fine with all affected maintainers.
+On 9/11/2024 4:04 PM, Dmitry Baryshkov wrote:
+> On Wed, 11 Sept 2024 at 13:08, Soutrik Mukhopadhyay
+> <quic_mukhopad@quicinc.com> wrote:
+>> In order to support different HW versions, introduce aux_cfg array
+>> to move v4 specific aux configuration settings.
+>>
+>> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+>> ---
+>>   drivers/phy/qualcomm/phy-qcom-edp.c | 34 +++++++++++++++++------------
+>>   1 file changed, 20 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+>> index da2b32fb5b45..0f860a807d1b 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+>> @@ -90,6 +90,7 @@ struct phy_ver_ops {
+>>
+>>   struct qcom_edp_phy_cfg {
+>>          bool is_edp;
+>> +       u8 *aux_cfg;
+>>          const struct qcom_edp_swing_pre_emph_cfg *swing_pre_emph_cfg;
+>>          const struct phy_ver_ops *ver_ops;
+>>   };
+>> @@ -186,11 +187,14 @@ static const struct qcom_edp_swing_pre_emph_cfg edp_phy_swing_pre_emph_cfg = {
+>>          .pre_emphasis_hbr3_hbr2 = &edp_pre_emp_hbr2_hbr3,
+>>   };
+>>
+>> +static u8 edp_phy_aux_cfg_v4[10] = {
+> static const u8, please.
 
-Qualcomm RB3 Gen2 board resets if it's used with the existing WCN6750 firmware,
-most likely because of the differences in the TZ setup. This pull request adds
-firmware specific to the qcm6490 / qcs6490 SoC family.
+
+Sure, we will change this to "static const u8" in next version patch.
 
 
-@Kalle, I understand that you cannot and won't fully support this firmware set.
-As a preparation to adding these files I moved existing files to the sc7280/
-subdir and pil-squashed them.  It is a generic preference to use a single MBN
-file instead of MDT + Bnn files. The mdt_loader detects the format without
-using the extension, handles the differences internally and doesn't require any
-changes to the driver or to the DT.  Could you please ack such a change?
+>
+>
+>> +       0x00, 0x13, 0x24, 0x00, 0x0a, 0x26, 0x0a, 0x03, 0x37, 0x03
+>> +};
+>> +
+>>   static int qcom_edp_phy_init(struct phy *phy)
+>>   {
+>>          struct qcom_edp *edp = phy_get_drvdata(phy);
+>>          int ret;
+>> -       u8 cfg8;
+>>
+>>          ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
+>>          if (ret)
+>> @@ -222,22 +226,20 @@ static int qcom_edp_phy_init(struct phy *phy)
+>>           * even needed.
+>>           */
+>>          if (edp->cfg->swing_pre_emph_cfg && !edp->is_edp)
+>> -               cfg8 = 0xb7;
+>> -       else
+>> -               cfg8 = 0x37;
+>> +               edp->cfg->aux_cfg[8] = 0xb7;
+>>
+>>          writel(0xfc, edp->edp + DP_PHY_MODE);
+>>
+>> -       writel(0x00, edp->edp + DP_PHY_AUX_CFG0);
+>> -       writel(0x13, edp->edp + DP_PHY_AUX_CFG1);
+>> -       writel(0x24, edp->edp + DP_PHY_AUX_CFG2);
+>> -       writel(0x00, edp->edp + DP_PHY_AUX_CFG3);
+>> -       writel(0x0a, edp->edp + DP_PHY_AUX_CFG4);
+>> -       writel(0x26, edp->edp + DP_PHY_AUX_CFG5);
+>> -       writel(0x0a, edp->edp + DP_PHY_AUX_CFG6);
+>> -       writel(0x03, edp->edp + DP_PHY_AUX_CFG7);
+>> -       writel(cfg8, edp->edp + DP_PHY_AUX_CFG8);
+>> -       writel(0x03, edp->edp + DP_PHY_AUX_CFG9);
+>> +       writel(edp->cfg->aux_cfg[0], edp->edp + DP_PHY_AUX_CFG0);
+>> +       writel(edp->cfg->aux_cfg[1], edp->edp + DP_PHY_AUX_CFG1);
+>> +       writel(edp->cfg->aux_cfg[2], edp->edp + DP_PHY_AUX_CFG2);
+>> +       writel(edp->cfg->aux_cfg[3], edp->edp + DP_PHY_AUX_CFG3);
+>> +       writel(edp->cfg->aux_cfg[4], edp->edp + DP_PHY_AUX_CFG4);
+>> +       writel(edp->cfg->aux_cfg[5], edp->edp + DP_PHY_AUX_CFG5);
+>> +       writel(edp->cfg->aux_cfg[6], edp->edp + DP_PHY_AUX_CFG6);
+>> +       writel(edp->cfg->aux_cfg[7], edp->edp + DP_PHY_AUX_CFG7);
+>> +       writel(edp->cfg->aux_cfg[8], edp->edp + DP_PHY_AUX_CFG8);
+>> +       writel(edp->cfg->aux_cfg[9], edp->edp + DP_PHY_AUX_CFG9);
+>>
+>>          writel(PHY_AUX_STOP_ERR_MASK | PHY_AUX_DEC_ERR_MASK |
+>>                 PHY_AUX_SYNC_ERR_MASK | PHY_AUX_ALIGN_ERR_MASK |
+>> @@ -519,16 +521,19 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v4 = {
+>>   };
+>>
+>>   static const struct qcom_edp_phy_cfg sc7280_dp_phy_cfg = {
+>> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>>          .ver_ops = &qcom_edp_phy_ops_v4,
+>>   };
+>>
+>>   static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
+>> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>>          .swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
+>>          .ver_ops = &qcom_edp_phy_ops_v4,
+>>   };
+>>
+>>   static const struct qcom_edp_phy_cfg sc8280xp_edp_phy_cfg = {
+>>          .is_edp = true,
+>> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>>          .swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg,
+>>          .ver_ops = &qcom_edp_phy_ops_v4,
+>>   };
+>> @@ -707,6 +712,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
+>>   };
+>>
+>>   static struct qcom_edp_phy_cfg x1e80100_phy_cfg = {
+>> +       .aux_cfg = edp_phy_aux_cfg_v4,
+> Is this correct? Judging by ver_ops, X Elite uses v6 of the PHY, so
+> maybe it should also use v5 AUX tables?
 
 
-@Bjorn, @Konrad in the past we have pushed all WPSS / WiFi firmware to ath10k
-and ath11k even if gets executed on the host.  I should have caught this while
-reviewing DT changes.  This branch uses firmware name that isn't compatible
-with the existing DT files.  Would you insist on adding compatibility symlink
-or we'd better fix the DT files?
+As per the current implementation, v6 uses v4 aux configuration, so we 
+updated it to v4.
 
----
 
-The following changes since commit 4a0367b33aeaa7fe1255a920d0e39f825b6985c1:
-
-  Merge branch 'rtl8852b' into 'main' (2024-09-11 11:00:41 +0000)
-
-are available in the Git repository at:
-
-  https://gitlab.com/lumag/linux-firmware rb3gen2-wpss
-
-for you to fetch changes up to fb8c67987c89b6f33fb787dfc6ff6e5e0f317f6d:
-
-  ath11k: add device-specific firmware for QCM6490 boards (2024-09-12 11:58:57 +0300)
-
-----------------------------------------------------------------
-Dmitry Baryshkov (2):
-      ath11k: move WCN6750 firmware to the device-specific subdir
-      ath11k: add device-specific firmware for QCM6490 boards
-
- WHENCE                                             |  18 ++++++++----------
- ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn              | Bin 0 -> 7734064 bytes
- ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} | Bin 5819999 -> 7463728 bytes
- ath11k/WCN6750/hw1.0/wpss.b00                      | Bin 340 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b01                      | Bin 6848 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b02                      | Bin 10300 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b03                      | Bin 4096 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b05                      | Bin 164332 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b06                      | Bin 266684 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b07                      | Bin 1176368 -> 0 bytes
- ath11k/WCN6750/hw1.0/wpss.b08                      |   0
- ath11k/WCN6750/hw1.0/wpss.mdt                      | Bin 7188 -> 0 bytes
- 12 files changed, 8 insertions(+), 10 deletions(-)
- create mode 100644 ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn
- rename ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} (77%)
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b00
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b01
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b02
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b03
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b05
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b06
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b07
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b08
- delete mode 100644 ath11k/WCN6750/hw1.0/wpss.mdt
+>
+>>          .swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
+>>          .ver_ops = &qcom_edp_phy_ops_v6,
+>>   };
+>> --
+>> 2.17.1
+>>
+>
+> --
+> With best wishes
+> Dmitry
 
