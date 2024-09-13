@@ -1,145 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-31764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60B119785BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 18:28:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E77E9785EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 18:37:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71A891C22CA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 16:28:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E3DAF28B447
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 16:37:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96E517406F;
-	Fri, 13 Sep 2024 16:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18308770E1;
+	Fri, 13 Sep 2024 16:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="AGr7V/92"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZqrOfTdQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED74C53373
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 16:28:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36D547A6A;
+	Fri, 13 Sep 2024 16:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726244888; cv=none; b=YVyHjU+qoGsDwtdMs31gbizmFyc3x3hsHVhCp5QrsTdbElGHtnGR+aXAVPuUuyy2em8PJoDhLmZHIND/upWwuzXjSOtvK24aj/SMlLXzQ9T2tebi8CxBUGuj/Sgk+bjpRD0RO+SiWA6Zao4L2iiIP1sy0opVD0E7SPJndFKFna0=
+	t=1726245462; cv=none; b=VJaPwm95Z/wtKlKGJWyDWOe7uKL9hIwOf/g0qOb68NyTG2Xqq9gcIE8dMq+mQNDHYy/s44IlSGrfZA/5HQdaapWeSc3LzNHNXUXDli0YyLyLKWbKcjbUibCOpaAteHQyU4Z3R0F5rikfo5gDBKmchWbj4JL8E5+PbUWPYn02nZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726244888; c=relaxed/simple;
-	bh=l6fQQfIJrCnieXnJtgF3yWwkk1JOKa/ssQuU9USSh54=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tCPTA8AfAi9stgnNzvuDb1SHipfMeKqub4b6wNIjH0b8lj20Vujvc7Uf7f3P7PZAF3WnSn7Lmcj8ifyoV+t+H18pz1whFNMp4iThRXHpXIGObBaHlJ3Tmdk7BktbRKbBFhi4TTp/L90pTOu/mwKeKEn1X5goW4QLlwRxJ2RY3zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=AGr7V/92; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-846bcb525f7so629375241.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 09:28:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1726244884; x=1726849684; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MySfAV1H+y1ji7wrdPmDhE9q7agfjXhZS+w1J3QnDfE=;
-        b=AGr7V/92Ccvh2ei+H3/gjhiw71ZoSCNCUhMriUQ4BlAbHantF65uBfx7vg+eEefmXE
-         Cs+qy4mjox/EiuRlPGTc6loAydW4F1JELiQ3+Ia2E4XTf5jvNP14CmOCyMcg8Zd7X+n1
-         kUdYnMPHcw2XrkeK7lkMvA0aHpAemdplbGITY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726244884; x=1726849684;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MySfAV1H+y1ji7wrdPmDhE9q7agfjXhZS+w1J3QnDfE=;
-        b=hZ1LoAIicfPYuDM0JmLbCy549sV8SpzHClMGA9KbWBd4GbvizlQqciITJdHsX55iwt
-         WPEX2LnTf7rXNfsU7DEWoT6UH3sysvSOgS2JTYrkh9ZUSx29j0DVJsXhF1UG66vXhQJC
-         tG/T1n9e+7HLpEMwpB2Wv4/GqYjN3pK7JhqFiwmJhdwkmWOMZRzLolAtmaR6nE8ThQAz
-         7jtuFoBfuIU+PDxT3SMaS1obN71Aa8w5xuSoIbZCy87yE1D0yoyeyMxT3EN4MtfUCFOj
-         EbWThoyf2zH6TbIqah8G/218meMagTygSre/XanTsSAsbkBuiMZyMT8/OOZRpGLFoXbO
-         Q2yw==
-X-Forwarded-Encrypted: i=1; AJvYcCX9Q/ES3Rbwqg4d8+ptxRiNA8wOo00Oey5g/hRahraEkHE+Cw8SyywRzN6OeSrBRhRkCpiO/Cu4H1Bry4rD@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIlYKCwyJhAHRw+YvakM2S12UVu6dzmX/yRNEyRfL77I6uW7lZ
-	d/9WnOto15QOkXaoiOcDhm7v/QhN4vuM03GUY26G+uKX5yLyBji2f7nMLhi70WFQd5AW562z7lY
-	=
-X-Google-Smtp-Source: AGHT+IFludznHx5rFRMx/9L328gNVDvNJYMoe/LH9baSBdH9qMGhy/Ff1uVxd8dl4XTxSsx5/EgS/Q==
-X-Received: by 2002:a05:6102:a51:b0:498:ccd9:5b1e with SMTP id ada2fe7eead31-49d4145a617mr6027260137.4.1726244884397;
-        Fri, 13 Sep 2024 09:28:04 -0700 (PDT)
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com. [209.85.160.179])
-        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-49c16d93a87sm1228392137.22.2024.09.13.09.28.03
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Sep 2024 09:28:03 -0700 (PDT)
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4584a719ff5so17326541cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 09:28:03 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVWbUjcsp/t5FZXaiw+cuuzn2UPVk9TXsv1+6fFnxiHarcNaWcyrm1o0jjbac6ehxEBzrWB/FSwNMworQpP@vger.kernel.org
-X-Received: by 2002:a05:6214:3a86:b0:6c5:297c:da5f with SMTP id
- 6a1803df08f44-6c573570b58mr118095856d6.33.1726244882965; Fri, 13 Sep 2024
- 09:28:02 -0700 (PDT)
+	s=arc-20240116; t=1726245462; c=relaxed/simple;
+	bh=701SKl8cKJX2QC6nh6wDA1oWgBjgHiBpfvUmT7+8aEQ=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=eM6PGla6IJZjcC5xZx88YPhvyF3h5x8hsvT4Z6OnOHRWR9jxGY13X1R4KjI4ilJ4mooUJ8tYBC4OP5iFg0xm8E/sXhdfQmaabPD0DfE6qJszTETWxbcqQ+Qxp3sQJ2XuTH6bL0jOB/NbpyzLv6qJVX28876tT/fpbTWjAMg39NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZqrOfTdQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24EAAC4CEC0;
+	Fri, 13 Sep 2024 16:37:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726245461;
+	bh=701SKl8cKJX2QC6nh6wDA1oWgBjgHiBpfvUmT7+8aEQ=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=ZqrOfTdQNo9lA9khn2Kr1Jf8aIrBNNC7IhR/iy+eNgoAsZ69LHszScZBNZmHNCXQv
+	 CH1Uh6F3I07jCia9cqlaAwMfgc1MQCB6jp9u6fe0ccaGXGtq8TDWZyOkh97LaH2jc/
+	 tVHFohoHDKTmAY1xtY203INchHagPRVG9PU6L6k/9Mpa+VoGzjcCxCnut5SSRsjzEJ
+	 wex2vhiCSqmpO/TWg2qD3kG9DdtPn4AB+ml7gVumDjmxkA8MHgzGVVfqFvBpaKkNgL
+	 xHUTLPK+uJlA99ZzDwo6GkhjIXujy7BD30LROF+nfOATSU/sVulh/aIYdpEouVJmyk
+	 kk8JFL6bxlYgA==
+Date: Fri, 13 Sep 2024 11:37:40 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240909132810.1296786-1-ruanjinjie@huawei.com>
- <20240909132810.1296786-4-ruanjinjie@huawei.com> <CAD=FV=XQ7uf_Y_WTv_6-DX1Mo=+RycKSyxf=E-f3TOKiuE5RMA@mail.gmail.com>
- <c662f0b9-31dc-8b97-ef3f-ea33f9fc62af@huawei.com> <CAD=FV=U+kc1rKSDDo-Zx+CiuapoJ8izrCW0Wh-PfR7ivY_4bXw@mail.gmail.com>
- <10e77c5a-a188-698b-0c82-86c4bcdf114d@huawei.com>
-In-Reply-To: <10e77c5a-a188-698b-0c82-86c4bcdf114d@huawei.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 13 Sep 2024 09:27:51 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XGKph6t9S-r9-D+LkYcGNgRbEAC-qc4OQZjZXmxrjozw@mail.gmail.com>
-Message-ID: <CAD=FV=XGKph6t9S-r9-D+LkYcGNgRbEAC-qc4OQZjZXmxrjozw@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] spi: geni-qcom: Use devm functions to simplify code
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: broonie@kernel.org, akashast@codeaurora.org, vkoul@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, linux-kernel@vger.kernel.org, 
+ Simona Vetter <simona.vetter@ffwll.ch>, 
+ Chanwoo Choi <cw00.choi@samsung.com>, Mark Brown <broonie@kernel.org>, 
+ linux-samsung-soc@vger.kernel.org, 
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ dri-devel@lists.freedesktop.org, Lee Jones <lee@kernel.org>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-pm@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, Pavel Machek <pavel@ucw.cz>, 
+ Michael Turquette <mturquette@baylibre.com>, linux-pwm@vger.kernel.org, 
+ Sebastian Reichel <sre@kernel.org>, devicetree@vger.kernel.org, 
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ David Airlie <airlied@gmail.com>, 
+ =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, linux-input@vger.kernel.org, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ cros-qcom-dts-watchers@chromium.org, linux-leds@vger.kernel.org, 
+ Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-clk@vger.kernel.org, Simona Vetter <simona@ffwll.ch>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Maxime Ripard <mripard@kernel.org>
+In-Reply-To: <20240913-starqltechn_integration_upstream-v4-5-2d2efd5c5877@gmail.com>
+References: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
+ <20240913-starqltechn_integration_upstream-v4-5-2d2efd5c5877@gmail.com>
+Message-Id: <172624546028.155976.17920164099975885299.robh@kernel.org>
+Subject: Re: [PATCH v4 05/27] dt-bindings: mfd: add maxim,max77705
 
-Hi,
 
-On Thu, Sep 12, 2024 at 11:44=E2=80=AFPM Jinjie Ruan <ruanjinjie@huawei.com=
-> wrote:
->
-> On 2024/9/12 21:38, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Wed, Sep 11, 2024 at 8:53=E2=80=AFPM Jinjie Ruan <ruanjinjie@huawei.=
-com> wrote:
-> >>
-> >>>> @@ -1132,6 +1134,12 @@ static int spi_geni_probe(struct platform_dev=
-ice *pdev)
-> >>>>         if (ret)
-> >>>>                 return ret;
-> >>>>
-> >>>> +       ret =3D devm_add_action_or_reset(dev, spi_geni_release_dma_c=
-han, mas);
-> >>>> +       if (ret) {
-> >>>> +               dev_err(dev, "Unable to add action.\n");
-> >>>> +               return ret;
-> >>>> +       }
-> >>>
-> >>> Use dev_err_probe() to simplify.
-> >>>
-> >>> ret =3D devm_add_action_or_reset(dev, spi_geni_release_dma_chan, mas)=
-;
-> >>> if (ret)
-> >>>   return dev_err_probe(dev, ret, "Unable to add action.\n");
-> >>
-> >> It seems that if it only return -ENOMEM or 0, using dev_err_probe() ha=
-s
-> >> not not much value for many community maintainers.
-> >
-> > While I won't insist, it still has some value to use dev_err_probe()
-> > as I talked about in commit 7065f92255bb ("driver core: Clarify that
-> > dev_err_probe() is OK even w/out -EPROBE_DEFER")
-> The main difference is that when use dev_err_probe()=EF=BC=8Cthere will p=
-rint
-> anything on -ENOMEM now.
+On Fri, 13 Sep 2024 18:07:48 +0300, Dzmitry Sankouski wrote:
+> Add maxim,max77705 core binding part.
+> 
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> 
+> ---
+> Changes in v4:
+> - change dts example intendation from tabs
+>  to spaces
+> - remove interrupt-names property
+> - remove obvious reg description
+> - split long(>80) lines
+> ---
+>  .../devicetree/bindings/mfd/maxim,max77705.yaml    | 169 +++++++++++++++++++++
+>  MAINTAINERS                                        |   1 +
+>  2 files changed, 170 insertions(+)
+> 
 
-Oh, I see. You're saying that we should just get rid of the print
-altogether because the only error case is -ENOMEM and the kernel
-already splats there? Yeah, that sounds right to me. That doesn't
-match what you did in v5, though...
+My bot found errors running 'make dt_binding_check' on your patch:
 
--Doug
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/mfd/maxim,max77705.example.dtb: pmic@66: fuel_gauge: 'shunt-resistor-micro-ohms' is a required property
+	from schema $id: http://devicetree.org/schemas/mfd/maxim,max77705.yaml#
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20240913-starqltechn_integration_upstream-v4-5-2d2efd5c5877@gmail.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
 
