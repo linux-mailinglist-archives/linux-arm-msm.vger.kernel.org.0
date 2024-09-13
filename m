@@ -1,144 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-31695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAAF4977DC3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 12:38:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5158977EB3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 13:43:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 953911F220F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 10:38:48 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 28B22B25A07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 11:43:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 668B114A4FB;
-	Fri, 13 Sep 2024 10:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E21D31D86E9;
+	Fri, 13 Sep 2024 11:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ePFJ3k54"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gvyT8Q1M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A5180B;
-	Fri, 13 Sep 2024 10:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3012F1BA872
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 11:43:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726223913; cv=none; b=lxia+Olf9TGppcRtIRpEMyDzzrpDt2sB1ijOSB3bz2R+/xZ86d1Ae52UemkUgzKp+ooEIumx9H5yRW67wH7Ijyj5Uku1PVuWyHhook708IrrGyJhEGysASUTQ+yqI0SSkyPd9bvFULlDDzUkJ7RQwJdz20EFL4WDH6WBElaocIQ=
+	t=1726227790; cv=none; b=OnAuuaRWOdGG8hRwbk/HIldak3KcZKNYMlonPr/sFKktWip+yG4mqozhMmSIXYxSPc8QkjpqWVMcV3jWkBtYIMkOebUiw7CPMrE/zXUmH1iWAVW3uWtVthN5gntfEVzBkRuMq/h+8n4ZkU/gbroF5WifdRWNZwpSB++k4awAae0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726223913; c=relaxed/simple;
-	bh=ya+b6fWnoTCmKfP2fqVdrp8rUcJ1yQK7X2vYgTHDZ9c=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=VNM0ouEgbu3MKF0XijwaGds/St9ElTcAzRAKSWDYdl2Fvk5l01/FsOEl6oIwoPVA6QOtO0+camHjLE7lxsH7ryjtCi7/etjYQZpxPHEznYQ1N9f4Ol8Mo6fkDjx7Smk5bOcRYVboWShMEDufRra2kS5ldn3y2ds54FzoUv3zZfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ePFJ3k54; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48D9r2Ni018682;
-	Fri, 13 Sep 2024 10:38:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:in-reply-to:message-id:references:subject:to; s=
-	qcppdkim1; bh=/fcHkwmMXZSLWlNP8JeKtPUuEq/EBZikUQLcSNCnoVU=; b=eP
-	FJ3k54s9eFhGKzTeI1yo72eqgw7N5kYlHtDunEuaxo6FLCJUUWGzWVdNcOtgxRVS
-	l2juXT6XMdEceddIiMdYZ/NPrIFGCupzxTD/3I7kXY+4wWLEiPYy2MgFUzdftq3b
-	2FDp65rlk4RoiAud3q5ej5uFt8CGu7xDSlC8wpZfOgBSsZ7cbWVPEcRBWsxdQQGM
-	3QPZSIzE4IrB1ajVmF2qrXMNz+yTj6aPhm0tsyvIaSrhx03DbHeon0e0dpdNUU9i
-	msHwUZoxLgGdhhwupTdALglfxI/HouEhby3ewsxpi247GCLI95PTuukg/0QxffFA
-	4uywvWw/bv0gL7sTkytQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41j6gn4q2f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 13 Sep 2024 10:38:07 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48DAc4Ma032498;
-	Fri, 13 Sep 2024 10:38:04 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 41h1698ff0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Fri, 13 Sep 2024 10:38:04 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48DAc3n4032483;
-	Fri, 13 Sep 2024 10:38:03 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-mukhopad-hyd.qualcomm.com [10.147.244.250])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 48DAc3t5032468;
-	Fri, 13 Sep 2024 10:38:03 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 3978529)
-	id 974905001BA; Fri, 13 Sep 2024 16:08:01 +0530 (+0530)
-From: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org,
-        andersson@kernel.org, simona@ffwll.ch, dmitry.baryshkov@linaro.org,
-        abel.vesa@linaro.org, robdclark@gmail.com, quic_abhinavk@quicinc.com,
-        sean@poorly.run, marijn.suijten@somainline.org, airlied@gmail.com,
-        daniel@ffwll.ch, maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, quic_khsieh@quicinc.com, konrad.dybcio@linaro.org,
-        quic_parellan@quicinc.com, quic_bjorande@quicinc.com
-Cc: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        quic_riteshk@quicinc.com, quic_vproddut@quicinc.com
-Subject: [PATCH v2 5/5] drm/msm/dp: Add DisplayPort controller for SA8775P
-Date: Fri, 13 Sep 2024 16:07:55 +0530
-Message-Id: <20240913103755.7290-6-quic_mukhopad@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20240913103755.7290-1-quic_mukhopad@quicinc.com>
-References: <20240913103755.7290-1-quic_mukhopad@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jq4-TmNTIQfYgO9JrvZG5o3h0sTq3sCs
-X-Proofpoint-GUID: jq4-TmNTIQfYgO9JrvZG5o3h0sTq3sCs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- clxscore=1015 phishscore=0 mlxlogscore=999 lowpriorityscore=0
- suspectscore=0 mlxscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409130073
+	s=arc-20240116; t=1726227790; c=relaxed/simple;
+	bh=97YoPWO30aOmzmIGDrW8k0PQ1PFGfCeF0Ju6v6syArU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NBfX3YeBW+YcQhTORHsKG8F7BqOOGXMn8J0pHARc1iygjRouVZiQqHWsO5aQhoWDYu4jDJwvKekso/CG0gAmMIjWnFH9OsKNWSjnOGIMHRxB7ERyutMTEPBdZd3gB6YyyflfZO2KK2UCRACw9JRYyyRp7cHYWGuzwJhIam8U9u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gvyT8Q1M; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6b47ff8a59aso6830037b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 04:43:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726227788; x=1726832588; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9UwhSpacqWbNrpzy9OkkjEtHbhA7k4WWF7GmkMMBnJM=;
+        b=gvyT8Q1MRV0KSAr1VAax5qpoJqKqtPzYNR7N8Lz65ABFbWCZkapCibKjWeVQPk7CDL
+         j4Q2j5zdEow7qKBwFdEksxcgcHHt4IuPUIoV8UwC5GNGdHiYISPlpJuwcCaFN+h0ELuf
+         B8cPowTmtw5vSFPrBfU429sh+zIlDV4ujLsJzzJJf6DL0fwnQz/QnIK1QVJSs7mYdMjD
+         zGp4/R5NVxHT+C/CEhPbYm07SDqvBCdk/HHPpJJrt5g+Yl9PKpwAXl76ts7KTnbL35nD
+         +/PpT75zbrhxOEsB6/QdQTlwPFBB1tI0BHlPgsAQsqdVUQkywm+4wajr0BDT6VscowhU
+         BMow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726227788; x=1726832588;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9UwhSpacqWbNrpzy9OkkjEtHbhA7k4WWF7GmkMMBnJM=;
+        b=D00HcNS4LuYA5ar+FbE+xj6P5IW5S6o/lEdDHJh4loMK4uySRI1ds50oFOHfQiVBL2
+         Ox0JNIzOMHoIrKJI0oXdaWj7EeHVq1Aw64/c3KqPgvzSLOOy2+Sbk+at52UjpKxLeXix
+         Xs9HCnf5u2oc6/tNf03tcMqk/te8h2KCZAZDJDJqoNSkt6Hk/C5GD6emg9OlVe9mYpmf
+         qrlDdf4yDnUaxAN5KesuZFH36fQvtZOTlwn5v5SdvOVdDs8G5GNLn9UYaSxNo/Jtyb0g
+         4VD5l1XW7BocM+P3P6e/bFk7RyfzEy6BY2MI4qZ3mbLEnFeiOzcw+WpOOuAZE7FdquFR
+         PG9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUjR3kNeWT1hq5Tr8wrelPdJy09iTGDQx7xLWCXsHS7eJA2qNwKJ2uMH0flROI6jBHldxw29xrR9DIJKakK@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz9ehtad/xKjOljTGzqcDZN2VYoMheKnLoayFo14F+J0QO0l6gO
+	Vmo3ViY86D1vIEPoeISBxUEN8MWzX3j6sOWIftaZ4V2SdgfiOS40FFr2I9aHhOHymbGHBLcz57U
+	45RiMqk+DJFCId60QoC8Rf7kMKoBbPI5Hwihjgg==
+X-Google-Smtp-Source: AGHT+IE1TLnxU5IuXLszG0sh4Cmeh/NG3k6A0NeL7GYbVv4i0eJleu/njbaWM0plHlg4dpg3DlaBntAGY4GvPCDnoFM=
+X-Received: by 2002:a05:690c:ec9:b0:632:5b24:c0c with SMTP id
+ 00721157ae682-6dbcc23000fmr21070177b3.5.1726227787870; Fri, 13 Sep 2024
+ 04:43:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+References: <20240913103755.7290-1-quic_mukhopad@quicinc.com> <20240913103755.7290-3-quic_mukhopad@quicinc.com>
+In-Reply-To: <20240913103755.7290-3-quic_mukhopad@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 13 Sep 2024 14:42:56 +0300
+Message-ID: <CAA8EJppddLmzJ9WSkLLr-nwM-qe647Sm6jV8SpHdB=0vRQT-=Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/5] phy: qcom: edp: Introduce aux_cfg array for
+ version specific aux settings
+To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org, 
+	andersson@kernel.org, simona@ffwll.ch, abel.vesa@linaro.org, 
+	robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
+	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	quic_khsieh@quicinc.com, konrad.dybcio@linaro.org, quic_parellan@quicinc.com, 
+	quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, quic_riteshk@quicinc.com, 
+	quic_vproddut@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-The Qualcomm SA8775P platform comes with a DisplayPort controller
-with a different base offset than the previous SoCs,
-add support for this in the DisplayPort driver.
+On Fri, 13 Sept 2024 at 13:38, Soutrik Mukhopadhyay
+<quic_mukhopad@quicinc.com> wrote:
+>
+> In order to support different HW versions, introduce aux_cfg array
+> to move v4 specific aux configuration settings.
+>
+> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+> ---
+> v2: Fixed review comments from Bjorn and Dmitry
+>         - Made aux_cfg array as const.
+>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-edp.c | 37 ++++++++++++++++++-----------
+>  1 file changed, 23 insertions(+), 14 deletions(-)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+> index da2b32fb5b45..bcd5aced9e06 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+> @@ -90,6 +90,7 @@ struct phy_ver_ops {
+>
+>  struct qcom_edp_phy_cfg {
+>         bool is_edp;
+> +       const u8 *aux_cfg;
+>         const struct qcom_edp_swing_pre_emph_cfg *swing_pre_emph_cfg;
+>         const struct phy_ver_ops *ver_ops;
+>  };
+> @@ -186,11 +187,15 @@ static const struct qcom_edp_swing_pre_emph_cfg edp_phy_swing_pre_emph_cfg = {
+>         .pre_emphasis_hbr3_hbr2 = &edp_pre_emp_hbr2_hbr3,
+>  };
+>
+> +static const u8 edp_phy_aux_cfg_v4[10] = {
+> +       0x00, 0x13, 0x24, 0x00, 0x0a, 0x26, 0x0a, 0x03, 0x37, 0x03
+> +};
+> +
+>  static int qcom_edp_phy_init(struct phy *phy)
+>  {
+>         struct qcom_edp *edp = phy_get_drvdata(phy);
+> +       u8 aux_cfg[10];
 
-Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
----
-v2: No change
+Please define 10, so that there are no magic numbers (and less chance
+of damaging the stack if it gets changed in one place only.
 
----
- drivers/gpu/drm/msm/dp/dp_display.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+>         int ret;
+> -       u8 cfg8;
+>
+>         ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
+>         if (ret)
+> @@ -200,6 +205,8 @@ static int qcom_edp_phy_init(struct phy *phy)
+>         if (ret)
+>                 goto out_disable_supplies;
+>
+> +       memcpy(aux_cfg, edp->cfg->aux_cfg, sizeof(aux_cfg));
+> +
+>         writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
+>                DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
+>                edp->edp + DP_PHY_PD_CTL);
+> @@ -222,22 +229,20 @@ static int qcom_edp_phy_init(struct phy *phy)
+>          * even needed.
+>          */
+>         if (edp->cfg->swing_pre_emph_cfg && !edp->is_edp)
+> -               cfg8 = 0xb7;
+> -       else
+> -               cfg8 = 0x37;
+> +               aux_cfg[8] = 0xb7;
+>
+>         writel(0xfc, edp->edp + DP_PHY_MODE);
+>
+> -       writel(0x00, edp->edp + DP_PHY_AUX_CFG0);
+> -       writel(0x13, edp->edp + DP_PHY_AUX_CFG1);
+> -       writel(0x24, edp->edp + DP_PHY_AUX_CFG2);
+> -       writel(0x00, edp->edp + DP_PHY_AUX_CFG3);
+> -       writel(0x0a, edp->edp + DP_PHY_AUX_CFG4);
+> -       writel(0x26, edp->edp + DP_PHY_AUX_CFG5);
+> -       writel(0x0a, edp->edp + DP_PHY_AUX_CFG6);
+> -       writel(0x03, edp->edp + DP_PHY_AUX_CFG7);
+> -       writel(cfg8, edp->edp + DP_PHY_AUX_CFG8);
+> -       writel(0x03, edp->edp + DP_PHY_AUX_CFG9);
+> +       writel(aux_cfg[0], edp->edp + DP_PHY_AUX_CFG0);
+> +       writel(aux_cfg[1], edp->edp + DP_PHY_AUX_CFG1);
+> +       writel(aux_cfg[2], edp->edp + DP_PHY_AUX_CFG2);
+> +       writel(aux_cfg[3], edp->edp + DP_PHY_AUX_CFG3);
+> +       writel(aux_cfg[4], edp->edp + DP_PHY_AUX_CFG4);
+> +       writel(aux_cfg[5], edp->edp + DP_PHY_AUX_CFG5);
+> +       writel(aux_cfg[6], edp->edp + DP_PHY_AUX_CFG6);
+> +       writel(aux_cfg[7], edp->edp + DP_PHY_AUX_CFG7);
+> +       writel(aux_cfg[8], edp->edp + DP_PHY_AUX_CFG8);
+> +       writel(aux_cfg[9], edp->edp + DP_PHY_AUX_CFG9);
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index e1228fb093ee..e4954fd99eb0 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -118,6 +118,12 @@ struct msm_dp_desc {
- 	bool wide_bus_supported;
- };
- 
-+static const struct msm_dp_desc sa8775p_dp_descs[] = {
-+	{ .io_start = 0xaf54000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
-+	{ .io_start = 0xaf5c000, .id = MSM_DP_CONTROLLER_1, .wide_bus_supported = true },
-+	{}
-+};
-+
- static const struct msm_dp_desc sc7180_dp_descs[] = {
- 	{ .io_start = 0x0ae90000, .id = MSM_DP_CONTROLLER_0, .wide_bus_supported = true },
- 	{}
-@@ -162,6 +168,7 @@ static const struct msm_dp_desc x1e80100_dp_descs[] = {
- };
- 
- static const struct of_device_id dp_dt_match[] = {
-+	{ .compatible = "qcom,sa8775p-dp", .data = &sa8775p_dp_descs },
- 	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_descs },
- 	{ .compatible = "qcom,sc7280-dp", .data = &sc7280_dp_descs },
- 	{ .compatible = "qcom,sc7280-edp", .data = &sc7280_dp_descs },
+Replace this with a loop?
+
+>
+>         writel(PHY_AUX_STOP_ERR_MASK | PHY_AUX_DEC_ERR_MASK |
+>                PHY_AUX_SYNC_ERR_MASK | PHY_AUX_ALIGN_ERR_MASK |
+> @@ -519,16 +524,19 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v4 = {
+>  };
+>
+>  static const struct qcom_edp_phy_cfg sc7280_dp_phy_cfg = {
+> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>         .ver_ops = &qcom_edp_phy_ops_v4,
+>  };
+>
+>  static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
+> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>         .swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
+>         .ver_ops = &qcom_edp_phy_ops_v4,
+>  };
+>
+>  static const struct qcom_edp_phy_cfg sc8280xp_edp_phy_cfg = {
+>         .is_edp = true,
+> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>         .swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg,
+>         .ver_ops = &qcom_edp_phy_ops_v4,
+>  };
+> @@ -707,6 +715,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
+>  };
+>
+>  static struct qcom_edp_phy_cfg x1e80100_phy_cfg = {
+> +       .aux_cfg = edp_phy_aux_cfg_v4,
+>         .swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
+>         .ver_ops = &qcom_edp_phy_ops_v6,
+>  };
+> --
+> 2.17.1
+>
+
+
 -- 
-2.17.1
-
+With best wishes
+Dmitry
 
