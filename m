@@ -1,141 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-31763-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 976359785AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 18:23:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60B119785BE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 18:28:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DDE11F24D6E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 16:23:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 71A891C22CA2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 16:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 594C15644E;
-	Fri, 13 Sep 2024 16:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96E517406F;
+	Fri, 13 Sep 2024 16:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="GdKD+pc8"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="AGr7V/92"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC84852F62
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 16:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED74C53373
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 16:28:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726244622; cv=none; b=H2w2HZ0epSRP1HKLA2J8rcU90mp4BUGKTg2AKd2Ih6SqHDpocsFid6Xks9LADfpz1rorqwClz8SOfx0vnYoSbzGVmJFRTK3W/RVp+TZj0G/H2s7XShglMXuYN17qeo7L2OSGGdlruNLX5gXOLgP6BzpzgYNznZFMdxli4wHHSXo=
+	t=1726244888; cv=none; b=YVyHjU+qoGsDwtdMs31gbizmFyc3x3hsHVhCp5QrsTdbElGHtnGR+aXAVPuUuyy2em8PJoDhLmZHIND/upWwuzXjSOtvK24aj/SMlLXzQ9T2tebi8CxBUGuj/Sgk+bjpRD0RO+SiWA6Zao4L2iiIP1sy0opVD0E7SPJndFKFna0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726244622; c=relaxed/simple;
-	bh=CSPBqxfop0vKlwZoZSNBFsPOfmpObWndV9PqKAstImo=;
+	s=arc-20240116; t=1726244888; c=relaxed/simple;
+	bh=l6fQQfIJrCnieXnJtgF3yWwkk1JOKa/ssQuU9USSh54=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rx3RU17auUSQySGzOeC4zWtyNyOi7bxoag9jpFkFccVxeWvrhvkjHmXRSAeA0D7ysRO1SYWyu53IKwkFZKJYy1dXBzf6avQZgHz7NoiDoqWyile0F2OlivQwEd4gUL+zOogaecDRA46RGxTrIMV4oEFJqV4XJEfIuWRmP9PGqw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=GdKD+pc8; arc=none smtp.client-ip=209.85.160.176
+	 To:Cc:Content-Type; b=tCPTA8AfAi9stgnNzvuDb1SHipfMeKqub4b6wNIjH0b8lj20Vujvc7Uf7f3P7PZAF3WnSn7Lmcj8ifyoV+t+H18pz1whFNMp4iThRXHpXIGObBaHlJ3Tmdk7BktbRKbBFhi4TTp/L90pTOu/mwKeKEn1X5goW4QLlwRxJ2RY3zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=AGr7V/92; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4582a0b438aso18250011cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 09:23:40 -0700 (PDT)
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-846bcb525f7so629375241.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 09:28:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1726244618; x=1726849418; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1726244884; x=1726849684; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=H0ue1UIXLhYSPozfX3gRLbEnC77zpspRA67c7dICmis=;
-        b=GdKD+pc8ioqELvq+XJWX1ZfzEq8YM33fR46nXCTNo/NIx/a7uwOIJAadc49EqQgrCT
-         hqfXuN+zHcnsotmw9J53Uvq3EK3/G/zje1E4b6c3OKYloWN4D7lGxtZPgRbsrF/bH2k/
-         FKPn6f0mBkshQ1GodQ9Y3MgdCiMwLnaMEw/KM=
+        bh=MySfAV1H+y1ji7wrdPmDhE9q7agfjXhZS+w1J3QnDfE=;
+        b=AGr7V/92Ccvh2ei+H3/gjhiw71ZoSCNCUhMriUQ4BlAbHantF65uBfx7vg+eEefmXE
+         Cs+qy4mjox/EiuRlPGTc6loAydW4F1JELiQ3+Ia2E4XTf5jvNP14CmOCyMcg8Zd7X+n1
+         kUdYnMPHcw2XrkeK7lkMvA0aHpAemdplbGITY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726244618; x=1726849418;
+        d=1e100.net; s=20230601; t=1726244884; x=1726849684;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=H0ue1UIXLhYSPozfX3gRLbEnC77zpspRA67c7dICmis=;
-        b=uMbw8+W7lFj1MwREB3jYwEEGF2pilrE4FEkdUbCAC8BIztAwla5fhhFGQ5FV+iRht2
-         iI9+vEoPEUO0H6+AtIeD31mv8MW4ckrlHVrhBJ8Ql+KIYGrBKS8vUKggGLHUtoZdhkUq
-         f6wiGee5iDLAvZ2Y9Euo7fNhxXN8xzrbJEsc+hY5AxJAM3PDVF9mPPOpO8Ld6j8Reiwx
-         UuBhHUtkhq4F1W8rhFUCoUBo+HZxf2SeUEguZCOsoOGAsj1x7gTUKzzu5EsdSISHmRV+
-         yFBfoTJUA3yxBai74cvWARFIGmG3xUXiz24wn+CWQdGfsEuiat/YTbRd9JyGdY9jlID/
-         dP4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUn5mDSVxWFxzPPY8CRM0T3wXpzUCCPSIlKXpVRcCri34ePCv/udqgWBBdqS/THVyTeIST7nyhOXnebGLrz@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFu5QNYfkbPBR5DUM5Y7g3BrgpztibvrK4TzEfx/EwkTF1nBAb
-	QsXsi+gFlv/fCt/Kg1+fPc5Rms1oe3HPAnyRzHSjsC2/z80eGLpsLB65BY1OD1rD79UAQWdMM2A
+        bh=MySfAV1H+y1ji7wrdPmDhE9q7agfjXhZS+w1J3QnDfE=;
+        b=hZ1LoAIicfPYuDM0JmLbCy549sV8SpzHClMGA9KbWBd4GbvizlQqciITJdHsX55iwt
+         WPEX2LnTf7rXNfsU7DEWoT6UH3sysvSOgS2JTYrkh9ZUSx29j0DVJsXhF1UG66vXhQJC
+         tG/T1n9e+7HLpEMwpB2Wv4/GqYjN3pK7JhqFiwmJhdwkmWOMZRzLolAtmaR6nE8ThQAz
+         7jtuFoBfuIU+PDxT3SMaS1obN71Aa8w5xuSoIbZCy87yE1D0yoyeyMxT3EN4MtfUCFOj
+         EbWThoyf2zH6TbIqah8G/218meMagTygSre/XanTsSAsbkBuiMZyMT8/OOZRpGLFoXbO
+         Q2yw==
+X-Forwarded-Encrypted: i=1; AJvYcCX9Q/ES3Rbwqg4d8+ptxRiNA8wOo00Oey5g/hRahraEkHE+Cw8SyywRzN6OeSrBRhRkCpiO/Cu4H1Bry4rD@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIlYKCwyJhAHRw+YvakM2S12UVu6dzmX/yRNEyRfL77I6uW7lZ
+	d/9WnOto15QOkXaoiOcDhm7v/QhN4vuM03GUY26G+uKX5yLyBji2f7nMLhi70WFQd5AW562z7lY
 	=
-X-Google-Smtp-Source: AGHT+IFpHsArDTHKDZbo5YJbrpz2NiMygmbwHCf4hw6zR8PxHTs056VuSV3BGO7h4NdSVeIUwQRRZg==
-X-Received: by 2002:ac8:5f87:0:b0:453:5f05:2ba3 with SMTP id d75a77b69052e-458602bb10emr130146671cf.8.1726244618226;
-        Fri, 13 Sep 2024 09:23:38 -0700 (PDT)
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com. [209.85.219.50])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45822d435cfsm66812371cf.0.2024.09.13.09.23.37
+X-Google-Smtp-Source: AGHT+IFludznHx5rFRMx/9L328gNVDvNJYMoe/LH9baSBdH9qMGhy/Ff1uVxd8dl4XTxSsx5/EgS/Q==
+X-Received: by 2002:a05:6102:a51:b0:498:ccd9:5b1e with SMTP id ada2fe7eead31-49d4145a617mr6027260137.4.1726244884397;
+        Fri, 13 Sep 2024 09:28:04 -0700 (PDT)
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com. [209.85.160.179])
+        by smtp.gmail.com with ESMTPSA id ada2fe7eead31-49c16d93a87sm1228392137.22.2024.09.13.09.28.03
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Sep 2024 09:23:37 -0700 (PDT)
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6c35357cdacso15610756d6.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 09:23:37 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXBAOuKienXDPWLpuQYIi8O5X56ZWstK18NhrNQuyZhHZUoCOOlW1aWHhy3lL9CFU7dDbjLWjSjs939FO9t@vger.kernel.org
-X-Received: by 2002:a05:6214:4197:b0:6c3:5ebb:9526 with SMTP id
- 6a1803df08f44-6c573582959mr90511496d6.29.1726244616451; Fri, 13 Sep 2024
- 09:23:36 -0700 (PDT)
+        Fri, 13 Sep 2024 09:28:03 -0700 (PDT)
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4584a719ff5so17326541cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 09:28:03 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVWbUjcsp/t5FZXaiw+cuuzn2UPVk9TXsv1+6fFnxiHarcNaWcyrm1o0jjbac6ehxEBzrWB/FSwNMworQpP@vger.kernel.org
+X-Received: by 2002:a05:6214:3a86:b0:6c5:297c:da5f with SMTP id
+ 6a1803df08f44-6c573570b58mr118095856d6.33.1726244882965; Fri, 13 Sep 2024
+ 09:28:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240912092457.1887906-1-dmitry.baryshkov@linaro.org>
- <ZuOnz1QcNZUVYPZZ@hu-bjorande-lv.qualcomm.com> <CAA8EJprNbt1FE-rqL_R+KVyVWHzZekTwfSYnedJYrODFtS6qbQ@mail.gmail.com>
- <ZuRcRVsEI1D7Cg8h@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <ZuRcRVsEI1D7Cg8h@hu-bjorande-lv.qualcomm.com>
+References: <20240909132810.1296786-1-ruanjinjie@huawei.com>
+ <20240909132810.1296786-4-ruanjinjie@huawei.com> <CAD=FV=XQ7uf_Y_WTv_6-DX1Mo=+RycKSyxf=E-f3TOKiuE5RMA@mail.gmail.com>
+ <c662f0b9-31dc-8b97-ef3f-ea33f9fc62af@huawei.com> <CAD=FV=U+kc1rKSDDo-Zx+CiuapoJ8izrCW0Wh-PfR7ivY_4bXw@mail.gmail.com>
+ <10e77c5a-a188-698b-0c82-86c4bcdf114d@huawei.com>
+In-Reply-To: <10e77c5a-a188-698b-0c82-86c4bcdf114d@huawei.com>
 From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 13 Sep 2024 09:23:25 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WJWy7mVvnhB5HWwJWBLfA9UjyPpA1FSybVs8QDmXBFhg@mail.gmail.com>
-Message-ID: <CAD=FV=WJWy7mVvnhB5HWwJWBLfA9UjyPpA1FSybVs8QDmXBFhg@mail.gmail.com>
-Subject: Re: [RFC] Qualcomm RB3 Gen2 WiFi firmware pull
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Kalle Valo <kvalo@kernel.org>, ath11k@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org
+Date: Fri, 13 Sep 2024 09:27:51 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XGKph6t9S-r9-D+LkYcGNgRbEAC-qc4OQZjZXmxrjozw@mail.gmail.com>
+Message-ID: <CAD=FV=XGKph6t9S-r9-D+LkYcGNgRbEAC-qc4OQZjZXmxrjozw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] spi: geni-qcom: Use devm functions to simplify code
+To: Jinjie Ruan <ruanjinjie@huawei.com>
+Cc: broonie@kernel.org, akashast@codeaurora.org, vkoul@kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-On Fri, Sep 13, 2024 at 8:37=E2=80=AFAM Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
+On Thu, Sep 12, 2024 at 11:44=E2=80=AFPM Jinjie Ruan <ruanjinjie@huawei.com=
+> wrote:
 >
-> > > > @Bjorn, @Konrad in the past we have pushed all WPSS / WiFi firmware=
- to ath10k
-> > > > and ath11k even if gets executed on the host.  I should have caught=
- this while
-> > > > reviewing DT changes.  This branch uses firmware name that isn't co=
-mpatible
-> > > > with the existing DT files.  Would you insist on adding compatibili=
-ty symlink
-> > > > or we'd better fix the DT files?
-> > > >
-> > >
-> > > I think we have a limited user base of sc7280-chrome-common, so we
-> > > should be able to fix up the DeviceTree, and avoid the symlink.
+> On 2024/9/12 21:38, Doug Anderson wrote:
+> > Hi,
 > >
-> > I think we should keep the ath11k/WCN6750/hw1.0/wpss.mdt symlink,
-> > that's fine. I was talking about adding the qcom/qcm6490/wpss.mbn ->
-> > ath11k/WCN6750/hw1.0/wpss.mbn and the same for qcs6490 (just for the
-> > sake of existing DT files) or it's fine to fix the DT files instead
-> > and omit the symlink.
+> > On Wed, Sep 11, 2024 at 8:53=E2=80=AFPM Jinjie Ruan <ruanjinjie@huawei.=
+com> wrote:
+> >>
+> >>>> @@ -1132,6 +1134,12 @@ static int spi_geni_probe(struct platform_dev=
+ice *pdev)
+> >>>>         if (ret)
+> >>>>                 return ret;
+> >>>>
+> >>>> +       ret =3D devm_add_action_or_reset(dev, spi_geni_release_dma_c=
+han, mas);
+> >>>> +       if (ret) {
+> >>>> +               dev_err(dev, "Unable to add action.\n");
+> >>>> +               return ret;
+> >>>> +       }
+> >>>
+> >>> Use dev_err_probe() to simplify.
+> >>>
+> >>> ret =3D devm_add_action_or_reset(dev, spi_geni_release_dma_chan, mas)=
+;
+> >>> if (ret)
+> >>>   return dev_err_probe(dev, ret, "Unable to add action.\n");
+> >>
+> >> It seems that if it only return -ENOMEM or 0, using dev_err_probe() ha=
+s
+> >> not not much value for many community maintainers.
 > >
->
-> Perhaps I'm mistaken, but does WiFi work on those boards today? I'm
-> inclined to just have us fix up the DT and avoid sprinkling the symlinks
-> all over the place.
->
->
-> I guess this shows that I need to start holding back on future
-> firmware-name entries until the linux-firmware structure is known.
->
-> > >
-> > > But I'd prefer Doug's ack on that.
+> > While I won't insist, it still has some value to use dev_err_probe()
+> > as I talked about in commit 7065f92255bb ("driver core: Clarify that
+> > dev_err_probe() is OK even w/out -EPROBE_DEFER")
+> The main difference is that when use dev_err_probe()=EF=BC=8Cthere will p=
+rint
+> anything on -ENOMEM now.
 
-As far as I know you can count the number of users of sc7280 Chrome
-taking your shoes off. It might just be Abhniav and Jessica at
-Qualcomm. I think they do care about WiFi but they could probably
-handle a device tree fixup as long as you let them know. Certainly
-there aren't any devices in the field.
+Oh, I see. You're saying that we should just get rid of the print
+altogether because the only error case is -ENOMEM and the kernel
+already splats there? Yeah, that sounds right to me. That doesn't
+match what you did in v5, though...
 
 -Doug
 
