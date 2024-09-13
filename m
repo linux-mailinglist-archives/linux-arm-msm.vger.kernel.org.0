@@ -1,272 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-31679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3015F977AB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 10:10:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2563977B1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 10:32:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5BE081C203F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 08:10:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67CD31F241F4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 08:32:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECA2413D89D;
-	Fri, 13 Sep 2024 08:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A01A1D67BF;
+	Fri, 13 Sep 2024 08:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b="YBSvwQun"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jhx/fTcJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291A31D589E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 08:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC7A1BD510;
+	Fri, 13 Sep 2024 08:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726215047; cv=none; b=bnGiEp1mFMwuBHj53+OMYHnLj/Y+76UVTJyk2qWQcHf3WuRERx4FjA7z5VOdnCG1GQ5ly/65Vkn9Y38OxK6dbf13qTGFhzgoleiBUuJ1DKHAVNMXIGJHlkJ5mwuSSs6bruSUA/xcfIAk2y7TJNRtN04n+E1LaI+dQW+VBCCxCIA=
+	t=1726216368; cv=none; b=GB4Z6Ja+NmWQG1gQi6BwOnJuJJ07Q/bBCha60r2WMom1HcrXzXg7QHfOi2dJahpK6tQv8z4IqYnJVoDNRKwNyBeDHIp8JnYPXMe+aIpwDBmv6Yhu5DSieO9EqSeZbqeceCLlYjO8TZneZ2zJN9OMGa3hH5rHMh64dhSzIDOjG3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726215047; c=relaxed/simple;
-	bh=bm0JrAOh22eMu3dJ7cStSs9X0hitNAj/hOSXsbUVBd0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YFKk0ULl+8nfd3Jmpc6GB+l0HX8Rtz44CEQPT4csgNAEYi6A/r+1snOdv2NXTBLVXngJoeGTwfRa7GH+zsAAh7xGZAw4YaiuzfzhJZLqRaHUpAMq+ukePbzX5jQsqvcwxXstEIXbYKjZcsOOdFh4H8dearQuDa1xQZHxhg2OlTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com; spf=pass smtp.mailfrom=embeddedor.com; dkim=pass (2048-bit key) header.d=embeddedor.com header.i=@embeddedor.com header.b=YBSvwQun; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=embeddedor.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=embeddedor.com
-Received: from eig-obgw-5001a.ext.cloudfilter.net ([10.0.29.139])
-	by cmsmtp with ESMTPS
-	id oyNQsj8upnNFGp1O9snKZn; Fri, 13 Sep 2024 08:10:45 +0000
-Received: from gator4166.hostgator.com ([108.167.133.22])
-	by cmsmtp with ESMTPS
-	id p1O8sZSdNmqhip1O8sp8Rx; Fri, 13 Sep 2024 08:10:45 +0000
-X-Authority-Analysis: v=2.4 cv=NdEt1HD4 c=1 sm=1 tr=0 ts=66e3f385
- a=1YbLdUo/zbTtOZ3uB5T3HA==:117 a=rpUMG24A1zG+UrzXDtAMsg==:17
- a=IkcTkHD0fZMA:10 a=EaEq8P2WXUwA:10 a=7T7KSl7uo7wA:10 a=VwQbUJbxAAAA:8
- a=9OA2k-xDzDUK-BUy8SkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=Xt_RvD8W3m28Mn_h3AK8:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=embeddedor.com; s=default; h=Content-Transfer-Encoding:Content-Type:
-	In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
-	:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=1G59LJMSYivR08X+18CcLBybb5tZQUn1LSKdgrtgB30=; b=YBSvwQunKc8b9LdviI/QHVj+1t
-	X5fVKu0Ox2tyTnevFtmhS0YDWNy1EioVVaJ0mtpfxlhcU7RkOMTKzcB6N/X80qMZxAPLHD5O2vQt7
-	LYs9OB42/E40q0iCdZZeH/g2LBWWDdVYC7p5NC236pfEky/z+v57lQCUa0bjOp6XuFgo6JrWqVams
-	yIyd0GSgHv6Hrtbo4YF/svTpnR8UwrwHavQmRwyiqBS5eH17r7yESkNqLwrHdktpr6cGuFQF2R9PU
-	j/lKJ0HnIFCMoE1TrKpK6BLubY6nHNfTGnL7TbgoqVF7GS0A8R900PMD/bcedfGKCZmCzBmJyw0XC
-	GXlKuCtQ==;
-Received: from [185.44.53.103] (port=32866 helo=[192.168.1.187])
-	by gator4166.hostgator.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.96.2)
-	(envelope-from <gustavo@embeddedor.com>)
-	id 1sp1O7-003nYS-2g;
-	Fri, 13 Sep 2024 03:10:44 -0500
-Message-ID: <5a438394-ae88-4d72-a56e-6886d06b0a84@embeddedor.com>
-Date: Fri, 13 Sep 2024 10:10:40 +0200
+	s=arc-20240116; t=1726216368; c=relaxed/simple;
+	bh=DmD/oFS9ztHwN6LHCihrKLQc89zTH//9v3d7Pudf0gE=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:MIME-Version:
+	 Content-Type; b=ExR9PH9Cx3NzViorSwBLe9VVppdJWLLsAavJ8abUytViDxbY5D8f3gUr1irXBN5vLR5TZLGcDs/YpnUi+F/vyjz0HxlUSWzp1qcyo1Sjvd4K4HQbK4qJgY+hl5qW8SDVf+xGJK2OcoLdc/NcuhNamr8KwR7gDrGR/BrlVvTDZ68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jhx/fTcJ; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42bb7298bdeso8398455e9.1;
+        Fri, 13 Sep 2024 01:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726216364; x=1726821164; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:in-reply-to:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wp9Y737ViR4EfOInl3nplGoJAcdlB+yuFRrQ0BSzktk=;
+        b=Jhx/fTcJPNndRUuB9lLIkr6H2oVl3Y3IgpPLrXQ+E1a0nBioMhXnID93eZbuFyCWts
+         mG7zgAbtomkavBn8aZdut71HWvmuL0jnSka1+IgbriASbZudnlAihbnT7Ee10MBQhr0Z
+         fRCKmBjgb+G0rmPAnt7Cs0mXneVLBEyyumOOLwsYDOWS14TWfcQBoTK+MrSGbHKTdpF2
+         1xrXWzDvsn7t3SdZovQQVffRdpTFRoJsmyWqc7JS3svST+2mGmIdJUU6iP1fK+E7FEks
+         Q2ytItjS5b7uf5IYPjjdKMwtO/ltg8YmuXiqyEOoTI5+R7uDRewheb9X4LQuraJi8ogO
+         q9YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726216364; x=1726821164;
+        h=content-transfer-encoding:mime-version:in-reply-to:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wp9Y737ViR4EfOInl3nplGoJAcdlB+yuFRrQ0BSzktk=;
+        b=CC2kPq0NMpoQlyvwwQGJ5vEUO0TSKAQH1rh87lfmxyC95t99ic+JyaUzFove18EiD+
+         ZUyzw1cHZlmVFGc7x6gbOmzgPTvDP/EnhsnvP+DNeg3Xn+xyKYj+Ro8j1nkgK3EU0rVp
+         C4SDNyGL8cQBThaF115qzW7tr8DHYBlwhrCrnAIf9qsCOj0zvnrTq9jklqmXSD3cfBfK
+         BaQLmiwTbppqxkyALFKkBp86519C7zGjephYCDFMSUc1C03UMhUnPVSVtnbulhY6DcqP
+         9S3X1PNxNmeclJ9WZv88hOhncNnkITcT+XTlV1x5JM46e0hwrgilXFOQ00UKpC/7+0PA
+         jkZQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVIlyw8Iqifmi6QO3W27gpL5Yps4Umbel6VfeHenqDICDkRCf4GOEb5uZgUTuXPvp+AdepMo5MD8tdKs01X@vger.kernel.org, AJvYcCVZhtCsE7fBQBoh9sEfBVptj41j3+fAbDhSJe69+D2YXrCjgfEVEgROnTtaxZyDNBxarIHYQ4f+7LQZ@vger.kernel.org, AJvYcCVgwjQVBFTp3C5NMyVk9yyRFMN8JuC3KojXOZIvdBAxBWLGLDQNGbcRHi3Fjtwb47nMOEXeHi16dQul@vger.kernel.org, AJvYcCWZm4I9Psi60SeNFjWZ7cFwDORxH+zRMM849RkJ8171oHYqXKjV7ZSjQ6wSq5YhvKr4SNlbtOdOLc+cYk9ARQ==@vger.kernel.org, AJvYcCWwEPwpvI3d+Q/A5RLV9L0UySQGRUzvaMqHrlJ0ym9jM6Ep1BoL81xWty5bwfnyezFEOd6CYJW9Fp5Y@vger.kernel.org, AJvYcCXAtFR1aRpti65x7wjtc1ykiku5SrqYe8c1YRRpzkbgBxjqBHUipS9Y+EHuE2LCcneUSH5O4X5pKln/IJs=@vger.kernel.org, AJvYcCXQ9Zm3YR3Wdqj/qTd4FAKG4E3bCHA0bxcdZfdJXQP/IXADUeyzUvVnJVBsWXLy7IjpiHW3p/rMzMXDHgg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoXlD9a7RE+14evReJdk7rJUMOEwqyQ5v3PaDxvLSfJe+SEOkd
+	Z3TnVu8LxefjBRrXOnnvBAyqaMlT9ZIRmNXhcySWedeVszspEWFq
+X-Google-Smtp-Source: AGHT+IE2Ku5Yqa7DnoqdH5xDY5dD9ozv14FV0pNO09UH2LmGbvbqmw1nTSHM8AvIojolJCXpaHwH8w==
+X-Received: by 2002:a5d:5150:0:b0:374:bd48:fae8 with SMTP id ffacd0b85a97d-378d61f090fmr1570895f8f.25.1726216363746;
+        Fri, 13 Sep 2024 01:32:43 -0700 (PDT)
+Received: from foxbook (bio60.neoplus.adsl.tpnet.pl. [83.28.130.60])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf03ccsm846921566b.183.2024.09.13.01.32.41
+        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
+        Fri, 13 Sep 2024 01:32:43 -0700 (PDT)
+Date: Fri, 13 Sep 2024 10:32:37 +0200
+From: =?UTF-8?B?TWljaGHFgg==?= Pecio <michal.pecio@gmail.com>
+To: quic_wcheng@quicinc.com, mathias.nyman@linux.intel.com
+Cc: Thinh.Nguyen@synopsys.com, alsa-devel@alsa-project.org,
+ bgoswami@quicinc.com, broonie@kernel.org, conor+dt@kernel.org,
+ corbet@lwn.net, devicetree@vger.kernel.org, dmitry.torokhov@gmail.com,
+ gregkh@linuxfoundation.org, krzk+dt@kernel.org, lgirdwood@gmail.com,
+ linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
+ linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
+ mathias.nyman@intel.com, perex@perex.cz,
+ pierre-louis.bossart@linux.intel.com, robh@kernel.org,
+ srinivas.kandagatla@linaro.org, tiwai@suse.com
+Subject: Re: [PATCH v27 01/32] xhci: add helper to stop endpoint and wait
+ for completion
+Message-ID: <20240913103237.2f5dc796@foxbook>
+In-Reply-To: <20240912193935.1916426-2-quic_wcheng@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH][next] rpmsg: glink: Avoid -Wflex-array-member-not-at-end
- warnings
-To: "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <ZrOQa2gew5yadyt3@cute>
-Content-Language: en-US
-From: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-In-Reply-To: <ZrOQa2gew5yadyt3@cute>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator4166.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - embeddedor.com
-X-BWhitelist: no
-X-Source-IP: 185.44.53.103
-X-Source-L: No
-X-Exim-ID: 1sp1O7-003nYS-2g
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: ([192.168.1.187]) [185.44.53.103]:32866
-X-Source-Auth: gustavo@embeddedor.com
-X-Email-Count: 33
-X-Org: HG=hgshared;ORG=hostgator;
-X-Source-Cap: Z3V6aWRpbmU7Z3V6aWRpbmU7Z2F0b3I0MTY2Lmhvc3RnYXRvci5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfG3KKPlmaSqYY4gHcZNM/trxgy2vxMeX0xTiYB/XiIKn7UOuGimQdgMc8y6lrW0PoznyzGTX0iEKKBZp1g4+VAnll3V7b39fu10j6FrmbHeLPwd/Km8X
- A3dK6thi8lcLL6OLp8ABga/Kzl5V9q0xas2/0MIXBDu7Xy+R1WshsTmIS8WqyMIBgd8NlpFeSOpNQXO8Ba4sX7pW/W2iLRix4J29TQYUskMEIkTt9nxJ0H4o
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 
-Hi all,
+Hi,
 
-Friendly ping: who can take this, please? 🙂
+> Expose xhci_stop_endpoint_sync() which is a synchronous variant of
+> xhci_queue_stop_endpoint().  This is useful for client drivers that are
+> using the secondary interrupters, and need to stop/clean up the current
+> session.  The stop endpoint command handler will also take care of
+> cleaning up the ring.
 
-Thanks
--Gustavo
+I'm not entirely sure what you meant by "cleaning up the ring" (maybe a
+comment would be in order?), but I see nothing being done here after the
+command completes and FYI xhci-ring.c will not run the default handler if
+the command is queued with a completion, like here.
 
-On 07/08/24 17:19, Gustavo A. R. Silva wrote:
-> -Wflex-array-member-not-at-end was introduced in GCC-14, and we are
-> getting ready to enable it, globally.
-> 
-> So, in order to avoid ending up with a flexible-array member in the
-> middle of multiple other structs, we use the `__struct_group()`
-> helper to create a new tagged `struct glink_msg_hdr`. This structure
-> groups together all the members of the flexible `struct glink_msg`
-> except the flexible array.
-> 
-> As a result, the array is effectively separated from the rest of the
-> members without modifying the memory layout of the flexible structure.
-> We then change the type of the middle struct members currently causing
-> trouble from `struct glink_msg` to `struct glink_msg_hdr`.
-> 
-> We also want to ensure that when new members need to be added to the
-> flexible structure, they are always included within the newly created
-> tagged struct. For this, we use `static_assert()`. This ensures that the
-> memory layout for both the flexible structure and the new tagged struct
-> is the same after any changes.
-> 
-> This approach avoids having to implement `struct glink_msg_hdr` as a
-> completely separate structure, thus preventing having to maintain two
-> independent but basically identical structures, closing the door to
-> potential bugs in the future.
-> 
-> We also use `container_of()` whenever we need to retrieve a pointer to
-> the flexible structure, through which we can access the flexible-array
-> member, if necessary.
-> 
-> Additionally, we use the `DEFINE_RAW_FLEX()` helper for an on-stack
-> definition of a flexible structure where the size for the flexible-array
-> member is known at compile-time.
-> 
-> So, with these changes, fix the following warnings:
-> drivers/rpmsg/qcom_glink_native.c:51:26: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-> drivers/rpmsg/qcom_glink_native.c:459:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-> drivers/rpmsg/qcom_glink_native.c:846:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-> drivers/rpmsg/qcom_glink_native.c:968:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-> drivers/rpmsg/qcom_glink_native.c:1380:34: warning: structure containing a flexible array member is not at the end of another structure [-Wflex-array-member-not-at-end]
-> 
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> ---
->   drivers/rpmsg/qcom_glink_native.c | 42 +++++++++++++++++--------------
->   1 file changed, 23 insertions(+), 19 deletions(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-> index 82d460ff4777..ed89b810f262 100644
-> --- a/drivers/rpmsg/qcom_glink_native.c
-> +++ b/drivers/rpmsg/qcom_glink_native.c
-> @@ -30,11 +30,16 @@
->   #define RPM_GLINK_CID_MAX	65536
->   
->   struct glink_msg {
-> -	__le16 cmd;
-> -	__le16 param1;
-> -	__le32 param2;
-> +	/* New members MUST be added within the __struct_group() macro below. */
-> +	__struct_group(glink_msg_hdr, hdr, __packed,
-> +		__le16 cmd;
-> +		__le16 param1;
-> +		__le32 param2;
-> +	);
->   	u8 data[];
->   } __packed;
-> +static_assert(offsetof(struct glink_msg, data) == sizeof(struct glink_msg_hdr),
-> +	      "struct member likely outside of __struct_group()");
->   
->   /**
->    * struct glink_defer_cmd - deferred incoming control message
-> @@ -48,7 +53,7 @@ struct glink_msg {
->   struct glink_defer_cmd {
->   	struct list_head node;
->   
-> -	struct glink_msg msg;
-> +	struct glink_msg_hdr msg;
->   	u8 data[];
->   };
->   
-> @@ -455,12 +460,9 @@ static void qcom_glink_intent_req_abort(struct glink_channel *channel)
->   static int qcom_glink_send_open_req(struct qcom_glink *glink,
->   				    struct glink_channel *channel)
->   {
-> -	struct {
-> -		struct glink_msg msg;
-> -		u8 name[GLINK_NAME_SIZE];
-> -	} __packed req;
-> +	DEFINE_RAW_FLEX(struct glink_msg, req, data, GLINK_NAME_SIZE);
->   	int name_len = strlen(channel->name) + 1;
-> -	int req_len = ALIGN(sizeof(req.msg) + name_len, 8);
-> +	int req_len = ALIGN(sizeof(*req) + name_len, 8);
->   	int ret;
->   	unsigned long flags;
->   
-> @@ -476,12 +478,12 @@ static int qcom_glink_send_open_req(struct qcom_glink *glink,
->   
->   	channel->lcid = ret;
->   
-> -	req.msg.cmd = cpu_to_le16(GLINK_CMD_OPEN);
-> -	req.msg.param1 = cpu_to_le16(channel->lcid);
-> -	req.msg.param2 = cpu_to_le32(name_len);
-> -	strcpy(req.name, channel->name);
-> +	req->cmd = cpu_to_le16(GLINK_CMD_OPEN);
-> +	req->param1 = cpu_to_le16(channel->lcid);
-> +	req->param2 = cpu_to_le32(name_len);
-> +	strcpy(req->data, channel->name);
->   
-> -	ret = qcom_glink_tx(glink, &req, req_len, NULL, 0, true);
-> +	ret = qcom_glink_tx(glink, req, req_len, NULL, 0, true);
->   	if (ret)
->   		goto remove_idr;
->   
-> @@ -826,7 +828,9 @@ static int qcom_glink_rx_defer(struct qcom_glink *glink, size_t extra)
->   
->   	INIT_LIST_HEAD(&dcmd->node);
->   
-> -	qcom_glink_rx_peek(glink, &dcmd->msg, 0, sizeof(dcmd->msg) + extra);
-> +	qcom_glink_rx_peek(glink,
-> +			   container_of(&dcmd->msg, struct glink_msg, hdr), 0,
-> +			   sizeof(dcmd->msg) + extra);
->   
->   	spin_lock(&glink->rx_lock);
->   	list_add_tail(&dcmd->node, &glink->rx_queue);
-> @@ -843,7 +847,7 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
->   	struct glink_core_rx_intent *intent;
->   	struct glink_channel *channel;
->   	struct {
-> -		struct glink_msg msg;
-> +		struct glink_msg_hdr msg;
->   		__le32 chunk_size;
->   		__le32 left_size;
->   	} __packed hdr;
-> @@ -965,7 +969,7 @@ static void qcom_glink_handle_intent(struct qcom_glink *glink,
->   	};
->   
->   	struct {
-> -		struct glink_msg msg;
-> +		struct glink_msg_hdr msg;
->   		struct intent_pair intents[];
->   	} __packed * msg;
->   
-> @@ -1377,7 +1381,7 @@ static int __qcom_glink_send(struct glink_channel *channel,
->   	struct glink_core_rx_intent *tmp;
->   	int iid = 0;
->   	struct {
-> -		struct glink_msg msg;
-> +		struct glink_msg_hdr msg;
->   		__le32 chunk_size;
->   		__le32 left_size;
->   	} __packed req;
-> @@ -1685,7 +1689,7 @@ static void qcom_glink_work(struct work_struct *work)
->   		list_del(&dcmd->node);
->   		spin_unlock_irqrestore(&glink->rx_lock, flags);
->   
-> -		msg = &dcmd->msg;
-> +		msg = container_of(&dcmd->msg, struct glink_msg, hdr);
->   		cmd = le16_to_cpu(msg->cmd);
->   		param1 = le16_to_cpu(msg->param1);
->   		param2 = le32_to_cpu(msg->param2);
+At least that's the case for certain command types and there is probably
+a story behind each of them. I know that xhci_stop_device() queues a
+Stop EP with completion (and also a few without(?)). Maybe it's a bug...
+
+Regards,
+Michal
 
