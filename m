@@ -1,202 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-31761-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AE29978486
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 17:19:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5ED36978500
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 17:38:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BD19F285072
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 15:19:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D36391F27CED
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 15:38:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B14C1C5782;
-	Fri, 13 Sep 2024 15:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F26253373;
+	Fri, 13 Sep 2024 15:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QqtG5sjD"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cB0TFw2Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896E01C3F30;
-	Fri, 13 Sep 2024 15:09:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A99558B6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 15:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726240175; cv=none; b=qnNEYSB1a5xLPs0sDfIpXR986lhd2I9snSKjKQdM2G/LRoy36wdmESYAAUocnMavoOvgBECrVBAGoBRhGnHzRM0wG5rGmQIIoWnmRodabhjAWCbGUvY/d7uuSd3+FdfviqYLnbQYIdDxuVhQFqmp+X/4xhvy9Puh5Pz0bDnJKtM=
+	t=1726241874; cv=none; b=cJNpycGZDtkYOOqEKHT2ncSirw8KqvqGrpyNt1h/+E83hYp5m/p1dTuSwcYaRql3LycwcQ2t9OWxGN6GlUC78fl1JWL3/kdfTCX/JLKtOn5IRRIatVKdvkZ00SeA66mGRWkVGZtugjyBPeCQg6od2abpO/LrY7pU4cJ1DihLP58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726240175; c=relaxed/simple;
-	bh=sotlZbQi5UxMTXTY9iQWeBGitc5Ct0BtuZ2yW6i8Nok=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=VNp+hW1d1PgsGFhK5D7e2RqyNGNAhD6Cmr5ocg6ziPLmseic6XHGkjcaTIe20Ec6kj4002Q46NVVExSRfVNqqn6Jn738mX6ABG1vUp2V4LBk1bPSaoMxGgYR5hsly/UxEWlq2t1Dg4VRnJlKXUIzFvnFI30yLftOzpCSj3E/pSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QqtG5sjD; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5c26311c6f0so2944448a12.3;
-        Fri, 13 Sep 2024 08:09:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726240171; x=1726844971; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mXJIkSLw8SmFch9ZUCSaWYebLdfaycyre/4lwJqktRc=;
-        b=QqtG5sjD75MPPTL9uxDFdApVZ3+r7KD2KL0iNEd7Js90da5B8v2G7y+/hyWDKlV5rX
-         3Fztu+Wr2ICdSY2o/ip5d3KH8+xusrmEk4hGscNhCdvFluwf/bmjeOVoL8nh2Ixdb9IJ
-         8U3CtH+hvCV76li6tt5eG48Gg8AHVZvQlRHh8Iy1dsORWODQX5jFUWiWqOMInp9PIMAH
-         Eam4aRySDKUWLk1mcEu1RA6JcvJ5gyFy+57gK4h1j2AScZLQbGYtM+Xs1NvdELKUDhmk
-         VuhKzTAeL7kuvMrIK55UaKutlSNNDmXIDkoTqOUNNL/vrl+yneS+sZaOlU7w6poRuwn5
-         7baw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726240171; x=1726844971;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mXJIkSLw8SmFch9ZUCSaWYebLdfaycyre/4lwJqktRc=;
-        b=J9s27h1UUGLr84U5/yAyZJsgI6gwTHTQQ+vx/u51IwWj7gqz1CmyTrroV5jq8Uh2kr
-         E6u/R847+cr5r/nQ2cV7iHoiZ/O8Tnuqm1jUfKDhRIJ/WZF6sKhlzSzO04n2OS86LbR0
-         EUfQ2zyMBYDHXc6Q4qcMzz39U9NEvPDWHumLR14W95EsHaqGt0qOc1T96vkXLvxGZDoi
-         R5rnELotNTtDWaSnFytAWVM0bOaJ7FdMiB9fpweo4LiQ3ATYKmZdbNBA+ImhCfSjQ0Ch
-         6NmICZQIdot3wAagTOVaiWzPG5FK7xN17aQ/feXCCjFm8oGKxBLN0/GNL+ae640xuK/z
-         0wHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUhCX0BAMk05IyBLSQutDLJfVWTFswx9F6GWd198LSABd381GBIIaofuv+n3Fa5lFEPdxdJepGB/ueakzc=@vger.kernel.org, AJvYcCUuti24ziJKj2yZFdgTlk5qdVp945GGwnleaoFOwvGYAgF7kM/9o3AZlWOLxs+cYjH4P6bgysgzQEM9drJk@vger.kernel.org, AJvYcCV/qB5ttufj9m/e1++oHyIrcBu/Jt7mXBsrsWZpW93JbSKj/Zx9IYSZWtbqcNxF6T8URIhVfGCxA7YUd61q3DF5fE0=@vger.kernel.org, AJvYcCVkbNcUFQEropyKy8NfbbsMNZ0QFvOOxr1HnVH6jZrBzr082ilPdQ9RkssS8xkcR+35Qbb7GX9WOIsQu46sKg==@vger.kernel.org, AJvYcCWkJ1fxPDQw+F8r8yx7Po3+bsO/Ie2HEvDLachSkDhlUvGLdF0gIqwUzuNz3Ji0C3TXXVK+1MAIYtX+@vger.kernel.org, AJvYcCXJHZsaa+Lap0z/vITRjAjE62GtCcTohp03NyLwF6TsIf9FuM6fHeZe2uwiRnsoxTVQn7RploJGBy5rBw==@vger.kernel.org, AJvYcCXJnUnKOXJwgWI/0HxHCnRFJ6i5GZUP9VgPjkF/qb/TieQqREoyTLOspdurnGLOHPfqyNQSodpmpsci@vger.kernel.org, AJvYcCXt0cotO6XZozI3melRYob9QNcTS0GS2D4FCOYxAwa1B0Sgm/cZTNkjEey2pOgXjSPttPPrsaluxiW0@vger.kernel.org
-X-Gm-Message-State: AOJu0YxuhtrqkE/IfZ68GjJMK0tVXPbHrxcDBj+ASAUTOSw7C4Nva94o
-	ajFXxhiT6NXbFfN+Y1dTeTE+SQ9dGLGsQrG0J2viUkESwvG/xvQyBeZVeA==
-X-Google-Smtp-Source: AGHT+IGyk1J+WrXxg3n6en6ZybXZ+SEJzAfSUZQA055wEMUefoWDRM5H6YgIPbZdZbXXjvmPnSljDQ==
-X-Received: by 2002:a05:6402:35c1:b0:5c4:181a:6b0a with SMTP id 4fb4d7f45d1cf-5c4181a6b7dmr4656181a12.10.1726240171482;
-        Fri, 13 Sep 2024 08:09:31 -0700 (PDT)
-Received: from [127.0.1.1] ([178.127.153.210])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5c3ebd523b4sm7774318a12.51.2024.09.13.08.09.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Sep 2024 08:09:31 -0700 (PDT)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Fri, 13 Sep 2024 18:08:10 +0300
-Subject: [PATCH v4 27/27] arm64: dts: qcom: starqltechn: add modem support
+	s=arc-20240116; t=1726241874; c=relaxed/simple;
+	bh=85wuC1UyDMgUXhX7aEoUXNbsEKaqAre+gXlVBz22H1E=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LT/6vJy8698T7xzlWEMCijm+XcOyhMfbj/+2PJVKWPQ8PFZvegXrAIrXdom/6fVhiX3kgY12j6Vlqx9L856fLwUMaIlqKe3mdYBw1SuGR6G5UYFmtruyfDNhMWj18ltc52e1BolMuKAR20G4soc5ewg9c5agRuhAIIpOVEkopcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cB0TFw2Y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48DAJvgr004962;
+	Fri, 13 Sep 2024 15:37:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=NBlo8UM2zJ9FKI4YEVATh9ao
+	2MuegB3AxLqnKpMSuJ4=; b=cB0TFw2YHTHTav1s5B9esYGjY2g9/wBOQV+Gmy9a
+	OakJzIlXYU9DbTNS7j0Ybk/ulz6FRBow+uTcpPKpa1AB3IXEZNyMLfo7X/8mThWm
+	SUg+CEo3rfNHfIhvoqByBRTvv1O05knFGuFF/rHJCvDRTe3vSuuvcBTPZ09rTAKq
+	WdO0ktOHM3RiOlz1xi8o0lryilcIu75RGOiHQwkXa7FoUFx09Yo+B/myoW1jTYbn
+	f5nKEnu7VageSK11rLxIZRRZpPSduxVyF5fhXPF9abigtgAuVakAqdRAcEc0u43e
+	r5xgKXWrRHXXlNtnUD+8HVdHmW9NKGUsCc2bYUKXMhDlMA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41gy7399qs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Sep 2024 15:37:44 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48DFbgWD020678
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Sep 2024 15:37:42 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 13 Sep 2024 08:37:42 -0700
+Date: Fri, 13 Sep 2024 08:37:41 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Kalle Valo
+	<kvalo@kernel.org>,
+        <ath11k@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [RFC] Qualcomm RB3 Gen2 WiFi firmware pull
+Message-ID: <ZuRcRVsEI1D7Cg8h@hu-bjorande-lv.qualcomm.com>
+References: <20240912092457.1887906-1-dmitry.baryshkov@linaro.org>
+ <ZuOnz1QcNZUVYPZZ@hu-bjorande-lv.qualcomm.com>
+ <CAA8EJprNbt1FE-rqL_R+KVyVWHzZekTwfSYnedJYrODFtS6qbQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240913-starqltechn_integration_upstream-v4-27-2d2efd5c5877@gmail.com>
-References: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
-In-Reply-To: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
-To: Sebastian Reichel <sre@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
- Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
- =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Chanwoo Choi <cw00.choi@samsung.com>, 
- Simona Vetter <simona@ffwll.ch>, cros-qcom-dts-watchers@chromium.org, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Simona Vetter <simona.vetter@ffwll.ch>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-input@vger.kernel.org, linux-leds@vger.kernel.org, 
- linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org, 
- Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726240085; l=2030;
- i=dsankouski@gmail.com; s=20240618; h=from:subject:message-id;
- bh=sotlZbQi5UxMTXTY9iQWeBGitc5Ct0BtuZ2yW6i8Nok=;
- b=2OY/1Wou8Los9DL2QaeQkDbKQavhO22dQvFX7va+9W+VFm6Zwxp1qTyqVIttAEcQn/XWN02FC
- mMW9IBedqIOB+8AWBDGbU1ksLCmuAtMW2nQ+hhGKetema4Hwj+gR7YU
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=6pMMVVDDReSiRgPCbMOUauN5nS3ty4Sf5b7a2gi4x0M=
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAA8EJprNbt1FE-rqL_R+KVyVWHzZekTwfSYnedJYrODFtS6qbQ@mail.gmail.com>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _AHHnNdIN0YwOk9TYBFfU682Qy7bfJsl
+X-Proofpoint-GUID: _AHHnNdIN0YwOk9TYBFfU682Qy7bfJsl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
+ malwarescore=0 adultscore=0 mlxlogscore=999 suspectscore=0
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409130109
 
-Add support for modem and ipa(IP Accelerator).
-Add spss reserved memory node.
+On Fri, Sep 13, 2024 at 07:12:58AM +0300, Dmitry Baryshkov wrote:
+> On Fri, 13 Sept 2024 at 05:48, Bjorn Andersson
+> <quic_bjorande@quicinc.com> wrote:
+> >
+> > On Thu, Sep 12, 2024 at 12:24:57PM +0300, Dmitry Baryshkov wrote:
+> > > Hello,
+> > >
+> > > I'm planning to send the following pull request to linux-firmware, adding WiFi
+> > > DSP firmware for the RB3 Gen2 board. However before doing that I wanted to
+> > > check if it's fine with all affected maintainers.
+> > >
+> > > Qualcomm RB3 Gen2 board resets if it's used with the existing WCN6750 firmware,
+> > > most likely because of the differences in the TZ setup. This pull request adds
+> > > firmware specific to the qcm6490 / qcs6490 SoC family.
+> > >
+> >
+> > Given that this firmware runs on the SoC, isn't it device specific? Does
+> > it make sense to carry this under ath11k/, when it's expected to have
+> > the same form and distribution as the other remoteproc firmware?
+> 
+> This is an interesting question. I think that having all WiFi-related
+> firmware under athNk makes sense. For example wlanmdsp.mbn files are
+> also stored under ath10k/WCN3990/ subdirs.
+> So do q6 and m3 firmware files under ath11k/IPQ*/.
+> 
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
----
- .../boot/dts/qcom/sdm845-samsung-starqltechn.dts   | 39 ++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+I was under the impression that wlanmdsp.mbn (as being run in a
+protection domain) had lower security/signature requirements than the
+wpss.mbn.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 2710386a89e1..4614ec5f731f 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -17,6 +17,8 @@
- #include "pm8998.dtsi"
- #include "sdm845-wcd9340.dtsi"
- 
-+/delete-node/ &rmtfs_mem;
-+/delete-node/ &spss_mem;
- /delete-node/ &adsp_mem;
- /delete-node/ &slpi_mem;
- 
-@@ -91,15 +93,39 @@ memory@a1300000 {
- 			pmsg-size = <0x40000>;
- 		};
- 
-+		/*
-+		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
-+		 * random crashes which are most likely modem related, more testing needed.
-+		 */
-+		removed_region: removed-region@88f00000 {
-+			reg = <0 0x88f00000 0 0x1c00000>;
-+			no-map;
-+		};
-+
- 		slpi_mem: slpi@96700000 {
- 			reg = <0 0x96700000 0 0xf00000>;
- 			no-map;
- 		};
- 
-+		spss_mem: spss@97700000 {
-+			reg = <0 0x97700000 0 0x100000>;
-+			no-map;
-+		};
-+
- 		adsp_mem: memory@97800000 {
- 			reg = <0 0x97800000 0 0x2000000>;
- 			no-map;
- 		};
-+
-+		rmtfs_mem: rmtfs-mem@fde00000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xfde00000 0 0x202000>;
-+			qcom,use-guard-pages;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+		};
- 	};
- 
- 	gpio_keys {
-@@ -837,6 +863,19 @@ dai@5 {
- 	};
- };
- 
-+&mss_pil {
-+	firmware-name = "qcom/sdm845/starqltechn/mba.mbn",
-+			"qcom/sdm845/starqltechn/modem.mbn";
-+	status = "okay";
-+};
-+
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/sdm845/starqltechn/ipa_fws.mbn";
-+	status = "okay";
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
+If wpss.mbn is not vendor-signed (in a real product...) then I have no
+concerns with keeping it under ath11k/
 
--- 
-2.39.2
+> >
+> > >
+> > > @Kalle, I understand that you cannot and won't fully support this firmware set.
+> > > As a preparation to adding these files I moved existing files to the sc7280/
+> > > subdir and pil-squashed them.  It is a generic preference to use a single MBN
+> > > file instead of MDT + Bnn files. The mdt_loader detects the format without
+> > > using the extension, handles the differences internally and doesn't require any
+> > > changes to the driver or to the DT.  Could you please ack such a change?
+> > >
+> >
+> > I much prefer that we switch this to the single-file version, so I'm
+> > onboard with this.
+> >
+> > >
+> > > @Bjorn, @Konrad in the past we have pushed all WPSS / WiFi firmware to ath10k
+> > > and ath11k even if gets executed on the host.  I should have caught this while
+> > > reviewing DT changes.  This branch uses firmware name that isn't compatible
+> > > with the existing DT files.  Would you insist on adding compatibility symlink
+> > > or we'd better fix the DT files?
+> > >
+> >
+> > I think we have a limited user base of sc7280-chrome-common, so we
+> > should be able to fix up the DeviceTree, and avoid the symlink.
+> 
+> I think we should keep the ath11k/WCN6750/hw1.0/wpss.mdt symlink,
+> that's fine. I was talking about adding the qcom/qcm6490/wpss.mbn ->
+> ath11k/WCN6750/hw1.0/wpss.mbn and the same for qcs6490 (just for the
+> sake of existing DT files) or it's fine to fix the DT files instead
+> and omit the symlink.
+> 
 
+Perhaps I'm mistaken, but does WiFi work on those boards today? I'm
+inclined to just have us fix up the DT and avoid sprinkling the symlinks
+all over the place.
+
+
+I guess this shows that I need to start holding back on future
+firmware-name entries until the linux-firmware structure is known.
+
+> >
+> > But I'd prefer Doug's ack on that.
+> >
+> > > ---
+> > >
+> > > The following changes since commit 4a0367b33aeaa7fe1255a920d0e39f825b6985c1:
+> > >
+> > >   Merge branch 'rtl8852b' into 'main' (2024-09-11 11:00:41 +0000)
+> > >
+> > > are available in the Git repository at:
+> > >
+> > >   https://gitlab.com/lumag/linux-firmware rb3gen2-wpss
+> > >
+> > > for you to fetch changes up to fb8c67987c89b6f33fb787dfc6ff6e5e0f317f6d:
+> > >
+> > >   ath11k: add device-specific firmware for QCM6490 boards (2024-09-12 11:58:57 +0300)
+> > >
+> > > ----------------------------------------------------------------
+> > > Dmitry Baryshkov (2):
+> > >       ath11k: move WCN6750 firmware to the device-specific subdir
+> > >       ath11k: add device-specific firmware for QCM6490 boards
+> > >
+> > >  WHENCE                                             |  18 ++++++++----------
+> > >  ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn              | Bin 0 -> 7734064 bytes
+> >
+> > qcm or qcs?
+> 
+> qcm6490 as the main location, qcs6490 is symlinked via WHENCE file.
+> 
+
+Ok!
+
+Regards,
+Bjorn
+
+> >
+> > Regards,
+> > Bjorn
+> >
+> > >  ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} | Bin 5819999 -> 7463728 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b00                      | Bin 340 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b01                      | Bin 6848 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b02                      | Bin 10300 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b03                      | Bin 4096 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b05                      | Bin 164332 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b06                      | Bin 266684 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b07                      | Bin 1176368 -> 0 bytes
+> > >  ath11k/WCN6750/hw1.0/wpss.b08                      |   0
+> > >  ath11k/WCN6750/hw1.0/wpss.mdt                      | Bin 7188 -> 0 bytes
+> > >  12 files changed, 8 insertions(+), 10 deletions(-)
+> > >  create mode 100644 ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn
+> > >  rename ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} (77%)
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b00
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b01
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b02
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b03
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b05
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b06
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b07
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b08
+> > >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.mdt
+> 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
 
