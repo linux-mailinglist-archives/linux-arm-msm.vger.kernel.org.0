@@ -1,198 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-31667-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 144999777BA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 06:13:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68A0F9777CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 06:17:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F79C1F25890
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 04:13:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F1B6E2873E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 04:17:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76F431459F7;
-	Fri, 13 Sep 2024 04:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99C7819CC2A;
+	Fri, 13 Sep 2024 04:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ga+e1oE8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SSnzqgFm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69332F34
-	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 04:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DCE80C02
+	for <linux-arm-msm@vger.kernel.org>; Fri, 13 Sep 2024 04:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726200792; cv=none; b=QjM7t9RjT8ITZrxgACS6l79zh523jldb2C6N4IfmKCBJ/pli21GiKf8CCEIOKQ/HjWNCOeQWHa7aVkQTdkixhVRLuoxwnoTzUc/G24MuEkx300mpjxLf18VdmkN7s5JiGI4RgZOhn2dhPMf3SrazsZv4ZHW64hp50kyBTHxEQaw=
+	t=1726201046; cv=none; b=OzJYQzRhEZpqCaCNP2U1dhyUE30I/IxA778E1OOrzZXa1HwBJRargMmv0x3SPuK4bKSoO3nIsRoqE2VD34DQ/Qu2t3DAd/gPEGJ8q3a5IMjybznI485xBUadJiwJA1As1th9faJYH6L8Y5UGcIDcx/Ph704UNOijEoYgh3FRF+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726200792; c=relaxed/simple;
-	bh=3RHXD0JztOWgxmOfe3MqrQ03ez0C4dRKs8NyHIOX/gY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PAtm3cFRmkH7+JCT7ibYGdIzdenSZafIfR4BOFDwcD6Dke2kx+HDUkXNesIXawjjV4AFjMaCsXZ3KYXG3oL+UEC+xDPEtboW7Fb0jWtAq2P5jHMFzuenfoXGzJkLtKwMzgFpJBYk9jIvScS2HW/vVVC2Ps3HLdsVxLvGoLssMLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ga+e1oE8; arc=none smtp.client-ip=209.85.128.181
+	s=arc-20240116; t=1726201046; c=relaxed/simple;
+	bh=aM2JA62bwsTf/mFEE3ERvJ911Rrl9INEVCFzTU5RMo8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=flCR9Mi8Nkl+HZAUp+pkFxfBOb2O9BMg3IQ9WLJb4IQO+uK9GXOLU9+xONRp5HlKgw0dJdgfGJlFOTtVcHQYPE5UjC6/vqibCwjlRQfpj+SoUALRTNXpitNxV6BQvl2CqPjlNqYy7DK8mW6V5Lih9Al6zdtt/+s37vt5dhTYYdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SSnzqgFm; arc=none smtp.client-ip=209.85.167.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6d49cec2a5dso3943747b3.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 21:13:10 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-5367ae52a01so657074e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Sep 2024 21:17:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726200790; x=1726805590; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ytV/cW8qP0AhnvyRSBmY1oJKJQJ5t2/DISr11I1TwTo=;
-        b=ga+e1oE8hSQQ/mJamweJcHGzcoDDV0Q9Q5oMrIz59h0d3MafhFDEU3dipOIbwdT+5o
-         kFpkldX+mrTxNZVz+bCcmVWqhElX5C+A0E3ONx5ngX5WATPvJjlVQS3D/yTdlVYWt3DJ
-         sys5jUsJ9DAQF76zBySBzu6u42BY5fKm9k1hhuv9GHyJFQq8koOxqk7kNUgexaWK/Udj
-         ATZxHR7dcuPdwbw/bEkcoEHHWJekT3DLEeQLQHEoW9lKImAo6cFLHriAfYQzDFauut4h
-         tzvbhTOplURgHaXf4b9EQLd6n+TG4urJ2Ix7z3ab/aGjVKLHI/0qrasL7rNVwOuO6/Sj
-         8G6g==
+        d=linaro.org; s=google; t=1726201043; x=1726805843; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2VLJt3GjYxxx/2ULy4tfS3vYUKWoTa4Wu7pIKq+KoC4=;
+        b=SSnzqgFmY1va/31dRWURYlmGkqGQRCWGYAXRGEvuIc2EX4t9Vfs9jZFhtIGzuy2KhB
+         uzFBgL1syNQspQhfExJjxGaO2pkVLciT8A3rROyY789M6kgK7JP7m6EVXJhh3PTkrpcC
+         F9ASGyCfRv9JinfsRzijssph9vbaxit+SXC4oocML2AqZWYLWJFZUd2TDsoaNRxguPPs
+         kY/5smtnNl87zknpp3DJuiY9g+H+FgY0TUE+baY6uYCMf8XyXBItCmNwCcWVyJ1b28Z8
+         LVO5zhsvFCtUPql0IwWtUfJTlzYMMA45/rfJ4ZC/eR2y21Ev9BbAdSkOseZz/T4GcNZx
+         M2/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726200790; x=1726805590;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ytV/cW8qP0AhnvyRSBmY1oJKJQJ5t2/DISr11I1TwTo=;
-        b=oIFeOnp21RaPxIrWhLY1ZmzqLsO9AwGfvG98lS1oYxqkPjiHzSjZYp8nRMXFkgLGAt
-         1K4LzR+P3DpBWIkqjdZWH4pN0OxoGxp1eFU2YdjMWYmNgQ7WDCAPLWGLE2XLuOyoqGN7
-         Vfh+Wpf5Vvkz9Upg2nUUAC3Ta0aJZmo1784uaAXM5lyP5JhEOXrxfmGnMcQbqOeY+y+b
-         3JO59yAdhGLqsd4UmR2Da1VUqbv7QcC6L9IjKrCGUY2FrAXVZZqLYmFTb/Ze35N2+dIM
-         QWp1saOyPrUQ2T0tTDWSLumrVa0aCSbxeOYy3bWI6rgULvD7VxBtl2MZPspG7nL7/ivd
-         KdUg==
-X-Forwarded-Encrypted: i=1; AJvYcCVLCrPNGe1DKFrt9ItOUWU9x/iPonjSZVDuDXljOzwfVpYfjZNXhq8rQtqRg/5vveOSGl6BnMA/6/Vma7+h@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhF5B04F+B3QAASP2ZOXKLKyEwI8TV3XcJn35VVDJ+88wagvHL
-	CcdH7JjlAGNfDo4elv95BOMsG601EO9f2Rhu1/TpzRx8E6J3l1PsB4NOZnIXGJMNXL5hMXly1cM
-	HXGFlLo3DAGI2ji0VCwG+tb7dWIZZaGlRyqhhiA==
-X-Google-Smtp-Source: AGHT+IGFIiFoLnoMrNLvrbA7W6LP9mmwF8lL4/E9ZOuU3zznDzmplHUCmfvd8R2Oa0TFB8WWqzp74sQZmTr6M95s1TY=
-X-Received: by 2002:a05:690c:101:b0:6b0:e813:753b with SMTP id
- 00721157ae682-6dbcc592e0cmr12578527b3.38.1726200789447; Thu, 12 Sep 2024
- 21:13:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726201043; x=1726805843;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2VLJt3GjYxxx/2ULy4tfS3vYUKWoTa4Wu7pIKq+KoC4=;
+        b=sXa2mGf7HHDC3WO2G0vSkSqu+raVDv5+fVwWByIiU6MMuTcJ9Ol7DIyUPBQWcUtEJF
+         pWC99shHO/V//KOJzZBfJ5DdPuE4+hPjhqUJUEoeDLyk7XmuPjD3SH36y9Yca0oItz9J
+         gtDxJIWcy4+hexOOMJQwb5MnksaWDu6xpFXA/NN3Lqj54+jurC2Fx8hpeQ9dHI+I9zSH
+         zqIQ9ohrlMOwDy05XK3cmdxwmkHXRQ8zOVC5GswvIWUX+ZMH7SdRzPK36klGxat1RG0E
+         r/bmZsbRrdNzSQFlCuwSq1Du2Cy/n60cW5Gn/0j2tbIa1IJhr2SZvX1R4jbOBr9iU9+t
+         87cw==
+X-Forwarded-Encrypted: i=1; AJvYcCVlyg58QthSZrbgXmfYuwUDStHFI1VtqeCHUSHuLDsIbf3EJVlOlF6KRMECc3G8QtKcjEjNEHpjCG/qjEFx@vger.kernel.org
+X-Gm-Message-State: AOJu0YyBvt5nJYkgzRRAMZO9JA6QEqcwGB7NjGPvTj6QgjG95Qzx5Oia
+	x59s/O+FEFTNsEHDenX7dRlKOgccI8wEtn6vRS8m7jpSiv71H2kyzb9tgLklbIQ=
+X-Google-Smtp-Source: AGHT+IGH8yA1KtIzAhW/xFxsftx+1xAYzqN5yLnfjaIyj9mrJlEqDozfPTmDUZXzB01URaqg+7Cziw==
+X-Received: by 2002:a05:6512:10d2:b0:535:d4e9:28ca with SMTP id 2adb3069b0e04-5367ff33836mr839053e87.55.1726201041834;
+        Thu, 12 Sep 2024 21:17:21 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5365f90404fsm2106513e87.234.2024.09.12.21.17.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Sep 2024 21:17:21 -0700 (PDT)
+Date: Fri, 13 Sep 2024 07:17:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, 
+	Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org, todor.too@gmail.com, mchehab@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, kernel@quicinc.com, 
+	Yongsheng Li <quic_yon@quicinc.com>
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+Message-ID: <laoud3fhqgrcnkbwasij3vrpvz5pqphcslrb3kka6zshiqqlkz@pqt2iotmnz7m>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+ <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
+ <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
+ <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
+ <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240912092457.1887906-1-dmitry.baryshkov@linaro.org> <ZuOnz1QcNZUVYPZZ@hu-bjorande-lv.qualcomm.com>
-In-Reply-To: <ZuOnz1QcNZUVYPZZ@hu-bjorande-lv.qualcomm.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 13 Sep 2024 07:12:58 +0300
-Message-ID: <CAA8EJprNbt1FE-rqL_R+KVyVWHzZekTwfSYnedJYrODFtS6qbQ@mail.gmail.com>
-Subject: Re: [RFC] Qualcomm RB3 Gen2 WiFi firmware pull
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc: Doug Anderson <dianders@chromium.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Kalle Valo <kvalo@kernel.org>, ath11k@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
 
-On Fri, 13 Sept 2024 at 05:48, Bjorn Andersson
-<quic_bjorande@quicinc.com> wrote:
->
-> On Thu, Sep 12, 2024 at 12:24:57PM +0300, Dmitry Baryshkov wrote:
-> > Hello,
-> >
-> > I'm planning to send the following pull request to linux-firmware, adding WiFi
-> > DSP firmware for the RB3 Gen2 board. However before doing that I wanted to
-> > check if it's fine with all affected maintainers.
-> >
-> > Qualcomm RB3 Gen2 board resets if it's used with the existing WCN6750 firmware,
-> > most likely because of the differences in the TZ setup. This pull request adds
-> > firmware specific to the qcm6490 / qcs6490 SoC family.
-> >
->
-> Given that this firmware runs on the SoC, isn't it device specific? Does
-> it make sense to carry this under ath11k/, when it's expected to have
-> the same form and distribution as the other remoteproc firmware?
+On Thu, Sep 12, 2024 at 04:11:58PM GMT, Bryan O'Donoghue wrote:
+> On 12/09/2024 13:44, Vladimir Zapolskiy wrote:
+> > > csiphy0
+> > > 
+> > > vdda-phy-supply = <&vreg_l2c_0p9>;
+> > > vdda-pll-supply = <&vreg_l1c_1p2>;
+> > > 
+> > > This is also the case for csiphy 1/2/4
+> > > 
+> > > So, I _don't_ believe this is work we need to do, since its the same
+> > > regulator for each PHY.
+> > 
+> > This is board specific, and even if the separation is not needed on the
+> > boards
+> > you have just checked, still it may be needed on some boards, which are
+> > not yet
+> > checked/not yet known.
+> 
+> There is a Power Grid Analysis document which specifies these rails @ the
+> SoC level and assumes you've used the Qcom PMIC to power, moreover the PGA
+> re-uses the same regulator over and over again.
+> 
+> You _could_ provide that power from your own PMIC which provides the same
+> voltage range as the Qcom PMIC you haven't used. Even if you did provide
+> that from your own PMIC you'd have to provide _separate_ rails for the
+> various CSIPHYs before it would be required to have a per PHY rail
+> requirement on this SoC.
+> 
+> Are people really powering these SoCs with their own PMICs ?
+> No probably not.
 
-This is an interesting question. I think that having all WiFi-related
-firmware under athNk makes sense. For example wlanmdsp.mbn files are
-also stored under ath10k/WCN3990/ subdirs.
-So do q6 and m3 firmware files under ath11k/IPQ*/.
-
->
-> >
-> > @Kalle, I understand that you cannot and won't fully support this firmware set.
-> > As a preparation to adding these files I moved existing files to the sc7280/
-> > subdir and pil-squashed them.  It is a generic preference to use a single MBN
-> > file instead of MDT + Bnn files. The mdt_loader detects the format without
-> > using the extension, handles the differences internally and doesn't require any
-> > changes to the driver or to the DT.  Could you please ack such a change?
-> >
->
-> I much prefer that we switch this to the single-file version, so I'm
-> onboard with this.
->
-> >
-> > @Bjorn, @Konrad in the past we have pushed all WPSS / WiFi firmware to ath10k
-> > and ath11k even if gets executed on the host.  I should have caught this while
-> > reviewing DT changes.  This branch uses firmware name that isn't compatible
-> > with the existing DT files.  Would you insist on adding compatibility symlink
-> > or we'd better fix the DT files?
-> >
->
-> I think we have a limited user base of sc7280-chrome-common, so we
-> should be able to fix up the DeviceTree, and avoid the symlink.
-
-I think we should keep the ath11k/WCN6750/hw1.0/wpss.mdt symlink,
-that's fine. I was talking about adding the qcom/qcm6490/wpss.mbn ->
-ath11k/WCN6750/hw1.0/wpss.mbn and the same for qcs6490 (just for the
-sake of existing DT files) or it's fine to fix the DT files instead
-and omit the symlink.
-
->
-> But I'd prefer Doug's ack on that.
->
-> > ---
-> >
-> > The following changes since commit 4a0367b33aeaa7fe1255a920d0e39f825b6985c1:
-> >
-> >   Merge branch 'rtl8852b' into 'main' (2024-09-11 11:00:41 +0000)
-> >
-> > are available in the Git repository at:
-> >
-> >   https://gitlab.com/lumag/linux-firmware rb3gen2-wpss
-> >
-> > for you to fetch changes up to fb8c67987c89b6f33fb787dfc6ff6e5e0f317f6d:
-> >
-> >   ath11k: add device-specific firmware for QCM6490 boards (2024-09-12 11:58:57 +0300)
-> >
-> > ----------------------------------------------------------------
-> > Dmitry Baryshkov (2):
-> >       ath11k: move WCN6750 firmware to the device-specific subdir
-> >       ath11k: add device-specific firmware for QCM6490 boards
-> >
-> >  WHENCE                                             |  18 ++++++++----------
-> >  ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn              | Bin 0 -> 7734064 bytes
->
-> qcm or qcs?
-
-qcm6490 as the main location, qcs6490 is symlinked via WHENCE file.
-
->
-> Regards,
-> Bjorn
->
-> >  ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} | Bin 5819999 -> 7463728 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b00                      | Bin 340 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b01                      | Bin 6848 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b02                      | Bin 10300 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b03                      | Bin 4096 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b05                      | Bin 164332 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b06                      | Bin 266684 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b07                      | Bin 1176368 -> 0 bytes
-> >  ath11k/WCN6750/hw1.0/wpss.b08                      |   0
-> >  ath11k/WCN6750/hw1.0/wpss.mdt                      | Bin 7188 -> 0 bytes
-> >  12 files changed, 8 insertions(+), 10 deletions(-)
-> >  create mode 100644 ath11k/WCN6750/hw1.0/qcm6490/wpss.mbn
-> >  rename ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} (77%)
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b00
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b01
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b02
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b03
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b05
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b06
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b07
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b08
-> >  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.mdt
-
-
+Yes, they are.
 
 -- 
 With best wishes
