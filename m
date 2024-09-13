@@ -1,114 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-31680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31683-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2563977B1C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 10:32:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5815977B3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 10:38:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67CD31F241F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 08:32:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B8C71C20D5E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Sep 2024 08:38:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A01A1D67BF;
-	Fri, 13 Sep 2024 08:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A70B11D6DB8;
+	Fri, 13 Sep 2024 08:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jhx/fTcJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lld+Rusj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC7A1BD510;
-	Fri, 13 Sep 2024 08:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A3E1D6C4C;
+	Fri, 13 Sep 2024 08:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726216368; cv=none; b=GB4Z6Ja+NmWQG1gQi6BwOnJuJJ07Q/bBCha60r2WMom1HcrXzXg7QHfOi2dJahpK6tQv8z4IqYnJVoDNRKwNyBeDHIp8JnYPXMe+aIpwDBmv6Yhu5DSieO9EqSeZbqeceCLlYjO8TZneZ2zJN9OMGa3hH5rHMh64dhSzIDOjG3w=
+	t=1726216674; cv=none; b=qkSh48X/k255PNIAhSso8/VsheCpj8ZzK/hYFDBdJmCTJtuqb2vqTpWYNP+Hu1KA51AKZJWDbz23QdP8D/TBtKuZmC8FqkPryADQENAinz8BSVcK06a5JKxpceFeTF5HEEDiuswlh7k7BALj9bMLZiC1Kc8aL33Ltdm5s5+QGfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726216368; c=relaxed/simple;
-	bh=DmD/oFS9ztHwN6LHCihrKLQc89zTH//9v3d7Pudf0gE=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:MIME-Version:
-	 Content-Type; b=ExR9PH9Cx3NzViorSwBLe9VVppdJWLLsAavJ8abUytViDxbY5D8f3gUr1irXBN5vLR5TZLGcDs/YpnUi+F/vyjz0HxlUSWzp1qcyo1Sjvd4K4HQbK4qJgY+hl5qW8SDVf+xGJK2OcoLdc/NcuhNamr8KwR7gDrGR/BrlVvTDZ68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jhx/fTcJ; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42bb7298bdeso8398455e9.1;
-        Fri, 13 Sep 2024 01:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726216364; x=1726821164; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:in-reply-to:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wp9Y737ViR4EfOInl3nplGoJAcdlB+yuFRrQ0BSzktk=;
-        b=Jhx/fTcJPNndRUuB9lLIkr6H2oVl3Y3IgpPLrXQ+E1a0nBioMhXnID93eZbuFyCWts
-         mG7zgAbtomkavBn8aZdut71HWvmuL0jnSka1+IgbriASbZudnlAihbnT7Ee10MBQhr0Z
-         fRCKmBjgb+G0rmPAnt7Cs0mXneVLBEyyumOOLwsYDOWS14TWfcQBoTK+MrSGbHKTdpF2
-         1xrXWzDvsn7t3SdZovQQVffRdpTFRoJsmyWqc7JS3svST+2mGmIdJUU6iP1fK+E7FEks
-         Q2ytItjS5b7uf5IYPjjdKMwtO/ltg8YmuXiqyEOoTI5+R7uDRewheb9X4LQuraJi8ogO
-         q9YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726216364; x=1726821164;
-        h=content-transfer-encoding:mime-version:in-reply-to:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wp9Y737ViR4EfOInl3nplGoJAcdlB+yuFRrQ0BSzktk=;
-        b=CC2kPq0NMpoQlyvwwQGJ5vEUO0TSKAQH1rh87lfmxyC95t99ic+JyaUzFove18EiD+
-         ZUyzw1cHZlmVFGc7x6gbOmzgPTvDP/EnhsnvP+DNeg3Xn+xyKYj+Ro8j1nkgK3EU0rVp
-         C4SDNyGL8cQBThaF115qzW7tr8DHYBlwhrCrnAIf9qsCOj0zvnrTq9jklqmXSD3cfBfK
-         BaQLmiwTbppqxkyALFKkBp86519C7zGjephYCDFMSUc1C03UMhUnPVSVtnbulhY6DcqP
-         9S3X1PNxNmeclJ9WZv88hOhncNnkITcT+XTlV1x5JM46e0hwrgilXFOQ00UKpC/7+0PA
-         jkZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVIlyw8Iqifmi6QO3W27gpL5Yps4Umbel6VfeHenqDICDkRCf4GOEb5uZgUTuXPvp+AdepMo5MD8tdKs01X@vger.kernel.org, AJvYcCVZhtCsE7fBQBoh9sEfBVptj41j3+fAbDhSJe69+D2YXrCjgfEVEgROnTtaxZyDNBxarIHYQ4f+7LQZ@vger.kernel.org, AJvYcCVgwjQVBFTp3C5NMyVk9yyRFMN8JuC3KojXOZIvdBAxBWLGLDQNGbcRHi3Fjtwb47nMOEXeHi16dQul@vger.kernel.org, AJvYcCWZm4I9Psi60SeNFjWZ7cFwDORxH+zRMM849RkJ8171oHYqXKjV7ZSjQ6wSq5YhvKr4SNlbtOdOLc+cYk9ARQ==@vger.kernel.org, AJvYcCWwEPwpvI3d+Q/A5RLV9L0UySQGRUzvaMqHrlJ0ym9jM6Ep1BoL81xWty5bwfnyezFEOd6CYJW9Fp5Y@vger.kernel.org, AJvYcCXAtFR1aRpti65x7wjtc1ykiku5SrqYe8c1YRRpzkbgBxjqBHUipS9Y+EHuE2LCcneUSH5O4X5pKln/IJs=@vger.kernel.org, AJvYcCXQ9Zm3YR3Wdqj/qTd4FAKG4E3bCHA0bxcdZfdJXQP/IXADUeyzUvVnJVBsWXLy7IjpiHW3p/rMzMXDHgg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoXlD9a7RE+14evReJdk7rJUMOEwqyQ5v3PaDxvLSfJe+SEOkd
-	Z3TnVu8LxefjBRrXOnnvBAyqaMlT9ZIRmNXhcySWedeVszspEWFq
-X-Google-Smtp-Source: AGHT+IE2Ku5Yqa7DnoqdH5xDY5dD9ozv14FV0pNO09UH2LmGbvbqmw1nTSHM8AvIojolJCXpaHwH8w==
-X-Received: by 2002:a5d:5150:0:b0:374:bd48:fae8 with SMTP id ffacd0b85a97d-378d61f090fmr1570895f8f.25.1726216363746;
-        Fri, 13 Sep 2024 01:32:43 -0700 (PDT)
-Received: from foxbook (bio60.neoplus.adsl.tpnet.pl. [83.28.130.60])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a8d25cf03ccsm846921566b.183.2024.09.13.01.32.41
-        (version=TLS1_2 cipher=AES128-SHA bits=128/128);
-        Fri, 13 Sep 2024 01:32:43 -0700 (PDT)
-Date: Fri, 13 Sep 2024 10:32:37 +0200
-From: =?UTF-8?B?TWljaGHFgg==?= Pecio <michal.pecio@gmail.com>
-To: quic_wcheng@quicinc.com, mathias.nyman@linux.intel.com
-Cc: Thinh.Nguyen@synopsys.com, alsa-devel@alsa-project.org,
- bgoswami@quicinc.com, broonie@kernel.org, conor+dt@kernel.org,
- corbet@lwn.net, devicetree@vger.kernel.org, dmitry.torokhov@gmail.com,
- gregkh@linuxfoundation.org, krzk+dt@kernel.org, lgirdwood@gmail.com,
- linux-arm-msm@vger.kernel.org, linux-doc@vger.kernel.org,
- linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-usb@vger.kernel.org,
- mathias.nyman@intel.com, perex@perex.cz,
- pierre-louis.bossart@linux.intel.com, robh@kernel.org,
- srinivas.kandagatla@linaro.org, tiwai@suse.com
-Subject: Re: [PATCH v27 01/32] xhci: add helper to stop endpoint and wait
- for completion
-Message-ID: <20240913103237.2f5dc796@foxbook>
-In-Reply-To: <20240912193935.1916426-2-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1726216674; c=relaxed/simple;
+	bh=LhqzbbeJPDFDX1us0PqKZch9ACqhnfXgoQdeEpyIkeE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=A3ViWobc/W2v0dkeCY9ek9wlCCTUFVi1Lh+kSsy0IODO5eXz1ULc+UIHMlkshHzvvgmJ/78JcCRpDBWDhfdLVuudmfklcKK0zcJYvdF2jCw3fhp5qei9v7UHTif70kfrxpWk9MI5r5AG0OKlyRbhgf3gcbPkFdBuVSR5Db+pHgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lld+Rusj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48CMBb7v018913;
+	Fri, 13 Sep 2024 08:37:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=Pds7CggsUh1Rn6FKGi339ydI1uZXqwenFix
+	dciKo4T4=; b=Lld+RusjUiG9krtmKEH5WPHJkLGULVSh59rk3FmZ+Q3a1PX0b7s
+	7a7hZPRgLu4zGwtuSloUVMkCcpVJGA2VQ0g/n/x2xciHG5RbOjVfb1UaWlhFcyxC
+	56oNfZNefSpzxs8DsftteHCbBzm2KVS/PeHbwAdbsiaDsN/a86PAfbT2YBECCsUH
+	7G4CpLr4PjeN/rW2BuJyTCFq2r6bTvMUak3FKXo4RWAvshUj2foB5/1K+xI9SRqW
+	tCkutiI9ZYTHPaablSDzoBXYPOtWYteQRuhcjCbCbvPDHEjwTQsqeaOTpYCOyewm
+	Wjxd3WMpUfYGNJUKLbXDTZ21gPNOopVFWzQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41j6gn4b9k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Sep 2024 08:37:27 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48D7n725006336;
+	Fri, 13 Sep 2024 08:37:26 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 41kwufrfe7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Sep 2024 08:37:26 +0000
+Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48D8Y5eu005428;
+	Fri, 13 Sep 2024 08:37:26 GMT
+Received: from hu-devc-lv-u22-c.qualcomm.com (hu-qianyu-lv.qualcomm.com [10.81.25.114])
+	by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 48D8bPng010338
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 13 Sep 2024 08:37:26 +0000
+Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4098150)
+	id 9FB6954F; Fri, 13 Sep 2024 01:37:25 -0700 (PDT)
+From: Qiang Yu <quic_qianyu@quicinc.com>
+To: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
+        robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+        quic_devipriy@quicinc.com
+Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+        neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v2 0/5] Add support for PCIe3 on x1e80100
+Date: Fri, 13 Sep 2024 01:37:19 -0700
+Message-Id: <20240913083724.1217691-1-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: btvZkKFNgB4xeuw285RWP8WZ9UwYZqrk
+X-Proofpoint-GUID: btvZkKFNgB4xeuw285RWP8WZ9UwYZqrk
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ clxscore=1015 phishscore=0 mlxlogscore=932 lowpriorityscore=0
+ suspectscore=0 mlxscore=0 priorityscore=1501 malwarescore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409130059
 
-Hi,
+This series add support for PCIe3 on x1e80100.
 
-> Expose xhci_stop_endpoint_sync() which is a synchronous variant of
-> xhci_queue_stop_endpoint().  This is useful for client drivers that are
-> using the secondary interrupters, and need to stop/clean up the current
-> session.  The stop endpoint command handler will also take care of
-> cleaning up the ring.
+PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
+PHY configuration compare other PCIe instances on x1e80100. Hence add
+required resource configuration and usage for PCIe3.
 
-I'm not entirely sure what you meant by "cleaning up the ring" (maybe a
-comment would be in order?), but I see nothing being done here after the
-command completes and FYI xhci-ring.c will not run the default handler if
-the command is queued with a completion, like here.
+v2->v1:
+1. Squash [PATCH 1/8], [PATCH 2/8],[PATCH 3/8] into one patch and make the
+   indentation consistent.
+2. Put dts patch at the end of the patchset.
+3. Put dt-binding patch at the first of the patchset.
+4. Add a new patch where opp-table is added in dt-binding to avoid dtbs
+   checking error.
+5. Remove GCC_PCIE_3_AUX_CLK, RPMH_CXO_CLK, put in TCSR_PCIE_8L_CLKREF_EN
+   as ref.
+6. Remove lane_broadcasting.
+7. Add 64 bit bar, Remove GCC_PCIE_3_PIPE_CLK_SRC, 
+   GCC_CFG_NOC_PCIE_ANOC_SOUTH_AHB_CLK is changed to
+   GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK.
+8. Add Reviewed-by tag.
+9. Remove [PATCH 7/8], [PATCH 8/8].
 
-At least that's the case for certain command types and there is probably
-a story behind each of them. I know that xhci_stop_device() queues a
-Stop EP with completion (and also a few without(?)). Maybe it's a bug...
+Qiang Yu (5):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100
+    QMP PCIe PHY Gen4 x8
+  dt-bindings: PCI: qcom: Add OPP table for X1E80100
+  phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3
+  clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
+  arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
 
-Regards,
-Michal
+ .../bindings/pci/qcom,pcie-x1e80100.yaml      |   4 +
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |   3 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 202 ++++++++++++++++-
+ drivers/clk/qcom/gcc-x1e80100.c               |  10 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 211 ++++++++++++++++++
+ .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
+ 7 files changed, 468 insertions(+), 6 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
+
+-- 
+2.34.1
+
 
