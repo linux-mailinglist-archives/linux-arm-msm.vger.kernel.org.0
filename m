@@ -1,68 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-31788-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70C7D978D77
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 07:12:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99676978E8E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 08:57:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33A7E2878C0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 05:12:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B903AB21F53
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 06:57:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7097219FF;
-	Sat, 14 Sep 2024 05:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B46C71CDA37;
+	Sat, 14 Sep 2024 06:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="OLv+Vh6K"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G0+QHPCl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14914199BC;
-	Sat, 14 Sep 2024 05:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3651CDA2F;
+	Sat, 14 Sep 2024 06:56:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726290770; cv=none; b=ekDjqycMR/MpHEDkeWM2zStbsPjuBvhCEbsKN1nMlir2taYl78OtP2pihSyCDxk8VpiKkhDiMMY+nFxFQAqrTdNwedyvMgWjB92WwDIixbarxzOiFrxrpk7zzoD1dLwPKRrL5R8+w5Uw9FWmeiTrI+xsqyiZmhDoDlvrbXlkdQs=
+	t=1726297015; cv=none; b=JvCi8iqY3gXgTAYbvBCEkWKo7PqYxyv+G5xg9wvipDnbuWtOA5fR3QtHlHVWe8k2+yVVJXjeid/S+hqWSQO6gHd5xQzBFQ5Brq4KgJyzPam0hGBmr+J9k9lilEjjTTqJCqaLBzZojv3SxGBxhskCD6IfbASw/CwecIOcVovKsZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726290770; c=relaxed/simple;
-	bh=/HB28poQFqti82eKAs8KNttYZol5FFOa8Hcja/yKtL0=;
+	s=arc-20240116; t=1726297015; c=relaxed/simple;
+	bh=z82qoXfdXrLYs3jMxnQP89C3VVMg1koj+ufGNLLviTY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ox4PyJ3aWXDJrix6eFFFh42ofwuiFkdSZ+25YVIas35MdlrNzxQzYJcW2HlXRpu7hxI+nH6QoUccdA/IAAK00l1ZkQVP85yhLJyXR6eiza1GM8MwrgOl4fBBaNZ3L5+I0cXnehr6Qfnrifx1rQxQbIH0MOj9oaOqqtrfbocU1YY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=OLv+Vh6K; arc=none smtp.client-ip=192.198.163.9
+	 Content-Type:Content-Disposition:In-Reply-To; b=H6FvcGUNTdpePSTNjP5C8D4nGtvGZyhr7Z4buH1Wfu2/Uxu1I9O5DBFOz1Xh1zZFxJBvF4n+3CkhnQWjpma/Zv5SCCVt/rAnFA6BgBFmJvVo9xF+A6jX+BUJEhb9YtVYnJiKn8AQX89YXHgJePgX0UPiOenvHRYaWRMXXi3ZA2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G0+QHPCl; arc=none smtp.client-ip=192.198.163.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1726290769; x=1757826769;
+  t=1726297014; x=1757833014;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=/HB28poQFqti82eKAs8KNttYZol5FFOa8Hcja/yKtL0=;
-  b=OLv+Vh6Kh7SzTrYSEexJPAZ4V/og19giFKa5PERf/gSx6D6AhlSj2Z8V
-   YN477blbVKgtjahRWb9iNK8KgQw4v5cqKCboTiegbEVot+KfbGghHL5/U
-   66FG073UOUdww/zTWn1Z/jTs3YRxpn19J5ssPSfqGE9M/GHdJGn2kRpk9
-   StIM/RQudgO0qYgX+k3krLM5eJao3sSWrMZzdAknKcOoVE9NrKKchmYp2
-   D+Ni1TnJr2fg50GT0z6Qc5KHGTZ0wtN45ANCskICfyFbEr/Dl3VTJpeCQ
-   HKuS7k1uBK/VIR/x5P7L9TqXeerXKtyMR2OZ82yRyp493cW9tGcWSxGd8
-   Q==;
-X-CSE-ConnectionGUID: lHa43aCLTFiSyLgv+NGwKQ==
-X-CSE-MsgGUID: DGVWiKjPQwy5kmisw1ZJeQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11194"; a="35874422"
+  bh=z82qoXfdXrLYs3jMxnQP89C3VVMg1koj+ufGNLLviTY=;
+  b=G0+QHPClqpztL4q1gszdIj/Jax2lSZlm/wtYKhCDZbyZTgaRi2fM0DkO
+   IrF022bg1z49ZT0qKZY5bSmpbuMz/w2sX3aQplbiv+oqOzDAmuEVMXcQZ
+   bqaY1CwYyQdbc3+565FHcffjLpO1iZCHGDkB+svefUeXJ12LzSIlxklMb
+   qn7qrwoXL0FUsw4hwV/pBXo2flCYNWiaD2eKghFtleViZ8ZOB5OAT1d8x
+   Ql77av5CJU2dfkM9tRwlvLw9rbj2OAL1dur0mYplR54RVaYEPyPL8Z+ro
+   RSGJD7YT8o8h7hizbz8FBNrwaWHgsY2gx7XUBCyRy5fDTRiiphqrXfntU
+   A==;
+X-CSE-ConnectionGUID: QVd9BH0OTziphDShyzQA6g==
+X-CSE-MsgGUID: cHz493HESm66AzGNDOVU4Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11194"; a="35878469"
 X-IronPort-AV: E=Sophos;i="6.10,228,1719903600"; 
-   d="scan'208";a="35874422"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2024 22:12:48 -0700
-X-CSE-ConnectionGUID: 9kMl8jvvTEqx02Vo7dS9nw==
-X-CSE-MsgGUID: gDe/TK+gT7mkd/ggLB2mrw==
+   d="scan'208";a="35878469"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2024 23:56:53 -0700
+X-CSE-ConnectionGUID: 0Ta95WA3Rs+rO+CmSX4CtQ==
+X-CSE-MsgGUID: 5n97j3mcQOyiIWczxHzCcA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.10,228,1719903600"; 
-   d="scan'208";a="73322579"
+   d="scan'208";a="68320761"
 Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
-  by orviesa004.jf.intel.com with ESMTP; 13 Sep 2024 22:12:41 -0700
+  by fmviesa009.fm.intel.com with ESMTP; 13 Sep 2024 23:56:47 -0700
 Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1spL5K-0007Or-2w;
-	Sat, 14 Sep 2024 05:12:38 +0000
-Date: Sat, 14 Sep 2024 13:12:20 +0800
+	id 1spMi5-0007TQ-0T;
+	Sat, 14 Sep 2024 06:56:45 +0000
+Date: Sat, 14 Sep 2024 14:56:27 +0800
 From: kernel test robot <lkp@intel.com>
 To: Dzmitry Sankouski <dsankouski@gmail.com>,
 	Sebastian Reichel <sre@kernel.org>,
@@ -90,10 +90,9 @@ Cc: oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
 	devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 11/27] power: supply: max77705: Add charger driver for
- Maxim 77705
-Message-ID: <202409141322.ptabmnJ9-lkp@intel.com>
-References: <20240913-starqltechn_integration_upstream-v4-11-2d2efd5c5877@gmail.com>
+Subject: Re: [PATCH v4 03/27] gcc-sdm845: Add general purpose clock ops
+Message-ID: <202409141429.Wv6WJPEQ-lkp@intel.com>
+References: <20240913-starqltechn_integration_upstream-v4-3-2d2efd5c5877@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -102,7 +101,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240913-starqltechn_integration_upstream-v4-11-2d2efd5c5877@gmail.com>
+In-Reply-To: <20240913-starqltechn_integration_upstream-v4-3-2d2efd5c5877@gmail.com>
 
 Hi Dzmitry,
 
@@ -112,90 +111,73 @@ kernel test robot noticed the following build errors:
 
 url:    https://github.com/intel-lab-lkp/linux/commits/Dzmitry-Sankouski/power-supply-add-undervoltage-health-status-property/20240913-231027
 base:   5acd9952f95fb4b7da6d09a3be39195a80845eb6
-patch link:    https://lore.kernel.org/r/20240913-starqltechn_integration_upstream-v4-11-2d2efd5c5877%40gmail.com
-patch subject: [PATCH v4 11/27] power: supply: max77705: Add charger driver for Maxim 77705
-config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20240914/202409141322.ptabmnJ9-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240914/202409141322.ptabmnJ9-lkp@intel.com/reproduce)
+patch link:    https://lore.kernel.org/r/20240913-starqltechn_integration_upstream-v4-3-2d2efd5c5877%40gmail.com
+patch subject: [PATCH v4 03/27] gcc-sdm845: Add general purpose clock ops
+config: arm-randconfig-001-20240914 (https://download.01.org/0day-ci/archive/20240914/202409141429.Wv6WJPEQ-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240914/202409141429.Wv6WJPEQ-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409141322.ptabmnJ9-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202409141429.Wv6WJPEQ-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
-   drivers/power/supply/max77705_charger.c: In function 'max77705_charger_probe':
->> drivers/power/supply/max77705_charger.c:523:48: error: assignment of member 'irq_drv_data' in read-only object
-     523 |         max77705_charger_irq_chip.irq_drv_data = chg;
-         |                                                ^
+   arm-linux-gnueabi-ld: drivers/clk/qcom/clk-rcg2.o: in function `clk_rcg2_calc_mnd':
+>> drivers/clk/qcom/clk-rcg2.c:437:(.text.clk_rcg2_calc_mnd+0x26): undefined reference to `__aeabi_uldivmod'
+>> arm-linux-gnueabi-ld: drivers/clk/qcom/clk-rcg2.c:438:(.text.clk_rcg2_calc_mnd+0x38): undefined reference to `__aeabi_uldivmod'
 
 
-vim +/irq_drv_data +523 drivers/power/supply/max77705_charger.c
+vim +437 drivers/clk/qcom/clk-rcg2.c
 
-   497	
-   498	static int max77705_charger_probe(struct platform_device *pdev)
-   499	{
-   500		struct power_supply_config pscfg = {};
-   501		struct max77693_dev *max77705;
-   502		struct max77705_charger_data *chg;
-   503		struct device *dev, *parent;
-   504		struct regmap_irq_chip_data *irq_data;
-   505		int ret;
-   506	
-   507		dev = &pdev->dev;
-   508		parent = dev->parent;
-   509		max77705 = dev_get_drvdata(parent);
-   510	
-   511		chg = devm_kzalloc(dev, sizeof(*chg), GFP_KERNEL);
-   512		if (!chg)
-   513			return -ENOMEM;
-   514	
-   515		platform_set_drvdata(pdev, chg);
-   516	
-   517		chg->regmap = max77705->regmap_chg;
-   518		if (!chg->regmap)
-   519			return -ENODEV;
-   520	
-   521		chg->dev = dev;
-   522	
- > 523		max77705_charger_irq_chip.irq_drv_data = chg;
-   524		ret = devm_regmap_add_irq_chip(chg->dev, chg->regmap, max77705->irq,
-   525						IRQF_ONESHOT | IRQF_SHARED, 0,
-   526						&max77705_charger_irq_chip,
-   527						&irq_data);
-   528		if (ret) {
-   529			dev_err(dev, "failed to add irq chip: %d\n", ret);
-   530			return ret;
-   531		}
-   532	
-   533		ret = regmap_update_bits(chg->regmap,
-   534					MAX77705_CHG_REG_INT_MASK,
-   535					MAX77705_CHGIN_IM, 0);
-   536	
-   537		if (ret)
-   538			return ret;
-   539	
-   540		chg->wqueue = create_singlethread_workqueue(dev_name(dev));
-   541		if (IS_ERR(chg->wqueue)) {
-   542			dev_err(dev, "failed to create workqueue\n");
-   543			return PTR_ERR(chg->wqueue);
-   544		}
-   545		INIT_WORK(&chg->chgin_work, max77705_chgin_isr_work);
-   546	
-   547		pscfg.of_node = dev->of_node;
-   548		pscfg.drv_data = chg;
-   549	
-   550		chg->psy_chg = devm_power_supply_register(dev, &max77705_charger_psy_desc,
-   551							  &pscfg);
-   552		if (IS_ERR(chg->psy_chg))
-   553			return PTR_ERR(chg->psy_chg);
-   554	
-   555		max77705_charger_initialize(chg);
-   556	
-   557		return max77705_charger_enable(chg);
-   558	}
-   559	
+   427	
+   428	static void clk_rcg2_calc_mnd(u64 parent_rate, u64 rate, struct freq_tbl *f,
+   429				unsigned int mnd_max, unsigned int hid_max)
+   430	{
+   431		int i = 2, count = 0;
+   432		unsigned int pre_div_pure = 1;
+   433		unsigned long rates_gcd, scaled_parent_rate;
+   434		u16 m, n = 1, n_candidate = 1, n_max;
+   435	
+   436		rates_gcd = gcd(parent_rate, rate);
+ > 437		m = rate / rates_gcd;
+ > 438		scaled_parent_rate = parent_rate / rates_gcd;
+   439		while (scaled_parent_rate > (mnd_max + m) * hid_max) {
+   440			// we're exceeding divisor's range, trying lower scale.
+   441			if (m > 1) {
+   442				m--;
+   443				scaled_parent_rate = mult_frac(scaled_parent_rate, m, (m + 1));
+   444			} else {
+   445				f->n = mnd_max + m;
+   446				f->pre_div = hid_max;
+   447				f->m = m;
+   448			}
+   449		}
+   450	
+   451		n_max = m + mnd_max;
+   452	
+   453		while (scaled_parent_rate > 1) {
+   454			while (scaled_parent_rate % i == 0) {
+   455				n_candidate *= i;
+   456				if (n_candidate < n_max)
+   457					n = n_candidate;
+   458				else if (pre_div_pure * i < hid_max)
+   459					pre_div_pure *= i;
+   460				else
+   461					clk_rcg2_split_div(i, &pre_div_pure, &n, hid_max);
+   462	
+   463				scaled_parent_rate /= i;
+   464			}
+   465			i++;
+   466			count++;
+   467		}
+   468	
+   469		f->m = m;
+   470		f->n = n;
+   471		f->pre_div = pre_div_pure > 1 ? pre_div_pure : 0;
+   472	}
+   473	
 
 -- 
 0-DAY CI Kernel Test Service
