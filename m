@@ -1,185 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-31789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99676978E8E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 08:57:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C38D978F26
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 10:39:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B903AB21F53
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 06:57:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D5082887B2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Sep 2024 08:39:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B46C71CDA37;
-	Sat, 14 Sep 2024 06:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 407D9145FE8;
+	Sat, 14 Sep 2024 08:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="G0+QHPCl"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="UD9rh84s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from sender4-op-o14.zoho.com (sender4-op-o14.zoho.com [136.143.188.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3651CDA2F;
-	Sat, 14 Sep 2024 06:56:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726297015; cv=none; b=JvCi8iqY3gXgTAYbvBCEkWKo7PqYxyv+G5xg9wvipDnbuWtOA5fR3QtHlHVWe8k2+yVVJXjeid/S+hqWSQO6gHd5xQzBFQ5Brq4KgJyzPam0hGBmr+J9k9lilEjjTTqJCqaLBzZojv3SxGBxhskCD6IfbASw/CwecIOcVovKsZM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726297015; c=relaxed/simple;
-	bh=z82qoXfdXrLYs3jMxnQP89C3VVMg1koj+ufGNLLviTY=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3696433D5;
+	Sat, 14 Sep 2024 08:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1726303157; cv=pass; b=srsmMcSIJ+W5XWJ+8EBBu2IyxZcU08+eYhSYu161+XANKyz6Pww7dm0ecBt8sfkvB2QkuDuMkuDeiSITkNGbV/cGQOfEXZKFvsOT9+6cEYhjzTnduRxzhRGbagPkRP5AjCQDjBbf6ke6dcNH1HV1ilNQfr9+zu2XYLkgZKYDBwU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1726303157; c=relaxed/simple;
+	bh=pfSJVhTniD/TEI8prxwxup12Sbw+prmH32swhXL3LQ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H6FvcGUNTdpePSTNjP5C8D4nGtvGZyhr7Z4buH1Wfu2/Uxu1I9O5DBFOz1Xh1zZFxJBvF4n+3CkhnQWjpma/Zv5SCCVt/rAnFA6BgBFmJvVo9xF+A6jX+BUJEhb9YtVYnJiKn8AQX89YXHgJePgX0UPiOenvHRYaWRMXXi3ZA2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=G0+QHPCl; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1726297014; x=1757833014;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=z82qoXfdXrLYs3jMxnQP89C3VVMg1koj+ufGNLLviTY=;
-  b=G0+QHPClqpztL4q1gszdIj/Jax2lSZlm/wtYKhCDZbyZTgaRi2fM0DkO
-   IrF022bg1z49ZT0qKZY5bSmpbuMz/w2sX3aQplbiv+oqOzDAmuEVMXcQZ
-   bqaY1CwYyQdbc3+565FHcffjLpO1iZCHGDkB+svefUeXJ12LzSIlxklMb
-   qn7qrwoXL0FUsw4hwV/pBXo2flCYNWiaD2eKghFtleViZ8ZOB5OAT1d8x
-   Ql77av5CJU2dfkM9tRwlvLw9rbj2OAL1dur0mYplR54RVaYEPyPL8Z+ro
-   RSGJD7YT8o8h7hizbz8FBNrwaWHgsY2gx7XUBCyRy5fDTRiiphqrXfntU
-   A==;
-X-CSE-ConnectionGUID: QVd9BH0OTziphDShyzQA6g==
-X-CSE-MsgGUID: cHz493HESm66AzGNDOVU4Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11194"; a="35878469"
-X-IronPort-AV: E=Sophos;i="6.10,228,1719903600"; 
-   d="scan'208";a="35878469"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2024 23:56:53 -0700
-X-CSE-ConnectionGUID: 0Ta95WA3Rs+rO+CmSX4CtQ==
-X-CSE-MsgGUID: 5n97j3mcQOyiIWczxHzCcA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,228,1719903600"; 
-   d="scan'208";a="68320761"
-Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
-  by fmviesa009.fm.intel.com with ESMTP; 13 Sep 2024 23:56:47 -0700
-Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1spMi5-0007TQ-0T;
-	Sat, 14 Sep 2024 06:56:45 +0000
-Date: Sat, 14 Sep 2024 14:56:27 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dzmitry Sankouski <dsankouski@gmail.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@kernel.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	cros-qcom-dts-watchers@chromium.org,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 03/27] gcc-sdm845: Add general purpose clock ops
-Message-ID: <202409141429.Wv6WJPEQ-lkp@intel.com>
-References: <20240913-starqltechn_integration_upstream-v4-3-2d2efd5c5877@gmail.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=La1Z/G55fHQep/l+nANHaaft687CgjRp46uxOd4FJowgEEc448Z5M/opkHf3RtXzbsi0d0+yGb71V/rC4NPx6CNiqKpGqygyikG2qXfzk52snEyqHbJfboD0zkulcjdCBvNXmbgDjLpOGXr/gUZ+ZJ8+rPfeA6D/0luuF0FV14w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=UD9rh84s; arc=pass smtp.client-ip=136.143.188.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1726303126; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=MLOmakQrtsg4TH4ciQgVKKbaYfee0msm0gpHo0IRm2TCR1PjW/dhublzRh0fRtGTGALhk45SIBObhSMIdaclT1VZ9llt1dpmAWq4/rrRaZnP0TlystVIRu8JLbEtT5I9dAY40SMVINghKRE66+gmMtnaXLBPvrGwUkoll0SY1iU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1726303126; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=Ej6QX9G1dmM07ksR/FVgVBTC5gPecCY6T1R8JXBXxZk=; 
+	b=QY6lMDWN3HqBg2CDOf4cd+x4CEh43tB3mXTwIHABzoMI9JNSgz3eCEZESG2I+hR6nX15ncOa5pdT8gmwe3yMArbB0phGyXskFZyfoOp4NyvlZWvqyKpCJ2GuN5ZhbcTzbw8Mtg8QOC6CbLtFeId2ZLx38RRRTlrcB5KrD33AbT0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1726303126;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=Ej6QX9G1dmM07ksR/FVgVBTC5gPecCY6T1R8JXBXxZk=;
+	b=UD9rh84s/7G9dAEtd71GxxzLUEpLcscRJ47S8/+Pe+224BS1cdckHNW/uTnB9dg5
+	ie+cQG6VuPJdexJ7jiJPsrCstd7qabLh6ikWCE7quHAz3dCrzp0Zv10KpGsPVcL2ajR
+	EzZkbOiu/30stenQoIDwq5734cnSfpNxAyU85Jbc=
+Received: by mx.zohomail.com with SMTPS id 1726303124615201.60398788551277;
+	Sat, 14 Sep 2024 01:38:44 -0700 (PDT)
+Received: by mercury (Postfix, from userid 1000)
+	id 3FFFB1060578; Sat, 14 Sep 2024 10:38:28 +0200 (CEST)
+Date: Sat, 14 Sep 2024 10:38:28 +0200
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, Liam Girdwood <lgirdwood@gmail.com>, 
+	Mark Brown <broonie@kernel.org>, Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+	Krzysztof Kozlowski <krzk@kernel.org>, Chanwoo Choi <cw00.choi@samsung.com>, 
+	Simona Vetter <simona@ffwll.ch>, cros-qcom-dts-watchers@chromium.org, 
+	Konrad Dybcio <konradybcio@kernel.org>, Simona Vetter <simona.vetter@ffwll.ch>, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, linux-input@vger.kernel.org, 
+	linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, linux-samsung-soc@vger.kernel.org
+Subject: Re: [PATCH v4 01/27] power: supply: add undervoltage health status
+ property
+Message-ID: <uta55qswxp43tdziertbwvopytx26kjanouxfffvkjfnhrkwj2@bwoyfygw3pp7>
+References: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
+ <20240913-starqltechn_integration_upstream-v4-1-2d2efd5c5877@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="r7xlkoqbyyg5k4lc"
+Content-Disposition: inline
+In-Reply-To: <20240913-starqltechn_integration_upstream-v4-1-2d2efd5c5877@gmail.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-1.3.1/223.982.64
+X-ZohoMailClient: External
+
+
+--r7xlkoqbyyg5k4lc
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240913-starqltechn_integration_upstream-v4-3-2d2efd5c5877@gmail.com>
+Content-Transfer-Encoding: quoted-printable
 
-Hi Dzmitry,
+Hi,
 
-kernel test robot noticed the following build errors:
+On Fri, Sep 13, 2024 at 06:07:44PM GMT, Dzmitry Sankouski wrote:
+> Add POWER_SUPPLY_HEALTH_UNDERVOLTAGE status for power supply
+> to report under voltage lockout failures.
+>=20
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
 
-[auto build test ERROR on 5acd9952f95fb4b7da6d09a3be39195a80845eb6]
+This is missing updates to
+Documentation/ABI/testing/sysfs-class-power and
+drivers/power/supply/power_supply_sysfs.c
+(POWER_SUPPLY_HEALTH_TEXT).
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dzmitry-Sankouski/power-supply-add-undervoltage-health-status-property/20240913-231027
-base:   5acd9952f95fb4b7da6d09a3be39195a80845eb6
-patch link:    https://lore.kernel.org/r/20240913-starqltechn_integration_upstream-v4-3-2d2efd5c5877%40gmail.com
-patch subject: [PATCH v4 03/27] gcc-sdm845: Add general purpose clock ops
-config: arm-randconfig-001-20240914 (https://download.01.org/0day-ci/archive/20240914/202409141429.Wv6WJPEQ-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240914/202409141429.Wv6WJPEQ-lkp@intel.com/reproduce)
+Greetings,
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409141429.Wv6WJPEQ-lkp@intel.com/
+-- Sebastian
 
-All errors (new ones prefixed by >>):
+>  include/linux/power_supply.h | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
+> index 910d407ebe63..8682e6466544 100644
+> --- a/include/linux/power_supply.h
+> +++ b/include/linux/power_supply.h
+> @@ -58,6 +58,7 @@ enum {
+>  	POWER_SUPPLY_HEALTH_OVERHEAT,
+>  	POWER_SUPPLY_HEALTH_DEAD,
+>  	POWER_SUPPLY_HEALTH_OVERVOLTAGE,
+> +	POWER_SUPPLY_HEALTH_UNDERVOLTAGE,
+>  	POWER_SUPPLY_HEALTH_UNSPEC_FAILURE,
+>  	POWER_SUPPLY_HEALTH_COLD,
+>  	POWER_SUPPLY_HEALTH_WATCHDOG_TIMER_EXPIRE,
+>=20
+> --=20
+> 2.39.2
+>=20
 
-   arm-linux-gnueabi-ld: drivers/clk/qcom/clk-rcg2.o: in function `clk_rcg2_calc_mnd':
->> drivers/clk/qcom/clk-rcg2.c:437:(.text.clk_rcg2_calc_mnd+0x26): undefined reference to `__aeabi_uldivmod'
->> arm-linux-gnueabi-ld: drivers/clk/qcom/clk-rcg2.c:438:(.text.clk_rcg2_calc_mnd+0x38): undefined reference to `__aeabi_uldivmod'
+--r7xlkoqbyyg5k4lc
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-vim +437 drivers/clk/qcom/clk-rcg2.c
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmblS3wACgkQ2O7X88g7
++prRCxAAlhYUU4yJX7NEhfMbNTVWhURSBhobZ62HayXzgdpD6Mq48r79Maug7GC9
+GT0mcYXyGLCZjLkte5Qn0695klYG9JsIWdZqOdQV7fgHhH6gDBkFYghMVv8NVnXF
+Pmcmwc1QOCjmDp37EkvxjXKOc+XNdnVuAlSwpnP3zkXKtexwe3kvZtD3qLToP7vs
+Q+6qA8/9KVvC83i5VqrHUoWdkR514ZI8YcPzjStj6FecIRitH0xtOm9inpeLj1tv
+fFcknMQkRSdNAarhfpZNzFLoyOSpImY/yeUEx3qFUqKNGtDZVkXvWNHVaEEEtxih
++1mX44QV5thBOSuKfuIA0deafptEjaP/eXhQEwS619aqDJd7J+JBmnZAdlmiBLqK
+iEsBgTeThbx7RuOvBvRUVYPlUPG1jpYBgfWT4OT6w7x9tkkfemxU/JT1tXJNmKAp
+onm6UftL9rF/olPVoXIL4AZ8QhsLkGQ+2iDNWaUbcvhWdEAo0AFnJNIRJHdbUT4a
+fPlTrlZ5DO/ufGCPj7rbPehkVjKD/apDK84Dp8mQrIjlzuxqMacWFBv0Szrj9k4L
+ZpUae4iBOygN1fXd6M8w3SvZw+9JOixLL/1vm2Av8vJwMYUUt4eNInyN4Pr1cjMh
+Rd6zPpSmphSU+AgGnN70hqkRetW7+zUoyFzoKWtQeWApkEdHhVE=
+=Gfk0
+-----END PGP SIGNATURE-----
 
-   427	
-   428	static void clk_rcg2_calc_mnd(u64 parent_rate, u64 rate, struct freq_tbl *f,
-   429				unsigned int mnd_max, unsigned int hid_max)
-   430	{
-   431		int i = 2, count = 0;
-   432		unsigned int pre_div_pure = 1;
-   433		unsigned long rates_gcd, scaled_parent_rate;
-   434		u16 m, n = 1, n_candidate = 1, n_max;
-   435	
-   436		rates_gcd = gcd(parent_rate, rate);
- > 437		m = rate / rates_gcd;
- > 438		scaled_parent_rate = parent_rate / rates_gcd;
-   439		while (scaled_parent_rate > (mnd_max + m) * hid_max) {
-   440			// we're exceeding divisor's range, trying lower scale.
-   441			if (m > 1) {
-   442				m--;
-   443				scaled_parent_rate = mult_frac(scaled_parent_rate, m, (m + 1));
-   444			} else {
-   445				f->n = mnd_max + m;
-   446				f->pre_div = hid_max;
-   447				f->m = m;
-   448			}
-   449		}
-   450	
-   451		n_max = m + mnd_max;
-   452	
-   453		while (scaled_parent_rate > 1) {
-   454			while (scaled_parent_rate % i == 0) {
-   455				n_candidate *= i;
-   456				if (n_candidate < n_max)
-   457					n = n_candidate;
-   458				else if (pre_div_pure * i < hid_max)
-   459					pre_div_pure *= i;
-   460				else
-   461					clk_rcg2_split_div(i, &pre_div_pure, &n, hid_max);
-   462	
-   463				scaled_parent_rate /= i;
-   464			}
-   465			i++;
-   466			count++;
-   467		}
-   468	
-   469		f->m = m;
-   470		f->n = n;
-   471		f->pre_div = pre_div_pure > 1 ? pre_div_pure : 0;
-   472	}
-   473	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+--r7xlkoqbyyg5k4lc--
 
