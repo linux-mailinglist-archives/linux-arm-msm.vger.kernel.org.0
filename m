@@ -1,62 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-31847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31848-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2C15F97A529
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 17:21:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF02297A531
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 17:21:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5926B294FD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 15:20:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1D3311C26991
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 15:21:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D66F1158A3C;
-	Mon, 16 Sep 2024 15:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62EF715AD9C;
+	Mon, 16 Sep 2024 15:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mwMtQmJ9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B5ITreaq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4262149C4D;
-	Mon, 16 Sep 2024 15:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3588C149C4D;
+	Mon, 16 Sep 2024 15:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726500029; cv=none; b=tpJLdBz+Fp5PWvUGGCLdexWvwiSh5ClPV71Btvhd5jIPK9PoiL9o4tKIevAOoX2XI7iC5bgUPKwyGEfP9VmfArKluboJklOx/Jk44TDeM5vVJv87NxkrHZ/ZELRJP1vVgJF2P7Hw4fowInC+0Ifao6hpTYyzURAulLP/CcXURD8=
+	t=1726500076; cv=none; b=eE+kma2f2de2AAlQzErGb1z4pX195a7zQhh6DyRetExvccX0wT0jCmt9GD/z1Oc7AW2TcNaTv+3eGNrLM396jmxyX/bZyzNaja01wCTAAU60RcRvzjs3cbmSYczpzUj+mFvAF6HnLNFXD2kOD5l7Q4UBguOcOhJPHOW/8osxDAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726500029; c=relaxed/simple;
-	bh=dI8QA7UEh9kQ4aiH5s1VwA/ah6vGvZinGPk/2zxpCWs=;
+	s=arc-20240116; t=1726500076; c=relaxed/simple;
+	bh=15KPeQUmUDmhfRZADjOpKO9OZuRW742vA+qq24d9DQo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A1Z2axwzJ8MoWPtfwoUhG+DN32S27gE2j0lUlGTw6w1kWeS5jV22Mn2rPx1G3FIIZDSbltzwTsbK4m0FYLU0jp64Gq7xc3C/mA66uZS4tibTfOMOeDnAtAMYgzCdNFKgWaJu+ZczQPfdhGUiX9mabul8G4Y9iIhl+vDcMt6HCPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mwMtQmJ9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984C2C4CECE;
-	Mon, 16 Sep 2024 15:20:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=JVLDeQLEZR8x8E0dKW+5SHe0PADMpGr+HjBf70CSjjjWrTlQOEVKin2wht2rcOLpKNypo00pRJBy09/023jqbIL/sdx9uJbBCDYLJAG5abuXXLtfibE3YRVjMlMSueQo5+hSx8X8BEfinwdTQotwo+Oqor2bBESoWgq4d0Iw91g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B5ITreaq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4741C4CEC4;
+	Mon, 16 Sep 2024 15:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726500029;
-	bh=dI8QA7UEh9kQ4aiH5s1VwA/ah6vGvZinGPk/2zxpCWs=;
+	s=k20201202; t=1726500075;
+	bh=15KPeQUmUDmhfRZADjOpKO9OZuRW742vA+qq24d9DQo=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mwMtQmJ9gaRprRQtCndPijrsfTrBfedlVjsFa2vL3ichPSWdEQ/7LmfE+RvhOdO1c
-	 0PEoK4ACAi5iNCLycGMHDPuhb6iFUQSq1dXfkkg1EE02oBTkm/PNatMEVf1+ZdRchJ
-	 XCxmwHvHifr157iq+xtAaBq7W7RI8x6kwtyAwbYNUpTuepMj/a1ciTLgvVb5e3moFm
-	 AMfiFr80svPV9y2bD/injtAIfF28T0KFJpR45Ld4MlEjmKekE25oZfpTEOL6ki3h71
-	 SUVuB8p/KeBhd+VTJBUgzR0N8K6TaEvmckyqEXBdOb4wCtvH15ykvi2SC0JexcaB+l
-	 OgTUWSBiJKYqw==
-Date: Mon, 16 Sep 2024 17:20:25 +0200
+	b=B5ITreaqD66aCZn0ZnFRJQUnkcv9GGjMkBePgY00QODxUerihkKlQ/zgReoKJwE2Q
+	 Cap3vUp5CkErTeHLvGn0fZa13YQzZxOCbR+88hd5sTElej40AgSEz+toE+/ngvMUZm
+	 EGEtYX8jlXedfWk40Ep2CJOYrGNjS+8XUqV2K1kWZrw2P2vndv/Lw9zb9VL3pQPHkj
+	 YoGmZkYSS0I/H58sA1yM0QCgNHLkjE8SSN+w1RelY8FwpUsdq2uBiKyEOb1rirrEHc
+	 Z5C2xlsId/ivtorQ6nAOg7xPJ7QU550v4Z35ZhWnUq/g3VyAo/65+vr4nsezSW3mtV
+	 0C29kzbyIC/YQ==
+Date: Mon, 16 Sep 2024 17:21:12 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Qiang Yu <quic_qianyu@quicinc.com>, vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, 
-	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com, 
-	quic_devipriy@quicinc.com, kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org, 
+To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org, 
+	andersson@kernel.org, simona@ffwll.ch, dmitry.baryshkov@linaro.org, 
+	abel.vesa@linaro.org, robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
+	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, quic_khsieh@quicinc.com, 
+	konrad.dybcio@linaro.org, quic_parellan@quicinc.com, quic_bjorande@quicinc.com, 
 	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] dt-bindings: PCI: qcom: Add OPP table for X1E80100
-Message-ID: <npm3szetf55hw6ghmscol2rl5jb5h3neywit2axea53vbgarvh@pgqq5j5y5pcb>
-References: <20240913083724.1217691-1-quic_qianyu@quicinc.com>
- <20240913083724.1217691-3-quic_qianyu@quicinc.com>
- <tf4z475uqjenohdgqj4ltoty3j3gopxnbdhrrn6zo3ug5yuvyq@us2nysv2ggxh>
- <20240913133619.z7cc4whhpvs2uecb@thinkpad>
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
+	quic_riteshk@quicinc.com, quic_vproddut@quicinc.com
+Subject: Re: [PATCH v2 1/5] dt-bindings: phy: Add eDP PHY compatible for
+ sa8775p
+Message-ID: <qy4hizhsrz6nnfq4a5eremcc7b2gtw6czpav2j34nyj4i6fenv@p6vzlxanhmd5>
+References: <20240913103755.7290-1-quic_mukhopad@quicinc.com>
+ <20240913103755.7290-2-quic_mukhopad@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,39 +67,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240913133619.z7cc4whhpvs2uecb@thinkpad>
+In-Reply-To: <20240913103755.7290-2-quic_mukhopad@quicinc.com>
 
-On Fri, Sep 13, 2024 at 07:06:19PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Sep 13, 2024 at 03:30:59PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, Sep 13, 2024 at 01:37:21AM GMT, Qiang Yu wrote:
-> > > Add OPP table so that PCIe is able to adjust power domain performance
-> > > state and ICC peak bw according to PCIe gen speed and link width.
-> > > 
-> > > Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml | 4 ++++
-> > >  1 file changed, 4 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
-> > > index a9db0a231563..e2d6719ca54d 100644
-> > > --- a/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
-> > > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-x1e80100.yaml
-> > > @@ -70,6 +70,10 @@ properties:
-> > >        - const: pci # PCIe core reset
-> > >        - const: link_down # PCIe link down reset
-> > >  
-> > > +  operating-points-v2: true
-> > > +  opp-table:
-> > > +    type: object
-> > 
-> > I think these properties are generic enough and we might want to have
-> > them for most if not all platforms. Maybe we should move them to
-> > qcom,pcie-common.yaml?
-> > 
+On Fri, Sep 13, 2024 at 04:07:51PM +0530, Soutrik Mukhopadhyay wrote:
+> Add compatible string for the supported eDP PHY on sa8775p platform.
 > 
-> Agree. It should be moved to qcom,pcie-common.yaml.
+> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+> ---
+> v2: No change
+>  
+> ---
+>  Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml | 1 +
 
-Yep, ack.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
