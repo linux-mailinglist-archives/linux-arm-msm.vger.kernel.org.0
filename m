@@ -1,57 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-31861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C9A4697A6FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 19:44:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67D8B97A6FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 19:45:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8AD5A282CBD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 17:44:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A9E51C26D88
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 17:45:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DABD15B963;
-	Mon, 16 Sep 2024 17:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC72715921D;
+	Mon, 16 Sep 2024 17:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TRwpHaor"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H3Nsn2XC"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430533BBE3;
-	Mon, 16 Sep 2024 17:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0BFE57D;
+	Mon, 16 Sep 2024 17:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726508656; cv=none; b=g3wUvQoEwaVxU9LHdWa5UiszVk7WX6d90MoK7RvfyyKtt6DL3NBiW1Zm0ErLDXJEIGNYPTNDkmifNXvSq1nElYEERaZIEjF/oGk0quohBDXF/YVG62PdqAngVpVkocyOK2Vr4BKkPf6E3rUchYM68aUlS2WVp1op4vvSLrMMpbc=
+	t=1726508736; cv=none; b=sYXL/Pv2M5TUZZsHJk1VYOdt/e9va+c0kvAIjmbHgFq/TClbmEIKweXfuTMCK4lwBWDT53K7pVg03726PhMWNvkttfxJ1c+wrKpAZe3Ja4OGqdvSv11fYIzNrWlPLlDJ8s2LHxhtcOCrTLdCeZ0CMhzGdW5+MYffSSAa8bX/4c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726508656; c=relaxed/simple;
-	bh=ADymnq/FgyjIQybsM5bqTj0G7cM+ICgypacPLY8w43s=;
+	s=arc-20240116; t=1726508736; c=relaxed/simple;
+	bh=/J9JVQF2RP/fW7rmcjqsNwCaKwmOgs5LSQ2Zq75zewA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=leJV6gLESNb/zjMaHYR8rufCIAYsrID8R9H1IfROfyaj6b+wAKgD0uDqMWEOLoJ4YDrKuiQhrJHk3kfhLBfkRlYlBkWfVjHKCOfTiksz5AelZq+dpzS1VnmUr+Qm3y1J+O7jQMWrvxKqhF76T5VZ5VkMsvYURDoNnybtrUbzToM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TRwpHaor; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973C7C4CEC4;
-	Mon, 16 Sep 2024 17:44:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=i7/k+IHO7ALjPUm/CqlpxficBdgGlBuNa3FHl7Y5OgHiJjQgj07r60x7x+Y2+a9tWCQWco/7lkI7IvS+ev30psWXGs1E2aPHsozpc9ZB7nDOjNuF46kwpqprc3sF4r62WQEDUDaeSwj7TfnbtytjzeKSY1DheI8JFo3WhT5qE/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H3Nsn2XC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A1EC4CEC4;
+	Mon, 16 Sep 2024 17:45:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726508655;
-	bh=ADymnq/FgyjIQybsM5bqTj0G7cM+ICgypacPLY8w43s=;
+	s=k20201202; t=1726508736;
+	bh=/J9JVQF2RP/fW7rmcjqsNwCaKwmOgs5LSQ2Zq75zewA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TRwpHaorFbSHo5p/jXw6D5h274ynkJQ5+AB3h23GCptQb7SRAKjnxwWQiM27r/N8P
-	 GMZLv55vxjhZ0WywWj8f8YJbXKSXsl9vDNGo3A1dEMbHwiXVvX2qWofSmjb66oOMX6
-	 DULSQNBJopw3+UKgu+Vz36YPLoQGKcLt436vgaCxo8KuPytw9FHKmKjVCUbbYQqFsE
-	 tc991W2jPM7OHJU5k80dGvycKKrQ/iqzu5Gu9Aojinmn5YlMHXpScaGCV6p0l+WCPG
-	 KieZ5kNyq8cmxW70hGdy0oKngfLvJOFWkHI3p2mwDdPzbG9fvsnYgdRwtEJxwSyPgE
-	 WAh7zT1i0+ISA==
-Date: Mon, 16 Sep 2024 12:44:14 -0500
+	b=H3Nsn2XCD/eJEniPEoxHcB4QN3puMzML5nZKhcwgfzamDfvJ9Ur96fuWzf9iTwHfp
+	 R8SpjDjxV/8IB4lIPyuFLaL5Ucfn1/tVsEkkaAkLw+XSXTocpkbZTGhqYqxLKk4vtN
+	 1tiJhiroDZ+vm+1GTh0gWZ6b8iuzY+OqhgL8XTU4fcW1ET63+3azzrosElTx6oEWff
+	 dnux1VRphs6ZJZrhrqU9BrD6o3Poe6XHpNbH0QsURrQCSpQSytDHJ0IptVgtezTDvb
+	 cZqE0BE7PwB1fxlnZc1P5lmUcE0mpOZ5yhX4tClaEyh79q88cB1UKB2HbzHzpuwnWy
+	 DdsKejH7VM0qg==
+Date: Mon, 16 Sep 2024 12:45:29 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
+Cc: linux-watchdog@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	devicetree@vger.kernel.org,
+	Wim Van Sebroeck <wim@linux-watchdog.org>, kernel@quicinc.com,
+	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com
-Subject: Re: [PATCH] dt-bindings: nvmem: qfprom: Add compatible for QCS615
-Message-ID: <172650865415.863438.12271291958389950791.robh@kernel.org>
-References: <20240912-add_qfprom_compatible_for_qcs615-v1-1-9ef2e26c14ee@quicinc.com>
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: watchdog: Document Qualcomm QCS615 watchdog
+Message-ID: <172650872929.865205.1913224631021020834.robh@kernel.org>
+References: <20240912-add_watchdog_compatible_for_qcs615-v1-1-ec22b5ad9891@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,19 +62,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240912-add_qfprom_compatible_for_qcs615-v1-1-9ef2e26c14ee@quicinc.com>
+In-Reply-To: <20240912-add_watchdog_compatible_for_qcs615-v1-1-ec22b5ad9891@quicinc.com>
 
 
-On Thu, 12 Sep 2024 10:54:41 +0800, Lijuan Gao wrote:
-> Document compatible for QFPROM used on QCS615. It's compatible
-> with generic QFPROM fallback.
+On Thu, 12 Sep 2024 10:56:59 +0800, Lijuan Gao wrote:
+> Add devicetree binding for watchdog present on Qualcomm QCS615 SoC.
 > 
 > Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 > ---
-> Document QFPROM compatible for Qualcomm QCS615. It provides access
-> functions for QFPROM data to rest of the drivers via nvmem interface.
+> Add devicetree binding for watchdog present on Qualcomm
+> QCS615 SoC.
 > ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>  Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
 
