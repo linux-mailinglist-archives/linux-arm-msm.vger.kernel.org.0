@@ -1,117 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-31825-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31826-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22B5097A28D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 14:53:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B89097A302
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 15:39:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B92831F21C00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 12:53:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D7AF1F2124C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 13:39:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F04D14D2B3;
-	Mon, 16 Sep 2024 12:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32E0C15534E;
+	Mon, 16 Sep 2024 13:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z8uagj0I"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="BwV47of6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E3A37BB15;
-	Mon, 16 Sep 2024 12:53:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47826154C0D
+	for <linux-arm-msm@vger.kernel.org>; Mon, 16 Sep 2024 13:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726491214; cv=none; b=JvSd7wNCHt410BHW1a4Vrzn4AG+eu7eOMdZed3N3a6H7wVL6k5hgtReL8mTG2LjY4bG4xFuV3EDV+VyQt/vCPJXnHyXXWbi3046KkyQMnU9k2z1ktBuQ3JMYqVxEU2YtNM1D8bJDP2FHpFMyDpCxm4Ett8NuxZ6aE4phoBQCV5A=
+	t=1726493948; cv=none; b=hO/DevWiyx9zH64SbniSgxvFUrvXwKMl2c8RIEybrDtKnEmCuGNOjL4rhyyZef9wlbfitMHKEqmCdKLskdrDjMgC/OCwB8x0vrVjCCINaGacAf6IundMCqvOulYkbWbcZypLP7lnRekWoRfy+rCr87tMImU5xqvepLzeV1slzyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726491214; c=relaxed/simple;
-	bh=FhRNnOze2UFnXZAjYPHSrk0MyxDWTSo8GRum1FUygH0=;
+	s=arc-20240116; t=1726493948; c=relaxed/simple;
+	bh=gpDTnqpsiA0konUnyq4PiZCiElhUnaKwv4G03rEeMn0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AP8Yd0E2eUwQ0yoTRptgtybB25ETvyhBt90aomA+/1qm+EXkOKirCn7yfYO74wWFQG1QiFq996jsCaN6l3HwZkEekq0J/paif+UMyApGxbw4ICdmV6TYsQ6vUsobDjwZOR1tPJDge0Qna0eOzrgufxLgxX464ayxY33rNw44R2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z8uagj0I; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AFABC4CECE;
-	Mon, 16 Sep 2024 12:53:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726491213;
-	bh=FhRNnOze2UFnXZAjYPHSrk0MyxDWTSo8GRum1FUygH0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z8uagj0IL/hj/TYI3poKF9XljOZRw9U3MhJVxvI0l5jLEsTixkvHMiYyM8cgj9GA0
-	 GmyhRvBt7AW0q/N31LD4l2BO4dMT64y/aQI4usR4uT4tHDkMifB/MJ8DpkV6dRmYGL
-	 Cf3fxIl4nw8TXgu0Gu6Qm+5ezB+mZePZTSKhEh9aOt68BhjnZamCZjHgaKAPvndNIP
-	 0pS9H50Okz88XajWxCoribp3rIeA1Y1+n5n6sRxOXKg/lNEk+gR23yd2DjKSgptZyP
-	 ZPFZwrt69bSswAR53lJblzMhak8ca2hMtHsz810trra9jRDGs4r6ofcRIx5KRMXNqt
-	 p7Kb5XbbRYcCA==
-Date: Mon, 16 Sep 2024 14:53:28 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Cc: linux-i2c@vger.kernel.org, 
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, Jinjie Ruan <ruanjinjie@huawei.com>, 
-	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, linux-arm-msm@vger.kernel.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=LaCYWLMPz3j7CxfVA7GtUXo3pml5c/VuKeUTdx5M2Hz9mw0C627xDiYzzAumWgqGMq6iHhuBgVF9hPh66TW6LHaJWxrz9QOH4SOd4gz+S37r4+R97mjKKpYyuQiJQqSOG95q/UwHq68GQNRVsH+If/sslmyUPBmHnjqZN4DNVo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=BwV47of6; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=g/eo
+	0SBcEoDYXOfJ9SKKPnWuwKIaMlQa162DkFW4Pt4=; b=BwV47of6aCh89+e/vqHE
+	2Jj6Rs8Nw4xOxJRloKt3VU6xMSfwW5c011mvASzH8EB/0x6AQB7GAQ6O6WCLmB+a
+	n8zFXcQh+nSzOJjedMfJUYWCx5yUHft9mpfiozNs9bniQpwIkof91fqoZhWZBKPZ
+	3GenBEFsYo9YQo9KI42mcpmbhRtN8V5JvwtfH6VadxORI3+Wwr+QpR9u16pTzi4G
+	DmIHhuDTeSYtxXu4APedrIT8P7kh1t3kZWIxjUKmsS+RM/7u1r17hePnO0Tn26uP
+	6GRKoDDoP0SEb0tSkQfJLnyD3Cu6ZbF1oYd4QVJwrblO3XoylOWpBPnkI7tkcYRu
+	ZA==
+Received: (qmail 2013929 invoked from network); 16 Sep 2024 15:39:04 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 16 Sep 2024 15:39:04 +0200
+X-UD-Smtp-Session: l3s3148p1@ihY5sjwietG5aIoy
+Date: Mon, 16 Sep 2024 15:39:03 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Andi Shyti <andi.shyti@kernel.org>
+Cc: linux-i2c@vger.kernel.org,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	linux-arm-msm@vger.kernel.org
 Subject: Re: [PATCH] i2c: qcom-geni: Keep comment why interrupts start
  disabled
-Message-ID: <rezzwxrahok257tz35sxawqodn5sktkgxfokhmhdlrm2o4624p@agqoixuxg3md>
+Message-ID: <Zug09yHONEFdGjav@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andi Shyti <andi.shyti@kernel.org>, linux-i2c@vger.kernel.org,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Jinjie Ruan <ruanjinjie@huawei.com>,
+	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+	linux-arm-msm@vger.kernel.org
 References: <20240916121516.3102-2-wsa+renesas@sang-engineering.com>
+ <rezzwxrahok257tz35sxawqodn5sktkgxfokhmhdlrm2o4624p@agqoixuxg3md>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="V2aMwWMpBes+BDfA"
+Content-Disposition: inline
+In-Reply-To: <rezzwxrahok257tz35sxawqodn5sktkgxfokhmhdlrm2o4624p@agqoixuxg3md>
+
+
+--V2aMwWMpBes+BDfA
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240916121516.3102-2-wsa+renesas@sang-engineering.com>
+Content-Transfer-Encoding: quoted-printable
 
-Hi Wolfram,
 
-On Mon, Sep 16, 2024 at 02:15:17PM GMT, Wolfram Sang wrote:
-> The to-be-fixed commit rightfully reduced a race window, but also
-> removed a comment which is still helpful after the fix. Bring the
-> comment back.
-> 
-> Fixes: e2c85d85a05f ("i2c: qcom-geni: Use IRQF_NO_AUTOEN flag in request_irq()")
-> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 4c9050a4d58e..03c05dcc2202 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -818,6 +818,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  	init_completion(&gi2c->done);
->  	spin_lock_init(&gi2c->lock);
->  	platform_set_drvdata(pdev, gi2c);
-> +
-> +	/* Disable the interrupt so that the system can enter low-power mode */
+> Thanks for the patch! However, I wouldn=E2=80=99t typically consider this
+> a fix, and I don=E2=80=99t think it would qualify for stable release
+> inclusion.
 
-Thanks for the patch! However, I wouldn’t typically consider this
-a fix, and I don’t think it would qualify for stable release
-inclusion.
+Okay, I agree.
 
-That said, I agree that a comment should be added back. The original
-comment no longer fits as well as it did before. A more
-appropriate comment would be:
+> That said, I agree that a comment should be added back. The original
+> comment no longer fits as well as it did before. A more
+> appropriate comment would be:
+>=20
+> /*
+>  * Do not enable interrupts by default to allow the system to enter
+>  * low-power mode. The driver will explicitly enable interrupts when
+>  * needed using enable_irq().
+>  */
+>=20
+> Does it make sense?
 
-/*
- * Do not enable interrupts by default to allow the system to enter
- * low-power mode. The driver will explicitly enable interrupts when
- * needed using enable_irq().
- */
+Frankly, I think this is too detailed, we can't have kernel driver 101
+in each and every driver. But I will happily stand back if you insist
+because we are entering a bike-shedding area. My proposal would be:
 
-Does it make sense?
+ /* Keep interrupts disabled initially to allow for low-power modes */
 
-Thanks,
-Andi
+Chose what you prefer!
 
-PS If you want I can add it to the current i2c-host-fixes and
-retrigger the pull request.
+Happy hacking,
 
->  	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
->  			       dev_name(dev), gi2c);
->  	if (ret) {
-> -- 
-> 2.45.2
-> 
+   Wolfram
+
+--V2aMwWMpBes+BDfA
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmboNPYACgkQFA3kzBSg
+KbYG5w/9Hl1jPxxxAgbG4Zgqso3YLYPCQtJvZYZoQ2yHhnPEnhHGVqOT4TjhEDzr
+uIWFtNI/HHPib8iWSQa/TgV/RZ5IomWR7iEmWfuL/qYK+FhzpU4m9SQ3zoBcHERg
+WaA/rNLZgziD6l56yvZY+ebIvqtWD1qgkRF8wUiNndXWgIe4unKutE8TkqNXu6Dc
+pSIA/58Q04xX/GlHeGQsg3tXiAZm+lm9X+6hJAzFKOZ7DbQGVg43mT/MWH4CYMbZ
+cNlTedHzM7ypULSMjd7DFRR7Gig4a1yuOCxMcwzTqw4RpBJMlGuvIv9k/zvp7dA/
+RlRfrcT1korxZkn0hLWM4nLOVyZXhQw0SfDcmICajKlJeNO5K6iqqzbHCpirKC0g
+rexaOJUEq4ugvWs7hiAzc0/J1oRqwfFSEvyuwh+Mx4VuxbXAWEv5tTRACqUVzSWS
+PGTt2iX54ZLPKN4hIj5ckBquKSE/QbWWiJlGU+ZerlyTQwEjL1e7yikkD6GqwPsb
+Esplj44hrM9A5lUAeIOie/SIuo1OZqUcVLBugAVwey3yV4yvTH5ekIzZ40Bcxgod
+slhY3DJhj2p1XJBZcaFyPcV6JgXm7PHdnbhOAMXBWb64U+CdpGuzOKvAIciABoh1
+9WR2A6sh5aKyCAlB3mbHw/uvmY7hjV5FBl709VExNz9UGXJZerM=
+=hejy
+-----END PGP SIGNATURE-----
+
+--V2aMwWMpBes+BDfA--
 
