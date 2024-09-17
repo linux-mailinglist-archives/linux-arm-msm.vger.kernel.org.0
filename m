@@ -1,237 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-31934-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31935-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EB2697B4D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 22:40:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77D2097B507
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 23:13:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8F951F220F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 20:40:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 750541C21DB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 21:13:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EF90191499;
-	Tue, 17 Sep 2024 20:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53BA618BC17;
+	Tue, 17 Sep 2024 21:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="M8PH18MB"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a9YqAQGC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFE4190067;
-	Tue, 17 Sep 2024 20:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6332AEEE;
+	Tue, 17 Sep 2024 21:13:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726605585; cv=none; b=OLdCf6qTOaTYHpjZU97LcVDg0OjjyvBhIt0TPupobdzNqhFVxE4FoulvjvwJIUIJKI3sf8hYPgEm4x7iTfUL3s0ioogyDD3/OPPqTJDgUICk+6p4PwnZvxGgnf2i6BAG7i4WJhiUxbiZf2r4/XHasKg4+OhF5JM5FaOACvtr1T4=
+	t=1726607628; cv=none; b=NHt6dZDGbwFs2YIveKYwXo0S0wJOTY7MXcs4xIYQNj5d3/iPasLruO7ZddVaoWwGy8/qtlPI+b/o9YoooMrNByEqpaLCUokHXR8U6qDXUeMZM6a3Nt/nSlH8mWhE7dJ4uJGSRVuxupv6q303gjeKFe2VCKizAYTgt3zXUyK5oIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726605585; c=relaxed/simple;
-	bh=bxsKbmm9kkuz1RA3NZIz329WqdshwBhbOvsjnxlwYQQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=dABUpZaYuTVUlOzV9Bq3+y52SeOuFvs5G1X24JuMz/7Wd1lNiAUo9w5AZjon8n3+9aKi4AZu01XKotlSXZ9C5QhRP9DrV0LR5CJi3HE1vgVMPRAnHuo8BQKwrE8i0CduxPAhzPtGNHHrFwdzCUA1ecFybeMmE+MEF3+Pdk9jt4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=M8PH18MB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48HI0fGU019745;
-	Tue, 17 Sep 2024 20:39:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ksd+tDqDvj1vhxj2bop7NP/KDMWQ/RNWC91hZ84E/ZU=; b=M8PH18MBCzN16awM
-	pqxwH1vjd6HD7QGConQ9ZH2jT6HmvigBBa03NQtow3yK1n8baTQtEJ5MymU/8vCK
-	y76vmi2i+AT2n2HfGyRgI1JHbTuYbeGx0VrTx3LhZvzE+X8RC2SkrQhELYGuhFRn
-	bFpy+fBLym+NXXXF1PBVTA3Tl06MO/xK61UevW9DFtRpx6FCfdaB+E8gxBtk6qto
-	OjFFqQIszDJGHqKZQT6x/nOr/wxdMmi5S+q3vCt8le7J/3u82tQNps/4oo+Zzejz
-	MvPwT29NxPIXwJANR1CukyoP0/n6ntie5k9F+nOYRdpi6KnMVG3MqUZiuYPiu3Yq
-	Lh1KEg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4k0r01j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Sep 2024 20:39:30 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48HKdTr0021688
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Sep 2024 20:39:29 GMT
-Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Sep
- 2024 13:39:22 -0700
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Date: Wed, 18 Sep 2024 02:08:43 +0530
-Subject: [PATCH 3/3] arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
+	s=arc-20240116; t=1726607628; c=relaxed/simple;
+	bh=4X3wjfPidt/LiD/CTXVhAiLZG8gvYHhMjugKG8MTr1A=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=cXotlcmwdWVgoz+3okvGbzizkleIfSn4nJ5L8hjjm7Am7UNqDofT8L1mrSWoo1gloJAFYEw4QiL/LJpMu0zumasTRqyye8BlfftM58LUfS6S1hXUfyU0S46nVIcHxofGWS2mp9EnAuz0kWfPZDvj9eRAZhQNxyujHd+fPtaS6+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a9YqAQGC; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42cde6b5094so49579975e9.3;
+        Tue, 17 Sep 2024 14:13:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726607625; x=1727212425; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gQPCeSxuJUcAGQx1wAqP64lG5jHDZ2prYT74R2lhQOw=;
+        b=a9YqAQGCZ/oMdRDOz1DLNKPidAtHVwZxUcpfA+nH0Nfw5GYTZtZWxodNYemmnYSnqi
+         LFx8HprUqfi+eNgXe/pssCglRhwzspL5X7imEJYa35Y0KzSE1nP4aOugqg0WxfJQdnWF
+         fm2e9hC58S/faNttSGDsHZjzzHapOnt83vwTE01mCYze9qR7rlHvzpcuvpMoaClU4FdG
+         reF/aKoCjCSvyInRJz308svqAzKALASJQHM5Ideup6HCFlfEVjKkZKF8KKeXNL3nZWiA
+         nLCN0esTgms4hIpCvZ6WLY/5TB2sc1G/YuPu1QXkhBBXM79heT9e/7YdyKKP3KsZwas3
+         VXzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726607625; x=1727212425;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gQPCeSxuJUcAGQx1wAqP64lG5jHDZ2prYT74R2lhQOw=;
+        b=SrkC9fhiVelJzq3dgNwiOXqJd7C5dt/vVf4n52aGANrPkGKrVcjrUJ9krVPHmulDH/
+         zHjejPmDfowIH77gaLuRwEDzTaa7baLdsOH6uNG5fHqL+58ALYiMuPfHfVV3z8K8vhXW
+         bAkIa65Z1Oix5awnNv/2XUAmRNDWHCjVkhprxgNUnpcFayndRpURNYfd/kFrTc1AnW1Z
+         xlAvQ5IuciUfD0LXH7vaWUA8/NnwI0hyEkp0x+InCOLsvEwEe3PaoIn/9FdR90s5pBVV
+         XEa8aXXqxFSopiFeZS3IqFr9Ji4FG6xkSsntK56nFbD1QsLW3DLcLG5lG9DtC/zLg/td
+         MWPA==
+X-Forwarded-Encrypted: i=1; AJvYcCUYq06Oi7zvMSOmC6pns2f/Dndb3eDIfxHD0pIXGaBTz59QWviCvi7KNv0HVkIL2dvcpYozSHkyOow=@vger.kernel.org, AJvYcCUsRI0+rPucaPbVMImr//RHJ9ppAy4KpPa2h3lQoa3Ggz9AiwSLQN31M6+7dc3Bzhy7Dy+o1rW4HfS/5X6+@vger.kernel.org, AJvYcCVuJN3hEPP6VO5J1BlLqC7qSS2RtUj3f7OVStHr+lbMguFoNh5kt8yL91zIow1OEsDeY7u2pkrTF7X/jIMf@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjQFTQGRLD15rAY7/fsJ6eFFDba8hht20AlufF+FzPhSS4VGKs
+	5np4jdonBEYbivGUnY65gIDbAIaudd7BbGN9cAqD5h8c5PJZ1GD3
+X-Google-Smtp-Source: AGHT+IFX0JeNjumj2d4t5AlUe2fLFgOpLXFjFId3yhPG2daYecY7DrQ2nuwiffFhE1sL2NnrL3rglw==
+X-Received: by 2002:a5d:6291:0:b0:374:c481:3f7 with SMTP id ffacd0b85a97d-378c2cd5ed9mr12211612f8f.6.1726607624482;
+        Tue, 17 Sep 2024 14:13:44 -0700 (PDT)
+Received: from localhost.localdomain ([37.72.3.43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e72e4a46sm10545913f8f.14.2024.09.17.14.13.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Sep 2024 14:13:44 -0700 (PDT)
+From: =?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mikisabate@gmail.com>
+To: rafael@kernel.org
+Cc: daniel.lezcano@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mikisabate@gmail.com>
+Subject: [PATCH] cpuidle: Fix reference count on CPU node
+Date: Tue, 17 Sep 2024 23:13:25 +0200
+Message-ID: <20240917211325.639765-1-mikisabate@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240918-a663-gpu-support-v1-3-25fea3f3d64d@quicinc.com>
-References: <20240918-a663-gpu-support-v1-0-25fea3f3d64d@quicinc.com>
-In-Reply-To: <20240918-a663-gpu-support-v1-0-25fea3f3d64d@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konrad.dybcio@linaro.org>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie
-	<airlied@gmail.com>, "Daniel Vetter" <daniel@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726605543; l=3427;
- i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
- bh=YcuLV7CYQ9i9FanWtKsSPESYzGT7pdn0eE2r0GN6uQQ=;
- b=gssJCgYnTzZ27n0Hej4eUxADMSau8UzE8tUJyB1xtXxRgpRPOOYmXJbsxw50IVbFMTAfSUK7k
- Zqh+e4j3hb+AenTvxc0xBn6OP9tfh4A3y/p6CDOwGt2lgJ1IZXX3HIq
-X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
- pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZwSyPe5gLm22YYMlskXsF1kkCiuIYQkp
-X-Proofpoint-GUID: ZwSyPe5gLm22YYMlskXsF1kkCiuIYQkp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 phishscore=0 spamscore=0 malwarescore=0
- bulkscore=0 impostorscore=0 mlxlogscore=999 clxscore=1015
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409170147
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+For the qcom-spm driver, an early return was not calling the proper
+of_node_put call for a previously acquired device node.
 
-Add gpu and gmu nodes for sa8775p based platforms.
-
-Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Signed-off-by: Miquel Sabaté Solà <mikisabate@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi |  8 ++++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 75 ++++++++++++++++++++++++++++++
- 2 files changed, 83 insertions(+)
+ drivers/cpuidle/cpuidle-qcom-spm.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 2a6170623ea9..a01e6675c4bb 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -407,6 +407,14 @@ queue3 {
- 	};
- };
+diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle-qcom-spm.c
+index 1fc9968eae19..d3608f47d02b 100644
+--- a/drivers/cpuidle/cpuidle-qcom-spm.c
++++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+@@ -96,8 +96,10 @@ static int spm_cpuidle_register(struct device *cpuidle_dev, int cpu)
+ 		return -ENODEV;
  
-+&gpu {
-+	status = "okay";
-+
-+	zap-shader {
-+		firmware-name = "qcom/sa8775p/a663_zap.mbn";
-+	};
-+};
-+
- &i2c11 {
- 	clock-frequency = <400000>;
- 	pinctrl-0 = <&qup_i2c11_default>;
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 23f1b2e5e624..12c79135a303 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -2824,6 +2824,81 @@ tcsr_mutex: hwlock@1f40000 {
- 			#hwlock-cells = <1>;
- 		};
+ 	saw_node = of_parse_phandle(cpu_node, "qcom,saw", 0);
+-	if (!saw_node)
++	if (!saw_node) {
++		of_node_put(cpu_node);
+ 		return -ENODEV;
++	}
  
-+		gpu: gpu@3d00000 {
-+			compatible = "qcom,adreno-663.0", "qcom,adreno";
-+			reg = <0 0x03d00000 0 0x40000>,
-+			      <0 0x03d9e000 0 0x1000>,
-+			      <0 0x03d61000 0 0x800>;
-+			reg-names = "kgsl_3d0_reg_memory",
-+				    "cx_mem",
-+				    "cx_dbgc";
-+			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+			iommus = <&adreno_smmu 0 0xc00>,
-+				 <&adreno_smmu 1 0xc00>;
-+			operating-points-v2 = <&gpu_opp_table>;
-+			qcom,gmu = <&gmu>;
-+			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "gfx-mem";
-+			#cooling-cells = <2>;
-+
-+			status = "disabled";
-+
-+			zap-shader {
-+				memory-region = <&pil_gpu_mem>;
-+			};
-+
-+			gpu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-405000000 {
-+					opp-hz = /bits/ 64 <405000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <8368000>;
-+				};
-+
-+			};
-+		};
-+
-+		gmu: gmu@3d6a000 {
-+			compatible = "qcom,adreno-gmu-663.0", "qcom,adreno-gmu";
-+			reg = <0 0x03d6a000 0 0x34000>,
-+				<0 0x3de0000 0 0x10000>,
-+				<0 0x0b290000 0 0x10000>;
-+			reg-names = "gmu", "rscc", "gmu_pdc";
-+			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hfi", "gmu";
-+			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-+				 <&gpucc GPU_CC_CXO_CLK>,
-+				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+				 <&gpucc GPU_CC_AHB_CLK>,
-+				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-+				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
-+			clock-names = "gmu",
-+				      "cxo",
-+				      "axi",
-+				      "memnoc",
-+				      "ahb",
-+				      "hub",
-+				      "smmu_vote";
-+			power-domains = <&gpucc GPU_CC_CX_GDSC>,
-+					<&gpucc GPU_CC_GX_GDSC>;
-+			power-domain-names = "cx",
-+					     "gx";
-+			iommus = <&adreno_smmu 5 0xc00>;
-+			operating-points-v2 = <&gmu_opp_table>;
-+
-+			gmu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-200000000 {
-+					opp-hz = /bits/ 64 <200000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+				};
-+			};
-+		};
-+
- 		gpucc: clock-controller@3d90000 {
- 			compatible = "qcom,sa8775p-gpucc";
- 			reg = <0x0 0x03d90000 0x0 0xa000>;
-
+ 	pdev = of_find_device_by_node(saw_node);
+ 	of_node_put(saw_node);
 -- 
-2.45.2
+2.46.0
 
 
