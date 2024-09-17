@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-31901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D069E97AF28
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 12:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 68C8B97AF52
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 13:14:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 90FDB280DF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 10:46:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24B0C281996
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 11:14:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 772F215CD7C;
-	Tue, 17 Sep 2024 10:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B34716193C;
+	Tue, 17 Sep 2024 11:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EWkigtX3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NG98e+nE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC068219ED;
-	Tue, 17 Sep 2024 10:46:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216AC14BFA3;
+	Tue, 17 Sep 2024 11:14:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726570003; cv=none; b=N4FwbtTKtB4afw/df3SMZ+3XL3Jyyb6ACwjNJDyrpzI2avRfLErfJ7xq8zm686pWSFqxQ6jb82qONJcDznvBKRMiaSbKLv3mFvEyZ1NVQwuzDWXG8QsdzqNXzQjqFMx7AVeFNfJD1zs8ChZwAvEz9KnqaG1uJ3qWXuzBgTJLxek=
+	t=1726571658; cv=none; b=feLIuFOpa0i3r2tLKmUsIjJqSH9M2D+Q/n5et5OZcs4VEqvTgAgOwA2Crz5AsOlpfn0hT2Phl40dAhiLFUsRAyz4rom2CbnXwksggn5jC79Ir3B6Il0tNqyWNdCxzuAwIUzCgpojv7XkpIElQysVyZOUX1sYv8yVyqW8ROMR7tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726570003; c=relaxed/simple;
-	bh=VwgbqRmMuYTyDjqru++XjKig9TQvq7qY0bPQ4ERYZMg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=dxikbwAqdKZz0bTjjzuyuPbXksc76F+OYUCboccl6fDWYbnJztV3aoazO+bCU/+eBroVT/ndDCjZ2q3+ew7gfK8dqad3zkFlrGM6yA1yGRgjNGBH0Kl4+w/THcIJyNIwOSin26neO/d0fIu9kiISPAMPpJwI2aXk+iIM9BsJCBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EWkigtX3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48H4Aron023009;
-	Tue, 17 Sep 2024 10:46:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=uNL4ElfLyO5/Hxpc1u+Bcf
-	TC25dN+5QyzOqW/uDWKlk=; b=EWkigtX3pWXCOy5Tbhrg8lnrYYbfmAFF6/9oZA
-	CyB4fKKbXHHqTm2B/01I3X2RTOSTX8v2RJLSXnr9ETzzRfx80dddCEUd8/sDoRrU
-	rDVejMk5Z/ciHqm8PiUZ62oeicmY9MXVEz/R+SYZ+tofA60DKEcwyGg78SNWEqOW
-	9mImOlsBu033GtVgSYyurrpTEvU/Uloi8OiBc9ZKuLjlObo38/NK7WYyI6Rziz8o
-	glB8q2pTkvykCvZbKUvQ5dYwNAhArEhgsXBjkOjImbR03aj47wBLeWn+DrWeTf8B
-	Pj2ZPfbraRIbd5i9EA+/yLGa4U7zi9ZyApa69o5E7udU+SAA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4jdpj97-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Sep 2024 10:46:34 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48HAkXmT031148
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Sep 2024 10:46:33 GMT
-Received: from hu-krichai-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 17 Sep 2024 03:46:28 -0700
-From: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Date: Tue, 17 Sep 2024 16:16:20 +0530
-Subject: [PATCH] PCI: qcom: Skip wait for link up if global IRQ handler is
- present
+	s=arc-20240116; t=1726571658; c=relaxed/simple;
+	bh=p43bASK1vfwUMiWcV6qCQue61/vpDXfDQ0kldeq7A80=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=qklIWa73yuKtAcZIXJV82+c3P6rKNZH25yHAukKX4Kg1KN1QfGXnuSGV9hmQ2b0V39V4CFXDquhCvehNDre0Q3FJ+M9mnAjoSKDeEdvEtZaPaO5ZO9ee4JmNCjJ1OKgzEtTMa4w3ZLPGt7waqCZ4ZmZ/B9v3UHlFw7oW2HVnt/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NG98e+nE; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a8ce5db8668so955376566b.1;
+        Tue, 17 Sep 2024 04:14:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726571655; x=1727176455; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UayKS1Ryd/2ZU19LR8Ae6STsmhjtxW8blequ0WcRifc=;
+        b=NG98e+nE/394kSHocrspPoR3B/Jz3d5NkNSwaem9FHiW5WVZ4SDxAILSDwKOlwy1oP
+         XHih9A+eytefI2Nvtr+Ye475+AFA7Ldq7SW91NuEYq+p2325VbDCokBaKJbXuh6Fvonk
+         x9rpGLffTYiqq4kFHKwYfWfU54nGec/uoHPfXHkCkGyiGMhfiG/FCnmxKVwbXrJXSgsF
+         rT/ecgmZfu1uzVR9S3itdvotPxwMS/u3iIYOVpwAmJJbo3TEiHqmOswSYxX5cg07NllL
+         vYh0+RN37D/p0PbAyqxdmbiCTr0BXUuGLBUF5IxG9RIF7D2mpS1XzbRhRvApR/m9Rq5n
+         aPYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726571655; x=1727176455;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UayKS1Ryd/2ZU19LR8Ae6STsmhjtxW8blequ0WcRifc=;
+        b=NRbeGiqGVgUxD0k6r5JI4paWVL+WCTIxfYcSOIspVTmXbtplI9CyX7MU0ZptzCwMY0
+         FtfFY1xc+HtWS9QOPp1Pea4uRtrEN5UXlzDN3g4x6Lzc6Kqa9pMgQoQmFIJVvsVpfHHi
+         P1jNP7C/N/7aQsN6Z7YZgSJpXgkglnKbcROo//OIcqKBBcOfKAMmBqydIfL6kI6qb4HU
+         mquP3US2/t6odykc9RmjXVEySGKDEK/uON1K7ZNGnhmMohCE7oEhqygu3GROQRIONJ2o
+         Rb51XKoHp3R7zoRcHgE1D8Acre2R0rfd5WX4nFqKRPn2oy9B4EHEKh3YXNOvcUUfo1Wt
+         oUfg==
+X-Forwarded-Encrypted: i=1; AJvYcCVk6ssAIcVbSY3SgvH7eaRd3XrWPwC/QBPu6jhaE8/XvJ6YLBMH/KZ/E21ne21m6z3EMYElJwJ4Lczy8uGy@vger.kernel.org, AJvYcCWyLq0Zg9K48fPD8swfkfbN5Z7VBXL2naDpcL2tFWKxtSl6+DNM3mr0Dva6UhLo56QAdKv8P86PEXg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmeNYChficrhi7/5K72H5WatRR9tLs0jNJQgwkSn05ydD6zfyQ
+	c/8hteCCsxoB9n6GX0jOfrdWeMJ6OzWQ6ULpzxkxxZQtZvk8ETeY
+X-Google-Smtp-Source: AGHT+IECSFVHLSs2BEa6gNEYukMuwIRh8+PAJowLHgFybu70GwUbv7gOL7Z/0OHAwrPcrtKgysbISw==
+X-Received: by 2002:a17:906:730d:b0:a86:ab84:7fc1 with SMTP id a640c23a62f3a-a9029620359mr2320985366b.50.1726571654929;
+        Tue, 17 Sep 2024 04:14:14 -0700 (PDT)
+Received: from [192.168.1.17] (host-82-51-105-30.retail.telecomitalia.it. [82.51.105.30])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90612e1a55sm430745166b.157.2024.09.17.04.14.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 17 Sep 2024 04:14:14 -0700 (PDT)
+From: Antonino Maniscalco <antomani103@gmail.com>
+Subject: [PATCH v4 00/11] Preemption support for A7XX
+Date: Tue, 17 Sep 2024 13:14:10 +0200
+Message-Id: <20240917-preemption-a750-t-v4-0-95d48012e0ac@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,130 +77,144 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240917-remove_wait-v1-1-456d2551bc50@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAPtd6WYC/1XMQQ7CIBCF4as0sxYDhKq48h6mMRQGO4sWhYqah
- ruLTVy4/F/yvgUSRsIEx2aBiJkShamG2DRgBzNdkZGrDZJLxbUQLOIYMl6ehmZmnNpJdXBWew7
- 1cYvo6bVq5672QGkO8b3iWXzXnyP/nCyYYHrvle9963rXnu4PsjTZrQ0jdKWUD51TOQSoAAAA
-To: Jingoo Han <jingoohan1@gmail.com>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?=
-	<kw@linux.com>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas
-	<bhelgaas@google.com>
-CC: <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        <quic_nitegupt@quicinc.com>, <quic_skananth@quicinc.com>,
-        <quic_vpernami@quicinc.com>, <quic_mrana@quicinc.com>,
-        <linux-pci@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Krishna chaitanya chundru
-	<quic_krichai@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAIJk6WYC/33OTQ7CIBAF4KsY1mIo0AKuvIdxQWFoSexPoCGap
+ neXdmNjGpdv8uabmVGE4CGi62lGAZKPfuhz4OcTMq3uG8De5owooZzIosRjAOjGKdewFiXBE3Y
+ GQGnJec0Uynu54fxrM++PnFsfpyG8txOpWKf/tFRggkVtNa0M44SJW9Np/7yYoUOrluhOYORIo
+ FmQlQbQlhorya/AvoIihz+wLDiruKiUcqI2e2FZlg/ji2hINgEAAA==
+To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ Jonathan Corbet <corbet@lwn.net>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>, 
+ Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Sharat Masetty <smasetty@codeaurora.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726569988; l=3046;
- i=quic_krichai@quicinc.com; s=20230907; h=from:subject:message-id;
- bh=VwgbqRmMuYTyDjqru++XjKig9TQvq7qY0bPQ4ERYZMg=;
- b=VsXWHIU4Kh0jK9AgQj+PMMsiGPy6VBUR3XVayM6dnnh0uogoZNFk3R91vilnE/9rWW4squtzq
- aPS2pbRTq5zDoyBbwMEt3yraga8/KYB/1doPoJBgKi8kvVnBiFXSg6f
-X-Developer-Key: i=quic_krichai@quicinc.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oKPnwRu_0Z3vgc9B1TSmBpiTvf-nhpCz
-X-Proofpoint-GUID: oKPnwRu_0Z3vgc9B1TSmBpiTvf-nhpCz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- clxscore=1015 adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0
- priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
- mlxlogscore=881 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409170077
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1726571652; l=5075;
+ i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
+ bh=p43bASK1vfwUMiWcV6qCQue61/vpDXfDQ0kldeq7A80=;
+ b=hk5Iub5XOWrLjQszZCzHusnMkYZMvOSGsyYwmJgPjMZhgjDUDdjGbekIQLR9r72L6BMNoffeD
+ XKuvlYiVfcWCTqekKi63nJNgN73JaxnMY4NUpexaqmORj/amq7uhrBu
+X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
+ pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-In cases where a global IRQ handler is present to manage link up
-interrupts, it may not be necessary to wait for the link to be up
-during PCI initialization which optimizes the bootup time.
+This series implements preemption for A7XX targets, which allows the GPU to
+switch to an higher priority ring when work is pushed to it, reducing latency
+for high priority submissions.
 
-Move platform_get_irq_byname_optional() above to set bypass_link_up_wait
-before dw_pcie_host_init() as this flag is used in this function only.
+This series enables L1 preemption with skip_save_restore which requires
+the following userspace patches to function:
 
-And also as part of the PCIe link up event, update ICC and OPP values.
+https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
 
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+A flag is added to `msm_submitqueue_create` to only allow submissions
+from compatible userspace to be preempted, therefore maintaining
+compatibility.
+
+Preemption is currently only enabled by default on A750, it can be
+enabled on other targets through the `enable_preemption` module
+parameter. This is because more testing is required on other targets.
+
+For testing on other HW it is sufficient to set that parameter to a
+value of 1, then using the branch of mesa linked above, `TU_DEBUG=hiprio`
+allows to run any application as high priority therefore preempting
+submissions from other applications.
+
+The `msm_gpu_preemption_trigger` and `msm_gpu_preemption_irq` traces
+added in this series can be used to observe preemption's behavior as
+well as measuring preemption latency.
+
+Some commits from this series are based on a previous series to enable
+preemption on A6XX targets:
+
+https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
+
+Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 ---
- drivers/pci/controller/dwc/pcie-designware-host.c | 3 ++-
- drivers/pci/controller/dwc/pcie-designware.h      | 1 +
- drivers/pci/controller/dwc/pcie-qcom.c            | 7 ++++++-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+Changes in v4:
+- Added missing register in pwrup list 
+- Removed and rearrange barriers
+- Renamed `skip_inline_wptr` to `restore_wptr`
+- Track ctx seqno per ring
+- Removed secure preempt context
+- NOP out postamble to disable it instantly
+- Only emit pwrup reglist once
+- Document bv_rptr_addr
+- Removed unused A6XX_PREEMPT_USER_RECORD_SIZE
+- Set name on preempt record buffer
+- Link to v3: https://lore.kernel.org/r/20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 3e41865c7290..e0ddfaf9f87a 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -531,7 +531,8 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
- 	}
- 
- 	/* Ignore errors, the link may come up later */
--	dw_pcie_wait_for_link(pci);
-+	if (!pp->bypass_link_up_wait)
-+		dw_pcie_wait_for_link(pci);
- 
- 	bridge->sysdata = pp;
- 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index e518f81ea80c..7fe0e9b1b095 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -348,6 +348,7 @@ struct dw_pcie_rp {
- 	bool			use_atu_msg;
- 	int			msg_atu_index;
- 	struct resource		*msg_res;
-+	bool			bypass_link_up_wait;
- };
- 
- struct dw_pcie_ep_ops {
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 88a98be930e3..bcb8c60453ba 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1552,6 +1552,8 @@ static irqreturn_t qcom_pcie_global_irq_thread(int irq, void *data)
- 		pci_lock_rescan_remove();
- 		pci_rescan_bus(pp->bridge->bus);
- 		pci_unlock_rescan_remove();
-+
-+		qcom_pcie_icc_opp_update(pcie);
- 	} else {
- 		dev_WARN_ONCE(dev, 1, "Received unknown event. INT_STATUS: 0x%08x\n",
- 			      status);
-@@ -1686,6 +1688,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, pcie);
- 
-+	irq = platform_get_irq_byname_optional(pdev, "global");
-+	if (irq > 0)
-+		pp->bypass_link_up_wait = true;
-+
- 	ret = dw_pcie_host_init(pp);
- 	if (ret) {
- 		dev_err(dev, "cannot initialize host\n");
-@@ -1699,7 +1705,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 		goto err_host_deinit;
- 	}
- 
--	irq = platform_get_irq_byname_optional(pdev, "global");
- 	if (irq > 0) {
- 		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
- 						qcom_pcie_global_irq_thread,
+Changes in v3:
+- Added documentation about preemption
+- Use quirks to determine which target supports preemption
+- Add a module parameter to force disabling or enabling preemption
+- Clear postamble when profiling
+- Define A6XX_CP_CONTEXT_SWITCH_CNTL_LEVEL fields in a6xx.xml
+- Make preemption records MAP_PRIV
+- Removed user ctx record (NON_PRIV) and patch 2/9 as it's not needed
+  anymore
+- Link to v2: https://lore.kernel.org/r/20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com
+
+Changes in v2:
+- Added preept_record_size for X185 in PATCH 3/7
+- Added patches to reset perf counters
+- Dropped unused defines
+- Dropped unused variable (fixes warning)
+- Only enable preemption on a750
+- Reject MSM_SUBMITQUEUE_ALLOW_PREEMPT for unsupported targets
+- Added Akhil's Reviewed-By tags to patches 1/9,2/9,3/9
+- Added Neil's Tested-By tags
+- Added explanation for UAPI changes in commit message
+- Link to v1: https://lore.kernel.org/r/20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com
 
 ---
-base-commit: 9aaeb87ce1e966169a57f53a02ba05b30880ffb8
-change-id: 20240911-remove_wait-ad46248dc9f0
+Antonino Maniscalco (11):
+      drm/msm: Fix bv_fence being used as bv_rptr
+      drm/msm/A6XX: Track current_ctx_seqno per ring
+      drm/msm: Add a `preempt_record_size` field
+      drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
+      drm/msm/A6xx: Implement preemption for A7XX targets
+      drm/msm/A6xx: Sync relevant adreno_pm4.xml changes
+      drm/msm/A6xx: Use posamble to reset counters on preemption
+      drm/msm/A6xx: Add traces for preemption
+      drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
+      drm/msm/A6xx: Enable preemption for A750
+      Documentation: document adreno preemption
+
+ Documentation/gpu/msm-preemption.rst               |  98 +++++
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |   2 +-
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   2 +-
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   6 +-
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   7 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 325 ++++++++++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h              | 174 ++++++++
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c          | 440 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   9 +-
+ drivers/gpu/drm/msm/msm_drv.c                      |   4 +
+ drivers/gpu/drm/msm/msm_gpu.c                      |   2 +-
+ drivers/gpu/drm/msm/msm_gpu.h                      |  11 -
+ drivers/gpu/drm/msm/msm_gpu_trace.h                |  28 ++
+ drivers/gpu/drm/msm/msm_ringbuffer.h               |  18 +
+ drivers/gpu/drm/msm/msm_submitqueue.c              |   3 +
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |   7 +-
+ .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  39 +-
+ include/uapi/drm/msm_drm.h                         |   5 +-
+ 20 files changed, 1117 insertions(+), 66 deletions(-)
+---
+base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
+change-id: 20240815-preemption-a750-t-fcee9a844b39
 
 Best regards,
 -- 
-Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Antonino Maniscalco <antomani103@gmail.com>
 
 
