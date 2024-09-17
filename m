@@ -1,145 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-31925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1619097B201
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 17:43:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A93997B225
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 17:47:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A6571C24704
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 15:43:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFB1F1C24A12
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 15:47:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ABD21CE6E7;
-	Tue, 17 Sep 2024 15:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FDAF15C148;
+	Tue, 17 Sep 2024 15:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b="uLkt/Azi"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q9eXdJni"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-00823401.pphosted.com (mx0a-00823401.pphosted.com [148.163.148.104])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9876C1CDFDA
-	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2024 15:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.148.104
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6BD18B46A;
+	Tue, 17 Sep 2024 15:30:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726586318; cv=none; b=t2JnMTaOM+Eb2bB89khlbwfo0Qhp992LBTsfASH0DakVQkXNFxmizdNaOuQobpHXHjBLZGHMNIKZMfHV+V6pjf2+HDwiASnk2eIfx8apm7H9zgkJBmT7SFwpCS1xHaNnOS0uZS+mOLAHj1RevIxZ7WWy/R8rq6QWLcpi2JvPqg4=
+	t=1726587043; cv=none; b=Csw51XsE9lB0fKMKUvdT38HubOUUYhzJhMCTSGhCQHb9j/oEazEuD9ZbuFiZ7l7uPJGqQjiAjyWEdcUpAdU+qi3iAr6VnkqJKP/BvzKqpJNCUc/Kh2+paR6Qz2URLijlCMLuAn2lDVAUMcbCKt+IWI2zFX2Nom2S1tUMoKWAHmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726586318; c=relaxed/simple;
-	bh=0OqSLERFxVcXKizcsEYDTN1/NTZ7HEdmewtOSQT0tQE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=boVQfIEB+twX7IIawRrKYOOA162ihVtwEYQwShNz1sqnmKyj6onL4LETcxPFwHiDGh1Jhp2T4hHKFiYhnDacrZ68qyqfudUM+rSIBAjP8hKanqduq28I9WxZqjYi94qJMNfq7On8OjZoJLm3VT7z2zkjllKereQhg6WCzHFq94Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com; spf=pass smtp.mailfrom=motorola.com; dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b=uLkt/Azi; arc=none smtp.client-ip=148.163.148.104
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=motorola.com
-Received: from pps.filterd (m0355085.ppops.net [127.0.0.1])
-	by mx0a-00823401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48H7sEkW019576;
-	Tue, 17 Sep 2024 15:15:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=motorola.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=DKIM202306;
-	 bh=mlVGIrqy64Dc9eUSBnKjtZmzWncJaw1NjMKPONvPhT8=; b=uLkt/Azi2B5T
-	0NWE+4MAkIPgnfAA0eNTX3nhWH1WVhB+ck9xMdfdaM4LPhUb41u7kuHNiBY52+Mr
-	Y9ptX/5el7Zh4sQIFzpqz1D4Uroe0KquH4cl66A+tKy1I+n89CSmzqk89vi9hk9l
-	iMSqz5eDvt+zQ77t3JMhNzHQVPocJUT6H11XZ26a2RQhQH46pFLSX0CaTmT1LB1q
-	M2MxeY4QpWX4fw2rlrjq5zPgoJncRpjBE+iTPf75VAuHhuYv1UyxloeoG8Qx1NIR
-	1XHeTcxbxnHJ1AP2zFybUJfPzVpQVZNun5fOE3S0XK1jlvBQMd0Dh616A/xSxVJF
-	h9Pq7VUg/A==
-Received: from iadlppfpol1.lenovo.com ([104.232.228.80])
-	by mx0a-00823401.pphosted.com (PPS) with ESMTPS id 41ns0fkupu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 17 Sep 2024 15:15:10 +0000 (GMT)
-Received: from ilclmmrp01.lenovo.com (unknown [100.65.83.165])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by iadlppfpol1.lenovo.com (Postfix) with ESMTPS id 4X7QLz2TvFz8fgF6;
-	Tue, 17 Sep 2024 15:15:07 +0000 (UTC)
-Received: from ilclasset02 (ilclasset02.mot.com [100.64.11.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: mbland)
-	by ilclmmrp01.lenovo.com (Postfix) with ESMTPSA id 4X7QLy3368z3nd8C;
-	Tue, 17 Sep 2024 15:15:06 +0000 (UTC)
-Date: Tue, 17 Sep 2024 10:15:05 -0500
-From: Maxwell Bland <mbland@motorola.com>
-To: Maciej =?utf-8?Q?=C5=BBenczykowski?= <maze@google.com>
-Cc: Neill Kapron <nkapron@google.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Andrew Wheeler <awheeler@motorola.com>,
-        Sammy BS2 Que | =?utf-8?B?6ZiZ5paM55Sf?= <quebs2@motorola.com>,
-        Todd Kjos <tkjos@google.com>,
-        Viktor Martensson <vmartensson@google.com>,
-        Andy Lutomirski <luto@amacapital.net>,
-        "keescook@chromium.org" <keescook@chromium.org>,
-        Will Drewry <wad@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        kernel-team <kernel-team@android.com>,
-        "adelva@google.com" <adelva@google.com>,
-        "jeffv@google.com" <jeffv@google.com>
-Subject: Re: [RFC] Proposal: Static SECCOMP Policies
-Message-ID: <viztnjhxjfc5asyzpxlbsjgkno7jmgs3so7xf4q4y633nncjz3@kp27s5ktxydk>
-References: <SEZPR03MB6786D45BE387F2B378E71A84B4642@SEZPR03MB6786.apcprd03.prod.outlook.com>
- <ZuNVqvVgXLjNXS5Y@google.com>
- <CANP3RGfez2onSLVT2wC1hsSmKGxD9aFdV3we3Zsngw0BgbeGyw@mail.gmail.com>
- <TYZPR03MB67922FFDE5C9C925D8274677B4652@TYZPR03MB6792.apcprd03.prod.outlook.com>
- <CANP3RGfwL1OigoSkhmnRFDy=y+sstabiRAREPxEbEiEfuDaweQ@mail.gmail.com>
- <rlgx2zq3s6vs6t26fut3ez6bix5jphvofyuw2amnbdpyb6c55m@kxzqput2rry5>
- <CANP3RGf_WoEOCgJ=X_nVBDYuwDty0BDiCSZQxONLX-dVbd2-UQ@mail.gmail.com>
+	s=arc-20240116; t=1726587043; c=relaxed/simple;
+	bh=OJzTjkSK+iJo8xCS+hitRPETuIrLbA19oFp+chpHtSE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fLjjMv5f0C52fBUTPF8yz+ST6pBlxz8TTiR+wYL8J9FAA01ODrQy5tkMeHYk8+QHj8XyGfOtQKIXw/cmhWTGgI2yeOtfaslPr1yYYChixlPp9w2hfvYGb5+GfXBvBng10xXJwhUjZ2VJnh5AV0q6zZh6lClVl6Mcg8egz2v16ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q9eXdJni; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3a0979cc639so14728615ab.2;
+        Tue, 17 Sep 2024 08:30:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1726587039; x=1727191839; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rPW/AgdMn9HEEBlCh+UVWWKGsOQrfUimterFynorjKM=;
+        b=Q9eXdJniOmSN4H4x+nHL1yHX8PwOBY0Wh9IKylMHv3ny5o2Lc30NocvM8odO/pMpOS
+         b8P1fvxyYFJ+vZtBckuhPdEaGaGtC/XfHaN1vFI0HEaH9pLN/CL3Rey+iPAEDjmbGWEP
+         tA6gDvvT2WLMq/l3BUFQCUimNRiGW0AIQ90l32TRRaHhZt9pms2bWvTtFErybpQXmFTc
+         28G45Y9lZTiE6p5FXAs4u1DtlV38uqViYFBrmTdkqLbk729A357u5p4VKp81luDokZTC
+         i8I2+SZrKtgeaXNI3Jf2VqK/uyKGLoV3/YaxBGBvEE9OZXT6gdrYFgSpT7n466NuFuP+
+         9I/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726587039; x=1727191839;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rPW/AgdMn9HEEBlCh+UVWWKGsOQrfUimterFynorjKM=;
+        b=Yi9mDBqd6P+qlw3A3vtSaGAFdELHdlkuKnd/1dPCF0WtUKoR1/NyNKsnWStIBPvVGw
+         3XFlEiiXFzkPfimAFiTOQhWq3h76mQktB5Y2e6qBBwxPY4CoJg95TLH3jb4B9AHcNk+p
+         QZHlvPMG64jIZkuXdf+SfDhsnCJbAzNroKzAjCCWEfIsAuz2rGgc1YNXhwmopiYeLY96
+         3DLeJHnpxmC6zEtpzmc3Vl1Cc9rZ7lXXSFoY0Q/A7qW03bhRTMYQxQqh487EoJ8hyoDZ
+         QGegE3sbFXC/eqQowQ9IbAFKgCFMYWlhORCWlktYxsyQfzkTfMvgm7pjI7LEjQ4kwEjD
+         vRIw==
+X-Forwarded-Encrypted: i=1; AJvYcCVFFi4F3nNEO5Qo7IaqKt8vPERR7prAAeBwY35gLQA3yQL+4HcNKxPztnPaFGUkJB2uRMvra3qExJVqlVdb@vger.kernel.org, AJvYcCWEXg36J7y//b4ixqArfNL/ckGKl07mPHdQ24rBtIUabqBcNk+3FCbB3u90iNuSRdO25v3inNpVz0GbtVHD@vger.kernel.org
+X-Gm-Message-State: AOJu0YzR2sE/Dins54WEVn9j81EdV+SjPLmvzq97mpnFU3xRp9d0NQvL
+	vMok2US843yAkVMMPJxV8VUxVpYNrxLAwOcFZJF3+6F16j4N6BUs1aqiYFAgpquDgNDcLRRHO1Q
+	DN0vNUSfqGp7yoCve1KgFyl9E/Ns=
+X-Google-Smtp-Source: AGHT+IFnQfX2Dm7t85FaLReCnsm/k3IVJHP6S0jDSauS+A3CY0LNPlrSmf9NZpTDLnGuUiYPAko0KJRt85OCKIPoMnY=
+X-Received: by 2002:a05:6e02:5a9:b0:3a0:8c68:7705 with SMTP id
+ e9e14a558f8ab-3a08c6877c6mr117243125ab.21.1726587038839; Tue, 17 Sep 2024
+ 08:30:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CANP3RGf_WoEOCgJ=X_nVBDYuwDty0BDiCSZQxONLX-dVbd2-UQ@mail.gmail.com>
-X-Proofpoint-GUID: Bf-bPnnNI6Pe4_IxKzC_r7PK1QG85c5H
-X-Proofpoint-ORIG-GUID: Bf-bPnnNI6Pe4_IxKzC_r7PK1QG85c5H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
- mlxlogscore=917 spamscore=0 bulkscore=0 phishscore=0 adultscore=0
- mlxscore=0 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409170109
+References: <20240913195132.8282-1-robdclark@gmail.com> <e6991910-5058-4ef0-bfdf-6d33953535dd@kernel.org>
+In-Reply-To: <e6991910-5058-4ef0-bfdf-6d33953535dd@kernel.org>
+From: Rob Clark <robdclark@gmail.com>
+Date: Tue, 17 Sep 2024 08:30:25 -0700
+Message-ID: <CAF6AEGvgS-DD0+qGX_Mud75aES4AQQjmWx2j2gyz7uakTpnp0w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/a6xx+: Insert a fence wait before SMMU table update
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Akhil P Oommen <quic_akhilpo@quicinc.com>, 
+	Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, 
+	Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 16, 2024 at 03:50:04PM GMT, Maciej Żenczykowski wrote:
-> On Mon, Sep 16, 2024 at 3:18 PM Maxwell Bland <mbland@motorola.com> wrote:
+On Tue, Sep 17, 2024 at 6:47=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.o=
+rg> wrote:
+>
+> On 13.09.2024 9:51 PM, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
 > >
-> > #define MODIFY_KERNEL_CODE                                                     \
-> >         do {                                                                   \
-> >                 fake_je = (struct jump_entry *)kallsyms_lookup_name_ind(       \
-> >                         "spectre_bhb_state");                                  \
-> >                 attack_addr = kallsyms_lookup_name_ind("udp_recvmsg");         \
-> >                 if (register_kprobe(&kp2)) {                                   \
-> >                         return -1;                                             \
-> >                 }                                                              \
-> >                 arch_jump_label_transform =                                    \
-> >                         (arch_jump_label_transform_t)kp2.addr;                 \
-> >                 fake_je->code = attack_addr - (unsigned long)&(fake_je->code); \
-> >                 fake_je->target = stext - (unsigned long)&(fake_je->target);   \
-> >                 arch_jump_label_transform(fake_je, JUMP_LABEL_JMP);            \
-> >                 return 0;                                                      \
-> >         } while (0)
-> 
-> That's not valid cBPF
+> > The CP_SMMU_TABLE_UPDATE _should_ be waiting for idle, but on some
+> > devices (x1-85, possibly others), it seems to pass that barrier while
+> > there are still things in the event completion FIFO waiting to be
+> > written back to memory.
+>
+> Can we try to force-fault around here on other GPUs and perhaps
+> limit this workaround?
 
-It is not intended to be: see the Qualys exploit from my original
-message. People are not loading bad BPF, they are targeting BPF code
-pages for modification during the window between JIT and execution,
-using a write-gadget exploit, e.g. UAF + Heap Spray.
+not sure what you mean by "force-fault"... we could probably limit
+this to certain GPUs, the only reason I didn't is (a) it should be
+harmless when it is not needed, and (b) I have no real good way to get
+an exhaustive list of where it is needed.  Maybe/hopefully it is only
+x1-85, but idk.
 
-Also, I read through and responded to Andy's message on this thread just
-now. Andy had the really good idea of rather than Android saying "use
-this seccomp->BPF compiler", the code page or BPF program comes with an
-"origin" tag, that is, something saying "this was generated by
-libminijail" or "bionic libc". That would work just as well supposing
-that if I were to see a tag for something I did not know (likely one of
-these QCOM services), I could email someone at QCOM to get the compiler
-spec, hopefully.
+It does bring up an interesting question about preemption, though
+
+BR,
+-R
+
+> Akhil, do we have any insight on this?
+>
+> Konrad
 
