@@ -1,221 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-31913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31914-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A968997AF8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 13:17:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20D7F97B0D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 15:39:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67E5C284563
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 11:17:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 56D4CB29921
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 13:39:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C032188589;
-	Tue, 17 Sep 2024 11:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8674D188584;
+	Tue, 17 Sep 2024 13:38:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZCKsMQ2C"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iMhRPGKG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904E516A94B;
-	Tue, 17 Sep 2024 11:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31703188A2D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2024 13:38:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726571677; cv=none; b=F/684cyTnuEcGyj4/fLc3OmWPuZfaCwHbPBYGYJgZmvzMWL1iwpXRe40gFwC2KIDLgOxNsJAlNzeF/C9g30yx2t/S3JXGVZXr1WW1k6G/T5qf9GjI9zbCxarei+axc73V5BOl4PDLaoqlpIlMsQbymsi2oPFiCEW6xzjc7BCfQo=
+	t=1726580333; cv=none; b=CrQFq1jneSxvzZ0lK8mFNJknHO5uFii7dOPZmVEGu5xW+FoZG4TBjfOyuQ9TimNh79EtsU/b5w1KaBEhlzmoaragjUdHxFyQZWSHnkeDB8MvbhV/+FqnIHaNNUJEPqGSPjghm7dSHO8gx2VoWUJor5zkPa9PBdV4+y6iAAA59m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726571677; c=relaxed/simple;
-	bh=roRdoUA06OSktfkT3cuEuaM2HtScD0650/8+GaZZFy4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LhEDFztIOeN2eDc/h9C6OTEr7vB4prlNzRLTQLpVwdGyufZooktS34X3xbvDIuG+ia/kU1E9qCu4HGnLCAQ8AZX8VaB3ritj2POFgDsqtjVpHwpFRE55knwD4vQkutv4olKRIuHExqseXTDUVJYNTtF890jf0x+f+vq+zR9EKMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZCKsMQ2C; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8a7cdfdd80so647439466b.0;
-        Tue, 17 Sep 2024 04:14:35 -0700 (PDT)
+	s=arc-20240116; t=1726580333; c=relaxed/simple;
+	bh=ZG1vxeD3EgoOOwm9exxEQewT3p4f8/J4YXV48auODqo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pYI7nxyGuDp+C5OOnSOgHA8SDJQDZnK/WVf6j4l8XhES94qqHWKC5N7PQN3Eqf2Suwm46tUJvbhXAmyzOkgXhkGTxapb/7SSWne3zfgnhKuf9ng3abbsOQ8NDdw9FGeEnSVWQw4OZLoZWzYbmJsgs8Zu/y4PWqugd6UsNN6PL9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iMhRPGKG; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2f762de00fbso59943611fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2024 06:38:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726571674; x=1727176474; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Bo/Q+fVB0c2N2S+2tO3u0tNQvOs02ddpFS55PdIBqiM=;
-        b=ZCKsMQ2C2QkijTjt1FKdat4VS9xLVJXFsvwGrgSCbUiI5SZh/Y+eyBDqfMHZcGcOdb
-         kMV8lgI+DhyVAN59/31GY4VtD8nY1jHsnPLv38uO68INuSZ79m0aW9Ay6Jwv9L/fC278
-         h0VXgQnvJKivKtDGp/q4kDqWWcka55tkmc7wiupxV4cQlyrmJ8ECMnO6hhwiwlX/tJ7c
-         S4DmsmxW31mERlp5hDn1v5HdXQ9e0yHGWowsYzVR1lfthi3iTVYQ1HLl9ZvNLnHE93Sp
-         LUMARLlgiev1nZS99JcGZQ0Wqp5vOkkericjtNXtMYXMhWTmGd3GC1AuU5GPKkSEKwWG
-         bcWw==
+        d=linaro.org; s=google; t=1726580303; x=1727185103; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7oEZwCbDIQ8F+t4Rs5Bvaf5j4IlFxDz2ZFbzuElzFFQ=;
+        b=iMhRPGKGN1Rod39srcMpq7d9KknSbl06Wa8LgN01LnEX8o21jlNpURD/MmHqadr5ce
+         8WOJe2CRnV7nYhajsphNI+6Fkhh+jwYjP+2gTHzabrqcXZyLzBHQ53gHGDjwOtx3v0y+
+         1pWXT1BJd2LM0uoDoLhU6AUGaRaGMYF0mgszFvC6jxkBa5ygrjbauPHl8b+HBsrtDlm8
+         ClJynL7ANSIlpjxCfhql+RJZRhEG2MAoEf5LxDf9FAqiTP5/MSW5sWOK1TBNYa0tsbNk
+         7z931rNADc+rNOYwYtAxnhxiC6/UBoQdEekOcTA8/huLFHkOctGW64I3aAgPMLZpoWLN
+         O8nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726571674; x=1727176474;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Bo/Q+fVB0c2N2S+2tO3u0tNQvOs02ddpFS55PdIBqiM=;
-        b=tMbvf2lZ8w3LVm7IN5FiT4BG5wUzGEy0LC0F+VXmAOUu0/Cpj/MisoJbeG4wXyOZIU
-         IXAUScpfG+XqTVj17FOwrGSQwKldyUGSxXAKx9hL/9bCt/rGnSnWWFcEAoS4GdUp39nU
-         jtVReS1FFOowfYZ6Rqn9FLJWuI41836d22rUm3O3gaotEV+7cQG+WcCbuAB5gNT7cEeV
-         1o2rzEB51FevdIYYyhLeexOqGxPMA3GiMgnHlDfdDBQ1JvTIRwCBHIJ0QEiN7us7hzAg
-         UYCLpVeulhwQawa3Ia5hYAQIGbcN237lHw8VFYOcEaODxOZOgrHgSuhIi3XbYkuf4wI1
-         J+GA==
-X-Forwarded-Encrypted: i=1; AJvYcCWRWEovW8fYO7KdVcAWev5SykuZb3n3AlVKV2EgsPUX/EZO+D58g6dmYJvX2/mFP+khS/TPQkUVmfmZoJnU@vger.kernel.org, AJvYcCWXiBICZqHaP9tU/xEmMbIf4r7lxDFzHq2vvUh4+pIKeql3hCtrHjo5vyz8XivtGQgVysCECYclZPo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPAZ0TgjglQ/52r9xXT6aXz1E9JYVfDMTIA9Z/9XPRN5wdA5DD
-	pxhBBEsal29m9atMJ9pahn41loUtMK2r4nDchgnf8+B1T9qW3TiK
-X-Google-Smtp-Source: AGHT+IEo3KeisOhfYxWfOemIFnRDGajHBF3QYONL7b0c6BlfR/CJVVBqL7wK41v8Afv13g1KcnHV7A==
-X-Received: by 2002:a17:907:7f23:b0:a86:700f:93c0 with SMTP id a640c23a62f3a-a9047d1ac6dmr1292392066b.35.1726571673826;
-        Tue, 17 Sep 2024 04:14:33 -0700 (PDT)
-Received: from [192.168.1.17] (host-82-51-105-30.retail.telecomitalia.it. [82.51.105.30])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90612e1a55sm430745166b.157.2024.09.17.04.14.31
+        d=1e100.net; s=20230601; t=1726580303; x=1727185103;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7oEZwCbDIQ8F+t4Rs5Bvaf5j4IlFxDz2ZFbzuElzFFQ=;
+        b=rA2tj3E//FAwh9/NcMWbdXvlLm1PIU3iEfVxulkl/HVlgHnomNfY2AJ25kxZPPVze4
+         Dh8bizjwWlMBYYb/yCf4gpDoSC3VGcHlqxggktoc3jhKpwMucszSgEssIgNAOGKc/GUi
+         azaeAu2n3qr8kicxsgboa+BWAR387X8xeejgP+LeGSB86R9jv+XDM5aPqJ1Byi7XeDEa
+         qN2FPWfmKxL5IYDb3KkUx/bmYO8OBDkV+O4MS9Pp4siKnk9ElUO0vHdgFEwiSds90vVi
+         eH4Kqg8a8WtGWfvLV6AUPmywmih4CveXuYbaSflzrKZjuS2lG0Tg3OM9y7Rja4itk1sw
+         EfNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/DNYCKKaE0kAwHalDFa13uDUZyNWuGJZ+W88bUP0YKWiBE9YadSE2XKWxwygoyFYWMPqutkzgBUufiKmO@vger.kernel.org
+X-Gm-Message-State: AOJu0YwZ7aVHkzYLHBj4Cd8wgvV4YmPglKj8zESHuFi3un81f3/g7DVa
+	nxOOnUxr0AThX4wo2mqg0XtzGvYJiRmv70jAlbV6vpdXvel/EISyj2atU55k8YsBcjoo+YHRHec
+	Fhtw=
+X-Google-Smtp-Source: AGHT+IGjeiZlF4mZL1r/PNyz6+OKRKX0/62xZ9kMPvlixKz4htlJC6nn+3BuxQ2/JVRsRDBmL4KaIA==
+X-Received: by 2002:a2e:b8c2:0:b0:2f4:5d9:e8e3 with SMTP id 38308e7fff4ca-2f787dad4c0mr109899051fa.7.1726580302686;
+        Tue, 17 Sep 2024 06:38:22 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f79d30175fsm10821131fa.53.2024.09.17.06.38.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Sep 2024 04:14:33 -0700 (PDT)
-From: Antonino Maniscalco <antomani103@gmail.com>
-Date: Tue, 17 Sep 2024 13:14:21 +0200
-Subject: [PATCH v4 11/11] Documentation: document adreno preemption
+        Tue, 17 Sep 2024 06:38:21 -0700 (PDT)
+Date: Tue, 17 Sep 2024 16:38:20 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sachin Gupta <quic_sachgupt@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_bhaskarv@quicinc.com, 
+	quic_mapa@quicinc.com, quic_narepall@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: qcs6490-rb3gen2: Add SD Card node
+Message-ID: <gyasvmb5q3e4pgmfpj7njovclydwhsvsxt4ayfxzbh5njwgwsq@zfhlm6lqfirl>
+References: <20240917090630.1025-1-quic_sachgupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240917-preemption-a750-t-v4-11-95d48012e0ac@gmail.com>
-References: <20240917-preemption-a750-t-v4-0-95d48012e0ac@gmail.com>
-In-Reply-To: <20240917-preemption-a750-t-v4-0-95d48012e0ac@gmail.com>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- Jonathan Corbet <corbet@lwn.net>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>
-X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726571652; l=4842;
- i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
- bh=roRdoUA06OSktfkT3cuEuaM2HtScD0650/8+GaZZFy4=;
- b=DNGawWdMty8okiDt/7j6ItVwD17WNPGrPDbSn6xIln3BXwF6VZLrsXi+qTJkgXjZ0nc1r6J1j
- nOxyBYuU/5SB91rFRyxpLOw6+WqT369DmPmh3TVRpAnUPU2sdutlD24
-X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
- pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240917090630.1025-1-quic_sachgupt@quicinc.com>
 
-Add documentation about the preemption feature supported by the msm
-driver.
+On Tue, Sep 17, 2024 at 02:36:30PM GMT, Sachin Gupta wrote:
+> Add SD Card node for Qualcomm qcs6490-rb3gen2 Board.
 
-Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
----
- Documentation/gpu/msm-preemption.rst | 98 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 98 insertions(+)
+Consider adding mmc0 or mmc2 alias for the sdhc_2 node.
 
-diff --git a/Documentation/gpu/msm-preemption.rst b/Documentation/gpu/msm-preemption.rst
-new file mode 100644
-index 000000000000..c1203524da2e
---- /dev/null
-+++ b/Documentation/gpu/msm-preemption.rst
-@@ -0,0 +1,98 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+:orphan:
-+
-+=============
-+MSM Preemtion
-+=============
-+
-+Preemption allows Adreno GPUs to switch to an higher priority ring when work is
-+pushed to it, reducing latency for high priority submissions.
-+
-+When preemption is enabled 4 rings are initialized, corresponding to different
-+priority levels. Having multiple rings is purely a software concept as the GPU
-+only has registers to keep track of one graphics ring.
-+The kernel is able to switch which ring is currently being processed by
-+requesting preemption. When certain conditions are met, depending on the
-+priority level, the GPU will save its current state in a series of buffers,
-+then restores state from a similar set of buffers specified by the kernel. It
-+then resumes execution and fires an IRQ to let the kernel know the context
-+switch has completed.
-+
-+This mechanism can be used by the kernel to switch between rings. Whenever a
-+submission occurs the kernel finds the highest priority ring which isn't empty
-+and preempts to it if said ring is not the one being currently executed. This is
-+also done whenever a submission completes to make sure execution resumes on a
-+lower priority ring when a higher priority ring is done.
-+
-+Preemption levels
-+-----------------
-+
-+Preemption can only occur at certain boundaries. The exact conditions can be
-+configured by changing the preemption level, this allows to compromise between
-+latency (ie. the time that passes between when the kernel requests preemption
-+and when the SQE begins saving state) and overhead (the amount of state that
-+needs to be saved).
-+
-+The GPU offers 3 levels:
-+
-+Level 0
-+  Preemption only occurs at the submission level. This requires the least amount
-+  of state to be saved as the execution of userspace submitted IBs is never
-+  interrupted, however it offers very little benefit compared to not enabling
-+  preemption of any kind.
-+
-+Level 1
-+  Preemption occurs at either bin level, if using GMEM rendering, or draw level
-+  in the sysmem rendering case.
-+
-+Level 2
-+  Preemption occurs at draw level.
-+
-+Level 1 is the mode that is used by the msm driver.
-+
-+Additionally the GPU allows to specify a `skip_save_restore` option. This
-+disables the saving and restoring of certain registers which lowers the
-+overhead. When enabling this userspace is expected to set the state that isn't
-+preserved whenever preemption occurs which is done by specifying preamble and
-+postambles. Those are IBs that are executed before and after
-+preemption.
-+
-+Preemption buffers
-+------------------
-+
-+A series of buffers are necessary to store the state of rings while they are not
-+being executed. There are different kinds of preemption records and most of
-+those require one buffer per ring. This is because preemption never occurs
-+between submissions on the same ring, which always run in sequence when the ring
-+is active. This means that only one context per ring is effectively active.
-+
-+SMMU_INFO
-+  This buffer contains info about the current SMMU configuration such as the
-+  ttbr0 register. The SQE firmware isn't actually able to save this record.
-+  As a result SMMU info must be saved manually from the CP to a buffer and the
-+  SMMU record updated with info from said buffer before triggering
-+  preemption.
-+
-+NON_SECURE
-+  This is the main preemption record where most state is saved. It is mostly
-+  opaque to the kernel except for the first few words that must be initialized
-+  by the kernel.
-+
-+SECURE
-+  This saves state related to the GPU's secure mode.
-+
-+NON_PRIV
-+  The intended purpose of this record is unknown. The SQE firmware actually
-+  ignores it and therefore msm doesn't handle it.
-+
-+COUNTER
-+  This record is used to save and restore performance counters.
-+
-+Handling the permissions of those buffers is critical for security. All but the
-+NON_PRIV records need to be inaccessible from userspace, so they must be mapped
-+in the kernel address space with the MSM_BO_MAP_PRIV flag.
-+For example, making the NON_SECURE record accessible from userspace would allow
-+any process to manipulate a saved ring's RPTR which can be used to skip the
-+execution of some packets in a ring and execute user commands with higher
-+privileges.
+> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 33 ++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> index 0d45662b8028..5df3167651ca 100644
+> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> @@ -716,9 +716,42 @@
+>  	status = "okay";
+>  };
+>  
+> +&sdc2_clk {
+> +	bias-disable;
+> +	drive-strength = <16>;
+> +};
+
+Please move all pinctrl-related nodes below the PINCTRL comment.
+
+> +
+> +&sdc2_cmd {
+> +	bias-pull-up;
+> +	drive-strength = <10>;
+> +};
+> +
+> +&sdc2_data {
+> +	bias-pull-up;
+> +	drive-strength = <10>;
+> +};
+> +
+> +&sdhc_2 {
+> +	status = "okay";
+> +
+> +	pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>, <&sd_cd>;
+> +	pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>, <&sd_cd>;
+> +
+> +	vmmc-supply = <&vreg_l9c_2p96>;
+> +	vqmmc-supply = <&vreg_l6c_2p96>;
+> +
+> +	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
+> +};
+> +
+>  &tlmm {
+>  	gpio-reserved-ranges = <32 2>, /* ADSP */
+>  			       <48 4>; /* NFC */
+> +
+> +	sd_cd: sd-cd-state {
+> +		pins = "gpio91";
+> +		function = "gpio";
+> +		bias-pull-up;
+> +	};
+
+There is also a special PINCRTL_related TLMM imstance down the file,
+move it to that node.
+
+>  };
+>  
+>  &uart5 {
+> -- 
+> 2.17.1
+> 
 
 -- 
-2.46.0
-
+With best wishes
+Dmitry
 
