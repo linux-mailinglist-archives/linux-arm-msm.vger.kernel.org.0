@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-31875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77E0497A9CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 01:57:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 552D497AA09
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 02:45:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1CCFF28A0C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Sep 2024 23:57:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7FF51F28B11
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 00:45:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 819EB153814;
-	Mon, 16 Sep 2024 23:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9221C4A32;
+	Tue, 17 Sep 2024 00:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="bUAOLGKm"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pHsQjMx8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0FA14A4D6;
-	Mon, 16 Sep 2024 23:57:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 062B4847B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 17 Sep 2024 00:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726531039; cv=none; b=jh4VUGNDc2LhlcExjPxW5dc4z4Gp2BHV9nOCMDVweMJbPZbVMrW/oFIOmG6cba+D7FgssCkpnDEb/FMBKgLFP/Yh3NBp7fpwlCxPQWe0etEzhwc83AhpRh5kEu2d9HHyu1FgABfcDEJs5c9BVCRkzfXIwnWLD9GFZXUYxkpKAR8=
+	t=1726533907; cv=none; b=EJ07ggol7ZzzHdfNr/VP/1hMcdaypwtRGbdph7J/ZbK2vP8FVqFb4wfdmKK742qTFtzeT2e/J/IfIMT75KElFKdRo5Hs9utAyzpxL/quV1PHu6WzxVSKHLhRS3gMI91fsrmxXkQTGKGvvl/+5TEOA5QOdPhfDqswo09CBsEKp/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726531039; c=relaxed/simple;
-	bh=TrlAOEEOnjmBU08apRAnP9M+pLZpdYovn6wn2WroKNQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=hVr8mUSnVDGaDM0pkfK5uDJQYESCih7uRGqN5nKy5D+vg1NluP4wUEnLRDeaQkMYbuv45JKtCKBJB/25qXKHL7UaBTk5HPAQ6A9IEWPuV6Yh/duZVG4pbK2NO0+HeqXUO2sz/w/YsUQqTV0nKraGMhLwpNApD1HfiLms7EkxLX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=bUAOLGKm; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1726533907; c=relaxed/simple;
+	bh=ONnW64HWyDloqjnf1D0L3OhvmjVpJVPjAFQRkT234ks=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FppgfodxPGHtOIC4pDrQcGk6+uhxzzpyLBeV+zYQQhCDeAIRDvyXfXlCR5C1pKkdyRsMo/mGDnv7Nd6csjUM1DybCbn5TmdEU+GwAtUrYQpbK1wSbltt3MUngJ9HdzMyJLd8Qj8mb7mVZPp60EDHPpKrmSyAx2M1DsTKUSKpSV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pHsQjMx8; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GCjfxi012443;
-	Mon, 16 Sep 2024 23:57:13 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48GD52aE017283;
+	Tue, 17 Sep 2024 00:44:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mVfTJEr5F/tJ+is7JKXfugyHyOYSUxSoW7m7bMm3VTM=; b=bUAOLGKm0IBDEinZ
-	iWW2SPMxxoGdtOK+ZrQyABi7ZHZ1jxw+H37ot2iNmNV9nP5zJQ0VRoZpkQ7nzs2Q
-	RXKFH5QPoEfSsINHb1w2o+PxNSPj8pI6mwA3lMmRQ44JpdoO3Y0szKB6XbikVkf4
-	mzf4M7kdyE9DhGLB+YsEJKDnZhYLwmkYJkOwrj1v74q3M7ENHREsRXHwzrsjpwme
-	aL4d9tQC+njIsem8EzptmHeAuvYh+rTuq4dZREiTkh2FKto1ONm/PuU3FaYaiP3A
-	UDbnB8C1QcwQFnCfRLpCxYDefshJvKgp/akSu1sxfEaktuQ67mqfMXxq6ByDvUAb
-	9JyhcQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4jhnheh-1
+	NmgZtn0AjKqWDAK7831W9QzjJFQ/IH6yd5+asW4vXDY=; b=pHsQjMx8ZCDjW8UY
+	Bi9Ln1p76/+r+KfJcY18G031sWKt+H3M33uRWBc6GYx1LLNEUo5QWQGZQXukC2g+
+	3EHS6I3jjAxn42HdSl05S1aGzntpnzIKJ/+4c6xKUVjjg/3DQgOFeL5i7ilJEp2x
+	4DmDq9T0UP2ktiChHexFo/foOIsnxkIDCpIkE9ziIzXB/3+GCBy5ky0BP8ADeqOh
+	qy6RZ0+NOJNzaIwvtfJg6sI3nOD3mYbdlnt6Vk012S28SYHxMN8m7/X74JuZMp1L
+	C89uL3javzZ1+P3ISu5FFWhuGNqnspKajBP4cm/H2v/CkVPAsHluUoE+QI9e/w2Y
+	g7eloQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4kjdh55-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Sep 2024 23:57:13 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48GNvBQW021047
+	Tue, 17 Sep 2024 00:44:54 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48H0irbe019099
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 16 Sep 2024 23:57:12 GMT
-Received: from [10.71.108.138] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+	Tue, 17 Sep 2024 00:44:53 GMT
+Received: from [10.110.75.131] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 16 Sep
- 2024 16:57:08 -0700
-Message-ID: <218d3e02-2d2b-4ec2-93b3-5936f84cf41c@quicinc.com>
-Date: Mon, 16 Sep 2024 16:57:08 -0700
+ 2024 17:44:52 -0700
+Message-ID: <32340061-c864-4579-b557-b9a1e60baabd@quicinc.com>
+Date: Mon, 16 Sep 2024 17:44:52 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,264 +65,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Subject: Re: [PATCH v2 2/2] firmware: qcom_scm: Support multiple waitq
- contexts
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Konrad Dybcio <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <cover.1724968351.git.quic_uchalich@quicinc.com>
- <b736ba58b4a4164f7232de7e075102cd2818b1e7.1724968351.git.quic_uchalich@quicinc.com>
- <q4tb7muqjef2hc2laodybghxesriaq5oxca45xmaqpxv3xnmav@eolhk75eolkt>
+Subject: Re: [PATCH v6 01/15] drm/msm/dpu: make sure phys resources are
+ properly initialized
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>
+CC: Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan+linaro@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20240903-dpu-mode-config-width-v6-0-617e1ecc4b7a@linaro.org>
+ <20240903-dpu-mode-config-width-v6-1-617e1ecc4b7a@linaro.org>
 Content-Language: en-US
-In-Reply-To: <q4tb7muqjef2hc2laodybghxesriaq5oxca45xmaqpxv3xnmav@eolhk75eolkt>
-Content-Type: text/plain; charset="UTF-8"
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240903-dpu-mode-config-width-v6-1-617e1ecc4b7a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dkL5tZamEWrDwamlIiiBJsrBg8uiQPlj
-X-Proofpoint-GUID: dkL5tZamEWrDwamlIiiBJsrBg8uiQPlj
+X-Proofpoint-GUID: ehm73ebdUY5HJjNGzEQ8fSxmtDSG7Dqp
+X-Proofpoint-ORIG-GUID: ehm73ebdUY5HJjNGzEQ8fSxmtDSG7Dqp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 phishscore=0 impostorscore=0 bulkscore=0 adultscore=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409160164
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ suspectscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0
+ phishscore=0 impostorscore=0 mlxlogscore=993 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409170002
 
-On 9/4/2024 2:54 PM, Bjorn Andersson wrote:
-> On Thu, Aug 29, 2024 at 03:15:55PM GMT, Unnathi Chalicheemala wrote:
->> Currently, only a single waitqueue context exists, with waitqueue id zero.
->> Multi-waitqueue mechanism is added in firmware to support the case when
->> multiple VMs make SMC calls or single VM making multiple calls on same CPU.
->>
->> When VMs make SMC call, firmware will allocate waitqueue context assuming
->> the SMC call to be a blocking call. SMC calls that cannot acquire resources
->> are returned to sleep in the calling VM. When resource is available, VM
->> will be notified to wake sleeping thread and resume SMC call.
->> SM8650 firmware can allocate two such waitq contexts so create these two
->> waitqueue contexts.
->>
->> Unique waitqueue contexts are supported by a dynamically sized array where
->> each unique wq_ctx is associated with a struct completion variable for easy
->> lookup. To get the number of waitqueue contexts directly from firmware,
->> qcom_scm_query_waitq_cnt() is introduced. On older targets which support
->> only a single waitqueue, wq_cnt is set to 1 as SCM call for
->> query_waitq_cnt() is not implemented for single waitqueue case.
->>
->> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
->> ---
->>  drivers/firmware/qcom/qcom_scm.c | 82 +++++++++++++++++++++++---------
->>  1 file changed, 60 insertions(+), 22 deletions(-)
->>
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
->> index ed51fbb1c065..b2c5505de681 100644
->> --- a/drivers/firmware/qcom/qcom_scm.c
->> +++ b/drivers/firmware/qcom/qcom_scm.c
->> @@ -44,12 +44,13 @@ static bool download_mode = IS_ENABLED(CONFIG_QCOM_SCM_DOWNLOAD_MODE_DEFAULT);
->>  module_param(download_mode, bool, 0);
->>  
->>  struct qcom_scm {
->> +	int wq_cnt;
-> 
-> Does it make sense for this to be negative? Please make it unsigned.
-> 
-> Also, might not be the most significant member of this struct, so
-> perhaps you can move it further down?
-> 
-Ack.
->>  	struct device *dev;
->>  	struct clk *core_clk;
->>  	struct clk *iface_clk;
->>  	struct clk *bus_clk;
->>  	struct icc_path *path;
->> -	struct completion waitq_comp;
->> +	struct completion *waitq;
->>  	struct reset_controller_dev reset;
->>  
->>  	/* control access to the interconnect path */
->> @@ -1850,6 +1851,31 @@ static int qcom_scm_fill_irq_fwspec_params(struct irq_fwspec *fwspec, u32 virq)
->>  	return 0;
->>  }
->>  
->> +static int qcom_scm_query_waitq_count(void)
->> +{
->> +	bool avail;
->> +	int count;
->> +	int ret;
->> +	struct qcom_scm_desc desc = {
->> +		.svc = QCOM_SCM_SVC_WAITQ,
->> +		.cmd = QCOM_SCM_WAITQ_GET_INFO,
->> +		.owner = ARM_SMCCC_OWNER_SIP
->> +	};
->> +	struct qcom_scm_res res;
->> +
->> +	avail = __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_GET_INFO);
->> +	if (!avail) {
->> +		count = 1;
->> +		return count;
-> 
-> count is a local variable, so just return count; and drop the {} please.
-> 
-> 
-> Perhaps even drop the local boolean variable:
-> 
-> 	if (!__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_WAITQ, QCOM_SCM_WAITQ_GET_INFO))
-> 		return 1;
-> 
-Ack.
->> +	}
->> +
->> +	ret = qcom_scm_call_atomic(__scm->dev, &desc, &res);
->> +	if (ret)
-> 
-> (Keep this local variable, as that's in line with the style...)
-> 
->> +		return ret;
->> +	count = res.result[0] & 0xff;
->> +	return count;
-> 
-> Again, return res.result[0] & 0xff; should be sufficient, no need for a
-> local variable immediately followed by a return statement.
-> 
-Ack.
->> +}
->> +
->>  static int qcom_scm_get_waitq_irq(void)
->>  {
->>  	int ret;
->> @@ -1876,42 +1902,40 @@ static int qcom_scm_get_waitq_irq(void)
->>  	return ret;
->>  }
->>  
->> -static int qcom_scm_assert_valid_wq_ctx(u32 wq_ctx)
->> +static struct completion *qcom_scm_get_completion(u32 wq_ctx)
->>  {
->> -	/* FW currently only supports a single wq_ctx (zero).
->> -	 * TODO: Update this logic to include dynamic allocation and lookup of
->> -	 * completion structs when FW supports more wq_ctx values.
->> -	 */
->> -	if (wq_ctx != 0) {
->> -		dev_err(__scm->dev, "Firmware unexpectedly passed non-zero wq_ctx\n");
->> -		return -EINVAL;
->> -	}
->> +	struct completion *wq;
->>  
->> -	return 0;
->> +	if (wq_ctx >= __scm->wq_cnt)
-> 
-> I'm guessing that we're not expecting to ever hit this, but if we do, we
-> will fail a qcom_scm_call() or qcom_scm_call_atomic() call, giving
-> someone down the road a bad week of debugging...
-> 
-> How about wrapping the conditional in a WARN_ON_ONCE()?
-> 
-Yes understood, ack.
->> +		return ERR_PTR(-EINVAL);
->> +
->> +	wq = &__scm->waitq[wq_ctx];
->> +
->> +	return wq;
->>  }
->>  
->>  int qcom_scm_wait_for_wq_completion(u32 wq_ctx)
->>  {
->> -	int ret;
->> +	struct completion *wq;
->>  
->> -	ret = qcom_scm_assert_valid_wq_ctx(wq_ctx);
->> -	if (ret)
->> -		return ret;
->> +	wq = qcom_scm_get_completion(wq_ctx);
->> +	if (IS_ERR(wq))
->> +		return PTR_ERR(wq);
->>  
->> -	wait_for_completion(&__scm->waitq_comp);
->> +	wait_for_completion(wq);
->>  
->>  	return 0;
->>  }
->>  
->>  static int qcom_scm_waitq_wakeup(unsigned int wq_ctx)
->>  {
->> -	int ret;
->> +	struct completion *wq;
->>  
->> -	ret = qcom_scm_assert_valid_wq_ctx(wq_ctx);
->> -	if (ret)
->> -		return ret;
->> +	wq = qcom_scm_get_completion(wq_ctx);
->> +	if (IS_ERR(wq))
->> +		return PTR_ERR(wq);
->>  
->> -	complete(&__scm->waitq_comp);
->> +	complete(wq);
->>  
->>  	return 0;
->>  }
->> @@ -1948,6 +1972,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
->>  	struct qcom_tzmem_pool_config pool_config;
->>  	struct qcom_scm *scm;
->>  	int irq, ret;
->> +	int i;
->>  
->>  	scm = devm_kzalloc(&pdev->dev, sizeof(*scm), GFP_KERNEL);
->>  	if (!scm)
->> @@ -1958,7 +1983,6 @@ static int qcom_scm_probe(struct platform_device *pdev)
->>  	if (ret < 0)
->>  		return ret;
->>  
->> -	init_completion(&scm->waitq_comp);
->>  	mutex_init(&scm->scm_bw_lock);
->>  
->>  	scm->path = devm_of_icc_get(&pdev->dev, NULL);
->> @@ -1993,6 +2017,20 @@ static int qcom_scm_probe(struct platform_device *pdev)
->>  	/* Let all above stores be available after this */
->>  	smp_store_release(&__scm, scm);
-> 
-> Should have spotted this earlier... But if any code below this point
-> takes an error path (i.e. we return non-0 from hereon) devres will free
-> __scm and anyone calling the qcom_scm API will hit a use-after-free.
-> 
-> Add to that it doesn't seem like a good idea to have
-> qcom_scm_is_available() return true until we have setup the wait queue
-> count or setup tzmem at least.
-> 
-Would the other calls that go through error path below need to be before the smp_store_release?
-Just wondering if that needs to be fixed in a separate patch..
 
-And I think the waitq initialization before the smp_store_release should be okay.
->>  
->> +	platform_set_drvdata(pdev, scm);
+
+On 9/2/2024 8:22 PM, Dmitry Baryshkov wrote:
+> The commit b954fa6baaca ("drm/msm/dpu: Refactor rm iterator") removed
+> zero-init of the hw_ctl array, but didn't change the error condition,
+> that checked for hw_ctl[i] being NULL. At the same time because of the
+> early returns in case of an error dpu_encoder_phys might be left with
+> the resources assigned in the previous state. Rework assigning of hw_pp
+> / hw_ctl to the dpu_encoder_phys in order to make sure they are always
+> set correctly.
 > 
-> I believe this is a leftover from previous versions of this patch?
-> 
-Yes, will remove this.
-> Regards,
-> Bjorn
-> 
->> +	ret = qcom_scm_query_waitq_count();
->> +	if (ret < 0)
->> +		return ret;
->> +
->> +	scm->wq_cnt = ret;
->> +
->> +	scm->waitq = devm_kcalloc(&pdev->dev, scm->wq_cnt, sizeof(*scm->waitq), GFP_KERNEL);
->> +	if (!scm->waitq)
->> +		return -ENOMEM;
->> +
->> +	for (i = 0; i < scm->wq_cnt; i++)
->> +		init_completion(&scm->waitq[i]);
->> +
->>  	irq = qcom_scm_get_waitq_irq();
->>  	if (irq < 0) {
->>  		if (irq != -ENXIO)
->> -- 
->> 2.34.1
->>
+> Fixes: b954fa6baaca ("drm/msm/dpu: Refactor rm iterator")
+> Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 9 ++++-----
+>   1 file changed, 4 insertions(+), 5 deletions(-)
 > 
 
+Thanks,
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
