@@ -1,112 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-31878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A11597AACD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 06:48:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4776697AAE4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 07:06:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BADBC2861B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 04:48:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C10631F23921
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Sep 2024 05:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAD7E4436E;
-	Tue, 17 Sep 2024 04:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61B3B4436E;
+	Tue, 17 Sep 2024 05:05:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZiZ5JmKs"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HlR564Qh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDC02628C;
-	Tue, 17 Sep 2024 04:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576A025763;
+	Tue, 17 Sep 2024 05:05:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726548516; cv=none; b=kAm82ER1/klocHtcPFo/FbP667sfyAPtluCWdOcUDYHT76eNaH6NzA/5BF06qgThZWMey+akPzGxycelzOSBbAdJAGe+YjNMRNbsuAgr2QORrTlctCm0pN2RyjB09aILkZIZMx1W5GEjzc2A0zI/SBLAmRpV/2o+2SBkRkRd5o4=
+	t=1726549555; cv=none; b=A34nNXpE7ffdhqiKPPy7c+q0utPyPykZPLxQnBluhlJqNRgzxn6MYVdjmR6jY/6q35O379HYoeudFcGLypZZZJKuASIsceO748f19DNmtZ68OTaYowZ0jAqqb2pD6WBDqr4I+ki+Vrvl48YKIT6P85Ru91/x6VqndiAZm6IbTzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726548516; c=relaxed/simple;
-	bh=oKSypXT+O8xQvmO/3o+T7oQdtJbsfOnu405VHrNJ2/Y=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=bw/UEQbaWYjf+wNwwQo0BLzIiKvVLvifo31xdKMKLnmV79IBJaYJtr5RI0FLOvXcsXOwaqEz7hVG04siiczs4CoZN+qcxJC7lCGQDEH3hUFKKoxeog/iWd/JqLqpJ3RC/yyUmjVrSq10dDTKbySAQ9BnEbOEa0JDjI+4AFEwQeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZiZ5JmKs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 12457C4CEC6;
-	Tue, 17 Sep 2024 04:48:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726548516;
-	bh=oKSypXT+O8xQvmO/3o+T7oQdtJbsfOnu405VHrNJ2/Y=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=ZiZ5JmKse2G8sBLbuwLAYoeqv+SaUpZjTqjQ28g2XS+gSY6g2AnJ/UQTyxEHDFkhT
-	 wmPUYzCiWS3Sg33QxtQHeWyTz7EZ5cvnCSOP5BYVOC4DElmzeIBJ6Qkhp/08takHSM
-	 XIFPyoa928G1fNnuhZ0X/m9CD+XLc7pEgLVxAibUZpCnfp2Hkrb0NgR3y80bTjM1jV
-	 Qk3w7lylzhTDLo1KlffuYUQBhqECgVrWyVTZWK1BjmHcspaL81kM1nWFp1NmDPF5k3
-	 QQDZqlpB5l7P1UTeyEQIrT8KxN+d/rX30Fygac9FMXOhGw1CTenlxe/wgg9/3/F8hB
-	 vRmJoe7CBfNZw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01828C3ABAD;
-	Tue, 17 Sep 2024 04:48:36 +0000 (UTC)
-From: Rudraksha Gupta via B4 Relay <devnull+guptarud.gmail.com@kernel.org>
-Date: Mon, 16 Sep 2024 21:48:35 -0700
-Subject: [PATCH] arm: expressatt: fix pm8921_l6 regulator
+	s=arc-20240116; t=1726549555; c=relaxed/simple;
+	bh=XqJJFeOp7MdyQLdxKtgi2ITW8F7GZDZkuwkfDas8Xb8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VwozU18aFUP8pvYWD34P0lddyghY/HKcL8FKFCTFMDIw38K+9d8fNSosdxF27K38HClfLeF/aPT5K4OwoobBLNGK8p9Lu7qXkQkhInb8Py5akjv+u5zupuGmzjjjPLwI5YBBy/virPnHfUKoFJ02wvIcaTx1mShftQNiVHwbxLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HlR564Qh; arc=none smtp.client-ip=192.198.163.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1726549554; x=1758085554;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=XqJJFeOp7MdyQLdxKtgi2ITW8F7GZDZkuwkfDas8Xb8=;
+  b=HlR564Qh3/p5Sh0kkkGBUofPAQ65soGZ4CK5Z8nlxodHDyRb4O9uEMNC
+   DpV+aJsmo0HRNGZuht82DWlFbgxY2I0m8dqsFT7Lr6Jqgho6vwK5HATZj
+   D4lif6G+V0IoAnTXf7ERJvWNdQoZvsENNoMsIRFzCqIBURiQg5qVRX4I+
+   Vrcfz6xo3WXKkX3ML6bYshh0OKfK8HeEidDo5+OYMn6YfnRSoGKWmYLgZ
+   p7xcyOIrzUDsmfzq0F4sEG1B+dJ8IcnEpvkhM9h/k7JVg9LxvO/e2IO5c
+   MmLHFmWeyKGfnP00nhmLb0l1e4pbh/xWZdf9uXKaEVksQMoKjFbTzu1jA
+   g==;
+X-CSE-ConnectionGUID: RZaWERXNRE2VLSmrXFOGjA==
+X-CSE-MsgGUID: Kka+zk0pT5O5eczFkik6tQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11197"; a="24930138"
+X-IronPort-AV: E=Sophos;i="6.10,234,1719903600"; 
+   d="scan'208";a="24930138"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2024 22:05:53 -0700
+X-CSE-ConnectionGUID: UDgYpWYHSw6tiyAgLVXzBA==
+X-CSE-MsgGUID: w5W0zApoSMCZMnGOleu5JA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,234,1719903600"; 
+   d="scan'208";a="68954735"
+Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
+  by orviesa010.jf.intel.com with ESMTP; 16 Sep 2024 22:05:47 -0700
+Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1sqQPI-000AoA-22;
+	Tue, 17 Sep 2024 05:05:44 +0000
+Date: Tue, 17 Sep 2024 13:05:03 +0800
+From: kernel test robot <lkp@intel.com>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, axboe@kernel.dk,
+	song@kernel.org, yukuai3@huawei.com, agk@redhat.com,
+	snitzer@kernel.org, mpatocka@redhat.com, adrian.hunter@intel.com,
+	quic_asutoshd@quicinc.com, ritesh.list@gmail.com,
+	ulf.hansson@linaro.org, andersson@kernel.org,
+	konradybcio@kernel.org, kees@kernel.org, gustavoars@kernel.org,
+	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-raid@vger.kernel.org, dm-devel@lists.linux.dev,
+	linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-hardening@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, quic_srichara@quicinc.com,
+	quic_varada@quicinc.com, quic_mdalam@quicinc.com
+Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
+Message-ID: <202409171209.aEtxsPez-lkp@intel.com>
+References: <20240916085741.1636554-2-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240916-sd-card-regulator-v1-1-669533c393d7@gmail.com>
-X-B4-Tracking: v=1; b=H4sIACIK6WYC/x3MMQqAMAxA0atIZgO2iFavIg6hjTUgKqmKIN7d4
- viG/x9IrMIJ+uIB5UuSbGuGKQvwM62RUUI22MrWVWcaTAE9aUDleC50bIrUGts4T3XLDnK3K09
- y/89hfN8PdF7ctmMAAAA=
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Rudraksha Gupta <guptarud@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726548515; l=930;
- i=guptarud@gmail.com; s=20240916; h=from:subject:message-id;
- bh=0szhZ8yMa3ObS2XdUtiow/IhLUveGGFKEJjNsTf2maw=;
- b=zNZLIIpIV6we+iuTTRtSItw7FtLYgumjoSgbLi6eTwkq4WKZbzffar16BnHfZ4QK7tk/HS01Q
- QuBuG4fSa8ZDOE4oAY+BHc1JYdUFaFw+/e3ulBI1fONbL1rE8DFREcP
-X-Developer-Key: i=guptarud@gmail.com; a=ed25519;
- pk=ETrudRugWAtOpr0OhRiheQ1lXM4Kk4KGFnBySlKDi2I=
-X-Endpoint-Received: by B4 Relay for guptarud@gmail.com/20240916 with
- auth_id=211
-X-Original-From: Rudraksha Gupta <guptarud@gmail.com>
-Reply-To: guptarud@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240916085741.1636554-2-quic_mdalam@quicinc.com>
 
-From: Rudraksha Gupta <guptarud@gmail.com>
+Hi Md,
 
-The SD card refuses to work because the regulator is turned off. Enable
-it by default.
+kernel test robot noticed the following build errors:
 
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
----
- arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts | 1 +
- 1 file changed, 1 insertion(+)
+[auto build test ERROR on device-mapper-dm/for-next]
+[also build test ERROR on axboe-block/for-next linus/master song-md/md-next v6.11 next-20240916]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-index af6cc6393d74..13c102a562ab 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8960-samsung-expressatt.dts
-@@ -253,6 +253,7 @@ pm8921_l5: l5 {
- 		};
- 
- 		pm8921_l6: l6 {
-+			regulator-always-on;
- 			regulator-min-microvolt = <2950000>;
- 			regulator-max-microvolt = <2950000>;
- 			bias-pull-down;
+url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/dm-inlinecrypt-Add-inline-encryption-support/20240916-170452
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/device-mapper/linux-dm.git for-next
+patch link:    https://lore.kernel.org/r/20240916085741.1636554-2-quic_mdalam%40quicinc.com
+patch subject: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
+config: openrisc-randconfig-r062-20240917 (https://download.01.org/0day-ci/archive/20240917/202409171209.aEtxsPez-lkp@intel.com/config)
+compiler: or1k-linux-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240917/202409171209.aEtxsPez-lkp@intel.com/reproduce)
 
----
-base-commit: 98f7e32f20d28ec452afb208f9cffc08448a2652
-change-id: 20240916-sd-card-regulator-a71268ca47e8
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202409171209.aEtxsPez-lkp@intel.com/
 
-Best regards,
+All errors (new ones prefixed by >>):
+
+   drivers/md/dm-inline-crypt.c: In function 'crypt_prepare_inline_crypt_key':
+>> drivers/md/dm-inline-crypt.c:81:15: error: implicit declaration of function 'blk_crypto_init_key' [-Wimplicit-function-declaration]
+      81 |         ret = blk_crypto_init_key(cc->blk_key, cc->key, cc->crypto_mode,
+         |               ^~~~~~~~~~~~~~~~~~~
+>> drivers/md/dm-inline-crypt.c:88:15: error: implicit declaration of function 'blk_crypto_start_using_key' [-Wimplicit-function-declaration]
+      88 |         ret = blk_crypto_start_using_key(cc->dev->bdev, cc->blk_key);
+         |               ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/md/dm-inline-crypt.c: In function 'crypt_destroy_inline_crypt_key':
+>> drivers/md/dm-inline-crypt.c:104:17: error: implicit declaration of function 'blk_crypto_evict_key'; did you mean 'blk_crypto_register'? [-Wimplicit-function-declaration]
+     104 |                 blk_crypto_evict_key(cc->dev->bdev, cc->blk_key);
+         |                 ^~~~~~~~~~~~~~~~~~~~
+         |                 blk_crypto_register
+   drivers/md/dm-inline-crypt.c: In function 'crypt_inline_encrypt_submit':
+>> drivers/md/dm-inline-crypt.c:121:17: error: implicit declaration of function 'bio_crypt_set_ctx' [-Wimplicit-function-declaration]
+     121 |                 bio_crypt_set_ctx(bio, cc->blk_key, dun, GFP_KERNEL);
+         |                 ^~~~~~~~~~~~~~~~~
+
+
+vim +/blk_crypto_init_key +81 drivers/md/dm-inline-crypt.c
+
+    72	
+    73	static int crypt_prepare_inline_crypt_key(struct inlinecrypt_config *cc)
+    74	{
+    75		int ret;
+    76	
+    77		cc->blk_key = kzalloc(sizeof(*cc->blk_key), GFP_KERNEL);
+    78		if (!cc->blk_key)
+    79			return -ENOMEM;
+    80	
+  > 81		ret = blk_crypto_init_key(cc->blk_key, cc->key, cc->crypto_mode,
+    82					  cc->iv_size, cc->sector_size);
+    83		if (ret) {
+    84			DMERR("Failed to init inline encryption key");
+    85			goto bad_key;
+    86		}
+    87	
+  > 88		ret = blk_crypto_start_using_key(cc->dev->bdev, cc->blk_key);
+    89		if (ret) {
+    90			DMERR("Failed to use inline encryption key");
+    91			goto bad_key;
+    92		}
+    93	
+    94		return 0;
+    95	bad_key:
+    96		kfree_sensitive(cc->blk_key);
+    97		cc->blk_key = NULL;
+    98		return ret;
+    99	}
+   100	
+   101	static void crypt_destroy_inline_crypt_key(struct inlinecrypt_config *cc)
+   102	{
+   103		if (cc->blk_key) {
+ > 104			blk_crypto_evict_key(cc->dev->bdev, cc->blk_key);
+   105			kfree_sensitive(cc->blk_key);
+   106			cc->blk_key = NULL;
+   107		}
+   108	}
+   109	
+   110	static void crypt_inline_encrypt_submit(struct dm_target *ti, struct bio *bio)
+   111	{
+   112		struct inlinecrypt_config *cc = ti->private;
+   113		u64 dun[BLK_CRYPTO_DUN_ARRAY_SIZE];
+   114	
+   115		bio_set_dev(bio, cc->dev->bdev);
+   116		if (bio_sectors(bio)) {
+   117			memset(dun, 0, BLK_CRYPTO_MAX_IV_SIZE);
+   118			bio->bi_iter.bi_sector = cc->start +
+   119				dm_target_offset(ti, bio->bi_iter.bi_sector);
+   120			dun[0] = le64_to_cpu(bio->bi_iter.bi_sector + cc->iv_offset);
+ > 121			bio_crypt_set_ctx(bio, cc->blk_key, dun, GFP_KERNEL);
+   122		}
+   123	
+   124		submit_bio_noacct(bio);
+   125	}
+   126	
+
 -- 
-Rudraksha Gupta <guptarud@gmail.com>
-
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
