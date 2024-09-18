@@ -1,159 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-31944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39B9897B692
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 03:30:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EA2D97B6D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 04:37:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B05401F252DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 01:30:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B0A51C21AA5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 02:37:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC6DB6FC5;
-	Wed, 18 Sep 2024 01:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B4B641C69;
+	Wed, 18 Sep 2024 02:37:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WgB3+jiO"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N2vYRpUF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A94723B0;
-	Wed, 18 Sep 2024 01:30:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C921D10A1C;
+	Wed, 18 Sep 2024 02:37:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726623041; cv=none; b=TSVNf4tTmCZmJ6N2WlTinEEge1kZSeFX94pXvj7d/6qQYDehd+yH9OJhOpP7bKd1cbCpUVnTpbOHIGjfcg0hxRTwEZzHcwgT8q8RbIbDRivH5kIvNPiHPwXalC7XjSVwKbZmuBToHudI2rwZUua3IpwsuIaSUgn78Tj3VUmIRxI=
+	t=1726627043; cv=none; b=cN4JUohxyoKv67M0cypU8ngmhj0f55eZ0xzKPDLbU/FjwlumfpLfOL7nFC5og4D5x0zxLVCxezf5EbihF8RxZ7KpvsBu5yhqbufy8kl41EXWb2qdmY9bGn4sjy723nBw+gNqUGCZtZg9siGYRAMIUds3ls16tGZ3F0cpEUVeXTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726623041; c=relaxed/simple;
-	bh=6sLG32ZEqRTa06GTyFt9bywhw1ZzJ1zgq3wy8VSnph8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=s56Ey43VU0Az5Mmv9Wgo23lMeCtRtzUAF6vugVMZdxYAw12j1l0m/iCx+PGfIosOgbOtI4pFkyaAUPCmTsEZ7+wo+towj0tEDfl1Iy0bPRGORfosKazh3qzskVOYn419QV7PqGfEXV3f3ONbbUnhfPB2pFODCd+s/1Q+SK4lVYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WgB3+jiO; arc=none smtp.client-ip=209.85.166.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-82aa8c36eefso294956339f.3;
-        Tue, 17 Sep 2024 18:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726623039; x=1727227839; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CsmNn5dg++oFHFAezsus4TU+AssoseH+2pzEpTsEOgA=;
-        b=WgB3+jiOxU8/yWJj9mVERETzJtn6wF3hChBsts5PKFZQvg5IYNTG9HsF6vc+LNpMW6
-         Nz7UkCatxF3XJ+znSPz+S4qi/OVRpuyVLWc3QLgj9r5ch4ZnlskoLNPYtkcXyjHApxWh
-         kVoIkAZljv9l0TqJtiAoa43l9TuEjbXnQwdyeP665VuAoTPgEvOXCv8j+ePsbvcasBHG
-         mw2kXlxlCRLH9eL8qQ0GQmkBihGw9gn3kAU6S3AxrG+uZz1YAPzZOe9adg6bShrr+yA1
-         icfYDNmPpEcQ6/o8t9/ic58rw0Ea1Iic/uEAlOu7rzjQwdXzryaPbSPsj6b0dga3+Y12
-         +Wng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726623039; x=1727227839;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CsmNn5dg++oFHFAezsus4TU+AssoseH+2pzEpTsEOgA=;
-        b=mi8gCr3YPIEH6WwhnPAkiam2SZNsRwCBifU/JTjWhZq6devaqnfWX0kmkUXIbheHon
-         Bjr47qw9p0Mm//CPqNukVskLdqEOl367IP+IlNtyAaXsNwZEkPWHXGN3QA80pSk+juNF
-         1mJzqg40v83FKgxAIhscf5Hbjk9H0/nLUkVb06PYefTU/2gw9ECii5fOeLRB5cqiG8qj
-         aGQTbSaMibjPCJvAHyT14draAIP5glN6iAUqwKqIlj3iWIrTeEHiVwc+w/HAi4tuIB2m
-         DnwzUizf0UfkMcO2gYF1zS0K09mdAa3Zu42ENcbGSb4SiBlJnRX/4T9Jf+V3Lrcl/1r4
-         nKVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVybBLnWBVtCT99ItWsRgyn+nE0L+vUrPA6ZnGvIn9jKPT0Erjanj9bAfu6BMul9vZ2iD3cZtGdg5G5IwJ8@vger.kernel.org, AJvYcCWFhHS2VUHD1XWyXMgB1lEo1pd99pLmRX1JnNfCFw1+BgxyOao2rO+tq6/2c1hqodbwowfXAptRMncr70wM@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHylGGSz28Np7jAvGt7TVBQPZ5VHRD0kL0OwZlvy69rC74OdQI
-	+lWMHLyZ3PnDIpTW+BBV9Wo9GA7o2lIj9fAmAbIBEawtRmeelF20oCMRCxivy7eOKGzSBbhqKK6
-	DfZBfi3CjmZv5xjU265gC/v4Bq2k=
-X-Google-Smtp-Source: AGHT+IH+arwrYMMUiRQ7iDz1p8MmtCk5NY5GioMSJMKylZrwRZMJBVsiVdg6t3RHmGzslQrpXww0oOTa8SFimw7P4Zw=
-X-Received: by 2002:a05:6e02:b2c:b0:3a0:978b:e6b with SMTP id
- e9e14a558f8ab-3a0978b112bmr104763985ab.21.1726623039436; Tue, 17 Sep 2024
- 18:30:39 -0700 (PDT)
+	s=arc-20240116; t=1726627043; c=relaxed/simple;
+	bh=2SgDmPF2tu0rxh8NLZGVhv66VyP/tU2WlRm3WvEadSA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ntAihGSPgbaq4r/+eoP6vLWkM/sDkReEvHUSBV63SS/0bI4XT4FWQ5H/ef1Var6ilkUN0ljV9nXwb+8+wytevo78rvo3ydca+uVMb2Xntd64uuHFzIbIoYzmTJT4+hqoTq5VTmh/3Lbj6dhxXVFhlkZETq9zo+YsluxQtWhvuBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N2vYRpUF; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48HIo1X0014062;
+	Wed, 18 Sep 2024 02:37:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	n0Q9RprhLJjui0lSDTxr9f9l24/VUBMygwI7Buzzqdc=; b=N2vYRpUFrCncU0kw
+	KpfU7pkM0ngg6VpTP3KGNL+oOq8I9gSzwFQJ372M58iEoWoWPhHcy0YqDD/PUJFD
+	rhrjbhxBM7+EzPKyAOydhnbLn51fnHb5VNgcU//lG9qSoQBcKw7izQaSOB/Iz4AO
+	z1fsId+1/q2CE5N1uGAytA3cXWRzKFuTgI59eWh2KAXYylrWT+kr/3peiAnj4qzD
+	fg51umZU1MrU9aYj9uRrR9ORpm720UrmsB00QV5FI/oaga9lhCVf99/nrReFIe9E
+	B2e3BING8oSm07hqORbJkRCTqTjLODcHWCUuMIz243mgNL6kmoaXjK4rdLJ7qLh/
+	y+4zYA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4ge8eus-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Sep 2024 02:37:05 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48I2b4jZ006782
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 18 Sep 2024 02:37:04 GMT
+Received: from [10.239.132.205] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 17 Sep
+ 2024 19:36:58 -0700
+Message-ID: <900aa614-d735-4aaa-ab73-bee30231aa25@quicinc.com>
+Date: Wed, 18 Sep 2024 10:36:55 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240913195132.8282-1-robdclark@gmail.com> <e6991910-5058-4ef0-bfdf-6d33953535dd@kernel.org>
- <CAF6AEGvgS-DD0+qGX_Mud75aES4AQQjmWx2j2gyz7uakTpnp0w@mail.gmail.com> <59974e61-13f8-4080-850a-55e599c41cb5@kernel.org>
-In-Reply-To: <59974e61-13f8-4080-850a-55e599c41cb5@kernel.org>
-From: Rob Clark <robdclark@gmail.com>
-Date: Tue, 17 Sep 2024 18:30:27 -0700
-Message-ID: <CAF6AEGsVaq33wJzfnuvLWSPbmecx-j8a8FoCenKkBLMuqBTwdg@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/a6xx+: Insert a fence wait before SMMU table update
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, Akhil P Oommen <quic_akhilpo@quicinc.com>, 
-	Connor Abbott <cwabbott0@gmail.com>, Rob Clark <robdclark@chromium.org>, 
-	Sean Paul <sean@poorly.run>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] Add initial support for QCS615 SoC and QCS615 RIDE
+ board
+To: "Rob Herring (Arm)" <robh@kernel.org>
+CC: Thomas Gleixner <tglx@linutronix.de>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>,
+        <devicetree@vger.kernel.org>, <kernel@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Conor Dooley" <conor+dt@kernel.org>
+References: <20240913-add_initial_support_for_qcs615-v2-0-9236223e7dab@quicinc.com>
+ <172623730756.4076334.1076664597052385217.robh@kernel.org>
+From: Lijuan Gao <quic_lijuang@quicinc.com>
+In-Reply-To: <172623730756.4076334.1076664597052385217.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: _IHIhUdMJoTT6oE6s4g9U6kIQZ4ltxyX
+X-Proofpoint-ORIG-GUID: _IHIhUdMJoTT6oE6s4g9U6kIQZ4ltxyX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 impostorscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 adultscore=0 phishscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 spamscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2409180014
 
-On Tue, Sep 17, 2024 at 4:37=E2=80=AFPM Konrad Dybcio <konradybcio@kernel.o=
-rg> wrote:
+
+
+在 9/13/2024 10:24 PM, Rob Herring (Arm) 写道:
+> 
+> On Fri, 13 Sep 2024 19:55:22 +0800, Lijuan Gao wrote:
+>> This introduces the Device Tree for the QCS615 platform.
+>>
+>> Features added and enabled:
+>> - CPUs with PSCI idle states
+>> - Interrupt-controller with PDC wakeup support
+>> - Timers, TCSR Clock Controllers
+>> - Reserved Shared memory
+>> - QFPROM
+>> - TLMM
+>> - Watchdog
+>> - RPMH controller
+>> - Sleep stats driver
+>>
+>> This series are splited into three parts:
+>> - 1-3: Binding files for QCS615 SoC and PDC (Reviewed)
+>> - 4  : Soc table entry (Reviewed)
+>> - 5-6: Initial DTSI and RIDE board device tree
+>>
+>> Bindings Dependencies:
+>> watchdog: https://lore.kernel.org/all/20240912-add_watchdog_compatible_for_qcs615-v1-1-ec22b5ad9891@quicinc.com/
+>> qfprom: https://lore.kernel.org/all/20240912-add_qfprom_compatible_for_qcs615-v1-1-9ef2e26c14ee@quicinc.com/
+>> tcsr: https://lore.kernel.org/all/20240912-add_tcsr_compatible_for_qcs615-v1-1-5b85dd4d42ad@quicinc.com/
+>>
+>> Build Dependencies:
+>> tlmm: https://lore.kernel.org/all/20240910-add_qcs615_pinctrl_driver-v1-0-36f4c0d527d8@quicinc.com/
+>>
+>> Patch made the following verifications:
+>> - Successfully pass dt_binding_check with DT_CHECKER_FLAGS=-m for earch binding file
+>> - Successfully pass dtbs_check with W=1 for dts
+>> - Verified CPU Hotplug and online CPUs on QCS615 ride board
+>> - Checked pinctrl-maps path
+>> - Verified Watchdog functional with "echo 1 > /dev/watchdog", can trigger
+>>    a watchdog bark and later bite
+>> - Verified functional with DCC console function on QCS615 ride board
+>> - RPMH controller driver probed successfully
+>> - Sleep stats driver probed successfully and checked qcom_stats
+>>    node on QCS615 ride board
+>>
+>> Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
+>> ---
+>> Changes in v2:
+>> - Collected reviewed-bys
+>> - Removed extra blank line
+>> - Removed redundant function
+>> - Renamed xo-board to xo-board-clk and move it and sleep-clk to board dts
+>> - Renamed system-sleep to cluster_sleep_2
+>> - Removed cluster1
+>> - Added entry-method for idle-states
+>> - Added DTS chassis type
+>> - Added TCSR Clock Controllers
+>> - Added Reserved Shared memory
+>> - Added QFPROM
+>> - Added TLMM
+>> - Added Watchdog
+>> - Added RPMH controller
+>> - Added Sleep stats driver
+>> - Link to v1: https://lore.kernel.org/r/20240828-add_initial_support_for_qcs615-v1-0-5599869ea10f@quicinc.com
+>>
+>> ---
+>> Lijuan Gao (6):
+>>        dt-bindings: arm: qcom: document QCS615 and the reference board
+>>        dt-bindings: arm: qcom,ids: add SoC ID for QCS615
+>>        dt-bindings: qcom,pdc: document QCS615 Power Domain Controller
+>>        soc: qcom: socinfo: Add QCS615 SoC ID table entry
+>>        arm64: dts: qcom: add initial support for QCS615 DTSI
+>>        arm64: dts: qcom: add base QCS615 RIDE dts
+>>
+>>   Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+>>   .../bindings/interrupt-controller/qcom,pdc.yaml    |   1 +
+>>   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts           |  34 ++
+>>   arch/arm64/boot/dts/qcom/qcs615.dtsi               | 511 +++++++++++++++++++++
+>>   drivers/soc/qcom/socinfo.c                         |   1 +
+>>   include/dt-bindings/arm/qcom,ids.h                 |   1 +
+>>   7 files changed, 555 insertions(+)
+>> ---
+>> base-commit: 100cc857359b5d731407d1038f7e76cd0e871d94
+>> change-id: 20240910-add_initial_support_for_qcs615-1a96c3469728
+>>
+>> Best regards,
+>> --
+>> Lijuan Gao <quic_lijuang@quicinc.com>
+>>
+>>
+>>
+> 
+> 
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+> 
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+> 
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+> 
+>    pip3 install dtschema --upgrade
+> 
+> 
+> New warnings running 'make CHECK_DTBS=y qcom/qcs615-ride.dtb' for 20240913-add_initial_support_for_qcs615-v2-0-9236223e7dab@quicinc.com:
+> 
+> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: efuse@780000: compatible:0: 'qcom,qcs615-qfprom' is not one of ['qcom,apq8064-qfprom', 'qcom,apq8084-qfprom', 'qcom,ipq5332-qfprom', 'qcom,ipq6018-qfprom', 'qcom,ipq8064-qfprom', 'qcom,ipq8074-qfprom', 'qcom,ipq9574-qfprom', 'qcom,msm8226-qfprom', 'qcom,msm8916-qfprom', 'qcom,msm8974-qfprom', 'qcom,msm8976-qfprom', 'qcom,msm8996-qfprom', 'qcom,msm8998-qfprom', 'qcom,qcm2290-qfprom', 'qcom,qcs404-qfprom', 'qcom,sc7180-qfprom', 'qcom,sc7280-qfprom', 'qcom,sc8280xp-qfprom', 'qcom,sdm630-qfprom', 'qcom,sdm670-qfprom', 'qcom,sdm845-qfprom', 'qcom,sm6115-qfprom', 'qcom,sm6350-qfprom', 'qcom,sm6375-qfprom', 'qcom,sm8150-qfprom', 'qcom,sm8250-qfprom', 'qcom,sm8450-qfprom', 'qcom,sm8550-qfprom', 'qcom,sm8650-qfprom']
+> 	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: efuse@780000: Unevaluated properties are not allowed ('compatible' was unexpected)
+> 	from schema $id: http://devicetree.org/schemas/nvmem/qcom,qfprom.yaml#
+> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/efuse@780000: failed to match any schema with compatible: ['qcom,qcs615-qfprom', 'qcom,qfprom'] > arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/syscon@1fc0000: 
+failed to match any schema with compatible: ['qcom,qcs615-tcsr', 'syscon']
+> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/pinctrl@3100000: failed to match any schema with compatible: ['qcom,qcs615-tlmm']
+> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: watchdog@17c10000: compatible: 'oneOf' conditional failed, one must be fixed:
+> 	['qcom,apss-wdt-qcs615', 'qcom,kpss-wdt'] is too long
+> 	['qcom,apss-wdt-qcs615', 'qcom,kpss-wdt'] is too short
+> 	'qcom,apss-wdt-qcs615' is not one of ['qcom,kpss-wdt-ipq4019', 'qcom,apss-wdt-ipq5018', 'qcom,apss-wdt-ipq5332', 'qcom,apss-wdt-ipq9574', 'qcom,apss-wdt-msm8226', 'qcom,apss-wdt-msm8974', 'qcom,apss-wdt-msm8994', 'qcom,apss-wdt-qcm2290', 'qcom,apss-wdt-qcs404', 'qcom,apss-wdt-sa8255p', 'qcom,apss-wdt-sa8775p', 'qcom,apss-wdt-sc7180', 'qcom,apss-wdt-sc7280', 'qcom,apss-wdt-sc8180x', 'qcom,apss-wdt-sc8280xp', 'qcom,apss-wdt-sdm845', 'qcom,apss-wdt-sdx55', 'qcom,apss-wdt-sdx65', 'qcom,apss-wdt-sm6115', 'qcom,apss-wdt-sm6350', 'qcom,apss-wdt-sm8150', 'qcom,apss-wdt-sm8250']
+> 	'qcom,kpss-wdt' was expected
+> 	'qcom,scss-timer' was expected
+> 	'qcom,apss-wdt-qcs615' is not one of ['qcom,kpss-wdt-apq8064', 'qcom,kpss-wdt-ipq8064', 'qcom,kpss-wdt-mdm9615', 'qcom,kpss-wdt-msm8960']
+> 	'qcom,msm-timer' was expected
+> 	'qcom,kpss-timer' was expected
+> 	from schema $id: http://devicetree.org/schemas/watchdog/qcom-wdt.yaml#
+> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: /soc@0/watchdog@17c10000: failed to match any schema with compatible: ['qcom,apss-wdt-qcs615', 'qcom,kpss-wdt']
 >
-> On 17.09.2024 5:30 PM, Rob Clark wrote:
-> > On Tue, Sep 17, 2024 at 6:47=E2=80=AFAM Konrad Dybcio <konradybcio@kern=
-el.org> wrote:
-> >>
-> >> On 13.09.2024 9:51 PM, Rob Clark wrote:
-> >>> From: Rob Clark <robdclark@chromium.org>
-> >>>
-> >>> The CP_SMMU_TABLE_UPDATE _should_ be waiting for idle, but on some
-> >>> devices (x1-85, possibly others), it seems to pass that barrier while
-> >>> there are still things in the event completion FIFO waiting to be
-> >>> written back to memory.
-> >>
-> >> Can we try to force-fault around here on other GPUs and perhaps
-> >> limit this workaround?
-> >
-> > not sure what you mean by "force-fault"...
->
-> I suppose 'reproduce' is what I meant
+There are some dependencies. The above errors are fixed by the following 
+patches：
+1. failed to match any schema with compatible: ['qcom,qcs615-qfprom', 
+'qcom,qfprom']
+  Fixed by 
+https://lore.kernel.org/all/20240912-add_qfprom_compatible_for_qcs615-v1-1-9ef2e26c14ee@quicinc.com/
+2. failed to match any schema with compatible: ['qcom,qcs615-tcsr', 
+'syscon']
+  Fixed by 
+https://lore.kernel.org/all/20240912-add_tcsr_compatible_for_qcs615-v1-1-5b85dd4d42ad@quicinc.com/
+3. failed to match any schema with compatible: ['qcom,qcs615-tlmm']
+  Fixed by 
+https://lore.kernel.org/all/20240910-add_qcs615_pinctrl_driver-v1-0-36f4c0d527d8@quicinc.com/
+4. failed to match any schema with compatible: ['qcom,apss-wdt-qcs615', 
+'qcom,kpss-wdt']
+  Fixed by 
+https://lore.kernel.org/all/20240912-add_watchdog_compatible_for_qcs615-v1-1-ec22b5ad9891@quicinc.com/
+> 
+> 
+> 
+> 
 
-I haven't _noticed_ it yet.. if you want to try on devices you have,
-glmark2 seems to be good at reproducing..
-
-I think the reason is combo of high fps (on x1-85 most scenes are
-north of 8k fps) so you get a lot of context switches btwn compositor
-and glmark2.  Most scenes are just a clear plus single draw, and I
-guess the compositor is just doing a single draw/blit.  A6xx can be
-two draws/blits deep in it's pipeline, a7xx can be four, which maybe
-exacerbates this.
-
-> > we could probably limit
-> > this to certain GPUs, the only reason I didn't is (a) it should be
-> > harmless when it is not needed,
->
-> Do we have any realistic perf hits here?
-
-I don't think so, we can't switch ttbr0 while the gpu is still busy so
-what the sqe does for CP_SMMU_TABLE_UPDATE _should_ be equivalent.
-Maybe it amounts to some extra CP cycles and memory read, but I think
-that should be negligible given that the expensive thing is that we
-are stalling the gpu until it is idle.
-
-> > and (b) I have no real good way to get
-> > an exhaustive list of where it is needed.  Maybe/hopefully it is only
-> > x1-85, but idk.
-> >
-> > It does bring up an interesting question about preemption, though
->
-> Yeah..
-
-The KMD does setup an xAMBLE to clear the perfcntrs on context switch.
-We could maybe piggy back on that, but I guess we'd have to patch in
-the fence value to wait for?
-
-> Do we know what windows does here?
-
-not sure, maybe akhil has some way to check.  Whether a similar
-scenario comes up with windows probably depends on how the winsys
-works.  If it dropped frames when rendering >vblank rate, you'd get
-fewer context switches.
-
-BR,
--R
-
-> Konrad
+-- 
+Thx and BRs
+Lijuan Gao
 
