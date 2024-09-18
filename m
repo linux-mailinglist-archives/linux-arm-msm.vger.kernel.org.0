@@ -1,82 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-31970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0913C97BF5C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 18:59:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2615797BF85
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 19:15:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A15221F218F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 16:59:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC5AA282746
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 17:14:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 354961C985B;
-	Wed, 18 Sep 2024 16:59:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF3511C9874;
+	Wed, 18 Sep 2024 17:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vIuXeXLR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hjFh4A1H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8831C1736;
-	Wed, 18 Sep 2024 16:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B361B9B49;
+	Wed, 18 Sep 2024 17:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726678796; cv=none; b=S8UZdrFShItUvoYAdYSvKtI0nRQeNTFh9s1FYHuH7+6oPvDoa1CtnY7FggqISzJb07iG93zouWY+4WB+UInf5ldMZAsmNqxy0SRtSLNfNTKjhuY3PxyaTSzTTjLNbSH8+plEK4fEFB9ih+o6knhoiNTWdpBLzy6Sq2DtCDN0jZQ=
+	t=1726679695; cv=none; b=W65S19XvzbzxvfSV7iBGiEMwnJtZVqrfjz5b4Ni9XsX1Jac7ranyJwSQ9ql3rxXhbMkB4fr5bVs+CzC15h24cMATQjZosN2xIvmd4E6KdzxC2QVc/rEELYWnsnyRGycZXdErhrqAW6X0VW5o6soTIADFnCL3e36T+1pIGE1vlyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726678796; c=relaxed/simple;
-	bh=NC9j+2ZyLN39hfDlR7lvY1YWapL1nV0mLnxgFAj1QaQ=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=k10XhXoRnOLPzdm4WRQDwmCuynMSO8hVVUwy+1RtRYRqUNxV0Hs/vbThNF/loAFaBcf4IsSnXlswjrHKzkxk3MXnco/1B2yN8JEbyE0nAC+4vK+laSQ9zdFk4GYsqJ4Q553dHVn+92/kDWmNOUc2eiM80PrdPfOqUKGhcfjQX1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vIuXeXLR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53176C4CED1;
-	Wed, 18 Sep 2024 16:59:55 +0000 (UTC)
+	s=arc-20240116; t=1726679695; c=relaxed/simple;
+	bh=se9nDBRBjI7FoM8cZzoIPCEXe0jMmjU5Q1XxWRQ6wUA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JBD0ZS1Z3XBMUFd//SI62qWl5kIQojDTnD3eaa5R8l+2L+GIeEZ8lWC0Fp2zJySNBeWkIWMW46dd+33UvBvo9qK2pH9w7jUTWHdNS8kjqgxW2YrwmzTAUl9yFbphYbPOSCptC0v0f1CTt3tSr3YgywSyRyY8JnO8qjsRx+lxOvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hjFh4A1H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA227C4CEC2;
+	Wed, 18 Sep 2024 17:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726678795;
-	bh=NC9j+2ZyLN39hfDlR7lvY1YWapL1nV0mLnxgFAj1QaQ=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=vIuXeXLRfNt4cPiR81A0Xra4qQiN9AIYGL/AcHOalR/QFAQM+fwBRVg16KB5CeIgK
-	 U9+yxMxfTXJliP4cylJl2UfBpOXehCb7quimSGRaZA/AG8EsMJkN+iQm1wv/uo7sNY
-	 XKsnmsg8r907jZIu7kEfn1f6g2JxN8h3uXOAaRT4U9bYtskWCFKIRAahZla7KrIh9/
-	 wcLGYYHB5m64UyO2skiFgxavqaVRYabm8WRUYoU7dK8dbX1pTuZ9qZk3EknWxul3n6
-	 RGNcTEf+tkhCJF5DE5wlIc06CCR29Vrqd0GAli8vfCDH/zJLkvEyv/r5mKWWsJbzx0
-	 uokv3la2tRRuQ==
-Message-ID: <038cdb46c8e0a615894b25e3aac5483e.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=k20201202; t=1726679695;
+	bh=se9nDBRBjI7FoM8cZzoIPCEXe0jMmjU5Q1XxWRQ6wUA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hjFh4A1Hi4VkpIC8I2IMLHVXC6pOFVGLcPJu/LY/tYv312M0B/g+aA5eMcOB21d7v
+	 pirME89AvXq8f7qy+B6NQifjSFYkUCLG3Kee7FQKBJLcNz/VI/ymALb0BCCKljjpjX
+	 Gy8b3WYJAkWTraU6DbWgX2S6z8RFZ6OmA9GFSijBmzek5JfJ68PvdQ2gVmfVdxtL+m
+	 vG45JW3AWMI2o+zIBHtpc7pZOK83tK8BIE2Avw4ikCQjFZVBgDP91w7wkSIViXd3w8
+	 Z9FqO2F3LLS7nFTPQLEU+8N3QAomNYMbjwZlStqRp2lDIK+Xq55YG8d0Cfpklh+Frx
+	 o2Q3ESpMo1dww==
+Date: Wed, 18 Sep 2024 12:14:53 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-phy@lists.infradead.org,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: add
+ missing x1e80100 pipediv2 clocks
+Message-ID: <172667969326.1817225.11425040649410740756.robh@kernel.org>
+References: <20240916082307.29393-1-johan+linaro@kernel.org>
+ <20240916082307.29393-2-johan+linaro@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240914223233.1342-1-andersson@kernel.org>
-References: <20240914223233.1342-1-andersson@kernel.org>
-Subject: Re: [GIT PULL] Qualcomm clock updates for v6.12
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Ajit Pandey <quic_ajipan@quicinc.com>, Varadarajan Narayanan <quic_varada@quicinc.com>, Luca Weiss <luca@lucaweiss.eu>, AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Mike Tipton <quic_mdtipton@quicinc.com>, Rayyan Ansari <rayyan.ansari@linaro.org>, Taniya Das <quic_tdas@quicinc.com>, Vedang Nagar <quic_vnagar@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>, linux-clk@vger.kernel.org
-Date: Wed, 18 Sep 2024 09:59:53 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240916082307.29393-2-johan+linaro@kernel.org>
 
-Quoting Bjorn Andersson (2024-09-14 15:32:32)
->=20
-> The following changes since commit 8400291e289ee6b2bf9779ff1c83a291501f01=
-7b:
->=20
->   Linux 6.11-rc1 (2024-07-28 14:19:55 -0700)
->=20
-> are available in the Git repository at:
->=20
->   https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qco=
-m-clk-for-6.12
->=20
-> for you to fetch changes up to d628455ab3c22bf633935f5d09451530c44c4ba3:
->=20
->   clk: qcom: videocc-sm8550: Use HW_CTRL_TRIGGER flag for video GDSC's (2=
-024-08-20 17:15:16 -0500)
->=20
-> ----------------------------------------------------------------
 
-Thanks. Pulled into clk-next
+On Mon, 16 Sep 2024 10:23:05 +0200, Johan Hovold wrote:
+> The x1e80100 QMP PCIe PHYs all have a pipediv2 clock that needs to be
+> described.
+> 
+> Fixes: e94b29f2bd73 ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHYs")
+> Cc: Abel Vesa <abel.vesa@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
+
 
