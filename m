@@ -1,135 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-31962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3010297BCB3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 15:02:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5CB697BCD3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 15:10:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D21871F24B3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 13:02:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 17D04B212D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 13:10:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EBC2B189F57;
-	Wed, 18 Sep 2024 13:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56FFA1741C8;
+	Wed, 18 Sep 2024 13:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dvQ5Colc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bXMUM1eh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2454318990D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 13:02:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781AA1CD3F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 13:10:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726664568; cv=none; b=F5OjWhgtOrDbsUKrWDQ+mIUlfZXNr67FQqZbEJ+j8JbSkvrbYH2MtmANjNs4STPi3853ou4xhtD2RqlwgKJzI5DcRzCI/UdbnJiCRCEq34+OFEWGNvmD/fzjL2OlcCJYrhjbK2Z0dnKQa+WA3aKHAIzZxm60ojXSpfF07pe4rTc=
+	t=1726665011; cv=none; b=lESZeYKeOa9Axcvhl9qgYSIO0Yf9t1bU+74f3nZFjChDaOyeTI02RPzDD4TfDXAiQmtx/cH6dBhNAfj6syLAzyoyNufIeYFD4VwLQb+QLdvBUZvhyMGs4I4am5AobPPaQLf+JRtgfBt52rG+eAR8ymuatsyFPzAzBTvZvuNTThM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726664568; c=relaxed/simple;
-	bh=fkxNactTtfPV+pF7AYrystjYaIivYRerWOIrN2LwuIQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=aSZ14hT6m0LgpKbI1wudafyHhkZddSc4GfAcarCZbftRJ0MwiXS6mD+apaKJYjHWr8iLR6OD+N6QzL8cMgYXzBIl8pSktwPJv+X3JcYPGUdfgPb79NCDhF+OIz3sIGz4ETBZ/0LsL2J9Nbkta6OJk/sgaqoHTbXtNowYCx74Pzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dvQ5Colc; arc=none smtp.client-ip=209.85.208.173
+	s=arc-20240116; t=1726665011; c=relaxed/simple;
+	bh=qSS9j04dMz97s1/G7sXN4oo94BzskpOxNZlCp1HcBGs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QOeSI40kfBOzf12udOs8EUF7gp2WVbH0OknWOtnawh9v6nkb7fnERKd4y0xDb/kC4jlp4rHOZ7QHaCIgkiFEm9Ac+XQ+4IvJAbDA1vX2AmveKGHvyHCecQ3MQLTa9dBShN7uxraZGrnSAlN/MdOTWxHerj8MOao4GPhswXj15OQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bXMUM1eh; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2f752d9ab62so55334381fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 06:02:46 -0700 (PDT)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5c241feb80dso1594624a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 06:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726664565; x=1727269365; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ATW44ntMNC19RTiT79RitfHTSID/tcZoZ+wLlD8HpFA=;
-        b=dvQ5ColcUAnUV6vMCVFgGiBBzfWzxR+5ryql1kscafWxhDmveFIShuyoiSv1Umqonh
-         fxgQM317EUU9waXcPAix7Nt9UGCn7NJwGeqzCGdQHw9sUVdIbEjKBZPWr6yJd/JQ0m8i
-         IpxMbPRtLnXEBASHxXvCRG9OxeGAITfcweSXWuTMXuMzcYEzo/m61ADacv0D9XC8HmlH
-         /u2cXhUBtNnOCwrYCxVUx8ecXI2va1o961HSzI1TDKORYqdZfs5xppubNBicdXPp94yD
-         ovJFrConANtyHAvVzunKnqyQGERhhTdv0W1Zi0pzW1iS5QiJKiz0TRpRhN3iqcG9oydg
-         kF+g==
+        d=linaro.org; s=google; t=1726665008; x=1727269808; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VVRgT66/mOuXoJrqQ8wh1eZWHMJn1TVCedz1ceMT+pM=;
+        b=bXMUM1ehfNXoefr+2aBc3G/dLfGptZpgUDvbcIEq1jnu4aLwvo8HeYO/DcAJje3MHV
+         3cATBVkLuErbn3GPp4oR47+s373xqpNee+GkfeoGq2F9glXutMQwLWwspFXhSlHaAaGT
+         wIow2jvihLG4EexhxvQfKTsBACPh7OLa4M5NiaT1WKgHWmD0SsrA/Dko0FIFnuRfVqIQ
+         7kh1A62kShBJBqAqOlKno1UEQJCTlSQDAPBiCNTGChsKQJ6tZdNW2c8Ip25Dp05Yibvy
+         RuPGOnWItTXjn32KistG+ktBb8sZrnI6WnRnN/Uj7BnyUIys7PVjhajKoP27slpp1rdp
+         VPNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726664565; x=1727269365;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ATW44ntMNC19RTiT79RitfHTSID/tcZoZ+wLlD8HpFA=;
-        b=V2B/TWX4NUWmkP57DkyB2Y0/nBu2OihP7ndHpxYY+QX5+I+8K39uudJIq3gRL4PCfv
-         Fkna4hwNZkhhZkjbmYXge+nIcp1ux5dvjj34WywUswxQ1Uq2tUers23vCJCF7hhSK2gQ
-         t0XegoKFEJgItQfC9Buvv4oiNToETRIq/XVdYfQYPbrf67Ur6hjTzP+NPXYvDYzPDvIz
-         OCgPXseL3VOLTLbtXDimc3XxBAmIvZsyda0R9aVSe+P1qvdSEDlBZ3Je89Qtkk2Lrsf+
-         wT+K+inGuH9e3z8AW64qZLlCZZ3a+1DQXl1XWej+H24HNG1hffVICHrUgTaXDBajwVZu
-         inoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW64WZeaXCEiItx9QWgon+Z9zq16atqNNMVV69eVm40fnQLyDYsfjn2bxE4Nz+rPr1G2qSIfjNKx/Pm7HDy@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBTB6TgQQUmy4Q2GuHcGLbteLFDG842G8iI/S8smbuwH8KFrGM
-	upHAP4FYG4xOFjYM4oUh6i8tNpp84Dr2yIDVKN44XrO6s0T/n5R9uZaX+SRuJZhGO7YsCRKDTjs
-	EEkU=
-X-Google-Smtp-Source: AGHT+IENvkLCRJ6PgUKbcBNDttzRMjlvQEm33+uhx9+i/+f7XgInowOISmKP2l/jOslrFqUCcHWCPw==
-X-Received: by 2002:a05:651c:2208:b0:2f6:5921:f35b with SMTP id 38308e7fff4ca-2f791a0d2d0mr106357291fa.27.1726664564786;
-        Wed, 18 Sep 2024 06:02:44 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f79d485c57sm13181811fa.109.2024.09.18.06.02.42
+        d=1e100.net; s=20230601; t=1726665008; x=1727269808;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VVRgT66/mOuXoJrqQ8wh1eZWHMJn1TVCedz1ceMT+pM=;
+        b=eXx76mfSEybn3rRurYihakuP0KkX8xSnj29Acspg3zonKdYrkArN5cPZGPQ+xOjs/w
+         EhA00Uqf85EMT8yjCKjeir0LquEIkBQD+DhdAGBVtxPLftzTQlnQYCREQKri9H1FDlle
+         14ut6f+oO8k13EdqpqS1oAVW7Iaqqlcztd2krxjOJXsojuL3luOjMApP00c9RND5jbqW
+         8WtlLaXaI6mIJXRSJcDF/FBiXcPUGG2a/0tqpzeQRjDG5ZoH5YO3uXE5uUDBNXhDb4P/
+         aKNOFVY992JIobus1+mroiIKY3dXjuq7YR2CnmBRh8l5WAOLKPxYx3lX8MEA9Tvzty2Y
+         3Zmg==
+X-Forwarded-Encrypted: i=1; AJvYcCXFWeoU9lkSyjLXHTZetNBw9lMOQPYJo/fV6SFKflXJ/tvDxhqFp5VkWfnP0NKxRS2vaxVZe3jMnBh03SFT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5roCot+bf7kHOB7G/jH2E9bwXwfR7sJY1uxtzkJkNui6XUGGf
+	4JhQV6EmXeqcWu6EUhn6Rt3Qhs5AC3JXRpq/5IvaOY+KgzFRzsmQ3PRz0NZNJTkUx5j3JTbl6XK
+	K
+X-Google-Smtp-Source: AGHT+IGHtxlIXrPw47xVhdH8uLboKPn/Kp7bXo6oA0xYfYIupxuqexOncbN9AZZ0BmhjMlNITwnFjw==
+X-Received: by 2002:a17:907:1b05:b0:a7a:afe8:1013 with SMTP id a640c23a62f3a-a902a3d188dmr2413879466b.1.1726665007741;
+        Wed, 18 Sep 2024 06:10:07 -0700 (PDT)
+Received: from linaro.org ([62.231.96.65])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9060f39a8fsm588762066b.0.2024.09.18.06.10.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Sep 2024 06:02:43 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Wed, 18 Sep 2024 16:02:39 +0300
-Subject: [PATCH] soc: qcom: pd_mapper: fix ADSP PD maps
+        Wed, 18 Sep 2024 06:10:07 -0700 (PDT)
+Date: Wed, 18 Sep 2024 16:10:05 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Johan Hovold <johan@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom: edp: Add runtime PM support
+Message-ID: <ZurRLf8S1j6s8GPz@linaro.org>
+References: <20240907-phy-qcom-edp-enable-runtime-pm-v1-1-8b9ee4210e1e@linaro.org>
+ <ZuqmB3Cn7mGfA2PU@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240918-x1e-fix-pdm-pdr-v1-1-cefc79bb33d1@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAG7P6mYC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIxMDS0ML3QrDVN20zArdgpRcIC7STTJPNkmxNLdITEwzVgLqKihKBUqDTYy
- Ora0FALKNxF5hAAAA
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>, 
- Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1046;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=fkxNactTtfPV+pF7AYrystjYaIivYRerWOIrN2LwuIQ=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBm6s9yWIoJMvUmfey0hpRsOxNUQUFmdSXLFwiYM
- FTFD77VoAiJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZurPcgAKCRCLPIo+Aiko
- 1ZEHCACQgxEjTJtoCYuxeGuePeXLJn3K8bG5i7Np30n4hEb8LHST6j+h5b8Ult7yL3fI4XhXLMR
- 9b7vYGNQxUd7x7zo5gEcDnRllKBezAgqcG3vQNTB6VSjtdwJ508ahxStFd8lnVxuEAffJCQK62J
- 7y1pwFi7bvxFpZLtIcTpA08Aoj+1NWJJHdJKoExnhSvOJBYdyLRU+C+slK5rOjVwfcoB10lPLNM
- S9wnK2vUXhhBCWgK6PLpTs5ivEcXF8TEX5g/1HVI3FDDSWrqu7lJuANFYgY4VrOBR7VozwmNMJw
- vpDYyu+iI3yJiavKcxi3erCkLq33wwLg3B6Bu9lkhTPc7nwN
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZuqmB3Cn7mGfA2PU@hovoldconsulting.com>
 
-On X1E8 devices root ADSP domain should have tms/pdr_enabled registered.
-Change the PDM domain data that is used for X1E80100 ADSP.
+On 24-09-18 12:05:59, Johan Hovold wrote:
+> On Sat, Sep 07, 2024 at 06:25:21PM +0300, Abel Vesa wrote:
+> > Enable runtime PM support by adding proper ops which will handle the
+> 
+> Avoid words like 'proper' here (what are non-proper runtime PM ops?).
 
-Fixes: bd6db1f1486e ("soc: qcom: pd_mapper: Add X1E80100")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/soc/qcom/qcom_pd_mapper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sure.
 
-diff --git a/drivers/soc/qcom/qcom_pd_mapper.c b/drivers/soc/qcom/qcom_pd_mapper.c
-index c940f4da28ed..9d33a8c71778 100644
---- a/drivers/soc/qcom/qcom_pd_mapper.c
-+++ b/drivers/soc/qcom/qcom_pd_mapper.c
-@@ -519,7 +519,7 @@ static const struct qcom_pdm_domain_data *sm8550_domains[] = {
- 
- static const struct qcom_pdm_domain_data *x1e80100_domains[] = {
- 	&adsp_audio_pd,
--	&adsp_root_pd,
-+	&adsp_root_pd_pdr,
- 	&adsp_charger_pd,
- 	&adsp_sensor_pd,
- 	&cdsp_root_pd,
+> 
+> > clocks and regulators. These resources will now be handled on power_on and
+> > power_off instead of init and exit PHY ops.
+> 
+> No, this is simply a false claim and indicates that you haven't reviewed
+> how PHY runtime PM works. Core will increment the usage count on init()
+> and decrement it on exit().
 
----
-base-commit: 32ffa5373540a8d1c06619f52d019c6cdc948bb4
-change-id: 20240918-x1e-fix-pdm-pdr-b7c4d978aaf3
+Yeah, I guess the better argument here would be that the PHY needs
+regulators and clocks enabled. Anyway, ignore this version as it
+was already NACKed by Dmitry.
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+> 
+> > Also enable these resources on
+> > probe in order to balance out the disabling that is happening right after.
+> > Prevent runtime PM from being ON by default as well.
+> 
+> And here you just regressed all current systems that do not have udev
+> rules to enable runtime PM, and which will now be stuck with these
+> resources always-on (e.g. during DPMS off and system suspend).
+> 
+> In fact, you are even regressing systems that would enable runtime PM,
+> as the runtime suspend callback would not currently be called when you
+> enter system suspend so the regulators and clocks will be left on.
+> 
+> This clearly hasn't been tested and analysed properly.
+> 
+> > +static int __maybe_unused qcom_edp_runtime_suspend(struct device *dev)
+> > +{
+> > +	struct qcom_edp *edp = dev_get_drvdata(dev);
+> > +
+> > +	dev_err(dev, "Suspending DP phy\n");
+> 
+> You forgot to drop your development printks (same below).
+> 
+> Johan
 
