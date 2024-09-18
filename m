@@ -1,142 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-31951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BE7297BA3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 11:41:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02C0197BA86
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 12:06:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3895CB25331
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 09:41:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AA8A91F277B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 10:06:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E29E51779BD;
-	Wed, 18 Sep 2024 09:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3FAA17085C;
+	Wed, 18 Sep 2024 10:06:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ozSINlCU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JEJx++iA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD3F915C150;
-	Wed, 18 Sep 2024 09:41:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B209F9E4;
+	Wed, 18 Sep 2024 10:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726652477; cv=none; b=khwFdpcBgiORV1SJxkWdsDaJDSOjbCSi0+KYTvNpofr5gxOAwGCqaknidERWHK/VBznyjxVE6vXCrLydBb6H8zBOgSYmetj37R1ZTWyVHfIVRomBlW0TXSbfmgKw2YaCS7hLia9FCblHHbtXF25bbIGe2OQjCnpC2H+VbFLeJ9k=
+	t=1726653963; cv=none; b=HNUDa/4w4zMqDb/rTvyYpycbRkLjfMAJBHWYnXqm33oy7dPHgknSzPfKS4eZnCD9EtxwaoDd6RxBbD555CHQVsvfIZfG4g/b1voZD40YkyvOy4daGSokN6Ffw1MMC0qnTCmg1LSIK6s0T8DPp/xDRdnuCozV0uIa5t14FenA98c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726652477; c=relaxed/simple;
-	bh=U8/Lv2YwwgyhpxOf09roeTE5M92/MEKBkzahSiAmuNk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WBkEXUnVmGK46FPSstHtNTUhY3ocKebuqwV6RXi0QUMvIMGciF7/ezwl0CL+L2DRoO8kMybSnM3Z2EnA9S6xm5yCgAIQ/WmobGgOHn9m7/dIo54IZl7zRLK/2/U5g7dsOxsrCHtDna6wOXlHGuWwBf0UbQU3e+PkxaqS0ELVdNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ozSINlCU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48HIoZFe013717;
-	Wed, 18 Sep 2024 09:40:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZGKeKnE4cbpXs2ly6M1HqZTGvlB5uPeWFZTcOSxFjhc=; b=ozSINlCUx1oBkvd9
-	DmSrn0CVyAFE9Fxqz7JFUhV++6V2F34uAOHgv7YC9FcCbd4Urx9OBSDvkhGyH48Y
-	ZY5ErvZYVBXWzdKAbPRQAgpRrMaq8wOkbNQemS+YEp++HlvxMvm/L8DTuvIqlxhY
-	xM5BVyoXfTHaohSr4fCIxSFP5a/Ob3fAY2G0+ST7ooRT84uie0XjO2hy77f4q8u0
-	D9ZGZhh3YLLIJ6J1tPm5WB774HCNduYoeXCuANOpJlAlHezVPl72EOkmIbR+Qnqv
-	SgFJsbgbY1EdlfJap2vExMS3yxhNLnvkX22ryA5rXxLFM5ciXLeIugoAE/DCSvFo
-	7cBCnA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4hh9fwr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Sep 2024 09:40:44 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48I9eghY017304
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Sep 2024 09:40:42 GMT
-Received: from [10.218.15.248] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Sep
- 2024 02:40:37 -0700
-Message-ID: <40dd23e7-9ea5-4eb3-bb6b-e1952d746958@quicinc.com>
-Date: Wed, 18 Sep 2024 15:10:34 +0530
+	s=arc-20240116; t=1726653963; c=relaxed/simple;
+	bh=b9ubWyNkci8vVhzFdYA9KsCYZugo7cm3IlQEuh6iue0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WyABcLhTpfSwFSYJR09++l2x1U+UoSl4fI5nqJRee1+JNfstzGaTC/QNX9Shnjhsq2mOrHsziYOn1cUuDITWCnjzcNSD6uv+1WLt+mkpI0KvCeod5Aar+5aNtdN1c3IMBuCf/nGSsuk+xBAeXitqeQiTlAElcqEsakLbgtImi9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JEJx++iA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4148EC4CEC3;
+	Wed, 18 Sep 2024 10:06:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726653963;
+	bh=b9ubWyNkci8vVhzFdYA9KsCYZugo7cm3IlQEuh6iue0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JEJx++iAkxnatHlTFHLGHaXqoTECueNrOQcMMlX/zjJgsMyeCZJsBOdEJu518FI3r
+	 fg4AzPtrCdoLe5UmpM0+JV+LuKm1iGDMKhQ1jOW11y/kYMnQtFk5Bf4LSNIvbIRglv
+	 MGUSnG2YtW3q4Zy4nXBZLQhgdk+n+xRyzsCaHO9LrfnHharz7jbh+hag9f3KGCTSMp
+	 zx3Fmw/bDIKBtxx0yxWRG1icj/5uw2RWfuUvoES18G22SAP2gGrUN8SmYXvAYQM4bV
+	 waI4WOurk1DOrqdN6aBRoCL3Uc/+4bQCobP7j/Px+gHkDt9lFgHdMIV7iZ8n1I5HdZ
+	 1MqeZbIQXO1ow==
+Received: from johan by theta with local (Exim 4.98)
+	(envelope-from <johan@kernel.org>)
+	id 1sqrZP-000000001j5-2CWn;
+	Wed, 18 Sep 2024 12:05:59 +0200
+Date: Wed, 18 Sep 2024 12:05:59 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] phy: qcom: edp: Add runtime PM support
+Message-ID: <ZuqmB3Cn7mGfA2PU@hovoldconsulting.com>
+References: <20240907-phy-qcom-edp-enable-runtime-pm-v1-1-8b9ee4210e1e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] interconnect: qcom: add QCS8300 interconnect
- provider driver
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Stephan Gerhold
-	<stephan.gerhold@kernkonzept.com>,
-        Danila Tikhonov <danila@jiaxyga.com>,
-        "Adam Skladowski" <a39.skl@gmail.com>,
-        Vladimir Lypak
-	<vladimir.lypak@gmail.com>,
-        Andrew Halaney <ahalaney@redhat.com>,
-        Odelu
- Kukatla <quic_okukatla@quicinc.com>,
-        Mike Tipton <quic_mdtipton@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240910101013.3020-1-quic_rlaggysh@quicinc.com>
- <20240910101013.3020-3-quic_rlaggysh@quicinc.com>
- <3xjvx2kwrlruhhxw4aald26qjf5fzikay2ypzr3mwv75mlmf5q@lmn2o64npfg2>
-Content-Language: en-US
-From: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-In-Reply-To: <3xjvx2kwrlruhhxw4aald26qjf5fzikay2ypzr3mwv75mlmf5q@lmn2o64npfg2>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kfAHwdp5rv5mTjZA4y68O1eyqBSLz097
-X-Proofpoint-ORIG-GUID: kfAHwdp5rv5mTjZA4y68O1eyqBSLz097
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- adultscore=0 impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- mlxlogscore=999 mlxscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409180061
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240907-phy-qcom-edp-enable-runtime-pm-v1-1-8b9ee4210e1e@linaro.org>
 
+On Sat, Sep 07, 2024 at 06:25:21PM +0300, Abel Vesa wrote:
+> Enable runtime PM support by adding proper ops which will handle the
 
+Avoid words like 'proper' here (what are non-proper runtime PM ops?).
 
-On 9/11/2024 4:18 PM, Dmitry Baryshkov wrote:
-> On Tue, Sep 10, 2024 at 10:10:13AM GMT, Raviteja Laggyshetty wrote:
->> Add driver for the Qualcomm interconnect buses found in QCS8300
->> based platforms. The topology consists of several NoCs that are
->> controlled by a remote processor that collects the aggregated
->> bandwidth for each master-slave pairs.
->>
->> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
->> ---
->>  drivers/interconnect/qcom/Kconfig   |   11 +
->>  drivers/interconnect/qcom/Makefile  |    2 +
->>  drivers/interconnect/qcom/qcs8300.c | 2088 +++++++++++++++++++++++++++
->>  drivers/interconnect/qcom/qcs8300.h |  177 +++
->>  4 files changed, 2278 insertions(+)
->>  create mode 100644 drivers/interconnect/qcom/qcs8300.c
->>  create mode 100644 drivers/interconnect/qcom/qcs8300.h
-> 
-> The driver looks pretty close to sa8775p one. Would it make sense to
-> have a single driver instead? Or would it complicate things
-> significantly?
-> 
+> clocks and regulators. These resources will now be handled on power_on and
+> power_off instead of init and exit PHY ops.
 
-Yes, the target is close to sa8775p. but there are differences in the topology and same driver cannot be used for both targets.
+No, this is simply a false claim and indicates that you haven't reviewed
+how PHY runtime PM works. Core will increment the usage count on init()
+and decrement it on exit().
 
-Thanks,
-Raviteja
+> Also enable these resources on
+> probe in order to balance out the disabling that is happening right after.
+> Prevent runtime PM from being ON by default as well.
 
+And here you just regressed all current systems that do not have udev
+rules to enable runtime PM, and which will now be stuck with these
+resources always-on (e.g. during DPMS off and system suspend).
 
+In fact, you are even regressing systems that would enable runtime PM,
+as the runtime suspend callback would not currently be called when you
+enter system suspend so the regulators and clocks will be left on.
+
+This clearly hasn't been tested and analysed properly.
+
+> +static int __maybe_unused qcom_edp_runtime_suspend(struct device *dev)
+> +{
+> +	struct qcom_edp *edp = dev_get_drvdata(dev);
+> +
+> +	dev_err(dev, "Suspending DP phy\n");
+
+You forgot to drop your development printks (same below).
+
+Johan
 
