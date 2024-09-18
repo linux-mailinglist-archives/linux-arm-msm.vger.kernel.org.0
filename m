@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-31975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20A1997C1FD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 00:57:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F06297C1FF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 00:58:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B2D77B21A4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 22:57:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7CD11F21DF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 22:58:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B94F31CB333;
-	Wed, 18 Sep 2024 22:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAD521CBEA2;
+	Wed, 18 Sep 2024 22:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uMHD3WpF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g5EkbuqV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5EF135417;
-	Wed, 18 Sep 2024 22:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0C71CBE9E;
+	Wed, 18 Sep 2024 22:57:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726700271; cv=none; b=PKwRG/LPDLMQf3YaWoZU0XYRKGDi8Xsehv7QtchXFDx/qzL4g3MX7msuWg1Nc3/ZgA7lf+2dhasAjMGonYXQ/Q396n2OObE4ISJb7N7QokFn/N1s3quMPIxlDd1xIuNe/zhBcp8oAzJhiJolVrnaIV9Thc3uWJtQPYahJCLp3jc=
+	t=1726700274; cv=none; b=A0hgcQnaSOGT76U3XeUy1FW+mmAJwbaNP9s1CJfK9A6EfKN0k44YDlF56I2DNAV/PrjT67xdVYN7w+9LxXt/2tiNge0Arcfv7NBu7U1OP2b7hFHMQvzuik6jG0vIpa/A9vHa+HhpmJyVimd0vmTTeLWv54rVv92NJZVuF89fT4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726700271; c=relaxed/simple;
-	bh=PQJ0fnTaoCP3RrUPV2On94uyJzX0Ft0/kqfYjNPnNQY=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gdrP7j/8wb2bKGNEiPywFrLrpksnzYDHl13KH/eHZQTxeGvQ7iUVhYVkG46InBHNMuISwniIjmFpC9LDE2/XOkhZwcF9qVpbCpCexnipQir4Fpe/6H4fa+44JkHjYUW1h2pKZ8+CIP8ghxDcBaRGxpNqPyy+WAcYDbvZCdOqRvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uMHD3WpF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F399C4CEC2;
-	Wed, 18 Sep 2024 22:57:47 +0000 (UTC)
+	s=arc-20240116; t=1726700274; c=relaxed/simple;
+	bh=lVs3+P3PVrfKB1JE19rE1ggJhR6Tbzok6Qn7Eo06ZJ4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=QDaBVMAYX309fmGixsqljqKBIIhjb8PH07GIaAdi6gioJ6zbQDaBii0govWeO9/xGWmawZ/Ppv8JUAYbq6ez52h+ND2ZdNJPsW4PBNVQaQGdAeUcqFxaK6b3K9lxxqLAk9V9S7ySCXP8mNIJngglqUdSeZ22pf0y2Kc4CSxS2kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g5EkbuqV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92898C4CECD;
+	Wed, 18 Sep 2024 22:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726700271;
-	bh=PQJ0fnTaoCP3RrUPV2On94uyJzX0Ft0/kqfYjNPnNQY=;
-	h=From:Subject:Date:To:Cc:From;
-	b=uMHD3WpF85brH028BwHm9/R+x7fMB4nksZsbQTttLr3JZH+xzAVhErk9dFo4kqweF
-	 QB28xog74k6Ki+BZtPB/rfXFSXEHEt80RucKPZSou+ltheNtfjVBylysz2IyOo3IlA
-	 h4uTOHa92VyGimpNo7QFxRwWyqFslQ//ohUvJ+HYUGcuYuJhbDg7TuFfgqeINSIW3l
-	 5tbS8ppXZwYG8d69xrSO2cU5fTQ1YV9HRzu6brAlRnzluojLpapibYaQtq6UusaIyZ
-	 DplamrqPj0s2RwkIfMtnKmS+nxJTeACZCt0qXEjMLvVro9uGNSi9bKNgw+fdZIiXLh
-	 aQpIJQfLC84kQ==
+	s=k20201202; t=1726700274;
+	bh=lVs3+P3PVrfKB1JE19rE1ggJhR6Tbzok6Qn7Eo06ZJ4=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=g5EkbuqVDKigUqamayGDiuaic3SDOCNVn3LD1qio8Z3zzqJunRod6q8A9kGOA52Rc
+	 sspH9e46icBIrCmulUQCaWBa7pR0/NEr2sALWlDzUiWENcm0m98wTSMnXdh8L3bTD5
+	 dULfXOEi2vKNmT00f+IgkcVXe0oh6C3AxWEzYSnjm8LVqkk/Zmgj1wF48CxMAA3Y15
+	 zF3KwySntjvZFGn1aR4nkPfIRmN8NN9CZLHIU5tMeVleEleW+ZwcPTQcP9KaqVcFYJ
+	 s5RXv6sET5uqjh9u1j0apcEg9kmN+RcEVwV7PVN3VHkuaOD/Vd61A8eb7wSdB++H8J
+	 CGYKrRjZY8Kqg==
 From: Konrad Dybcio <konradybcio@kernel.org>
-Subject: [RFC PATCH 00/11] Affirm SMMU coherent pagetable walker capability
- on RPMh SoCs
-Date: Thu, 19 Sep 2024 00:57:13 +0200
-Message-Id: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com>
+Date: Thu, 19 Sep 2024 00:57:14 +0200
+Subject: [PATCH RFC 01/11] arm64: dts: qcom: qdu1000: Affirm IDR0.CCTW on
+ apps_smmu
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -53,10 +53,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMla62YC/x3MTQqAIBBA4avErBMmC/q5SoSITTWLVJyKILp70
- vJbvPeAUGISGIoHEl0sHHxGVRbgNutXUjxng0bdYF/16giRnbIxipF9P40LGyXyh8IWl7qz2ml
- sIecx0cL3vx6n9/0A5QnCqGoAAAA=
-X-Change-ID: 20240919-topic-apps_smmu_coherent-070f38a2c207
+Message-Id: <20240919-topic-apps_smmu_coherent-v1-1-5b3a8662403d@quicinc.com>
+References: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com>
+In-Reply-To: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -65,53 +64,42 @@ Cc: Marijn Suijten <marijn.suijten@somainline.org>,
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726700267; l=1794;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1726700267; l=1004;
  i=quic_kdybcio@quicinc.com; s=20230215; h=from:subject:message-id;
- bh=PQJ0fnTaoCP3RrUPV2On94uyJzX0Ft0/kqfYjNPnNQY=;
- b=P3mbzr2DiFVwV9kQBSz/0dNPcoZ1ufgTeGArEdBKKyLP/d5rHs4N+8dVpSPNDhxdn8TIgX06E
- eq9ro0vj4WZDJoZlxhaEcC2BKt9HEHER+miHTHObzi34XTP5OwRsGrf
+ bh=LyUvQG/s6kpNprKcZlTnppyjCx1IfqQG0TxgrW9JrFA=;
+ b=ehhL9CgScd00H79XIv3UwRWv8jYtHtchqFTi9H8/6yOmI8jZ8rj6erqT4vSN930BC4KF6SVRD
+ GQ9s4GEfQnfB1/5IWPxMAPhaDKJVv/Om5XPkFTkWWRAzxGlIXzKJal5
 X-Developer-Key: i=quic_kdybcio@quicinc.com; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-I only read back the SMMU config on X1E & 7280, but I have it on good
-authority that this concerns all RPMh SoCs. Sending as RFC just in case.
+From: Konrad Dybcio <quic_kdybcio@quicinc.com>
 
-Lacking coherency can hurt performance, but claiming coherency where it's
-absent would lead to a kaboom.
+On RPMh-based SoCs, the APPS SMMU advertizes support for cache-coherent
+pagetable walk via the IDR0 register. This however is not respected by
+the arm-smmu driver unless dma-coherent is set.
+
+Mark the node as dma-coherent to ensure this (and other) implementations
+take this coherency into account.
 
 Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
 ---
-Konrad Dybcio (11):
-      arm64: dts: qcom: qdu1000: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sc7180: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sc8180x: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sc8280xp: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sdm670: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sdm845: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sm6350: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sm8150: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sm8350: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: sm8450: Affirm IDR0.CCTW on apps_smmu
-      arm64: dts: qcom: x1e80100: Affirm IDR0.CCTW on apps_smmu
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
- arch/arm64/boot/dts/qcom/qdu1000.dtsi  | 1 +
- arch/arm64/boot/dts/qcom/sc7180.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/sc8180x.dtsi  | 2 +-
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
- arch/arm64/boot/dts/qcom/sdm670.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/sm6350.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/sm8150.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/sm8350.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/sm8450.dtsi   | 1 +
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 ++
- 11 files changed, 12 insertions(+), 1 deletion(-)
----
-base-commit: 55bcd2e0d04c1171d382badef1def1fd04ef66c5
-change-id: 20240919-topic-apps_smmu_coherent-070f38a2c207
+diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+index 642ca8f0236b3944c5962e5b12b5959cd349812f..1dd760e97794877bae35d19ca264f8fc70f96c8b 100644
+--- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
++++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+@@ -1412,6 +1412,7 @@ apps_smmu: iommu@15000000 {
+ 				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>;
++			dma-coherent;
+ 		};
+ 
+ 		intc: interrupt-controller@17200000 {
 
-Best regards,
 -- 
-Konrad Dybcio <quic_kdybcio@quicinc.com>
+2.46.1
 
 
