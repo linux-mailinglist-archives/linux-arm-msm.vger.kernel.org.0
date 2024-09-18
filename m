@@ -1,301 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-31957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A77C097BC10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 14:20:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4108097BC41
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 14:32:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3DFBB21253
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 12:20:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7BB4B1C21E36
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 12:32:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7E3C176FB8;
-	Wed, 18 Sep 2024 12:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C3C1189F41;
+	Wed, 18 Sep 2024 12:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QMLdsj/m"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K+2GypYD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846102E64B;
-	Wed, 18 Sep 2024 12:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E81188CC5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 12:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726662052; cv=none; b=is0VPNqmLQtpNXknV006v/P7r9tMiwFM2OFeMDpzeLLM6UawtJHEs1e0IxTeig2+JkqdXVF4WTHsjmslVgQXePxRlkOGvZyDivwHjacN5RXXCQ+X9SibeSvMWPjXfYJjvzRJc4BAXs+gON4LHhLaQz4JsPExq/Yp1ccGR0lm59k=
+	t=1726662748; cv=none; b=hhKCvd9t4nDDWdiqy5Y2HzzDQ8jCLIQccCT+rBoYJ7VcLShv3jRBwkxshUhEfeMSda1/NzwCzWOBNp4DNRkTW7jW304bFcv6xoIc9l2hfTaPVO8PIaTtI1wL/MPuuhb6CLv6fF2dtWVo+GttD9QyjLQ6jADSeXzUbs9xyGdBvH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726662052; c=relaxed/simple;
-	bh=YReHkWzoW90cu/Ao3EPUTSj1YiN0NQwCGDLLvtaUMZs=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=ft5ItMqdCFft2m6IWAggx/D4HYkKk0eUOyyNyNX5/AtizBkKyjg7jNzbSYb0L6UYb4d9WTZTzklBD8s0hrki6tasVvtABrtQr4PkL0j5MOG1Q8GUlJWYrhjyOal6VXU1hT/+btEjEkE1E9+tEW870Vr6Im8nQjXZbROvoJtPayQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QMLdsj/m; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48I6lLrn002533;
-	Wed, 18 Sep 2024 12:20:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	y49ljK7hhswfxyQq8jRavd0/ztkz3NCyaDreEvf3yzY=; b=QMLdsj/muGPPF5rr
-	ygvoxHb3GnfgoBBW2eJK76zQE0q1EixKzCJN4rtLP1YARM7TBt/uxf55ETNHvmVe
-	+QBTzir+Eh3yex6V2Gdu9xO1/3JCGF+M3D+idrD5YFE8xlGOkalD41JO6zJ9Hjgd
-	YRvA2mhNj1Vqhs9gYGpM85reWsFAffO/BmMtun3UkQe5G+S6JmdsYYB8POimF0lc
-	THe7cylO0h3QmNATNQePjrhIPZ5/uoS3A5m70mu+mPdbR/lK3ql3ZD5j8AkqBukk
-	iJg+AjLD+z74cMdyOXPmt4iMOlfqczDUAFaO2gzH3Uew07Lp6jNXBv9yQ+hBp7CN
-	X7ubCg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4hfhwbr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Sep 2024 12:20:39 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48ICKcOx015988
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 18 Sep 2024 12:20:38 GMT
-Received: from [10.216.13.254] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Sep
- 2024 05:20:32 -0700
-Message-ID: <77ce3d16-9e56-4ed3-89bd-e4d26d88eae2@quicinc.com>
-Date: Wed, 18 Sep 2024 17:50:27 +0530
+	s=arc-20240116; t=1726662748; c=relaxed/simple;
+	bh=3gVQ9JaYTaBdvDz5MGdsXx0ayVEISpaMDfcREkdX9c8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EX3A57QK1dwPNnIf8zwan+FjR7vXsNWhcaBB0IrO9ZGwL52ErokQnXafrD7MPCC3TztkMK06fAmzUFp/yOQ99DnLKs77OE/tuczS/srI4O5cNITDqUqeGSMvmqDydkwzF7IG+JF6zIa8F5r+BQu4bThx51ueuPF6SMjdFYpmiwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K+2GypYD; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53660856a21so4949990e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 05:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726662743; x=1727267543; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QldvlS8/eJZac6pG0e6NEdXcfsAi5+t2N8DBgSFO8Rk=;
+        b=K+2GypYD3gvqB4wezdF1ONJGmiuElFPIW3MxSawSSrNDMxe3f9v/pSSpnkpq6OXX/Y
+         aWTS3XIpx9iz5CLBWmoUqqMLgB5nJlSU+z2IowwLG928nhWsgldW0u3qFptNAtAEkXa1
+         uqsT6LLb/uVXoypoWodr1Aj3jRT3XuNfXssLoCjPfJ+yq26aWG4Is/lrXbygXj40M7Qs
+         bqAkP0Yz5HtnAS+qWbosrohj1+VED2F8RMgCIGsbkjJD6i91jZvMemNZILZcD1fIuscp
+         b1bZcsUEeFrRkx/mWf55chIaQskhYvl8ymzbHDkPAIH8wU4Xa+FFsstwChP8Kso04Ecu
+         Tb2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726662743; x=1727267543;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QldvlS8/eJZac6pG0e6NEdXcfsAi5+t2N8DBgSFO8Rk=;
+        b=koaOKyZK7GCj0Cj2Fr6ukd5S6m6nrtZQAFVbbu5RX3bz2VWBrTq+rk69m3+ofuxf04
+         VF9WFt9ljEwlpwJVqPFNjeJnzFd3wyow+zugmqlvOGM82+dXPN40GevmjL0tcT7i0M00
+         daMvDB1R75Rw3tAf6QhYSRRpjCdiyNJ2wVq8cW9BPQuCPWfwyfuWayl3fgFyc3aMsy0i
+         SqzVkLZ4bqcia25uYl+H+IQc0Tr13cZ1JO1BBtXD90pPHg69KWS1wJ0eqy9DBjz84ydV
+         Dvtk7oHpuS7eEf1sHT3ztuMEMjF3HM50vVizlqvsZsdL11XMtj47RJkVsD5ufw1LzV23
+         lcvA==
+X-Forwarded-Encrypted: i=1; AJvYcCWiQTJA59f0Ljlg3k/+zpmuwrCL2/k0wBrvKgtl14J9EwEHr4SbZ+d/DnGHBp2mNwUmthntuGw4NST96qGD@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCjVrUHlJ3Lm7RFxf2BNS2nrWB3a9azZ15LGH47d5/TxfZNWfQ
+	3qbhN0di815j/6HIEdtmxQhnc5GxDEmBI8tLOumZbTl2mFrNvjwtcS4+YpumJO4=
+X-Google-Smtp-Source: AGHT+IErvjmxyimyd57IGMkKNpdAXZ02gL2PuI7e7vGw8BlqbmJRMt4iCTe0zO0FnjQKvmbmHIhaUw==
+X-Received: by 2002:a05:6512:33d6:b0:536:741a:6bad with SMTP id 2adb3069b0e04-5367feb95bamr9279710e87.12.1726662743277;
+        Wed, 18 Sep 2024 05:32:23 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53698c3dd4esm797163e87.13.2024.09.18.05.32.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Sep 2024 05:32:21 -0700 (PDT)
+Date: Wed, 18 Sep 2024 15:32:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Sachin Gupta <quic_sachgupt@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_cang@quicinc.com, quic_nguyenb@quicinc.com, quic_bhaskarv@quicinc.com, 
+	quic_mapa@quicinc.com, quic_narepall@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
+Subject: Re: [PATCH 1/1] arm64: dts: qcom: qcs6490-rb3gen2: Add SD Card node
+Message-ID: <4g6ao5bbt57wdro6sroq7nodxtgdk5ecdxsdkrfvttfrsm2zmw@jik6og3np75z>
+References: <20240917090630.1025-1-quic_sachgupt@quicinc.com>
+ <gyasvmb5q3e4pgmfpj7njovclydwhsvsxt4ayfxzbh5njwgwsq@zfhlm6lqfirl>
+ <5c0f627b-058d-4213-9c2a-5adb2f174c0d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Subject: Re: [PATCH v2 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
- between two subsystems
-To: <neil.armstrong@linaro.org>, <konrad.dybcio@linaro.org>,
-        <andersson@kernel.org>, <andi.shyti@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <conor+dt@kernel.org>, <agross@kernel.org>,
-        <devicetree@vger.kernel.org>, <vkoul@kernel.org>, <linux@treblig.org>,
-        <dan.carpenter@linaro.org>, <Frank.Li@nxp.com>,
-        <konradybcio@kernel.org>
-CC: <quic_vdadhani@quicinc.com>
-References: <20240906191438.4104329-1-quic_msavaliy@quicinc.com>
- <20240906191438.4104329-5-quic_msavaliy@quicinc.com>
- <b3a5dd54-90ba-4d75-9650-efbff12cddeb@linaro.org>
- <3bd27b6d-74b8-4f7b-b3eb-64682442bbda@quicinc.com>
- <3dddd226-c726-434e-8828-c12f76a71752@linaro.org>
- <687db538-1a41-4353-89fd-d1869d960a12@quicinc.com>
- <ed0c3d9c-82d8-47db-938c-4e60e8ebed77@linaro.org>
-Content-Language: en-US
-In-Reply-To: <ed0c3d9c-82d8-47db-938c-4e60e8ebed77@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: udEkeV9OS7ClIy2BFO3gv_FICQsEvsUd
-X-Proofpoint-ORIG-GUID: udEkeV9OS7ClIy2BFO3gv_FICQsEvsUd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- impostorscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409180080
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5c0f627b-058d-4213-9c2a-5adb2f174c0d@quicinc.com>
 
-Thanks Neil for the review !
-
-On 9/10/2024 3:22 PM, neil.armstrong@linaro.org wrote:
-> On 10/09/2024 11:15, Mukesh Kumar Savaliya wrote:
->> Hi Neil,
->>
->> On 9/9/2024 6:34 PM, neil.armstrong@linaro.org wrote:
->>> On 09/09/2024 11:18, Mukesh Kumar Savaliya wrote:
->>>> Hi Neil,
->>>>
->>>> On 9/9/2024 2:24 PM, neil.armstrong@linaro.org wrote:
->>>>> Hi,
->>>>>
->>>>> On 06/09/2024 21:14, Mukesh Kumar Savaliya wrote:
->>>>>> Add support to share I2C SE by two Subsystems in a mutually 
->>>>>> exclusive way.
->>>>>> Use  "qcom,shared-se" flag in a particular i2c instance node ifthe
->>>>>> usecase requires i2c controller to be shared.
->>>>>>
->>>>>> I2C driver just need to mark first_msg and last_msg flag to help 
->>>>>> indicate
->>>>>> GPI driver to  take lock and unlock TRE there by protecting from 
->>>>>> concurrent
->>>>>> access from other EE or Subsystem.
->>>>>>
->>>>>> gpi_create_i2c_tre() function at gpi.c will take care of adding 
->>>>>> Lock and
->>>>>> Unlock TRE for the respective transfer operations.
->>>>>>
->>>>>> Since the GPIOs are also shared for the i2c bus between two SS, do 
->>>>>> not
->>>>>> touch GPIO configuration during runtime suspend and only turn off the
->>>>>> clocks. This will allow other SS to continue to transfer the data
->>>>>> without any disturbance over the IO lines.
->>>>>
->>>>> This doesn't answer my question about what would be the behavior if 
->>>>> one
->>>>> use uses, for example, GPI DMA, and the Linux kernel FIFO mode or 
->>>>> SE DMA ?
->>>>>
->>>> Shared usecase is not supported for non GSI mode (FIFO and DMA), it 
->>>> should be static usecase. Dynamic sharing from two clients of two 
->>>> subsystems is only for GSI mode. Hope this helps ?
->>>
->>> Sure, this is why I proposed on v1 cover letter reply to add:
->> Sure, i will add in cover letter and code check combining with 
->> fifo_disable check.
->>> ==============><=====================================================================
->>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
->>> b/drivers/i2c/busses/i2c-qcom-geni.c
->>> index ee2e431601a6..a15825ea56de 100644
->>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->>> @@ -885,7 +885,7 @@ static int geni_i2c_probe(struct platform_device 
->>> *pdev)
->>>           else
->>>                   fifo_disable = readl_relaxed(gi2c->se.base + 
->>> GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
->>>
->>> -       if (fifo_disable) {
->>> +       if (gi2c->is_shared || fifo_disable) {
->>   Should be ANDING logically, as we need to combine both check. Shared
->>   usecase possible only for fifo_disable.
+On Wed, Sep 18, 2024 at 03:58:04PM GMT, Sachin Gupta wrote:
 > 
-> Could you elaborate on that ? GPI DMA is totally usable even if FIFO is 
-> enabled,
-> it's a decision took in the driver to _not_ use GPI when FIFO is enabled.
 > 
-Yes, Neil, you are right. Its actually reverse condition from HW 
-configuration.
+> On 9/17/2024 7:08 PM, Dmitry Baryshkov wrote:
+> > On Tue, Sep 17, 2024 at 02:36:30PM GMT, Sachin Gupta wrote:
+> > > Add SD Card node for Qualcomm qcs6490-rb3gen2 Board.
+> > 
+> > Consider adding mmc0 or mmc2 alias for the sdhc_2 node.
+> > 
+> Thank you for your input. However, aliases you mentioned already exists in
+> the sc7280.dtsi header file.
 
-if fifo_disable = true, then FIFO registers will not be accessible, 
-meaning its GPI mode only. And SW should decide use GPI DMA mode only.
+Ack
 
-if fifo_disable = false, it can still use GPI DMA/CPU_DMA. we need to 
-restrict from SW side.
-
-Provided above, i suggest to keep conditional check with ANDING.
-We want only GSI mode to be supported with shared SE. Because GSI mode 
-only has GPII channel allocated to each EE. if not, then it will be 
-misused between EEs and no way to prevent concurrency at HW level.(E.g. 
-we use lock/unlock in GSI mode)
-
-If so, hope you agree with the conditional check of ANDing both flags?
-> Neil
 > 
->>
->>   if(gi2c->is_shared && fifo_disable) {
->>>                   /* FIFO is disabled, so we can only use GPI DMA */
->>>                   gi2c->gpi_mode = true;
->>>                   ret = setup_gpi_dma(gi2c);
->>> ==============><=====================================================================
->>>
->>> Thanks,
->>> Neil
->>>
->>>>> Because it seems to "fix" only the GPI DMA shared case.
->>>>>
->>>>> Neil
->>>>>
->>>>>>
->>>>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>>>> ---
->>>>>>   drivers/i2c/busses/i2c-qcom-geni.c | 29 
->>>>>> ++++++++++++++++++++++-------
->>>>>>   1 file changed, 22 insertions(+), 7 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c 
->>>>>> b/drivers/i2c/busses/i2c-qcom-geni.c
->>>>>> index eebb0cbb6ca4..ee2e431601a6 100644
->>>>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->>>>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->>>>>> @@ -1,5 +1,6 @@
->>>>>>   // SPDX-License-Identifier: GPL-2.0
->>>>>>   // Copyright (c) 2017-2018, The Linux Foundation. All rights 
->>>>>> reserved.
->>>>>> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights 
->>>>>> reserved.
->>>>>>   #include <linux/acpi.h>
->>>>>>   #include <linux/clk.h>
->>>>>> @@ -99,6 +100,7 @@ struct geni_i2c_dev {
->>>>>>       struct dma_chan *rx_c;
->>>>>>       bool gpi_mode;
->>>>>>       bool abort_done;
->>>>>> +    bool is_shared;
->>>>>>   };
->>>>>>   struct geni_i2c_desc {
->>>>>> @@ -602,6 +604,7 @@ static int geni_i2c_gpi_xfer(struct 
->>>>>> geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->>>>>>       peripheral.clk_div = itr->clk_div;
->>>>>>       peripheral.set_config = 1;
->>>>>>       peripheral.multi_msg = false;
->>>>>> +    peripheral.shared_se = gi2c->is_shared;
->>>>>>       for (i = 0; i < num; i++) {
->>>>>>           gi2c->cur =&msgs[i];
->>>>>> @@ -612,6 +615,8 @@ static int geni_i2c_gpi_xfer(struct 
->>>>>> geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->>>>>>           if (i < num -1)
->>>>>>               peripheral.stretch = 1;
->>>>>> +        peripheral.first_msg =(i == 0);
->>>>>> +        peripheral.last_msg = (i == num - 1);
->>>>>>           peripheral.addr = msgs[i].addr;
->>>>>>           ret = geni_i2c_gpi(gi2c, &msgs[i], &config,
->>>>>> @@ -631,8 +636,11 @@ static int geni_i2c_gpi_xfer(struct 
->>>>>> geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->>>>>>           dma_async_issue_pending(gi2c->tx_c);
->>>>>>           time_left =wait_for_completion_timeout(&gi2c->done, 
->>>>>> XFER_TIMEOUT);
->>>>>> -        if (!time_left)
->>>>>> +        if (!time_left) {
->>>>>> +            dev_err(gi2c->se.dev, "I2C timeout gpi flags:%d 
->>>>>> addr:0x%x\n",
->>>>>> +                        gi2c->cur->flags, gi2c->cur->addr);
->>>>>>               gi2c->err = -ETIMEDOUT;
->>>>>> +        }
->>>>>>           if (gi2c->err) {
->>>>>>               ret = gi2c->err;
->>>>>> @@ -800,6 +808,11 @@ static int geni_i2c_probe(struct 
->>>>>> platform_device *pdev)
->>>>>>           gi2c->clk_freq_out = KHZ(100);
->>>>>>       }
->>>>>> +    if (of_property_read_bool(pdev->dev.of_node, 
->>>>>> "qcom,shared-se")) {
->>>>>> +        gi2c->is_shared = true;
->>>>>> +        dev_dbg(&pdev->dev, "Shared SE Usecase\n");
->>>>>> +    }
->>>>>> +
->>>>>>       if (has_acpi_companion(dev))
->>>>>>           ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
->>>>>> @@ -962,14 +975,16 @@ static int __maybe_unused 
->>>>>> geni_i2c_runtime_suspend(struct device *dev)
->>>>>>       struct geni_i2c_dev *gi2c = dev_get_drvdata(dev);
->>>>>>       disable_irq(gi2c->irq);
->>>>>> -    ret = geni_se_resources_off(&gi2c->se);
->>>>>> -    if (ret) {
->>>>>> -        enable_irq(gi2c->irq);
->>>>>> -        return ret;
->>>>>> -
->>>>>> +    if (gi2c->is_shared) {
->>>>>> +        geni_se_clks_off(&gi2c->se);
->>>>>>       } else {
->>>>>> -        gi2c->suspended = 1;
->>>>>> +        ret = geni_se_resources_off(&gi2c->se);
->>>>>> +        if (ret) {
->>>>>> +            enable_irq(gi2c->irq);
->>>>>> +            return ret;
->>>>>> +        }
->>>>>>       }
->>>>>> +    gi2c->suspended = 1;
->>>>>>       clk_disable_unprepare(gi2c->core_clk);
->>>>>
->>>>>
->>>
->>>
-> 
+> > > Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 33 ++++++++++++++++++++
+> > >   1 file changed, 33 insertions(+)
+
+-- 
+With best wishes
+Dmitry
 
