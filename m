@@ -1,267 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-31948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31949-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A19197B8BF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 09:47:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ABE5F97B937
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 10:21:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 68C9EB263A9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 07:47:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E8871F25064
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Sep 2024 08:21:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 804E71741C8;
-	Wed, 18 Sep 2024 07:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4587117A599;
+	Wed, 18 Sep 2024 08:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eg+y7d5K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EGog5r/M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADE2172BD8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 07:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0554B17967F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 08:18:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726645599; cv=none; b=a5WS73RDmiPbZpdkaE/mUSYZyqXmTFjI51aGI5uY/kr47pRsUx/wETG6eyxn4g478GcpzkOPFPcyGosVKAAy0J2ToWnFcBUMNGbVkNi19/ZHxuajy2RDltMr77PT2lVc/ErGT5gHkxwyltpPkND9Ak+ctyYaJVEihwFkWICRssU=
+	t=1726647504; cv=none; b=nKUS0e8AW77n9IhM5EMJd4QGIuYIDufEsFDwxWxFLjEcBhMMjeLhyZdzqaV8kZJ390s/t1uI+h232jXQdJ1iiH/3pdzuj6AwUdcv9ptTxxwUhrq1gOuIOJAWuD55TXCDEOmnHqsRuXXLrv6FrJoinNAidlS/rNmtjQ22L2YYbls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726645599; c=relaxed/simple;
-	bh=u0YwTtmM57VeJdosy4dRHWDV2Ad4X+RMY6+Qg7YrRrU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=LJZT2AguXE5WfuJQYeVOACRsUlqrB7779tBCTXAW9QIHzjJwAvK+kHdS63jRGACvMPN2j39qKpVDfgnTCv1mA2kLt46ixZtxej0p6N1TR97Vq4P5xZvoyvk6OAyiaw6gQCroJNIGq2qoGPyMSzSNzk4OwUV2G619VF7UIU8FPps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eg+y7d5K; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1726647504; c=relaxed/simple;
+	bh=fl5Szw0BaQjN8co3XgZhzhJhVuUWOHhLQd8bcOW++uw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hIUP+yj2xCQY0qi6q83XqgJ4c5YMXCSyzLlrd+cacuPHYXQvf4EYo9yDB5takxDjvvb7LJGJ0s9nSvGVnfhYKj/I+kjOwxBJb4h3jsSD5Nph40IaP1io5KwXngAsoWDCG+fZDPzzgf0zC4GqYfkqYFPubqCRbY1X6MFBm1QcH/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EGog5r/M; arc=none smtp.client-ip=209.85.218.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-374c6187b6eso4734946f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 00:46:36 -0700 (PDT)
+Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-a8d4979b843so888413266b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Sep 2024 01:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726645595; x=1727250395; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gQaTzkrOq6/kp5cHVFWeOEqBCRfMHF8F0wy39Qy5IOI=;
-        b=eg+y7d5KpRb5gRMtX0M84dOL9pGOlEIiqQMCOO3D/5daYvHptdVccIouk7xmm9UJjO
-         UdVi6MkAx+n3zQ1Au06yybb4COsXwIGgNSEaJ+6ljNyRKUHRonE2tdFxwxxiKhTiwRqW
-         VMB7DBJ6/ilkkXV8v8fVvUARUxRmXhkhr9PSeuwG7RGN+mG1pwRl6XlO97lvwoZlU79h
-         bicaHJvq9dTrurwIRaenouPR90d0Kk73p4+k6wMMIg2su4SetO3Pe0pALAChCja0Ss6O
-         cE8TIISYpnQTa9FpQMjcd2TRXdPUAYfog8ktkz0hgTXdWa7u/RL9sh4T+KEcQRQ/p2an
-         2ivA==
+        d=linaro.org; s=google; t=1726647499; x=1727252299; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ADDecU6io5qXLPo72Y1njDAmtAkj5Evq/Lc+OmYs5AM=;
+        b=EGog5r/MvVNvyUuv85H1Jf5O0KXZ1NFH1kT+DYGKip184z/PHQw7Vqu2Vuowx2LwyV
+         OtXqXXPUKpdKWruRjXqEQoZ7uFkbPGPqcwe3mD6Ltq8U2NMHGwMNtb9/uVbTSm9OczLK
+         ZpcudoP5ar7gHTUtlmpUipXKXkOoOE2NN0prKrFxmOoZ0cgCbTHbGpLSBRWYv2xvwDS3
+         XlQvhV8vy6r/7zmaq7s7XzVW2ROn6yQ5ex4exOaHi6BuLxTvPNMzGb+BC0tSVViGxTg6
+         o2GKVFLqetZHcK1aQKR0cGNX8KETN+xVzUr500LBc453Q8y/66ZIklJYFwHVBCmuA1zZ
+         zTcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726645595; x=1727250395;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=gQaTzkrOq6/kp5cHVFWeOEqBCRfMHF8F0wy39Qy5IOI=;
-        b=OFEyNf/0F+iI+Kn9p7Cvp0ZdGTbDdWR1eXDlXRQ3OacCSqbx1zIcxZvcrrmfx92+Xk
-         QPgEbAPLuIYEKMltfPlks9T7wSSgQRD4ie6zar7szgkKCJH1V3VNpu0OcH0ZrhnHhdlj
-         C62Bm0Ikwped0DeSG5R3zAxz3ZHrErmsBMLBJzNhqydxhW1JeqLBS/3i34dONKJmxNKp
-         qdVZYTzoaZRj2Xzn9S0latky63GRI7GpWnrZlRUPdqovUnddgJXAKBPmsce8HxVUDTg5
-         6M+InjnRirIyFDeO7c8gFOsAhqHOT++4iASaVDsYezbr3l0WlKaEZlyahBZu9Lo294IF
-         Yx+g==
-X-Gm-Message-State: AOJu0YzVpRBge7hQUK/6/OB3oe6lEW9HDehYKx5H89v1pXAN+ANiCWhB
-	zWWQoYZxHMd3OhRV8QRTRaNCkULWvb+Smxy7SAFHHuCOqrsgnK8lCyg0+yiny2E=
-X-Google-Smtp-Source: AGHT+IFSBQGV1AzgNI2mA8AdseO6QLgeyWriBLHes7xom/Y+b7LQ1ve9cGz8O4B1KR1An09BGC6n+g==
-X-Received: by 2002:a05:6000:4581:b0:374:cbc4:53b1 with SMTP id ffacd0b85a97d-378c2d5b269mr12250427f8f.40.1726645594641;
-        Wed, 18 Sep 2024 00:46:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:2782:e782:f1c:dcad? ([2a01:e0a:982:cbb0:2782:e782:f1c:dcad])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e70509220sm9678365e9.28.2024.09.18.00.46.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Sep 2024 00:46:34 -0700 (PDT)
-Message-ID: <c70392bb-bda1-48c7-824e-23d6f92f54ef@linaro.org>
-Date: Wed, 18 Sep 2024 09:46:33 +0200
+        d=1e100.net; s=20230601; t=1726647499; x=1727252299;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ADDecU6io5qXLPo72Y1njDAmtAkj5Evq/Lc+OmYs5AM=;
+        b=dbtxo8jYxmnhK0cJ65Y8+foglB6cwCmsKherpjn1xPp8+/JWM9BFpOiWXeSyZOFoU0
+         J4bwpcuiU+8d4NsRnZW41RUq7aqgYuXnkU9bTLmXdRQ7yWH8f2q6i7Sx539ttehCFGO3
+         Tkcg4OU8m9l2ueIbxPc2hlBYhTKGgLwpcPF4C7G2bwJpE7/IN+ZUAOFlGFyOf93Rudvk
+         F9CBtfdUlUVE9nHH65dK6TbhZJCmT9iixJdGET1hRy2BjdVsgzs5Ijy+HpSSt6o689ae
+         aoZPwpdLkBW3BTc61UdxCGvzv5/FGrkNIPrwnm+DAfygXqXwXCR2txKtwizfIaqxo+Kv
+         rdQg==
+X-Forwarded-Encrypted: i=1; AJvYcCX7CNwIVw0KICsfsJEWfyu5FWyqbilvIelLXK9ufyzN+wc3wGiUtGSxB4EBFkSRyVTXkbdU4h7iE/jxv0qf@vger.kernel.org
+X-Gm-Message-State: AOJu0YxIB0ACeCo2a/p1bv24dXXraW2jHkc13jwubHLmqIutBEi+cONH
+	qjxCrA7HjZvxI7pWI/+m1jBbfvEy7+k2m0MjfbBSJXuI2pzuSMfBgJlqn7rY/7Y=
+X-Google-Smtp-Source: AGHT+IGQKF2A68DlLQDzcD2GEIWf/ojqOq08unamj88s0l+BssIWLJsicrTzijNPepLnl71COH8BEA==
+X-Received: by 2002:a17:907:e644:b0:a77:b4e3:4fca with SMTP id a640c23a62f3a-a902941e770mr1917846666b.9.1726647499217;
+        Wed, 18 Sep 2024 01:18:19 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef80:af58:2647:ac01:c408])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90612b4321sm546104566b.113.2024.09.18.01.18.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Sep 2024 01:18:18 -0700 (PDT)
+Date: Wed, 18 Sep 2024 10:18:13 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Rudraksha Gupta <guptarud@gmail.com>,
+	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v2 2/2] firmware: qcom: scm: fall back to kcalloc() for
+ no SCM device bound
+Message-ID: <ZuqMxetUzZ8UCZUx@linaro.org>
+References: <20240911-tzmem-null-ptr-v2-0-7c61b1a1b463@linaro.org>
+ <20240911-tzmem-null-ptr-v2-2-7c61b1a1b463@linaro.org>
+ <ZuhgV1vicIFzPGI-@linaro.org>
+ <CAMRc=MevCNHSs2jMbMXjoFYY7V8NqKha8jd3aDCgGNvuL3LwEw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v4 00/11] Preemption support for A7XX
-To: Antonino Maniscalco <antomani103@gmail.com>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Jonathan Corbet <corbet@lwn.net>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, Akhil P Oommen <quic_akhilpo@quicinc.com>,
- Sharat Masetty <smasetty@codeaurora.org>
-References: <20240917-preemption-a750-t-v4-0-95d48012e0ac@gmail.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240917-preemption-a750-t-v4-0-95d48012e0ac@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MevCNHSs2jMbMXjoFYY7V8NqKha8jd3aDCgGNvuL3LwEw@mail.gmail.com>
 
-Hi,
+On Tue, Sep 17, 2024 at 12:17:19PM +0200, Bartosz Golaszewski wrote:
+> On Mon, Sep 16, 2024 at 6:44 PM Stephan Gerhold
+> <stephan.gerhold@linaro.org> wrote:
+> > On Wed, Sep 11, 2024 at 11:07:04AM +0200, Bartosz Golaszewski wrote:
+> > > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > >
+> > > Older platforms don't have an actual SCM device tied into the driver
+> > > model and so there's no struct device which to use with the TZ Mem API.
+> > > We need to fall-back to kcalloc() when allocating the buffer for
+> > > additional SMC arguments on such platforms which don't even probe the SCM
+> > > driver and never create the TZMem pool.
+> > >
+> > > Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
+> > > Reported-by: Rudraksha Gupta <guptarud@gmail.com>
+> > > Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
+> > > Tested-by: Rudraksha Gupta <guptarud@gmail.com>
+> > > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > > ---
+> > >  drivers/firmware/qcom/qcom_scm-smc.c | 28 ++++++++++++++++++++++++----
+> > >  1 file changed, 24 insertions(+), 4 deletions(-)
+> > >
+> > > diff --git a/drivers/firmware/qcom/qcom_scm-smc.c b/drivers/firmware/qcom/qcom_scm-smc.c
+> > > index 2b4c2826f572..88652c38c9a0 100644
+> > > --- a/drivers/firmware/qcom/qcom_scm-smc.c
+> > > +++ b/drivers/firmware/qcom/qcom_scm-smc.c
+> > > [...]
+> > > @@ -173,9 +182,20 @@ int __scm_smc_call(struct device *dev, const struct qcom_scm_desc *desc,
+> > >               smc.args[i + SCM_SMC_FIRST_REG_IDX] = desc->args[i];
+> > >
+> > >       if (unlikely(arglen > SCM_SMC_N_REG_ARGS)) {
+> > > -             args_virt = qcom_tzmem_alloc(mempool,
+> > > -                                          SCM_SMC_N_EXT_ARGS * sizeof(u64),
+> > > -                                          flag);
+> > > +             /*
+> > > +              * Older platforms don't have an entry for SCM in device-tree
+> > > +              * and so no device is bound to the SCM driver. This means there
+> > > +              * is no struct device for the TZ Mem API. Fall back to
+> > > +              * kcalloc() on such platforms.
+> > > +              */
+> > > +             if (mempool)
+> > > +                     args_virt = qcom_tzmem_alloc(
+> > > +                                     mempool,
+> > > +                                     SCM_SMC_N_EXT_ARGS * sizeof(u64),
+> > > +                                     flag);
+> > > +             else
+> > > +                     args_virt = kcalloc(SCM_SMC_N_EXT_ARGS, sizeof(u64),
+> > > +                                         flag);
+> >
+> > I'm afraid this won't work. For kcalloc, we would need to flush the
+> > cache since it returns cached memory. In v6.10 this was done using the
+> > dma_map_single() call that you removed when moving to the tzmem
+> > allocator.
+> >
+> 
+> Indeed, I missed this but it's not very hard to re-add here.
+> 
+> > Actually, taking only the first patch in this series should be enough to
+> > fix the crash Rudraksha reported. None of the older platforms should
+> > ever reach into this if statement. I think the rough story is:
+> >
+> >  1. The crash Rudraksha reported happens in qcom_scm_set_cold_boot_addr()
+> >     during SMP CPU core boot-up. That code runs very early, AFAIK even
+> >     before the device model is initialized. There is no way to get
+> >     a device pointer at that point. Even if you add the scm node to DT.
+> >
+> >  2. AFAIK all the ARM32 platforms without PSCI support implement the
+> >     legacy calling convention (see qcom_scm-legacy.c). They will only
+> >     reach qcom_scm-smc.c once during convention detection (see
+> >     __get_convention()). This is a SCM call with just a single argument
+> >     that won't go inside the if (unlikely(arglen > SCM_SMC_N_REG_ARGS)).
+> >     And qcom_scm-legacy.c does not use the tzmem allocator (yet?).
+> >
+> 
+> No and I didn't plan to add it. Let me know if I should?
+> 
 
-On 17/09/2024 13:14, Antonino Maniscalco wrote:
-> This series implements preemption for A7XX targets, which allows the GPU to
-> switch to an higher priority ring when work is pushed to it, reducing latency
-> for high priority submissions.
-> 
-> This series enables L1 preemption with skip_save_restore which requires
-> the following userspace patches to function:
-> 
-> https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/30544
-> 
-> A flag is added to `msm_submitqueue_create` to only allow submissions
-> from compatible userspace to be preempted, therefore maintaining
-> compatibility.
-> 
-> Preemption is currently only enabled by default on A750, it can be
-> enabled on other targets through the `enable_preemption` module
-> parameter. This is because more testing is required on other targets.
-> 
-> For testing on other HW it is sufficient to set that parameter to a
-> value of 1, then using the branch of mesa linked above, `TU_DEBUG=hiprio`
-> allows to run any application as high priority therefore preempting
-> submissions from other applications.
-> 
-> The `msm_gpu_preemption_trigger` and `msm_gpu_preemption_irq` traces
-> added in this series can be used to observe preemption's behavior as
-> well as measuring preemption latency.
-> 
-> Some commits from this series are based on a previous series to enable
-> preemption on A6XX targets:
-> 
-> https://lkml.kernel.org/1520489185-21828-1-git-send-email-smasetty@codeaurora.org
-> 
-> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> ---
-> Changes in v4:
-> - Added missing register in pwrup list
-> - Removed and rearrange barriers
-> - Renamed `skip_inline_wptr` to `restore_wptr`
-> - Track ctx seqno per ring
-> - Removed secure preempt context
-> - NOP out postamble to disable it instantly
-> - Only emit pwrup reglist once
-> - Document bv_rptr_addr
-> - Removed unused A6XX_PREEMPT_USER_RECORD_SIZE
-> - Set name on preempt record buffer
-> - Link to v3: https://lore.kernel.org/r/20240905-preemption-a750-t-v3-0-fd947699f7bc@gmail.com
-> 
-> Changes in v3:
-> - Added documentation about preemption
-> - Use quirks to determine which target supports preemption
-> - Add a module parameter to force disabling or enabling preemption
-> - Clear postamble when profiling
-> - Define A6XX_CP_CONTEXT_SWITCH_CNTL_LEVEL fields in a6xx.xml
-> - Make preemption records MAP_PRIV
-> - Removed user ctx record (NON_PRIV) and patch 2/9 as it's not needed
->    anymore
-> - Link to v2: https://lore.kernel.org/r/20240830-preemption-a750-t-v2-0-86aeead2cd80@gmail.com
-> 
-> Changes in v2:
-> - Added preept_record_size for X185 in PATCH 3/7
-> - Added patches to reset perf counters
-> - Dropped unused defines
-> - Dropped unused variable (fixes warning)
-> - Only enable preemption on a750
-> - Reject MSM_SUBMITQUEUE_ALLOW_PREEMPT for unsupported targets
-> - Added Akhil's Reviewed-By tags to patches 1/9,2/9,3/9
-> - Added Neil's Tested-By tags
-> - Added explanation for UAPI changes in commit message
-> - Link to v1: https://lore.kernel.org/r/20240815-preemption-a750-t-v1-0-7bda26c34037@gmail.com
-> 
-> ---
-> Antonino Maniscalco (11):
->        drm/msm: Fix bv_fence being used as bv_rptr
->        drm/msm/A6XX: Track current_ctx_seqno per ring
->        drm/msm: Add a `preempt_record_size` field
->        drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
->        drm/msm/A6xx: Implement preemption for A7XX targets
->        drm/msm/A6xx: Sync relevant adreno_pm4.xml changes
->        drm/msm/A6xx: Use posamble to reset counters on preemption
->        drm/msm/A6xx: Add traces for preemption
->        drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
->        drm/msm/A6xx: Enable preemption for A750
->        Documentation: document adreno preemption
-> 
->   Documentation/gpu/msm-preemption.rst               |  98 +++++
->   drivers/gpu/drm/msm/Makefile                       |   1 +
->   drivers/gpu/drm/msm/adreno/a2xx_gpu.c              |   2 +-
->   drivers/gpu/drm/msm/adreno/a3xx_gpu.c              |   2 +-
->   drivers/gpu/drm/msm/adreno/a4xx_gpu.c              |   2 +-
->   drivers/gpu/drm/msm/adreno/a5xx_gpu.c              |   6 +-
->   drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   7 +-
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c              | 325 ++++++++++++++-
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.h              | 174 ++++++++
->   drivers/gpu/drm/msm/adreno/a6xx_preempt.c          | 440 +++++++++++++++++++++
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h            |   9 +-
->   drivers/gpu/drm/msm/msm_drv.c                      |   4 +
->   drivers/gpu/drm/msm/msm_gpu.c                      |   2 +-
->   drivers/gpu/drm/msm/msm_gpu.h                      |  11 -
->   drivers/gpu/drm/msm/msm_gpu_trace.h                |  28 ++
->   drivers/gpu/drm/msm/msm_ringbuffer.h               |  18 +
->   drivers/gpu/drm/msm/msm_submitqueue.c              |   3 +
->   drivers/gpu/drm/msm/registers/adreno/a6xx.xml      |   7 +-
->   .../gpu/drm/msm/registers/adreno/adreno_pm4.xml    |  39 +-
->   include/uapi/drm/msm_drm.h                         |   5 +-
->   20 files changed, 1117 insertions(+), 66 deletions(-)
-> ---
-> base-commit: 7c626ce4bae1ac14f60076d00eafe71af30450ba
-> change-id: 20240815-preemption-a750-t-fcee9a844b39
-> 
-> Best regards,
-
-I've been running vulkan-cts (1.3.7.3-0-gd71a36db16d98313c431829432a136dbda692a08 from Yocto)
-on SM8650-QRD, SM8550-QRD & SM8450-HDK boards with enable_preemption in default value
-and forced to 1, and I've seen no regression so far
-
-On SM8550, I've seen a few:
-platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* Message HFI_H2F_MSG_GX_BW_PERF_VOTE id 2743 timed out waiting for response
-platform 3d6a000.gmu: [drm:a6xx_hfi_send_msg.constprop.0 [msm]] *ERROR* Unexpected message id 2743 on the response queue
-but it's unrelated to preempt
-
-and on SM8450:
-platform 3d6a000.gmu: [drm:a6xx_gmu_set_oob [msm]] *ERROR* Timeout waiting for GMU OOB set GPU_SET: 0x0
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 7.3.0.1: hangcheck detected gpu lockup rb 0!
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 7.3.0.1:     completed fence: 331235
-msm_dpu ae01000.display-controller: [drm:hangcheck_handler [msm]] *ERROR* 7.3.0.1:     submitted fence: 331236
-adreno 3d00000.gpu: [drm:a6xx_irq [msm]] *ERROR* gpu fault ring 0 fence 50de4 status 00800005 rb 0000/0699 ib1 0000000000000000/0000 ib2 0000000000000000/0000
-msm_dpu ae01000.display-controller: [drm:recover_worker [msm]] *ERROR* 7.3.0.1: hangcheck recover!
-msm_dpu ae01000.display-controller: [drm:recover_worker [msm]] *ERROR* 7.3.0.1: offending task: deqp-vk (/usr/lib/vulkan-cts/deqp-vk)
-msm_dpu ae01000.display-controller: [drm:recover_worker [msm]] *ERROR* 7.3.0.1: hangcheck recover!
-leading to a VK_ERROR_DEVICE_LOST, but again unrelated to preempt support.
-
-So you can also add:
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
+I'm not sure if there is any advantage aside from slightly more
+consistent code. None of these old platforms will have support for the
+SHM bridge. We would need to test the changes carefully to make sure
+there are no regressions. It's probably easier (and safer) to just leave
+that code as-is.
 
 Thanks,
-Neil
+Stephan
 
