@@ -1,63 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-31990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31991-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CC2497C451
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 08:31:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EFB397C495
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 09:00:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A18E9B2183C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 06:30:57 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 420BB1C22AB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 07:00:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3351E17C20F;
-	Thu, 19 Sep 2024 06:30:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DABF21917FC;
+	Thu, 19 Sep 2024 07:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JB0n8yFk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p01w6N9S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC2A2D611;
-	Thu, 19 Sep 2024 06:30:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920C91917E1;
+	Thu, 19 Sep 2024 07:00:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726727454; cv=none; b=agQBobTPce1AC7tBvp204t4+5TV1HV4JTzIfM0lFoIw+7//bL+Ub9+yafzzEK25I7vxKB7xNyCvHUP3Jha452D18gpZ/8uotR1GOses/T0yxTjTFry9w/F+piz1uKy9YP2r6GFrzPZH1zkOCyr2nz/fM4yUNHrBiWSyLHbQNqmg=
+	t=1726729228; cv=none; b=NoMxZu53A74fnrPsETkrur50TWfZzKt0Yb+u921tINLobVMWK6I1y+wBbQyhHIdF6EqsGQZ9thXsOyyDkktuiVweio+o7xGs77/ch7A7AGQKFdpwmkuOlEFvv7tlAUIniNUMom80o7xX9/5VdctMGvcmO8pmWhbekqhGsHiUFT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726727454; c=relaxed/simple;
-	bh=9E1Dj8+Rtvk4CsMbA5zBO+6mpKq1iMvge6SlBi4g6Fg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=XQNa1RNCAJvPwN4MHP12PkJWtT3WoIYtT6OYCOI0/U9oVaWDfDVnvnRVSF1s6/5Hsxerj/qIPu8RLrMXUw/gwAW8j7/Gx94dP3G2Z06Qz2UTuiDKIh/v6TfAetykHp9xn1DMSSYTAA3Vi14k4gVSGhj6GoAgtOeJh5XdNMqhe00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JB0n8yFk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48IJI7tY012612;
-	Thu, 19 Sep 2024 06:30:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2CMh2NDjOinI+rhXcFElY+FQUwnwc3oYqXqP3e8yjhE=; b=JB0n8yFkCU6TMunz
-	A/7o6G2jKTvQXt9zCVmhb1Szuhk2sA9kDLGqwg7O7+f/n9YBuqyWYojZXA1WHFEu
-	w2DebHoSeyX94WZRAYHjBwjPi6d61NgwP3AFCSI+u/Mv5+KjWPjEc+DEwZnzDmhg
-	MZ5R5ISm/2nFhvwu3BElmTEnlp7L8DOJ9JjjVCX9Gf+mNhENgi52sRPG7vxQQCl6
-	GtgQv3aL2Ctgmj8cMe2uanvUC2swOJMe+0fqWhm5oKirFsGx9OuZu65xceF41UMY
-	OKyDw5N9fXx3HppudXT9ka+b8zB7QM1qVKqGtubirZdAOyxzeyVa/YoaLXMwWu+e
-	7ukJQA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4gd4ade-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Sep 2024 06:30:39 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48J6UdlK027082
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Sep 2024 06:30:39 GMT
-Received: from [10.204.65.49] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 18 Sep
- 2024 23:30:35 -0700
-Message-ID: <27ed94a1-eb60-43b1-b181-2b8270015a37@quicinc.com>
-Date: Thu, 19 Sep 2024 12:00:33 +0530
+	s=arc-20240116; t=1726729228; c=relaxed/simple;
+	bh=t9RtZpRZoGBiHu7vK8NzRJulyoUBoTT7NAXEVYpBF0E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O7bdJBucc+vXpT2XwkPZvJlftazfJ3dpKWha3CrdEzN7U/H433CtRoZgbAJdF4OskpoHj8uJacVn1DUZTfHOMnerBO4S5WkX1WXXlYIlMfwoi6SF6O1YlBoTlRIrAllDg3zdd2lySmbX5qgxFpq694u6uA1nojBGWHGmyAOw1Go=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p01w6N9S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B04BC4CEC4;
+	Thu, 19 Sep 2024 07:00:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726729228;
+	bh=t9RtZpRZoGBiHu7vK8NzRJulyoUBoTT7NAXEVYpBF0E=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=p01w6N9SmtQ8dez7aT8RhvBSczsPephbuWni4AnI7frtx5xWTa+i9Err35w827rj+
+	 OK9ZQVjmtA+Me4r88/dv/frvOXEasTpU+2ZlQRC1heeChyVR7zM+LfsU8NLOMEjY5i
+	 vCIqpBeHs2Fb59qtxk9DLkgE+a/VW8UYmXYPAefO9fNg1unuJL4t66fsJ1zEsrVR9T
+	 MZ2VUmf4gLEXzE030u8TH8QQMpQMBGyjKA5cxKD6HJzDBLUtuUQla63ZiitjLVOnVL
+	 bWg6mVy5Rtrqb3vtkO5ptBLQo2uq0E5LGvTeBVVIkGzrWUzq1knXC3wkJsTmofMmyG
+	 GBvpQhSHbNdXg==
+Message-ID: <6886f561-b9e4-468b-9515-72053d57911f@kernel.org>
+Date: Thu, 19 Sep 2024 09:00:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,139 +50,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] misc: fastrpc: Skip reference for DMA handles
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <gregkh@linuxfoundation.org>, <quic_bkumar@quicinc.com>,
-        <linux-kernel@vger.kernel.org>, <quic_chennak@quicinc.com>,
-        <dri-devel@lists.freedesktop.org>, <arnd@arndb.de>,
-        stable
-	<stable@kernel.org>
-References: <20240822105933.2644945-1-quic_ekangupt@quicinc.com>
- <20240822105933.2644945-4-quic_ekangupt@quicinc.com>
- <7q7rar7ssvzlkol46e5e4yecgt6n4b4oqueam4ywlxjeasx2dl@oydthy337t6i>
+Subject: Re: [PATCH v4 08/27] mfd: max77693: remove unused declarations
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <quic_jesszhan@quicinc.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Simona Vetter <simona@ffwll.ch>,
+ cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konradybcio@kernel.org>,
+ Simona Vetter <simona.vetter@ffwll.ch>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org,
+ linux-samsung-soc@vger.kernel.org
+References: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
+ <20240913-starqltechn_integration_upstream-v4-8-2d2efd5c5877@gmail.com>
+ <wywp6vj2pqqe7to55k7ssh5sbqrmy7emvwruvm2waytancf3r4@aygtw3y6huwx>
+ <CABTCjFAvXYrRJS3Dwf-TMq3OW_vN1hskk+qPjosbRym7xOvy1Q@mail.gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Ekansh Gupta <quic_ekangupt@quicinc.com>
-In-Reply-To: <7q7rar7ssvzlkol46e5e4yecgt6n4b4oqueam4ywlxjeasx2dl@oydthy337t6i>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sFzpdocpkrE2omDSeZ2UUeT0-RqyU-dm
-X-Proofpoint-GUID: sFzpdocpkrE2omDSeZ2UUeT0-RqyU-dm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- bulkscore=0 clxscore=1015 spamscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=999 impostorscore=0 mlxscore=0 priorityscore=1501 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409190040
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <CABTCjFAvXYrRJS3Dwf-TMq3OW_vN1hskk+qPjosbRym7xOvy1Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-
-
-On 8/30/2024 3:03 PM, Dmitry Baryshkov wrote:
-> On Thu, Aug 22, 2024 at 04:29:33PM GMT, Ekansh Gupta wrote:
->> If multiple dma handles are passed with same fd over a remote call
->> the kernel driver takes a reference and expects that put for the
->> map will be called as many times to free the map.
->> But DSP only
->> updates the fd one time in the fd list when the DSP refcount
->> goes to zero
-> I'm sorry, I couldn't understand this phrase. Could you plese clarify
-> what do you mean here?
-DMA handle are buffers passed to DSP which are only unmapped when DSP updated
-the buffer fd in fdlist.
-fdlist implementation: misc: fastrpc: Add fdlist implementation - kernel/git/next/linux-next.git - The linux-next integration testing tree <https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/misc/fastrpc.c?id=8f6c1d8c4f0cc316b0456788fff8373554d1d99d>
-
-A remote call payload carries both input/output buffers and dma handles. The lifetime
-of input/output buffer is a remote call which means that any buffer allocated or mapped
-for a remote call will be freed or unmapped when the remote call is completing. Whereas,
-dma handles can get freed over some other remote call whenever the DSP will update
-fdlist. So if a remote call passed multiple dma handles with same fd to DSP, on driver, ref
-count will be incremented, but DSP can update fdlist only 1 time for the same fd as DSP also
-has a ref counting happening for the dma handle and fdlist is updated when the DSP ref
-count goes to 0. In this case, the map will not get freed even though it is no longer in use.
->
->> and hence kernel make put call only once for the
->> fd. This can cause SMMU fault issue as the same fd can be used
->> in future for some other call.
+On 18/09/2024 14:53, Dzmitry Sankouski wrote:
+> пн, 16 сент. 2024 г. в 12:10, Krzysztof Kozlowski <krzk@kernel.org>:
 >>
->> Fixes: 35a82b87135d ("misc: fastrpc: Add dma handle implementation")
->> Cc: stable <stable@kernel.org>
->> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->> ---
->>  drivers/misc/fastrpc.c | 13 ++++++++-----
->>  1 file changed, 8 insertions(+), 5 deletions(-)
+>> On Fri, Sep 13, 2024 at 06:07:51PM +0300, Dzmitry Sankouski wrote:
+>>> Remove `enum max77693_irq_source` declaration because unused.
+>>>
+>>> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+>>> ---
+>>>  include/linux/mfd/max77693-private.h | 11 -----------
+>>>  1 file changed, 11 deletions(-)
 >>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index ebe828770a8d..ad56e918e1f8 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -755,7 +755,7 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
->>  
->>  static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
->>  				u64 va, u64 len, u32 attr,
->> -				struct fastrpc_map **ppmap)
->> +				struct fastrpc_map **ppmap, bool take_ref)
->>  {
->>  	struct fastrpc_session_ctx *sess = fl->sctx;
->>  	struct fastrpc_map *map = NULL;
->> @@ -763,7 +763,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
->>  	struct scatterlist *sgl = NULL;
->>  	int err = 0, sgl_index = 0;
->>  
->> -	if (!fastrpc_map_lookup(fl, fd, va, len, ppmap, true))
->> +	if (!fastrpc_map_lookup(fl, fd, va, len, ppmap, take_ref))
->>  		return 0;
->>  
->>  	map = kzalloc(sizeof(*map), GFP_KERNEL);
->> @@ -917,14 +917,17 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
->>  	int i, err;
->>  
->>  	for (i = 0; i < ctx->nscalars; ++i) {
->> +		bool take_ref = true;
->>  
->>  		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1 ||
->>  		    ctx->args[i].length == 0)
->>  			continue;
->>  
->> +		if (i >= ctx->nbufs)
->> +			take_ref = false;
-> Please clarify too.
-nbufs -> total input/output buffers
-nscalars -> nbufs + dma handles
-So here, avoiding ref increment for dma handles.
->
->>  		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
->>  				(u64)ctx->args[i].ptr, ctx->args[i].length,
->> -				ctx->args[i].attr, &ctx->maps[i]);
->> +				ctx->args[i].attr, &ctx->maps[i], take_ref);
->>  		if (err) {
->>  			dev_err(dev, "Error Creating map %d\n", err);
->>  			return -EINVAL;
->> @@ -1417,7 +1420,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->>  
->>  	if (init.filelen && init.filefd) {
->>  		err = fastrpc_map_create(fl, init.filefd, init.file,
->> -				init.filelen, 0, &map);
->> +				init.filelen, 0, &map, true);
->>  		if (err)
->>  			goto err;
->>  	}
->> @@ -2040,7 +2043,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
->>  
->>  	/* create SMMU mapping */
->>  	err = fastrpc_map_create(fl, req.fd, req.vaddrin, req.length,
->> -			0, &map);
->> +			0, &map, true);
->>  	if (err) {
->>  		dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
->>  		return err;
->> -- 
->> 2.34.1
->>
+>> Please split your patchset per subsystems. There is no dependency on MFD
+>> bits from your DTS... (if there is, this needs to be fixed anyway)
+> 
+> Indeed, my dts has no dependency on this patch.
+> However, my dts has dependency on MAX77705, so AFAIU,
+> I should send this patch separately, while leaving other drivers in same
+> patchset, right?
+
+How DTS could have dependency on MAX77705? It's a clear no go - broken
+patch. And something very weird, almost never happening for new hardware.
+
+Best regards,
+Krzysztof
 
 
