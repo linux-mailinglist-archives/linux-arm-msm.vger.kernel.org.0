@@ -1,138 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-32030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0638B97CD80
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 20:18:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E3E4A97CD89
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 20:27:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 399591C2220E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 18:18:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22BEC1C2220E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 18:27:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE552225DA;
-	Thu, 19 Sep 2024 18:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88DD01EF1D;
+	Thu, 19 Sep 2024 18:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eymn/A0k"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FTkt+prq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906EB2135B;
-	Thu, 19 Sep 2024 18:18:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB4522612;
+	Thu, 19 Sep 2024 18:27:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726769917; cv=none; b=V2+2RJOFgkc+mqtWxwDIN6Sz9k8apzy4aev4r75ovzEDHAhrVmAhJS6K68oy5wNW45hCSdRR8LaxikmetStCMFQOKX5k8pHg3ZW3ifZckFVFJuc9j+nLFaDKGF0waeeYssYlRuyPvmhgToPxc4ACOoeY/cNhw3k2UGArDmWobFc=
+	t=1726770424; cv=none; b=rc8uBOb8wkanFW24UaT4oxPWWddQ8/+aeuyh2EQtZdzArQzFKutBLXEwaWj10IVaDV7hJbOxDrTicvMvLOiCJYviht569SZL/6PMXqAl3qgWPkxhISLk/qqxIQwzEMrgcJyQq2w94ePpXK8OGAWC+7jL9JtbB6xqbNeJ8MyZKNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726769917; c=relaxed/simple;
-	bh=2HYTLAuWIIiS7gziRBIjfRq23M96swliUqb3niDxuL0=;
-	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=km8Pm3GQD1TY7xYi0EosSQQwCElS8A2FnWiGKHgjbO1tHQYlLig6+DopoAkGkWJBypjsrbG9zgEIcDcSAfwmvGuJemxmbOFulhtUJCxTq2EnQYTQR+e12DMGY72MfOI5FcbWqkjfdhZ3LgxMnWHeO32XKFCL2rE3+NXFc1H+WAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eymn/A0k; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4E6C4CEC4;
-	Thu, 19 Sep 2024 18:18:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726769917;
-	bh=2HYTLAuWIIiS7gziRBIjfRq23M96swliUqb3niDxuL0=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=Eymn/A0k+Z8AqYMCAgFcZY5cLiBMg66nYmdi8QIU/opMipziA/Sjb3/xEJyNIy54w
-	 5uXPMLksV2H3c/5LRx+CoUVCAVFfCX29CzUtGLP7KttwHLJXZZ/KEbJD97W0swwx70
-	 wLmzXWvf5CRHDg44LAp0tpc5+Hq3es66Eoji6bSTbbUgzRxJ16+t3pFhQF2CHsxuL1
-	 5Sso2gcNh4hsrYQ1S36p5tX93VpXJaHKpemsIUqI3kT16G7ZbYBsAuzyafIQaH7TgR
-	 T7IYmWUdjNj+MALm9bU+G47I93/wtNuqMZT8FMLWtrG0aOEqr++36zca2Aobz8tAN1
-	 GXaXWWC2DKrSg==
-Date: Thu, 19 Sep 2024 13:18:35 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1726770424; c=relaxed/simple;
+	bh=+tSIlAbahTuJSj8tulWAQD7IPGFDu55eDHbUAbttPjc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Jv7rxY7nRQTn+VbX+zYgHeTXtO11XOBKnMsr7CKLOpEKYWcWVA789SV41ht35tckw9lAsZAEL457FZXsA3OArKmMj6NVz1xgW4IWX8xuIfeP8pio1g0xghqxBiaLqf4Vk6gcRWFHqTmJ6z43mafWwr1MyD3Qn6sdCK5InFxAHbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FTkt+prq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48J97QQS005813;
+	Thu, 19 Sep 2024 18:25:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Y1NwkcCP+9Au12YWcI9sbzGfangJc6C+wSvJTbSss0o=; b=FTkt+prqfRaovEMR
+	jxv/tgDLKS+HdoEOVIal6pSpkujgKfO3OM6Z2o6aIGZB40ZUDtWfT0pZWaQM3lYO
+	gDRUTH/0tBpnfu8hsZCFdrcEgNjLiS5t0em8zuTCmK7Vw5Z5Jb1AA168CQ8fPA0V
+	DbBPrVSRGPDvQ+3TTnIugoEFFijrF5dsxD9i5nJJgwcSEIMifJTFoveyjYT/mhYx
+	QRjkYnv8cqmDvItSZxEgn4DbyjuDr8gdudalnz7Vit9YDmDXNR3M5QaIVBRkU4RA
+	j4Xu4yZyRfrggdEKlxP1Luv8sPN2LUDvBADMUhIVxfBrXuy9SAZzTqqYceKQ2pXV
+	5cHrgQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4jdxd9f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Sep 2024 18:25:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48JIPW9T020939
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Sep 2024 18:25:32 GMT
+Received: from [10.110.111.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Sep
+ 2024 11:25:32 -0700
+Message-ID: <233ac3dc-41c4-46a0-b821-e6e835baa0e9@quicinc.com>
+Date: Thu, 19 Sep 2024 11:25:19 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org
-In-Reply-To: <20240919170018.13672-1-alex.vinarskis@gmail.com>
-References: <20240919170018.13672-1-alex.vinarskis@gmail.com>
-Message-Id: <172676985197.765618.17726985689014014506.robh@kernel.org>
-Subject: Re: [PATCH v1 0/3] X1E Dell XPS 9345 support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] drm/msm/dpu: on SDM845 move DSPP_3 to LM_5 block
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark
+	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Sravanthi
+ Kollukuduru <skolluku@codeaurora.org>,
+        Rajesh Yadav <ryadav@codeaurora.org>,
+        Archit Taneja <architt@codeaurora.org>,
+        Jami Kettunen
+	<jami.kettunen@somainline.org>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@somainline.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jeykumar
+ Sankaran <jsanka@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>
+References: <20240905-dpu-fix-sdm845-catalog-v1-0-3363d03998bd@linaro.org>
+ <20240905-dpu-fix-sdm845-catalog-v1-1-3363d03998bd@linaro.org>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240905-dpu-fix-sdm845-catalog-v1-1-3363d03998bd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wz0_x3Kgugbzns0JkCBcCGhSsbJWBk4r
+X-Proofpoint-GUID: wz0_x3Kgugbzns0JkCBcCGhSsbJWBk4r
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
+ clxscore=1011 adultscore=0 mlxscore=0 suspectscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409190123
 
 
-On Thu, 19 Sep 2024 18:59:31 +0200, Aleksandrs Vinarskis wrote:
-> Introduce support for the mentioned laptop.
+
+On 9/4/2024 8:26 PM, Dmitry Baryshkov wrote:
+> On the SDM845 platform the DSPP_3 is used by the LM_5. Correct
+> corresponding entries in the sdm845_lm array.
 > 
-> Very similar to other X1E laptops, device tree was derived by analyzing dtsi of
-> existing models and ACPI tables of this laptop [1]. Most notable difference were
-> * TZ protected SPI19.
-> * Keyboard only working after suspend/resume sequence, will do a follow up patch
-> to i2c-hid.
-> * Lots of small deviations in LDOs voltages.
-> 
-> Successfully tested with Debian 12 and Gnome, although this required additional
-> patches, namely harcode GPU chipid, apply [2] and _revert_ [3] - same as in Abel
-> Vesa's branches. Without last two the boot process is terminated by TZ. Firmware
-> for GPU/aDSP/cDSP was extracted from Windows, WiFi firmware from upstream
-> linux-firmware.
-> 
-> Quite a few things alraedy work, details in patches, quite a few still in WIP or
-> TODOs. Since fixing these may take me a while due to lack of documentation,
-> sending current progress as its very much usable.
-> 
-> [1] https://github.com/aarch64-laptops/build/blob/master/misc/dell-xps-9345/acpi/DSDT.dsl
-> [2] https://lore.kernel.org/all/20240830-x1e80100-bypass-pdc-v1-1-d4c00be0c3e3@linaro.org/
-> [3] https://lore.kernel.org/all/20240708-x1e80100-pd-mapper-v1-1-854386af4cf5@linaro.org/
-> 
-> Aleksandrs Vinarskis (3):
->   dt-bindings: arm: qcom: Add Dell XPS 13 9345
->   firmware: qcom: scm: Allow QSEECOM on Dell XPS 13 9345
->   arm64: dts: qcom: Add support for X1-based Dell XPS 13 9345
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/x1e80100-dell-tributo-13.dts     | 860 ++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.c              |   1 +
->  4 files changed, 863 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-tributo-13.dts
-> 
-> --
-> 2.43.0
-> 
-> 
+> Fixes: c72375172194 ("drm/msm/dpu/catalog: define DSPP blocks found on sdm845")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
+Matches the docs I have, hence
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-New warnings running 'make CHECK_DTBS=y qcom/x1e80100-dell-tributo-13.dtb' for 20240919170018.13672-1-alex.vinarskis@gmail.com:
-
-arch/arm64/boot/dts/qcom/x1e80100-dell-tributo-13.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-dell-tributo-13.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-dell-tributo-13.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
-
-
-
-
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
