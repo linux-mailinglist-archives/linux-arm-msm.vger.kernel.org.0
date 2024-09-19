@@ -1,137 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-31998-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-31999-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9FE497C60A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 10:40:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4889A97C624
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 10:46:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 08B5F1C21070
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 08:40:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDA221F24930
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 08:46:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FE0D1990C3;
-	Thu, 19 Sep 2024 08:40:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 815C41991CD;
+	Thu, 19 Sep 2024 08:46:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IxqfnCPu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KQjXKmPp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB600198A30;
-	Thu, 19 Sep 2024 08:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FE0175D56
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2024 08:46:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726735246; cv=none; b=TAHo8GZgpn1K1cERAhS37dnPVZka11ovKWPldfiPyoIMQ+/uObhxHzz/uO7EEkW5UPxLAgCdj7UgpHq/XDlSa2asLAU3c4rYllOYWx3lANHh8i/pY+N5uuWehTUBZuAigg2jT9Uz1zVHouT+0OsxSI8VphmSM9rMRiUb/F1lqGg=
+	t=1726735587; cv=none; b=CsrQMyl+Nnnd/nhdAV9Z7nuqC556g8dnYluFoLmp/Xl0tci1QNQNn6YfsDykxJpyoCk53hR3lPqH1N/Zo5Cda81KpPJgv5/cckGeoOiDLBg90wf3I36yp6AH+DaYcByxrZIKoiI5oLFiBvBfIUo47Uq64mO97Ne5U12e1jv3O9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726735246; c=relaxed/simple;
-	bh=D0CUj5d6cc8AqQcicr95QuM3BKdQKimPOjS1AgGc/c8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IkcprS9+ZmMhn2MFFjqOAxn2MRuj5Lxj1xEgKtDoOCtnPw3lD74iJa5ILn+fsctWayUL3DF14hYpMH9fBhd6V78Haai2cKNDfStxaMiBxlD8dZ3pW0o3VbidrDGIOLiJXNdmSZt3y0qJPbtf75bnEAENhLLCgAL7pEieK4cPCkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IxqfnCPu; arc=none smtp.client-ip=209.85.217.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-49bcd11fc37so182383137.3;
-        Thu, 19 Sep 2024 01:40:44 -0700 (PDT)
+	s=arc-20240116; t=1726735587; c=relaxed/simple;
+	bh=ZYXvN4PM/Yw57V9eOc+34CW7Je+3EYhkLIft2Mx1y8c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HiU+sPAIN5sNLl4Usz0aBob5KybhCoJF6qPG2thGzPSsKPH7Sfh66MI0+sN+pjcNCR7abtRBpZnYG/YRL4cE5l5ZPOV7JazYTzkZz4RpqEhmR3tdxu1hptRl8QDdLECs7OF4GzkeJZKY/7i9vMPpeaca2oUuJ8RIF/sJLHa2NFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KQjXKmPp; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5369f1c7cb8so726763e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2024 01:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726735243; x=1727340043; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xykemnfjHLjw1rPIo+7O6AS00C6CkkoCorxyDrzMaEQ=;
-        b=IxqfnCPuWq0aTqLERSIlOiIpwacHfWTvlWFPPxTksJjhS2vt2ntz05f1qmnClbD4fJ
-         PU2FGlTIpcvJTwYIzDBlNRHCYjxYLOpMsN/y9lbup76w1SoJvMuYl9LKzx5On+C0dTzJ
-         /c7rPL2JrdEx7vyVukXKaFL0+KdveXPN9ZihOvVBjx2F52BtdhwYUX5ntVNmOEXLLwFV
-         STH4K1tBf5nU9Tfwzcu8ShIf/iP1JG7cxZy6UqvNkVxzlWTKWOHCse7UFgnEmaV4oZZK
-         e0jFcHCQaScxd78NckHpONcqgsPzX4fnsL3+5xffXPJS83fFO2d6u2o5HDA2CVuuKTmu
-         uD0g==
+        d=linaro.org; s=google; t=1726735581; x=1727340381; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hJ12HbzQHhuObShUByJk3xORRM2O/FohuyVTNSBpDh8=;
+        b=KQjXKmPpYL+EcSgunIu/SD9xcGIqcaaRt6Boja7sdsjAxv0pduy/h3/2iEJjVOlLzp
+         vJpyeRqRHaIo5s4p5KibDdIXDEABqosfeNZYa+Qieib/PCqU1qyWomsEyOW/m2HWwvNb
+         fJChej8bnlDhsM5QXjBlADDjjCDPKic/0j27yPWtZZzO13mFuS+uo0pIL4O8rTU5Ql1X
+         6BaXtZGhbLNLtMG/5LzKrflp/yWpIea4lpEBlI0SFK2J8cDoUKA71z5tWd7arVkAPCLy
+         xNOpI+eN3QI8Y5lwvwgTJcoSDw/rFnv1Dtzf3rl+iTCHet/qFlqdoYYeziuDFVQl5Y2B
+         I8bA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726735243; x=1727340043;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xykemnfjHLjw1rPIo+7O6AS00C6CkkoCorxyDrzMaEQ=;
-        b=qWsKzq9CSSGC/i/ctk+2yZjt3ZhibOnLsFPovwK69lswussNOSWq1aCXO6IbUVLVHk
-         LTd/FhXdlIWNFKF5TYA2z/C9z+Fj9VqdoP1c/aT/otP+Yd+skRlFI6/DOvPtd3gJWGor
-         k6zFlS8F13+cJCg0QdHOCsB0AG8tw1UVaRw8hGexdW6+ZNcyjBBjCrvX10vipA5mi/wA
-         yB97X6z8X+DgzHgDDBvCL9uNjodK2kCU7aOlwrApm/jkV0pwnHso+fKgrvF6qWaACkUz
-         g3aF2ligj4nuZ+rKOYJdDNI31lhIr8jHbtkfj7F930evnaMjH9bim2raUN+sMNOauZj0
-         UfDA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7xw/JWmy52kWpzYNA1mWo2+wSEg2URjMVF3m8hJmFyrk7FQxeQh5wihK4xIhlWOzwcJaKV9YPIvyP@vger.kernel.org, AJvYcCUTHapgoPAyvgGgmuICY22biBM8n4in6wqMhv0YGxGIKtZRSmcpkvju1Iy+5c9/6MNIA7/pcsAy5Zs=@vger.kernel.org, AJvYcCUfHUs9OJDNRYYqkMmrBYo2SiM3JJOW06a0D/qCSLe4SL4ozzRJzky32ViCRO5krG7CI1APQsjYcwp2@vger.kernel.org, AJvYcCVHO9M0HTO9Big+vs6zrYqotjrdAE0oR9DDZG03pQbdbKu+fNsyfK6ra2XBzNz0qTuSQAvstRIUK4E1PbZp@vger.kernel.org, AJvYcCVu3G20I1T09Gcn0QBMq8Um3GuTOxm4VFW0DKaAmxCwVwHFlJkHkeCkdwE/akm46+fIejSd9qnYeG8eJQ==@vger.kernel.org, AJvYcCW/kkuYeNQZ/JL6RbuyAkviemGHVHvN/gkOLHFLFfFMpXTgaq81a8AS4m+NcTYm+CoiSITtz+aNzxRqGcY30w==@vger.kernel.org, AJvYcCXHKrkNQONjmFIzA1sLUoCUYLvao//e62WGcnlneDghfeziAmIrWYn4QInPTIdYSZoRsoquM76Dkzsu@vger.kernel.org, AJvYcCXJpdpLoxg67umQGfE4iBdNMdSZr0SHnS2bhl6VAJ1NC2GNW4rSjkM5CwRVPFcdaYlBVRwJhyC5ERy84sI=@vger.kernel.org, AJvYcCXn0kgOg1WcFfP7P6b/OAv3lK6ULCmTOKsPo0ncIEqGsSO2mBmF71daRkLAUDKZdp3W3JqGlYd9rLHtTO2Sc1++TPY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzN3cEU7FsFpxo4NpzVagGxAY/UsgPmUVRqjndQ8zAeaUYELiO
-	0KsDjK8fF7cn4oLurGNaMbvL2bjDwzNZSqyqNexSyiyOCOzTKx29i8JXS9rSPdxzxdPDls9UeuZ
-	GHIqqlIEylGw4e6xs5gh7AbZipH4=
-X-Google-Smtp-Source: AGHT+IEPF6qaPSTwKWIjFiNSfRRNnkJYm1P330LaZ6f6Fgj87ECtB4FGVzstCMCjXzBEMRn+f/qNz2tsedSZyWrs7oI=
-X-Received: by 2002:a05:6102:38d1:b0:49b:f5ed:4bcb with SMTP id
- ada2fe7eead31-49d4157db8cmr17162683137.24.1726735243511; Thu, 19 Sep 2024
- 01:40:43 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1726735581; x=1727340381;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hJ12HbzQHhuObShUByJk3xORRM2O/FohuyVTNSBpDh8=;
+        b=c9yGhzelPfKPJjMuPXwp705ySspqQ8hqrN4m8YIg03ZdmG9R5pJApBlSrEsedebJLH
+         oQLAC2Kx+EuVUkmlGmWNsIU6Hr/g+FyLCGu1hdT8oeZPm8iPqQ7De3pxhkrWk9mn6Ash
+         IniIO+QdGunFjbwRpsxO7doSbGvPbyU9HDH63cuMispiNlySuxfs3BrQU4yH7kZ291N1
+         FtpB/XYxXN+iOfpMBGfu+bnFt/pwem7rJwIvmuBEkRCR4EtioYaZoJOE8QJJjsx4bX5w
+         Vigct86UzU4fa5xE7w6O5zzAvGhAndqbccOQzpubN6towyCGT7A8EzLehawOlI++JrEa
+         dlmw==
+X-Forwarded-Encrypted: i=1; AJvYcCWY3dx14cP7m41kJkuD6iUNBt7bKAUKBPu+ITWlR1l5oUKWvJK3Hckr/TnxUvkqwadHVtYvlYPNs2Wp4tV+@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyb5TwTC1ovnIDEYlhbk2t8Ila82FTzMsLlJzO9VboK03uo+4Mw
+	xfhvfQeGByqzNl4cb0Vl1waCPh8Pt7GqHwQxVj6z6JKXtXXKlq3gWyf+b19Jww3dgG6OoAY3+SL
+	m+x4=
+X-Google-Smtp-Source: AGHT+IEZElLzhpq+N2gsak+Pv41EuVKSdnqfaHqUixwI6vDwWQm809LovGIDQT7jKEi2wN/Tu8W/NA==
+X-Received: by 2002:a05:6512:3ca5:b0:535:6cde:5c4d with SMTP id 2adb3069b0e04-5367feb9b81mr13497263e87.3.1726735580856;
+        Thu, 19 Sep 2024 01:46:20 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-536870a86a4sm1771880e87.213.2024.09.19.01.46.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Sep 2024 01:46:19 -0700 (PDT)
+Date: Thu, 19 Sep 2024 11:46:16 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Cc: srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org, 
+	gregkh@linuxfoundation.org, quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org, 
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org, arnd@arndb.de, 
+	stable <stable@kernel.org>
+Subject: Re: [PATCH v1 3/3] misc: fastrpc: Skip reference for DMA handles
+Message-ID: <7ejauhf33nyt77ve26524rtvf46qohipztydjnbezlaz666cpg@3wfhpaxv3rd2>
+References: <20240822105933.2644945-1-quic_ekangupt@quicinc.com>
+ <20240822105933.2644945-4-quic_ekangupt@quicinc.com>
+ <7q7rar7ssvzlkol46e5e4yecgt6n4b4oqueam4ywlxjeasx2dl@oydthy337t6i>
+ <27ed94a1-eb60-43b1-b181-2b8270015a37@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
- <20240913-starqltechn_integration_upstream-v4-8-2d2efd5c5877@gmail.com>
- <wywp6vj2pqqe7to55k7ssh5sbqrmy7emvwruvm2waytancf3r4@aygtw3y6huwx>
- <CABTCjFAvXYrRJS3Dwf-TMq3OW_vN1hskk+qPjosbRym7xOvy1Q@mail.gmail.com> <6886f561-b9e4-468b-9515-72053d57911f@kernel.org>
-In-Reply-To: <6886f561-b9e4-468b-9515-72053d57911f@kernel.org>
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Thu, 19 Sep 2024 11:40:32 +0300
-Message-ID: <CABTCjFDKuEM2wogLcJXX+0eCOTCDUSycPi7JCjvdRCbXaP2EOg@mail.gmail.com>
-Subject: Re: [PATCH v4 08/27] mfd: max77693: remove unused declarations
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>, 
-	Chanwoo Choi <cw00.choi@samsung.com>, Simona Vetter <simona@ffwll.ch>, 
-	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konradybcio@kernel.org>, 
-	Simona Vetter <simona.vetter@ffwll.ch>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-input@vger.kernel.org, 
-	linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <27ed94a1-eb60-43b1-b181-2b8270015a37@quicinc.com>
 
-=D1=87=D1=82, 19 =D1=81=D0=B5=D0=BD=D1=82. 2024=E2=80=AF=D0=B3. =D0=B2 10:0=
-0, Krzysztof Kozlowski <krzk@kernel.org>:
->
-> On 18/09/2024 14:53, Dzmitry Sankouski wrote:
-> > =D0=BF=D0=BD, 16 =D1=81=D0=B5=D0=BD=D1=82. 2024=E2=80=AF=D0=B3. =D0=B2 =
-12:10, Krzysztof Kozlowski <krzk@kernel.org>:
-> >>
-> >> On Fri, Sep 13, 2024 at 06:07:51PM +0300, Dzmitry Sankouski wrote:
-> >>> Remove `enum max77693_irq_source` declaration because unused.
-> >>>
-> >>> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> >>> ---
-> >>>  include/linux/mfd/max77693-private.h | 11 -----------
-> >>>  1 file changed, 11 deletions(-)
-> >>
-> >> Please split your patchset per subsystems. There is no dependency on M=
-FD
-> >> bits from your DTS... (if there is, this needs to be fixed anyway)
+On Thu, Sep 19, 2024 at 12:00:33PM GMT, Ekansh Gupta wrote:
+> 
+> 
+> On 8/30/2024 3:03 PM, Dmitry Baryshkov wrote:
+> > On Thu, Aug 22, 2024 at 04:29:33PM GMT, Ekansh Gupta wrote:
+> >> If multiple dma handles are passed with same fd over a remote call
+> >> the kernel driver takes a reference and expects that put for the
+> >> map will be called as many times to free the map.
+> >> But DSP only
+> >> updates the fd one time in the fd list when the DSP refcount
+> >> goes to zero
+> > I'm sorry, I couldn't understand this phrase. Could you plese clarify
+> > what do you mean here?
+> DMA handle are buffers passed to DSP which are only unmapped when DSP updated
+> the buffer fd in fdlist.
+> fdlist implementation: misc: fastrpc: Add fdlist implementation - kernel/git/next/linux-next.git - The linux-next integration testing tree <https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/drivers/misc/fastrpc.c?id=8f6c1d8c4f0cc316b0456788fff8373554d1d99d>
+> 
+> A remote call payload carries both input/output buffers and dma handles. The lifetime
+> of input/output buffer is a remote call which means that any buffer allocated or mapped
+> for a remote call will be freed or unmapped when the remote call is completing. Whereas,
+> dma handles can get freed over some other remote call whenever the DSP will update
+> fdlist. So if a remote call passed multiple dma handles with same fd to DSP, on driver, ref
+> count will be incremented, but DSP can update fdlist only 1 time for the same fd as DSP also
+> has a ref counting happening for the dma handle and fdlist is updated when the DSP ref
+> count goes to 0. In this case, the map will not get freed even though it is no longer in use.
+
+
+OK, I started looking at the related code. Pleas fix possible map leak
+in fastrpc_put_args(), happening if the copy_to_user() fails.
+
+Second. Please merge fastrpc_map_lookup() + fastrpc_map_put() invocation
+into a single call, effectively dropping take_ref argument from
+fastrpc_map_lookup() (which can now become fastrpc_map_get()).
+
+Now back to your patch.
+
+Please clarify if my understanding is correct:
+
+The driver maps dma bufs and passes them to DSP. Then once DSP firmware
+finds out that a particular buffer is no longer needed, it returns
+its fd via the fdlist part of the invoke_buf. As these buffers are
+returned only once, when they are no longer necessary, the kernel should
+not take additional references on the long-living dma-bufs.
+
+If that's the case, see my comments below.
+
 > >
-> > Indeed, my dts has no dependency on this patch.
-> > However, my dts has dependency on MAX77705, so AFAIU,
-> > I should send this patch separately, while leaving other drivers in sam=
-e
-> > patchset, right?
->
-> How DTS could have dependency on MAX77705? It's a clear no go - broken
-> patch. And something very weird, almost never happening for new hardware.
->
-Oh right, dts only depends on driver bindings, not driver code, so I
-can send dts
-patches with bindings in separate series, and per subsystem series for new
-driver code.
+> >> and hence kernel make put call only once for the
+> >> fd. This can cause SMMU fault issue as the same fd can be used
+> >> in future for some other call.
+> >>
+> >> Fixes: 35a82b87135d ("misc: fastrpc: Add dma handle implementation")
+> >> Cc: stable <stable@kernel.org>
+> >> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> >> ---
+> >>  drivers/misc/fastrpc.c | 13 ++++++++-----
+> >>  1 file changed, 8 insertions(+), 5 deletions(-)
+> >>
+> >> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> >> index ebe828770a8d..ad56e918e1f8 100644
+> >> --- a/drivers/misc/fastrpc.c
+> >> +++ b/drivers/misc/fastrpc.c
+> >> @@ -755,7 +755,7 @@ static const struct dma_buf_ops fastrpc_dma_buf_ops = {
+> >>  
+> >>  static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+> >>  				u64 va, u64 len, u32 attr,
+> >> -				struct fastrpc_map **ppmap)
+> >> +				struct fastrpc_map **ppmap, bool take_ref)
+> >>  {
+> >>  	struct fastrpc_session_ctx *sess = fl->sctx;
+> >>  	struct fastrpc_map *map = NULL;
+> >> @@ -763,7 +763,7 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+> >>  	struct scatterlist *sgl = NULL;
+> >>  	int err = 0, sgl_index = 0;
+> >>  
+> >> -	if (!fastrpc_map_lookup(fl, fd, va, len, ppmap, true))
+> >> +	if (!fastrpc_map_lookup(fl, fd, va, len, ppmap, take_ref))
+> >>  		return 0;
+
+Do not add the take_ref argument to fastrpc_map_create(). Instead
+extract the rest of the code to the function fastrpc_map_attach() (or
+something like that).
+
+> >>  
+> >>  	map = kzalloc(sizeof(*map), GFP_KERNEL);
+> >> @@ -917,14 +917,17 @@ static int fastrpc_create_maps(struct fastrpc_invoke_ctx *ctx)
+> >>  	int i, err;
+> >>  
+> >>  	for (i = 0; i < ctx->nscalars; ++i) {
+> >> +		bool take_ref = true;
+> >>  
+> >>  		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1 ||
+> >>  		    ctx->args[i].length == 0)
+> >>  			continue;
+> >>  
+> >> +		if (i >= ctx->nbufs)
+> >> +			take_ref = false;
+> > Please clarify too.
+> nbufs -> total input/output buffers
+> nscalars -> nbufs + dma handles
+> So here, avoiding ref increment for dma handles.
+> >
+> >>  		err = fastrpc_map_create(ctx->fl, ctx->args[i].fd,
+> >>  				(u64)ctx->args[i].ptr, ctx->args[i].length,
+> >> -				ctx->args[i].attr, &ctx->maps[i]);
+> >> +				ctx->args[i].attr, &ctx->maps[i], take_ref);
+
+Call conditionally either fastrpc_map_create() or fastrpc_map_attach().
+
+> >>  		if (err) {
+> >>  			dev_err(dev, "Error Creating map %d\n", err);
+> >>  			return -EINVAL;
+> >> @@ -1417,7 +1420,7 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
+> >>  
+> >>  	if (init.filelen && init.filefd) {
+> >>  		err = fastrpc_map_create(fl, init.filefd, init.file,
+> >> -				init.filelen, 0, &map);
+> >> +				init.filelen, 0, &map, true);
+> >>  		if (err)
+> >>  			goto err;
+> >>  	}
+> >> @@ -2040,7 +2043,7 @@ static int fastrpc_req_mem_map(struct fastrpc_user *fl, char __user *argp)
+> >>  
+> >>  	/* create SMMU mapping */
+> >>  	err = fastrpc_map_create(fl, req.fd, req.vaddrin, req.length,
+> >> -			0, &map);
+> >> +			0, &map, true);
+> >>  	if (err) {
+> >>  		dev_err(dev, "failed to map buffer, fd = %d\n", req.fd);
+> >>  		return err;
+> >> -- 
+> >> 2.34.1
+> >>
+> 
+
+-- 
+With best wishes
+Dmitry
 
