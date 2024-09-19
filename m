@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2528897C909
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 14:21:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1C2997C911
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 14:26:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0E652814E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 12:21:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC1B91C21636
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 12:26:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D95C919D8AA;
-	Thu, 19 Sep 2024 12:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3040B19DF69;
+	Thu, 19 Sep 2024 12:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SuIE9run"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gg4nAtjE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A923319D070;
-	Thu, 19 Sep 2024 12:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA5E119DF5C;
+	Thu, 19 Sep 2024 12:26:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726748487; cv=none; b=YLUYF/rC94uGFRrUoxg0FXXY8p0olx0OovIna07K/l1J0rg2iR5EgOJzm/yM9qxbQQVLe6ZD2Mwru4H7SkqzLvEWrEWTdfkaOpfW9DU6LxKhvKiuh5FjONbj37T1TO7yG5g0+KXifWJko1BwiDmfybWifdY2LgKwEVpGpoeCuQU=
+	t=1726748805; cv=none; b=uZwOXdHAL3l91SrqzjuucVb0HXY0BUvVrEGcHxM1Jr0AEkA4VeWdwwUEW9NmxVhllLstx9rWrorpdqa7xPQAsp9COWlT32xrrHfyso/ROuAIVPr3JHkde7KyMORz0ztRrpP/u+ez7NUHh2oCWmfUtPiFt1eil7FSadPCVCVVW1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726748487; c=relaxed/simple;
-	bh=qPDfi50q4+h+m1QVi+XbdtGKWOu+/D8mXscbYofFnZI=;
+	s=arc-20240116; t=1726748805; c=relaxed/simple;
+	bh=leQyPxL1L0sSQwR1ysuxz2pWw20dOuldUQKtP+h8zwM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H+xqVxSWkKgud+oVMchDqNLf4jKSj8+QYaBEVVcBholkTrVrPCo0eYoMANK2ILUO1VjTz4hNqRhUf/8oA86aR7GoxHjsSFVxtXiSoEMni8WaEE84B7/N5kL0n8sFpljGLllEA5UCbv/Uk3FDXu5Hm8GwBETJLB8Whe/SDSWRkAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SuIE9run; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA04C4CEC4;
-	Thu, 19 Sep 2024 12:21:23 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ME0FN9yEm1iNCXkAwpAwUPYEcLPq+LieOmMeA6CwZUv/iJBbm594XoVOcGCv8dGZrxOUmKT+NVT+TF1ujLr8KCIYnpj2JQ70aYesi85rUnqYVbFMjVYfsvPZuNRmJ4nB8klA9RQXRmoFne1RTtntvn2EiA3L9gwrGUKPd7hQoIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gg4nAtjE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD97DC4DE1D;
+	Thu, 19 Sep 2024 12:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726748487;
-	bh=qPDfi50q4+h+m1QVi+XbdtGKWOu+/D8mXscbYofFnZI=;
+	s=k20201202; t=1726748804;
+	bh=leQyPxL1L0sSQwR1ysuxz2pWw20dOuldUQKtP+h8zwM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SuIE9runkmPZL068l3IwoV99o82/ot8KPWQ9qYPXu88P3NWyRcspyCK79iD78YmOM
-	 6/4UqmIU0JNRW9Ysvay3YjdFyBkOFkWmh8IzGgXzySym4NT3sND3fJ/lwtdVCVHNqA
-	 6no7BMO17Bhyt5H+cStz/5lE4eDGwaR6OU7ulGYjT3HEIkM1xjpCzo8HD/zodOS/BZ
-	 oaSjSbiZMLpMFHEsOSy0VlOZwavue78/LXlVyuIzKPCZACfkZQnvss7nYcOouIsJo7
-	 0sMG8/geobpJUMAln16pz+NBcwLCMMg6pUw2X3VzAbQBvaZmIjGAoE4My+H7hQcPWb
-	 2ZaFqYz+FqFSA==
-Message-ID: <d9c82785-d78a-4e3e-8b32-e5fd616fef5a@kernel.org>
-Date: Thu, 19 Sep 2024 14:21:21 +0200
+	b=gg4nAtjEGTTihQgTuabTMGp4krUy09H22B4e9WWY5uZCMWIfG8ld2gagyWgBrbA2X
+	 uqWdSwUAF4RmDDCmK3cPd3uOCg5xVJtek+Joq8ZsPvtdrulZGjeOepvUwKE+PCjxx1
+	 ROiQfMxA8bn++XQpYvHQHQZDvIgCE2EqZTO/7Xu8t5LNVhA10eB6erN6dZqZ2HbEqK
+	 cngQqW/75zt2LRK+UwNwOs5VeR7/Ww0Taa3xSnhDVqFdPH0cIGpLEAG3G+GTKtPFLa
+	 CfKkWcDctfmRBwoWF89w17cI/kU3MTaBxMbj/qBnc7am2HC5GDLtMtvCIYSYs7aLML
+	 ARMV6LVgn1kfw==
+Message-ID: <5c61af2f-9f7f-4351-a973-7d08612c50c3@kernel.org>
+Date: Thu, 19 Sep 2024 14:26:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] dt-bindings: clock: qcom: Add QCS615 GCC clocks
-To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
- <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
- Imran Shaik <quic_imrashai@quicinc.com>,
- Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20240919-qcs615-clock-driver-v1-0-51c0cc92e3a2@quicinc.com>
- <20240919-qcs615-clock-driver-v1-3-51c0cc92e3a2@quicinc.com>
+Subject: Re: [PATCH 2/8] dt-bindings: pinctrl: qcom: add IPQ5332 pinctrl
+To: Sricharan R <quic_srichara@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ ulf.hansson@linaro.org, linus.walleij@linaro.org, catalin.marinas@arm.com,
+ p.zabel@pengutronix.de, geert+renesas@glider.be,
+ dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Cc: quic_varada@quicinc.com
+References: <20240913121250.2995351-1-quic_srichara@quicinc.com>
+ <20240913121250.2995351-3-quic_srichara@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,44 +109,72 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240919-qcs615-clock-driver-v1-3-51c0cc92e3a2@quicinc.com>
+In-Reply-To: <20240913121250.2995351-3-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 19/09/2024 09:32, Taniya Das wrote:
-> Add device tree bindings for global clock controller on QCS615 SoCs.
+On 13/09/2024 14:12, Sricharan R wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > 
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Add device tree bindings for IPQ5332 TLMM block.
+> 
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > ---
->  .../devicetree/bindings/clock/qcom,qcs615-gcc.yaml |  59 ++++++
->  include/dt-bindings/clock/qcom,qcs615-gcc.h        | 211 +++++++++++++++++++++
->  2 files changed, 270 insertions(+)
+>  .../bindings/pinctrl/qcom,ipq5424-tlmm.yaml   | 115 ++++++++++++++++++
+>  1 file changed, 115 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,ipq5424-tlmm.yaml
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,ipq5424-tlmm.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5424-tlmm.yaml
 > new file mode 100644
-> index 000000000000..fecc694cd71b
+> index 000000000000..a16d9725e368
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml
-> @@ -0,0 +1,59 @@
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,ipq5424-tlmm.yaml
+> @@ -0,0 +1,115 @@
 > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/clock/qcom,qcs615-gcc.yaml#
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,ipq5424-tlmm.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm Global Clock & Reset Controller on QCS615
+> +title: Qualcomm IPQ5424 TLMM pin controller
 > +
 > +maintainers:
-> +  - Taniya Das <quic_tdas@quicinc.com>
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Sorry, not me. I don't have this hardware.
+
 > +
 > +description: |
-> +  Qualcomm global clock control module provides the clocks, resets and power
-> +  domains on QCS615.
-> +
-> +  See also:: include/dt-bindings/clock/qcom,qcs615-gcc.h
 
-Since  I expect resend of patchset (other comments), please also switch
-from :: to single :.
+Drop |
+
+> +  Top Level Mode Multiplexer pin controller in Qualcomm IPQ5424 SoC.
+> +
+> +allOf:
+> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,ipq5424-tlmm
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  gpio-reserved-ranges:
+> +    minItems: 1
+> +    maxItems: 26
+
+25, I believe is the max in such case
+
+> +
+> +  gpio-line-names:
+> +    maxItems: 50
+> +
+
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
