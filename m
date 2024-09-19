@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-32027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E236497CCCE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 19:01:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A079297CCD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 19:01:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AAAD2284106
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 17:01:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D31F81C219A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 17:01:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 402271A2564;
-	Thu, 19 Sep 2024 17:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E72CB1A01DF;
+	Thu, 19 Sep 2024 17:01:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ddomzj3B"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ek5fr3fT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896FD1A2547;
-	Thu, 19 Sep 2024 17:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39CFF19F479;
+	Thu, 19 Sep 2024 17:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726765261; cv=none; b=kcFz7GuXppwHYoZ32lVSitAP6jQ8HqWIQ8KTN0O5JDdWwm4td60fdVn8EllsWrEyu4jd/i43Biatep+lFKyF6ZGvaFtLEoS/X28kNvIwXOropYkivQPKVisxvSLiB5GgFgFcFWCm1DsN/0m0MCp3vZQD6PcmlJ6f/owRWK57ElE=
+	t=1726765266; cv=none; b=mzGzA9eOo5G+ZEUAIge/QzYOcqQS2g4JejlJTKdDMXP5rtkmvIGiToIYNMQwObLtcteMhxmQTwTUc7II2JKh17nkbfPkyqkf7QWiIm+Jy7SAXwQLaeW7KpNV2PUkuBK7gz0or06BGWGghEGCklvnD1g/pJx0IT2CmHKbV6QLKbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726765261; c=relaxed/simple;
-	bh=pwYSFK8CNwkivKxIA4vjEVquKLP6QGlBai8mnTcEbfw=;
+	s=arc-20240116; t=1726765266; c=relaxed/simple;
+	bh=86lNDti98B3FtBNrJ8VtcyWjNgvm4qSYF5NMuXt4o7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iNQbRLugffsUugfjBvvUpGQafbvJFhwhwjzJgmU4zi/RnQbeKgnXUp18PzyBU2iVM76X3aTS/B68cm87Rg0Yuh8877N63V9qSInaQIDpmbmFR/e1ITNpZqVqQUvjGJMs1VNYcqQRMj6jWEM8Zw/hJ80etUGv0UwGlHUaib04Mig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ddomzj3B; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version; b=PzyUaKbU6lO2KNUX1GX8UYRorCK2uoPCZRX26rqrslLEnOT0JnofHWiiymlN9m9TdpEa+fvQNDJ5zS5jgWygmhBXK5keyl4F8ha/07CWSuUVk6tWvQmCsnvUpBRYyOD12a5o1kTnplluWh2LNqEe5lWREDvJkqEaxE9ikohnYYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ek5fr3fT; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3780c8d689aso709824f8f.0;
-        Thu, 19 Sep 2024 10:00:59 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-374c8cef906so805447f8f.2;
+        Thu, 19 Sep 2024 10:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726765258; x=1727370058; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1726765263; x=1727370063; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=02z3BueeEMQVvMcXxvrC8DgCvw6rPVfONTZ3zehPzWw=;
-        b=Ddomzj3BipBply7kTkJURl7Z/JhtlMXTq22A+E03n3r5uHOw4MHIr82hcsvOfdQ+28
-         qGmw3+aqu8x8BzJYakGyGZHYJCmrhaoaWXvgVkh+vfkHLsfegOKZUNkptyoW8xKLLQLq
-         WWVFBH9WjMbXnkPhTyAZUeZRLx0Bth23W5oxo6zY+5ZiwlGTP+sPPdcU/xmjukwbyQPr
-         zLc534n0bQwcj6EPrdSTsv4T69qdKEr7uhzhd+xXW+XPb2U9a0aiWG977+wt2/KqmTJ6
-         Vy28j+HNqbUFI46DYEoRFp+R2wFQe/ARYIbJBXIyYPxgUd3IPhrVst4Ku8ZiFGwj7O5o
-         7ZUQ==
+        bh=7wbVzVuP2EQRXllLbnpIyUhNHn2iGNIIzJzj2vDJt+E=;
+        b=ek5fr3fTlQ/6N0NBS6p2C/Q0cWckFnpttwBXz9iT3g91gvn+m5dee3M+lEq2Ji6MDl
+         B/g85ekFhlKU8K+VYCPzPXProUd2BM7sHbFbiodSHOxl3/XWIJRAoq+hAv9t4V4dLVHZ
+         2KI/SOZi3Fa5zqJxuPfz+l9qbieOfxI2kCr8142Ue5Q+Iq5kXRxMCdULCULOV1c+NdfD
+         b7PGiuotvADSpVT9uhMnoxGaxGENooal2i0n6eX+yV4fYkqo8zaW6I2JdlUhap8+YBU0
+         CYwcdR6CBjfr1DZ6sTP66oR2haPbo3YXyjRqx0XfDksyKrrE8lMv59WbOixQSQMrbwh5
+         bgwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726765258; x=1727370058;
+        d=1e100.net; s=20230601; t=1726765263; x=1727370063;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=02z3BueeEMQVvMcXxvrC8DgCvw6rPVfONTZ3zehPzWw=;
-        b=cjOe5xsLh+zaTzLmr1+CZ8xtZ2Kad84hBOsZoPT/YqPfKH4kFKKEnyH9SpdvwBrk+o
-         1N/RytQYxgtc+vaTbMMrzpeVhIK63ZDydPVk67jYeSLflSU0wUXZC2++oTUvMcq4uHug
-         R4QyseqWYKsQ3cXiS9AptJnZps4s11DlH1FTcbiQktFBZ3YouJW7wkJyg4R1+cxP2epm
-         m+0MxDRkXpnw2iTxz8d4RecC3Tzqu8y3Br1rc3/O/QLa8LO67EvMTJ32HvrldgWtXrLI
-         D2WOyT/g0scN+vazAEf0bkj+9Y+9Svh+NaQmQDQaUL2ZAYDGI830QQQOgNgHSY9IhMtc
-         z2Qw==
-X-Forwarded-Encrypted: i=1; AJvYcCV67rZVwBq/4vPRpHVH5qfWyRD8RCETwusWA2/QfG2Q44/aSuR3EJAWLW9eAFntsIkeHHysOiPYeCA/@vger.kernel.org, AJvYcCVL2Y7LbWR0OiQmDZecOY1DeoZmxeMtz7ftOiey4QO+YbtDnAsEI3XfsYzk71bZXxVhwkKYhS2Izs0Fpwr/NA==@vger.kernel.org, AJvYcCVc7hVdh+XUqWRoYDEU6KrSAmGf6xJvgDK+UorD6/i+cpIhAFJ295YNC4Pt0Hu+G6zAPqhKdbORNZPSCnOI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6oop/E7YjvmUcLq81Sl/1DWiLfsbP1kAhck2VxZv6W28ic/7U
-	xHUY3mS4vEpePsLAEIRcFggJWlLvkWTCoBHOHEfdDWGmAry9kH0=
-X-Google-Smtp-Source: AGHT+IGk2XhS6C+z5uaMnKZE8Rpzgl5YYDuEp82yzizTILoZdMffKArFlUE9PUk2DyZWaSSyOZ/djQ==
-X-Received: by 2002:a5d:4811:0:b0:374:b9a7:5ed6 with SMTP id ffacd0b85a97d-378c2d064c2mr16823672f8f.22.1726765257373;
-        Thu, 19 Sep 2024 10:00:57 -0700 (PDT)
+        bh=7wbVzVuP2EQRXllLbnpIyUhNHn2iGNIIzJzj2vDJt+E=;
+        b=e5A23CQylCxjSoGjBx1Wtk/fTa251VsCyXZtGQYxeGUMWx/ywRjsEseHyMf0UHKY/C
+         RCc8E1uOuYkW2GgZyoO/DQab1zg1UoK7NyzvjjPZeIB3eHex84srKLZJawysLPxEYIdf
+         bocx0FAOPD+j/bdj9Vm1S5PafyUcpXrS274U7D4Fk5ipseE6+VQmypOzE8kBUoZXZzHg
+         q0V5ybQ4yBFLEdqA3hZkJ/J07LbWlvHYOUhcpFkllFhYS+82fsA/69m9Ayhzsv8vXJZZ
+         qLN63u7iDrlEQH1E7/ukeP1hKYUAj2jfLj9mLwwemSBcIt4saAnXMRqPpe7Of+BtNRf2
+         Uqpg==
+X-Forwarded-Encrypted: i=1; AJvYcCWTC6hGYQteTROckdWnpkC8SmpSHuzFvz0MUanUZfcygFWgR4zGQtlAnAlFmbKm2JGwtDLIDzlFYw8r@vger.kernel.org, AJvYcCX0TWJpm3nX0GH8VO6302BFkLW5q+j3yfYXAG2KNbreMaJxswvW1jZcemni+OPN5h7amUzWe/3c1u371VXX@vger.kernel.org, AJvYcCX1zXMUXPmPHxqp/y4cmTJpWevT4mI9rQFJWeGYQmLVeM041bvRI0z8+UM0OX9FXA8JojezwFS/jrdNvamgKg==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4UJpegh87rHH/+KPc1iYLonDcEmLS3TT/O9IfnbwIL0ZzcFB5
+	GChDsdxGZH0fPpwVgygSmX+eJgbVMuT3cj3xyAc9fMSgrwSCXiYqze3LUMCI14125EE=
+X-Google-Smtp-Source: AGHT+IGBRrcCyd5ZtNnCNeiu5QuJnml2odfbcrl1k9UTjOBFCK508r0zqaUMGUg77GNESKiavT4vdQ==
+X-Received: by 2002:adf:efcb:0:b0:374:c515:4441 with SMTP id ffacd0b85a97d-378c2d728d1mr15219972f8f.56.1726765263099;
+        Thu, 19 Sep 2024 10:01:03 -0700 (PDT)
 Received: from localhost.localdomain (adsl-178-39-53-103.adslplus.ch. [178.39.53.103])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e780dcf1sm15469282f8f.114.2024.09.19.10.00.53
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-378e780dcf1sm15469282f8f.114.2024.09.19.10.00.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Sep 2024 10:00:57 -0700 (PDT)
+        Thu, 19 Sep 2024 10:01:02 -0700 (PDT)
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
@@ -79,9 +79,9 @@ Cc: Konrad Dybcio <konradybcio@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
 	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Subject: [PATCH v1 1/3] dt-bindings: arm: qcom: Add Dell XPS 13 9345
-Date: Thu, 19 Sep 2024 18:59:32 +0200
-Message-ID: <20240919170018.13672-2-alex.vinarskis@gmail.com>
+Subject: [PATCH v1 2/3] firmware: qcom: scm: Allow QSEECOM on Dell XPS 13 9345
+Date: Thu, 19 Sep 2024 18:59:33 +0200
+Message-ID: <20240919170018.13672-3-alex.vinarskis@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240919170018.13672-1-alex.vinarskis@gmail.com>
 References: <20240919170018.13672-1-alex.vinarskis@gmail.com>
@@ -93,25 +93,23 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Document the X1E80100-based Dell XPS laptop.
-
 Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ drivers/firmware/qcom/qcom_scm.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 5cb54d69af0b..a1ae01a9d581 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1058,6 +1058,7 @@ properties:
-       - items:
-           - enum:
-               - asus,vivobook-s15
-+              - dell,tributo-13
-               - lenovo,yoga-slim7x
-               - microsoft,romulus13
-               - microsoft,romulus15
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 10986cb11ec0..5d8afdb3b6c9 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1731,6 +1731,7 @@ EXPORT_SYMBOL_GPL(qcom_scm_qseecom_app_send);
+  + any potential issues with this, only allow validated machines for now.
+  */
+ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
++	{ .compatible = "dell,tributo-13" },
+ 	{ .compatible = "lenovo,flex-5g" },
+ 	{ .compatible = "lenovo,thinkpad-t14s" },
+ 	{ .compatible = "lenovo,thinkpad-x13s", },
 -- 
 2.43.0
 
