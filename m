@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8F2DD97C8F8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 14:19:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2528897C909
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 14:21:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F00C2858BC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 12:19:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E0E652814E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 12:21:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65C7B19D89F;
-	Thu, 19 Sep 2024 12:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D95C919D8AA;
+	Thu, 19 Sep 2024 12:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JpA94uZW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SuIE9run"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3393D19C57B;
-	Thu, 19 Sep 2024 12:19:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A923319D070;
+	Thu, 19 Sep 2024 12:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726748375; cv=none; b=rDGXbNY+uaGaxlqluuPjQ42PyhdjoRArHpbIkJbsBgiCNPa+DwT+ebcBD6ENxzZDXkuCCBE8pTcCFm84pqc8iib34gdEETvU3TEG88DsBMnF7GX3SQ8eaDracvf2PkJwWFWdam5GIPPHgHjwJVQxvlQXHEQkFXrHsOFyuhTd5HE=
+	t=1726748487; cv=none; b=YLUYF/rC94uGFRrUoxg0FXXY8p0olx0OovIna07K/l1J0rg2iR5EgOJzm/yM9qxbQQVLe6ZD2Mwru4H7SkqzLvEWrEWTdfkaOpfW9DU6LxKhvKiuh5FjONbj37T1TO7yG5g0+KXifWJko1BwiDmfybWifdY2LgKwEVpGpoeCuQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726748375; c=relaxed/simple;
-	bh=oQGxpz7igw8FUAUX8lkzht6ogzt4MFkMiazInDcQ55E=;
+	s=arc-20240116; t=1726748487; c=relaxed/simple;
+	bh=qPDfi50q4+h+m1QVi+XbdtGKWOu+/D8mXscbYofFnZI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F2BWb3He71qGysgTNe9H0+04ZQGmSR5ChUa+gH1BJjwLjijqMjj5tjkRUO79D7zCp0yriJFmdp/oKYcTBCYpCqU8xaUoJwY9cw8XYt6n5e6ce/Xr9u90lLncmk35NXah3AIdjkKj3KyzQPvOFXJ5YZTNnbrpEMXsZ0RkzcWuLhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JpA94uZW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F32C4CEC6;
-	Thu, 19 Sep 2024 12:19:30 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=H+xqVxSWkKgud+oVMchDqNLf4jKSj8+QYaBEVVcBholkTrVrPCo0eYoMANK2ILUO1VjTz4hNqRhUf/8oA86aR7GoxHjsSFVxtXiSoEMni8WaEE84B7/N5kL0n8sFpljGLllEA5UCbv/Uk3FDXu5Hm8GwBETJLB8Whe/SDSWRkAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SuIE9run; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FA04C4CEC4;
+	Thu, 19 Sep 2024 12:21:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726748374;
-	bh=oQGxpz7igw8FUAUX8lkzht6ogzt4MFkMiazInDcQ55E=;
+	s=k20201202; t=1726748487;
+	bh=qPDfi50q4+h+m1QVi+XbdtGKWOu+/D8mXscbYofFnZI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=JpA94uZWj9bAMjiTnxgR4gV6xClNGiRwOV7ziOQ1I8f9aE5flGFjAlYAx4yg44Gbz
-	 k9a9YL9hUVOewC12yvb+6XLiZ60eTErpBJpFfKAblisBYcYWyTUwtobN9seDfK6I00
-	 u5aDBJzmRDO5ygpuELLIS7KuLxjXcg8ajOKfO03oQ08gMUk3Fx4kSGN5BuIcsmsKsc
-	 +RiUkAhQEhxA1jpjx7GZsyI9pMrCAHZNhv78n4zEn5WC2gjNKEvP1bKPgFYF0fFWIS
-	 XU4x6cTteH7y5EV7KFfTIzluxVlfCRm0NinwovS/09gWdAMWXxneA3fMmsfPVEaIRx
-	 impA0JLowyVAg==
-Message-ID: <86758559-3fd4-4f2f-bf40-818ac1410f0a@kernel.org>
-Date: Thu, 19 Sep 2024 14:19:28 +0200
+	b=SuIE9runkmPZL068l3IwoV99o82/ot8KPWQ9qYPXu88P3NWyRcspyCK79iD78YmOM
+	 6/4UqmIU0JNRW9Ysvay3YjdFyBkOFkWmh8IzGgXzySym4NT3sND3fJ/lwtdVCVHNqA
+	 6no7BMO17Bhyt5H+cStz/5lE4eDGwaR6OU7ulGYjT3HEIkM1xjpCzo8HD/zodOS/BZ
+	 oaSjSbiZMLpMFHEsOSy0VlOZwavue78/LXlVyuIzKPCZACfkZQnvss7nYcOouIsJo7
+	 0sMG8/geobpJUMAln16pz+NBcwLCMMg6pUw2X3VzAbQBvaZmIjGAoE4My+H7hQcPWb
+	 2ZaFqYz+FqFSA==
+Message-ID: <d9c82785-d78a-4e3e-8b32-e5fd616fef5a@kernel.org>
+Date: Thu, 19 Sep 2024 14:21:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] clk: qcom: rpmhcc: Add support for QCS615 Clocks
+Subject: Re: [PATCH 3/4] dt-bindings: clock: qcom: Add QCS615 GCC clocks
 To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
  <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -61,7 +61,7 @@ To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20240919-qcs615-clock-driver-v1-0-51c0cc92e3a2@quicinc.com>
- <20240919-qcs615-clock-driver-v1-2-51c0cc92e3a2@quicinc.com>
+ <20240919-qcs615-clock-driver-v1-3-51c0cc92e3a2@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,54 +107,47 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240919-qcs615-clock-driver-v1-2-51c0cc92e3a2@quicinc.com>
+In-Reply-To: <20240919-qcs615-clock-driver-v1-3-51c0cc92e3a2@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 19/09/2024 09:32, Taniya Das wrote:
-> Add the RPMHCC clocks required for QCS615 SoC.
+> Add device tree bindings for global clock controller on QCS615 SoCs.
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  drivers/clk/qcom/clk-rpmh.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+>  .../devicetree/bindings/clock/qcom,qcs615-gcc.yaml |  59 ++++++
+>  include/dt-bindings/clock/qcom,qcs615-gcc.h        | 211 +++++++++++++++++++++
+>  2 files changed, 270 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/clk-rpmh.c b/drivers/clk/qcom/clk-rpmh.c
-> index 4acde937114a..96600aba9bf2 100644
-> --- a/drivers/clk/qcom/clk-rpmh.c
-> +++ b/drivers/clk/qcom/clk-rpmh.c
-> @@ -795,6 +795,24 @@ static const struct clk_rpmh_desc clk_rpmh_x1e80100 = {
->  	.num_clks = ARRAY_SIZE(x1e80100_rpmh_clocks),
->  };
->  
-> +static struct clk_hw *qcs615_rpmh_clocks[] = {
-> +	[RPMH_CXO_CLK]		= &clk_rpmh_bi_tcxo_div2.hw,
-> +	[RPMH_CXO_CLK_A]	= &clk_rpmh_bi_tcxo_div2_ao.hw,
-> +	[RPMH_LN_BB_CLK2]	= &clk_rpmh_ln_bb_clk2_a2.hw,
-> +	[RPMH_LN_BB_CLK2_A]	= &clk_rpmh_ln_bb_clk2_a2_ao.hw,
-> +	[RPMH_LN_BB_CLK3]	= &clk_rpmh_ln_bb_clk3_a2.hw,
-> +	[RPMH_LN_BB_CLK3_A]	= &clk_rpmh_ln_bb_clk3_a2_ao.hw,
-> +	[RPMH_RF_CLK1]		= &clk_rpmh_rf_clk1_a.hw,
-> +	[RPMH_RF_CLK1_A]	= &clk_rpmh_rf_clk1_a_ao.hw,
-> +	[RPMH_RF_CLK2]		= &clk_rpmh_rf_clk2_a.hw,
-> +	[RPMH_RF_CLK2_A]	= &clk_rpmh_rf_clk2_a_ao.hw,
-> +};
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml
+> new file mode 100644
+> index 000000000000..fecc694cd71b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml
+> @@ -0,0 +1,59 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,qcs615-gcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +static const struct clk_rpmh_desc clk_rpmh_qcs615 = {
-> +	.clks = qcs615_rpmh_clocks,
-> +	.num_clks = ARRAY_SIZE(qcs615_rpmh_clocks),
-> +};
+> +title: Qualcomm Global Clock & Reset Controller on QCS615
 > +
->  static struct clk_hw *of_clk_rpmh_hw_get(struct of_phandle_args *clkspec,
->  					 void *data)
->  {
-> @@ -879,6 +897,7 @@ static int clk_rpmh_probe(struct platform_device *pdev)
->  
->  static const struct of_device_id clk_rpmh_match_table[] = {
->  	{ .compatible = "qcom,qdu1000-rpmh-clk", .data = &clk_rpmh_qdu1000},
-> +	{ .compatible = "qcom,qcs615-rpmh-clk", .data = &clk_rpmh_qcs615},
+> +maintainers:
+> +  - Taniya Das <quic_tdas@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm global clock control module provides the clocks, resets and power
+> +  domains on QCS615.
+> +
+> +  See also:: include/dt-bindings/clock/qcom,qcs615-gcc.h
 
-Keep alphabetical order, by compatible.
+Since  I expect resend of patchset (other comments), please also switch
+from :: to single :.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
 Best regards,
 Krzysztof
