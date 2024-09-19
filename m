@@ -1,130 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-32033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32034-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E591C97CD9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 20:34:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3B2E97CDD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 20:48:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 913F51F21F0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 18:34:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6AACE284CDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 18:48:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B512FAD21;
-	Thu, 19 Sep 2024 18:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 13640291E;
+	Thu, 19 Sep 2024 18:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pWEPHfSD"
+	dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b="MSuxslZ8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2541BC49;
-	Thu, 19 Sep 2024 18:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D22D23749
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2024 18:48:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726770839; cv=none; b=olh5OkBPx0k7UQKPTZi8mhPfJeuuIctQns5LBAdFKSVGjUbWrRCEDqgadTavlgTgv53FOHtQQHhIoogcnEaTMioXmuzywhnev+RoTsPTyeRCpvxrcbgD+8pTrDobxY8eVjuMy/+2D6qTayXAKHV7aJegP4lEOIHRN0YEBaX4CL4=
+	t=1726771732; cv=none; b=ZgU1vfanLFJMV0eVblDA3k5cGzEYXD89B0f0hsWZXmYHExvyA/u/vw377HUFNlvv8SXuwqa2O8gHry3Vz63DvMWMiS/zM1+pugegy3KR7X141CAYVAMv6j/eGznfStLmDL/hBWTvojTkq6bYW651iQrSuxXBXcdAShfdRLkcNXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726770839; c=relaxed/simple;
-	bh=fyqZTrXV6DkdPLOJsfqnSbNq1a48IkkR/ElFZjPwRS8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HcBZXWqf0ZtgGdgpT2ot0umzL1hn20sQsK1p20EPx43/zhlb/xd0H7L0FeInJv8QnIGvPRqmpnEVJuTCpvo5JOYSjp/hrhIgsY0JUbcxNuJc5z56FteEgid9c11vEc2woW1Id93yuCYYY8S3ajZNmVgaN9lzdVpvBMy/UThlV6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pWEPHfSD; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48J9P1tq031418;
-	Thu, 19 Sep 2024 18:33:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	E2v9W5ToTAXSX0uVR1sXtPadf0VJTte9c1GTqVCirCc=; b=pWEPHfSDcQIoV4Wz
-	y8QRrJuXXmYACz7WxrGCO6a1c71RR2+4x3xFFwXAqg4owgjCjCNsZYMuQzp9Yk98
-	65BWQR3ZFiA3uRN8uGWyjVKempiYlpBIZJhez65H3c4rUJA/4jHa6e6lGWp5Up10
-	GgVH23091NyKgN+JqaMeB8aUkmFEZqmkzGiu0/2BRDe7gIDMf/qd5tN/H4vOsj+n
-	UmmxqzGVSBM9W1SerD/AEIstxwYjXOfRHR2gjP60+xRrF0tw+CHEyUC0qae6cmEH
-	70ow2f9JHClSbGgLsMoUUtcL09pd5jPC5yqCO922uqSTQjAzBEJ+EWu79/l3ReaO
-	0dmAfA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4gee5y3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Sep 2024 18:33:02 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48JIX1xi028143
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 19 Sep 2024 18:33:01 GMT
-Received: from [10.110.111.10] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Sep
- 2024 11:33:00 -0700
-Message-ID: <08494313-5ff4-4730-90f2-4fad14071c91@quicinc.com>
-Date: Thu, 19 Sep 2024 11:32:59 -0700
+	s=arc-20240116; t=1726771732; c=relaxed/simple;
+	bh=tBkFsOEGKki/Ujou0mi5ka3jQDUd4rYy6dVeLu5RC6w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IRq9fK/4mTRKRBR+TeWQOcXzUL4PwLlR4o6g/ybEHshErJnprAmu7RwQJZmAK+BAwe+LyT6pMsiJgiED0osdwaaB2UqXb68H2FfN820tVtCV+DdpZvm0Tv3a860W0LlsMnmMecoXnWp7T1j5YjtKtQA92FKYlrpUwttDDigi1mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org; spf=pass smtp.mailfrom=kali.org; dkim=pass (2048-bit key) header.d=kali.org header.i=@kali.org header.b=MSuxslZ8; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=kali.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kali.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42cbb08a1a5so10476715e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2024 11:48:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google; t=1726771729; x=1727376529; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5NKj5Iywn8pi1HV6RavjZasiS19LGez3AtSbupjyBc4=;
+        b=MSuxslZ8E9y9YmWorzOb7RA3Csz+2Okf1MY9ZvOQwn1+sKSyIokoQ9ZXhP7UpHPAYW
+         NOu41thxDOC6siauWBFnbk86zqlCxnFU+EY5UXLM3uUvzSGBVgcY3yWHQQQPzrhJO9sq
+         DclOU6+tYc/4qXtepr8bLvlv6j8p5LstNqOnpk7cROnWS2qw6O1IsMUZ/mVQ2KsiVw78
+         8/wWfXJC0De51TbrfLbv/e/shjHSp00fmCWXpLfmKCDxkvbaonhWqUF2OKz2IRlo8JFJ
+         UMAI0qxgTsXwKlRpVGPhIFkRZ6gSeF8HVD5DgShbPjZ0oni6wBiQQmYZuDDUEKGq+uZU
+         FfkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726771729; x=1727376529;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5NKj5Iywn8pi1HV6RavjZasiS19LGez3AtSbupjyBc4=;
+        b=FvhlQoduvf+QduE3K+FF5NAztjaOCmlanmHVODq++POSiPZvIPW9AkypxTy22VntMv
+         vHctFSS3NTZYkuTDv24iswNJDGNuMg0e/G5o7RY/L1TRj3hS+hVe2SllF2CxYxI9Y1Q4
+         rq7lM7ch5YyFcmAoXVuXOm8+oSNvvYkjZ8hh4ei4orGYuM8ezYmucBOWCmh0HOyx3Rdg
+         nHGsF+aa1GQ5oZwyuMa3JgFZHP+Tx7RodYUQVjGHsFbHNyHDxGF8joA5sGNf4wep1SYl
+         wxOdqmUhjwP2F1vNI3YZR+5f+2by5EK3mSRg0L7nC34Wz0R09csKtUFhpmyNGdvW0J7B
+         e6gQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXNec/pyBYF8FTLbzHkKO0w7B8Qo0YY05SAeeOST9BmGVyhdq8BOFD+jmH1NumJ9MLigB+an1Gv/6P+Raj8@vger.kernel.org
+X-Gm-Message-State: AOJu0YzuQ9kOAZ8EJU0WmsjBJr0+Nq4AxFOiYndKNtCE5Q3J1qzcjdo2
+	WfTV4Olc5BhcgjbjxowU4g7jk7DpM7nyjYuGCd7QC2848m3TOZjjI2MHmZxeB1qdhrvpxziTo3w
+	3Qj64a1+iCoSP9sB28eiiYJ6Zhj5wT0Xs5XJ8iA==
+X-Google-Smtp-Source: AGHT+IFwZ00ICb5UCjsH6ziqz8Xe7HABIip24+gKr+pPgaD0kCyAzp+K0Fw2+tCzsUPMbb7TJM5PAUtR0m7y7h5wl6k=
+X-Received: by 2002:a5d:410b:0:b0:369:9358:4634 with SMTP id
+ ffacd0b85a97d-37a42277e15mr193773f8f.19.1726771728546; Thu, 19 Sep 2024
+ 11:48:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] drm/msm/dpu: drop LM_3 / LM_4 on MSM8998
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark
-	<robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Sravanthi
- Kollukuduru <skolluku@codeaurora.org>,
-        Rajesh Yadav <ryadav@codeaurora.org>,
-        Archit Taneja <architt@codeaurora.org>,
-        Jami Kettunen
-	<jami.kettunen@somainline.org>,
-        AngeloGioacchino Del Regno
-	<angelogioacchino.delregno@somainline.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Jeykumar
- Sankaran <jsanka@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-References: <20240905-dpu-fix-sdm845-catalog-v1-0-3363d03998bd@linaro.org>
- <20240905-dpu-fix-sdm845-catalog-v1-3-3363d03998bd@linaro.org>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240905-dpu-fix-sdm845-catalog-v1-3-3363d03998bd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: KIfRM3LUNuoShbYbhEDhOEKIdzxXR4Zf
-X-Proofpoint-ORIG-GUID: KIfRM3LUNuoShbYbhEDhOEKIdzxXR4Zf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=768 impostorscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 adultscore=0 phishscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409190124
+References: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com>
+ <D4A2FKPTXHS5.3AHU7ZEKFVMGG@fairphone.com> <2fb16b35-e6c5-4239-a745-a9dd7412539a@kernel.org>
+In-Reply-To: <2fb16b35-e6c5-4239-a745-a9dd7412539a@kernel.org>
+From: Steev Klimaszewski <steev@kali.org>
+Date: Thu, 19 Sep 2024 13:48:37 -0500
+Message-ID: <CAKXuJqj=5wZg2+EZOmbS4TjrvqNm9UhsqeSPHZyVbOLnir_juA@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/11] Affirm SMMU coherent pagetable walker
+ capability on RPMh SoCs
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Luca Weiss <luca.weiss@fairphone.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	cros-qcom-dts-watchers@chromium.org, 
+	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Konrad Dybcio <quic_kdybcio@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Konrad,
 
+On Thu, Sep 19, 2024 at 5:07=E2=80=AFAM Konrad Dybcio <konradybcio@kernel.o=
+rg> wrote:
+>
+> On 19.09.2024 9:00 AM, Luca Weiss wrote:
+> > On Thu Sep 19, 2024 at 12:57 AM CEST, Konrad Dybcio wrote:
+> >> I only read back the SMMU config on X1E & 7280, but I have it on good
+> >> authority that this concerns all RPMh SoCs. Sending as RFC just in cas=
+e.
+> >>
+> >> Lacking coherency can hurt performance, but claiming coherency where i=
+t's
+> >> absent would lead to a kaboom.
+> >
+> > Hi Konrad!
+> >
+> > You want people with the affected SoCs to test this I imagine?
+>
+> Yeah, would be nice to confirm
+>
+> >
+> > Just boot it and see if it doesn't implode, or do you have any more
+> > elaborate test plan for this?
+>
+> No, booting should be enough of a test
+>
+> Konrad
 
-On 9/4/2024 8:26 PM, Dmitry Baryshkov wrote:
-> On the MSM8998 platform ther are no LM_3 and LM_4 blocks. Drop them from
-> the MSM8998 catalog.
-> 
-> Fixes: 94391a14fc27 ("drm/msm/dpu1: Add MSM8998 to hw catalog")
-> Reported-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 12 ------------
->   1 file changed, 12 deletions(-)
-> 
+I have tested sc8280xp on the Thinkpad X13s.  It still boots and
+nothing seems to be more broken than usual (kidding, it seems to be
+running exactly as it was before the patchset was applied.)  I will
+try to find the time to test sc8180x on a Flex 5G as well as the
+sdm845 on the Lenovo Yoga C630, but I can't promise I'll find the
+time.
 
-LGTM
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s (sc8280xp)
 
