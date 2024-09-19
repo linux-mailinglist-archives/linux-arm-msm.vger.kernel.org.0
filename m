@@ -1,117 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-32022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7874A97CAF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 16:28:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 532D097CB41
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 17:01:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AB30D1C22F4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 14:28:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05D7A1F2361D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Sep 2024 15:01:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF5791A01AE;
-	Thu, 19 Sep 2024 14:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDD9F1E522;
+	Thu, 19 Sep 2024 15:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tejh5jOt"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="EluOQG+e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250D219E7F0;
-	Thu, 19 Sep 2024 14:28:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2676012B64
+	for <linux-arm-msm@vger.kernel.org>; Thu, 19 Sep 2024 15:01:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726756111; cv=none; b=Fi+p56tSc8t8iaPA12mfBu5j3PURp4VRZ3EA7AYZj03eh0Shp0LMJmePYenKNfDAjqST73mvGtjCBA4CyO9c3zoheODchyTGMxOcmPA2DwYxzIhS0AMTW1MWElpwKtRiA+JiBwHRbIKh1+uCn2Dgxxe5K/myHGXT4UVYgqDzr9I=
+	t=1726758067; cv=none; b=m+HG0kM2MRdtv1Ku4eQ55VfY1GfkRJrvYgpMWoMSXq7gBvDLv/Zm6xEIQKpX0fg+Fnu/PA4+YwmjRSMH5n+elai/pPUlijBccrZGV3EcyXGsa91O05Sh3IhJIuAEtkw8BV+zd9JVkTAM11yi4bB3M6CGEvSR1GdX67OIFHMwCuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726756111; c=relaxed/simple;
-	bh=Lv99Rd2xF1eeQ1uPXvtn6uzDKVYNGbOgwen3TkJJj/k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bzM0cozH4tTebYFT35w0+pzU1gQqWlMWo7a4UMlDvqbI6OYVlKrFazxoNFM5hsepP8E+Aw+AY4E9n59TIzQc5/DC6JfPcF+v47kiFJot//8Gt3BBcZ3Eqg+JAjcGDtJbufveiYii5+kO/sq+dYmP5gqgt2I8Cx3wW3e5qG8zZA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tejh5jOt; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-710d5d9aac1so503886a34.3;
-        Thu, 19 Sep 2024 07:28:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726756109; x=1727360909; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lv99Rd2xF1eeQ1uPXvtn6uzDKVYNGbOgwen3TkJJj/k=;
-        b=Tejh5jOtpaLgQGq7sJ8XfmGP73YeaqnQ6T+HAyH7wGLGriFBCAfH8OR6gHjLoG1UjS
-         Ef3cUWJ07bbklFjxeqPXA/flIu2xFGGZKbZds97InJqOib+u+UMvnmDh/tjhrlvVT0bo
-         YRLvkF5SEWQ7PDs303vTUs7ZlS8GjHZVQPNo29zCTW29th7ZcmRqy3HxG2VKT8j5Y/Eu
-         hnxkm7yloK6VHE6C68aLcAp9i8msEuGY8AnUvDsf89teZlZ3eoY8b8Ho1ctgHiy3SZlJ
-         7pXKyITYwgvXS/tnuqgPW/n9NxjmWijcjeB/f2dBp42ztGxfCl2GkiRlIKiKEid/nhtP
-         vyTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726756109; x=1727360909;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Lv99Rd2xF1eeQ1uPXvtn6uzDKVYNGbOgwen3TkJJj/k=;
-        b=OGsmlA2cjBNYsixK1/mW3JKL85pmhlzmM4E8pQ8yjDLEaOMmr5WY8XFSI8+kSeUNep
-         x7AZlAFaG9aTq2T+xD0RkHu86Y+rRDRz0woM1i3iVVVG6d2dafuQnDouKEJu8WgnpOrz
-         47HG1yWGuLljLQMRwHTmBJTVt+Io15rFGJNIL9z+jb8Lee872eqwLX/QTH8Z/4vqFv0z
-         +QZ7XDpI1lRL3+AyCH/dPG0UVtlrttt0dI03as6nDBLw//6VGcLkWiGscrOY5hmo9qhU
-         PGjlQvKPEsIdHs+3J+JvdEMjCmD5KkAZs9WyOfX4D2B8U47WIZb24iPOy1c1QgjaECIU
-         124w==
-X-Forwarded-Encrypted: i=1; AJvYcCU2rwerUuAjwj6u6pP7shQqn74Ji0b1MAvWQwsOdwBTOgd+ICIHW+EujyZQw2kV4OJi3beh1BmHKHVx@vger.kernel.org, AJvYcCUUITYjE97gFuqeF+XnMRGx7b8SRDvRfNfLfPmRg2LcpFkRZhKnZcFwg4q79zfymk8x8vs5JUVUFkWH9eSM@vger.kernel.org, AJvYcCUmWLy0s7ZReBh3e4U5pWGrELMQ4e4qHIrb0E+nJ8Si8GsJV/wRMT4x80soagF3sSxPEXsTIYI12RL4pQ==@vger.kernel.org, AJvYcCUnsGik155Z1mO9cS8QpoSy+qXenO5tUObtTn4bI4C3PZeh86VnP65kJ2uULla3AxTBsJK0K/2MICDLfC97q4qhT8M=@vger.kernel.org, AJvYcCVyeTrO+D+5/KfrJXT5T8CapXPwS4bE+P8r5Q+Z9UOoVBuuZZU75nHcw+Qra1dgoaUS67ZtBC6uvWo=@vger.kernel.org, AJvYcCWOn0i0NByVxJd8MeXB/9Z1+9vexSfN9TRWbbuJHnpDlVv6c+Bf/acudTAFd37jLHW/Lf3c8DI9/Y5zdThw1Q==@vger.kernel.org, AJvYcCWkwDQqwaag/5QB3XvDNRXHOXZByT+MaP/SgnE1qr3SaGhIPVuEgfViWoDz4FONtLqrV2eQzAi62pWb@vger.kernel.org, AJvYcCWwG3sJh5vRZo9WptqlL7YPOKgQ0X7lZ+A7dja1uExgvqWCUpZRdeeHAnNv90zJ5bRUsol1nnxcK40vzDQ=@vger.kernel.org, AJvYcCXb/xSqk1zSGTiQjVH5Ay8fYZGN/XK5bXCm9TTuremSsHY+2hP7sw/BtkNpKu8GrtmIo89bl/Jyla00@vger.kernel.org
-X-Gm-Message-State: AOJu0YwsIeDaGzavVTSec5fqqm+PtJ3BIU64EgbwXW2v0cWQayTkvNw9
-	81luEAP0atsv5C9gITxRu+94BfOUZ4uvIZDVDtKdZf7+cn3zP6BiOzmWxZshVsnco8MLpXvz+oy
-	WUf0sWte/RuGKm0iM8n/ioeM5JYQ=
-X-Google-Smtp-Source: AGHT+IGwBKKGWJh9wIKK61DdnRwd23qorQxP1cJCpH4kAY5YZpY1WQqWwNfbOqxU7M8iB6BuEvF3r+xT5muishtD3hk=
-X-Received: by 2002:a05:6358:7e8c:b0:19f:4967:4e8f with SMTP id
- e5c5f4694b2df-1bb23dd5df8mr730499455d.22.1726756109157; Thu, 19 Sep 2024
- 07:28:29 -0700 (PDT)
+	s=arc-20240116; t=1726758067; c=relaxed/simple;
+	bh=eLZmuvXn/fL4WM7Jw14Bq199RP1dgflXKrn2gGYALlY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GejzSYOzobReMRG90KoIH4lXvB2ixtYX2E1z3vDAmKzV/YoUEAbwXGpkSzhzGPpzf7lL9aa9mgYGM7/4ydys8TDd3b0O8X0E7RFXhOVi2qW6LxtOiIBOOFCi/iJ8fkpSjP7dcAXpogZTIlZTmEjIvhOC5is22+mWpE47hv/CzW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=EluOQG+e; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JAS75E027505;
+	Thu, 19 Sep 2024 15:00:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vLw9cYn82I5U6HjJdEtejWm+SXNTfIGz8BTQuDN+ooI=; b=EluOQG+e9zif3WkS
+	NmvO8xIDMNOlOHSXTb1pzhUe8x7wc3K/SlIkbWDbr743jD+/L43bepRmk4ipeJ+b
+	wSMSWiDAKNMjVspqEcWrqpcmM8oQL2aF/3Ad4vF4wH9tRL03CghfadLSUtvHFHQp
+	N+grGzFCMuEn6E5wwTmZ86xwtuDG2rmO/XStHCT77H7UEggmmI1jX+OqiZwroljz
+	rTXxSJiM7f0pVuWxnNtw+omR0N5/G6CvMjbUA/yzZkUli9cHWdFKPlCSHa06yTLf
+	qcb9cPqAqzO1RORj31zPanKGGzs5jwLDoO/Ijl9opWBh3+HBubHU1hhqKg0ycbX0
+	Qolpxg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4gnwr87-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Sep 2024 15:00:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48JF0sbX025300
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 19 Sep 2024 15:00:54 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 19 Sep
+ 2024 08:00:54 -0700
+Message-ID: <5e173c63-ff79-d61c-3c85-887dc08a3fff@quicinc.com>
+Date: Thu, 19 Sep 2024 09:00:29 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com>
- <20240913-starqltechn_integration_upstream-v4-15-2d2efd5c5877@gmail.com> <35liocltjuxv3gjueuvpaytx44crebbc4c63atztakuq5dfpax@bquve7tkrvtx>
-In-Reply-To: <35liocltjuxv3gjueuvpaytx44crebbc4c63atztakuq5dfpax@bquve7tkrvtx>
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Thu, 19 Sep 2024 17:28:17 +0300
-Message-ID: <CABTCjFCNuMKTeF8YyqCHGQ2CCQ76C1djL_3rja7itLfBM5vogQ@mail.gmail.com>
-Subject: Re: [PATCH v4 15/27] regulator: add s2dos05 regulator support
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Sebastian Reichel <sre@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Sam Ravnborg <sam@ravnborg.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Lee Jones <lee@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Pavel Machek <pavel@ucw.cz>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <ukleinek@kernel.org>, 
-	Chanwoo Choi <cw00.choi@samsung.com>, Simona Vetter <simona@ffwll.ch>, 
-	cros-qcom-dts-watchers@chromium.org, Konrad Dybcio <konradybcio@kernel.org>, 
-	Simona Vetter <simona.vetter@ffwll.ch>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-input@vger.kernel.org, 
-	linux-leds@vger.kernel.org, linux-pwm@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: Add crashdump to Sahara
+Content-Language: en-US
+To: Konrad Dybcio <konradybcio@kernel.org>, <andersson@kernel.org>,
+        <jacek.lawrynowicz@linux.intel.com>, <quic_carlv@quicinc.com>
+CC: <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>
+References: <20240918155254.3186031-1-quic_jhugo@quicinc.com>
+ <630b2044-eaec-4a8a-bd29-d20751d33e2f@kernel.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <630b2044-eaec-4a8a-bd29-d20751d33e2f@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Vuu4e4NILdQYs1MvxImeLQO7LzAwCNcv
+X-Proofpoint-ORIG-GUID: Vuu4e4NILdQYs1MvxImeLQO7LzAwCNcv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 malwarescore=0 suspectscore=0 clxscore=1011 phishscore=0
+ lowpriorityscore=0 bulkscore=0 impostorscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409190099
 
-> > diff --git a/include/linux/regulator/s2dos05.h b/include/linux/regulator/s2dos05.h
-> > new file mode 100644
-> > index 000000000000..2e89fcbce769
-> > --- /dev/null
-> > +++ b/include/linux/regulator/s2dos05.h
-> > @@ -0,0 +1,73 @@
-> > +/* SPDX-License-Identifier: GPL-2.0+ */
->
-> Are you sure that here (and other places) you want any newer GPL? This
-> is quite odd. Does original code (from which you took 2016 copyrights)
-> have this as well?
->
-Original code permits redistribution under 2+ license [1].
-Is 2+ preferable over 2 only?
+On 9/18/2024 5:41 PM, Konrad Dybcio wrote:
+> On 18.09.2024 5:52 PM, Jeffrey Hugo wrote:
+>> The Sahara protocol has a crashdump functionality. In the hello
+>> exchange, the device can advertise it has a memory dump available for
+>> the host to collect. Instead of the device making requests of the host,
+>> the host requests data from the device which can be later analyzed.
+>>
+>> Implement this functionality and utilize the devcoredump framework for
+>> handing the dump over to userspace.
+>>
+>> Similar to how firmware loading in Sahara involves multiple files,
+>> crashdump can consist of multiple files for different parts of the dump.
+>> Structure these into a single buffer that userspace can parse and
+>> extract the original files from.
+>>
+>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>> ---
+> 
+> I gave this a brief read, but.. aren't you dumping however much DRAM the
+> AIC100 has (and then some SRAM) onto the host machine without the user
+> asking for it (i.e. immediately after the AIC crashes)?
 
-[1]: https://github.com/klabit87/twrp_android_samsung_kernel_sdm845/blob/android-8.0/include/linux/regulator/s2dos05.h#L9
+I'm not entirely clear what the concern is.  Too much host RAM usage maybe?
+
+In short, I think the direct answer is yes and no.
+
+We put the dump content in the host RAM and allow the user to decide if 
+they want to save it.  The user has 5 minutes to do something with the 
+dump, then the devcoredump framework automatically frees the content in 
+RAM.  Typically the user would access the sysfs file provided by 
+devcoredump, and save the contents to the file system for offline 
+processing.
+
+There are a few other GPUs and several other devices that do the same. 
+Panfrost appears to save every BO the user allocated into the dump, 
+which would suggest that the user could create an arbitrarily large dump.
+
+In the case of AIC100, it is technically possible for the entire device 
+DRAM and SRAM to be offloaded.  That is up to the FW to decide if all of 
+that is relevant.  Current implementation of the FW is heavily 
+aggressive on what it selects for the dump, and current dumps are in the 
+100-200MB range.
+
+It feels like you are implying the user should somehow request the dump 
+by having devcoredump publish something, and then hook into the user's 
+reads of the sysfs to go collect the dump.  I worry that means the 
+driver would then need to determine when there is no user interested in 
+collecting the dump, in order to continue the reboot process.  I expect 
+that would be a 5 minute delay (devcoredump deciding there is no user 
+interest after 5 minutes).  I worry that users would object to such a 
+delay given customer feedback we've had on getting the devices into 
+service quickly.
+
+-Jeff
 
