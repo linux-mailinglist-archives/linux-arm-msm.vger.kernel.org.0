@@ -1,81 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-32053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F19B597D2FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 10:49:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7F5A097D33F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 11:02:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E69C28237A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 08:49:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 361BC1F2179D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 09:02:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBE9957333;
-	Fri, 20 Sep 2024 08:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B6756F2F3;
+	Fri, 20 Sep 2024 09:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RbE4PV5+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yd+uO6vp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1D82AE77
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 08:49:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160A3273FE;
+	Fri, 20 Sep 2024 09:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726822193; cv=none; b=IRT7x6KxGExnBQyJOM3fVebrWbklfLzrz2V1fWytMrXbdKwcvqIE3o8OvBqulV4DLcIVGRPbOcXl9iS9QOxlLASR+JzCHlQczoAqKS0DiKhvotyCTFc2EipfOHNxvlJ+quNzZzVyo9qLGBlrKt4WB2Q4vzsbJJuZhX8ku89SucE=
+	t=1726822947; cv=none; b=XS2WzAIVa2IkoBOfxwZiJ57dt/r3DHxAoRfORrhpjpyEbR/cAtoZuqeOquuRFrZ6/bwOLXxWzY2wOKIk3of8fqHauJ7cDhEJ3x+gDXubH1XyFzqZNerknjuj/JqTBXSGUbrub41AICFbbY4M1COUXbb1QGBB36QqBRnsAmYnEOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726822193; c=relaxed/simple;
-	bh=Ul6+k56+rET5ikYl9Wlyb5QU+2e9LeAugwA7ZUy8aQs=;
+	s=arc-20240116; t=1726822947; c=relaxed/simple;
+	bh=vL40QuaqUyXmvlqNrC3awGYHeM3daaijDcC2ZZTSI08=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ulZs785STXFY09cWEprzLHBOfUMJTUd3edjySe901FH5zHKfZiKIOhl9E1lfXEDFFFFurjZL12H4NsB5a5l9TSzV7zgAA0hRIjqXJyfkTO06+TAwUd5l6Bnkk/333ZpjL97dQgq2CFnmUdsJunMSTaqcygTsjDvhWqvowuWL19k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RbE4PV5+; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2f75129b3a3so18914011fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 01:49:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726822190; x=1727426990; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/dZq39y1yiawVOmzqHUZFDG0IEs14bepdnpA8Y4CR8w=;
-        b=RbE4PV5+451YuG+biB7lLBZAURJJ/QqtJvSHDB2EhC9rHxWHeFWyc6juSxt/VAUqr+
-         R6XB9iR3YsI67eSR+iGbOWJHA6fQ/XqPRCXNV4jazrxfnVCCML0rvlMUdKe8Is3V4ZPa
-         Lyk+A8yzqlUAhLkWgBz/betzHmtGGVGwAtYW/DHkjHaWr0rbaoCl8xTv5AtIBy4vc+zk
-         0vqNCbPxvtkrr2SjcoDHBbseZ/IlK0YMJE+2SDlH15pp4Yn5+Bg9E6CpClhraQ8hixpT
-         1W3Fp5A5GxgpBlVax+g54A0xoFwfwLhM+6Sunhp5oUlf2izU+Gw73jBfMU0RRN+ik9AI
-         Rh6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726822190; x=1727426990;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/dZq39y1yiawVOmzqHUZFDG0IEs14bepdnpA8Y4CR8w=;
-        b=NnJ/KnG8ZMDjqTrnGtvSXB9oDV6ZXGLfjO3CeBcaK+0edVZCr6lZnuBjqq+XIRQDQF
-         QX11MwXivKRkzzjGBj38swXexzlRE34RAwzRJGgJUzPThC4FcBQU+6DPBtlpNWL1lk5S
-         Fl25lEOjCu4QAJ4OU5qjz5MLyPBe8XNQBdukXpsbnmHlIGdbkzHhH0uHEU3m5LE3Ykk2
-         JKO8aq6xnlrCgCGtHtHpxegITSGWnpHlNyn9C4gfE8zT+tCJZiI1xf0HsZnct+7Gdot/
-         zspGnhI1Wz1qXKsP9cD5gJfxYmH+xb/TayfwHfY85iqkr6RIAF8MHSeIKG80ZBQoOiqT
-         tqXg==
-X-Forwarded-Encrypted: i=1; AJvYcCWbB0a2RN+4/BVL9kM4N7jjJpzNKnL4h9cTW/mdWSgmn6slSTB782F45eoXHAOuJmiKsyfnXEaTbYcP7PN+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwmcUizg2x6ytGOnzXNWVwzgydJ3mB6CKlQYN8ajFzwa8MzHdid
-	PlM4ZIC01LC8GOnIWfZP0rHP1HjfmC4/TDyrVTw7/rR2n0uAp2C3rBdBfhz7KIQ=
-X-Google-Smtp-Source: AGHT+IHNgoRJU5dt/I+CNLjo/qo8pYUrBsy+CjDiGTinbT2mfTEim0dzNPghM0G/Uz1D8qPKV8HY5w==
-X-Received: by 2002:a2e:beac:0:b0:2f7:6d92:1a30 with SMTP id 38308e7fff4ca-2f7cb2eea52mr15262661fa.14.1726822190038;
-        Fri, 20 Sep 2024 01:49:50 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f79d324e6asm18274321fa.72.2024.09.20.01.49.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 01:49:48 -0700 (PDT)
-Date: Fri, 20 Sep 2024 11:49:46 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rln7fxHmxtZjwlOW8U2ASvwmDvNHZx3jmJOzd1MANIiolcrwCA/raepTZgGQqHDsKDCGfgBJzRxonVjfNgA8Po8aOZnwe89mHsYEN6YpqsT6JKYSOJnp9bHWTgNXXJ+UYFoOD7qdakVy6GdHfQxx3aDIjMqoirtOf4Roici65Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yd+uO6vp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D108C4CEC3;
+	Fri, 20 Sep 2024 09:02:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726822946;
+	bh=vL40QuaqUyXmvlqNrC3awGYHeM3daaijDcC2ZZTSI08=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Yd+uO6vprzIJUiCsDBFJ8zc0zk0lbcseywLXrXlXESPY/aDEQFgqn/I4jas8C5CWj
+	 Tl7/x0Zlwu0B65kB3OKVu/EBeiiilFjUtxbx1t95XvK2ICG4iErusyjoBuOaJ+26YF
+	 uaneRm8bc7HtsGfX6UTMGt0W4fsFO85exx4A5wWu0tST7ILtTJ4uKVMR13gWKMlASi
+	 D6gobQS4cibPyFQHbjfvkDKYGPPLR9hkmmw53PpqCH05LnL3OJi3TG7FNE6dmMvCP0
+	 +AWWBvPE+2nbWdDGkyPqVfhblHKcd4/H3kK3MLEnvitHXDF5QSBBZ45PGJW+02Ff0f
+	 nkZsLI2BePojA==
+Received: from johan by theta with local (Exim 4.98)
+	(envelope-from <johan@kernel.org>)
+	id 1srZWw-0000000023k-1uWu;
+	Fri, 20 Sep 2024 11:02:22 +0200
+Date: Fri, 20 Sep 2024 11:02:22 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Chris Lew <quic_clew@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
 Subject: Re: [PATCH] soc: qcom: pd_mapper: fix ADSP PD maps
-Message-ID: <sziblrb4ggjzehl7fqwrh3bnedvwizh2vgymxu56zmls2whkup@yziunmooga7b>
+Message-ID: <Zu06HiEpA--LbaoU@hovoldconsulting.com>
 References: <20240918-x1e-fix-pdm-pdr-v1-1-cefc79bb33d1@linaro.org>
  <Zu0wb-RSwnlb0Lma@hovoldconsulting.com>
+ <sziblrb4ggjzehl7fqwrh3bnedvwizh2vgymxu56zmls2whkup@yziunmooga7b>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,38 +67,32 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Zu0wb-RSwnlb0Lma@hovoldconsulting.com>
+In-Reply-To: <sziblrb4ggjzehl7fqwrh3bnedvwizh2vgymxu56zmls2whkup@yziunmooga7b>
 
-On Fri, Sep 20, 2024 at 10:21:03AM GMT, Johan Hovold wrote:
-> On Wed, Sep 18, 2024 at 04:02:39PM +0300, Dmitry Baryshkov wrote:
-> > On X1E8 devices root ADSP domain should have tms/pdr_enabled registered.
-> > Change the PDM domain data that is used for X1E80100 ADSP.
+On Fri, Sep 20, 2024 at 11:49:46AM +0300, Dmitry Baryshkov wrote:
+> On Fri, Sep 20, 2024 at 10:21:03AM GMT, Johan Hovold wrote:
+> > On Wed, Sep 18, 2024 at 04:02:39PM +0300, Dmitry Baryshkov wrote:
+> > > On X1E8 devices root ADSP domain should have tms/pdr_enabled registered.
+> > > Change the PDM domain data that is used for X1E80100 ADSP.
+> > 
+> > Please expand the commit message so that it explains why this is
+> > needed and not just describes what the patch does.
 > 
-> Please expand the commit message so that it explains why this is
-> needed and not just describes what the patch does.
+> Unfortunately in this case I have no idea. It marks the domain as
+> restartable (?), this is what json files for CRD and T14s do. Maybe
+> Chris can comment more.
 
-Unfortunately in this case I have no idea. It marks the domain as
-restartable (?), this is what json files for CRD and T14s do. Maybe
-Chris can comment more.
+Chris, could you help sort out if and why this change is needed?
 
-> What is the expected impact of this and is there any chance that this is
-> related to some of the in-kernel pd-mapper regression I've reported
-> (e.g. audio not being registered and failing with a PDR error)?
+	https://lore.kernel.org/all/20240918-x1e-fix-pdm-pdr-v1-1-cefc79bb33d1@linaro.org/	
+
+> > What is the expected impact of this and is there any chance that this is
+> > related to some of the in-kernel pd-mapper regression I've reported
+> > (e.g. audio not being registered and failing with a PDR error)?
+> > 
+> > 	https://lore.kernel.org/all/ZthVTC8dt1kSdjMb@hovoldconsulting.com/
 > 
-> 	https://lore.kernel.org/all/ZthVTC8dt1kSdjMb@hovoldconsulting.com/
+> Still debugging this, sidetracked by OSS / LPC.
 
-Still debugging this, sidetracked by OSS / LPC.
-
-> 
-> > Fixes: bd6db1f1486e ("soc: qcom: pd_mapper: Add X1E80100")
-> > Cc: stable@vger.kernel.org
-> 
-> Since the offending commit has not reached mainline yet, there's no need
-> for a stable tag.
-
-Ack, nice.
-
--- 
-With best wishes
-Dmitry
+Johan
 
