@@ -1,150 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-32088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 224EB97D66C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 15:45:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8731897D689
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 16:01:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC36D28312A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 13:45:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 04B26B21DD9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 14:01:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D611217ADE9;
-	Fri, 20 Sep 2024 13:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9ECD2AE69;
+	Fri, 20 Sep 2024 14:00:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Dx6zclKJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X9caUx4W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2649814EC64
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 13:45:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22484224F0;
+	Fri, 20 Sep 2024 14:00:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726839909; cv=none; b=J0k3vFUALKVmAHHdHAMj1eBGnsUUGNb2ZyK5ARW3MzwYmYr/5eFX4HQZZToDvbN0NSN8fb6tcVl3OcdWmZiXm7cXIMqXkurqWgUuGRCJvH4e/sBhmE8nnbCuzvlDe6do67brnfNZ9fOsayBAT/kGgjzSOSs/FId4WC+fFgTPX5k=
+	t=1726840858; cv=none; b=ksbOjTsTmpnNs2E96IpYxoLuTd23sBXqo4BzijRe6CZzF2+7YFlYik6+ulFBLyksqCzGst0NLcXrk2VLaWvCLBu0s6uXWO81ACIOJTikK2ShsFn/fxsMhDHjIpzVb6s8xMl/DTTuzmB6TGneKWBczs+qK+i+HkNLFLfaI4nYpvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726839909; c=relaxed/simple;
-	bh=gDN/sgBuhIM3JVUFXVcLakscRVbrc1kau7V11AQd7YE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rr3F80nXlzEp3PSKszvNCB+Ku2geE8aehTWH2ewbbvyeuORS8WdZ1AsRWI+XoKWdTqCWrCAnzmcxXrTUBTWx1qLrvzcUfRbkSEwFPa01TFxnbku4zKSXK8ti8dVqHfDe+Y6mTiVsJ7odcOnLmJE1YUhca9kb8lPmqRU3/eilwUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Dx6zclKJ; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ddcce88701so20229237b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 06:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1726839907; x=1727444707; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TdvJ+kr1RTk5qIQIrIC2yclK5Px3xgR1ScHS8srLiXw=;
-        b=Dx6zclKJ3rT3xDoek6YfZ7qdF4/D3AD7RrFuwZRU3e+5IZH1BGasPwFVlJILH3uRKV
-         cPZDAwjDKxaK2jkrDJOr7Bdy/pi09qjt3dZz954N6VtvvMRTgLk7EBxyOuXNIKMXroVl
-         NPwUCRdWUw7y4aJ1pIhtHQ5pCK07i4cjDAAiU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726839907; x=1727444707;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TdvJ+kr1RTk5qIQIrIC2yclK5Px3xgR1ScHS8srLiXw=;
-        b=gsMw9ADF/PrZCu3Il7CoyoPaX3r5ESWAWSseAjDNacZiDWzo7jowrR1vdXaoOqjBK5
-         RfVIzLvfy4pzjwlTDGRK+RFz1GR0pTzGTpXzW3MA1M00cr46eWdMlE0woA7f9sqCjaib
-         9mWP81ZoX++FfLlht2vXPL8bmZCVFP1uqbEO2A97Exm+ltWateiC9TACdQQ7Ql9ZJTDx
-         yyveofvxUhMSyv0HLv98a7TT12GM+efx6KxL/xJIMPGrhgDM7ptHDZsgsSMWn8QfabF3
-         dP1vmX6a7mTHC5yDMLruRIHs+SFaQNeBHIeWq8Ywbtq6NP7T9QLxW4xhNzG4fTq4AexI
-         Q1qg==
-X-Forwarded-Encrypted: i=1; AJvYcCVVc31deZZE9GALIMswVOA7oi6rfAGYKbKbx+tPsdv6Qd+1y9jl09Ky1MRNfouqjpdmfczpDc71J/Uxg8/Q@vger.kernel.org
-X-Gm-Message-State: AOJu0YygWzoxYJZU3sLzd+jVr23MecGVn8z6xXNkBWJAR+gOOpZPiEu7
-	fVCYlKkxviPe3v5Az5Er64v1kf0CLJergW/vVoxV/RmNvEygMVtyFbEVvpzWMyEP8+5d77JUENk
-	8hQ==
-X-Google-Smtp-Source: AGHT+IEfB7fkGobELQ//+LzAalfZ4bjaSoymRKayaIwmcd9ghR3DxN9fWUsx6ZIwzkJdfLpIfACuDA==
-X-Received: by 2002:a05:690c:6603:b0:6be:3601:7189 with SMTP id 00721157ae682-6dff2830d15mr18668097b3.10.1726839906634;
-        Fri, 20 Sep 2024 06:45:06 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6dbe2df0763sm24481017b3.20.2024.09.20.06.45.05
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 20 Sep 2024 06:45:05 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e1d0e74f484so1834634276.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 06:45:05 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVQp+HZOfnu9AVzYoDU6+fy4xrl9cxog9eUzU3/ijp6MfI3DMx3N+ai89/zBoPWDpSg7DKp53T1Tut856i6@vger.kernel.org
-X-Received: by 2002:a05:6902:2b05:b0:e20:2245:6fa2 with SMTP id
- 3f1490d57ef6-e2252f54996mr1772372276.29.1726839904812; Fri, 20 Sep 2024
- 06:45:04 -0700 (PDT)
+	s=arc-20240116; t=1726840858; c=relaxed/simple;
+	bh=SjouKvnGzvSQYYGymuKxBI8tlJLwwvujAM9/Hx6FcxE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=jOpqCEwlt348sDel//6fNaRKV9BNLtnEsBIxHxxynLkW+BI4O/cza2fx7M7lPyzh+9z9QnrjN3GJLUx/4KEXznZ86/rLEWccjuyOvlOhlhpkwQem+tcng/xyInfLQLFlmH9/OoqAYaS0vV4qHkNe+XeWvWkGflsLOhHzQluAYXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X9caUx4W; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48KB5tad017555;
+	Fri, 20 Sep 2024 14:00:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Se93HO0HCudHeOs3VcVG74GCHSXa9IoKZz1+bHFhs2o=; b=X9caUx4WUMG5TR5e
+	XKnYibiKKX6i3tCHlmpDCsQT3/mnoK/z9K4dY0p8UC9RgKrdqEi2x9sT9uw63Ahy
+	ujf93IeBCU3tV+8iDDOppHxTaPx4vhxctRnfQsAFg6H5briGfYnjBW4pfJUvYmft
+	XrWwdo9W1mmDTNCJMwIGVWuZKq5ewqVtKLQMqdizUxJyGUArK/01HENlL7zV7AIh
+	upehnRSJZTQsHaXGOWL6TNmfc4+cGQuGyF/4TMsiZB5GG87cODqq9757GPpTr9LI
+	bcb6CnE/tifpM2NqnklpuivgaNqrqy1R/bQLQdNjA8fY0/xxv2NNvY4uV+KMkFrn
+	OmJW0g==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41ry4aa2cr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Sep 2024 14:00:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48KE0HxF013883
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 20 Sep 2024 14:00:17 GMT
+Received: from [10.111.141.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Sep
+ 2024 07:00:14 -0700
+Message-ID: <18e971c6-a0ef-4d48-a592-ec035b05d2b7@quicinc.com>
+Date: Fri, 20 Sep 2024 07:00:11 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com> <20240919-topic-apps_smmu_coherent-v1-2-5b3a8662403d@quicinc.com>
-In-Reply-To: <20240919-topic-apps_smmu_coherent-v1-2-5b3a8662403d@quicinc.com>
-From: Doug Anderson <dianders@chromium.org>
-Date: Fri, 20 Sep 2024 06:44:53 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xrbe1NO+trk1SJ30gHm5jLFjd0bAeG3H46gD+vNFZa1w@mail.gmail.com>
-Message-ID: <CAD=FV=Xrbe1NO+trk1SJ30gHm5jLFjd0bAeG3H46gD+vNFZa1w@mail.gmail.com>
-Subject: Re: [PATCH RFC 02/11] arm64: dts: qcom: sc7180: Affirm IDR0.CCTW on apps_smmu
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Konrad Dybcio <quic_kdybcio@quicinc.com>, Rob Clark <robdclark@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] soc: qcom: pd_mapper: fix ADSP PD maps
+To: Johan Hovold <johan@kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Stephan Gerhold <stephan.gerhold@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <stable@vger.kernel.org>
+References: <20240918-x1e-fix-pdm-pdr-v1-1-cefc79bb33d1@linaro.org>
+ <Zu0wb-RSwnlb0Lma@hovoldconsulting.com>
+ <sziblrb4ggjzehl7fqwrh3bnedvwizh2vgymxu56zmls2whkup@yziunmooga7b>
+ <Zu06HiEpA--LbaoU@hovoldconsulting.com>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <Zu06HiEpA--LbaoU@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8xh5ep7kPkkbkIMIPCF1nbqlX1sStHZ7
+X-Proofpoint-ORIG-GUID: 8xh5ep7kPkkbkIMIPCF1nbqlX1sStHZ7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1011 malwarescore=0
+ suspectscore=0 spamscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ mlxlogscore=906 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409200102
 
-Hi,
-
-On Wed, Sep 18, 2024 at 3:58=E2=80=AFPM 'Konrad Dybcio' via
-cros-qcom-dts-watchers <cros-qcom-dts-watchers@chromium.org> wrote:
->
-> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
->
-> On RPMh-based SoCs, the APPS SMMU advertizes support for cache-coherent
-
-FWIW, the "RPMh-based" confused me a bit. This isn't really related to
-RPMh, right? I think you're just using "RPMh-based" to establish a
-point in time and that Qualcomm added RPMh in the same generation of
-SoCs that they added cache-coherent pagetable walk?
 
 
-> pagetable walk via the IDR0 register. This however is not respected by
-> the arm-smmu driver unless dma-coherent is set.
->
-> Mark the node as dma-coherent to ensure this (and other) implementations
-> take this coherency into account.
->
-> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 1 +
->  1 file changed, 1 insertion(+)
+On 9/20/2024 2:02 AM, Johan Hovold wrote:
+> On Fri, Sep 20, 2024 at 11:49:46AM +0300, Dmitry Baryshkov wrote:
+>> On Fri, Sep 20, 2024 at 10:21:03AM GMT, Johan Hovold wrote:
+>>> On Wed, Sep 18, 2024 at 04:02:39PM +0300, Dmitry Baryshkov wrote:
+>>>> On X1E8 devices root ADSP domain should have tms/pdr_enabled registered.
+>>>> Change the PDM domain data that is used for X1E80100 ADSP.
+>>>
+>>> Please expand the commit message so that it explains why this is
+>>> needed and not just describes what the patch does.
+>>
+>> Unfortunately in this case I have no idea. It marks the domain as
+>> restartable (?), this is what json files for CRD and T14s do. Maybe
+>> Chris can comment more.
+> 
+> Chris, could you help sort out if and why this change is needed?
+> 
+> 	https://lore.kernel.org/all/20240918-x1e-fix-pdm-pdr-v1-1-cefc79bb33d1@linaro.org/	
+> 
 
-I remotely booted this on sc7180-trogdor-lazor. Since I'm working
-remotely at the moment I can't check the screen, but I can at least
-confirm that nothing seemed to go boom. I can also confirm that
-without your patch I see:
+I don't think this change would help with the issue reported by Johan. 
+ From a quick glance, I couldn't find where exactly the restartable 
+attribute is used, but this type of change would only matter when the 
+ChargerPD is started or restarted.
 
-[    1.580607] arm-smmu 15000000.iommu:         non-coherent table walk
-[    1.580612] arm-smmu 15000000.iommu:         (IDR0.CTTW overridden
-by FW configuration)
+The PMIC_GLINK channel probing in rpmsg is dependent on ChargerPD 
+starting, so we know ChargerPD can start with or without this change.
 
-...and after your patch I see:
+I can give this change a try next week to help give a better analysis.
 
-[    1.569350] arm-smmu 15000000.iommu:         coherent table walk
-
-Thus:
-
-Tested-by: Douglas Anderson <dianders@chromium.org>
-
-I'm curious: can this also be turned on for the Adreno SMMU also?
-dmesg still has this after your patch (which makes sense since your
-patch didn't touch the Adreno SMMU):
-
-[    2.423521] arm-smmu 5040000.iommu:  non-coherent table walk
-[    2.423526] arm-smmu 5040000.iommu:  (IDR0.CTTW overridden by FW
-configuration)
-
--Doug
+>>> What is the expected impact of this and is there any chance that this is
+>>> related to some of the in-kernel pd-mapper regression I've reported
+>>> (e.g. audio not being registered and failing with a PDR error)?
+>>>
+>>> 	https://lore.kernel.org/all/ZthVTC8dt1kSdjMb@hovoldconsulting.com/
+>>
+>> Still debugging this, sidetracked by OSS / LPC.
+> 
+> Johan
 
