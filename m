@@ -1,132 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-32086-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32087-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1C2C97D60A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 15:15:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B4F4097D64A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 15:39:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80E98285A88
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 13:15:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C1C6286241
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 13:39:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BE1114A636;
-	Fri, 20 Sep 2024 13:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B23A617B51B;
+	Fri, 20 Sep 2024 13:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y46nJgb7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xhyBlidS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5300A139CE3;
-	Fri, 20 Sep 2024 13:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC529158DB1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 13:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726838127; cv=none; b=c8UKrjYr5uU9KkAvCfzwgzenKbSYAZGaH9s/qJ5FfQ99Oi5eSts+KANQq6j333zoCK/VNtjwb/RrFKtQiw+8SouWT8tuYrymNVjt78Idc+aWpojFYcMBOfzbM1RC+kscaljcuC1yHl6mzSxWaWVF4sQcYGLA4Yja0L17UmgMpCE=
+	t=1726839537; cv=none; b=J7FnnLl/NtCx22MgTSVCt/NGlJ3OuSvWsGb9DycXAo6QKbm015KwcCzkdk8ui/oMjEF2OmZCEXpdrOp2ezIHq0VcV+t9BkAQPMKHUAh6tIptGvgCToYEFjKkD0mptafINDZm7esY+K3PkAdHHIRaKzPdDGkcWocI7nkY0mQpo5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726838127; c=relaxed/simple;
-	bh=fyAaJ1bjN0SUUCuuc1C9mR8rJB9SxykgdDB/Ao0I0Kc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fNOKSp93c1T4I++3ISSaI7xnKIO6Cwjk/jL4XeNBuEr1992TzOd36t5/Uulo9DrfH+5XbWPY3sPjIT703++j3OrTBwL6j0DCWAJyvvhldSV+pBnNn+0As0fNQHXGtRkCFxV3x69OZnG2+t8pt7YPGKzTycJGMKb/R0easUtW26Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y46nJgb7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25B8C4CEC3;
-	Fri, 20 Sep 2024 13:15:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726838126;
-	bh=fyAaJ1bjN0SUUCuuc1C9mR8rJB9SxykgdDB/Ao0I0Kc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Y46nJgb7EnNIoqx0UJW4Qrha8fO/LMvuvlYcKrt0IDmguvgV3AeCbC4Pkn/NT6vJu
-	 pH3lc4XJKGbBQ6yXpST4DlTBLa8W7bzUAlJzRfbIG7fLZPLe9mDYNBrOyVIqxHZe3u
-	 CnUCcWI3goEILuiUfqf1QfqXrqoDNAmXBizaBosMX8VdA4/M7gScFu6peE8stU7Kqs
-	 enX6GAaydMzs/QxWlypwg8jEhWIUa+utOjDRREViEomlYOR7+KLsadxWs6hZEAtnxa
-	 caPdqupkJSUe3esVZSd3xUCrLz9N8R5xyHmYXEp0PrHMRV5IPd7xSqv2fJl0lDvvHc
-	 0zuTBprq2U4hg==
-Message-ID: <30458916-90f4-4126-b5b4-a52f580c4fa7@kernel.org>
-Date: Fri, 20 Sep 2024 15:15:22 +0200
+	s=arc-20240116; t=1726839537; c=relaxed/simple;
+	bh=uwy521Wq//LDB1VjjbGONgVeYOhq0Cx51x30cZ0QpfY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CzvuW0Oz2Lw26jXuenKHE5gBdz4DI9zbyutQahaMkIYmyBphxWrx9EKT4ocakbNav4CJ2wyC7KcFKqBarmFIdQ8R0BhAj91tTvFfBYrVD5m5F9iwJkg4poiVZiDfejTlpGvtEBB7PKYhmRCjv24dOsn7QoiHHVHnDCDnkOgu82w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xhyBlidS; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a8a7596b7dfso356619366b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 06:38:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726839534; x=1727444334; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6nua9lBreH4pniRm9sNeuVot1xTd+1IeLvCiRrKDqCk=;
+        b=xhyBlidSyYlZ1dldu3BWqEzuaY/jzsAVjqbhWiDKPM3t0iDDf/75pN3LKASdXZAps0
+         LW3sIYkCqnYBhnSeFhCr7TMsbOKicI5pRUesYW9zJxGka6huboc4zuj5bNz3+9wEHncZ
+         CG7ydTmD/lVSqMNozkmGAKxaL5piMQRa+shWR0k9Xd9VRf0hLhz7TpxbV5MOGYECpWA3
+         e9p1Z3tXvdbdhRmzYDOMgb88srsJnz6pnwQKG06xWK1R838N7CF8U27sEyAoqqBF1Rg6
+         rIiHeZfgqURxmHjZb26R86M44O/6dldsWno8Hd19k0PYXXEsW9AxIl3Kbw3o7dBIe7T2
+         isTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726839534; x=1727444334;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6nua9lBreH4pniRm9sNeuVot1xTd+1IeLvCiRrKDqCk=;
+        b=lihAxjys9yiBGjms0/D2vwgjYMhNZ0qm4W7A+R46q02okrLWUO06pYBB26KbC3YsCs
+         6N0BIgGuQUgNROmAomC+SDUZhOYKXYjItk4CL/h3bulm7ltOkkEOMmOct9CA1cahers+
+         ceupAth1qdy24iQuH8UvOeVHVkq5JefhtZdK/iMfQ+eE0l2zPtBZhOwzmOGA3fwAEUaP
+         jJandSOfTw9yXtOTlDbP63GMoXdl9ntvZkE/ZJVLaDcoaIrNinOCYVMxcfzDG1oJp+rn
+         tMbHmRZve2GFv2O/85IU2J3WPA5LtmDY7xTIzUKSBDPzDr3KhijIMU0kKC4UEZ81BgqF
+         8SmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUyiF2DN27jHOhOvvggO00EZZVgQjp0x3LyScmT40iE33NlmSBE0w5sd7HpoBlPGBJnul7sKN+JA8/1/TH6@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUPk8zNf5AAPRbA4B+ImPMJXbtv3QTKaPHBZ20Nfp63HkLC93C
+	bpUHPMbs9skpILf5eqDXQpxpfqqtK5+M6bPJb1NwjwULOc+S30r/RVNmhGjXX6c=
+X-Google-Smtp-Source: AGHT+IH/b42mb53eprDqyvAXwCp6PuRpZ/h0MnX0Y03+kqaCROwk/vdCC9t8YA/9swqos3U3i1D/Hw==
+X-Received: by 2002:a17:907:a0e:b0:a90:3494:2aa9 with SMTP id a640c23a62f3a-a90c1c363c1mr735135066b.2.1726839534014;
+        Fri, 20 Sep 2024 06:38:54 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef80:de75:1bb0:80e4:4afd])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061331938sm845930566b.222.2024.09.20.06.38.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2024 06:38:53 -0700 (PDT)
+Date: Fri, 20 Sep 2024 15:38:47 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jinjie Ruan <ruanjinjie@huawei.com>, stephan@gerhold.net,
+	loic.poulain@linaro.org, ryazanov.s.a@gmail.com,
+	johannes@sipsolutions.net, davem@davemloft.net, edumazet@google.com,
+	kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] net: wwan: qcom_bam_dmux: Fix missing
+ pm_runtime_disable()
+Message-ID: <Zu165w1ZzLiRvXOp@linaro.org>
+References: <20240920100711.2744120-1-ruanjinjie@huawei.com>
+ <lqj3jfaelgeecf5yynpjxza6h4eblhzumx6rif3lgivfqhb4nk@xeft7zplc2xb>
+ <Zu1uKR6v0pI5p01R@linaro.org>
+ <CAA8EJprysL1Tn_SzyKaDgzSxzwDTdJo5Zx4jUEmE88qJ66vdFg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: power: qcom,rpmpd: document qcs615 RPMh
- power domains
-To: Tingguo Cheng <quic_tingguoc@quicinc.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Ulf Hansson <ulf.hansson@linaro.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, quic_fenglinw@quicinc.com,
- quic_tingweiz@quicinc.com
-References: <20240920-add_qcs615_powerdomains_driver_support-v1-0-8846efaf9454@quicinc.com>
- <20240920-add_qcs615_powerdomains_driver_support-v1-1-8846efaf9454@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20240920-add_qcs615_powerdomains_driver_support-v1-1-8846efaf9454@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJprysL1Tn_SzyKaDgzSxzwDTdJo5Zx4jUEmE88qJ66vdFg@mail.gmail.com>
 
-On 20/09/2024 06:08, Tingguo Cheng wrote:
-> Add compatible string for the RPMh power domains on qcs615 platform.
+On Fri, Sep 20, 2024 at 03:05:13PM +0200, Dmitry Baryshkov wrote:
+> On Fri, 20 Sept 2024 at 14:44, Stephan Gerhold
+> <stephan.gerhold@linaro.org> wrote:
+> >
+> > On Fri, Sep 20, 2024 at 01:48:15PM +0300, Dmitry Baryshkov wrote:
+> > > On Fri, Sep 20, 2024 at 06:07:11PM GMT, Jinjie Ruan wrote:
+> > > > It's important to undo pm_runtime_use_autosuspend() with
+> > > > pm_runtime_dont_use_autosuspend() at driver exit time.
+> > > >
+> > > > But the pm_runtime_disable() and pm_runtime_dont_use_autosuspend()
+> > > > is missing in the error path for bam_dmux_probe(). So add it.
+> > >
+> > > Please use devm_pm_runtime_enable(), which handles autosuspend.
+> > >
+> >
+> > This would conflict with the existing cleanup in bam_dmux_remove(),
+> > which probably needs to stay manually managed since the tear down order
+> > is quite important there.
 > 
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+> Hmm, the setup and teardown code makes me wonder now.
 
-You sent within 30 minutes two independent patchsets touching the same
-part of code, so you knew it will lead to conflicts. I don't get how you
-imagine this to be applied. I suggest combining patchsets in such case.
+Yeah, you ask the right questions. :-) It's really tricky to get this
+100% right. I spent quite some time to get close, but there are likely
+still some loopholes. I haven't heard of anyone running into trouble,
+though. This driver has been rock solid for the past few years.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Are we guaranteed that the IRQs can not be delivered after suspending
+> the device?
 
-Best regards,
-Krzysztof
+I think bam_dmux_remove() should be safe. disable_irq(dmux->pc_irq)
+prevents any further delivery of IRQs before doing the final power off.
 
+> Also is there a race between IRQs being enabled, manual check of the
+> IRQ state and the pc_ack / power_off calls?
+
+Yes, I'm pretty sure this race exists in theory. I'm not sure how to
+avoid it. We would need an atomic "return current state and enable IRQ"
+operation, but I don't think this exists at the moment. Do you have any
+suggestions?
+
+Thanks,
+Stephan
 
