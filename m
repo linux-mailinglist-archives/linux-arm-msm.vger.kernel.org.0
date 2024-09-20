@@ -1,203 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-32111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B315997D904
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 19:30:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0271197D953
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 19:47:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D70D21C20A0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 17:29:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26F851C22561
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 17:47:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76354154C12;
-	Fri, 20 Sep 2024 17:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C0D31802A8;
+	Fri, 20 Sep 2024 17:47:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CwqjsRU9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="awTceDyS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1CA1EF1D;
-	Fri, 20 Sep 2024 17:29:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4BDD530;
+	Fri, 20 Sep 2024 17:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726853398; cv=none; b=IOybWUe3q0/dT5gAqrEqZ54UkQosWnR7lk9w8MIN1Flo2O3I43LEKxd72hYdAwjjBjrQWc7OF/RCkG7Ptowb7c90o1C2XSrKmyGlxtyWa9RlOgOL8qgC63xF3vzKrBy49FcLVeepjOM58qyNY2/hsO+bCIoYqWcqCwrRRGKaAlw=
+	t=1726854447; cv=none; b=EQ0T4Dvnc0aUyR1X+LX/QE3rAmscJbx+PGfiy/8pdyuY142zf3FwHokjcm0A8zsvyKlybzdSGSDZl0v9ONa1EnQcsInNceerpc2SZLssDYH8NuYCb5UTmOASgTstMA6+3L5hgtOLW2uuWpHxx4Zb1WU3oRJYfVOZcRzvcuJ8NG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726853398; c=relaxed/simple;
-	bh=ToBempyJO52rcaZf9WT2IgoRwbXZC2bQrV7/ZpLdDJI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OBbetF1UFjV56upFsyIgxSAadATZPiGRDHVQBT0TDk94UiCmWzjMRnGmSEt8Es9yr4z2v2kUp5e/Vf7grtI5isSewB+zBfNSEdfXKzolo8T0YP6SyBdI68P3gR0nDiRj7a7Fh3YC4vPONee6p2uRV7ciE4f5W5mzvbvDU8PjD4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CwqjsRU9; arc=none smtp.client-ip=209.85.166.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3a0c874547cso5765235ab.2;
-        Fri, 20 Sep 2024 10:29:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1726853396; x=1727458196; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7vlHUoHs0FcmxQf+gRGeqkvknNNXsHGuxyDqS9sJWsg=;
-        b=CwqjsRU9LJLw0F/Mc4I6Nv00Y+Jv74Du1L60PiCgwpGNGtPj/SWlbAp/BBHqryv9wf
-         wGa/UPk2AOGLD3UGNYWbRKshUXNNdAGRCDmKSs+80Q+ckFyiXHDu9UCb48bTU/E1ubs0
-         AdNOohMbT0mBMeBz3XGU60nWPJyl7/y16M4sRrnuhYjw1Wbfnp/wK8VWeuI5YGy2IXC5
-         B/PAZskrYro8vQP3hG4fcPh4oo/iENN1XHGp+BhI4VIpDgUUffQZreLxIE3coCmmukg0
-         fp2njXmUirJfJJLbxmxqbD53Iz+kIEPZUSOfzAqQJg+DKvK7Q+94Y7NprlmQcGHhsmgV
-         6xlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726853396; x=1727458196;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7vlHUoHs0FcmxQf+gRGeqkvknNNXsHGuxyDqS9sJWsg=;
-        b=eB2VjM4AIef+bQiGaYyiA7wueZi72MY7O+Wkfuy43Dqnq3DXRT0gTQK5YlMhNizmij
-         I6arKCohRIbiuD8+EAYF7Fbqb85nvZWhWbD96OIMy+xsl19hnHimBvPX4HRxNKPWAQpY
-         SNlM68lw1PA5NyLRrYrK3dNKb4SZ3Sotr4y3VxfET2O28GHvaBPDIrLH+OQ3Iadg6Vdi
-         gO2CeUjvCEZSqhWNEp3TGuXj8AmuxNUbOnsOawHG7qEFEQ8hj8xBG1eX+cF3zMIgv6yH
-         orhV5O9cTiLtAHhWoziC5RQhDNe88byovJR7kZPPfBu22gZiQFY9fgWn1p+W6/f1u8oI
-         Dd3A==
-X-Forwarded-Encrypted: i=1; AJvYcCUJHNP1RfZQ5HH9Oe0B2UjpgBI+XPJFk/bhRlitxAjQGf3j+7tM4JH818qB/Rtrwato7IqKcLgcEGZUAzV2@vger.kernel.org, AJvYcCUdSWepr1ofd3WfjgHJXG2fWWIKETIWvlf17/3yvlFA3i3bVAafh/ZfDJePTiZtXPIWLSTLNUifwSWT@vger.kernel.org, AJvYcCXpjwat7VUA/FIm9qqDG1jdiRXB1kB+ZZmIMPPbz0LUQ349lxn/VKUjMUaWoRaS8gfZfIqUltjiHvlkM6X9@vger.kernel.org
-X-Gm-Message-State: AOJu0YwAj7imSMeevOy+d2U5HqsJlwEdK869XdYQcvvwk5a7dq7Gkvi/
-	aJ79A1a2QAztTPcEcsM4NaaNOzwd5/g/pTYyBRxLf6CvgsDYHP9hncGz7im4A+lau361kfJZDHV
-	4CsOMUUSBnpDjAV5nyq3nKGkp/CQ=
-X-Google-Smtp-Source: AGHT+IHNXGCljUfMLJx6sCLO4++HQZjQ/FOVgWDT41eOWzzfjs+TkV2rqYcXQef9v8l+9n/cftti5MrlsII4SNy0Vq0=
-X-Received: by 2002:a05:6e02:1a2d:b0:3a0:9fa5:8f2 with SMTP id
- e9e14a558f8ab-3a0c8d15e27mr38885115ab.18.1726853395783; Fri, 20 Sep 2024
- 10:29:55 -0700 (PDT)
+	s=arc-20240116; t=1726854447; c=relaxed/simple;
+	bh=mGCg4J/5BGD3gJKaTmQFi2kBsoo2r0rrbKe3dG75q5Y=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=r9XTRIuZqmHdqITldcf0b1ldSV6ORYpvJIOQSqga3oV7VSKYALje9I+E0icB8gmFiMe2AAgMu6g4tN7NV5/clofTFjoVNO+vQguOcEvuIytfURBjaZmvs7PRu74lPrEMnTlLJIVmjT+NDVUrbChvTmjaMdLqWXMiAkaIjP4D5cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=awTceDyS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D5DB2C4CEC3;
+	Fri, 20 Sep 2024 17:47:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726854446;
+	bh=mGCg4J/5BGD3gJKaTmQFi2kBsoo2r0rrbKe3dG75q5Y=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=awTceDySO39iBg9QIXkPBBXIABSDmu3PQ6Y22jfYI3HsxOriZwDtmeN7VTH0oSl/x
+	 4ZJwmrSZA+LfaoLYvfhuKC/Ky0aRAo8cwV/temHoSgrltmsFGi3cSXQvjNx+TIXaF6
+	 0E/nCH71geQewafwjI/CmMlpRiiKJWyKRwICdQx9jnwTlUpmZx+v8am3Eqdy0BoS0Y
+	 /16BNY44hSXgm7nQTaidPajCkeSmI4Opz0g7Qf61vVQtHS1yPz6ErfXFC6J/MZDB/m
+	 3WXCrGxsLmVBk1UgXdvJ7mx+qWMU7+dE31stuTHe8NEbaPfcBx3RKVeIbAvSpmbKX5
+	 gui7XjoZl3iyw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE36CF9C60;
+	Fri, 20 Sep 2024 17:47:26 +0000 (UTC)
+From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
+Subject: [PATCH v2 0/2] arm64: dts: qcom: sc8280xp-wdk2023: dt definition
+ for WDK2023
+Date: Fri, 20 Sep 2024 19:47:23 +0200
+Message-Id: <20240920-jg-blackrock-for-upstream-v2-0-9bf2f1b2191c@oldschoolsolutions.biz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240917-preemption-a750-t-v4-0-95d48012e0ac@gmail.com>
- <20240917-preemption-a750-t-v4-9-95d48012e0ac@gmail.com> <20240920165427.wikjsywhbcb2kz7h@hu-akhilpo-hyd.qualcomm.com>
-In-Reply-To: <20240920165427.wikjsywhbcb2kz7h@hu-akhilpo-hyd.qualcomm.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Fri, 20 Sep 2024 10:29:44 -0700
-Message-ID: <CAF6AEGv95t=ioPGYLi6CdEuQzx9GC9ehMaTyG03ucbdVHx3eEg@mail.gmail.com>
-Subject: Re: [PATCH v4 09/11] drm/msm/A6XX: Add a flag to allow preemption to submitqueue_create
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Antonino Maniscalco <antomani103@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACu17WYC/x2OQQ6CMBREr2K69ptSWgFX3sOw+JRfqFRKWiAq4
+ e5Wlm+SeTMbixQsRXY7bSzQaqP1YwJxPjHd49gR2DYxE1xIXgkOzw4ah3oIXg9gfIBlinMgfEG
+ hC9QoOJW5YKk/BTL2fbgfdeLextmHzzG1Zv+UKaNkWVAGJFUJEnMENFyAVoIU15hVV3n3ro269
+ 95F75Y5/YuXxn5Zve/7D8LzOfG/AAAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Merck Hung <merckhung@gmail.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1726854445; l=1811;
+ i=jens.glathe@oldschoolsolutions.biz; s=20240919;
+ h=from:subject:message-id;
+ bh=mGCg4J/5BGD3gJKaTmQFi2kBsoo2r0rrbKe3dG75q5Y=;
+ b=fzGBZ1P3km1ktZaT8Bh01lhwQQDgrWbDqJTMI0GAC2A8ZxvaWR2qVT0Hm/Vdr8lTP/WcCmQec
+ L6vzhAa+xaNBVnjDvS7KOQsgpQfDFSPrJDsaLdF599bE7mqeD6lO5Qo
+X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
+ pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
+X-Endpoint-Received: by B4 Relay for
+ jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
+X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Reply-To: jens.glathe@oldschoolsolutions.biz
 
-On Fri, Sep 20, 2024 at 9:54=E2=80=AFAM Akhil P Oommen <quic_akhilpo@quicin=
-c.com> wrote:
->
-> On Tue, Sep 17, 2024 at 01:14:19PM +0200, Antonino Maniscalco wrote:
-> > Some userspace changes are necessary so add a flag for userspace to
-> > advertise support for preemption when creating the submitqueue.
-> >
-> > When this flag is not set preemption will not be allowed in the middle
-> > of the submitted IBs therefore mantaining compatibility with older
-> > userspace.
-> >
-> > The flag is rejected if preemption is not supported on the target, this
-> > allows userspace to know whether preemption is supported.
->
-> Just curious, what is the motivation behind informing userspace about
-> preemption support?
+"Microsoft Windows Dev Kit 2023" aka "Blackrock" aka "Project Volterra"
 
-I think I requested that, as a "just in case" (because it would
-otherwise be awkward if we later needed to know the difference btwn
-drm/sched "preemption" which can only happen before submit is written
-to ring and "real" preemption)
+Device tree for the Windows Dev Kit 2023. This work
+is based on the initial work of Merck Hung <merckhung@gmail.com>.
 
-BR,
--R
+Supported features:
+- USB type-c and type-a ports
+- minidp connector
+- built-in r8152 Ethernet adapter
+- PCIe devices 
+- nvme 
+- ath11k WiFi (WCN6855)
+- WCN6855 Bluetooth
+- A690 GPU
+- Venus codec
+- ADSP and CDSP
+- GPIO keys
+- Audio definition (works via USB)
 
-> -Akhil
->
-> >
-> > Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 ++++++++----
-> >  drivers/gpu/drm/msm/msm_submitqueue.c |  3 +++
-> >  include/uapi/drm/msm_drm.h            |  5 ++++-
-> >  3 files changed, 15 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/a6xx_gpu.c
-> > index 736f475d696f..edbcb6d229ba 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > @@ -430,8 +430,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struc=
-t msm_gem_submit *submit)
-> >       OUT_PKT7(ring, CP_SET_MARKER, 1);
-> >       OUT_RING(ring, 0x101); /* IFPC disable */
-> >
-> > -     OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > -     OUT_RING(ring, 0x00d); /* IB1LIST start */
-> > +     if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
-> > +             OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > +             OUT_RING(ring, 0x00d); /* IB1LIST start */
-> > +     }
-> >
-> >       /* Submit the commands */
-> >       for (i =3D 0; i < submit->nr_cmds; i++) {
-> > @@ -462,8 +464,10 @@ static void a7xx_submit(struct msm_gpu *gpu, struc=
-t msm_gem_submit *submit)
-> >                       update_shadow_rptr(gpu, ring);
-> >       }
-> >
-> > -     OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > -     OUT_RING(ring, 0x00e); /* IB1LIST end */
-> > +     if (submit->queue->flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT) {
-> > +             OUT_PKT7(ring, CP_SET_MARKER, 1);
-> > +             OUT_RING(ring, 0x00e); /* IB1LIST end */
-> > +     }
-> >
-> >       get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
-> >               rbmemptr_stats(ring, index, cpcycles_end));
-> > diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/ms=
-m/msm_submitqueue.c
-> > index 0e803125a325..9b3ffca3f3b4 100644
-> > --- a/drivers/gpu/drm/msm/msm_submitqueue.c
-> > +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-> > @@ -170,6 +170,9 @@ int msm_submitqueue_create(struct drm_device *drm, =
-struct msm_file_private *ctx,
-> >       if (!priv->gpu)
-> >               return -ENODEV;
-> >
-> > +     if (flags & MSM_SUBMITQUEUE_ALLOW_PREEMPT && priv->gpu->nr_rings =
-=3D=3D 1)
-> > +             return -EINVAL;
-> > +
-> >       ret =3D msm_gpu_convert_priority(priv->gpu, prio, &ring_nr, &sche=
-d_prio);
-> >       if (ret)
-> >               return ret;
-> > diff --git a/include/uapi/drm/msm_drm.h b/include/uapi/drm/msm_drm.h
-> > index 3fca72f73861..f37858db34e6 100644
-> > --- a/include/uapi/drm/msm_drm.h
-> > +++ b/include/uapi/drm/msm_drm.h
-> > @@ -345,7 +345,10 @@ struct drm_msm_gem_madvise {
-> >   * backwards compatibility as a "default" submitqueue
-> >   */
-> >
-> > -#define MSM_SUBMITQUEUE_FLAGS (0)
-> > +#define MSM_SUBMITQUEUE_ALLOW_PREEMPT        0x00000001
-> > +#define MSM_SUBMITQUEUE_FLAGS                    ( \
-> > +             MSM_SUBMITQUEUE_ALLOW_PREEMPT | \
-> > +             0)
-> >
-> >  /*
-> >   * The submitqueue priority should be between 0 and MSM_PARAM_PRIORITI=
-ES-1,
-> >
-> > --
-> > 2.46.0
-> >
+Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Signed-off-by: Merck Hung <merckhung@gmail.com>
+
+Original work: https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
+
+This dt is more or less deducted from the Thinkpad X13s.
+It contains a lot of guesswork, and also a lot of research on
+what works with the Windows Dev Kit.
+
+It is in use and under development since May 2023, pretty stable now.
+
+---
+Changes in v2:
+- removed whitespaces and breaks
+- added compatibility binding
+- added feature list
+- reformatted Signed-off list
+- Link to v1: https://lore.kernel.org/r/5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz
+
+---
+Jens Glathe (2):
+      arm64: dts: qcom: sc8280xp-wdk2023: dt definition for WDK2023
+      dt-bindings: arm: qcom: Add Microsoft Windows Dev Kit 2023
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 1332 ++++++++++++++++++++
+ 3 files changed, 1334 insertions(+)
+---
+base-commit: 98f7e32f20d28ec452afb208f9cffc08448a2652
+change-id: 20240920-jg-blackrock-for-upstream-7c7aca20e832
+
+Best regards,
+-- 
+Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+
+
 
