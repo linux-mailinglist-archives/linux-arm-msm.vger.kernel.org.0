@@ -1,201 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-32119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 851BC97D9D2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 21:35:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF74397D9E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 21:45:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E93C41F23336
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 19:34:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 835F21F234AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 19:45:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D830E1442F4;
-	Fri, 20 Sep 2024 19:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 082BD184534;
+	Fri, 20 Sep 2024 19:45:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cl8SQ7e7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QTZlefiV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f65.google.com (mail-ej1-f65.google.com [209.85.218.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6AF44C81;
-	Fri, 20 Sep 2024 19:34:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D6D16A94F
+	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 19:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726860896; cv=none; b=FqT3n3PDTCgl2SEAg//bqyd4Vb6tS8wMPL++NIMryyHeAZJ+Nko9QCW+PwkqF5P6XKrXc7UJWzt+xaXKZOUPMxKBi3Q0XurJPNNPg8be8PMILcKbLvIafyE938066y8j9JOlirhdKK7JSNPw/Yl8v16Su6YYUctpHZP/BwVA5us=
+	t=1726861547; cv=none; b=I+rxP2bo+8AHNfA03iYLEqfx2L4Qfi0G8S0vmWV/He2peZ07jwL249OukRt7w9FohHnRbK1xp1wR1DOt1cZs67PtXqtNlI7MhgJyMGVA5c2MoVCTP4a4XzohybU+SvMLrKedXWbnb1EjEAhVc6n/0Nx/5+jdAajPnb9q/uk2P7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726860896; c=relaxed/simple;
-	bh=JyqLtbe0E2IK4lZFZBmmOkz4o+sIiAwpR3NvNf0bGf4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mXTC/g+ZwzVytW18qUO2P8bY/kW1yXIFg5g11s1s43lQyHNeloHpx9WXHiMu21wiGLLbnX6TWYYq1GJMzdKBryPoq1lvyqofpH84fUz5UkTvYIOQ46Q39WDdW5CeKt5NPj+CF+iVk1rcrkCFoxZ5O1hI+K7LIH5Rsuz26dZqvUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cl8SQ7e7; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48KI5hq3017169;
-	Fri, 20 Sep 2024 19:34:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZKklw6VHAc7PtrhzAdiC/HmgH49cCYfgi4H2Fn8w8HA=; b=cl8SQ7e7rBJjg28O
-	PlLJq+kHfnZnoEhRG5EO4Wm/XVY+Vpf/dse6xXgSVNtGB+fsTe67m6SKlAzJ/cNP
-	BvwkFcFFbDSfyXGtkq7Q8mk42eYJhprl1SQGNs47nJykNtnKopwl4MsOP8nJMOTr
-	wCp6opT92PvOojvxs4qapi1u6XJf0F81Iw6VpzzEJKDE6vk5jyNagf/8U57OI2ch
-	82oPW+H3HpXuLyBggmdSGT8d3ETQuPszp/mT+CU+iRRX/uVmyQwreUpwGJNkEpE/
-	mSCxjWtJmtA+kdFomDDs3nOEU5EfMTKJjGI8b6O5vtzzbvvKPc1UMjT1gzlyHXKn
-	gjeZ3w==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4hhjb3c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Sep 2024 19:34:37 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48KJYZAG007194
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Sep 2024 19:34:35 GMT
-Received: from [10.216.31.199] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Sep
- 2024 12:34:30 -0700
-Message-ID: <5d57669d-dce5-44de-963e-0997ac107c9b@quicinc.com>
-Date: Sat, 21 Sep 2024 01:04:16 +0530
+	s=arc-20240116; t=1726861547; c=relaxed/simple;
+	bh=U2WlvI+9T8YkwgSekwR1bxigdVYdZyFV/7ZqO1c9QEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FP2CjHtC4cKk3qPxMfXVOOkpFt45CAlOxvsZQHb/ntEQS1br8inJigFkNAHHVvZj7IWICJ9t1AtPWLytuCcEYcqVkXDqiy5oUfV+oBqI8kJr5uNbNw8lRqyHxF8ttojQrk8UOtUFjSZ2jLTEHxtI1hscwDfgEDUexDcXG1PeWCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QTZlefiV; arc=none smtp.client-ip=209.85.218.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f65.google.com with SMTP id a640c23a62f3a-a8d24f98215so292020566b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 12:45:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726861543; x=1727466343; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TRS+idGNzahvBj9jscmdm3PmSwtqxAOI1WCgdqDAFHo=;
+        b=QTZlefiVIne2AbWsQA8oKOe5q6AoC6G8TjM/S0l1ZeHc6Zs+U/lEdlupjMjD5LZM1k
+         tG2s23Lj6v8RHdoY3Mjp7+2/By55DGYYbQT6o0VkpsatO7fS3rbIZy9XEzsvs1eUr8iU
+         aDRY0EjSq4/dEyj/GgebV9L2FoATRvDCoJrMBoDjvJCSLq65KlkeY1Pn7bdI7XKfzmtc
+         zacAFPOxyMZVp3NrTm6CJ+PluhnrX5lMJXbAPVkzNDxgzWFLmh5cxc8yxR/7lndRtX5+
+         NuGHJDUWoQSt72A5Mw3zLlAZRCS7pPu8F9ZjaDnziSmdr3NEa/cKD7u9v1F9xMbxpxUZ
+         vdVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726861543; x=1727466343;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TRS+idGNzahvBj9jscmdm3PmSwtqxAOI1WCgdqDAFHo=;
+        b=cirW2Mdy8+7r8WJfePSURnVriPVqakSa/snKo4BWOBpSrF5mfvZ96IhvopztVgIucP
+         sJwqpojlul36xvcMa3SWN7uoIANH/nJzyu8DcbzJ6hnGYV0Iiei391/ZbMtu81Ay/QkS
+         /NmWW+ANzFZWT3sp0gZRUvD4L0Y8PlrrTVkFQ4qeu5+r4XRNFVuaPK/UOS/IqTWGrflv
+         t2zrcXIR8tafRR8m+zp1SQood1kaZRnoqxIn9xPFXZ20vyB4ykRW7BcSybMaKTv6AUkF
+         D1sH7cIxnZhDrcde+VmjDPQWuWabV51cKDUwHEEGHgQn2BlFaprmRvJOHBWj6sz9HcMN
+         pGLA==
+X-Forwarded-Encrypted: i=1; AJvYcCVtXsOcHwVrRGZ0vjbLJmdHy0eaZcSfWG9Vdlm3AyZRireJhIVEtsa7Ag2iz4uzO16nC6rYpB5TGxufFFZU@vger.kernel.org
+X-Gm-Message-State: AOJu0YwajcYiTpzhB2+Ha7nP+Mbodv7fejca1PIZZ851RhhO1RPjPID9
+	2p1E/xdYJGtNht9Wu3n2nWYJZDDFThz70Ee4Kr+tRW+DgquaVxqep1BbYioxXY0=
+X-Google-Smtp-Source: AGHT+IE+zny0ecrNNzz46off+DY0B6+d8ny0pTLg+W0H3UOq2GCe3fmfJwKyykwIG/0D2Qq9+gmtiA==
+X-Received: by 2002:a17:907:3f25:b0:a8a:ead3:8515 with SMTP id a640c23a62f3a-a90d514a83fmr329372466b.65.1726861543096;
+        Fri, 20 Sep 2024 12:45:43 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef80:de75:1bb0:80e4:4afd])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9061331912sm881054066b.224.2024.09.20.12.45.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Sep 2024 12:45:42 -0700 (PDT)
+Date: Fri, 20 Sep 2024 21:45:37 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Rudraksha Gupta <guptarud@gmail.com>,
+	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: Re: [PATCH] firmware: qcom: scm: Allow devicetree-less probe
+Message-ID: <Zu3Q4dZLmMb3zAaq@linaro.org>
+References: <20240920-scm-pdev-v1-1-b76d90e06af7@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 4/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
-        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <quic_c_gdjako@quicinc.com>, <iommu@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-References: <20240920155813.3434021-1-quic_bibekkum@quicinc.com>
- <20240920155813.3434021-5-quic_bibekkum@quicinc.com>
- <hdel47qqf4tto34a5atbjyukameoweudywixuj24aisqoikhcq@v523pootitbg>
-Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <hdel47qqf4tto34a5atbjyukameoweudywixuj24aisqoikhcq@v523pootitbg>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: itM2T97mlohOTpcr_8ns0Gu8Svu2fMBi
-X-Proofpoint-ORIG-GUID: itM2T97mlohOTpcr_8ns0Gu8Svu2fMBi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
- adultscore=0 impostorscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- mlxlogscore=999 mlxscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2409200142
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240920-scm-pdev-v1-1-b76d90e06af7@quicinc.com>
 
-
-
-On 9/20/2024 9:50 PM, Dmitry Baryshkov wrote:
-> On Fri, Sep 20, 2024 at 09:28:12PM GMT, Bibek Kumar Patro wrote:
->> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
->> the TLB to fetch just the next page table. MMU-500 features ACTLR
->> register which is implementation defined and is used for Qualcomm SoCs
->> to have a custom prefetch setting enabling TLB to prefetch the next set
->> of page tables accordingly allowing for faster translations.
->>
->> ACTLR value is unique for each SMR (Stream matching register) and stored
->> in a pre-populated table. This value is set to the register during
->> context bank initialisation.
->>
->> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->> ---
->>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 26 ++++++++++++++++++++++
->>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  1 +
->>   2 files changed, 27 insertions(+)
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> index 38ac9cab763b..4ac272d05843 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->> @@ -252,6 +252,20 @@ static bool qcom_adreno_can_do_ttbr1(struct arm_smmu_device *smmu)
->>   	return true;
->>   }
->>
->> +static void qcom_smmu_set_actlr_dev(struct device *dev, struct arm_smmu_device *smmu, int cbndx,
->> +		const struct of_device_id *client_match)
->> +{
->> +	const struct of_device_id *match =
->> +			of_match_device(client_match, dev);
->> +
->> +	if (!match) {
->> +		dev_notice(dev, "no ACTLR settings present\n");
+On Fri, Sep 20, 2024 at 11:01:40AM -0700, Elliot Berman wrote:
+> Some devicetrees representing Qualcomm Technologies, Inc. SoCs are
+> missing the SCM node. Users of the SCM device assume the device is
+> present and the driver also assumes it has probed. This can lead to
+> unanticipated crashes when there isn't an SCM device. All Qualcomm
+> Technologies, Inc. SoCs use SCM to communicate with firmware, so create
+> the platform device if it's not present in the devicetree.
 > 
-> dev_dbg() or even dev_vdbg(), please. We do not want to spam people with
-> messages about a perfectly normal behaviour.
+> Tested that SCM node still probes on:
+>  - sm8650-qrd with the SCM DT node still present
+>  - sm845-mtp with the SCM DT node still present
+>  - sm845-mtp with the node removed
 > 
-> LGTM otherwise.
+> Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
+> Reported-by: Rudraksha Gupta <guptarud@gmail.com>
+> Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
+> Link: https://lore.kernel.org/all/CAA8EJpqSKbKJ=y0LAigGdj7_uk+5mezDgnzV5XEzwbxRJgpN1w@mail.gmail.com/
+> Suggested-by: Bartosz Golaszewski <brgl@bgdev.pl>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-Ack, thanks Dmitry for the suggestion.
-I was actually wondering if to broadcast this message
-over the logs through dev_notice or give a option to
-print it in debug level through dev_dbg.
+Do we actually need this patch?
 
-But I'm inline with your suggestion now, will switch
-to dev_dbg for this message.
+We have a simple patch already that fixes the reported regression [1].
 
-Thanks & regards,
-Bibek
+And as I explained in my reply to that series [2], the root cause is not
+the lack of /scm node in the DT, but the time when the SCM call is made
+during the kernel boot process. qcom_scm_set_cold_boot_addr() is called
+in arch/arm/mach-qcom/platsmp.c before any drivers bind to devices in
+the DT. We would need an early_initcall() to run early enough before
+initializing SMP, but I haven't found any examples that the
+device/driver model is actually functional at that point.
 
-> 
-> 
->> +		return;
->> +	}
->> +
->> +	arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR, (u64)match->data);
->> +}
->> +
->>   static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->>   {
->> @@ -316,8 +330,20 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->>   static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->>   		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
->>   {
->> +	struct arm_smmu_device *smmu = smmu_domain->smmu;
->> +	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
->> +	const struct of_device_id *client_match;
->> +	int cbndx = smmu_domain->cfg.cbndx;
->> +
->>   	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
->>
->> +	client_match = qsmmu->data->client_match;
->> +
->> +	if (!client_match)
->> +		return 0;
->> +
->> +	qcom_smmu_set_actlr_dev(dev, smmu, cbndx, client_match);
->> +
->>   	return 0;
->>   }
->>
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> index b55cd3e3ae48..8addd453f5f1 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
->> @@ -28,6 +28,7 @@ struct qcom_smmu_match_data {
->>   	const struct qcom_smmu_config *cfg;
->>   	const struct arm_smmu_impl *impl;
->>   	const struct arm_smmu_impl *adreno_impl;
->> +	const struct of_device_id * const client_match;
->>   };
->>
->>   irqreturn_t qcom_smmu_context_fault(int irq, void *dev);
->> --
->> 2.34.1
->>
-> 
+I think applying the simple one line fix from Bartosz [1] should be
+sufficient to restore all functionality that worked before the SCM
+allocator changes.
+
+Thanks,
+Stephan
+
+[1]: https://lore.kernel.org/linux-arm-msm/20240911-tzmem-null-ptr-v2-1-7c61b1a1b463@linaro.org/
+[2]: https://lore.kernel.org/linux-arm-msm/ZuhgV1vicIFzPGI-@linaro.org/
 
