@@ -1,112 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-32076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4330797D59A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 14:44:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5DB297D59C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 14:44:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 005EF1F238A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 12:44:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 244171C20888
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 12:44:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FE6414EC44;
-	Fri, 20 Sep 2024 12:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 051F01514DE;
+	Fri, 20 Sep 2024 12:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XZzwrcRY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fA0h2HlJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B6614D280
-	for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 12:44:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B643013D52B;
+	Fri, 20 Sep 2024 12:44:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726836271; cv=none; b=iLCyd6VdHgrCfsou3A/HXyeiMCICA1gr43A9trl97qimyoeiPgyCrGubpI3IO+owUKgJix/qodGIgs/XG4QJXZqRD9HMB30Y9DjMSgNpKKLrD+lYJJCZSnwKz+KJ4FjZzWW9Q0UhnbIge8DS/e3DKts0US3crgc4Fxm0vym0ZfM=
+	t=1726836274; cv=none; b=Cm0UtULHa3BXFYQn+z46fB3XISSBcUdGVUpb6/2oFlPbEIDwUP4zyCjTLe6qvU7fOGZJmv61QOeGh2KJ6AY5yJoLxrOLj3syWakIaphbiKVQk6sZ6lGq1vLQsWoqk8whvzfdLWVBM7jd0DR9TVML66n4zBb4aMgjpqE9LXxNlVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726836271; c=relaxed/simple;
-	bh=B8MzUXbeIjS+MC1pxMl6CzSLrM5Bx82UeVG+v9v3rEw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nydTz8r1uYvHnrT8h9bFnUqHdPtnb9GysI1Y84FHy8JQrBJ18WVxCGzFh1aEzonl5R+g97bOcSNt9MDHb+N5pQiSkFJ39mS6am5YHoVfgDMVRsIZ1jlUF5RKOxkF4COZF31Cr2l8LMv4bvGEOXv6KbkiJBOuxX7uzs9zKOMQRXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XZzwrcRY; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a8d43657255so288246266b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Sep 2024 05:44:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726836268; x=1727441068; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aDO0vPyvIABvz0DiT33xAJEo0l8Q5gFjEXHJSzmH/NE=;
-        b=XZzwrcRYzLhu+bX/CdK2pMnPKrxruGMegxiAZmA6yHWXUbwLr7pNZmHdyS0I2jo66g
-         2BCpwOllB832WYrTjaBfF6rpRSBpRC4UDWkDcFdV1h9F+AqNGaQKDJ0g2Klmuuuc77uf
-         YUiyFx7YLxX/gQ/mpKrTF0tAxvx/i9KAk9ANNBsFQQodvFox7YO8XIAs7tWO5WjwjvTh
-         UNSQVdZhlKFvia99LXeierzjQFtyUEM9Xb36xwmUEL6OQj2SGNA9COrVpPn2qpkpejke
-         Aw1LEj1ihfVNsvhxWfOaDK7x22xV6vs2WEEhe9LPNxyjbht6/id3yPkii+WYHNbhw6eC
-         WMIw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726836268; x=1727441068;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aDO0vPyvIABvz0DiT33xAJEo0l8Q5gFjEXHJSzmH/NE=;
-        b=VN/EvaFkt3+uf6uBgg3jrraCoyg3dA4aEs5RgCAxDNXlBUCS/RXMuQrutf6FVTHihg
-         DzC4OrjfFuXX9egwyCmTozZXluVxA1vYi5RyB+e74dECWYWXe0fWl8+NWQkczN4iLrFn
-         XTHgddNINDJCIlf7f7ucv2akce6AnkbpvyAQi9atzHitLked9QJXljCJTT8nMAPkHrIi
-         9y4j7N2ruDN3mFN0zNlH8yMABQqgGcyZng5KcYzXCDX2x+V72x8ZX56yN9oagWkztrYN
-         Yw3I70dGdXeTtdkhvRnA7HHJ0whcFQDT/TT/sTOfjOQhvYda766JKT0fJUwAcXL2afGv
-         gNog==
-X-Forwarded-Encrypted: i=1; AJvYcCWpZf845A2cb+9Zv+k0pVTjsr323J3ltQtO8m/6K/lr9GzG6IxAdZBBlcTPLSI/PqCmg8C3LQIxZuJpifUf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4O4QWGRKnm7qAyo6nlfoHnISsJHdNAeDxO2voonsPbM8KI8XV
-	sXMRK8WLGKZcgJ8T0yPlXJ6Cm0N0oAYYeKToUHr93+RoPmWPpv367wkkqbzTqwk=
-X-Google-Smtp-Source: AGHT+IGDYr84SfhTE9iCQ3CMFhcNCWIPXNlNOj1ld8jHd8Q6e5bYh+70KLroF2CA85pp6CVhB7OAtQ==
-X-Received: by 2002:a17:907:e65b:b0:a8d:c3b:b16 with SMTP id a640c23a62f3a-a90d4ffaf60mr209109866b.28.1726836267822;
-        Fri, 20 Sep 2024 05:44:27 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef80:de75:1bb0:80e4:4afd])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90612e519esm855375566b.176.2024.09.20.05.44.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 20 Sep 2024 05:44:27 -0700 (PDT)
-Date: Fri, 20 Sep 2024 14:44:25 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jinjie Ruan <ruanjinjie@huawei.com>, stephan@gerhold.net,
-	loic.poulain@linaro.org, ryazanov.s.a@gmail.com,
-	johannes@sipsolutions.net, davem@davemloft.net, edumazet@google.com,
-	kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] net: wwan: qcom_bam_dmux: Fix missing
- pm_runtime_disable()
-Message-ID: <Zu1uKR6v0pI5p01R@linaro.org>
-References: <20240920100711.2744120-1-ruanjinjie@huawei.com>
- <lqj3jfaelgeecf5yynpjxza6h4eblhzumx6rif3lgivfqhb4nk@xeft7zplc2xb>
+	s=arc-20240116; t=1726836274; c=relaxed/simple;
+	bh=l3N4z2t/DFfwO/uan9wDbusPXHDlLtxdDU82/BxByyQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UkVvEMrRLdpuqh+UjBic+UPK44tWdwzM90Tbw2kY2Q+Fo4rft+j7oQLE6rV6t/KNsQDDy+XEjFlGUUFDk0PAjOA27R5D/gEajzVxX5JHVU8IWeW11yGpruBPaOBN3J9bGoFB1exwhMxrAP6rYC0Wx/dV3P7ms+6OPVkOUS6Mo90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fA0h2HlJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BB7C4CEC3;
+	Fri, 20 Sep 2024 12:44:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726836274;
+	bh=l3N4z2t/DFfwO/uan9wDbusPXHDlLtxdDU82/BxByyQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fA0h2HlJn8kKW45n262aJao2Oil96tYVnA8lOpaotbnRmlU4pIrrJwrypLrGDimpf
+	 DVvdXyJx3fFyv4O67mnTTmhdhKxU7uJQ1UUG1sBnDwyN2l/FeJcfA8/JgOD2LQRn8a
+	 XJ1CzHILHj/rdnoFsSZUIsluUzvL/M4WZOH04VrxMFmsOivQ3Ou4FSvD0lpw368OVy
+	 QDHFCiX7llidUDuxenzZZbAPJ1pC9VtgIJWONvmIc9Wz2/dz5RKnOn6i9ccs3XrSKQ
+	 N2z5Spa+C+735QnR7ljAfzC+jjy6M53kf8zYA3sjYTRIKj6XobBDARlXaatjDkgWnA
+	 W/BwoBXJhx3YQ==
+Message-ID: <91392141-af8b-4161-8e76-6f461aaba42a@kernel.org>
+Date: Fri, 20 Sep 2024 14:44:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <lqj3jfaelgeecf5yynpjxza6h4eblhzumx6rif3lgivfqhb4nk@xeft7zplc2xb>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/8] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
+To: Sricharan Ramabadhran <quic_srichara@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ ulf.hansson@linaro.org, linus.walleij@linaro.org, catalin.marinas@arm.com,
+ p.zabel@pengutronix.de, geert+renesas@glider.be,
+ dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Cc: quic_varada@quicinc.com
+References: <20240913121250.2995351-1-quic_srichara@quicinc.com>
+ <20240913121250.2995351-2-quic_srichara@quicinc.com>
+ <4cd3d3f8-7d73-4171-bb35-aba975cdc11a@kernel.org>
+ <9f2ccf3d-fa71-4784-b6d2-2b12ed50bdd2@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <9f2ccf3d-fa71-4784-b6d2-2b12ed50bdd2@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Sep 20, 2024 at 01:48:15PM +0300, Dmitry Baryshkov wrote:
-> On Fri, Sep 20, 2024 at 06:07:11PM GMT, Jinjie Ruan wrote:
-> > It's important to undo pm_runtime_use_autosuspend() with
-> > pm_runtime_dont_use_autosuspend() at driver exit time.
-> > 
-> > But the pm_runtime_disable() and pm_runtime_dont_use_autosuspend()
-> > is missing in the error path for bam_dmux_probe(). So add it.
+On 20/09/2024 13:56, Sricharan Ramabadhran wrote:
 > 
-> Please use devm_pm_runtime_enable(), which handles autosuspend.
-> 
+>>> +
+>>> +allOf:
+>>> +  - $ref: qcom,gcc.yaml#
+>>> +
+>>> +properties:
+>>> +  compatible:
+>>> +    const: qcom,ipq5424-gcc
+>>
+>> So everything i sthe same as 5332? Why not adding it there?
+>>
+> infact, ipq5332 has 1 dual lane and 1 single lane pcie, whereas
+> ipq5424 has 2 dual lane and 2 single lane pcie. will update the
+> bindings in v2 accordingly.
 
-This would conflict with the existing cleanup in bam_dmux_remove(),
-which probably needs to stay manually managed since the tear down order
-is quite important there.
+Hm? What is the difference in the bindings? I don't see. Maybe some diff
+would help.
 
-I think this looks reasonable, except that pm_runtime_set_suspended()
-should be redundant since it's the default runtime PM state.
+Best regards,
+Krzysztof
 
-Thanks,
-Stephan
 
