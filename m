@@ -1,63 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-32043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C3E197D186
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 09:12:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D508597D1B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 09:26:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD1D21C210F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 07:12:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BFA128264A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 07:26:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D262433D6;
-	Fri, 20 Sep 2024 07:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1D1338DE5;
+	Fri, 20 Sep 2024 07:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="DSVBRiAx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I/80oSva"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46D0F3BB50;
-	Fri, 20 Sep 2024 07:12:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2298820ED;
+	Fri, 20 Sep 2024 07:26:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726816343; cv=none; b=ETHz+lNWowZW3iV9kgCnT/o3dfgofiwvlbgwIxci06+z6BWu8ueDyxi4c4xskHsOErd+JbCVnbkze5/J0one8HcyFpXkFnvClx4IulOBlsPPMt4Lp+Zb9dgO3vVGCF+cSosp8y97K84PVKQ7K3l8QTUiZBP/owKJqPj/tKXBkVg=
+	t=1726817191; cv=none; b=KwIwl5VWnogMGJFr1eARf487JcbFUBwEGvRrzsEydC1TUIKLyAtXeo7nhOjXrnQ33Pgvg8x32kK/uBMNWHkJDcNARyHwcj2mOMbxwVmShgVyJN4idc9v11zk/eEFRGT1cKKsJvZybA0vIyrZ6o89qV1iUfof5qKJ5MESr5RndF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726816343; c=relaxed/simple;
-	bh=/8F4vC+WrRK8JmcD0TA3VmXt6A8IcZpsr5kN9dbyx7o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=R9PQQSyiMvtZRf4byHzhhB3R6Fpv3Cw/K5eSm2/XRmvMtXEnDG148+DRPbJbeupyV0ZNkeLDWR+2JiJJMBuMly3IblLdeXMvNhSNPuQ0SbHlIpx+/leXHO9i4cshpvjq7HRNEYhwTshO9wBMhSBRrvCMhMNa1TAHEMwbJJLF+V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=DSVBRiAx; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1726817191; c=relaxed/simple;
+	bh=v4qD2LzdHQxvvvs14S/SB1WeQes1Tb/4cKlo5Zj+e6I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=V9wYwuljyYEaP9dAPL5afRVwvxn7cz8HVZ7DYnBTQqVhEgpjruNed+eQzEQWY7WfKl+14LMxRktoII8EN0Z7bd30HXuWNDIjUkL6OGSctPf74ZlRuxSZ3Kpq67SOrK0fFl8kt7w6dKLKhAlzdo46TwCExTEwr+VWvwoTE6pvjxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I/80oSva; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JLx2kl018133;
-	Fri, 20 Sep 2024 07:12:05 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48JJ3sNj005788;
+	Fri, 20 Sep 2024 07:26:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=0EKgVH//p3yEU4Of22Zpii
-	69hvSp1EgzKmBMS7nyUfU=; b=DSVBRiAxcTbzJSnxmAek/GIIjgTySK5YYE75XW
-	T7wMWjHt0X4vmDPZ286A1JSNhswbjVDXjzgHzRqNJ22TVDZNHfpasyD+TfueDqZp
-	UnGrEbh4FQlOfpWy1a5As4YB6RJrjZIWKmp7aWrorK6YjdjXp0YoYWs8i1GtciOn
-	Rql7CxLRllKKDYCDmL2SFoYvhe8U6lHIKP/ioJzWmM5bcZNlRf6tcimtYLfkZo48
-	u9PRdbkoSHhJOgQjNWyHfmcj3+YegqnfZ00PzM0kahPp6dd9bcRs8uN8Ivr7faNh
-	GKwEFgoAraZkncksGZUkErPqGzGBqPQdfc5ayjMXRpHfbETA==
+	:mime-version:subject:to; s=qcppdkim1; bh=Kw6dFYWBBHebVUmaYsgwQJ
+	YlHh8GjmSyGYzeZdBjeNg=; b=I/80oSva4FZFckZyI0rhxNTx1M3XqzxomWbUDD
+	wJmvlcf+6t6Z9eupXv3JiFZo5oC9xKhpaRY6eLugpgcZlr/z1Mc7vwcKfHsw9LvI
+	Pubo5jEypJxUwsNxfKg9hFyNzKhQ08YkGi+BoATc0uV2LKQoMENjy1fQJ0yuYLz6
+	bz1dOIqJpERdau6JFZ55ag+pQ5Di6wmaXMqY/qiU6dAhZLxoaPEDVT3JSxsOXjYw
+	egygUfjhe/aIaa9AeqHFATLYE6jdOxi6mYuIE93uJhQKxjWJNv7UUMoMEqROpXOD
+	WhwBRQY24X6dA+aGjjpgb9KLmjBfEFts6fkwJARA6r2JHxsg==
 Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4hfr2rg-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4jj08ad-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Sep 2024 07:12:05 +0000 (GMT)
+	Fri, 20 Sep 2024 07:26:26 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48K7C4cR006797
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48K7QOJc027264
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Sep 2024 07:12:04 GMT
+	Fri, 20 Sep 2024 07:26:24 GMT
 Received: from lijuang2-gv.ap.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 20 Sep 2024 00:11:57 -0700
+ 15.2.1544.9; Fri, 20 Sep 2024 00:26:19 -0700
 From: lijuang <quic_lijuang@quicinc.com>
-Date: Fri, 20 Sep 2024 15:11:41 +0800
-Subject: [PATCH v2] dt-bindings: watchdog: Document Qualcomm QCS615
- watchdog
+Date: Fri, 20 Sep 2024 15:26:05 +0800
+Subject: [PATCH v2] dt-bindings: mfd: qcom,tcsr: Add compatible for qcs615
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,77 +65,76 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240920-add_watchdog_compatible_for_qcs615-v2-1-427944f1151e@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIACwg7WYC/42NQQ6CMBBFr0K6toZOwFBX3sOQpkwHmEQptIgaw
- t2txAO4fD8/760iUmCK4pytItDCkf2QAA6ZwN4OHUl2iQXkUOQacmmdM087Y+98Z9DfRztzcyP
- T+mAmjCdVSiKsbIWAGgqRRGOgll975Fon7jnOPrz35qK+60+v4B/9oqSShABNaZ2utLpMD0Ye8
- Jj+ot627QN1orgt1gAAAA==
-To: Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
-	<linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
+Message-ID: <20240920-add_tcsr_compatible_for_qcs615-v2-1-8ce2dbc7f72c@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAIwj7WYC/4WNQQ6CMBBFr2JmbU2nARRX3sOQpnRamUQptEg0h
+ LtbiXuX7+fnvQWSi+wSnHcLRDdz4tBnUPsd2M70NyeYMoOSqpC1ksIQ6cmmqG14DGbi9u60D1G
+ PNlVYClmjMdXRo608ZMkQnefXFrg2mTtOU4jvrTfjd/2pUf1TzyhQlO2pJCqoUIYu45Mt9/aQ/
+ 9Cs6/oB/D1xeM4AAAA=
+To: Lee Jones <lee@kernel.org>, Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Rajendra Nayak
-	<quic_rjendra@quicinc.com>
+        "Bjorn
+ Andersson" <andersson@kernel.org>
 CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-watchdog@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Lijuan Gao <quic_lijuang@quicinc.com>
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Lijuan Gao
+	<quic_lijuang@quicinc.com>
 X-Mailer: b4 0.15-dev-99b12
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1726816316; l=1347;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1726817178; l=1288;
  i=quic_lijuang@quicinc.com; s=20240827; h=from:subject:message-id;
- bh=/8F4vC+WrRK8JmcD0TA3VmXt6A8IcZpsr5kN9dbyx7o=;
- b=AyiaB6kq6mN7zrKjfS3c7QTrfacqklSKgmDxslJeYz3hj6UVjrLSwKt755IHXcqoZFueHRPIZ
- x3rutL4hQX6CCGTrsgd7B2zWcYegmzaZ1KJt0erfV8yrLlfupwlQPWx
+ bh=v4qD2LzdHQxvvvs14S/SB1WeQes1Tb/4cKlo5Zj+e6I=;
+ b=JiL7oABRij1J8nybGMIGnVyb0D2pJHKqIvuUYpKFYBhbvnWYiceLUqgkc3R4BydiXy+WbPhpd
+ B0/30Gs+vJrDc3oobS7LwXPFvmGFCyQoJP7hYzfWC5YzxERgVBdafuS
 X-Developer-Key: i=quic_lijuang@quicinc.com; a=ed25519;
  pk=1zeM8FpQK/J1jSFHn8iXHeb3xt7F/3GvHv7ET2RNJxE=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 2LvPdIpFtkIOlW-stJqeU7CLoU7Wqp4c
-X-Proofpoint-ORIG-GUID: 2LvPdIpFtkIOlW-stJqeU7CLoU7Wqp4c
+X-Proofpoint-ORIG-GUID: Z2ejSs9JvTD6Ch5z7E3Q62l7uzyxD7oa
+X-Proofpoint-GUID: Z2ejSs9JvTD6Ch5z7E3Q62l7uzyxD7oa
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- impostorscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409200049
+ clxscore=1015 phishscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0
+ mlxlogscore=936 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409200050
 
-Add devicetree binding for watchdog present on Qualcomm QCS615 SoC.
+Document the qcom,qcs615-tcsr compatible.
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
 Signed-off-by: Lijuan Gao <quic_lijuang@quicinc.com>
 ---
-Add devicetree binding for watchdog present on Qualcomm
-QCS615 SoC.
+Document the qcom,qcs615-tcsr compatible, tcsr will provide various
+control and status functions for their peripherals.
 ---
 Changes in v2:
 - Collected Acked-by
 - Rebased patchset on top next-20240919
-- Link to v1: https://lore.kernel.org/r/20240912-add_watchdog_compatible_for_qcs615-v1-1-ec22b5ad9891@quicinc.com
+- Link to v1: https://lore.kernel.org/r/20240912-add_tcsr_compatible_for_qcs615-v1-1-5b85dd4d42ad@quicinc.com
 ---
- Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml | 1 +
+ Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-index 932393f8c649..32eaf43aadb3 100644
---- a/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-+++ b/Documentation/devicetree/bindings/watchdog/qcom-wdt.yaml
-@@ -26,6 +26,7 @@ properties:
-               - qcom,apss-wdt-msm8994
-               - qcom,apss-wdt-qcm2290
-               - qcom,apss-wdt-qcs404
-+              - qcom,apss-wdt-qcs615
-               - qcom,apss-wdt-sa8255p
-               - qcom,apss-wdt-sa8775p
-               - qcom,apss-wdt-sc7180
+diff --git a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+index 7d0b0b403150..6734a6c99f8f 100644
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -21,6 +21,7 @@ properties:
+           - qcom,msm8998-tcsr
+           - qcom,qcm2290-tcsr
+           - qcom,qcs404-tcsr
++          - qcom,qcs615-tcsr
+           - qcom,sa8775p-tcsr
+           - qcom,sc7180-tcsr
+           - qcom,sc7280-tcsr
 
 ---
 base-commit: 3621a2c9142bd490af0666c0c02d52d60ce0d2a5
-change-id: 20240920-add_watchdog_compatible_for_qcs615-eec8a8c2c924
+change-id: 20240920-add_tcsr_compatible_for_qcs615-091aa67f1c6f
 
 Best regards,
 -- 
