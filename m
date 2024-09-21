@@ -1,139 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-32125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D503F97DAE7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 01:50:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB70D97DAFA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 02:25:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7DCD21F22CD6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Sep 2024 23:50:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CAC091C20D74
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 00:25:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B687218D63E;
-	Fri, 20 Sep 2024 23:50:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1258115C3;
+	Sat, 21 Sep 2024 00:25:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oJUhsjfE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZDJ9VnZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7FA5D915;
-	Fri, 20 Sep 2024 23:50:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C0110E6;
+	Sat, 21 Sep 2024 00:25:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726876228; cv=none; b=sesN2RUx03i+iJAIcQRTj3Taaxpsgj/+5EY0GoEAEF2I+XQoIsxQXD/ZFdXrtIBa/G9ocKmD6AlL3ogZQlUgfiIA3mXSSGGXBG5tsYHPLu1f+D2BqIQkNcxA7JG/34A6uC8hoAuYmi1i7xEuZece+iz0zwXtD1j5ReelO9JdLPM=
+	t=1726878304; cv=none; b=eAQOhdeI4XDAqxZCGx+Tfi8ztzkwpP8ZsbTsUM4jExR/Tqpn9c3JtLOWeTYF23rmMnD3mdIumQYUbUY3ZorN6kMDmkwrWS3UpoZ9nN1pfcQC9UqMTbeniR2DGEjKzfqiK1V8JHzclrGSy8SrRoCK6NcwVdWEOU3wBtN36ulOyNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726876228; c=relaxed/simple;
-	bh=ipjxMYTJoUHV3BA3NQmOYPF7baYuN9ZnKpWZo3rOiu4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=k5hJOOKoIEd89oIChSlAG6W+ipKsRoKQUhbb1RfNtHMnn9NOLvVMgPrx9V6UCWuwXXapn0rj/b76dr5KkXANlCQvPffKthsacTnzttYwjHfQGrDyk8+tlfFrXD3BY9nyngkW6hhekiSKTmnKnXB6AKqvj0soKh6t17ElK224JDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oJUhsjfE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48KKfbDf018634;
-	Fri, 20 Sep 2024 23:49:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ipjxMYTJoUHV3BA3NQmOYPF7baYuN9ZnKpWZo3rOiu4=; b=oJUhsjfEtGDyM+Xk
-	sT9Exk6FnRk/K6LyxiHaCDBqhVQbTf9oAsbilKHcPnCirdSxQW7Zu1BgW5oSfbOl
-	fZi+/Dg5P+46YauPnUtI1ShsqpNNTsKIxnWvPiRVF0Hl3tNcbs/mMeNeVPfGGI5W
-	WA71H3X71j6loxOa4Uop19VSgmmhYkd2pjOPqFrgcR+youl3vZYOR085mQ5eaqAp
-	MT/5pUUcu/2hkaGobdhEskM14ziOgL75PBULCWpJURYdIszjjkZ1vdUB9UoFMl0Z
-	8dq1uAhO9+I14V7FSfXVJ8axATi9KnrF/xg0onTL2vXjzp4MtEVigsfIOxkYHy7d
-	ANgOUw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41n4hftsu2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Sep 2024 23:49:58 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48KNnwf2011994
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 20 Sep 2024 23:49:58 GMT
-Received: from [10.71.112.62] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 20 Sep
- 2024 16:49:57 -0700
-Message-ID: <182938da-da86-49a4-800a-446954cc6c60@quicinc.com>
-Date: Fri, 20 Sep 2024 16:49:57 -0700
+	s=arc-20240116; t=1726878304; c=relaxed/simple;
+	bh=myBcqF/KQGuPoP9RYMYc2B6DAYHbjrD3pZNXUMO3jpw=;
+	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
+	 Message-Id:Subject; b=ml+PdrxoUNDB+TUKPa4TzLj7d0tUumFAA1oLWtuHJ68vzigXOcjm4+LPVXpMR/xyzIKVu2ilIhueC/lT0SVMLtsfDr/RwmwVy+Bmg1sZ6Vy1IxMfKU1eVz87mPDiBDU6G81J0YYIQiZV0uhiNzZ5Yg+yvTtFSYsZaGCC9UZemFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZDJ9VnZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2684AC4CEC3;
+	Sat, 21 Sep 2024 00:25:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1726878303;
+	bh=myBcqF/KQGuPoP9RYMYc2B6DAYHbjrD3pZNXUMO3jpw=;
+	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
+	b=FZDJ9VnZisFBe1oIcyZ+weuArltlrJaTUECWdhP6bAXFe04J6o6R9KSytJ3okPWFf
+	 bEo1Fwy+eItZgDFTShbHZTr8lf9sppNeBCxQVt6kTHMppMpqU3NjTXfOfsYbK4opNX
+	 nWbJMLwEbFo+L4T/sRZ/fl2dMYAGK/Fa4xkz6HaXIND0lOBrrQN/efUxPc4zc/cK2E
+	 I1xbfrnwzYT7YVtH2/qThCv1Rp5YsDscQ0NdFpsFsZmn5RKPH/yLkiXW9QxQllgrR5
+	 ULSY57dB5x/KvNvsGLWAMvlvZmWQbv4x20N+CgV7L+ddDJtaUY9ZLl6XiAD9fCEbD5
+	 ZddGdzrlAIfuQ==
+Date: Fri, 20 Sep 2024 19:25:02 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v27 01/32] xhci: add helper to stop endpoint and wait for
- completion
-To: =?UTF-8?Q?Micha=C5=82_Pecio?= <michal.pecio@gmail.com>
-CC: <mathias.nyman@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <alsa-devel@alsa-project.org>, <bgoswami@quicinc.com>,
-        <broonie@kernel.org>, <conor+dt@kernel.org>, <corbet@lwn.net>,
-        <devicetree@vger.kernel.org>, <dmitry.torokhov@gmail.com>,
-        <gregkh@linuxfoundation.org>, <krzk+dt@kernel.org>,
-        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <pierre-louis.bossart@linux.intel.com>,
-        <robh@kernel.org>, <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>
-References: <20240913103237.2f5dc796@foxbook>
- <a9dcaa5a-4f5d-451a-93aa-7457798fc243@quicinc.com>
- <20240915095514.6b01fefb@foxbook>
-Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <20240915095514.6b01fefb@foxbook>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iytzgxK0RhtlpMsGzW7stpvgCpcQAXKb
-X-Proofpoint-ORIG-GUID: iytzgxK0RhtlpMsGzW7stpvgCpcQAXKb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 phishscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- impostorscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409200174
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Cc: Merck Hung <merckhung@gmail.com>, linux-arm-msm@vger.kernel.org, 
+ devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+In-Reply-To: <20240920-jg-blackrock-for-upstream-v2-0-9bf2f1b2191c@oldschoolsolutions.biz>
+References: <20240920-jg-blackrock-for-upstream-v2-0-9bf2f1b2191c@oldschoolsolutions.biz>
+Message-Id: <172687817265.147669.10724647062896729336.robh@kernel.org>
+Subject: Re: [PATCH v2 0/2] arm64: dts: qcom: sc8280xp-wdk2023: dt
+ definition for WDK2023
 
-Hi Michal,
 
-On 9/15/2024 12:55 AM, Michał Pecio wrote:
-> Hi,
->
->> Maybe the last sentence is not needed.  When we are using the
->> secondary interrupters, at least in the offload use case that I've
->> verified with, the XHCI is completely unaware of what TDs have been
->> queued, etc...  So technically, even if we did call the default
->> handler (ie xhci_handle_cmd_stop_ep), most of the routines to
->> invalidate TDs are going to be no-ops.
-> Yes, the cancellation machinery will return immediately if there are
-> no TDs queued by xhci_hcd itself.
->
-> But xhci_handle_cmd_stop_ep() does a few more things for you - it
-> checks if the command has actually succeeded, clears any halt condition
-> which may be preventing stopping the endpoint, and it sometimes retries
-> the command (only on "bad" chips, AFAIK).
->
-> This new code does none of the above, so in the general case it can't
-> even guarantee that the endpoint is stopped when it returns zero. This
-> should ideally be documented in some way, or fixed, before somebody is
-> tempted to call it with unrealistically high expectations ;)
->
-> As far as I see, it only works for you because isochronous never halts
-> and Qualcomm HW is (hopefully) free of those stop-after-restart bugs.
-> There will be problems if the SB tries to use any other endpoint type.
+On Fri, 20 Sep 2024 19:47:23 +0200, Jens Glathe wrote:
+> "Microsoft Windows Dev Kit 2023" aka "Blackrock" aka "Project Volterra"
+> 
+> Device tree for the Windows Dev Kit 2023. This work
+> is based on the initial work of Merck Hung <merckhung@gmail.com>.
+> 
+> Supported features:
+> - USB type-c and type-a ports
+> - minidp connector
+> - built-in r8152 Ethernet adapter
+> - PCIe devices
+> - nvme
+> - ath11k WiFi (WCN6855)
+> - WCN6855 Bluetooth
+> - A690 GPU
+> - Venus codec
+> - ADSP and CDSP
+> - GPIO keys
+> - Audio definition (works via USB)
+> 
+> Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> Signed-off-by: Merck Hung <merckhung@gmail.com>
+> 
+> Original work: https://github.com/merckhung/linux_ms_dev_kit/blob/ms-dev-kit-2023-v6.3.0/arch/arm64/boot/dts/qcom/sc8280xp-microsoft-dev-kit-2023.dts
+> 
+> This dt is more or less deducted from the Thinkpad X13s.
+> It contains a lot of guesswork, and also a lot of research on
+> what works with the Windows Dev Kit.
+> 
+> It is in use and under development since May 2023, pretty stable now.
+> 
+> ---
+> Changes in v2:
+> - removed whitespaces and breaks
+> - added compatibility binding
+> - added feature list
+> - reformatted Signed-off list
+> - Link to v1: https://lore.kernel.org/r/5f5487e1-e458-4a3a-af02-c52e50ca1964@oldschoolsolutions.biz
+> 
+> ---
+> Jens Glathe (2):
+>       arm64: dts: qcom: sc8280xp-wdk2023: dt definition for WDK2023
+>       dt-bindings: arm: qcom: Add Microsoft Windows Dev Kit 2023
+> 
+>  Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+>  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+>  .../boot/dts/qcom/sc8280xp-microsoft-blackrock.dts | 1332 ++++++++++++++++++++
+>  3 files changed, 1334 insertions(+)
+> ---
+> base-commit: 98f7e32f20d28ec452afb208f9cffc08448a2652
+> change-id: 20240920-jg-blackrock-for-upstream-7c7aca20e832
+> 
+> Best regards,
+> --
+> Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+> 
+> 
+> 
 
-So what I ended up doing was to split off the context error handling into a separate helper API, which can be also called for the sync ep stop API.  From there, based on say....the helper re queuing the stop EP command, it would return a specific value to signify that it has done so.  The sync based API will then re-wait for the completion of the subsequent stop endpoint command that was queued.  In all other context error cases, it'd return the error to the caller, and its up to them to handle it accordingly.
 
-Thanks
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-Wesley Cheng
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+New warnings running 'make CHECK_DTBS=y qcom/sc8280xp-microsoft-blackrock.dtb' for 20240920-jg-blackrock-for-upstream-v2-0-9bf2f1b2191c@oldschoolsolutions.biz:
+
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: /: dp1-connector@0: 'anyOf' conditional failed, one must be fixed:
+	'reg' is a required property
+	'ranges' is a required property
+	from schema $id: http://devicetree.org/schemas/root-node.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: /firmware/qseecom: failed to match any schema with compatible: ['qcom,qseecom-sc8280xp', 'qcom,qseecom']
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: /firmware/qseecom: failed to match any schema with compatible: ['qcom,qseecom-sc8280xp', 'qcom,qseecom']
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: bluetooth: 'vddaon-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: bluetooth: 'vddwlcx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: bluetooth: 'vddwlmx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: bluetooth: 'vddbtcmx-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: bluetooth: 'vddrfa1p8-supply' is a required property
+	from schema $id: http://devicetree.org/schemas/net/bluetooth/qualcomm-bluetooth.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: pcie@1c00000: Unevaluated properties are not allowed ('pcie-vdda-supply', 'vdda-supply' were unexpected)
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc8280xp.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@1c06000: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: pcie@1c20000: max-link-speed: 16 is not one of [1, 2, 3, 4]
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc8280xp.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: pcie@1c20000: Unevaluated properties are not allowed ('#address-cells', '#interrupt-cells', '#size-cells', 'aspm-no-l0s', 'bus-range', 'device_type', 'dma-coherent', 'interconnect-names', 'interconnects', 'interrupt-map', 'interrupt-map-mask', 'linux,pci-domain', 'max-link-speed', 'msi-map', 'num-lanes', 'pcie-vdda-supply', 'pcie@0', 'perst-gpios', 'phy-names', 'phys', 'power-domains', 'ranges', 'required-opps', 'vdda-supply', 'vddpe-3v3-supply', 'wake-gpios' were unexpected)
+	from schema $id: http://devicetree.org/schemas/pci/qcom,pcie-sc8280xp.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: pcie@1c20000: max-link-speed: 16 is not one of [1, 2, 3, 4]
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@1c24000: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-pcie-phy.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88e5000: 'phy-supply', 'vdda-phy-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88e7000: 'phy-supply', 'vdda-phy-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88e8000: 'phy-supply', 'vdda-phy-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88e9000: 'phy-supply', 'vdda-phy-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88ea000: 'phy-supply', 'vdda-phy-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88ef000: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88f1000: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@88eb000: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@8902000: 'phy-supply', 'vdda-phy-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,usb-snps-femto-v2.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@8903000: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: usb@a4f8800: usb@a400000:phy-names: 'oneOf' conditional failed, one must be fixed:
+	'usb2-port0' is not one of ['usb2-phy', 'usb3-phy']
+	'usb2-port0' does not match '^usb(2-([0-9]|1[0-4])|3-[0-3])$'
+	'usb3-port0' is not one of ['usb2-phy', 'usb3-phy']
+	'usb3-port0' does not match '^usb(2-([0-9]|1[0-4])|3-[0-3])$'
+	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: usb@a400000: phy-names: 'oneOf' conditional failed, one must be fixed:
+	'usb2-port0' is not one of ['usb2-phy', 'usb3-phy']
+	'usb2-port0' does not match '^usb(2-([0-9]|1[0-4])|3-[0-3])$'
+	'usb3-port0' is not one of ['usb2-phy', 'usb3-phy']
+	'usb3-port0' does not match '^usb(2-([0-9]|1[0-4])|3-[0-3])$'
+	from schema $id: http://devicetree.org/schemas/usb/snps,dwc3.yaml#
+arch/arm64/boot/dts/qcom/sc8280xp-microsoft-blackrock.dtb: phy@aec2a00: 'phy-supply', 'pll-supply' do not match any of the regexes: 'pinctrl-[0-9]+'
+	from schema $id: http://devicetree.org/schemas/phy/qcom,edp-phy.yaml#
+
+
+
+
 
 
