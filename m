@@ -1,127 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-32130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C66C197DBFA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 09:27:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9834F97DC02
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 09:45:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6025D1F21EEE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 07:27:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4B5DC1F2152A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 07:45:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1B127DA67;
-	Sat, 21 Sep 2024 07:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20C7915E97;
+	Sat, 21 Sep 2024 07:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PeCwSd/K"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lh9i/CUb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA3C2C9D
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 07:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF6D215E8B;
+	Sat, 21 Sep 2024 07:45:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726903641; cv=none; b=SjyjSDcaLQ3U5s26Inx0xFVfJzKfE2CU3IwcHEkh0RZyK7YhEu7DaGlZ1K+tnPv9jpvboqAhjC+7Nk5xRFJgP7/4vfiDGagIKiF0txsQZiAapAiPRnRINyBTEvn25CM633xy2OqJEDeJ79R/qzc5b7YBFScTScSaJURpCB4Ko04=
+	t=1726904734; cv=none; b=qWCrJnciK7M3941+Pi0UUw9evTE/Dx3DWVi+agPKcCFxx+DTplp/HWcUhDyWXUFJGqLOPzTicVtWvty86D/N2CaBKKT9I5Hwp2DlDuBy0jjpEBOuEyD/DoJI4wNsjAGSnzz6lW0G7x54Zf2/FyafFXvcqd4M4v1yunTqvVf8j48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726903641; c=relaxed/simple;
-	bh=Qu96Di5aW4zEqvucXhSjlkkCQLjKXM6ECA/Ulqv82cs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LmLDusstvYbC4d7D0VTQgobUa1jPJGwk9f4ddPFlYFU1nDZPTTAgeGMFguuJSuLnYAu0elTfBNgvlOLyZF/AvTGhpiad83XBwZMCrzczMaNq1smVdYugFnDcv4/woq4CWy8PSXL2Si6E/Iidy2uqTz7h2S41TcKwmdwMGiOaBiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PeCwSd/K; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f75aaaade6so30392421fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 00:27:19 -0700 (PDT)
+	s=arc-20240116; t=1726904734; c=relaxed/simple;
+	bh=P4A8/TeKUeWC19dX+4wsOaQphVgDgS5LnrFxCEn3j7s=;
+	h=From:Content-Type:Mime-Version:Subject:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=TzRGzgy7AU1JiYP5B3ErFUZtKV1Qv1S6JwZHNqcADpFu6dqO8IegAgKrjFO3zEBoDcY/NRzcGga6Oo+nHXWy1Vh1e1VCh0Xp72u3FEwUDW+cBp7D5hRpodIF47kRFJk9fKhLPBnJR1a0ZCJwe5EgQHbcdLt98/G84G9CmJlIFoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lh9i/CUb; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3dd16257b7bso1311329b6e.1;
+        Sat, 21 Sep 2024 00:45:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726903638; x=1727508438; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=epbKJnWX2a4mnxddWY1VokmGlmbcMonTnO+g8xpnvCs=;
-        b=PeCwSd/KQ6GiLBt0YnPdvVL8Ut9+KYg1m3FAn6WKl1HtgPLW/Oq0+V1BIxTFrmHJFI
-         lSWYJGJRRM4cW/mRba3DGgzGZ5ThW3XDG2VYDwIhmQh5AWNBQDupJCypC8sZ7IXLd9Kn
-         U8nQO6bzr9ZgfPv7duiFN8cHnKHo5qwi3RV9syccK5Q2zOEjgu6UNjh5Swx/2tPwiIWm
-         G4/tk5O2P+opsTDMCzn2+x/YRaGjIJiC6djzDUaKYScxIBR1upe7/HC+EOJpD3wcTUJ/
-         iQb5NFG6QsipLjT8EhLhNcJRCy9KSPgnWGXnPQLpV7B1s7DUeZWdKbmch4tZcJqPdyKS
-         WC0g==
+        d=gmail.com; s=20230601; t=1726904731; x=1727509531; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:subject:mime-version
+         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P4A8/TeKUeWC19dX+4wsOaQphVgDgS5LnrFxCEn3j7s=;
+        b=Lh9i/CUbds5OYaPvVeytBKnJOTlIAcfcdlv+Xry9un7adicP4lK8fhOFpucfZUwz5N
+         cohxIUK+IiGYQmhq+ku67CHE7WoBlQM8tfw1Wn3gdVFuydSxaTlD3SlaqBbaYZRyy11X
+         4lLB65xEnyjEPuBCMmD3l+nAN+DpnJBmgCZ9XxFknHsZLdv6OKm13XnyFOcihKkph1C8
+         s3mEUq9XzEiCPz9tuexEV/9SPNF/Wrg8AlU7IrrZUUCB73FeqK9KHJEGhDxYi8byV1W2
+         uP9hBs96WnWRf5VCblJPgxd0xr8lMolDt6jJKze0mG4uT44kfOfZS8JuUc2ALFFJNk7N
+         aw/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726903638; x=1727508438;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=epbKJnWX2a4mnxddWY1VokmGlmbcMonTnO+g8xpnvCs=;
-        b=RcKQBxaLPm+rfA+9cmebPPvQ3N5ehb5SJM+HiBgeglyorPiGaynuIm5MQgHcG+LK8R
-         i6RsXsqHL0w3R5RPkoZTA0EZdCMRWHlJw9kbEox8VYxP3pU3xiC3a8Oq/nG9RCYVulzX
-         TOVQha28rZk00Hwgk4Q6FnCSG2adly5x6UBl7gUMVT0I/XURwPWpOHIThkV36BYCRdqV
-         F795kOUG0i0k5G6un3HfK+q18qAW+Hm5Y5H/H156q+8rAZvtcFGUlYnnpj5gQ/8v998O
-         IivfKSeN2K/SLvWn0QDJ/5t47yWELAI/eY1eYqATlLxa4eqh5iniH5CcVG2tVzg5nPiR
-         W+EQ==
-X-Gm-Message-State: AOJu0Yw0aoRP0XRblJP2hiD/3+/Sti+Nz5+u1d+kQrP7rwo6igzXjoN2
-	f0V+uHsnt5l1UOYq6gAp0rd/RWc9ZSkbpqQO5144pMagecJaFh4T3mb5lFvbMjfqp9l1KjB8Ntb
-	g2Js=
-X-Google-Smtp-Source: AGHT+IHNlrHyPvqIQ42XJj/FPRZYKpa3B8G6ggcI1MA29HcvMGWI5eZjqpXdwsQXj2omM2DflJ+tdQ==
-X-Received: by 2002:a05:651c:2206:b0:2f7:6fa8:9e00 with SMTP id 38308e7fff4ca-2f7cc373a99mr31780641fa.19.1726903637464;
-        Sat, 21 Sep 2024 00:27:17 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f79d2e1dcasm21448731fa.25.2024.09.21.00.27.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Sep 2024 00:27:16 -0700 (PDT)
-Date: Sat, 21 Sep 2024 10:27:13 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: John Schulz <john.schulz1@protonmail.com>
-Cc: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] Changing Ardreno X185 Check to X1xxx Family Check
-Message-ID: <vhuac7ac4stqkqq6wfw5lx7ftalphmmfuiytkm4etydoy7nu3m@uxs475wlm4ca>
-References: <eXTmCkW-1fFjQPMz9pDuTV6stWYM2-k_vUP8hhFhSQGIVNAITUWcadIMLvtpufgBOIUY4S8RYGU-vSxIEehZknZv9n1tnS2ivaSvUSyQpGQ=@protonmail.com>
+        d=1e100.net; s=20230601; t=1726904731; x=1727509531;
+        h=to:references:message-id:date:cc:in-reply-to:subject:mime-version
+         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P4A8/TeKUeWC19dX+4wsOaQphVgDgS5LnrFxCEn3j7s=;
+        b=ALafzTtkrJU/kbuC47ePFepXlgFxWE+wk8nlDd2ytfAi2XYddUp9uVcLJr+IcuG1wt
+         vhRA/9n86f9WJvYFSGPciFdsVKSwXwKkVaXr0Hfx4hzRMCKBLZUPqiAsvryqDXZnXugF
+         CGU8ir42ipIqEvTm5K550kRM5TlI4ulvy/Tfax1onXpS3O3QYP1UD/rrRM8HgnwtkkS9
+         ZIZPQg1CDFq1w9VSNEU/eK7HGio5nIVRLbMKKRQDvkJa5j4ymDI3TEDgCmI/K4QC3xjq
+         NiU7jv2NHNTgkr29t5kGX/RF6nH1Mi1SD+J8AqMCj4qvuD24f1PpcJvwHCMfmrx7tq+V
+         EYow==
+X-Forwarded-Encrypted: i=1; AJvYcCUHOyNBKhfeF6Gho+tpreK7EIIk8iuEQNTjKQkKg4es0dnPKl90Z6f4mjuJHgB3Fvm0iinqeRTQNnlnKL+R@vger.kernel.org, AJvYcCXC9qRwgtSkj38mEdkI2rPDfNFmp4I/xWi71UcKCrT7UXAi3/fu4fD+VHDFhFKkzaQmiHfq3uS2BlxMNodY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAAhdR1T6Qz8H7EU+c7mvS0YtEtiXOrF6vlXqBlFXAduw+5NTo
+	ltk3jxJcL8Hd0pNiorUIFzjLH21HFRbp4nOiZio1p4fxQyJl8IbS196+SsBg
+X-Google-Smtp-Source: AGHT+IHB7WVkdYZ1w1eCx+yBcJxQ9FiDVTJ4u01Fh4ZGEgs3Ld54S3HP36zHfsP7UFFJ7oCdMJBCEg==
+X-Received: by 2002:a05:6808:3a0b:b0:3e2:6b70:7a79 with SMTP id 5614622812f47-3e2728ec132mr2921964b6e.1.1726904731321;
+        Sat, 21 Sep 2024 00:45:31 -0700 (PDT)
+Received: from smtpclient.apple ([2600:381:5b92:bfe2:2169:4915:ffee:bb2d])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5e3b0e43754sm2520849eaf.42.2024.09.21.00.45.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 21 Sep 2024 00:45:30 -0700 (PDT)
+From: Rudraksha Gupta <guptarud@gmail.com>
+X-Google-Original-From: Rudraksha Gupta <GuptaRud@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <eXTmCkW-1fFjQPMz9pDuTV6stWYM2-k_vUP8hhFhSQGIVNAITUWcadIMLvtpufgBOIUY4S8RYGU-vSxIEehZknZv9n1tnS2ivaSvUSyQpGQ=@protonmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] firmware: qcom: scm: Allow devicetree-less probe
+In-Reply-To: <fqdmcct5b5sxv3rpxiksmzpjbpcwmyuwpb5epjnhgpzxh344pp@pxggownwv44n>
+Cc: Elliot Berman <quic_eberman@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Andrew Halaney <ahalaney@redhat.com>,
+ "Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Sat, 21 Sep 2024 00:45:19 -0700
+Message-Id: <547C76B7-8E41-44C3-8433-374B4E6BC341@gmail.com>
+References: <fqdmcct5b5sxv3rpxiksmzpjbpcwmyuwpb5epjnhgpzxh344pp@pxggownwv44n>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: iPhone Mail (20H350)
 
-On Sat, Sep 21, 2024 at 01:03:00AM GMT, John Schulz wrote:
-> Hello,
-> 
-> First time submitting a patch. As work is made towards integrating more QCOM X1E and X1P SoCs, using a family identification function seems better fit than checking individual devices. 
+> Which devicetrees? I assume that this mostly concerns arm32 machines,
+> but I don't see if you have tested this on any of them. Also on some of
+> those machines SCM require additional clocks, I don't see that being
+> handled in the patch.
+>=20
+> If we are to manually instantiate SCM node, I'd prefer for it to be
+> explicit, e.g. MSM8x60, create SCM device, using this-and-that clock.
 
-
-Please use git commit and then git format-patch / git send-email to
-format and send patches.
-
-Commit message is not an email text but rather a patch description. It
-should explain why you made the change.
-
-Patches should be atomic and non-breaking. E.g. if I pick this patch w/o
-picking up 2/2 build will break. We frequently use git bisect, which
-means that (ideally) after each commit the kernel should still build.
-
-Last, but not least, your patch misses DCO signature.
-
-Please take a glance at Documentation/process, especially
-submitting-patches.rst.
-
-> 
-> Thanks,
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 06cab2c6fd66..34ca8f6d5d99 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -1026,7 +1026,7 @@ static int hw_init(struct msm_gpu *gpu)
->  	gpu_write(gpu, REG_A6XX_UCHE_CLIENT_PF, BIT(7) | 0x1);
->  
->  	/* Set weights for bicubic filtering */
-> -	if (adreno_is_a650_family(adreno_gpu) || adreno_is_x185(adreno_gpu)) {
-> +	if (adreno_is_a650_family(adreno_gpu) || adreno_is_x1xx_family(adreno_gpu)) {
->  		gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0, 0);
->  		gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
->  			0x3fe05ff4);
-
--- 
-With best wishes
-Dmitry
+I believe the consensus was that we will be using your one liner fix instead=
+ of this. If I misunderstood, please let me know and I will happily test thi=
+s patch.
 
