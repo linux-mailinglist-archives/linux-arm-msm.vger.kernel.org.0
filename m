@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B3DD97DE22
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 19:59:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 584C197DE3B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 20:23:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E889EB21282
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 17:59:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 048AB281287
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 18:23:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE4F8282F1;
-	Sat, 21 Sep 2024 17:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED3393BBC9;
+	Sat, 21 Sep 2024 18:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kmzOVD+0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U6hlAXlS"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A301799B;
-	Sat, 21 Sep 2024 17:59:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC62322094;
+	Sat, 21 Sep 2024 18:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726941578; cv=none; b=Q7GAq5qT/YeFjCNH9PlZCtDNElT24bjpGakjozpspyTswaXCYWBbEuSPNqmvH05yOm4qZ4VNxDiMCIgbGQAxoRixjCGi4O5dT95a26QiXqQmRKJDJ1FdiFb/uePepZ7hQKWqaRaF4szmd8OPamMiGPzZ8SO0dZxwIgZFuwZmnug=
+	t=1726943024; cv=none; b=smpbd5zc0aDvfXW0Uj9JsHA5q7ubhYREiQXI+1ssQdLx7w5UF+jC5/EMLcl1h7J+xEjDJpXiSN9T0tOTVf0Pxp9v0Xz89o8PtWAqra1Z76O3dSU+izJuyBOSZAMwyJQnIgZ4kQzrS+VJu/c7DzC9AdaTR64yThON2PsM80qTmMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726941578; c=relaxed/simple;
-	bh=w0C/tAIJReLLbJQwWenLsrx9ocRRmiyTZLEj5OL3PH8=;
+	s=arc-20240116; t=1726943024; c=relaxed/simple;
+	bh=yfKssePOYgdVSn8I5leQaKY5/lR3CsAYoqDNczzTFLQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YET16nry+HttoEpzWjn8NQFAAofy4cvo52QnJnK+sQsVyrMj9yeEOeHxus75TVlMuzSDlqlU56157Fn1Kn+1krONA2iRkSJiubuBq3UyfAhT0coG8PbxcKrB5FQYShTuyxnlGV0FzPBCzdo5KAcue2bWfAq0xqYdF51jdjGgTs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kmzOVD+0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D70DC4CEC2;
-	Sat, 21 Sep 2024 17:59:34 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=uBsxh0Bi6MABwy2pm+afj3UnLUB6esGW/85yOR0jbm9/KWnHACQz18iMRkeEAcv71ELWHuu2wSwRWMK1/1sLRvpli0Iff/Zj4z7j2e1sD1ZIYgQSlVK9JVwm2tqLyDAd/1OAg+RsV28AVhqrlJqDYN1asYPH5ujREkUVhOW1BFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U6hlAXlS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0E1C4CEC2;
+	Sat, 21 Sep 2024 18:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1726941578;
-	bh=w0C/tAIJReLLbJQwWenLsrx9ocRRmiyTZLEj5OL3PH8=;
+	s=k20201202; t=1726943024;
+	bh=yfKssePOYgdVSn8I5leQaKY5/lR3CsAYoqDNczzTFLQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=kmzOVD+0nPYwu+iCzr4DeRyJ7xZzeHJHS6YuRqqF5Y2n6BhZ6wJZZP/iqRukPklRl
-	 pxEwMPONgX0dEGvlg3k4/B6A/r1CvDQy2E04eY6S8u43cH0U5RHwVUv2vWS2TBOZbK
-	 6Fn3YRwhyJW/9YNcWtdQOKQAdtZWG9bvv0OIguTmOGatc++GQGVmHIl+TFdiTdv+dM
-	 s995F4jCX+PxcSTQvutZOOU8Lqr0ndVXOAwk06NEmICau2SHKWBjQr92jzBjw5I0SK
-	 7JrB1szTjsdZ6JReNcUWgKEhGnHdDyPJnGn0DiLux0CDHc98UAKFAsSZ4Ii40PU3yv
-	 G8dU7t8+eGnqQ==
-Message-ID: <747a2ed7-f169-4980-8e8c-778e50d9d67b@kernel.org>
-Date: Sat, 21 Sep 2024 19:59:31 +0200
+	b=U6hlAXlS2oD/M5iFUk7jqXC6b1rgKXD9DTJSSBXr3l1GigWEbbt9Axa6+9ZSpODmd
+	 vfOvPNfQLLrwb85pYQ3Apyi2eefOFc9DaCMC7pQav2im5QbmQuRDgLOmJSJDEeKAYE
+	 33fWnA9MzlANuN/PyxW1zI2gKz/8eD9wt5LbZ5FqhkxEFnSHeUe1FVyxQbGvc00mFl
+	 sJOgEIJ4fAj7Zfg4IoTnHw/uaAoeB8LVrel7wLEI3+TeFFGbw0ZG2C0ZM4+3W13Jxq
+	 ySHo/v3ryO1AYeEimOlicGkChRWvIvh+CTM+Ylf/TFOiifmuk2qLtFyvlVnj8MM7D2
+	 sUD45YK1ZmdVw==
+Message-ID: <78d9c6f9-5667-4ecf-92c9-73e9e4b9b424@kernel.org>
+Date: Sat, 21 Sep 2024 20:23:33 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: Add Dell XPS 13 9345
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Rob Clark <robdclark@gmail.com>,
- Peter de Kraker <peterdekraker@umito.nl>
-References: <20240921163455.12577-1-alex.vinarskis@gmail.com>
- <20240921163455.12577-2-alex.vinarskis@gmail.com>
+Subject: Re: [PATCH 1/5] dt-bindings: display/msm: Document MDSS on SA8775P
+To: Mahadevan <quic_mahap@quicinc.com>, robdclark@gmail.com,
+ quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org, sean@poorly.run,
+ marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ swboyd@chromium.org, konrad.dybcio@linaro.org, danila@jiaxyga.com,
+ bigfoot@classfun.cn, neil.armstrong@linaro.org, mailingradian@gmail.com,
+ quic_jesszhan@quicinc.com, andersson@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_kalyant@quicinc.com,
+ quic_jmadiset@quicinc.com, quic_vpolimer@quicinc.com
+References: <20240912071437.1708969-1-quic_mahap@quicinc.com>
+ <20240912071437.1708969-2-quic_mahap@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,36 +110,31 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240921163455.12577-2-alex.vinarskis@gmail.com>
+In-Reply-To: <20240912071437.1708969-2-quic_mahap@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/09/2024 18:33, Aleksandrs Vinarskis wrote:
-> Document the X1E80100-based Dell XPS 9345 laptop, platform
-> codenamed 'Tributo'/'Tributo R'.
+On 12/09/2024 09:14, Mahadevan wrote:
 > 
-> Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+> +        clocks = <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
+> +                 <&gcc GCC_DISP_HF_AXI_CLK>,
+> +                 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>;
+> +
+> +        interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
+> +        interrupt-controller;
+> +        #interrupt-cells = <1>;
+> +
+> +        iommus = <&apps_smmu 0x1000 0x402>;
+> +
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +        ranges;
+> +
+> +        status = "disabled";
 
-<form letter>
-This is a friendly reminder during the review process.
-
-It looks like you received a tag and forgot to add it.
-
-If you do not know the process, here is a short explanation:
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-
-If a tag was not added on purpose, please state why and what changed.
-</form letter>
-
-
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Uh no, it cannot be disabled. What would be the point of it? Please
+reach to your colleagues for some internal review before posting (see
+also go/upstream in internal systems).
 
 Best regards,
 Krzysztof
