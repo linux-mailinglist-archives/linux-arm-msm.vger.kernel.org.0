@@ -1,82 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-32129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32130-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2B5697DBF8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 09:21:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C66C197DBFA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 09:27:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13FE21F2207D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 07:21:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6025D1F21EEE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 07:27:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07EFC13D51C;
-	Sat, 21 Sep 2024 07:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1B127DA67;
+	Sat, 21 Sep 2024 07:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iR7HXi+s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PeCwSd/K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1750455E73
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 07:21:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA3C2C9D
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 07:27:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726903304; cv=none; b=cbxbisKMfEZ9SNqH9HS6wj0krXGZe4IfdSuNtQCe8mbB91V/Rw2tSn5HR/mucKQAwo43LvwVAZESXXZcJKnngGofcn/YirNYDR8QycQGZGpH2rykzTzJboEvxVEUhHSJqWnxSKd1NhRhkuYLzhZsnjZrUwu1EPsIcnjinBVV/MY=
+	t=1726903641; cv=none; b=SjyjSDcaLQ3U5s26Inx0xFVfJzKfE2CU3IwcHEkh0RZyK7YhEu7DaGlZ1K+tnPv9jpvboqAhjC+7Nk5xRFJgP7/4vfiDGagIKiF0txsQZiAapAiPRnRINyBTEvn25CM633xy2OqJEDeJ79R/qzc5b7YBFScTScSaJURpCB4Ko04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726903304; c=relaxed/simple;
-	bh=fiG3hOaA7XA752vx2vS+8PIWI70Gh9F5G6AZUWz4/Ms=;
+	s=arc-20240116; t=1726903641; c=relaxed/simple;
+	bh=Qu96Di5aW4zEqvucXhSjlkkCQLjKXM6ECA/Ulqv82cs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gwj87IZLSInzt6Es/t18Qr05FkQMXYA9tIA3ebOqAuevoVWUgp1qWbZObZtqZigcRsFneChn2wfkRiFQlIUcN3PVYEOFJEc3P5bGDmVFFSyX2JDj4m7UFFBuVYyMWhp8hXgPksJcj98Ivic6fubGVBQLjTkdTUaUKBu60MAA/Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iR7HXi+s; arc=none smtp.client-ip=209.85.167.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=LmLDusstvYbC4d7D0VTQgobUa1jPJGwk9f4ddPFlYFU1nDZPTTAgeGMFguuJSuLnYAu0elTfBNgvlOLyZF/AvTGhpiad83XBwZMCrzczMaNq1smVdYugFnDcv4/woq4CWy8PSXL2Si6E/Iidy2uqTz7h2S41TcKwmdwMGiOaBiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PeCwSd/K; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5365928acd0so3103768e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 00:21:42 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2f75aaaade6so30392421fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 00:27:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726903301; x=1727508101; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1726903638; x=1727508438; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IZZdu3nG9tnEBLi6sg75S4kfE8Xv5x2MAWLMz7iRXfI=;
-        b=iR7HXi+sU5pB3h3tYBFTzCwe4pL5lnrPhBdW62pF+lfQFhS7rzHWR2qFX4nQrx3VxM
-         dw1UieZd/iitT0xEb/kVaKkLT1rqPBCsPMo2HhOKXa7r2hwNyflhj5mbT2E1UdEmSa6d
-         yHio0HvRjSLRXPwETH0IM2tTQd4hsqKxgxOsAu08CqB9pSgeHvpyeAyymDZtfttiToFC
-         W4VuPT0GZ036aJ74ZbYqT/xjXFRovfBKVUbmhgO1QhRz/9BQjtDxPTbule7Puqa6+ePP
-         fdOPPDAQ4zRZQAfWaX9fL7+wZ91pNwCk/i0J5jVrQdwIaz+Teo3zMNwINLwVTbEn+OAD
-         6wCA==
+        bh=epbKJnWX2a4mnxddWY1VokmGlmbcMonTnO+g8xpnvCs=;
+        b=PeCwSd/KQ6GiLBt0YnPdvVL8Ut9+KYg1m3FAn6WKl1HtgPLW/Oq0+V1BIxTFrmHJFI
+         lSWYJGJRRM4cW/mRba3DGgzGZ5ThW3XDG2VYDwIhmQh5AWNBQDupJCypC8sZ7IXLd9Kn
+         U8nQO6bzr9ZgfPv7duiFN8cHnKHo5qwi3RV9syccK5Q2zOEjgu6UNjh5Swx/2tPwiIWm
+         G4/tk5O2P+opsTDMCzn2+x/YRaGjIJiC6djzDUaKYScxIBR1upe7/HC+EOJpD3wcTUJ/
+         iQb5NFG6QsipLjT8EhLhNcJRCy9KSPgnWGXnPQLpV7B1s7DUeZWdKbmch4tZcJqPdyKS
+         WC0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726903301; x=1727508101;
+        d=1e100.net; s=20230601; t=1726903638; x=1727508438;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IZZdu3nG9tnEBLi6sg75S4kfE8Xv5x2MAWLMz7iRXfI=;
-        b=nZAhmDJ/wQSN1TYNa0+8AdvyyqngDHyHwY8EW+MOW1D80zaQ04AiYtdUPfZf+Mo6xr
-         cxpWg+CgeduetH3St4g4TuUY+rQffGxJfIQfA47Mb5FDbrH7rK8XDFMfL2lLdGydmQeg
-         BGw4x4qftjuo5RuxDeHDd+m5NNfCBTRh7iCNBACBmtO0AmH1y7smFRwnR97whvPozJhS
-         uORCSGCdTY1eQdgFvH7TXwspZUXuqjiumLd4r6PDCo0Ep22bIn0oruw+j6UxSqYUuvwW
-         H5grlywnf3pwdQDtb4WYGCZ9ADyt+2aoyJLoVRJS5bDMiklyqRSj+aTsdtARZUMXzm8/
-         KK2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUjxa12+hQhREH39RIpMAi/E7KtPXDQcboQhIdN/s6mqJa5P0NyCzdPpf/yiEAUaAKGuyP8cA0QQNxtX2Ih@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2GVdhtGSOHOgAtjqgRQST87QoenDRIRGCskpJ4VsvNd+RcQZ3
-	uPJ/DIQ2aLPy+rhQm+eDWAPKIMFaHY26YlMjnFWnNPhper86bbYnoCpf38WbFTI=
-X-Google-Smtp-Source: AGHT+IF0hxBF9skV/bG11iGeIxzhShS9O/B6D8X6Tmf+0dBjjxjYBBlzJE0px7XHVZWrZjZWJvNHzw==
-X-Received: by 2002:a05:6512:3ca8:b0:52f:cdb0:11c0 with SMTP id 2adb3069b0e04-536ad16b1fcmr2786192e87.21.1726903301102;
-        Sat, 21 Sep 2024 00:21:41 -0700 (PDT)
+        bh=epbKJnWX2a4mnxddWY1VokmGlmbcMonTnO+g8xpnvCs=;
+        b=RcKQBxaLPm+rfA+9cmebPPvQ3N5ehb5SJM+HiBgeglyorPiGaynuIm5MQgHcG+LK8R
+         i6RsXsqHL0w3R5RPkoZTA0EZdCMRWHlJw9kbEox8VYxP3pU3xiC3a8Oq/nG9RCYVulzX
+         TOVQha28rZk00Hwgk4Q6FnCSG2adly5x6UBl7gUMVT0I/XURwPWpOHIThkV36BYCRdqV
+         F795kOUG0i0k5G6un3HfK+q18qAW+Hm5Y5H/H156q+8rAZvtcFGUlYnnpj5gQ/8v998O
+         IivfKSeN2K/SLvWn0QDJ/5t47yWELAI/eY1eYqATlLxa4eqh5iniH5CcVG2tVzg5nPiR
+         W+EQ==
+X-Gm-Message-State: AOJu0Yw0aoRP0XRblJP2hiD/3+/Sti+Nz5+u1d+kQrP7rwo6igzXjoN2
+	f0V+uHsnt5l1UOYq6gAp0rd/RWc9ZSkbpqQO5144pMagecJaFh4T3mb5lFvbMjfqp9l1KjB8Ntb
+	g2Js=
+X-Google-Smtp-Source: AGHT+IHNlrHyPvqIQ42XJj/FPRZYKpa3B8G6ggcI1MA29HcvMGWI5eZjqpXdwsQXj2omM2DflJ+tdQ==
+X-Received: by 2002:a05:651c:2206:b0:2f7:6fa8:9e00 with SMTP id 38308e7fff4ca-2f7cc373a99mr31780641fa.19.1726903637464;
+        Sat, 21 Sep 2024 00:27:17 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5368704e995sm2501278e87.106.2024.09.21.00.21.37
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f79d2e1dcasm21448731fa.25.2024.09.21.00.27.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Sep 2024 00:21:39 -0700 (PDT)
-Date: Sat, 21 Sep 2024 10:21:36 +0300
+        Sat, 21 Sep 2024 00:27:16 -0700 (PDT)
+Date: Sat, 21 Sep 2024 10:27:13 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Elliot Berman <quic_eberman@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Andrew Halaney <ahalaney@redhat.com>, Rudraksha Gupta <guptarud@gmail.com>, 
-	"Linux regression tracking (Thorsten Leemhuis)" <regressions@leemhuis.info>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <brgl@bgdev.pl>
-Subject: Re: [PATCH] firmware: qcom: scm: Allow devicetree-less probe
-Message-ID: <fqdmcct5b5sxv3rpxiksmzpjbpcwmyuwpb5epjnhgpzxh344pp@pxggownwv44n>
-References: <20240920-scm-pdev-v1-1-b76d90e06af7@quicinc.com>
+To: John Schulz <john.schulz1@protonmail.com>
+Cc: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH 1/2] Changing Ardreno X185 Check to X1xxx Family Check
+Message-ID: <vhuac7ac4stqkqq6wfw5lx7ftalphmmfuiytkm4etydoy7nu3m@uxs475wlm4ca>
+References: <eXTmCkW-1fFjQPMz9pDuTV6stWYM2-k_vUP8hhFhSQGIVNAITUWcadIMLvtpufgBOIUY4S8RYGU-vSxIEehZknZv9n1tnS2ivaSvUSyQpGQ=@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,38 +81,45 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240920-scm-pdev-v1-1-b76d90e06af7@quicinc.com>
+In-Reply-To: <eXTmCkW-1fFjQPMz9pDuTV6stWYM2-k_vUP8hhFhSQGIVNAITUWcadIMLvtpufgBOIUY4S8RYGU-vSxIEehZknZv9n1tnS2ivaSvUSyQpGQ=@protonmail.com>
 
-On Fri, Sep 20, 2024 at 11:01:40AM GMT, Elliot Berman wrote:
-> Some devicetrees representing Qualcomm Technologies, Inc. SoCs are
-> missing the SCM node. Users of the SCM device assume the device is
-> present and the driver also assumes it has probed. This can lead to
-> unanticipated crashes when there isn't an SCM device. All Qualcomm
-> Technologies, Inc. SoCs use SCM to communicate with firmware, so create
-> the platform device if it's not present in the devicetree.
-
-Which devicetrees? I assume that this mostly concerns arm32 machines,
-but I don't see if you have tested this on any of them. Also on some of
-those machines SCM require additional clocks, I don't see that being
-handled in the patch.
-
-If we are to manually instantiate SCM node, I'd prefer for it to be
-explicit, e.g. MSM8x60, create SCM device, using this-and-that clock.
-
-> Tested that SCM node still probes on:
->  - sm8650-qrd with the SCM DT node still present
->  - sm845-mtp with the SCM DT node still present
->  - sm845-mtp with the node removed
+On Sat, Sep 21, 2024 at 01:03:00AM GMT, John Schulz wrote:
+> Hello,
 > 
-> Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
-> Reported-by: Rudraksha Gupta <guptarud@gmail.com>
-> Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
-> Link: https://lore.kernel.org/all/CAA8EJpqSKbKJ=y0LAigGdj7_uk+5mezDgnzV5XEzwbxRJgpN1w@mail.gmail.com/
-> Suggested-by: Bartosz Golaszewski <brgl@bgdev.pl>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  drivers/firmware/qcom/qcom_scm.c | 75 +++++++++++++++++++++++++++++++++++-----
->  1 file changed, 66 insertions(+), 9 deletions(-)
+> First time submitting a patch. As work is made towards integrating more QCOM X1E and X1P SoCs, using a family identification function seems better fit than checking individual devices. 
+
+
+Please use git commit and then git format-patch / git send-email to
+format and send patches.
+
+Commit message is not an email text but rather a patch description. It
+should explain why you made the change.
+
+Patches should be atomic and non-breaking. E.g. if I pick this patch w/o
+picking up 2/2 build will break. We frequently use git bisect, which
+means that (ideally) after each commit the kernel should still build.
+
+Last, but not least, your patch misses DCO signature.
+
+Please take a glance at Documentation/process, especially
+submitting-patches.rst.
+
+> 
+> Thanks,
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 06cab2c6fd66..34ca8f6d5d99 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1026,7 +1026,7 @@ static int hw_init(struct msm_gpu *gpu)
+>  	gpu_write(gpu, REG_A6XX_UCHE_CLIENT_PF, BIT(7) | 0x1);
+>  
+>  	/* Set weights for bicubic filtering */
+> -	if (adreno_is_a650_family(adreno_gpu) || adreno_is_x185(adreno_gpu)) {
+> +	if (adreno_is_a650_family(adreno_gpu) || adreno_is_x1xx_family(adreno_gpu)) {
+>  		gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0, 0);
+>  		gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
+>  			0x3fe05ff4);
 
 -- 
 With best wishes
