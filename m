@@ -1,126 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-32152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03F7A97DED7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 22:44:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 52FBB97DEE7
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 22:55:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C574A28180A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 20:44:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7EF42814F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 20:55:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C62763A268;
-	Sat, 21 Sep 2024 20:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D3F13D890;
+	Sat, 21 Sep 2024 20:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="VMweyhgG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cxpVQvgO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-40134.protonmail.ch (mail-40134.protonmail.ch [185.70.40.134])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A9A1392
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 20:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D708C22094
+	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 20:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726951452; cv=none; b=V7s5TxbBNzOFP/EAGLGgYLXkh33NBRr3JvqUWkYhnZ+itiS00eUR7F9WbP0trHMYs1+X44+yo4mtT/6HwYHb6cFxx+mqViP1I92hxRVGj0IhpRfgTe54avS/H5KZo6jPn/iQzTWMoZUraEIgKnRrYcaHuVOifdJR0Eh8gxjthek=
+	t=1726952107; cv=none; b=WrTyICK8o/hOGFXkVeJEYKCKMo1flzMWBq0tdsSWSuVxRfDAouFpxqZAWF9vVpDhdrKj7FWRkTIRhvWbqQFRTIQtWWlCNB/VUcdciC59+FnVmZokmKYiQoQpz2Q680tivnqVdahacmOpfYH2v6RlpivIpx2UDa0MomZh6gvgEmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726951452; c=relaxed/simple;
-	bh=v4KBetdb6AtdZ2ic6A7wa5nRc9Kb1ckYYVYf1Q43Qf8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=L6owkm/cmiwPErE1vBx3yDRWk5Mv9PDCiJJZ58MQaXesXK1wEjeCZ3xHLQ7OPG+eN7UPCp+vRXF/zS8R+PhqGB52XdpbLb9+bm2r11TAVWuLbDnLRa09EWms0NRYkqidTMsQznmGdJ+WAL5kHkDegmQROy+ff/PFNAX4BhePZEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=VMweyhgG; arc=none smtp.client-ip=185.70.40.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1726951448; x=1727210648;
-	bh=v4KBetdb6AtdZ2ic6A7wa5nRc9Kb1ckYYVYf1Q43Qf8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=VMweyhgG9nbUDAdTE2DkSWxSDlBMPcE56zH2P8t6qVRL0SchZT9H5DS0KbVSA5SdO
-	 x/eEFNHanHaTgqxOqv7T4SHr2sde3ZkMoSPRRcY78J7Q7i9N47oVLf4PapqB+RRCn0
-	 N2A2ZU03Vg1SNoNe4qKgJ3iR1MhCFcPwLg0m1cJKj+vPXj3+SfFeB1xONG53FYEyk5
-	 mvQh9yt6xemQgxwsZG9ksx+nJ9ItAcbB7xHGDvOgta51Edn70an6YAmCz/P5X5Zvex
-	 3Q6ZPwWZqADOPRsA5szZMR2XUbcuyTwoC+Cvss35AVeH/lCHP3q7jWelwF/JWHrbvs
-	 zwbcr4cc9bYag==
-Date: Sat, 21 Sep 2024 20:44:04 +0000
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-From: John Schulz <john.schulz1@protonmail.com>
-Cc: "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] Changing Ardreno X185 Check to X1xxx Family Check
-Message-ID: <atv82owbRaQefTwm8Zu9eNtRGoFKjx-t1rLO-Ni0cZIc1Xt-rRpUpV46E3eVZB-OOR5Uw1-kpAISiISw0Wpd97thi1klJguazfDqkCVF5d8=@protonmail.com>
-In-Reply-To: <vhuac7ac4stqkqq6wfw5lx7ftalphmmfuiytkm4etydoy7nu3m@uxs475wlm4ca>
-References: <eXTmCkW-1fFjQPMz9pDuTV6stWYM2-k_vUP8hhFhSQGIVNAITUWcadIMLvtpufgBOIUY4S8RYGU-vSxIEehZknZv9n1tnS2ivaSvUSyQpGQ=@protonmail.com> <vhuac7ac4stqkqq6wfw5lx7ftalphmmfuiytkm4etydoy7nu3m@uxs475wlm4ca>
-Feedback-ID: 15150580:user:proton
-X-Pm-Message-ID: 4d16f44e3f2157013c03194f4f4f085659992ca1
+	s=arc-20240116; t=1726952107; c=relaxed/simple;
+	bh=zCqpoS5w4f1xCshb9HIsD+o5plreKKm3k8RGLBVK15c=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=DCyS+sYh4P7fphE9/OQ3NfULZE87X3qDw0PYkEpoCo7KZPv04pIYhmPzlxRQ1U4zqNHZut3OuS9H8cyCoKbIgS5gv5Am5zWxiSwwHg5/VeghxMOa1QMyLeWuw0+MauKJ3m7ZH8Xb7oe7Zxk++y1ILqJ03edXRZ0SLmLxNjfRuUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cxpVQvgO; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2f758f84dfbso24732361fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 13:55:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1726952104; x=1727556904; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/bTCsBF5k6hiXd0BD7pAzfGo+bzmLOlGAZbycow2IC0=;
+        b=cxpVQvgOnB9RYQhW9bksqm+HgslffbiariyRDN2827fPUA/gYm1P/3JbCzNa6LSmGV
+         1LVJSz/y7wLgEAHvsadmRhRMT38LeBt9R61RRVtiwHHzHeZujmRneFgsQOnnUeDVWLNo
+         7A5/+kz+sFKEqvAnrsOHCB6XPcIqSOQ+hKbRXmp7t7+GfkMUIRSDlChk+Nan+IRoACGI
+         NXCeMoubInwDFPDqeZt2EoYHBudBSQDA4u9NAgN68URmZ2uYmJXKexfd5k7K9QJSHCrV
+         RSdTmQ2MnTjXIGnoMiwzu9uuKl8SLI3AIQ3ZYwxQBPT/ywA/H8hywmuRWTVRHYgRJLeq
+         vFoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1726952104; x=1727556904;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/bTCsBF5k6hiXd0BD7pAzfGo+bzmLOlGAZbycow2IC0=;
+        b=bpC3dYZ+tU+oZyqQQwD2RIqac7lCP+SLp2Aj68T2a9I/kEx1qYXo8671sIK5POcJCc
+         AWTWBrJV8XALAOv+rRTKMHrMuqvieSdIVcrvdjFNSQj1QGvsnqfzQ1msCSzW9hkkTq38
+         FGWfUJYD4R1NZM1NRqQyJ6TRHs9lOmgzhz7jHHDiUD7L0KLaSgeuyxuXn8FwGaaPyGyg
+         8lfSAgKqA57jK3SGpBlXh2GJr0bELOJK5TMZsRyeLNair6noigb8brZQtNN/xnMAZ6cZ
+         q9kuzDkV4D9DHjJ7e+wKmgLfI+GUb7dNIbKngljKH1DJF0No7rUnV4gBNuPD3CZiW78b
+         7o0A==
+X-Forwarded-Encrypted: i=1; AJvYcCX1fr/cSz12/bsvhK2KPsna1qvS+9J0StnJo1UwdqJzl0u6Xesisx58q61JPEAABlaoQtQSg7xIz+FzkYtj@vger.kernel.org
+X-Gm-Message-State: AOJu0YymDJVfdaezp4HZ0IWULpb84UbWL+BbGaphtU+7kn9pu/EqH+L9
+	f0EnOt7qWqCW5QNpKkDyKkUVi0jPo66lRCoYsT40OQxvilAFY4bYQJyfTWpAFl8=
+X-Google-Smtp-Source: AGHT+IGkE/CDmDZd8a6qDrSxzq4ke5KBxWqmH8ZKD8+ZcMk8xb1LBGvp0UT4UVMQ7i9Mrzn6JJ+Flw==
+X-Received: by 2002:a2e:9dc9:0:b0:2f7:5519:7130 with SMTP id 38308e7fff4ca-2f7cb360708mr28339491fa.31.1726952103966;
+        Sat, 21 Sep 2024 13:55:03 -0700 (PDT)
+Received: from eriador.lan (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f79d37f6besm23986731fa.94.2024.09.21.13.55.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 21 Sep 2024 13:55:02 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: laurentiu.palcu@oss.nxp.com,
+	l.stach@pengutronix.de,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	shawnguo@kernel.org,
+	s.hauer@pengutronix.de,
+	kernel@pengutronix.de,
+	festevam@gmail.com,
+	p.zabel@pengutronix.de,
+	robdclark@gmail.com,
+	sean@poorly.run,
+	konradybcio@kernel.org,
+	quic_abhinavk@quicinc.com,
+	marijn.suijten@somainline.org,
+	thierry.reding@gmail.com,
+	mperttunen@nvidia.com,
+	jonathanh@nvidia.com,
+	agx@sigxcpu.org,
+	gregkh@linuxfoundation.org,
+	jordan@cosmicpenguin.net,
+	dri-devel@lists.freedesktop.org,
+	imx@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	linux-tegra@vger.kernel.org,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Jinjie Ruan <ruanjinjie@huawei.com>
+Subject: Re: (subset) [PATCH v2 0/5] drm: Use IRQF_NO_AUTOEN flag in request_irq()
+Date: Sat, 21 Sep 2024 23:55:00 +0300
+Message-ID: <172695208396.1339964.10365625478619096144.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240912083020.3720233-1-ruanjinjie@huawei.com>
+References: <20240912083020.3720233-1-ruanjinjie@huawei.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-Hello,
+On Thu, 12 Sep 2024 16:30:15 +0800, Jinjie Ruan wrote:
+> As commit cbe16f35bee6 ("genirq: Add IRQF_NO_AUTOEN for request_irq/nmi()")
+> said, reqeust_irq() and then disable_irq() is unsafe. In the small time gap
+> between request_irq() and disable_irq(), interrupts can still come.
+> 
+> IRQF_NO_AUTOEN flag can be used by drivers to request_irq(). It prevents
+> the automatic enabling of the requested interrupt in the same
+> safe way. With that the usage can be simplified and corrected.
+> 
+> [...]
 
-Thank you for your insight and my apologies on messing up the first one. I =
-have submitted a fixed one that uses git and send mail.=20
+Applied to drm-misc-next, thanks!
 
-Thank you,
-John Schulz
+[1/5] drm/imx: Use IRQF_NO_AUTOEN flag in request_irq()
+      commit: 1af01e14db7e0b45ae502d822776a58c86688763
+[2/5] drm/imx/dcss: Use IRQF_NO_AUTOEN flag in request_irq()
+      commit: 4380f8624b8bff3637476726351ed7bb8850188a
+[3/5] drm/imx/ipuv3: Use IRQF_NO_AUTOEN flag in request_irq()
+      commit: 40004709a3d3b07041a473a163ca911ef04ab8bd
 
-On Saturday, September 21st, 2024 at 3:27 AM, Dmitry Baryshkov <dmitry.bary=
-shkov@linaro.org> wrote:
+Best regards,
+-- 
+With best wishes
+Dmitry
 
->=20
->=20
-> On Sat, Sep 21, 2024 at 01:03:00AM GMT, John Schulz wrote:
->=20
-> > Hello,
-> >=20
-> > First time submitting a patch. As work is made towards integrating more=
- QCOM X1E and X1P SoCs, using a family identification function seems better=
- fit than checking individual devices.
->=20
->=20
->=20
-> Please use git commit and then git format-patch / git send-email to
-> format and send patches.
->=20
-> Commit message is not an email text but rather a patch description. It
-> should explain why you made the change.
->=20
-> Patches should be atomic and non-breaking. E.g. if I pick this patch w/o
-> picking up 2/2 build will break. We frequently use git bisect, which
-> means that (ideally) after each commit the kernel should still build.
->=20
-> Last, but not least, your patch misses DCO signature.
->=20
-> Please take a glance at Documentation/process, especially
-> submitting-patches.rst.
->=20
-> > Thanks,
-> >=20
-> > diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/ms=
-m/adreno/a6xx_gpu.c
-> > index 06cab2c6fd66..34ca8f6d5d99 100644
-> > --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> > @@ -1026,7 +1026,7 @@ static int hw_init(struct msm_gpu *gpu)
-> > gpu_write(gpu, REG_A6XX_UCHE_CLIENT_PF, BIT(7) | 0x1);
-> >=20
-> > /* Set weights for bicubic filtering */
-> > - if (adreno_is_a650_family(adreno_gpu) || adreno_is_x185(adreno_gpu)) =
-{
-> > + if (adreno_is_a650_family(adreno_gpu) || adreno_is_x1xx_family(adreno=
-_gpu)) {
-> > gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0, 0);
-> > gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
-> > 0x3fe05ff4);
->=20
->=20
-> --
-> With best wishes
-> Dmitry
 
