@@ -1,145 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-32170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C43D97E305
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 21:37:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FADA97E33E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 22:32:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6D8951C20B90
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 19:37:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 80D4D1C208FC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 20:32:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A05CC405C9;
-	Sun, 22 Sep 2024 19:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21AE454BD8;
+	Sun, 22 Sep 2024 20:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GC8Co70i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TiDvsu+9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DA7524C;
-	Sun, 22 Sep 2024 19:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E274F39FCF;
+	Sun, 22 Sep 2024 20:32:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727033834; cv=none; b=P24H6+aPnF1h7Qqi0AnZsW/FoBJkG9n4QmpUWsTQNffTO61UTUbWaNcUKgPE/YtpyKm0f+VBEjbUgwhG7li/pAHj549/OZF2Ac5u0l3XmGLgkcu7D5Vgrbl9EYcgItdFZU49bpfeq9a3RlTAtLaw/YicJ6WslGUuoXAdt4wKbto=
+	t=1727037137; cv=none; b=hpEZ/Nyj/nBYDX467xs/fuZ/CZdJvYWjDvhUzXMVDsQlRFq/Snw3Zk5lgSjOrOJcqWs2QJ8ksUCO07as2vcpsCjsPPmzRIo1e46FuCJ1N24UdElnYfR+MyWaueY+uAZDkjY2zyTP+2ds61c+u2ikWhZi2WPm33RYet1imUnfaLg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727033834; c=relaxed/simple;
-	bh=2elvPLDf2iP7pfvWrJF4PIrd717oYH/D7huh/K95R3k=;
+	s=arc-20240116; t=1727037137; c=relaxed/simple;
+	bh=Wkhxr7zFNFIazgoASlMplbrwcKNgSTWyidioOVkTuBk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QuOxMc3uGuhg687nFMrgtblDfwn4WP2Ip80sruOzzwHAJHcqhW8pFalwg3azg3ew5QstalGcf4uuaMCLCPOs7cFYc9Ih8NYiBGlQXwFe+yW03uRh4du1+GM7wWfVqIilg9zHxkyKvkdjz/pg2zfiMVzjHolb1zdn0Pznrh7dpn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GC8Co70i; arc=none smtp.client-ip=198.175.65.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727033833; x=1758569833;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=2elvPLDf2iP7pfvWrJF4PIrd717oYH/D7huh/K95R3k=;
-  b=GC8Co70iFJ5/fzNe9BYe2vffolDrvuaTRbUpMZ5vErbciomtcv3B+woH
-   QVDmEzz4d/b8qaOl5IvIeDZlnJXzf9mN3qorU0btwqYXPqm9a71I61oSP
-   mOkfKqcyphTaWbRMtyu8csbNmTjX7vwMUH3eGmIQlqY6hDbfDkQFnZnRj
-   fzivcxvIlciRpeRE4NRR9r+t63PPcAxR6jUF6lRN2a/cTj3dlXvCnMn3z
-   xFG6u++EWrvYl48Rzlj5FNc3lGFTxrDMgwepSlVoUYU5THHZQAj2xmAIM
-   mZUMnN1ehrElbG7Xdz/bgrYn5Ht1Ll4HGaWapLTt1j8A7N0lxDNR8K2lY
-   Q==;
-X-CSE-ConnectionGUID: sFcdq7CzSYqkwWGDsIiVNQ==
-X-CSE-MsgGUID: IyFJ40wJTu+RWs9CcamgAQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11202"; a="26133423"
-X-IronPort-AV: E=Sophos;i="6.10,250,1719903600"; 
-   d="scan'208";a="26133423"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2024 12:37:12 -0700
-X-CSE-ConnectionGUID: 6LQoP8f1Tzq6X/iNwnEpiQ==
-X-CSE-MsgGUID: yCSyk3qATPian6mC4I7CBg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,250,1719903600"; 
-   d="scan'208";a="75407740"
-Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 22 Sep 2024 12:37:08 -0700
-Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1ssSOI-000GcY-0i;
-	Sun, 22 Sep 2024 19:37:06 +0000
-Date: Mon, 23 Sep 2024 03:36:56 +0800
-From: kernel test robot <lkp@intel.com>
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>, robdclark@gmail.com,
-	will@kernel.org, robin.murphy@arm.com, joro@8bytes.org,
-	jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org,
-	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com,
-	dmitry.baryshkov@linaro.org
-Cc: oe-kbuild-all@lists.linux.dev, iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, quic_bibekkum@quicinc.com
-Subject: Re: [PATCH v15 4/5] iommu/arm-smmu: introduction of ACTLR for custom
- prefetcher settings
-Message-ID: <202409230343.Q8KnYl2w-lkp@intel.com>
-References: <20240920155813.3434021-5-quic_bibekkum@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=juD+eXtM6D8BR57WDVLC5tbteRxK/JKQkgkM85uqfPdKwpzSlYU5XEi5l5VNv/kh1ZiJwbfp/lXaej0kj35Ho1Qt8eLLz0bYPC7XhP/v8ErKZuVTKG+r+3pgRCS7iv0rUf9M+wWW8xjZD6NU+5Cb7WpC/ZHQyJPVDnPTeel9Q9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TiDvsu+9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88F6C4CEC3;
+	Sun, 22 Sep 2024 20:32:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727037136;
+	bh=Wkhxr7zFNFIazgoASlMplbrwcKNgSTWyidioOVkTuBk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=TiDvsu+9gnBUH6LkeNAgFbvmb8NH/msjU0IY5ssA4B4yiyvdSIJOBNVt6vCf+X7YG
+	 WJLbqLlUuc/Te1whGHFwEypeKUFrWs71Bh1+fpInwHV33FhGbpBUTX1jbQ35xmxPB+
+	 TsRxgFFUXsyxhtsD6eQEYfuYmqPak4IBWdVMSgU0lQU2Heut0HrZPS2AbY6B2oADnt
+	 7YwYx+QHfAM1IuTPAuwvjZfHbrt35b0tjZFzqpVzv1x1X4eQoeWM2AhxApYf44d4B0
+	 L8HdmiZEjiRvmc7YWNKlO/6nxa1GF/orW/YVi89RdHNyHrLYhQPcExR94FdWMG1Ya0
+	 aq9rHAbK56XIg==
+Date: Sun, 22 Sep 2024 22:32:12 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: broonie@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
+	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com, 
+	manivannan.sadhasivam@linaro.org, vkoul@kernel.org, nikita.shubin@maquefel.me, esben@geanix.com, 
+	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-mtd@lists.infradead.org, quic_srichara@quicinc.com, 
+	quic_varada@quicinc.com
+Subject: Re: [PATCH v10 1/8] spi: dt-bindings: Introduce qcom,spi-qpic-snand
+Message-ID: <k3id2ywyghhmoiekehko7ear2nef5ygmizvkax5s6sdi2zhn5d@yfhgl5xte4dw>
+References: <20240922113351.2390195-1-quic_mdalam@quicinc.com>
+ <20240922113351.2390195-2-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240920155813.3434021-5-quic_bibekkum@quicinc.com>
+In-Reply-To: <20240922113351.2390195-2-quic_mdalam@quicinc.com>
 
-Hi Bibek,
+On Sun, Sep 22, 2024 at 05:03:44PM +0530, Md Sadre Alam wrote:
+> Document the QPIC-SPI-NAND flash controller present in the IPQ SoCs.
+> It can work both in serial and parallel mode and supports typical
+> SPI-NAND page cache operations.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+> 
+> Change in [v10]
+> 
+> * No change
 
-kernel test robot noticed the following build warnings:
+...
 
-[auto build test WARNING on linus/master]
-[also build test WARNING on joro-iommu/next v6.11 next-20240920]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> +title: Qualcomm QPIC NAND controller
+> +
+> +maintainers:
+> +  - Md sadre Alam <quic_mdalam@quicinc.com>
+> +
+> +description:
+> +  The QCOM QPIC-SPI-NAND flash controller is an extended version of
+> +  the QCOM QPIC NAND flash controller. It can work both in serial
+> +  and parallel mode. It supports typical SPI-NAND page cache
+> +  operations in single, dual or quad IO mode with pipelined ECC
+> +  encoding/decoding using the QPIC ECC HW engine.
+> +
+> +allOf:
+> +  - $ref: /schemas/spi/spi-controller.yaml#
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,spi-qpic-snand
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Bibek-Kumar-Patro/iommu-arm-smmu-re-enable-context-caching-in-smmu-reset-operation/20240921-000146
-base:   linus/master
-patch link:    https://lore.kernel.org/r/20240920155813.3434021-5-quic_bibekkum%40quicinc.com
-patch subject: [PATCH v15 4/5] iommu/arm-smmu: introduction of ACTLR for custom prefetcher settings
-config: arm-qcom_defconfig (https://download.01.org/0day-ci/archive/20240923/202409230343.Q8KnYl2w-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 13.3.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240923/202409230343.Q8KnYl2w-lkp@intel.com/reproduce)
+Recently it turned out that Qualcomm generic compatibles are not
+generic... That was odd, but to me it is a clear signal that something
+should not be called generic if it is not generic enough.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409230343.Q8KnYl2w-lkp@intel.com/
+Please switch to soc-specific compatibles (and drop my reviewed-by, so
+this will appear in my review queue).
 
-All warnings (new ones prefixed by >>):
+Best regards,
+Krzysztof
 
-   In file included from drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:14:
-   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c: In function 'qcom_smmu_set_actlr_dev':
->> drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c:266:59: warning: cast from pointer to integer of different size [-Wpointer-to-int-cast]
-     266 |         arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR, (u64)match->data);
-         |                                                           ^
-   drivers/iommu/arm/arm-smmu/arm-smmu.h:533:59: note: in definition of macro 'arm_smmu_cb_write'
-     533 |         arm_smmu_writel((s), ARM_SMMU_CB((s), (n)), (o), (v))
-         |                                                           ^
-
-
-vim +266 drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-
-   254	
-   255	static void qcom_smmu_set_actlr_dev(struct device *dev, struct arm_smmu_device *smmu, int cbndx,
-   256			const struct of_device_id *client_match)
-   257	{
-   258		const struct of_device_id *match =
-   259				of_match_device(client_match, dev);
-   260	
-   261		if (!match) {
-   262			dev_notice(dev, "no ACTLR settings present\n");
-   263			return;
-   264		}
-   265	
- > 266		arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR, (u64)match->data);
-   267	}
-   268	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
