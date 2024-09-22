@@ -1,218 +1,273 @@
-Return-Path: <linux-arm-msm+bounces-32158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32160-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 915EF97DF71
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 00:34:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 559AE97E12F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 13:35:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B4A22B2129B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Sep 2024 22:34:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 786221C20B4F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 11:35:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A6C21714D3;
-	Sat, 21 Sep 2024 22:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB78019340F;
+	Sun, 22 Sep 2024 11:34:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u0yo62WZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="C7jRQtN8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DAA15575C
-	for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 22:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D7613C9C7;
+	Sun, 22 Sep 2024 11:34:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1726958032; cv=none; b=B8Ru8UWTjxu/NIqOd1uBmrkyhybSKAlHBGwrcsnwQqTzt1YkQ6iA1qoXOQ6cZF3fLUULu58Wuje/sjPVhXXplIaAVxe3/JpFZ7noZRApZJU/qICR4CrsgGaxMrLvTRLb0vUJ5leZy9DuonzJsmQsUKBpAuujTh+Yjc4iyeVUFmQ=
+	t=1727004897; cv=none; b=KLGltoumx5uBvDE56MgWM+AQoT5s3L4FSILxUM12Sd7zz2iZgxB0bPdoNjKraAR8NUhqN2Vtz3AwXMRsoqabHLwf4lsJmugRrxdexUcnDhracVZApCdO7l8DqUPgb7zGDhVn3C5wiY/A7GxJQ4vfjiF2/eL4ILNNrSss5rZ4D4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1726958032; c=relaxed/simple;
-	bh=Tp0FNXrk2yEfqUnoYGkY4MsSg6rdyB04bZgqohgoAbs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b/QY0Enrrk/S7EZoWVF6Qf5ppIOF5DQ/R7Ib5nvtZI0BlfVD9DG1bJj4OxU1ASI8Cl7bLcvEDgoSWrD4vCgDdfaFnH4yGeWUI+dV/gG3h9wtrBA5p0XBX2UaQ+V2IgenjmwBT0vQ8jeArGC1ybe9Bum8Hqu/VtslWqAvx5WkzgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u0yo62WZ; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5365cf5de24so3977473e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 21 Sep 2024 15:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1726958028; x=1727562828; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gX86j39e02j/mMJI41SFOhgjLK0jANOAafMy+BuLlM8=;
-        b=u0yo62WZeZbfVJe0NakLs6fPSii9QhbqrN/LKg3sgscDwhDI/Dn2hzicmKFIn1Zsc5
-         QL14mRlXSZ1yNWSNyDOA9+He07jIhuhxPm3U6XE8blBFoD9+qzq5rS7PcKRmF/s/O5Ho
-         rG7paYgsWfRx+GQ7VHlhk3lSZ877+JUnSz6R20iBjnulFkXW/TAVWj1TPg3ftQT79dkl
-         sf74VWHhHtFsJYh4bdguRnSscoIn6M6KsHwvCxwLdoXtwVEP6knHK33KPvG0w2nPHJ/X
-         Pm+Pqd+HMl1Tu2GpBy668pvxDOIx7vVSP8a+3SGB7Mns4awQ2FbHTVvHIrxsGTZBXLcD
-         76Cw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1726958028; x=1727562828;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gX86j39e02j/mMJI41SFOhgjLK0jANOAafMy+BuLlM8=;
-        b=LjibaTaT4NhGnulZ22sJMdmKhUj7C643/0GRSxRfsn2DUO5amo68IUZakI6hnIfiVF
-         n8098mNkgg7kvvByFRZB8yWgdWQjI2fFVjoo1LYp765sMXghPAJgEGptgd41Qp00+dav
-         dhruuYMusZ7pW7UAKHb5lhnZ458c/Zv/AUcvpvVCU+1sBl7D7q3rE54T4aDTkIU8G8/5
-         9lEyTM5+0n2SJg714Qyq2+/El3kgOcjSrC0XkrGUIrp/I1kU6bCp3mzVrIHPDy16WNb5
-         +9qZHPCoSKXyOVNMvMEvmoqrc/JqRqd/z/aJKG7fJQXMSWjQoYmfsEK9n+rZkOLTqQB9
-         1kow==
-X-Forwarded-Encrypted: i=1; AJvYcCWh+9oXyQJAexNfPIC+8jA/+EQdIrBD3+fGoGzyHTLzl6nph6GOTYIUqlUC+Hlv+C/eQGwvDj+voDij5+Hc@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBJ4i72LI0Ka2lo/0FpjJO0XUor07cuxejh2NLF4tI2jLA2znj
-	cXDd1hMj+QKgoQo5wlEnQ04C5f9TzeiltkUBblP1iir14QqVBzzUUe3mwIo0irs=
-X-Google-Smtp-Source: AGHT+IEQg2tUTFCeWCDOw+B1mlFRNoo51OtcNliubEi2LO0DCWuhnyqKCtGXKESfuGiyNwvVThuwYg==
-X-Received: by 2002:a05:6512:ba4:b0:530:ba4b:f65d with SMTP id 2adb3069b0e04-536ad180176mr3632234e87.28.1726958027223;
-        Sat, 21 Sep 2024 15:33:47 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-536870ad17dsm2741416e87.241.2024.09.21.15.33.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 21 Sep 2024 15:33:46 -0700 (PDT)
-Date: Sun, 22 Sep 2024 01:33:44 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: "Gaurav Kashyap (QUIC)" <quic_gaurkash@quicinc.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>, 
-	Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>, 
-	Mikulas Patocka <mpatocka@redhat.com>, Adrian Hunter <adrian.hunter@intel.com>, 
-	Asutosh Das <quic_asutoshd@quicinc.com>, Ritesh Harjani <ritesh.list@gmail.com>, 
-	Ulf Hansson <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
-	Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, "Martin K. Petersen" <martin.petersen@oracle.com>, 
-	"Theodore Y. Ts'o" <tytso@mit.edu>, Jaegeuk Kim <jaegeuk@kernel.org>, 
-	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	"manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>, "linux-block@vger.kernel.org" <linux-block@vger.kernel.org>, 
-	"linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"dm-devel@lists.linux.dev" <dm-devel@lists.linux.dev>, "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>, 
-	"linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>, "linux-fscrypt@vger.kernel.org" <linux-fscrypt@vger.kernel.org>, 
-	"linux-fsdevel@vger.kernel.org" <linux-fsdevel@vger.kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
-	"bartosz.golaszewski" <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v6 09/17] soc: qcom: ice: add HWKM support to the ICE
- driver
-Message-ID: <sgq72p6hkebkv6r5vsyvxsasojkhzlmwqravynpnwjkozwb7g7@6ml3vlkigxoh>
-References: <66953e65-2468-43b8-9ccf-54671613c4ab@linaro.org>
- <ivibs6qqxhbikaevys3iga7s73xq6dzq3u43gwjri3lozkrblx@jxlmwe5wiq7e>
- <98cc8d71d5d9476297a54774c382030d@quicinc.com>
- <CAA8EJpp_HY+YmMCRwdteeAHnSHtjuHb=nFar60O_PwLwjk0mNA@mail.gmail.com>
- <9bd0c9356e2b471385bcb2780ff2425b@quicinc.com>
- <20240912231735.GA2211970@google.com>
- <CAA8EJpq3sjfB0BsJTs3_r_ZFzhrrpy-A=9Dx9ks2KrDNYCntdg@mail.gmail.com>
- <20240913045716.GA2292625@google.com>
- <egtwyk2rp3mtnw2ry6npq5xjfhjvtnymbxy66zevtdi7yvaav4@gcnmrmtqro4b>
- <20240921194939.GB2187@quark.localdomain>
+	s=arc-20240116; t=1727004897; c=relaxed/simple;
+	bh=5bo21WyyT2HE5gHnLKcOOgFtLFeXcYv5FTTzNgXDKSI=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=QKW5U/A0JhNBTfvjth4Lh4CJtqgO7/cFnGy2MzPC3QP0uXsoMASOuhJoKKBrxN0FM54ngaSqcOqbKMENR4l3jtquYt3k+GtcWKSTcXW8Snmsq5JC99ZLfHETq51vNI6CHGpG6WgjBX4eZKIXFEz4MZHEdueA7iKKUw55TtsB+Hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=C7jRQtN8; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48MBI3GZ023431;
+	Sun, 22 Sep 2024 11:34:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=MfyJjVv98j65NSWG3tHxq2
+	CYLllgcSIRE8e0PoAqBZg=; b=C7jRQtN8JexNfeyK5oKfgFZaolW0s5NiSjHvov
+	iEGhejM5GGv18Wj4IzBDd5NiyErzGmDbO9Rp95DED+2SHWbWeCkd8GFkizCIkITr
+	1l6dvG3la6Fh3yWYZeQpfsugmSoSKEALlZvNHNCCNPSeMmO/qpjhXk5fRngB82JC
+	+1C6ZZ+lEmvLIK8E6P50yMa0EFjk3+MmyaholHZPrx8/Kis4vVdCUPmyKv0pBv9G
+	3rEUdW5wbTZ5sekRdaT+WJm+j20uwXjiDp6kmXftaDL1+bvOADVC9AnyY1sjNIAl
+	R42UlY/lNtPMr2P0SbOy8SzPxSqhr3Aife1LiI2v9e4tm9aA==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sn5bje09-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 22 Sep 2024 11:34:12 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48MBYBc7014598
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 22 Sep 2024 11:34:11 GMT
+Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 22 Sep 2024 04:34:05 -0700
+From: Md Sadre Alam <quic_mdalam@quicinc.com>
+To: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <miquel.raynal@bootlin.com>,
+        <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <vkoul@kernel.org>,
+        <nikita.shubin@maquefel.me>, <esben@geanix.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-mtd@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <quic_mdalam@quicinc.com>
+Subject: [PATCH v10 0/8] Add QPIC SPI NAND driver
+Date: Sun, 22 Sep 2024 17:03:43 +0530
+Message-ID: <20240922113351.2390195-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240921194939.GB2187@quark.localdomain>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pQIikAQ-j77z-H7W3v-lb5OFd_x7rMeI
+X-Proofpoint-GUID: pQIikAQ-j77z-H7W3v-lb5OFd_x7rMeI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0 mlxlogscore=812
+ spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 phishscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409220087
 
-On Sat, Sep 21, 2024 at 12:49:39PM GMT, Eric Biggers wrote:
-> Hi Dmitry,
-> 
-> On Fri, Sep 13, 2024 at 03:21:07PM +0300, Dmitry Baryshkov wrote:
-> > > > > > > > Once ICE has moved to a HWKM mode, the firmware key programming
-> > > > > > > currently does not support raw keys.
-> > > > > > > > This support is being added for the next Qualcomm chipset in Trustzone to
-> > > > > > > support both at he same time, but that will take another year or two to hit
-> > > > > > > the market.
-> > > > > > > > Until that time, due to TZ (firmware) limitations , the driver can only
-> > > > > > > support one or the other.
-> > > > > > > >
-> > > > > > > > We also cannot keep moving ICE modes, due to the HWKM enablement
-> > > > > > > being a one-time configurable value at boot.
-> > > > > > >
-> > > > > > > So the init of HWKM should be delayed until the point where the user tells if
-> > > > > > > HWKM or raw keys should be used.
-> > > > > >
-> > > > > > Ack.
-> > > > > > I'll work with Bartosz to look into moving to HWKM mode only during the first key program request
-> > > > > >
-> > > > >
-> > > > > That would mean the driver would have to initially advertise support for both
-> > > > > HW-wrapped keys and raw keys, and then it would revoke the support for one of
-> > > > > them later (due to the other one being used).  However, runtime revocation of
-> > > > > crypto capabilities is not supported by the blk-crypto framework
-> > > > > (Documentation/block/inline-encryption.rst), and there is no clear path to
-> > > > > adding such support.  Upper layers may have already checked the crypto
-> > > > > capabilities and decided to use them.  It's too late to find out that the
-> > > > > support was revoked in the middle of an I/O request.  Upper layer code
-> > > > > (blk-crypto, fscrypt, etc.) is not prepared for this.  And even if it was, the
-> > > > > best it could do is cleanly fail the I/O, which is too late as e.g. it may
-> > > > > happen during background writeback and cause user data to be thrown away.
-> > > > 
-> > > > Can we check crypto capabilities when the user sets the key?
-> > > 
-> > > I think you mean when a key is programmed into a keyslot?  That happens during
-> > > I/O, which is too late as I've explained above.
-> > > 
-> > > > Compare this to the actual HSM used to secure communication or
-> > > > storage. It has certain capabilities, which can be enumerated, etc.
-> > > > But then at the time the user sets the key it is perfectly normal to
-> > > > return an error because HSM is out of resources. It might even have
-> > > > spare key slots, but it might be not enough to be able to program the
-> > > > required key (as a really crazy example, consider the HSM having at
-> > > > this time a single spare DES key slot, while the user wants to program
-> > > > 3DES key).
-> > > 
-> > > That isn't how the kernel handles inline encryption keyslots.  They are only
-> > > programmed as needed for I/O.  If they are all in-use by pending I/O requests,
-> > > then the kernel waits for an I/O request to finish and reprograms the keyslot it
-> > > was using.  There is never an error reported due to lack of keyslots.
-> > 
-> > Does that mean that the I/O can be outstanding for the very long period
-> > of time? Or that if the ICE hardware has just a single keyslot, but
-> > there are two concurrent I/O processes using two different keys, the
-> > framework will be constantly swapping the keys programmed to the HW?
-> 
-> Yes for both.  Of course, system designers are supposed to put in enough
-> keyslots for this to not be much of a problem.
-> 
-> So, the "wait for a keyslot" logic in the block layer is necessary in general so
-> that applications don't unnecessarily get I/O errors.  But in a properly tuned
-> system this logic should be rarely executed.
-> 
-> And in cases where the keyslots really are a bottleneck, users can of course
-> just use software encryption instead.
-> 
-> Note that the number of keyslots is reported in sysfs.
-> 
-> > I think it might be prefereable for the drivers and the framework to
-> > support "preprogramming" of the keys, when the key is programmed to the
-> > hardware when it is set by the user.
-> 
-> This doesn't sound particularly useful.  If there are always enough keyslots,
-> then keyslots never get evicted and there is no advantage to this.  If there are
-> *not* always enough keyslots, then it's sometimes necessary to evict keyslots,
-> so it would not be desirable to have them permanently reserved.
+v10:
+ * Fixed compilation warnings reported by kernel test robot
+ * Added depends on CONFIG_MTD for qpic-spi nand driver
+ * Removed extra bracket from statement if (i == (num_cw - 1))
+   in qcom_spi_program_raw() api.
 
-I'm still trying to propose solutions for the hwkm-or-raw keys problem,
-trying to find a way to return an error early enough. So it's not about
-the hints for frequently-used keys, but for returning an error if the
-user tries to program key type which became unusupported after a
-previous call.
+v9:
+ * Fixed all the compilation warning reported by
+   kernel test robot
+  * Changed type of cmd1, vld to u32 from __le32 in qcom_nand_controller
+   structure
+ * Changed type of cfg0, cfg1, cfg0_raw, cfg1_raw, clrflashstatus,
+   ecc_buf_cfg, ecc_bch_cfg, clrreadstatus to u32 in qcom_nand_host
+   structure
+ * In nandc_set_read_loc_first() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot
+ * In nandc_set_read_loc_last() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot
+ * Changed data type of cw_offset, read_size, is_last_read_loc to
+   u32 in nandc_set_read_loc() api to fix compilation warning reported
+   by kernel test bot
+ * In set_address() api added cpu_to_le32() macro to fix compilation
+   warning reported by kernel test bot
+ * In update_rw_regs() api added cpu_to_le32() macro to fix compilation
+   warning reported by kernel test bot
+ * In qcom_op_cmd_mapping() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot
+ * In qcom_read_status_exec() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot
+ * In qcom_read_id_type_exec() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot
+ * In qcom_misc_cmd_type_exec() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot
+ * In qcom_param_page_type_exec() api added cpu_to_le32() macro to fix
+   compilation warning reported by kernel test bot   
+ * In update_rw_regs() api added cpu_to_le32() macro to fix compilation
+   issue reported by kernel test bot
+ * In qcom_param_page_type_exec() api added cpu_to_le32() macro to fix
+   compilation issue reported by kernel test bot
+ * Changed data type of addr1, addr2, cmd, to __le32 in qpic_spi_nand
+   structure
+ * In qcom_spi_set_read_loc_first() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_set_read_loc_last() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_init() api added cpu_to_le32() macro to fix compilation
+   warning
+ * In qcom_spi_ecc_init_ctx_pipelined() api removed unused variables
+   reqs, user, step_size, strength and added cpu_to_le32() macro as well
+   to fix compilation warning
+ * In qcom_spi_read_last_cw() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_check_error() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_read_page_ecc() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_read_page_oob() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_program_raw() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_program_ecc() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_program_oob() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_send_cmdaddr() api added cpu_to_le32() macro to fix
+   compilation warning
+ * In qcom_spi_io_op() api added cpu_to_le32() macro to fix compilation
+    warning
+v8:
+ * Fixed compilation warning reported by kernel test robot
+ * Added "chip" description in nandc_set_read_loc_first()
+ * Added "chip" description" in nandc_set_read_loc_last()
+ * Changed data type of read_location0, read_location1,
+   read_location2, read_location3, addr0, addr1, cmd, cfg0,
+   cfg1, ecc_bch_cfg, ecc_buf_cfg, clrflashstatus, clrreadstatus,
+   orig_cmd1, orig_vld to __le32 to fix compilation warning.
+ * Included bitfield.h header file in spi-qpic-snand.c to
+   fix compilation warning
+ * Removed unused variable "steps" variable from 
+   qcom_spi_ecc_init_ctx_pipelined()
 
-> It could make sense to have some sort of hints mechanism, where frequently-used
-> keys can be marked as high-priority to keep programmed in a keyslot.  I don't
-> see much of a need for this though, given that the eviction policy is already
-> LRU, so it already prefers to keep frequently-used keys in a keyslot.
-> 
-> > Another option might be to let the drivers validate the keys being set
-> > by userspace. This way in our case the driver might report that it
-> > supports both raw and wrapped keys, but start rejecting the keys once
-> > it gets notified that the user has programmed other kind of keys. This
-> > way key setup can fail, but the actual I/O can not. WDYT?
-> 
-> Well, that has the same effect as the crypto capabilities check which is already
-> done.  The problem is that your proposal effectively revokes a capability, and
-> that is racy.
-> 
-> - Eric
+v7:
+ * Added read_oob() and write_oob() api
+ * Added FIELD_PREP() in spi init
+ * Made CONFIG_SPI_QPIC_SNAND and CONFIG_MTD_NAND_QCOM
+   as bool type
+ * Removed offset 0 in oob_ecc() layout
+ * Handled multiple error condition
+
+v6:
+ * Added FIELD_PREP() and GENMASK() macro
+ * Added qpic_spi_nand{..} structure for
+   spi nand realted variables
+ * Made qpic_common.c slectable based on
+   either CONFIG_MTD_NAND_QCOM or CONFIG_SPI_QPIC_SNAND
+ * Removed rawnand.h from qpic-common.h 
+ * Removed partitions.h and rawnand.h form spi-qpic-snand.c
+ * Added qcom_nand_unalloc() in remove()
+
+v5:
+ * Fixes nandbiterr issue
+ * Added raw_read() and raw_write() API
+ * Added qcom_ prefix to all the common API
+ * Removed register indirection
+ * Following tests for SPI-NAND devices passed
+
+   - mtd_oobtest
+   - mtd_pagetest
+   - mtd_readtest
+   - mtd_speedtest
+   - mtd_stresstest
+   - mtd_subpagetest
+   - mtd_nandbiterrs
+   - nandtest
+   - nanddump
+   - nandwrite
+   - nandbiterr -i
+   - mtd erase
+   - mtd write
+   - dd
+   - hexddump
+
+v4:
+ * In this patch series fixes kernel doc for all the cmmon api
+ * Also fixes dm-binding commit message
+ * Fix qpic_common.c compilation based on config
+
+v3:
+ * In this patch series fixes multiple things like
+   added clock-name, added _alloc_controller api instead
+   of alloc_master, made common apis more generic etc.
+
+ * Addressed all the comment from v2 patch series
+
+v2:
+ * https://lore.kernel.org/linux-arm-msm/20240215134856.1313239-1-quic_mdalam@quicinc.com/
+ * In this series of patchs we have added basic working QPIC SPI NAND
+   driver with READ, WRITE, ERASE etc functionality
+
+ * Addressed all the comments given in RFC [v1] patch
+
+v1:
+ * https://lore.kernel.org/linux-arm-msm/20231031120307.1600689-1-quic_mdalam@quicinc.com/
+ * Initial set of patches for handling QPIC SPI NAND.
+
+
+Md Sadre Alam (8):
+  spi: dt-bindings: Introduce qcom,spi-qpic-snand
+  mtd: rawnand: qcom: cleanup qcom_nandc driver
+  mtd: rawnand: qcom: Add qcom prefix to common api
+  mtd: nand: Add qpic_common API file
+  mtd: rawnand: qcom: use FIELD_PREP and GENMASK
+  spi: spi-qpic: add driver for QCOM SPI NAND flash Interface
+  arm64: dts: qcom: ipq9574: Add SPI nand support
+  arm64: dts: qcom: ipq9574: Disable eMMC node
+
+ .../bindings/spi/qcom,spi-qpic-snand.yaml     |   83 +
+ .../boot/dts/qcom/ipq9574-rdp-common.dtsi     |   43 +
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts   |    2 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         |   27 +
+ drivers/mtd/nand/Makefile                     |    7 +
+ drivers/mtd/nand/qpic_common.c                |  738 +++++++
+ drivers/mtd/nand/raw/Kconfig                  |    2 +-
+ drivers/mtd/nand/raw/qcom_nandc.c             | 1763 +++--------------
+ drivers/spi/Kconfig                           |    9 +
+ drivers/spi/Makefile                          |    1 +
+ drivers/spi/spi-qpic-snand.c                  | 1634 +++++++++++++++
+ include/linux/mtd/nand-qpic-common.h          |  482 +++++
+ 12 files changed, 3349 insertions(+), 1442 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml
+ create mode 100644 drivers/mtd/nand/qpic_common.c
+ create mode 100644 drivers/spi/spi-qpic-snand.c
+ create mode 100644 include/linux/mtd/nand-qpic-common.h
 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
