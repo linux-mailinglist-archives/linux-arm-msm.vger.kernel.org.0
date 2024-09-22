@@ -1,158 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-32168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C63997E206
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 16:39:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62B7497E2AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 19:09:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D57B41C2082C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 14:39:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CCE91C20D2D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 22 Sep 2024 17:09:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDB0C6FBF;
-	Sun, 22 Sep 2024 14:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CDD62BAF1;
+	Sun, 22 Sep 2024 17:09:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="woPcY6vv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RVdVgmwq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD1F4A28
-	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Sep 2024 14:39:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA0626AD0
+	for <linux-arm-msm@vger.kernel.org>; Sun, 22 Sep 2024 17:09:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727015973; cv=none; b=cgXflOhPx2ZNhkbzduQoi5+quhVkFeZz4wyuMNKs1uHoutOMqm8ybW329EyAg58zADU4PnH3xaxvZ5Oul8++HUOETZBRnP91y+uweE7GpRI1WBxEZUAT93WdHkKqyqDAP9pKW6GVOJxc1Nm+TGn6vT4H43RptUISVO5m1JWKNnk=
+	t=1727024971; cv=none; b=UPAxpTKqyI1C9LF5Kp59bayAHi/YLqLQyTKPoXDQJj6Kp6y0XFWRg/Sqw3K3jFdcjYJ8DvFWUxtBNXyZ7rQsiZH2d3joVWFa2HLDvY3xYf3xYnC0/ldabyisRUEPceo6KwkwN+LnAdhSTliiko1inmoCo6S1HkciuPr+k0xX/po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727015973; c=relaxed/simple;
-	bh=AfR9SBqzuLK2O2sxCewRKtNE8lpuN4wYOAadBWmt3y4=;
+	s=arc-20240116; t=1727024971; c=relaxed/simple;
+	bh=7kPmqFQNL8wHbsPJ1aFo4mgkSTjutG+BY+1kZiG8quU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nj7QRgm/DLI2G/7N9mnCbIY3jH6H6kLsKcgUYUeinizj8KCvUgW/eyjxiwGSlnoQ2daNILwVnuIyJqyCI3RBJG4GYbF1RdE9ap/C3Gm0gcclF1pYAB65edN7/BP+Fng8W/QDTliFFqRy+kfUwlKkSkP0CYW8XTUjVW59djDdqJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=woPcY6vv; arc=none smtp.client-ip=209.85.167.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=bQo4mG/jr1+1h+rr5nybiQFSfF8YDX0+gQ9bhuXX85Ud27b4vhaBsnwo2+88hqiQiFSpV/OcOOgCVjdQE7TOsOp9pt26IIrbAXjdTd7yIxbq3LJ71loyPjd26XN7qpY+QQwpal7sBEqvYlQjPJvn2rf/f3RijIvrW8e2JtCFCjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RVdVgmwq; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5365aec6fc1so3797038e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Sep 2024 07:39:31 -0700 (PDT)
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-42cbc38a997so22343205e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Sep 2024 10:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727015970; x=1727620770; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=B+Z1Fj0zQf/4137f/rr72W5Rrit5dm3a9kJJ8qdJcv4=;
-        b=woPcY6vviRsMzWueMRvlNy2Ly6d5Y3PgPaL4zhJsY9AeQpbqkYHpjzxqdJ/9UnRtMP
-         PueazGsiUc8DRzy17TZBPPpnd4RGePKiP1m8kAPMxifhyVuae8LF2KdU3vr0tQf3WFnF
-         R9H5yGzP7nCad08DVlLIY9+JKMsG3Pcp5LAgsN5/qP2tlqlOCbtol+iywfVTNMDz2A8o
-         aHQPDTV7BGYb8Te4Q8ptQFxZJnQbh9jjADuA+Ds2SH0d0Ft18bETkwx9X48cTzi5QB5i
-         lpK9Xx32ladnFEgjaDpW1bpDmduOeOan5FMCCPBXc92FQlgWYp175SGDyx9xQNtx2NCN
-         8AEg==
+        d=linaro.org; s=google; t=1727024968; x=1727629768; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=L0rIrXzxLzm1RYymakq/5yWW79oFHaAAUNk6PTkjpnU=;
+        b=RVdVgmwq2gl2Qr+72ogBtUR1SOZjuyexkfBIdXMRmgMec1gsqU1ivluOcDZScjHaXj
+         c7kg7yLNaBxQ37vi9OnjnQk56KQVhdsiCEuCcEbWXL6vl57lNhQmVb6RvHyaWbkePkGX
+         ZBLoX9P/8+LsgmLH38Vu30KcmqqmTzayP9VLFaIHqnNcIr6rOeb3HIxw82B/DPi/ELFQ
+         O5QVDkdG0mHgIoGNmIKpicnub/wj46rLFc9lr1xCB4bRTl4TYUDoFKKWiUAzy1nz6Nzi
+         SuKDJal/0e3BUEzQIQj2g1CxNhyryqIWRDzqSbedZhHTeSx/EFOmk9hBxZMAsDT98Gzz
+         jXgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727015970; x=1727620770;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B+Z1Fj0zQf/4137f/rr72W5Rrit5dm3a9kJJ8qdJcv4=;
-        b=ccfWeLi5ZJ0Mpgp8L3Emm0vXZ4RGAC4zOhJjQ9Xc3LpDeUTqSIXyWl5wk6zO5UH33v
-         QFvCFwLduRIDQjps6ksdLVjZqNdLR9XL0trdytkpGYHv/tD31pj4R4l6Xv1Ksnzg1RkL
-         PoaMp9dJD0+54MNdgpICJuqw4J45KBiKtAKUC82OyX7dG61+V7azV77Wzu3S4Fh8S9oe
-         md/YK7+teeVHMKZHjNXmloeL9gUmrsUbh++vv+HKGSQaupVZLVQmig+iioJYgjlReXAV
-         1OQf58sQkWQ3ksJQ/+ensOPp/u2tEqgycUpGsDLBPyvDFwFZxe5oKWDzGD8brv/Uioxp
-         40JQ==
-X-Gm-Message-State: AOJu0YwoG4r06CIVcdlZoowKWzTX9CGrO8JizarH28tkjhPUCBYRExv2
-	kUysnDyVjCMvbFJvG1Hnfl8AJ7FMTUVu20p8UMpmVWghdYRxKPSXVkABAKN7+ug=
-X-Google-Smtp-Source: AGHT+IEMNG1wX9oM1T2uLOaIh7Ct9PfBz53bCjFMsXE96yUL+EvR1Zc2C/eXgw9P+Ufx9b3NCVYzDw==
-X-Received: by 2002:a05:6512:ac1:b0:536:55ef:69e8 with SMTP id 2adb3069b0e04-536ac179d79mr3815089e87.0.1727015969504;
-        Sun, 22 Sep 2024 07:39:29 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-536a7a4c4besm1326814e87.65.2024.09.22.07.39.27
+        d=1e100.net; s=20230601; t=1727024968; x=1727629768;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L0rIrXzxLzm1RYymakq/5yWW79oFHaAAUNk6PTkjpnU=;
+        b=vA5bNIfCvKajDdCiYdecZoeVannpL9pI48ezjDhrWD7UjFk1HDXmZwUgXLKaJFd2+A
+         iVmJV4sdaKOSTRPe9fw8klQu2vqKpLpxOrornk/9WlT0PDmuzus9aSjFKfq932MI/cNN
+         ygd23rbRlt82ZZTIAAdrH5kXiSIcPEAGkK8fYHAcLWsyxI4WXSTaSMlueo5LWrCdB+Gm
+         Nhcnrvho4MHMJEGC6mEPwKRPKs6BHzDq4R0t3gSDWXzkmELJ0rhazgxamJObnzpMWAq4
+         3ul8u0fMUBA3JjCAMazjK5qudajhi7Mm9yshBhoto3UYj1Npx1avHLAc61M9V8uF37GG
+         827w==
+X-Forwarded-Encrypted: i=1; AJvYcCWJEjijOTYlIcH+DEoLDOaoeNafH6zbAJbpahTDysfTR6aRfgg70ucKapYHWDV6IYkuXUlQrO3eEnU3VDZe@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy65Iw/K4m2b1Dkh9m2zwL2IktcNhlJOfmrrVBpnA/CkSPRSgBm
+	MoLkvY4xnExgokQSmfsY/eSF2pJgoxDnJ5Ehw57Sm2C6vqKmublBPboAniViRw==
+X-Google-Smtp-Source: AGHT+IHnnuaHgxDj+rS3r9lgGu134/fQ270qm0dfx4TIlDOErD+D6Q+2jXX//mse26TLw59cSmOqYw==
+X-Received: by 2002:a05:600c:1ca2:b0:42c:b8e5:34d5 with SMTP id 5b1f17b1804b1-42e7a9fe8dbmr52478745e9.15.1727024967852;
+        Sun, 22 Sep 2024 10:09:27 -0700 (PDT)
+Received: from thinkpad (i53873832.versanet.de. [83.135.56.50])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e801d66f6sm55926815e9.29.2024.09.22.10.09.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Sep 2024 07:39:28 -0700 (PDT)
-Date: Sun, 22 Sep 2024 17:39:26 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: John Schulz <john.schulz1@protonmail.com>
-Cc: linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] drivers/gpu: Switching Adreno x1-85 device check to
- family check.
-Message-ID: <g7jofgrxwdypuemq4xe5h45pbewwviggllffoxongmarozme2m@cewhxcp7ij7j>
-References: <20240921204237.8006-1-john.schulz1@protonmail.com>
+        Sun, 22 Sep 2024 10:09:27 -0700 (PDT)
+Date: Sun, 22 Sep 2024 19:09:25 +0200
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>, vkoul@kernel.org,
+	kishon@kernel.org, robh@kernel.org, andersson@kernel.org,
+	konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org,
+	quic_msarkar@quicinc.com, quic_devipriy@quicinc.com,
+	dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+	neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-clk@vger.kernel.org
+Subject: Re: [PATCH v2 0/5] Add support for PCIe3 on x1e80100
+Message-ID: <20240922170925.qcuwja6oaqlbng5j@thinkpad>
+References: <20240913083724.1217691-1-quic_qianyu@quicinc.com>
+ <36bd9f69-e263-08a1-af07-45185ea03671@quicinc.com>
+ <6f1118eb-89cf-4fd4-a35d-e8b98b0b7a8d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240921204237.8006-1-john.schulz1@protonmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6f1118eb-89cf-4fd4-a35d-e8b98b0b7a8d@quicinc.com>
 
-On Sat, Sep 21, 2024 at 08:42:54PM GMT, John Schulz wrote:
-
-Subject prefix is not correct, it should be drm/msm
-
-> Switches the is_x185 check to is_x1xx_family to accommodate more devices.
-> Note that I got the X1-45 GPU ID from Windows which may not be correct.
-
-How did you test it? It's not that the driver is going to work on that
-GPU without a catalog entry.
-
+On Thu, Sep 19, 2024 at 10:14:06PM +0800, Qiang Yu wrote:
 > 
-> Signed-off-by: John Schulz <john.schulz1@protonmail.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  3 ++-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 12 +++++++++---
->  2 files changed, 11 insertions(+), 4 deletions(-)
+> On 9/14/2024 11:59 AM, Krishna Chaitanya Chundru wrote:
+> > Hi qiang,
+> > 
+> > In next series can you add logic in controller driver
+> > to have new ops for this x1e80100 since this hardware
+> > has smmuv3 support but currently the ops_1_9_0 ops which
+> > is being used has configuring bdf to sid table which will
+> > be not present for this devices.
+> > 
+> Sure, bdf2sid map is not supported and required since we use smmuv3 for
+> pcie on x1e80100. Can I add a new ops which is same as ops_1_9_0 basically
+> and only config_sid callback is removed. Or add a new flag to determine if
+> we need to config bdf2sid map like no_l0s.
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 06cab2c6fd66..f04aeacae3c2 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -2,6 +2,7 @@
->  /* Copyright (c) 2017-2019 The Linux Foundation. All rights reserved. */
->  
->  
-> +#include "adreno_gpu.h"
->  #include "msm_gem.h"
->  #include "msm_mmu.h"
->  #include "msm_gpu_trace.h"
-> @@ -1026,7 +1027,7 @@ static int hw_init(struct msm_gpu *gpu)
->  	gpu_write(gpu, REG_A6XX_UCHE_CLIENT_PF, BIT(7) | 0x1);
->  
->  	/* Set weights for bicubic filtering */
-> -	if (adreno_is_a650_family(adreno_gpu) || adreno_is_x185(adreno_gpu)) {
-> +	if (adreno_is_a650_family(adreno_gpu) || adreno_is_x1xx_family(adreno_gpu)) {
->  		gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_0, 0);
->  		gpu_write(gpu, REG_A6XX_TPL1_BICUBIC_WEIGHTS_TABLE_1,
->  			0x3fe05ff4);
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index 58d7e7915c57..ec36fc915433 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -526,9 +526,15 @@ static inline int adreno_is_a750(struct adreno_gpu *gpu)
->  	return gpu->info->chip_ids[0] == 0x43051401;
->  }
->  
-> -static inline int adreno_is_x185(struct adreno_gpu *gpu)
-> -{
-> -	return gpu->info->chip_ids[0] == 0x43050c01;
-> +static inline int adreno_is_x1xx_family(struct adreno_gpu *gpu)
-> +{
-> +	switch (gpu->info->chip_ids[0]) {
-> +	case 0x1fc31043; // X1-45
+> Hi Mani, what do you think about this?
+> 
 
-Just by comparing it with other IDs it looks like you got it backwards.
+Good question. IMO it is better to add a new ops even though it duplictes the
+callbacks. Because the newer platforms are not going to need this bdf2sid map
+anyway. But if we add a flag to determine that, then the check will become,
 
-> +	case 0x43050c01; // X1-85
-> +		return 1;
-> +	default:
-> +		return 0;
-> +	}
->  }
->  
->  static inline int adreno_is_a740_family(struct adreno_gpu *gpu)
-> -- 
-> 2.46.1
-> 
-> 
+	if (pcie->cfg->ops->config_sid && !pcie->cfg->smmuv3)
+		...
+
+And this doesn't look good as both conditions are false for X1E80100 i.e., it
+doesn't need bdf2sid mapping and it is also a SMMUv3 platform. Moreover having
+two checks here makes it confusing also.
+
+So let's use a new callback. But please mention the IP revision in comments as
+like other ops.
+
+- Mani
+
+> Thanks,
+> Qiang
+> > 
+> > - Krishna Chaitanya.
+> > 
+> > On 9/13/2024 2:07 PM, Qiang Yu wrote:
+> > > This series add support for PCIe3 on x1e80100.
+> > > 
+> > > PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
+> > > PHY configuration compare other PCIe instances on x1e80100. Hence add
+> > > required resource configuration and usage for PCIe3.
+> > > 
+> > > v2->v1:
+> > > 1. Squash [PATCH 1/8], [PATCH 2/8],[PATCH 3/8] into one patch and
+> > > make the
+> > >     indentation consistent.
+> > > 2. Put dts patch at the end of the patchset.
+> > > 3. Put dt-binding patch at the first of the patchset.
+> > > 4. Add a new patch where opp-table is added in dt-binding to avoid dtbs
+> > >     checking error.
+> > > 5. Remove GCC_PCIE_3_AUX_CLK, RPMH_CXO_CLK, put in
+> > > TCSR_PCIE_8L_CLKREF_EN
+> > >     as ref.
+> > > 6. Remove lane_broadcasting.
+> > > 7. Add 64 bit bar, Remove GCC_PCIE_3_PIPE_CLK_SRC,
+> > >     GCC_CFG_NOC_PCIE_ANOC_SOUTH_AHB_CLK is changed to
+> > >     GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK.
+> > > 8. Add Reviewed-by tag.
+> > > 9. Remove [PATCH 7/8], [PATCH 8/8].
+> > > 
+> > > Qiang Yu (5):
+> > >    dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100
+> > >      QMP PCIe PHY Gen4 x8
+> > >    dt-bindings: PCI: qcom: Add OPP table for X1E80100
+> > >    phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3
+> > >    clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
+> > >    arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
+> > > 
+> > >   .../bindings/pci/qcom,pcie-x1e80100.yaml      |   4 +
+> > >   .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |   3 +
+> > >   arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 202 ++++++++++++++++-
+> > >   drivers/clk/qcom/gcc-x1e80100.c               |  10 +-
+> > >   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 211 ++++++++++++++++++
+> > >   .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 +++
+> > >   drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
+> > >   7 files changed, 468 insertions(+), 6 deletions(-)
+> > >   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+> > >   create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
+> > > 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
