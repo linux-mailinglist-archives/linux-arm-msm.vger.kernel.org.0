@@ -1,140 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-32204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EB0C97EBAB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 14:44:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F22D897EBD1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 14:58:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E2DFCB212CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 12:44:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B979F283530
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 12:58:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 023C3195B1A;
-	Mon, 23 Sep 2024 12:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8BB0199EA7;
+	Mon, 23 Sep 2024 12:57:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VPoZVdMw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="on08+izb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4E6194A59
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2024 12:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADA7199948;
+	Mon, 23 Sep 2024 12:57:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727095445; cv=none; b=evDMUgfMGf2cW6fFiSuNOHQpJPOwXocDCB9jWptBTzc2qfAdmMW792rx0HxpXGh1Xc+O8TR+XM/66EFJ+7DUSkkWpxTHBRSEHpOVGnJQ9AaN1/mK2wb7RzcilTXRUbcGQ2cxgpmoE9pq2p2LpisHz4sJ2329+9iKIFeLKiSBqqM=
+	t=1727096262; cv=none; b=brBzy+bF6oeiBV93tX2TmENfTswOw128oCNKCQAFl3xCjRyEKxsUtvnfpjPG0H/bLf8luJZB+zIB4pVWEm2VEmH4ylrc1nuYse0bwSZgHFXWFpT6G1cSnBJ4GdvKXsmTjaLcESCm+qSbH/iaoowqTHDZeXYYaNUePxoqnFWp+cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727095445; c=relaxed/simple;
-	bh=TVLtiVvW5vaCL46NINDK8Adww8W/D9+l6DqTY+m8VUg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nRe3m1o3gH2/gbcKcwPsIzZ7EG6YUIP0iKWgxhobkzqz2Ru2myeYiDfMqhfrvNCQLkzcN+NOGOSh87zWksI/eEm3+IZSVhJscu0PQ3ul8dy70ITQo3+SDyWMjyJhmLO+0ovoWaVCfhATBD+tizWPw5IUVgIck24VD9rjCEDUV4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VPoZVdMw; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5c3d2f9f896so6063157a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2024 05:44:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727095441; x=1727700241; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i6bIma9HKr/eXg0lAgMWRo2b9ll54v4t077yr94CrZ8=;
-        b=VPoZVdMw2E9eWKDXEBGvqOWGlHg6+TMjU2RGC20e+DSbZuu1M/QBXhPWRM2REt4beX
-         3UD0U0Q7dScxby8PwQxgxY1xpC2DGfdFdfIGFBXQD8XR1mVoTVosWu6oTbiy36Ws+w/w
-         1yKzAbtSiffRLLr6jxQOzWovS3Tow4hE3hT/7Vk6nsOkoVXLSh3f/bOtLd+Exqhr5nlF
-         Sy1Lc3+CynSsDR2hoPN96kIzaQewTgAocDVt6KUx63eEOqwm3/DN0YwpHiM2FwBlwSxh
-         0CCzU3eZaQUyrjfhAhysNi/WSraPPfnXjRHPDRv+cWrIVztsy+8+JIniB/GqpedS3CW0
-         IbEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727095441; x=1727700241;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i6bIma9HKr/eXg0lAgMWRo2b9ll54v4t077yr94CrZ8=;
-        b=FsLRki54FCaTW+B9ozrHaxz7cyhmBAYMfEovuAQGA7pkwA40upIIA7uZQsKIbZkdse
-         o9+LRALQk6Jx4RysFmK7VDE0kVhOrnDL4/S1GhwxHrRPZg9nKow3tw80MPJrK5cQVa6O
-         srqiW3ZGhqtl/dkDYsPa9vzhHSd/oGgMSXzdnGAO4jv2N0Tptro7H9TzIGq97wvpqQvJ
-         c/g9O8/AyLtpkwc3uVig9BulRWU/PycESftiowNAT6nxywktkL+/UPjH3e8NjfkZWq7T
-         wC40wOiK4zbfb3VtDlsyVv4DPSVQ7qSwqGw8bQ/9MYL2CQpNqqOnJ+Anz0tcPKNWQJIG
-         hb1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVdD3Twe8NfUlvzHOFDAxl7wX9k8Z3JrZCGO1LgbvALbtvHHaD0T0rc5gOjU94S0LjoVdIPbhjKYT43nzxu@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJmzTx0Y6+0ssijHykAbgcPTibALQbX7KiQe8CdMyMw/av1SXN
-	wW3PH6/R3qedR/IVp/tfofdt3ZkzDb1ajWRG61KVm8N+ouxHKyF3xHD3i5eOyuA=
-X-Google-Smtp-Source: AGHT+IEVAj1HE3hb6jZE4BzB+CcLNa8iY01RAmuxlz+j9hb4CloAziZ26qigCmGcnprsyLA3FBALmA==
-X-Received: by 2002:a17:907:f706:b0:a8d:4e24:5314 with SMTP id a640c23a62f3a-a90d4ffe7dbmr1058725566b.24.1727095441259;
-        Mon, 23 Sep 2024 05:44:01 -0700 (PDT)
-Received: from [192.168.0.25] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a90610f429bsm1211494966b.61.2024.09.23.05.44.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Sep 2024 05:44:00 -0700 (PDT)
-Message-ID: <5ec1aca4-c690-49c9-9432-96b9852de86f@linaro.org>
-Date: Mon, 23 Sep 2024 13:43:59 +0100
+	s=arc-20240116; t=1727096262; c=relaxed/simple;
+	bh=138ysTb9UGP6qlupnmgFo4OleRcuHrIa96kPMA6264s=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=M9p3nsJyFmifBIo0zkg6FKYou1hxorrJMQkPD/B59TvgNAKf5n5BUMxhvNZ8I79ehiGrd2H+hB4MMfzsqmWQimot5UoTL43LhkWcjZKttR5wgf0UaeC3DacQe0Yy2XQNrqMBKlPpG2ISvh8KpBlGCWTT3amdOK7ZGrXtpGgdzCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=on08+izb; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48NAu2CE009631;
+	Mon, 23 Sep 2024 12:57:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=sBxmY8EMQYIGQGDFdYweMBOS4dlxGEQ7c/P
+	+yOnOhtg=; b=on08+izb2lhQ7Sr9HB1Z7jju3hMwuSTn7spRZ5JpxK8LCI7JM5H
+	ZGt4kjQV0o1HYNcBB3DxoxfN/CDD9LEwMtu0Rlu1Yl1OrLpo/tIDFE9ikvo8Zxf9
+	3XFFTy7NuH4UKj85v10oZHDQukrO7wBdPEt21X4tSIhEP17EgeeE/ufWmLX0mj4Y
+	CSntFdJLGpSKlDZ//+A+2m9aOC+sBihFMMsMMywx8kUYX6gW8qC9tG8RrZqNXQPc
+	J7+mWMpX2R0OCQ3j5gy1KoponA9bjW3ZICqrUVpWrox+RcoArHAvTGm1iTwG4PNX
+	yjO6yARwPkDGgpAwAF6uPi2r1AiTgmVOaMQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sqe94nwy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 23 Sep 2024 12:57:17 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48NCvFro001774;
+	Mon, 23 Sep 2024 12:57:15 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 41sq7ktnar-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 23 Sep 2024 12:57:15 +0000
+Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48NCspIr030063;
+	Mon, 23 Sep 2024 12:57:15 GMT
+Received: from hu-devc-lv-u22-c.qualcomm.com (hu-qianyu-lv.qualcomm.com [10.81.25.114])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 48NCvFZK001738
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 23 Sep 2024 12:57:15 +0000
+Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4098150)
+	id 33E6265F; Mon, 23 Sep 2024 05:57:15 -0700 (PDT)
+From: Qiang Yu <quic_qianyu@quicinc.com>
+To: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
+        robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+        quic_devipriy@quicinc.com
+Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+        neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v3 0/6] Add support for PCIe3 on x1e80100
+Date: Mon, 23 Sep 2024 05:57:07 -0700
+Message-Id: <20240923125713.3411487-1-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] media: dt-bindings: media: camss: Fix interrupt
- types
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: lF6GgPoAvUms48r_roaOuiMcm6VsPBEQ
+X-Proofpoint-GUID: lF6GgPoAvUms48r_roaOuiMcm6VsPBEQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=888 spamscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409230095
 
-On 23/09/2024 08:28, Vladimir Zapolskiy wrote:
-> It was discovered that on a few Qualcomm platforms types of interrupts
-> do not match both downstream code and a type requested by the CAMSS driver.
-> 
-> The mismatched interrupt type between firmware and the correspondent CAMSS
-> driver leads to known problems, which were discussed previously:
-> 
->    https://lore.kernel.org/lkml/20220530080842.37024-4-manivannan.sadhasivam@linaro.org/
-> 
-> Here the situation is right the same, namely a repeated bind of camss device
-> is not possible due to a wrongly specified interrupt type, and it may lead
-> to an issue in runtime manifested like this:
-> 
->    irq: type mismatch, failed to map hwirq-509 for interrupt-controller@17a00000!
-> 
-> Changes from v1 to v2:
-> * added gained Acked-by, Tested-by and Reviewed-by tags,
-> * per patch review requests from Krzysztof deduplicated "media:" from subjects.
-> 
-> Link to v1 of the changeset:
-> 
->    https://lore.kernel.org/all/20240905164142.3475873-1-vladimir.zapolskiy@linaro.org/
-> 
-> Vladimir Zapolskiy (6):
->    dt-bindings: media: qcom,sc8280xp-camss: Fix interrupt types
->    dt-bindings: media: qcom,sdm845-camss: Fix interrupt types
->    dt-bindings: media: qcom,sm8250-camss: Fix interrupt types
->    arm64: dts: qcom: sc8280xp: Fix interrupt type of camss interrupts
->    arm64: dts: qcom: sdm845: Fix interrupt types of camss interrupts
->    arm64: dts: qcom: sm8250: Fix interrupt types of camss interrupts
-> 
->   .../bindings/media/qcom,sc8280xp-camss.yaml   | 40 +++++++++----------
->   .../bindings/media/qcom,sdm845-camss.yaml     | 20 +++++-----
->   .../bindings/media/qcom,sm8250-camss.yaml     | 28 ++++++-------
->   arch/arm64/boot/dts/qcom/sc8280xp.dtsi        | 40 +++++++++----------
->   arch/arm64/boot/dts/qcom/sdm845.dtsi          | 20 +++++-----
->   arch/arm64/boot/dts/qcom/sm8250.dtsi          | 28 ++++++-------
->   6 files changed, 88 insertions(+), 88 deletions(-)
-> 
+This series add support for PCIe3 on x1e80100.
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
+PHY configuration compare other PCIe instances on x1e80100. Hence add
+required resource configuration and usage for PCIe3.
 
-For the series.
+v2->v3:
+1. Use 'Gen 4 x8' in commit msg
+2. Move opp-table property to qcom,pcie-common.yaml
+3. Add Reviewed-by tag
+4. Add global interrupt and use GIC_SPI for the parent interrupt specifier
+5. Use 0x0 in reg property and use pcie@ for pcie3 device node
+6. Show different IP version v6.30 in commit msg
+7. Add logic in controller driver to have new ops for x1e80100
+
+v2->v1:
+1. Squash [PATCH 1/8], [PATCH 2/8],[PATCH 3/8] into one patch and make the
+   indentation consistent.
+2. Put dts patch at the end of the patchset.
+3. Put dt-binding patch at the first of the patchset.
+4. Add a new patch where opp-table is added in dt-binding to avoid dtbs
+   checking error.
+5. Remove GCC_PCIE_3_AUX_CLK, RPMH_CXO_CLK, put in TCSR_PCIE_8L_CLKREF_EN
+   as ref.
+6. Remove lane_broadcasting.
+7. Add 64 bit bar, Remove GCC_PCIE_3_PIPE_CLK_SRC, 
+   GCC_CFG_NOC_PCIE_ANOC_SOUTH_AHB_CLK is changed to
+   GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK.
+8. Add Reviewed-by tag.
+9. Remove [PATCH 7/8], [PATCH 8/8].
+
+Qiang Yu (6):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100
+    QMP PCIe PHY Gen4 x8
+  dt-bindings: PCI: qcom: Add OPP table for X1E80100
+  phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3
+  clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
+  PCI: qcom: Add new cfg and ops without config_sid callback for
+    X1E80100
+  arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
+
+ .../bindings/pci/qcom,pcie-common.yaml        |   4 +
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |   3 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 204 ++++++++++++++++-
+ drivers/clk/qcom/gcc-x1e80100.c               |  10 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        |  16 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 211 ++++++++++++++++++
+ .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
+ 8 files changed, 485 insertions(+), 7 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
+
+-- 
+2.34.1
+
 
