@@ -1,125 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-32203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A735997EAFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 13:48:01 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6C5197EAFC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 13:47:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5196A1F21F80
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 11:48:01 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A6B3B20759
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 11:47:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B573E197A92;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D9F182C60;
 	Mon, 23 Sep 2024 11:47:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tBPbh6gO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14038120D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2024 11:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24706433D6;
+	Mon, 23 Sep 2024 11:47:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727092068; cv=none; b=W6aBkXAeLQdQQdYrPEPh4Iuvz3rtnpFng9xzblaKWL+oA03glhC621ALM1xv7iRphG+tWD81cYeShP5JH6py6hywOMQDXiDz3bU3rNALqhDjym6I3Hjb/9bD1CJNRW8BOdL1KMZcrQcgVeL6vMqHSArE61XxMq/VHvaALlEQWG8=
+	t=1727092068; cv=none; b=U9zKydx5srllyPX/bA2GvH53ikIy7dOf9DAZUZAtxn9eS/EcNzwZWYJnyx44WtlO25/l5FY99Jr5yN2TTFd9S/rBOnHisQGrAd2o12/Sb01kGIZ1H6Jmr5TFLwr2K6Kw8JBtsNo/cv7O2f3/4lCQgxVR2eui1k8iCgynkpiarf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1727092068; c=relaxed/simple;
-	bh=3SbgIdRUjYzuNhjnvUZP+Nr40Ibrmk6328EEhkaeYtA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NF24KtXum3FwASHymp/OGGFVEeJTq+rP4oD20EPodCMPDUkmiTopxfYVJfJT6Umhq4DQyToGtOldHybUU1Ueeh42Yay2vyM8Iiq9RzwhBtKAhLZfGWKYhE16VnRb5nRHha+orzPjq/ypp00TbJCGmqJJ1MdQIRMFOa0GqU32dbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tBPbh6gO; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5365cc68efaso22945e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Sep 2024 04:47:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727092065; x=1727696865; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0djd4G/7ZZ9d24oyrx0WPtUTMtYC0XKPiOilllFoMEI=;
-        b=tBPbh6gOD3GaLZ7DyKBNFx1DpLo8rwv+dTlgCgNQUrCc2+UYpAGMxW9cvJr3Jb36AS
-         qQejXXznQGAXuD9G7ILoZQ8Wiyrqa6C6j2wm36ZH/y365mPUhKfd8OFflokshGYV0UQU
-         izDUgDGBcFO/3CI30m/dRFV5bOgZoPF1kcxVZER388hROIoz+CvpZZsmTgeRnVnHlKhx
-         j5qL0RL+lM6fo/o2tsx0dnKcgfO1bk0wHyRxcfVL9RcVoV6mnJpTy3BZWtLoFZbCJwAd
-         0BpsKz7AboD43uQyb0wz2H5fhRRhcOgtozCHwMULMOpXOW3ZX275S9VkTav4UWIxfcP+
-         /bsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727092065; x=1727696865;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0djd4G/7ZZ9d24oyrx0WPtUTMtYC0XKPiOilllFoMEI=;
-        b=sh66RoPaVOzFYM2vU4bohDUyJyQz0t/vAGhejnQ2eBxnBAHfYh4G+o6ECvrAtq07Wz
-         U7xN7bUlXGjb5rRak1wsfabo2rb7wNKlb1wGVW+Bf2qSgBUHsDjbw3T6/kZeycGRhmT8
-         TE/5gG064uH7lltPf4I3C2elM8D2IPAaxeURf9Gf1a16dpwUfoe175qOeuR7qZeSBFMB
-         Fhts2xxBFjnvUXKWs/5AWcj7bBk+Z7NFdvlsQwq8RTtVAoGl3TTB5kVH4yk4rWxdEoJo
-         32xYniy4WMgFdzX3TPqtT9hVj5i4bB1ALLPXlDItsB83DlO7nW2Lc/kGI/ALvQepjDgB
-         za3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVKtkZGL4s9oXG378+yBTTbBCPjegnAe2jtLpw4oRs+eilzUAv1jmt6CfvHGyTAQ4bAkc79AVpOLGkq7iDN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzj29XoxTbXInwFRmKoYFil8og5qQpscZwaCnVmFvhmhKLJeOiM
-	y3zMG99qFHbaFLsKno3aTQ6LjEMFBTQC0MOrhWbG6BeRCgJ2FuY5/b9ja0Knm+vSDHbjf+epAv7
-	dFNVjsA==
-X-Google-Smtp-Source: AGHT+IGOWlf1E3MK25Ig9GpguOQfG2ei5zN70UwUJJU5oIGPcT/EQOZr978PoKbxaP0b1IeYvBKH9w==
-X-Received: by 2002:a05:6512:10d0:b0:52c:df51:20bc with SMTP id 2adb3069b0e04-536ad164335mr5499187e87.16.1727092065029;
-        Mon, 23 Sep 2024 04:47:45 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5368704678asm3244982e87.5.2024.09.23.04.47.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Sep 2024 04:47:44 -0700 (PDT)
-Date: Mon, 23 Sep 2024 14:47:42 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org, 
-	andersson@kernel.org, simona@ffwll.ch, abel.vesa@linaro.org, robdclark@gmail.com, 
-	quic_abhinavk@quicinc.com, sean@poorly.run, marijn.suijten@somainline.org, 
-	airlied@gmail.com, daniel@ffwll.ch, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, quic_khsieh@quicinc.com, konrad.dybcio@linaro.org, 
-	quic_parellan@quicinc.com, quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, quic_riteshk@quicinc.com, 
-	quic_vproddut@quicinc.com
-Subject: Re: [PATCH v3 5/5] drm/msm/dp: Add DisplayPort controller for SA8775P
-Message-ID: <vdzxghgr3uhj36mjqnphagf2mftpsnqg3mubjo7gfiexcrdb55@6i2s7s4a4qr4>
-References: <20240923113150.24711-1-quic_mukhopad@quicinc.com>
- <20240923113150.24711-6-quic_mukhopad@quicinc.com>
+	bh=vGEtl2dx+wLKXYLoTRA44ll9w1yabp9wwxFdAIE0Ew0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ITWpaTUja84tLhmbDdcBmCJO0K7a0sQKLOMAFYVznp1iZdrgY+DyGkSRdFzovAA0mRf7pTIj5KKbEaMzXlnAENOxPw8XSpPYthPJVgwBIx8yEbi4H/4xj3i4UiYKc6L5lCMXX2dqiHwgXQ12XNU7okAcJc4SY/WhcNkerKNQVzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.252])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4XC1QH5lJxzfcbh;
+	Mon, 23 Sep 2024 19:45:27 +0800 (CST)
+Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
+	by mail.maildlp.com (Postfix) with ESMTPS id 0A3321800A7;
+	Mon, 23 Sep 2024 19:47:44 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemh500013.china.huawei.com
+ (7.202.181.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 23 Sep
+ 2024 19:47:43 +0800
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <stephan@gerhold.net>, <loic.poulain@linaro.org>,
+	<ryazanov.s.a@gmail.com>, <johannes@sipsolutions.net>, <davem@davemloft.net>,
+	<edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
+	<linux-arm-msm@vger.kernel.org>, <netdev@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH v2] net: wwan: qcom_bam_dmux: Fix missing pm_runtime_disable()
+Date: Mon, 23 Sep 2024 19:57:43 +0800
+Message-ID: <20240923115743.3563079-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240923113150.24711-6-quic_mukhopad@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ kwepemh500013.china.huawei.com (7.202.181.146)
 
-On Mon, Sep 23, 2024 at 05:01:50PM GMT, Soutrik Mukhopadhyay wrote:
-> The Qualcomm SA8775P platform comes with 2 DisplayPort controllers
-> for each mdss, having different base offsets than the previous
-> SoCs. The support for all 4 DPTX have been added here, and
-> validation of MDSS0 DPTX0 and DPTX1 have been conducted.
+It's important to undo pm_runtime_use_autosuspend() with
+pm_runtime_dont_use_autosuspend() at driver exit time.
 
-I'd prefer if there was a word 'only' in the last phrase, but I can live
-without it.
+But the pm_runtime_disable() and pm_runtime_dont_use_autosuspend()
+is missing in the error path for bam_dmux_probe(). So add it.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Found by code review. Compile-tested only.
 
+Fixes: 21a0ffd9b38c ("net: wwan: Add Qualcomm BAM-DMUX WWAN network driver")
+Suggested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+---
+v2:
+- Drop the unneeded pm_runtime_set_suspended().
+- Add Suggested-by.
+- Update the commit message.
+---
+ drivers/net/wwan/qcom_bam_dmux.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-> 
-> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-> ---
-> v2: No change
-> 
-> v3: Fixed review comments from Konrad and Bjorn
-> 	-Added all the necessary DPTX controllers for this platform.
-> 
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-
+diff --git a/drivers/net/wwan/qcom_bam_dmux.c b/drivers/net/wwan/qcom_bam_dmux.c
+index 26ca719fa0de..5dcb9a84a12e 100644
+--- a/drivers/net/wwan/qcom_bam_dmux.c
++++ b/drivers/net/wwan/qcom_bam_dmux.c
+@@ -823,17 +823,17 @@ static int bam_dmux_probe(struct platform_device *pdev)
+ 	ret = devm_request_threaded_irq(dev, pc_ack_irq, NULL, bam_dmux_pc_ack_irq,
+ 					IRQF_ONESHOT, NULL, dmux);
+ 	if (ret)
+-		return ret;
++		goto err_disable_pm;
+ 
+ 	ret = devm_request_threaded_irq(dev, dmux->pc_irq, NULL, bam_dmux_pc_irq,
+ 					IRQF_ONESHOT, NULL, dmux);
+ 	if (ret)
+-		return ret;
++		goto err_disable_pm;
+ 
+ 	ret = irq_get_irqchip_state(dmux->pc_irq, IRQCHIP_STATE_LINE_LEVEL,
+ 				    &dmux->pc_state);
+ 	if (ret)
+-		return ret;
++		goto err_disable_pm;
+ 
+ 	/* Check if remote finished initialization before us */
+ 	if (dmux->pc_state) {
+@@ -844,6 +844,11 @@ static int bam_dmux_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	return 0;
++
++err_disable_pm:
++	pm_runtime_disable(dev);
++	pm_runtime_dont_use_autosuspend(dev);
++	return ret;
+ }
+ 
+ static void bam_dmux_remove(struct platform_device *pdev)
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
