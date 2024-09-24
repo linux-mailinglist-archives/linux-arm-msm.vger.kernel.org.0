@@ -1,172 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-32263-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80E8B984326
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:08:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75906984348
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:15:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A32CB1C22719
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 10:08:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E44451F2272A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 10:15:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E73BD176242;
-	Tue, 24 Sep 2024 10:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F070C172BDF;
+	Tue, 24 Sep 2024 10:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Y5M2m0xB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XrxY4gID"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714F11741E8;
-	Tue, 24 Sep 2024 10:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3041B173345;
+	Tue, 24 Sep 2024 10:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727172490; cv=none; b=NABupza5OWTaRjanqAl/HzkhL+kbHa3f8D2evZAdgbS7EYknN0re46x4rCHm2BeEUXS0ObHn64MI28SFrLp3X26pVS19cD0wIGJQjWLKb/KyumwYGCN3R7UYS3f016hhJs4z0BlKhThzmURwE9+FevwJOLJrRyDoOc6WNQfWYDQ=
+	t=1727172902; cv=none; b=RMmG1nEl7yjRmACCbIx4qkFKyXcEOg3qKqASrrEP37VH+YI1prdSEYxzvQuNUWOmdMZHE/VNG1T9ad+UyIum4TXVCpH9tOtqwgFMljDgjvh3n/PxQ3O4doH6Rkx5lY513cnS+0utq4/nJLpBiodZUtWhu+UsYmGCENBjdrHT060=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727172490; c=relaxed/simple;
-	bh=M82rVUbBl7UcdLq4bwSBA0W24f2OkRmxnyIcRAb+/cM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=AJ66QAB/xMLsDBFj/QQFDJKRqsDh/lRdovjGowO5ssCI42YLBSkyYCtUhrU5CZ7vqR2L1XUvPqhFITWaHr4dcA6sELZUQ2MGeLhx2kaGc7b4cWrFs3NVUp4aPay1VO7f8wuK5gXHbOJNjJWzcDLdz1zI3EjfRD6i5/AlgpUnS84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Y5M2m0xB; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1727172902; c=relaxed/simple;
+	bh=0+JMYHLjqMSWMXQODc8SVvbB3V6T7yMYk+jgcOYz8lc=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ivgODNcDsJHvOg7gcg2oImMyqdMQnAuBEm4JawaPkfyWWoK6YTqUlKKzP+xAf+9BjwgFa+ZEvn394V1hCECE+UU8vvHGannQMs83iufKj95sgom7hqTU8qZO5S+gu5IBfE7PIl8J70rG8hLj7xXkxIXI1PVPMUoAQaKex8li/F8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XrxY4gID; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48O9Cg7d009631;
-	Tue, 24 Sep 2024 10:08:07 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48O9eqeD024446;
+	Tue, 24 Sep 2024 10:14:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sFnfXJUtf6d5DWHw5i6MiTOzelEImSYe1UluwOn3G+Y=; b=Y5M2m0xBKjJS7/Sn
-	aBTRyS8PzZxeZCJF0hf/M4ykB+Bdx0OsWAsyNFlXLTjSZuS6cpR1NtC7PWT3IaGQ
-	foEa7gKBLMXeUrzEO/NiWBBCYxH6ztSsb6/6LQ6Zf1Q74C95O9QyR2xbj6Z9LEvY
-	QfSv8SJ3SWinu60AxH4ZprM+w+wJbO/qPXqcBZuPT4a9MR/2IlddybZVEhsLSJCC
-	7VAwOPlP5V/zKvDRxI7VTEu0HJlkQPfuiy7kumUAlwxNElLSBIeki7HLjEN0xK5Y
-	a814HY0qC640ZFERAjQVZQG6Ie1K3n8wlT9xpYOyhxro7Ai7oK5tYg4aUt6g9uE5
-	ZdHNQg==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sqe97x1b-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=MjRA6AtoYGwZ3W/55TtpIAasOhCK4CvxBpB
+	r1anyjSE=; b=XrxY4gID5YdMiBy9YRx3/2SMHF4IOtNak7TI+hsNAeoLC1H1LX6
+	oi2BZZg1M/8oEInN4dtL0E11tMin0kRhlDkyUwUCPk+wSYsarnT71C4c/h0WiHKD
+	J8Aesgt25qpUlHuOlPj+POjCyi4pGRLF7xUhFibZOA74vKl/n34OR75x6pz6Ur1a
+	gKKIO5Sa6YoS4A5w6T0uYH5+H/EXIw/73gBLI7hBk8dL1sogajDIucNW6ldLI/N3
+	tW4l4IVnguq51w5yC6w6lKb2huj0QkVKeN6ndtGau3oPqWiK/hgnhYmqLok/7BeS
+	LtCvkVwkeXpEyO6KPtkN2Y7CumD/ZNmUf1w==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sph6ra4q-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 10:08:07 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48OA86Gd004750
+	Tue, 24 Sep 2024 10:14:48 +0000 (GMT)
+Received: from pps.filterd (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48OAE86a019117;
+	Tue, 24 Sep 2024 10:14:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 41udjhy295-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 10:08:06 GMT
-Received: from songxue-gv.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 24 Sep 2024 03:08:01 -0700
-From: Song Xue <quic_songxue@quicinc.com>
-Date: Tue, 24 Sep 2024 18:07:12 +0800
-Subject: [PATCH 2/2] soc: qcom: llcc: Add configuration data for QCS615
+	Tue, 24 Sep 2024 10:14:47 +0000
+Received: from NALASPPMTA01.qualcomm.com (NALASPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48OAE7qj019106;
+	Tue, 24 Sep 2024 10:14:47 GMT
+Received: from hu-devc-lv-u22-c.qualcomm.com (hu-qianyu-lv.qualcomm.com [10.81.25.114])
+	by NALASPPMTA01.qualcomm.com (PPS) with ESMTPS id 48OAEk03020059
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 10:14:47 +0000
+Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4098150)
+	id 7B8D665F; Tue, 24 Sep 2024 03:14:46 -0700 (PDT)
+From: Qiang Yu <quic_qianyu@quicinc.com>
+To: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
+        robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
+        sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+        quic_devipriy@quicinc.com
+Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+        neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-clk@vger.kernel.org, Qiang Yu <quic_qianyu@quicinc.com>
+Subject: [PATCH v4 0/6] Add support for PCIe3 on x1e80100
+Date: Tue, 24 Sep 2024 03:14:38 -0700
+Message-Id: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20240924-add_llcc_support_for_qcs615-v1-2-a9f3289760d3@quicinc.com>
-References: <20240924-add_llcc_support_for_qcs615-v1-0-a9f3289760d3@quicinc.com>
-In-Reply-To: <20240924-add_llcc_support_for_qcs615-v1-0-a9f3289760d3@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Conor Dooley <conor@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>
-CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Song Xue
-	<quic_songxue@quicinc.com>
-X-Mailer: b4 0.15-dev-88a27
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727172476; l=2298;
- i=quic_songxue@quicinc.com; s=20240911; h=from:subject:message-id;
- bh=M82rVUbBl7UcdLq4bwSBA0W24f2OkRmxnyIcRAb+/cM=;
- b=Xhtf7CZGk5jCKZ9C19IDZyM8QeuHRNRemIE1r1GHOxv9g+gy7c+GVKB01V5SwaQZR28Ed4Y8T
- koCvh5LhBk7C84LjoaJ10Yx/kjlrfn2XD41HmmjUJevkGM+8RdVBYRe
-X-Developer-Key: i=quic_songxue@quicinc.com; a=ed25519;
- pk=Z6tjs+BBbyg1kYqhBq0EfW2Pl/yZdOPXutG9TOVA1yc=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: a6r_wLm9eoTntWpGikPb-mTzW75ewB-T
-X-Proofpoint-GUID: a6r_wLm9eoTntWpGikPb-mTzW75ewB-T
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: lUspAZtLss2zMG1AsDl5nTszgcmO5MmN
+X-Proofpoint-ORIG-GUID: lUspAZtLss2zMG1AsDl5nTszgcmO5MmN
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=999 spamscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
- suspectscore=0 malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ impostorscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxlogscore=792
+ mlxscore=0 adultscore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409240071
 
-Add LLCC configuration support for the QCS615 platform.
+This series add support for PCIe3 on x1e80100.
 
-Signed-off-by: Song Xue <quic_songxue@quicinc.com>
----
- drivers/soc/qcom/llcc-qcom.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+PCIe3 needs additional set of clocks, regulators and new set of PCIe QMP
+PHY configuration compare other PCIe instances on x1e80100. Hence add
+required resource configuration and usage for PCIe3.
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 8fa4ffd3a9b5921d95c20648048dcdfa20dde5db..11507eb3efff101e4f330e7f4282a31aa172369d 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -151,6 +151,13 @@ enum llcc_reg_offset {
- 	LLCC_COMMON_STATUS0,
- };
- 
-+static const struct llcc_slice_config qcs615_data[] =  {
-+	{ LLCC_CPUSS,    1,  128, 1, 0, 0xF, 0x0, 0, 0, 0, 0, 1, 1 },
-+	{ LLCC_MDM,      8,  256, 0, 1, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_GPUHTW,   11, 128, 1, 1, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
-+	{ LLCC_GPU,      12, 128, 1, 0, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
-+};
-+
- static const struct llcc_slice_config sa8775p_data[] =  {
- 	{LLCC_CPUSS,    1, 2048, 1, 0, 0x00FF, 0x0, 0, 0, 0, 1, 1, 0, 0},
- 	{LLCC_VIDSC0,   2, 512, 3, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
-@@ -539,6 +546,16 @@ static const u32 llcc_v2_1_reg_offset[] = {
- 	[LLCC_COMMON_STATUS0]	= 0x0003400c,
- };
- 
-+static const struct qcom_llcc_config qcs615_cfg[] = {
-+	{
-+		.sct_data	= qcs615_data,
-+		.size		= ARRAY_SIZE(qcs615_data),
-+		.need_llcc_cfg	= true,
-+		.reg_offset	= llcc_v1_reg_offset,
-+		.edac_reg_offset = &llcc_v1_edac_reg_offset,
-+	},
-+};
-+
- static const struct qcom_llcc_config qdu1000_cfg[] = {
- 	{
- 		.sct_data       = qdu1000_data_8ch,
-@@ -721,6 +738,11 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
- 	},
- };
- 
-+static const struct qcom_sct_config qcs615_cfgs = {
-+	.llcc_config	= qcs615_cfg,
-+	.num_config	= ARRAY_SIZE(qcs615_cfg),
-+};
-+
- static const struct qcom_sct_config qdu1000_cfgs = {
- 	.llcc_config	= qdu1000_cfg,
- 	.num_config	= ARRAY_SIZE(qdu1000_cfg),
-@@ -1375,6 +1397,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- }
- 
- static const struct of_device_id qcom_llcc_of_match[] = {
-+	{ .compatible = "qcom,qcs615-llcc", .data = &qcs615_cfgs },
- 	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
- 	{ .compatible = "qcom,sa8775p-llcc", .data = &sa8775p_cfgs },
- 	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfgs },
+v3->v4:
+1. Reword commit msg of [PATCH v3 5/6]
+2. Drop opp-table property from qcom,pcie-sm8450.yaml
+3. Add Reviewed-by tag
+
+v2->v3:
+1. Use 'Gen 4 x8' in commit msg
+2. Move opp-table property to qcom,pcie-common.yaml
+3. Add Reviewed-by tag
+4. Add global interrupt and use GIC_SPI for the parent interrupt specifier
+5. Use 0x0 in reg property and use pcie@ for pcie3 device node
+6. Show different IP version v6.30 in commit msg
+7. Add logic in controller driver to have new ops for x1e80100
+
+v2->v1:
+1. Squash [PATCH 1/8], [PATCH 2/8],[PATCH 3/8] into one patch and make the
+   indentation consistent.
+2. Put dts patch at the end of the patchset.
+3. Put dt-binding patch at the first of the patchset.
+4. Add a new patch where opp-table is added in dt-binding to avoid dtbs
+   checking error.
+5. Remove GCC_PCIE_3_AUX_CLK, RPMH_CXO_CLK, put in TCSR_PCIE_8L_CLKREF_EN
+   as ref.
+6. Remove lane_broadcasting.
+7. Add 64 bit bar, Remove GCC_PCIE_3_PIPE_CLK_SRC, 
+   GCC_CFG_NOC_PCIE_ANOC_SOUTH_AHB_CLK is changed to
+   GCC_CFG_NOC_PCIE_ANOC_NORTH_AHB_CLK.
+8. Add Reviewed-by tag.
+9. Remove [PATCH 7/8], [PATCH 8/8].
+
+Qiang Yu (6):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100
+    QMP PCIe PHY Gen4 x8
+  dt-bindings: PCI: qcom: Move OPP table to qcom,pcie-common.yaml
+  phy: qcom: qmp: Add phy register and clk setting for x1e80100 PCIe3
+  clk: qcom: gcc-x1e80100: Fix halt_check for pipediv2 clocks
+  PCI: qcom: Add support for X1E80100 SoC
+  arm64: dts: qcom: x1e80100: Add support for PCIe3 on x1e80100
+
+ .../bindings/pci/qcom,pcie-common.yaml        |   4 +
+ .../bindings/pci/qcom,pcie-sm8450.yaml        |   4 -
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |   3 +
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi        | 204 ++++++++++++++++-
+ drivers/clk/qcom/gcc-x1e80100.c               |  10 +-
+ drivers/pci/controller/dwc/pcie-qcom.c        |  16 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 211 ++++++++++++++++++
+ .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 +++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
+ 9 files changed, 485 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
 
 -- 
-2.25.1
+2.34.1
 
 
