@@ -1,173 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-32246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4183798426F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 11:42:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 714209842F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:04:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5AF1DB2172C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 09:39:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 163E21F23D89
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 10:04:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C98C715574F;
-	Tue, 24 Sep 2024 09:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7698157468;
+	Tue, 24 Sep 2024 10:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YNHkgLvO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y2wm0uQ1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCCA15382E
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 09:39:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E89156678;
+	Tue, 24 Sep 2024 10:04:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727170757; cv=none; b=B1u3liDcRtp/EjxwYqHtsjPAYvsgWgBST5G/fX0R6yv4QnF2vc0XYpI6sHo9pQjBJNX/MNOenbQ7EIQVXjlm+9aJ8tY1NxNuS+1F7FD79raf/p8BkfUVPI2mI/j7OvdbEXexccKwNI9EJ4iiktB/jVR80UYf93mneABXivUkK7g=
+	t=1727172257; cv=none; b=SmTQF2i587520yTs7QjR05gcl2KXY+ZynQXWn9I8Ab3pyqHVYaFwqU8tJdNe3iMnVDpIF28jmLnCrwwZADz726WlNAizclL4yrM1v42KgX0EwfuQdRo9NQHWsueQndEfKsbs7GZr8yyVtxtkh+hvWSpOSkr3Rv+DvKDwk794JuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727170757; c=relaxed/simple;
-	bh=mf/yNQbTyBi6//hoU5xYaWDXLqvNOSROMW/L33As/p4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MD2afkm/7rUioXKUJgWE5ibvFSb8DLDjgZCFvEbX/B1i1Qj+7o6EbMEfj80hkSDPwczohlxcCHAkdBwjc5bMa3n8yCOdeO7/n1KgSbpiLIZpyCoIW/MorPU9akuEd8mDoICALKmL3nizR4H5h96GpVN/+ocCP3lAU3BWk6D2718=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YNHkgLvO; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f7502f09fdso43749361fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 02:39:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727170754; x=1727775554; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IdePYOwVLhdr7Z5Ai8vXonZrKUMVNJYnj4sOgIcjQV4=;
-        b=YNHkgLvO0spWElQLKY80APHmBabpqFxSQDexqEUdOr1+D3tqFXiZPvKbju4P8c1GqN
-         5FDg4eY/Rq3mAC5Wxjk+yW248KX4emwhuMkl0B93NT2thH1ZX1PpI4kSeqN3zQNZ1M0k
-         /NzhNWI5kyfceOR8UunxFsOaDRQPm1tAfY0P2JLO7oIIRSZUVKj5Ez8xuXq6cvx6bOWe
-         93MlvnyKc0MGC1X821tejiMz3LxGC5PPm1kBREE3eMBwk8HIkMUbb4oWA1y6+M47HcGz
-         FO34TcKApYbEu3/06D6vfi9/b+zH24sXquC3ety56pvLaOYimLwTPe4NjUWpTsuJjeWI
-         yACw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727170754; x=1727775554;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IdePYOwVLhdr7Z5Ai8vXonZrKUMVNJYnj4sOgIcjQV4=;
-        b=sl6Ih9U2vnyG8qmDp76IUQpNrAJvL6tIOxONodHBcRYFJhewLAlv0fOT/dina2e4Sn
-         aT8Gy48YTGvT2f7mxHfZC1NKFE5x6i9mtwIiIe12hpFOjZKNdz4+e2t1A04YREjKarD7
-         vEQWzF8mXf8VX2vO5FsRlbeqzMLTygb/MXkuvEpQkh6InowGv02phal4LFHFPokPwLfc
-         BFoUYrx7PnPfkVeVqwOCHDeAkjIHQoITdL3iNuectXXdSlAnBlLmACNhhzq65WoUpQoh
-         Rvi7iqk6X2+4reSCdaiiIq3F1Ycnfn2R6W0Oeyu21aTlI5LIIaklC/F0ET+Ft4qDy5M4
-         voUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUH1cVmjprImLT5cHocwUV+O3D8MID6cDDtQVEaZoYe0NEBh42LRJurKTdGvZefYXl7DX60C1nFDpqKdiOs@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoPLubjqgqHhLgJeAmETRwVmRjjns1K/3YzSc8vTzfpBoghZKx
-	Qtk3rTc3o8GKRTDzEYeuVhFk6YiUrmK18QAwsONO15Jv9j5jjeK7B9U+4Yzx2TcuPJMwKgtXEDp
-	/KjFhbA==
-X-Google-Smtp-Source: AGHT+IGaSdkWJlPaDdNvVeB10oDjOeL9lA78zLl9tk9InZw6sDjbdJCQLJwiltHxpGb4QESfI1B8mA==
-X-Received: by 2002:a2e:801:0:b0:2f7:5ca2:6d10 with SMTP id 38308e7fff4ca-2f8d0b91516mr7459431fa.15.1727170747681;
-        Tue, 24 Sep 2024 02:39:07 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f8d282fd34sm1606521fa.28.2024.09.24.02.39.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 02:39:06 -0700 (PDT)
-Date: Tue, 24 Sep 2024 12:39:04 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
-	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
-	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, iommu@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v15 5/5] iommu/arm-smmu: add ACTLR data and support for
- qcom_smmu_500
-Message-ID: <jqwm5ddslvpbdp4ngxxyfpeda2qoc2rsnxc5cwo3gy24mpd345@qkyxwggxk77m>
-References: <20240920155813.3434021-1-quic_bibekkum@quicinc.com>
- <20240920155813.3434021-6-quic_bibekkum@quicinc.com>
- <xxd74r5zzobcsg6joty4rxxmj4gaiezmj6bqlcdbcyhshchqq2@ljpxtgq2dthg>
- <66af599b-85a7-40fd-b550-346013028394@quicinc.com>
+	s=arc-20240116; t=1727172257; c=relaxed/simple;
+	bh=ZOlF++g0DIY2Dau+2rmCmqOq54oAWz267Ydk8PsExYs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OdP5tKMA/tVoZNQNrJ990tfpFM2/NUI7e/uP3gOE/o4LVcMP7rHzfLBZ/3bwFZfO5Nl2t67e9oMD3+9WDcWBYWVqSkINjk/bUZLBhN4s7UmF/Tw6K6AuGwj8p5OAdlwrmva9R93WQkwtyCA5NHfspu7ItnT2pj9lNCYEAGj2Zp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y2wm0uQ1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FBAC4CEC4;
+	Tue, 24 Sep 2024 10:04:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727172257;
+	bh=ZOlF++g0DIY2Dau+2rmCmqOq54oAWz267Ydk8PsExYs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Y2wm0uQ1HDdCiv+s91by4J87LRT7W7YFZE1tg7HJiRISSINtagwlzVCbuDJr6X4ai
+	 4cIN8c7BzMQk64IJvthriuY4uY2ldAYJJ7u9Z7nljCn7bPMdNYolFabllJUrJkKsUU
+	 1hve/5wBQuebCazjHcTG2DvheM0YizqmqNc1w3Hb0HXBSCQ6yvEN1PNe9u7HC54YLM
+	 KUV3HEYbZWvikfxzqIdnvzxaUa7XtcHRMwb23i89VuXam0hhUciKgxS4mW2pH+eTrb
+	 cMve6I5158QTF+YIrwDoGdxUOnsx/a3G0Xafp3glQT9xzR9FW1tZL+Bm2cWi+zv1++
+	 j88IphF1gqrIw==
+Message-ID: <2a1b199b-b426-4895-be8f-2b7629e84fcd@kernel.org>
+Date: Tue, 24 Sep 2024 12:04:10 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66af599b-85a7-40fd-b550-346013028394@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 07/11] arm64: dts: qcom: sm6350: Affirm IDR0.CCTW on
+ apps_smmu
+To: Luca Weiss <luca.weiss@fairphone.com>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>
+References: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com>
+ <20240919-topic-apps_smmu_coherent-v1-7-5b3a8662403d@quicinc.com>
+ <D4EBVCYB1A56.21TT1WFRGCYGN@fairphone.com>
+ <D4ECC1Y7MLX2.2072IIRC7SJV3@fairphone.com>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <D4ECC1Y7MLX2.2072IIRC7SJV3@fairphone.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, Sep 21, 2024 at 01:29:04AM GMT, Bibek Kumar Patro wrote:
+On 24.09.2024 9:37 AM, Luca Weiss wrote:
+> On Tue Sep 24, 2024 at 9:15 AM CEST, Luca Weiss wrote:
+>> On Thu Sep 19, 2024 at 12:57 AM CEST, Konrad Dybcio wrote:
+>>> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
+>>>
+>>> On RPMh-based SoCs, the APPS SMMU advertizes support for cache-coherent
+>>> pagetable walk via the IDR0 register. This however is not respected by
+>>> the arm-smmu driver unless dma-coherent is set.
+>>>
+>>> Mark the node as dma-coherent to ensure this (and other) implementations
+>>> take this coherency into account.
+>>
+>> Hi Konrad!
+>>
+>> Similar to [0] everything seems to look fine on SM7225 Fairphone 4.
+>>
+>> [    0.190433] arm-smmu 15000000.iommu: probing hardware configuration...
+>> [    0.190459] arm-smmu 15000000.iommu: SMMUv2 with:
+>> [    0.190499] arm-smmu 15000000.iommu:         stage 1 translation
+>> [    0.190515] arm-smmu 15000000.iommu:         coherent table walk
+>> [    0.190531] arm-smmu 15000000.iommu:         stream matching with 71 register groups
+>> [    0.190560] arm-smmu 15000000.iommu:         63 context banks (0 stage-2 only)
+>> [    0.191097] arm-smmu 15000000.iommu:         Supported page sizes: 0x61311000
+>> [    0.191114] arm-smmu 15000000.iommu:         Stage-1: 36-bit VA -> 36-bit IPA
+>> [    0.191299] arm-smmu 15000000.iommu:         preserved 0 boot mappings
+>>
+>> The Adreno SMMU still has non-coherent table walk.
+>>
+>> [    1.141215] arm-smmu 3d40000.iommu: probing hardware configuration...
+>> [    1.141243] arm-smmu 3d40000.iommu: SMMUv2 with:
+>> [    1.141270] arm-smmu 3d40000.iommu:  stage 1 translation
+>> [    1.141279] arm-smmu 3d40000.iommu:  address translation ops
+>> [    1.141288] arm-smmu 3d40000.iommu:  non-coherent table walk
+>> [    1.141296] arm-smmu 3d40000.iommu:  (IDR0.CTTW overridden by FW configuration)
+>> [    1.141307] arm-smmu 3d40000.iommu:  stream matching with 5 register groups
+>> [    1.141326] arm-smmu 3d40000.iommu:  5 context banks (0 stage-2 only)
+>> [    1.141347] arm-smmu 3d40000.iommu:  Supported page sizes: 0x63315000
+>> [    1.141356] arm-smmu 3d40000.iommu:  Stage-1: 48-bit VA -> 36-bit IPA
+>> [    1.141568] arm-smmu 3d40000.iommu:  preserved 0 boot mappings
+>>
+>>
+>> Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4
+>>
+>> [0] https://lore.kernel.org/linux-arm-msm/CAD=FV=Xrbe1NO+trk1SJ30gHm5jLFjd0bAeG3H46gD+vNFZa1w@mail.gmail.com/
 > 
+> FWIW adding 'dma-coherent;' to &adreno_smmu also doesn't seem to
+> explode:
 > 
-> On 9/20/2024 9:48 PM, Dmitry Baryshkov wrote:
-> > On Fri, Sep 20, 2024 at 09:28:13PM GMT, Bibek Kumar Patro wrote:
-> > > Add ACTLR data table for qcom_smmu_500 including
-> > > corresponding data entry and set prefetch value by
-> > > way of a list of compatible strings.
-> > > 
-> > > Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-> > > ---
-> > >   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 24 ++++++++++++++++++++++
-> > >   1 file changed, 24 insertions(+)
-> > > 
-> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > index 4ac272d05843..e8f936a446df 100644
-> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> > > @@ -25,8 +25,31 @@
-> > > 
-> > >   #define CPRE			(1 << 1)
-> > >   #define CMTLB			(1 << 0)
-> > > +#define PREFETCH_SHIFT		8
-> > > +#define PREFETCH_DEFAULT	0
-> > > +#define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
-> > > +#define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
-> > > +#define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
-> > >   #define GFX_ACTLR_PRR		(1 << 5)
-> > > 
-> > > +static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
-> > > +	{ .compatible = "qcom,adreno",
-> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-> > > +	{ .compatible = "qcom,adreno-gmu",
-> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-> > > +	{ .compatible = "qcom,adreno-smmu",
-> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-> > > +	{ .compatible = "qcom,fastrpc",
-> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-> > > +	{ .compatible = "qcom,sc7280-mdss",
-> > > +			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
-> > > +	{ .compatible = "qcom,sc7280-venus",
-> > > +			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
-> > > +	{ .compatible = "qcom,sm8550-mdss",
-> > > +			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
-> > > +	{ }
-> > > +};
-> > 
-> > Wow, this looks really nice now!
-> > 
+> [    1.451965] arm-smmu 3d40000.iommu: probing hardware configuration...
+> [    1.455547] arm-smmu 3d40000.iommu: SMMUv2 with:
+> [    1.459041] arm-smmu 3d40000.iommu:  stage 1 translation
+> [    1.462446] arm-smmu 3d40000.iommu:  address translation ops
+> [    1.465843] arm-smmu 3d40000.iommu:  coherent table walk
+> [    1.469216] arm-smmu 3d40000.iommu:  stream matching with 5 register groups
+> [    1.472645] arm-smmu 3d40000.iommu:  5 context banks (0 stage-2 only)
+> [    1.476067] arm-smmu 3d40000.iommu:  Supported page sizes: 0x63315000
+> [    1.479458] arm-smmu 3d40000.iommu:  Stage-1: 48-bit VA -> 36-bit IPA
+> [    1.483152] arm-smmu 3d40000.iommu:  preserved 0 boot mappings
 > 
-> I am also in favor of this compatible based approach now,
-> as it looks to be much cleaner implementation.
+> And kmscube still runs as expected.
 
+Thanks, I'll look into adreno separately
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
-> 
-> > > +
-> > >   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
-> > >   {
-> > >   	return container_of(smmu, struct qcom_smmu, smmu);
-> > > @@ -640,6 +663,7 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
-> > >   	.impl = &qcom_smmu_500_impl,
-> > >   	.adreno_impl = &qcom_adreno_smmu_500_impl,
-> > >   	.cfg = &qcom_smmu_impl0_cfg,
-> > > +	.client_match = qcom_smmu_actlr_client_of_match,
-> > >   };
-> > > 
-> > >   /*
-> > > --
-> > > 2.34.1
-> > > 
-> > 
-
--- 
-With best wishes
-Dmitry
+Konrad
 
