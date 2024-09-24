@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32333-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D66B984B1D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:40:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3D1C984B65
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 21:03:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C59972849C3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 18:40:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67BBD1F2254C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 19:03:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D3191AD3FE;
-	Tue, 24 Sep 2024 18:39:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01AF474BF5;
+	Tue, 24 Sep 2024 19:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fq4YZClR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kxboQR2i"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A32D1AC8BE;
-	Tue, 24 Sep 2024 18:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C13711B85D2;
+	Tue, 24 Sep 2024 19:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727203170; cv=none; b=lKNRe+XJcSLiNK6DJqV8ky4OG4/5YxnyrSNKkST5vN1UsLwfjHGsDR6kry0VQAC9MJBBGQLDaMlJeDLgdb1F1EuoUIMPLDgHZDi41wG3uekq6o6TjJX35a5ZAGv4LNcpBEVaFWxV3XV5Qdlh3jV4LDJMVevLHsRxoWeua9xIehg=
+	t=1727204628; cv=none; b=Cpz4J7cAng1hYeEOiE9kcLS5qk4fWkGmEYnBQAMe9IWuflo1g6wnaJbzfS8RebsfTyX/FLGIVGwKxzXPMDGBTZHAIekjOrq/7nHniKu9HzfCWEMDmYHtpdTUYfVNSDqIgYfTwJkpGIr1hrVllbSsSXu1HMNgM78QCKGjQrWhJIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727203170; c=relaxed/simple;
-	bh=wzehy+b1qqLL8OTawQ1M6yaZDocl+IDjT2tUky8lGqo=;
+	s=arc-20240116; t=1727204628; c=relaxed/simple;
+	bh=dS3+273g6IfFSVUMs3zFlkFWLtDCj83qG48dfGXNT54=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kkpatKyiY8S9yffcA+JgQWrfPfvletD7DGtHQKfEILpZbsZX4UruZqjhhIUttIpECcHnjZy3UvjRZNlTKKXwkXvXyGykMsvL9qjjHV4JZ7o4mwtAZF+T1Txez6dtnoH48gvOmB8MCCu14blNfQkgP/KGBxtehhGdHAG2RnzgYAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fq4YZClR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03A1C4CEC5;
-	Tue, 24 Sep 2024 18:39:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=A9PjFeHUUFwuuGyN/+QOhvgF6rOfFdGOw20XdOqhBf6OZ35YkuqRGlXntVrpWfEKm3hDxeHMrI1w0Wt7YlbybntDzibZ6pyau5mE6V32LV1tYMENflM+rXE9gv/oX09Nm6966rKu5DaigoJnGZZtP6EVGubdncVBOBDmke+di3E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kxboQR2i; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40FF8C4CEC4;
+	Tue, 24 Sep 2024 19:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727203169;
-	bh=wzehy+b1qqLL8OTawQ1M6yaZDocl+IDjT2tUky8lGqo=;
+	s=k20201202; t=1727204628;
+	bh=dS3+273g6IfFSVUMs3zFlkFWLtDCj83qG48dfGXNT54=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=fq4YZClR2OdQ6phVcGXx9vGCe426M6TIwMiaXPX02UhmNw6NlJLzucw8ZKNkpUjw6
-	 mHC9uADFtLPlJPI10x9Nitd8gpTeQ+VjBi4BMlQHksMLAU1X6yNma56Q+rnmLXauPG
-	 5114beqs6/qmN+kKDpFzu7lKoGPbLN8NA8gmmv2wRGmzXcdeRQ3y3/tr8vdXuoi1NE
-	 egOVBogMn+4df1mnzZ9pQLjLkk2R8wMT3ZXaJcmMDCovKCQm38l2it3OrpOoq9BhiD
-	 pXoQ4JuG9y/kevN2jK7YLZ7DgTSlBlwoxSeAwNqBkXtiLFHON5HQyg6tghcxGA3oTQ
-	 SX7ZeI5suWeFA==
-Message-ID: <50e0e837-1c70-4d6d-bb55-a68dec3dcd3b@kernel.org>
-Date: Tue, 24 Sep 2024 20:39:20 +0200
+	b=kxboQR2ivGZccLupnn+lS0+ms67/vkKqEDBLccR50iQ13xHpsyi8qk30NiG88gIRz
+	 l78z/lpzJWTtfmlvL9JE2+QHp5AnHQXFZDSGu4bQnBw+Jv/n9cyVrDXXTemftiM72O
+	 ncy/Yk+C9vSKUkIrFfBEQ9Vb0AQjFrBuXl9XnmwUf5eLGsHlMqso7oUgr0OUZPUkwr
+	 nsMawrIcaXMOydH6hplBFYTs/aqhwiZ68KSv03Qj2jhHE1fvPuq+PdS8fsju47m7L7
+	 +XCgVbI+J2ZAbIl7vM2u/ToZcaHeoStzMqfXuuBZM9XfbZP22JFNjHVvmiEvFXbCDn
+	 /PqKG2qt2vPyA==
+Message-ID: <902310fb-14fd-42ff-bcac-7814cbc0d635@kernel.org>
+Date: Tue, 24 Sep 2024 21:03:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,26 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/6] dt-bindings: PCI: qcom: Move OPP table to
- qcom,pcie-common.yaml
-To: Qiang Yu <quic_qianyu@quicinc.com>, manivannan.sadhasivam@linaro.org,
- vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, andersson@kernel.org,
- konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org,
- quic_msarkar@quicinc.com, quic_devipriy@quicinc.com
-Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
- neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org
-References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
- <20240924101444.3933828-3-quic_qianyu@quicinc.com>
-Content-Language: en-US
+Subject: Re: [PATCH 1/2] dt-bindings: interconnect: document the RPMh
+ Network-On-Chip interconnect in QCS615 SoC
+To: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
+ Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+ Adam Skladowski <a39.skl@gmail.com>,
+ Rajendra Nayak <quic_rjendra@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Danila Tikhonov <danila@jiaxyga.com>,
+ Vladimir Lypak <vladimir.lypak@gmail.com>,
+ Sibi Sankar <quic_sibis@quicinc.com>,
+ Odelu Kukatla <quic_okukatla@quicinc.com>,
+ Mike Tipton <quic_mdtipton@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240924143958.25-1-quic_rlaggysh@quicinc.com>
+ <20240924143958.25-2-quic_rlaggysh@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -109,18 +113,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240924101444.3933828-3-quic_qianyu@quicinc.com>
+In-Reply-To: <20240924143958.25-2-quic_rlaggysh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/09/2024 12:14, Qiang Yu wrote:
-> OPP table is a generic property that is also required by other qcom
-> platforms. Hence move this property to qcom,pcie-common.yaml so that PCIe
-> on other qcom platforms is able to adjust power domain performance state
-> and ICC peak bw according to PCIe gen speed and link width.
+On 24/09/2024 16:39, Raviteja Laggyshetty wrote:
+> Document the RPMh Network-On-Chip Interconnect of the QCS615 platform.
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> ---
+> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+
+...
+
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    gem_noc: interconnect@9680000 {
+> +        compatible = "qcom,qcs615-gem-noc";
+> +        reg = <0x9680000 0x3E200>;
+
+
+If there is going to be new version, then lowercase hex.
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
