@@ -1,89 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-32299-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 963E698474F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 16:08:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 80596984792
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 16:22:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 67161B21630
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:08:39 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 12AD9B22497
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:22:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 757981A7AE3;
-	Tue, 24 Sep 2024 14:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 853021AAE1F;
+	Tue, 24 Sep 2024 14:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="y/TCBL0g"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W1DQUh6N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A941A76A7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 14:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEAF1AAE1B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 14:22:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727186913; cv=none; b=RbIgYvaRrBsMd4wJOphKn+Hh/4a79W27/I+YE824QLXc7KZRf8K3i+FkYOHmWMH2VhilGNYt7F63GTBJQSwtYIdpr+QeLSf/S9G+YPLP2BxzakhNOEoX0BrmJQov5bhTHPB7RerkJBgt10hubaSUc5AlKPv0HbQh5r4npU6rD4s=
+	t=1727187738; cv=none; b=hAKoBh8Zxex1WQo6AyWvXo/EYgcaa7w+/Mn7RN6pBETScADTz5zxiLIV2NnJnnnlrcocEiMT3u7lX0hN4wSZkyE9p3Mh32DIPnohfIB6oqECWMabHXd83FkN2Kk0yH3h8AbmvtuD0EpvSTh+dJLK7h1GA+/eje5A27LcFsHpDqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727186913; c=relaxed/simple;
-	bh=/fZq1LO55PhzPQor2iRagt/VVrgJjkHC0YieILTN/OM=;
+	s=arc-20240116; t=1727187738; c=relaxed/simple;
+	bh=uAxN6+VoyYYMhj+61lqo2+k8kccuNE2ZJn0dLiJO43g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PRcL4BK9Rfx+hG373h+hyZQ/o++XE9a+2xch34LDEo8vD0pni+N+Xm0uXEg6Z8vjVZcCWhdNafFKqHJQMLbd844a9nD1sIEjzN7TG6Yu8I5oHhUEdEfZmb46wFHLxhq2Mcs5jubu1B1crHODx6zS2eCWwTXolCEGPMxwPcGtpO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=y/TCBL0g; arc=none smtp.client-ip=209.85.221.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gf1JRFxBsuP6YzD/Axyc1UkOFsFguW092Hueudmn41V9qgAOkUIRU7tGaZFQmwcuU8VWt6tJ+jiZy6YSyUa7oi+0Lwk2KuTQYUuZq0pU040f/H6O/1TG1ABkjTyLcOmE4BpXV2bCKB8vfnm0bSmVNV7lfHyK1BNB7l/opX5lq8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W1DQUh6N; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-37747c1d928so2962993f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 07:08:31 -0700 (PDT)
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-374bfc395a5so3623999f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 07:22:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727186910; x=1727791710; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1727187735; x=1727792535; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=40piiJGTfM7ZQA0UedJryDRvdqrWepuUZqLPtNOH3VQ=;
-        b=y/TCBL0gSQnqiTj1DOKSUfYmt2fXay7UAAnAaCQkf1+hFHWmYEAOL/Uf8UhA2STMMA
-         IxAfFP/e9cC6sWdFyWahli28tqwx1YR/Sg2d2cUsQnrnLt0xBGTAdveBOaELx9faKyn+
-         M8u/9y/5LsrPy4yzy0zuoc5WRvh8L/cVgt/vsnf+gFZLRBld+j2DxevmM5STLYLrDMxk
-         wqpoTeDMGCVqDsbEzlh709NyVWP9y697xrdH1JAmYMusOsJYerS/fFUArgPDBU+HWRii
-         wQiRcpG2DQZH6zat6v+xGh5qcUO0cLfqAv6ASdhs3Ta48u52vyp4XM8hy9pfg9ULUpj1
-         kFqQ==
+        bh=SRWKH7KMz/8+qviApEBtv1znQizOO2YNlrxsaNgC6xY=;
+        b=W1DQUh6NC57QC+RaW6TEO+dj0V34qODwJy5csA2uf2rQWYDQIdUOF6rnSAM+kYIL7p
+         NGiVuFJzOLX3KoQNQObSMdV3V/zhwc1TtGemZqB5LkUYzKoXiXZUwziaRiCRhaP7V8d9
+         IPYsHN1otyq9L/fRCgxz2YJks32/4dfRac+MHX2m8GmGmIxnkII0RKfFDSF1vWrgvN44
+         CHbj6mjZ09Y2Xvwr+hedJk/v0GJm4fcaGx7PBcVkSL0JWLNS/OgwV9D9apUkr2r3EmHR
+         /dLsFA/qRbHZqfEKRWqSAGOd4LCMVsOIkIdyw0+BYAzkFDt7qSvS6V021nhvNY3k6bvx
+         66JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727186910; x=1727791710;
+        d=1e100.net; s=20230601; t=1727187735; x=1727792535;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=40piiJGTfM7ZQA0UedJryDRvdqrWepuUZqLPtNOH3VQ=;
-        b=XKukTbs2R5KhKip+j57B2AevSvBZd34MvgAhhkcYyahiiLFlgYTEFmET9ZFR8GG16y
-         Hb3gfksCoXqXH7Lc0nE1RxV3Fdi8YBAWmC6Z8j5oT76EJzikoUTfYomT9/ls6kyHK2jj
-         EsJfEw8MBo+G+nlDalUy67tJaT59gPY66JAa7lkOPM9vPp+P7mQo3LenIEk1Kn6Jo7VB
-         B5nt4XE6lNQFfYri5LxvrjVCxwiQ2pC2IeBPMTXKOP7ldl1RmJI2ohIFWmcbQFF2bpa8
-         uDw6WQgIrQ7w1qGI18NgDL78YWVln1n3EnsAQzJpDc4g/Solj4aWIuS1CDVwv1CqXNTp
-         m/Aw==
-X-Forwarded-Encrypted: i=1; AJvYcCXna0u2hJWbS//05W5m8VKXCUCzEL2OkOZzFIpokTJJYjJJmLnIVJ0ZWlHwNfNTcMCwJcVOBly8+ZfErxAq@vger.kernel.org
-X-Gm-Message-State: AOJu0YymV9ahdSKokqvcOTjkdcK+Cvz+9LUDWCnpvyN6ZppPg2+tpLbn
-	alXJGcp+BdtIDHDA8qK4QcYAfnbeY6tzi+0e7zTBI247QQ/hESlbcNV0BwfJDw==
-X-Google-Smtp-Source: AGHT+IH4WW0ZIOSHklIzJiL/X3r6M9oWzL4NBPDdU5VWxfP/mCN0bTHEJd5jEIb+qLxFYKJld/AuBQ==
-X-Received: by 2002:a5d:6189:0:b0:371:c518:6f54 with SMTP id ffacd0b85a97d-37a422c02acmr8022006f8f.29.1727186910055;
-        Tue, 24 Sep 2024 07:08:30 -0700 (PDT)
+        bh=SRWKH7KMz/8+qviApEBtv1znQizOO2YNlrxsaNgC6xY=;
+        b=o1MjlBOyzeNFWo81MqfdMmGST5N9Ea2b8T2+t7H1ClFoaTwuMWgt/b/6IG8gMGOh43
+         J0tP2Cai8bgVTzWYKxRVYJvhBIPcuxQpvgB9/8tbkEoFBB4XLhnMqp5uQ6U+F6uCPxl2
+         wVWnIDlJKcgACHbYhCdmOD0DPRKty5f+bua/B2W/j8GY+Ip/SybuiZsoUuOUyxeILG+e
+         R89Lr7oXyqdl0wO/vR0FPZ9XDhDe5lrAm/cdGKCoQxOFUFpn/u0NcNdJDY4hJrJ8EQ7N
+         AvON32O10iaKTkTTOQ3S0nrx57L/irttOGeJ7Sead+gNfLFCmLPgIJKRk8u7/aMgA85J
+         eCvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWpEw7lSjLLjrPrqyarBU9ICjNayjU1hRSVezswDSMg/BWPU7J2OdplcCvZ6DHKu1O+nZzBrYP6Hu00nvTv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/zXU13esgFhi8AjDuFvHhvZ0xVG1L6OW1++NWA/g6mGr+dmF8
+	eAjcMk+Tqr8AuSkXDmsfphJoC40o4F/3Tj46z8e7aYPlyx0pPO5QWm28pevlDQ==
+X-Google-Smtp-Source: AGHT+IGiTm5gRFqQY30arxpbkSM6JJMWCg+AHPZ8mPYvJoLCgs0HQGxOHryh1NMShVUy4dhN+3W81Q==
+X-Received: by 2002:a05:6000:459d:b0:374:c1ea:2d40 with SMTP id ffacd0b85a97d-37c7eb996e1mr2259340f8f.1.1727187734954;
+        Tue, 24 Sep 2024 07:22:14 -0700 (PDT)
 Received: from thinkpad ([80.66.138.17])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37cbc3187e6sm1684265f8f.92.2024.09.24.07.08.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e754ce37bsm158894715e9.48.2024.09.24.07.22.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 07:08:29 -0700 (PDT)
-Date: Tue, 24 Sep 2024 16:08:28 +0200
+        Tue, 24 Sep 2024 07:22:14 -0700 (PDT)
+Date: Tue, 24 Sep 2024 16:22:13 +0200
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
-	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-	abel.vesa@linaro.org, quic_msarkar@quicinc.com,
-	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
-	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v4 2/6] dt-bindings: PCI: qcom: Move OPP table to
- qcom,pcie-common.yaml
-Message-ID: <20240924140828.mz5vjcicygsj4eb4@thinkpad>
-References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
- <20240924101444.3933828-3-quic_qianyu@quicinc.com>
+To: Jingyi Wang <quic_jingyw@quicinc.com>
+Cc: Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, quic_tengfan@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, quic_tingweiz@quicinc.com,
+	quic_aiquny@quicinc.com
+Subject: Re: [PATCH v2] dt-bindings: mailbox: qcom-ipcc: Document QCS8300 IPCC
+Message-ID: <20240924142213.7jeuy2jwik4bm43i@thinkpad>
+References: <20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,58 +88,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240924101444.3933828-3-quic_qianyu@quicinc.com>
+In-Reply-To: <20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com>
 
-On Tue, Sep 24, 2024 at 03:14:40AM -0700, Qiang Yu wrote:
-
-> OPP table is a generic property that is also required by other qcom
-> platforms. Hence move this property to qcom,pcie-common.yaml so that PCIe
-> on other qcom platforms is able to adjust power domain performance state
-> and ICC peak bw according to PCIe gen speed and link width.
+On Wed, Sep 11, 2024 at 03:25:15PM +0800, Jingyi Wang wrote:
+> Document the Inter-Processor Communication Controller on the Qualcomm
+> QCS8300 Platform, which will be used to route interrupts across various
+> subsystems found on the SoC.
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 - Mani
 
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml | 4 ++++
->  Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.yaml | 4 ----
->  2 files changed, 4 insertions(+), 4 deletions(-)
+> Changes in v2:
+> - decoupled from the original series.
+> - Link to v1: https://lore.kernel.org/r/20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com
+> ---
+>  Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
-> index 704c0f58eea5..3c6430fe9331 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-common.yaml
-> @@ -78,6 +78,10 @@ properties:
->      description: GPIO controlled connection to WAKE# signal
->      maxItems: 1
->  
-> +  operating-points-v2: true
-> +  opp-table:
-> +    type: object
-> +
->  required:
->    - reg
->    - reg-names
-> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.yaml
-> index 46bd59eefadb..6e0a6d8f0ed0 100644
-> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.yaml
-> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-sm8450.yaml
-> @@ -70,10 +70,6 @@ properties:
->        - const: msi7
->        - const: global
->  
-> -  operating-points-v2: true
-> -  opp-table:
-> -    type: object
-> -
->    resets:
->      maxItems: 1
->  
+> diff --git a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> index 05e4e1d51713..6323c3519a8a 100644
+> --- a/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> +++ b/Documentation/devicetree/bindings/mailbox/qcom-ipcc.yaml
+> @@ -24,6 +24,7 @@ properties:
+>    compatible:
+>      items:
+>        - enum:
+> +          - qcom,qcs8300-ipcc
+>            - qcom,qdu1000-ipcc
+>            - qcom,sa8775p-ipcc
+>            - qcom,sc7280-ipcc
+> 
+> ---
+> base-commit: 100cc857359b5d731407d1038f7e76cd0e871d94
+> change-id: 20240911-qcs8300_ipcc_binding-2d1c646185c5
+> 
+> Best regards,
 > -- 
-> 2.34.1
+> Jingyi Wang <quic_jingyw@quicinc.com>
 > 
 
 -- 
