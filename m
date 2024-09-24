@@ -1,167 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-32339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 010D8984C63
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 22:45:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45884984D01
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 23:48:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 39F99B2283C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:45:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C69F61F24055
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 21:48:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEBEB12C52E;
-	Tue, 24 Sep 2024 20:45:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D83CE13D29A;
+	Tue, 24 Sep 2024 21:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NRXSNY5b"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Gyb5F3Yu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2267F460;
-	Tue, 24 Sep 2024 20:45:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACF582488;
+	Tue, 24 Sep 2024 21:48:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727210744; cv=none; b=c8zeWD5hw2DSv0OcTqgwUjj4lxMYhzfmftm9hwcR/+JRewn6EWeXzk538akJWtoMkw8IgxAyTC3wZrxus9qrwMlQRooMGi3BkKdTuS5X0kaC58e3vIbxFmdOcOKW142wd3/NQEQyX5NMrTjjDeOoj2sKQqAR5qdOZLQ4mQ2HREs=
+	t=1727214518; cv=none; b=GCY8APxdG8wuRYMjI7ZhLyAYN0z548hyIeqpCd+96btyXuSXFFgmRTDuQVnGW7FRcSzGebBlsFRej/quCTAshKPc8DuboPW+hDvbzhVPuEH2pZR/SPwqDwBDGqsTaeGA8wxVgw3VrZuOhpPPLJ9YzoNRFU/8SV7oX0QJnFhfTrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727210744; c=relaxed/simple;
-	bh=DpBOXJPHj5DADz4W54y6K8iRFUTOoV1fHS7qxdqclOk=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QLndTcsGu3MMQo8FA6Ak04aMx3t6VpvRQT//mPcDAVSYEUVOc8cBNgxdHx4nSFnmauIj/T20lqSscFiH83a5CPduw+zNCkToyzXFrhMEjcyICGB8qaj2L6TcAImOy7jWq2iyoAD46mNElW0RirVvIcn985ePhWOcelmh+WSp9Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NRXSNY5b; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1727214518; c=relaxed/simple;
+	bh=ch1B+nC2XYty/18UmhZn1YTMQF1mkQxUCTtY9tk2Hzs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=LHnmfE/DYkOan5yoef4UsUuWFS9nNIFAmMUZFA3lHrTRCyrXo+jI4gINsI+BpAT5lkFphw0PwqruJJvQW88gaEaUzPfZmb8tFYtKO/jbxpufAtfaNfXvtAF3NvBuEXEKLGUEa8Tn8XHxE8gGeqQP5DqAQMvR0Th4mfzC1u7XUw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Gyb5F3Yu; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48OH0VeX016306;
-	Tue, 24 Sep 2024 20:45:40 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48OHWcXS013004;
+	Tue, 24 Sep 2024 21:47:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=uWpGuPZMMGW0w0fXt6h7IJ2P
-	V2DkLtbbQEf2FPozRGM=; b=NRXSNY5bAaqWHo2a4ToxIKGQmw78EnW3vtmujvMo
-	J0pd9aiuZgbD5pPmgZN9o/0YTrVnukuNjgsery9E8g3JlwJf4XS27o9vHfJ83bpt
-	1Og6IG3YUkpai8PoOvTJSydq2VCT746pZtGm9h5DFgyneNUaPruY8kPK9Hq+3rUX
-	f+9djBmnfmyWADk2qRzMtP2MKDDPCGwLRCNoOxMeJPppBaTbsUNKv84L3dObI7iq
-	tnomWnTa0GybGTsFdLNC/i+Au0he1brVYqvU0rQF1XAptoqoX3uvk6WjkF18Cqju
-	hKLwsiTqFZN3Wu8fcaTH+mUbuXJLAlFZjcxhN8WrUdMdlQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spc2ssf9-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ch1B+nC2XYty/18UmhZn1YTMQF1mkQxUCTtY9tk2Hzs=; b=Gyb5F3YugcXOHjzE
+	m5DpE3ezd3wXVDLsSZXbNge3FGmMWXVPXPwHeb9tBmVUZXr5K8d8hJMjLCRs9dM4
+	RR42dn8TIZu5NwOZOKEon7CroYMKhx7LvkprC9vdQT5I2NJTgYXexcJUBizRxMBT
+	J5AqWbgo8DCL6Zfiic8I5tp9FGB0Ysa9k4Ysp8c7BZMu/EC3RZAnrLn3/4s5pKlO
+	aUEqW5Qoawu7ZDqYv2iAaV2A+HSIOpsBHfQaZnG1tTLmzd2ApJaOLwUm3xZ5zgXx
+	xMucpwKhtKCrWdTeYoRBpzqBDGC2NgIQfn65ieuliTC7cbJ3681+pT1AgDqHPrV/
+	7TI+Hg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sqakhpa1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 20:45:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48OKjdHH025569
+	Tue, 24 Sep 2024 21:47:57 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48OLluZR006391
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 20:45:39 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 24 Sep 2024 13:45:38 -0700
-Date: Tue, 24 Sep 2024 13:45:37 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-CC: <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-Subject: Re: [PATCH 1/1] i2c: qcom-geni: add 32MHz I2C SE clock support for
- IPQ5424
-Message-ID: <ZvMk8T0dK+heMLer@hu-bjorande-lv.qualcomm.com>
-References: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
+	Tue, 24 Sep 2024 21:47:56 GMT
+Received: from [10.110.20.217] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Sep
+ 2024 14:47:55 -0700
+Message-ID: <dec459d3-fa0d-4ed0-ad6b-4a976b0f9e49@quicinc.com>
+Date: Tue, 24 Sep 2024 14:47:54 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v27 01/32] xhci: add helper to stop endpoint and wait for
+ completion
+To: =?UTF-8?Q?Micha=C5=82_Pecio?= <michal.pecio@gmail.com>
+CC: <mathias.nyman@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
+        <alsa-devel@alsa-project.org>, <bgoswami@quicinc.com>,
+        <broonie@kernel.org>, <conor+dt@kernel.org>, <corbet@lwn.net>,
+        <devicetree@vger.kernel.org>, <dmitry.torokhov@gmail.com>,
+        <gregkh@linuxfoundation.org>, <krzk+dt@kernel.org>,
+        <lgirdwood@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <pierre-louis.bossart@linux.intel.com>,
+        <robh@kernel.org>, <srinivas.kandagatla@linaro.org>, <tiwai@suse.com>
+References: <20240913103237.2f5dc796@foxbook>
+ <a9dcaa5a-4f5d-451a-93aa-7457798fc243@quicinc.com>
+ <20240915095514.6b01fefb@foxbook>
+ <182938da-da86-49a4-800a-446954cc6c60@quicinc.com>
+ <20240923012328.1e4d0bc6@foxbook>
+Content-Language: en-US
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <20240923012328.1e4d0bc6@foxbook>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: wBVK7pAv62SDtFCPlu39eJ9b-M-KBWKP
-X-Proofpoint-ORIG-GUID: wBVK7pAv62SDtFCPlu39eJ9b-M-KBWKP
+X-Proofpoint-ORIG-GUID: qiPxEtCjhcoNN42tT5PhLvaywjB-iOC8
+X-Proofpoint-GUID: qiPxEtCjhcoNN42tT5PhLvaywjB-iOC8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=999
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409240144
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 impostorscore=0 suspectscore=0 phishscore=0 adultscore=0
+ clxscore=1011 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409240151
 
-On Tue, Sep 24, 2024 at 12:20:20PM +0530, Manikanta Mylavarapu wrote:
+Hi Michal
 
-Subject gives a clear indication that this is specific to IPQ5424, which
-it isn't. So, please drop that wording from the subject.
+On 9/22/2024 4:23 PM, Michał Pecio wrote:
+> Hi,
+>
+>> So what I ended up doing was to split off the context error handling
+>> into a separate helper API, which can be also called for the sync ep
+>> stop API.  From there, based on say....the helper re queuing the stop
+>> EP command, it would return a specific value to signify that it has
+>> done so.  The sync based API will then re-wait for the completion of
+>> the subsequent stop endpoint command that was queued.
+> AFAIK retries are only necessary on buggy hardware. I don't see them on
+> my controllers except for two old ones, both with the same buggy chip.
+>
+>>  In all other context error cases, it'd return the error to the caller,
+>> and its up to them to handle it accordingly.
+> For the record, all existing callers end up ignoring this return value.
+>
+> Honestly, I don't know if improving this function is worth your effort
+> if it's working for you as-is. There are no users except xhci-sideband
+> and probably shouldn't be - besides failing to fix stalled endpoints,
+> this function also does nothing to prevent automatic restart of the EP
+> when new URBs are submitted through xhci_hcd, so it is mainly relevant
+> for sideband users who never submit URBs the usual way.
+>
+> My issue with this function is that it is simply poorly documented what
+> it is or isn't expected to achieve (both here and in the calling code
+> in xhci-sideband.c), and the changelog message is wrong to suggest that
+> the default completion handler will run (unless somewhere there are
+> patches to make it happen), making it look like this code can do things
+> that it really cannot do. And this is apparently a public, exported API.
 
-Perhaps:
-"i2c: qcom-geni: Support systems with 32MHz SE clock"
+Thanks for the clarifications.  Yes, unfortunately, I can't really test any scenarios where this would be exercised in the current path, so I will leave the code out for now, and just add some comments and updates to the commit message.  Can revisit when there is some other users for utilizing secondary interrupters.
 
-> The IPQ5424 I2C SE clock operates at a frequency of 32MHz. Since the
-> existing map table is based on 19.2MHz, this patch incorporate the
-> clock map table to derive the SCL clock from the 32MHz SE clock.
+Thanks
 
-Then here you're doing the right thing of introducing the IPQ5424, so
-this looks good to me.
+Wesley Cheng
 
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 212336f724a6..bbd9ecf09f4b 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -71,6 +71,7 @@ enum geni_i2c_err_code {
->  
->  #define I2C_AUTO_SUSPEND_DELAY	250
->  #define KHZ(freq)		(1000 * freq)
-> +#define MHZ(freq)		(1000000 * freq)
->  #define PACKING_BYTES_PW	4
->  
->  #define ABORT_TIMEOUT		HZ
-> @@ -152,11 +153,21 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
->  	{KHZ(1000), 1, 3,  9, 18},
->  };
->  
-> +/* source_clock = 32 MHz */
-> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32M[] = {
-
-I'd prefer that you s/32M/32mhz/, and that you rename geni_i2c_clk_map
-to geni_i2c_clk_map_19p2mhz[].
-
-> +	{KHZ(100), 7, 14, 18, 40},
-> +	{KHZ(400), 4,  3, 11, 20},
-> +	{KHZ(1000), 4, 3,  6, 15},
-> +};
-> +
->  static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
->  {
->  	int i;
->  	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
->  
-> +	if (clk_get_rate(gi2c->se.clk) == MHZ(32))
-> +		itr = geni_i2c_clk_map_32M;
-
-Leave itr uninitialized above and add an else here with the assignment,
-to make it clearer that it's one or the other case. (Compared to "It's
-always 19.2MHz and then in some cases we override that with 32MHz")
-
-
-PS. I wouldn't mind you dropping the addition of the MHZ macro and just
-compare clk_get_rate() with 32000000 and 19200000. But that's a matter
-of taste.
-
-Regards,
-Bjorn
-
-> +
->  	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
->  		if (itr->clk_freq_out == gi2c->clk_freq_out) {
->  			gi2c->clk_fld = itr;
-> -- 
-> 2.34.1
-> 
 
