@@ -1,180 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-32295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6213D984607
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3271398470D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 15:50:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAE3A283894
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:36:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E12D72833E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 13:50:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C00D1A4F39;
-	Tue, 24 Sep 2024 12:36:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 167333FEC;
+	Tue, 24 Sep 2024 13:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9jBpMSm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tEmz6zlF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BE91A4F18
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 12:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0BE1EEF9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 13:50:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727181409; cv=none; b=k++mx6LzS+tyfOqWghmPW2yiNy1eD44rXocx/XJsyd8Dxh/nFTrnlChRW4U9XfZAZJyI+QZsMCb272I2w474iinY0PXixOPfMvpT3xqdGUyf/Nf9Tx9tR2shyEjt5SI3UA4bKHHp/Ex5qVTuKiAt9TWpaCaaMpZmfEHfby1J8OA=
+	t=1727185826; cv=none; b=GXFgXsXB0m1L5HTtV5pP85mPWs6TZ1SsDbUg2t2fP97wYDqOH+tdTWq7EksiDdqWsn01dJ/fb8Rcl9XYAr6CNOhWlVg/LUT/KZ+awTvr59HdzZlQBh8ltVUB+QQOkpOJmN5XN4Sb4uBbFTOfHP3gg1r26l712NOesZqaapW9ltU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727181409; c=relaxed/simple;
-	bh=0tgYaNknECHGcREZzuh0GavXRA4JoNzrI0nt+ohvHAc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=G8U5rauItN7/B2BFPynnnT+VkoLTwwmpY9huO1dJ6onf3uY9IrQrkJRJ50KerVBjSqNweb29+w8H6azHyp9/D0TX8o9kK09MPBOGoFJ1lEbSQqNpocrxwo0AfJMqPEY/euuP+jdtmmWQhG2zca1PWytIVToI5fAb6XwTRkT38wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S9jBpMSm; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1727185826; c=relaxed/simple;
+	bh=FfFjf3VJdlGssW2awH79Wj4ykRkSoAFUaeAibisjnZA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e2y3zCxrS3VWz/AaeQkrpiu6E9AUiBEcUOTjhzKhHWKqNbdprlUgYD4C5g0508WLIoLp4w2/b5KrHhZNBwVsOVW9Jic7rdzrvQhTv0f6Kkxr+QML+1Fbb1/agMPQB7TbidiIChY8VLkTJx6StZ0fEojLqSSwj+k5+FJxj/BNZjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tEmz6zlF; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6de15eefdd3so39541907b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 05:36:47 -0700 (PDT)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a8d2daa2262so722700866b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 06:50:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727181406; x=1727786206; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZclqvN8OWviCoeP7W2fOBR9cc4G4ZJZYXXNmxnjQMg0=;
-        b=S9jBpMSm2q+HNAhhL9QgKFolkr2nCGbcDH64mL44hYiQzTMBehO8OrH1i9W2Nr+mXY
-         etayHSzpH1zETTVB8yleWvza8EbkZbvwnB5fBpPjeDJQiGtiY8wO1Qq6Wy9v57knbNGm
-         fXkvXWNBY4OWI3JTfMQorBt03b3/lm9h7S5iRZV39SH/MP/SmAp33xMRhr4j+BRjBs7w
-         TSO7HwycuZpO+2CjIXRdROtNe8bH+E2DUzYXdh0L5m6yeFa8+c1KUP7ivpNEAUxsydMZ
-         Hh9963QythiYyYBakmmYjLu3SMbn6+4kQ4faNDwjetJP8g6kzmgsS7BOvLZVqMtzGZMN
-         gxAQ==
+        d=linaro.org; s=google; t=1727185823; x=1727790623; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=U0y2FhLvJlmHV0mTv41RTPjAXO9B+KhA3TIpyOQoJGM=;
+        b=tEmz6zlFK/gEE423R043YjO+P/ikl6mtuHc7Ia9SuwZqwawfglwcM/JQ8Cuknp3gCq
+         fUp+z93PcLrY2vCwqE6yLE+t5tNm43YE4oCE9pEvQTQWvNalWQ1PA0p7TxOALEdQ2CjT
+         kBLpB2e48oyQhiXMN1u4IwK7nuYsboGl6eYaooMzTN+XGEv/l/bQpePpQwrSOwOv10IN
+         v5UrpWb2A4jKtExQT+hmCqCKjfwDoq4l0jTWM1EWSgDAvNqODt65udx75X3SMYQ9F+Az
+         uGd7aVWkWdFMgIORxZFDhCeetqqTnW2ASAtAX0pAJgMXaI9ziTEHsUPco2hwmH2G2BSD
+         pCuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727181406; x=1727786206;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZclqvN8OWviCoeP7W2fOBR9cc4G4ZJZYXXNmxnjQMg0=;
-        b=gtJRfbM/sw6BHFbxj3XtoR7nT1ALqZKp0ai1rI/5Ip2vtaPwyHpdaQTwS5OTiegBX/
-         y9VssEqokZiTos+7I5FyyjEzMNBB2/cPgS22GXDzNThfRKcyONCr8pJmQYtE9d4rL8SY
-         tb96+q5TmcGyZxH5ATAKMqnDVnbF8V2UXl0CnN/nids6T5XepTr5lYnE6Ei1ReZTHbS9
-         FiJT/KvPP1oCJoCu4gZ0PRB2vj8SP5lBpc0doc2+sckCZNvKYWJjZ13XLYRj1hXoMGAi
-         f+cN6e3KwK0aBR4AZLsNLCZR0tFREhJRi8SpXxsiNGVmEgsS/fT9esdcjJGL8yvouN9Y
-         bKOg==
-X-Forwarded-Encrypted: i=1; AJvYcCXDkxK2bTrWdIRlFXOGr4OjBJqXk6wYs4K3gEb4j391w19tWG/fI8pU5wRPlHbw9lPdD6tzRCIOnB4adBbL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+DQfCEikTEbThSY4SqJkAfw/MLMTKxSS8jRf5oTvsb0SQtynX
-	CJl1po8aqSqek9jCiQUmEKniyKqkKrMCX7QYsMHR6NSY98DslVF1g8no5eYpv4///LkEoefK9GM
-	TaxdTKrLCtE96lkOmGqdvN0bdfn8uSflabIivei97AbENicRQXq07Hw==
-X-Google-Smtp-Source: AGHT+IGYuEuHzLpsgKnYPKtlxcYnqyLY8yYJBAHJhgxQ8dv64VF7X1Tzkg40TcunXFxtwU+tj7usbv8oLmJYhPL74p4=
-X-Received: by 2002:a05:690c:4443:b0:6e2:1062:9b90 with SMTP id
- 00721157ae682-6e210629d20mr13188617b3.44.1727181406631; Tue, 24 Sep 2024
- 05:36:46 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727185823; x=1727790623;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U0y2FhLvJlmHV0mTv41RTPjAXO9B+KhA3TIpyOQoJGM=;
+        b=Nobe3Ov05uY1vz5OU16mncJFQaTlS+Dq9+B23sGG88uBpGDMLRtAiUZe7sCPv96vuw
+         HdLJ4vxhLceHLR1r93gb0jmEPzDlWLhpXBOylEGYBDgfN6dnE+FyQJn9NlZJNmirL1Ue
+         siThs7xoZpyjjjWydy88xfGezZJsgafjxVmK7F4Lno6lRlZMMZrOJV16+8jDppdZ9Xkb
+         XuO+5XcXhHLj6eTKW/mFMZTpPMq+yAMs96Qjeec2vX/uPAc6oIBR2wqwlt4DhqkorcTI
+         BwCHX/nQ/WJ9v6LducA4R6ckmslUlPW7WN/nQR7dy0RVZSXttrHS+10WD6+FpHKmD0Io
+         sodg==
+X-Forwarded-Encrypted: i=1; AJvYcCXylbMQAYwyHfSUa60eksCvolB1VOOnOWjr2Jnv4Ti1c4yExKdKurt5IWjRZ0UJ7XDSxOhqr47UUfy1PZ4K@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5YEzNZOrt3sAxS/i2qHwgloCCBMGTs/ZThrt8tcpGs5s8Wy/d
+	63BcM2ARntiT0GKr/7duMaD2IVWDhqGw4X8RqSt6W5UHu9v+kLlcRXsMn+Ny6g==
+X-Google-Smtp-Source: AGHT+IEyXFVN8yWlZBr2c0QmUeS9Pixk5O8tibvuF7nDhnrYoQ0QURy2zis3HJYVbJUApjUTxl05fQ==
+X-Received: by 2002:a17:907:e615:b0:a8d:7046:a1bd with SMTP id a640c23a62f3a-a90d501ad10mr1301633766b.28.1727185822706;
+        Tue, 24 Sep 2024 06:50:22 -0700 (PDT)
+Received: from thinkpad ([80.66.138.17])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93931340b5sm85768766b.190.2024.09.24.06.50.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Sep 2024 06:50:22 -0700 (PDT)
+Date: Tue, 24 Sep 2024 15:50:21 +0200
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
+	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+	abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
+	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v4 5/6] PCI: qcom: Add support for X1E80100 SoC
+Message-ID: <20240924135021.ybpyoahlpuvedma5@thinkpad>
+References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
+ <20240924101444.3933828-6-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240912071437.1708969-1-quic_mahap@quicinc.com>
- <20240912071437.1708969-5-quic_mahap@quicinc.com> <v4cnmso3nl5oi3scd2lkg6kepb52vjrzgoti42ikds3y2wq6aw@sbn2yu4xeiun>
- <9b47bd8e-6079-4285-a3d7-932178d5bdf2@quicinc.com> <rmndmhq67lajdmva6gt46rqtkvf6jh2afbqazafz6oxv7ep56j@bznopz3aexyt>
- <ba0bc896-41ad-4f1d-9218-fc5a44add422@quicinc.com>
-In-Reply-To: <ba0bc896-41ad-4f1d-9218-fc5a44add422@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 24 Sep 2024 14:36:35 +0200
-Message-ID: <CAA8EJpqTuj2j4mTKCTGpOX6ZfgGLocmDdwX1BwqEp6OkBejnDg@mail.gmail.com>
-Subject: Re: [PATCH 4/5] drm/msm/dpu: Add SA8775P support
-To: Mahadevan P <quic_mahap@quicinc.com>
-Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
-	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, swboyd@chromium.org, 
-	konrad.dybcio@linaro.org, danila@jiaxyga.com, bigfoot@classfun.cn, 
-	neil.armstrong@linaro.org, mailingradian@gmail.com, quic_jesszhan@quicinc.com, 
-	andersson@kernel.org, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_kalyant@quicinc.com, quic_jmadiset@quicinc.com, 
-	quic_vpolimer@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240924101444.3933828-6-quic_qianyu@quicinc.com>
 
-On Tue, 24 Sept 2024 at 14:31, Mahadevan P <quic_mahap@quicinc.com> wrote:
->
->
-> On 9/24/2024 5:46 PM, Dmitry Baryshkov wrote:
-> > On Tue, Sep 24, 2024 at 04:42:02PM GMT, Mahadevan P wrote:
-> >> On 9/12/2024 1:34 PM, Dmitry Baryshkov wrote:
-> >>> On Thu, Sep 12, 2024 at 12:44:36PM GMT, Mahadevan wrote:
-> >>>> Add definitions for the display hardware used on the
-> >>>> Qualcomm SA8775P platform.
-> >>>>
-> >>>> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
-> >>>> ---
-> >>>>    .../msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h   | 485 ++++++++++++++++++
-> >>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
-> >>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +-
-> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   3 +-
-> >>>>    4 files changed, 491 insertions(+), 3 deletions(-)
-> >>>>    create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-> >>>>
-> > [...]
-> >
-> >>>> +static const struct dpu_intf_cfg sa8775p_intf[] = {
-> >>>> +  {
-> >>>> +          .name = "intf_0", .id = INTF_0,
-> >>>> +          .base = 0x34000, .len = 0x280,
-> >>>> +          .features = INTF_SC7280_MASK,
-> >>>> +          .type = INTF_DP,
-> >>>> +          .controller_id = MSM_DP_CONTROLLER_0,
-> >>>> +          .prog_fetch_lines_worst_case = 24,
-> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
-> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
-> >>>> +  }, {
-> >>>> +          .name = "intf_1", .id = INTF_1,
-> >>>> +          .base = 0x35000, .len = 0x300,
-> >>>> +          .features = INTF_SC7280_MASK,
-> >>>> +          .type = INTF_DSI,
-> >>>> +          .controller_id = MSM_DSI_CONTROLLER_0,
-> >>>> +          .prog_fetch_lines_worst_case = 24,
-> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
-> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
-> >>>> +          .intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
-> >>>> +  }, {
-> >>>> +          .name = "intf_2", .id = INTF_2,
-> >>>> +          .base = 0x36000, .len = 0x300,
-> >>>> +          .features = INTF_SC7280_MASK,
-> >>>> +          .type = INTF_DSI,
-> >>>> +          .controller_id = MSM_DSI_CONTROLLER_1,
-> >>>> +          .prog_fetch_lines_worst_case = 24,
-> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
-> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
-> >>>> +          .intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
-> >>>> +  }, {
-> >>>> +          .name = "intf_3", .id = INTF_3,
-> >>>> +          .base = 0x37000, .len = 0x280,
-> >>>> +          .features = INTF_SC7280_MASK,
-> >>>> +          .type = INTF_NONE,
-> >>>> +          .controller_id = MSM_DP_CONTROLLER_0,   /* pair with intf_0 for DP MST */
-> >>>> +          .prog_fetch_lines_worst_case = 24,
-> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
-> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
-> >>>> +  }, {
-> >>>> +          .name = "intf_4", .id = INTF_4,
-> >>>> +          .base = 0x38000, .len = 0x280,
-> >>>> +          .features = INTF_SC7280_MASK,
-> >>>> +          .type = INTF_DP,
-> >>>> +          .controller_id = MSM_DP_CONTROLLER_1,
-> >>>> +          .prog_fetch_lines_worst_case = 24,
-> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
-> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
-> >>>> +  }, {
-> >>> Where is intf_5 ?
-> >>
-> >> intf_5 of base address 0x39000 is not supported on this target.
-> > Not supported by whom?
->
->
-> In sa8775p mdss architecture intf_5 is not present. So we are not adding
-> in SW too.
+On Tue, Sep 24, 2024 at 03:14:43AM -0700, Qiang Yu wrote:
+> X1E80100 has PCIe ports that support up to Gen4 x8 based on hardware IP
+> version 1.38.0.
+> 
+> Currently the ops_1_9_0 which is being used for X1E80100 has config_sid
+> callback to config BDF to SID table. However, this callback is not
+> required for X1E80100 because it has smmuv3 support and BDF to SID table
+> will be not present.
+> 
+> Hence add support for X1E80100 by introducing a new ops and cfg structures
+> that don't require the config_sid callback. This could be reused by the
+> future platforms based on SMMUv3.
+> 
 
-ack, thanks for the explanation. It's better now.
+Oops... I completely overlooked that you are not adding the SoC support but
+fixing the existing one :( Sorry for suggesting a commit message that changed
+the context.
+
+For this, you can have something like:
+
+"PCI: qcom: Fix the ops for X1E80100 SoC
+
+X1E80100 SoC is based on SMMUv3, hence it doesn't need the BDF2SID mapping
+present in the existing cfg_1_9_0 ops. This is fixed by introducing new ops
+'ops_1_38_0' and cfg 'cfg_1_38_0' structures. These are exactly same as the
+1_9_0 ones, but they don't have the 'config_sid()' callback that handles the
+BDF2SID mapping in the hardware. These new structures could also be used by the
+future SoCs making use of SMMUv3."
+
+- Mani
+
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 88a98be930e3..56ba8bc72f78 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -1367,6 +1367,16 @@ static const struct qcom_pcie_ops ops_2_9_0 = {
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  };
+>  
+> +/* Qcom IP rev.: 1.38.0 */
+> +static const struct qcom_pcie_ops ops_1_38_0 = {
+> +	.get_resources = qcom_pcie_get_resources_2_7_0,
+> +	.init = qcom_pcie_init_2_7_0,
+> +	.post_init = qcom_pcie_post_init_2_7_0,
+> +	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+> +	.deinit = qcom_pcie_deinit_2_7_0,
+> +	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+> +};
+> +
+>  static const struct qcom_pcie_cfg cfg_1_0_0 = {
+>  	.ops = &ops_1_0_0,
+>  };
+> @@ -1409,6 +1419,10 @@ static const struct qcom_pcie_cfg cfg_sc8280xp = {
+>  	.no_l0s = true,
+>  };
+>  
+> +static const struct qcom_pcie_cfg cfg_1_38_0 = {
+> +	.ops = &ops_1_38_0,
+> +};
+> +
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>  	.link_up = qcom_pcie_link_up,
+>  	.start_link = qcom_pcie_start_link,
+> @@ -1837,7 +1851,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>  	{ .compatible = "qcom,pcie-sm8450-pcie0", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sm8450-pcie1", .data = &cfg_1_9_0 },
+>  	{ .compatible = "qcom,pcie-sm8550", .data = &cfg_1_9_0 },
+> -	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_1_9_0 },
+> +	{ .compatible = "qcom,pcie-x1e80100", .data = &cfg_1_38_0 },
+>  	{ }
+>  };
+>  
+> -- 
+> 2.34.1
+> 
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
