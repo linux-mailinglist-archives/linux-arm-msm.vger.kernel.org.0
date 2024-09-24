@@ -1,101 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-32233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDAFC983F90
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 09:45:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19F6B983FDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 10:05:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CFE0280EFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 07:45:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BD4011F23254
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 08:05:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C523414884D;
-	Tue, 24 Sep 2024 07:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5119E14B976;
+	Tue, 24 Sep 2024 08:05:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="Hca81bFp"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="CvuFzrI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51436224EA;
-	Tue, 24 Sep 2024 07:45:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6914513B586;
+	Tue, 24 Sep 2024 08:05:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727163901; cv=none; b=p0IcrlSl5zMH9LzGBJRxmVRfwOce0u9jFSkh8WmVNyqN4AMt8E2+eXMWCT2aUL9+Oc9mJ8q0DcbUgNJOk6ESfn/PUPKlufU2gGTYT+GiM1S73dB147oryAVlZRxKSVCBCGlWAmxmui5WP2q2mq4ejyuDpHtnMOzmvsKJ4moOB0Y=
+	t=1727165109; cv=none; b=td5Ff9RIbZbhi39sPodROxnGmEoeW2Z8gcwrlcCpX3TliARxqqhB3fHEV7VXzt3EM0wPQF0D6Q6m2MQTzxOC8nJcwFAyDvdD3s3pLrLSslWbgQqG62uw+gytix9tyPhrwP4zZXzwEfbfUfm7gE5SDZT1TGp6FQoJrF5/UrL3rmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727163901; c=relaxed/simple;
-	bh=KLJAg8LEAPMGZJuG/KhSybXNlWLQIRi/+4OZ9O9a/XQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aWLIajIGu3tVjLiaXpMNb5rGf5dgbWdRfH6M0e9FkPGf3zF6lXxE/ww7E+Wocd9q0Mx888NW4VrataM9Xpu4LKUeat1Qe3hKFsRXx1pSNbCXpswjGJhw04xk9S7MvM58dop4Oy8fIbhui4gQz7AOyGwKatZ1G6OBCRAS+hWaBFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=Hca81bFp; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=fT8t09p6erN3pDvzXMMBDzSN+OtEWMEQMRtR+c1AOX8=; b=Hca81bFp34vjVqqCSPc4FQw+/z
-	2pJW2t6D2slXOGZ/jwr4f3rL51d8T0OkQ5Pp8txkDx2MptwGnfl15NSfAOdtDMTsYQqqcFISprD5r
-	RG4q953GwKaPKnxF5JoupU6x4NoWRDi0ehK3H/H/Z12cE4H4Bb5Nt4v/AoTEZQ3rDCcZfgUh81BZq
-	gU2Ig+hCG1yCPiCNOhawBhj64CGm4Ib3/QxMT99XPRel8yV5fI8gDIldqpHDKqCFwrhPZ9ikKibFp
-	rbyEYqwS8PFuleCukeWwuKKMts2ytXcQ9QczU6L3MBKymVvLqgo15FyeJrV0iIzLGzvuqFDpChOny
-	y6odS+Dw==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1st0E9-00000001TIz-3VJj;
-	Tue, 24 Sep 2024 07:44:53 +0000
-Date: Tue, 24 Sep 2024 00:44:53 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Eric Biggers <ebiggers@kernel.org>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, axboe@kernel.dk,
-	song@kernel.org, yukuai3@huawei.com, agk@redhat.com,
-	snitzer@kernel.org, mpatocka@redhat.com, adrian.hunter@intel.com,
-	quic_asutoshd@quicinc.com, ritesh.list@gmail.com,
-	ulf.hansson@linaro.org, andersson@kernel.org,
-	konradybcio@kernel.org, kees@kernel.org, gustavoars@kernel.org,
-	linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-raid@vger.kernel.org, dm-devel@lists.linux.dev,
-	linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-hardening@vger.kernel.org, quic_srichara@quicinc.com,
-	quic_varada@quicinc.com
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-Message-ID: <ZvJt9ceeL18XKrTc@infradead.org>
-References: <20240916085741.1636554-1-quic_mdalam@quicinc.com>
- <20240916085741.1636554-2-quic_mdalam@quicinc.com>
- <20240921185519.GA2187@quark.localdomain>
+	s=arc-20240116; t=1727165109; c=relaxed/simple;
+	bh=bkob+FdVbT5JvRwKp/3RFu5HC+yR0/AGxmQWAMBAfxw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EleAETJiprAmLAVMTzAZ4c5/8dSHWYe9wKAr6/ElBo/iDtPFYxrn23QghNdRrPsmIr4VHe6EmZA4FNltRTM9lZU2K9UGm2Z51XHjkALNfhg17b24p+kagVBY9wRsqFg4sWavdVmx6e1pqTdXQvWFe8LaAjNsfIW4OoAkDs5JRn8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=CvuFzrI0; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1727165105;
+	bh=bkob+FdVbT5JvRwKp/3RFu5HC+yR0/AGxmQWAMBAfxw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=CvuFzrI0AhizshttZzgCNh2wASf80PcmQTwldXXkfRp3FLPhvWPKcfrWEvbKo1Xfl
+	 pYUdAvUXHnxCiRj+ansAs1Y/4qEBT2Zw5XVVCJNP0uIbVQ8vrmon7R8FFrcoXCUH6s
+	 9pJCTeDwuMeOV60sdTU3fT/wzcFnRngPhHowoQrpxGM+RtY4qCuVp/9cxh0gpJy1qA
+	 vosjvZo289g0RSv045JmPKfysGhGUkc9uWvpxbNbbTk4ORi2A8gXcPDYXBJXyeGyMz
+	 H+BP1y/ML/KeP7+lTIDUgycgFbxCGaC693LhuQAEtPJhFvvXYKON7YacpsDKrw3Ovw
+	 10HNVyTURjyPg==
+Received: from [192.168.50.250] (unknown [171.76.80.125])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 3D1CC17E1045;
+	Tue, 24 Sep 2024 10:05:02 +0200 (CEST)
+Message-ID: <58a9334d-26eb-4106-806a-59e5e728aed5@collabora.com>
+Date: Tue, 24 Sep 2024 13:35:00 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240921185519.GA2187@quark.localdomain>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] docs/gpu: ci: update flake tests requirements
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
+ helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ robdclark@gmail.com, guilherme.gallo@collabora.com,
+ sergi.blanch.torne@collabora.com, deborah.brouwer@collabora.com,
+ mripard@kernel.org, rodrigo.vivi@intel.com,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, amd-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20240924022600.1441969-1-vignesh.raman@collabora.com>
+ <CAA8EJprUUUc0iDph-HPrW1anrdnzYju7+JERQdHbwxvznq=H4w@mail.gmail.com>
+Content-Language: en-US
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <CAA8EJprUUUc0iDph-HPrW1anrdnzYju7+JERQdHbwxvznq=H4w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sat, Sep 21, 2024 at 11:55:19AM -0700, Eric Biggers wrote:
-> (https://android.googlesource.com/kernel/common/+/refs/heads/android-mainline/drivers/md/dm-default-key.c),
-> and I've been looking for the best way to get the functionality upstream.  The
-> main challenge is that dm-default-key is integrated with fscrypt, such that if
-> fscrypt encrypts the data, then the data isn't also encrypted with the block
-> device key.  There are also cases such as f2fs garbage collection in which
-> filesystems read/write raw data without en/decryption by any key.  So
-> essentially a passthrough mode is supported on individual I/O requests.
+Hi Dmitry,
 
-Adding a default key is not the job of a block remapping driver.  You'll
-need to fit that into the file system and/or file system level helpers.
+On 24/09/24 11:46, Dmitry Baryshkov wrote:
+> On Tue, 24 Sept 2024 at 04:26, Vignesh Raman
+> <vignesh.raman@collabora.com> wrote:
+>>
+>> Update the documentation to require linking to a relevant GitLab
+>> issue for each new flake entry instead of an email report. Added
+>> specific GitLab issue URLs for i915, xe and other drivers.
+>>
+>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>> ---
+>>   Documentation/gpu/automated_testing.rst | 15 ++++++++++-----
+>>   1 file changed, 10 insertions(+), 5 deletions(-)
+>>
+>> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
+>> index 2d5a28866afe..f73b8939dc3a 100644
+>> --- a/Documentation/gpu/automated_testing.rst
+>> +++ b/Documentation/gpu/automated_testing.rst
+>> @@ -67,20 +67,25 @@ Lists the tests that for a given driver on a specific hardware revision are
+>>   known to behave unreliably. These tests won't cause a job to fail regardless of
+>>   the result. They will still be run.
+>>
+>> -Each new flake entry must be associated with a link to the email reporting the
+>> -bug to the author of the affected driver, the board name or Device Tree name of
+>> -the board, the first kernel version affected, the IGT version used for tests,
+>> -and an approximation of the failure rate.
+>> +Each new flake entry must include a link to the relevant GitLab issue, the board
+>> +name or Device Tree name, the first kernel version affected, the IGT version used
+>> +for tests and an approximation of the failure rate.
+>>
+>>   They should be provided under the following format::
+>>
+>> -  # Bug Report: $LORE_OR_PATCHWORK_URL
+>> +  # Bug Report: $GITLAB_ISSUE
+>>     # Board Name: broken-board.dtb
+>>     # Linux Version: 6.6-rc1
+>>     # IGT Version: 1.28-gd2af13d9f
+>>     # Failure Rate: 100
+>>     flaky-test
+>>
+>> +The GitLab issue must include the logs and the pipeline link. Use the appropriate
+>> +link below to create an issue.
+>> +https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/ for i915 drivers
+>> +https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/ for xe drivers
+> 
+> drm/msm for msm driver, please. Otherwise we can easily miss such issues.
+
+Sure, will add it in v2. Thanks.
 
 > 
-> It looks like this patch not only does not support that, but it ignores the
-> existence of fscrypt (or any other use of inline encryption by filesystems)
-> entirely, and overrides any filesystem-provided key with the block device's.  At
-> the very least, this case would need to be explicitly not supported initially,
-> i.e. dm-inlinecrypt would error out if the upper layer already provided a key.
+>> +https://gitlab.freedesktop.org/drm/misc/kernel/-/issues for other drivers
+>> +
+>>   drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
+>>   -----------------------------------------------------------
+>>
+>> --
+>> 2.43.0
+>>
+> 
+> 
 
-I agree that we have an incompatibility here, but simply erroring out
-feels like the wrong way to approach the stacking.  If a stacking driver
-consumes the inline encryption capability it must not advertise it to
-the upper layers.
-
+Regards,
+Vignesh
 
