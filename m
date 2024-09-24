@@ -1,142 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-32245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 816A19841C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 11:13:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4183798426F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 11:42:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0B4DBB25ED1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 09:13:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5AF1DB2172C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 09:39:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20D31155308;
-	Tue, 24 Sep 2024 09:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C98C715574F;
+	Tue, 24 Sep 2024 09:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NfeFf3Lz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YNHkgLvO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956E61547D8;
-	Tue, 24 Sep 2024 09:13:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCCA15382E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 09:39:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727169224; cv=none; b=LtY6tWyGwOFBjwf/WG6aoI8Zzcx2ImXzY1YshF1nca7HuiQIhL3YBMxb+K2KbA4VrCGP9SBboOo0Bc3RHYV6rJFEWbV97ujKM12T/4gwRDNMPoMU6yAZ84X50gOky4MXXx+XcboOyYeTzJ3y8blhgUyKN/sbGjQO48zTLbzWwck=
+	t=1727170757; cv=none; b=B1u3liDcRtp/EjxwYqHtsjPAYvsgWgBST5G/fX0R6yv4QnF2vc0XYpI6sHo9pQjBJNX/MNOenbQ7EIQVXjlm+9aJ8tY1NxNuS+1F7FD79raf/p8BkfUVPI2mI/j7OvdbEXexccKwNI9EJ4iiktB/jVR80UYf93mneABXivUkK7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727169224; c=relaxed/simple;
-	bh=lTJFEX70Tnr0Fw5lsQ72ydPKnO3WrZEIIZkapGteRCc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TNjVicql/+xMhQUwnTZkuRU37FgDnGNKEyjrlMwmY/8A1ZQIryk9SW1n5DdL/ES0X2tO/wcXj0RS4oP9I2K8L0wVg01qDTfbDSWwSNNZkte8K9mYLgOUqFacAfZzLlEZGeQQqWeMhB+hq2UTiV+lRhp2eoUKB/yWBnDwdHDMPoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NfeFf3Lz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48NNkhHF031702;
-	Tue, 24 Sep 2024 09:13:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	q0oaTA2N1s7C2vWalnp91IkLu0tiSvZcDmbqZbmr0eE=; b=NfeFf3LzgaVH71Zn
-	y0r+M1Xc1l6PbVMD6z5qqgICraNKNwfGdHEjCwjTDbZmkNIzXz/LTdUECnA5mFCL
-	zlzKYdgb0qkFiy0dreXcKmgYUU9SX4Hxf1ohA2Q52lbgrYhmcl6cAQJ0Oef44P5N
-	FDDNNY0J+9oXhdOaLI3gEEMNGSJGVFltLkOD/0Di0VX+kuRU5VmTtQyPRVqTkR4g
-	acjE8G2GVgpLjX1snGQwSgAdD0idSZLvrbyUb999OzCoLr3U/O1bXr7zteBFn5kx
-	eMDuzCk3oHkBx51KkUg0WvTXOTKrfmSUSNYmhOF6qC1iqQ/UYfS/wUcs1VolG1lE
-	5FQL7A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sph6r07d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 09:13:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48O9DZtp005104
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 09:13:35 GMT
-Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Sep
- 2024 02:13:31 -0700
-Message-ID: <d82ee974-ead8-5729-ec04-4ed039f6045a@quicinc.com>
-Date: Tue, 24 Sep 2024 14:43:28 +0530
+	s=arc-20240116; t=1727170757; c=relaxed/simple;
+	bh=mf/yNQbTyBi6//hoU5xYaWDXLqvNOSROMW/L33As/p4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MD2afkm/7rUioXKUJgWE5ibvFSb8DLDjgZCFvEbX/B1i1Qj+7o6EbMEfj80hkSDPwczohlxcCHAkdBwjc5bMa3n8yCOdeO7/n1KgSbpiLIZpyCoIW/MorPU9akuEd8mDoICALKmL3nizR4H5h96GpVN/+ocCP3lAU3BWk6D2718=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YNHkgLvO; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f7502f09fdso43749361fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 02:39:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727170754; x=1727775554; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IdePYOwVLhdr7Z5Ai8vXonZrKUMVNJYnj4sOgIcjQV4=;
+        b=YNHkgLvO0spWElQLKY80APHmBabpqFxSQDexqEUdOr1+D3tqFXiZPvKbju4P8c1GqN
+         5FDg4eY/Rq3mAC5Wxjk+yW248KX4emwhuMkl0B93NT2thH1ZX1PpI4kSeqN3zQNZ1M0k
+         /NzhNWI5kyfceOR8UunxFsOaDRQPm1tAfY0P2JLO7oIIRSZUVKj5Ez8xuXq6cvx6bOWe
+         93MlvnyKc0MGC1X821tejiMz3LxGC5PPm1kBREE3eMBwk8HIkMUbb4oWA1y6+M47HcGz
+         FO34TcKApYbEu3/06D6vfi9/b+zH24sXquC3ety56pvLaOYimLwTPe4NjUWpTsuJjeWI
+         yACw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727170754; x=1727775554;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IdePYOwVLhdr7Z5Ai8vXonZrKUMVNJYnj4sOgIcjQV4=;
+        b=sl6Ih9U2vnyG8qmDp76IUQpNrAJvL6tIOxONodHBcRYFJhewLAlv0fOT/dina2e4Sn
+         aT8Gy48YTGvT2f7mxHfZC1NKFE5x6i9mtwIiIe12hpFOjZKNdz4+e2t1A04YREjKarD7
+         vEQWzF8mXf8VX2vO5FsRlbeqzMLTygb/MXkuvEpQkh6InowGv02phal4LFHFPokPwLfc
+         BFoUYrx7PnPfkVeVqwOCHDeAkjIHQoITdL3iNuectXXdSlAnBlLmACNhhzq65WoUpQoh
+         Rvi7iqk6X2+4reSCdaiiIq3F1Ycnfn2R6W0Oeyu21aTlI5LIIaklC/F0ET+Ft4qDy5M4
+         voUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUH1cVmjprImLT5cHocwUV+O3D8MID6cDDtQVEaZoYe0NEBh42LRJurKTdGvZefYXl7DX60C1nFDpqKdiOs@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoPLubjqgqHhLgJeAmETRwVmRjjns1K/3YzSc8vTzfpBoghZKx
+	Qtk3rTc3o8GKRTDzEYeuVhFk6YiUrmK18QAwsONO15Jv9j5jjeK7B9U+4Yzx2TcuPJMwKgtXEDp
+	/KjFhbA==
+X-Google-Smtp-Source: AGHT+IGaSdkWJlPaDdNvVeB10oDjOeL9lA78zLl9tk9InZw6sDjbdJCQLJwiltHxpGb4QESfI1B8mA==
+X-Received: by 2002:a2e:801:0:b0:2f7:5ca2:6d10 with SMTP id 38308e7fff4ca-2f8d0b91516mr7459431fa.15.1727170747681;
+        Tue, 24 Sep 2024 02:39:07 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f8d282fd34sm1606521fa.28.2024.09.24.02.39.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Sep 2024 02:39:06 -0700 (PDT)
+Date: Tue, 24 Sep 2024 12:39:04 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
+	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
+	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v15 5/5] iommu/arm-smmu: add ACTLR data and support for
+ qcom_smmu_500
+Message-ID: <jqwm5ddslvpbdp4ngxxyfpeda2qoc2rsnxc5cwo3gy24mpd345@qkyxwggxk77m>
+References: <20240920155813.3434021-1-quic_bibekkum@quicinc.com>
+ <20240920155813.3434021-6-quic_bibekkum@quicinc.com>
+ <xxd74r5zzobcsg6joty4rxxmj4gaiezmj6bqlcdbcyhshchqq2@ljpxtgq2dthg>
+ <66af599b-85a7-40fd-b550-346013028394@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v3 09/29] media: iris: introduce Host firmware interface
- with necessary hooks
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
- <20240827-iris_v3-v3-9-c5fdbbe65e70@quicinc.com>
- <06036309-a7cd-4eb8-b7bf-1704f49ffdf1@linaro.org>
-Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <06036309-a7cd-4eb8-b7bf-1704f49ffdf1@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: kzn99QocKUDptBJMORb7II7zCGR7iRSW
-X-Proofpoint-ORIG-GUID: kzn99QocKUDptBJMORb7II7zCGR7iRSW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxlogscore=601
- mlxscore=0 adultscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409240063
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <66af599b-85a7-40fd-b550-346013028394@quicinc.com>
+
+On Sat, Sep 21, 2024 at 01:29:04AM GMT, Bibek Kumar Patro wrote:
+> 
+> 
+> On 9/20/2024 9:48 PM, Dmitry Baryshkov wrote:
+> > On Fri, Sep 20, 2024 at 09:28:13PM GMT, Bibek Kumar Patro wrote:
+> > > Add ACTLR data table for qcom_smmu_500 including
+> > > corresponding data entry and set prefetch value by
+> > > way of a list of compatible strings.
+> > > 
+> > > Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> > > ---
+> > >   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 24 ++++++++++++++++++++++
+> > >   1 file changed, 24 insertions(+)
+> > > 
+> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > > index 4ac272d05843..e8f936a446df 100644
+> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> > > @@ -25,8 +25,31 @@
+> > > 
+> > >   #define CPRE			(1 << 1)
+> > >   #define CMTLB			(1 << 0)
+> > > +#define PREFETCH_SHIFT		8
+> > > +#define PREFETCH_DEFAULT	0
+> > > +#define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
+> > > +#define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
+> > > +#define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
+> > >   #define GFX_ACTLR_PRR		(1 << 5)
+> > > 
+> > > +static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
+> > > +	{ .compatible = "qcom,adreno",
+> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
+> > > +	{ .compatible = "qcom,adreno-gmu",
+> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
+> > > +	{ .compatible = "qcom,adreno-smmu",
+> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
+> > > +	{ .compatible = "qcom,fastrpc",
+> > > +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
+> > > +	{ .compatible = "qcom,sc7280-mdss",
+> > > +			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
+> > > +	{ .compatible = "qcom,sc7280-venus",
+> > > +			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
+> > > +	{ .compatible = "qcom,sm8550-mdss",
+> > > +			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
+> > > +	{ }
+> > > +};
+> > 
+> > Wow, this looks really nice now!
+> > 
+> 
+> I am also in favor of this compatible based approach now,
+> as it looks to be much cleaner implementation.
 
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-On 9/5/2024 6:06 PM, Bryan O'Donoghue wrote:
-> On 27/08/2024 11:05, Dikshita Agarwal via B4 Relay wrote:
->> +enum hfi_packet_port_type {
->> +    HFI_PORT_NONE        = 0x00000000,
->> +    HFI_PORT_BITSTREAM    = 0x00000001,
->> +    HFI_PORT_RAW        = 0x00000002,
->> +};
->> +
->> +enum hfi_packet_payload_info {
->> +    HFI_PAYLOAD_NONE    = 0x00000000,
->> +    HFI_PAYLOAD_U32        = 0x00000001,
->> +    HFI_PAYLOAD_S32        = 0x00000002,
->> +    HFI_PAYLOAD_U64        = 0x00000003,
->> +    HFI_PAYLOAD_S64        = 0x00000004,
->> +    HFI_PAYLOAD_STRUCTURE    = 0x00000005,
->> +    HFI_PAYLOAD_BLOB    = 0x00000006,
->> +    HFI_PAYLOAD_STRING    = 0x00000007,
->> +    HFI_PAYLOAD_Q16        = 0x00000008,
->> +    HFI_PAYLOAD_U32_ENUM    = 0x00000009,
->> +    HFI_PAYLOAD_32_PACKED    = 0x0000000a,
->> +    HFI_PAYLOAD_U32_ARRAY    = 0x0000000b,
->> +    HFI_PAYLOAD_S32_ARRAY    = 0x0000000c,
->> +    HFI_PAYLOAD_64_PACKED    = 0x0000000d,
->> +};
->> +
->> +enum hfi_packet_host_flags {
->> +    HFI_HOST_FLAGS_NONE            = 0x00000000,
+
 > 
-> Are these NONE flags used/necessary ?
-> 
-> If they are dead enum values, please drop in the next version.
-Sure, will check and remove if not needed.
-> 
-> ---
-> bod
+> > > +
+> > >   static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
+> > >   {
+> > >   	return container_of(smmu, struct qcom_smmu, smmu);
+> > > @@ -640,6 +663,7 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+> > >   	.impl = &qcom_smmu_500_impl,
+> > >   	.adreno_impl = &qcom_adreno_smmu_500_impl,
+> > >   	.cfg = &qcom_smmu_impl0_cfg,
+> > > +	.client_match = qcom_smmu_actlr_client_of_match,
+> > >   };
+> > > 
+> > >   /*
+> > > --
+> > > 2.34.1
+> > > 
+> > 
+
+-- 
+With best wishes
+Dmitry
 
