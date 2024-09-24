@@ -1,134 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-32338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D45E984BE6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 22:02:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 010D8984C63
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 22:45:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D85F1C22D73
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:02:14 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 39F99B2283C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:45:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35DC1126F0A;
-	Tue, 24 Sep 2024 20:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEBEB12C52E;
+	Tue, 24 Sep 2024 20:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TbPqkR9c"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NRXSNY5b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF6D335C7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 20:02:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A2267F460;
+	Tue, 24 Sep 2024 20:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727208126; cv=none; b=n/M0n2c7tI4I70iD45/aZ/7JP0+YxFx9bBaINLxI/s1/VxEpO01uURKECH8xHJFtL+F0Y9At9BbDsMsKMoltNnOqae2Tjp/3ukSVgBNS2flPm4Klg0f8NtE/T1dmjcjCUb/PFi+gfcsrQ7DKaE3FRWD7AfbF3FJxm8xDotFKzW0=
+	t=1727210744; cv=none; b=c8zeWD5hw2DSv0OcTqgwUjj4lxMYhzfmftm9hwcR/+JRewn6EWeXzk538akJWtoMkw8IgxAyTC3wZrxus9qrwMlQRooMGi3BkKdTuS5X0kaC58e3vIbxFmdOcOKW142wd3/NQEQyX5NMrTjjDeOoj2sKQqAR5qdOZLQ4mQ2HREs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727208126; c=relaxed/simple;
-	bh=I58XqHijHUA2UWwDbiGNUDJ1ijylNn3S1hQqxpel1aE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=A5kT5GG8dHFmrASQJfWEXI3Jx1vIgtxiqT24FkG08AtcQecm3cZn/AaZbdawjhd9gv9yW3Bm79NXV2D5YdeuvCR1TPq/AjJkZj3BLBiigh6R1mzjknfzUcWn1fM4aTh/2pgOb83+E1CPC7cynuqVP4HeAy0MIkhNvbAtMUpnfFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TbPqkR9c; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5356bb5522bso7054116e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 13:02:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727208122; x=1727812922; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pCMBvU2x6ctygjOC+bxXh9ki3HMzf8uD5pWCAHaHSyo=;
-        b=TbPqkR9cMgX2WK9NHYZujeQPBZuLFrtke+M5+bUf4zi4YAlmL1qlHdjIjVcKft4jKi
-         cw1ZpB/CPmAl6cWQAoBc7SkxBrkYZO65s7Io4xJkJdJaiTJt9ojheUzeaYfj7YNSzhz+
-         rrPPigkGrqyxUPVAu1prby0FYXv9JLerq8A9/crH6H2e5sqTpYghJbv0OnByAhGtgl+e
-         xCtuR2LbmRtQfNZgMTfs2wB7VR0pXU2oCJqojQCQZK9azTJual6wZZWPOZVmwLVmeTm4
-         hFGkuDeR4GIOnBQt1v6AxQ3UwuBwf2SrrltGYhY8i157UHlhLp890laBHgaPGjT1G+bi
-         pncQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727208122; x=1727812922;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pCMBvU2x6ctygjOC+bxXh9ki3HMzf8uD5pWCAHaHSyo=;
-        b=fQI+RDyebYa/AweGv7h2XJyqxk3hcOZdhQWC8FCHZ53x0+v86BInTpXqm6uYJVitOm
-         /JTvTmebEspYEm26gcIIsWb5rgwMRYUxl/DdH8k1WMADiRU8/qXb7175d7IeNLN3EXFv
-         tHoc7/RLf/zTMiBIr7g/OjG/zuTLDgj4q6vvxlz9wSmxh6VeFq8LSUXYA4tOGwf7rslv
-         7NcJFUwhuVdbXZHndIY44blpDfbp1JT6z1CH465J6zPqiH9DLHQrZQE+92hHfaAOnIxW
-         7/o3B3sN3s5ZWoCPMJ2N7DLcwj7kuoJzigGiJzyu+hzaMd/gZ2JE010IZql6xNfLGaXK
-         y/6g==
-X-Gm-Message-State: AOJu0YznshOxq3gCWXa4sOg3IU9QtJ8jJ92qmiXA8Pbx7uQSGzboMOrC
-	pJ0WaMtwrtwBbKEnF2nrn37rgZ5mk0/AVnrPgpznvmk4shgu0CZZezxWBcf7OQTL41P6bPx18yA
-	5Z2IvvA==
-X-Google-Smtp-Source: AGHT+IFeut3+KrkdV7UIBIPsPMOKFGCrq1HWwv+N5oz9vY5pML8Pt5/c5VD6qEyMSQ4BqOELrDRP3w==
-X-Received: by 2002:a05:6512:3dac:b0:537:a855:7d6f with SMTP id 2adb3069b0e04-53877538c38mr81739e87.34.1727208122326;
-        Tue, 24 Sep 2024 13:02:02 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-537a8648995sm316863e87.197.2024.09.24.13.02.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 13:02:01 -0700 (PDT)
-Date: Tue, 24 Sep 2024 23:02:00 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: John Schulz <john.schulz1@protonmail.com>
-Cc: linux-arm-msm@vger.kernel.org
-Subject: Re: (No Subject)
-Message-ID: <ysoadpz2lequzaxi3tl66jsnu6rduxoubgzifth7fmmg3axxrv@lxtjlpu65ozp>
-References: <20240921204237.8006-1-john.schulz1@protonmail.com>
- <g7jofgrxwdypuemq4xe5h45pbewwviggllffoxongmarozme2m@cewhxcp7ij7j>
- <20240924155442.74210-1-john.schulz1@protonmail.com>
+	s=arc-20240116; t=1727210744; c=relaxed/simple;
+	bh=DpBOXJPHj5DADz4W54y6K8iRFUTOoV1fHS7qxdqclOk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QLndTcsGu3MMQo8FA6Ak04aMx3t6VpvRQT//mPcDAVSYEUVOc8cBNgxdHx4nSFnmauIj/T20lqSscFiH83a5CPduw+zNCkToyzXFrhMEjcyICGB8qaj2L6TcAImOy7jWq2iyoAD46mNElW0RirVvIcn985ePhWOcelmh+WSp9Kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NRXSNY5b; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48OH0VeX016306;
+	Tue, 24 Sep 2024 20:45:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=uWpGuPZMMGW0w0fXt6h7IJ2P
+	V2DkLtbbQEf2FPozRGM=; b=NRXSNY5bAaqWHo2a4ToxIKGQmw78EnW3vtmujvMo
+	J0pd9aiuZgbD5pPmgZN9o/0YTrVnukuNjgsery9E8g3JlwJf4XS27o9vHfJ83bpt
+	1Og6IG3YUkpai8PoOvTJSydq2VCT746pZtGm9h5DFgyneNUaPruY8kPK9Hq+3rUX
+	f+9djBmnfmyWADk2qRzMtP2MKDDPCGwLRCNoOxMeJPppBaTbsUNKv84L3dObI7iq
+	tnomWnTa0GybGTsFdLNC/i+Au0he1brVYqvU0rQF1XAptoqoX3uvk6WjkF18Cqju
+	hKLwsiTqFZN3Wu8fcaTH+mUbuXJLAlFZjcxhN8WrUdMdlQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spc2ssf9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 20:45:40 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48OKjdHH025569
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 20:45:39 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 24 Sep 2024 13:45:38 -0700
+Date: Tue, 24 Sep 2024 13:45:37 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+CC: <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: Re: [PATCH 1/1] i2c: qcom-geni: add 32MHz I2C SE clock support for
+ IPQ5424
+Message-ID: <ZvMk8T0dK+heMLer@hu-bjorande-lv.qualcomm.com>
+References: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240924155442.74210-1-john.schulz1@protonmail.com>
+In-Reply-To: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wBVK7pAv62SDtFCPlu39eJ9b-M-KBWKP
+X-Proofpoint-ORIG-GUID: wBVK7pAv62SDtFCPlu39eJ9b-M-KBWKP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=999
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409240144
 
-On Tue, Sep 24, 2024 at 03:54:59PM GMT, John Schulz wrote:
-> Hi Dmitry, 
+On Tue, Sep 24, 2024 at 12:20:20PM +0530, Manikanta Mylavarapu wrote:
+
+Subject gives a clear indication that this is specific to IPQ5424, which
+it isn't. So, please drop that wording from the subject.
+
+Perhaps:
+"i2c: qcom-geni: Support systems with 32MHz SE clock"
+
+> The IPQ5424 I2C SE clock operates at a frequency of 32MHz. Since the
+> existing map table is based on 19.2MHz, this patch incorporate the
+> clock map table to derive the SCL clock from the 32MHz SE clock.
+
+Then here you're doing the right thing of introducing the IPQ5424, so
+this looks good to me.
+
 > 
-> I do not have a way of testing this patch. I do see your point in that it may be redundant/unnecessary
-> since basic/generic drivers should at the very least output a shell interface. 
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> ---
+>  drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 > 
-> Upon doing more research, I came across the fact that some X1 GPUs have OEM signing that prevent the 
-> driver from working. I suspect that is what I am running into when I try testing various distros. All
-> of them exhibit the same behavior of the display halting during the bootloader handoff and the HDMI
-> port does not output anything. Even the Debian 12 image from Linaro exhibits the same issue. 
+> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+> index 212336f724a6..bbd9ecf09f4b 100644
+> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+> @@ -71,6 +71,7 @@ enum geni_i2c_err_code {
+>  
+>  #define I2C_AUTO_SUSPEND_DELAY	250
+>  #define KHZ(freq)		(1000 * freq)
+> +#define MHZ(freq)		(1000000 * freq)
+>  #define PACKING_BYTES_PW	4
+>  
+>  #define ABORT_TIMEOUT		HZ
+> @@ -152,11 +153,21 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
+>  	{KHZ(1000), 1, 3,  9, 18},
+>  };
+>  
+> +/* source_clock = 32 MHz */
+> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32M[] = {
 
-Ok. So you have a device with X1P, which you don't seem to be able to
-get to work? Could you please try doing the following:
+I'd prefer that you s/32M/32mhz/, and that you rename geni_i2c_clk_map
+to geni_i2c_clk_map_19p2mhz[].
 
-- you might need to modify the GPU DT node to use a different ID there.
-  If your guess is right, you might need to specify qcom,adreno-4310c31f
-  (this is from your patch)
+> +	{KHZ(100), 7, 14, 18, 40},
+> +	{KHZ(400), 4,  3, 11, 20},
+> +	{KHZ(1000), 4, 3,  6, 15},
+> +};
+> +
+>  static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+>  {
+>  	int i;
+>  	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
+>  
+> +	if (clk_get_rate(gi2c->se.clk) == MHZ(32))
+> +		itr = geni_i2c_clk_map_32M;
 
-- you need to define a corresponding entry in a7xx_gpus[]. Try using
-  X1-85 as an inspiration.
+Leave itr uninitialized above and add an else here with the assignment,
+to make it clearer that it's one or the other case. (Compared to "It's
+always 19.2MHz and then in some cases we override that with 32MHz")
 
-- only with that in place the x1xx family makes sense.
 
+PS. I wouldn't mind you dropping the addition of the MHZ macro and just
+compare clk_get_rate() with 32000000 and 19200000. But that's a matter
+of taste.
 
-Also it would be nice if you describe your issue. What exactly do you
-observe and what doesn't seem to work?
+Regards,
+Bjorn
 
+> +
+>  	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
+>  		if (itr->clk_freq_out == gi2c->clk_freq_out) {
+>  			gi2c->clk_fld = itr;
+> -- 
+> 2.34.1
 > 
-> I find this a bit odd given that there is a dts entry for the Asus Vivobook S 15 X1E varient. I 
-> don't see any comments on whether the dts for that laptop was tested. The Vivobook I have is the
-> X1P varient which, to my knowledge, is identical to the X1E one but a different SoC. 
-> 
-> Perhaps it would be of better use of my (and others) time figuring out if the GPU drivers not
-> working is due to OEM locking and if so, trying to unlock it. What do y'all think? 
-> 
-> P.S. Apologies for the incorrect prefix, should have done more research instead of trying to 
-> make an educated guess. 
-> 
-> Thanks,
-> John
-> 
-> 
-
--- 
-With best wishes
-Dmitry
 
