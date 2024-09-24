@@ -1,131 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-32219-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B3509839F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 01:09:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29343983B30
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 04:26:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BF081F23A4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Sep 2024 23:03:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C6C491F23834
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 02:26:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1937C49631;
-	Mon, 23 Sep 2024 23:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5069ACA6B;
+	Tue, 24 Sep 2024 02:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GRyBsoyU"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="I6FlfQQJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2386213B58E;
-	Mon, 23 Sep 2024 23:02:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DDD1B85DF;
+	Tue, 24 Sep 2024 02:26:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727132577; cv=none; b=BCSHATh6fgy7aGO7FkU8wWa6iLcq5MvWF5HUDCugo0z+3NjrMZOjETA0mII1/MUamkhJP4J1jAe2ZFbTMhmxyNIT/GQ5KHHGuUUuKPEnyfnp6Vd/ogBzPVepnOWw6Vb4wAEh/eSwIyVMuZskv0rxh1Or0zMQXYM4sDb30Z4XwFI=
+	t=1727144781; cv=none; b=IvjaCe7Py2J+tGYd2JI4a0vhbDyVZnBCi8El5viGBJZw+vLjeHtU46tDU1T7vH1Jhcd54z9w4wTPPwRY00WRHKt+wI+ehNX83V+1eyUUBDzLrQwUwzASJmd/597e59x/BCJhWVDYOxBYdFF9E+9KS530xeVCdNnVOwOK9jTSLAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727132577; c=relaxed/simple;
-	bh=sT2ERJf1IiiQr2+SWze8EkX9mc+I3GG3PKU3JCCVBjY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BsoWCptb1Ubt1eSeJtFrz8HOda5leZ0PLe1i39keZ0yXvt0+lEUlGdAuXSxN5v4JJniql98GnTgZnKEkgkUB9uspM8KoccLtKbLoBgI7cCn+HY5npX3IAqRwduRQMHUNWJ1fWYSN7j6bQvQxQFT2AKjFr8wMj+RCscr//Qyb0mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GRyBsoyU; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727132575; x=1758668575;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=sT2ERJf1IiiQr2+SWze8EkX9mc+I3GG3PKU3JCCVBjY=;
-  b=GRyBsoyUFAcS+ndUalrjfDTzXXJgVFluape6Smk8QoLIM/+tmTD8BrJJ
-   4Z1aIVqYqegfXVyiEytNYnuiiye/ml5BqE4q3k9RS2a1PVuBbLHX5eC75
-   wHqQRnLkk0hGiENl4wz+XTssE8HyMjZRsAsYJNjQUWyyVMHWHOJdtDOvT
-   aeUnJWI5hu+TOxbxjh4tfnZCzWn4ZLUwrt9ekav6RUVVnfdbb3aFMbdn9
-   HLjS/jTCq53/efcq4Zpa41wKwlmpEsB9hn3lmKfbmb63HWhMyNoFcar2b
-   6aL501x+Gwuamaz9U0449U0DYah404Zmi9zfsQEEu2nJBtCUHIRZTqK3U
-   g==;
-X-CSE-ConnectionGUID: SZyQggyfRXGDWqdq8P+iAw==
-X-CSE-MsgGUID: 3QjBCGZRQ3eXNIG6vHfjsw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11204"; a="43619919"
-X-IronPort-AV: E=Sophos;i="6.10,252,1719903600"; 
-   d="scan'208";a="43619919"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2024 16:02:54 -0700
-X-CSE-ConnectionGUID: j7WMgWH0REWhb6PcC1xKjw==
-X-CSE-MsgGUID: pjBFfilMSHiuQui1WsfUtQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,252,1719903600"; 
-   d="scan'208";a="76138059"
-Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
-  by orviesa004.jf.intel.com with ESMTP; 23 Sep 2024 16:02:49 -0700
-Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1sss4s-000Hfb-0R;
-	Mon, 23 Sep 2024 23:02:46 +0000
-Date: Tue, 24 Sep 2024 07:02:45 +0800
-From: kernel test robot <lkp@intel.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, broonie@kernel.org,
-	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
-	andersson@kernel.org, konradybcio@kernel.org,
-	miquel.raynal@bootlin.com, richard@nod.at, vigneshr@ti.com,
-	manivannan.sadhasivam@linaro.org, vkoul@kernel.org,
-	nikita.shubin@maquefel.me, esben@geanix.com,
-	linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-mtd@lists.infradead.org
-Cc: oe-kbuild-all@lists.linux.dev, quic_srichara@quicinc.com,
-	quic_varada@quicinc.com, quic_mdalam@quicinc.com
-Subject: Re: [PATCH v10 6/8] spi: spi-qpic: add driver for QCOM SPI NAND
- flash Interface
-Message-ID: <202409240634.CH4E22kp-lkp@intel.com>
-References: <20240922113351.2390195-7-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1727144781; c=relaxed/simple;
+	bh=bVBlh+fY6Ig9uXlKnweewNbRdJcBCdmmmBM3MYgyfkc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=tu2G+lTjLbRYbwhvjuOteiATHcN/c5uOhbuptd0NK15QGoRzDB0bAz08Xk+RtvBfTSIWO8t3du4YIf0i7smJ7W6jda1whc1Oj9F6l2jd/c5TsC6ko1tTo4ZBYOYptEqY1H3TT7PFlObek8j2t6ROjXuSNJp1m0ZshejaCCQfu0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=I6FlfQQJ; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1727144777;
+	bh=bVBlh+fY6Ig9uXlKnweewNbRdJcBCdmmmBM3MYgyfkc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=I6FlfQQJLJgS0B4GYHreTcgkphmT0mtS/izy2z6fKSS7SM/YLiUDuQFlVGy/mj+BV
+	 LAJ5Z6OzVK7XlKTu8ty7d5B8lKWjrOvTfhYxuS2lGgxDMgwRhHeUh7zm+vBW/smVbC
+	 Lh9cVPMXsPLsFyyrDTIyHDkgs2vabkhVEfSxOnu4vKWN/Wk5xbz+iG7hP43duNJhhq
+	 RDxF4v0iGL0s4K00QMKKfxunJksIA+2M8LnIE854C+pIIKC3EfPWYcizvciDBHaP69
+	 s0b33b7a0NOtNEuAz5lPT4Chepeo/Zztl/y2h8GLSNs+QJry4OgRR2BW0VhQ/VipCC
+	 MEAHSNEfkemDA==
+Received: from localhost.localdomain (unknown [171.76.80.125])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 1187A17E0EC1;
+	Tue, 24 Sep 2024 04:26:13 +0200 (CEST)
+From: Vignesh Raman <vignesh.raman@collabora.com>
+To: dri-devel@lists.freedesktop.org
+Cc: daniels@collabora.com,
+	helen.koike@collabora.com,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
+	robdclark@gmail.com,
+	guilherme.gallo@collabora.com,
+	sergi.blanch.torne@collabora.com,
+	deborah.brouwer@collabora.com,
+	dmitry.baryshkov@linaro.org,
+	mripard@kernel.org,
+	rodrigo.vivi@intel.com,
+	linux-mediatek@lists.infradead.org,
+	linux-amlogic@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	amd-gfx@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
+	intel-gfx@lists.freedesktop.org,
+	virtualization@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1] docs/gpu: ci: update flake tests requirements
+Date: Tue, 24 Sep 2024 07:55:58 +0530
+Message-ID: <20240924022600.1441969-1-vignesh.raman@collabora.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240922113351.2390195-7-quic_mdalam@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Md,
+Update the documentation to require linking to a relevant GitLab
+issue for each new flake entry instead of an email report. Added
+specific GitLab issue URLs for i915, xe and other drivers.
 
-kernel test robot noticed the following build errors:
+Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+---
+ Documentation/gpu/automated_testing.rst | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-[auto build test ERROR on mtd/nand/next]
-[also build test ERROR on broonie-spi/for-next robh/for-next linus/master v6.11 next-20240923]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Md-Sadre-Alam/spi-dt-bindings-Introduce-qcom-spi-qpic-snand/20240922-193748
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/mtd/linux.git nand/next
-patch link:    https://lore.kernel.org/r/20240922113351.2390195-7-quic_mdalam%40quicinc.com
-patch subject: [PATCH v10 6/8] spi: spi-qpic: add driver for QCOM SPI NAND flash Interface
-config: loongarch-allmodconfig (https://download.01.org/0day-ci/archive/20240924/202409240634.CH4E22kp-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 14.1.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240924/202409240634.CH4E22kp-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409240634.CH4E22kp-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   loongarch64-linux-ld: drivers/spi/spi-qpic-snand.o: in function `qcom_spi_remove':
->> spi-qpic-snand.c:(.text+0x3e8): undefined reference to `qcom_nandc_unalloc'
-   loongarch64-linux-ld: drivers/spi/spi-qpic-snand.o: in function `qcom_spi_probe':
->> spi-qpic-snand.c:(.text+0xb48): undefined reference to `qcom_nandc_alloc'
->> loongarch64-linux-ld: spi-qpic-snand.c:(.text+0xbe4): undefined reference to `qcom_write_reg_dma'
-   loongarch64-linux-ld: spi-qpic-snand.c:(.text+0xc08): undefined reference to `qcom_write_reg_dma'
-   loongarch64-linux-ld: spi-qpic-snand.c:(.text+0xc24): undefined reference to `qcom_write_reg_dma'
-   loongarch64-linux-ld: spi-qpic-snand.c:(.text+0xc40): undefined reference to `qcom_write_reg_dma'
->> loongarch64-linux-ld: spi-qpic-snand.c:(.text+0xc48): undefined reference to `qcom_submit_descs'
->> loongarch64-linux-ld: spi-qpic-snand.c:(.text+0xc7c): undefined reference to `qcom_nandc_unalloc'
-
+diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
+index 2d5a28866afe..f73b8939dc3a 100644
+--- a/Documentation/gpu/automated_testing.rst
++++ b/Documentation/gpu/automated_testing.rst
+@@ -67,20 +67,25 @@ Lists the tests that for a given driver on a specific hardware revision are
+ known to behave unreliably. These tests won't cause a job to fail regardless of
+ the result. They will still be run.
+ 
+-Each new flake entry must be associated with a link to the email reporting the
+-bug to the author of the affected driver, the board name or Device Tree name of
+-the board, the first kernel version affected, the IGT version used for tests,
+-and an approximation of the failure rate.
++Each new flake entry must include a link to the relevant GitLab issue, the board
++name or Device Tree name, the first kernel version affected, the IGT version used
++for tests and an approximation of the failure rate.
+ 
+ They should be provided under the following format::
+ 
+-  # Bug Report: $LORE_OR_PATCHWORK_URL
++  # Bug Report: $GITLAB_ISSUE
+   # Board Name: broken-board.dtb
+   # Linux Version: 6.6-rc1
+   # IGT Version: 1.28-gd2af13d9f
+   # Failure Rate: 100
+   flaky-test
+ 
++The GitLab issue must include the logs and the pipeline link. Use the appropriate
++link below to create an issue.
++https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/ for i915 drivers
++https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/ for xe drivers
++https://gitlab.freedesktop.org/drm/misc/kernel/-/issues for other drivers
++
+ drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
+ -----------------------------------------------------------
+ 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.43.0
+
 
