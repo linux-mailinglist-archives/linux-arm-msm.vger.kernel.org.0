@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32332-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D17C984AF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:39:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D66B984B1D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:40:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CFEB9B22F3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 18:39:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C59972849C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 18:40:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57F6F1ACDF3;
-	Tue, 24 Sep 2024 18:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D3191AD3FE;
+	Tue, 24 Sep 2024 18:39:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="REJayGTy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fq4YZClR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBBC1AC45A;
-	Tue, 24 Sep 2024 18:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A32D1AC8BE;
+	Tue, 24 Sep 2024 18:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727203145; cv=none; b=BSQ+OeOK0JSLrD6TcnAUT+6UkL3WPp9piREpURPLE2mklgLdZ8kIiM3EOFsc4Nd2/Td/6izwlKHdo9l6pITmQhSgQYJ2dtk++HFqyBNhLvP2VZLeH9WcMVXIpgm/6o1bmpe5RFI9qe2iMVrnQiu1m/eSk7p80A4B1njUpShToDs=
+	t=1727203170; cv=none; b=lKNRe+XJcSLiNK6DJqV8ky4OG4/5YxnyrSNKkST5vN1UsLwfjHGsDR6kry0VQAC9MJBBGQLDaMlJeDLgdb1F1EuoUIMPLDgHZDi41wG3uekq6o6TjJX35a5ZAGv4LNcpBEVaFWxV3XV5Qdlh3jV4LDJMVevLHsRxoWeua9xIehg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727203145; c=relaxed/simple;
-	bh=qlVpmiFg8i15nd6jTmVhMDRAo08ef/F5oFu+Ie4XXWU=;
+	s=arc-20240116; t=1727203170; c=relaxed/simple;
+	bh=wzehy+b1qqLL8OTawQ1M6yaZDocl+IDjT2tUky8lGqo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a18bB8vyUEQUlhkh9pev6st07Xrl/1RJVD7h2j2GIqV/0PpQRlkfoe4KSnOSSC4VvuECXAGYAM7ua3J4nHmQEnJHzP+iTMUKFC0oSG1guCkS0S4ulPimA8TMODS9vP+wgK3vlVYTUDQC+tzpR9gsRH1YVKgdOQk1LiEOmyrEffw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=REJayGTy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45C8C4CEC4;
-	Tue, 24 Sep 2024 18:38:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kkpatKyiY8S9yffcA+JgQWrfPfvletD7DGtHQKfEILpZbsZX4UruZqjhhIUttIpECcHnjZy3UvjRZNlTKKXwkXvXyGykMsvL9qjjHV4JZ7o4mwtAZF+T1Txez6dtnoH48gvOmB8MCCu14blNfQkgP/KGBxtehhGdHAG2RnzgYAM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fq4YZClR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03A1C4CEC5;
+	Tue, 24 Sep 2024 18:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727203144;
-	bh=qlVpmiFg8i15nd6jTmVhMDRAo08ef/F5oFu+Ie4XXWU=;
+	s=k20201202; t=1727203169;
+	bh=wzehy+b1qqLL8OTawQ1M6yaZDocl+IDjT2tUky8lGqo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=REJayGTy8xykHFAGb/Xv8u89d6lVZBeu1JnaC+VcXSN0W830ViRMBbEu/QYTdbq21
-	 Okhe0DmMfWcSVtPD2SeQQwm93Vizrow+4CbxjNNbBo+0FwWYx4CcUqB4df4ve6eCfz
-	 quNZ45+rsC6NGYHJ4TxcpuAjdoZuVkXPtdYJTKRnGxMQLM49KdFtqLWyIgbGeZ6mre
-	 Ny+P7BwilrdvqXDBn6V5QCrHrWbUadUY7mMnreMTHWBh1MZxIiXznZz3qd7lF3MV3H
-	 s9awMR+y3fD8vyVXHYS4lGmDzWbVD9UOdiJ3WCWt8KVli5TWhn2E274Cw9Gd4zfaz6
-	 Q9gvJr/3/vW2Q==
-Message-ID: <823fe98e-eb80-4b6d-8c35-3c14cbb52dda@kernel.org>
-Date: Tue, 24 Sep 2024 20:38:53 +0200
+	b=fq4YZClR2OdQ6phVcGXx9vGCe426M6TIwMiaXPX02UhmNw6NlJLzucw8ZKNkpUjw6
+	 mHC9uADFtLPlJPI10x9Nitd8gpTeQ+VjBi4BMlQHksMLAU1X6yNma56Q+rnmLXauPG
+	 5114beqs6/qmN+kKDpFzu7lKoGPbLN8NA8gmmv2wRGmzXcdeRQ3y3/tr8vdXuoi1NE
+	 egOVBogMn+4df1mnzZ9pQLjLkk2R8wMT3ZXaJcmMDCovKCQm38l2it3OrpOoq9BhiD
+	 pXoQ4JuG9y/kevN2jK7YLZ7DgTSlBlwoxSeAwNqBkXtiLFHON5HQyg6tghcxGA3oTQ
+	 SX7ZeI5suWeFA==
+Message-ID: <50e0e837-1c70-4d6d-bb55-a68dec3dcd3b@kernel.org>
+Date: Tue, 24 Sep 2024 20:39:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,26 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
-To: Sricharan Ramabadhran <quic_srichara@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- ulf.hansson@linaro.org, linus.walleij@linaro.org, catalin.marinas@arm.com,
- p.zabel@pengutronix.de, geert+renesas@glider.be,
- dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Cc: quic_varada@quicinc.com
-References: <20240913121250.2995351-1-quic_srichara@quicinc.com>
- <20240913121250.2995351-2-quic_srichara@quicinc.com>
- <4cd3d3f8-7d73-4171-bb35-aba975cdc11a@kernel.org>
- <9f2ccf3d-fa71-4784-b6d2-2b12ed50bdd2@quicinc.com>
- <91392141-af8b-4161-8e76-6f461aaba42a@kernel.org>
- <30fdcb3e-a7ff-4764-bed5-39494c3e3326@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v4 2/6] dt-bindings: PCI: qcom: Move OPP table to
+ qcom,pcie-common.yaml
+To: Qiang Yu <quic_qianyu@quicinc.com>, manivannan.sadhasivam@linaro.org,
+ vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org,
+ quic_msarkar@quicinc.com, quic_devipriy@quicinc.com
+Cc: dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+ neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
+ <20240924101444.3933828-3-quic_qianyu@quicinc.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -113,57 +109,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <30fdcb3e-a7ff-4764-bed5-39494c3e3326@quicinc.com>
+In-Reply-To: <20240924101444.3933828-3-quic_qianyu@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/09/2024 14:10, Sricharan Ramabadhran wrote:
+On 24/09/2024 12:14, Qiang Yu wrote:
+> OPP table is a generic property that is also required by other qcom
+> platforms. Hence move this property to qcom,pcie-common.yaml so that PCIe
+> on other qcom platforms is able to adjust power domain performance state
+> and ICC peak bw according to PCIe gen speed and link width.
 > 
-> 
-> On 9/20/2024 6:14 PM, Krzysztof Kozlowski wrote:
->> On 20/09/2024 13:56, Sricharan Ramabadhran wrote:
->>>
->>>>> +
->>>>> +allOf:
->>>>> +  - $ref: qcom,gcc.yaml#
->>>>> +
->>>>> +properties:
->>>>> +  compatible:
->>>>> +    const: qcom,ipq5424-gcc
->>>>
->>>> So everything i sthe same as 5332? Why not adding it there?
->>>>
->>> infact, ipq5332 has 1 dual lane and 1 single lane pcie, whereas
->>> ipq5424 has 2 dual lane and 2 single lane pcie. will update the
->>> bindings in v2 accordingly.
->>
->> Hm? What is the difference in the bindings? I don't see. Maybe some diff
->> would help.
->>
-> 
-> For IPQ5424, clocks items is like this
-> 
->        - description: Board XO clock source
->        - description: Sleep clock source
->        - description: PCIE 2lane PHY0 pipe clock source
->        - description: PCIE 2lane PHY1 pipe clock source
->        - description: PCIE 2lane PHY2 pipe clock source
->        - description: PCIE 2lane PHY3 pipe clock source
->        - description: USB PCIE wrapper pipe clock source
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> ---
 
-But that's not true. Open your patch and look:
-
-+  clocks:
-+    items:
-+      - description: Board XO clock source
-+      - description: Sleep clock source
-+      - description: PCIE 2lane PHY pipe clock source
-+      - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
-+      - description: USB PCIE wrapper pipe clock source
-
-Either you sent incomplete binding or we talk about different things.
-Looks like first case, so the binding is just not ready. I am not going
-to review it.
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
