@@ -1,64 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-32238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7AC3E9840CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 10:43:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3E09D9840D0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 10:43:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D8F0BB207C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 08:43:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E86DB1F22459
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 08:43:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E84AD14F124;
-	Tue, 24 Sep 2024 08:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9B7114F9F8;
+	Tue, 24 Sep 2024 08:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rA/vjWKD"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ocdzidDW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC95514EC4A;
-	Tue, 24 Sep 2024 08:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF7814F123;
+	Tue, 24 Sep 2024 08:43:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727167386; cv=none; b=dHA4BJ6xI3/uGvFKWmrmpN63arii+2w10bR/h08z6rZeGzUMHciXMPRjSP3KMKM7K1nqiSJE7LXyrzsHu5RWIeOqMI15Fwn2vGyZP6vJXQJmWUG2xkDXzpsVN0XHJl7h1T6FOcrrRwKt7bcfBJe3AS3ogZPZ+c9mRmxGR3JdD00=
+	t=1727167414; cv=none; b=bet0ZPWLu4X3BKCk1kqBJfxWwGNrMi9X5p2h59EpZMiyHXzUXetWURr1JJPjLczNpA4AhVLefFOkSaq/qXZ7KD19LI4A9vqnzItBniSMmccLHhNfvQGKm9co3+M8AzOVXVCo+JmKQ0K8w5WxiBrA+NcEMkbH4n+Lds+om9Ofy7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727167386; c=relaxed/simple;
-	bh=G03an4s/BBkbiR5sfEuBnlun4tbtlIlIOPYVWkYcMPU=;
+	s=arc-20240116; t=1727167414; c=relaxed/simple;
+	bh=0GyJC5zgimegff6pjgvV2wTvLGb/Riajc7yJ4PNzrgU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=edJeokv7v3mgeu2ChsTd2TYk9o8qgMPPB2+LarTGN3MEpuwPbgqjAIbjvUZ7DQpP2ZJI+5Fy+Zt3mRM9nvOsHZ8eXdIDpJi8bOvzrnsQZNb7xnvvwBSbmlQ388RuCptF9AaopGu1ngf0GtTEWxDIcqyZSByLlgmUBvCR8OdySZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rA/vjWKD; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D5CC4CEC4;
-	Tue, 24 Sep 2024 08:43:05 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=NZzYywmY2gU0UfLQbRW1Q9LDHxbBmHIrfGuU0tdieYFIr0aRt3Du1X1gxlNDJzmuhpXRcwjVTqEp7FnuzWblNfdTHSUwDOduIBwW5LwCXVEFasEDoafzcyvjEFFDKAhfrqRq2x0lpB84ZCOexhHm2o4L2OefaabYbRjotA0IXUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ocdzidDW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB45C4CEC4;
+	Tue, 24 Sep 2024 08:43:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727167386;
-	bh=G03an4s/BBkbiR5sfEuBnlun4tbtlIlIOPYVWkYcMPU=;
+	s=k20201202; t=1727167414;
+	bh=0GyJC5zgimegff6pjgvV2wTvLGb/Riajc7yJ4PNzrgU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rA/vjWKDVg4XoXhqoSRyPjmQaRYSrI00ThmOhO6SGl2/h5PKG6/x3/P0wNZBNuzTd
-	 RPf93PE9q5moiD/R2ga0mGP8Xt2FsRdWYqXsbGQIW/pNpwCNcB0qE5yFBeZBOnKU4l
-	 ZwCDP8YzK2IsCMsQgKxZm6MO7/qRlC1UkxkHZ4rN4u3iSiwfVedq4WOuYc/P0pAu6I
-	 A6DrFV/ZIRYh0MdV8Qo3oLJyOQiPQSl+tE6sf6LtgfXybwvl4eL6wVVQpBEPfTI5/R
-	 D5V5SKA8lNmCEVKaJ8+6xOB2VeyzOGZtnjCznHcJBR/G/SfIKCgJqXmV/EYESqEZAB
-	 8pQhucrdjqyxA==
-Date: Tue, 24 Sep 2024 10:43:02 +0200
+	b=ocdzidDWy3R5QEhvUy528E8C+QpTkQ20lSCngxXB57cZ+IcZmY8IACqzrQtkSJiPH
+	 L3FrN5jwBS7dMd37KtqzFBqP+iXfcUsu8x+e2mXj8+I3PgEYsZsQaFRDkMJ28RpFNC
+	 2mA5ES7+U7U5pJmWqUgwSDy80PTXxw3pVAC8xsk+d4/b67qQ+0a89oHlbj2HQ56/so
+	 oeWBbHYCRPkzGUOcT7Kt4apcvD1+pYxhv3eA9j/2GHW0iwmo8n8FP6PWcWDhLORVQf
+	 EmC/uFZVfZqB1U1M6CbP0OifrZcnawEzMwqOiw7KFxgUOGOYt0w63pScZUtuLPRjq7
+	 dPrnh7hxlqR5w==
+Date: Tue, 24 Sep 2024 10:43:29 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org, 
-	andersson@kernel.org, simona@ffwll.ch, dmitry.baryshkov@linaro.org, 
-	abel.vesa@linaro.org, robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
-	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
-	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, quic_khsieh@quicinc.com, 
-	konrad.dybcio@linaro.org, quic_parellan@quicinc.com, quic_bjorande@quicinc.com, 
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org, 
+	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org, 
+	quic_msarkar@quicinc.com, quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org, 
+	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org, 
 	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
-	quic_riteshk@quicinc.com, quic_vproddut@quicinc.com
-Subject: Re: [PATCH v3 4/5] dt-bindings: display: msm: dp-controller:
- document SA8775P compatible
-Message-ID: <6v3wtdxcooi6qfolj5bfbgeru4uyawj6bsbfcnxu3lspuuhsi6@ysmb435njcul>
-References: <20240923113150.24711-1-quic_mukhopad@quicinc.com>
- <20240923113150.24711-5-quic_mukhopad@quicinc.com>
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v3 1/6] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x8
+Message-ID: <znnzcqujrz4cc3uimwymwizf4yvhsos3ky5vwhkxmopootmu2d@3yglev5si6fn>
+References: <20240923125713.3411487-1-quic_qianyu@quicinc.com>
+ <20240923125713.3411487-2-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,19 +64,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20240923113150.24711-5-quic_mukhopad@quicinc.com>
+In-Reply-To: <20240923125713.3411487-2-quic_qianyu@quicinc.com>
 
-On Mon, Sep 23, 2024 at 05:01:49PM +0530, Soutrik Mukhopadhyay wrote:
-> Add compatible string for the DisplayPort controller found on the
-> Qualcomm SA8775P platform.
+On Mon, Sep 23, 2024 at 05:57:08AM -0700, Qiang Yu wrote:
+> PCIe 3rd instance of X1E80100 supports Gen 4 x8 which needs different
+> 8 lane capable QMP PCIe PHY with hardware revision v6.30. Document Gen
+> 4 x8 PHY as separate module.
 > 
-> Signed-off-by: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 > ---
-> v2: No change
-> 
-> v3: No change
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml    | 3 +++
+>  1 file changed, 3 insertions(+)
 
-Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
