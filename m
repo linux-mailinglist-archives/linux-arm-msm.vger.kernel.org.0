@@ -1,221 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-32294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32295-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10F7A9845F0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:31:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6213D984607
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:36:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8CDB41F22114
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:31:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EAE3A283894
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:36:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0181A7049;
-	Tue, 24 Sep 2024 12:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C00D1A4F39;
+	Tue, 24 Sep 2024 12:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MA/u2rPQ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S9jBpMSm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78741E492;
-	Tue, 24 Sep 2024 12:31:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BE91A4F18
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 12:36:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727181099; cv=none; b=IRjnTWHCavXqsS+TzdApyLGzBf4n7FlfWVrIJJHaUaGb1ER/MATT8hEnvNzr4RYAhwzyYrnUnqvSnGbhwXtZ7m5vPvniFLWKLnFDHPskm9ozx50VVNy8wPXmsF6ek4ybkTckEhVZFxfl100c6WKAX1Vll6MPtRmuTugXn1saTdc=
+	t=1727181409; cv=none; b=k++mx6LzS+tyfOqWghmPW2yiNy1eD44rXocx/XJsyd8Dxh/nFTrnlChRW4U9XfZAZJyI+QZsMCb272I2w474iinY0PXixOPfMvpT3xqdGUyf/Nf9Tx9tR2shyEjt5SI3UA4bKHHp/Ex5qVTuKiAt9TWpaCaaMpZmfEHfby1J8OA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727181099; c=relaxed/simple;
-	bh=hw8Xn5no9YQQhO+J5jLnsR9xj0RT1VJYy4cPNn0hX8E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=kwxznHGMZGJUvCsBGxl99utyZAKlgWHPtLAQVNtHr2Cg8Ejp+IiPAjo2L8fAGmbcy8/8wYb7526P4tDRz5OuxHU74bqgJxu+SdfJkuhFEp2U5JXAaOByJGW1hf+8fM+9U9DhZ8JwpYOpx5JGVbG4t8mkGXeX3j6iaKkiiB+7bjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MA/u2rPQ; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48O9HtHp029683;
-	Tue, 24 Sep 2024 12:31:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KDMLxLpa4DvKZTxB9Er0izaxMUHOO8cKu8XznRIeN7A=; b=MA/u2rPQiMw7LHUh
-	FKcze571vcNzzwHLePoNiOxUHD/by8Pqg1tElRTgdh0zWzMyvNZubuqII7xOBUQ6
-	W6tLEdoer0LQLSDNVSgicW55obAtmW5v6PB+Uk2/YW3wlfPcDzbiMCp3KVC70u/2
-	RqjJEdeps/7e8pdX/eNGIzEFYoQO5vSCTYEDxeikKz/1aOj04oTksiMhQcbkBwI9
-	neBpo5iPJ+zLf8MjFnGQqXk3h9PT8HmMxXZ8v+moend7voAjMvQToTnDQpVs58Vf
-	szrjBsgSZcml/DKoM1eOiOGXufQl4zd0nyizZIvxuLO/NrS9KCpl5ILs+l0ZoL2c
-	dWh8ug==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spwer8hh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 12:31:17 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48OCVGYt026341
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 24 Sep 2024 12:31:16 GMT
-Received: from [10.204.67.11] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Sep
- 2024 05:31:08 -0700
-Message-ID: <ba0bc896-41ad-4f1d-9218-fc5a44add422@quicinc.com>
-Date: Tue, 24 Sep 2024 18:01:06 +0530
+	s=arc-20240116; t=1727181409; c=relaxed/simple;
+	bh=0tgYaNknECHGcREZzuh0GavXRA4JoNzrI0nt+ohvHAc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=G8U5rauItN7/B2BFPynnnT+VkoLTwwmpY9huO1dJ6onf3uY9IrQrkJRJ50KerVBjSqNweb29+w8H6azHyp9/D0TX8o9kK09MPBOGoFJ1lEbSQqNpocrxwo0AfJMqPEY/euuP+jdtmmWQhG2zca1PWytIVToI5fAb6XwTRkT38wg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S9jBpMSm; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6de15eefdd3so39541907b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 05:36:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727181406; x=1727786206; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZclqvN8OWviCoeP7W2fOBR9cc4G4ZJZYXXNmxnjQMg0=;
+        b=S9jBpMSm2q+HNAhhL9QgKFolkr2nCGbcDH64mL44hYiQzTMBehO8OrH1i9W2Nr+mXY
+         etayHSzpH1zETTVB8yleWvza8EbkZbvwnB5fBpPjeDJQiGtiY8wO1Qq6Wy9v57knbNGm
+         fXkvXWNBY4OWI3JTfMQorBt03b3/lm9h7S5iRZV39SH/MP/SmAp33xMRhr4j+BRjBs7w
+         TSO7HwycuZpO+2CjIXRdROtNe8bH+E2DUzYXdh0L5m6yeFa8+c1KUP7ivpNEAUxsydMZ
+         Hh9963QythiYyYBakmmYjLu3SMbn6+4kQ4faNDwjetJP8g6kzmgsS7BOvLZVqMtzGZMN
+         gxAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727181406; x=1727786206;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZclqvN8OWviCoeP7W2fOBR9cc4G4ZJZYXXNmxnjQMg0=;
+        b=gtJRfbM/sw6BHFbxj3XtoR7nT1ALqZKp0ai1rI/5Ip2vtaPwyHpdaQTwS5OTiegBX/
+         y9VssEqokZiTos+7I5FyyjEzMNBB2/cPgS22GXDzNThfRKcyONCr8pJmQYtE9d4rL8SY
+         tb96+q5TmcGyZxH5ATAKMqnDVnbF8V2UXl0CnN/nids6T5XepTr5lYnE6Ei1ReZTHbS9
+         FiJT/KvPP1oCJoCu4gZ0PRB2vj8SP5lBpc0doc2+sckCZNvKYWJjZ13XLYRj1hXoMGAi
+         f+cN6e3KwK0aBR4AZLsNLCZR0tFREhJRi8SpXxsiNGVmEgsS/fT9esdcjJGL8yvouN9Y
+         bKOg==
+X-Forwarded-Encrypted: i=1; AJvYcCXDkxK2bTrWdIRlFXOGr4OjBJqXk6wYs4K3gEb4j391w19tWG/fI8pU5wRPlHbw9lPdD6tzRCIOnB4adBbL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz+DQfCEikTEbThSY4SqJkAfw/MLMTKxSS8jRf5oTvsb0SQtynX
+	CJl1po8aqSqek9jCiQUmEKniyKqkKrMCX7QYsMHR6NSY98DslVF1g8no5eYpv4///LkEoefK9GM
+	TaxdTKrLCtE96lkOmGqdvN0bdfn8uSflabIivei97AbENicRQXq07Hw==
+X-Google-Smtp-Source: AGHT+IGYuEuHzLpsgKnYPKtlxcYnqyLY8yYJBAHJhgxQ8dv64VF7X1Tzkg40TcunXFxtwU+tj7usbv8oLmJYhPL74p4=
+X-Received: by 2002:a05:690c:4443:b0:6e2:1062:9b90 with SMTP id
+ 00721157ae682-6e210629d20mr13188617b3.44.1727181406631; Tue, 24 Sep 2024
+ 05:36:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] drm/msm/dpu: Add SA8775P support
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
-        <marijn.suijten@somainline.org>, <airlied@gmail.com>,
-        <daniel@ffwll.ch>, <maarten.lankhorst@linux.intel.com>,
-        <mripard@kernel.org>, <tzimmermann@suse.de>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <swboyd@chromium.org>,
-        <konrad.dybcio@linaro.org>, <danila@jiaxyga.com>,
-        <bigfoot@classfun.cn>, <neil.armstrong@linaro.org>,
-        <mailingradian@gmail.com>, <quic_jesszhan@quicinc.com>,
-        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_kalyant@quicinc.com>, <quic_jmadiset@quicinc.com>,
-        <quic_vpolimer@quicinc.com>
 References: <20240912071437.1708969-1-quic_mahap@quicinc.com>
- <20240912071437.1708969-5-quic_mahap@quicinc.com>
- <v4cnmso3nl5oi3scd2lkg6kepb52vjrzgoti42ikds3y2wq6aw@sbn2yu4xeiun>
- <9b47bd8e-6079-4285-a3d7-932178d5bdf2@quicinc.com>
- <rmndmhq67lajdmva6gt46rqtkvf6jh2afbqazafz6oxv7ep56j@bznopz3aexyt>
-From: Mahadevan P <quic_mahap@quicinc.com>
-In-Reply-To: <rmndmhq67lajdmva6gt46rqtkvf6jh2afbqazafz6oxv7ep56j@bznopz3aexyt>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Fgaw1YBB5oBIDuwJY2-TfFv7nOrfD-Y_
-X-Proofpoint-ORIG-GUID: Fgaw1YBB5oBIDuwJY2-TfFv7nOrfD-Y_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1015
- malwarescore=0 mlxscore=0 mlxlogscore=992 impostorscore=0 phishscore=0
- spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409240088
+ <20240912071437.1708969-5-quic_mahap@quicinc.com> <v4cnmso3nl5oi3scd2lkg6kepb52vjrzgoti42ikds3y2wq6aw@sbn2yu4xeiun>
+ <9b47bd8e-6079-4285-a3d7-932178d5bdf2@quicinc.com> <rmndmhq67lajdmva6gt46rqtkvf6jh2afbqazafz6oxv7ep56j@bznopz3aexyt>
+ <ba0bc896-41ad-4f1d-9218-fc5a44add422@quicinc.com>
+In-Reply-To: <ba0bc896-41ad-4f1d-9218-fc5a44add422@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 24 Sep 2024 14:36:35 +0200
+Message-ID: <CAA8EJpqTuj2j4mTKCTGpOX6ZfgGLocmDdwX1BwqEp6OkBejnDg@mail.gmail.com>
+Subject: Re: [PATCH 4/5] drm/msm/dpu: Add SA8775P support
+To: Mahadevan P <quic_mahap@quicinc.com>
+Cc: robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
+	marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch, 
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, swboyd@chromium.org, 
+	konrad.dybcio@linaro.org, danila@jiaxyga.com, bigfoot@classfun.cn, 
+	neil.armstrong@linaro.org, mailingradian@gmail.com, quic_jesszhan@quicinc.com, 
+	andersson@kernel.org, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_kalyant@quicinc.com, quic_jmadiset@quicinc.com, 
+	quic_vpolimer@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-
-On 9/24/2024 5:46 PM, Dmitry Baryshkov wrote:
-> On Tue, Sep 24, 2024 at 04:42:02PM GMT, Mahadevan P wrote:
->> On 9/12/2024 1:34 PM, Dmitry Baryshkov wrote:
->>> On Thu, Sep 12, 2024 at 12:44:36PM GMT, Mahadevan wrote:
->>>> Add definitions for the display hardware used on the
->>>> Qualcomm SA8775P platform.
->>>>
->>>> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
->>>> ---
->>>>    .../msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h   | 485 ++++++++++++++++++
->>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
->>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +-
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   3 +-
->>>>    4 files changed, 491 insertions(+), 3 deletions(-)
->>>>    create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
->>>>
-> [...]
+On Tue, 24 Sept 2024 at 14:31, Mahadevan P <quic_mahap@quicinc.com> wrote:
 >
->>>> +static const struct dpu_intf_cfg sa8775p_intf[] = {
->>>> +	{
->>>> +		.name = "intf_0", .id = INTF_0,
->>>> +		.base = 0x34000, .len = 0x280,
->>>> +		.features = INTF_SC7280_MASK,
->>>> +		.type = INTF_DP,
->>>> +		.controller_id = MSM_DP_CONTROLLER_0,
->>>> +		.prog_fetch_lines_worst_case = 24,
->>>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
->>>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
->>>> +	}, {
->>>> +		.name = "intf_1", .id = INTF_1,
->>>> +		.base = 0x35000, .len = 0x300,
->>>> +		.features = INTF_SC7280_MASK,
->>>> +		.type = INTF_DSI,
->>>> +		.controller_id = MSM_DSI_CONTROLLER_0,
->>>> +		.prog_fetch_lines_worst_case = 24,
->>>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
->>>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
->>>> +		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
->>>> +	}, {
->>>> +		.name = "intf_2", .id = INTF_2,
->>>> +		.base = 0x36000, .len = 0x300,
->>>> +		.features = INTF_SC7280_MASK,
->>>> +		.type = INTF_DSI,
->>>> +		.controller_id = MSM_DSI_CONTROLLER_1,
->>>> +		.prog_fetch_lines_worst_case = 24,
->>>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
->>>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
->>>> +		.intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
->>>> +	}, {
->>>> +		.name = "intf_3", .id = INTF_3,
->>>> +		.base = 0x37000, .len = 0x280,
->>>> +		.features = INTF_SC7280_MASK,
->>>> +		.type = INTF_NONE,
->>>> +		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
->>>> +		.prog_fetch_lines_worst_case = 24,
->>>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
->>>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
->>>> +	}, {
->>>> +		.name = "intf_4", .id = INTF_4,
->>>> +		.base = 0x38000, .len = 0x280,
->>>> +		.features = INTF_SC7280_MASK,
->>>> +		.type = INTF_DP,
->>>> +		.controller_id = MSM_DP_CONTROLLER_1,
->>>> +		.prog_fetch_lines_worst_case = 24,
->>>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
->>>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
->>>> +	}, {
->>> Where is intf_5 ?
->>
->> intf_5 of base address 0x39000 is not supported on this target.
-> Not supported by whom?
-
-
-In sa8775p mdss architecture intf_5 is not present. So we are not adding 
-in SW too.
-
-
 >
->>
->>>> +		.name = "intf_6", .id = INTF_6,
->>>> +		.base = 0x3A000, .len = 0x280,
->>>> +		.features = INTF_SC7280_MASK,
->>>> +		.type = INTF_NONE,
->>>> +		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
->>>> +		.prog_fetch_lines_worst_case = 24,
->>>> +		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
->>>> +		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
->>>> +	}, {
-> [skipped]
+> On 9/24/2024 5:46 PM, Dmitry Baryshkov wrote:
+> > On Tue, Sep 24, 2024 at 04:42:02PM GMT, Mahadevan P wrote:
+> >> On 9/12/2024 1:34 PM, Dmitry Baryshkov wrote:
+> >>> On Thu, Sep 12, 2024 at 12:44:36PM GMT, Mahadevan wrote:
+> >>>> Add definitions for the display hardware used on the
+> >>>> Qualcomm SA8775P platform.
+> >>>>
+> >>>> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
+> >>>> ---
+> >>>>    .../msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h   | 485 ++++++++++++++++++
+> >>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
+> >>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +-
+> >>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   3 +-
+> >>>>    4 files changed, 491 insertions(+), 3 deletions(-)
+> >>>>    create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+> >>>>
+> > [...]
+> >
+> >>>> +static const struct dpu_intf_cfg sa8775p_intf[] = {
+> >>>> +  {
+> >>>> +          .name = "intf_0", .id = INTF_0,
+> >>>> +          .base = 0x34000, .len = 0x280,
+> >>>> +          .features = INTF_SC7280_MASK,
+> >>>> +          .type = INTF_DP,
+> >>>> +          .controller_id = MSM_DP_CONTROLLER_0,
+> >>>> +          .prog_fetch_lines_worst_case = 24,
+> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 25),
+> >>>> +  }, {
+> >>>> +          .name = "intf_1", .id = INTF_1,
+> >>>> +          .base = 0x35000, .len = 0x300,
+> >>>> +          .features = INTF_SC7280_MASK,
+> >>>> +          .type = INTF_DSI,
+> >>>> +          .controller_id = MSM_DSI_CONTROLLER_0,
+> >>>> +          .prog_fetch_lines_worst_case = 24,
+> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> >>>> +          .intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2),
+> >>>> +  }, {
+> >>>> +          .name = "intf_2", .id = INTF_2,
+> >>>> +          .base = 0x36000, .len = 0x300,
+> >>>> +          .features = INTF_SC7280_MASK,
+> >>>> +          .type = INTF_DSI,
+> >>>> +          .controller_id = MSM_DSI_CONTROLLER_1,
+> >>>> +          .prog_fetch_lines_worst_case = 24,
+> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+> >>>> +          .intr_tear_rd_ptr = DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2),
+> >>>> +  }, {
+> >>>> +          .name = "intf_3", .id = INTF_3,
+> >>>> +          .base = 0x37000, .len = 0x280,
+> >>>> +          .features = INTF_SC7280_MASK,
+> >>>> +          .type = INTF_NONE,
+> >>>> +          .controller_id = MSM_DP_CONTROLLER_0,   /* pair with intf_0 for DP MST */
+> >>>> +          .prog_fetch_lines_worst_case = 24,
+> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31),
+> >>>> +  }, {
+> >>>> +          .name = "intf_4", .id = INTF_4,
+> >>>> +          .base = 0x38000, .len = 0x280,
+> >>>> +          .features = INTF_SC7280_MASK,
+> >>>> +          .type = INTF_DP,
+> >>>> +          .controller_id = MSM_DP_CONTROLLER_1,
+> >>>> +          .prog_fetch_lines_worst_case = 24,
+> >>>> +          .intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 20),
+> >>>> +          .intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 21),
+> >>>> +  }, {
+> >>> Where is intf_5 ?
+> >>
+> >> intf_5 of base address 0x39000 is not supported on this target.
+> > Not supported by whom?
 >
->>>> @@ -1464,6 +1464,7 @@ static const struct of_device_id dpu_dt_match[] = {
->>>>    	{ .compatible = "qcom,sm8250-dpu", .data = &dpu_sm8250_cfg, },
->>>>    	{ .compatible = "qcom,sm8350-dpu", .data = &dpu_sm8350_cfg, },
->>>>    	{ .compatible = "qcom,sm8450-dpu", .data = &dpu_sm8450_cfg, },
->>>> +	{ .compatible = "qcom,sa8775p-dpu", .data = &dpu_sa8775p_cfg, },
->>> Wrong sorting order
->>
->> Sure will move below sm8650-dpu.
-> What makes you think that in a dictionary sa8775p comes after sm8650?
-
-
-Will update according to alphabetical order in next patch.
-
-
 >
->>
->>>>    	{ .compatible = "qcom,sm8550-dpu", .data = &dpu_sm8550_cfg, },
->>>>    	{ .compatible = "qcom,sm8650-dpu", .data = &dpu_sm8650_cfg, },
->>>>    	{ .compatible = "qcom,x1e80100-dpu", .data = &dpu_x1e80100_cfg, },
->>>> -- 
->>>> 2.34.1
->>>>
+> In sa8775p mdss architecture intf_5 is not present. So we are not adding
+> in SW too.
+
+ack, thanks for the explanation. It's better now.
+
+-- 
+With best wishes
+Dmitry
 
