@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-32279-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 924D19844B6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 13:32:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DD60F9844B9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 13:33:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B44991C23CB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 11:32:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A4681C24007
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 11:33:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 388891A76A0;
-	Tue, 24 Sep 2024 11:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A77F91A76C0;
+	Tue, 24 Sep 2024 11:30:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PIE+LlX9"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YhuytiBO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1B81A7256;
-	Tue, 24 Sep 2024 11:30:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99C71A727A;
+	Tue, 24 Sep 2024 11:30:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727177448; cv=none; b=dYYN5VFZ1cKRlJ2kxODfJcuGn11iGSLN069vj/RYQVldYreUXa6vlqxVtlROcgGEc4oOXAiAzCdbHRAGlIvTIPF8UsSqJZv9U6YSTMPY0NISZEDEE2C46iN6n5EmFznG3+K2M4+ywMxWBl+TruC26PzOZ8eI14xI34VDGFfhAbQ=
+	t=1727177449; cv=none; b=YIfareXiccvYQ+Slh9WP+KynyqhAIgRnE3NsXPXHQ3gcuBorU/I4TOQjEIpA619PXQ3eXbOvpdmmY8jZvsY4zYs6cFnbYI23qpj3n4QlmJP2xljeaKMo6tt1wpVITADwM3zhLm70gcSnM0MhfAK1T6ytvho0SHNbecZqGEinAZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727177448; c=relaxed/simple;
-	bh=jU1AlYtknaCE51ZnM/HBAvqUX6+tTJwfzHBOTp368BQ=;
+	s=arc-20240116; t=1727177449; c=relaxed/simple;
+	bh=HrcVfm6GphW+dkH2/eI9roTkaCaCbkN7M4JC5UFjlfM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=sAfQ6HdeuvV7BCMOZr4IB6L8vjmCUWlHThEqgscdi4ByyWLqXyQX/46oGUJK9kX2+DbfHR2sb8u+Sy+8bOz01IfPZT5McOZWcwc3eI2TMAp2hzt81gfKCI/7JJIK3vAlyJftsquAQ5vR/h8joeRBfn2u4o0kfH/jDlBs2J9iYVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PIE+LlX9; arc=none smtp.client-ip=209.85.218.45
+	 In-Reply-To:To:Cc; b=sQYMSPGBzG/jJRTfehNrONSKtc0FXn+Rn/qE8s3g/OsKHwbAIsOHU401iSFLBEspLU8Xh6obwUC2fMR5ABy00rv0Q1jANaCAD2U6DGXzF41a56Qk1nSzJzvQS/ynbQIaWukbMnL+o0lvf5JAZfU6LYbL0rslqYxW064LgyT7dHg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YhuytiBO; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a8d2b24b7a8so239909066b.1;
-        Tue, 24 Sep 2024 04:30:45 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8a7b1c2f2bso901639666b.0;
+        Tue, 24 Sep 2024 04:30:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727177444; x=1727782244; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727177446; x=1727782246; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DOKXSutIlfOVDg0zXz9VdQ+hEZL/0dYJxHmN2LSZob8=;
-        b=PIE+LlX9WIglC3ZPSGya5mpf7DviSRbLZfRHhEeQDhEyGjrKXv3GEwsyFYrvJTUDd1
-         gk1vQ/tTRCCLFe4yZFxSZSFoZFHqoVt1AxWMI2oevw8U82J2/hYLRQEYLN30/Umr/tce
-         sQ1UqBArEHLHfbLjcVPhR7jRDqDnM3WMjDiGPAECqCK1R0fTfLt3NL4GJrvrPksbTxzj
-         IiLnUTmaWUjJLoYGzJk3Q3j0Fzisgd4Pw/CtLRd5286i7+MEp8K5i3hK+FSbu/JkQOHg
-         BWWMCs77RQLWM+jWi+DsMKayaxgT+fgvhbwshAmJma0UluwSqpq3+h/x34pOaDT0rggI
-         Kk8w==
+        bh=DtlKt6idkJAcSVx+NWk8duOZfO6okh0MSeZqXt1n944=;
+        b=YhuytiBObKnSIGbngynG7RABJk3NI9vqPWFmCW+mv7g7wu+Hni8EyPL//uXKi3Z+TS
+         p6/uvqlvt62TCY8RWxxEb0x2Oi5F63JnzK3x4GagMkzUPk9mok/P4F/G2ir19g4c0UWI
+         nVEWsxLfdJ82wik0CoZkQEN4W72/LtgF1yUtBYxL/9my70+6CBdwsYN3ALhQA3jatHVC
+         gHqEDb4e5oEz1Z93JRoKi4w5bH2kqjoKgYFaA6XC+IONcS0N5ulgE88vyk0y9nL22mcs
+         2NAJMWt/DvuYFsn0Wz430YmqEk+FIdfzMdDGj3pykjFZNtY2h+Wer6tBloaCO4k0fP/N
+         QypA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727177444; x=1727782244;
+        d=1e100.net; s=20230601; t=1727177446; x=1727782246;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DOKXSutIlfOVDg0zXz9VdQ+hEZL/0dYJxHmN2LSZob8=;
-        b=G5+16xJdvPMI67sJsEYi9GHIPGTbKXObF/Hivcc2G9pa5IxxJeoHz1ekf4blXjPjRq
-         y/U4FW5+ime3RvnBED2hOpRSZ9a30ut+7WHbmPEIMeNvo5OhQhXchWfb9Yivy4y/21cc
-         UHwfSIGuyS+M8jbzYkY/wnKZ2D4LGJ/EyTGWjQqj4CkvmcxfAm4QEg4cMwdiJbYaKgPu
-         eQ/uBHDV8jO2LH12qsaHkgJ1keHtzvZwmhJL+FLpl0UI+RMxLTOx0JKTl+LIdtoFQ8yb
-         z6zWEMpnGk87n8xZfUcn02meINJ+V4WcjpUAo6J1+Wd5J5sWmU01LutbuYazlp/j4JIF
-         PZlg==
-X-Forwarded-Encrypted: i=1; AJvYcCVdHhRT2F9QGTpDdqgGyOCSBX96q4ORB6MBLUqk//i9cW1f+dX6DpMLflinYK18RTTlPh/gH9aAliLT80Hn@vger.kernel.org, AJvYcCXRQ/O3SC//lIqCTi1QE7+a/4W3BFdjecu2zThNu8Jb/jQj/iQdH07qJMJ9Lhk0utwXd0LeY+Z6n5k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwH9WMW4+vCEX4temXOG+JAxCWJF4OyGqRZca9+gTag52s3xumI
-	R8Xb5Ffkc53zHVU/5oikQY/DH60Ao1Edss6hYYBULljLwnT+hYuRrg5RvC+w
-X-Google-Smtp-Source: AGHT+IGqRXoyIYAzXzwS+0rRoDSY26E+w04seke3Hd4luX3c4gyYDZU47N2cZwYzSfmtShZy70yqnw==
-X-Received: by 2002:a17:907:3e98:b0:a7a:8284:c8d6 with SMTP id a640c23a62f3a-a92d55a9ff0mr295162766b.24.1727177444379;
-        Tue, 24 Sep 2024 04:30:44 -0700 (PDT)
+        bh=DtlKt6idkJAcSVx+NWk8duOZfO6okh0MSeZqXt1n944=;
+        b=FRsJRUnJ5KS3FCvDcGQhoDo6JyCxiuwYTfbJk3/G5jPNHhPdF7/nsHc2Syuld/YcdO
+         YeCoA/r2i+l+YWTBt3scDuCEunlpeE8PmZEVy4a3lSvhWy5kCu6Co2d8VKoeoTjB+HEZ
+         7YVLs+c9dqil+HEVmJnR9n2ropr42XTcMm+tOYnTBJ9SAJJwNt5GgaOYGX9dUsI3CkR4
+         YcD9IjptQ2yt47g/4/eUFYIuF0us47ggIJVBR5q8ONpH7u8c6YD+86qIJws0g3vow/VA
+         uBhKeEyEK4IR0zHcN3M7+6/iu5WS5GBicdNgTVBOoZykT0AJXxyYMVcqdk5PGh70dgBf
+         UXGw==
+X-Forwarded-Encrypted: i=1; AJvYcCUh/TkETXlasW7DcIG3c23Tf39qVg3dwFAmkxlqUdIDPnkqJmOFDvbg43xEWMNzk4JHNLpyyn8zsyUKmUlc@vger.kernel.org, AJvYcCX6ByzO+ExU1iaeNZDS7k9CmwGhSzxmQ8yJdMDIgEHQprWcrs85SuVj5E+nxv+NLFGIOYU3tkk930U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxv0VLY5Rd4DhqTEWrUKLdo8aqTQXHucjPn5fFOn4Z4MqYC/aPT
+	XT/MkTfciAQ58IOqF/2MpxVBUrgsZOU0udusFvHR5Dl9O5lPZ7QDbQATtsAO
+X-Google-Smtp-Source: AGHT+IEaWx/441QIk2rtllfpJ1s+7PSPQeqyJQiFATxUwsmjwWsOBcZRgKQs+F7ZKPPkFcaq+e7HRA==
+X-Received: by 2002:a17:907:e64f:b0:a8d:555f:eeda with SMTP id a640c23a62f3a-a90d4fdf82cmr1509225066b.8.1727177445942;
+        Tue, 24 Sep 2024 04:30:45 -0700 (PDT)
 Received: from [192.168.1.17] (host-87-7-171-42.retail.telecomitalia.it. [87.7.171.42])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93930cae0fsm72612766b.120.2024.09.24.04.30.42
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93930cae0fsm72612766b.120.2024.09.24.04.30.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 04:30:44 -0700 (PDT)
+        Tue, 24 Sep 2024 04:30:45 -0700 (PDT)
 From: Antonino Maniscalco <antomani103@gmail.com>
-Date: Tue, 24 Sep 2024 13:30:38 +0200
-Subject: [PATCH v5 03/11] drm/msm: Add a `preempt_record_size` field
+Date: Tue, 24 Sep 2024 13:30:39 +0200
+Subject: [PATCH v5 04/11] drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240924-preemption-a750-t-v5-3-0be2bf81c187@gmail.com>
+Message-Id: <20240924-preemption-a750-t-v5-4-0be2bf81c187@gmail.com>
 References: <20240924-preemption-a750-t-v5-0-0be2bf81c187@gmail.com>
 In-Reply-To: <20240924-preemption-a750-t-v5-0-0be2bf81c187@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -93,78 +93,44 @@ To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>, 
- Akhil P Oommen <quic_akhilpo@quicinc.com>, 
  Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727177437; l=2436;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727177437; l=1479;
  i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
- bh=jU1AlYtknaCE51ZnM/HBAvqUX6+tTJwfzHBOTp368BQ=;
- b=WB9NJcsEG+aJ5FO2zki7u9MZuqw2lELiKDiAM1IPKxx+CQqjJtzKcux5/K/di0l9hjtsHHVNz
- 6HCYWYZh8k8CyxlzrUzG+IxUyXVt7WgmXkldthAtQ6ynqJLp7Ai7WZc
+ bh=HrcVfm6GphW+dkH2/eI9roTkaCaCbkN7M4JC5UFjlfM=;
+ b=AyFPAFOk2mxFmrI1dnga0J8a6dYRNWGg482028ks8r3gY41J5JokFfnV5rBBLARPpqungLuE7
+ JDreZFdmJbvABkCO4dnf3j+aNlwa3SSjw0PGgr0wxpdSn3/7UiL8qYR
 X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-Adds a field to `adreno_info` to store the GPU specific preempt record
-size.
+Add missing bitfields to CONTEXT_SWITCH_CNTL in a6xx.xml.
 
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
 Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 4 ++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 1 +
- 2 files changed, 5 insertions(+)
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-index 68ba9aed5506ea2f367ff0282a73fdd1122f2526..316f23ca91671d973797f2a5b69344f376707325 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
-@@ -1190,6 +1190,7 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.protect = &a730_protect,
- 		},
- 		.address_space_size = SZ_16G,
-+		.preempt_record_size = 2860 * SZ_1K,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43050a01), /* "C510v2" */
- 		.family = ADRENO_7XX_GEN2,
-@@ -1209,6 +1210,7 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.gmu_chipid = 0x7020100,
- 		},
- 		.address_space_size = SZ_16G,
-+		.preempt_record_size = 4192 * SZ_1K,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43050c01), /* "C512v2" */
- 		.family = ADRENO_7XX_GEN2,
-@@ -1227,6 +1229,7 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.gmu_chipid = 0x7050001,
- 		},
- 		.address_space_size = SZ_256G,
-+		.preempt_record_size = 4192 * SZ_1K,
- 	}, {
- 		.chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
- 		.family = ADRENO_7XX_GEN3,
-@@ -1245,6 +1248,7 @@ static const struct adreno_info a7xx_gpus[] = {
- 			.gmu_chipid = 0x7090100,
- 		},
- 		.address_space_size = SZ_16G,
-+		.preempt_record_size = 3572 * SZ_1K,
- 	}
- };
- DECLARE_ADRENO_GPULIST(a7xx);
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 1ab523a163a00b333a85b099e9eb9209e6a2e646..6b1888280a83e6288c4b071733d5d6097afe3a99 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -111,6 +111,7 @@ struct adreno_info {
- 	 * {SHRT_MAX, 0} sentinal.
- 	 */
- 	struct adreno_speedbin *speedbins;
-+	u64 preempt_record_size;
- };
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+index 2dfe6913ab4f52449b76c2f75b2d101c08115d16..fd31d1d7a11eef7f38dcc2975dc1034f6b7a2e41 100644
+--- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
++++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+@@ -1337,7 +1337,12 @@ to upconvert to 32b float internally?
+ 		<reg32 offset="0x0" name="REG" type="a6x_cp_protect"/>
+ 	</array>
  
- #define ADRENO_CHIP_IDS(tbl...) (uint32_t[]) { tbl, 0 }
+-	<reg32 offset="0x08A0" name="CP_CONTEXT_SWITCH_CNTL"/>
++	<reg32 offset="0x08A0" name="CP_CONTEXT_SWITCH_CNTL">
++		<bitfield name="STOP" pos="0" type="boolean"/>
++		<bitfield name="LEVEL" low="6" high="7"/>
++		<bitfield name="USES_GMEM" pos="8" type="boolean"/>
++		<bitfield name="SKIP_SAVE_RESTORE" pos="9" type="boolean"/>
++	</reg32>
+ 	<reg64 offset="0x08A1" name="CP_CONTEXT_SWITCH_SMMU_INFO"/>
+ 	<reg64 offset="0x08A3" name="CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR"/>
+ 	<reg64 offset="0x08A5" name="CP_CONTEXT_SWITCH_PRIV_SECURE_RESTORE_ADDR"/>
 
 -- 
 2.46.1
