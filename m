@@ -1,168 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-32229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8128983DA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 09:15:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D76CA983DAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 09:17:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5893D1F23FFD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 07:15:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 146481C20FAC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 07:17:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79662145346;
-	Tue, 24 Sep 2024 07:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9684813D278;
+	Tue, 24 Sep 2024 07:17:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="jstRXiqJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GADONGLG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FD0143725
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 07:15:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E5D1A270;
+	Tue, 24 Sep 2024 07:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727162117; cv=none; b=A23aUGM1xT9JLuASc9QUO3CKqMvphknyHmxRsCA28wxOVqhuNO5iK9/XxiAj2zCnU6JAzHCnwAHh1jT+XCOp/ejJGhO7f/U2c4ahmebf5GRQMlfjmnKN96xr+R5nBNjf++m95EJjUS73t1SmQI1snx3OkEIC7HpDnaawdrZWr4I=
+	t=1727162226; cv=none; b=ds/cVRRlcQMHP2gJQkL7cTAUOPbb6wkAtjDY0crQD5w/BfQj3SFihWk6OfocPN5EPXv1szqxsHnOP+/vw0x7VTK2G/LFxbx/SjQnIdDUgC7FB3FuVmckSoW+vrK5wNZZ2iDPxgp1jgDyJlYkwKVQPi7eoqD5UfnOc9CqQZrw6qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727162117; c=relaxed/simple;
-	bh=dFHsUcuwdml9tPy/a9bwGm7XZBafs188fpXgCrVxH9c=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=BHuMowWSglGhDyV3FcH6nDTm5rJ16GR5SDijEPi5XiMmNAmOquGBZxv9hADBUbwor2nLvPi7gu/WI3W5APxqiSD+3lRqktSSztPNiP1deHkl7wdIhqWR/q54IPk1ce1yxIPzUjv8ZiXsm47FuRXe0YFLKXkUhbQKVLlg7VQVEH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=jstRXiqJ; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c44e1cde53so6598673a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 00:15:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1727162114; x=1727766914; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cajhmBCXQZKSrLAVt9O9VA7lCZwJirG7AeVDIGrh7f8=;
-        b=jstRXiqJ1wnBKtZn1QUTenz8LvoUrqmiizVkDpARYWWwyPAvnpkChkDys+rnhMZUjh
-         Pxo4FlpGVy/H5m+9FWSPmgliaeqXqq7AKthpJ6qfoDwd/bDcL5FkmqAoM5dHD8weg7c5
-         dwLre0B/J4Ad9ngM9Iw0LeOdJ7uIn/raUjPbjeAk4M4oJdPDC4y+S5WTrG0RtiwV7Xb3
-         2KJHHU7JCBBGKMPBoiqEKCBzGiBmtKb4EX9bwPfDwhyqevYHDny72PUFeqEs2ZBKObnW
-         TydhUntGkuGyamviNiVu2pi8DiKef/HSQdexhEMYwIKzvo/qOjp17jqbw0ekNWnF6VXm
-         2QVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727162114; x=1727766914;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cajhmBCXQZKSrLAVt9O9VA7lCZwJirG7AeVDIGrh7f8=;
-        b=IWXnMYCCDx7hoipwA2XKkkFU/ZNc4umhtA75gMcXt71dGc4WiZtwc5/TEx5gTRStE0
-         sTffZlhFUcl3bQyqhUGfHDayaLQyN81IIjkKgDHG/v10YXrodAzSHK5LYuYGkk7LcM4S
-         UvhqE5EJu0Nu0qLEft49ImjPfPdGUH6FsaFYwVm5MF7XAY047FLHd4MjUMAhCmH42/ck
-         xwiL/KoeafvJ+riVh09Z//xyn87vNCyW88zOYHLeg+jzfEWXqZlpovWU1vE2szrHP+4D
-         bAZxEVNfx0ZAPETP3DvJCW3SAOr0H9LGTsZRCFezIyuyWQBrl3OwaRkUQUUNfbCq3Z1l
-         +erg==
-X-Forwarded-Encrypted: i=1; AJvYcCXvhuq87Mld/rKkkAS50/usFZHmss/0IGLwd0WyYMyymjPdmY8UOoa+3FsEhaest5rNvwCfXhlAiXsi0Rgn@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfVH6bnjSfQJquIYTLv5Lmwg3YYO/bOsDY1YnxoMkoAsgtv0Kq
-	mx6UQOXdXo/je+BsKit4RxIARtWAMrr8EEM8M5U3Yk5XeDrvlct1mMwV5Qh7WG8=
-X-Google-Smtp-Source: AGHT+IGhzrOQvSNMdXNtOt+4i5dURer+xNowHaBG6b65R80TgOhirmqf/gL94bvXn9ou3bbm+OVdUQ==
-X-Received: by 2002:a05:6402:34d1:b0:5c3:c548:ab3a with SMTP id 4fb4d7f45d1cf-5c4646640bfmr11854683a12.2.1727162113821;
-        Tue, 24 Sep 2024 00:15:13 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c5cf4d77d9sm445370a12.94.2024.09.24.00.15.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Sep 2024 00:15:13 -0700 (PDT)
+	s=arc-20240116; t=1727162226; c=relaxed/simple;
+	bh=GlWqPVGyfJjTHUigN4P2tB+86Vn7NXTJO6DA+2obKXo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tx4R/bAVxu8UtHjlaq4KNWGFv4sgiT6y6MCVR/zXMn0is64JfmGoDc5p4Kk2W8rd2LjwFRVOizMqXESpHaA6evFW8QZHeKQokJfvsxvUgPpFFc5h3i4BUvLeWWw0g2AwqjkFrxaX4/oVwiIuEBFkhGab5sfoDuWok30K2WMREcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GADONGLG; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48NJWFU5021730;
+	Tue, 24 Sep 2024 07:16:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	KKyssr1uc6M3Edh6ydcV4gtcPR+09KpLfaDOx33Lq7U=; b=GADONGLGmYWOz0s+
+	ztrmq0L23Enkbmai+od+OWRJpvIYbWIm3ljPf8ogzpxwgx5Wjx9jmjUgYyCz47Sm
+	foP2DeomiDLzDuTBtYYN1nBwbdXUGDhvPH3WZ8C2O7s9W3m9zTHnjxc/T/TIgcdh
+	FF5efEzdi56ExxHjoqOXe8Cvq2W6T+f6dG8WImSUDDnuzqcvhGW4YsI3TFoqwPT5
+	bQfV2OvQzmllH8ajg/JjPxGhceol266E26iYZ5uq3HeDAJjyfJRz7IIx+/vEV1nm
+	M+/kAlbeFET8Nbsy4j3guueFMZ6T6Hnb0tdXX2TeqhnGvRpppGDFzm379HIR8x6U
+	nK5KUg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sqe97918-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 07:16:46 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48O7Gj2w000900
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 07:16:45 GMT
+Received: from [10.204.67.11] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Sep
+ 2024 00:16:37 -0700
+Message-ID: <013459fd-fbb0-4225-90e3-a16115154646@quicinc.com>
+Date: Tue, 24 Sep 2024 12:46:34 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 24 Sep 2024 09:15:12 +0200
-Message-Id: <D4EBVCYB1A56.21TT1WFRGCYGN@fairphone.com>
-Subject: Re: [PATCH RFC 07/11] arm64: dts: qcom: sm6350: Affirm IDR0.CCTW on
- apps_smmu
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konradybcio@kernel.org>, "Bjorn Andersson"
- <andersson@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- <cros-qcom-dts-watchers@chromium.org>
-Cc: "Marijn Suijten" <marijn.suijten@somainline.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Konrad Dybcio" <quic_kdybcio@quicinc.com>
-X-Mailer: aerc 0.18.2-0-ge037c095a049
-References: <20240919-topic-apps_smmu_coherent-v1-0-5b3a8662403d@quicinc.com> <20240919-topic-apps_smmu_coherent-v1-7-5b3a8662403d@quicinc.com>
-In-Reply-To: <20240919-topic-apps_smmu_coherent-v1-7-5b3a8662403d@quicinc.com>
-
-On Thu Sep 19, 2024 at 12:57 AM CEST, Konrad Dybcio wrote:
-> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
->
-> On RPMh-based SoCs, the APPS SMMU advertizes support for cache-coherent
-> pagetable walk via the IDR0 register. This however is not respected by
-> the arm-smmu driver unless dma-coherent is set.
->
-> Mark the node as dma-coherent to ensure this (and other) implementations
-> take this coherency into account.
-
-Hi Konrad!
-
-Similar to [0] everything seems to look fine on SM7225 Fairphone 4.
-
-[    0.190433] arm-smmu 15000000.iommu: probing hardware configuration...
-[    0.190459] arm-smmu 15000000.iommu: SMMUv2 with:
-[    0.190499] arm-smmu 15000000.iommu:         stage 1 translation
-[    0.190515] arm-smmu 15000000.iommu:         coherent table walk
-[    0.190531] arm-smmu 15000000.iommu:         stream matching with 71 reg=
-ister groups
-[    0.190560] arm-smmu 15000000.iommu:         63 context banks (0 stage-2=
- only)
-[    0.191097] arm-smmu 15000000.iommu:         Supported page sizes: 0x613=
-11000
-[    0.191114] arm-smmu 15000000.iommu:         Stage-1: 36-bit VA -> 36-bi=
-t IPA
-[    0.191299] arm-smmu 15000000.iommu:         preserved 0 boot mappings
-
-The Adreno SMMU still has non-coherent table walk.
-
-[    1.141215] arm-smmu 3d40000.iommu: probing hardware configuration...
-[    1.141243] arm-smmu 3d40000.iommu: SMMUv2 with:
-[    1.141270] arm-smmu 3d40000.iommu:  stage 1 translation
-[    1.141279] arm-smmu 3d40000.iommu:  address translation ops
-[    1.141288] arm-smmu 3d40000.iommu:  non-coherent table walk
-[    1.141296] arm-smmu 3d40000.iommu:  (IDR0.CTTW overridden by FW configu=
-ration)
-[    1.141307] arm-smmu 3d40000.iommu:  stream matching with 5 register gro=
-ups
-[    1.141326] arm-smmu 3d40000.iommu:  5 context banks (0 stage-2 only)
-[    1.141347] arm-smmu 3d40000.iommu:  Supported page sizes: 0x63315000
-[    1.141356] arm-smmu 3d40000.iommu:  Stage-1: 48-bit VA -> 36-bit IPA
-[    1.141568] arm-smmu 3d40000.iommu:  preserved 0 boot mappings
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/5] Add display support for Qualcomm SA8775P platform
+Content-Language: en-US
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <maarten.lankhorst@linux.intel.com>,
+        <mripard@kernel.org>, <tzimmermann@suse.de>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <swboyd@chromium.org>,
+        <konrad.dybcio@linaro.org>, <danila@jiaxyga.com>,
+        <bigfoot@classfun.cn>, <neil.armstrong@linaro.org>,
+        <mailingradian@gmail.com>, <quic_jesszhan@quicinc.com>,
+        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_kalyant@quicinc.com>, <quic_jmadiset@quicinc.com>,
+        <quic_vpolimer@quicinc.com>
+References: <20240912071437.1708969-1-quic_mahap@quicinc.com>
+ <7fcbvouzb7gq6lclrkgs6pxondvj5wvutyw3swg55ugvzfpvd4@2ph7x7ulxoyv>
+From: Mahadevan P <quic_mahap@quicinc.com>
+In-Reply-To: <7fcbvouzb7gq6lclrkgs6pxondvj5wvutyw3swg55ugvzfpvd4@2ph7x7ulxoyv>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: KzVsAwP5PUX1tTjVWqWecZqXc7n3LxI8
+X-Proofpoint-GUID: KzVsAwP5PUX1tTjVWqWecZqXc7n3LxI8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=627 spamscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409240049
 
 
-Tested-by: Luca Weiss <luca.weiss@fairphone.com> # sm7225-fairphone-fp4
+On 9/12/2024 1:26 PM, Dmitry Baryshkov wrote:
+> On Thu, Sep 12, 2024 at 12:44:32PM GMT, Mahadevan wrote:
+>> Add support for mdss and dpu driver on Qualcomm SA8775P platform.
+>>
+>> ---
+>> This series depends on following series:
+>> https://lore.kernel.org/all/20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com/
+> As such, it probably can not be merged before 6.14 (the mentioned series
+> will go on 6.13, we usually don't do cross-tree merges into drm). Please
+> rework the bindings to drop the dependency (it is possible, use fake
+> nodes instead of using dispcc + ID). Then you can specify that only the
+> DTS patch depends on the dispcc support, allowing driver changes to go
+> in first.
 
-[0] https://lore.kernel.org/linux-arm-msm/CAD=3DFV=3DXrbe1NO+trk1SJ30gHm5jL=
-Fjd0bAeG3H46gD+vNFZa1w@mail.gmail.com/
 
-Regards
-Luca
+Can we use clocks = <&dummy_dispcc 0>, <&dummy_dispcc 1>,  
+<&dummy_dispcc 2>; instead of  clocks =  <&dispcc0 
+MDSS_DISP_CC_MDSS_AHB_CLK>, <&dispcc0 MDSS_DISP_CC_MDSS_MDP_LUT_CLK>, 
+<&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>; in dt bindings?
 
 >
-> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm6350.dtsi | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/q=
-com/sm6350.dtsi
-> index 7986ddb30f6e8ce6ceeb0f90772b0243aed6bffe..54cfe99006613f8ccc5bf6d83=
-bcb4bf8e72f3cfe 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-> @@ -2685,6 +2685,7 @@ apps_smmu: iommu@15000000 {
->  				     <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
->  				     <GIC_SPI 413 IRQ_TYPE_LEVEL_HIGH>;
-> +			dma-coherent;
->  		};
-> =20
->  		intc: interrupt-controller@17a00000 {
-
+>> ---
+>>
+>> Mahadevan (5):
+>>    dt-bindings: display/msm: Document MDSS on SA8775P
+>>    dt-bindings: display/msm: Document the DPU for SA8775P
+>>    drm/msm: mdss: Add SA8775P support
+>>    drm/msm/dpu: Add SA8775P support
+>>    arm64: dts: qcom: sa8775p: add display dt nodes
+>>
+>>   .../display/msm/qcom,sa8775p-dpu.yaml         | 120 +++++
+>>   .../display/msm/qcom,sa8775p-mdss.yaml        | 225 ++++++++
+>>   arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  85 +++
+>>   .../msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h   | 485 ++++++++++++++++++
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   3 +-
+>>   drivers/gpu/drm/msm/msm_mdss.c                |  10 +
+>>   8 files changed, 931 insertions(+), 3 deletions(-)
+>>   create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sa8775p-dpu.yaml
+>>   create mode 100644 Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+>>
+>> -- 
+>> 2.34.1
+>>
 
