@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32334-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AF05984B67
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 21:05:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F35EE984B6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 21:05:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 33E541F227D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 19:05:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D8161F2299A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 19:05:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E049374BF5;
-	Tue, 24 Sep 2024 19:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DD968063C;
+	Tue, 24 Sep 2024 19:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="seOdaJze"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/TGfCx1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2D51B85D2;
-	Tue, 24 Sep 2024 19:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FA074BF5;
+	Tue, 24 Sep 2024 19:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727204700; cv=none; b=JILBefOeKROOy6gFJOEBDHWEWYhfAS0a5AJB0y1y8e5g8C2ub5YmnYSWAohkAW4U/CrGCLX0RFOv8+BuSH67oz8l6eRARjJzxHeZIP8HCV1vPvW16as7URM1XtyIhtk5bM9G55Ml5svJY8Y7Om/mde/wUVM8xfvx8LTqY8np79g=
+	t=1727204728; cv=none; b=b7XJv4DTYovgZazJOrPXmF1/qBiP3pg8UnY18i3NKBANmL0jUCSYEuKb401JJCk3ZPrH1ZJofHTcJn0IiaIGp57QUX5AkBkhWSIMB5diIXvuNGei6930vVPpfa53jN0antiFF2J9WI3mbFmybX0Q9pPiHdckJKan01JPW5f+wB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727204700; c=relaxed/simple;
-	bh=jazYlHF5VNrTC4j4teI5VVneJOTOSITRqk8L9ktqQVM=;
+	s=arc-20240116; t=1727204728; c=relaxed/simple;
+	bh=ViganIZMkhIXStNZCSZxVv4zNKbvz3pEal7CoYQofsQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=n/CJTwvtMEMMsQkIeLFjAO6DGTafdx98zVFA1YjXq1CXOGJsLmLu9wjJWVDuizW0gwSfuKVTkk7gdvZZk1Re5qp4XmY/0IeO+Mp2g8lJkVPQ8jGH8RWKw0JL5ZCFPi5rCmuymF+tSYXJVDhpeqHHuyySzpXH5Y565LSv2UJ8fss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=seOdaJze; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC61C4CEC4;
-	Tue, 24 Sep 2024 19:04:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=gtVqjQTnUTasD22/L0Ia8IQ5LVVJAJJw+RAAMuBAj3bzHCKZdHy1taD54XPa/zYDGhDhvB287awmjST4y4vLBKGyYbBweV08do1SKgqvA3ST4RMI5+OS2ntTgKTZW6HOFQgJyKkFDGu1WCNSYpcnGL9MGVSrbGKRTqwUGVwIwNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/TGfCx1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D117BC4CEC4;
+	Tue, 24 Sep 2024 19:05:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727204700;
-	bh=jazYlHF5VNrTC4j4teI5VVneJOTOSITRqk8L9ktqQVM=;
+	s=k20201202; t=1727204727;
+	bh=ViganIZMkhIXStNZCSZxVv4zNKbvz3pEal7CoYQofsQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=seOdaJzeGlnwmQNRGIGsLGgVz4+gUKAC5Q5kzIi34TlxK9DHzr4pY89JghzzzeOR+
-	 v9g4bfdbFG486ASDNuDBxEfG2PZOjZfPT+BGP0PHCsXrmfiIveXbAzy7zF9mRTUy8j
-	 66mD31LjuZTDzUnaEg5M+WpfYwl9h2+ql2vxO3FBX+IBLt0nEpfSMuQftNGkxIDyT7
-	 TuYV/NRFQditwyYi/UFdFHjZbiev6Z8HUwo2irmlVqWNEWEGBKIwsO4gC56tITR1oQ
-	 fG6wfiqRmDGYHrqertsRqIu6gPZcHnPIfk2ys8Ieuj2eRmOBm9zAt98LeLOT1Z6p5E
-	 etwwRatsSSeIg==
-Message-ID: <670f4ac8-a024-4027-9b5b-7cb8a357ef13@kernel.org>
-Date: Tue, 24 Sep 2024 21:04:52 +0200
+	b=B/TGfCx1QagBRi6+uRaM0fKv2xsw6kBBKAInOqiJn3BUxD25j/RU1ZLsh09urlE7u
+	 iLCF4lXes7tR0i+NpQakmQGNWU7z590aHHeCZ1+L8GMUBKlxLtzukUpAofwQ19XiU3
+	 37z/HN+3E9F0L5u2H8bp1+zLwslBByViTXXpz0kroBY2gcKct9rRH8/Xj+DW9l5T3c
+	 PYDp/4bBVjkoIw8VSgEd8vqlSMa7oNmmCVb27I/VNa5VD3J+CktIiPiLUjuZdOyn0+
+	 UMWnbwdHDHa8lNS70lR4cD/l4xeR6JMvuxwulfo6dWRUSp12X9l8l7TJNbubaBKLxG
+	 bRnXtAlMP/bYQ==
+Message-ID: <a5dd2d64-0790-496d-992c-199691f0cdcf@kernel.org>
+Date: Tue, 24 Sep 2024 21:05:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] dt-bindings: ufs: qcom: Document the QCS8300 UFS
- Controller
-To: quic_jingyw@quicinc.com,
+Subject: Re: [PATCH v2] dt-bindings: mailbox: qcom-ipcc: Document QCS8300 IPCC
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>,
- Bart Van Assche <bvanassche@acm.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Andy Gross <agross@kernel.org>
+ Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Xin Liu <quic_liuxin@quicinc.com>
-References: <20240911-qcs8300_ufs_binding-v2-1-68bb66d48730@quicinc.com>
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com
+References: <20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,27 +104,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240911-qcs8300_ufs_binding-v2-1-68bb66d48730@quicinc.com>
+In-Reply-To: <20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/09/2024 09:06, Jingyi Wang via B4 Relay wrote:
-> From: Xin Liu <quic_liuxin@quicinc.com>
+On 11/09/2024 09:25, Jingyi Wang wrote:
+> Document the Inter-Processor Communication Controller on the Qualcomm
+> QCS8300 Platform, which will be used to route interrupts across various
+> subsystems found on the SoC.
 > 
-> Document the Universal Flash Storage(UFS) Controller on the Qualcomm
-> QCS8300 Platform.
-> 
-> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
 > Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
-> Changes in v2:
-> - decoupled from the original series.
-> - Link to v1: https://lore.kernel.org/r/20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com
-> ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
 
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+Acked-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
