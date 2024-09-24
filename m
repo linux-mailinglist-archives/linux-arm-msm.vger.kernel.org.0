@@ -1,237 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-32290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89E4B98456E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:03:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D789E98459E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 14:11:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0ADEC1F22715
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:03:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B4F12833D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 12:11:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D6772148823;
-	Tue, 24 Sep 2024 12:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19A0A1A7267;
+	Tue, 24 Sep 2024 12:11:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BKq/f+Hw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="PGQs6pD4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F5C3C099
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 12:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5741A7261;
+	Tue, 24 Sep 2024 12:11:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727179407; cv=none; b=HN2ribN38JynV2Bg/zLHPXYWlx/db9kr1GYiW//LauUCzr8G35DCft+jHYXaMBRlWo10mxsnCU0rHvUlmZaZbr3/Cg5YDJ1PtG9x2qDrpNJL2PK4lFG+Xz28TyM1tG6tklMjdJqUP2HpleApIyGFTDfZ3JzJiKeDqyEOtSLbplY=
+	t=1727179884; cv=none; b=X1YCCxO2maMgF+e+4mTX66ft5CVVhFZrWNSY945jj9mQTwjvKvGsscRQy0ma8JzeueINRZnLdgi5/jqzZlAcOpiDXNM1lWDtWmGbEFrVVW5xnF7ePaZ4KiRoLPLCzIHSgJMuGjpkNxj8KSd4ktL7fRqT7ylpS4jUaTUARvYMPNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727179407; c=relaxed/simple;
-	bh=BKuoLGhSemarSQqGyR3hGJxqIMBJJ+wv74GyrdjB4Qk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YrOL2/lg0jiJULp1PanpUWjLt6IKoyhPPIDbJ6XfKg2biAuf3OfVJs+ZO2nUcZLjm9Jl0PhSrKSlhGNmMMbUS2JuduRXPuEdm2zG8oAVA7qQpuBGiZymJM0xhBLFosyQ1yAaqpSznP4Nut+FR1egLGjFwa8dFv0pXeYOB7Tvgno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BKq/f+Hw; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6ddceaaa9f4so42633877b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 05:03:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727179405; x=1727784205; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1SexCe+KVJledInGZuUisJCoVV9rpz12HkhvcoEgjd4=;
-        b=BKq/f+HwGvtFyY7EQjVFiTzaDzUCj6w3dx2ngo/P08D7j9IbGod42APaUaMMxBRlPf
-         8gjCSwN1EHQHg+viHoZYlj9FMcmTVwwOw6kZ2GihMmc3VCEd9zGmJhpbZG4/iNwbl9sV
-         Cl28QM+GfupCDCako29rQ9JbzUELq8DcwdCXPnElShHPUIUnvaR40QDoGpy4g3VKjU87
-         UazFOppZyy5pPYPvKxcW51F1ReETOU6OR1LP/eeAlCCm18XaccM2hcdaidchuHT4NxE/
-         6S+j8oaAd1uiEJM/oIEsL+Xg29LxP5YqFp046Lqx/5R0gTOR8eHlOjTDCXojvrYa6jbm
-         Y+Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727179405; x=1727784205;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1SexCe+KVJledInGZuUisJCoVV9rpz12HkhvcoEgjd4=;
-        b=IjXBs+/sc/yKnQEf3H4/7Z2zc9IHM/L/W685ie3HXVJABSTuRZTWv6sOX7wWPBoiuV
-         BFKpTZlSiy7kgxdseQAx0VoDdGFQoehlzABhLmIkLz3ts2kdTZX5rki2ZYj4oHLopk7F
-         sOpB0yqjIV7DfXfe1+9iq0wOQ1/MQjbT84nv/+iFwVNvTh11mYhjuO5au4lKO9YhwJHa
-         HpLaS+PQ+b79jTtvROO4vqmEzEC5WEzBJXobCDZu3npeQ5kIH8/HE3Cl/em9GWqCWosF
-         DA2KMsu5lIMbN5x0OFZRH+UQtTs/S44fMM6JJ63Z7aRgtsQRaNvLkGLhhZDS+x7kuuvw
-         VECw==
-X-Forwarded-Encrypted: i=1; AJvYcCUgyOkdWgnjqDsYCSGBr3G7mCJNz8MsigSEhfLbVBz/EFQWPSZvLMkJE8bRRTUk+Fm3JpOXe/liWo2HJuMj@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQAsWxL123GVvdrVcjMErIpGZKorZ9TI8o79iOagUBOIvRq6iu
-	u49dNPneQT2fEy63hH5KG6lEdP1wI8E2XE8+E5OZ5HEdPLHW94EKndkFhvHaxkh8cVqa59jP8gd
-	pgH917xZsrfrn2iEgQp4B7zPBgFDldYTd+LQimQ==
-X-Google-Smtp-Source: AGHT+IHD+QEFMSL2xtRxxA304IQqPTeFi2914vIHsfkaU8qMNFT9p8W8xdPZCGc+sB86DXrWl1vKLyrM0nKFsowI0Oc=
-X-Received: by 2002:a05:690c:2507:b0:647:7782:421a with SMTP id
- 00721157ae682-6dfef019bb1mr70848227b3.45.1727179405120; Tue, 24 Sep 2024
- 05:03:25 -0700 (PDT)
+	s=arc-20240116; t=1727179884; c=relaxed/simple;
+	bh=S+5ZTdN1pPJa9IuFwdIuX2jtdc1wF/KYf3fatFFndeE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
+	 In-Reply-To:Content-Type; b=PqKzPOBx3sLCW7WJOS3Sk4dCA/fW3q4TCri6bmba6y1NV0ItQezH9Wh25WZYKLiqkvjDMJqoZ/kPi7AanuyKlZEQ97G02vK6F0JhLdKRWiisSMwSthlyJHovjcu/0myrH3lI+ZTBHje1HOwHDNmepW125CZmMXoIZj9zJ7ifmDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=PGQs6pD4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48O9fAkp017406;
+	Tue, 24 Sep 2024 12:11:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	vvNGpzffxQxSM2lHDEfUn4zL+xA1sFHMMkiqkZlU+qo=; b=PGQs6pD4D7IRQ4C8
+	KhmnSJkukKR099RoCamN4s1/ox3gmKy9GjpOdKCNLPETVi08G73gOXwcer9ly6Zp
+	38EfOuRIUreY9OCh39falA8hlZ+ZMeuXJa6ZcIZgwqJWVEf8HbTj/kaEhce6JBZv
+	0MxcSWYSMjS3QWbyYPqmm7fI/WyjOAZ437q+LxMVpLv5SDJh7C4TYUJqMvj8xdaY
+	VsFlhJoEhdPs4J97X5X46mCRybYUbQf4Wm+EGPOfRXIm21uafSjoVNxmg8J8E5aM
+	xoh5IFTW7wGFBFmyj1xyF3cfE6FQZ8tROYvegA5Iu3CHcJYZP6jg2PJgLW2hn4PC
+	zNFFIQ==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41snqygjnb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 12:11:04 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48OCB22u011774
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 24 Sep 2024 12:11:02 GMT
+Received: from [10.151.37.100] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 24 Sep
+ 2024 05:10:55 -0700
+Message-ID: <30fdcb3e-a7ff-4764-bed5-39494c3e3326@quicinc.com>
+Date: Tue, 24 Sep 2024 17:40:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240902-x1e80100-crd-dts-add-external-dp-support-v1-0-899c264c0eb7@linaro.org>
- <20240902-x1e80100-crd-dts-add-external-dp-support-v1-1-899c264c0eb7@linaro.org>
- <th2x3gtx56fr7zuhhleuj77eghfe7kgbfhok7ul5egez4iq5v2@qy5wy4hxpb5s> <ZvKdmhfxilFfOzmb@linaro.org>
-In-Reply-To: <ZvKdmhfxilFfOzmb@linaro.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 24 Sep 2024 14:03:13 +0200
-Message-ID: <CAA8EJpq1WwmJfZdW7e3EWEucHpnEYZJkFOek65YcadYwgXWyCg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] arm64: dts: qcom: x1e80100-crd: Enable external DP support
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Johan Hovold <johan@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-
-On Tue, 24 Sept 2024 at 13:08, Abel Vesa <abel.vesa@linaro.org> wrote:
->
-> On 24-09-02 21:54:58, Dmitry Baryshkov wrote:
-> > On Mon, Sep 02, 2024 at 06:01:35PM GMT, Abel Vesa wrote:
-> > > The Qualcomm Snapdragon X Elite CRD board has 3 USB Type-C ports,
-> > > all of them supporting external DP altmode. Between each QMP
-> > > combo PHY and the corresponding Type-C port, sits one Parade PS8830
-> > > retimer which handles both orientation and SBU muxing. Add nodes for
-> > > each retimer, fix the graphs between connectors and the PHYs accordingly,
-> > > add the voltage regulators needed by each retimer and then enable all
-> > > 3 remaining DPUs.
-> > >
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 414 +++++++++++++++++++++++++++++-
-> > >  1 file changed, 408 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > > index 10b28d870f08..6dfc85eda354 100644
-> > > --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> >
-> > [skipped]
-> >
-> >
-> > > @@ -709,6 +861,163 @@ keyboard@3a {
-> > >     };
-> > >  };
-> > >
-> > > +&i2c1 {
-> > > +   clock-frequency = <400000>;
-> > > +
-> > > +   status = "okay";
-> > > +
-> > > +   typec-mux@8 {
-> > > +           compatible = "parade,ps8830";
-> > > +           reg = <0x08>;
-> > > +
-> > > +           clocks = <&rpmhcc RPMH_RF_CLK5>;
-> > > +           clock-names = "xo";
-> > > +
-> > > +           vdd15-supply = <&vreg_rtmr2_1p15>;
-> > > +           vdd18-supply = <&vreg_rtmr2_1p8>;
-> > > +           vdd33-supply = <&vreg_rtmr2_3p3>;
-> > > +
-> > > +           reset-gpios = <&tlmm 185 GPIO_ACTIVE_HIGH>;
-> > > +
-> > > +           orientation-switch;
-> > > +           retimer-switch;
-> >
-> > Doesn't it need to listen to mode switching events? 4-lane DP vs
-> > 2/2-lane DP + USB3 requires propagating of the altmode events to the QMP
-> > PHY, see the original 4-lane series.
->
-> The mode is passed through the retimer state as well, isn't it?
-
-ack.
-
->
-> >
-> > > +
-> > > +           ports {
-> > > +                   #address-cells = <1>;
-> > > +                   #size-cells = <0>;
-> > > +
-> > > +                   port@0 {
-> > > +                           reg = <0>;
-> > > +
-> > > +                           retimer_ss2_ss_out: endpoint {
-> > > +                                   remote-endpoint = <&pmic_glink_ss2_ss_in>;
-> > > +                           };
-> > > +                   };
-> > > +
-> > > +                   port@1 {
-> > > +                           reg = <1>;
-> > > +
-> > > +                           retimer_ss2_ss_in: endpoint {
-> > > +                                   remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-> > > +                           };
-> > > +                   };
-> > > +
-> > > +                   port@2 {
-> > > +                           reg = <2>;
-> > > +
-> > > +                           retimer_ss2_con_sbu_out: endpoint {
-> > > +                                   remote-endpoint = <&pmic_glink_ss2_con_sbu_in>;
-> > > +                           };
-> > > +                   };
-> > > +           };
-> > > +   };
-> > > +};
-> > > +
-> >
-> >
-> > > @@ -1164,7 +1566,7 @@ &usb_1_ss0_dwc3_hs {
-> > >  };
-> > >
-> > >  &usb_1_ss0_qmpphy_out {
-> > > -   remote-endpoint = <&pmic_glink_ss0_ss_in>;
-> > > +   remote-endpoint = <&retimer_ss0_ss_in>;
-> > >  };
-> >
-> > orientation-switch and mode-switch for the QMP PHY?
->
-> orientation-switch is already in the SoC dtsi nodes.
->
-> But the qmp phy doesn't currently support mode switching. Right?
-
-Yeah, we didn't land that patchset :-(
-
->
-> >
-> > >
-> > >  &usb_1_ss1_hsphy {
-> > > @@ -1196,7 +1598,7 @@ &usb_1_ss1_dwc3_hs {
-> > >  };
-> > >
-> > >  &usb_1_ss1_qmpphy_out {
-> > > -   remote-endpoint = <&pmic_glink_ss1_ss_in>;
-> > > +   remote-endpoint = <&retimer_ss1_ss_in>;
-> > >  };
-> > >
-> > >  &usb_1_ss2_hsphy {
-> > > @@ -1228,5 +1630,5 @@ &usb_1_ss2_dwc3_hs {
-> > >  };
-> > >
-> > >  &usb_1_ss2_qmpphy_out {
-> > > -   remote-endpoint = <&pmic_glink_ss2_ss_in>;
-> > > +   remote-endpoint = <&retimer_ss2_ss_in>;
-> > >  };
-> > >
-> > > --
-> > > 2.34.1
-> > >
-> >
-> > --
-> > With best wishes
-> > Dmitry
->
-> Thanks for reviewing.
->
-> Abel
+User-Agent: Mozilla Thunderbird
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Subject: Re: [PATCH 1/8] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
+To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <ulf.hansson@linaro.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <p.zabel@pengutronix.de>,
+        <geert+renesas@glider.be>, <dmitry.baryshkov@linaro.org>,
+        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+CC: <quic_varada@quicinc.com>
+References: <20240913121250.2995351-1-quic_srichara@quicinc.com>
+ <20240913121250.2995351-2-quic_srichara@quicinc.com>
+ <4cd3d3f8-7d73-4171-bb35-aba975cdc11a@kernel.org>
+ <9f2ccf3d-fa71-4784-b6d2-2b12ed50bdd2@quicinc.com>
+ <91392141-af8b-4161-8e76-6f461aaba42a@kernel.org>
+Content-Language: en-US
+In-Reply-To: <91392141-af8b-4161-8e76-6f461aaba42a@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Njq9SLglo7LSV5tU12g90qC4kLC3UrBc
+X-Proofpoint-ORIG-GUID: Njq9SLglo7LSV5tU12g90qC4kLC3UrBc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 adultscore=0 bulkscore=0 phishscore=0 mlxlogscore=949
+ spamscore=0 lowpriorityscore=0 clxscore=1015 mlxscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409240085
 
 
 
--- 
-With best wishes
-Dmitry
+On 9/20/2024 6:14 PM, Krzysztof Kozlowski wrote:
+> On 20/09/2024 13:56, Sricharan Ramabadhran wrote:
+>>
+>>>> +
+>>>> +allOf:
+>>>> +  - $ref: qcom,gcc.yaml#
+>>>> +
+>>>> +properties:
+>>>> +  compatible:
+>>>> +    const: qcom,ipq5424-gcc
+>>>
+>>> So everything i sthe same as 5332? Why not adding it there?
+>>>
+>> infact, ipq5332 has 1 dual lane and 1 single lane pcie, whereas
+>> ipq5424 has 2 dual lane and 2 single lane pcie. will update the
+>> bindings in v2 accordingly.
+> 
+> Hm? What is the difference in the bindings? I don't see. Maybe some diff
+> would help.
+> 
+
+For IPQ5424, clocks items is like this
+
+       - description: Board XO clock source
+       - description: Sleep clock source
+       - description: PCIE 2lane PHY0 pipe clock source
+       - description: PCIE 2lane PHY1 pipe clock source
+       - description: PCIE 2lane PHY2 pipe clock source
+       - description: PCIE 2lane PHY3 pipe clock source
+       - description: USB PCIE wrapper pipe clock source
+
+
+For IPQ5332, its like this,
+
+       - description: Board XO clock source
+       - description: Sleep clock source
+       - description: PCIE 2lane PHY pipe clock source
+       - description: PCIE 2lane x1 PHY pipe clock source
+       - description: USB PCIE wrapper pipe clock source
+
+So for IPQ5424, there are 2 additional PCI phy's.
+
+So would it be fine to add the new IPQ5424 compatible to
+IPQ5322 file itself with a 'if:' of compatibles ?
+
+Regards,
+  Sricharan
+
+
 
