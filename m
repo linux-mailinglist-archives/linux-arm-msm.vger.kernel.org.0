@@ -1,82 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-32337-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27B08984BCE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 21:52:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D45E984BE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 22:02:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B79F6B20E89
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 19:52:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D85F1C22D73
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 20:02:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E08B812CDAE;
-	Tue, 24 Sep 2024 19:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35DC1126F0A;
+	Tue, 24 Sep 2024 20:02:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tVSSRqFv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TbPqkR9c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187CD282F4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 19:52:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BF6D335C7
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 20:02:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727207525; cv=none; b=ttrdty27OPNivFvcnWnnF34v5YC7B+ZXhuOMoeoGpdnIaJFhQ8dcgSC+YscsBL888d7bw5ILmlRQhZYclXIvApRn1IJawWfTtvQAGzuoEUzx6qy04m9Zos69bt7/WhiW4feV1/h4F78YFFnt5hXI1YoHX0sZ8aRDY1ZQVlBgJPU=
+	t=1727208126; cv=none; b=n/M0n2c7tI4I70iD45/aZ/7JP0+YxFx9bBaINLxI/s1/VxEpO01uURKECH8xHJFtL+F0Y9At9BbDsMsKMoltNnOqae2Tjp/3ukSVgBNS2flPm4Klg0f8NtE/T1dmjcjCUb/PFi+gfcsrQ7DKaE3FRWD7AfbF3FJxm8xDotFKzW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727207525; c=relaxed/simple;
-	bh=5KeGSbg57tX5ax84rBYpT31G4XxcL2sAPukh7rLxBTU=;
+	s=arc-20240116; t=1727208126; c=relaxed/simple;
+	bh=I58XqHijHUA2UWwDbiGNUDJ1ijylNn3S1hQqxpel1aE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p6nqiSQ1WgYmEQWC3ieyAGfsAAlv+20jejuYhHfDs+YZj2R9dw6uJAjlQnd7JPrkDRFj3EdK8txbseMjzsd27TvpH8ASD0AZ8sHI4FA5cqE15TslJ1dq2MWsxAl/cln/KlP9A3tFVjkHXL2B3sDQRSRqywzPqerhS6MY+x/t0M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tVSSRqFv; arc=none smtp.client-ip=209.85.208.172
+	 Content-Type:Content-Disposition:In-Reply-To; b=A5kT5GG8dHFmrASQJfWEXI3Jx1vIgtxiqT24FkG08AtcQecm3cZn/AaZbdawjhd9gv9yW3Bm79NXV2D5YdeuvCR1TPq/AjJkZj3BLBiigh6R1mzjknfzUcWn1fM4aTh/2pgOb83+E1CPC7cynuqVP4HeAy0MIkhNvbAtMUpnfFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TbPqkR9c; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2f75129b3a3so61033791fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 12:52:03 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5356bb5522bso7054116e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 13:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727207522; x=1727812322; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1727208122; x=1727812922; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bq0U9R9eeNIJowW2qVvKnhEa2DAwJD9fSlheIQ6XtPo=;
-        b=tVSSRqFve4HKXsJsxHif4UbuYVO5kU4a3YBjFccsV6UFby++3B+RYVlYDPVVLrkmf2
-         mAFw5XSYAlDeb+MfHM50dByAqXV9dsPRAgVo/yyAkHBndeHtMDVuxojUjo/MY6n0sEAV
-         aIqGHMjeercncUnQuA9ZnJiGMNKnkv+Ur83kYrujibLZXRWpSxGp3ZsatgTz/qFA/b1V
-         4zeFSp5kCe0MoQabwKRQDOudoaYJlpKMo2QGV/ouOhzMMGhwe1tuoZziaFCGKMGKzAFi
-         nApQLDVM+b7KY2HJbChi5J76POV0KxXJGAtAeXDUMytNHn6U4pfHCVcBDQuB2Do1vRNM
-         wlvw==
+        bh=pCMBvU2x6ctygjOC+bxXh9ki3HMzf8uD5pWCAHaHSyo=;
+        b=TbPqkR9cMgX2WK9NHYZujeQPBZuLFrtke+M5+bUf4zi4YAlmL1qlHdjIjVcKft4jKi
+         cw1ZpB/CPmAl6cWQAoBc7SkxBrkYZO65s7Io4xJkJdJaiTJt9ojheUzeaYfj7YNSzhz+
+         rrPPigkGrqyxUPVAu1prby0FYXv9JLerq8A9/crH6H2e5sqTpYghJbv0OnByAhGtgl+e
+         xCtuR2LbmRtQfNZgMTfs2wB7VR0pXU2oCJqojQCQZK9azTJual6wZZWPOZVmwLVmeTm4
+         hFGkuDeR4GIOnBQt1v6AxQ3UwuBwf2SrrltGYhY8i157UHlhLp890laBHgaPGjT1G+bi
+         pncQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727207522; x=1727812322;
+        d=1e100.net; s=20230601; t=1727208122; x=1727812922;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bq0U9R9eeNIJowW2qVvKnhEa2DAwJD9fSlheIQ6XtPo=;
-        b=A7eAe0iOLh+8zSHkYx9V2aKzgtmNo/5WcjlqGoRKYJYfwqNBiB00vcEVwS9P3+t1qu
-         tNlz32qa8+tqZa+A1kt+7inKF3FMN284oqw80CqTujUdxUPEgomcIjIOEo3ZemTuqxuq
-         +XsWccX61IguC0EDUagmnezitowEcdPF1Gg8aNfAgb4HU0Ut9QjKH6DyLH8m4KzQWuDo
-         n+1uv3+lvnGptdSnrbdcZRp7HeCFt+pK2opQpKZOept/OlLHsnqGp20mNq6a7LXfmKT0
-         wZVkx22bXDIjyL1T6rW7pAGGau8gHY3jyQZ4+i2onpw3s2iZclG56DVN9LMph7FIw0Z1
-         Jvow==
-X-Gm-Message-State: AOJu0Yypr6Q2LRiy+PP8vQNmoHVmXkveke6HbKACXlaz4mJsU6xSDvOl
-	49MDZrcsSLkZEWnxX07nOjySvB1rm+5wtzDwpk3+nQ34f3hLtbLibFgBOJk3VzeSlLmgT2MTOQ3
-	60/+Dwg==
-X-Google-Smtp-Source: AGHT+IEk0uKEEK8BKFUqm0todqOrVIpVZOqp06Z3FNH4MbitPEcBybY4WcA5l7TOP1oTtKKl7bj9uw==
-X-Received: by 2002:a2e:be93:0:b0:2ee:8453:5164 with SMTP id 38308e7fff4ca-2f904a5b09dmr3365951fa.0.1727207522076;
-        Tue, 24 Sep 2024 12:52:02 -0700 (PDT)
+        bh=pCMBvU2x6ctygjOC+bxXh9ki3HMzf8uD5pWCAHaHSyo=;
+        b=fQI+RDyebYa/AweGv7h2XJyqxk3hcOZdhQWC8FCHZ53x0+v86BInTpXqm6uYJVitOm
+         /JTvTmebEspYEm26gcIIsWb5rgwMRYUxl/DdH8k1WMADiRU8/qXb7175d7IeNLN3EXFv
+         tHoc7/RLf/zTMiBIr7g/OjG/zuTLDgj4q6vvxlz9wSmxh6VeFq8LSUXYA4tOGwf7rslv
+         7NcJFUwhuVdbXZHndIY44blpDfbp1JT6z1CH465J6zPqiH9DLHQrZQE+92hHfaAOnIxW
+         7/o3B3sN3s5ZWoCPMJ2N7DLcwj7kuoJzigGiJzyu+hzaMd/gZ2JE010IZql6xNfLGaXK
+         y/6g==
+X-Gm-Message-State: AOJu0YznshOxq3gCWXa4sOg3IU9QtJ8jJ92qmiXA8Pbx7uQSGzboMOrC
+	pJ0WaMtwrtwBbKEnF2nrn37rgZ5mk0/AVnrPgpznvmk4shgu0CZZezxWBcf7OQTL41P6bPx18yA
+	5Z2IvvA==
+X-Google-Smtp-Source: AGHT+IFeut3+KrkdV7UIBIPsPMOKFGCrq1HWwv+N5oz9vY5pML8Pt5/c5VD6qEyMSQ4BqOELrDRP3w==
+X-Received: by 2002:a05:6512:3dac:b0:537:a855:7d6f with SMTP id 2adb3069b0e04-53877538c38mr81739e87.34.1727208122326;
+        Tue, 24 Sep 2024 13:02:02 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f8d283c655sm3056961fa.55.2024.09.24.12.51.59
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-537a8648995sm316863e87.197.2024.09.24.13.02.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Sep 2024 12:52:00 -0700 (PDT)
-Date: Tue, 24 Sep 2024 22:51:58 +0300
+        Tue, 24 Sep 2024 13:02:01 -0700 (PDT)
+Date: Tue, 24 Sep 2024 23:02:00 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: John Schulz <john.schulz1@protonmail.com>
 Cc: linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] drivers/gpu: Switching Adreno x1-85 device check to
- family check.
-Message-ID: <ftxrcovpon2vwkjcoejtcdlmmanq4fslpqr7ho3nljvikqpkae@gfxs3qvjk6zs>
+Subject: Re: (No Subject)
+Message-ID: <ysoadpz2lequzaxi3tl66jsnu6rduxoubgzifth7fmmg3axxrv@lxtjlpu65ozp>
 References: <20240921204237.8006-1-john.schulz1@protonmail.com>
  <g7jofgrxwdypuemq4xe5h45pbewwviggllffoxongmarozme2m@cewhxcp7ij7j>
  <20240924155442.74210-1-john.schulz1@protonmail.com>
- <20240924155442.74210-2-john.schulz1@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,19 +83,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240924155442.74210-2-john.schulz1@protonmail.com>
+In-Reply-To: <20240924155442.74210-1-john.schulz1@protonmail.com>
 
-On Tue, Sep 24, 2024 at 03:55:38PM GMT, John Schulz wrote:
-> Switches the is_x185 check to is_x1xx_family to accommodate more devices.
-> Note that I got the X1-45 GPU ID from Windows which may not be correct.
+On Tue, Sep 24, 2024 at 03:54:59PM GMT, John Schulz wrote:
+> Hi Dmitry, 
 > 
-> Signed-off-by: John Schulz <john.schulz1@protonmail.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  3 ++-
->  drivers/gpu/drm/msm/adreno/adreno_gpu.h | 12 +++++++++---
->  2 files changed, 11 insertions(+), 4 deletions(-)
+> I do not have a way of testing this patch. I do see your point in that it may be redundant/unnecessary
+> since basic/generic drivers should at the very least output a shell interface. 
+> 
+> Upon doing more research, I came across the fact that some X1 GPUs have OEM signing that prevent the 
+> driver from working. I suspect that is what I am running into when I try testing various distros. All
+> of them exhibit the same behavior of the display halting during the bootloader handoff and the HDMI
+> port does not output anything. Even the Debian 12 image from Linaro exhibits the same issue. 
 
-I don't see a point in reposting the patch with the same set of issues.
+Ok. So you have a device with X1P, which you don't seem to be able to
+get to work? Could you please try doing the following:
+
+- you might need to modify the GPU DT node to use a different ID there.
+  If your guess is right, you might need to specify qcom,adreno-4310c31f
+  (this is from your patch)
+
+- you need to define a corresponding entry in a7xx_gpus[]. Try using
+  X1-85 as an inspiration.
+
+- only with that in place the x1xx family makes sense.
+
+
+Also it would be nice if you describe your issue. What exactly do you
+observe and what doesn't seem to work?
+
+> 
+> I find this a bit odd given that there is a dts entry for the Asus Vivobook S 15 X1E varient. I 
+> don't see any comments on whether the dts for that laptop was tested. The Vivobook I have is the
+> X1P varient which, to my knowledge, is identical to the X1E one but a different SoC. 
+> 
+> Perhaps it would be of better use of my (and others) time figuring out if the GPU drivers not
+> working is due to OEM locking and if so, trying to unlock it. What do y'all think? 
+> 
+> P.S. Apologies for the incorrect prefix, should have done more research instead of trying to 
+> make an educated guess. 
+> 
+> Thanks,
+> John
+> 
+> 
 
 -- 
 With best wishes
