@@ -1,181 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-32313-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F302098485E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 17:15:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98D11984863
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 17:16:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C25781C21778
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 15:15:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27C081F23892
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Sep 2024 15:16:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A11E1CFB6;
-	Tue, 24 Sep 2024 15:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2B1917579;
+	Tue, 24 Sep 2024 15:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PLE2yZvc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="C3nPpx7L"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D965D17579;
-	Tue, 24 Sep 2024 15:15:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF49F15E96
+	for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 15:16:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727190930; cv=none; b=CWmgszj+WvMirYwXO4+PtuwbdIH6DGrxJE8yTITXm5y21mSsFCDDqq2povRINUYn/KzfurDmKnWPHUTCnIQYgvowetNqc11DWpZLEhBLPT0GVt0KNshaPLA+glhT36FHULMWLZK8JU8+VcL7ppgkTe7SepaQzRgfx0LdMWlg7Xs=
+	t=1727190972; cv=none; b=a3oJ9GV57d8A0AkM6RxNgn8d6mjR6VczhZqLK6TL8n9I2CVY8ropqpNEiClPuBz5PhG7Uhd3u0tsmoBEH3T59A/ykB8d4sdJ5Zv3jWwawhuQPbv1BmAeaV25Afsiqwyi0y9dw6rKJEFWJ//ckWxGx9hkM3zV/ddBOTGbTHuiGWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727190930; c=relaxed/simple;
-	bh=zua3115y7pyjRHGR0V8lJBC3jKIcSuH/Ui+QDs+z1Gw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JgV9/CtZBRfFx4QSilRmpK2aQzlSufNl5coS6C1f9FRLL0S+/Q/Dbxjhm3o3lxOENykXvZtn9+7Foa7HL2Sa570vtN+t3BGYKAbPg2nIpIr45O6/v81Eygs0GPAwRsH5y6kBJKxzycbHDylx1/J2RqxCnI9IVXNKnaIwp7844EY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PLE2yZvc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF84C4CEC4;
-	Tue, 24 Sep 2024 15:15:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727190929;
-	bh=zua3115y7pyjRHGR0V8lJBC3jKIcSuH/Ui+QDs+z1Gw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PLE2yZvcxco7DlAVE0tAajIu/yBQjgrEMN/2GdK6xd3eqx56YPDtGkyroSb1hVrBA
-	 fxxJhxsVpxUrEyPfZoKKTtAI0AtYO2numyIlO5445D6v9OZsn8BVvuLtLBK5O4Qe6g
-	 BhySFKMJ60VEFB4Bjuz5A3b24+NETz5LFzyAgR/NMjbinrXneEhIJ7dT8v+RAqadPd
-	 vhL+HqJUJDRWhoWg3ytmBzS0dHYDmFbB0cjwEnXTorvsgpa24J84oXuA4yPD8KrmTx
-	 cRA/Zx6cjfh9xrFEol8xEac/0RpWVSNS6bZt3eBP8mNBS1SBiRmkbkDPnWwxWWt+hr
-	 1aUiZuPq2EQeA==
-Received: from johan by theta with local (Exim 4.98)
-	(envelope-from <johan@kernel.org>)
-	id 1st7G9-0000000025Y-1TD9;
-	Tue, 24 Sep 2024 17:15:25 +0200
-Date: Tue, 24 Sep 2024 17:15:25 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
-	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
-	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
-	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
-	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v4 3/6] phy: qcom: qmp: Add phy register and clk setting
- for x1e80100 PCIe3
-Message-ID: <ZvLXjdpBpUS3lLn-@hovoldconsulting.com>
-References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
- <20240924101444.3933828-4-quic_qianyu@quicinc.com>
+	s=arc-20240116; t=1727190972; c=relaxed/simple;
+	bh=PwTDlLox2AQAmONIpbECM8jVk9QU0Vp6e7ZQgQ06bE0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kXwnk/dPLANeCBGvPyLr8KIkeGQfhojHA2aSDN/c6vKaxI3RgET9U/kuW4v/8yToAwGKBNNjvPzWAKUmgUdP3GJzC7KGdZX9M+/qSuBh/vh3k3gp9kEsMCr4RvjsUz8di72Uk4pCp7VLNBJT/aoJZ+ly1O6l/KOwu2rx6D8ebOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=C3nPpx7L; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso72788961fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Sep 2024 08:16:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727190968; x=1727795768; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=M2+kErz59ViWHYR3BIUhJh9tCnLP5LQVNzAaQ1sSNYU=;
+        b=C3nPpx7LcETD3OwJ5UC7uqNcT61XcL6WP2dt+Ga+OaNRsKz/2kEpJV8M5EUEopFb8F
+         rjtLXyiPPT8YkjnDgT35bLGfGZrYo97dcpHz1L0A8txhyerUQ1PN2a0RAEJJBSKUtA7v
+         aMlkD+tw6V+JPinEBIwIQyxgENhKuZfQpfOPkQyepr/VOYKFiHMfx8aflVQTICYbouXp
+         FUBMeQmcL7il1jnKTlgj77i6WHzuokxJXIZfMcs7pS5a6xhNH1IQFjyEgK2Cy0U3CoPZ
+         eTKGgS8hx78mikL6vHPjADgFj5dCXO2HNr+e9YNThrzMFfF3MtHlamObA1qtFpw8qYeZ
+         sGQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727190968; x=1727795768;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=M2+kErz59ViWHYR3BIUhJh9tCnLP5LQVNzAaQ1sSNYU=;
+        b=ZEWW258qf95xvkah1ozZuVDDsbtlbhvTArIIhNgua4irjZ5T62Ecv4LHDrA0wvGXXL
+         KgDZRi12vV3AINys24M9vaSsgfoWMsaLv1xyrDsDFKnHYDAro42eanmkcjZFz7CSSrCJ
+         GxUTV9FK7NLjjItjuabbzro1dNyhineNfygWUfNme2Wf/bd6TgS09jchIQLFDK32b9j4
+         ZGIJ4YU6vOJDyMDHU9cvahk0r0cOHh0RpZ/d3vHiS5SUSPzjamZ5FnPhMR035uk0MBhT
+         4Lqmr7T6D9AVlMYQ1we47eXoEWqoBGOxCGqY6s1xaTWF+vX/ypOC9H0xTtlh2uRc1C3x
+         gx4w==
+X-Forwarded-Encrypted: i=1; AJvYcCXnmI0PaDpwhVbebEcst/pluY/G07bsHWuTeq+5SauQbrRzYeMnCOX99+N5GCXfuC8My8DoC5lnsTgwWG2D@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxd8quudmQ787zRUEMFSwT5UtZtBkCVvQ4HSSUdnDA2VIUvMzF7
+	NjbkG2/L6QoXOWUAM+yRX4dr/ge9ejUii9Qoi3OOE39Y1fdvF00Av4vF5aWhkDM=
+X-Google-Smtp-Source: AGHT+IGga//IkWzGe9va/Pn0IB7tDK/PAFPD+bS+JVMybUqi1i8ZQsWDZz9NCHDjyOTeeTzh5RfKGw==
+X-Received: by 2002:a2e:a593:0:b0:2f7:5980:78ca with SMTP id 38308e7fff4ca-2f7cb360495mr81537551fa.32.1727190968045;
+        Tue, 24 Sep 2024 08:16:08 -0700 (PDT)
+Received: from [192.168.0.25] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c5cf49d41esm841259a12.42.2024.09.24.08.16.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Sep 2024 08:16:07 -0700 (PDT)
+Message-ID: <b259f304-77a2-4b0e-a8b3-c8d0fb8f9750@linaro.org>
+Date: Tue, 24 Sep 2024 16:16:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240924101444.3933828-4-quic_qianyu@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 20/29] media: iris: subscribe parameters and properties
+ to firmware for hfi_gen2
+To: quic_dikshita@quicinc.com, Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vedang Nagar <quic_vnagar@quicinc.com>
+References: <20240827-iris_v3-v3-0-c5fdbbe65e70@quicinc.com>
+ <20240827-iris_v3-v3-20-c5fdbbe65e70@quicinc.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20240827-iris_v3-v3-20-c5fdbbe65e70@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 24, 2024 at 03:14:41AM -0700, Qiang Yu wrote:
-> Currently driver supports only x4 lane based functionality using tx/rx and
-> tx2/rx2 pair of register sets. To support 8 lane functionality with PCIe3,
-> PCIe3 related QMP PHY provides additional programming which are available
-> as txz and rxz based register set. Hence adds txz and rxz based registers
-> usage and programming sequences.
-
-> Phy register setting for txz and rxz will
-> be applied to all 8 lanes. Some lanes may have different settings on
-> several registers than txz/rxz, these registers should be programmed after
-> txz/rxz programming sequences completing.
-
-Please expand and clarify what you mean by this.
- 
-> Besides, x1e80100 SoC uses QMP phy with version v6.30 for PCIe Gen4 x8.
-> Add the new register offsets in a dedicated header file.
+On 27/08/2024 11:05, Dikshita Agarwal via B4 Relay wrote:
+> From: Vedang Nagar <quic_vnagar@quicinc.com>
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+> For hfi_gen2, subscribe for different bitstream parameters to
+> firmware to get notified for change in any of the subscribed
+> parameters.
+> 
+> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
+> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-pcie.c      | 211 ++++++++++++++++++
->  .../qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h    |  25 +++
->  drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h |  19 ++
->  3 files changed, 255 insertions(+)
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v6_30.h
->  create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-v6_30.h
+>   drivers/media/platform/qcom/iris/iris_hfi_gen2.h   |   6 +
+>   .../platform/qcom/iris/iris_hfi_gen2_command.c     | 179 +++++++++++++++++++++
+>   .../platform/qcom/iris/iris_hfi_gen2_defines.h     |   9 ++
+>   .../platform/qcom/iris/iris_platform_common.h      |   4 +
+>   .../platform/qcom/iris/iris_platform_sm8550.c      |  13 ++
+>   5 files changed, 211 insertions(+)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index f71787fb4d7e..d7bbd9df11d7 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-
-> @@ -1344,6 +1346,155 @@ static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
->  	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_20_PCS_G4_FOM_EQ_CONFIG5, 0x8a),
->  };
->  
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x8_pcie_txz_tbl[] = {
-
-Please try to follow the sort order used for the other platforms for
-these tables (e.g.  serdes, tx, rx, pcr, pcr_misc).
-
-> +static const struct qmp_phy_init_tbl x1e80100_qmp_gen4x8_pcie_pcs_misc_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_ENDPOINT_REFCLK_DRIVE, 0xc1),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_OSC_DTCT_ACTIONS, 0x00),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_EQ_CONFIG1, 0x16),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_G4_EQ_CONFIG5, 0x02),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_G4_PRE_GAIN, 0x2e),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_RX_MARGINING_CONFIG1, 0x03),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_RX_MARGINING_CONFIG3, 0x28),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_RX_MARGINING_CONFIG5, 0x18),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_G3_FOM_EQ_CONFIG5, 0x7a),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_G4_FOM_EQ_CONFIG5, 0x8a),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_G3_RXEQEVAL_TIME, 0x27),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_G4_RXEQEVAL_TIME, 0x27),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_TX_RX_CONFIG, 0xc0),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_30_PCS_POWER_STATE_CONFIG2, 0x1d),
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2.h
+> index 8170c1fef569..5fbbab844025 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2.h
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2.h
+> @@ -18,12 +18,18 @@ struct iris_core;
+>    *
+>    * @inst: pointer to iris_instance structure
+>    * @packet: HFI packet
+> + * @ipsc_properties_set: boolean to set ipsc properties to fw
+> + * @opsc_properties_set: boolean to set opsc properties to fw
+>    * @src_subcr_params: subscription params to fw on input port
+> + * @dst_subcr_params: subscription params to fw on output port
+>    */
+>   struct iris_inst_hfi_gen2 {
+>   	struct iris_inst		inst;
+>   	struct iris_hfi_header		*packet;
+> +	bool				ipsc_properties_set;
+> +	bool				opsc_properties_set;
+>   	struct hfi_subscription_params	src_subcr_params;
+> +	struct hfi_subscription_params	dst_subcr_params;
+>   };
+>   
+>   void iris_hfi_gen2_command_ops_init(struct iris_core *core);
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> index e50f00021f6d..791b535a3584 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+> @@ -472,6 +472,9 @@ static int iris_hfi_gen2_session_open(struct iris_inst *inst)
+>   	if (inst->state != IRIS_INST_DEINIT)
+>   		return -EALREADY;
+>   
+> +	inst_hfi_gen2->ipsc_properties_set = false;
+> +	inst_hfi_gen2->opsc_properties_set = false;
 > +
-
-Stray newline.
-
-> +};
+>   	inst_hfi_gen2->packet = kzalloc(4096, GFP_KERNEL);
+>   	if (!inst_hfi_gen2->packet)
+>   		return -ENOMEM;
+> @@ -536,9 +539,185 @@ static int iris_hfi_gen2_session_close(struct iris_inst *inst)
+>   	return ret;
+>   }
+>   
+> +static int iris_hfi_gen2_session_subscribe_mode(struct iris_inst *inst,
+> +						u32 cmd, u32 plane, u32 payload_type,
+> +						void *payload, u32 payload_size)
+> +{
+> +	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
 > +
-
-> +static const struct qmp_phy_cfg x1e80100_qmp_gen4x8_pciephy_cfg = {
-> +	.lanes = 8,
+> +	iris_hfi_gen2_packet_session_command(inst,
+> +					     cmd,
+> +					     (HFI_HOST_FLAGS_RESPONSE_REQUIRED |
+> +					     HFI_HOST_FLAGS_INTR_REQUIRED),
+> +					     iris_hfi_gen2_get_port(plane),
+> +					     inst->session_id,
+> +					     payload_type,
+> +					     payload,
+> +					     payload_size);
 > +
-> +	.offsets		= &qmp_pcie_offsets_v6_30,
-> +	.tbls = {
-> +		.serdes			= x1e80100_qmp_gen4x8_pcie_serdes_tbl,
-> +		.serdes_num		= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_serdes_tbl),
-> +		.rx			= x1e80100_qmp_gen4x8_pcie_rx_tbl,
-> +		.rx_num			= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_rx_tbl),
-> +		.pcs			= x1e80100_qmp_gen4x8_pcie_pcs_tbl,
-> +		.pcs_num		= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_pcs_tbl),
-> +		.pcs_misc		= x1e80100_qmp_gen4x8_pcie_pcs_misc_tbl,
-> +		.pcs_misc_num		= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_pcs_misc_tbl),
-> +		.ln_shrd		= x1e80100_qmp_gen4x8_pcie_ln_shrd_tbl,
-> +		.ln_shrd_num		= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_ln_shrd_tbl),
-> +		.txz			= x1e80100_qmp_gen4x8_pcie_txz_tbl,
-> +		.txz_num		= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_txz_tbl),
-> +		.rxz			= x1e80100_qmp_gen4x8_pcie_rxz_tbl,
-> +		.rxz_num		= ARRAY_SIZE(x1e80100_qmp_gen4x8_pcie_rxz_tbl),
-
-Try follow the order of the other SoCs here as well (e.g. use the order
-defined in struct qmp_phy_cfg_tbls).
-
-> +	},
-
->  static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
->  {
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> @@ -3751,6 +3953,9 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
->  
->  	qmp_configure(qmp->dev, serdes, tbls->serdes, tbls->serdes_num);
-
-If your comment in the commit message implies that txz/rxz must be
-programmed before tx/rx then you need to add a comment here as well.
-
-> +	qmp_configure(qmp->dev, qmp->txz, tbls->txz, tbls->txz_num);
-> +	qmp_configure(qmp->dev, qmp->rxz, tbls->rxz, tbls->rxz_num);
+> +	return iris_hfi_queue_cmd_write(inst->core, inst_hfi_gen2->packet,
+> +					inst_hfi_gen2->packet->size);
+> +}
 > +
->  	qmp_configure_lane(qmp->dev, tx, tbls->tx, tbls->tx_num, 1);
->  	qmp_configure_lane(qmp->dev, rx, tbls->rx, tbls->rx_num, 1);
+> +static int iris_hfi_gen2_subscribe_change_param(struct iris_inst *inst, u32 plane)
+> +{
+> +	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+> +	struct hfi_subscription_params subsc_params;
+> +	u32 prop_type, payload_size, payload_type;
+> +	struct iris_core *core = inst->core;
+> +	const u32 *change_param = NULL;
+> +	u32 change_param_size = 0;
+> +	u32 payload[32] = {0};
+> +	u32 hfi_port = 0;
+> +	int ret;
+> +	u32 i;
+> +
+> +	if ((V4L2_TYPE_IS_OUTPUT(plane) && inst_hfi_gen2->ipsc_properties_set) ||
+> +	    (V4L2_TYPE_IS_CAPTURE(plane) && inst_hfi_gen2->opsc_properties_set)) {
+> +		dev_err(core->dev, "invalid plane\n");
+> +		return 0;
+> +	}
+> +
+> +	change_param = core->iris_platform_data->input_config_params;
+> +	change_param_size = core->iris_platform_data->input_config_params_size;
+> +
+> +	if (!change_param || !change_param_size)
+> +		return -EINVAL;
 
-Johan
+That's an odd one, checking for zero but _not_ bounds checking 
+chanage_param_size < (sizeof(payload)/sizeof(u32)) - 1
+
+I'm not sure where inpug_config_param_size gets populated but I'd rather 
+check that type of parameter - for exactly that reason - than the 
+defensive coding done on your inputs elsewhere.
+
+TL;DR why do you trust change_param_size < your array size but not 
+change_param_size >= 1 ?
+
+---
+bod
 
