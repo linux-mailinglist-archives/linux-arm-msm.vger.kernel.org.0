@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-32506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B39E69863CF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 17:40:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2704986481
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 18:11:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DE7611C27745
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:40:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7053AB2E7D2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:24:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA2281D5AC5;
-	Wed, 25 Sep 2024 15:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C533172BDF;
+	Wed, 25 Sep 2024 15:05:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o/bWVpAB"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lV/dEyYi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C28DDC5;
-	Wed, 25 Sep 2024 15:40:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B0416DEDF;
+	Wed, 25 Sep 2024 15:05:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727278829; cv=none; b=XZf1V6iP99HI9P4zqFqLFPT5Y9MXl91YWffHjKFrgqzcVVfNtk7iyxs0MdsoG/WAoO3zyFMVt95VDUF1m1UCbIP8T2zi6/Zk9HVytff7CGeG+Pnj6Wl0L7wR+wu83ov+ecBsvN2D5jiyVPsw7wB6J9a0teyyEfOvXBXl7oGMWmw=
+	t=1727276727; cv=none; b=UCUqzPdzRLQY8R1yUG0+RoHaWvgISE4CFZpt6EWhqLmjdsRfV0Zf72p8MEGCniJPf3yvryLSTY+B1mt8i//Hu91BL7XuCw1lXKznVtjkNjZHYFUTZGu0MB1Vw02My8NlA1RXVXZQC9t5V7xlCyaBB/2pO25gUFrH8SPdh0JSvDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727278829; c=relaxed/simple;
-	bh=986SlRrlycEw9SEZ7YlGWIbuS0GUP+bBf/BOWdsi/cs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NvXSlbn5URxNUwSxmXWXlsk2rGhCmI+zLlsIOutf5PUYmled4IKXmT0dW2C9n7wo6J/Vw1SHK7dX+xrgP7jQsr2F4DPyVFlh4H9u7bVy6jX6JgXC2jQXfUkEkGpGru+EWMlCz7CfzfWACXJr+UPZhXss2fyuEmrdLjjU+vyNs8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o/bWVpAB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48P7TBAx002097;
-	Wed, 25 Sep 2024 15:40:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eu5BTfN7gGDmJfFLzwg37VwuJ3b5VZixko81Swn6aOw=; b=o/bWVpABz4/j08O8
-	InPMwtLHG2uvu/JWp/aQYvHM6s295xronx4XcgfZROWxjkOEtkk9k1uTi2A7B9b9
-	DJ3Y/tJm7PmkpvTywUKQqc572TSKqjbtVPav67OPxsZAXcyCtPcOj1KO/wPSUzjk
-	Iv4AwU48P8SdN8FoEK4K0Uul2bF8B97zX7UvFq9f6ofUeufX8ZlLQQj1CWVyebwu
-	mSEsnyN1fJhskV5ohPicI7bqYyzhr5YKsNzaIKrO4bEywwOLctCuWuEHoZCy7HtB
-	4Cow7GaseO2cTKWZyEddhtz/SUKU6S+yBLZAvdtKk+lw2XiHY4vx8NWVGbE9OriW
-	LmFntw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spwevfmf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 15:40:23 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48PFeMpw008110
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 15:40:22 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Sep
- 2024 08:40:16 -0700
-Message-ID: <a0f66292-fb97-40ae-9fb1-d79160e70bb3@quicinc.com>
-Date: Wed, 25 Sep 2024 23:40:14 +0800
+	s=arc-20240116; t=1727276727; c=relaxed/simple;
+	bh=LTFovhotCR3F0gjdRFbbOMrUPSlsAH2Mi6k1oPhssn0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UwLQGKhzmFDiZCEYOFszKA2iysb2DrWh1nMqY68/cvYapmY/kbPd5ZFbh8SWrcYYsNV+AbbP3/ylTKBQoGbcUiNJ3qY04CWf8SkgEtqMdzX/pS2wKrnzp/jvravR1Sk/qOJ40novOJWHnudjE7c0q9mFzKQVvWg2eNjnMjdEXxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lV/dEyYi; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727276726; x=1758812726;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=LTFovhotCR3F0gjdRFbbOMrUPSlsAH2Mi6k1oPhssn0=;
+  b=lV/dEyYibagIHuQvOXg5M78AV3oH9/1pbaF41/rpAG1o4xfXp5Yf9vC9
+   NdLP3PtytXUqiqbZMd5NGh3zxm1sg4a0H9ruJYXJC8OAtIGLWWwRvuwky
+   DST+0k8NlEABCcGRsyscQve21QpYNt03z79P6KForVrF7cyFQmKS91TsL
+   spWWGTkhkwkAHBfWMYowWbNZiLItv2ReDTUTu74688YrmNYbLM4S6QBRc
+   WHt4aOiQ/d13QZae+tUReW5UDS7xQI8HL6wpitYKWrpDbQfuHnCgL/N54
+   7uEt/7LlRaiGcTqyfE3D+be+UNuVXECahP92qlOXGBeKuyibxvoGesaAI
+   w==;
+X-CSE-ConnectionGUID: BApjExqiTim3RzQByOk0ww==
+X-CSE-MsgGUID: iDKTPwRRQ865FqjgcAKOpA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11206"; a="26482948"
+X-IronPort-AV: E=Sophos;i="6.10,257,1719903600"; 
+   d="scan'208";a="26482948"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2024 08:05:25 -0700
+X-CSE-ConnectionGUID: uBmKSm89TSiRGkjsbpUpYg==
+X-CSE-MsgGUID: ELGXt5SjQ5GvFpL3sot2/g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.10,257,1719903600"; 
+   d="scan'208";a="76317739"
+Received: from kniemiec-mobl1.ger.corp.intel.com (HELO [10.245.246.30]) ([10.245.246.30])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2024 08:05:20 -0700
+Message-ID: <8bb65adc-e995-443e-80c9-36e9b5d8eee3@linux.intel.com>
+Date: Wed, 25 Sep 2024 16:54:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,133 +67,117 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>, <krzk+dt@kernel.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <todor.too@gmail.com>,
-        <rfoss@kernel.org>, <conor+dt@kernel.org>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
- <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
- <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
- <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
- <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
- <6562a958-47e9-4a49-b235-fe8deba3c051@linaro.org>
- <cab95caa-9ffb-446a-858b-342939e80811@mleia.com>
- <4e94106d-5ca9-485b-8c51-c18dcd4e64b0@linaro.org>
- <b779182f-a963-400a-8fc1-2468710082d2@linaro.org>
+Subject: Re: [PATCH v28 30/32] ALSA: usb-audio: Add USB offload route kcontrol
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ dmitry.torokhov@gmail.com, corbet@lwn.net, broonie@kernel.org,
+ lgirdwood@gmail.com, tiwai@suse.com, krzk+dt@kernel.org,
+ Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, robh@kernel.org,
+ gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
+References: <20240925010000.2231406-1-quic_wcheng@quicinc.com>
+ <20240925010000.2231406-31-quic_wcheng@quicinc.com>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <b779182f-a963-400a-8fc1-2468710082d2@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CCd-aqsO0QRZw8MMe7MBcT94d3Vl79kg
-X-Proofpoint-ORIG-GUID: CCd-aqsO0QRZw8MMe7MBcT94d3Vl79kg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1011
- malwarescore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 phishscore=0
- spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409250112
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <20240925010000.2231406-31-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Vladimir, Bryan,
 
-On 9/18/2024 7:16 AM, Vladimir Zapolskiy wrote:
-> Hi Bryan,
-> 
-> On 9/18/24 01:40, Bryan O'Donoghue wrote:
->> On 13/09/2024 06:06, Vladimir Zapolskiy wrote:
->>> On 9/13/24 01:41, Bryan O'Donoghue wrote:
->>>> On 12/09/2024 21:57, Vladimir Zapolskiy wrote:
->>>>>> 3. Required not optional in the yaml
->>>>>>
->>>>>>        => You can't use the PHY without its regulators
->>>>>
->>>>> No, the supplies shall be optional, since it's absolutely possible to
->>>>> have
->>>>> such a board, where supplies are merely not connected to the SoC.
->>>>
->>>> For any _used_ PHY both supplies are certainly required.
->>>>
->>>> That's what the yaml/dts check for this should achieve.
->>>
->>> I believe it is technically possible by writing an enormously complex
->>> scheme, when all possible "port" cases and combinations are listed.
->>>
->>> Do you see any simpler way? Do you insist that it is utterly needed?
->>
->> I asked Krzysztof about this offline.
->>
->> He said something like
->>
->> Quote:
->> This is possible, but I think not between child nodes.
->> https://elixir.bootlin.com/linux/v6.11-rc7/source/Documentation/ 
->> devicetree/bindings/example-schema.yaml#L194
->>
->> You could require something in children, but not in parent node. For
->> children something around:
->> https://elixir.bootlin.com/linux/v6.4-rc7/source/Documentation/ 
->> devicetree/bindings/net/qcom,ipa.yaml#L174
->>
->> allOf:
->>     - if:
->>         required:
->>           - something-in-parent
->>       then:
->>         properties:
->>           child-node:
->>             required:
->>               - something-in-child
->>
->> I will see if I can turn that into a workable proposal/patch.
->>
-> 
-> thank you for pushing my review request forward.
-> 
-> Overall I believe making supply properties as optional ones is sufficient,
-> technically straightforward and merely good enough, thus please let me
-> ask you to ponder on this particular variant one more time.
-> 
 
-So, we are discussing two things.
 
-1# Use separate supplies for each CSI block, looks like there is no 
-doubt about it anymore. So, I will update it just like based on suggestion.
+> +static int
+> +snd_usb_offload_route_get(struct snd_kcontrol *kcontrol,
+> +			  struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
+> +	int ret;
+> +
+> +	ret = snd_soc_usb_update_offload_route(sysdev,
+> +					       CARD_IDX(kcontrol->private_value),
+> +					       PCM_IDX(kcontrol->private_value),
+> +					       SNDRV_PCM_STREAM_PLAYBACK,
+> +					       ucontrol->value.integer.value);
+> +	if (ret < 0) {
+> +		ucontrol->value.integer.value[0] = -1;
+> +		ucontrol->value.integer.value[1] = -1;
+> +	}
 
-csiphyX-vdda-phy-supply
-csiphyX-vdda-pll-supply
+well this invalidates again what I understood from the last patch and
+goes back to what I understood initially: the error code is never
+returned to higher levels - when offload is not supported the kcontrol
+values are encoded to the -1 magic value.
 
-Then I will need below items in the required list if they are required.
-required:
-   - csiphy0-vdda-phy-supply
-   - csiphy0-vdda-pll-supply
-   - csiphy1-vdda-phy-supply
-   - csiphy1-vdda-pll-supply
-...
-   - csiphy7-vdda-phy-supply
-   - csiphy7-vdda-pll-supply
+> +	return 0;
 
-2# Regarding the CSI supplies, if they need to be making as optional?
-Looks like there is no conclusion now.
+and this begs the question if this helper should return a void value.
 
-@Bryan, do you agree with this?
+> +}
+> +
+> +static int snd_usb_offload_route_info(struct snd_kcontrol *kcontrol,
+> +				      struct snd_ctl_elem_info *uinfo)
+> +{
+> +	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+> +	uinfo->count = 2;
+> +	uinfo->value.integer.min = -1;
+> +	/* Arbitrary max value, as there is no 'limit' on number of PCM devices */
+> +	uinfo->value.integer.max = 0xff;
+> +
+> +	return 0;
+> +}
+> +
+> +static struct snd_kcontrol_new snd_usb_offload_mapped_ctl = {
+> +	.iface = SNDRV_CTL_ELEM_IFACE_CARD,
+> +	.access = SNDRV_CTL_ELEM_ACCESS_READ,
+> +	.info = snd_usb_offload_route_info,
+> +	.get = snd_usb_offload_route_get,
+> +};
+> +
+> +/**
+> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
+> + * @chip - USB SND chip device
+> + *
+> + * Creates a sound control for a USB audio device, so that applications can
+> + * query for if there is an available USB audio offload path, and which
+> + * card is managing it.
+> + */
+> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
+> +{
+> +	struct usb_device *udev = chip->dev;
+> +	struct snd_kcontrol_new *chip_kctl;
+> +	struct snd_usb_substream *subs;
+> +	struct snd_usb_stream *as;
+> +	char ctl_name[37];
 
-Thanks,
-Depeng
+that's quite a magic value.
+
+> +	int ret;
+> +
+> +	list_for_each_entry(as, &chip->pcm_list, list) {
+> +		subs = &as->substream[SNDRV_PCM_STREAM_PLAYBACK];
+> +		if (!subs->ep_num)
+> +			continue;
+> +
+> +		chip_kctl = &snd_usb_offload_mapped_ctl;
+> +		chip_kctl->count = 1;
+> +		/*
+> +		 * Store the associated USB SND card number and PCM index for
+> +		 * the kctl.
+> +		 */
+> +		chip_kctl->private_value = as->pcm_index |
+> +					  chip->card->number << 16;
+> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
+> +			as->pcm_index);
+> +		chip_kctl->name = ctl_name;
+> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
+> +				  udev->bus->sysdev));
+> +		if (ret < 0)
+> +			break;
+> +	}
+> +
+> +	return ret;
+> +}
 
