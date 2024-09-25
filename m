@@ -1,189 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-32510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 447B798662B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 20:16:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B17B986630
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 20:18:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61E56B20F9C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 18:16:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32394284131
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 18:18:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B25542E646;
-	Wed, 25 Sep 2024 18:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80997129E93;
+	Wed, 25 Sep 2024 18:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amacapital-net.20230601.gappssmtp.com header.i=@amacapital-net.20230601.gappssmtp.com header.b="pnTQ1Wyo"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c2/scw8q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A332040870
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 18:16:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65CB1D5ACD;
+	Wed, 25 Sep 2024 18:18:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727288175; cv=none; b=CCByfgaicMoAtY3XQmM5Gfl62vMeBPWHutiw2V1mB9M4reBKw98eXVZ1qjp0p8cpDgW0jAh/aSGe+BFBR7jDpVNBKyRPCwpct8BeGLnrPPzDRmXVUnwxPk4iD3YG1tuZAiE6gbGVztyfOV5ivXnq8Aa1SlCTtozkdSi9lyTkYHQ=
+	t=1727288300; cv=none; b=VED0bxlAHOe77KJQzCwfGGtNY4ObH/qpUSYdMD0P085qvBRnP/VJUWTNTISvKJEADbFf/lsKeWKvRmX5oR7GU3HakQ9Of3RpNWAaotBGRZU5FCuHlAnV+OyGFC/3Nj8r6+9uVQHQikZT+8KliuDwpQBKVcw7EKGyuTxyat1b9uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727288175; c=relaxed/simple;
-	bh=4DcvhFYfT2AE81dZjObAZ3BxCK094YtvdQFRaxTL0EE=;
+	s=arc-20240116; t=1727288300; c=relaxed/simple;
+	bh=gWsy6H13VNTiSSRm01K6ax9aVmZD6+BX8NRpB0HYQ68=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P0hJyu+Ku4L1h8Tqxg5OA9vJtGWiIc2WpF1InFg6zP45kd58HEzjc89pgtcFeyWnb0FFbdgznib21ikmqY6j4pB4lS1YHZZe0GBbpUTJjlo5I/mcuNEFYTB1zlN2ok8kBp/b80K/1P+daF/KRZ9/UlIakW+dR5xvlFE8Sl7Qj88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net; spf=pass smtp.mailfrom=amacapital.net; dkim=pass (2048-bit key) header.d=amacapital-net.20230601.gappssmtp.com header.i=@amacapital-net.20230601.gappssmtp.com header.b=pnTQ1Wyo; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=amacapital.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amacapital.net
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-a8d24f98215so19360266b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 11:16:13 -0700 (PDT)
+	 To:Cc:Content-Type; b=lgOl/DSw2TnVmUMU6AWbf0DM1K/uWGTHzrXQ/gtwV0gs21IGk3ZboCJtD2KMr6VcyriRRgYLnop9aiIFLBWcsZ/FM/wXwjQoEi5ESGn/BLWzGvMK95PBdQh+rx7S31sDijPOsMmnE5JNn5PAatxOlXb7TbQ7cGJlwuHBvQYIU7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c2/scw8q; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-42cbbb1727eso698635e9.2;
+        Wed, 25 Sep 2024 11:18:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amacapital-net.20230601.gappssmtp.com; s=20230601; t=1727288172; x=1727892972; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YpuLG24ZCGv71UbThjxre5Spo20qpnUmQzNaIPgoeOI=;
-        b=pnTQ1Wyob0Gp2/5L9nIgdXjr9Gm196GLTUQJT01xNo1V7QEx6Hunk7rLxZLc98TR5a
-         eZ29J1VNgUmpBRheIihoWpJ0zv79JZ2LQ6NMa7zounHp58JvuTChAHuJ7j/6IyeDyjGQ
-         efj8U90WJfoNRa7EgilmggB3qg/JCT6PNWyCxJNG2+P9ITghiYJVJEHE7MtOuXMMVRBs
-         xNhhwlr5/uHGnOKM/a+qMNcn97BYq6MC1iNjReDwyFrLLmvnvW4knEyHz/+wWlH1cIbp
-         pwDXimjArkPaxXGSbu4tmm/TVtlK9sU3HniBote0B+gB0R/49o01C87PZ9k0ISjHjof4
-         gZVA==
+        d=gmail.com; s=20230601; t=1727288297; x=1727893097; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EqXz9qu83+EHOYAALTDMwiIK5hs6Ih3Fc29t/kJ0wUw=;
+        b=c2/scw8qFclYaUp4y9jxBtSNQDNgaqYK4iHyG73Gnax1gfIRUzJ30DUVczU7fNW/PO
+         4sJoGhl3ghntFyI/GKu7ZnAFb+oVxfQT3nCJnbeGM+u8krL3r0Unn8BExoPWr6rsdd8q
+         uCZiU3rU4VgeLuN9gclncX0qDvhOJEc1EgxX341wHMsaEY0movkUbVvx/SIAB0qjB6wd
+         GMLQ6kpSZ4LiQvUroXe+OCl49i8Fff7/NE6Bh0KGKGOYtyNRdz3k0U1dRF1epZAxAEbC
+         7eTVFxXfdGqQrk+M/7Cvys/GpltnmfArBhoiP6fITcmaEBXKoKpTwWszb6pGltQSK3Xf
+         m+jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727288172; x=1727892972;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YpuLG24ZCGv71UbThjxre5Spo20qpnUmQzNaIPgoeOI=;
-        b=hFje1gtw7y460JNbEm9yZhQRQQLwx1mpmIzHZFQMpu6Dy04Ik1N9G3Q7BpH2NkCgc9
-         aerhTDNbnFoeeemoFI1ndrdwmCcQNGLz7XsiErnzpkgve4NnCJMNIwU+rkr9iiLaiwKA
-         wH85iOodOGVaIQSIYJrOCWoHrVU4sLVGKnE7QKlpdDMjsgE/SJHGO/l7XdCTxHn/KqiC
-         M/HgH+HLEXSEL+kfxZjn36KegWsWsmqLvElWXcMiBTnHaaQVamcmAzWANeDfs6DEw/W1
-         k9ez5U7M9eiDzv0XOwX0mumOC55PmBh1PKSGx7Mb0jBgpXNmJAJMuj7kYqodmamC2ahu
-         xONQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWEX9GJwYYlB8Xz2egwLb3jn9EmJsG8c3Fea/MWpKaUZbM52eHNrIYir4vvrJT+fPlsz7XPk80+2g6p/wiF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy0m0TDbFpwT7FHXUx8GL7h0BGPDlHQbTodD+YuC4digi7VL9dm
-	Nz6nYjd1Hc6e3iN7ZpIQV3TL6OsAtOsRCeJjkYYwIEmtPMNTr21DBZUf6MW8pt6UQEoRQBsJ/1y
-	MbTnqM+089nIrlyr02M+qSrV9fcEqfLZiWXOg
-X-Google-Smtp-Source: AGHT+IGIbjo1SJjR+7nUhJeyZNp9sE3nHGpQKuQ3ToGu0SkOxQeMaHhqobWVR8j7UEcM2RJRbNO3IlCvWJG+o3B6Xu0=
-X-Received: by 2002:a17:907:60c9:b0:a86:43c0:4270 with SMTP id
- a640c23a62f3a-a93a0343450mr391948866b.13.1727288171687; Wed, 25 Sep 2024
- 11:16:11 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727288297; x=1727893097;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EqXz9qu83+EHOYAALTDMwiIK5hs6Ih3Fc29t/kJ0wUw=;
+        b=Svbs1d8TJT8P0tHDyEcW2w3o0i8sJ3LdWhIQ98o6H9K6LC+k7z3rgCbudK6RHalQQX
+         ihfp26AwRYFov+yvpOd3cmEj0lQzmmDm9Z+toIArGeyBGx3PS/kWZ/vY5IhKJX1WjUMY
+         J01HMZVU2W4XFM3ZHt2LRLT7gpX+2yiUh1WYdVwPaPgKtvW1csAMbH3HaC6o7hn8g/yg
+         f1s/uQ0mj62TPCdrrg5Uj8INyzKF+tQrawJ3+QNeHeUvQEGNIWcmW+2HZ8AN3b8q9/OL
+         Ooespv3mkO5wcK5p6NnrXe6PYLu4/86KW5r3QvE4yJ/Z/fCQ3V5uAUOkNtdACLWS8z7G
+         JAaw==
+X-Forwarded-Encrypted: i=1; AJvYcCUEy1/FWWV01fVhGfCmqM1BNQzNLtAt1mEq7YghDK5H0Co/uAmsFXemKPtaqebq4bZZTviPs1Ac/28w4+b/@vger.kernel.org, AJvYcCV7Fp1NRHAaX8OyNp5mniuE+4CZlTrEfVskLIiDlQiXR4YMHMz2K9JCnqYazFjQEp+HcWN5pI/8skdIZc6odQ==@vger.kernel.org, AJvYcCVny0cabCs2F1rCHxYswKDhitC91EGd6TcD2QwdPSBIHW3/M13Vyf91//Jkm8FO9fXQh5tjdOoy/GVk@vger.kernel.org
+X-Gm-Message-State: AOJu0YytQ2GpSkul+GlpTn5aWR5dUvhe4nM/Wvg3v9jfW3aQk4fwMUPg
+	jIKF+mB1k7CjIbiNInaQzVykR2/LGgYYJ0NdpHiSwYZaw/agZKqvsurwCZiKIWUpI64gAWcyXQB
+	EsCqjn3EQLR+AkyeslGIziRV1IA==
+X-Google-Smtp-Source: AGHT+IFM/qKVjzFn7aqBWOmJl2qCkEB6MuNPyjE6a2MO91pvcCYTDKPiFRPY78zEW0ZlN8N7caPygKoxAPPHxJ28JsM=
+X-Received: by 2002:a05:600c:1e27:b0:42c:ae76:6cea with SMTP id
+ 5b1f17b1804b1-42e9610c8d0mr27192785e9.9.1727288296541; Wed, 25 Sep 2024
+ 11:18:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <SEZPR03MB6786D45BE387F2B378E71A84B4642@SEZPR03MB6786.apcprd03.prod.outlook.com>
- <ZuNVqvVgXLjNXS5Y@google.com> <CANP3RGfez2onSLVT2wC1hsSmKGxD9aFdV3we3Zsngw0BgbeGyw@mail.gmail.com>
- <TYZPR03MB67922FFDE5C9C925D8274677B4652@TYZPR03MB6792.apcprd03.prod.outlook.com>
- <3zxgxxa75znxfvoufhtg3wm2vamjthogyacoybiket5js3kquf@yldiyczms4ou>
- <CALCETrVVo9g=v8dXN_Z1pBPx_194Mcanxz9_CgYUjJ_138_4LQ@mail.gmail.com> <tazl5khrfdxifmosasadhexsmm73oolnooevkjwlncydqz4lvl@dxlis7ipxozj>
-In-Reply-To: <tazl5khrfdxifmosasadhexsmm73oolnooevkjwlncydqz4lvl@dxlis7ipxozj>
-From: Andy Lutomirski <luto@amacapital.net>
-Date: Wed, 25 Sep 2024 11:16:00 -0700
-Message-ID: <CALCETrW4OkWSc+QCsW-x2OyL0rzbw0-guiN3jNgcr6WfwDMhCA@mail.gmail.com>
-Subject: Re: [RFC] Proposal: Static SECCOMP Policies
-To: Maxwell Bland <mbland@motorola.com>
-Cc: =?UTF-8?Q?Maciej_=C5=BBenczykowski?= <maze@google.com>, 
-	Neill Kapron <nkapron@google.com>, 
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, Andrew Wheeler <awheeler@motorola.com>, 
-	Sammy BS2 Que <quebs2@motorola.com>, Todd Kjos <tkjos@google.com>, 
-	Viktor Martensson <vmartensson@google.com>, "keescook@chromium.org" <keescook@chromium.org>, 
-	Will Drewry <wad@chromium.org>, Andy Gross <agross@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@somainline.org>, 
-	kernel-team <kernel-team@android.com>, adelva@google.com, jeffv@google.com
+References: <20240921163455.12577-1-alex.vinarskis@gmail.com> <20240921163455.12577-4-alex.vinarskis@gmail.com>
+In-Reply-To: <20240921163455.12577-4-alex.vinarskis@gmail.com>
+From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
+Date: Wed, 25 Sep 2024 20:18:04 +0200
+Message-ID: <CAMcHhXrwsBHQ7FeR7AFKp3NGufVQQK0O=PHRq+GZBh9SpVNqQA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: Add support for X1-based Dell
+ XPS 13 9345
+To: Bjorn Andersson <andersson@kernel.org>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Rob Clark <robdclark@gmail.com>, Peter de Kraker <peterdekraker@umito.nl>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 17, 2024 at 8:08=E2=80=AFAM Maxwell Bland <mbland@motorola.com>=
- wrote:
+On Sat, 21 Sept 2024 at 18:35, Aleksandrs Vinarskis
+<alex.vinarskis@gmail.com> wrote:
 >
-> On Fri, Sep 13, 2024 at 09:18:58PM GMT, Andy Lutomirski wrote:
-> > On Fri, Sep 13, 2024 at 10:30=E2=80=AFAM Maxwell Bland <mbland@motorola=
-.com> wrote:
-> > > On Fri, Sep 13, 2024 at 05:07:46PM GMT, Maxwell Bland wrote:
-> > >
-> > > But don't let me distract from the issue, which is that
-> > > cBPF/eBPF/however these filters get allocated to machine code,
-> > > bpf_int_jit_compile ends up getting called and a new
-> > > privileged-executable page gets allocated without compile-time
-> > > provenance (at least, without reverse engineering) for where that cod=
-e
-> > > came from.
-> >
-> > But what if there was a mechanism to *cryptographically hash* a BPF
-> > program as part of the loading process?  Then that hash could be
-> > looked up in a list, and a decision could be made based on the result?
-> >  Would this help solve any problems?
+> Initial support for Dell XPS 9345 13" 2024 (Tributo) based on X1E80100.
 >
-> The issue I have seen in the prior Qualys linked exploit from my initial
-> message and from talks by security researchers elsewhere, for example
-> Google Project Zero's recent "Analyzing a Modern In-the-wild Android
-> Exploit" by Seth Jenkins, is that people have the ability to target
-> these pages during the window between the page being allocated as
-> writable by vmalloc.c and the update to the PTE which makes it
-> executable, so a signature does help (creates the requirement of more
-> than one write to commit "forgery"), but doesn't totally 100% solve the
-> problem.
+> Working:
+> * Touchpad
+> * Keyboard (only post suspend&resume, i2c-hid patch WIP)
+> * eDP, with brightness control
+> * NVME
+> * USB Type-C ports in USB2/USB3 (one orientation)
+> * WiFi
+> * GPU/aDSP/cDSP firmware loading (requires binaries from Windows)
+> * Lid switch
+> * Sleep/suspend, nothing visibly broken on resume
 >
-> Right now, every time I open up chrome on our latest flagship the
-> browsers sandbox filters trigger my EL2 monitor because they are
-> attempting to follow the standard W^X protocol. If I were to build one
-> of these exploits, I'd:
+> Not working:
+> * Speakers (WIP, pin guessing, x4 WSA8845)
+> * Microphones (WIP, pin guessing)
+> * Fingerprint Reader (WIP, USB MP with ptn3222)
+> * USB as DP/USB3 (WIP, PS8830 based)
+> * Camera
+> * Battery Info
 >
-> (1) find out a non-crashing leak for code page and data values
-> (2) determine from vmalloc's rb-tree where the next one-page allocation
->     is likely to occur
-> (3) prime my write gadget for an offset into that page
-> (4) spin up chrome in a second thread
-> (5) attempt to trigger a write (or two) at the right precise time using
->     prior empirical measurement or my read gadget for kernel mem
->
-> Which is messy, but people have been known to do more given good enough
-> stakes. Hell, I spent a few months working on something similar for
-> airplane communication management units.
+> Should be working, but cannot be tested due to lack of hw:
+> * Higher res OLED, higher res IPS panels
+> * Touchscreen
 
-My vague proposal for a "better JIT API" (which you quoted below)
-explicitly and completely solves this problem:
+A follow up to the display discussion thread [1] - Peter de Kraker has
+tested these changes on his OLED setup, a few findings:
+* OLED panel works out of the box, with `edp-panel`  compatible. Turns
+on, turns Off on suspend, turns On on resume. Will update description
+when respinning to reflect this.
+* As per Bjorn Andersson's correction, the touchscreen was tested and
+confirmed to be working with 0x10 address. No other i2c devices are
+detected on that bus. Will update description when respinning to
+reflect this.
+* SKU/HWIDs of OLED and non-touch IPS models are 1:1 the same
+* For reference, non-touch IPS panel is 'LQ134N1' according to EDID
 
->
-> > So what would a good solution look like?  It seem to me that the
-> > program being supervised (a userspace or kernel JIT) could generate
-> > some kind of data structure along these lines:
-> >
-> > - machine code to be materialized
-> >
-> > - address and length at which to materialize it (probably
-> > page-aligned, but maybe not)
-> >
-> > - an "origin" of this code (perhaps a file handle?) -- I'm not 100%
-> > sure this is useful
-> >
-> > - a "justification" for the code.  This could be something like "Hey,
-> > this is JITted from cBPF for seccomp, and here's the cBPF".
+Regards,
+Alex
 
-Even ignoring the origin and justification parts, there's no WX window
-in here.  The code is generated, then it's shipped off to the
-hypervisor/supervisor, and *exactly that code* is materialized !W, X.
+[1] https://lore.kernel.org/all/CAF6AEGtrQzcMFsWCd-JzVFmF1sRk3vgy=L1q4Lzp+K1a4fuRnw@mail.gmail.com/
 
-Of course, this still leaves verification to be handled.
-
-> Returning to the idea of origins, at the end of the work day yesterday I
-> queried Maciej to "have Android choose one compiler for seccomp policies
-> to BPF and stick with it", because if I knew filters were chosen by
-> libminijail or some other userspace system, I could pretty easily figure
-> out what EL2 needs to expect at runtime. An "origin" field would be
-> equally as effective, and retain flexibility.
-
-At the risk of a silly suggestion, what if the entire JIT compiler and
-verifier (or a sufficient portion) were, itself, a WASM (or similar)
-program, signed or whatever, and shipped off to the hypervisor?  The
-hypervisor could run it (in whatever sandbox it likes -- hypervisors
-are capable of spawning a separate VM to host it if needed), and only
-then accept the output.
-
-I, personally, think that this is of extremely dubious value unless
-it's paired with a control flow integrity system.  But maybe it could
-be!  Something like x86 IBT would be a start, and FineIBT would be
-better, as would an ARM equivalent.
-
---Andy
+[...]
 
