@@ -1,62 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-32478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1519985D3C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:05:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B6B0985D63
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:09:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEEA5B29D9D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 13:02:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 01AA51F27C70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 13:09:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A76D1DA317;
-	Wed, 25 Sep 2024 12:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA7A11E1314;
+	Wed, 25 Sep 2024 12:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQa7ZvGb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NO+nHQIH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA381DA312;
-	Wed, 25 Sep 2024 12:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC05E1E0B8D;
+	Wed, 25 Sep 2024 12:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727265741; cv=none; b=Ao4s9BoR1OQmUdZlc11eGEVt4R+a6IJDlHalWB0ti4wyIA9trPoKPJ7u1317qzGsjeXs4YnOcjgEyEwv6ja0/ciHUNg1UpOeu6zUzP1Hj63q6lmXWGCpEdkFZii53RHaRAp6VUSZfIWCwUNYcvkFIOmCbnFJ9qENWqhvw4VKwR0=
+	t=1727265805; cv=none; b=TT9a/cy3r5zB1AJ5YfpvpQAEBCLs/Do2yYJd+kb8OrA1SgQh87ITvOXl05VM1+LVW1VTOQ8Jzt617YKt4o/Z6NZBenhVrBb6Q7MGFhlyN3WSoo62UZJiCuwDWDlVfunG6rOhJ0T6+T4ys4xP4CPEjIJlKzbeT/dzxpvGQt0u7j8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727265741; c=relaxed/simple;
-	bh=lkXxB/YjIjrqCNz9gdjyXC7KTuV69ONi+VaZy64n8X0=;
+	s=arc-20240116; t=1727265805; c=relaxed/simple;
+	bh=DdOAZIMYSHY1pVfhyV0TUDcZfM90uA5dTndwNjWxsas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvIPCeOzdYLnBwe/4KhAZT2+OZQuE88oJOtD+oa5hV6y/k5qWTbCrl3KeuEEOf4bIR6HX/wMNlsNyrGWMwtTG+gbMlvwTSFHKWIMcer0YCc7/jr0rEpvhhfy91zBcI95OyJwrAvezYwq9wBKlgO146KYRiNKKpzbiesTNTPcJRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQa7ZvGb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF7CC4CEC7;
-	Wed, 25 Sep 2024 12:02:19 +0000 (UTC)
+	 MIME-Version; b=p4nVLbObhmozth5Hd8dBmiu67HoglKeP6qIKdGEk/KyyT35wJJu1OhxKFIGJLypZ7GI2rZcp99S41pV6KnEbWoZWjKSxgoXTdR0siYnWpp/3zdgTtGw+u/46GM34eHEwRvx2kj8XfZ7A0lMFcTWX6f5hAIZJd/A6eYrfwMZmT2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NO+nHQIH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5730EC4CEC7;
+	Wed, 25 Sep 2024 12:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727265741;
-	bh=lkXxB/YjIjrqCNz9gdjyXC7KTuV69ONi+VaZy64n8X0=;
+	s=k20201202; t=1727265805;
+	bh=DdOAZIMYSHY1pVfhyV0TUDcZfM90uA5dTndwNjWxsas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQa7ZvGbudG8VOzDytwkW+T+NyRkjnDjd7UjbETfJhgl8AWuDN78woxFpW00U9lfR
-	 g0yCIAylKKYNKiK4rz9kG8edy21pZ//VFMS4/X3arTZ4ViArGeTPEKhBySZz1zyDsJ
-	 4b7vUCr2GBA6Bu00Prj/0SiL9H3WcLEJhZJT1J7Kn4ugI6OUZvc0Lx26qgcbvpvuKO
-	 4E75fQq+8/k/ATgUKDhCBIZRoMRbLIl0JSaFIPrCHDgfQFu3t8UWAvihalKLYKlh8O
-	 +j/Wu9L14vzn3GfQHa+PJCVLjKjYaGcSok8urAQVUp2STEyL8EwwQdFSfGGGM9miK9
-	 AbVg8qr+06hww==
+	b=NO+nHQIH4fbMmclbY0Kl4OxOk16Yh7F3CkVyi8mpJPd4DAlgHdwXR+xUT5vwN+85/
+	 m6/+bYSZUtPC0JFxEEA6aeYDpKjfEKC4P1rxtEqMtP++t9Y2TMvZrOgg6JNsCyePPs
+	 MyCaiM6cSIVcA04eH6rwfupqj9MnFwiFgUhKiQ9Tv+acmvdDykeYJGi9Pc21WgD91q
+	 HSgCJifVnay5knKILSBnCKovqlkDuHtQVU/V4YLOmJCaHrp2ZzYvdjQu9VZZyfZKfE
+	 n3Q8wn5Y0lKoKlYZvPrcHSsh5lVQnmA0SnrX67mMXkDp02nc+icjTJNiRN7MCid1ai
+	 ZuuLGmggK9gCg==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Marc Gonzalez <mgonzalez@freebox.fr>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	srinivas.kandagatla@linaro.org,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
+	robdclark@gmail.com,
+	joro@8bytes.org,
+	iommu@lists.linux.dev,
 	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.10 082/197] ASoC: codecs: wsa883x: Handle reading version failure
-Date: Wed, 25 Sep 2024 07:51:41 -0400
-Message-ID: <20240925115823.1303019-82-sashal@kernel.org>
+	linux-arm-kernel@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.10 103/197] iommu/arm-smmu-qcom: hide last LPASS SMMU context bank from linux
+Date: Wed, 25 Sep 2024 07:52:02 -0400
+Message-ID: <20240925115823.1303019-103-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240925115823.1303019-1-sashal@kernel.org>
 References: <20240925115823.1303019-1-sashal@kernel.org>
@@ -71,70 +71,72 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.10.11
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Marc Gonzalez <mgonzalez@freebox.fr>
 
-[ Upstream commit 2fbf16992e5aa14acf0441320033a01a32309ded ]
+[ Upstream commit 3a8990b8a778219327c5f8ecf10b5d81377b925a ]
 
-If reading version and variant from registers fails (which is unlikely
-but possible, because it is a read over bus), the driver will proceed
-and perform device configuration based on uninitialized stack variables.
-Handle it a bit better - bail out without doing any init and failing the
-update status Soundwire callback.
+On qcom msm8998, writing to the last context bank of lpass_q6_smmu
+(base address 0x05100000) produces a system freeze & reboot.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240710-asoc-wsa88xx-version-v1-2-f1c54966ccde@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The hardware/hypervisor reports 13 context banks for the LPASS SMMU
+on msm8998, but only the first 12 are accessible...
+Override the number of context banks
+
+[    2.546101] arm-smmu 5100000.iommu: probing hardware configuration...
+[    2.552439] arm-smmu 5100000.iommu: SMMUv2 with:
+[    2.558945] arm-smmu 5100000.iommu: 	stage 1 translation
+[    2.563627] arm-smmu 5100000.iommu: 	address translation ops
+[    2.568923] arm-smmu 5100000.iommu: 	non-coherent table walk
+[    2.574566] arm-smmu 5100000.iommu: 	(IDR0.CTTW overridden by FW configuration)
+[    2.580220] arm-smmu 5100000.iommu: 	stream matching with 12 register groups
+[    2.587263] arm-smmu 5100000.iommu: 	13 context banks (0 stage-2 only)
+[    2.614447] arm-smmu 5100000.iommu: 	Supported page sizes: 0x63315000
+[    2.621358] arm-smmu 5100000.iommu: 	Stage-1: 36-bit VA -> 36-bit IPA
+[    2.627772] arm-smmu 5100000.iommu: 	preserved 0 boot mappings
+
+Specifically, the crashes occur here:
+
+	qsmmu->bypass_cbndx = smmu->num_context_banks - 1;
+	arm_smmu_cb_write(smmu, qsmmu->bypass_cbndx, ARM_SMMU_CB_SCTLR, 0);
+
+and here:
+
+	arm_smmu_write_context_bank(smmu, i);
+	arm_smmu_cb_write(smmu, i, ARM_SMMU_CB_FSR, ARM_SMMU_CB_FSR_FAULT);
+
+It is likely that FW reserves the last context bank for its own use,
+thus a simple work-around is: DON'T USE IT in Linux.
+
+If we decrease the number of context banks, last one will be "hidden".
+
+Signed-off-by: Marc Gonzalez <mgonzalez@freebox.fr>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20240820-smmu-v3-1-2f71483b00ec@freebox.fr
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa883x.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
-index 2169d93989841..1831d4487ba9d 100644
---- a/sound/soc/codecs/wsa883x.c
-+++ b/sound/soc/codecs/wsa883x.c
-@@ -998,15 +998,19 @@ static const struct reg_sequence reg_init[] = {
- 	{WSA883X_GMAMP_SUP1, 0xE2},
- };
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 13f3e2efb2ccb..8bc71449aabc3 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -282,6 +282,13 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 	u32 smr;
+ 	int i;
  
--static void wsa883x_init(struct wsa883x_priv *wsa883x)
-+static int wsa883x_init(struct wsa883x_priv *wsa883x)
- {
- 	struct regmap *regmap = wsa883x->regmap;
--	int variant, version;
-+	int variant, version, ret;
- 
--	regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
-+	ret = regmap_read(regmap, WSA883X_OTP_REG_0, &variant);
-+	if (ret)
-+		return ret;
- 	wsa883x->variant = variant & WSA883X_ID_MASK;
- 
--	regmap_read(regmap, WSA883X_CHIP_ID0, &version);
-+	ret = regmap_read(regmap, WSA883X_CHIP_ID0, &version);
-+	if (ret)
-+		return ret;
- 	wsa883x->version = version;
- 
- 	switch (wsa883x->variant) {
-@@ -1041,6 +1045,8 @@ static void wsa883x_init(struct wsa883x_priv *wsa883x)
- 				   WSA883X_DRE_OFFSET_MASK,
- 				   wsa883x->comp_offset);
- 	}
++	/*
++	 * MSM8998 LPASS SMMU reports 13 context banks, but accessing
++	 * the last context bank crashes the system.
++	 */
++	if (of_device_is_compatible(smmu->dev->of_node, "qcom,msm8998-smmu-v2") && smmu->num_context_banks == 13)
++		smmu->num_context_banks = 12;
 +
-+	return 0;
- }
- 
- static int wsa883x_update_status(struct sdw_slave *slave,
-@@ -1049,7 +1055,7 @@ static int wsa883x_update_status(struct sdw_slave *slave,
- 	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
- 
- 	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
--		wsa883x_init(wsa883x);
-+		return wsa883x_init(wsa883x);
- 
- 	return 0;
- }
+ 	/*
+ 	 * Some platforms support more than the Arm SMMU architected maximum of
+ 	 * 128 stream matching groups. For unknown reasons, the additional
 -- 
 2.43.0
 
