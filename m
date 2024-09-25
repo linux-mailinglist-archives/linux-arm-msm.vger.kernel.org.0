@@ -1,96 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-32503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9D0F986361
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 17:25:09 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id D183D986447
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 17:57:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8937D1F28028
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:25:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B61DFB36084
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:27:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 399BB17F4F7;
-	Wed, 25 Sep 2024 15:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47FC91171C;
+	Wed, 25 Sep 2024 15:09:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="IPJSh30f"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EH8GCQxn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F6E16EC19;
-	Wed, 25 Sep 2024 15:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193461A702;
+	Wed, 25 Sep 2024 15:09:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727276733; cv=none; b=IK9X3uABdf7Hw851lJ0zGN/qaIaIWmOyXJ5EIn1GblyaJ15kVq9Wsa1vjPj6UYwavGnxMPvbWWTfDyK/QLKahTEVCV7k8+5PYd9ScJdBrrd70QNIfe8fPwUkhQFWCLf4aKG/M6N/ggDuTnzfTQiEnRbFnBmnDBsMww1qq0WW9Bk=
+	t=1727276997; cv=none; b=O91WauQCzGbfniAxHgAaE3p4cgs8iVWPrkl573/nDFtrmHJ89TWJkoqUb5v0dynClxf5/vkaxF9t6RQnQhRTpgZc+iO5EE1rpM+6dMhD6+dwkRJAOxWvskDtE454vhRziwtV4i1Ty/MctH4T+fs+Augamz6Kcs81NQavRjcPBMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727276733; c=relaxed/simple;
-	bh=oUEDKfr3g2+OPN66lqRdCh/RebgOM2ORzt3yS88puJc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rqEooliebUccuuGXOs1exAvTtmt0eTviTbHThK3H+HAZVIANXdSsmjo7rzaSPwuqmKSCBDC20lp1m3XNPEWmHoGWMCyC3Y5ZvwrrawIWkwX8lHxBiO1b413grugPVUJCEJGzFxp/ZFJcbjCqaDXQFxXbecAp0LZFonOftwgTvWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=IPJSh30f; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727276732; x=1758812732;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=oUEDKfr3g2+OPN66lqRdCh/RebgOM2ORzt3yS88puJc=;
-  b=IPJSh30fmxlSKqjLJYotYYiGfYR7kKGf6zwpmK4HCW20V2n1oclDJinL
-   Js+VoqLVNgj7JyN+HbsH1HoFcw7UmAsNMRIeCTFaQVgKi7Vu/8mw5GBnm
-   WAziHMA45e97jPdvdpaMn5U6YD6rYaw+WJF+MGKtenluuZbCN8hgweoEG
-   /eAnbNHY04KIjDczdEksPW+1P88CePleqj6Gc2UOSdqcMPpd9JUmXuFys
-   HXTWbimC2HNfFGLY7H2BNzhUNZPeM0/HHAg0SEwMei/oiBnZR50ibLObD
-   wyhSggKNa80WjR7+YoJtLSGPysLRvH4afDkAAsI5gguxYcYlEzgldn9Em
-   Q==;
-X-CSE-ConnectionGUID: Gwlp/nFYRrO0w+Jpm4raDw==
-X-CSE-MsgGUID: JN4MNJDgShKgDRfpsJ4BTg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11206"; a="26482979"
-X-IronPort-AV: E=Sophos;i="6.10,257,1719903600"; 
-   d="scan'208";a="26482979"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2024 08:05:31 -0700
-X-CSE-ConnectionGUID: UJBsXjh0QG6gd/Q+NIpkLw==
-X-CSE-MsgGUID: Q21AA1FjTgeEkddoyjPTvw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,257,1719903600"; 
-   d="scan'208";a="76317772"
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO [10.245.246.30]) ([10.245.246.30])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2024 08:05:26 -0700
-Message-ID: <4552c7fb-2c59-485d-af67-0bf36d2424e5@linux.intel.com>
-Date: Wed, 25 Sep 2024 17:04:20 +0200
+	s=arc-20240116; t=1727276997; c=relaxed/simple;
+	bh=v6ZqQ0h3Q4wFy9NSRlR9T2wiHt8IegbsTzeMyUTfV/I=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=ANzW6Yp9Sig9JeHLWqs1Ng4F2aa8sjd76vPEceYPTv9dqcp3aIraxVQpGkJTKU0pA1vqPrX/n80yWVhSYnTsW3ZfUEtPKDxCoQ4qRy5lt6ducR4cwcLnhuWYmDA5FhaEPKEipxJv79mNoojggcLCS9Om2IL4m6GjXBJhRL8tMZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EH8GCQxn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E28FC4CECE;
+	Wed, 25 Sep 2024 15:09:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727276996;
+	bh=v6ZqQ0h3Q4wFy9NSRlR9T2wiHt8IegbsTzeMyUTfV/I=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=EH8GCQxnuNLmojJvnFgDo2oOw+22mOTHKQnwSFJhAIxA7CHF7fFinMasmGo/htt0S
+	 FNP1s3y3lRGu6rG2krldFh6PNWoHQMCbeFcHxDUUl9SMtrKVkLcZziyXSthqOSwawi
+	 mWlKW72HAqZioIonpExemwMKEzbrm71Ilzt1DUuet4zcyfUVx/6b9v2o58rLLzj7zO
+	 fMq/i1quOb+wW8sxf1oyO1kz8nbYC93NTXQ8akNVf3b2Yg/cpz1iLDVTnPZEkATDEY
+	 NbZaC7IPHlN3rPs57DWIm0YisYu7XeE9IR9mHnygVMNyR3EQg0xQwWhOjBGWgG8AuA
+	 92jB+BOVLrCSA==
+From: Mark Brown <broonie@kernel.org>
+To: srinivas.kandagatla@linaro.org, a39.skl@gmail.com, 
+ linux-sound@vger.kernel.org, Alexey Klimov <alexey.klimov@linaro.org>
+Cc: lgirdwood@gmail.com, perex@perex.cz, tiwai@suse.com, 
+ alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, krzysztof.kozlowski@linaro.org, 
+ vkoul@kernel.org, klimov.linux@gmail.com
+In-Reply-To: <20240925043823.520218-1-alexey.klimov@linaro.org>
+References: <20240925043823.520218-1-alexey.klimov@linaro.org>
+Subject: Re: (subset) [PATCH REVIEW 1/2] ASoC: codecs: lpass-rx-macro: fix
+ RXn(rx,n) macro for DSM_CTL and SEC7 regs
+Message-Id: <172727699157.2075752.5178047483756857834.b4-ty@kernel.org>
+Date: Wed, 25 Sep 2024 17:09:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v28 00/32] Introduce QC USB SND audio offloading support
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- dmitry.torokhov@gmail.com, corbet@lwn.net, broonie@kernel.org,
- lgirdwood@gmail.com, tiwai@suse.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, robh@kernel.org,
- gregkh@linuxfoundation.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20240925010000.2231406-1-quic_wcheng@quicinc.com>
-Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20240925010000.2231406-1-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-99b12
 
+On Wed, 25 Sep 2024 05:38:22 +0100, Alexey Klimov wrote:
+> Turns out some registers of pre-2.5 version of rxmacro codecs are not
+> located at the expected offsets but 0xc further away in memory.
+> So far the detected registers are CDC_RX_RX2_RX_PATH_SEC7 and
+> CDC_RX_RX2_RX_PATH_DSM_CTL.
+> 
+> CDC_RX_RXn_RX_PATH_DSM_CTL(rx, n) macro incorrectly generates the address
+> 0x540 for RX2 but it should be 0x54C and it also overwrites
+> CDC_RX_RX2_RX_PATH_SEC7 which is located at 0x540.
+> The same goes for CDC_RX_RXn_RX_PATH_SEC7(rx, n).
+> 
+> [...]
 
-Overall the patchset is much improved but you still have misleading
-information, see e.g. the rather poor description of error codes for the
-update_offload_route() helper.
+Applied to
 
-I hope other reviewers step-in to cover this large set of patches...
-Cheers,
--Pierre
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[2/2] ASoC: codecs: lpass-rx-macro: add missing CDC_RX_BCL_VBAT_RF_PROC2 to default regs values
+      commit: e249786b2188107a7c50e7174d35f955a60988a1
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
