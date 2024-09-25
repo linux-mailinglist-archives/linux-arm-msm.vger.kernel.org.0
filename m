@@ -1,289 +1,236 @@
-Return-Path: <linux-arm-msm+bounces-32525-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32526-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 756839868A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 23:50:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDA89986977
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 01:24:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8AB01F252F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 21:50:18 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EAC561C20975
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 23:24:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5AAF31534FB;
-	Wed, 25 Sep 2024 21:50:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7FD61A38FC;
+	Wed, 25 Sep 2024 23:24:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VqAEz1wF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rf0TTza1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B12F4C91;
-	Wed, 25 Sep 2024 21:50:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8696F12BEBB;
+	Wed, 25 Sep 2024 23:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727301016; cv=none; b=a5G04kJiJKKe8dlTgEKB2RFtgjdVIadRz4g2NQAWgrUa+yQqrFofkgQUDruzuO+DVfCaAB3tmcWRmZHpDKG4xPUq0yEn7LWznXId9TQlXf31aYKe9xfGDLH7cTnKK7+eprFW4FGM+y2VtpZ4COGZzqCPaHm0MQ43WgCdkh1FUJQ=
+	t=1727306670; cv=none; b=qI2KcHz70sN89WXhbiIzswZ1AT2NvZuVLZzI0/z3A+q6eARt8PgYzjEoigWHlOyK3YyxWSTugDXQprDYPlo56p+EMSChSYRDFekm08dc1ckueSyn37Gozii94qR+dFU6gfxlm1ADO4PR/w6zWMS4Wg6zj42zVcnqg6WNETTZWls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727301016; c=relaxed/simple;
-	bh=EFCd0hY+WQcVPDGPgHTKBF7gS4SpzfNZSvk8p6BkQ6c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=u+g4/+R/yJD/uNVW4iECJyFf56BQEUynxlcZxMAqrR8/VgBhlddBjjw8UnBRgLPSisU4aCVI9rKS0qh/vaMKZ+UxVhQcSsFmZsveOcIJdxiWfpYea/qziwdzU6cahQd0tmdYqMwBY0AdtUD54avBEljWf7CbGRtAejK9KgXfPoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VqAEz1wF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH5VEm003273;
-	Wed, 25 Sep 2024 21:49:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cUo2xnrZPZytmmedqxe3w7UxThlQk1ZAm+U9dTIDcvo=; b=VqAEz1wFCrobFtss
-	CmglPNmdc9HijPDOUP4Zru19aHRUVEmODLeyAD8XgPka6ZiF1qZppCz2hP4AaYdk
-	DC/W/xNuTTnFqfp4ioEngrOop/fyd5mL5vxFheoEGzpeLOZkUvl06AQngH86EdSC
-	KeNPUmPW6e4VRglf+67UsDLp3ftaJVMGSb07IupIMrrGYSYJAgEeDVWI1G9Gzvqo
-	yKFrMj1jt5EWalryweYuB9oI47O0bu3kxSmziRYnbfYa/XmuMcZMGsMj65UbJxuy
-	eD6V5/69O+5yHOBUKyZMxn5WSvNiOgEOz1C876sJwYBeJte/0WRivB8c4aoUfDpV
-	6BruGw==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sn5bwn3m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 21:49:56 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48PLnt67020845
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 21:49:55 GMT
-Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Sep
- 2024 14:49:53 -0700
-Message-ID: <b3830573-1f39-4729-be58-c2659a37d689@quicinc.com>
-Date: Wed, 25 Sep 2024 14:49:48 -0700
+	s=arc-20240116; t=1727306670; c=relaxed/simple;
+	bh=g3zNEuACkNKKF7DM2e0wUsD+QK9yDA1CFZXE6cxfm0Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MxXLqJ/pNN/WxH9zl2KS1VrVK9xkIvwBBpBPSfjiWIZx3m+lVVXQEGWg/2saD2/T3AnLd37zqGlMvhXQGVbq57UvG+8TADNmh9M6MF+SAGkNeP5flGkv1N6PYizDW5y9l0AvoukJcqfeHlofwlPjPy6bTch/1ykzeKFJubL6CkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rf0TTza1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF87C4CEC3;
+	Wed, 25 Sep 2024 23:24:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727306670;
+	bh=g3zNEuACkNKKF7DM2e0wUsD+QK9yDA1CFZXE6cxfm0Y=;
+	h=From:To:Cc:Subject:Date:From;
+	b=rf0TTza1S3p1YALqFQOCom6Jm3i4y+VPz/1puW5DS6e880ny5qmARn/pd/8fBs2t1
+	 H+kU9g7OoIXdRgMnbqXMAo+xn2K5IUNrX4Um6d5Kx2D1e+tYvFeSWoKQT3bgdXYj9W
+	 0v+KcOIMJVKUH7cPijm0cHyM4JbEemZro3q2q5sfvola1hxVqM08tWdooSdOpDAU+3
+	 aiJfMwgHXTFKN9GUXQ6RPKAeW/mkp6MDVGOlgzW67u/JFmuwPnvqM1S3qKzAI2Jpn3
+	 EENwc0xldR/ocJgJZoovineWQvpe46VBWPrN2Bc4wCqf26JtgRzGd9xNEDw/AIKaA2
+	 wRYObDcnba5wg==
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Conor Dooley <conor@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Jim Quinlan <jim2101024@gmail.com>,
+	Nicolas Saenz Julienne <nsaenz@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Andy Gross <agross@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>,
+	Jim Quinlan <james.quinlan@broadcom.com>,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	dmaengine@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-media@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-rpi-kernel@lists.infradead.org,
+	linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH] dt-bindings: Fix array property constraints
+Date: Wed, 25 Sep 2024 18:24:06 -0500
+Message-ID: <20240925232409.2208515-1-robh@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/22] drm/msm/dpu: move resource allocation to CRTC
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jessica Zhang
-	<quic_jesszhan@quicinc.com>
-CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, <quic_ebharadw@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Rob Clark
-	<robdclark@chromium.org>,
-        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
-	<ville.syrjala@linux.intel.com>
-References: <20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com>
- <20240924-concurrent-wb-v2-5-7849f900e863@quicinc.com>
- <dv5iij6v76ieprfckdjo4yksrjrgqw73v2lh7u4xffpu7rdrf3@zgjcp3a2hlxo>
- <24a11f4c-d848-4f1b-afbd-35b135fa3105@quicinc.com>
- <CAA8EJpraspHpgGvJxe7dXx-hN+yirs_+AacjkrHvPWuEvrLJ-w@mail.gmail.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJpraspHpgGvJxe7dXx-hN+yirs_+AacjkrHvPWuEvrLJ-w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: hN5KCY7DiitFrvWgxg5Ynov_mKy_xXVd
-X-Proofpoint-GUID: hN5KCY7DiitFrvWgxg5Ynov_mKy_xXVd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
- spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409250155
+Content-Transfer-Encoding: 8bit
 
+Schemas for array properties should only have 1 level of array
+constraints (e.g. items, maxItems, minItems). Sometimes the old
+encoding of all properties into a matrix leaked into the schema, and
+didn't matter for validation. Now the inner constraints are just
+silently ignored as json-schema array keywords are ignored on scalar
+values.
 
+Generally, keep the inner constraints and drop the outer "items". With
+gicv3 "mbi-alias" property, it is more appropriately a uint32 or uint64
+as it is an address and size depends on "#address-cells".
 
-On 9/25/2024 2:11 PM, Dmitry Baryshkov wrote:
-> On Wed, 25 Sept 2024 at 22:39, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
->>
->>
->>
->> On 9/24/2024 4:13 PM, Dmitry Baryshkov wrote:
->>> On Tue, Sep 24, 2024 at 03:59:21PM GMT, Jessica Zhang wrote:
->>>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>
->>>> All resource allocation is centered around the LMs. Then other blocks
->>>> (except DSCs) are allocated basing on the LMs that was selected, and LM
->>>> powers up the CRTC rather than the encoder.
->>>>
->>>> Moreover if at some point the driver supports encoder cloning,
->>>> allocating resources from the encoder will be incorrect, as all clones
->>>> will have different encoder IDs, while LMs are to be shared by these
->>>> encoders.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> [quic_abhinavk@quicinc.com: Refactored resource allocation for CDM]
->>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>>> [quic_jesszhan@quicinc.com: Changed to grabbing exising global state]
->>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>> ---
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  86 ++++++++++++
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 201 +++++++++++-----------------
->>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  19 +++
->>>>    3 files changed, 183 insertions(+), 123 deletions(-)
->>>>
->>>> @@ -544,159 +542,117 @@ void dpu_encoder_helper_split_config(
->>>>       }
->>>>    }
->>>>
->>>> -bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
->>>> +void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
->>>> +                             struct msm_display_topology *topology,
->>>> +                             struct drm_atomic_state *state,
->>>> +                             const struct drm_display_mode *adj_mode)
->>>>    {
->>>>       struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
->>>> -    int i, intf_count = 0, num_dsc = 0;
->>>> +    struct drm_connector *connector;
->>>> +    struct drm_connector_state *conn_state;
->>>> +    struct msm_display_info *disp_info;
->>>> +    struct drm_framebuffer *fb;
->>>> +    struct msm_drm_private *priv;
->>>> +    int i;
->>>>
->>>>       for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
->>>>               if (dpu_enc->phys_encs[i])
->>>> -                    intf_count++;
->>>> +                    topology->num_intf++;
->>>>
->>>> -    /* See dpu_encoder_get_topology, we only support 2:2:1 topology */
->>>> +    /* We only support 2 DSC mode (with 2 LM and 1 INTF) */
->>>>       if (dpu_enc->dsc)
->>>> -            num_dsc = 2;
->>>> +            topology->num_dsc += 2;
->>>>
->>>> -    return (num_dsc > 0) && (num_dsc > intf_count);
->>>> -}
->>>> +    connector = drm_atomic_get_new_connector_for_encoder(state, drm_enc);
->>>> +    if (!connector)
->>>> +            return;
->>>> +    conn_state = drm_atomic_get_new_connector_state(state, connector);
->>>> +    if (!conn_state)
->>>> +            return;
->>>>
->>>> -struct drm_dsc_config *dpu_encoder_get_dsc_config(struct drm_encoder *drm_enc)
->>>> -{
->>>> -    struct msm_drm_private *priv = drm_enc->dev->dev_private;
->>>> -    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
->>>> -    int index = dpu_enc->disp_info.h_tile_instance[0];
->>>> +    disp_info = &dpu_enc->disp_info;
->>>>
->>>> -    if (dpu_enc->disp_info.intf_type == INTF_DSI)
->>>> -            return msm_dsi_get_dsc_config(priv->dsi[index]);
->>>> +    priv = drm_enc->dev->dev_private;
->>>>
->>>> -    return NULL;
->>>> +    /*
->>>> +     * Use CDM only for writeback or DP at the moment as other interfaces cannot handle it.
->>>> +     * If writeback itself cannot handle cdm for some reason it will fail in its atomic_check()
->>>> +     * earlier.
->>>> +     */
->>>> +    if (disp_info->intf_type == INTF_WB && conn_state->writeback_job) {
->>>> +            fb = conn_state->writeback_job->fb;
->>>> +
->>>> +            if (fb && MSM_FORMAT_IS_YUV(msm_framebuffer_format(fb)))
->>>> +                    topology->needs_cdm = true;
->>>> +    } else if (disp_info->intf_type == INTF_DP) {
->>>> +            if (msm_dp_is_yuv_420_enabled(priv->dp[disp_info->h_tile_instance[0]], adj_mode))
->>>> +                    topology->needs_cdm = true;
->>>> +    }
->>>
->>> Just to note, the needs_cdm is not enough once you introduce CWB
->>> support. E.g. DP/YUV420 + WB/YUV case requires two CDM blocks (which we
->>> don't have), but this doesn't get reflected in the topology.
->>
->> Hi Dmitry,
->>
->> Ack. I can add something to make atomic_check fail if the input FB is
->> YUV format and CWB is enabled.
-> 
-> I'd prefer for this to be more natural rather than just checking for
-> the DP && DP_YUV420 && WB && WB_FMT_YUV. In the worst case, count CDM
-> requests and then in RM check them against the catalog. But I had a
-> more logical (although more intrusive) implementation on my mind:
-> 
-> struct msm_display_topology {
->      struct {
->        u32 num_intf;
->        u32 num_wb;
->        u32 num_dsc;
->        bool needs_cdm;
->      } outputs[MAX_OUTPUTS];
->      u32 num_lm;
-> };
-> 
-> WDYT?
-> 
+Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/cache/l2c2x0.yaml  |  5 ++---
+ .../devicetree/bindings/dma/dma-common.yaml          |  7 +++----
+ .../bindings/interrupt-controller/arm,gic-v3.yaml    | 12 +++++-------
+ .../devicetree/bindings/media/i2c/thine,thp7312.yaml |  3 +--
+ .../bindings/memory-controllers/exynos-srom.yaml     |  5 ++---
+ .../devicetree/bindings/pci/brcm,stb-pcie.yaml       |  5 ++---
+ .../devicetree/bindings/soc/qcom/qcom,smp2p.yaml     |  3 +--
+ 7 files changed, 16 insertions(+), 24 deletions(-)
 
-the struct msm_display_topology was originally designed as a per-encoder 
-struct (dpu_encoder_get_topology() indicates the same). Making this an 
-array of outputs was not needed as there is expected to be one struct 
-msm_display_topology for each virt encoder's requested topology and the 
-blocks inside of it other than LM, are "encoder" hw blocks.
+diff --git a/Documentation/devicetree/bindings/cache/l2c2x0.yaml b/Documentation/devicetree/bindings/cache/l2c2x0.yaml
+index d7840a5c4037..10c1a900202f 100644
+--- a/Documentation/devicetree/bindings/cache/l2c2x0.yaml
++++ b/Documentation/devicetree/bindings/cache/l2c2x0.yaml
+@@ -100,9 +100,8 @@ properties:
+       filter. Addresses in the filter window are directed to the M1 port. Other
+       addresses will go to the M0 port.
+     $ref: /schemas/types.yaml#/definitions/uint32-array
+-    items:
+-      minItems: 2
+-      maxItems: 2
++    minItems: 2
++    maxItems: 2
+ 
+   arm,io-coherent:
+     description: indicates that the system is operating in an hardware
+diff --git a/Documentation/devicetree/bindings/dma/dma-common.yaml b/Documentation/devicetree/bindings/dma/dma-common.yaml
+index ea700f8ee6c6..fde5160b5d29 100644
+--- a/Documentation/devicetree/bindings/dma/dma-common.yaml
++++ b/Documentation/devicetree/bindings/dma/dma-common.yaml
+@@ -32,10 +32,9 @@ properties:
+       The first item in the array is for channels 0-31, the second is for
+       channels 32-63, etc.
+     $ref: /schemas/types.yaml#/definitions/uint32-array
+-    items:
+-      minItems: 1
+-      # Should be enough
+-      maxItems: 255
++    minItems: 1
++    # Should be enough
++    maxItems: 255
+ 
+   dma-channels:
+     $ref: /schemas/types.yaml#/definitions/uint32
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
+index 5f051c666cbe..f3247a47f9ee 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/arm,gic-v3.yaml
+@@ -132,10 +132,9 @@ properties:
+       Address property. Base address of an alias of the GICD region containing
+       only the {SET,CLR}SPI registers to be used if isolation is required,
+       and if supported by the HW.
+-    $ref: /schemas/types.yaml#/definitions/uint32-array
+-    items:
+-      minItems: 1
+-      maxItems: 2
++    oneOf:
++      - $ref: /schemas/types.yaml#/definitions/uint32
++      - $ref: /schemas/types.yaml#/definitions/uint64
+ 
+   ppi-partitions:
+     type: object
+@@ -223,9 +222,8 @@ patternProperties:
+           (u32, u32) tuple describing the untranslated
+           address and size of the pre-ITS window.
+         $ref: /schemas/types.yaml#/definitions/uint32-array
+-        items:
+-          minItems: 2
+-          maxItems: 2
++        minItems: 2
++        maxItems: 2
+ 
+     required:
+       - compatible
+diff --git a/Documentation/devicetree/bindings/media/i2c/thine,thp7312.yaml b/Documentation/devicetree/bindings/media/i2c/thine,thp7312.yaml
+index 535acf2b88a9..bc339a7374b2 100644
+--- a/Documentation/devicetree/bindings/media/i2c/thine,thp7312.yaml
++++ b/Documentation/devicetree/bindings/media/i2c/thine,thp7312.yaml
+@@ -135,8 +135,7 @@ properties:
+ 
+           data-lanes:
+             $ref: /schemas/media/video-interfaces.yaml#/properties/data-lanes
+-            items:
+-              maxItems: 4
++            maxItems: 4
+             description:
+               This property is for lane reordering between the THP7312 and the imaging
+               sensor that it is connected to.
+diff --git a/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
+index 10a2d97e5f8b..a5598ade399f 100644
+--- a/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
++++ b/Documentation/devicetree/bindings/memory-controllers/exynos-srom.yaml
+@@ -66,9 +66,8 @@ patternProperties:
+ 
+       samsung,srom-timing:
+         $ref: /schemas/types.yaml#/definitions/uint32-array
+-        items:
+-          minItems: 6
+-          maxItems: 6
++        minItems: 6
++        maxItems: 6
+         description: |
+           Array of 6 integers, specifying bank timings in the following order:
+           Tacp, Tcah, Tcoh, Tacc, Tcos, Tacs.
+diff --git a/Documentation/devicetree/bindings/pci/brcm,stb-pcie.yaml b/Documentation/devicetree/bindings/pci/brcm,stb-pcie.yaml
+index 0925c520195a..2ad1652c2584 100644
+--- a/Documentation/devicetree/bindings/pci/brcm,stb-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/brcm,stb-pcie.yaml
+@@ -92,9 +92,8 @@ properties:
+       may have two component regions -- base and extended -- so
+       this information cannot be deduced from the dma-ranges.
+     $ref: /schemas/types.yaml#/definitions/uint64-array
+-    items:
+-      minItems: 1
+-      maxItems: 3
++    minItems: 1
++    maxItems: 3
+ 
+   resets:
+     minItems: 1
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+index 141d666dc3f7..1ba1d419e83b 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smp2p.yaml
+@@ -55,8 +55,7 @@ properties:
+ 
+   qcom,smem:
+     $ref: /schemas/types.yaml#/definitions/uint32-array
+-    items:
+-      maxItems: 2
++    maxItems: 2
+     description:
+       Two identifiers of the inbound and outbound smem items used for this edge.
+ 
+-- 
+2.45.2
 
-needs_cdm was made a boolean instead of a num_cdm_count like other 
-hardware blocks because till the most recent chipset, we have only one 
-CDM block. Whenever we do have more CDM blocks why will introducing 
-num_cdm to the topology struct not solve your problem rather than making 
-it an array of outputs?
-
-Because then, RM will know that the request exceeds the max blocks.
-
-I think what you are trying to do now is make struct 
-msm_display_topology's encoder parts per-encoder and rest like num_lm 
-per "RM session".
-
-The thought is not wrong but at the same time seems a bit of an overkill 
-because its mostly already like that. Apart from CDM for which I have no 
-indication of another one getting added, rest of the blocks are already 
-aligned towards a per-encoder model and not a "RM session" model.
-
-Even if we end up doing it this way, most of the model is kind of unused 
-really because each encoder will request its own topology anyway, there 
-is just no aggregation for CDM which at this point is not needed as 
-there is no HW we are aware of needing this.
-
-I think the atomic_check validation is needed either way because if two 
-encoders request cdm, we cannot do clone mode as there is only one cdm 
-block today. Its just that we are not tracking num_cdm today due to 
-reasons explained above but basically doing something like below seems 
-right to me:
-
-if (enc_is_in_clone_mode && needs_cdm)
-	return -ENOTSUPPORTED;
-
-When we add more cdm_blocks, we can drop this check and making needs_cdm 
-a num_cdm will make it naturally fail.
-
->>
->> Thanks,
->>
->> Jessica Zhang
->>
->>>
->>>>    }
->>>>
->>> --
->>> With best wishes
->>> Dmitry
->>
-> 
-> 
 
