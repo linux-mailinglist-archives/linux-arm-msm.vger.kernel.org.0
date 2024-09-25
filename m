@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A029C985696
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 11:46:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1F8F9856B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 11:55:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67723286DE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:46:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F32531C22EEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:55:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3301411EB;
-	Wed, 25 Sep 2024 09:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17A301537B9;
+	Wed, 25 Sep 2024 09:55:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rMl089XN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RSY+RqN7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785F128F3;
-	Wed, 25 Sep 2024 09:46:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4411A13B284;
+	Wed, 25 Sep 2024 09:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727257605; cv=none; b=k+i9b8/KZHTtVKtAbGdU7mBYigcfr1jXYt1VU4Sv8Hs8eBIIEZdSVEgvEW01zkHDcCQ+gDjwF+f1zOfAqmmMxCIgCd47Paj+w5AssrK6wN9sUe4bdcyOVcFL3YojeQXZhI4ElQ2XtJX9WkNM1Qg0a3CJHk2XT2u8jvlQqkvVvFs=
+	t=1727258124; cv=none; b=bMoP3FILJJ4TrP1/lgzCXSr2ydbcJEVuJ0Oz4yqyDB/BzisXMK0gk9UnFqH2xjFKBCnB9TcizL/F8BAdPZdTykAWi+DUBQhdKr/+pTP3ohpldBuMKXpu8PsYZcIrXlsfZZ2q2sE0SXH7Opk0ORZO3DCh+SP/BnrY1W+qE/34LTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727257605; c=relaxed/simple;
-	bh=wtn5+KuMLTAqeZweMoRuxkoCjg49C5loEg74Pkq8niU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dDkzo5gNF/uMNfbk0Lvk1ISlm1kFHXsqqKvAU/p/BNoA6tiF1G2qE4gVyTxvgGIz3Ly02BcG68gFh2WM9arnXIgs1dD1Ii3Z12CIxcdUtM9gqcfaS5viI23MUPr1yZk8eTzha1ziUXS8m9IOGp2FS2n5TNc8UXWp+fWgr5LnhSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rMl089XN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EA2C4CEC3;
-	Wed, 25 Sep 2024 09:46:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727257605;
-	bh=wtn5+KuMLTAqeZweMoRuxkoCjg49C5loEg74Pkq8niU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rMl089XNFRAEGqGjifzGH4vHmkqYCn0PuSiSSxoa44g9uXf9m4QFeUwMFyWZ4/Jrl
-	 RaWXD3u0L8Qt22vg1xvfKfhEXnEe51XdG2dZYT7Xw1P6J0/FadUCOm49X5dW6kf4zE
-	 hT1lEuWPSW5mbij8dbwOKHzfa5Rhyr+ZhFoZ6OxzHE3IZeYZhDa2sRoSDqE7jqdSA0
-	 8gz/HaruwpjM77EOo8nPk4GT+zFAAKpD8cMPuedCRqi+afrz3e5QVRuyl59+Rc3uXE
-	 +tjJZ18viIKSWYX490NH6d9/dZcdd2dpWfj8j/G2Tee3pwbN31N28qqnWwHoIfyStT
-	 leX5AWRIOWgAA==
-Message-ID: <2731e17d-c1ad-4fb4-ab60-82ceafeffbaf@kernel.org>
-Date: Wed, 25 Sep 2024 11:46:35 +0200
+	s=arc-20240116; t=1727258124; c=relaxed/simple;
+	bh=lnq6ZO3x7xysWD7okx3yWWPn1VbGS7K24zu5ipQhMTs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=XBl6/+W/D01/z4+dq+jsJeGWte2lwbYryn04COCT0wUhtfbSDyatWBfVvgbo2eyCrUYYH7RxTxQ334Pdb5R6qwKws6v02+RqdoPUtS9Q1qc2rqSehUehqjOdzpaMAWVnYa1PeKKlCqOqbEZXs10+VwP3NFakxgs4YjbhiRld/BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RSY+RqN7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48P7LBuH006979;
+	Wed, 25 Sep 2024 09:55:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	TYHA75fE9IatDsWvPNyuWaPSE/JwKHRGcBQvG0HJumc=; b=RSY+RqN73zkyfqUQ
+	qNUEt5aD1Mef47PflnJISOPuM4abuPNKONQ904/rDpOCbRapurDchR4Qs7I2+pKp
+	vjYQoYvKqYHJZc3RnpzvszMOQ3K6GvNEtMMvjzqBdz+pc5BkZm0kp4YeVOzJvDSY
+	UNAGcufzaM0ezjHunxeqD+omtH3kugtXRs0pRM68CJdIGjuIOCVy7zYzWF87oLl1
+	JzGC6uBmPz63ZXpTX9pASVA6hOxntmsjZgHhh2O+l9kUGkbyLTblRUvHMm1NaIQu
+	R+VAmL+oBkSVBKCfrRzB3YL8CynBdeWUyaZiqJdPDcgT26oXfgqQJviGPv1WsCFZ
+	yrYO7w==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skgnc30w-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Sep 2024 09:55:18 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48P9tHCB001378
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 25 Sep 2024 09:55:17 GMT
+Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Sep
+ 2024 02:55:15 -0700
+Message-ID: <ad86f820-1e9f-4e15-b106-3e2136dbf438@quicinc.com>
+Date: Wed, 25 Sep 2024 15:25:12 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,69 +65,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: x1e80100: Add support for PCIe3
- on x1e80100
-To: Konrad Dybcio <konradybcio@kernel.org>,
- Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
- Johan Hovold <johan+linaro@kernel.org>
-Cc: Qiang Yu <quic_qianyu@quicinc.com>, vkoul@kernel.org, kishon@kernel.org,
- robh@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- abel.vesa@linaro.org, quic_msarkar@quicinc.com, quic_devipriy@quicinc.com,
- dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
- neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
- linux-clk@vger.kernel.org
-References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
- <20240924101444.3933828-7-quic_qianyu@quicinc.com>
- <9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org>
- <20240925080522.qwjeyrpjtz64pccx@thinkpad>
- <4ee4d016-9d68-4925-9f49-e73a4e7fa794@kernel.org>
+Subject: Re: [PATCH 1/1] i2c: qcom-geni: add 32MHz I2C SE clock support for
+ IPQ5424
+To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, <andi.shyti@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
+ <e14e2136-54eb-411d-afff-f6803a23ad6a@quicinc.com>
+ <3c3647c1-8d6d-4038-8815-30c1570d856c@quicinc.com>
 Content-Language: en-US
-From: Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <4ee4d016-9d68-4925-9f49-e73a4e7fa794@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <3c3647c1-8d6d-4038-8815-30c1570d856c@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Z1HJJ-LSDMZapJc6Q-gLp44OXnlkQKJW
+X-Proofpoint-GUID: Z1HJJ-LSDMZapJc6Q-gLp44OXnlkQKJW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxlogscore=999 adultscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ spamscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409250067
 
-On 25.09.2024 11:30 AM, Konrad Dybcio wrote:
-> On 25.09.2024 10:05 AM, Manivannan Sadhasivam wrote:
->> On Tue, Sep 24, 2024 at 04:26:34PM +0200, Konrad Dybcio wrote:
->>> On 24.09.2024 12:14 PM, Qiang Yu wrote:
->>>> Describe PCIe3 controller and PHY. Also add required system resources like
->>>> regulators, clocks, interrupts and registers configuration for PCIe3.
->>>>
->>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>
->>> Qiang, Mani
->>>
->>> I have a RTS5261 mmc chip on PCIe3 on the Surface Laptop.
->>
->> Is it based on x1e80100?
-> 
-> You would think so :P
-> 
->>
->>> Adding the global irq breaks sdcard detection (the chip still comes
->>> up fine) somehow. Removing the irq makes it work again :|
->>>
->>> I've confirmed that the irq number is correct
->>>
->>
->> Yeah, I did see some issues with MSI on SM8250 (RB5) when global interrupts are
->> enabled and I'm working with the hw folks to understand what is going on. But
->> I didn't see the same issues on newer platforms (sa8775p etc...).
->>
->> Can you please confirm if the issue is due to MSI not being received from the
->> device? Checking the /proc/interrutps is enough.
-> 
-> There's no msi-map for PCIe3. I recall +Johan talking about some sort of
-> a bug that prevents us from adding it?
+Thanks manikanta !
 
-Unless you just meant the msi0..=7 interrupts, then yeah, I only get one irq
-event with "global" in place and it seems to never get more
-
-Konrad
+On 9/25/2024 2:14 PM, Manikanta Mylavarapu wrote:
+> 
+> 
+> On 9/25/2024 1:06 PM, Mukesh Kumar Savaliya wrote:
+>> Hi Manikanta,
+>>
+>> On 9/24/2024 12:20 PM, Manikanta Mylavarapu wrote:
+>>> The IPQ5424 I2C SE clock operates at a frequency of 32MHz. Since the
+>> would it be better to say , I2C SE is sourced from 32MHZ ?
+> 
+> Okay, sure.
+> 
+>>> existing map table is based on 19.2MHz, this patch incorporate the
+>> based on 19.2MHz. this patch /,/.
+> 
+> Okay, sure.
+> 
+>>> clock map table to derive the SCL clock from the 32MHz SE clock.
+>> from the 32MHz Source Clock frequency.
+>> SE = Expand OR  (I2C Serial Engine Controller)
+> 
+> Okay, sure.
+> 
+Please also mention the reason why 32MHz got added ? Need to describe 
+evolution to understand the purpose behind this change.
+>>>
+>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>> ---
+>>>    drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++++++
+>>>    1 file changed, 11 insertions(+)
+>>>
+>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> index 212336f724a6..bbd9ecf09f4b 100644
+>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> @@ -71,6 +71,7 @@ enum geni_i2c_err_code {
+>>>      #define I2C_AUTO_SUSPEND_DELAY    250
+>>>    #define KHZ(freq)        (1000 * freq)
+>>> +#define MHZ(freq)        (1000000 * freq)
+>>>    #define PACKING_BYTES_PW    4
+>>>      #define ABORT_TIMEOUT        HZ
+>>> @@ -152,11 +153,21 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
+>> A thought - Should we rename this appending _19.2M ? In future one or more may come as it evolves speed.
+> 
+> Okay, sure.
+> 
+> Thanks & Regards,
+> Manikanta.
+> 
+>>>        {KHZ(1000), 1, 3,  9, 18},
+>>>    };
+>>>    +/* source_clock = 32 MHz */
+>>> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32M[] = {
+>>> +    {KHZ(100), 7, 14, 18, 40},
+>>> +    {KHZ(400), 4,  3, 11, 20},
+>>> +    {KHZ(1000), 4, 3,  6, 15},
+>>> +};
+>>> +
+>>>    static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+>>>    {
+>>>        int i;
+>>>        const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
+>>>    +    if (clk_get_rate(gi2c->se.clk) == MHZ(32))
+>>> +        itr = geni_i2c_clk_map_32M;
+>>> +
+>>>        for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
+>>>            if (itr->clk_freq_out == gi2c->clk_freq_out) {
+>>>                gi2c->clk_fld = itr;
+> 
 
