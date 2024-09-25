@@ -1,183 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-32502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2704986481
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 18:11:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ECB59864A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 18:18:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7053AB2E7D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 15:24:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F7A228B27A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:18:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C533172BDF;
-	Wed, 25 Sep 2024 15:05:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8EA639FEB;
+	Wed, 25 Sep 2024 16:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lV/dEyYi"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="Zl7g9RJT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B0416DEDF;
-	Wed, 25 Sep 2024 15:05:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDC61D5ABD;
+	Wed, 25 Sep 2024 16:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727276727; cv=none; b=UCUqzPdzRLQY8R1yUG0+RoHaWvgISE4CFZpt6EWhqLmjdsRfV0Zf72p8MEGCniJPf3yvryLSTY+B1mt8i//Hu91BL7XuCw1lXKznVtjkNjZHYFUTZGu0MB1Vw02My8NlA1RXVXZQC9t5V7xlCyaBB/2pO25gUFrH8SPdh0JSvDw=
+	t=1727281088; cv=none; b=fx1qT3bsnK6k0jZZXCWkQSJcQLW1hig2qFOdz3JjbN++lUyybTFWlqRwuZNxNSKNMMb2L1g1HwC2mW2CQWBOfnSFBQF8TwvPgwe3RdgXmzkgq2PCGGjjLD65C8IKSRK/YS3qhgQ86mGu6kYSe6EWVqgjdFGE0sNDObQPiJn3+6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727276727; c=relaxed/simple;
-	bh=LTFovhotCR3F0gjdRFbbOMrUPSlsAH2Mi6k1oPhssn0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UwLQGKhzmFDiZCEYOFszKA2iysb2DrWh1nMqY68/cvYapmY/kbPd5ZFbh8SWrcYYsNV+AbbP3/ylTKBQoGbcUiNJ3qY04CWf8SkgEtqMdzX/pS2wKrnzp/jvravR1Sk/qOJ40novOJWHnudjE7c0q9mFzKQVvWg2eNjnMjdEXxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lV/dEyYi; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727276726; x=1758812726;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=LTFovhotCR3F0gjdRFbbOMrUPSlsAH2Mi6k1oPhssn0=;
-  b=lV/dEyYibagIHuQvOXg5M78AV3oH9/1pbaF41/rpAG1o4xfXp5Yf9vC9
-   NdLP3PtytXUqiqbZMd5NGh3zxm1sg4a0H9ruJYXJC8OAtIGLWWwRvuwky
-   DST+0k8NlEABCcGRsyscQve21QpYNt03z79P6KForVrF7cyFQmKS91TsL
-   spWWGTkhkwkAHBfWMYowWbNZiLItv2ReDTUTu74688YrmNYbLM4S6QBRc
-   WHt4aOiQ/d13QZae+tUReW5UDS7xQI8HL6wpitYKWrpDbQfuHnCgL/N54
-   7uEt/7LlRaiGcTqyfE3D+be+UNuVXECahP92qlOXGBeKuyibxvoGesaAI
-   w==;
-X-CSE-ConnectionGUID: BApjExqiTim3RzQByOk0ww==
-X-CSE-MsgGUID: iDKTPwRRQ865FqjgcAKOpA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11206"; a="26482948"
-X-IronPort-AV: E=Sophos;i="6.10,257,1719903600"; 
-   d="scan'208";a="26482948"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2024 08:05:25 -0700
-X-CSE-ConnectionGUID: uBmKSm89TSiRGkjsbpUpYg==
-X-CSE-MsgGUID: ELGXt5SjQ5GvFpL3sot2/g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.10,257,1719903600"; 
-   d="scan'208";a="76317739"
-Received: from kniemiec-mobl1.ger.corp.intel.com (HELO [10.245.246.30]) ([10.245.246.30])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Sep 2024 08:05:20 -0700
-Message-ID: <8bb65adc-e995-443e-80c9-36e9b5d8eee3@linux.intel.com>
-Date: Wed, 25 Sep 2024 16:54:28 +0200
+	s=arc-20240116; t=1727281088; c=relaxed/simple;
+	bh=UR4rx861FVc7MUozMDlYpuInZFzHxiWfjaUBgmnWlzQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=UZjOLnX1yv1FFOyFulVFy8HEPPJR3687iRKqdrSdO216LdkviTAgc3O8l3oG5dHBitOM158Zc/w0+q0WEw8tNLDeyXLMaT408Bwt4FsrR5vKhZW15MMBgokpA1o6sr96mj5vwDASfxvXF3FjmWBGTtOiHm4dnmaGwBDmx5//gGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=Zl7g9RJT; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from [192.168.1.130] (BC2491B6.dsl.pool.telekom.hu [188.36.145.182])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 489B4E450F;
+	Wed, 25 Sep 2024 16:09:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1727280584;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=fhfpSgyYQdb2EqROgqo0rwnUCTCj5II+pEYG/o/3OIM=;
+	b=Zl7g9RJT1AjBvUtYBfRyjBJYVyoLiEy6jyD5OauarHAkDyPoZY7bX61nKlvOffBto/8ktK
+	1eWPZybdICP87Ack0l3GNLoqlaxxBnj5qgwwtj+7IARNqJRJyZ6c3KmKPZPbNacsM3tzbG
+	u7c/3Hv9RQJjpR9JxMQYIyWXR+WaaQS+OOx6xzBu+WjpIQ0JsWMcXt0yrJGhQ0nJznftwU
+	ipZImxYrLJl9adhoAiLeiBvJQOIaELm2YraA+lQ0RUj+M0QVUq9iMDdEM9Nr8Psyv8YFLy
+	3QadhZeUv8IlII528HT+jVFtZ+X9/i/Tk2tfVdqXVJIsfdChV1/xbE3c/j7Xhg==
+From: =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+Date: Wed, 25 Sep 2024 18:09:39 +0200
+Subject: [PATCH] clk: qcom: clk-alpha-pll: Fix pll post div mask when width
+ is not set
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v28 30/32] ALSA: usb-audio: Add USB offload route kcontrol
-To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
- mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
- dmitry.torokhov@gmail.com, corbet@lwn.net, broonie@kernel.org,
- lgirdwood@gmail.com, tiwai@suse.com, krzk+dt@kernel.org,
- Thinh.Nguyen@synopsys.com, bgoswami@quicinc.com, robh@kernel.org,
- gregkh@linuxfoundation.org
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
- linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
-References: <20240925010000.2231406-1-quic_wcheng@quicinc.com>
- <20240925010000.2231406-31-quic_wcheng@quicinc.com>
-Content-Language: en-US
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20240925010000.2231406-31-quic_wcheng@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20240925-fix-postdiv-mask-v1-1-f70ba55f415e@mainlining.org>
+X-B4-Tracking: v=1; b=H4sIAMI19GYC/x2MQQqAIBAAvxJ7bqHUiPpKdDDdaoks3JAg+nvSc
+ WBmHhCKTAJ98UCkxMJHyFCXBbjVhoWQfWZQlTJVpxqc+cbzkMtzwt3KhpM1LTmvNFkNOTsjZed
+ fDuP7fnVsv+1iAAAA
+X-Change-ID: 20240925-fix-postdiv-mask-ba47ecd23ea3
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, 
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ =?utf-8?q?Barnab=C3=A1s_Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727280584; l=1264;
+ i=barnabas.czeman@mainlining.org; s=20240730; h=from:subject:message-id;
+ bh=UR4rx861FVc7MUozMDlYpuInZFzHxiWfjaUBgmnWlzQ=;
+ b=hoCWYjTKMqe5jer7ssS/foHAcic93tpjikdx3NHX2UQP/WtBfWXSd/t7KKJS2eMbxCgxA9rfS
+ gJD0R9guodpBmtCYiIht+Kxa2e/ezE4AIbhCwkbfQSF09q04dPcbXT4
+X-Developer-Key: i=barnabas.czeman@mainlining.org; a=ed25519;
+ pk=TWUSIGgwW/Sn4xnX25nw+lszj1AT/A3bzkahn7EhOFc=
 
+Many qcom clock drivers do not have .width set. In that case value of
+(p)->width - 1 will be negative which breaks clock tree. Fix this
+by checking if width is zero, and pass 0 to GENMASK if that's the case.
 
+Fixes: 2c4553e6c485 ("clk: qcom: clk-alpha-pll: Fix the pll post div mask")
+Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+---
+ drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+index f9105443d7dbb104e3cb091e59f43df25999f8b3..1f914bc0af5449ed1fb545d850607138a06fab1a 100644
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -40,7 +40,7 @@
+ 
+ #define PLL_USER_CTL(p)		((p)->offset + (p)->regs[PLL_OFF_USER_CTL])
+ # define PLL_POST_DIV_SHIFT	8
+-# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width - 1, 0)
++# define PLL_POST_DIV_MASK(p)	GENMASK((p)->width ? (p)->width - 1 : 0, 0)
+ # define PLL_ALPHA_MSB		BIT(15)
+ # define PLL_ALPHA_EN		BIT(24)
+ # define PLL_ALPHA_MODE		BIT(25)
 
-> +static int
-> +snd_usb_offload_route_get(struct snd_kcontrol *kcontrol,
-> +			  struct snd_ctl_elem_value *ucontrol)
-> +{
-> +	struct device *sysdev = snd_kcontrol_chip(kcontrol);
-> +	int ret;
-> +
-> +	ret = snd_soc_usb_update_offload_route(sysdev,
-> +					       CARD_IDX(kcontrol->private_value),
-> +					       PCM_IDX(kcontrol->private_value),
-> +					       SNDRV_PCM_STREAM_PLAYBACK,
-> +					       ucontrol->value.integer.value);
-> +	if (ret < 0) {
-> +		ucontrol->value.integer.value[0] = -1;
-> +		ucontrol->value.integer.value[1] = -1;
-> +	}
+---
+base-commit: 62f92d634458a1e308bb699986b9147a6d670457
+change-id: 20240925-fix-postdiv-mask-ba47ecd23ea3
 
-well this invalidates again what I understood from the last patch and
-goes back to what I understood initially: the error code is never
-returned to higher levels - when offload is not supported the kcontrol
-values are encoded to the -1 magic value.
+Best regards,
+-- 
+Barnabás Czémán <barnabas.czeman@mainlining.org>
 
-> +	return 0;
-
-and this begs the question if this helper should return a void value.
-
-> +}
-> +
-> +static int snd_usb_offload_route_info(struct snd_kcontrol *kcontrol,
-> +				      struct snd_ctl_elem_info *uinfo)
-> +{
-> +	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
-> +	uinfo->count = 2;
-> +	uinfo->value.integer.min = -1;
-> +	/* Arbitrary max value, as there is no 'limit' on number of PCM devices */
-> +	uinfo->value.integer.max = 0xff;
-> +
-> +	return 0;
-> +}
-> +
-> +static struct snd_kcontrol_new snd_usb_offload_mapped_ctl = {
-> +	.iface = SNDRV_CTL_ELEM_IFACE_CARD,
-> +	.access = SNDRV_CTL_ELEM_ACCESS_READ,
-> +	.info = snd_usb_offload_route_info,
-> +	.get = snd_usb_offload_route_get,
-> +};
-> +
-> +/**
-> + * snd_usb_offload_create_ctl() - Add USB offload bounded mixer
-> + * @chip - USB SND chip device
-> + *
-> + * Creates a sound control for a USB audio device, so that applications can
-> + * query for if there is an available USB audio offload path, and which
-> + * card is managing it.
-> + */
-> +int snd_usb_offload_create_ctl(struct snd_usb_audio *chip)
-> +{
-> +	struct usb_device *udev = chip->dev;
-> +	struct snd_kcontrol_new *chip_kctl;
-> +	struct snd_usb_substream *subs;
-> +	struct snd_usb_stream *as;
-> +	char ctl_name[37];
-
-that's quite a magic value.
-
-> +	int ret;
-> +
-> +	list_for_each_entry(as, &chip->pcm_list, list) {
-> +		subs = &as->substream[SNDRV_PCM_STREAM_PLAYBACK];
-> +		if (!subs->ep_num)
-> +			continue;
-> +
-> +		chip_kctl = &snd_usb_offload_mapped_ctl;
-> +		chip_kctl->count = 1;
-> +		/*
-> +		 * Store the associated USB SND card number and PCM index for
-> +		 * the kctl.
-> +		 */
-> +		chip_kctl->private_value = as->pcm_index |
-> +					  chip->card->number << 16;
-> +		sprintf(ctl_name, "USB Offload Playback Route PCM#%d",
-> +			as->pcm_index);
-> +		chip_kctl->name = ctl_name;
-> +		ret = snd_ctl_add(chip->card, snd_ctl_new1(chip_kctl,
-> +				  udev->bus->sysdev));
-> +		if (ret < 0)
-> +			break;
-> +	}
-> +
-> +	return ret;
-> +}
 
