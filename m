@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7843D986148
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:45:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84B3098615A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:47:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 226121F2701F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:45:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA4741C26FE2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:47:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 929901B3B21;
-	Wed, 25 Sep 2024 14:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E3E1B580F;
+	Wed, 25 Sep 2024 14:07:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8BYhsEH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="acJH3mb8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6719A1B374F;
-	Wed, 25 Sep 2024 14:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EF41B580D;
+	Wed, 25 Sep 2024 14:07:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727273126; cv=none; b=Q31lEzvDsq5vFd9bp71/rAZLBaAzhDNGH6y8JF//JdMqFSRI2+aouZrfbYrXMTK4NnOnvyCGMwSXY9RaN+VFWRs1EdKgbRjyGan0PExdeceOc0m3M93tLTjQ2SvLLMtGFCukMxtp5KVzGLveRxKlINQ3LAf5kqAr3/V/wakvNco=
+	t=1727273257; cv=none; b=cQ1M0m4ALIDWriKHrsWSr87fVGccf4Gc06AjEImAjbAIjaSOUSaln0MXcrXBFisfRMyBmj4fT3Nl8M55WvyS44RJOdBMDSy4utA91/a+GMke6a8Bnortr3b8Fpy2qCFwPuJoiRwQLIbjyQ+Wlus6AxUKV43gH9MDu3WtsG5zSeA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727273126; c=relaxed/simple;
-	bh=Wg1VV9lDuitVlyZRhiPqf+AVaPi9i6PcyjUKWoJ1IMo=;
+	s=arc-20240116; t=1727273257; c=relaxed/simple;
+	bh=gvqnSrhRYuaFfpZy3kXC+zMSnnnyboWPLgboCFLynNM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wnp1Rnnug/mrF2fQ+hvbxdBUCPnWbFuYr+Dm6YzwISVMFol3rLUoF24BxJYKrVszqudyHZM0LIdLMcswBP4xa+n8t5+SKtFiCknXshGXNxktVHyukIeUr+NafuSalyeoM5ItBnEdkYorcf7goWRXjNWMULO71ClNXIGzGKGDh14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8BYhsEH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB04FC4CEC9;
-	Wed, 25 Sep 2024 14:05:21 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=DU2Q4JN7eOPRgpke8DdvdWK1hV+p0kyjZ5/cV9YqXDX+eaaW2Wze+UHoDO7zatRKLbdMKbkiVOdugpy33aJK6R/wBKFNwK7LOUD/2fWdU5FaQcXbf1nlzw3TSQ/DpmYswzgrDy5/Pxz8W27Z8vLxNWTsXKtPnNQSw+coCFPCELc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=acJH3mb8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E830FC4CEC3;
+	Wed, 25 Sep 2024 14:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727273126;
-	bh=Wg1VV9lDuitVlyZRhiPqf+AVaPi9i6PcyjUKWoJ1IMo=;
+	s=k20201202; t=1727273256;
+	bh=gvqnSrhRYuaFfpZy3kXC+zMSnnnyboWPLgboCFLynNM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=H8BYhsEHYXfJ7UjvRPVlWwCB3uHeCfYZG2PVVpqdCJ181yKdCodT/wsTIxlwAtPpz
-	 wGxjcnFbfHR+aMywF/uQkHmbb95kpSXw4ccPrqVqqVk+p0LcvTvSVQ0PWOTsRdPilr
-	 GerbNvh3/VcE7eTQBe/siNNK3UtoKhjDrE2xS4ANWbRMSa5auM8U+XU2uzF02byPMj
-	 IStRgnqk2AlevGsJqNkX3NLlmxH5X91uR5ZAAcklnT0R2RIDm48l8PgzsTRZoQka40
-	 dqpPdjXxIv6cr7oE1YAyRYTFe7PVhpH2UGdpobiZpR+1P7K0w4pSQhbo9kmpa9sWc9
-	 4B5eeBdmkqaGw==
-Message-ID: <6416a73b-2e13-40b1-9daf-fe9d420770a0@kernel.org>
-Date: Wed, 25 Sep 2024 16:05:19 +0200
+	b=acJH3mb8LYJCz8TqE/o5SL89RXO4dS2UWkc+cGhSui/4G9mZ1ymGIdlTDMf1+Vo8P
+	 e+2WxYaEiSXHPHL18KJar26Yrxqll2cw04vsxa7qB2KOlwXXxM2gZmD+iANVeZeVT8
+	 FtJBprf02UhfAJX6sVXyvRVa7J3YrkO/oHblDb14I5izfEL7Pidn4TYEromdvGpOsa
+	 0+o2BtDFyFrDUXZo1JZOyJQLMAhwI/g6LYedJ+Hj/fybHwUTp3sIztA8ZdE4KDoOOo
+	 u/8lpxMYhkvlqIMCtA4BV3CJGzrI5N097JlvRSOg5wZm6+v8Qk2d6EHkDJCyh1tTER
+	 PkL3LoQDQVWBQ==
+Message-ID: <0fcccdbe-ba46-4d0b-ab8b-ad659bec05d5@kernel.org>
+Date: Wed, 25 Sep 2024 16:07:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: add base QCS8300 RIDE dts
-To: Jingyi Wang <quic_jingyw@quicinc.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
- Will Deacon <will@kernel.org>
+Subject: Re: [PATCH v3] dt-bindings: phy: Add QMP UFS PHY compatible for
+ QCS8300
+To: Jingyi Wang <quic_jingyw@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
- quic_aiquny@quicinc.com, Xin Liu <quic_liuxin@quicinc.com>,
- Tingguo Cheng <quic_tingguoc@quicinc.com>
-References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
- <20240925-qcs8300_initial_dtsi-v2-4-494c40fa2a42@quicinc.com>
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Xin Liu <quic_liuxin@quicinc.com>
+References: <20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,25 +104,33 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-4-494c40fa2a42@quicinc.com>
+In-Reply-To: <20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/09/2024 12:43, Jingyi Wang wrote:
-> Add initial support for Qualcomm QCS8300 RIDE board which enables
-> DSPs, UFS and booting to shell with uart console.
+On 25/09/2024 09:34, Jingyi Wang wrote:
+> From: Xin Liu <quic_liuxin@quicinc.com>
 > 
-> [Xin: added ufs/adsp/gpdsp nodes]
-> Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
+> Document the QMP UFS PHY compatible for Qualcomm QCS8300 to support
+> physical layer functionality for UFS found on the SoC. Use fallback to
+> indicate the compatibility of the QMP UFS PHY on the QCS8300 with that
+> on the SA8775P.
+> 
 > Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
-> [Tingguo: added the rpmhpd nodes]
-> Co-developed-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
 > Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile         |   1 +
->  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 267 ++++++++++++++++++++++++++++++
->  2 files changed, 268 insertions(+)
+> Changes in v3:
+> - remove redundant compatible.
+> - Link to v2: https://lore.kernel.org/r/20240911-qcs8300_ufs_phy_binding-v2-1-c801a2d27a84@quicinc.com
+> 
+> Changes in v2:
+> - decoupled from the original series.
+> - Use fallback to indicate compatibility with SA8775P.
+> - typo fixup
+> - Link to v1: https://lore.kernel.org/r/20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com
+> ---
+>  .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml    | 45 ++++++++++++----------
+>  1 file changed, 25 insertions(+), 20 deletions(-)
 > 
 
 
