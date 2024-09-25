@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32493-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6375B9861A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:58:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CF9E98613B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:44:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 51BFCB334E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:43:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A44391F26B43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:44:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2771D1917EE;
-	Wed, 25 Sep 2024 14:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32BA31B07C3;
+	Wed, 25 Sep 2024 14:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j3ZldT4S"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZGAzSbKp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4C01917D8;
-	Wed, 25 Sep 2024 14:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D3F1B07BE;
+	Wed, 25 Sep 2024 14:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727272960; cv=none; b=niX9XM8HA2gpPylAQRJiR0rF3XUJIQToFoPo1VrHdVjutT7negjtCazjwxGEekBV3+g7hjJEaQ713JoktfSVO7pLhggTwR8wYB7XWLBDiP9gpMQ1yBQVkTNoQrf+YJbSR+B1/5Zs8PjG9zX/rOsgCFxrqFiz6td1rZjzhME3MuM=
+	t=1727272988; cv=none; b=eIRs8Borz3EyU3crM/owPdwAenZuyI58hBD7NcULqBvMA4vuEW84pI8Lp1zkN5s9UHvGhJjStTWx4XBY0BExYRWDGvWlzv6xAlEM2+E+sjC3qrdZnQVELbTXmh6NEn6fmGFjLGvheGF1UAPU6MK/1E0FrPhH6vhdKfuDVqlNLWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727272960; c=relaxed/simple;
-	bh=k8vX4Mbd8a2Xp1PN0/sp11+GlAU361pKJpuH/Iakg+Q=;
+	s=arc-20240116; t=1727272988; c=relaxed/simple;
+	bh=nXK7N7Nf1cSVpn5fChKLMWvj7CC+73/9ZEx65cCe3Y8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VzNYiNEd4BZE3+eFaeBMUEMFBBXNf1y3T9TNXLdUVj9sVKTSz6C+7QJWl9CwgbsP5ksOpTlslq5Kj0/6GhILQVkHNq0K3/z9Dpr4Vqyvs8K+9WxXAwHieXAuFKjm10IYDpVZxe8LVU/flV7BrLj54ebdEWxyekGfFXSefSWCkl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j3ZldT4S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38CCC4CEC3;
-	Wed, 25 Sep 2024 14:02:35 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=IOpXfJNDxtz+CaXNHtp9hpYnuNr4Nr2kGGEUFOASh7fbgkRQgF5vxRG+v6kwwTG586Zc0kbKtX4JLSTwMyhiSZ7iUD5ZC8aESH94nJjCkfFc2tzqW3MMYou2EHd6RYddHQP1zd0t33/ATDzp4LD0nQu81mVEdB6uWU53xyVO4eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZGAzSbKp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323F4C4CEC3;
+	Wed, 25 Sep 2024 14:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727272959;
-	bh=k8vX4Mbd8a2Xp1PN0/sp11+GlAU361pKJpuH/Iakg+Q=;
+	s=k20201202; t=1727272987;
+	bh=nXK7N7Nf1cSVpn5fChKLMWvj7CC+73/9ZEx65cCe3Y8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=j3ZldT4Sari63zWGth2KtuX+l7wUxw+M/nTFE3KuS6Fpc0d/+l3UpKpafPO4xt2tg
-	 Z4fsP6xw3VRoozFs4iq2s813GKyG1zVUruqp2XgagWimqqAqEY9RY/HyUqk3dliaqP
-	 1nB3y6oafF3r90UwY0LF5jcSaydRa/6l4OOvyMuDwDhkv/BZwhDKrIIZuhgTRb2jds
-	 fsWN2iDB9Sr/ev9rzgjezyYlPYMJLso4y1Qtwe9pe0/Jr89XNzcnbXrIIA+Kqmy25N
-	 PFefq8UkK7BuJNrin0U+6ej8Vpbh95u8afMm1Yax9GU0U5GNr6/n80TeJHn4QBnMFe
-	 YNwBNJ0Sswz6w==
-Message-ID: <da2621e0-caf6-4593-9393-1fa8c74b2a9f@kernel.org>
-Date: Wed, 25 Sep 2024 16:02:34 +0200
+	b=ZGAzSbKpZ13a3gBnNPRxmeX46Jw9jpP82qR5qcK85E3ipgzDNy3fWNbggCT2LvOtg
+	 tLbm8ytutjjwrxiVj7QLeX6KHz+lUtKS7pAVLzrEARDWjQOF+Bx9Viu9I8ftAJHN2O
+	 sFOkha0s2ZkJfLNfRVasOKpixP6xFtNBDS1uXIGC9PEX/aIPDbGEVDnnnfHQv6Oydf
+	 3E6q6CqlBatZjB+Z+UGw6D3673vh5muHU5EfbVWRMAoVWnF5tqjDgwV9V1ERnief4J
+	 0dPGPffXkOOYgZipHDBPHaJlodxcAeDVEoDiQK6WgE8Jn1wCvVjH2cX0dMmL6bf0px
+	 KscXFPpk67ICA==
+Message-ID: <31d6f7e3-a839-4532-8290-4ed29cadb5b7@kernel.org>
+Date: Wed, 25 Sep 2024 16:03:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: document QCS8300 SoC and
- reference board
+Subject: Re: [PATCH v2 2/4] arm64: defconfig: enable clock controller,
+ interconnect and pinctrl for QCS8300
 To: Jingyi Wang <quic_jingyw@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -63,7 +63,7 @@ Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
  quic_aiquny@quicinc.com
 References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
- <20240925-qcs8300_initial_dtsi-v2-1-494c40fa2a42@quicinc.com>
+ <20240925-qcs8300_initial_dtsi-v2-2-494c40fa2a42@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,15 +109,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-1-494c40fa2a42@quicinc.com>
+In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-2-494c40fa2a42@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/09/2024 12:43, Jingyi Wang wrote:
-> Document Qualcomm QCS8300 SoC and its reference board QCS8300 RIDE.
+> Enable clock controller, interconnect and pinctrl for Qualcomm
+> QCS8300 platform to boot to UART console.
+> 
+> The serial engine depends on gcc, interconnect and pinctrl. Since
+> the serial console driver is only available as built-in, so these
+> configs needs be built-in for the UART device to probe and register
+> the console.
 > 
 > Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
-
+> ---
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
