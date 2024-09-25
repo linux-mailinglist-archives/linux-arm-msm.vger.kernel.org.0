@@ -1,141 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-32439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93A7B985464
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:45:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B175A9854A0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:53:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F7D02829AA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 07:45:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E27B31C22C02
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 07:53:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA46148FF5;
-	Wed, 25 Sep 2024 07:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC416158216;
+	Wed, 25 Sep 2024 07:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p8YG+41F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTTu6Zbp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E46768E7;
-	Wed, 25 Sep 2024 07:45:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5F0154C19;
+	Wed, 25 Sep 2024 07:53:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727250325; cv=none; b=A8pn2ZMk5Dwim1wtlPICLbMKebKTBxWQIBZei7386HO45Q3I9kLFspCITqEHF6ZfnRD+1prnxJ3GpOztA4B5R+Y88uEks3C9Yu7bitefmLwdwkGcRRgmicVgjVPTEl2iIEwDLIt8bEAs1/jzWprB2936fBS+tHpd9HimrSTkujo=
+	t=1727250793; cv=none; b=REK9XXOj7nynppojYPZBmJsW26l3tziUB88pmahbtu1RHMkCzKMiHMi8AQy9d4dRKLjfkWPvMMh/ge8njHSoPhAJBQam5vImrM1CZwNycCzgctruHO93gjfcnRyRxY4HxiUeKSrJKk0q7ddVDJNIvu81KulsEL+ZIEIoIvS/r0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727250325; c=relaxed/simple;
-	bh=IE8ZVu2aiidjh+hRIBeJ/vw9AQM1Lg63nrhIP0/Uaaw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=suz3CNKQCBJ6MtJT8Ksp5ZhdgZSvDH/b1RHiS2aEXy76FbcKFFBl2oaH3ryYCnwYbFJgC+SPagyAbtR+J+0VRAd8c7K0T1n3phK+qRJZ9qpBvW02bKDuTT3NDMi1/waXCX5w12VZ+2rq59tNBDX7UUgQ3kU+GeDhKbP5/WYVglg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p8YG+41F; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48OI25XF013399;
-	Wed, 25 Sep 2024 07:45:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=URXGrPY7ypUtdDqnCvuaAT
-	HIgW9AP3ddNNq9J4c23OQ=; b=p8YG+41FMP4G4TasYReDsIadY5uzVUhRX4xbs/
-	y6+9kWspjtAGr8MkdAJa+Z6sE2Y+g0Fe50xKrl+mEZmf5c6WfIKW1BHo6+dWqOFE
-	HAm6EAAEoto0UKo8KPvjIYehy98rSdeOLkNatFT0Zv6cTT+0MGqh8znCTGyzVeWB
-	hSA24aT3S1zXGnPV3y/2Ksq1B3Q3AEoMpIpLARP2h36j5z3eW0sY4E8nXFKCSlGV
-	fKap7zXLptjifw/mdhr8epXplwLemVwO3jVuZ6+JhLa9W6mloEeaHweDi0gikbZj
-	EyLF5TABxx2FOGTuVM5l6SHOmyWyweajWTdOm0Baqsu+fE4w==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spc2u4en-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 07:45:20 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48P7jJbu001253
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 07:45:19 GMT
-Received: from jingyw-gv.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 25 Sep 2024 00:45:17 -0700
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-Date: Wed, 25 Sep 2024 15:45:06 +0800
-Subject: [PATCH] dt-bindings: interconnect: qcom-bwmon: Document QCS8300
- bwmon compatibles
+	s=arc-20240116; t=1727250793; c=relaxed/simple;
+	bh=JlkZaCujSCTgJbO5kGZerdxZ8O560A/44Dww/tnh8jg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QVJ1kdigUIcqDWlpmSuUtRoLjgreg0rxHL5cKBJuMRxc0FZW4PQbme4iE3ZyE4d02Yt8O8ivngmDhmAwh9gjvH5boRRmcJLR3jB3hIsHn41j9DVdgAXMxzHJ7FaX3yN1GL97JtAcPy/VGiCecatk7MV+yyVdAKB+GQqrPlq095c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTTu6Zbp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07C1DC4CEC6;
+	Wed, 25 Sep 2024 07:53:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727250793;
+	bh=JlkZaCujSCTgJbO5kGZerdxZ8O560A/44Dww/tnh8jg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RTTu6ZbpEXm+3108C+MCKpOe3cc7GDzplrAVh9usgsndAVm+APjBu7u0CCEnxobUO
+	 2enBjoa2k4bSRynYGNF7lciz7jltxlFxGi5UQSiACYJD2te2ujn9/tPX5DccdPqzg9
+	 UO32kfxRO9oSW/rOCcJNLJ8PKdjk5Em+jkdXxzAr8u1nthoAxJfImVkDnG5A6NG1dR
+	 QNem17diLh6Ivk5lN6rrphnMJ+6yqnbn55Cr9SGkpFe8UqjcX0P3/jf7zN/CQOmiR1
+	 XZM81UADMyTM7BiX6IeHK+nxtbSoAUgrwwAAnmgKgVRkbxlybgufVDhXPByGvTrV6o
+	 eKsLu7JNZd/Yg==
+Message-ID: <2012b494-ce72-455c-a298-85264dd2f648@kernel.org>
+Date: Wed, 25 Sep 2024 09:53:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] dt-bindings: interconnect: qcom-bwmon: Document QCS8300
+ bwmon compatibles
+To: Jingyi Wang <quic_jingyw@quicinc.com>, Georgi Djakov <djakov@kernel.org>,
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-ID: <20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAIG/82YC/x3MTQ5AMBBA4avIrDWptn6vIiKqg1kYtAkScXeN5
- bd474GAnjBAkzzg8aRAG0dkaQLjMvCMglw0KKmMrFUujjFUWsreXuvGvSV2xLMoTOYqNHbSZQG
- x3T1OdP/ftnvfDyLo2bRnAAAA
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Georgi Djakov
-	<djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <quic_tengfan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Jingyi Wang <quic_jingyw@quicinc.com>
-X-Mailer: b4 0.15-dev-99b12
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727250316; l=1422;
- i=quic_jingyw@quicinc.com; s=20240910; h=from:subject:message-id;
- bh=IE8ZVu2aiidjh+hRIBeJ/vw9AQM1Lg63nrhIP0/Uaaw=;
- b=aRTjs8Zvo3qvyumphImuX18BBp/XI8y7mkkYzjZBhWOTOfEPxRzrGRCEIK2BG8wNfFGw7bQr7
- XmCks+84mhkAxTRKUqKRkyCBvfhVcyXL8DzDFl2gD59qRQh2RTyIPPS
-X-Developer-Key: i=quic_jingyw@quicinc.com; a=ed25519;
- pk=ZRP1KgWMhlXXWlSYLoO7TSfwKgt6ke8hw5xWcSY+wLQ=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hDCOYzy3pQjHRyQHpjhFcjEiL5SLLOPp
-X-Proofpoint-ORIG-GUID: hDCOYzy3pQjHRyQHpjhFcjEiL5SLLOPp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
- impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=907
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409250054
 
-Document QCS8300 BWMONs, which has two BWMONv4 instances for the CPU->LLCC
-path and one BWMONv5 instance for LLCC->DDR path.
+On 25/09/2024 09:45, Jingyi Wang wrote:
+> Document QCS8300 BWMONs, which has two BWMONv4 instances for the CPU->LLCC
+> path and one BWMONv5 instance for LLCC->DDR path.
 
-Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
----
- Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+Please wrap commit message according to Linux coding style / submission
+process (neither too early nor over the limit):
+https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
 
-diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-index 189f5900ee50..251410aabf38 100644
---- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-+++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
-@@ -26,6 +26,7 @@ properties:
-       - items:
-           - enum:
-               - qcom,qcm2290-cpu-bwmon
-+              - qcom,qcs8300-cpu-bwmon
-               - qcom,sa8775p-cpu-bwmon
-               - qcom,sc7180-cpu-bwmon
-               - qcom,sc7280-cpu-bwmon
-@@ -40,6 +41,7 @@ properties:
-           - const: qcom,sdm845-bwmon    # BWMON v4, unified register space
-       - items:
-           - enum:
-+              - qcom,qcs8300-llcc-bwmon
-               - qcom,sa8775p-llcc-bwmon
-               - qcom,sc7180-llcc-bwmon
-               - qcom,sc8280xp-llcc-bwmon
 
----
-base-commit: 4d0326b60bb753627437fff0f76bf1525bcda422
-change-id: 20240925-qcs8300_bwmon_binding-641d8e4bf376
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+
 
 Best regards,
--- 
-Jingyi Wang <quic_jingyw@quicinc.com>
+Krzysztof
 
 
