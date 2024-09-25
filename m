@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32492-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9ED7098612E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:42:27 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6375B9861A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:58:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF3A71C26661
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:42:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 51BFCB334E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:43:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7237174EDB;
-	Wed, 25 Sep 2024 14:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2771D1917EE;
+	Wed, 25 Sep 2024 14:02:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gtDLjpX8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j3ZldT4S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79762172BDF;
-	Wed, 25 Sep 2024 14:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4C01917D8;
+	Wed, 25 Sep 2024 14:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727272902; cv=none; b=b1udjEM7Zr27tbXAtRgk99IXGY79oly3oKtva/6vzl66En80j0YkPdTFQkcqbu5FoXxBPllclUNuKhsRq8O86ySmjZsEUnkvxI9P18vQ3v3a9LR1lgUf4Jj6H3IeduleObBFVnFN3howG7IzzZHAXf7N55y2219p8WJWYs1CHq0=
+	t=1727272960; cv=none; b=niX9XM8HA2gpPylAQRJiR0rF3XUJIQToFoPo1VrHdVjutT7negjtCazjwxGEekBV3+g7hjJEaQ713JoktfSVO7pLhggTwR8wYB7XWLBDiP9gpMQ1yBQVkTNoQrf+YJbSR+B1/5Zs8PjG9zX/rOsgCFxrqFiz6td1rZjzhME3MuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727272902; c=relaxed/simple;
-	bh=zzbVxj6ilX+D15ESDzZEfJp/XuGvGmBRWmWm+mk8m5Q=;
+	s=arc-20240116; t=1727272960; c=relaxed/simple;
+	bh=k8vX4Mbd8a2Xp1PN0/sp11+GlAU361pKJpuH/Iakg+Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=neKF0H2IXtriOoO8mIFTTnISsUsRlFCW2G/dHf/jlaa4EAzyBRZWD2vY9LCVFlimvXhx6Dk39NvtLCcRqRiZ6sq4E97qsp0B2OpnX5eAe8EhApHL4vHbTAG06iCeyveHGnjHaaoTQrJofPNpmj987WNS1EZ15pSvGwjVxa+Qggo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gtDLjpX8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C58C4CEC3;
-	Wed, 25 Sep 2024 14:01:37 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=VzNYiNEd4BZE3+eFaeBMUEMFBBXNf1y3T9TNXLdUVj9sVKTSz6C+7QJWl9CwgbsP5ksOpTlslq5Kj0/6GhILQVkHNq0K3/z9Dpr4Vqyvs8K+9WxXAwHieXAuFKjm10IYDpVZxe8LVU/flV7BrLj54ebdEWxyekGfFXSefSWCkl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j3ZldT4S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38CCC4CEC3;
+	Wed, 25 Sep 2024 14:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727272902;
-	bh=zzbVxj6ilX+D15ESDzZEfJp/XuGvGmBRWmWm+mk8m5Q=;
+	s=k20201202; t=1727272959;
+	bh=k8vX4Mbd8a2Xp1PN0/sp11+GlAU361pKJpuH/Iakg+Q=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=gtDLjpX8MjT01xyRdsSoGA4wijV0ZVDv4pzuiRlh/qehfTaWXUh3MlhgB8zHAjmk+
-	 TIiwl5ils+CsyqSbH+6nC/dFjOnhCF53A4OQKBai3s8zBlz9Y45039zULhlVSF4RcE
-	 Ak9zduSGrOAklZK3mZH1nT/ZJNm/9E/My6eR4E19XMBasW9bnAnerBbZLbEO28SVoj
-	 dhaKNi6J/UVDy90bxREa/p7fJIqZ6eplhtNPOr3yp8eqZYfq68dd3WcbZSmTkMFHLi
-	 IIVFu6WcCTfv1ePzjL+/fL35yPfQWNpYr6czRSo9MOjZ8JP9VHpSX5UI+ITWj5c+lf
-	 ErPku1QY+/H4g==
-Message-ID: <5a4a80e7-b6dc-4c01-a16d-ed8ea1aefe44@kernel.org>
-Date: Wed, 25 Sep 2024 16:01:35 +0200
+	b=j3ZldT4Sari63zWGth2KtuX+l7wUxw+M/nTFE3KuS6Fpc0d/+l3UpKpafPO4xt2tg
+	 Z4fsP6xw3VRoozFs4iq2s813GKyG1zVUruqp2XgagWimqqAqEY9RY/HyUqk3dliaqP
+	 1nB3y6oafF3r90UwY0LF5jcSaydRa/6l4OOvyMuDwDhkv/BZwhDKrIIZuhgTRb2jds
+	 fsWN2iDB9Sr/ev9rzgjezyYlPYMJLso4y1Qtwe9pe0/Jr89XNzcnbXrIIA+Kqmy25N
+	 PFefq8UkK7BuJNrin0U+6ej8Vpbh95u8afMm1Yax9GU0U5GNr6/n80TeJHn4QBnMFe
+	 YNwBNJ0Sswz6w==
+Message-ID: <da2621e0-caf6-4593-9393-1fa8c74b2a9f@kernel.org>
+Date: Wed, 25 Sep 2024 16:02:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/4] Add initial support for QCS8300 SoC and QCS8300
- RIDE board
+Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: document QCS8300 SoC and
+ reference board
 To: Jingyi Wang <quic_jingyw@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -61,11 +61,9 @@ To: Jingyi Wang <quic_jingyw@quicinc.com>,
 Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
- quic_aiquny@quicinc.com, Zhenhua Huang <quic_zhenhuah@quicinc.com>,
- Xin Liu <quic_liuxin@quicinc.com>, Kyle Deng <quic_chunkaid@quicinc.com>,
- Tingguo Cheng <quic_tingguoc@quicinc.com>,
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+ quic_aiquny@quicinc.com
 References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+ <20240925-qcs8300_initial_dtsi-v2-1-494c40fa2a42@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,51 +109,17 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-1-494c40fa2a42@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/09/2024 12:43, Jingyi Wang wrote:
-> Introduce the Device Tree for the QCS8300 platform.
+> Document Qualcomm QCS8300 SoC and its reference board QCS8300 RIDE.
 > 
-> Features added and enabled:
-> - CPUs with PSCI idle states
-> - Interrupt-controller with PDC wakeup support
-> - Timers, TCSR Clock Controllers
-> - Reserved Shared memory
-> - GCC and RPMHCC
-> - TLMM
-> - Interconnect
-> - QuP with uart
-> - SMMU
-> - QFPROM
-> - Rpmhpd power controller
-> - UFS
-> - Inter-Processor Communication Controller
-> - SRAM
-> - Remoteprocs including ADSP,CDSP and GPDSP
-> - BWMONs
-> 
-> binding dependencies:
-> - remoteproc: https://lore.kernel.org/linux-arm-msm/20240925-qcs8300_remoteproc_binding-v3-1-21b0c52b142b@quicinc.com/
-> - ufs-phy: https://lore.kernel.org/linux-arm-msm/20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com/
-> - ufs-controller: https://lore.kernel.org/all/20240911-qcs8300_ufs_binding-v2-1-68bb66d48730@quicinc.com/ - Reviewed
-> - smmu: https://lore.kernel.org/all/20240911-qcs8300_smmu_binding-v2-1-f53dd9c047ba@quicinc.com/ - Applied
-> - ipcc: https://lore.kernel.org/all/20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com/ - Applied
-> - qfprom: https://lore.kernel.org/all/20240911-qcs8300_qfprom_binding-v2-1-d39226887493@quicinc.com/ - Reviewed
-> - tcsr: https://lore.kernel.org/all/20240911-qcs8300_tcsr_binding-v2-1-66eb5336b8d1@quicinc.com/ - Reviewed
-> - rmphpd: https://lore.kernel.org/all/20240920-add_qcs8300_powerdomains_driver_support-v1-1-96a2a08841da@quicinc.com/ - Reviewed
-> - bwmon: https://lore.kernel.org/all/20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com/ - Reviewed
-> - others: https://lore.kernel.org/all/20240911-qcs8300_binding-v2-0-de8641b3eaa1@quicinc.com/ - Reviewed
+> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 
-Number of new soc patchsets from Qualcomm is quite big recently, so I
-feel like repeating same feedback to same people... although maybe these
-are different threads.
 
-Anyway, please combine the series targetting the same subsystem. The
-subsystem here is Qcom SoC, so the series above are part of this.
-
-We requested split per subsystem, not per patch.
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
