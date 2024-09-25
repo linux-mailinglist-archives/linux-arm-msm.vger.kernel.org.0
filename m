@@ -1,198 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-32490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EA09986104
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:38:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ED7098612E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:42:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 671D428CAA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:38:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CF3A71C26661
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:42:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 873FE183CB5;
-	Wed, 25 Sep 2024 13:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7237174EDB;
+	Wed, 25 Sep 2024 14:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qyjoblw9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gtDLjpX8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE0717DFF5;
-	Wed, 25 Sep 2024 13:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79762172BDF;
+	Wed, 25 Sep 2024 14:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727272180; cv=none; b=jMxl8k0p55a/8D8eR7DqwEIGW4lf5TcToo4M6krWCOJ1Wo/QdYvK0/v7F9papMLG0kHfqvk46s0uY2OC21XrIceo0gvGMi9TfdYm3S7GWTyRqlhKzAkC5J+dUS+GqMZ5j1P2Aim8SVP6NspZATMRBK9r58dpbu/Ema7q2c/UFFk=
+	t=1727272902; cv=none; b=b1udjEM7Zr27tbXAtRgk99IXGY79oly3oKtva/6vzl66En80j0YkPdTFQkcqbu5FoXxBPllclUNuKhsRq8O86ySmjZsEUnkvxI9P18vQ3v3a9LR1lgUf4Jj6H3IeduleObBFVnFN3howG7IzzZHAXf7N55y2219p8WJWYs1CHq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727272180; c=relaxed/simple;
-	bh=ycCGXL/uRHjA4Pfa6QMo/gCbhY65nmP/6lsczsGQbxE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ee6xe5csH/FJ5lGfsZ1Dr+WEqTfmJZeHEUBnT4shtTYxCYJMPTPBrCOlu/szhLqRif0qmCAwvFxLoHmW2vPXdcPpxDjsndbu/EurZTOrG1YvYOuALYe8iSj25+JGw8wpiddCXgmNCL79B6puoeuLVfnsIjC+SgNeFhyzS6ot3jI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qyjoblw9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5010C4CEC3;
-	Wed, 25 Sep 2024 13:49:39 +0000 (UTC)
+	s=arc-20240116; t=1727272902; c=relaxed/simple;
+	bh=zzbVxj6ilX+D15ESDzZEfJp/XuGvGmBRWmWm+mk8m5Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=neKF0H2IXtriOoO8mIFTTnISsUsRlFCW2G/dHf/jlaa4EAzyBRZWD2vY9LCVFlimvXhx6Dk39NvtLCcRqRiZ6sq4E97qsp0B2OpnX5eAe8EhApHL4vHbTAG06iCeyveHGnjHaaoTQrJofPNpmj987WNS1EZ15pSvGwjVxa+Qggo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gtDLjpX8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C58C4CEC3;
+	Wed, 25 Sep 2024 14:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727272180;
-	bh=ycCGXL/uRHjA4Pfa6QMo/gCbhY65nmP/6lsczsGQbxE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Qyjoblw9mJC40BA64nQ1Ef/hb5PmYECWjhyCWm3k3j3LzuQztz7CPvXd0chslbboL
-	 ZQXtrZGgSMzfXC2vaLGttHeJLQkz3UgQlQcv8/zBxNQXX8yChCDfkDrlzzSqSOvHcR
-	 bu4cd0pcLoIqeXZrLVJi3kJ3gJWuyvBkLxZQ9euRdqIusyZ6hugN8pQvAP1apidhjz
-	 Qc8KB4cIszj4r+LO5DVE1ob9W9119M8N/uCWaDT0ckWpzc4MnOdkF/08Bc6Y5Tnoem
-	 XTa/heuE8jvi8leKUgqJ6Xq8tJMc0rQZa2B0toHR/mTLccFD6VelbHhH64wkakAu9y
-	 fB3Dyac+apMcQ==
-Date: Wed, 25 Sep 2024 15:49:37 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: dri-devel@lists.freedesktop.org, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org, robdclark@gmail.com, dmitry.baryshkov@linaro.org, 
-	quic_jesszhan@quicinc.com, linux-kernel@vger.kernel.org
-Subject: Re: [RFC PATCH] drm: allow encoder mode_set even when connectors
- change for crtc
-Message-ID: <20240925-glaring-squid-of-opportunity-5ddce2@houat>
-References: <20240905221124.2587271-1-quic_abhinavk@quicinc.com>
- <20240909-neat-stoic-hamster-cbbe42@houat>
- <33f29f1c-157a-424e-89c6-c1549a2d6403@quicinc.com>
- <20240910-liberal-platinum-scorpion-d43cff@houat>
- <34dad274-a048-4a1f-8acb-894d264ebe80@quicinc.com>
+	s=k20201202; t=1727272902;
+	bh=zzbVxj6ilX+D15ESDzZEfJp/XuGvGmBRWmWm+mk8m5Q=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=gtDLjpX8MjT01xyRdsSoGA4wijV0ZVDv4pzuiRlh/qehfTaWXUh3MlhgB8zHAjmk+
+	 TIiwl5ils+CsyqSbH+6nC/dFjOnhCF53A4OQKBai3s8zBlz9Y45039zULhlVSF4RcE
+	 Ak9zduSGrOAklZK3mZH1nT/ZJNm/9E/My6eR4E19XMBasW9bnAnerBbZLbEO28SVoj
+	 dhaKNi6J/UVDy90bxREa/p7fJIqZ6eplhtNPOr3yp8eqZYfq68dd3WcbZSmTkMFHLi
+	 IIVFu6WcCTfv1ePzjL+/fL35yPfQWNpYr6czRSo9MOjZ8JP9VHpSX5UI+ITWj5c+lf
+	 ErPku1QY+/H4g==
+Message-ID: <5a4a80e7-b6dc-4c01-a16d-ed8ea1aefe44@kernel.org>
+Date: Wed, 25 Sep 2024 16:01:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="fjwrgalcvxjtvi5d"
-Content-Disposition: inline
-In-Reply-To: <34dad274-a048-4a1f-8acb-894d264ebe80@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] Add initial support for QCS8300 SoC and QCS8300
+ RIDE board
+To: Jingyi Wang <quic_jingyw@quicinc.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>
+Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
+ quic_aiquny@quicinc.com, Zhenhua Huang <quic_zhenhuah@quicinc.com>,
+ Xin Liu <quic_liuxin@quicinc.com>, Kyle Deng <quic_chunkaid@quicinc.com>,
+ Tingguo Cheng <quic_tingguoc@quicinc.com>,
+ Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 25/09/2024 12:43, Jingyi Wang wrote:
+> Introduce the Device Tree for the QCS8300 platform.
+> 
+> Features added and enabled:
+> - CPUs with PSCI idle states
+> - Interrupt-controller with PDC wakeup support
+> - Timers, TCSR Clock Controllers
+> - Reserved Shared memory
+> - GCC and RPMHCC
+> - TLMM
+> - Interconnect
+> - QuP with uart
+> - SMMU
+> - QFPROM
+> - Rpmhpd power controller
+> - UFS
+> - Inter-Processor Communication Controller
+> - SRAM
+> - Remoteprocs including ADSP,CDSP and GPDSP
+> - BWMONs
+> 
+> binding dependencies:
+> - remoteproc: https://lore.kernel.org/linux-arm-msm/20240925-qcs8300_remoteproc_binding-v3-1-21b0c52b142b@quicinc.com/
+> - ufs-phy: https://lore.kernel.org/linux-arm-msm/20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com/
+> - ufs-controller: https://lore.kernel.org/all/20240911-qcs8300_ufs_binding-v2-1-68bb66d48730@quicinc.com/ - Reviewed
+> - smmu: https://lore.kernel.org/all/20240911-qcs8300_smmu_binding-v2-1-f53dd9c047ba@quicinc.com/ - Applied
+> - ipcc: https://lore.kernel.org/all/20240911-qcs8300_ipcc_binding-v2-1-ca15326c5d0f@quicinc.com/ - Applied
+> - qfprom: https://lore.kernel.org/all/20240911-qcs8300_qfprom_binding-v2-1-d39226887493@quicinc.com/ - Reviewed
+> - tcsr: https://lore.kernel.org/all/20240911-qcs8300_tcsr_binding-v2-1-66eb5336b8d1@quicinc.com/ - Reviewed
+> - rmphpd: https://lore.kernel.org/all/20240920-add_qcs8300_powerdomains_driver_support-v1-1-96a2a08841da@quicinc.com/ - Reviewed
+> - bwmon: https://lore.kernel.org/all/20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com/ - Reviewed
+> - others: https://lore.kernel.org/all/20240911-qcs8300_binding-v2-0-de8641b3eaa1@quicinc.com/ - Reviewed
 
---fjwrgalcvxjtvi5d
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Number of new soc patchsets from Qualcomm is quite big recently, so I
+feel like repeating same feedback to same people... although maybe these
+are different threads.
 
-Hi,
+Anyway, please combine the series targetting the same subsystem. The
+subsystem here is Qcom SoC, so the series above are part of this.
 
-On Wed, Sep 11, 2024 at 05:54:44PM GMT, Abhinav Kumar wrote:
-> On 9/10/2024 1:40 AM, Maxime Ripard wrote:
-> > Hi,
-> >=20
-> > On Mon, Sep 09, 2024 at 12:59:47PM GMT, Abhinav Kumar wrote:
-> > > On 9/9/2024 6:37 AM, Maxime Ripard wrote:
-> > > > Hi,
-> > > >=20
-> > > > On Thu, Sep 05, 2024 at 03:11:24PM GMT, Abhinav Kumar wrote:
-> > > > > In certain use-cases, a CRTC could switch between two encoders
-> > > > > and because the mode being programmed on the CRTC remains
-> > > > > the same during this switch, the CRTC's mode_changed remains fals=
-e.
-> > > > > In such cases, the encoder's mode_set also gets skipped.
-> > > > >=20
-> > > > > Skipping mode_set on the encoder for such cases could cause an is=
-sue
-> > > > > because even though the same CRTC mode was being used, the encoder
-> > > > > type could have changed like the CRTC could have switched from a
-> > > > > real time encoder to a writeback encoder OR vice-versa.
-> > > > >=20
-> > > > > Allow encoder's mode_set to happen even when connectors changed o=
-n a
-> > > > > CRTC and not just when the mode changed.
-> > > > >=20
-> > > > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > > >=20
-> > > > The patch and rationale looks sane to me, but we should really add =
-kunit
-> > > > tests for that scenarii.
-> > > >=20
-> > >=20
-> > > Thanks for the review.
-> > >=20
-> > > We have a IGT for recreating this scenario and thats how this issue w=
-as
-> > > captured
-> > >=20
-> > > kms_writeback --run-subtest writeback-check-output -c <primary displa=
-y mode>
-> > >=20
-> > > We had added an option ( 'c' - custom mode) a couple of yrs ago to al=
-low
-> > > writeback to be tested using any mode the user passes in (https://lor=
-e.kernel.org/r/all/YuJhGkkxah9U6FGx@platvala-desk.ger.corp.intel.com/T/)
-> > >=20
-> > > If we pass in the same resolution as the primary RT display, this sce=
-nario
-> > > always happens as the CRTC switches between RT encoder and WB encoder=
-=2E Hope
-> > > that addresses some of the concern.
-> >=20
-> > Unless it can easily be run in some sort of CI loop by anyone
-> > contributing to that part of the kernel, it doesn't.
-> >=20
-> > Don't get me wrong, it's a great feature, but it doesn't help making
-> > sure that issue never creeps back in.
-> >=20
->=20
-> Ack, I understand.
->=20
-> > > Regarding KUnit tests, I have a couple of questions:
-> > >=20
-> > > 1) This is more of a run-time scenario where CRTC switch happens, doe=
-s this
-> > > qualify for a KUnit or perhaps I am missing something.
-> >=20
-> > We've been using kunit to perform integration tests in the kernel too,
-> > so I would say that it definitely qualifies.
-> >=20
-> > > 2) Is there any existing KUnit test file under drm/tests for validati=
-ng
-> > > drm_atomic_helper_commit_modeset_disables() /
-> > > drm_atomic_helper_commit_modeset_enables() path because this will fal=
-l under
-> > > that bucket. I didnt find any matching case where we can extend this.
-> >=20
-> > We don't have that at the moment, but we shouldn't be too far off. The
-> > HDMI framework I contributed some months ago for example has all the
-> > mode checking infrastructure in kunit. So you already have some way to
-> > create a driver, a new state, modify that state and check it.
-> >=20
-> > The only thing missing in your case is being able to commit it and check
-> > that it has run, which shouldn't be too hard
->
-> Alright. Yes I reviewed the hdmi infrastructure tests and you seem to have
-> most of the pieces. I just need to find some cycles to work on this :) so
-> you can have my name down for it and either me one of our team members or
-> perhaps with some help from other msm developers we can get it added.
->=20
-> The reason I was hoping to get this reviewed and added as a "fix" was we =
-had
-> already run into this scenario with kms_writeback test case and the same
-> scenario was seen in another msm bug
-> https://gitlab.freedesktop.org/drm/msm/-/issues/59 leading to a null ptr
-> crash but we ended up fixing that within msm because that was a better fix
-> anyway so I was thinking this change would help to resolve these types of
-> issues for us once for all.
->=20
-> But if this needs to wait for the KUnit to be added, thats fine, we will
-> resend this one along with the KUnit once we work on it.
+We requested split per subsystem, not per patch.
 
-Yeah, if it's not urgent I'd rather have the kunit test at the same time.
+Best regards,
+Krzysztof
 
-Maxime
-
---fjwrgalcvxjtvi5d
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZvQU8AAKCRAnX84Zoj2+
-dqX4AX9LT2pHKxp0NnUAFfbov3SwgZhSXxLTHHhFh5TTk7zZhTNNp7KIrLcciFAE
-AFOuCEwBf0fhKVN+VRjoqPUAZACADK38KjT+hNnrom9CQg+vlyIo4rsrox/+wBZn
-JfajcT/qMA==
-=cQZr
------END PGP SIGNATURE-----
-
---fjwrgalcvxjtvi5d--
 
