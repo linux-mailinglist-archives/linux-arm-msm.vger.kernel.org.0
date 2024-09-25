@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6728D986143
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:45:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7843D986148
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:45:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8A8A41C26B77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:44:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 226121F2701F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:45:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF44E191F85;
-	Wed, 25 Sep 2024 14:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 929901B3B21;
+	Wed, 25 Sep 2024 14:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MWE3ZBzf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8BYhsEH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8090E188908;
-	Wed, 25 Sep 2024 14:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6719A1B374F;
+	Wed, 25 Sep 2024 14:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727273094; cv=none; b=AWCt/SI49HG4UwsIvApqHaBVN9Pq5/m3IuwlFSrawyTtu2ughi+iOgX5DZwq+9osDBGvuofx9X8AYOqjIdHPSe8sQ+NZv8FZVD5Q2uoRzePOFURaJy95ELEfvhQxzMFCJwGiYPoPeFqg9jJdkqx6IjM8jlXj26DYYj1ASB5aiM0=
+	t=1727273126; cv=none; b=Q31lEzvDsq5vFd9bp71/rAZLBaAzhDNGH6y8JF//JdMqFSRI2+aouZrfbYrXMTK4NnOnvyCGMwSXY9RaN+VFWRs1EdKgbRjyGan0PExdeceOc0m3M93tLTjQ2SvLLMtGFCukMxtp5KVzGLveRxKlINQ3LAf5kqAr3/V/wakvNco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727273094; c=relaxed/simple;
-	bh=6XmMca78fZ+uHRGS4MReGI7sGeQK78OvPvxKaPg2u1A=;
+	s=arc-20240116; t=1727273126; c=relaxed/simple;
+	bh=Wg1VV9lDuitVlyZRhiPqf+AVaPi9i6PcyjUKWoJ1IMo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DRntnGZO2Ci2ysXhr57zySmHr/jDLkW0enx2iOI9IBHfL4mmXx6fCfyPcfBwrU+HL7Aa4gKKi84hLp+zKmTlTw15vQVMPP7lRJQuuK01OQvYvCFQx8KTZ1ltOlPsYsuQoTz4wSUIh5x4vXfm/PoxCo840vAl+tHwcQPJVUYGsv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MWE3ZBzf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C62CC4CEC3;
-	Wed, 25 Sep 2024 14:04:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Wnp1Rnnug/mrF2fQ+hvbxdBUCPnWbFuYr+Dm6YzwISVMFol3rLUoF24BxJYKrVszqudyHZM0LIdLMcswBP4xa+n8t5+SKtFiCknXshGXNxktVHyukIeUr+NafuSalyeoM5ItBnEdkYorcf7goWRXjNWMULO71ClNXIGzGKGDh14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8BYhsEH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB04FC4CEC9;
+	Wed, 25 Sep 2024 14:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727273094;
-	bh=6XmMca78fZ+uHRGS4MReGI7sGeQK78OvPvxKaPg2u1A=;
+	s=k20201202; t=1727273126;
+	bh=Wg1VV9lDuitVlyZRhiPqf+AVaPi9i6PcyjUKWoJ1IMo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MWE3ZBzff3oRlu1CjKLwyaL80Gm9DyV0Ni7ElYgqljhI/wP+Jh6UrRvdoApm+lFJN
-	 bBWIMweXpQv5zyUNMdIr0TQoIw8S8JMiBMh6zHM77ta9U/RRDgSC69RVfXn8K57VrD
-	 OyZ9tpqXQmsbTpQ2klXY8RyKELMBChj9HiYLpNFQC8yCKQdBl6VrlK8RxrwEMPIt5N
-	 qYvhADkAGdCUGa5x0yLStu975d8X6bo3qMsVk6sGBQivnRJjKDk9UZl72x5mE4aiGk
-	 nSB+XVQnDlkJ28sp5tjled+vOU32YJHcw+GP1WnxvcFXmCv8xfWOFwJTWHOdJo18Ff
-	 yCfVJiXI3DHtg==
-Message-ID: <d263a06a-506a-408c-b9b3-4bfb7f386bc0@kernel.org>
-Date: Wed, 25 Sep 2024 16:04:47 +0200
+	b=H8BYhsEHYXfJ7UjvRPVlWwCB3uHeCfYZG2PVVpqdCJ181yKdCodT/wsTIxlwAtPpz
+	 wGxjcnFbfHR+aMywF/uQkHmbb95kpSXw4ccPrqVqqVk+p0LcvTvSVQ0PWOTsRdPilr
+	 GerbNvh3/VcE7eTQBe/siNNK3UtoKhjDrE2xS4ANWbRMSa5auM8U+XU2uzF02byPMj
+	 IStRgnqk2AlevGsJqNkX3NLlmxH5X91uR5ZAAcklnT0R2RIDm48l8PgzsTRZoQka40
+	 dqpPdjXxIv6cr7oE1YAyRYTFe7PVhpH2UGdpobiZpR+1P7K0w4pSQhbo9kmpa9sWc9
+	 4B5eeBdmkqaGw==
+Message-ID: <6416a73b-2e13-40b1-9daf-fe9d420770a0@kernel.org>
+Date: Wed, 25 Sep 2024 16:05:19 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] arm64: dts: qcom: add initial support for QCS8300
- DTSI
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: add base QCS8300 RIDE dts
 To: Jingyi Wang <quic_jingyw@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -61,12 +60,10 @@ To: Jingyi Wang <quic_jingyw@quicinc.com>,
 Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  linux-arm-kernel@lists.infradead.org, quic_tingweiz@quicinc.com,
- quic_aiquny@quicinc.com, Zhenhua Huang <quic_zhenhuah@quicinc.com>,
- Xin Liu <quic_liuxin@quicinc.com>, Kyle Deng <quic_chunkaid@quicinc.com>,
- Tingguo Cheng <quic_tingguoc@quicinc.com>,
- Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
+ quic_aiquny@quicinc.com, Xin Liu <quic_liuxin@quicinc.com>,
+ Tingguo Cheng <quic_tingguoc@quicinc.com>
 References: <20240925-qcs8300_initial_dtsi-v2-0-494c40fa2a42@quicinc.com>
- <20240925-qcs8300_initial_dtsi-v2-3-494c40fa2a42@quicinc.com>
+ <20240925-qcs8300_initial_dtsi-v2-4-494c40fa2a42@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,48 +109,26 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-3-494c40fa2a42@quicinc.com>
+In-Reply-To: <20240925-qcs8300_initial_dtsi-v2-4-494c40fa2a42@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/09/2024 12:43, Jingyi Wang wrote:
-> Add initial DTSI for QCS8300 SoC.
+> Add initial support for Qualcomm QCS8300 RIDE board which enables
+> DSPs, UFS and booting to shell with uart console.
 > 
-> Features added in this revision:
-> - CPUs with PSCI idle states
-> - Interrupt-controller with PDC wakeup support
-> - Timers, TCSR Clock Controllers
-> - Reserved Shared memory
-> - GCC and RPMHCC
-> - TLMM
-> - Interconnect
-> - QuP with uart
-> - SMMU
-> - QFPROM
-> - Rpmhpd power controller
-> - UFS
-> - Inter-Processor Communication Controller
-> - SRAM
-> - Remoteprocs including ADSP,CDSP and GPDSP
-> - BWMONs
-> 
-> [Zhenhua: added the smmu node]
-> Co-developed-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
-> Signed-off-by: Zhenhua Huang <quic_zhenhuah@quicinc.com>
 > [Xin: added ufs/adsp/gpdsp nodes]
 > Co-developed-by: Xin Liu <quic_liuxin@quicinc.com>
 > Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
-> [Kyle: added the aoss_qmp node]
-> Co-developed-by: Kyle Deng <quic_chunkaid@quicinc.com>
-> Signed-off-by: Kyle Deng <quic_chunkaid@quicinc.com>
 > [Tingguo: added the rpmhpd nodes]
 > Co-developed-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
 > Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
-> [Raviteja: added interconnect nodes]
-> Co-developed-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
-> Signed-off-by: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>
 > Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
 > ---
+>  arch/arm64/boot/dts/qcom/Makefile         |   1 +
+>  arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 267 ++++++++++++++++++++++++++++++
+>  2 files changed, 268 insertions(+)
+> 
 
 
 Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
