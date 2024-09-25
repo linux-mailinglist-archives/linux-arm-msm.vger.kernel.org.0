@@ -1,125 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-32441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 712629854C5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:58:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 383C89854CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:59:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A1F411C22CFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 07:58:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 695AE1C2111E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 07:59:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77FA0157472;
-	Wed, 25 Sep 2024 07:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 290C0158851;
+	Wed, 25 Sep 2024 07:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fLBRpWPc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bbqV20Nu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417FC15852E;
-	Wed, 25 Sep 2024 07:58:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EDE158557
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 07:59:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727251134; cv=none; b=rv2Wqgw4TBcR+/OCLqA5sB7eXWire5IRo8Ap0Wwp1weZSl7ktVbHpcvwbO9YSneSxDt7zmK+GmH8THLu/yOlSGw0wGyaU4NmZioI1bvdxMMFL6e1f1xanVYfc6yuOll8PpYwk6Y3OUa6Izzfs0CMrX3Q52lt3Ofl4XiNtfrb4Sc=
+	t=1727251145; cv=none; b=DEw2jqmiv7v70iOW5sudaUpT8oBTUkzgZPaUarAcYPywgAfLdYv2WR5s2nn+Oi5lj/gc2FPg+ZxJMq9y+Hp3dMsfTgO4VAkSBSXNKK4L8yTgyP0osQRv/N+NswTU02EOko7leabKNFXllBJvNfjMksLrtkiAV3F9Zu3MpHp0FPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727251134; c=relaxed/simple;
-	bh=cpn2XtszwCBZL4nk3PP1CHBOM36S+Rz+eeyhGr8BkME=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=umSbXVT6W/rpb2r9AvVFjmciG3mjkSgji7gLl9yw7glsAIkOI1lqAicg7andEqn4W1JHKJ/6w8s0nhHBGUN7lh0Q1fohSll2k+Zt6gOSbu3Tzb7rgH1SMCNx4WdB7jyWtaqewn5trKjq0LpIRpj5D7TMGm6hs053w9WcPE7/TIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fLBRpWPc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCAEC4CEC3;
-	Wed, 25 Sep 2024 07:58:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727251133;
-	bh=cpn2XtszwCBZL4nk3PP1CHBOM36S+Rz+eeyhGr8BkME=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=fLBRpWPcnktvpfCQmLOlZ6+3PfwYHcYGqc4POzoXlbxLq7toYa4STM1XKn9xH0CYL
-	 nvvDmsrU/+qNpKXMmVPVI+GmuXrO1c8hv22v5r1QgPsBl3s7sw8dBOh79+Ku1p2ZPx
-	 DHMogk+QT8emdQXlkyBcSBoJEWDqhof5C32ckFTOS6NpnIpMifh0741n4ANFoNtgzr
-	 Ka5l8Ys0TXHkmav4m0ocvmH7/j+akNcD+u/zRWg54w+odXkK1hoUIaFjK8X9wEsUQe
-	 Moa6hI1/aQanbaMu9Y26FatuxD1gAYexBu7YJCXkRJi8NVtMHyCgTHcEMaD1Lpwvud
-	 ttu1Q0ltkx90g==
-Message-ID: <29745775-2c90-40f8-8b6e-812a318d9061@kernel.org>
-Date: Wed, 25 Sep 2024 09:58:48 +0200
+	s=arc-20240116; t=1727251145; c=relaxed/simple;
+	bh=Hc+LCHMm4RDQ9GTVn7gf8E/cTxLuUSUoH4rgKkOqOT0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V/6wIGwujUeo/fhjUi4Xw8k9VqilZfkL5IBsTid5pEVa3HV9vnyWIuFO6HeD5zSGIlg2oGk391I65TtTMxCUdHhxu2Xj/gbFQNAVW7Y6AEiSTK8L9wFWBqENDHr8EeXNgvihVFZFCphCg+xz6OHteQOfOJwAhYQ4tPadtC48NJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bbqV20Nu; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-42cb60aff1eso63865035e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 00:59:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727251141; x=1727855941; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=bapYHrGCRxq+5Z8fPQWisdRvflJnfm7FCmo91yCvTzg=;
+        b=bbqV20Nu4WOcVFoCgpRpACsANHDTTYiD4uCkkknliQaNFvKMuajE+2rrUs7qGaa7Le
+         LPCn/VPkRXg2ywwEsby6gWnq27hXh8I+8FLFIJ29X3bgc9vmOd2+lX9VZM3cRDv4avhp
+         IO5e50GbLxAO3ZCIsmTGO/zQFDn1x7LbQjBDeAIMpD0Vxm7Wr7OJ09WMybfxeOsrg8nZ
+         zQ5iHUpcRGTV7Z2ouCtV6A7ynVnoBYh35ftbOAXy44EbhWDzP4LL4356iRWLq+ARX9jI
+         fQaDvwr6HvR2r/kyWADPVr8fS8fWO7OLH2Yk7PBqoBvkmLQUFu/MowTWXID+rLu4K6/r
+         GBpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727251141; x=1727855941;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bapYHrGCRxq+5Z8fPQWisdRvflJnfm7FCmo91yCvTzg=;
+        b=FimhBRTs7iWcZhpAq0TqkJS7PYteKwa/iN0XmV/8DK6cFzC8gbp46kgzxZFQzHVits
+         SA2xeTT44fDj57MkU0rZJCBb4GC6cYZxczSd+Ti62DDC97hBufrmfQN0DCeUAOKlJdeX
+         DoyQh7/CZ8xpinuIumCip9Rg/SsxV6nOdqNBb0+J42pyyt3IfeRvb6vl/jkdH2UecSf+
+         nFnKqsAjUfCAk4jSGy2uMa3w46/vlo1vM7tpUcZZWGPvqVn1228OZp1hwFgI73QWq3ng
+         LkxOkPZMmpPPi2Op0SZYdpOyMZ06NDg8yfwtlY3VhTTI86anTf5CULnrsw3y9+fZTkGa
+         e8gw==
+X-Forwarded-Encrypted: i=1; AJvYcCUh9i6vE6CUo09VNZ23qP9zH6etTXa2KH/3igqSN+VXEzfN1eM6R2AkX2bmts+DbrWNGt5rwLeq7N7q//M2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzR7rwE7QcWz8MWVh4q2LYaJAuCQmujlek4TnfkiqtIMI1Yq2H3
+	5BN/J5AT9IiI27ADynHyN6wxFME7CFYbE+7SPCVCIlHrZLr4b2lVO98YV9JdXg==
+X-Google-Smtp-Source: AGHT+IG3djtkgvDwFjL5SMyfW3qLoXY0CLRwpTQ//e0lJY1MODc0J/w7hgvsNBnFokru+vE1owYtFw==
+X-Received: by 2002:adf:f886:0:b0:371:8cc3:3995 with SMTP id ffacd0b85a97d-37cc24847f5mr1254992f8f.34.1727251141533;
+        Wed, 25 Sep 2024 00:59:01 -0700 (PDT)
+Received: from thinkpad ([80.66.138.17])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37cbc31f77esm3313206f8f.108.2024.09.25.00.59.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Sep 2024 00:59:01 -0700 (PDT)
+Date: Wed, 25 Sep 2024 09:58:59 +0200
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: Johan Hovold <johan@kernel.org>, vkoul@kernel.org, kishon@kernel.org,
+	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
+	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
+	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: x1e80100: Add support for PCIe3
+ on x1e80100
+Message-ID: <20240925075859.4vbb4faaworc6eyz@thinkpad>
+References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
+ <20240924101444.3933828-7-quic_qianyu@quicinc.com>
+ <ZvLQFSjwR-TvHbm_@hovoldconsulting.com>
+ <ee32742d-9daf-4bff-948b-cf2e705bc73f@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: interconnect: qcom-bwmon: Document QCS8300
- bwmon compatibles
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Jingyi Wang <quic_jingyw@quicinc.com>, Georgi Djakov <djakov@kernel.org>,
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com>
- <2012b494-ce72-455c-a298-85264dd2f648@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
- cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
- JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
- gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
- J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
- NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
- BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
- vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
- Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
- S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
- FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
- QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
- gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
- /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
- iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
- VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
- 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
- xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
- eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
- AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
- MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
- Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
- MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
- OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
- GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
- 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
- YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
- 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
- BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
- JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
- 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
- YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
- Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
- ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
- vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
- oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
- lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
- t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
- uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
- 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
- 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <2012b494-ce72-455c-a298-85264dd2f648@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ee32742d-9daf-4bff-948b-cf2e705bc73f@quicinc.com>
 
-On 25/09/2024 09:53, Krzysztof Kozlowski wrote:
-> On 25/09/2024 09:45, Jingyi Wang wrote:
->> Document QCS8300 BWMONs, which has two BWMONv4 instances for the CPU->LLCC
->> path and one BWMONv5 instance for LLCC->DDR path.
+On Wed, Sep 25, 2024 at 02:37:41PM +0800, Qiang Yu wrote:
 > 
-> Please wrap commit message according to Linux coding style / submission
-> process (neither too early nor over the limit):
-> https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+> On 9/24/2024 10:43 PM, Johan Hovold wrote:
+> > On Tue, Sep 24, 2024 at 03:14:44AM -0700, Qiang Yu wrote:
+> > > Describe PCIe3 controller and PHY. Also add required system resources like
+> > > regulators, clocks, interrupts and registers configuration for PCIe3.
+> > > @@ -2907,6 +2907,208 @@ mmss_noc: interconnect@1780000 {
+> > >   			#interconnect-cells = <2>;
+> > >   		};
+> > > +		pcie3: pcie@1bd0000 {
+> > > +			device_type = "pci";
+> > > +			compatible = "qcom,pcie-x1e80100";
+> > > +			interrupts = <GIC_SPI 158 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 166 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 769 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 836 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 671 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 200 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 219 IRQ_TYPE_LEVEL_HIGH>,
+> > > +				     <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
+> > > +			interrupt-names = "msi0",
+> > > +					  "msi1",
+> > > +					  "msi2",
+> > > +					  "msi3",
+> > > +					  "msi4",
+> > > +					  "msi5",
+> > > +					  "msi6",
+> > > +					  "msi7",
+> > > +					  "global";
+> > This ninth "global" interrupt is not described by the bindings, which
+> > would also need to be updated. What is it used for?
+> 
+> As of now, the global interrupts is mainly used to get link up event so
+> that the device driver can enumerate the PCIe endpoint devices without
+> user intervention. You can refer to
+> https://lore.kernel.org/linux-pci/20240828-pci-qcom-hotplug-v4-11-263a385fbbcb@linaro.org.
+> 
+> I see this global interrupts has been documented in qcom,pcie-sm8450.yaml.
+> Do I need to move it to qcom,pcie-common.yaml?
+> 
 
-Although it actually is wrapped at 75, so ignore above.
+No, you need to describe it in qcom,pcie-x1e80100.yaml.
 
-Best regards,
-Krzysztof
+- Mani
 
+-- 
+மணிவண்ணன் சதாசிவம்
 
