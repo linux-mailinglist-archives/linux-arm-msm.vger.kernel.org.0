@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD6C79855A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 10:40:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 055429855C2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 10:44:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 19BCA1C22D57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 08:40:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A3E6F1F240C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 08:44:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC696158531;
-	Wed, 25 Sep 2024 08:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8B7415AAB6;
+	Wed, 25 Sep 2024 08:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NiZjgL4r"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dB8lF5YF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9440132124;
-	Wed, 25 Sep 2024 08:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC3F1552E0;
+	Wed, 25 Sep 2024 08:44:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727253638; cv=none; b=Nlx6JUJIoEFnLln88pZZgDAKkBThBgFBpbsqgViXandBTsc2Wai3FEYocMxHUFIWDZ/upfy5GeZZMkm/o82MdVA/HzSNxxonybg9ePvGXUZ9HcUAF1tsCxHfBb4xJbK8rJGW5FGykSrsRxgr2P50Wm9sS2ixPq0t1gwfR/Yo06Y=
+	t=1727253853; cv=none; b=qpVGsvRSx5Fzu6amZ5LyBb4VgDcV8fFDTSGqH8cuVAvYb3cEq+OwJarCYdGMCQlqEa1jf+vzIGWUxC/4zmj97e5yA/+dnMdzDZXR0cDqe2Fj20UV+FxMre7mhLlU6BsLJjE6gLO4KkYmrf7CMhPtiq1Wf/RA1X2QRTal4lLOSTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727253638; c=relaxed/simple;
-	bh=G3rkyJMud+WT9NrQgRrDr5uH79egWN8AUKmAFpNfr2Y=;
+	s=arc-20240116; t=1727253853; c=relaxed/simple;
+	bh=DO8VK0v2Jf7/FGxXPyOnJqfVq2g37pkTvX5TLfE/ong=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mlBwzds2SHI1gpWJts3xxhCv8Hc3mkTxfq0kVHBjzbwH/BIbml2vYbKRxjeb9A3zCKUJSRStVqx5LFMLji0SNYFvzIaONhHyIGRDrgvb4NCgUrJ/YVD1a4bRVd0k2jz2MHQVGu8JtdGYqgdMXTjZj7Vv5cNmb1eoHDb8QrK/ZXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NiZjgL4r; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=pKnYr2MxoISxBR+btrB+mWK0EuZ0TybzDTMp0lN3+41jC1H4rf744OqrenM1ZBXN0HpMH0m9stXTsK/SIrFefLgcne49gpJknaJsHnI2Pde9H83wqWpKGRFeNmuulbKzEjdgXs/4WYHeZH0NT0px+sjz403MbIfUbFIxrJEUTss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dB8lF5YF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48P8CCGv003198;
-	Wed, 25 Sep 2024 08:40:27 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48P8Kj50016579;
+	Wed, 25 Sep 2024 08:44:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	byKamiQAHNnlbq0CpogC8pF/k5ZwWEhkxkolRelxSvg=; b=NiZjgL4r8MKCcwte
-	5H3eFAR3nqSC8aGQbcRAys2mlWKhfhQQNL4qe2KdLFPYHrSubav92hEPI/tnLa/p
-	ysLKPR9pGujpAW2SZyQgYMX4QgZ6OAJeY3kE2d8mfNk6eZeBXwZvP3bWvwalgVCG
-	bIZZA4APTXRjLIWxIkDmkv5h8E0lCUJbZ2y2XMasAfAWlXHSnqOOyiNXt0OevWaP
-	FOgwYqJ/LamocboV4/QanWqsXbZEKztQdTjqvCGFpRg3DiGZovLcQd0MMMCm4PVu
-	2sJic/+BmqE0gjUq3q8WfmpcavCoeXh77MGBXK/mfZqRVGXrPYuE6NbwKVo67dKT
-	sMh0sg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sph6ujyp-1
+	Wg9VmCa1LfbiNfZVXVBt2tG1pR0YkPVDCUAhMon4a4o=; b=dB8lF5YFErAH1VBj
+	HpEqfIaNFxe7/lzs+IDMozZ3w0OuH8YpnM9V4VLB4W3DPXa5k+h29wXUvYFhrWWm
+	fhJo+AcEhjyay8nMwezbM4q9kq/3udIlXI0cTINiQwW4uHDJ3Klq7AWqfjme7DVN
+	owqvX0gRY0AbLBAu/HxwXZKS74l6Ua3ri1QDhQWTkql7TD1Dvr6GbcoEE6S4RF3N
+	7NzB4wZRrBXzySV9turR8Kc4NOpzXTcxgNtwhFh0Z1beVc8/Zt5y000+r7M8kGkE
+	kQ0DiMXHAd6SwXdCuIcADuyNmLrqKra2OVEX6HiwAag99apvRnuhpXnFTABro7Pi
+	461tdA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skueue0n-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 08:40:27 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48P8ePO0027288
+	Wed, 25 Sep 2024 08:44:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48P8i8ht000614
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 08:40:25 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 25 Sep 2024 08:44:08 GMT
+Received: from [10.151.37.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Sep
- 2024 01:40:23 -0700
-Message-ID: <56b3ca36-e7b8-480f-99b8-c624acba8d65@quicinc.com>
-Date: Wed, 25 Sep 2024 16:40:20 +0800
+ 2024 01:44:06 -0700
+Message-ID: <3c3647c1-8d6d-4038-8815-30c1570d856c@quicinc.com>
+Date: Wed, 25 Sep 2024 14:14:03 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,87 +65,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: interconnect: qcom-bwmon: Document QCS8300
- bwmon compatibles
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Georgi Djakov
-	<djakov@kernel.org>, Rob Herring <robh@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, <quic_tengfan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com>
- <7ld327om75xpz53fb7itxp2i7gjqvhavywzuhmf52myynawwvo@rmb7yimjxxmy>
+Subject: Re: [PATCH 1/1] i2c: qcom-geni: add 32MHz I2C SE clock support for
+ IPQ5424
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, <andi.shyti@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
+ <e14e2136-54eb-411d-afff-f6803a23ad6a@quicinc.com>
 Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <7ld327om75xpz53fb7itxp2i7gjqvhavywzuhmf52myynawwvo@rmb7yimjxxmy>
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <e14e2136-54eb-411d-afff-f6803a23ad6a@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: amRyg2Afm2cv0iX8sGCVKnzRyLNofn1g
-X-Proofpoint-ORIG-GUID: amRyg2Afm2cv0iX8sGCVKnzRyLNofn1g
+X-Proofpoint-GUID: T5ZMbQUGk6GSK37eaJXTzOdHna3SpbTz
+X-Proofpoint-ORIG-GUID: T5ZMbQUGk6GSK37eaJXTzOdHna3SpbTz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
- mlxscore=0 adultscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
+ adultscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409250062
 
 
 
-On 9/25/2024 4:10 PM, Dmitry Baryshkov wrote:
-> On Wed, Sep 25, 2024 at 03:45:06PM GMT, Jingyi Wang wrote:
->> Document QCS8300 BWMONs, which has two BWMONv4 instances for the CPU->LLCC
->> path and one BWMONv5 instance for LLCC->DDR path.
+On 9/25/2024 1:06 PM, Mukesh Kumar Savaliya wrote:
+> Hi Manikanta,
+> 
+> On 9/24/2024 12:20 PM, Manikanta Mylavarapu wrote:
+>> The IPQ5424 I2C SE clock operates at a frequency of 32MHz. Since the
+> would it be better to say , I2C SE is sourced from 32MHZ ?
+
+Okay, sure.
+
+>> existing map table is based on 19.2MHz, this patch incorporate the
+> based on 19.2MHz. this patch /,/.
+
+Okay, sure.
+
+>> clock map table to derive the SCL clock from the 32MHz SE clock.
+> from the 32MHz Source Clock frequency.
+> SE = Expand OR  (I2C Serial Engine Controller)
+
+Okay, sure.
+
 >>
->> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 >> ---
->>  Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 2 ++
->>  1 file changed, 2 insertions(+)
+>>   drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++++++
+>>   1 file changed, 11 insertions(+)
 >>
->> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
->> index 189f5900ee50..251410aabf38 100644
->> --- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
->> +++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
->> @@ -26,6 +26,7 @@ properties:
->>        - items:
->>            - enum:
->>                - qcom,qcm2290-cpu-bwmon
->> +              - qcom,qcs8300-cpu-bwmon
-> 
-> In most other cases qcs8300 is being declared with the compat fallback
-> to sa8775p compat string. Is there any reason why bwmon is different?
-> 
-All the *cpu-bwmon are fallback to "qcom,sdm845-bwmon", so we add "qcom,qcs8300-cpu-bwmon"
-compatible and fallback to that.
->>                - qcom,sa8775p-cpu-bwmon
->>                - qcom,sc7180-cpu-bwmon
->>                - qcom,sc7280-cpu-bwmon
->> @@ -40,6 +41,7 @@ properties:
->>            - const: qcom,sdm845-bwmon    # BWMON v4, unified register space
->>        - items:
->>            - enum:
->> +              - qcom,qcs8300-llcc-bwmon
->>                - qcom,sa8775p-llcc-bwmon
->>                - qcom,sc7180-llcc-bwmon
->>                - qcom,sc8280xp-llcc-bwmon
->>
->> ---
->> base-commit: 4d0326b60bb753627437fff0f76bf1525bcda422
->> change-id: 20240925-qcs8300_bwmon_binding-641d8e4bf376
->>
->> Best regards,
->> -- 
->> Jingyi Wang <quic_jingyw@quicinc.com>
->>
-> 
-Thanks,
-Jingyi
+>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>> index 212336f724a6..bbd9ecf09f4b 100644
+>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>> @@ -71,6 +71,7 @@ enum geni_i2c_err_code {
+>>     #define I2C_AUTO_SUSPEND_DELAY    250
+>>   #define KHZ(freq)        (1000 * freq)
+>> +#define MHZ(freq)        (1000000 * freq)
+>>   #define PACKING_BYTES_PW    4
+>>     #define ABORT_TIMEOUT        HZ
+>> @@ -152,11 +153,21 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
+> A thought - Should we rename this appending _19.2M ? In future one or more may come as it evolves speed.
+
+Okay, sure.
+
+Thanks & Regards,
+Manikanta.
+
+>>       {KHZ(1000), 1, 3,  9, 18},
+>>   };
+>>   +/* source_clock = 32 MHz */
+>> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32M[] = {
+>> +    {KHZ(100), 7, 14, 18, 40},
+>> +    {KHZ(400), 4,  3, 11, 20},
+>> +    {KHZ(1000), 4, 3,  6, 15},
+>> +};
+>> +
+>>   static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+>>   {
+>>       int i;
+>>       const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
+>>   +    if (clk_get_rate(gi2c->se.clk) == MHZ(32))
+>> +        itr = geni_i2c_clk_map_32M;
+>> +
+>>       for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
+>>           if (itr->clk_freq_out == gi2c->clk_freq_out) {
+>>               gi2c->clk_fld = itr;
 
 
