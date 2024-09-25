@@ -1,147 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-32438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87596985447
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:37:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93A7B985464
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:45:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9A2A61C2088F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 07:37:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F7D02829AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 07:45:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACC6E15747D;
-	Wed, 25 Sep 2024 07:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AA46148FF5;
+	Wed, 25 Sep 2024 07:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NHNnmoHz"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="p8YG+41F"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F0C156F55;
-	Wed, 25 Sep 2024 07:37:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E46768E7;
+	Wed, 25 Sep 2024 07:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727249830; cv=none; b=skUroEUPY/LTizjIdwOxSNITVA5lOptM9n8C5mXP/QRotn1w8CgiuUeX4IBlnhkq3AkAGspBUZlyW81o6Fz+4h2ZX/nhspn7jBoY7A0F2djEbrdqMG3gKx2UOx8D6Fwbcmtgh1UxTiOyJlheo8zLtvy6mGQfpb+7hg2fDL2xcNU=
+	t=1727250325; cv=none; b=A8pn2ZMk5Dwim1wtlPICLbMKebKTBxWQIBZei7386HO45Q3I9kLFspCITqEHF6ZfnRD+1prnxJ3GpOztA4B5R+Y88uEks3C9Yu7bitefmLwdwkGcRRgmicVgjVPTEl2iIEwDLIt8bEAs1/jzWprB2936fBS+tHpd9HimrSTkujo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727249830; c=relaxed/simple;
-	bh=yMl2CgUjE1vZxpHmmrNLL9Ere5j/hjy5L9/g+qd4Q5I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DhYZ1Hj+X8drIwUpqnVK4JwWWjBmPCE0s95LRJN1edEr269TDjOLBaCV/SKMNa1hUSTY0FlxATAQA4Xla7ORWLmsntkPKya3/ZngtroXBaJqP145jl825/PSlPbydl1wTfmun044stDiUF3ymrMJrCr4m0rz7U+S3pmsMXnlpKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NHNnmoHz; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1727250325; c=relaxed/simple;
+	bh=IE8ZVu2aiidjh+hRIBeJ/vw9AQM1Lg63nrhIP0/Uaaw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=suz3CNKQCBJ6MtJT8Ksp5ZhdgZSvDH/b1RHiS2aEXy76FbcKFFBl2oaH3ryYCnwYbFJgC+SPagyAbtR+J+0VRAd8c7K0T1n3phK+qRJZ9qpBvW02bKDuTT3NDMi1/waXCX5w12VZ+2rq59tNBDX7UUgQ3kU+GeDhKbP5/WYVglg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=p8YG+41F; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48P73irJ026499;
-	Wed, 25 Sep 2024 07:37:05 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48OI25XF013399;
+	Wed, 25 Sep 2024 07:45:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8X9eoG5dZXKT/ZCNbX8qdgtglFp+pPJcZshg43W4RsE=; b=NHNnmoHzznjg4Iky
-	ChCkfizzApj2JsIbinywVu78Tc5XZR7L6t3sl2ZpBWapG4CRpFtCqTNVC8XrSo9M
-	lIsfbk7cpq48LKXFMH9HsXCK952g+vPxJu9xHffwzU5VE0tE+W56sbPdfcYHj0d5
-	jLYHto7MdzTUI18L2g9C9rfL8DFP9op+yiojRcaqjREHAM8YtsIEJcD3YRI7r8Zi
-	YQ9KGQ/fWs966g75qodyi299gyLpRpJ1fXqfGhzh/NDoU2aqBid0Z6kOSi7vV60W
-	hI8KdArQwLHXQ6peDXqNrlJMpasPiNiVUd0jS0mbD3wGl4e08YZ4OFXi0ce5FRs8
-	St6X8w==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sp7uke1m-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=URXGrPY7ypUtdDqnCvuaAT
+	HIgW9AP3ddNNq9J4c23OQ=; b=p8YG+41FMP4G4TasYReDsIadY5uzVUhRX4xbs/
+	y6+9kWspjtAGr8MkdAJa+Z6sE2Y+g0Fe50xKrl+mEZmf5c6WfIKW1BHo6+dWqOFE
+	HAm6EAAEoto0UKo8KPvjIYehy98rSdeOLkNatFT0Zv6cTT+0MGqh8znCTGyzVeWB
+	hSA24aT3S1zXGnPV3y/2Ksq1B3Q3AEoMpIpLARP2h36j5z3eW0sY4E8nXFKCSlGV
+	fKap7zXLptjifw/mdhr8epXplwLemVwO3jVuZ6+JhLa9W6mloEeaHweDi0gikbZj
+	EyLF5TABxx2FOGTuVM5l6SHOmyWyweajWTdOm0Baqsu+fE4w==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spc2u4en-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 07:37:05 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48P7b4l7025918
+	Wed, 25 Sep 2024 07:45:20 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48P7jJbu001253
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Sep 2024 07:37:04 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Sep
- 2024 00:37:01 -0700
-Message-ID: <e14e2136-54eb-411d-afff-f6803a23ad6a@quicinc.com>
-Date: Wed, 25 Sep 2024 13:06:58 +0530
+	Wed, 25 Sep 2024 07:45:19 GMT
+Received: from jingyw-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 25 Sep 2024 00:45:17 -0700
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+Date: Wed, 25 Sep 2024 15:45:06 +0800
+Subject: [PATCH] dt-bindings: interconnect: qcom-bwmon: Document QCS8300
+ bwmon compatibles
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] i2c: qcom-geni: add 32MHz I2C SE clock support for
- IPQ5424
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, <andi.shyti@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
-Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <20240924065020.2009975-1-quic_mmanikan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-ID: <20240925-qcs8300_bwmon_binding-v1-1-a7bfd94b2854@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAIG/82YC/x3MTQ5AMBBA4avIrDWptn6vIiKqg1kYtAkScXeN5
+ bd474GAnjBAkzzg8aRAG0dkaQLjMvCMglw0KKmMrFUujjFUWsreXuvGvSV2xLMoTOYqNHbSZQG
+ x3T1OdP/ftnvfDyLo2bRnAAAA
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Georgi Djakov
+	<djakov@kernel.org>, Rob Herring <robh@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <quic_tengfan@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Jingyi Wang <quic_jingyw@quicinc.com>
+X-Mailer: b4 0.15-dev-99b12
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727250316; l=1422;
+ i=quic_jingyw@quicinc.com; s=20240910; h=from:subject:message-id;
+ bh=IE8ZVu2aiidjh+hRIBeJ/vw9AQM1Lg63nrhIP0/Uaaw=;
+ b=aRTjs8Zvo3qvyumphImuX18BBp/XI8y7mkkYzjZBhWOTOfEPxRzrGRCEIK2BG8wNfFGw7bQr7
+ XmCks+84mhkAxTRKUqKRkyCBvfhVcyXL8DzDFl2gD59qRQh2RTyIPPS
+X-Developer-Key: i=quic_jingyw@quicinc.com; a=ed25519;
+ pk=ZRP1KgWMhlXXWlSYLoO7TSfwKgt6ke8hw5xWcSY+wLQ=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9yFwfLJOPhuonJjmifqlVIkR8PBGkor3
-X-Proofpoint-ORIG-GUID: 9yFwfLJOPhuonJjmifqlVIkR8PBGkor3
+X-Proofpoint-GUID: hDCOYzy3pQjHRyQHpjhFcjEiL5SLLOPp
+X-Proofpoint-ORIG-GUID: hDCOYzy3pQjHRyQHpjhFcjEiL5SLLOPp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=928 mlxscore=0 phishscore=0
- suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409250053
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 suspectscore=0 lowpriorityscore=0 spamscore=0
+ impostorscore=0 malwarescore=0 adultscore=0 phishscore=0 mlxlogscore=907
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409250054
 
-Hi Manikanta,
+Document QCS8300 BWMONs, which has two BWMONv4 instances for the CPU->LLCC
+path and one BWMONv5 instance for LLCC->DDR path.
 
-On 9/24/2024 12:20 PM, Manikanta Mylavarapu wrote:
-> The IPQ5424 I2C SE clock operates at a frequency of 32MHz. Since the
-would it be better to say , I2C SE is sourced from 32MHZ ?
-> existing map table is based on 19.2MHz, this patch incorporate the
-based on 19.2MHz. this patch /,/.
-> clock map table to derive the SCL clock from the 32MHz SE clock.
-from the 32MHz Source Clock frequency.
-SE = Expand OR  (I2C Serial Engine Controller)
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
->   drivers/i2c/busses/i2c-qcom-geni.c | 11 +++++++++++
->   1 file changed, 11 insertions(+)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 212336f724a6..bbd9ecf09f4b 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -71,6 +71,7 @@ enum geni_i2c_err_code {
->   
->   #define I2C_AUTO_SUSPEND_DELAY	250
->   #define KHZ(freq)		(1000 * freq)
-> +#define MHZ(freq)		(1000000 * freq)
->   #define PACKING_BYTES_PW	4
->   
->   #define ABORT_TIMEOUT		HZ
-> @@ -152,11 +153,21 @@ static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
-A thought - Should we rename this appending _19.2M ? In future one or 
-more may come as it evolves speed.
->   	{KHZ(1000), 1, 3,  9, 18},
->   };
->   
-> +/* source_clock = 32 MHz */
-> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32M[] = {
-> +	{KHZ(100), 7, 14, 18, 40},
-> +	{KHZ(400), 4,  3, 11, 20},
-> +	{KHZ(1000), 4, 3,  6, 15},
-> +};
-> +
->   static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
->   {
->   	int i;
->   	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
->   
-> +	if (clk_get_rate(gi2c->se.clk) == MHZ(32))
-> +		itr = geni_i2c_clk_map_32M;
-> +
->   	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
->   		if (itr->clk_freq_out == gi2c->clk_freq_out) {
->   			gi2c->clk_fld = itr;
+Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+---
+ Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+index 189f5900ee50..251410aabf38 100644
+--- a/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
++++ b/Documentation/devicetree/bindings/interconnect/qcom,msm8998-bwmon.yaml
+@@ -26,6 +26,7 @@ properties:
+       - items:
+           - enum:
+               - qcom,qcm2290-cpu-bwmon
++              - qcom,qcs8300-cpu-bwmon
+               - qcom,sa8775p-cpu-bwmon
+               - qcom,sc7180-cpu-bwmon
+               - qcom,sc7280-cpu-bwmon
+@@ -40,6 +41,7 @@ properties:
+           - const: qcom,sdm845-bwmon    # BWMON v4, unified register space
+       - items:
+           - enum:
++              - qcom,qcs8300-llcc-bwmon
+               - qcom,sa8775p-llcc-bwmon
+               - qcom,sc7180-llcc-bwmon
+               - qcom,sc8280xp-llcc-bwmon
+
+---
+base-commit: 4d0326b60bb753627437fff0f76bf1525bcda422
+change-id: 20240925-qcs8300_bwmon_binding-641d8e4bf376
+
+Best regards,
+-- 
+Jingyi Wang <quic_jingyw@quicinc.com>
+
 
