@@ -1,117 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-32521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC2B898684D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 23:28:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D176A986852
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 23:28:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D28FFB21083
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 21:28:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9632028519C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 21:28:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66AC9147C79;
-	Wed, 25 Sep 2024 21:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DFA1155733;
+	Wed, 25 Sep 2024 21:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="HCA1FSVF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M6P9byp+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA391D5AD5;
-	Wed, 25 Sep 2024 21:28:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72F4147C79
+	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 21:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727299703; cv=none; b=S3r7vJ7o4fhClSet0zws4cKsG53tV8Wdqc2QaeWnYZMoIqDLwcx/fg49XhvUzcAe/wAXh+gcPAownEDPbplrvjZTT6A4G3ekEuQcHCcQ/UuRhDpE27sK3/JJaHebnIGjZQIoZSjRB+xFEHWN5Myfoy11edgbzTczHd0zOwK1jhg=
+	t=1727299727; cv=none; b=k4rZKHNu34fDjDI5Pd3VnWB5ZGfUTtYqT/CQQbM6pYWsMcH/v0AROqOI0QoVgKFnh6S3ycHr8zpnj+15AhAYi6UowSz/0riKe5jrBfPf10al/Hrqf8pp9HpqqiQYJc0y/ifIxhHafMhfs06EUQmm2E4QSD2HfBxNZJMy2/ZPp+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727299703; c=relaxed/simple;
-	bh=GUNwHM2yiFQvwZ6WkgnGF6m5+taxG2nCKU6HJ3+fNWE=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=qDZbZAX61WUMBP1LWnTTLn1O+dFdXrwq+QCgpjzyRBzupA9C8Q92Ag+hDN5pJzVS/4wKxdtLscjOEXh/CUwf1sHGr3n9L8wrUBwDb/RssGXQkgEODUt59XAifQivz4prThjTUnoh43B7Oet3CaVbt4bUQQWg5fhHOIgCn8tCg9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=HCA1FSVF; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
-	by mail.mainlining.org (Postfix) with ESMTPSA id CD7C3E450F;
-	Wed, 25 Sep 2024 21:28:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1727299698;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=uZoAqNRo8n74r1nSrRilUrJGSUbgDdHa7HHFP+4Yh+c=;
-	b=HCA1FSVFIix5UbxfQvh6ilRng62jmytqkONOUZAVKH45/7TtjCOZG8yuWbd+WBIMqLmzrY
-	54wdNKeYqY7DZGIbyiawCa/ErYzDbFnsYxayXZlMwZhJBFeYhurHELYRv3eMZXDHL9lHxd
-	R3TrsxPeHqDSQjzbfOooBgxj1RxK5p0+3AuFbS6p0OOFCsob2scutqJsOKv6bC691xL1o1
-	IO+dvJHniTgmiq6HbnDcrR3jgawTByh5eWx1d1TrXLM+TqA2D+0bMw9p8Mb0IsW20eEHT0
-	Dl7nSTw2mAGCQxMr38XNFtGmsfKgvzS4hsatjQCxTAxsnwi1IKeEY02oqEOo+A==
+	s=arc-20240116; t=1727299727; c=relaxed/simple;
+	bh=WucR+djirwpM6STmHdVUy4UR5ERz2gZtg/GRT0C4+GM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JYGvCwM6LwUOZSK5mjYaIwMTsI9XqsQ+QcTv6YE2PviP8VRYmyc40s1yJK6m2pXnFutIq3S0JM92OIT5tS5wdscaBf21OIIG7rV4m4Q8NaW/jFMFYU/cSMRc6H8EqGcGpgm9LpU0ZVzNlfzArLVyb6NddfbItsJ6eN91I+ldfMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M6P9byp+; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2f762de00e5so2929021fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 14:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727299724; x=1727904524; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gwTr0ZjzKHD8edFYUSKF8PBtaT++xT7YsKjfFnre+JY=;
+        b=M6P9byp+++VgGzj3JjemOtwY976DKBqxqAII/DgM4aNnkiS1sYNXCw+EUwxQTkvLAT
+         GG7TQdk5sgipr9UPMLraayYGIG5oki9x9QDgJeuoWeh29mCugfrLacEm05apNh35PD1l
+         vvfE0QgUQEOfNwNh28+LSn/BxBGuhIINM55223ygPTzZvEwy6QeM4uC55l4iJB5AGkcV
+         xtTW+eH4E6Dvli43X0wilQ/PLPUDEBPkpguG86UC5pyIDb9Mnp/DyGG5jL7TQ6kFzVVZ
+         GEPd/g+OQ8TG8j1w3asTDgbMMmHBxkK9QS0glr4yk76+TF3MFli6Oec8clg6+rUdwMaK
+         5hgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727299724; x=1727904524;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gwTr0ZjzKHD8edFYUSKF8PBtaT++xT7YsKjfFnre+JY=;
+        b=lpeQ0rixmTPmwEv0nkkVtBI/p+6gMMAWORTWXiCBKmx1E1N6DDSDL65pHchNXLzRem
+         gIZWLMUxGdR+M/nH6ImwsJ8Syxp4e666tSqH3306u2PzLVlynNpfFsWeF3hePM7qK4Ye
+         3hSwDjJ4jkgU6QuyGS7jAFLzGPldwsX+DgwCQEY9EWFpUxau4vlf27bnyujWoi0Fyp9T
+         B2h2O3TIjXwJHa9xQVKvN6HXUdGsd4ES4WGElS0+PLb2BadDFmFoNqGV5MLl0w371CLW
+         iULUyldKWlCD6kgLRZ270M3iup4siwpJyGY/Gn0XIuDmSe1A+DDTw3CvCs8c0ABraKRX
+         p8kQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWhwRHYfwl29b3sFEbD/w6/zRyJj+dY2pu7IbtJzgbcTGPvywyrROwPfGMf5oTV4MU3ZR8aiXXva2r1XZug@vger.kernel.org
+X-Gm-Message-State: AOJu0YxkaBSTeH3J8RVwkfrzZ/8NZnpKq353YXTZhnwyzrUGNIwsChpt
+	Y3UtX+6LulrD0wa2ym8r5zgGe9l3VNesj/iDD5L4s0pDDuX0J4HU+elCAOkjPTU=
+X-Google-Smtp-Source: AGHT+IFr4Ny4+GpZtXRbkLD1/XaxRB6oYcW6d6Gw9eijaSV1QXJ3oFhYYiPUQKPns6/AJEWKpEWAAA==
+X-Received: by 2002:a05:651c:2117:b0:2f7:4f84:50a2 with SMTP id 38308e7fff4ca-2f91ca426ffmr26443491fa.31.1727299723711;
+        Wed, 25 Sep 2024 14:28:43 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f8d283bfd0sm6173091fa.42.2024.09.25.14.28.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Sep 2024 14:28:42 -0700 (PDT)
+Date: Thu, 26 Sep 2024 00:28:40 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Abhishek Sahu <absahu@codeaurora.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>
+Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: Fix pll post div mask when
+ width is not set
+Message-ID: <jlmnxzkferigmhh5akcr5uumrdychjxyy2flftx5u2sg2w62aa@566u2lqj5od2>
+References: <20240925-fix-postdiv-mask-v2-1-b825048b828b@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 25 Sep 2024 23:28:18 +0200
-From: barnabas.czeman@mainlining.org
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
- <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Daniel
- Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: [PATCH 0/2] Add MSM8996/MSM8953 dpu catalog
-In-Reply-To: <zeek3j7skstysho5bduxn23xipz3fpqsfwggue66dlyozhepnn@4wnnd7q6xf22>
-References: <20240628-dpu-msm8953-msm8996-v1-0-a31c77248db7@mainlining.org>
- <zeek3j7skstysho5bduxn23xipz3fpqsfwggue66dlyozhepnn@4wnnd7q6xf22>
-Message-ID: <e69b07677ff786e35a5904cf1a455851@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240925-fix-postdiv-mask-v2-1-b825048b828b@mainlining.org>
 
-On 2024-08-01 21:25, Dmitry Baryshkov wrote:
-> On Fri, Jun 28, 2024 at 04:39:38PM GMT, Barnab√°s Cz√©m√°n wrote:
->> This patch series add dpu support for MSM8996/MSM8953 devices.
->> 
->> Note, by default these platforms are still handled by the MDP5 driver
->> unless the `msm.prefer_mdp5=false' parameter is provided.
+On Wed, Sep 25, 2024 at 08:33:20PM GMT, Barnab·s CzÈm·n wrote:
+> Many qcom clock drivers do not have .width set. In that case value of
+> (p)->width - 1 will be negative which breaks clock tree. Fix this
+> by checking if width is zero, and pass 3 to GENMASK if that's the case.
 > 
-> Could you please provide a summary of features actually tested with the
-> DPU driver? Have you tested YUV output? Have you tested RGB planes?
-> Which LMs have you tested?
+> Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
+> Fixes: 2c4553e6c485 ("clk: qcom: clk-alpha-pll: Fix the pll post div mask")
 
-How can i check specific feature?
-I have set echo 0x32 > /sys/module/drm/parameters/debug 
-DRIVER+ATOMIC+VERBOSE ATOMIC log is pretty verbose and big this way.
-For lm i have found this kind of message in log: [ 1027.577132] 
-[drm:_dpu_crtc_blend_setup [msm]] lm 0, op_mode 0x2, ctl 0
-> 
->> Signed-off-by: Barnab√°s Cz√©m√°n <barnabas.czeman@mainlining.org>
->> ---
->> Dmitry Baryshkov (1):
->>       drm/msm/dpu: add support for MSM8953
->> 
->> Konrad Dybcio (1):
->>       drm/msm/dpu: Add MSM8996 support
->> 
->>  .../drm/msm/disp/dpu1/catalog/dpu_1_16_msm8953.h   | 218 
->> +++++++++++++
->>  .../drm/msm/disp/dpu1/catalog/dpu_1_7_msm8996.h    | 348 
->> +++++++++++++++++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 106 +++++++
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +
->>  drivers/gpu/drm/msm/msm_drv.c                      |   2 +
->>  6 files changed, 678 insertions(+)
->> ---
->> base-commit: df9574a57d02b265322e77fb8628d4d33641dda9
->> change-id: 20240528-dpu-msm8953-msm8996-5d0fb7e387b8
->> 
->> Best regards,
->> --
->> Barnab√°s Cz√©m√°n <barnabas.czeman@mainlining.org>
->> 
+I think one Fixes tag should be enough.
+
+Nevertheless,
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> Signed-off-by: Barnab·s CzÈm·n <barnabas.czeman@mainlining.org>
+> ---
+> Changes in v2:
+> - Pass 3 to GENMASK instead of 0.
+> - Add more Fixes tag for reference root cause.
+> - Link to v1: https://lore.kernel.org/r/20240925-fix-postdiv-mask-v1-1-f70ba55f415e@mainlining.org
+> ---
+>  drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+-- 
+With best wishes
+Dmitry
 
