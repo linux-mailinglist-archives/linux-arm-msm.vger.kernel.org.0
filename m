@@ -1,61 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32476-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32477-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8CF9985A90
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:09:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9408E985B43
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:19:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B247B22589
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 12:09:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C59611C23E3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 12:19:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD871B78F8;
-	Wed, 25 Sep 2024 11:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7B171BB6B2;
+	Wed, 25 Sep 2024 11:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cW6yb2Pw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o79MXMJA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B342D1B78F3;
-	Wed, 25 Sep 2024 11:42:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD71E1BB6B0;
+	Wed, 25 Sep 2024 11:47:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727264549; cv=none; b=siIfoE7YOLvTmIFBYFkNZV6f2ZT5cPkQknY7L6DfNbGdilg/a3L9aYuvgAMFunSvFtzN3dZL3V25lUEqaNqtUSG4M15zgXR2tbF24IefA/KCA9BCYZ4GA83Q9fWsHfazkwtx2NvFKAobLf6FVZjl6nOdL9wCg4RhG1N3HIIqmLQ=
+	t=1727264874; cv=none; b=Jjs3J96z8ClFJ4sx0giBO1dNtp0svoKsGpekw22bY7+0GlaEA216DUFFDuq+z4oe0U2Jlq7JgbNhcMRqsGWJoDuTue/GSNf0R1LSISIY6RE45bh1gIoHrH4yn87V3VUFTk3/rkkR9xFFSeiwySPZk4dcdC6JOuVbxRMonhjYC5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727264549; c=relaxed/simple;
-	bh=k4M4oCPrSASF+1TmGgx+cteJbKnwOS1p/HkflnkblY0=;
+	s=arc-20240116; t=1727264874; c=relaxed/simple;
+	bh=Jp/7mKD0NQ8tcuVLRYP6ppFFsuSAfFVkzvYBDI8NlO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRj711dU1xSu7EJILWZu0aXhxis4OXekeKrLfELjiiS3wEAxNXj4vxx/DivQW0nGlno1k9PWhCnCEp7oxXIwFF9TFh/vNhSkf9VkHyDAg5ut5ogQbIid+bxocYWTIEiFmGjiGo620FaDwPXaeeL4noyoO5slP1P6UP4ijfwQjVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cW6yb2Pw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429C5C4CEC3;
-	Wed, 25 Sep 2024 11:42:28 +0000 (UTC)
+	 MIME-Version; b=GNeHXYyjUc3F+Sx1u6dKYDpYuwNePcFmXK9WvnWnfPzNXyot/rE4STsjDEJRoP7DXb1qcyij2bpSpx2Yi1NIB2QIWHfg47y69dYXH8jZnWE+dqKg42GS9JOsLcGGgtGEfsoE7d94u8cPIltCbjioyyNX0Pi6TKsgHiTY5J4qaFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o79MXMJA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10145C4CEC3;
+	Wed, 25 Sep 2024 11:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727264549;
-	bh=k4M4oCPrSASF+1TmGgx+cteJbKnwOS1p/HkflnkblY0=;
+	s=k20201202; t=1727264874;
+	bh=Jp/7mKD0NQ8tcuVLRYP6ppFFsuSAfFVkzvYBDI8NlO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cW6yb2PwyRCywxr0kyhm2lWNCBEuxQjkxA5hVREKgJT7xwgejDKlG8JdK5dEVwj1W
-	 s9AEHCq9yIoSTiyRBmcQJb56TvcbcDdq+w3phXNtYuG7UWWiHxuaCrYlyEBPyAhiRj
-	 M0laWb+BPS+Qsr1EDALY5dEQsSUBGKTyzUrbliJQ6dizMzfwGyPlRIt2CO33N9G10Q
-	 PG4jFam+AMg507RtHcJMda1vbaSu8U9g+1nEv19eP7tfYb/A7t4GOrG7RLXiLoY68r
-	 pprrQ4PjErOlT5tNifzAXkP75dof5lJ1dCNfC+ykSNx5TPWiHY8Zc23jW5pkvg3T+U
-	 Qm7N2eLRem9eQ==
+	b=o79MXMJAfV9+dVtcEvjjTUDOgT9J7gqg5osjiUCNR1dVOHlcY7kqsH4kvSsOfs7cQ
+	 fbCDl/rPUDhWcHNN6/yDrsl4rCZfx+C1gyAj/BTLW5Zrb0YZZ/uo2E7qm9L/bC5S4z
+	 aotF703FTkUNJEBVeGwtEd9S9A/XFoyMJJKM5zZoamr23kL9yKeKRXr++MB8zK6rHS
+	 c+Qs1BZSzOt7wOOMm6IZ04unVeXxoxknfmmcaxwr/jIVWSEeptz8qywQVgV5TNVhn6
+	 DFFp7ir2rTlIi1oNyWVmpC/pe+avVpgCIMbfEz58oY4ngaJXT3ZaPEV4LFIltqKDKZ
+	 1Lb7i7F+gqG3w==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
 Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>,
 	robdclark@gmail.com,
-	joro@8bytes.org,
-	iommu@lists.linux.dev,
+	quic_abhinavk@quicinc.com,
+	dmitry.baryshkov@linaro.org,
+	airlied@gmail.com,
+	daniel@ffwll.ch,
 	linux-arm-msm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.11 121/244] iommu/arm-smmu-qcom: Work around SDM845 Adreno SMMU w/ 16K pages
-Date: Wed, 25 Sep 2024 07:25:42 -0400
-Message-ID: <20240925113641.1297102-121-sashal@kernel.org>
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.11 168/244] drm/msm/adreno: Assign msm_gpu->pdev earlier to avoid nullptrs
+Date: Wed, 25 Sep 2024 07:26:29 -0400
+Message-ID: <20240925113641.1297102-168-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20240925113641.1297102-1-sashal@kernel.org>
 References: <20240925113641.1297102-1-sashal@kernel.org>
@@ -72,65 +74,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 2d42d3ba443706c9164fa0bef4e5fd1c36bc1bd9 ]
+[ Upstream commit 16007768551d5bfe53426645401435ca8d2ef54f ]
 
-SDM845's Adreno SMMU is unique in that it actually advertizes support
-for 16K (and 32M) pages, which doesn't hold for newer SoCs.
+There are some cases, such as the one uncovered by Commit 46d4efcccc68
+("drm/msm/a6xx: Avoid a nullptr dereference when speedbin setting fails")
+where
 
-This however, seems either broken in the hardware implementation, the
-hypervisor middleware that abstracts the SMMU, or there's a bug in the
-Linux kernel somewhere down the line that nobody managed to track down.
+msm_gpu_cleanup() : platform_set_drvdata(gpu->pdev, NULL);
 
-Booting SDM845 with 16K page sizes and drm/msm results in:
+is called on gpu->pdev == NULL, as the GPU device has not been fully
+initialized yet.
 
-*** gpu fault: ttbr0=0000000000000000 iova=000100000000c000 dir=READ
-type=TRANSLATION source=CP (0,0,0,0)
+Turns out that there's more than just the aforementioned path that
+causes this to happen (e.g. the case when there's speedbin data in the
+catalog, but opp-supported-hw is missing in DT).
 
-right after loading the firmware. The GPU then starts spitting out
-illegal intstruction errors, as it's quite obvious that it got a
-bogus pointer.
+Assigning msm_gpu->pdev earlier seems like the least painful solution
+to this, therefore do so.
 
-Moreover, it seems like this issue also concerns other implementations
-of SMMUv2 on Qualcomm SoCs, such as the one on SC7180.
-
-Hide 16K support on such instances to work around this.
-
-Reported-by: Sumit Semwal <sumit.semwal@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240824-topic-845_gpu_smmu-v2-1-a302b8acc052@quicinc.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/602742/
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 1 +
+ drivers/gpu/drm/msm/msm_gpu.c           | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index b981ff25a983d..087fb4f6f4d3d 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -345,6 +345,14 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index ecc3fc5cec227..1079cfd6d9c7b 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -1083,6 +1083,7 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	adreno_gpu->chip_id = config->chip_id;
  
-+static int qcom_adreno_smmuv2_cfg_probe(struct arm_smmu_device *smmu)
-+{
-+	/* Support for 16K pages is advertised on some SoCs, but it doesn't seem to work */
-+	smmu->features &= ~ARM_SMMU_FEAT_FMT_AARCH64_16K;
-+
-+	return 0;
-+}
-+
- static void qcom_smmu_write_s2cr(struct arm_smmu_device *smmu, int idx)
- {
- 	struct arm_smmu_s2cr *s2cr = smmu->s2crs + idx;
-@@ -443,6 +451,7 @@ static const struct arm_smmu_impl sdm845_smmu_500_impl = {
+ 	gpu->allow_relocs = config->info->family < ADRENO_6XX_GEN1;
++	gpu->pdev = pdev;
  
- static const struct arm_smmu_impl qcom_adreno_smmu_v2_impl = {
- 	.init_context = qcom_adreno_smmu_init_context,
-+	.cfg_probe = qcom_adreno_smmuv2_cfg_probe,
- 	.def_domain_type = qcom_smmu_def_domain_type,
- 	.alloc_context_bank = qcom_adreno_smmu_alloc_context_bank,
- 	.write_sctlr = qcom_adreno_smmu_write_sctlr,
+ 	/* Only handle the core clock when GMU is not in use (or is absent). */
+ 	if (adreno_has_gmu_wrapper(adreno_gpu) ||
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 3666b42b4ecd7..a274b84664237 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -931,7 +931,6 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	if (IS_ERR(gpu->gpu_cx))
+ 		gpu->gpu_cx = NULL;
+ 
+-	gpu->pdev = pdev;
+ 	platform_set_drvdata(pdev, &gpu->adreno_smmu);
+ 
+ 	msm_devfreq_init(gpu);
 -- 
 2.43.0
 
