@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84B3098615A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:47:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63C23986185
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 16:54:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AA4741C26FE2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:47:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17FDC28BE6A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 14:54:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53E3E1B580F;
-	Wed, 25 Sep 2024 14:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57084183CBE;
+	Wed, 25 Sep 2024 14:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="acJH3mb8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FYSVjuPr"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EF41B580D;
-	Wed, 25 Sep 2024 14:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EB8155306;
+	Wed, 25 Sep 2024 14:22:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727273257; cv=none; b=cQ1M0m4ALIDWriKHrsWSr87fVGccf4Gc06AjEImAjbAIjaSOUSaln0MXcrXBFisfRMyBmj4fT3Nl8M55WvyS44RJOdBMDSy4utA91/a+GMke6a8Bnortr3b8Fpy2qCFwPuJoiRwQLIbjyQ+Wlus6AxUKV43gH9MDu3WtsG5zSeA=
+	t=1727274180; cv=none; b=V8OCZ0nw3RWpmRnY+6JFsyJKgXCXODiMtSFeQbSdpWkAp37Im4Ugr9Xt9VVUTw5CWyfJV+j6DG3Mvu9jWZAVpbiVPdDstnhBetQccM73KV3IWJcySpB7o4siQQoWBzx0sL5r9kt/mT0KsC1sFBtqka5c2+TqYIchHLhpPCeuO5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727273257; c=relaxed/simple;
-	bh=gvqnSrhRYuaFfpZy3kXC+zMSnnnyboWPLgboCFLynNM=;
+	s=arc-20240116; t=1727274180; c=relaxed/simple;
+	bh=iyz2lf3mkRgiTWfamskFcGdqQaAj/ZxSyUGpTPwhmiI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DU2Q4JN7eOPRgpke8DdvdWK1hV+p0kyjZ5/cV9YqXDX+eaaW2Wze+UHoDO7zatRKLbdMKbkiVOdugpy33aJK6R/wBKFNwK7LOUD/2fWdU5FaQcXbf1nlzw3TSQ/DpmYswzgrDy5/Pxz8W27Z8vLxNWTsXKtPnNQSw+coCFPCELc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=acJH3mb8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E830FC4CEC3;
-	Wed, 25 Sep 2024 14:07:33 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NgvqsgAkVQ043qsYqx4AsXu9zHAg0sIg6rV8Zrp6KUIZS0EzhkTy3LP2aj97RatJjjbpUcuG5IkWH7SIqIA7094KTNhN4QkEEw3fSQiGcnhZsbCLiMW5yvdyB7SA/PGLqFpUh1c84Mlv9ulEgSeIdiRk+dlxtYUaEI+fbsoeCLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FYSVjuPr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F17CC4CEC3;
+	Wed, 25 Sep 2024 14:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727273256;
-	bh=gvqnSrhRYuaFfpZy3kXC+zMSnnnyboWPLgboCFLynNM=;
+	s=k20201202; t=1727274179;
+	bh=iyz2lf3mkRgiTWfamskFcGdqQaAj/ZxSyUGpTPwhmiI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=acJH3mb8LYJCz8TqE/o5SL89RXO4dS2UWkc+cGhSui/4G9mZ1ymGIdlTDMf1+Vo8P
-	 e+2WxYaEiSXHPHL18KJar26Yrxqll2cw04vsxa7qB2KOlwXXxM2gZmD+iANVeZeVT8
-	 FtJBprf02UhfAJX6sVXyvRVa7J3YrkO/oHblDb14I5izfEL7Pidn4TYEromdvGpOsa
-	 0+o2BtDFyFrDUXZo1JZOyJQLMAhwI/g6LYedJ+Hj/fybHwUTp3sIztA8ZdE4KDoOOo
-	 u/8lpxMYhkvlqIMCtA4BV3CJGzrI5N097JlvRSOg5wZm6+v8Qk2d6EHkDJCyh1tTER
-	 PkL3LoQDQVWBQ==
-Message-ID: <0fcccdbe-ba46-4d0b-ab8b-ad659bec05d5@kernel.org>
-Date: Wed, 25 Sep 2024 16:07:31 +0200
+	b=FYSVjuPrVrFvkiPbsNMmdb1puAPUqVQ7hKn6XurxYeclOrxkQUWkJ/z+U3lJNgg3C
+	 31NJZQjQr4e1G83IV2lKMBtzgSB8u+sy/RF8eBzcLi+MtnNjsF8jweHhivN0zJbQSf
+	 flc529CDdaBVfUCw9vwrjKNiN1XPRiL0HfyoiOE3VPfP+LpqK2OHu1a9AAJfghZ/gz
+	 5pFxrlyFIeJOepZp1rHLhWjqwERrCCVyVrzcLdwvKtSZu4rE4Yw8bH3vVi1NwIwHdy
+	 yzO++7eqJQpNkm24MsNIQYbTmIrK/UayYjBV19uhy0kbRNr1FvPJVNgEfAXV7mMROM
+	 zEevPPUZtCuvA==
+Message-ID: <c315bfe0-88ba-4b1b-b57d-c51e4448a870@kernel.org>
+Date: Wed, 25 Sep 2024 16:22:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,15 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dt-bindings: phy: Add QMP UFS PHY compatible for
- QCS8300
-To: Jingyi Wang <quic_jingyw@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Xin Liu <quic_liuxin@quicinc.com>
-References: <20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sc7280: Add cpucp mbox node
+To: Shivnandan Kumar <quic_kshivnan@quicinc.com>,
+ Sibi Sankar <quic_sibis@quicinc.com>, Jassi Brar <jassisinghbrar@gmail.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org,
+ Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
+References: <20240924050941.1251485-1-quic_kshivnan@quicinc.com>
+ <20240924050941.1251485-4-quic_kshivnan@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -104,37 +107,39 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com>
+In-Reply-To: <20240924050941.1251485-4-quic_kshivnan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/09/2024 09:34, Jingyi Wang wrote:
-> From: Xin Liu <quic_liuxin@quicinc.com>
+On 24/09/2024 07:09, Shivnandan Kumar wrote:
+> Add the CPUCP mailbox node required for communication with CPUCP.
 > 
-> Document the QMP UFS PHY compatible for Qualcomm QCS8300 to support
-> physical layer functionality for UFS found on the SoC. Use fallback to
-> indicate the compatibility of the QMP UFS PHY on the QCS8300 with that
-> on the SA8775P.
-> 
-> Signed-off-by: Xin Liu <quic_liuxin@quicinc.com>
-> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
 > ---
-> Changes in v3:
-> - remove redundant compatible.
-> - Link to v2: https://lore.kernel.org/r/20240911-qcs8300_ufs_phy_binding-v2-1-c801a2d27a84@quicinc.com
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> Changes in v2:
-> - decoupled from the original series.
-> - Use fallback to indicate compatibility with SA8775P.
-> - typo fixup
-> - Link to v1: https://lore.kernel.org/r/20240904-qcs8300_initial_dtsi-v1-0-d0ea9afdc007@quicinc.com
-> ---
->  .../bindings/phy/qcom,sc8280xp-qmp-ufs-phy.yaml    | 45 ++++++++++++----------
->  1 file changed, 25 insertions(+), 20 deletions(-)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 3d8410683402..4b9b26a75c62 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -4009,6 +4009,14 @@ gem_noc: interconnect@9100000 {
+>  			qcom,bcm-voters = <&apps_bcm_voter>;
+>  		};
 > 
+> +		cpucp_mbox: mailbox@17430000 {
+
+Are you sure you placed it in correct location (the order is by unit
+address, see DTS coding style).
+
+> +			compatible = "qcom,sc7280-cpucp-mbox";
+> +			reg = <0 0x18590000 0 0x2000>,
+> +			      <0 0x17C00000 0 0x10>;
+
+Lowercase hex... we just fixed it everywhere and you introduce again
+same issues.
 
 
-Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 
 Best regards,
 Krzysztof
