@@ -1,118 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-32463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B51F2985694
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 11:46:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A029C985696
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 11:46:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 70172286B54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:46:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 67723286DE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Sep 2024 09:46:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1E7B13C810;
-	Wed, 25 Sep 2024 09:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF3301411EB;
+	Wed, 25 Sep 2024 09:46:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Mc9toR6d"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rMl089XN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16708120C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 09:46:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785F128F3;
+	Wed, 25 Sep 2024 09:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727257564; cv=none; b=E4xaDTfDhpYsD6aQ2AO/Av9Y0cOCbSsO25N9P/OgmtwSECPLSDeaqKrUY1/E/FdgfO9ktOOJKQk/Q1pLolSYseXxFCNcWLJQ6hZ2asMQ8Yz0I+7GtM3+3D9Okp19kERW/bobeYpg3OCA3lteha7MYyohx+PF/uSQwsAgys7QtEI=
+	t=1727257605; cv=none; b=k+i9b8/KZHTtVKtAbGdU7mBYigcfr1jXYt1VU4Sv8Hs8eBIIEZdSVEgvEW01zkHDcCQ+gDjwF+f1zOfAqmmMxCIgCd47Paj+w5AssrK6wN9sUe4bdcyOVcFL3YojeQXZhI4ElQ2XtJX9WkNM1Qg0a3CJHk2XT2u8jvlQqkvVvFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727257564; c=relaxed/simple;
-	bh=NgD5S9pyeEL0whX5CofWYtse3Eype5qITL1jwQePx/4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n+AIXD8F9nX0csDQdDPoX3tUI4mxfySZOtJy4g14KNKvYee6TsQy5fVYl6F4Ez4FpnmtVRteizQyRk+v/FzSjM0d33s3Ms14X4cgsS739h8m/8HQykg1NkZGhkA0boaY+M3f6rLaSyaFljJA4WJagldEFxGmz/lEc/2GPec/yzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Mc9toR6d; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-53654e2ed93so7734890e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Sep 2024 02:46:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1727257561; x=1727862361; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NgD5S9pyeEL0whX5CofWYtse3Eype5qITL1jwQePx/4=;
-        b=Mc9toR6d9TvkDamEcm9C96rX+OHNcOGvpzds1b9zuGCLm6fE5XlbibhWn1uJa9/50V
-         7z2ekHBEp/LfStDvuhZI5qdWXoJvt8Mw0aLbIyJxnCOKwTj/3/DsevmbeOlAnPdMBoQx
-         44NXzw7MdNjqkLI7KtPjCEWrNjeTHYXbJfaAzmNhmn9YegmpclOfnjqIwrupyU5WXf6P
-         oF9891vqvKACvbQkLf9Ma4olgjqIaTeqlhxJV7BmPcjSb/Z6aEkHZlbF3RtJl0qPEhdS
-         Z7hPpL4yK6FpWT0gow6ndKzETfgQSo0EZGJtdV0ysCHfZyuVb5a1lyXkJxkXkD3YYF8h
-         llJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727257561; x=1727862361;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NgD5S9pyeEL0whX5CofWYtse3Eype5qITL1jwQePx/4=;
-        b=RWSAIr1s6L+L6ccwpepOJZhv359tzAb+NYE1tL9iGIJAo6qsR8Zg1YhqIKfMkW7g+v
-         Sir51SDP5+qCq9ecSjYDnl8xs7+/2yUNQQAo+szZc6/iSlqf5dAFwRHGC+v6AJKhgjIn
-         vNg7J2R45Q0mq309W9HrHmWPmTEJdZCoeSkTSK391ewulz7rXp91Tey0EssPJT1V1w2D
-         uW+EtFUX6UMpg6+0qjySMKdEjLLjZdz9cieaFZRLyw9VH+WD91Q1VPjsqWGm6GO+IQ4Q
-         eBIDAkRUG6dK3hmmAMwNK7oLlU0I/TcNyf+PfkHk41/HFxQa6M4AoP9xekS1xGoET7En
-         hFGA==
-X-Forwarded-Encrypted: i=1; AJvYcCWuliGUKgYhbecj79cvpUBdZgTKaT26VMCmkjeOiKQJObCcHYjccXwJfpadye6oD5YzicG8lCCYnQP46tsN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzxkf/tjHyc0GowYism1xggfgJM99UVSmQqsWWbA1+j84hm8nB6
-	7qVOGzNpObRMxEiw9Kos21XfIT3tnoI01CkbNy4jRqUEk7xKRve1w/55Tgqx9GrrcDdwqetaiGo
-	kJooA9nA8bFvkZl+vSyVwp5ZZSReHJBTck7lVpA==
-X-Google-Smtp-Source: AGHT+IGpIsWwcArxaXl2nN/jmHZ9mZk4PS6iOVoWxDnyGMawf9jGJkP8UCfY9YHJq1XUYoIoHK/PxmvoTaQAXkJyg9w=
-X-Received: by 2002:a05:6512:1384:b0:535:3c94:70c2 with SMTP id
- 2adb3069b0e04-538704979e7mr1306012e87.19.1727257560704; Wed, 25 Sep 2024
- 02:46:00 -0700 (PDT)
+	s=arc-20240116; t=1727257605; c=relaxed/simple;
+	bh=wtn5+KuMLTAqeZweMoRuxkoCjg49C5loEg74Pkq8niU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dDkzo5gNF/uMNfbk0Lvk1ISlm1kFHXsqqKvAU/p/BNoA6tiF1G2qE4gVyTxvgGIz3Ly02BcG68gFh2WM9arnXIgs1dD1Ii3Z12CIxcdUtM9gqcfaS5viI23MUPr1yZk8eTzha1ziUXS8m9IOGp2FS2n5TNc8UXWp+fWgr5LnhSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rMl089XN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EA2C4CEC3;
+	Wed, 25 Sep 2024 09:46:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727257605;
+	bh=wtn5+KuMLTAqeZweMoRuxkoCjg49C5loEg74Pkq8niU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rMl089XNFRAEGqGjifzGH4vHmkqYCn0PuSiSSxoa44g9uXf9m4QFeUwMFyWZ4/Jrl
+	 RaWXD3u0L8Qt22vg1xvfKfhEXnEe51XdG2dZYT7Xw1P6J0/FadUCOm49X5dW6kf4zE
+	 hT1lEuWPSW5mbij8dbwOKHzfa5Rhyr+ZhFoZ6OxzHE3IZeYZhDa2sRoSDqE7jqdSA0
+	 8gz/HaruwpjM77EOo8nPk4GT+zFAAKpD8cMPuedCRqi+afrz3e5QVRuyl59+Rc3uXE
+	 +tjJZ18viIKSWYX490NH6d9/dZcdd2dpWfj8j/G2Tee3pwbN31N28qqnWwHoIfyStT
+	 leX5AWRIOWgAA==
+Message-ID: <2731e17d-c1ad-4fb4-ab60-82ceafeffbaf@kernel.org>
+Date: Wed, 25 Sep 2024 11:46:35 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240911-tzmem-null-ptr-v2-0-7c61b1a1b463@linaro.org> <e1089f44-5415-4a46-a8fb-9711f122a6bd@leemhuis.info>
-In-Reply-To: <e1089f44-5415-4a46-a8fb-9711f122a6bd@leemhuis.info>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 25 Sep 2024 11:45:49 +0200
-Message-ID: <CAMRc=MdmZ7_oHv_7Ja9E0pfuoF5wWeGz_1=Yq=G-gE_cpsBGSA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] firmware: qcom: scm: fix SMC calls on ARM32
-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Andrew Halaney <ahalaney@redhat.com>, Elliot Berman <quic_eberman@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Rudraksha Gupta <guptarud@gmail.com>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: x1e80100: Add support for PCIe3
+ on x1e80100
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Johan Hovold <johan+linaro@kernel.org>
+Cc: Qiang Yu <quic_qianyu@quicinc.com>, vkoul@kernel.org, kishon@kernel.org,
+ robh@kernel.org, andersson@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ abel.vesa@linaro.org, quic_msarkar@quicinc.com, quic_devipriy@quicinc.com,
+ dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+ neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
+ <20240924101444.3933828-7-quic_qianyu@quicinc.com>
+ <9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org>
+ <20240925080522.qwjeyrpjtz64pccx@thinkpad>
+ <4ee4d016-9d68-4925-9f49-e73a4e7fa794@kernel.org>
+Content-Language: en-US
+From: Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <4ee4d016-9d68-4925-9f49-e73a4e7fa794@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Sep 25, 2024 at 11:35=E2=80=AFAM Linux regression tracking (Thorste=
-n
-Leemhuis) <regressions@leemhuis.info> wrote:
->
-> On 11.09.24 11:07, Bartosz Golaszewski wrote:
-> > The new TZ Mem allocator assumes the SCM driver is always probed which
-> > apparently isn't the case on older platforms. Add a proper workaround.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> > Changes in v2:
-> > - use likely() for the more likely branch in smc_args_free()
-> > - Link to v1: https://lore.kernel.org/r/20240909-tzmem-null-ptr-v1-0-96=
-526c421bac@linaro.org
->
-> Thx for working on this. This afaics is fixing a regression from the
-> 6.11 cycle; we already missed fixing this for 6.11[1], but please allow
-> me to ask: is that something that bothers many people and thus should
-> maybe be fixed rather sooner than later? No pressure, just wondering, as
-> it seems the review is making slow progress.
->
-> Ciao, Thorsten
->
+On 25.09.2024 11:30 AM, Konrad Dybcio wrote:
+> On 25.09.2024 10:05 AM, Manivannan Sadhasivam wrote:
+>> On Tue, Sep 24, 2024 at 04:26:34PM +0200, Konrad Dybcio wrote:
+>>> On 24.09.2024 12:14 PM, Qiang Yu wrote:
+>>>> Describe PCIe3 controller and PHY. Also add required system resources like
+>>>> regulators, clocks, interrupts and registers configuration for PCIe3.
+>>>>
+>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>
+>>> Qiang, Mani
+>>>
+>>> I have a RTS5261 mmc chip on PCIe3 on the Surface Laptop.
+>>
+>> Is it based on x1e80100?
+> 
+> You would think so :P
+> 
+>>
+>>> Adding the global irq breaks sdcard detection (the chip still comes
+>>> up fine) somehow. Removing the irq makes it work again :|
+>>>
+>>> I've confirmed that the irq number is correct
+>>>
+>>
+>> Yeah, I did see some issues with MSI on SM8250 (RB5) when global interrupts are
+>> enabled and I'm working with the hw folks to understand what is going on. But
+>> I didn't see the same issues on newer platforms (sa8775p etc...).
+>>
+>> Can you please confirm if the issue is due to MSI not being received from the
+>> device? Checking the /proc/interrutps is enough.
+> 
+> There's no msi-map for PCIe3. I recall +Johan talking about some sort of
+> a bug that prevents us from adding it?
 
-Bjorn should pick up patch 1/2 from this series into the QCom branch.
-If it doesn't happen by the end of the merge window, I'll resend it
-separately on Monday.
+Unless you just meant the msi0..=7 interrupts, then yeah, I only get one irq
+event with "global" in place and it seems to never get more
 
-Bart
+Konrad
 
