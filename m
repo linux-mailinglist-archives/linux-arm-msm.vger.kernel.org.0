@@ -1,181 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-32554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33169987181
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 12:28:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 050479871A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 12:38:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E5CF82808FE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 10:28:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B16E82861D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 10:38:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1E6A1AC441;
-	Thu, 26 Sep 2024 10:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51D5B1AD3FE;
+	Thu, 26 Sep 2024 10:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jGc/O1BO"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HDLVKc41"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2534E190693
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 10:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF07347B4;
+	Thu, 26 Sep 2024 10:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727346523; cv=none; b=POpnACmBW04KhTBn5iOxAlKWLmSolajfUQdyN0dfzTa5Bq/9WKT8Z9hKgk2k/umpAPTkba9Q8F5xmgupS0M+smjBpP00WzDnZiPMK0d3qQYZKYNcqZJQt/8LnJYLPcrHBP67SDqzVYvXTQE+4OAIR6Hf73T/l3jTSP3160LFolk=
+	t=1727347126; cv=none; b=TZA12Hca98w9w5gxXT0I1EgDHy5LfwiEat8iRTfhRnprS/0i8/7dPQDdT8NxgLLgI/Gqfr2Fb3n+y9oEOLKH46nP6N2W3XdeLH6Op7ldKaXijJhSxEQROT/rn0NfTEVx8s9TGBlAdrGXuP25gVOtDedbBFGsDOPQ5QNQRTpWKcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727346523; c=relaxed/simple;
-	bh=JQ3SXkLOPNuuMrXaUBUFpbj7KM6YeRCqp0vOwhtJFrc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BgpvdeKjAZdZccsyxFTbT6n2WTaSJFjOm+DU63x8RTNWB+IRIxGHhM9/jGzs0reVZsmF+MHmCozQ2J2KRtBM8nwvcpyxTWXgFjqBu6h1BMhYMXOGv8oaSdrref+Brn0TsuPGPW2pOYv4M5eSTkf7s9qdvFj7Lrq2qm/EMvQHM8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jGc/O1BO; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-537ab8a921bso102791e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 03:28:41 -0700 (PDT)
+	s=arc-20240116; t=1727347126; c=relaxed/simple;
+	bh=+qcwPAH5CWuhj09/E6HWAImsCw7nT/5uSGGKzcjVS5Q=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=eYGS0v2XQDa1+20QbprAuy9AUabLJO50fb+phQX5ZBsWwbMKR+njgxh1F4/VcHu6dHRoiXfyxlJ2vAdlZAk9NXWzhWHQPpkSNC5qGh7CesYE3kNiJ2Zyy2Iy/CCIOh62frCDJY8Nk3lEaSEJ70ckP6Z8x5rBkVdPIN+iT4GXRDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HDLVKc41; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2f75e5f3debso7381961fa.1;
+        Thu, 26 Sep 2024 03:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727346520; x=1727951320; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UQ5h9IqgeF5qA+YygNEyEh8NIJAn6Orkt4Kv+rh7BNM=;
-        b=jGc/O1BOlj9D0N0GgcdWKCxpVSnSFvjjCr5Ift+ASbiyCLDHHUFqmTd/AKTxXZHXY8
-         YduikUNAuuGiwA0o9/Mesxd87Ivmnxuqzyka/iBKzFMKDPJcKL82uHayqo26aQ+El04j
-         n55kxVFgExks1Sg/4/6R0+rvmslTH+VNeYki9vF3K0OvX9oPKj3KPoRf1wiijGAPn5VA
-         4212qHTp5w4qVcTvGKdILkdKBuFKmQ06GIs8Imcj0brFWTifiUSrKE5B0a17FLfL0aaG
-         3/nsswaO88uggb7u5u51ZTrYRCUJ0x91RZTIfYcezcl/hzUy9HdnSO/nXIuiD+tNyohl
-         7hVA==
+        d=gmail.com; s=20230601; t=1727347122; x=1727951922; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=le5ANOrzvZoJzrfQColCGsuooOBHCuVJFSkbRGME1l4=;
+        b=HDLVKc41fTwbneLrgnCMhs2f8fYFuukefKoRLWMRspMGxuRD3t8NeLV46KNbdNMICJ
+         8bpMyPF832nmXAEGNVOM3EzwQ1BD37tRSsoDzFN2rlejoicmD1XkfBJ0MzmoPws2KrcH
+         9Q+OqToGClKjx8W2qrjSkNRV5aO+kO9zSdd5n13l0zjTqZHkba+nbOGi0WCBKApMq7V9
+         XM5pigYxkSjY4GYSsEXImDCd3i8PmRbHYLkJKu9azc4uRCMXLZEF2hFQQbauVYWSO47X
+         Diz3BgfVSlJYCmZ4S7tL3VmgKLmrLNV4FLkgFQ9SSIFXlfuS+HFAls6YLA74fkI77bBG
+         CWOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727346520; x=1727951320;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UQ5h9IqgeF5qA+YygNEyEh8NIJAn6Orkt4Kv+rh7BNM=;
-        b=WkYyQCL4nW69yMBwHAEyoIcKJaadF9ZIeyki2NY2cjcX3kX0CMzmIOJ2idmLfzQlWI
-         3fpuDlknL1VONjzqS4AKp0DFSrTmtXwKq0qYo3dEbtCnL0W3xIh8IOeI9Ooz4FUtiCks
-         Pi+Z+n4w/vlNd8FyK9N3q8cxRuEbtRw0Wof2zscWhR+k2HplhtIolt0zT2r5yr87lYlE
-         tL1KBBA7AOeAHT0nBmxJKp/pLXmSKrBdh3bjsB7InX2Nsyz0tJ+vkrvau5z6dCQKjRaY
-         5fNdB6RAmB5eAN2iSpuCYdrbyHO5djueZB9fkt5ZJvLFBAI7MaWDzP0f+B9mc2doSH1a
-         2yKg==
-X-Forwarded-Encrypted: i=1; AJvYcCWF1Jz9PucxdgpKKuoTmLXiRTsfECgXDOdwgQDMgRLg/1AdzyF77Q6k0wHaNdVOv+rHz4xf3C2Z6f/N+4Zt@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/Ru9eYKv3IEXvbPmfSYE+/s+CHj0AnjuAoN/PXtLNPBEE7sdc
-	gtiaft7VTODEtnX5VYB5PfFpiAOUcF33FpLEcrObvF0JGWKXFr35gzJsnxkGGXE=
-X-Google-Smtp-Source: AGHT+IHs2wZ0knluYwSQyv0Tm/Y+QWOXzamBc3yFHQU7pcagrgsOZH/5SuL/NKxmV+OONPmsciuL7Q==
-X-Received: by 2002:a05:6512:ac5:b0:52f:10b:666c with SMTP id 2adb3069b0e04-53877530f7dmr993235e87.5.1727346520224;
-        Thu, 26 Sep 2024 03:28:40 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-537a8648b4esm753786e87.221.2024.09.26.03.28.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Sep 2024 03:28:39 -0700 (PDT)
-Message-ID: <def1c338-8e41-4622-83d5-7a377d780d76@linaro.org>
-Date: Thu, 26 Sep 2024 13:28:37 +0300
+        d=1e100.net; s=20230601; t=1727347122; x=1727951922;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=le5ANOrzvZoJzrfQColCGsuooOBHCuVJFSkbRGME1l4=;
+        b=N83nTNBLI4F0n8jHmA0p/Ck+sQNLIIJ1AcjxxVA9Dm+NG3EuF+/oW8h1A2+1gmA1fc
+         DDLxXo8RZ3L3CV/hOAC6CdoozVGHAeElE79QaAgabqpYUGUOW8knLw8h+2bu6hfEZOXm
+         +lw55a9INNKxkPapVi/XcsFXjOjvED+3JVy96XVIZxMku0XI5L7ge2yQI3+WA9wEw5Bb
+         N1guPpCBYQrU87JP7Wa32GBiK8VRB4sU9Q8F/Q0SU4ZnP9turLORIT2ywS4yTYe9Pe6E
+         V2nK+Q24BfSEPiyCkLEFEj+NlF9UV9eJG7gnBt2DgKyr/8/8xnQvSFwoGu6wENHJsxPu
+         n6Ig==
+X-Forwarded-Encrypted: i=1; AJvYcCVY1EKxpThm4/QMysJQeEoXeTD4EtEHZ7GVCoXqP2gusFlgZ+Qe/ntzUXQ9ch4uzQTpsN5nope0HchtG1nV@vger.kernel.org, AJvYcCVlKHvbZ5c1+i720A4ZErefgVTsqhSYsISkwiKVOiGoJTP2wHrffWdmAXpw9BsUGivn5xCIOoKIHc8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYe2AKj9sOd0WoMnB0hbYC7H8NQRkg2D0jJ5EkWjOOhM8wbeA0
+	GMxFDLuGZYbqeiTPmqnLrOQuVKDKlgKYqZxEp1qz10edrW/HYGmp
+X-Google-Smtp-Source: AGHT+IFvlc3qdoIDjeZIFAD4TysLNLgMZ3yQFMyZvkuaMgNliPkwUyywGAPZ+4pvKIIUZR2cn/+qgA==
+X-Received: by 2002:a2e:851:0:b0:2f6:4cc0:5438 with SMTP id 38308e7fff4ca-2f91ca407c8mr28188701fa.29.1727347122285;
+        Thu, 26 Sep 2024 03:38:42 -0700 (PDT)
+Received: from [127.0.1.1] (mm-20-1-84-93.mgts.dynamic.pppoe.byfly.by. [93.84.1.20])
+        by smtp.googlemail.com with ESMTPSA id 38308e7fff4ca-2f8d289ee94sm7863791fa.120.2024.09.26.03.38.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Sep 2024 03:38:40 -0700 (PDT)
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Subject: [PATCH v5 0/2] Add divisor computation feature for sdm845 gp
+ clocks
+Date: Thu, 26 Sep 2024 13:38:14 +0300
+Message-Id: <20240617-starqltechn_integration_upstream-v5-0-761795ea5084@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/1] i2c: qcom-geni: Support systems with 32MHz serial
- engine clock
-Content-Language: en-US
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, andi.shyti@kernel.org,
- linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Cc: quic_srichara@quicinc.com, quic_varada@quicinc.com
-References: <20240926034304.3565278-1-quic_mmanikan@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20240926034304.3565278-1-quic_mmanikan@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAJY59WYC/43O0Q6CIBQG4FdxXEdDULCueo/WHOJR2RQNkNWc7
+ x66tbqry//fzvefBTmwGhw6JwuyELTTo4khPyRIddK0gHUdM6KEZoSnAjsv7b33oDpTauOhtdL
+ Hm3KenLcgB1ypghc5qWgDDEWmkg5wZaVRXYTM3PexnCw0+rHvXm8xd9r50T73NwLb2vdi8XsxM
+ EwwsIZzTkkqpLq0g9T9UY0D2vCQfcBTyv4AswjSmkJT5yovhPgG13V9Ad5rAaM2AQAA
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
+X-Mailer: b4 0.12.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727347119; l=2239;
+ i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
+ bh=+qcwPAH5CWuhj09/E6HWAImsCw7nT/5uSGGKzcjVS5Q=;
+ b=gKZKCAqwrb0LGnUPDlBsxmlEX2n5s0TnAxf+aVPZ7zOFtEruk54QeV3Z+VwedfLj+ZboKLyTK
+ 46AfT6x+LZ6Am0bMvj1ox4Ek/xUn0lzOLUQyQOfiThn6TPQropQiChQ
+X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
+ pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-Hello Manikanta.
+SDM845 has "General Purpose" clocks that can be muxed to
+SoC pins to clock various external devices.
+Those clocks may be used as e.g. PWM sources for external peripherals.
+    
+GPCLK can in theory have arbitrary value depending on the use case, so
+the concept of frequency tables, used in rcg2 clock driver, is not
+efficient, because it allows only defined frequencies.
+    
+Introduce clk_rcg2_gp_ops, which automatically calculate clock
+mnd values for arbitrary clock rate. The calculation done as follows:
+- upon determine rate request, we calculate m/n/pre_div as follows:
+  - find parent(from our client's assigned-clock-parent) rate
+  - find scaled rates by dividing rates on its greatest common divisor
+  - assign requested scaled rate to m
+  - factorize scaled parent rate, put multipliers to n till max value
+    (determined by mnd_width)
+- validate calculated values with *_width:
+  - if doesn't fit, delete divisor and multiplier by 2 until fit
+- return determined rate
+    
+Limitations:
+- The driver doesn't select a parent clock (it may be selected by client
+  in device tree with assigned-clocks, assigned-clock-parents properties)
 
-On 9/26/24 06:43, Manikanta Mylavarapu wrote:
-> In existing socs, I2C serial engine is sourced from XO (19.2MHz).
-> Where as in IPQ5424, I2C serial engine is sourced from GPLL0 (32MHz).
-> 
-> The existing map table is based on 19.2MHz. This patch incorporate
-> the clock map table to derive the SCL clock from the 32MHz source
-> clock frequency.
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-> ---
-> Changes in v2:
-> 	- Dropped IPQ5424 from the commit title
-> 	- Added else part to assign geni_i2c_clk_map_19p2mhz to itr
-> 	- Dropped MHZ macro and used HZ_PER_MHZ macro
-> 	- Expanded SE to serial engine
-> 	- Added the reason for 32MHz clock in commit message
-> 
->   drivers/i2c/busses/i2c-qcom-geni.c | 19 ++++++++++++++++---
->   1 file changed, 16 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 212336f724a6..22f2a0d83641 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -16,6 +16,7 @@
->   #include <linux/pm_runtime.h>
->   #include <linux/soc/qcom/geni-se.h>
->   #include <linux/spinlock.h>
-> +#include <linux/units.h>
->   
->   #define SE_I2C_TX_TRANS_LEN		0x26c
->   #define SE_I2C_RX_TRANS_LEN		0x270
-> @@ -146,18 +147,30 @@ struct geni_i2c_clk_fld {
->    * clk_freq_out = t / t_cycle
->    * source_clock = 19.2 MHz
->    */
-> -static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
-> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
->   	{KHZ(100), 7, 10, 11, 26},
->   	{KHZ(400), 2,  5, 12, 24},
->   	{KHZ(1000), 1, 3,  9, 18},
->   };
->   
-> +/* source_clock = 32 MHz */
-> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
-> +	{KHZ(100), 7, 14, 18, 40},
-> +	{KHZ(400), 4,  3, 11, 20},
-> +	{KHZ(1000), 4, 3,  6, 15},
-> +};
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+---
+Changes in v5:
+- Split patchset per subsystem
+- Link to v4: https://lore.kernel.org/r/20240913-starqltechn_integration_upstream-v4-0-2d2efd5c5877@gmail.com
 
-Please double check the values.
+Changes in v4:
+- Replace gcc-845 freq_tbl frequencies patch with new approach,
+  based on automatic m/n/pre_div value generation
+- Link to v3: https://lore.kernel.org/r/20240618-starqltechn_integration_upstream-v3-0-e3f6662017ac@gmail.com
 
-This is what I get:
-* for 100KHz: 32000000 / (40 * 7) ~ 114286, apparently 32000000 / (40 * 8) would
-be a better fit, however it's unclear what would be proper t_high / t_low values,
-* for 400KHz: it seems good,
-* for 1000KHz: 32000000 / (15 * 4) ~ 533333, which is almost 1/2 of the wanted
-bus frequency, so this one looks very wrong.
+---
+Dzmitry Sankouski (2):
+      clk: qcom: clk-rcg2: document calc_rate function
+      gcc-sdm845: Add general purpose clock ops
 
-Do you have any ideas how to get better bus frequency settings?
+ drivers/clk/qcom/clk-rcg.h    |   1 +
+ drivers/clk/qcom/clk-rcg2.c   | 201 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++----
+ drivers/clk/qcom/gcc-sdm845.c |  11 ++----
+ 3 files changed, 198 insertions(+), 15 deletions(-)
+---
+base-commit: 92fc9636d1471b7f68bfee70c776f7f77e747b97
+change-id: 20240617-starqltechn_integration_upstream-bc86850b2fe3
 
-> +
->   static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
->   {
->   	int i;
-> -	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
-> +	const struct geni_i2c_clk_fld *itr;
-> +
-> +	if (clk_get_rate(gi2c->se.clk) == 32 * HZ_PER_MHZ)
-> +		itr = geni_i2c_clk_map_32mhz;
-> +	else
-> +		itr = geni_i2c_clk_map_19p2mhz;
->   
-> -	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
-> +	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map_19p2mhz); i++, itr++) {
+Best regards,
+-- 
+Dzmitry Sankouski <dsankouski@gmail.com>
 
-Struct/data organization here is so weak, that here it's implicitly assumed
-that sizes of two arrays are equal. It could be kept as is of course, just
-pointing to it.
-
->   		if (itr->clk_freq_out == gi2c->clk_freq_out) {
->   			gi2c->clk_fld = itr;
->   			return 0;
-
---
-Best wishes,
-Vladimir
 
