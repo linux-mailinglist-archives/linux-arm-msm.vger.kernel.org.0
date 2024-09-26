@@ -1,133 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-32596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E41F09875D1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:41:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E19F49875DF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:45:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67EF81F20FEF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:41:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C96FB214D9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:45:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2921E43AB9;
-	Thu, 26 Sep 2024 14:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A2BA14A4E9;
+	Thu, 26 Sep 2024 14:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jab64f9b"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VeyTd9R8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826C13632B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 14:41:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE704142621
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 14:45:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727361679; cv=none; b=TvbYS4IhXZG8B+w3necRZuHV8ZzyzOQxmQzKaYADDl1D9u/cijRfrouFqKuagjDU1zMccByD47GN5/zlX5eOKilBuCGSw+nlxLv4JbOFjqvmCmF3BPerETJ+yDJgeY50B27c1eq0ok5aq4K0hBDk9f8x1yZLGmV8n3FprdewBJw=
+	t=1727361917; cv=none; b=Ow7IuyvxoOxvbxNF5/qTz5bkXl0yWb5fkDI/ulKGUSS3CsQaQXlO9TQPWiUBxY3IdIoY+Vc7nGyDOlOhBmxxGFdrqPJ5oj2qTTq6y3FkORvvyYRWhdmGlO3byc49xFjcLbxbSLohCrCQnL8LclspT0EYkWxbQmaCNr/v3AaJKgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727361679; c=relaxed/simple;
-	bh=3hBqlkDd2CboCZnt+32bHlBfwoKCR4w7ctHLvnCcMtw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VfyhOrnWdvihqskywhOJG1TOnp50YLL8Bn07d10vY7hDWZ6rDzK/vz04L6nZv7OHf8c6Wkd+K4cSxDuGLFvcG/xV5d9qoiuqnywpcN4mR63dylhsI+j0VX2vmUl8OksipzTmxtXy6gkhvDxCw4Duh34yX5q3wV8KfAIN/dlx63A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jab64f9b; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5365392cfafso1159938e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 07:41:17 -0700 (PDT)
+	s=arc-20240116; t=1727361917; c=relaxed/simple;
+	bh=dsumOzFDfuh/PYFlQ5fBlwa0itLqF681cpqOcUvtv+0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hnWIMIqK6Y39+ZODhU1QeVKd6+1vB9iN3/RRap0yek2eSU/kgCQm5LooPACN9HBmMX3DCANJ4SDClshtPgQbT/SXJ+rz6WtKNNOEA529MSWP7R6QH8uqwKLJdNpE3hnigEM9avgiWLwyEhFjd4VDAKjYWywOadxTcFJPmjEzggM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VeyTd9R8; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2f761461150so16837451fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 07:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727361675; x=1727966475; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wWrufhI1OaXX1M/49KinirIqQ3+0LvTc6ruUtQgTS6c=;
-        b=Jab64f9bEcMHSIysshyFpGLfGl8RledltP2beM1pIO96Yb6KalEFXQhTrCj01U8M7o
-         cS4WSPIzAJFskwArqs8EXxLT79rxE2Czve2n4CtKE8QwmASdis9jGqhcIpjNYNR8n8YI
-         /KlCFxRd4+KCiSNBovh9S4OW0HJJOpYkcZaE6XVfxDSsj4u/eQ+KGv6fHdW8gcik2qSO
-         +R7h2mp1g59Ch9By/1Fye3SDr5g5mcQtGq3dL9QMuDJOXS3aZ/Add5TT6t0oXEJkof7Q
-         ZhNSzpsrM7lHnEqI8sU7UHqui+ksChF+zc8ezqDQDwEt2ehrj9Hb8Qfu0gDX/hEx3L0K
-         v1hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727361675; x=1727966475;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1727361914; x=1727966714; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wWrufhI1OaXX1M/49KinirIqQ3+0LvTc6ruUtQgTS6c=;
-        b=PN0KJDFii8TU2jNSXuaSzzaMfZj1gxVlalwX/I+QJVARXDOnu1+O1oPMwVeWf90VbN
-         4DwzKzYNmRLGgGuyU/uJNpPviH0eHJF5LkNaAfM6Orz4MZ6nREewiFxBzALSu4VVZwoT
-         QzKthv46ALRLSlhaeedG5C+KBzaMUNIb53eyBJNacIwotZEHEOMzED95NgrE774TJ/fj
-         5nnDmClYmkCc68q5XO0LXlUMCpQhyPiBM8aRCbLXMsDHBzGtAX35ttIJGLbWq2mgc0gd
-         r22NDPRtDvbOSKEb28ZWQ6u0Nz0zuRnjSVRRhUj4TGxC+hcEVWYThez/D+mM9DlEJg5L
-         SJzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW+YLQh3et8g0bKZhS+7hDs5JvNUekNMWdARxG+pm7Z5WnseJWu6W5tAk+i0rnw3J99AlQlBntwik/NPh7N@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7V8TznTmHK9BtuSSNyq3TpLsr2VTln51bNhHCxS5fIm0bLll8
-	bjlYoJkVNQPYt7nBdJnZJTAjsEM4tYj3OmMbZWlZMp7c7MWj6NKoA6F5Wrq/UBo=
-X-Google-Smtp-Source: AGHT+IER6Za9qimt3NND6y2jN86DblVumX6oOnvT4M0Kys3dZuu5LlRfdb8WGqjYa4bEbRiVS/s1UQ==
-X-Received: by 2002:a05:6512:110e:b0:52c:e3ad:3fbf with SMTP id 2adb3069b0e04-5387755cb9cmr4503700e87.42.1727361675445;
-        Thu, 26 Sep 2024 07:41:15 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-537a8648bfcsm826890e87.210.2024.09.26.07.41.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 07:41:14 -0700 (PDT)
-Date: Thu, 26 Sep 2024 17:41:12 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: cros-qcom-dts-watchers@chromium.org, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 02/12] arm64: dts: qcom: starqltechn: remove wifi
-Message-ID: <zxa3q4gjo3afwcne3bqmc27ijctl2zwuf6frsb6j4ybzoihyjm@jky5375spaot>
-References: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
- <20240926-starqltechn_integration_upstream-v5-2-d2084672ff2f@gmail.com>
+        bh=UUk5GqFsvnt8aibuoucXH3mgAlXQnT7Fu6sM4Odfi8U=;
+        b=VeyTd9R8+cruMSRIYlvO1L1twVFDeN8tss4OomfqAArVdxqGg5rlNP6/dJTdyfu6V3
+         hBKl0fkg0OuRoNnW63/VeLvk9B7em36Cbcnf2Gqp0/4BJBn67uvQv+ry8hFi5yDSjsIc
+         a8GEHDLtx83lBr4KcH8WHijTHKP8MtiCRHURjyDSGurE/OL6/lpPk1QxqVf8EiHx0yZz
+         TNVzZ3pDHrxw7mhaAX45p5GVd9rTkNk/1N3FlqBl5y1AreZfVYwwT+srqanbuS6g/v0f
+         fU5CB0OLI9I9lxOKOEvBd+ntYRVtMlLO8Iq/FKzmdsk+ivGluF7Kent+Kwap0IKHHHBN
+         HYWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727361914; x=1727966714;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UUk5GqFsvnt8aibuoucXH3mgAlXQnT7Fu6sM4Odfi8U=;
+        b=As8w5WQ5zBaUtmAU/RRifit5Qlgp6iDtM9QVg4ci2royFOTgOWpMsg7CkkKReeU8n8
+         CC4QOyds6lCqzvWSqh9D3VwnxcgVWDH1ZyEpNCzPr4voqMQT1UCprLbBGHdC4wMOek7d
+         VjgIYyNWiCIbkTM9ogd4JHqWWS6H5c/KbOIzGOA0eoQzrF++gVEzt6XCMXtbLrwYzCOL
+         KTcUR8faGKAiOlkcQKCVpEkfGl/9m5Ehs16BgAVPhCcm3kZOOKYo4qlS9eRXxuJhw8PI
+         Equ4b/xV9yW/G7KH3HbWgRtH63/XHZ96t+tPQlE7FcH7YTABu+D53Z9OlVMXBpwitIFo
+         7FLw==
+X-Forwarded-Encrypted: i=1; AJvYcCVLhKMBsRwykwK9FABRGowW3Eyn801e49BJgHDUtQevjwYqkEw2jPtk/qbgfVqI3la7tuPjUCITocm4Y6nm@vger.kernel.org
+X-Gm-Message-State: AOJu0YzzZyef+n4xYXjWUwmsqQprDc+EJiEP/TID6tKJcn3NG6XLIKJM
+	vmrdcHC34O7luAmxPOkFVUScc6rFsQ5r6KVfm1lDLzs7tHk+ZMa81llrQE/e/0pajE/35vlnRA8
+	MuVFMcjW+aSNSzpwxxxO0wZhWyOuqCl+NsausfQ==
+X-Google-Smtp-Source: AGHT+IFBiLue3QFOk1WR26MRKOBV5299+r2MgZ52axZ/Ki/sFLcqtDTCw32+oxmnpnFn89KL/PCW6zIy0IG54nMMM54=
+X-Received: by 2002:a2e:4a0a:0:b0:2f7:6869:3b55 with SMTP id
+ 38308e7fff4ca-2f9cd40052emr9790031fa.21.1727361913927; Thu, 26 Sep 2024
+ 07:45:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240926-starqltechn_integration_upstream-v5-2-d2084672ff2f@gmail.com>
+References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
+ <20240906-wrapped-keys-v6-6-d59e61bc0cb4@linaro.org> <fc780dc2-5a69-48d8-8caa-ca2ee97d10ef@kernel.org>
+In-Reply-To: <fc780dc2-5a69-48d8-8caa-ca2ee97d10ef@kernel.org>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 26 Sep 2024 16:45:01 +0200
+Message-ID: <CAMRc=Md3itY5N1gErL-VDAz0qW6DrHPKpXzT6kNwc2HVfvchpA@mail.gmail.com>
+Subject: Re: [PATCH v6 06/17] firmware: qcom: scm: add a call for deriving the
+ software secret
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>, Alasdair Kergon <agk@redhat.com>, 
+	Mike Snitzer <snitzer@kernel.org>, Mikulas Patocka <mpatocka@redhat.com>, 
+	Adrian Hunter <adrian.hunter@intel.com>, Asutosh Das <quic_asutoshd@quicinc.com>, 
+	Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
+	Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
+	Bart Van Assche <bvanassche@acm.org>, 
+	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
+	"Martin K. Petersen" <martin.petersen@oracle.com>, Eric Biggers <ebiggers@kernel.org>, 
+	"Theodore Y. Ts'o" <tytso@mit.edu>, Jaegeuk Kim <jaegeuk@kernel.org>, 
+	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
+	Bjorn Andersson <andersson@kernel.org>, 
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-block@vger.kernel.org, 
+	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-fscrypt@vger.kernel.org, 
+	linux-fsdevel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 26, 2024 at 05:22:02PM GMT, Dzmitry Sankouski wrote:
-> Starqltechn has broadcom chip for wifi, so sdm845 wifi part
-> can be disabled.
-> 
-> Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
-> 
+On Mon, Sep 9, 2024 at 1:23=E2=80=AFPM Konrad Dybcio <konradybcio@kernel.or=
+g> wrote:
+> > +
+> > +     memzero_explicit(secret_buf, sw_secret_size);
+> > +
+> > +out_free_wrapped:
+>
+> Is there a reason to zero out the buffer that's being zero-allocated?
+>
 
-No empty lines between Fixes and other tags, please.
+It's my understanding that it is a good practice in crypto routines to
+immediately and explicitly zero out the memory used for storing
+secrets.
 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 8 --------
->  1 file changed, 8 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> index d37a433130b9..6fc30fd1262b 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-> @@ -418,14 +418,6 @@ &usb_1_qmpphy {
->  	status = "okay";
->  };
->  
-> -&wifi {
-> -	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
-> -	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-> -	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
-> -	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-> -	status = "okay";
-> -};
-> -
->  &tlmm {
->  	gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
->  
-> 
-> -- 
-> 2.39.2
-> 
-
--- 
-With best wishes
-Dmitry
+Bart
 
