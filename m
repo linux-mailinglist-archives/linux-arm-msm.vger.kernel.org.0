@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32527-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64E7C986B32
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 05:16:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A994986B5C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 05:30:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E2E61C21757
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 03:16:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2D95B1C2198A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 03:30:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C16AF16FF2A;
-	Thu, 26 Sep 2024 03:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E7EA17BB2E;
+	Thu, 26 Sep 2024 03:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CYDMfuPb"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cSmY+3ly"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41351E86F;
-	Thu, 26 Sep 2024 03:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6E817A906;
+	Thu, 26 Sep 2024 03:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727320566; cv=none; b=JOp3XI8YdISZGlUKAO2E4dXErQdLNLT36wpMwBwTfBb21z8klMzMrwsps1YPLDMf9Tx5zb27n/kze57ErJ51EfeeDQJw17ygqaUvGN6+tUJF/IWLMYCxNXao2d1Tg6OWqK6Js1McfzvWRBYLujVKiBn2zhjFvQ7dEO2Cf1pGjIw=
+	t=1727321358; cv=none; b=hcATuM6AF1j6/RfOaUUGfePrVQAn6Fli9C1qESHvZMtmgOucdZqtsnTyaoMjo2H3X3SqQk0LQvIneBoda/nnIA5+9ks4FZcuWEI31Zk+l3kyS40Ww7RWF/BYCEIlV0j0cSEA0gAHLWO1US88VodNgG+TEtCQ/vR/3QFASSiz6bo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727320566; c=relaxed/simple;
-	bh=+W2smmZP2TE11XEh0NI+zTe9OLlYjqH0F7I22285p4k=;
+	s=arc-20240116; t=1727321358; c=relaxed/simple;
+	bh=dJJpTpC8neKIIdCL9K3nrvbU0U5yGX0NezevEXECupk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NW2di3wA+CIwVAzWRMNb62lNo9qR80yzftzLDV6GKiAVvG/2bOVWA4+5RP3P5AhbEQ9dmSBKdsGOBltp5I5UdFAVY1P/35ZVwUPWr8m02v2GVh/IrcE/a8ORCGNOyqu3aLJCLjLBEGZnXovyTo1iPgSaNtVD8Owc8JbrfI3NQic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CYDMfuPb; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=HGhbD//oerqkyWPUpW5MjbrkK9qEHIrZbvr6YlbghdY3UbniSv/zM6imKYuBXU7+NrMGDL4hRKrbPQQDykyZ5Ts/wBhp0zu5/EceETvnRlO1VBZ2CbWaMM+F9lG4+yqtmbVdE+G4cK+cd8DKo3PlZ5l14YcDOVJrdVhxABZXMVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cSmY+3ly; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH579S013184;
-	Thu, 26 Sep 2024 03:15:46 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH5Jk7012529;
+	Thu, 26 Sep 2024 03:29:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	CzfN0rwmVw6/7b8Y2EWgGLi8n8HdqtF7GPY1P+QEZYQ=; b=CYDMfuPb7CtLsMDq
-	ODEbR5C2Aez6Nlga6qukQj9LQmOO5uW78/5quXHoPus3XfPZoIQgCbO0g0+/CdPy
-	wNUySMtvql7VSrY5uCwWI31d2XU83iQ1gEDO47N18uoIERnxB4s5P1gF+uSWY9RH
-	j8TUhsij4wUQvEjknCBYrooby3Rz/09TplIVqnn27LJ2Aya0jX83gFDHt0WCDaTc
-	F74HGMsR5K7A4GMaU/lK8MHUbjFFywT48XqMcgxiV5De4UV90ABTU5wreB9PDFqr
-	QuV2NGnoqW/TtIZ2LVDjOmaIXeUMCxKQNMZ36qJZeghBhLDsDgHR1wdJBkmwzgcx
-	TiWpZQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41snqyp5w1-1
+	XO/bmxI3kq9zcxVosDo1vUKLoZdAKrP1FIrKbyXHCfk=; b=cSmY+3lyCajULmB8
+	2ypYm7GXrvfmwfjxTWOgQSZesgCvXRJQlkqhvFDL54AxE0PRsNyraiU7eVXnMDDw
+	+VYyPPb+Xjbb8OCBVKQm3WRlJtXyOWJ0U5EwDpCJBr32a/W8/stmVDkfVZ7lOysi
+	ph30aNFqosZIOc3kgw7d1cd0Q6REL1cTS90jOWhnID41g1mat4HH/lB4jfEhgmif
+	KY3Zq9+FTtm4FozkbAHKgAybygItNgrstSZNOCMgJMi7aEIaSsuXb72hq+qMqwJP
+	YD3kH9KNUKAyOxltBMaPrbBVprwuQKtTkf57lW36DwKPp2ays1PiDHn8yaUPil4A
+	EA956Q==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skgnekw5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 03:15:46 +0000 (GMT)
+	Thu, 26 Sep 2024 03:29:01 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48Q3FiEr003271
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48Q3T0Fg011881
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 03:15:44 GMT
+	Thu, 26 Sep 2024 03:29:00 GMT
 Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 25 Sep
- 2024 20:15:39 -0700
-Message-ID: <1c6bf1a9-a781-4152-a7a1-7992c6f15829@quicinc.com>
-Date: Thu, 26 Sep 2024 11:15:34 +0800
+ 2024 20:28:54 -0700
+Message-ID: <1419ba07-5163-4126-8869-2213eea6c492@quicinc.com>
+Date: Thu, 26 Sep 2024 11:28:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,13 +65,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/6] arm64: dts: qcom: x1e80100: Add support for PCIe3
- on x1e80100
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: Johan Hovold <johan+linaro@kernel.org>, <vkoul@kernel.org>,
-        <kishon@kernel.org>, <robh@kernel.org>, <andersson@kernel.org>,
+Subject: Re: [PATCH v4 5/6] PCI: qcom: Add support for X1E80100 SoC
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: Johan Hovold <johan@kernel.org>, <vkoul@kernel.org>, <kishon@kernel.org>,
+        <robh@kernel.org>, <andersson@kernel.org>, <konradybcio@kernel.org>,
         <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mturquette@baylibre.com>,
         <sboyd@kernel.org>, <abel.vesa@linaro.org>, <quic_msarkar@quicinc.com>,
         <quic_devipriy@quicinc.com>, <dmitry.baryshkov@linaro.org>,
@@ -80,98 +77,71 @@ CC: Johan Hovold <johan+linaro@kernel.org>, <vkoul@kernel.org>,
         <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-clk@vger.kernel.org>
 References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
- <20240924101444.3933828-7-quic_qianyu@quicinc.com>
- <9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org>
- <20240925080522.qwjeyrpjtz64pccx@thinkpad>
- <4ee4d016-9d68-4925-9f49-e73a4e7fa794@kernel.org>
- <2731e17d-c1ad-4fb4-ab60-82ceafeffbaf@kernel.org>
- <20240925125224.53g6rw46qufxsw6m@thinkpad>
+ <20240924101444.3933828-6-quic_qianyu@quicinc.com>
+ <20240924135021.ybpyoahlpuvedma5@thinkpad>
+ <ZvLX_wkh7_y7sjPZ@hovoldconsulting.com>
+ <4368503f-fb33-4e6a-bef4-517e2b959400@quicinc.com>
+ <20240925080724.vgkgmnqc44aoiarv@thinkpad>
 Content-Language: en-US
 From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20240925125224.53g6rw46qufxsw6m@thinkpad>
+In-Reply-To: <20240925080724.vgkgmnqc44aoiarv@thinkpad>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qi2jcvq2zChZ5GtIcAm04MQlgpYr8sDZ
-X-Proofpoint-ORIG-GUID: qi2jcvq2zChZ5GtIcAm04MQlgpYr8sDZ
+X-Proofpoint-ORIG-GUID: CGPIGE7oYXMUFjcpnQm54XHv_eN8lSCW
+X-Proofpoint-GUID: CGPIGE7oYXMUFjcpnQm54XHv_eN8lSCW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 adultscore=0 bulkscore=0 phishscore=0 mlxlogscore=999
- spamscore=0 lowpriorityscore=0 clxscore=1011 mlxscore=0 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxlogscore=999 adultscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ spamscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409260020
 
 
-On 9/25/2024 8:52 PM, Manivannan Sadhasivam wrote:
-> On Wed, Sep 25, 2024 at 11:46:35AM +0200, Konrad Dybcio wrote:
->> On 25.09.2024 11:30 AM, Konrad Dybcio wrote:
->>> On 25.09.2024 10:05 AM, Manivannan Sadhasivam wrote:
->>>> On Tue, Sep 24, 2024 at 04:26:34PM +0200, Konrad Dybcio wrote:
->>>>> On 24.09.2024 12:14 PM, Qiang Yu wrote:
->>>>>> Describe PCIe3 controller and PHY. Also add required system resources like
->>>>>> regulators, clocks, interrupts and registers configuration for PCIe3.
->>>>>>
->>>>>> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
->>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>>> ---
->>>>> Qiang, Mani
+On 9/25/2024 4:07 PM, Manivannan Sadhasivam wrote:
+> On Wed, Sep 25, 2024 at 11:47:02AM +0800, Qiang Yu wrote:
+>> On 9/24/2024 11:17 PM, Johan Hovold wrote:
+>>> On Tue, Sep 24, 2024 at 03:50:21PM +0200, Manivannan Sadhasivam wrote:
+>>>> On Tue, Sep 24, 2024 at 03:14:43AM -0700, Qiang Yu wrote:
+>>>>> X1E80100 has PCIe ports that support up to Gen4 x8 based on hardware IP
+>>>>> version 1.38.0.
 >>>>>
->>>>> I have a RTS5261 mmc chip on PCIe3 on the Surface Laptop.
->>>> Is it based on x1e80100?
->>> You would think so :P
->>>
->>>>> Adding the global irq breaks sdcard detection (the chip still comes
->>>>> up fine) somehow. Removing the irq makes it work again :|
+>>>>> Currently the ops_1_9_0 which is being used for X1E80100 has config_sid
+>>>>> callback to config BDF to SID table. However, this callback is not
+>>>>> required for X1E80100 because it has smmuv3 support and BDF to SID table
+>>>>> will be not present.
 >>>>>
->>>>> I've confirmed that the irq number is correct
+>>>>> Hence add support for X1E80100 by introducing a new ops and cfg structures
+>>>>> that don't require the config_sid callback. This could be reused by the
+>>>>> future platforms based on SMMUv3.
 >>>>>
->>>> Yeah, I did see some issues with MSI on SM8250 (RB5) when global interrupts are
->>>> enabled and I'm working with the hw folks to understand what is going on. But
->>>> I didn't see the same issues on newer platforms (sa8775p etc...).
+>>>> Oops... I completely overlooked that you are not adding the SoC support but
+>>>> fixing the existing one :( Sorry for suggesting a commit message that changed
+>>>> the context.
 >>>>
->>>> Can you please confirm if the issue is due to MSI not being received from the
->>>> device? Checking the /proc/interrutps is enough.
->>> There's no msi-map for PCIe3. I recall +Johan talking about some sort of
->>> a bug that prevents us from adding it?
-> Yeah, that's for using GIC-ITS to receive MSIs. But the default one is the
-> internal MSI controller in DWC.
+>>>> For this, you can have something like:
+>>>>
+>>>> "PCI: qcom: Fix the ops for X1E80100 SoC
+>>>>
+>>>> X1E80100 SoC is based on SMMUv3, hence it doesn't need the BDF2SID mapping
+>>>> present in the existing cfg_1_9_0 ops. This is fixed by introducing new ops
+>>>> 'ops_1_38_0' and cfg 'cfg_1_38_0' structures. These are exactly same as the
+>>>> 1_9_0 ones, but they don't have the 'config_sid()' callback that handles the
+>>>> BDF2SID mapping in the hardware. These new structures could also be used by the
+>>>> future SoCs making use of SMMUv3."
+>>> Don't we need something like this for sc8280xp and other platforms using
+>>> SMMUv3 as well?
+>>  From what I know, sc8280xp and other qcom platforms are not using SMMUv3.
+> sc8280xp indeed has SMMUv3 for PCIe, but I'm not sure how it is configured. So
+> not completely sure whether we can avoid the mapping table or not.
 >
->> Unless you just meant the msi0..=7 interrupts, then yeah, I only get one irq
->> event with "global" in place and it seems to never get more
->>
-> Ok. Then most likely the same issue I saw on SM8250 as well. But I'm confused
-> why Qiang didn't see the issue. I specifically asked him to add the global
-> interrupt and test it with the endpoint to check if the issue arises or not.
->
-> Qiang, can you please confirm?
-Sorry, I misunderstood what you mean. I only verified if link was up but 
-ignored the status of ep device
-driver.
-
-But look like this issue is because snpsys MSI irq is msked during probe.
-Can you please also unmask BIT(23) - BIT(30) when unmask 
-PARF_INT_ALL_LINK_UP,
-like this
-
-@@ -1772,7 +1772,8 @@ static int qcom_pcie_probe(struct platform_device 
-*pdev)
-                         goto err_host_deinit;
-                 }
-
--               writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + 
-PARF_INT_ALL_MASK);
-+               writel_relaxed(PARF_INT_ALL_LINK_UP | GENMASK(30, 23), 
-pcie->parf + PARF_INT_ALL_MASK);
-+               dev_err(dev, "INT_ALL_MASK: 0x%x\n", 
-readl_relaxed(pcie->parf + PARF_INT_ALL_MASK));
-         }
-
-After that, this issue is fixed on my setup.
+> Qiang, please check with the hw team and let us know.
+Sure, will update once I get any response from hw team.
 
 Thanks,
 Qiang
