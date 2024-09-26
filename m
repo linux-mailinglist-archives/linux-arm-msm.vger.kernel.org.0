@@ -1,175 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-32530-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A274E986B6D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 05:42:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32310986B71
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 05:43:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF9332838DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 03:42:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6CA121C215C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 03:43:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8A93170A0B;
-	Thu, 26 Sep 2024 03:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FDDA1714A8;
+	Thu, 26 Sep 2024 03:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="BmvUWZVZ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c+5vaWig"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A5F1F61C;
-	Thu, 26 Sep 2024 03:42:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACF0B158875;
+	Thu, 26 Sep 2024 03:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727322124; cv=none; b=kLwPk38ovHxnJi0ywT+IMphpdO0YB2bTtVYkCkJrGR6ncgdIDAhJpu5Hsnhn3FZ7imlkO+Kqy72SN0riKxCQEjsTJHI3RRm6uOpjdTSUzd0Jp4fjdNzik9qgsznexnnFt9btnqMDDsaKTACIJ96wEUn5wm1v5daXciteeZTord4=
+	t=1727322213; cv=none; b=ixuwnndeAtYLdOnyKn8eniw2tsReNkMK4ShxZJgQPLHeTwpD42LKGm+4djXHCyyOATjA6MltK4Zr3qMBUw/0Mocax4LNLi+4kA4FPMSrNRVxfaRIU0R13ggdxyld+JlrbA21+71MGNs59zY4RVQoFZMnfZJifXRp2JWDGJzy+tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727322124; c=relaxed/simple;
-	bh=bn8GY1t8xgLoxh/ERTd157vEL+orkLsu/4+o3DeMIS8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pq2Qa/xTm8mugOziJOO3kki+Y92QYnwaVES000HSqApVM7HR97+Z901n+2WTCpw04DkO4+fWoF1cqjS6Hu6m8CzUJt1+9R7BWI0z7mkIlCpi1gsYTrW4fXn7elErANVHk9MoDB89MwSY7PinyOLV/m+NZeOphgYZEtHJ98A38mM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=BmvUWZVZ; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1727322213; c=relaxed/simple;
+	bh=ziaAltyUP6Uv8Cjn8kkY3y6IUbsSV9TI+PfBQwG5Jv8=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=lOy7S2jTKeIrtzxfoAIed/0LPJ2dYtcbTU/EOwq0nClCqKyPFIqx6SYO/e5ZIxfboNQWHeZkOumA+tfsGmvzXqWcylS8prsoalb3p4ObI6u4yBj6TFqDlZntohOhNvtNCxtscWfHl0HOHgR8JqDRnCMuUAIcQBuy8E9Nxjfe6j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c+5vaWig; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH5HJm012428;
-	Thu, 26 Sep 2024 03:41:59 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH5Il3024289;
+	Thu, 26 Sep 2024 03:43:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=eE/qYBz4vfY5FUQjoQePYXST
-	NpwboGXeT7wo5SN4QzU=; b=BmvUWZVZEHErSO8wb4z2O9D+xicl12P5xk/4EitR
-	VGIzKxmDaofwr/Ii2Ma7zuDhWEmHd9A06rx+AQf4MqYGiPpugANmxHj5so/4vXUj
-	8PeycDZ9jic4hVoPwxdVlBDYVWr149cvDLqC4bIaDMzLcQ41nxVEkegA8xcXh4KA
-	kIJ04Bh0yXW1ZQPcTisBSaf7SA/44z1js+Ve7KSGOUHPhoeN716q66sH6HC4eQMy
-	noSltNl2oLw2xE54I46pqI/FqrRCfs0nxuNuvkQDCjsF3dzxR5evnd7Ucgcw+pcD
-	s5To7lzRK2dEPxAIraZxZiEbhFHFPebGg7COpMOxV1eymA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skgnemsy-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=M8iyORpoieQKKkGuDSS3KK
+	Ka6ITUXPm6ogPg7SXR1Ug=; b=c+5vaWigq+8j69liBXS7KMkSp+DxgesTj5ySIl
+	QJilBcwgB6XE8XWewnNsNe0F2HjHGmb4ycpwqhd8EZFe9fF5BdkpDNLdoObaWsPT
+	Q74ea5vyIE8uQWeaI9jbAmry3V7c4fEKJhrn9h2rBgGZDqoBs8Lm8T+jTlcw3HjC
+	WPpbP0cFqG32w81TdEyhXHWBcXP4cHT6ZmE78OIOKg8TjqCOWybAxBQfrBklF1jZ
+	s0PrgP6VG/gS4ptzbYjUGaZflSKy0dIErNNXOhKnsWBlMZiiR3HZ/4oY5ONzQg1M
+	xFPWAqEsF8WUw+2tJ+XeuKWW/1VeGFDGeFxOwuPRFz87Rf1Q==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41spwewx6e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 03:41:59 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48Q3fvCC021204
+	Thu, 26 Sep 2024 03:43:27 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48Q3hRgk008776
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 03:41:57 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Thu, 26 Sep 2024 03:43:27 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 25 Sep 2024 20:41:56 -0700
-Date: Wed, 25 Sep 2024 20:41:55 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+ 15.2.1544.9; Wed, 25 Sep 2024 20:43:24 -0700
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <andi.shyti@kernel.org>, <quic_mmanikan@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] remoteproc: qcom: Fix NULL pointer in glink_subdev_stop()
-Message-ID: <ZvTYA1Rg6DrEEabk@hu-bjorande-lv.qualcomm.com>
-References: <20240925103351.1628788-1-quic_mojha@quicinc.com>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH v2 1/1] i2c: qcom-geni: Support systems with 32MHz serial engine clock
+Date: Thu, 26 Sep 2024 09:13:04 +0530
+Message-ID: <20240926034304.3565278-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240925103351.1628788-1-quic_mojha@quicinc.com>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: lydk3sJcl2qer8s6arYZZhUqyK2I6ZKn
-X-Proofpoint-GUID: lydk3sJcl2qer8s6arYZZhUqyK2I6ZKn
+X-Proofpoint-GUID: Lmy6Gsqk_xW23y_ojjDrtYsX0mox5qiL
+X-Proofpoint-ORIG-GUID: Lmy6Gsqk_xW23y_ojjDrtYsX0mox5qiL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
- mlxlogscore=999 adultscore=0 suspectscore=0 phishscore=0 impostorscore=0
- spamscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 priorityscore=1501 clxscore=1015
+ malwarescore=0 mlxscore=0 mlxlogscore=999 impostorscore=0 phishscore=0
+ spamscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2408220000 definitions=main-2409260022
 
-On Wed, Sep 25, 2024 at 04:03:51PM +0530, Mukesh Ojha wrote:
-> Multiple call to glink_subdev_stop() for the same remoteproc can happen
-> if rproc_stop() fails from Process-A that leaves the rproc state to
-> RPROC_CRASHED state later a call to recovery_store from user space in
-> Process B triggers rproc_trigger_recovery() of the same remoteproc to
-> recover it results in NULL pointer dereference issue in
-> qcom_glink_smem_unregister().
-> 
-> Fix it by having a NULL check in glink_subdev_stop().
-> 
-> 	Process-A                			Process-B
-> 
->   fatal error interrupt happens
-> 
->   rproc_crash_handler_work()
->     mutex_lock_interruptible(&rproc->lock);
->     ...
-> 
->        rproc->state = RPROC_CRASHED;
->     ...
->     mutex_unlock(&rproc->lock);
-> 
->     rproc_trigger_recovery()
->      mutex_lock_interruptible(&rproc->lock);
-> 
->       adsp_stop()
->       qcom_q6v5_pas 20c00000.remoteproc: failed to shutdown: -22
->       remoteproc remoteproc3: can't stop rproc: -22
+In existing socs, I2C serial engine is sourced from XO (19.2MHz).
+Where as in IPQ5424, I2C serial engine is sourced from GPLL0 (32MHz).
 
-I presume that at this point this remoteproc is in some undefined state
-and the only way to recover is for the user to reboot the machine?
+The existing map table is based on 19.2MHz. This patch incorporate
+the clock map table to derive the SCL clock from the 32MHz source
+clock frequency.
 
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+---
+Changes in v2:
+	- Dropped IPQ5424 from the commit title
+	- Added else part to assign geni_i2c_clk_map_19p2mhz to itr
+	- Dropped MHZ macro and used HZ_PER_MHZ macro
+	- Expanded SE to serial engine
+	- Added the reason for 32MHz clock in commit message
 
-The check for glink->edge avoids one pitfall following this, but I'd
-prefer to see a solution that avoids issues in this scenario in the
-remoteproc core - rather than working around side effects of this in
-different places.
+ drivers/i2c/busses/i2c-qcom-geni.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-Regards,
-Bjorn
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 212336f724a6..22f2a0d83641 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -16,6 +16,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/soc/qcom/geni-se.h>
+ #include <linux/spinlock.h>
++#include <linux/units.h>
+ 
+ #define SE_I2C_TX_TRANS_LEN		0x26c
+ #define SE_I2C_RX_TRANS_LEN		0x270
+@@ -146,18 +147,30 @@ struct geni_i2c_clk_fld {
+  * clk_freq_out = t / t_cycle
+  * source_clock = 19.2 MHz
+  */
+-static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
++static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
+ 	{KHZ(100), 7, 10, 11, 26},
+ 	{KHZ(400), 2,  5, 12, 24},
+ 	{KHZ(1000), 1, 3,  9, 18},
+ };
+ 
++/* source_clock = 32 MHz */
++static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
++	{KHZ(100), 7, 14, 18, 40},
++	{KHZ(400), 4,  3, 11, 20},
++	{KHZ(1000), 4, 3,  6, 15},
++};
++
+ static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
+ {
+ 	int i;
+-	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
++	const struct geni_i2c_clk_fld *itr;
++
++	if (clk_get_rate(gi2c->se.clk) == 32 * HZ_PER_MHZ)
++		itr = geni_i2c_clk_map_32mhz;
++	else
++		itr = geni_i2c_clk_map_19p2mhz;
+ 
+-	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
++	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map_19p2mhz); i++, itr++) {
+ 		if (itr->clk_freq_out == gi2c->clk_freq_out) {
+ 			gi2c->clk_fld = itr;
+ 			return 0;
+-- 
+2.34.1
 
->      mutex_unlock(&rproc->lock);
-> 
-> 						echo enabled > /sys/class/remoteproc/remoteprocX/recovery
-> 						recovery_store()
-> 						 rproc_trigger_recovery()
-> 						  mutex_lock_interruptible(&rproc->lock);
-> 						   rproc_stop()
-> 						    glink_subdev_stop()
-> 						      qcom_glink_smem_unregister() ==|
->                                                                                      |
->                                                                                      V
-> 						      Unable to handle kernel NULL pointer dereference
->                                                                 at virtual address 0000000000000358
-> 
-> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> ---
-> - We can do this NULL check in qcom_glink_smem_unregister() as it is
->   exported function however, there is only one user of this. So, doing
->   it with current approach should also be fine.
-> 
->  drivers/remoteproc/qcom_common.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-> index 8c8688f99f0a..52d6c9b99fdb 100644
-> --- a/drivers/remoteproc/qcom_common.c
-> +++ b/drivers/remoteproc/qcom_common.c
-> @@ -209,6 +209,9 @@ static void glink_subdev_stop(struct rproc_subdev *subdev, bool crashed)
->  {
->  	struct qcom_rproc_glink *glink = to_glink_subdev(subdev);
->  
-> +	if (!glink->edge)
-> +		return;
-> +
->  	qcom_glink_smem_unregister(glink->edge);
->  	glink->edge = NULL;
->  }
-> -- 
-> 2.34.1
-> 
-> 
 
