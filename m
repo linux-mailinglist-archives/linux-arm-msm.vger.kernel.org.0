@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-32592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C1CB98757B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:24:33 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ACC198757E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:25:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 388351F21E93
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:24:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6DC88B25004
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:25:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2058915B57C;
-	Thu, 26 Sep 2024 14:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1527F15ECDF;
+	Thu, 26 Sep 2024 14:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IkrdnxvV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dmya00Fp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4E515ADAB;
-	Thu, 26 Sep 2024 14:22:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2619015CD7A;
+	Thu, 26 Sep 2024 14:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727360556; cv=none; b=QBuehgsRHoO8FeuB4hOZ65F88rSvuF9GNt07ZcQbzYWNfeGlerXqAV7Qfr8y7WKClXglkwe4dqmS5RLvcEgmDl3UOEAzhDXRYjotVw76cLtRiECPSdNpLB+kG5UbinHeK6ECRHDnO/fG79e8cQHYPn28ilycLr/cxSItxTfWWRY=
+	t=1727360559; cv=none; b=sz8ppJp8NOspwBCceN3OK4D+8cm5GPwI0l8iDqbqVuIsIpbyhOnaBkbNybhINZLLDBqSu9As8qgVCVsgbrOBVJDGCV9ZClhizLt8poyCSnuQv5CbkueTUObCzgsVVWZnaQ4+tFnc2im4jYFTwfoFk4YCNZLVe4kV0f3cN2YFcwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727360556; c=relaxed/simple;
-	bh=y8oKXOplOXcw2ED9I11CdP0ecfiUGWbTr1J6Z6avwpI=;
+	s=arc-20240116; t=1727360559; c=relaxed/simple;
+	bh=zxA32SQxJHWkbMPlmZG/NoaCkikBVWLlnv+xwcrdsnc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=m5fa2Oudtog9QH1uVLPYx9k2NF7R+wJzGNsuWyToQcJ0iYVLYbclubNOnfw6RM+zt8YMD5jsnJNn/zjAqPx2A4fqrGV+Dg1H+Z+rIEAt3aPcI+IXSNdDCIC+XQDzxCcWHwdV93MN9lH57wvNxcG/h3oHJMXyodcyGdMBMosQAco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IkrdnxvV; arc=none smtp.client-ip=209.85.167.50
+	 In-Reply-To:To:Cc; b=p2LaYXbt+MgN929I1vQwIQSDRk3PcUh5X58xZr2OyPgvq05jlooo0I+m6pFn5xXZUQwVol6/yIp2H5jYyEG7/P92MaYWx1K8thhPIEbCljkd2YZltRAkVNaMq1Ci7/+s9dFZKRgpdVrJU6NYTYaGjN2drdJeqJdre8cBkf4GUQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dmya00Fp; arc=none smtp.client-ip=209.85.167.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5365d3f9d34so1311377e87.3;
-        Thu, 26 Sep 2024 07:22:34 -0700 (PDT)
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5389917ef34so1093651e87.2;
+        Thu, 26 Sep 2024 07:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727360552; x=1727965352; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727360555; x=1727965355; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WeDHrMYfGI+t+jChe0ejVP50XEXF6uESTKCRfajUFgc=;
-        b=IkrdnxvVCBuxI3shZnxbnVjc2poL2Ez/6Byy/hm9LHUxJNk0jD1mQdZlw+FLvV/mSQ
-         Z5jmjJLQiL1Cer6UgPlD1M5rwuDfIJxr89PCFjBpECiNfJQ3jYnXEaSd0l+zMl9pMBDh
-         Yh2ZoPV81kT2J/e2yFO0J6nsYvTZSCHywEE5EV2akzfae7yMz3IC9BeqGsdXjY482D7N
-         N3ZRDOa39PClHBa7nuU66Bd6YvoZRlXAE/jmeDbebPEA9JoI1kvBfTg4tRj5EbQpwaGA
-         aoF5PQ1nOr0oY8qdfumljqbPqt1+f717Y8rcC9oEiE+WXIdcxkMghFXarPao+GRoMnQ9
-         3EEw==
+        bh=vkYiezvXSNRtMLs2Or8bNlS3DRLHFJOdOzKBurCPuQk=;
+        b=Dmya00FpPmXJcLLdkSctZEypJYFRrK4NNfYJgWrART/t1Cvvy0xLfCuU09EGWBerxN
+         MNEl/mwiq+eUX8h6ocy0IcamwCV0Mc6bJ/gl0LnmAGfrlwmbZeRVNHBnGnEQ44+gKY46
+         hqLQ4M8CGx8nNByb1b0LtaDy1c/t/WCwDnaTfm99Fxsr3nKFOjYN/r+g5pSZJz8fV+mi
+         Jx0HDVvwKMIQesYrhlo37YOEH5XpNrV17B9aFV4kq10FEgfyaa73NtLN/YpGnQ542zqL
+         1huM4zXXjru36sQ7d4VduckKbH639KwK/0077WaEYP/j2LgxgJCylHsMP/PSxdCdmYEj
+         +/QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727360552; x=1727965352;
+        d=1e100.net; s=20230601; t=1727360555; x=1727965355;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WeDHrMYfGI+t+jChe0ejVP50XEXF6uESTKCRfajUFgc=;
-        b=tk5TeneHURFf8nC+3/wFwlpK6JCA7G6qawDpABK7eSZm+A+tSx340qZMbFTwf+qU9R
-         kpAQtncNO3G+p7VP7xv5V+0N8pkPqAP7StmAseKaWMwGkepinj+VzL2tu3HXzgxrjrlH
-         tb/VXS0+7iJ8MbbIfkgqU0N2EwcuNjPsBDgEGimxECikG7zIOrRPZ+TDs9r/xEVPpUvI
-         JhQNjkH8dMzYoIbEurPeUUAkWo7eT6D9YbPPcE7MwPPdhhADf2/jimEm/O2/XWtcj11D
-         ZzbtZRxb/CwjryYtflQhGD3U0E5ExlnI3EqiAqyE2iDnUmq5BFByDQMBCt1M+/kRJ+IY
-         YkjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUfdC/6OGLaF7oJWQEkQ9d5GCAwJFeoaVkci0qWdhU3unr3N6OhtW3JkRMe1y93T3jjhRvxJsYvhYcR@vger.kernel.org, AJvYcCXii/JkZx1TCsXRtN0GUfv3YWZPjgkPtz4RX32uD6eIrVHIC/XDwq/dqBlcBV0U+WdXo++tWZWzaRAxmIAA@vger.kernel.org
-X-Gm-Message-State: AOJu0YzNZ4ETi+8l2fptFJoSx8AxU+KmaVuw6t5I+V2Z5LFeoJ31+u/m
-	wY3xA+fMEfELwcnJPVPaP+7Aez+EZqwfInPOd9sT2vvVE0fx8sDV
-X-Google-Smtp-Source: AGHT+IEW4W+46XoivriXLVjE4+8JysyrF2fqRlflyhqbMLmBiszkZTv0NQlUAMwSOgjRTNxjbob4oQ==
-X-Received: by 2002:a05:6512:2304:b0:535:82eb:21d1 with SMTP id 2adb3069b0e04-5387756626cmr4468717e87.57.1727360552245;
-        Thu, 26 Sep 2024 07:22:32 -0700 (PDT)
+        bh=vkYiezvXSNRtMLs2Or8bNlS3DRLHFJOdOzKBurCPuQk=;
+        b=Op6QfGmSSYCvfZr7of4D+i9uvnA+SnGJ/DbwXhNUUuJMRAlGt07X5b+adYMKBO20yB
+         0I5hrU01XZcEJTjx3sB6HMjmGfOAb04Fh73Cf+HIk8poFAnUZAorm4dKaKrO5y3BjcUo
+         vdTOjSIGR4NOeZkZRbj8qppcD4tmc5K1He37AuJt4stUdubFp5DQgHB+TRtxtQMWXdYE
+         BBBOkF8y5uTe4dimtBMgm7ty1ML+awWPqV4TqLep5y+6pF0J4rDO568s7+/JX8JEiCpR
+         MC5mHLRTOPyAS22XQSMRz1AKt46M+OBGEtkCMiCm0F/jDOIO9FyqwfG2TtTb8JnZnv6V
+         r8yg==
+X-Forwarded-Encrypted: i=1; AJvYcCVUyc8eCR0QsSFeVpuELv7ib1+GGlHjUM7apTSwCIdGV4NLVBjTbTmzDZk3EqOsUw1VmzOAYPtlCB8/8tOp@vger.kernel.org, AJvYcCXE2VUo0ZOR4ggQXfqd2RLvW1GRzcKU/ZlUSrt8Sftbw3vGdQ1jq8t0W5Q4jAOqBjsb5GZyUIhXWkEl@vger.kernel.org
+X-Gm-Message-State: AOJu0YyI+jnbvSDlqm9jG3sRJwcg8QyUH8zKdkjrkNhhnGf5gNcWW/nH
+	6rOjriOWPTWYZ0G1gJ86eOblLvc9RGpJQgbp5JXg9OJTsojac5jS
+X-Google-Smtp-Source: AGHT+IGrtITrxEcW/+ijnKz/x5cAhF35xqPt8sz7W9Yg126EM52ugIf/NW/2IhaXHpcvGRiEZ3KZmg==
+X-Received: by 2002:a05:6512:158f:b0:536:5515:e9bc with SMTP id 2adb3069b0e04-5387755eee8mr4256661e87.46.1727360554852;
+        Thu, 26 Sep 2024 07:22:34 -0700 (PDT)
 Received: from [127.0.1.1] (mm-20-1-84-93.mgts.dynamic.pppoe.byfly.by. [93.84.1.20])
-        by smtp.googlemail.com with ESMTPSA id 2adb3069b0e04-537a864db1bsm815803e87.267.2024.09.26.07.22.31
+        by smtp.googlemail.com with ESMTPSA id 2adb3069b0e04-537a864db1bsm815803e87.267.2024.09.26.07.22.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 07:22:31 -0700 (PDT)
+        Thu, 26 Sep 2024 07:22:33 -0700 (PDT)
 From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Thu, 26 Sep 2024 17:22:09 +0300
-Subject: [PATCH v5 09/12] arm64: dts: qcom: starqltechn: add touchscreen
+Date: Thu, 26 Sep 2024 17:22:10 +0300
+Subject: [PATCH v5 10/12] arm64: dts: qcom: starqltechn: add initial sound
  support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20240926-starqltechn_integration_upstream-v5-9-d2084672ff2f@gmail.com>
+Message-Id: <20240926-starqltechn_integration_upstream-v5-10-d2084672ff2f@gmail.com>
 References: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
 In-Reply-To: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
 To: cros-qcom-dts-watchers@chromium.org, 
@@ -90,64 +90,262 @@ To: cros-qcom-dts-watchers@chromium.org,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727360533; l=1308;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727360533; l=5151;
  i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=y8oKXOplOXcw2ED9I11CdP0ecfiUGWbTr1J6Z6avwpI=;
- b=GTD2R7OtHFjkiDNcMWZPCYCFDSH9rJnM8YWX7KQt/NE0M3iKw0gV5htIJ41DUmkL8Sp+hdhzG
- 0RRNNKrBBaiAk0QO5YmawToYLY8138aw6NOrLGSfkRULaYOS5iTf6Sr
+ bh=zxA32SQxJHWkbMPlmZG/NoaCkikBVWLlnv+xwcrdsnc=;
+ b=iZrca6S9Y8ds5+cspPE2GV10lM0+7awvvWzLz+c4/GqDf7OCxyYVZ3SvZ8kGDIh8IyjAJLuq/
+ RfD6wzZqwkKAUmXY+NoRCDWnNQyVKSsGwrEx9N6CK0FmivmA6oEeZt1
 X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
  pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-Add support for samsung,s6sy761 touchscreen.
+Add support for sound (headphones and mics only)
+Also redefine slpi reserved memory, because adsp_mem overlaps with
+slpi_mem inherited from sdm845.dtsi.
 
 Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 213 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 213 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 53b9a7d71f1d..00f67d1299b2 100644
+index 00f67d1299b2..230e984b5ba3 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -561,6 +561,23 @@ &sdhc_2 {
- 	status = "okay";
+@@ -10,8 +10,15 @@
+ #include <dt-bindings/input/linux-event-codes.h>
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include <dt-bindings/sound/qcom,q6afe.h>
++#include <dt-bindings/sound/qcom,q6asm.h>
++
+ #include "sdm845.dtsi"
+ #include "pm8998.dtsi"
++#include "sdm845-wcd9340.dtsi"
++
++/delete-node/ &adsp_mem;
++/delete-node/ &slpi_mem;
+ 
+ / {
+ 	chassis-type = "handset";
+@@ -83,6 +90,16 @@ memory@a1300000 {
+ 			ftrace-size = <0x40000>;
+ 			pmsg-size = <0x40000>;
+ 		};
++
++		slpi_mem: slpi@96700000 {
++			reg = <0 0x96700000 0 0xf00000>;
++			no-map;
++		};
++
++		adsp_mem: memory@97800000 {
++			reg = <0 0x97800000 0 0x2000000>;
++			no-map;
++		};
+ 	};
+ 
+ 	gpio_keys {
+@@ -578,6 +595,202 @@ touchscreen@48 {
+ 	};
  };
  
-+&i2c11 {
-+	clock-frequency = <400000>;
++&adsp_pas {
++	firmware-name = "qcom/sdm845/starqltechn/adsp.mbn";
++	status = "okay";
++};
++
++&lpasscc {
++	status = "okay";
++};
++
++&wcd9340 {
++	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
++	vdd-buck-supply = <&vreg_s4a_1p8>;
++	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
++	vdd-tx-supply = <&vreg_s4a_1p8>;
++	vdd-rx-supply = <&vreg_s4a_1p8>;
++	vdd-io-supply = <&vreg_s4a_1p8>;
++	qcom,micbias1-microvolt = <1800000>;
++	qcom,micbias2-microvolt = <2700000>;
++	qcom,micbias3-microvolt = <1800000>;
++	qcom,micbias4-microvolt = <1800000>;
++};
++
++&sound {
++	compatible = "qcom,sdm845-sndcard";
++	model = "Samsung Galaxy S9";
++	pinctrl-0 = <&quat_mi2s_active &quat_mi2s_sd0_active &quat_mi2s_sd1_active>;
++	pinctrl-names = "default";
 +	status = "okay";
 +
-+	touchscreen@48 {
-+		compatible = "samsung,s6sy761";
-+		reg = <0x48>;
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <120 IRQ_TYPE_LEVEL_HIGH>;
-+		vdd-supply = <&s2dos05_ldo2>;
-+		avdd-supply = <&s2dos05_ldo3>;
++	audio-routing =	"RX_BIAS", "MCLK",
++			"AMIC2", "MIC BIAS2", /* Headset Mic */
++			"AMIC3", "MIC BIAS2", /* FMLeft Tx */
++			"AMIC4", "MIC BIAS2", /* FMRight Tx */
++			"DMIC0", "MIC BIAS1", /* Digital Mic0 */
++			"DMIC5", "MIC BIAS4", /* Digital Mic1 */
++			"DMIC4", "MIC BIAS4", /* Digital Mic2 */
++			"DMIC3", "MIC BIAS3", /* Digital Mic3 */
++			"DMIC2", "MIC BIAS3", /* Digital Mic4 */
++			"DMIC1", "MIC BIAS1"; /* Digital Mic5 */
 +
-+		pinctrl-0 = <&touch_irq_state>;
-+		pinctrl-names = "default";
++	mm1-dai-link {
++		link-name = "MultiMedia1";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
++		};
++	};
++
++	mm2-dai-link {
++		link-name = "MultiMedia2";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
++		};
++	};
++
++	mm3-dai-link {
++		link-name = "MultiMedia3";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
++		};
++	};
++
++	mm4-dai-link {
++		link-name = "MultiMedia4";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA4>;
++		};
++	};
++
++	mm5-dai-link {
++		link-name = "MultiMedia5";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA5>;
++		};
++	};
++
++	mm6-dai-link {
++		link-name = "MultiMedia6";
++		cpu {
++			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA6>;
++		};
++	};
++
++	slim-dai-link {
++		link-name = "SLIM Playback 1";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_0_RX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai = <&wcd9340 0>;
++		};
++	};
++
++	slimcap-dai-link {
++		link-name = "SLIM Capture 1";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_0_TX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai = <&wcd9340 1>;
++		};
++	};
++
++	slim2-dai-link {
++		link-name = "SLIM Playback 2";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_1_RX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai = <&wcd9340 2>; /* AIF2_PB */
++		};
++	};
++
++	slimcap2-dai-link {
++		link-name = "SLIM Capture 2";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_1_TX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai = <&wcd9340 3>; /* AIF2_CAP */
++		};
++	};
++
++	slimcap3-dai-link {
++		link-name = "SLIM Capture 3";
++		cpu {
++			sound-dai = <&q6afedai SLIMBUS_2_TX>;
++		};
++
++		platform {
++			sound-dai = <&q6routing>;
++		};
++
++		codec {
++			sound-dai = <&wcd9340 5>; /* AIF3_CAP */
++		};
++	};
++};
++
++&q6afedai {
++	dai@22 {
++		reg = <22>;
++		qcom,sd-lines = <1>;
++	};
++
++	dai@23 {
++		reg = <23>;
++		qcom,sd-lines = <0>;
++	};
++};
++
++&q6asmdai {
++	dai@0 {
++		reg = <0>;
++	};
++
++	dai@1 {
++		reg = <1>;
++	};
++
++	dai@2 {
++		reg = <2>;
++	};
++
++	dai@3 {
++		reg = <3>;
++	};
++
++	dai@4 {
++		reg = <4>;
++	};
++
++	dai@5 {
++		reg = <5>;
 +	};
 +};
 +
  &usb_1 {
  	status = "okay";
- };
-@@ -665,4 +682,15 @@ i2c21_scl_state: i2c21-scl-state {
- 		drive-strength = <2>;
- 		bias-disable;
- 	};
-+
-+	touch_irq_state: touch-irq-state {
-+		pins = "gpio120";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+};
-+
-+&qup_i2c11_default {
-+	drive-strength = <2>;
-+	bias-disable;
  };
 
 -- 
