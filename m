@@ -1,119 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-32604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68CED9877A0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 18:37:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C495E9877D0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 18:48:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BED31287B77
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:37:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C5631F27608
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:48:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33C4A15667E;
-	Thu, 26 Sep 2024 16:37:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TJWIDfQi"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84A871586F6;
+	Thu, 26 Sep 2024 16:48:33 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B1312BEBB;
-	Thu, 26 Sep 2024 16:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6DA3F9D5;
+	Thu, 26 Sep 2024 16:48:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727368620; cv=none; b=ASWskJdqojKnDDXh6nlrYWb0lfNHl/xu26v7CyLB12Q3t8GPo5OmQn1X5rPRntwm3yO7xJX2eku4vRzTbDnmRnFK9lebPyYxf8oe3I+DGgj7b7+vttQfPXxT7jvdu9trIsNGNdqGiTr+cMuCLJBr1Um81piXPnfMlU9P9evRmcc=
+	t=1727369313; cv=none; b=enIQoxzLjNheILMUryjQPpGjKgivkui2Cr0eGL0CfVkFolLP0GVeyhRPK2kIeYI5uQwgYiqu9icz9Kt/bx/x2PhMzdb3gcvXIJrDegNX0ezU5a2Pyrzgi3snPI8/nV7DT0VVzbmixSXoJAQ2j0QzXF+iLRrc88SCueFvAP3zpnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727368620; c=relaxed/simple;
-	bh=w1FJdKOm32c+Ge8FTW9mqPZjuB6KQQTcj8OAX5YmD4o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GkZ5qREBmwl+s7E12XwYPuULtTauWy/qh9/VM3nxeqSZ0IkZSaYn/FOaXsoQVVbU0QjMrvb9cBU/6znPgpq+4FgSKQKS4ygD1ad8ntm6134kaJkf5I1LNNXn0iZNcqk4BDGo7lF6PpP1vC15H0GSDeZ7DfutXc61zn7tLgs+3k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TJWIDfQi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC584C4CEC5;
-	Thu, 26 Sep 2024 16:36:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727368619;
-	bh=w1FJdKOm32c+Ge8FTW9mqPZjuB6KQQTcj8OAX5YmD4o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=TJWIDfQiU3geDX/2aC7h48yAL5lr4yBVoaHkFfIiMG2WxAK9jVbdT8d0DDKwwCfrU
-	 VgGEIMqGfYackuRbizXofkLgd3uwft1kELY7e8nW7oXy8tmugyRHDWlMXuLKrDiVRB
-	 4M+3Y0chGvD5CO/8hcYvhpmKffIvMleF1oZ76l0SCGdRoQ2LTzThDA4hci6c67GzCc
-	 UK29Sg2RR10ZjRqupgOeZK0+tCRHrpLtvLrO7e0xfItdeyN6G1jquRpAoM4/xDTgfX
-	 WmDpEC2Nqz4UvKwHtHtbm94EG0WKQxNunbFiwUfrfN1n8FUtRUNpXc6nebKIN3c6fP
-	 dd6gOhBKhV6UQ==
-Date: Thu, 26 Sep 2024 17:36:51 +0100
-From: Conor Dooley <conor@kernel.org>
-To: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-	Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Jim Quinlan <jim2101024@gmail.com>,
-	Nicolas Saenz Julienne <nsaenz@kernel.org>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Andy Gross <agross@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Jim Quinlan <james.quinlan@broadcom.com>,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmaengine@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-media@vger.kernel.org, linux-samsung-soc@vger.kernel.org,
-	linux-rpi-kernel@lists.infradead.org, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: Fix array property constraints
-Message-ID: <20240926-bullion-semester-024fab878903@spud>
-References: <20240925232409.2208515-1-robh@kernel.org>
+	s=arc-20240116; t=1727369313; c=relaxed/simple;
+	bh=3iLcjQkH5GQa4HPTVULpyY5LszmMUqJ2M/ZQuLeKLO4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L6AphV5wlmiuqusKH0It9J+AwGGGFfTUQA7NMEqFovQA9ZM9d9egHe/aZEjjDzytcyZH1zzep87wRYnzL4+Dw2vRLaPVG1/EppseX/O/TNk0xDHOFF607B9cS5KDKUbGfVT0/NvxIfEMm2I00w/+n64FKDZQ2tMYkSqzpN1pHIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.167.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=csie.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5365928acd0so1684738e87.2;
+        Thu, 26 Sep 2024 09:48:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727369304; x=1727974104;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HubwtGXoHYycyyJ/DTpsXcKHTqyuvb2GHfcFka+zhbM=;
+        b=LBkyu3Gg0uM6YdFdsbSOwur6pUFRR0OULLgvCBJk0hVZaGjGA40AqkUa/1uI1+itVZ
+         qHO/f6Pl327lRzF/hj/2is0birFqWvA9vD5JmDfOx4YJCbFnzV1O9hRt/yFC6hGml7Mb
+         fHcKdgRojD2P4QAzIsHnW9HU7Ap1hNeGHajtpDivW0KSJJDbfg8M+dDs24gRV/xAaQVZ
+         VrkyYv0wO8vrflz+h2d6R2wb3bWj/bE3haPSePQZ6M4WHoGFD19c2I9f7wo4MNrQ9zZ5
+         If1bFMa8DdS6SAza94aPP5lgIMWFVJNWKs3GHlRs5wfbT6Y5gq7W5FlObA9KESZ6U3Tg
+         N4xA==
+X-Forwarded-Encrypted: i=1; AJvYcCU25YmfI/m0XckkPMjvxQYfFoICp31eTY7QnkfVU4h/bO7pqdeWe0Np+3TlNmKbujMJS1IP/yNEMzOL@vger.kernel.org, AJvYcCUvdJCevN6xUsUGEcpN0b4z4v7jjNatdmoE/ti8sSPGd5HfeAlcsOSyC2uodfHv0tJ4hyYWln6moSkOb5VW@vger.kernel.org, AJvYcCUyq/WNVOQoCHLolsExfpDBqoK19Oj+w35qim35ViN5XKSsQX0I9BIr3Rw4KDVx++Ii4SSUYHUecK86eyfB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8Z8gYuknn/ATfNpfUUuFTq2xc6d+2Y1ZUKfOMMFicn3y32PUW
+	ziPu5laVW/uQxM45BqZOURwN2tAAcJ9VcPLKKIqX44xDg3P73AChw0dSv+rI
+X-Google-Smtp-Source: AGHT+IHzRpb+jWUFNDOOJweADrvwEZ4tOVH5Bif7f2NJyV7NMSRk9/3D3CkpA3Xd/63dJW1HWfcyvQ==
+X-Received: by 2002:a05:6512:1046:b0:536:741a:6bbc with SMTP id 2adb3069b0e04-5389fc43ff8mr213060e87.28.1727369304112;
+        Thu, 26 Sep 2024 09:48:24 -0700 (PDT)
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com. [209.85.208.174])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-538a0432525sm8394e87.145.2024.09.26.09.48.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Sep 2024 09:48:23 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2f77be8ffecso14330001fa.1;
+        Thu, 26 Sep 2024 09:48:23 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUm6S9C/NYVMNyOQe3O2Bh6ALT8HtmnDAC/R0911lFBvsIYAdgk4B0XCcTp8iZEBlJEkPkU0odsqs8jCFSZ@vger.kernel.org, AJvYcCX+YrFlyZol9t+nmkdTZ/Ex5IwkOVae658UATVoPUnHFf6CI8iEOLyk8U1Ny64VNkoFG28Rw9yS8/dz@vger.kernel.org, AJvYcCXKlJMg8aLxj2OW+D9ug1oNEKw4vopGZ8osXUReTldmHOxIMJOaQxi7SDGeUqRxprHTszC3gTIN5L5HyvkA@vger.kernel.org
+X-Received: by 2002:a2e:be93:0:b0:2f4:f279:36d3 with SMTP id
+ 38308e7fff4ca-2f9d3e3b935mr2254021fa.4.1727369303029; Thu, 26 Sep 2024
+ 09:48:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="uWcwIitsRojZdEUY"
-Content-Disposition: inline
-In-Reply-To: <20240925232409.2208515-1-robh@kernel.org>
-
-
---uWcwIitsRojZdEUY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20240926-iio_device_for_each_child_node_scoped-v1-0-64ca8a424578@gmail.com>
+ <20240926-iio_device_for_each_child_node_scoped-v1-3-64ca8a424578@gmail.com>
+In-Reply-To: <20240926-iio_device_for_each_child_node_scoped-v1-3-64ca8a424578@gmail.com>
+Reply-To: wens@csie.org
+From: Chen-Yu Tsai <wens@csie.org>
+Date: Fri, 27 Sep 2024 00:48:09 +0800
+X-Gmail-Original-Message-ID: <CAGb2v673tM84R=ixndabTmwane_dC+bu5YbNKHi1i+sd+tJksA@mail.gmail.com>
+Message-ID: <CAGb2v673tM84R=ixndabTmwane_dC+bu5YbNKHi1i+sd+tJksA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] iio: adc: sun20i-gpadc: use scoped device_for_each_child_node()
+To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Cc: Jonathan Cameron <jic23@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, 
+	Michael Hennerich <Michael.Hennerich@analog.com>, linux-arm-msm@vger.kernel.org, 
+	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sunxi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 25, 2024 at 06:24:06PM -0500, Rob Herring (Arm) wrote:
-> Schemas for array properties should only have 1 level of array
-> constraints (e.g. items, maxItems, minItems). Sometimes the old
-> encoding of all properties into a matrix leaked into the schema, and
-> didn't matter for validation. Now the inner constraints are just
-> silently ignored as json-schema array keywords are ignored on scalar
-> values.
->=20
-> Generally, keep the inner constraints and drop the outer "items". With
-> gicv3 "mbi-alias" property, it is more appropriately a uint32 or uint64
-> as it is an address and size depends on "#address-cells".
->=20
-> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+On Fri, Sep 27, 2024 at 12:08=E2=80=AFAM Javier Carrasco
+<javier.carrasco.cruz@gmail.com> wrote:
+>
+> Switch to device_for_each_child_node_scoped() to simplify the code by
+> removing the need for calls to fwnode_handle_put() in the error path.
+>
+> This prevents possible memory leaks if new error paths are added without
+> the required call to fwnode_handle_put().
+>
+> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Chen-Yu Tsai <wens@csie.org>
 
---uWcwIitsRojZdEUY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZvWNowAKCRB4tDGHoIJi
-0uo/AQCSoUq76yV2zPjc/Dv0ex3UOkszyyKeTqzAyCiuqne2QAD/WOq25LSaE13W
-/Ok8UcwWwBnHRPHDLu6I17O3OvhLEAk=
-=PPnK
------END PGP SIGNATURE-----
-
---uWcwIitsRojZdEUY--
+> ---
+>  drivers/iio/adc/sun20i-gpadc-iio.c | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/iio/adc/sun20i-gpadc-iio.c b/drivers/iio/adc/sun20i-=
+gpadc-iio.c
+> index 6a893d484cf7..136b8d9c294f 100644
+> --- a/drivers/iio/adc/sun20i-gpadc-iio.c
+> +++ b/drivers/iio/adc/sun20i-gpadc-iio.c
+> @@ -155,7 +155,6 @@ static int sun20i_gpadc_alloc_channels(struct iio_dev=
+ *indio_dev,
+>         unsigned int channel;
+>         int num_channels, i, ret;
+>         struct iio_chan_spec *channels;
+> -       struct fwnode_handle *node;
+>
+>         num_channels =3D device_get_child_node_count(dev);
+>         if (num_channels =3D=3D 0)
+> @@ -167,12 +166,10 @@ static int sun20i_gpadc_alloc_channels(struct iio_d=
+ev *indio_dev,
+>                 return -ENOMEM;
+>
+>         i =3D 0;
+> -       device_for_each_child_node(dev, node) {
+> +       device_for_each_child_node_scoped(dev, node) {
+>                 ret =3D fwnode_property_read_u32(node, "reg", &channel);
+> -               if (ret) {
+> -                       fwnode_handle_put(node);
+> +               if (ret)
+>                         return dev_err_probe(dev, ret, "invalid channel n=
+umber\n");
+> -               }
+>
+>                 channels[i].type =3D IIO_VOLTAGE;
+>                 channels[i].indexed =3D 1;
+>
+> --
+> 2.43.0
+>
 
