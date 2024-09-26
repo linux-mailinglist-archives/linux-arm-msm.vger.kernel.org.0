@@ -1,185 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-32595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FA68987583
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:25:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E41F09875D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:41:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FFD91F271E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:25:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 67EF81F20FEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:41:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 064AA165EFA;
-	Thu, 26 Sep 2024 14:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2921E43AB9;
+	Thu, 26 Sep 2024 14:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NE+Sgq9s"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jab64f9b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AE81607B4;
-	Thu, 26 Sep 2024 14:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5826C13632B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 14:41:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727360561; cv=none; b=pk3i85i2sKAbWYIQBSBDnmAhHZxVPP6S/CCOzpM7mhapyCVnHQ/Yc8fiWkB/z1LP/BFO5SaHTcal+qpeMMghtTKDCTyUUnsC3cxe1MOkaEfkz7mo9DTAK08ZFoJhlvddl7f2ckzDSc4RnHKHKXIl9Zv/2kamENK6V5Eg02kzzMc=
+	t=1727361679; cv=none; b=TvbYS4IhXZG8B+w3necRZuHV8ZzyzOQxmQzKaYADDl1D9u/cijRfrouFqKuagjDU1zMccByD47GN5/zlX5eOKilBuCGSw+nlxLv4JbOFjqvmCmF3BPerETJ+yDJgeY50B27c1eq0ok5aq4K0hBDk9f8x1yZLGmV8n3FprdewBJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727360561; c=relaxed/simple;
-	bh=ir13QocNhYd+dhLn3EnuWkM1Qmu0ZEM2VLHnjiH3yQk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JvpMkbnsuvV2XWMr1Kt0uEj5zOdcLTNjN9Yte+P5SuwayvRvxXY83niroAAMaCrGXpbR+qlxrlasLjkkmZHxtpD8BF5uV57M3FAxuG97ON8YqcJWU4dzhTHEccGF8+/hvNp5Cp/KZZ/YTPqD17aaaLtUzlRN+cFqz6n5rrCtZfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NE+Sgq9s; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5356bb55224so1443026e87.0;
-        Thu, 26 Sep 2024 07:22:40 -0700 (PDT)
+	s=arc-20240116; t=1727361679; c=relaxed/simple;
+	bh=3hBqlkDd2CboCZnt+32bHlBfwoKCR4w7ctHLvnCcMtw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VfyhOrnWdvihqskywhOJG1TOnp50YLL8Bn07d10vY7hDWZ6rDzK/vz04L6nZv7OHf8c6Wkd+K4cSxDuGLFvcG/xV5d9qoiuqnywpcN4mR63dylhsI+j0VX2vmUl8OksipzTmxtXy6gkhvDxCw4Duh34yX5q3wV8KfAIN/dlx63A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jab64f9b; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5365392cfafso1159938e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 07:41:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727360559; x=1727965359; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mvySoi/ghyixyWjU8Kt/wXCcix2cx/dAsfKUKyMxVic=;
-        b=NE+Sgq9sg0wPxpqXim21WoduwMyAA1QMsimQ+q4jtmwEuorAGDuND8fGgXWwbH7mLX
-         BsiyxMmt9gNL/ES2BsuMkeHnSUkZ1aKe0tMSOHDi58+KCdROvgcjVshyUMK3zjA0wqwS
-         fISkcVJRvDW5i9pXo5Vl6+S2gavZ8cAxtlVbcL6NotqpCIs7l6e6G5EK9X0p/ePi8Dz2
-         uu9CImciBASoxrw+tjA8frgYaVpeSG3cYqsMjczwnTliSkBBMQwTmxzL4UT7gKfy8ClK
-         2U68JeX+RRGfW0jtRHRSEFrWqndIW67WGg6smud3sCre3OhicH880N3FU3J+SHTvr9aG
-         4ZPg==
+        d=linaro.org; s=google; t=1727361675; x=1727966475; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wWrufhI1OaXX1M/49KinirIqQ3+0LvTc6ruUtQgTS6c=;
+        b=Jab64f9bEcMHSIysshyFpGLfGl8RledltP2beM1pIO96Yb6KalEFXQhTrCj01U8M7o
+         cS4WSPIzAJFskwArqs8EXxLT79rxE2Czve2n4CtKE8QwmASdis9jGqhcIpjNYNR8n8YI
+         /KlCFxRd4+KCiSNBovh9S4OW0HJJOpYkcZaE6XVfxDSsj4u/eQ+KGv6fHdW8gcik2qSO
+         +R7h2mp1g59Ch9By/1Fye3SDr5g5mcQtGq3dL9QMuDJOXS3aZ/Add5TT6t0oXEJkof7Q
+         ZhNSzpsrM7lHnEqI8sU7UHqui+ksChF+zc8ezqDQDwEt2ehrj9Hb8Qfu0gDX/hEx3L0K
+         v1hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727360559; x=1727965359;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mvySoi/ghyixyWjU8Kt/wXCcix2cx/dAsfKUKyMxVic=;
-        b=F876Pw4MMNS9Q8CIdIHYMQ6ZRSJ2mYmwSqF79/j2nbXCuw57MwcJR+fiR6tzmqL+Hz
-         paBvqU0mvA6MhxkC/XSljBqF+/x9X4X/Cl9EaBy0MXf6a6iGJW46GPG87MLH6D4d04Nk
-         TMS0WdqcV9LIlRMhwpznipbuK8B2tn7i/OTu2eJckZFj3lBI8C8a5J6D0aO9oGtQIZoj
-         GxYu425gBLIimc5ogIqEEVCIzIe58oGHx+t7jtr7OuxQ6zVyn0s793ooB1CSSzmi82d+
-         FY98jacPuZjYXhuChr3TxzICrmEeSPe7Ob6G67Lwuvi+sfWt19Jnt6/vmpxfWdEbCC1O
-         7JZw==
-X-Forwarded-Encrypted: i=1; AJvYcCV0F8kDYRllR4BxwkcR53VHYZSlnzy34oJm2zE1UYZkTigYKXWSn0qY2gJK0jclR8bin9ojCub8HJ8exKeQ@vger.kernel.org, AJvYcCXoAkzkYf+ZqyXMA4sMjaqEm5/8p9HXrc360lcy0Jj5h7wIu3YzQxvWRGzwv8GmwcdoiukcCdUoudN2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxqU4gLVWUbO4sJTKsb+moiXMuWxYdWCMalx8WiEc5mdiiEmRvy
-	y0YU2Mb6+DyWTFDMyxqIoj2R4cze4crEc6rO6VJHn8DgtABYqU+n
-X-Google-Smtp-Source: AGHT+IFjFpkYJtDlsaqYWrniHFrgIgENrRffE//ZKPHAlbRLrM3iqa1Io8iVHs0TgVNR+oGhvGRxRQ==
-X-Received: by 2002:a05:6512:ac7:b0:530:e323:b1cd with SMTP id 2adb3069b0e04-5387755cbccmr4493488e87.40.1727360558375;
-        Thu, 26 Sep 2024 07:22:38 -0700 (PDT)
-Received: from [127.0.1.1] (mm-20-1-84-93.mgts.dynamic.pppoe.byfly.by. [93.84.1.20])
-        by smtp.googlemail.com with ESMTPSA id 2adb3069b0e04-537a864db1bsm815803e87.267.2024.09.26.07.22.36
+        d=1e100.net; s=20230601; t=1727361675; x=1727966475;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wWrufhI1OaXX1M/49KinirIqQ3+0LvTc6ruUtQgTS6c=;
+        b=PN0KJDFii8TU2jNSXuaSzzaMfZj1gxVlalwX/I+QJVARXDOnu1+O1oPMwVeWf90VbN
+         4DwzKzYNmRLGgGuyU/uJNpPviH0eHJF5LkNaAfM6Orz4MZ6nREewiFxBzALSu4VVZwoT
+         QzKthv46ALRLSlhaeedG5C+KBzaMUNIb53eyBJNacIwotZEHEOMzED95NgrE774TJ/fj
+         5nnDmClYmkCc68q5XO0LXlUMCpQhyPiBM8aRCbLXMsDHBzGtAX35ttIJGLbWq2mgc0gd
+         r22NDPRtDvbOSKEb28ZWQ6u0Nz0zuRnjSVRRhUj4TGxC+hcEVWYThez/D+mM9DlEJg5L
+         SJzQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW+YLQh3et8g0bKZhS+7hDs5JvNUekNMWdARxG+pm7Z5WnseJWu6W5tAk+i0rnw3J99AlQlBntwik/NPh7N@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7V8TznTmHK9BtuSSNyq3TpLsr2VTln51bNhHCxS5fIm0bLll8
+	bjlYoJkVNQPYt7nBdJnZJTAjsEM4tYj3OmMbZWlZMp7c7MWj6NKoA6F5Wrq/UBo=
+X-Google-Smtp-Source: AGHT+IER6Za9qimt3NND6y2jN86DblVumX6oOnvT4M0Kys3dZuu5LlRfdb8WGqjYa4bEbRiVS/s1UQ==
+X-Received: by 2002:a05:6512:110e:b0:52c:e3ad:3fbf with SMTP id 2adb3069b0e04-5387755cb9cmr4503700e87.42.1727361675445;
+        Thu, 26 Sep 2024 07:41:15 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-537a8648bfcsm826890e87.210.2024.09.26.07.41.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 07:22:37 -0700 (PDT)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Thu, 26 Sep 2024 17:22:12 +0300
-Subject: [PATCH v5 12/12] arm64: dts: qcom: starqltechn: add modem support
+        Thu, 26 Sep 2024 07:41:14 -0700 (PDT)
+Date: Thu, 26 Sep 2024 17:41:12 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 02/12] arm64: dts: qcom: starqltechn: remove wifi
+Message-ID: <zxa3q4gjo3afwcne3bqmc27ijctl2zwuf6frsb6j4ybzoihyjm@jky5375spaot>
+References: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
+ <20240926-starqltechn_integration_upstream-v5-2-d2084672ff2f@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20240926-starqltechn_integration_upstream-v5-12-d2084672ff2f@gmail.com>
-References: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
-In-Reply-To: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
-To: cros-qcom-dts-watchers@chromium.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727360533; l=2052;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=ir13QocNhYd+dhLn3EnuWkM1Qmu0ZEM2VLHnjiH3yQk=;
- b=bEETRA30IoUzTR2gDYXWVHNr5nJGA7MFNAi36GprdUBVIrQU5Ivmm0NVQDxDqAum8EeJ7Ewv+
- q6IHjlwa1TgDTGNqN21yz2wL9Eid+j1GSqt9MFJK6EZ/H3h45eZA81/
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240926-starqltechn_integration_upstream-v5-2-d2084672ff2f@gmail.com>
 
-Add support for modem and ipa(IP Accelerator).
-Add spss reserved memory node.
+On Thu, Sep 26, 2024 at 05:22:02PM GMT, Dzmitry Sankouski wrote:
+> Starqltechn has broadcom chip for wifi, so sdm845 wifi part
+> can be disabled.
+> 
+> Fixes: d711b22eee55 ("arm64: dts: qcom: starqltechn: add initial device tree for starqltechn")
+> 
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 39 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+No empty lines between Fixes and other tags, please.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index f7cb09734d2f..0f2db2cfb1e7 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -17,6 +17,8 @@
- #include "pm8998.dtsi"
- #include "sdm845-wcd9340.dtsi"
- 
-+/delete-node/ &rmtfs_mem;
-+/delete-node/ &spss_mem;
- /delete-node/ &adsp_mem;
- /delete-node/ &slpi_mem;
- 
-@@ -91,15 +93,39 @@ memory@a1300000 {
- 			pmsg-size = <0x40000>;
- 		};
- 
-+		/*
-+		 * It seems like reserving the old rmtfs_mem region is also needed to prevent
-+		 * random crashes which are most likely modem related, more testing needed.
-+		 */
-+		removed_region: removed-region@88f00000 {
-+			reg = <0 0x88f00000 0 0x1c00000>;
-+			no-map;
-+		};
-+
- 		slpi_mem: slpi@96700000 {
- 			reg = <0 0x96700000 0 0xf00000>;
- 			no-map;
- 		};
- 
-+		spss_mem: spss@97700000 {
-+			reg = <0 0x97700000 0 0x100000>;
-+			no-map;
-+		};
-+
- 		adsp_mem: memory@97800000 {
- 			reg = <0 0x97800000 0 0x2000000>;
- 			no-map;
- 		};
-+
-+		rmtfs_mem: rmtfs-mem@fde00000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0xfde00000 0 0x202000>;
-+			qcom,use-guard-pages;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+		};
- 	};
- 
- 	gpio_keys {
-@@ -837,6 +863,19 @@ dai@5 {
- 	};
- };
- 
-+&mss_pil {
-+	firmware-name = "qcom/sdm845/starqltechn/mba.mbn",
-+			"qcom/sdm845/starqltechn/modem.mbn";
-+	status = "okay";
-+};
-+
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/sdm845/starqltechn/ipa_fws.mbn";
-+	status = "okay";
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 8 --------
+>  1 file changed, 8 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> index d37a433130b9..6fc30fd1262b 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> @@ -418,14 +418,6 @@ &usb_1_qmpphy {
+>  	status = "okay";
+>  };
+>  
+> -&wifi {
+> -	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
+> -	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
+> -	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
+> -	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
+> -	status = "okay";
+> -};
+> -
+>  &tlmm {
+>  	gpio-reserved-ranges = <0 4>, <27 4>, <81 4>, <85 4>;
+>  
+> 
+> -- 
+> 2.39.2
+> 
 
 -- 
-2.39.2
-
+With best wishes
+Dmitry
 
