@@ -1,272 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-32545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE220986D49
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 09:12:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C48DB986D5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 09:14:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3D5D5B20B3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 07:12:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC3431C21CCB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 07:14:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F66B18B49A;
-	Thu, 26 Sep 2024 07:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7791F18C013;
+	Thu, 26 Sep 2024 07:14:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bV50kE1W"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ok067OnW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1FF224D6
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 07:12:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B0F188907;
+	Thu, 26 Sep 2024 07:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727334766; cv=none; b=W0fzHlv97b7VR8fTq6o5zaEFglNGiZ7YxWsdXXhigoBj6ZYFkrzKT5v8rGDo4QQlBWve2OHvyaRc/kXZ9Y8u//r1oo0EC63s83XSLpOBoG+Vvp25lpU5WvGgZf9VIfgHQ2YlNTYsfzjKq/h+9BtMrhHqiB2TfoXGQlm2+fY4Myc=
+	t=1727334885; cv=none; b=SupGcanin5LXgHhsdM2XdBm47vGQ9fh8TruPtlyI4zhV4ENVT3Bl8clWOr4PSiMfhquuORmBx4H4RKPFdqgMVMAD18XZn9V8N92YUlV2mRr5GeQgsEjB7+/NK3uqZdOFrvbsM2EFWzJcIOJMDYvgAhWqWDfEAzfBakqO9uvN3ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727334766; c=relaxed/simple;
-	bh=4E/LOetIXYYf1xhxxq7AjZVsnp9dikavxzLX+hmzCUY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gu+1o96dJy0Sdwx1Xcu1teBv+kILjJYwpAuVhpwY+RGSKiBs2/ZH4s69WvZS9U7viSOM3WtKsV+4ZCI1OMo7e72mvlLrWpVEQ+PkjOZQVVDDy1Qfmepb1uPpgr1Pj38lLUX3myiQ0ccXt8u0vYJOpAQQ0Tk15qk7AtcPokh2J6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bV50kE1W; arc=none smtp.client-ip=209.85.167.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-5356aa9a0afso915813e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 00:12:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727334761; x=1727939561; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8s1pVCKNQ5LijTwwwKbqt+TsjnjxLMGQpEOKi95VGHE=;
-        b=bV50kE1Wq5FAiSONd5Gyd3Ztgdq8f96AsygNOvL286/36DQrbBlOa8iKBv/WwKk2XK
-         SJwFi2oSqA54dQ6CQsGH+HVuIf7DPo3c3qeWAiMCmIgzDEY39g4lHN6nZC+nu0IkFCCi
-         wcdbxCTmlk7xgq2J9LMy7kJ0eNtieiIUeFSzdGT2V8YchS5sb2eTTF2qpve/d35c28HT
-         yUNqGwl/GJoyKM5e0npI9GSX6ilnGancpZ98Zuu8pmFA09W0HoyncdmEuJ6aGRjur6xW
-         IVA24sEc6mpQ5i2USpzlT7JqpA6hGIxdCUBD2lGFF79wXW5/j6RyjIN/TXButs6zHc+/
-         huSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727334761; x=1727939561;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8s1pVCKNQ5LijTwwwKbqt+TsjnjxLMGQpEOKi95VGHE=;
-        b=kH6N2mdOlJmCUBf1GtIVYaXx07d6hUx025r9/B7lKcGGRMbpEAWDtav4dFGn86lL2I
-         q7mPToG3Sma23j3tq+DPQld5MM7WmlycNnYEgPmupkxl1sqoJmqJe5O3Xu7LHbZMvIVl
-         MulEQNjPongeDADThW2tE1e23nWcC5RrwPEyOwn2cw9/LM6oq0XI2FyivRYzD0Gh9UgA
-         dT1jwsxanBcO1hyjb/kTP0vVwlsSfDMXs7Swg8uwlRPlvxanUU8l2jVt2u62p1t5wsaB
-         PzXFYvQEI01bgoaFMWZgvb7KRVsQWU/owqSsxS4Kf/GMEah1+hSC2nhMtt06GWXDIEtA
-         +zKQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWbdLzir5gOvyrQPG/2Ww+NAz/9d+T9g1voaYt9rSXEE00KTCEFYu2PVAIiWFNN1L6XqnvSsI5mOhrPGmGc@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD8TpYEJOh66hq7iBdQgIG8amqPwwAldXHO03JT5zAvZ47YP+W
-	TWdrpdhV/xLbym5BinlXie5BzLHDJMw5ZXDCQnesH8xyVBnSCVMPwwoxk/KKOPkw5gNUUampqbl
-	Hr3HO7g==
-X-Google-Smtp-Source: AGHT+IEvLEJJDB6OVRh8ic+vi9uidxlX2tWayQauVJPNPmxbj5VEoP9OS3HkVp0PnEHowSwNvC2pog==
-X-Received: by 2002:a05:6512:3b0e:b0:536:7b56:6ba0 with SMTP id 2adb3069b0e04-538775666a3mr4753353e87.57.1727334760529;
-        Thu, 26 Sep 2024 00:12:40 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-537a85e0b8dsm720824e87.61.2024.09.26.00.12.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 00:12:39 -0700 (PDT)
-Date: Thu, 26 Sep 2024 10:12:37 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v2 05/22] drm/msm/dpu: move resource allocation to CRTC
-Message-ID: <w53qtqnbibnw2kekn56afrf75udl3hbrk6kfavv7imqac6eqvo@lpgdvxncpfep>
-References: <20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com>
- <20240924-concurrent-wb-v2-5-7849f900e863@quicinc.com>
- <dv5iij6v76ieprfckdjo4yksrjrgqw73v2lh7u4xffpu7rdrf3@zgjcp3a2hlxo>
- <24a11f4c-d848-4f1b-afbd-35b135fa3105@quicinc.com>
- <CAA8EJpraspHpgGvJxe7dXx-hN+yirs_+AacjkrHvPWuEvrLJ-w@mail.gmail.com>
- <b3830573-1f39-4729-be58-c2659a37d689@quicinc.com>
+	s=arc-20240116; t=1727334885; c=relaxed/simple;
+	bh=s1QCm+M6EGtkn+pyLctXytbJXiAlK/xwoHv72CVj4vE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IaxG107C3v5W0hPv/orIug5WeNVUqXOcCTrtRFqwBSnN695cRjE6lRUtk0HT5V7wj80vJvP6CkPgFEJBWSV/cGT7I3kbzHss3f9k1I5byKKJj4FqMTaeQ1ewWbktVvG6FTWRp3iYu7+eBo9ERWjf3r055bjlku5sPu3gYiZDrLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ok067OnW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH5MB9032311;
+	Thu, 26 Sep 2024 07:14:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Z1k2Vp1xBbiHK3RyGJFubNyjnmminq8ylfJH4ImpPLE=; b=Ok067OnWo0/xyRRs
+	9EzexZGhwtsR+KZ7U10m93poUZh6FWqltLB/PWUwt4tQvShavdraCnxFFjQJFXNY
+	Z1OK8UFPb43R1kKG5WwUvpYq3qi5HZAWylVrLJkEooFJHIZpEIIU5DAlWym+hLMu
+	70X7FA6rUPCQpv7t3TKjcoYmYmFBHvrldmvMQKrf9qSuPfz0JOkt4sJuOY3WvlBu
+	nVUPV40t25BeMTvvzey/xWkfbs485eHZZuQsCxRt69i2RQbDWd/TyWkdeX3MtKPr
+	wE2CwjkN/ZeOsNwu4XZfJk9NRP0TQ3aETHflrL8+cDuF2y/FSnaujwkA+gZZop9Q
+	py7aVw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sp7upsf4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Sep 2024 07:14:27 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48Q7EPee026611
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Sep 2024 07:14:25 GMT
+Received: from [10.151.37.100] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 26 Sep
+ 2024 00:14:19 -0700
+Message-ID: <3eee6f21-98fb-44ef-be19-75c4048a40ea@quicinc.com>
+Date: Thu, 26 Sep 2024 12:44:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b3830573-1f39-4729-be58-c2659a37d689@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 8/8] arm64: defconfig: Enable IPQ5424 SoC base configs
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <p.zabel@pengutronix.de>, <geert+renesas@glider.be>,
+        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_varada@quicinc.com>
+References: <20240913121250.2995351-1-quic_srichara@quicinc.com>
+ <20240913121250.2995351-9-quic_srichara@quicinc.com>
+ <4dxqbm4uuuuht5db7kt6faz2pdeodn224hd34np322divs22ba@dzmjveze3b4f>
+ <2a16d5a2-17a5-4988-8a25-34ac10ff3d08@quicinc.com>
+ <h6ajhgv5rqabxupove4ge4253ywzbjyxoqq75c7ojmauudd3z5@hhhkbbzfmved>
+Content-Language: en-US
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <h6ajhgv5rqabxupove4ge4253ywzbjyxoqq75c7ojmauudd3z5@hhhkbbzfmved>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vSx9peXx521b_oqIPBe2zFZUbiPCPjwV
+X-Proofpoint-ORIG-GUID: vSx9peXx521b_oqIPBe2zFZUbiPCPjwV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 mlxlogscore=573 mlxscore=0 phishscore=0
+ suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409260046
 
-On Wed, Sep 25, 2024 at 02:49:48PM GMT, Abhinav Kumar wrote:
-> On 9/25/2024 2:11 PM, Dmitry Baryshkov wrote:
-> > On Wed, 25 Sept 2024 at 22:39, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
-> > > On 9/24/2024 4:13 PM, Dmitry Baryshkov wrote:
-> > > > On Tue, Sep 24, 2024 at 03:59:21PM GMT, Jessica Zhang wrote:
-> > > > > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > 
-> > > > > All resource allocation is centered around the LMs. Then other blocks
-> > > > > (except DSCs) are allocated basing on the LMs that was selected, and LM
-> > > > > powers up the CRTC rather than the encoder.
-> > > > > 
-> > > > > Moreover if at some point the driver supports encoder cloning,
-> > > > > allocating resources from the encoder will be incorrect, as all clones
-> > > > > will have different encoder IDs, while LMs are to be shared by these
-> > > > > encoders.
-> > > > > 
-> > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > [quic_abhinavk@quicinc.com: Refactored resource allocation for CDM]
-> > > > > Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> > > > > [quic_jesszhan@quicinc.com: Changed to grabbing exising global state]
-> > > > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> > > > > ---
-> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  86 ++++++++++++
-> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 201 +++++++++++-----------------
-> > > > >    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  19 +++
-> > > > >    3 files changed, 183 insertions(+), 123 deletions(-)
-> > > > > 
-> > > > > @@ -544,159 +542,117 @@ void dpu_encoder_helper_split_config(
-> > > > >       }
-> > > > >    }
-> > > > > 
-> > > > > -bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
-> > > > > +void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
-> > > > > +                             struct msm_display_topology *topology,
-> > > > > +                             struct drm_atomic_state *state,
-> > > > > +                             const struct drm_display_mode *adj_mode)
-> > > > >    {
-> > > > >       struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
-> > > > > -    int i, intf_count = 0, num_dsc = 0;
-> > > > > +    struct drm_connector *connector;
-> > > > > +    struct drm_connector_state *conn_state;
-> > > > > +    struct msm_display_info *disp_info;
-> > > > > +    struct drm_framebuffer *fb;
-> > > > > +    struct msm_drm_private *priv;
-> > > > > +    int i;
-> > > > > 
-> > > > >       for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
-> > > > >               if (dpu_enc->phys_encs[i])
-> > > > > -                    intf_count++;
-> > > > > +                    topology->num_intf++;
-> > > > > 
-> > > > > -    /* See dpu_encoder_get_topology, we only support 2:2:1 topology */
-> > > > > +    /* We only support 2 DSC mode (with 2 LM and 1 INTF) */
-> > > > >       if (dpu_enc->dsc)
-> > > > > -            num_dsc = 2;
-> > > > > +            topology->num_dsc += 2;
-> > > > > 
-> > > > > -    return (num_dsc > 0) && (num_dsc > intf_count);
-> > > > > -}
-> > > > > +    connector = drm_atomic_get_new_connector_for_encoder(state, drm_enc);
-> > > > > +    if (!connector)
-> > > > > +            return;
-> > > > > +    conn_state = drm_atomic_get_new_connector_state(state, connector);
-> > > > > +    if (!conn_state)
-> > > > > +            return;
-> > > > > 
-> > > > > -struct drm_dsc_config *dpu_encoder_get_dsc_config(struct drm_encoder *drm_enc)
-> > > > > -{
-> > > > > -    struct msm_drm_private *priv = drm_enc->dev->dev_private;
-> > > > > -    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
-> > > > > -    int index = dpu_enc->disp_info.h_tile_instance[0];
-> > > > > +    disp_info = &dpu_enc->disp_info;
-> > > > > 
-> > > > > -    if (dpu_enc->disp_info.intf_type == INTF_DSI)
-> > > > > -            return msm_dsi_get_dsc_config(priv->dsi[index]);
-> > > > > +    priv = drm_enc->dev->dev_private;
-> > > > > 
-> > > > > -    return NULL;
-> > > > > +    /*
-> > > > > +     * Use CDM only for writeback or DP at the moment as other interfaces cannot handle it.
-> > > > > +     * If writeback itself cannot handle cdm for some reason it will fail in its atomic_check()
-> > > > > +     * earlier.
-> > > > > +     */
-> > > > > +    if (disp_info->intf_type == INTF_WB && conn_state->writeback_job) {
-> > > > > +            fb = conn_state->writeback_job->fb;
-> > > > > +
-> > > > > +            if (fb && MSM_FORMAT_IS_YUV(msm_framebuffer_format(fb)))
-> > > > > +                    topology->needs_cdm = true;
-> > > > > +    } else if (disp_info->intf_type == INTF_DP) {
-> > > > > +            if (msm_dp_is_yuv_420_enabled(priv->dp[disp_info->h_tile_instance[0]], adj_mode))
-> > > > > +                    topology->needs_cdm = true;
-> > > > > +    }
-> > > > 
-> > > > Just to note, the needs_cdm is not enough once you introduce CWB
-> > > > support. E.g. DP/YUV420 + WB/YUV case requires two CDM blocks (which we
-> > > > don't have), but this doesn't get reflected in the topology.
-> > > 
-> > > Hi Dmitry,
-> > > 
-> > > Ack. I can add something to make atomic_check fail if the input FB is
-> > > YUV format and CWB is enabled.
-> > 
-> > I'd prefer for this to be more natural rather than just checking for
-> > the DP && DP_YUV420 && WB && WB_FMT_YUV. In the worst case, count CDM
-> > requests and then in RM check them against the catalog. But I had a
-> > more logical (although more intrusive) implementation on my mind:
-> > 
-> > struct msm_display_topology {
-> >      struct {
-> >        u32 num_intf;
-> >        u32 num_wb;
-> >        u32 num_dsc;
-> >        bool needs_cdm;
-> >      } outputs[MAX_OUTPUTS];
-> >      u32 num_lm;
-> > };
-> > 
-> > WDYT?
-> > 
+
+
+On 9/26/2024 3:01 AM, Dmitry Baryshkov wrote:
+> On Thu, Sep 26, 2024 at 12:34:56AM GMT, Sricharan Ramabadhran wrote:
+>>
+>>
+>> On 9/13/2024 6:23 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Sep 13, 2024 at 05:42:50PM GMT, Sricharan R wrote:
+>>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>>>>
+>>>> Enable the clock and pinctrl configs for Qualcomm IPQ5332 SoC
+>>>
+>>> Please name the device rather than the platform. The defconfig affects
+>>> all users, so it should be justified.
+>>>
+>> Sorry, to understand correctly, you mean to use the board name here ?
 > 
-> the struct msm_display_topology was originally designed as a per-encoder
-> struct (dpu_encoder_get_topology() indicates the same). Making this an array
-> of outputs was not needed as there is expected to be one struct
-> msm_display_topology for each virt encoder's requested topology and the
-> blocks inside of it other than LM, are "encoder" hw blocks.
+> Yes, the board which is generally accessible, if possible. You are
+> increasing kernel size for everybody using defconfig, so at least it
+> should be obvious, who is benefiting from that.
 > 
-> needs_cdm was made a boolean instead of a num_cdm_count like other hardware
-> blocks because till the most recent chipset, we have only one CDM block.
-> Whenever we do have more CDM blocks why will introducing num_cdm to the
-> topology struct not solve your problem rather than making it an array of
-> outputs?
-> 
-> Because then, RM will know that the request exceeds the max blocks.
-> 
-> I think what you are trying to do now is make struct msm_display_topology's
-> encoder parts per-encoder and rest like num_lm per "RM session".
-> 
-> The thought is not wrong but at the same time seems a bit of an overkill
-> because its mostly already like that. Apart from CDM for which I have no
-> indication of another one getting added, rest of the blocks are already
-> aligned towards a per-encoder model and not a "RM session" model.
 
-But we should be leaning towards RM session.
+ok, will fix subject description accordingly.
 
-> 
-> Even if we end up doing it this way, most of the model is kind of unused
-> really because each encoder will request its own topology anyway, there is
-> just no aggregation for CDM which at this point is not needed as there is no
-> HW we are aware of needing this.
-
-With the resource allocation shifted to the CRTC individual encoders
-do not request their own topology (as it is now a property of the full
-output pipeline, not just an encoder). Yes, CDM aggregation into num_cdm
-seems unnecessary as there is just one CDM block.
-
-> I think the atomic_check validation is needed either way because if two
-> encoders request cdm, we cannot do clone mode as there is only one cdm block
-> today. Its just that we are not tracking num_cdm today due to reasons
-> explained above but basically doing something like below seems right to me:
-> 
-> if (enc_is_in_clone_mode && needs_cdm)
-> 	return -ENOTSUPPORTED;
-
-This check is incorrect in my opinion. The hardware should be able to
-support DP/YUV420 + WB/RGB and DP/RGB + WB/YUV combinations. Please
-correct me if I'm wrong.
-
-> When we add more cdm_blocks, we can drop this check and making needs_cdm a
-> num_cdm will make it naturally fail.
-
--- 
-With best wishes
-Dmitry
+Regards,
+  Sricharan
 
