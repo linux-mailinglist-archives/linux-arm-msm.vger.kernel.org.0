@@ -1,201 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-32622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B806987AA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 23:20:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 87632987B74
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 01:02:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B8397B24B69
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 21:20:54 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E4E0AB21D7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 23:01:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7E6B187342;
-	Thu, 26 Sep 2024 21:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160E715B98E;
+	Thu, 26 Sep 2024 23:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZIsLFDJN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L1VGlq0y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6F5187334
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 21:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ED2282FA;
+	Thu, 26 Sep 2024 23:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727385612; cv=none; b=JjqoB1Ez569UuqOInY6l9MnQW+g+0hD8CzFQ4EVlyWJikTvUvqrsmMNqN1WqkHOI4BhQbA6+uXMm5S6/Qiq+CvEbwBbYf9dtt3+m6T63bVsBbAdxMbr/rnzqjDL7YWORu6+4GhzRroE6jwFsfzbhDbd/roeqYM6M61fAGCRLj0M=
+	t=1727391713; cv=none; b=euNpHHkwPvoO7MB2QH1UA0mmC/AMqVZpl5ugwzUMB7ksQmkghk5z0LJTTSsFUVtzQU1LCCqBKLjOlyy7JiJt8a9IzgtCLilbAPGBhkdIC3XQHr+pcmp6O8PrU5CwoWqbejTQqsYLCvX6Dzl7jHjWmqPb6SmyLnvDKIbSXYCcuUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727385612; c=relaxed/simple;
-	bh=1sHmwkQeldUvan3DXa9NPnUnQcQojpW+2E4OZqOhIrM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eLfbKne00yY8WusfllkzImNEAE4ZdHJ1blg7pxz9/zENHtaADynNOtqJZMdfoF+GMqfa2gzyk9c837q+jgQD8VprGxNEqShVjspC9A/7DncXIA0L4FbZwhTZvUTKDmHheF95jK9VQlnz5PeU2KD5/UAVnjgfgih60yaVRJZsOcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZIsLFDJN; arc=none smtp.client-ip=209.85.208.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2f7556a7e73so1115371fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 14:20:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727385609; x=1727990409; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N6mj3rVPPTOsGuFLiJ5WXlKwr0a8XbVZn0thC7dU/MU=;
-        b=ZIsLFDJNTliM/hZAUqxMCOjElqkOu3B4HDfUFLxirXrTUhv6VhKa4xB5036/d7Kofz
-         6DaDdevUrQ+IdXqAqLak/4idZCZ84vz+J7q1hps2HhiTQqdyhn37XSdBIrpzqaAgj6x8
-         oLQBzSvxh43c9Bw4px0cGrmQHz2gKCdUWrHBmU1WpTauvRLtLJmEDKO2E/pfsiCxKxwb
-         DvuWA72hdKsjktS2S1XIj+k+VDjQbZutGSlCau6pmxZbPGwCVEccgzaF/4TjXCO8+GSD
-         C0XnNtqxJU/XHAfj8tWLdKGuCgWyr/G4rHxzMeYSWqtpNOelOjGnj67SGAogoOCV7Tho
-         55bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727385609; x=1727990409;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=N6mj3rVPPTOsGuFLiJ5WXlKwr0a8XbVZn0thC7dU/MU=;
-        b=Wg9LjdY9bP4f7bMbSJ+puuv+Ksx63+yF/w1914AyyLtjWj2gSWGuyPlPhuWEIeSEHg
-         U3MDPgstopCmo7fkw9jrhomZ3/OAzd9JISEXRincDRYyTb7eMrz1kCoYKSLdVVl1KVKV
-         6TOXenR7swkvn8yvscCqiJQLeFbkxSMYzcDgqYEuM0Pql/PFnyP+CGR08GMkNb0a2bYS
-         gpglvom9KuvpFpj2lEY2OTznBNvRFZ8pxyrztpByVFeTL04X7eAqKIbGr3j4MhYzv7rH
-         2n1t0ylvV3YrcHYZM7Lty/6XMj104Qp9diGPXGQTFrHBojeKPdHz0mnF0opb4m46hrJ8
-         tazg==
-X-Forwarded-Encrypted: i=1; AJvYcCUSnyX5nLWk6S9Pf0YVIPLXfJL9hnE4/lzgJhvf7+26PAkWpQHvbt+aHAeeRZg37qhkVtFGshtgbNwT55J2@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfeE3+BDahoF2fhl0we9pFCRBJvyA4U7gTnapGl0uIGQN/LTTs
-	TwRG2Cp0Uwq1CbQrsNWti8pFopTntDaeLMeFrvi8inX5zFMx8pECHSJdesVLywQ=
-X-Google-Smtp-Source: AGHT+IFIONc1IAhkFsnT1u0FsikeU7/QX6SH2g8WSnDaV/EJRgArVIrexFJtr6G9azzr44ECbFVw2g==
-X-Received: by 2002:a05:651c:2229:b0:2ee:d55c:255f with SMTP id 38308e7fff4ca-2f9d41a4ccemr2009351fa.7.1727385608856;
-        Thu, 26 Sep 2024 14:20:08 -0700 (PDT)
-Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2f9d4618a80sm684901fa.107.2024.09.26.14.20.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Sep 2024 14:20:07 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 2/2] media: qcom: camss: move SM8250 regulators from CSID to CSIPHY subdevice
-Date: Fri, 27 Sep 2024 00:19:57 +0300
-Message-ID: <20240926211957.4108692-3-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240926211957.4108692-1-vladimir.zapolskiy@linaro.org>
-References: <20240926211957.4108692-1-vladimir.zapolskiy@linaro.org>
+	s=arc-20240116; t=1727391713; c=relaxed/simple;
+	bh=ctGRqkZQnL3iwsaJbEOPs/nL6DqatorLsyNrJPJi188=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TYhjU3XWxqkAKqkzSNYi1VSIXjvkFBgSscmJvRJvxsm8OFdq8JxdLtf9j8we7tvtKFUoLhj0YjhlxIFDkV+X/aalNOwvYpZvkYoGX0DEzxiqSOwLCiFpy5iIurlpK+SNsXnZDeGJsd3X1pbked+LCFLQq99vo9sTfSZHnSXmlag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L1VGlq0y; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG9mG7026541;
+	Thu, 26 Sep 2024 23:01:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	bDhnhxaLSsQjl7xe4xa9yaUsNXJSZfAHaDNanf+MtVA=; b=L1VGlq0yeiNIwbWD
+	rauKzq2Npx92dXPG2lryye+al+tOxfhhN9iKJfacVJR0/J9ZOC2Ca7DN7ICbUYt1
+	fd4qRogLR3EGLww/vfyLSqOejT9EajrE2A4iisWpTarlDlidDX0maKIrT5eDLFVz
+	EHFs9NRc8SDF9/aJpM/CMuI2RRDpbY+x/l8hBLB0nNXc2BZR04bDnvfaknKCBwIL
+	RTt//+k6m9HJrAjlWIWNfwSTRTNP5kig2z1sIvdnOBZ5IYeHPKhgBbRgtouVydox
+	jyH5jDY0utWXZKkcxK+lhUtyxGRpLtfKMn8Mqb16HuZ5klrQkfH5H3FPgK/g6reY
+	2ac6hg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sn5c151y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Sep 2024 23:01:30 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48QN1TuF007471
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Sep 2024 23:01:29 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 26 Sep
+ 2024 16:01:27 -0700
+Message-ID: <e9f38fe1-10fb-49ad-b209-0e2786ec6f94@quicinc.com>
+Date: Thu, 26 Sep 2024 16:01:27 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] docs/gpu: ci: update flake tests requirements
+To: Vignesh Raman <vignesh.raman@collabora.com>,
+        <dri-devel@lists.freedesktop.org>
+CC: <daniels@collabora.com>, <helen.koike@collabora.com>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <robdclark@gmail.com>,
+        <guilherme.gallo@collabora.com>, <sergi.blanch.torne@collabora.com>,
+        <deborah.brouwer@collabora.com>, <dmitry.baryshkov@linaro.org>,
+        <mripard@kernel.org>, <rodrigo.vivi@intel.com>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-rockchip@lists.infradead.org>, <amd-gfx@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
+        <virtualization@lists.linux.dev>, <linux-kernel@vger.kernel.org>
+References: <20240926070653.1773597-1-vignesh.raman@collabora.com>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20240926070653.1773597-1-vignesh.raman@collabora.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: pSkChFDu4ef4NamDTDMy0qtaNpRfUdmK
+X-Proofpoint-GUID: pSkChFDu4ef4NamDTDMy0qtaNpRfUdmK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
+ spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 phishscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409260160
 
-On Qualcomm SM8250 SoC there are two sets of regulators, and each of
-both sets is specific to six CSIPHY IPs. At the moment there is no
-proper split of two "combined" regulators with quite arbitrary selected
-names in the driver or platform CAMSS device tree node, however for sake
-of clarity and better hardware description it makes sense to move the
-currently existing regulator resources from all CSID subdevices to all
-CSIPHY subdevices.
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- drivers/media/platform/qcom/camss/camss.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-index d64985ca6e88..576c9cb2aa3e 100644
---- a/drivers/media/platform/qcom/camss/camss.c
-+++ b/drivers/media/platform/qcom/camss/camss.c
-@@ -837,7 +837,7 @@ static const struct camss_subdev_resources vfe_res_845[] = {
- static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	/* CSIPHY0 */
- 	{
--		.regulators = {},
-+		.regulators = { "vdda-phy", "vdda-pll" },
- 		.clock = { "csiphy0", "csiphy0_timer" },
- 		.clock_rate = { { 400000000 },
- 				{ 300000000 } },
-@@ -850,7 +850,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	},
- 	/* CSIPHY1 */
- 	{
--		.regulators = {},
-+		.regulators = { "vdda-phy", "vdda-pll" },
- 		.clock = { "csiphy1", "csiphy1_timer" },
- 		.clock_rate = { { 400000000 },
- 				{ 300000000 } },
-@@ -863,7 +863,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	},
- 	/* CSIPHY2 */
- 	{
--		.regulators = {},
-+		.regulators = { "vdda-phy", "vdda-pll" },
- 		.clock = { "csiphy2", "csiphy2_timer" },
- 		.clock_rate = { { 400000000 },
- 				{ 300000000 } },
-@@ -876,7 +876,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	},
- 	/* CSIPHY3 */
- 	{
--		.regulators = {},
-+		.regulators = { "vdda-phy", "vdda-pll" },
- 		.clock = { "csiphy3", "csiphy3_timer" },
- 		.clock_rate = { { 400000000 },
- 				{ 300000000 } },
-@@ -889,7 +889,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	},
- 	/* CSIPHY4 */
- 	{
--		.regulators = {},
-+		.regulators = { "vdda-phy", "vdda-pll" },
- 		.clock = { "csiphy4", "csiphy4_timer" },
- 		.clock_rate = { { 400000000 },
- 				{ 300000000 } },
-@@ -902,7 +902,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- 	},
- 	/* CSIPHY5 */
- 	{
--		.regulators = {},
-+		.regulators = { "vdda-phy", "vdda-pll" },
- 		.clock = { "csiphy5", "csiphy5_timer" },
- 		.clock_rate = { { 400000000 },
- 				{ 300000000 } },
-@@ -918,7 +918,7 @@ static const struct camss_subdev_resources csiphy_res_8250[] = {
- static const struct camss_subdev_resources csid_res_8250[] = {
- 	/* CSID0 */
- 	{
--		.regulators = { "vdda-phy", "vdda-pll" },
-+		.regulators = {},
- 		.clock = { "vfe0_csid", "vfe0_cphy_rx", "vfe0", "vfe0_areg", "vfe0_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
-@@ -935,7 +935,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 	},
- 	/* CSID1 */
- 	{
--		.regulators = { "vdda-phy", "vdda-pll" },
-+		.regulators = {},
- 		.clock = { "vfe1_csid", "vfe1_cphy_rx", "vfe1", "vfe1_areg", "vfe1_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
-@@ -952,7 +952,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 	},
- 	/* CSID2 */
- 	{
--		.regulators = { "vdda-phy", "vdda-pll" },
-+		.regulators = {},
- 		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
-@@ -969,7 +969,7 @@ static const struct camss_subdev_resources csid_res_8250[] = {
- 	},
- 	/* CSID3 */
- 	{
--		.regulators = { "vdda-phy", "vdda-pll" },
-+		.regulators = {},
- 		.clock = { "vfe_lite_csid", "vfe_lite_cphy_rx", "vfe_lite",  "vfe_lite_ahb" },
- 		.clock_rate = { { 400000000 },
- 				{ 400000000 },
--- 
-2.45.2
+On 9/26/2024 12:06 AM, Vignesh Raman wrote:
+> Update the documentation to require linking to a relevant GitLab
+> issue for each new flake entry instead of an email report. Added
+> specific GitLab issue URLs for i915, xe and other drivers.
+> 
+> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> ---
+> 
+> v2:
+> - Add gitlab issue link for msm driver.
+> 
+> ---
+>   Documentation/gpu/automated_testing.rst | 16 +++++++++++-----
+>   1 file changed, 11 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
+> index 2d5a28866afe..f918fe56f2b0 100644
+> --- a/Documentation/gpu/automated_testing.rst
+> +++ b/Documentation/gpu/automated_testing.rst
+> @@ -67,20 +67,26 @@ Lists the tests that for a given driver on a specific hardware revision are
+>   known to behave unreliably. These tests won't cause a job to fail regardless of
+>   the result. They will still be run.
+>   
+> -Each new flake entry must be associated with a link to the email reporting the
+> -bug to the author of the affected driver, the board name or Device Tree name of
+> -the board, the first kernel version affected, the IGT version used for tests,
+> -and an approximation of the failure rate.
+> +Each new flake entry must include a link to the relevant GitLab issue, the board
+> +name or Device Tree name, the first kernel version affected, the IGT version used
+> +for tests and an approximation of the failure rate.
+>   
+>   They should be provided under the following format::
+>   
+> -  # Bug Report: $LORE_OR_PATCHWORK_URL
+> +  # Bug Report: $GITLAB_ISSUE
+>     # Board Name: broken-board.dtb
+>     # Linux Version: 6.6-rc1
+>     # IGT Version: 1.28-gd2af13d9f
+>     # Failure Rate: 100
+>     flaky-test
+>   
+> +The GitLab issue must include the logs and the pipeline link. Use the appropriate
+> +link below to create an issue.
+> +https://gitlab.freedesktop.org/drm/i915/kernel/-/issues for i915 driver
+> +https://gitlab.freedesktop.org/drm/xe/kernel/-/issues for xe driver
+> +https://gitlab.freedesktop.org/drm/msm/-/issues for msm driver
+> +https://gitlab.freedesktop.org/drm/misc/kernel/-/issues for other drivers
+> +
 
+Acked for MSM.
+
+Thanks
+
+Abhinav
+>   drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
+>   -----------------------------------------------------------
+>   
 
