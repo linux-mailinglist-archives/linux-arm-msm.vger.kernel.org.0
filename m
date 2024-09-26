@@ -1,131 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-32546-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C48DB986D5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 09:14:59 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id B34E8986D87
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 09:26:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC3431C21CCB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 07:14:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 22BDCB219FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 07:26:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7791F18C013;
-	Thu, 26 Sep 2024 07:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC27A188A37;
+	Thu, 26 Sep 2024 07:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ok067OnW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="M2HjjNSy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B0F188907;
-	Thu, 26 Sep 2024 07:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFFA5185B55;
+	Thu, 26 Sep 2024 07:26:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727334885; cv=none; b=SupGcanin5LXgHhsdM2XdBm47vGQ9fh8TruPtlyI4zhV4ENVT3Bl8clWOr4PSiMfhquuORmBx4H4RKPFdqgMVMAD18XZn9V8N92YUlV2mRr5GeQgsEjB7+/NK3uqZdOFrvbsM2EFWzJcIOJMDYvgAhWqWDfEAzfBakqO9uvN3ts=
+	t=1727335591; cv=none; b=WEFJGNLbooeTNxwpWg4C5C6ETgQC4paFDzH63ITVAB8kPTYO+mKrlXIcjKBP0Oq94cXp78bugcr3+JSCf/lxpmNsy/EgQylV4xADQPYHsiDwdaVczc7xhzdYAUXGnGr1F47Sbv01nnvP0OCT7FlV7xSF2aqmwxLjq/nPh/j4DXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727334885; c=relaxed/simple;
-	bh=s1QCm+M6EGtkn+pyLctXytbJXiAlK/xwoHv72CVj4vE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IaxG107C3v5W0hPv/orIug5WeNVUqXOcCTrtRFqwBSnN695cRjE6lRUtk0HT5V7wj80vJvP6CkPgFEJBWSV/cGT7I3kbzHss3f9k1I5byKKJj4FqMTaeQ1ewWbktVvG6FTWRp3iYu7+eBo9ERWjf3r055bjlku5sPu3gYiZDrLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ok067OnW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48PH5MB9032311;
-	Thu, 26 Sep 2024 07:14:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Z1k2Vp1xBbiHK3RyGJFubNyjnmminq8ylfJH4ImpPLE=; b=Ok067OnWo0/xyRRs
-	9EzexZGhwtsR+KZ7U10m93poUZh6FWqltLB/PWUwt4tQvShavdraCnxFFjQJFXNY
-	Z1OK8UFPb43R1kKG5WwUvpYq3qi5HZAWylVrLJkEooFJHIZpEIIU5DAlWym+hLMu
-	70X7FA6rUPCQpv7t3TKjcoYmYmFBHvrldmvMQKrf9qSuPfz0JOkt4sJuOY3WvlBu
-	nVUPV40t25BeMTvvzey/xWkfbs485eHZZuQsCxRt69i2RQbDWd/TyWkdeX3MtKPr
-	wE2CwjkN/ZeOsNwu4XZfJk9NRP0TQ3aETHflrL8+cDuF2y/FSnaujwkA+gZZop9Q
-	py7aVw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sp7upsf4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 07:14:27 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48Q7EPee026611
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 07:14:25 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 26 Sep
- 2024 00:14:19 -0700
-Message-ID: <3eee6f21-98fb-44ef-be19-75c4048a40ea@quicinc.com>
-Date: Thu, 26 Sep 2024 12:44:16 +0530
+	s=arc-20240116; t=1727335591; c=relaxed/simple;
+	bh=ePa5u/BcnZ/dATlftydtRiE5hN7gmuT0GTtjNoDiKEg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qAFyWVqFSYWmAOn0fzviFFeu5sQK1UwAGFs7IqiX12LqPPaSOK1DV5RQFYqm2UvdheDwWQOaxy5JjO/ceaPfDeWPSEsi1nw1fxfHQBH2nPF1qKj6/2y6a5t+oEouZiZz0GVUSJXhnTH7ahgaNTb9or8fiAdu2GrhdqHxXGXl5kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=M2HjjNSy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD8D4C4CEC5;
+	Thu, 26 Sep 2024 07:26:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727335590;
+	bh=ePa5u/BcnZ/dATlftydtRiE5hN7gmuT0GTtjNoDiKEg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=M2HjjNSyNaWEZ1yenHHEyui1RPMh8RJVBscCwUg+TXnkGbJouUPm2CIehBM3+Co6X
+	 VedGYDOORpYZqCXP1lA+ySO90Fwuu1ocnuaf/2z42w+C0bfF8oHdF9o/oTkHsVlwdt
+	 Bf9nj/u01qIShO0iWrBh8GkbROFRYw53rMgHLuBCyUdr+dM6Ch0H1hEOVk1h39MPXE
+	 7xLZP3vgb0rUT9712TiCXty9H7+EMJJ4XbeTqBu35iZX4CcMVSvlhmQeFt1qvfMBRR
+	 ugPSGU54cl34WqVGyPrygkOEOE89m5ePQQ98JoI1Rvhy/0rPTMoiMuolGmKpad2Y37
+	 nywPery26f36Q==
+Date: Thu, 26 Sep 2024 09:26:27 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Vignesh Raman <vignesh.raman@collabora.com>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com, 
+	helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch, robdclark@gmail.com, 
+	guilherme.gallo@collabora.com, sergi.blanch.torne@collabora.com, deborah.brouwer@collabora.com, 
+	dmitry.baryshkov@linaro.org, rodrigo.vivi@intel.com, linux-mediatek@lists.infradead.org, 
+	linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org, 
+	amd-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org, 
+	virtualization@lists.linux.dev, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] docs/gpu: ci: update flake tests requirements
+Message-ID: <20240926-athletic-gregarious-markhor-cc78ac@houat>
+References: <20240926070653.1773597-1-vignesh.raman@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] arm64: defconfig: Enable IPQ5424 SoC base configs
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <p.zabel@pengutronix.de>, <geert+renesas@glider.be>,
-        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <quic_varada@quicinc.com>
-References: <20240913121250.2995351-1-quic_srichara@quicinc.com>
- <20240913121250.2995351-9-quic_srichara@quicinc.com>
- <4dxqbm4uuuuht5db7kt6faz2pdeodn224hd34np322divs22ba@dzmjveze3b4f>
- <2a16d5a2-17a5-4988-8a25-34ac10ff3d08@quicinc.com>
- <h6ajhgv5rqabxupove4ge4253ywzbjyxoqq75c7ojmauudd3z5@hhhkbbzfmved>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <h6ajhgv5rqabxupove4ge4253ywzbjyxoqq75c7ojmauudd3z5@hhhkbbzfmved>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vSx9peXx521b_oqIPBe2zFZUbiPCPjwV
-X-Proofpoint-ORIG-GUID: vSx9peXx521b_oqIPBe2zFZUbiPCPjwV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=573 mlxscore=0 phishscore=0
- suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409260046
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="xmj2ly46kzbkkxma"
+Content-Disposition: inline
+In-Reply-To: <20240926070653.1773597-1-vignesh.raman@collabora.com>
 
 
+--xmj2ly46kzbkkxma
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 9/26/2024 3:01 AM, Dmitry Baryshkov wrote:
-> On Thu, Sep 26, 2024 at 12:34:56AM GMT, Sricharan Ramabadhran wrote:
->>
->>
->> On 9/13/2024 6:23 PM, Dmitry Baryshkov wrote:
->>> On Fri, Sep 13, 2024 at 05:42:50PM GMT, Sricharan R wrote:
->>>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>>>
->>>> Enable the clock and pinctrl configs for Qualcomm IPQ5332 SoC
->>>
->>> Please name the device rather than the platform. The defconfig affects
->>> all users, so it should be justified.
->>>
->> Sorry, to understand correctly, you mean to use the board name here ?
-> 
-> Yes, the board which is generally accessible, if possible. You are
-> increasing kernel size for everybody using defconfig, so at least it
-> should be obvious, who is benefiting from that.
-> 
+On Thu, Sep 26, 2024 at 12:36:49PM GMT, Vignesh Raman wrote:
+> Update the documentation to require linking to a relevant GitLab
+> issue for each new flake entry instead of an email report. Added
+> specific GitLab issue URLs for i915, xe and other drivers.
+>=20
+> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> ---
+>=20
+> v2:
+> - Add gitlab issue link for msm driver.
+>=20
+> ---
+>  Documentation/gpu/automated_testing.rst | 16 +++++++++++-----
+>  1 file changed, 11 insertions(+), 5 deletions(-)
+>=20
+> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/=
+automated_testing.rst
+> index 2d5a28866afe..f918fe56f2b0 100644
+> --- a/Documentation/gpu/automated_testing.rst
+> +++ b/Documentation/gpu/automated_testing.rst
+> @@ -67,20 +67,26 @@ Lists the tests that for a given driver on a specific=
+ hardware revision are
+>  known to behave unreliably. These tests won't cause a job to fail regard=
+less of
+>  the result. They will still be run.
+> =20
+> -Each new flake entry must be associated with a link to the email reporti=
+ng the
+> -bug to the author of the affected driver, the board name or Device Tree =
+name of
+> -the board, the first kernel version affected, the IGT version used for t=
+ests,
+> -and an approximation of the failure rate.
+> +Each new flake entry must include a link to the relevant GitLab issue, t=
+he board
+> +name or Device Tree name, the first kernel version affected, the IGT ver=
+sion used
+> +for tests and an approximation of the failure rate.
+> =20
+>  They should be provided under the following format::
+> =20
+> -  # Bug Report: $LORE_OR_PATCHWORK_URL
+> +  # Bug Report: $GITLAB_ISSUE
+>    # Board Name: broken-board.dtb
+>    # Linux Version: 6.6-rc1
+>    # IGT Version: 1.28-gd2af13d9f
+>    # Failure Rate: 100
+>    flaky-test
+> =20
+> +The GitLab issue must include the logs and the pipeline link. Use the ap=
+propriate
+> +link below to create an issue.
+> +https://gitlab.freedesktop.org/drm/i915/kernel/-/issues for i915 driver
+> +https://gitlab.freedesktop.org/drm/xe/kernel/-/issues for xe driver
+> +https://gitlab.freedesktop.org/drm/msm/-/issues for msm driver
+> +https://gitlab.freedesktop.org/drm/misc/kernel/-/issues for other drivers
+> +
 
-ok, will fix subject description accordingly.
+I can't comment for the others, but drm-misc at least still requires
+reporting issues by mail, so, no, sorry, we can't switch to gitlab only
+for now.
 
-Regards,
-  Sricharan
+Maxime
+
+--xmj2ly46kzbkkxma
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZvUMowAKCRAnX84Zoj2+
+dmrwAXwJooR80dwdvsWLwVqq5T8Tn9xQ8jXG5egqf3JJs5K3KqLQK01ARZoz96es
+RPNQmi8BgI1h2/qRTFQd2zqn7QgKcGKOtkv4Yc4dQqncavbg/HkcoYrbjgDyP6za
+D5kG4mEAOg==
+=hh9h
+-----END PGP SIGNATURE-----
+
+--xmj2ly46kzbkkxma--
 
