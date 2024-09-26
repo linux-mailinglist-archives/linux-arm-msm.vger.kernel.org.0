@@ -1,161 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-32623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87632987B74
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 01:02:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54C9A987B7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 01:11:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E4E0AB21D7A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 23:01:58 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BFC501F23BBB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 23:11:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 160E715B98E;
-	Thu, 26 Sep 2024 23:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 252F2188CC4;
+	Thu, 26 Sep 2024 23:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L1VGlq0y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TGbd8ZBp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ED2282FA;
-	Thu, 26 Sep 2024 23:01:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4428282FA;
+	Thu, 26 Sep 2024 23:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727391713; cv=none; b=euNpHHkwPvoO7MB2QH1UA0mmC/AMqVZpl5ugwzUMB7ksQmkghk5z0LJTTSsFUVtzQU1LCCqBKLjOlyy7JiJt8a9IzgtCLilbAPGBhkdIC3XQHr+pcmp6O8PrU5CwoWqbejTQqsYLCvX6Dzl7jHjWmqPb6SmyLnvDKIbSXYCcuUQ=
+	t=1727392265; cv=none; b=C68ZoAWxZvLuPGshijcQY1J90HH++YBCYLPonxVondONGHj5tDO955VFqhUjNtqOW0H2L2/z1cjvL0PM/8D6ajL731svv0Fji8BTaIGtxTSLkKNoxDoIW+a+Nm7sETYTX67v4MgvaXjwDIRC+j0C8c29Ls0e0Z7fjiCeWT45OdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727391713; c=relaxed/simple;
-	bh=ctGRqkZQnL3iwsaJbEOPs/nL6DqatorLsyNrJPJi188=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=TYhjU3XWxqkAKqkzSNYi1VSIXjvkFBgSscmJvRJvxsm8OFdq8JxdLtf9j8we7tvtKFUoLhj0YjhlxIFDkV+X/aalNOwvYpZvkYoGX0DEzxiqSOwLCiFpy5iIurlpK+SNsXnZDeGJsd3X1pbked+LCFLQq99vo9sTfSZHnSXmlag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L1VGlq0y; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG9mG7026541;
-	Thu, 26 Sep 2024 23:01:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	bDhnhxaLSsQjl7xe4xa9yaUsNXJSZfAHaDNanf+MtVA=; b=L1VGlq0yeiNIwbWD
-	rauKzq2Npx92dXPG2lryye+al+tOxfhhN9iKJfacVJR0/J9ZOC2Ca7DN7ICbUYt1
-	fd4qRogLR3EGLww/vfyLSqOejT9EajrE2A4iisWpTarlDlidDX0maKIrT5eDLFVz
-	EHFs9NRc8SDF9/aJpM/CMuI2RRDpbY+x/l8hBLB0nNXc2BZR04bDnvfaknKCBwIL
-	RTt//+k6m9HJrAjlWIWNfwSTRTNP5kig2z1sIvdnOBZ5IYeHPKhgBbRgtouVydox
-	jyH5jDY0utWXZKkcxK+lhUtyxGRpLtfKMn8Mqb16HuZ5klrQkfH5H3FPgK/g6reY
-	2ac6hg==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sn5c151y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 23:01:30 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48QN1TuF007471
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 26 Sep 2024 23:01:29 GMT
-Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 26 Sep
- 2024 16:01:27 -0700
-Message-ID: <e9f38fe1-10fb-49ad-b209-0e2786ec6f94@quicinc.com>
-Date: Thu, 26 Sep 2024 16:01:27 -0700
+	s=arc-20240116; t=1727392265; c=relaxed/simple;
+	bh=NuXoVhn/VY+NPvAHUjvVhb/s+/ZUMmU0/sKk5sKHH5E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ORQ6Z+0AtwrzoLmToQYxBMVSUrgQShYJYlBqMZW8yvWyF2uVyaO7iJ+sET50MbTjQxOUuJJznkt9zZy9cweCJ4R15c15ACRmXiHo4TZn1yp5UdcSmcIcmraLhrnTNbMZZGagJGOQyCfK2sj5GRbIMW6qfzRRL+IvIeY5smEadHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TGbd8ZBp; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-205722ba00cso14302485ad.0;
+        Thu, 26 Sep 2024 16:11:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727392263; x=1727997063; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/y2BsseFbccHmDcBudLCv67s4148Sh1VXV/ChQXGYK4=;
+        b=TGbd8ZBptuOHkpTcGxZ78TQxMRdBePiy/J3wXSPkgbyqAfIf2/9Vy4SniRlSWaRCMA
+         r2uH6wAHzo1GfTqUMPwpiGTetBelyrDnmXIsF6ipggzuOCDAPFaeSdvOjYNrznMHhwD1
+         u39wSMcsSXr42nljujOqt2dLmiWEvFgD+lUqdXQL4qSCQraS679n9BqKSZDFLApatoxP
+         lDFULp7JwUyYQ5wJjE9bwYcvf343KBM3uKHDs4mA52BcI/HCjnfjVMiIO7H+5Ci5ycJL
+         pZqk119MCldlrwzfIJXphssZZxqS7yvOJPoDfetOamDQQSOzMZfJncN0PZKUQ5FN83mF
+         0Gqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727392263; x=1727997063;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/y2BsseFbccHmDcBudLCv67s4148Sh1VXV/ChQXGYK4=;
+        b=sXy+R9COEaOoVyO1myZjRhR/RTfE3b+G4NqPKIEGUq5J1mi2nC18LJJ9zhfcn5boXZ
+         YEbAkqfpRk5zWlgnfe6OFiF4EBC54RRUlaboCUynqLOZJJ9Xpzj1dJ2b4fYk3kryU5m+
+         lKBYvSSY6u0T8lPLR0NpBEdTxReTTaFPhzX8Be4ULuDkoLvmCuLUI+zvEfY+TPJ8e+AE
+         zJ1vyWEEIGGkG9wY2P+DFkxL/bDs6aZsK3j2yNeECyNwo7QydV4BSBIhv5rzclFMLV/i
+         j7MlmVcOk3j6HgBrtxpHIfrWuPBWPe6GVFrAPSLyFkCL/Q0wb3KkxgQxliV6yCrDHmi6
+         bJZg==
+X-Forwarded-Encrypted: i=1; AJvYcCVm4TxZ/cRTgAMzC4+xW+tAITILDhg8HVrwCR2huHIyLu+foZjWIoQOyn5MfJ33+mPYRWWM+uHqYFhm74Ke@vger.kernel.org, AJvYcCW608YF+fkQsZCuhVAfJGMSR/Qo/tMK+vp3jyCwWa4inBxr9jh7P8kwg0R5gv6zfIRXAnBR7O4GGF03JpD5@vger.kernel.org
+X-Gm-Message-State: AOJu0YziotmcxJZ/ns4cJBuDUsJOSYK2GhlEj/rkBAdsqpqkELf3ZWJl
+	Q+jCz9r2is9UBMh5h9RyG9s0wKIp3pyRg2ZqOpu7bE3f7P+eMxUR
+X-Google-Smtp-Source: AGHT+IGLam89J49X5qsrqBE917oVUuFFnXPspoREaoDTh5bTOHMqF7m7+/wPp87hWJ8RPvmwzdipOA==
+X-Received: by 2002:a17:902:e889:b0:206:b1fa:ccbb with SMTP id d9443c01a7336-20b367ca001mr18573935ad.9.1727392262881;
+        Thu, 26 Sep 2024 16:11:02 -0700 (PDT)
+Received: from localhost.localdomain (111-240-71-161.dynamic-ip.hinet.net. [111.240.71.161])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20b37e14dd7sm3268375ad.138.2024.09.26.16.11.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Sep 2024 16:11:02 -0700 (PDT)
+From: Min-Hua Chen <minhuadotchen@gmail.com>
+To: Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Min-Hua Chen <minhuadotchen@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] regulator: qcom-smd: make smd_vreg_rpm static
+Date: Fri, 27 Sep 2024 07:10:36 +0800
+Message-ID: <20240926231038.31916-1-minhuadotchen@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] docs/gpu: ci: update flake tests requirements
-To: Vignesh Raman <vignesh.raman@collabora.com>,
-        <dri-devel@lists.freedesktop.org>
-CC: <daniels@collabora.com>, <helen.koike@collabora.com>, <airlied@gmail.com>,
-        <daniel@ffwll.ch>, <robdclark@gmail.com>,
-        <guilherme.gallo@collabora.com>, <sergi.blanch.torne@collabora.com>,
-        <deborah.brouwer@collabora.com>, <dmitry.baryshkov@linaro.org>,
-        <mripard@kernel.org>, <rodrigo.vivi@intel.com>,
-        <linux-mediatek@lists.infradead.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-rockchip@lists.infradead.org>, <amd-gfx@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>, <intel-gfx@lists.freedesktop.org>,
-        <virtualization@lists.linux.dev>, <linux-kernel@vger.kernel.org>
-References: <20240926070653.1773597-1-vignesh.raman@collabora.com>
-Content-Language: en-US
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20240926070653.1773597-1-vignesh.raman@collabora.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: pSkChFDu4ef4NamDTDMy0qtaNpRfUdmK
-X-Proofpoint-GUID: pSkChFDu4ef4NamDTDMy0qtaNpRfUdmK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 adultscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
- spamscore=0 mlxscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409260160
+Content-Transfer-Encoding: 8bit
 
+Since smd_vreg_rpm is used only in
+drivers/regulator/qcom_smd-regulator.c, make it static and fix the
+following sparse warning:
 
+drivers/regulator/qcom_smd-regulator.c:14:21: sparse: warning:
+symbol 'smd_vreg_rpm' was not declared. Should it be static?
 
-On 9/26/2024 12:06 AM, Vignesh Raman wrote:
-> Update the documentation to require linking to a relevant GitLab
-> issue for each new flake entry instead of an email report. Added
-> specific GitLab issue URLs for i915, xe and other drivers.
-> 
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
-> ---
-> 
-> v2:
-> - Add gitlab issue link for msm driver.
-> 
-> ---
->   Documentation/gpu/automated_testing.rst | 16 +++++++++++-----
->   1 file changed, 11 insertions(+), 5 deletions(-)
-> 
-> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
-> index 2d5a28866afe..f918fe56f2b0 100644
-> --- a/Documentation/gpu/automated_testing.rst
-> +++ b/Documentation/gpu/automated_testing.rst
-> @@ -67,20 +67,26 @@ Lists the tests that for a given driver on a specific hardware revision are
->   known to behave unreliably. These tests won't cause a job to fail regardless of
->   the result. They will still be run.
->   
-> -Each new flake entry must be associated with a link to the email reporting the
-> -bug to the author of the affected driver, the board name or Device Tree name of
-> -the board, the first kernel version affected, the IGT version used for tests,
-> -and an approximation of the failure rate.
-> +Each new flake entry must include a link to the relevant GitLab issue, the board
-> +name or Device Tree name, the first kernel version affected, the IGT version used
-> +for tests and an approximation of the failure rate.
->   
->   They should be provided under the following format::
->   
-> -  # Bug Report: $LORE_OR_PATCHWORK_URL
-> +  # Bug Report: $GITLAB_ISSUE
->     # Board Name: broken-board.dtb
->     # Linux Version: 6.6-rc1
->     # IGT Version: 1.28-gd2af13d9f
->     # Failure Rate: 100
->     flaky-test
->   
-> +The GitLab issue must include the logs and the pipeline link. Use the appropriate
-> +link below to create an issue.
-> +https://gitlab.freedesktop.org/drm/i915/kernel/-/issues for i915 driver
-> +https://gitlab.freedesktop.org/drm/xe/kernel/-/issues for xe driver
-> +https://gitlab.freedesktop.org/drm/msm/-/issues for msm driver
-> +https://gitlab.freedesktop.org/drm/misc/kernel/-/issues for other drivers
-> +
+No functional changes intended.
 
-Acked for MSM.
+Fixes: 5df3b41bd6b5 ("regulator: qcom_smd: Keep one rpm handle for all vregs")
+Signed-off-by: Min-Hua Chen <minhuadotchen@gmail.com>
+---
+ drivers/regulator/qcom_smd-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks
+diff --git a/drivers/regulator/qcom_smd-regulator.c b/drivers/regulator/qcom_smd-regulator.c
+index 28e7ce60cb61..25ed9f713974 100644
+--- a/drivers/regulator/qcom_smd-regulator.c
++++ b/drivers/regulator/qcom_smd-regulator.c
+@@ -11,7 +11,7 @@
+ #include <linux/regulator/of_regulator.h>
+ #include <linux/soc/qcom/smd-rpm.h>
+ 
+-struct qcom_smd_rpm *smd_vreg_rpm;
++static struct qcom_smd_rpm *smd_vreg_rpm;
+ 
+ struct qcom_rpm_reg {
+ 	struct device *dev;
+-- 
+2.43.0
 
-Abhinav
->   drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
->   -----------------------------------------------------------
->   
 
