@@ -1,120 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-32597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E19F49875DF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 16:45:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D00C2987711
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 17:56:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C96FB214D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 14:45:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8D141C25A74
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Sep 2024 15:56:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A2BA14A4E9;
-	Thu, 26 Sep 2024 14:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2614C1581F3;
+	Thu, 26 Sep 2024 15:56:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VeyTd9R8"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L8eY9ljI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE704142621
-	for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 14:45:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE5614B086;
+	Thu, 26 Sep 2024 15:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727361917; cv=none; b=Ow7IuyvxoOxvbxNF5/qTz5bkXl0yWb5fkDI/ulKGUSS3CsQaQXlO9TQPWiUBxY3IdIoY+Vc7nGyDOlOhBmxxGFdrqPJ5oj2qTTq6y3FkORvvyYRWhdmGlO3byc49xFjcLbxbSLohCrCQnL8LclspT0EYkWxbQmaCNr/v3AaJKgE=
+	t=1727366203; cv=none; b=RU5/q47I9cGC23ldMqhcfqLHE8VTNySIDGE7FFJ1D2JUb32TG9UBvMVQ1ympjgsujZSisqtiGCf2htsnFtA7D1W10YlvdecohlD0sI5Y68Lbbks+8tWA1vpcokIwWlmXu17XbgeYEXB6YxtrbvwUzlz0Vs305wkeLvKAYNOsXbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727361917; c=relaxed/simple;
-	bh=dsumOzFDfuh/PYFlQ5fBlwa0itLqF681cpqOcUvtv+0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hnWIMIqK6Y39+ZODhU1QeVKd6+1vB9iN3/RRap0yek2eSU/kgCQm5LooPACN9HBmMX3DCANJ4SDClshtPgQbT/SXJ+rz6WtKNNOEA529MSWP7R6QH8uqwKLJdNpE3hnigEM9avgiWLwyEhFjd4VDAKjYWywOadxTcFJPmjEzggM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VeyTd9R8; arc=none smtp.client-ip=209.85.208.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2f761461150so16837451fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Sep 2024 07:45:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1727361914; x=1727966714; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UUk5GqFsvnt8aibuoucXH3mgAlXQnT7Fu6sM4Odfi8U=;
-        b=VeyTd9R8+cruMSRIYlvO1L1twVFDeN8tss4OomfqAArVdxqGg5rlNP6/dJTdyfu6V3
-         hBKl0fkg0OuRoNnW63/VeLvk9B7em36Cbcnf2Gqp0/4BJBn67uvQv+ry8hFi5yDSjsIc
-         a8GEHDLtx83lBr4KcH8WHijTHKP8MtiCRHURjyDSGurE/OL6/lpPk1QxqVf8EiHx0yZz
-         TNVzZ3pDHrxw7mhaAX45p5GVd9rTkNk/1N3FlqBl5y1AreZfVYwwT+srqanbuS6g/v0f
-         fU5CB0OLI9I9lxOKOEvBd+ntYRVtMlLO8Iq/FKzmdsk+ivGluF7Kent+Kwap0IKHHHBN
-         HYWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727361914; x=1727966714;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UUk5GqFsvnt8aibuoucXH3mgAlXQnT7Fu6sM4Odfi8U=;
-        b=As8w5WQ5zBaUtmAU/RRifit5Qlgp6iDtM9QVg4ci2royFOTgOWpMsg7CkkKReeU8n8
-         CC4QOyds6lCqzvWSqh9D3VwnxcgVWDH1ZyEpNCzPr4voqMQT1UCprLbBGHdC4wMOek7d
-         VjgIYyNWiCIbkTM9ogd4JHqWWS6H5c/KbOIzGOA0eoQzrF++gVEzt6XCMXtbLrwYzCOL
-         KTcUR8faGKAiOlkcQKCVpEkfGl/9m5Ehs16BgAVPhCcm3kZOOKYo4qlS9eRXxuJhw8PI
-         Equ4b/xV9yW/G7KH3HbWgRtH63/XHZ96t+tPQlE7FcH7YTABu+D53Z9OlVMXBpwitIFo
-         7FLw==
-X-Forwarded-Encrypted: i=1; AJvYcCVLhKMBsRwykwK9FABRGowW3Eyn801e49BJgHDUtQevjwYqkEw2jPtk/qbgfVqI3la7tuPjUCITocm4Y6nm@vger.kernel.org
-X-Gm-Message-State: AOJu0YzzZyef+n4xYXjWUwmsqQprDc+EJiEP/TID6tKJcn3NG6XLIKJM
-	vmrdcHC34O7luAmxPOkFVUScc6rFsQ5r6KVfm1lDLzs7tHk+ZMa81llrQE/e/0pajE/35vlnRA8
-	MuVFMcjW+aSNSzpwxxxO0wZhWyOuqCl+NsausfQ==
-X-Google-Smtp-Source: AGHT+IFBiLue3QFOk1WR26MRKOBV5299+r2MgZ52axZ/Ki/sFLcqtDTCw32+oxmnpnFn89KL/PCW6zIy0IG54nMMM54=
-X-Received: by 2002:a2e:4a0a:0:b0:2f7:6869:3b55 with SMTP id
- 38308e7fff4ca-2f9cd40052emr9790031fa.21.1727361913927; Thu, 26 Sep 2024
- 07:45:13 -0700 (PDT)
+	s=arc-20240116; t=1727366203; c=relaxed/simple;
+	bh=fq7JZuKMvGwlG0zOURKKpBi6IDM8NnPtCmgJXstoMqQ=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y5j0SnfwuNBX5w4u8Zdd+eZHHrvDPMmfVsJeCKtxRViby2D0uVZ4NJeEM/uwmT+b8FB3cAF3UuoE22/prz5jhSc2EbH21GET39KuZm6j452CWU73qmKCczLxbfhmiZywWToBPfXVuL8iWmjteNXRuYgpia3seh6jCrGaMZQn4j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L8eY9ljI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48Q9fJH0021497;
+	Thu, 26 Sep 2024 15:56:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=r0Y0efsoMElBDcZQJXlIL64S
+	UPCW9t0wz/gYXRupPgc=; b=L8eY9ljIVSSqoZrIiN+DyY1qg34PvsZBZZXZfwyH
+	JczP8rh9H/8CWl7w1oJox0Xx1IM+R0GwLt2nMjn70FS5IZnwpAyHU/P+e7i67E7o
+	eC8bRvCHq5wPvQCEpRMExm5D74h+/1HXnIlt3jX+6Lgknhn4smsv5/HnuUQz+ekZ
+	5ihw2Mc/1CImA7nVMTH/EtPorqyuz5/JHSCP6PNUYoH3KGZd+/8kF8qJAjWMS6/x
+	YUgeIWQZ1UddePFxsqT3FGeMALTTWA85hppQOtpB917PwhxVjo6OmRDaORK4bNZp
+	GWVG4z1d1l5S8v0LbnvDli9h7Vm9UV52d6ww75kYyO/BSA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sqe9fw3n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Sep 2024 15:56:24 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48QFuN93002570
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 26 Sep 2024 15:56:23 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 26 Sep 2024 08:56:19 -0700
+Date: Thu, 26 Sep 2024 21:26:15 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Rob Clark <robdclark@gmail.com>
+CC: <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <freedreno@lists.freedesktop.org>, Connor Abbott <cwabbott0@gmail.com>,
+        "Rob
+ Clark" <robdclark@chromium.org>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Daniel
+ Vetter" <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] drm/msm/a6xx+: Insert a fence wait before SMMU table
+ update
+Message-ID: <20240926155615.y33wehbowzg57c32@hu-akhilpo-hyd.qualcomm.com>
+References: <20240913195132.8282-1-robdclark@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org>
- <20240906-wrapped-keys-v6-6-d59e61bc0cb4@linaro.org> <fc780dc2-5a69-48d8-8caa-ca2ee97d10ef@kernel.org>
-In-Reply-To: <fc780dc2-5a69-48d8-8caa-ca2ee97d10ef@kernel.org>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 26 Sep 2024 16:45:01 +0200
-Message-ID: <CAMRc=Md3itY5N1gErL-VDAz0qW6DrHPKpXzT6kNwc2HVfvchpA@mail.gmail.com>
-Subject: Re: [PATCH v6 06/17] firmware: qcom: scm: add a call for deriving the
- software secret
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>, Alasdair Kergon <agk@redhat.com>, 
-	Mike Snitzer <snitzer@kernel.org>, Mikulas Patocka <mpatocka@redhat.com>, 
-	Adrian Hunter <adrian.hunter@intel.com>, Asutosh Das <quic_asutoshd@quicinc.com>, 
-	Ritesh Harjani <ritesh.list@gmail.com>, Ulf Hansson <ulf.hansson@linaro.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Avri Altman <avri.altman@wdc.com>, 
-	Bart Van Assche <bvanassche@acm.org>, 
-	"James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>, 
-	"Martin K. Petersen" <martin.petersen@oracle.com>, Eric Biggers <ebiggers@kernel.org>, 
-	"Theodore Y. Ts'o" <tytso@mit.edu>, Jaegeuk Kim <jaegeuk@kernel.org>, 
-	Alexander Viro <viro@zeniv.linux.org.uk>, Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
-	Bjorn Andersson <andersson@kernel.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, linux-block@vger.kernel.org, 
-	linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org, 
-	linux-scsi@vger.kernel.org, linux-fscrypt@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20240913195132.8282-1-robdclark@gmail.com>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: es8GdKCSvMSM_g_AwFDUC2KyHS-qFbTW
+X-Proofpoint-GUID: es8GdKCSvMSM_g_AwFDUC2KyHS-qFbTW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=999 spamscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409260111
 
-On Mon, Sep 9, 2024 at 1:23=E2=80=AFPM Konrad Dybcio <konradybcio@kernel.or=
-g> wrote:
-> > +
-> > +     memzero_explicit(secret_buf, sw_secret_size);
-> > +
-> > +out_free_wrapped:
->
-> Is there a reason to zero out the buffer that's being zero-allocated?
->
+On Fri, Sep 13, 2024 at 12:51:31PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> The CP_SMMU_TABLE_UPDATE _should_ be waiting for idle, but on some
+> devices (x1-85, possibly others), it seems to pass that barrier while
+> there are still things in the event completion FIFO waiting to be
+> written back to memory.
+> 
+> Work around that by adding a fence wait before context switch.  The
+> CP_EVENT_WRITE that writes the fence is the last write from a submit,
+> so seeing this value hit memory is a reliable indication that it is
+> safe to proceed with the context switch.
+> 
+> Closes: https://gitlab.freedesktop.org/drm/msm/-/issues/63
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-It's my understanding that it is a good practice in crypto routines to
-immediately and explicitly zero out the memory used for storing
-secrets.
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
-Bart
+-Akhil
+
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 14 +++++++++++---
+>  1 file changed, 11 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index bcaec86ac67a..ba5b35502e6d 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -101,9 +101,10 @@ static void get_stats_counter(struct msm_ringbuffer *ring, u32 counter,
+>  }
+>  
+>  static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+> -		struct msm_ringbuffer *ring, struct msm_file_private *ctx)
+> +		struct msm_ringbuffer *ring, struct msm_gem_submit *submit)
+>  {
+>  	bool sysprof = refcount_read(&a6xx_gpu->base.base.sysprof_active) > 1;
+> +	struct msm_file_private *ctx = submit->queue->ctx;
+>  	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+>  	phys_addr_t ttbr;
+>  	u32 asid;
+> @@ -115,6 +116,13 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+>  	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
+>  		return;
+>  
+> +	/* Wait for previous submit to complete before continuing: */
+> +	OUT_PKT7(ring, CP_WAIT_TIMESTAMP, 4);
+> +	OUT_RING(ring, 0);
+> +	OUT_RING(ring, lower_32_bits(rbmemptr(ring, fence)));
+> +	OUT_RING(ring, upper_32_bits(rbmemptr(ring, fence)));
+> +	OUT_RING(ring, submit->seqno - 1);
+> +
+>  	if (!sysprof) {
+>  		if (!adreno_is_a7xx(adreno_gpu)) {
+>  			/* Turn off protected mode to write to special registers */
+> @@ -193,7 +201,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>  	struct msm_ringbuffer *ring = submit->ring;
+>  	unsigned int i, ibs = 0;
+>  
+> -	a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
+> +	a6xx_set_pagetable(a6xx_gpu, ring, submit);
+>  
+>  	get_stats_counter(ring, REG_A6XX_RBBM_PERFCTR_CP(0),
+>  		rbmemptr_stats(ring, index, cpcycles_start));
+> @@ -283,7 +291,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+>  	OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
+>  	OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);
+>  
+> -	a6xx_set_pagetable(a6xx_gpu, ring, submit->queue->ctx);
+> +	a6xx_set_pagetable(a6xx_gpu, ring, submit);
+>  
+>  	get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
+>  		rbmemptr_stats(ring, index, cpcycles_start));
+> -- 
+> 2.46.0
+> 
 
