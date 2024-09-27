@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12EE19884F4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 14:32:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F00239885FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 15:02:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0A5C2831F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 12:32:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6A9871F21136
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 13:02:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D7DE18C003;
-	Fri, 27 Sep 2024 12:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B11E018C907;
+	Fri, 27 Sep 2024 13:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SO0H9kP9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XG+nKQ2g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745413C3C;
-	Fri, 27 Sep 2024 12:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DE116C6A1;
+	Fri, 27 Sep 2024 13:02:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727440349; cv=none; b=DfIRoGQ3TCsRYyftdkAgIShlFsS/Hs6LFQgKX1ZGzWbRjg9mi0X/IdFqqxigCfsOQRo15pnq4Clnd1J9eTDkgKaWhVFWIV3LDVECGGCHddaLE1dfL6GpwpDBsFERPyxaa3KuYNML7dyr4WrK9IOn8RN8geVJ4RUE0HWtJyLdEs8=
+	t=1727442163; cv=none; b=F1PRB8d4KKpT4C8xwk3YdluiTrEpQUrRiu8Of6lrZDnxYxDMPv3X+IBICybWIzSd1I9yu94AiYH41Ob2y+MLZu4UcTZXB8X14c07SzX7WpAMjCQFb/lBtBWteMc7+2XY1C02YBm371gaANIo0Ggkletyazy/t0lAyRAsVPlRSuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727440349; c=relaxed/simple;
-	bh=Vr2od9I8KmP8ZZgSdu4bDmiFAz0gV+JBRg1M/m3NWTU=;
+	s=arc-20240116; t=1727442163; c=relaxed/simple;
+	bh=quDg/WTHOUWxyG4wdkg0y+YyZgY3G7BZqKrSLPoqeYY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GCi8qZntv6XA1PSS2iRHxP59WDih2vPa6qKOfMC3BBezHKc3MVMBCSIZIqRI9TJMuCd33s2Vzz2NAFcU/WPag1PFGOIHj7Olaj4tTw/Y/a3kK4MRC3KUxJYhrW14MKd090+oVuR+FXGBFSV4FeO3cM2bpRMMXrii0thtAF4ZC0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SO0H9kP9; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=qXA0OwWeeS3CBwXtsLFyJMZXQB8r4LLYi0ykTbQAY+SOf+qNED9a5viyM5Aq24cN6Nnhx4Eop3ZCse1ZGKDRkW2YaSq028Ba6iEln3qHhmrsQ4mQHam8JP9cKt0wsByhHwcMJFXXLY8/NKBSzKNVM5eJckXAGDqbPuHQcAr6pgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XG+nKQ2g; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48R6mkJo002675;
-	Fri, 27 Sep 2024 12:32:23 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48RD04qW026375;
+	Fri, 27 Sep 2024 13:02:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Fd3m0LHZbGPCb3F2fnwV/5uC9cpanAPfAVRzgVQVOk4=; b=SO0H9kP9udoIH6SK
-	s+WRIpuHhNA8Ptqv2UiADQghHw0i6frRoSOuWkvtrD6Mz2zKqsveqE+qSH5hvfLD
-	YHOn/EixmQSzktSq3OryMKO/v+VCpyzELcM0DLAOa0j8s+Xv+POxCJ3I3Igo8QdD
-	SIbpnx0D0Z0FMbuI7VHKUgZb/wrgzf/88xohF66XdNrgpTrpiqxnJnMwuGIa8o2/
-	OY2lMtAcLCCUbfV8P9NvY+ohosznTYobsj9v0V1UTakPg1giWgsEK3UO5Hhs37GA
-	VPI48rJO4pN5bcE7kyAxEH7co3le6bbJ5+AO7BZNIJvuKlvfNPhVgf9Nx1TSORvk
-	vVC3gw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sph738gb-1
+	4cB22I4o+uZPMHUCsQ4G8pU+CQy1I+qeGUQIDjJ0fEM=; b=XG+nKQ2gifreiJ6e
+	TrD+NHXiW3Kkp8kO01CkA6t8DvaOmE4hKrLs/LkbLEc5hySfITd6U9Ds4m2C03ad
+	GEtZl6i2F/xcMDBE0Fws3tEzZvE1x8y9AKDjQySqohD2uLHpr7KHLsFl0U262Grq
+	odvUokH01gKvZY3jDSlq5i8FoSwGjMdW7E0ZSW2nWBC4M6nlDxQQYHcZEpb+Ded8
+	TEqRyoltyIVYWKiuuoIhtF0yBA8L9qy076fmSOk5tse2DT9xmsllaa5kq368HZlt
+	fG1FK+p2Zfk5V93mT4T/37hGe3ynzYOHL/e4biUeBdcUtDtpC7eoksoPOB/KOagk
+	+/F4jA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41ww7080d6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Sep 2024 12:32:22 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48RCWLRQ029028
+	Fri, 27 Sep 2024 13:02:22 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48RD2L0o027936
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Sep 2024 12:32:21 GMT
-Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+	Fri, 27 Sep 2024 13:02:21 GMT
+Received: from [10.50.40.232] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 27 Sep
- 2024 05:32:18 -0700
-Message-ID: <46f745e1-cb95-443c-803d-7bc838160d5a@quicinc.com>
-Date: Fri, 27 Sep 2024 18:02:15 +0530
+ 2024 06:02:13 -0700
+Message-ID: <64c24ac5-f689-4226-8f28-1f597aa3b892@quicinc.com>
+Date: Fri, 27 Sep 2024 18:32:10 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,174 +65,107 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i2c: i2c-qcom-geni: Serve transfer during early resume
- stage
-To: Bjorn Andersson <quic_bjorande@quicinc.com>
-CC: <konrad.dybcio@linaro.org>, <andersson@kernel.org>,
-        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <quic_vdadhani@quicinc.com>, <vkoul@kernel.org>
-References: <20240402102741.128424-1-quic_msavaliy@quicinc.com>
- <ZuOpTjumRYAZTSXj@hu-bjorande-lv.qualcomm.com>
+Subject: Re: [PATCH V2 2/9] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
+ binding
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <p.zabel@pengutronix.de>, <geert+renesas@glider.be>,
+        <dmitry.baryshkov@linaro.org>, <neil.armstrong@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-mmc@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <quic_varada@quicinc.com>
+References: <20240927065244.3024604-1-quic_srichara@quicinc.com>
+ <20240927065244.3024604-3-quic_srichara@quicinc.com>
+ <ruti7hmkxkayzmqfbme6rw6j2vbhlx4ul4ptcckwamcpd4cyfx@owufhxwpvlcj>
 Content-Language: en-US
-From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-In-Reply-To: <ZuOpTjumRYAZTSXj@hu-bjorande-lv.qualcomm.com>
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <ruti7hmkxkayzmqfbme6rw6j2vbhlx4ul4ptcckwamcpd4cyfx@owufhxwpvlcj>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: q5zCTO7-KRn9e-Kkxpk7d6zX_7quFU3L
-X-Proofpoint-ORIG-GUID: q5zCTO7-KRn9e-Kkxpk7d6zX_7quFU3L
+X-Proofpoint-GUID: j_Hh1pZZyt3a_TVkV6tK8IgFT9N0cvtO
+X-Proofpoint-ORIG-GUID: j_Hh1pZZyt3a_TVkV6tK8IgFT9N0cvtO
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- impostorscore=0 bulkscore=0 spamscore=0 clxscore=1015 mlxlogscore=999
- mlxscore=0 adultscore=0 phishscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409270090
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ mlxlogscore=999 priorityscore=1501 impostorscore=0 adultscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409270094
 
-Hi Bjorn,
 
-On 9/13/2024 8:24 AM, Bjorn Andersson wrote:
-> On Tue, Apr 02, 2024 at 03:57:41PM +0530, Mukesh Kumar Savaliya wrote:
->> pm_runtime_get_sync() function fails during PM early resume and returning
->> -EACCES because runtime PM for the device is disabled at the early stage
->> causing i2c transfer to fail. Make changes to serve transfer with force
->> resume.
+
+On 9/27/2024 2:13 PM, Krzysztof Kozlowski wrote:
+> On Fri, Sep 27, 2024 at 12:22:37PM +0530, Sricharan R wrote:
+>> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >>
-> 
-> I'm guessing that this is caused by some other driver that wants to
-> perform an I2C access during early resume? If so, can you describe what
-> that use case is?
-> 
-Yes, PCIe is a client driver and uses i2c for transfer during very early 
-stage. We could not serve transfer request since runtime PM was not 
-active during early resume. We plan to support the similar request from 
-any client, hence the change.
-
-
-I am planning to push V2 very soon. i was late here.
-> Regards,
-> Bjorn
-> 
->> 1. Register interrupt with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags
->>     to avoid timeout of transfer when IRQ is not enabled during early stage.
->> 2. Do force resume if pm_runtime_get_sync() is failing after system
->>     suspend when runtime PM is not enabled.
->> 3. Increment power usage count after forced resume to balance
->>     it against regular runtime suspend.
+>> Add binding for the Qualcomm IPQ5424 Global Clock Controller
 >>
->> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 >> ---
->> v1 -> v2:
->> - Changed gi2c->se.dev to dev during dev_dbg() calls.
->> - Addressed review comments from Andi.
->> ---
->>   drivers/i2c/busses/i2c-qcom-geni.c | 55 ++++++++++++++++++++++++------
->>   1 file changed, 45 insertions(+), 10 deletions(-)
+>> [v2] Added the bindings as a part of ipq5332-gcc.yaml itself.
+>>       Difference between ipq5332 and ipq5424 being 2 additional phy's.
 >>
->> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
->> index da94df466e83..30c335b02ac4 100644
->> --- a/drivers/i2c/busses/i2c-qcom-geni.c
->> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
->> @@ -134,6 +134,8 @@ struct geni_i2c_clk_fld {
->>   	u8	t_cycle_cnt;
->>   };
->>   
->> +static int geni_i2c_runtime_resume(struct device *dev);
->> +
->>   /*
->>    * Hardware uses the underlying formula to calculate time periods of
->>    * SCL clock cycle. Firmware uses some additional cycles excluded from the
->> @@ -677,22 +679,48 @@ static int geni_i2c_fifo_xfer(struct geni_i2c_dev *gi2c,
->>   	return num;
->>   }
->>   
->> +static int geni_i2c_force_resume(struct geni_i2c_dev *gi2c)
->> +{
->> +	struct device *dev = gi2c->se.dev;
->> +	int ret;
->> +
->> +	ret = geni_i2c_runtime_resume(dev);
->> +	if (ret) {
->> +		dev_err(gi2c->se.dev, "Error turning SE resources:%d\n", ret);
->> +		pm_runtime_put_noidle(dev);
->> +		pm_runtime_set_suspended(dev);
->> +		return ret;
->> +	}
->> +	pm_runtime_get_noresume(dev);
->> +	pm_runtime_set_active(dev);
->> +	return ret;
->> +}
->> +
->>   static int geni_i2c_xfer(struct i2c_adapter *adap,
->>   			 struct i2c_msg msgs[],
->>   			 int num)
->>   {
->>   	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
->> +	struct device *dev = gi2c->se.dev;
->>   	int ret;
->>   
->>   	gi2c->err = 0;
->>   	reinit_completion(&gi2c->done);
->> -	ret = pm_runtime_get_sync(gi2c->se.dev);
->> -	if (ret < 0) {
->> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
->> -		pm_runtime_put_noidle(gi2c->se.dev);
->> -		/* Set device in suspended since resume failed */
->> -		pm_runtime_set_suspended(gi2c->se.dev);
->> -		return ret;
->> +
->> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
->> +		dev_dbg(dev, "RT_PM disabled, Do force resume, pm_usage_count: %d\n",
->> +			atomic_read(&dev->power.usage_count));
->> +		ret = geni_i2c_force_resume(gi2c);
->> +		if (ret)
->> +			return ret;
->> +	} else {
->> +		ret = pm_runtime_get_sync(dev);
->> +		if (ret == -EACCES && gi2c->suspended) {
->> +			dev_dbg(dev, "PM get_sync() failed-%d, force resume\n", ret);
->> +			ret = geni_i2c_force_resume(gi2c);
->> +			if (ret)
->> +				return ret;
->> +		}
->>   	}
->>   
->>   	qcom_geni_i2c_conf(gi2c);
->> @@ -702,8 +730,15 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->>   	else
->>   		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
->>   
->> -	pm_runtime_mark_last_busy(gi2c->se.dev);
->> -	pm_runtime_put_autosuspend(gi2c->se.dev);
->> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
->> +		pm_runtime_put_noidle(dev);
->> +		pm_runtime_set_suspended(dev);
->> +		gi2c->suspended = 0;
->> +	} else {
->> +		pm_runtime_mark_last_busy(gi2c->se.dev);
->> +		pm_runtime_put_autosuspend(gi2c->se.dev);
->> +	}
->> +
->>   	gi2c->cur = NULL;
->>   	gi2c->err = 0;
->>   	return ret;
->> @@ -820,7 +855,7 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>   	init_completion(&gi2c->done);
->>   	spin_lock_init(&gi2c->lock);
->>   	platform_set_drvdata(pdev, gi2c);
->> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, 0,
->> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
->>   			       dev_name(dev), gi2c);
->>   	if (ret) {
->>   		dev_err(dev, "Request_irq failed:%d: err:%d\n",
->> -- 
->> 2.25.1
+>>   .../bindings/clock/qcom,ipq5332-gcc.yaml      |  57 +++-
+>>   include/dt-bindings/clock/qcom,ipq5424-gcc.h  | 156 +++++++++
+>>   include/dt-bindings/reset/qcom,ipq5424-gcc.h  | 310 ++++++++++++++++++
+>>   3 files changed, 508 insertions(+), 15 deletions(-)
+>>   create mode 100644 include/dt-bindings/clock/qcom,ipq5424-gcc.h
+>>   create mode 100644 include/dt-bindings/reset/qcom,ipq5424-gcc.h
 >>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+>> index 9193de681de2..aaa8b399c3b4 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+>> @@ -4,31 +4,24 @@
+>>   $id: http://devicetree.org/schemas/clock/qcom,ipq5332-gcc.yaml#
+>>   $schema: http://devicetree.org/meta-schemas/core.yaml#
+>>   
+>> -title: Qualcomm Global Clock & Reset Controller on IPQ5332
+>> +title: Qualcomm Global Clock & Reset Controller on IPQ5332 and IPQ5424
+>>   
+>>   maintainers:
+>>     - Bjorn Andersson <andersson@kernel.org>
+>>   
+>>   description: |
+>>     Qualcomm global clock control module provides the clocks, resets and power
+>> -  domains on IPQ5332.
+>> +  domains on IPQ5332 and IPQ5424.
+>>   
+>> -  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
+>> -
+>> -allOf:
+>> -  - $ref: qcom,gcc.yaml#
+>> +  See also::
+>> +    include/dt-bindings/clock/qcom,gcc-ipq5332.h
+>> +    include/dt-bindings/clock/qcom,gcc-ipq5424.h
+>>   
+>>   properties:
+>>     compatible:
+>> -    const: qcom,ipq5332-gcc
+>> -
+>> -  clocks:
+>> -    items:
+>> -      - description: Board XO clock source
+>> -      - description: Sleep clock source
+>> -      - description: PCIE 2lane PHY pipe clock source
+>> -      - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
+>> -      - description: USB PCIE wrapper pipe clock source
+> 
+> You cannot remove properties from top-level. Unify the list, so it uses
+> common part (ipq5332) and keep it here with minItems.  Then in allOf you
+> only control min/maxItems.
+> 
+ok, got it. Will fix in V3. Thanks !!
+
+Regards,
+  Sricharan
 
