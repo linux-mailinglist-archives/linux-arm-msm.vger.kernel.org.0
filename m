@@ -1,148 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-32665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32666-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA943988392
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 13:58:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD1BB9883A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 14:00:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A957B1F24EFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 11:58:03 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B713B280AC0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 12:00:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACA718A6DC;
-	Fri, 27 Sep 2024 11:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A6D218B496;
+	Fri, 27 Sep 2024 12:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OAQWbnn7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="D20yKn0n"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFFB18A6D9;
-	Fri, 27 Sep 2024 11:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD918A94E;
+	Fri, 27 Sep 2024 12:00:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727438279; cv=none; b=RoZtrIGWrbCLQr4rmuzcioyz27eXucwErC2S0+lKwQhP/OUGHwjMjmjhabjAa7v2UYN5vvUwMpnCCxHTM1FSsWuX8P6un0/6XQkKPJsv1CcUA6uBhFkqnINODTUzSVgzJ6qzL/2+q0VtviNEbqAsf8hZQy23bSLlvC3z9hAtkKk=
+	t=1727438406; cv=none; b=sFCf16e4u4yAxxWHwpq6eaFKEYj0k9vtyAvbvQ4wTjGZCBqy2A3OSXWCCylhEgXY91f4onC2caxs48fkaFTPcdoMlKxs/ipRf05opO83BJpNadjl+0iWBmh2/R6rRup23BOFHwWTQ2fT6fLtwXfriUMqQO/AgDHLfHdOXYUFjlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727438279; c=relaxed/simple;
-	bh=OFvMn4GwvKADxI17/MHAKauBHsI2ZCvbRnSqWFXPevw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JclU7FqQj9zAzPnDO9taQxd2o+9lvm8ghN/hUtJEWfIpRb0AkD15idldN7xqxKxW+Z3eXAFihthwENb+/l5+0w1LyVmdwnNR6PCAPeh8sdWAnxQr6oRHE1Swx0RGDOGjwXMv7OOjqy+N2bzc/Ik4uz9a9S0/l5bTlF+CMGPXtg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OAQWbnn7; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2db6e80555dso376317a91.0;
-        Fri, 27 Sep 2024 04:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727438277; x=1728043077; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/00YoVmyxoQD04QF3B+FPA5cgwCGWAPgMWHF0NDU/mM=;
-        b=OAQWbnn7pTpY/EQbG5C09/sChWtgtM2VRSWXQ5Xv7MNffsrx/SjOZIoU5tbRZM56cv
-         TIphql2SnHz5qWkiiRbfBYQE/YwHYHl+Wfic0ojBVLEuR3kvWbApeNNjzeQa1vsGk2r6
-         p2u9nWmzhlHNBoV4GuGbmqI+caJ1QsC2GlbZB1rf7t/IfSLnVTHNqaIQBlGtUIDZv5Bc
-         VuLHWQRu/qdbzqkdizCljUBwZxKBdAGKa4gXQa9uTsM9Tyl+Hqpw4jmj6+psjN0pA77o
-         pvCKOTPGsgHjbPITWQDHqSSXFIHrNSNoCtG1sApIHA01nWak1YejV46B6JOKtSM4yg3R
-         HDQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727438277; x=1728043077;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/00YoVmyxoQD04QF3B+FPA5cgwCGWAPgMWHF0NDU/mM=;
-        b=Fu+HwK04J3/87EO4Z3PPCvNqJI6r/UUKsXHvoFrdztudns8MLpZUM0qNdvgFCyMPC8
-         QtOiAvhSJ9T8iIwTKk/CkVBbKMMVToWZVwBtdr5J7n4nlS79K8MLA/IrRtRBpeEV+zrY
-         5pAj77Vv8Qgxv8Ya3NJpCldnFZvtrhQl4pM4p8mHMQUgRWB/4HCS+peLKAkE+YFnCj8w
-         QZU+RFpaHnHUlXJrAzbFAQw/qqEi9cKbp9XjyfMOlQvo3vru/f/PDZ26Hs1AHsDAvMf2
-         qS2ZS/wr/h/D+KGPZi6jKwXtgC3fno4eMomETg/sQjU5YCXAsViy/rjp8ReBYgxJWdaZ
-         9TAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV/dTySIbtApQoPoFqYxaePvJadWIOLP2rip99FJDqnGAFmGydMuJiAHK8iU+CJhq9a95ARV878mE8a76Am@vger.kernel.org, AJvYcCVDOrqhJieQXNy8NWRj3BjrmmE6y23Tv4T97p2g9EkDCVmOo0BfPHYcAIOw91lp+zwZ31WIor865Sf75o5n@vger.kernel.org, AJvYcCXEd6HRFbhgYVx2F6nXxWWVXJ4NOa5H7VNoExHvOxNKbQafYiFRCn63CZ0dXNvbZm7dWbGnkMHeUfr7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzi8LR+jhUr0sh+2YlcF7CQ68PqsKuI8d4/XRnWhX1gNh6GoomY
-	AHDGHrwMDNLn2nFZY7scItqXdXTG0aQ4Jwnlnme/v7T6bQfgdAXRXDp4FppSMBVly85NgV7E+wu
-	fCd2G2/ynYT5sMBfJKwoQsn5/4Xk=
-X-Google-Smtp-Source: AGHT+IFMYD0OH+mms5PX41lPPzr/Ohq/r9pchznWtwGPOOpsDLVNm08dDIYqmANikx8KUubtMRcg72JLma6cxaU0Aik=
-X-Received: by 2002:a17:90a:68ce:b0:2d8:e7ef:7d23 with SMTP id
- 98e67ed59e1d1-2e0b8d7c62cmr1427986a91.4.1727438277454; Fri, 27 Sep 2024
- 04:57:57 -0700 (PDT)
+	s=arc-20240116; t=1727438406; c=relaxed/simple;
+	bh=G5dRquXqM5Ubqce76JdRcHqMplZAPXMF3V21VX6sEew=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=An+CmXPrTLkmR5WD6ZjEfRmugVaZSfRIUpB/wCMNiuWgzk0oXUj0+yh+GPWWiJQ5s0ggtBBJEN3hcJS4Gcco5v25NO2zWR+ddo4Iv5n3yYsbsSK3LUNMnqjlrnNjCwVBpBVApTpIYou+WPB5LpuVG6nh9q0nGnT2J/QNy95enCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=D20yKn0n; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48R6pHLs000908;
+	Fri, 27 Sep 2024 12:00:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=CarDBbXgWJJuBnsQuU5FLI
+	6/Z8gB5bLhrJy3KId03es=; b=D20yKn0n7DpXvM4X0rnyZ8qQ426dkrwqycXNw2
+	q82Sv+hdAQKJzJTLuSDWzC460sdqxeTcQyMrmCq/aj4pc+7+qv93EWOCtlQEbDVA
+	slA3x2GK4nQ3lpW6tx8lwJBBCwxu+rU0IyHFP8CaRzUq9qHgyzf0yd9jilKOi9mu
+	RK837Cne/1dDE/v7IduTbZj+y6veQE+aJgYDWoS3Dihfttb8eXJU60IKXU2Ogb8l
+	COBEiS6O3m+eD9Nj7KtCie6KzUtlycQ0hzrO51KZ2EoO4GFmWMFGQuqpbLEB6Ld0
+	2v3uGExal3pZFHkZ68rWkZVnH7GGPK4TuYAYcnRENFY1OHXA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sn3sjs3b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 12:00:00 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48RBxxaj016238
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 11:59:59 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 27 Sep 2024 04:59:51 -0700
+From: Tingguo Cheng <quic_tingguoc@quicinc.com>
+Subject: [PATCH v2 0/4] Add rpmhpd powerdomains support for QCS615/QCS8300
+Date: Fri, 27 Sep 2024 19:59:12 +0800
+Message-ID: <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-0-18c030ad7b68@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240926-preemption-a750-t-v6-0-7b6e1ef3648f@gmail.com> <20240926-preemption-a750-t-v6-4-7b6e1ef3648f@gmail.com>
-In-Reply-To: <20240926-preemption-a750-t-v6-4-7b6e1ef3648f@gmail.com>
-From: Connor Abbott <cwabbott0@gmail.com>
-Date: Fri, 27 Sep 2024 12:57:46 +0100
-Message-ID: <CACu1E7HEZztQ3bctuVdrwLCVY2oJ_01AyeKdwCuuB6gmsPurpg@mail.gmail.com>
-Subject: Re: [PATCH v6 04/11] drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
-To: Antonino Maniscalco <antomani103@gmail.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABKe9mYC/4XNQQ6DIBCF4asY1qUBpEq76j0aQwjQOgsBQWkb4
+ 92LJq67mvyzeN+Cko1gE7pVC4o2QwLvSrBThXSv3MtiMKURI4yTK2uxMkaOOjX0sh1REyKDf9t
+ o/KDAJWkiZBtlmkPwccKtNly0lDU1J6iMhmif8NnBR1e6hzT5+N39TLfvQZGD+mtkigm+NoopI
+ gSnRt3HGTQ4fdZ+QN26rj+2kJ0i5wAAAA==
+X-Change-ID: 20240927-add_qcs615_qcs8300_powerdomains_driver_support-7cd487126340
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+CC: <kernel@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <kernel@quicinc.com>,
+        <quic_fenglinw@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        Tingguo Cheng
+	<quic_tingguoc@quicinc.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727438390; l=1493;
+ i=quic_tingguoc@quicinc.com; s=20240917; h=from:subject:message-id;
+ bh=G5dRquXqM5Ubqce76JdRcHqMplZAPXMF3V21VX6sEew=;
+ b=/U1N0ljo+LoqaZ1L2EPggyyzZa1Bhp2IpVrZdU7nLvlSd1oG3K13E6QAp8sQhGo2OVZbweg/A
+ 0XIKA2/b8s2Bt2lnQG2JYd2X6wtcx6PpTHsxWLpIweUvKetIiqlOADL
+X-Developer-Key: i=quic_tingguoc@quicinc.com; a=ed25519;
+ pk=PiFYQPN5GCP7O6SA43tuKfHAbl9DewSKOuQA/GiHQrI=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: PNTOGV6zXA9DeLoM0djQE-qrwJsNJyqb
+X-Proofpoint-ORIG-GUID: PNTOGV6zXA9DeLoM0djQE-qrwJsNJyqb
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ mlxscore=0 impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=999 clxscore=1015
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409270086
 
-In the future, the right thing to do is open a mesa MR with just the
-register changes and then copy the file from mesa once it's merged,
-because all of the XML files are supposed to flow from mesa to keep
-mesa and the kernel in sync. I've opened a mesa MR [1] based on this
-that will hopefully get quickly acked and merged.
+Document the qcom,qcs8300-rpmhpd compatible and add power domains in
+rpmhpd driver to support QCS8300.
+Document the qcom,qcs615-rpmhpd compatible and add power domains in
+rpmhpd driver to support QCS615.
 
-Connor
+Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+---
+Changes in v2:
+- Rebased patchsets on next-20240927.
+- Combined 2 patchsets into one to resolve merge conflicts of touching
+  the same part of code.
+  - Current Patchset
+  |
+  |->Patchset 1:https://lore.kernel.org/r/20240920-add_qcs615_powerdomains_driver_support-v1-0-8846efaf9454@quicinc.com
+  |->Patchset 2:https://lore.kernel.org/r/20240920-add_qcs8300_powerdomains_driver_support-v1-0-96a2a08841da@quicinc.com
 
-[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/31422
+- Link to v1: https://lore.kernel.org/r/20240920-add_qcs8300_powerdomains_driver_support-v1-0-96a2a08841da@quicinc.com
 
-On Thu, Sep 26, 2024 at 10:17=E2=80=AFPM Antonino Maniscalco
-<antomani103@gmail.com> wrote:
->
-> Add missing bitfields to CONTEXT_SWITCH_CNTL in a6xx.xml.
->
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
-> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> ---
->  drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/=
-drm/msm/registers/adreno/a6xx.xml
-> index 2dfe6913ab4f52449b76c2f75b2d101c08115d16..fd31d1d7a11eef7f38dcc2975=
-dc1034f6b7a2e41 100644
-> --- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> @@ -1337,7 +1337,12 @@ to upconvert to 32b float internally?
->                 <reg32 offset=3D"0x0" name=3D"REG" type=3D"a6x_cp_protect=
-"/>
->         </array>
->
-> -       <reg32 offset=3D"0x08A0" name=3D"CP_CONTEXT_SWITCH_CNTL"/>
-> +       <reg32 offset=3D"0x08A0" name=3D"CP_CONTEXT_SWITCH_CNTL">
-> +               <bitfield name=3D"STOP" pos=3D"0" type=3D"boolean"/>
+---
+Tingguo Cheng (4):
+      dt-bindings: power: qcom,rpmpd: document qcs8300 RPMh power domains
+      pmdomain: qcom: rpmhpd: Add qcs8300 power domains
+      dt-bindings: power: qcom,rpmpd: document qcs615 RPMh power domains
+      pmdomain: qcom: rpmhpd: Add qcs615 power domains
 
-This bit isn't set to 1 when it's stopped, it's set to
+ .../devicetree/bindings/power/qcom,rpmpd.yaml      |  2 ++
+ drivers/pmdomain/qcom/rpmhpd.c                     | 36 ++++++++++++++++++++++
+ 2 files changed, 38 insertions(+)
+---
+base-commit: 40e0c9d414f57d450e3ad03c12765e797fc3fede
+change-id: 20240927-add_qcs615_qcs8300_powerdomains_driver_support-7cd487126340
 
-> +               <bitfield name=3D"LEVEL" low=3D"6" high=3D"7"/>
-> +               <bitfield name=3D"USES_GMEM" pos=3D"8" type=3D"boolean"/>
-> +               <bitfield name=3D"SKIP_SAVE_RESTORE" pos=3D"9" type=3D"bo=
-olean"/>
-> +       </reg32>
->         <reg64 offset=3D"0x08A1" name=3D"CP_CONTEXT_SWITCH_SMMU_INFO"/>
->         <reg64 offset=3D"0x08A3" name=3D"CP_CONTEXT_SWITCH_PRIV_NON_SECUR=
-E_RESTORE_ADDR"/>
->         <reg64 offset=3D"0x08A5" name=3D"CP_CONTEXT_SWITCH_PRIV_SECURE_RE=
-STORE_ADDR"/>
->
-> --
-> 2.46.1
->
+Best regards,
+-- 
+Tingguo Cheng <quic_tingguoc@quicinc.com>
+
 
