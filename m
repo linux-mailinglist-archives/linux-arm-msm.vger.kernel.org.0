@@ -1,174 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-32671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32672-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B0899883C8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 14:01:56 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91C139883CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 14:02:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2D944286101
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 12:01:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4A0E51F21369
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 12:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 661EF18BC1C;
-	Fri, 27 Sep 2024 12:00:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36DD818B46C;
+	Fri, 27 Sep 2024 12:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="l4mvowJA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jLR6oLjR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from fllv0016.ext.ti.com (fllv0016.ext.ti.com [198.47.19.142])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E741F18B487;
-	Fri, 27 Sep 2024 12:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.19.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05C29188CBE;
+	Fri, 27 Sep 2024 12:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727438458; cv=none; b=PnWByNoBtjvYEZH103LZY4zj7oD9MrZSNf7dretAMFOxlCGUvlhJHnZVHU7JaMXm/OG6NQUsbdc58nY2l9V/djUMJULkVeldjr5HzEvcK45sfxXsey64ccxFyLuy3Dee5mPtSCeRbffquhlgVPILxLcEXrINw395q6FGCWwhGSI=
+	t=1727438511; cv=none; b=oUX77c8EG187etGqZRmTBXc3MGlwje7IrhhtXAQ3IxL+W+v/BlokL4lfsKKMTREtMwT4c1wcjuaKP5DvXjdMeawqVGROSxiKYQF5y1G21GrJSRimBQXGyyVy5TVd2JGKTdmRo+NsbOirdGRimi4lN50OXMkUKu2R5tNq7O/hu3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727438458; c=relaxed/simple;
-	bh=xh7V+lSwrXwnf6AkaZSV161A1PTv5sxV84YQn60rU9g=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QrEg+k6y05PCRAvlxAPGQ+71PsF8wFPfWIYpgThxXpi5OdvLYPXqMhXrtLF7pZWSbfRUY408n2XBY0hocgfUEV6G0uh9rXWLRLxFk8H7JfXntY6zig+I7aA4NunFnPYRhN4dxqy0tUBRH2piBCWYTZIXGUkxdcKj8dxXQrfe1Ho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=l4mvowJA; arc=none smtp.client-ip=198.47.19.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from fllv0035.itg.ti.com ([10.64.41.0])
-	by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 48RC0MLi020296;
-	Fri, 27 Sep 2024 07:00:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1727438422;
-	bh=+jsVr4Ims5WSRmy2NLVUof7RpYlMYwogh7jR4rXlInk=;
-	h=Date:From:To:CC:Subject:References:In-Reply-To;
-	b=l4mvowJAjM9PJeOeJyl4Lw0IoQxGpHFoAmHIUeiriguabhIc4m8fYPjXtPvdf1o9e
-	 px8xK7VGURl6MbTf1fWQDPL2/R8LqUjVVjmLijdXCKy1uRwXptRLzZLF2aA1vBTqVC
-	 Bz/w2OXYV+xHs4q2SxmyjvE9E5mJ8nRaHRNMgeSw=
-Received: from DFLE105.ent.ti.com (dfle105.ent.ti.com [10.64.6.26])
-	by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 48RC0MQM110251
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
-	Fri, 27 Sep 2024 07:00:22 -0500
-Received: from flwvowa01.ent.ti.com (10.64.41.90) by DFLE105.ent.ti.com
- (10.64.6.26) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Fri, 27
- Sep 2024 07:00:22 -0500
-Received: from DFLE111.ent.ti.com (10.64.6.32) by flwvowa01.ent.ti.com
- (10.64.41.90) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2507.34; Fri, 27 Sep
- 2024 07:00:21 -0500
-Received: from lelvsmtp5.itg.ti.com (10.180.75.250) by DFLE111.ent.ti.com
- (10.64.6.32) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
- Frontend Transport; Fri, 27 Sep 2024 07:00:21 -0500
-Received: from localhost (uda0133052.dhcp.ti.com [128.247.81.232])
-	by lelvsmtp5.itg.ti.com (8.15.2/8.15.2) with ESMTP id 48RC0LAu068343;
-	Fri, 27 Sep 2024 07:00:21 -0500
-Date: Fri, 27 Sep 2024 07:00:21 -0500
-From: Nishanth Menon <nm@ti.com>
-To: Lee Jones <lee@kernel.org>
-CC: Arnd Bergmann <arnd@arndb.de>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, Mark Brown <broonie@kernel.org>,
-        Shawn Guo
-	<shawnguo@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        <bcm-kernel-feedback-list@broadcom.com>,
-        "Florian
- Fainelli" <florian.fainelli@broadcom.com>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        Alexandre Torgue
-	<alexandre.torgue@foss.st.com>
-Subject: Re: [PATCH V2] mfd: syscon: Use regmap max_register_is_0 as needed
-Message-ID: <20240927120021.b6okbwrdpguv4hp6@spiny>
-References: <20240903184710.1552067-1-nm@ti.com>
+	s=arc-20240116; t=1727438511; c=relaxed/simple;
+	bh=iiigvmi2oYfDnnJUmxQ2HMroTLtHWCI04zcoeDDFIcc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=XQyG6OdQN6Nsfa/iNG6sP/LNt81oLlTmfsjtkBcLU/39re0mYfyTlkTvqRk2iU37JUq09Y2fFdbzwYcVSWMvIsvV0wgO5pt8jMPHkdYB6DvwCP/TryZZpDKMOgekzc8YeiKF01ZSuxDpP6Yj8/keJMkilWr4NlJjs8ly5Wul2KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jLR6oLjR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20C0CC4CEC4;
+	Fri, 27 Sep 2024 12:01:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727438510;
+	bh=iiigvmi2oYfDnnJUmxQ2HMroTLtHWCI04zcoeDDFIcc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=jLR6oLjRoSVe/0Bb+Wkjhf/J4G9/C8I+dpOvOBS8wcAPK9fwUjtro+RRjh106c02R
+	 z6f3QAuUxHE/kKBrC+Actgjz5KKm2Askg4rlFb9V9n+2sOFxq8+sPDSXDZaVb8f8Yw
+	 konSoLbSWsHUhUSXmWFAVP7FyKhnZmuVtgOo1rzYcvTtw6OESu3inDoqIsAUmyK2m+
+	 BQC13xtNV2SKFQILHvXLMriA7fVIAcfimbL1T7Py23UMazm9BtUoFzVNw4OCDJJU9x
+	 bJ827KgIznlg0iU9jeyxLXKn+cfPudO8vLRKgPu9IdNIfS0OQeFcFB4XogEaEKYJ4Y
+	 DsX9gcv1psS+w==
+Message-ID: <4d3cdb2b-e521-4b8d-b995-e1b3d8c63c2b@kernel.org>
+Date: Fri, 27 Sep 2024 14:01:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20240903184710.1552067-1-nm@ti.com>
-X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] dt-bindings: power: qcom,rpmpd: document qcs8300
+ RPMh power domains
+To: Tingguo Cheng <quic_tingguoc@quicinc.com>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>
+Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, quic_fenglinw@quicinc.com,
+ quic_tingweiz@quicinc.com
+References: <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-0-18c030ad7b68@quicinc.com>
+ <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-1-18c030ad7b68@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-1-18c030ad7b68@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 13:47-20240903, Nishanth Menon wrote:
-> syscon has always set the optional max_register configuration of
-> regmap to ensure the correct checks are in place. However, a recent
-> commit 0ec74ad3c157 ("regmap: rework ->max_register handling")
-> introduced explicit configuration in regmap framework for register
-> maps that is exactly 1 register, when max_register is pointing to a
-> valid register 0. This commit solved a previous limitation of regmap
-> framework.
+On 27/09/2024 13:59, Tingguo Cheng wrote:
+> Add compatible string for the RPMh power domains on qcs8300 platform.
 > 
-> Update syscon driver to consistent in regmap configuration for
-> all sizes of syscons by using this new capability by setting
-> max_register_is_0, when the max_register is valid and 0.
-> 
-> Signed-off-by: Nishanth Menon <nm@ti.com>
+> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
 > ---
-> 
-> Based on my search
-> https://gist.github.com/nmenon/d537096d041fa553565fba7577d2cd24, the
-> pattern of syscon registers that may potentially be impacted by this
-> patch (that are exactly 1 register wide) is probably limited, though
-> this patch in itself was inspired by a buggy driver code fixed in
-> https://lore.kernel.org/linux-pm/20240828131915.3198081-1-nm@ti.com/
-> I have tried to Cc lists that may be interested in looking closer to
-> avoid un-intended side-effects.
-> 
-> Changes since V1:
-> * Incorporate review comments by rewording commit message and $subject
->   and dropped Fixes.
-> * No functional change to the patch.
-> * Expand the CC list to notify potential users.
-> 
-> V1: https://lore.kernel.org/all/20240828121008.3066002-1-nm@ti.com/
-> 
-> Cc: Mark Brown <broonie@kernel.org>
-> Cc: Shawn Guo <shawnguo@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: bcm-kernel-feedback-list@broadcom.com
-> Cc: Florian Fainelli <florian.fainelli@broadcom.com>
-> Cc: linux-stm32@st-md-mailman.stormreply.com
-> Cc: Alexandre Torgue <alexandre.torgue@foss.st.com>
 
+<form letter>
+This is a friendly reminder during the review process.
 
-A gentle ping.
+It looks like you received a tag and forgot to add it.
 
-> 
->  drivers/mfd/syscon.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/drivers/mfd/syscon.c b/drivers/mfd/syscon.c
-> index 2ce15f60eb10..3e1d699ba934 100644
-> --- a/drivers/mfd/syscon.c
-> +++ b/drivers/mfd/syscon.c
-> @@ -108,6 +108,8 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_res)
->  	syscon_config.reg_stride = reg_io_width;
->  	syscon_config.val_bits = reg_io_width * 8;
->  	syscon_config.max_register = resource_size(&res) - reg_io_width;
-> +	if (!syscon_config.max_register)
-> +		syscon_config.max_register_is_0 = true;
->  
->  	regmap = regmap_init_mmio(NULL, base, &syscon_config);
->  	kfree(syscon_config.name);
-> @@ -357,6 +359,9 @@ static int syscon_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  
->  	syscon_config.max_register = resource_size(res) - 4;
-> +	if (!syscon_config.max_register)
-> +		syscon_config.max_register_is_0 = true;
-> +
->  	if (pdata)
->  		syscon_config.name = pdata->label;
->  	syscon->regmap = devm_regmap_init_mmio(dev, base, &syscon_config);
-> 
-> -- 
-> 2.46.0
-> 
-> 
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions, under or above your Signed-off-by tag. Tag is "received", when
+provided in a message replied to you on the mailing list. Tools like b4
+can help here. However, there's no need to repost patches *only* to add
+the tags. The upstream maintainer will do that for tags received on the
+version they apply.
 
--- 
-Regards,
-Nishanth Menon
-Key (0xDDB5849D1736249D) / Fingerprint: F8A2 8693 54EB 8232 17A3  1A34 DDB5 849D 1736 249D
+https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
+
+If a tag was not added on purpose, please state why and what changed.
+</form letter>
+
+Best regards,
+Krzysztof
+
 
