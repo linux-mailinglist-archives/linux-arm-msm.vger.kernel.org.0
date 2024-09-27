@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-32693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52867988AFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 21:55:01 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45CD3988B22
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 22:15:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F800284DD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 19:55:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7FA81F2136F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 20:15:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86CEC1C1726;
-	Fri, 27 Sep 2024 19:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E269219308E;
+	Fri, 27 Sep 2024 20:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N32ygTRt"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i379LYSX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA511C2314;
-	Fri, 27 Sep 2024 19:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0739F1C0DD7;
+	Fri, 27 Sep 2024 20:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727466899; cv=none; b=YTIAHkaAbToY/ajBb+ZN/gfxOSoHuUw3JPUvQOuk3EOs4tbH0pLgfVlX4LcMC9m+EzPnOQQzNGbcEDrqz2DaMHM8ATFAirkAA2A7YbnRbSARWXU8Zcx1dDOznAyQdofIlZRo1Fcnp9oklLiQg7b+fgXsHMIZUPLz5oFPkV9rJTA=
+	t=1727468128; cv=none; b=TN6dzb8ffCqSpbN5xv/cL6UkYbXe1E0obuRsSTYp2YGz/QWFIqM4JiyXl1vUUwtrDh+5e3arZzu1Ev0FOo15jkyRhEL3IhDCFF5aJDotDfTY1UEWRJSExi+WtEaQfH44ulg5cK/ZL/wUCO3g+rgKzTHoo7AbEXl14RhJ8cctP9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727466899; c=relaxed/simple;
-	bh=ni5f01vHHK6WNOX9fH82PwiWJanF2V/ekCCo5y0yd0A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ELklO8PFTEAzZnPgtv6aJ6RYMSWMkD21Hbiri+HmQXns0R4Owlk65bEa1ntklJrt999tGl6J3Q08Y2L1HzV+tSEqUe1kjB54uKzbMXjbbKhYj1vfcPDw5e3jzxdcxQTi/jqEZkDA/DTD53wtJF4KxVWVn4vK/8B6HWTBlo4rM6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N32ygTRt; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48RFwuLn020953;
-	Fri, 27 Sep 2024 19:54:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Bw9dmykM1oqxtd+vSTcwef7paO8IgTipyaS026C0f7w=; b=N32ygTRtOF/GO6Bi
-	KZI5vRE7LAl0qmQBF86xWnX0yjMFx3QZDcnSOfEaMGuz79H7hIaljqrFXhyi4KmD
-	IskfQ+UNJv4NOenKLLSbbqEvyEXkeBEY1Uw6GwVVrpYdamt7DhneF/Xb653lPwkk
-	kPi4qvUXFrTIKXeN6LPm5h/qo+vWi7TRyQkY2r2VbMiLTS89QezI+qQt7rrWusHb
-	p89PBQdEkvW0ZKtSnJMzcQvRK+J8x4DUGxH1oVEhYDadvam13HGlw06ZI5racJVK
-	4NSbNuHhbWKL1cajyqHcCrGR7EqxAMMSvE6Jq54CPG5+m5VBoSlvGnrOmpPOQe6h
-	UOPDAA==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41sp7uv773-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Sep 2024 19:54:40 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48RJscAh002640
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 27 Sep 2024 19:54:38 GMT
-Received: from [10.216.8.2] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 27 Sep
- 2024 12:54:32 -0700
-Message-ID: <a7f0a221-cea1-441a-b276-285b8ce8b2bb@quicinc.com>
-Date: Sat, 28 Sep 2024 01:23:51 +0530
+	s=arc-20240116; t=1727468128; c=relaxed/simple;
+	bh=ek8QD245r6lFUWHgAu5IKfQNlnFycA+9qL9ruUcoRB8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Luv60SUpmCA4JJfmrdwc4TQDe1hrr6vFcaFo90sdNGdCttBtrSPcSdiGs63rRXruE5KwZD+658jvGwj1w7VtVQMF3qqxkxzapz8Kx9/gbRBeVNUjarnRXfHtZHRlsUjG44OGtNehbDq9MVAXIeNvPTrFKfo0L3WsYilqfbQV3d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i379LYSX; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5365aa568ceso3185654e87.0;
+        Fri, 27 Sep 2024 13:15:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727468125; x=1728072925; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QIMNxc9i5uywt236vnRMCdmiBIxZF4zCqaMPF6coLfc=;
+        b=i379LYSXm0VyD1ot7Gx7SM4HA684MhDsqToXpAIzGTXBgtoknHqR5pTk3gzJ/d9ViU
+         xTTUFDzTgWe7Kk0ricYyIaHm0C74KoNREADVN9aSSL7FiPYt82zcsOw/BDVsFK9sXh6X
+         nY6TMS5UHBuUv0IuFyFmXYb3DLF10F7X8iBxgUjmulA//CSPnu7NTKl5d1CpY2g3wFGN
+         MuliFRhVGsP4O8/FulBIXapVsNiucJfEe/d43Tc43Jjy9CVB0cSUX7bFL6Qxp4zBRSx9
+         tYHnLY5mBLF6nQ/lDRnRxKJ7Z4KKUUcGtcuIEfR3IiVIYj3ZEUG/LfgliSNgbR2c/prp
+         Kghg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727468125; x=1728072925;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QIMNxc9i5uywt236vnRMCdmiBIxZF4zCqaMPF6coLfc=;
+        b=AgwJG2kkN5HDcm0qtM4T5F1t7jBPw1pF2GQwqO1JfwdgPi817vvqdDnQ84zFvPQhYm
+         LMuBq/YvypLFKqRlj7CLOd5FmueapZyAsMFASubt6JKY1U5nTqVKfEJtjow1p75VWgP9
+         qQizr8OGeHagUqzKDUZ641YwZBuyEg6EXamWuKi25ueOf0zt8z+Qt65KGgyRKG7pHTbA
+         C6v33E8eKYx//gSDlM3HIfm1FX3lY6Rr3oRVOGFuLo2zkaqKd/zXT/homhEXuh042zdX
+         48JWvBC+s6EV09quUBuwhx6Iz/uZh2ucIjPvo4WzHPlmVZT0cEgb4VX/aDrf9u1q3RaB
+         pvYA==
+X-Forwarded-Encrypted: i=1; AJvYcCUcsJyuhiZRr8dey2vTveUW+3B4f8xSsA+MASHLEIdLMNslGwi6WFA5IqRVeu2Hqa5Ma2hAu6ti95pLP52N@vger.kernel.org, AJvYcCVw09DN2K7TTG1UpEHmIeIYNKXqk5bq05FZh1J8V84uEXh8qk78VSYfpBFpTf3vpbybQQq7Ba4b2R68@vger.kernel.org, AJvYcCXMsPAzqswo4M3n5wEtNBTvt91dkRl5NtHTQJCFqtIPF720h+9DmZKUVDw09IXTMj6JIzJcHkei3puW4N7e@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFFNwJ8vtEvj0EBGMmCbdboKNQJxQ4hQXSBews6evzVKypjOWo
+	3s22/W4ckXZPRoqBS0vTtLIdITrQY5JNky6OBYkF0cKiO1w1Urwk
+X-Google-Smtp-Source: AGHT+IHQGK1XWDK0fxlB6FflHsYkNhurTWaq10UOXiMznBIujmMLFUq8kQYDLfUnHiiGnjT2eyaWxA==
+X-Received: by 2002:a05:6512:31c1:b0:536:5625:511f with SMTP id 2adb3069b0e04-5389fc7d145mr4416291e87.45.1727468124570;
+        Fri, 27 Sep 2024 13:15:24 -0700 (PDT)
+Received: from [192.168.1.17] (host-87-19-160-215.retail.telecomitalia.it. [87.19.160.215])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2997507sm168172766b.204.2024.09.27.13.15.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Sep 2024 13:15:24 -0700 (PDT)
+Message-ID: <a035fb73-e2b8-4928-b136-b3b99996bc84@gmail.com>
+Date: Fri, 27 Sep 2024 22:15:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,124 +76,105 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 5/5] iommu/arm-smmu: add ACTLR data and support for
- qcom_smmu_500
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
-        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <quic_c_gdjako@quicinc.com>, <iommu@lists.linux.dev>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-References: <20240920155813.3434021-1-quic_bibekkum@quicinc.com>
- <20240920155813.3434021-6-quic_bibekkum@quicinc.com>
- <xxd74r5zzobcsg6joty4rxxmj4gaiezmj6bqlcdbcyhshchqq2@ljpxtgq2dthg>
- <66af599b-85a7-40fd-b550-346013028394@quicinc.com>
- <jqwm5ddslvpbdp4ngxxyfpeda2qoc2rsnxc5cwo3gy24mpd345@qkyxwggxk77m>
+Subject: Re: [PATCH v6 05/11] drm/msm/a6xx: Implement preemption for a7xx
+ targets
+To: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+ Akhil P Oommen <quic_akhilpo@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Sharat Masetty <smasetty@codeaurora.org>
+References: <20240926-preemption-a750-t-v6-0-7b6e1ef3648f@gmail.com>
+ <20240926-preemption-a750-t-v6-5-7b6e1ef3648f@gmail.com>
+ <CAF6AEGviMOLoZKHf4DX9mEj84Y5Xx2hH4tvrkRVLsYyQz35Bwg@mail.gmail.com>
 Content-Language: en-US
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-In-Reply-To: <jqwm5ddslvpbdp4ngxxyfpeda2qoc2rsnxc5cwo3gy24mpd345@qkyxwggxk77m>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NyYgMfx4Dw_sIS2ntnT0gdipMxNkeiXV
-X-Proofpoint-ORIG-GUID: NyYgMfx4Dw_sIS2ntnT0gdipMxNkeiXV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=999 mlxscore=0 phishscore=0
- suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409270145
+From: Antonino Maniscalco <antomani103@gmail.com>
+In-Reply-To: <CAF6AEGviMOLoZKHf4DX9mEj84Y5Xx2hH4tvrkRVLsYyQz35Bwg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-
-
-On 9/24/2024 3:09 PM, Dmitry Baryshkov wrote:
-> On Sat, Sep 21, 2024 at 01:29:04AM GMT, Bibek Kumar Patro wrote:
+On 9/27/24 6:29 PM, Rob Clark wrote:
+> On Thu, Sep 26, 2024 at 2:17 PM Antonino Maniscalco
+> <antomani103@gmail.com> wrote:
 >>
+>> This patch implements preemption feature for A6xx targets, this allows
+>> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
+>> hardware as such supports multiple levels of preemption granularities,
+>> ranging from coarse grained(ringbuffer level) to a more fine grained
+>> such as draw-call level or a bin boundary level preemption. This patch
+>> enables the basic preemption level, with more fine grained preemption
+>> support to follow.
 >>
->> On 9/20/2024 9:48 PM, Dmitry Baryshkov wrote:
->>> On Fri, Sep 20, 2024 at 09:28:13PM GMT, Bibek Kumar Patro wrote:
->>>> Add ACTLR data table for qcom_smmu_500 including
->>>> corresponding data entry and set prefetch value by
->>>> way of a list of compatible strings.
->>>>
->>>> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
->>>> ---
->>>>    drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 24 ++++++++++++++++++++++
->>>>    1 file changed, 24 insertions(+)
->>>>
->>>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> index 4ac272d05843..e8f936a446df 100644
->>>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
->>>> @@ -25,8 +25,31 @@
->>>>
->>>>    #define CPRE			(1 << 1)
->>>>    #define CMTLB			(1 << 0)
->>>> +#define PREFETCH_SHIFT		8
->>>> +#define PREFETCH_DEFAULT	0
->>>> +#define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
->>>> +#define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
->>>> +#define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
->>>>    #define GFX_ACTLR_PRR		(1 << 5)
->>>>
->>>> +static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
->>>> +	{ .compatible = "qcom,adreno",
->>>> +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
->>>> +	{ .compatible = "qcom,adreno-gmu",
->>>> +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
->>>> +	{ .compatible = "qcom,adreno-smmu",
->>>> +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
->>>> +	{ .compatible = "qcom,fastrpc",
->>>> +			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
->>>> +	{ .compatible = "qcom,sc7280-mdss",
->>>> +			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
->>>> +	{ .compatible = "qcom,sc7280-venus",
->>>> +			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
->>>> +	{ .compatible = "qcom,sm8550-mdss",
->>>> +			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
->>>> +	{ }
->>>> +};
->>>
->>> Wow, this looks really nice now!
->>>
+>> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
+>> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
+>> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+>> ---
+>>   drivers/gpu/drm/msm/Makefile              |   1 +
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 283 +++++++++++++++++++++-
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 +++++++++++++
+>>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 377 ++++++++++++++++++++++++++++++
+>>   drivers/gpu/drm/msm/msm_ringbuffer.h      |   7 +
+>>   5 files changed, 825 insertions(+), 11 deletions(-)
 >>
->> I am also in favor of this compatible based approach now,
->> as it looks to be much cleaner implementation.
 > 
+> [snip]
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> index 6e065500b64d6d95599d89c33e6703c92f210047..355a3e210335d60a5bed0ee287912271c353402a 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 > 
+> [snip]
 > 
-
-Hi Robin/Will, let me know if you have any suggestions/inputs on this 
-patch. If everything looks fine, I'll send the next iteration with 
-Dmitry's inputs and update tags.
-
-Thanks & regards,
-Bibek
-
+>> @@ -784,6 +1015,16 @@ static int a6xx_ucode_load(struct msm_gpu *gpu)
+>>                  msm_gem_object_set_name(a6xx_gpu->shadow_bo, "shadow");
+>>          }
 >>
->>>> +
->>>>    static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
->>>>    {
->>>>    	return container_of(smmu, struct qcom_smmu, smmu);
->>>> @@ -640,6 +663,7 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
->>>>    	.impl = &qcom_smmu_500_impl,
->>>>    	.adreno_impl = &qcom_adreno_smmu_500_impl,
->>>>    	.cfg = &qcom_smmu_impl0_cfg,
->>>> +	.client_match = qcom_smmu_actlr_client_of_match,
->>>>    };
->>>>
->>>>    /*
->>>> --
->>>> 2.34.1
->>>>
->>>
+>> +       a6xx_gpu->pwrup_reglist_ptr = msm_gem_kernel_new(gpu->dev, PAGE_SIZE,
+>> +                                                        MSM_BO_WC  | MSM_BO_MAP_PRIV,
+>> +                                                        gpu->aspace, &a6xx_gpu->pwrup_reglist_bo,
+>> +                                                        &a6xx_gpu->pwrup_reglist_iova);
 > 
+> Couldn't this also be MSM_BO_GPU_READONLY?  And same for the
+> preempt_postamble_ptr, I assume?
+
+So for pwrup_reglist_ptr, it contains the cpu_gpu_lock struct that needs 
+to be written by the gpu. The list itself is part of that struct.
+
+> 
+> Also, it looks like we are only writing the smmu_info from the
+> kernel.. is there any way that could be split out into a RO buffer?
+
+For preempt_postamble_ptr, and smmu_info I think it should be possible 
+so I'll work on that.
+
+> 
+> BR,
+> -R
+> 
+>> +
+>> +       if (IS_ERR(a6xx_gpu->pwrup_reglist_ptr))
+>> +               return PTR_ERR(a6xx_gpu->pwrup_reglist_ptr);
+>> +
+>> +       msm_gem_object_set_name(a6xx_gpu->pwrup_reglist_bo, "pwrup_reglist");
+>> +
+>>          return 0;
+>>   }
+>>
+
+
+Best regards,
+-- 
+Antonino Maniscalco <antomani103@gmail.com>
 
