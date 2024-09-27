@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 004779883CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 14:02:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A362C9883D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 14:04:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0CED1F2182C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 12:02:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5DF2B28181E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 12:04:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB54718BB93;
-	Fri, 27 Sep 2024 12:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFCFB18A95D;
+	Fri, 27 Sep 2024 12:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OszslMAX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DenDDL2G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D0918A92A;
-	Fri, 27 Sep 2024 12:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE5E61FCE;
+	Fri, 27 Sep 2024 12:04:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727438528; cv=none; b=CdGEvP+vVVPuv9D9AFeiU8aSIsq3LY7LUEIKw6MjqdLIOc0x/LfTzUPmIztH8oa0Vky7+KFLgbg+kgXNCXlh8nZ2acCLiZ5sY2ImRs8JJHaTqDfupVwlq1lnFMHb5O6gWQvVQqE/Yw1mNxj5EpLHL7g8LVIjL51NQ1KDbDSvFHs=
+	t=1727438644; cv=none; b=X3jMH4ZqvsOamO152WLwN7p7AAmlAcyPj0eFeE48MsVi5XHTbJ0KwAAr9HUsLms3R/o7TtcoF7Nm43NpyJ0jtORDahfK5LqrHHWA1gqA7x9+Df9TCCn9Jx5CXAZTIW9eHYyTc3LtBw5z4BbMRqOa8pYuhB8XNL8slYWSILQl0To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727438528; c=relaxed/simple;
-	bh=KIJtCjzp7yQ1wImdbJ9UZaHqYfO1EY9JsNdfo00+nJQ=;
+	s=arc-20240116; t=1727438644; c=relaxed/simple;
+	bh=tVqjFHEaB7hFNxzh+RNievSG+KxIiC6UbwlmwhcDrRM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=XdR+X0XIV0DFPFAWqTjRPFn6Wx4ChOpdXiCNyrVJkDnCybfK4QEof6tYdCLkYrixUY3vgtY6qbzH2ufzj/NKsvwWTtRB827Ne/Kr48q+/MqHiJtplm0Pg7pCY1tNuuvSLVQ5HfI/DKGs0cWNi3qyNE7gPkEoIbh3ISxLjztYrkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OszslMAX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF72C4CECD;
-	Fri, 27 Sep 2024 12:02:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=sr/JWlGvLRJhqEM4Kmq1D6d7HnYZJ/9Cr1KPT9jjBcXxkc1TuSnzeWgzOpSZtWcGjY2n+jvyFmpIMqXh4nMd7AWphnl4izMM9mMvHydQQ0xjff4/Tn1AGLZogr1s4PU2ILtvCVzutoJcuLOord57OqSMzOOQhYDQJbr/8UIwh8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DenDDL2G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C54C4CEC4;
+	Fri, 27 Sep 2024 12:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727438528;
-	bh=KIJtCjzp7yQ1wImdbJ9UZaHqYfO1EY9JsNdfo00+nJQ=;
+	s=k20201202; t=1727438644;
+	bh=tVqjFHEaB7hFNxzh+RNievSG+KxIiC6UbwlmwhcDrRM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=OszslMAXvC9Z/5CjTG/GzVGUMti6N5S7gMTQFh3ceL36F2HigenMDgqMF0Ei/xieO
-	 soUzjR4AN6Z2L/lzuT5tnVTQf25TWN5Ws+mJgZvYHKj7nqLEd1RC9xC1Nc7Q4wu8ec
-	 vkUEvOKUcc5MLfPlraUSVrSv5u3xe6GMwdwd3bgZ4tDtEp0UsCtmkg8SqQggzq7+a7
-	 YO6Lw1XFU9PCXCtaC7ciFKzp890uaGdXJCbOuWW/wioaO5WsgPniRiV5bwRLlMhqIO
-	 2sgyHdHJwu/9fX5qxW+E9k3LLBuF2EJYegSDISOPLbkBvoGzVb2pzFO5rQKhS/O1Oc
-	 z/y1Wpa7HvgVA==
-Message-ID: <951087d0-8126-40c2-9bd8-9c07ef0575f6@kernel.org>
-Date: Fri, 27 Sep 2024 14:02:03 +0200
+	b=DenDDL2GxaPEhzEqEClzghH5qrkQLS8s7dK4p7RnucnqYhu5DRl3scTLgZJAbn5kD
+	 pH8iMFhLvLWvEGON1tW2qDlTinPyxswCBjtxymTQa2LuTi2oFV7+3nXCuR4PdSziAq
+	 k4oUg/iC9h2JpXbxSxsydqLbnH1GqNv8m/10l7piZNxVDJaTCh0HmQf6BmbnFEqt0Z
+	 gjKlr2Xmngn+VssbFI5EjHfdX0nNlIknn4AAk0nImakhmFXzNUktBOl0CvYgxCHuFf
+	 Ho1keslgRwYL6GQNCdsncnRu/WHim4C7hc48E+NukmdtjlTHZazp6xkAuBpCZh6G8W
+	 QMXsYlBqdN/QQ==
+Message-ID: <52f83419-cc5e-49f3-90a7-26a5b4ddd5a0@kernel.org>
+Date: Fri, 27 Sep 2024 14:03:57 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] dt-bindings: power: qcom,rpmpd: document qcs615
- RPMh power domains
-To: Tingguo Cheng <quic_tingguoc@quicinc.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Ulf Hansson <ulf.hansson@linaro.org>
-Cc: kernel@quicinc.com, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, quic_fenglinw@quicinc.com,
- quic_tingweiz@quicinc.com
-References: <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-0-18c030ad7b68@quicinc.com>
- <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-3-18c030ad7b68@quicinc.com>
+Subject: Re: [PATCH v3 1/4] dt-bindindgs: i2c: qcom,i2c-geni: Document shared
+ flag
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+ linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+ vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
+ Frank.Li@nxp.com, bryan.odonoghue@linaro.org, krzk+dt@kernel.org,
+ robh@kernel.org
+References: <20240927063108.2773304-1-quic_msavaliy@quicinc.com>
+ <20240927063108.2773304-2-quic_msavaliy@quicinc.com>
+ <we3wmw6e25y6e4443ndrduurwvkkpvuw7ozrizuys6pwxppwfy@2uq7uda4evhd>
+ <320e0685-3dae-42a7-a387-75f6f52f4090@kernel.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,16 +110,68 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240927-add_qcs615_qcs8300_powerdomains_driver_support-v2-3-18c030ad7b68@quicinc.com>
+In-Reply-To: <320e0685-3dae-42a7-a387-75f6f52f4090@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 27/09/2024 13:59, Tingguo Cheng wrote:
-> Add compatible string for the RPMh power domains on qcs615 platform.
+On 27/09/2024 13:20, Konrad Dybcio wrote:
+> On 27.09.2024 11:24 AM, Krzysztof Kozlowski wrote:
+>> On Fri, Sep 27, 2024 at 12:01:05PM +0530, Mukesh Kumar Savaliya wrote:
+>>> Adds qcom,shared-se flag usage. Use this when particular I2C serial
+>>> controller needs to be shared between two subsystems.
+>>>
+>>> SE = Serial Engine, meant for I2C controller here.
+>>> TRE = Transfer Ring Element, refers to Queued Descriptor.
+>>> SS = Subsystems (APPS processor, Modem, TZ, ADSP etc).
+>>>
+>>> Example :
+>>> Two clients from different SS can share an I2C SE for same slave device
+>>> OR their owned slave devices.
+>>> Assume I2C Slave EEPROM device connected with I2C controller.
+>>> Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
+>>> This gets serialized by lock TRE + DMA Transfers + Unlock TRE at HW level.
+>>>
+>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml | 4 ++++
+>>>  1 file changed, 4 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>>> index 9f66a3bb1f80..3b9b20a0edff 100644
+>>> --- a/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>>> +++ b/Documentation/devicetree/bindings/i2c/qcom,i2c-geni-qcom.yaml
+>>> @@ -60,6 +60,10 @@ properties:
+>>>    power-domains:
+>>>      maxItems: 1
+>>>  
+>>> +  qcom,shared-se:
+>>> +    description: True if I2C needs to be shared between two or more subsystems(SS).
+>>
+>> The "SS" and subsystem should be explained in the binding. Please do not
+>> use some qcom-specific abbreviations here, but explain exactly, e.g.
+>> processors like application processor and DSP.
+>>
+>> "se" is also not explained in the binding - please open it and look for
+>> such explanation.
+>>
+>> This all should be rephrased to make it clear... We talked about this
+>> and I do not see much of improvements except commit msg, so we are
+>> making circles. I don't know, get someone internally to help you in
+>> upstreaming this.
+>>
+>> Is sharing of IP blocks going to be also for other devices? If yes, then
+>> this should be one property for all Qualcomm devices. If not, then be
+>> sure that this is the case because I will bring it up if you come with
+>> one more solution for something else.
 > 
-> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+> As far as I understand, everything that's not protocol-specific (in
+> this case it would be I2C tunables etc.) is common across all
+> protocols supported by the serial engine.
 
-So you expect all of us to do the same work twice?
+Yeah, but I also think about other things like clock controllers, TLMMs,
+MMUs and so on. Each of them will get a new "qcom,shared-xxx" property?
+
+I expect Mukesh to solve it in qcom-wide way, not only his one problem.
 
 Best regards,
 Krzysztof
