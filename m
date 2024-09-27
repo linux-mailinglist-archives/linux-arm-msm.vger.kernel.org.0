@@ -1,139 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-32627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EFC4987DD4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 07:25:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD9BB987E66
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 08:31:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 73463B247B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 05:25:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E717B1C217DC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 06:31:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F520175D21;
-	Fri, 27 Sep 2024 05:24:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F0B817A5B4;
+	Fri, 27 Sep 2024 06:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="qlfUz6eg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="dACh1fMy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5972A170836;
-	Fri, 27 Sep 2024 05:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A8AF9E4;
+	Fri, 27 Sep 2024 06:31:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727414698; cv=none; b=Nj7V4WZO8vF/VnGiVGZO7G3gIWHxh017s+uDVKM2SjHDncm3uQa+TN5FDrAqYeN6GC74eGWSpsGEW3BQY1xY9jX01dB8eruBqI1ZZHuiEp7o4OHv+KApQF18SR7fv0MrQn1xhpK9CQ5VV3Dvh7d+cydo5IGxHzV8qptScN5Ou+w=
+	t=1727418698; cv=none; b=nuhFG/VrnYH01WYgqS1bpmATBEgR9xmcBbmlcHp9Dvh/7uQ/Vk0h9w7E2FnpqwzVMHuOuurmn5RyiwHwqzFNyIE0b4LLYv8l6gsaZ1yqJecnSGm343bUAlWH0CIyz6Z5cHxxCYjyCHL/VNo0WGI9qxwtowq+3Nrb9uJx6tNTD1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727414698; c=relaxed/simple;
-	bh=r5E3C8ovlOGFFH6WMn3gqo8ezIWZpB6JtgD66EOvBSU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hxrDB8GcdXbBi2EIa0xqhem/ax1jr2m2XnSWiG8/nMOPQHGrkOFgcRGnrsYg58ecIXpGM1Ehaej0WcTy+VuUnzUKsgeXGbA6mFfjtjuF3N2mXZs9I8x/9Y/km9WhJuBNcgxsxPqrJ7Ebp/mENGQRHWQEzl+YY6kssqiSLJlTfb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=qlfUz6eg; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1727414687;
-	bh=r5E3C8ovlOGFFH6WMn3gqo8ezIWZpB6JtgD66EOvBSU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=qlfUz6egU+dmTUqLLZ/T/NtChPlvIXi5Cnxh+pjZW2RzNWlc8iwyFnQ9aLtIAqoBh
-	 3Mo5uuqK6PpFeIzDiNOfs/4acmFBcq4oFPd2V80PuLpCKTbA8rfVFhGvxvH5uHVcDf
-	 PeEIvrUpqfcFA0tm7JJVWUXTd/wW9R5KctFND710po/bTbfQVD14jaSvXziRrH973c
-	 Qilb43wFmKgA5+yspypzeEZBJDqu3cBX+WThpc8gwuUOsPFCfqb6XN9sQ4KQdr5egk
-	 4O+ryjd8lgSSuI2P5x5a2kr5k/K0vsgafGy78AzimNqxd6ufVF5SPLdttGxiRW78he
-	 zUrQFW0XMJ76g==
-Received: from localhost.localdomain (unknown [171.76.80.165])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 7E15F17E0FAC;
-	Fri, 27 Sep 2024 07:24:43 +0200 (CEST)
-From: Vignesh Raman <vignesh.raman@collabora.com>
-To: dri-devel@lists.freedesktop.org
-Cc: daniels@collabora.com,
-	helen.koike@collabora.com,
-	airlied@gmail.com,
-	daniel@ffwll.ch,
-	robdclark@gmail.com,
-	guilherme.gallo@collabora.com,
-	sergi.blanch.torne@collabora.com,
-	deborah.brouwer@collabora.com,
-	dmitry.baryshkov@linaro.org,
-	mripard@kernel.org,
-	rodrigo.vivi@intel.com,
-	quic_abhinavk@quicinc.com,
-	linux-mediatek@lists.infradead.org,
-	linux-amlogic@lists.infradead.org,
-	linux-rockchip@lists.infradead.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org,
-	intel-gfx@lists.freedesktop.org,
-	virtualization@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v3] docs/gpu: ci: update flake tests requirements
-Date: Fri, 27 Sep 2024 10:54:14 +0530
-Message-ID: <20240927052416.1833889-1-vignesh.raman@collabora.com>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1727418698; c=relaxed/simple;
+	bh=E5l+KF3z9LuX0cSWiFxdVNZgCJHKrA4+XBIkYIUc6a4=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=uU6GUXNevxgUyIc/DsQE5Q+T5ayLqEC2AfGft558h38uRf2Ec+3GJbvlcGaCYVNiocn7ti78sIN6yPW0cqu6kQsDsnVp1go34fA7t+KZKVVvFCO2MHUWcDIJYlg1dhnY8UDMim0FNHemvhtqkM5lPomfLBsOEWxaCpDSjpbmhP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=dACh1fMy; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48QG9eei001881;
+	Fri, 27 Sep 2024 06:31:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=v8jhLGIcyIuoj1CO2ilW6C
+	o4k21cGdVKm0hOEnMA9oU=; b=dACh1fMywTAcN5ht4AD2tBf2S8ObqtvlKUb4gV
+	XhiPIT3F3QkXKjFlyxHtqe1rsdzSt7zThYYHT6TobjLV6mtxt1elLq2G/GeI60EE
+	RSqvxAXXvoHLnTSjbxrmpVjj1iaOKvtUJwc2bv8Jn0Z4dDn0bQkRu8iCoGcyheNC
+	SkpkF5PGvU8qm7eKZrsKGoWWUwsclNgjauqPrvK9iPzZcW6lkjyGu42L4H4xufju
+	UXte64gHPVlWDzB0SW5IDzO/eB7zvLM2SDA6JXserq0MloA+HXcZpz7xgsK/SEEP
+	r4+kzyIE8KvTIjXfTyw2Y1wf9hobwCb6W0yz1idnyRLZDNlw==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skgnjf6r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 06:31:19 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 48R6VG3U001808;
+	Fri, 27 Sep 2024 06:31:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 41sq7mnbms-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 06:31:16 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 48R6VFI3001801;
+	Fri, 27 Sep 2024 06:31:15 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-msavaliy-hyd.qualcomm.com [10.213.110.207])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 48R6VFDP001799
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 06:31:15 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 429934)
+	id 9D1532408B; Fri, 27 Sep 2024 12:01:14 +0530 (+0530)
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+To: konrad.dybcio@linaro.org, andersson@kernel.org, andi.shyti@kernel.org,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        conor+dt@kernel.org, agross@kernel.org, devicetree@vger.kernel.org,
+        vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org,
+        Frank.Li@nxp.com, konradybcio@kernel.org, bryan.odonoghue@linaro.org,
+        krzk+dt@kernel.org, robh@kernel.org
+Cc: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Subject: [PATCH v3 0/4] Enable shared SE support over I2C
+Date: Fri, 27 Sep 2024 12:01:04 +0530
+Message-Id: <20240927063108.2773304-1-quic_msavaliy@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 5K6K7_MrA_cXfg1bPr5Jw7p9XTeAbp0i
+X-Proofpoint-GUID: 5K6K7_MrA_cXfg1bPr5Jw7p9XTeAbp0i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
+ mlxlogscore=999 adultscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ spamscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409270043
 
-Update the documentation to specify linking to a relevant GitLab
-issue or email report for each new flake entry. Added specific
-GitLab issue urls for i915, msm and amdgpu driver.
+This Series adds support to share QUP (Qualcomm Unified peripheral)
+based I2C SE (Serial Engine) controller between two subsystems
+(Apps/ADSP/TZ etc). Each SS having it's own dedicated GPII(General
+Purpose Interface Instance) acting as pipe between SE and GSI(Generic SW-
+Interface) DMA HW engine. Hence the sharing of SE is possible only with
+I2C SE in GSI mode, not with FIFO/CPU DMA mode.
 
-Acked-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # msm
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
-Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+Subsystem must acquire Lock over the SE so that it gets uninterrupted
+control till it unlocks the SE. It also makes sure the commonly shared
+TLMM GPIOs are not touched which can impact other subsystem or cause
+any interruption. Generally, GPIOs are being unconfigured during
+suspend time.
+
+GSI DMA engine is capable to perform requested transfer operations
+from any of the I2C client in a seamless way and its transparent to
+the subsystems. Make sure to enable “qcom,shared-se” flag only while
+enabling this feature. I2C client should add in its respective parent
+node. 
+
+Example : 
+Two clients from different SS can share an I2C SE for same slave device
+OR their owned slave devices.
+Assume I2C Slave EEPROM device connected with I2C controller.
+Each client from ADSP SS and APPS Linux SS can perform i2c transactions.
+This gets serialized by lock TRE + Transfers + Unlock TRE at HW level.
+
+
+Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
 ---
 
-v2:
-- Add gitlab issue link for msm driver.
+Link to V2: https://lore.kernel.org/lkml/a88a16ff-3537-4396-b2ea-4ba02b4850e9@quicinc.com/T/
 
-v3:
-- Update docs to specify we use email reporting or GitLab issues for flake entries.
+Changes in V3:
+ - Added missing maintainers which i forgot to add.
+ - Add cover letter with description of SS and EE for dt-bindings patch.
+ - Added acronyms expansion to commit log.
+ - [PATCH v2 3/4] : Removed exported symbol geni_se_clks_off(). 
+   Instead added changes to bypass pinctrl sleep configuration from
+   geni_se_resources_off() function.
+ - Changed title name of [PATCH v2 3/4] to reflect the suggested changes.
+ - [PATCH v2 4/4] kept geni_i2c_runtime_suspend() as is and removed 
+   explicit call to geni_se_clks_off().
+ - Removed is_shared variable from i2c driver and instead used common 
+   shared_geni_se variable from qcom-geni-se.h so that other protocols
+   can also extend for similar feature.
+ - I2C driver log changed from dev_err() to dev_dbg() for timeout.
+ - set gpi_mode = true if shared_geni_se is set for this usecase. Enhanced
+   comments around code and commit log.
+---
+
+Link to V1: https://lore.kernel.org/lkml/cb7613d0-586e-4089-a1b6-2405f4dc4883@quicinc.com/T/
+
+Changes in V2:
+ - Enhanced commit log grammatically for PATCH v1 3/4 as suggested by Bryan.
+ - Updated Cover letter along with acronyms expansion.
+ - Added maintainers list from other subsystems for review, which was missing.
+   Thanks to Krzysztof for pointing out.
+ - Added cover letter with an example of Serial Engine sharing.
+ - Addressed review comments for all the patches.
 
 ---
- Documentation/gpu/automated_testing.rst | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
-index 2d5a28866afe..03769b4a17cf 100644
---- a/Documentation/gpu/automated_testing.rst
-+++ b/Documentation/gpu/automated_testing.rst
-@@ -68,19 +68,24 @@ known to behave unreliably. These tests won't cause a job to fail regardless of
- the result. They will still be run.
- 
- Each new flake entry must be associated with a link to the email reporting the
--bug to the author of the affected driver, the board name or Device Tree name of
--the board, the first kernel version affected, the IGT version used for tests,
--and an approximation of the failure rate.
-+bug to the author of the affected driver or the relevant GitLab issue. The entry
-+must also include the board name or Device Tree name, the first kernel version
-+affected, the IGT version used for tests, and an approximation of the failure rate.
- 
- They should be provided under the following format::
- 
--  # Bug Report: $LORE_OR_PATCHWORK_URL
-+  # Bug Report: $LORE_URL_OR_GITLAB_ISSUE
-   # Board Name: broken-board.dtb
-   # Linux Version: 6.6-rc1
-   # IGT Version: 1.28-gd2af13d9f
-   # Failure Rate: 100
-   flaky-test
- 
-+Use the appropriate link below to create a GitLab issue:
-+amdgpu driver: https://gitlab.freedesktop.org/drm/amd/-/issues
-+i915 driver: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues
-+msm driver: https://gitlab.freedesktop.org/drm/msm/-/issues
-+
- drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
- -----------------------------------------------------------
- 
+Mukesh Kumar Savaliya (4):
+  dt-bindindgs: i2c: qcom,i2c-geni: Document shared flag
+  dma: gpi: Add Lock and Unlock TRE support to access SE exclusively
+  soc: qcom: geni-se: Do not keep GPIOs to sleep state for shared SE
+    usecase
+  i2c: i2c-qcom-geni: Enable i2c controller sharing between two
+    subsystems
+
+ .../bindings/i2c/qcom,i2c-geni-qcom.yaml      |  4 ++
+ drivers/dma/qcom/gpi.c                        | 37 ++++++++++++++++++-
+ drivers/i2c/busses/i2c-qcom-geni.c            | 24 ++++++++++--
+ drivers/soc/qcom/qcom-geni-se.c               | 14 +++++--
+ include/linux/dma/qcom-gpi-dma.h              |  6 +++
+ include/linux/soc/qcom/geni-se.h              |  3 ++
+ 6 files changed, 79 insertions(+), 9 deletions(-)
+
 -- 
-2.43.0
+2.25.1
 
 
