@@ -1,180 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-32694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32695-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45CD3988B22
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 22:15:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC94D988C27
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 23:59:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7FA81F2136F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 20:15:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 75A84283C3D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 21:59:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E269219308E;
-	Fri, 27 Sep 2024 20:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A48918C33B;
+	Fri, 27 Sep 2024 21:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i379LYSX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L6xdRkPp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0739F1C0DD7;
-	Fri, 27 Sep 2024 20:15:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E0E18B470;
+	Fri, 27 Sep 2024 21:59:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727468128; cv=none; b=TN6dzb8ffCqSpbN5xv/cL6UkYbXe1E0obuRsSTYp2YGz/QWFIqM4JiyXl1vUUwtrDh+5e3arZzu1Ev0FOo15jkyRhEL3IhDCFF5aJDotDfTY1UEWRJSExi+WtEaQfH44ulg5cK/ZL/wUCO3g+rgKzTHoo7AbEXl14RhJ8cctP9U=
+	t=1727474369; cv=none; b=ldNhb6AOXZqXh4Q0r+KiOt6qfM183tKxQqeD38+E93bUW/Ho03Hru5DepDeyuZqs5DbE4G1M+IQckbxXsi14Dhm9KIkoX2AiS5Vs8gaiZOjqS0DRaSGDmzCIedWT7uoreUKZFKMxdUKh+2t5xhSgCmLmPIygC1CtgTuH4KsSTKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727468128; c=relaxed/simple;
-	bh=ek8QD245r6lFUWHgAu5IKfQNlnFycA+9qL9ruUcoRB8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Luv60SUpmCA4JJfmrdwc4TQDe1hrr6vFcaFo90sdNGdCttBtrSPcSdiGs63rRXruE5KwZD+658jvGwj1w7VtVQMF3qqxkxzapz8Kx9/gbRBeVNUjarnRXfHtZHRlsUjG44OGtNehbDq9MVAXIeNvPTrFKfo0L3WsYilqfbQV3d0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i379LYSX; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5365aa568ceso3185654e87.0;
-        Fri, 27 Sep 2024 13:15:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727468125; x=1728072925; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QIMNxc9i5uywt236vnRMCdmiBIxZF4zCqaMPF6coLfc=;
-        b=i379LYSXm0VyD1ot7Gx7SM4HA684MhDsqToXpAIzGTXBgtoknHqR5pTk3gzJ/d9ViU
-         xTTUFDzTgWe7Kk0ricYyIaHm0C74KoNREADVN9aSSL7FiPYt82zcsOw/BDVsFK9sXh6X
-         nY6TMS5UHBuUv0IuFyFmXYb3DLF10F7X8iBxgUjmulA//CSPnu7NTKl5d1CpY2g3wFGN
-         MuliFRhVGsP4O8/FulBIXapVsNiucJfEe/d43Tc43Jjy9CVB0cSUX7bFL6Qxp4zBRSx9
-         tYHnLY5mBLF6nQ/lDRnRxKJ7Z4KKUUcGtcuIEfR3IiVIYj3ZEUG/LfgliSNgbR2c/prp
-         Kghg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727468125; x=1728072925;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QIMNxc9i5uywt236vnRMCdmiBIxZF4zCqaMPF6coLfc=;
-        b=AgwJG2kkN5HDcm0qtM4T5F1t7jBPw1pF2GQwqO1JfwdgPi817vvqdDnQ84zFvPQhYm
-         LMuBq/YvypLFKqRlj7CLOd5FmueapZyAsMFASubt6JKY1U5nTqVKfEJtjow1p75VWgP9
-         qQizr8OGeHagUqzKDUZ641YwZBuyEg6EXamWuKi25ueOf0zt8z+Qt65KGgyRKG7pHTbA
-         C6v33E8eKYx//gSDlM3HIfm1FX3lY6Rr3oRVOGFuLo2zkaqKd/zXT/homhEXuh042zdX
-         48JWvBC+s6EV09quUBuwhx6Iz/uZh2ucIjPvo4WzHPlmVZT0cEgb4VX/aDrf9u1q3RaB
-         pvYA==
-X-Forwarded-Encrypted: i=1; AJvYcCUcsJyuhiZRr8dey2vTveUW+3B4f8xSsA+MASHLEIdLMNslGwi6WFA5IqRVeu2Hqa5Ma2hAu6ti95pLP52N@vger.kernel.org, AJvYcCVw09DN2K7TTG1UpEHmIeIYNKXqk5bq05FZh1J8V84uEXh8qk78VSYfpBFpTf3vpbybQQq7Ba4b2R68@vger.kernel.org, AJvYcCXMsPAzqswo4M3n5wEtNBTvt91dkRl5NtHTQJCFqtIPF720h+9DmZKUVDw09IXTMj6JIzJcHkei3puW4N7e@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFFNwJ8vtEvj0EBGMmCbdboKNQJxQ4hQXSBews6evzVKypjOWo
-	3s22/W4ckXZPRoqBS0vTtLIdITrQY5JNky6OBYkF0cKiO1w1Urwk
-X-Google-Smtp-Source: AGHT+IHQGK1XWDK0fxlB6FflHsYkNhurTWaq10UOXiMznBIujmMLFUq8kQYDLfUnHiiGnjT2eyaWxA==
-X-Received: by 2002:a05:6512:31c1:b0:536:5625:511f with SMTP id 2adb3069b0e04-5389fc7d145mr4416291e87.45.1727468124570;
-        Fri, 27 Sep 2024 13:15:24 -0700 (PDT)
-Received: from [192.168.1.17] (host-87-19-160-215.retail.telecomitalia.it. [87.19.160.215])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2997507sm168172766b.204.2024.09.27.13.15.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Sep 2024 13:15:24 -0700 (PDT)
-Message-ID: <a035fb73-e2b8-4928-b136-b3b99996bc84@gmail.com>
-Date: Fri, 27 Sep 2024 22:15:22 +0200
+	s=arc-20240116; t=1727474369; c=relaxed/simple;
+	bh=2M0hdn4noUNVfLyhfiyb7RMQfOb1Mpni3jceBnB3vfE=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FNZwlTkw2DVT36BRrZDn+xNqm/UofWF9Laxlp1XWPeP5pP4d8j6Cj+GQaWk5bZ6lrZJCD7+FOfxVezYrZ2ZbVVe+7W2rMWfRnkoRkUEvF7rmaa435Uw/p4a4odKlVf2EbgXZ7uXofPpqySAqVcPdszJHT/lSQJowl0Q3qU3vel8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L6xdRkPp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48REZUrF001917;
+	Fri, 27 Sep 2024 21:59:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=yJk9n7jJ8hLIEsvr/THkA9Pi
+	ukcapey3efMXjpwZxto=; b=L6xdRkPp6D7ZWhh3ny4RnqI5/EldNBzMguokduez
+	k8BlKJGsWKVV5v6dIq3dq/CSW2kmtXtwQnIh5qeESzUzjHZlySfHdpxRioGwySlF
+	xft0Irzi7uakbo4wcdYhsFmvES4WNUt3reB2InA1qXKce7E4QhakGHiHsqwB8BSc
+	D17EIAL3l3lTcg9bLqQ4ZC0YQNxnJlmcZheyM+lE4XFRmJvvNWKZ6T4GMi56wQSV
+	iulGXUPbyZKSkiDMLyHBDr0G1hM9/98h24g+7DnUy4vrJXxNbZjmWEomyS9qg4t5
+	8Q2lHDoBuz7ZfEfcdylTpDl84nA8gO0q9RReiUGrzM6MqQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41skgnmpx2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 21:59:21 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48RLxBpw007807
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 27 Sep 2024 21:59:11 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Fri, 27 Sep 2024 14:59:10 -0700
+Date: Fri, 27 Sep 2024 14:59:09 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Mukesh Ojha <quic_mojha@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] remoteproc: qcom: Fix NULL pointer in glink_subdev_stop()
+Message-ID: <ZvcqrbLKqCQyYBsF@hu-bjorande-lv.qualcomm.com>
+References: <20240925103351.1628788-1-quic_mojha@quicinc.com>
+ <ZvTYA1Rg6DrEEabk@hu-bjorande-lv.qualcomm.com>
+ <ZvcJhzDmdhO/wbKq@hu-mojha-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 05/11] drm/msm/a6xx: Implement preemption for a7xx
- targets
-To: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org,
- dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
- Akhil P Oommen <quic_akhilpo@quicinc.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Sharat Masetty <smasetty@codeaurora.org>
-References: <20240926-preemption-a750-t-v6-0-7b6e1ef3648f@gmail.com>
- <20240926-preemption-a750-t-v6-5-7b6e1ef3648f@gmail.com>
- <CAF6AEGviMOLoZKHf4DX9mEj84Y5Xx2hH4tvrkRVLsYyQz35Bwg@mail.gmail.com>
-Content-Language: en-US
-From: Antonino Maniscalco <antomani103@gmail.com>
-In-Reply-To: <CAF6AEGviMOLoZKHf4DX9mEj84Y5Xx2hH4tvrkRVLsYyQz35Bwg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZvcJhzDmdhO/wbKq@hu-mojha-hyd.qualcomm.com>
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xXCjVqyzBZSTvVhOFFI_U3Jw4-LQndf1
+X-Proofpoint-GUID: xXCjVqyzBZSTvVhOFFI_U3Jw4-LQndf1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ mlxlogscore=999 adultscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ spamscore=0 mlxscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409270161
 
-On 9/27/24 6:29 PM, Rob Clark wrote:
-> On Thu, Sep 26, 2024 at 2:17 PM Antonino Maniscalco
-> <antomani103@gmail.com> wrote:
->>
->> This patch implements preemption feature for A6xx targets, this allows
->> the GPU to switch to a higher priority ringbuffer if one is ready. A6XX
->> hardware as such supports multiple levels of preemption granularities,
->> ranging from coarse grained(ringbuffer level) to a more fine grained
->> such as draw-call level or a bin boundary level preemption. This patch
->> enables the basic preemption level, with more fine grained preemption
->> support to follow.
->>
->> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
->> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
->> Signed-off-by: Sharat Masetty <smasetty@codeaurora.org>
->> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
->> ---
->>   drivers/gpu/drm/msm/Makefile              |   1 +
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 283 +++++++++++++++++++++-
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.h     | 168 +++++++++++++
->>   drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 377 ++++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/msm_ringbuffer.h      |   7 +
->>   5 files changed, 825 insertions(+), 11 deletions(-)
->>
+On Sat, Sep 28, 2024 at 01:07:43AM +0530, Mukesh Ojha wrote:
+> On Wed, Sep 25, 2024 at 08:41:55PM -0700, Bjorn Andersson wrote:
+> > On Wed, Sep 25, 2024 at 04:03:51PM +0530, Mukesh Ojha wrote:
+> > > Multiple call to glink_subdev_stop() for the same remoteproc can happen
+> > > if rproc_stop() fails from Process-A that leaves the rproc state to
+> > > RPROC_CRASHED state later a call to recovery_store from user space in
+> > > Process B triggers rproc_trigger_recovery() of the same remoteproc to
+> > > recover it results in NULL pointer dereference issue in
+> > > qcom_glink_smem_unregister().
+> > > 
+> > > Fix it by having a NULL check in glink_subdev_stop().
+> > > 
+> > > 	Process-A                			Process-B
+> > > 
+> > >   fatal error interrupt happens
+> > > 
+> > >   rproc_crash_handler_work()
+> > >     mutex_lock_interruptible(&rproc->lock);
+> > >     ...
+> > > 
+> > >        rproc->state = RPROC_CRASHED;
+> > >     ...
+> > >     mutex_unlock(&rproc->lock);
+> > > 
+> > >     rproc_trigger_recovery()
+> > >      mutex_lock_interruptible(&rproc->lock);
+> > > 
+> > >       adsp_stop()
+> > >       qcom_q6v5_pas 20c00000.remoteproc: failed to shutdown: -22
+> > >       remoteproc remoteproc3: can't stop rproc: -22
+> > 
+> > I presume that at this point this remoteproc is in some undefined state
+> > and the only way to recover is for the user to reboot the machine?
 > 
-> [snip]
+> Here, 50+ (5s) retry of scm shutdown is failing during decryption of
+> remote processor memory region, and i don't think, it is anyway to do
+> with remote processor state here, as a best effort more number of
+> retries can be tried instead of 50 or wait for some other recovery
+> command like recovery_store() to let it do the retry again from
+> beginning.
 > 
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index 6e065500b64d6d95599d89c33e6703c92f210047..355a3e210335d60a5bed0ee287912271c353402a 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> 
-> [snip]
-> 
->> @@ -784,6 +1015,16 @@ static int a6xx_ucode_load(struct msm_gpu *gpu)
->>                  msm_gem_object_set_name(a6xx_gpu->shadow_bo, "shadow");
->>          }
->>
->> +       a6xx_gpu->pwrup_reglist_ptr = msm_gem_kernel_new(gpu->dev, PAGE_SIZE,
->> +                                                        MSM_BO_WC  | MSM_BO_MAP_PRIV,
->> +                                                        gpu->aspace, &a6xx_gpu->pwrup_reglist_bo,
->> +                                                        &a6xx_gpu->pwrup_reglist_iova);
-> 
-> Couldn't this also be MSM_BO_GPU_READONLY?  And same for the
-> preempt_postamble_ptr, I assume?
 
-So for pwrup_reglist_ptr, it contains the cpu_gpu_lock struct that needs 
-to be written by the gpu. The list itself is part of that struct.
+But are you saying that retrying a bit later would allow us to get out
+of this problem? If we just didn't hit the NULL pointer(s)?
 
+How long are we talking about here? Is the timeout too short?
+
+> > 
+> > 
+> > The check for glink->edge avoids one pitfall following this, but I'd
+> > prefer to see a solution that avoids issues in this scenario in the
+> > remoteproc core - rather than working around side effects of this in
+> > different places.
 > 
-> Also, it looks like we are only writing the smmu_info from the
-> kernel.. is there any way that could be split out into a RO buffer?
-
-For preempt_postamble_ptr, and smmu_info I think it should be possible 
-so I'll work on that.
-
+> Handling in a remoteproc core means we may need another state something
+> like "RPROC_UNKNOWN" which can be kept after one attempt of recovery
+> failure and checking the same during another try return immediately with
+> some log message.
 > 
-> BR,
-> -R
-> 
->> +
->> +       if (IS_ERR(a6xx_gpu->pwrup_reglist_ptr))
->> +               return PTR_ERR(a6xx_gpu->pwrup_reglist_ptr);
->> +
->> +       msm_gem_object_set_name(a6xx_gpu->pwrup_reglist_bo, "pwrup_reglist");
->> +
->>          return 0;
->>   }
->>
 
+Yes, if we are failing to shut down the remoteproc and there's no way
+for us to reliably recover from that (e.g. we are not able to reclaim
+the memory), it seems reasonable that we have to mark it using a new
+state.
 
-Best regards,
--- 
-Antonino Maniscalco <antomani103@gmail.com>
+If that is the case, I'd call it RPROC_DEFUNCT (or something like that
+instead), because while in some "unknown" state, from a remoteproc
+framework's point of view, it's in a well known (broken) state.
+
+Regards,
+Bjorn
 
