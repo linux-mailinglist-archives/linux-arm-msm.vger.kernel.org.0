@@ -1,94 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-32664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52016988368
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 13:40:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA943988392
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 13:58:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04600282986
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 11:40:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A957B1F24EFC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Sep 2024 11:58:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F2591898FF;
-	Fri, 27 Sep 2024 11:40:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACA718A6DC;
+	Fri, 27 Sep 2024 11:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RtXXZ560"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OAQWbnn7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8F329B0;
-	Fri, 27 Sep 2024 11:40:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFFB18A6D9;
+	Fri, 27 Sep 2024 11:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727437229; cv=none; b=Q6tdUpINwZnyr3+Gf0GgsNQPJN3+6Kf8nVhS1MJemoxYubia0mX866xhTBZ0TDqYLnUPY3Yn7DmJUQg1ScGV/PNuPJphkIpkwxEnHMDRRBZsVv6+Xclnz5yqeitFYGj9MmZuTyfK66ncpBTvNYbFUvuAVstrOeZux9Jj0wzunrc=
+	t=1727438279; cv=none; b=RoZtrIGWrbCLQr4rmuzcioyz27eXucwErC2S0+lKwQhP/OUGHwjMjmjhabjAa7v2UYN5vvUwMpnCCxHTM1FSsWuX8P6un0/6XQkKPJsv1CcUA6uBhFkqnINODTUzSVgzJ6qzL/2+q0VtviNEbqAsf8hZQy23bSLlvC3z9hAtkKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727437229; c=relaxed/simple;
-	bh=+p5kaVpOnwFVuUCrs+KPwrAE0W9NA+0wEHrYwH2KrTE=;
-	h=Content-Type:MIME-Version:Subject:From:Message-Id:Date:References:
-	 In-Reply-To:To:Cc; b=RwPmeV1GGXfAVA3QtrZ5MYizDjw8AyeDT38qsQSLJd9UtNF4+sI73w0bd3QHlgxdkAP31WY27Ai3Da+b8HTrYOaJOiUhXtDR8z1reHIykAHWb1HuR3+0gVCPmwApIDZHDlL2u3NhHO+uv5hcdLhFkd1T4wSkOmpS4Hcu4SlB9SY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RtXXZ560; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54057C4CEC4;
-	Fri, 27 Sep 2024 11:40:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727437228;
-	bh=+p5kaVpOnwFVuUCrs+KPwrAE0W9NA+0wEHrYwH2KrTE=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=RtXXZ560pNIiLSkEkLSCy2QrnZbhp+uPRfg+APR3Kj7W7zxwULPj21Nqf3Pmxq0eL
-	 PWPJ5F0TH+B8rSIvRq2n0zJD3GEh3yquZV26R6Rcw+CyjKqF8dj+MpYmPh6Tbq9scM
-	 oGUPoLH1tOBpDzIlk+YFQngD4PR9c/UhN1Ibs9t5UQNJwvq/PnQ/E615bIeqa0p1i+
-	 TFb0/xzNDcvnXMHVKfaJdBx9b7VrZ5BD2LljeYUj/F9nF217pa2p+XoQj+GR1qvDJQ
-	 BXj07qTDMI8hAI7wWdVLKSrFbXQTBatOySoFuDYmWyjpsLhFsoRhy27aOLA1VNRF7m
-	 3tlCCIYGK41Cg==
-Received: from [10.30.226.235] (localhost [IPv6:::1])
-	by aws-us-west-2-korg-oddjob-rhel9-1.codeaurora.org (Postfix) with ESMTP id 354CC3809A80;
-	Fri, 27 Sep 2024 11:40:32 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1727438279; c=relaxed/simple;
+	bh=OFvMn4GwvKADxI17/MHAKauBHsI2ZCvbRnSqWFXPevw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JclU7FqQj9zAzPnDO9taQxd2o+9lvm8ghN/hUtJEWfIpRb0AkD15idldN7xqxKxW+Z3eXAFihthwENb+/l5+0w1LyVmdwnNR6PCAPeh8sdWAnxQr6oRHE1Swx0RGDOGjwXMv7OOjqy+N2bzc/Ik4uz9a9S0/l5bTlF+CMGPXtg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OAQWbnn7; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2db6e80555dso376317a91.0;
+        Fri, 27 Sep 2024 04:57:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1727438277; x=1728043077; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/00YoVmyxoQD04QF3B+FPA5cgwCGWAPgMWHF0NDU/mM=;
+        b=OAQWbnn7pTpY/EQbG5C09/sChWtgtM2VRSWXQ5Xv7MNffsrx/SjOZIoU5tbRZM56cv
+         TIphql2SnHz5qWkiiRbfBYQE/YwHYHl+Wfic0ojBVLEuR3kvWbApeNNjzeQa1vsGk2r6
+         p2u9nWmzhlHNBoV4GuGbmqI+caJ1QsC2GlbZB1rf7t/IfSLnVTHNqaIQBlGtUIDZv5Bc
+         VuLHWQRu/qdbzqkdizCljUBwZxKBdAGKa4gXQa9uTsM9Tyl+Hqpw4jmj6+psjN0pA77o
+         pvCKOTPGsgHjbPITWQDHqSSXFIHrNSNoCtG1sApIHA01nWak1YejV46B6JOKtSM4yg3R
+         HDQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727438277; x=1728043077;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/00YoVmyxoQD04QF3B+FPA5cgwCGWAPgMWHF0NDU/mM=;
+        b=Fu+HwK04J3/87EO4Z3PPCvNqJI6r/UUKsXHvoFrdztudns8MLpZUM0qNdvgFCyMPC8
+         QtOiAvhSJ9T8iIwTKk/CkVBbKMMVToWZVwBtdr5J7n4nlS79K8MLA/IrRtRBpeEV+zrY
+         5pAj77Vv8Qgxv8Ya3NJpCldnFZvtrhQl4pM4p8mHMQUgRWB/4HCS+peLKAkE+YFnCj8w
+         QZU+RFpaHnHUlXJrAzbFAQw/qqEi9cKbp9XjyfMOlQvo3vru/f/PDZ26Hs1AHsDAvMf2
+         qS2ZS/wr/h/D+KGPZi6jKwXtgC3fno4eMomETg/sQjU5YCXAsViy/rjp8ReBYgxJWdaZ
+         9TAQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV/dTySIbtApQoPoFqYxaePvJadWIOLP2rip99FJDqnGAFmGydMuJiAHK8iU+CJhq9a95ARV878mE8a76Am@vger.kernel.org, AJvYcCVDOrqhJieQXNy8NWRj3BjrmmE6y23Tv4T97p2g9EkDCVmOo0BfPHYcAIOw91lp+zwZ31WIor865Sf75o5n@vger.kernel.org, AJvYcCXEd6HRFbhgYVx2F6nXxWWVXJ4NOa5H7VNoExHvOxNKbQafYiFRCn63CZ0dXNvbZm7dWbGnkMHeUfr7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzi8LR+jhUr0sh+2YlcF7CQ68PqsKuI8d4/XRnWhX1gNh6GoomY
+	AHDGHrwMDNLn2nFZY7scItqXdXTG0aQ4Jwnlnme/v7T6bQfgdAXRXDp4FppSMBVly85NgV7E+wu
+	fCd2G2/ynYT5sMBfJKwoQsn5/4Xk=
+X-Google-Smtp-Source: AGHT+IFMYD0OH+mms5PX41lPPzr/Ohq/r9pchznWtwGPOOpsDLVNm08dDIYqmANikx8KUubtMRcg72JLma6cxaU0Aik=
+X-Received: by 2002:a17:90a:68ce:b0:2d8:e7ef:7d23 with SMTP id
+ 98e67ed59e1d1-2e0b8d7c62cmr1427986a91.4.1727438277454; Fri, 27 Sep 2024
+ 04:57:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] net: wwan: qcom_bam_dmux: Fix missing pm_runtime_disable()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <172743723073.1930223.10533462862376551133.git-patchwork-notify@kernel.org>
-Date: Fri, 27 Sep 2024 11:40:30 +0000
-References: <20240923115743.3563079-1-ruanjinjie@huawei.com>
-In-Reply-To: <20240923115743.3563079-1-ruanjinjie@huawei.com>
-To: Jinjie Ruan <ruanjinjie@huawei.com>
-Cc: stephan@gerhold.net, loic.poulain@linaro.org, ryazanov.s.a@gmail.com,
- johannes@sipsolutions.net, davem@davemloft.net, edumazet@google.com,
- kuba@kernel.org, pabeni@redhat.com, linux-arm-msm@vger.kernel.org,
- netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240926-preemption-a750-t-v6-0-7b6e1ef3648f@gmail.com> <20240926-preemption-a750-t-v6-4-7b6e1ef3648f@gmail.com>
+In-Reply-To: <20240926-preemption-a750-t-v6-4-7b6e1ef3648f@gmail.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Fri, 27 Sep 2024 12:57:46 +0100
+Message-ID: <CACu1E7HEZztQ3bctuVdrwLCVY2oJ_01AyeKdwCuuB6gmsPurpg@mail.gmail.com>
+Subject: Re: [PATCH v6 04/11] drm/msm: Add CONTEXT_SWITCH_CNTL bitfields
+To: Antonino Maniscalco <antomani103@gmail.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konrad.dybcio@linaro.org>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Jonathan Corbet <corbet@lwn.net>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello:
+In the future, the right thing to do is open a mesa MR with just the
+register changes and then copy the file from mesa once it's merged,
+because all of the XML files are supposed to flow from mesa to keep
+mesa and the kernel in sync. I've opened a mesa MR [1] based on this
+that will hopefully get quickly acked and merged.
 
-This patch was applied to netdev/net.git (main)
-by David S. Miller <davem@davemloft.net>:
+Connor
 
-On Mon, 23 Sep 2024 19:57:43 +0800 you wrote:
-> It's important to undo pm_runtime_use_autosuspend() with
-> pm_runtime_dont_use_autosuspend() at driver exit time.
-> 
-> But the pm_runtime_disable() and pm_runtime_dont_use_autosuspend()
-> is missing in the error path for bam_dmux_probe(). So add it.
-> 
-> Found by code review. Compile-tested only.
-> 
-> [...]
+[1] https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/31422
 
-Here is the summary with links:
-  - [v2] net: wwan: qcom_bam_dmux: Fix missing pm_runtime_disable()
-    https://git.kernel.org/netdev/net/c/d505d3593b52
+On Thu, Sep 26, 2024 at 10:17=E2=80=AFPM Antonino Maniscalco
+<antomani103@gmail.com> wrote:
+>
+> Add missing bitfields to CONTEXT_SWITCH_CNTL in a6xx.xml.
+>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
+> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+> ---
+>  drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/=
+drm/msm/registers/adreno/a6xx.xml
+> index 2dfe6913ab4f52449b76c2f75b2d101c08115d16..fd31d1d7a11eef7f38dcc2975=
+dc1034f6b7a2e41 100644
+> --- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+> +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+> @@ -1337,7 +1337,12 @@ to upconvert to 32b float internally?
+>                 <reg32 offset=3D"0x0" name=3D"REG" type=3D"a6x_cp_protect=
+"/>
+>         </array>
+>
+> -       <reg32 offset=3D"0x08A0" name=3D"CP_CONTEXT_SWITCH_CNTL"/>
+> +       <reg32 offset=3D"0x08A0" name=3D"CP_CONTEXT_SWITCH_CNTL">
+> +               <bitfield name=3D"STOP" pos=3D"0" type=3D"boolean"/>
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+This bit isn't set to 1 when it's stopped, it's set to
 
-
+> +               <bitfield name=3D"LEVEL" low=3D"6" high=3D"7"/>
+> +               <bitfield name=3D"USES_GMEM" pos=3D"8" type=3D"boolean"/>
+> +               <bitfield name=3D"SKIP_SAVE_RESTORE" pos=3D"9" type=3D"bo=
+olean"/>
+> +       </reg32>
+>         <reg64 offset=3D"0x08A1" name=3D"CP_CONTEXT_SWITCH_SMMU_INFO"/>
+>         <reg64 offset=3D"0x08A3" name=3D"CP_CONTEXT_SWITCH_PRIV_NON_SECUR=
+E_RESTORE_ADDR"/>
+>         <reg64 offset=3D"0x08A5" name=3D"CP_CONTEXT_SWITCH_PRIV_SECURE_RE=
+STORE_ADDR"/>
+>
+> --
+> 2.46.1
+>
 
