@@ -1,111 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-32703-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB0A298906D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 18:29:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CABF9890A5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 19:05:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4830928241F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 16:29:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07FDE281D8D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 17:05:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C77371419A9;
-	Sat, 28 Sep 2024 16:29:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D5211755C;
+	Sat, 28 Sep 2024 17:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZrQJx65O"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="cxPRrNkm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9270A5FEE6;
-	Sat, 28 Sep 2024 16:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE17247F53;
+	Sat, 28 Sep 2024 17:05:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727540992; cv=none; b=gqsIRQzL33xN4xZW2y6ygH/194UV5+bQylMmsZd+6Bz2wWFmOe9PTWpB34ol2sH/DQoQqTPVk+5Cl4eh++CrW2P6PYFtL/7cpGXFgLrSokojl/fHk81RWmgAmlhAPZYr+NijXdI4DIENeWWeeIjgBZLJRJAy0BJsbISr7UxvXos=
+	t=1727543149; cv=none; b=mvFsEK8fTljBfDdV6I/OlWp02a1jAWbjP99gWjhTDkWDmd1I5v4G1jWpB1QqzY0Z8zjRkeLVKG8ww7e6/6dhlSs4McXdUaDBXYn1NLuvnH9thf1zcEUhgH7/QxDpgZMwSXHAL+JYo51OKZMNnrFyoXKvavgesLB54s2cH0hjwaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727540992; c=relaxed/simple;
-	bh=f7It2CatrjhmD2pcjpPk4oE/AIT6Ex9NUsQxqsMgh0c=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bzCKJjzKC1SaWfkvbIMs2Oq3uNg7WbxDuih3fMurtEECNl9SC/IFVZLqsr1GEydBOFSNfmnkkv4bFTSoHtXY0IZRLba+vyN+7JnAKZSeDYFoLjDjOcs15wiGPfDpCWIae/8jgJ3hSzfzj1IzIYSQAXhafVZODY2popoSQG9bq44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZrQJx65O; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31187C4CEC3;
-	Sat, 28 Sep 2024 16:29:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727540992;
-	bh=f7It2CatrjhmD2pcjpPk4oE/AIT6Ex9NUsQxqsMgh0c=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=ZrQJx65OhK6f12Q23BR5WzIdCRCFiUu3mSVHZSSFMWrFkhe0RQCly7Y1B9jzzG3Sd
-	 xsUxCx6Z2qXOiWudsogTHV6pTkE82r92WR4qkabGM5+106uENLSe7uhYtg9T950ita
-	 x/S9wQ9XGvtXkNRsEVcIumeF+yoF2t5CjGdmT92oW+uZiEieuXJm9RPZbVZCVsIl3S
-	 j7a5RI2+MdMYqRr4Qgo7dcHntvLcNjR9GBdu73mOCeIoUxTpiODFqkRA8ZXOGAURed
-	 H8CG9dRgrVzAunPkiyvyx585N1qEtXjlOR9/zqzG78cY1Ap8NQlP8YhK29p52DJLD1
-	 1pHWUhT7XnLUQ==
-Date: Sat, 28 Sep 2024 17:29:44 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: Lars-Peter Clausen <lars@metafoo.de>, Chen-Yu Tsai <wens@csie.org>,
- Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland
- <samuel@sholland.org>, Michael Hennerich <Michael.Hennerich@analog.com>,
- linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-sunxi@lists.linux.dev
-Subject: Re: [PATCH 0/4] iio: adc: use scoped device_for_each_childe_node()
-Message-ID: <20240928172944.10da3b60@jic23-huawei>
-In-Reply-To: <20240926-iio_device_for_each_child_node_scoped-v1-0-64ca8a424578@gmail.com>
-References: <20240926-iio_device_for_each_child_node_scoped-v1-0-64ca8a424578@gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-pc-linux-gnu)
+	s=arc-20240116; t=1727543149; c=relaxed/simple;
+	bh=mrDTHczBUVO+Z+O9DHZF2u+esRrZbDGTvRKGSvgL9V8=;
+	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
+	 Message-ID:Content-Type; b=Nk18fUu8lPZRVhy5xKAOrbF1P3zLyOELqfl9dSW9Kmv+Zx0yx1OVYU4kwmIZ8835tIrsw5EgmwuB7bPUmar4Tm40gq9CFnVTW+qARXAibCWPq8qN5TvTDM68YJtI7+Sg51i2nNtELY5SxMNo7cQ6uxMH0G+D7Kp27KhvvhaORlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=cxPRrNkm; arc=none smtp.client-ip=5.75.144.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
+Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
+	by mail.mainlining.org (Postfix) with ESMTPSA id 11555E450F;
+	Sat, 28 Sep 2024 17:05:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
+	s=psm; t=1727543139;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=gkoPnL/JI7TcgMmtYbbDPdhapIy7UatsrJTwk4iLhDY=;
+	b=cxPRrNkmzjqxekB3QWby8HcPXZL3NinvckYxhld3JzRgXpWz1KsYPz22A9Ejw0HLfkXzYc
+	Ax6NzVbuiJddC+58VORiqW7UP89ZbC/zy7Q7pthwNkygSaQ0UW9amqREgOxkP+js43vyon
+	PoQbAy2JVumfJStDmuwM0w8BaggBsPZ599rmf4mDk07klHqCjeKIK5bxj3Z+LM1yInK8X8
+	mDp4I4RxKgQcyz8pK9pdfoXoN6QSEX4S9lGDfJYm8IM2ETpOOUOt12ZjEehojcfSuPJ1gE
+	wYI6TzHblpSXHEoTL5cN9b4Kr7D2xm/aidKFFAr0FhhylAn5UaarwKAixksixw==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Date: Sat, 28 Sep 2024 19:05:39 +0200
+From: barnabas.czeman@mainlining.org
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
+ <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Satya Priya
+ Kakitapalli <quic_skakitap@quicinc.com>, Konrad Dybcio
+ <konradybcio@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>
+Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: Fix pll post div mask when
+ width is not set
+In-Reply-To: <jlmnxzkferigmhh5akcr5uumrdychjxyy2flftx5u2sg2w62aa@566u2lqj5od2>
+References: <20240925-fix-postdiv-mask-v2-1-b825048b828b@mainlining.org>
+ <jlmnxzkferigmhh5akcr5uumrdychjxyy2flftx5u2sg2w62aa@566u2lqj5od2>
+Message-ID: <b9369ebfeae8bc1aad3f9da4a6453c3d@mainlining.org>
+X-Sender: barnabas.czeman@mainlining.org
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, 26 Sep 2024 18:08:36 +0200
-Javier Carrasco <javier.carrasco.cruz@gmail.com> wrote:
-
-> The device_for_each_child_node() macro requires calls to
-> fwnode_handle_put() upon early exits (break/return), and that has been a
-> constant source of bugs in the kernel.
+On 2024-09-25 23:28, Dmitry Baryshkov wrote:
+> On Wed, Sep 25, 2024 at 08:33:20PM GMT, Barnabás Czémán wrote:
+>> Many qcom clock drivers do not have .width set. In that case value of
+>> (p)->width - 1 will be negative which breaks clock tree. Fix this
+>> by checking if width is zero, and pass 3 to GENMASK if that's the 
+>> case.
+>> 
+>> Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
+>> Fixes: 2c4553e6c485 ("clk: qcom: clk-alpha-pll: Fix the pll post div 
+>> mask")
 > 
-> This series switches to the more secure, scoped version of the macro
-> in the IIO subsystem, wherever the loop contains error paths. This
-> change simplifies the code and removes the explicit calls to
-> fwnode_handle_put(). In all cases the child node is only used for
-> parsing, and not assigned to be used later.
+> I think one Fixes tag should be enough.
+Should I send a v3 remove one of them or not needed?
 > 
-> The straightforward uses of the loop with no error paths have been left
-> untouched, as their simplicity justifies the non-scoped variant.
+> Nevertheless,
 > 
-> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-All look good to me.
-
-I'll be rebasing on rc1 anyway, so there is plenty of time for any
-other reviews to come in.  In meantime I've queued these up on the testing
-branch of iio.git.
-
-Thanks,
-
-Jonathan
-> ---
-> Javier Carrasco (4):
->       iio: adc: qcom-pm8xxx-xoadc: use scoped device_for_each_child_node()
->       iio: adc: qcom-spmi-vadc: use scoped device_for_each_child_node()
->       iio: adc: sun20i-gpadc: use scoped device_for_each_child_node()
->       iio: adc: ad5755: use scoped device_for_each_child_node()
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
->  drivers/iio/adc/qcom-pm8xxx-xoadc.c |  8 +++-----
->  drivers/iio/adc/qcom-spmi-vadc.c    |  7 ++-----
->  drivers/iio/adc/sun20i-gpadc-iio.c  |  7 ++-----
->  drivers/iio/dac/ad5755.c            | 11 +++--------
->  4 files changed, 10 insertions(+), 23 deletions(-)
-> ---
-> base-commit: 92fc9636d1471b7f68bfee70c776f7f77e747b97
-> change-id: 20240926-iio_device_for_each_child_node_scoped-cb534e6f5d9b
-> 
-> Best regards,
-
+>> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+>> ---
+>> Changes in v2:
+>> - Pass 3 to GENMASK instead of 0.
+>> - Add more Fixes tag for reference root cause.
+>> - Link to v1: 
+>> https://lore.kernel.org/r/20240925-fix-postdiv-mask-v1-1-f70ba55f415e@mainlining.org
+>> ---
+>>  drivers/clk/qcom/clk-alpha-pll.c | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
 
