@@ -1,79 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-32706-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32707-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5422989139
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 21:53:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2611598913F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 22:03:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B13D1C22DE1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 19:53:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 870F62856A3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 20:03:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626D815443B;
-	Sat, 28 Sep 2024 19:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBA171494DA;
+	Sat, 28 Sep 2024 20:03:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SUmzg8Yu"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="PaKuYuQm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A091465A0;
-	Sat, 28 Sep 2024 19:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF57758222;
+	Sat, 28 Sep 2024 20:03:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727553217; cv=none; b=TDEYrBMoxLJ7NcS+7xNDUpNzs8xKSPh3msgru1J6UYmpFXrmk3gM6De/UUR6gtdV6478ja8IslPrZji8VLes6jcv/Psq/L88HdJ+lnW8peydmUByOgkkDQEJbDE9KE9mdAdB2VaScwAHDvnyaBM/Z9FQg+RH28lbJ7xn7WAw32w=
+	t=1727553817; cv=none; b=J6JIxATBYyfDgEBr5KkydGYgjPWEyVyk4ojuhbpvzb2VSbq4kQz65U9PywLJNDtnt8YbJ1ko/NEI4PXh39/K3MlECewOUZc3+Zqw7mj3N/EJkb6YzorzqxTOB1RMCSY5WfHqXNgQBfTyexGAejkB8Sw0MxrRiDqT61SmBptuwkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727553217; c=relaxed/simple;
-	bh=TsG2b3fBW6P71XH5avJ2+zbBrCJTD+5CCr5SVzCDjw4=;
+	s=arc-20240116; t=1727553817; c=relaxed/simple;
+	bh=4Y6Khbs0mLss/4PQfRnOgzb6KbX+t2KMxs8dRi3TLQM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o+/CCD5axXonadT096rVNvRoe0EAD0TnLrinyPdgSbYajxzS8umn5nzH5+Veep6+Lrj+e58NrpRPO2I5mRhpmRRIqVHVKPeTJcf4J+y121uH8IYW/hS0YuvEQEhagP4pkAaQn2T/YKECI8zKQ8tkp+JklXUrJsqMjT7bhL2irXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SUmzg8Yu; arc=none smtp.client-ip=192.198.163.10
+	 Content-Type:Content-Disposition:In-Reply-To; b=LBvNU+w4u/3FQakD5wSdL7WyhfVSbRqWJNe7MDYYt9JuNv9nbxJp3Mfy6dtFILSEEG8Wj9SC2ZzvMBtFwJML+S1W/kOQX1FVmhYEFkXVtzB+spa6uANlaSUFG1Vkht9OiWPsgnEYbZHLU1V/Us9N5NIzOU+BbGrVCBj42EyFv4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=PaKuYuQm; arc=none smtp.client-ip=192.198.163.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727553215; x=1759089215;
+  t=1727553815; x=1759089815;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=TsG2b3fBW6P71XH5avJ2+zbBrCJTD+5CCr5SVzCDjw4=;
-  b=SUmzg8YuG/fbsk/Eaf9zge6k9Py11ezpERzle7qjdGod59jJftnjjLJt
-   Jbrxkzo1RtuRijB00eGiMACUO5/OH69vzxnCu4bWq3ozxEA5iEHnq0IVl
-   jD4utAshBj36yky3mtzIlFxcbnyrDpon71HqJ3/q66G0U4WNJJjzFNuaP
-   x0WvGh2Al1qKY5qqL+WtVcDUUZJgcxmSDtWjw96kX3O6yXEHVddvsSz7/
-   Qw+5+nDYa7KWfgDLU/7I3iGnZPMcKyHx/CdNwlX0Lbgr56J9bpneR5xZl
-   RzAxGqmGHJhg1n/2NFt4/I0lTn+XOtQ0/oEwadOg1s/ec0vbfF6Dalllu
-   Q==;
-X-CSE-ConnectionGUID: CicrKSp0RKaC0PV/1+9Wfw==
-X-CSE-MsgGUID: 3b5tVCooTra07UH9/zJI1g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11209"; a="38036575"
+  bh=4Y6Khbs0mLss/4PQfRnOgzb6KbX+t2KMxs8dRi3TLQM=;
+  b=PaKuYuQmzpTifjSjAX9vhU0VEDaTjlapiwv51lSu7nc9oFlRv4ZW2DzV
+   dlnashIiOE78afP6uUUYHGl5N+x9p3Q4XOzSBsVeOhN3kHMhfkRNg62nm
+   PGGCHyYVC4btsO9MmDpNIUJJNUWZN0zsEB7XlzRs6oNvpj58pMKK6m8+r
+   x3ArzoFfQnnIC6S62AjtlnH+qgr/qLQVU4yx/mN19MNHtjHdorh85tuFi
+   yYKus1p4qCHAVfEg5hbPxgg/vzcQHm5XnwVP/Vn3n4i1Yo3j20afiWb19
+   3bGjdcHw50I+fbIxhD54uwoGHxujZ9h5zEbMRbk7pIbyFH1PcvYitRrqe
+   g==;
+X-CSE-ConnectionGUID: KPppTrAjTOeCE9r90/f3ng==
+X-CSE-MsgGUID: q0H+WSpjSyeSlM4ON3VCiQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11209"; a="26852124"
 X-IronPort-AV: E=Sophos;i="6.11,162,1725346800"; 
-   d="scan'208";a="38036575"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2024 12:53:35 -0700
-X-CSE-ConnectionGUID: bEZ9ms7uQpCQW5HKT/DOYQ==
-X-CSE-MsgGUID: 3IHAGF6YTy+64Yig4ZHwfQ==
+   d="scan'208";a="26852124"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2024 13:03:34 -0700
+X-CSE-ConnectionGUID: uw9RgQ9rTiCCzyIzYr/Pzg==
+X-CSE-MsgGUID: AmUTSg6WQQCZFX/XQY73oQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.11,162,1725346800"; 
-   d="scan'208";a="77394217"
+   d="scan'208";a="77259272"
 Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 28 Sep 2024 12:53:31 -0700
+  by fmviesa005.fm.intel.com with ESMTP; 28 Sep 2024 13:03:31 -0700
 Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1sudVR-000NZP-0n;
-	Sat, 28 Sep 2024 19:53:29 +0000
-Date: Sun, 29 Sep 2024 03:53:06 +0800
+	id 1sudf7-000NZd-1A;
+	Sat, 28 Sep 2024 20:03:29 +0000
+Date: Sun, 29 Sep 2024 04:03:25 +0800
 From: kernel test robot <lkp@intel.com>
 To: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_rampraka@quicinc.com, quic_nitirawa@quicinc.com,
-	quic_bhaskarv@quicinc.com, quic_neersoni@quicinc.com,
-	quic_gaurkash@quicinc.com
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_rampraka@quicinc.com,
+	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
+	quic_neersoni@quicinc.com, quic_gaurkash@quicinc.com
 Subject: Re: [PATCH] qcom: ice: Remove ice probe
-Message-ID: <202409290321.quE8sBb5-lkp@intel.com>
+Message-ID: <202409290335.0ctcBH8j-lkp@intel.com>
 References: <20240928050456.27577-1-quic_spuppala@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -100,21 +99,21 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Seshu-Madhavi-Puppala/qco
 base:   v6.11
 patch link:    https://lore.kernel.org/r/20240928050456.27577-1-quic_spuppala%40quicinc.com
 patch subject: [PATCH] qcom: ice: Remove ice probe
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20240929/202409290321.quE8sBb5-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240929/202409290321.quE8sBb5-lkp@intel.com/reproduce)
+config: m68k-allmodconfig (https://download.01.org/0day-ci/archive/20240929/202409290335.0ctcBH8j-lkp@intel.com/config)
+compiler: m68k-linux-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240929/202409290335.0ctcBH8j-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409290321.quE8sBb5-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202409290335.0ctcBH8j-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
->> drivers/soc/qcom/ice.c:309:10: error: incompatible integer to pointer conversion returning 'long' from a function with result type 'struct qcom_ice *' [-Wint-conversion]
+   drivers/soc/qcom/ice.c: In function 'of_qcom_ice_get':
+>> drivers/soc/qcom/ice.c:309:24: error: returning 'long int' from a function with return type 'struct qcom_ice *' makes pointer from integer without a cast [-Wint-conversion]
      309 |                 return PTR_ERR(base);
          |                        ^~~~~~~~~~~~~
-   1 error generated.
 
 
 vim +309 drivers/soc/qcom/ice.c
