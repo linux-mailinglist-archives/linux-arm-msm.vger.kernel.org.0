@@ -1,103 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-32704-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32705-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CABF9890A5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 19:05:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 865FD9890F2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 19:53:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07FDE281D8D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 17:05:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 036F6B20C6A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 17:53:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D5211755C;
-	Sat, 28 Sep 2024 17:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D219A1474D3;
+	Sat, 28 Sep 2024 17:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="cxPRrNkm"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="I4kUfdc6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE17247F53;
-	Sat, 28 Sep 2024 17:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30A015FEE6;
+	Sat, 28 Sep 2024 17:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727543149; cv=none; b=mvFsEK8fTljBfDdV6I/OlWp02a1jAWbjP99gWjhTDkWDmd1I5v4G1jWpB1QqzY0Z8zjRkeLVKG8ww7e6/6dhlSs4McXdUaDBXYn1NLuvnH9thf1zcEUhgH7/QxDpgZMwSXHAL+JYo51OKZMNnrFyoXKvavgesLB54s2cH0hjwaA=
+	t=1727546017; cv=none; b=QdcfUAIjV2HpGZ9GRhj8O6N3NRm31UhaMCvh00rPnnbbg+Zi4pwoyfgSezLEsgvKaYeMl6YjOzK53MHnQx5hhg1mRLSW0vFq/wz2+loK9CaUdD6u9Z98MQ5YWQdOO9AkDWS0SwwaLduPcr31wkvdwWnDATsdKgqZOO+xTLrCNZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727543149; c=relaxed/simple;
-	bh=mrDTHczBUVO+Z+O9DHZF2u+esRrZbDGTvRKGSvgL9V8=;
+	s=arc-20240116; t=1727546017; c=relaxed/simple;
+	bh=zMALgFkDqXHWXgI0B77rEXgc7pYEDEox2W/J4MJP03A=;
 	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=Nk18fUu8lPZRVhy5xKAOrbF1P3zLyOELqfl9dSW9Kmv+Zx0yx1OVYU4kwmIZ8835tIrsw5EgmwuB7bPUmar4Tm40gq9CFnVTW+qARXAibCWPq8qN5TvTDM68YJtI7+Sg51i2nNtELY5SxMNo7cQ6uxMH0G+D7Kp27KhvvhaORlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=cxPRrNkm; arc=none smtp.client-ip=5.75.144.95
+	 Message-ID:Content-Type; b=HHBmqp9DYRj89oWtZP2FuaLWnS9/jOrvRf3Cc85bk45N4Quf95T0bgMUP8rqY2rkZUs7SpgtbfKTfSUONHD96gGZww5wGq50IpbSXBPtvoYUgxCNch+sU/hrNagXPCNIff1nMdqH6vgR7Rw0khES8SoPhnmtp9CL8ciuEeaxX/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=I4kUfdc6; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 11555E450F;
-	Sat, 28 Sep 2024 17:05:39 +0000 (UTC)
+	by mail.mainlining.org (Postfix) with ESMTPSA id E5E9FE450F;
+	Sat, 28 Sep 2024 17:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1727543139;
+	s=psm; t=1727546013;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=gkoPnL/JI7TcgMmtYbbDPdhapIy7UatsrJTwk4iLhDY=;
-	b=cxPRrNkmzjqxekB3QWby8HcPXZL3NinvckYxhld3JzRgXpWz1KsYPz22A9Ejw0HLfkXzYc
-	Ax6NzVbuiJddC+58VORiqW7UP89ZbC/zy7Q7pthwNkygSaQ0UW9amqREgOxkP+js43vyon
-	PoQbAy2JVumfJStDmuwM0w8BaggBsPZ599rmf4mDk07klHqCjeKIK5bxj3Z+LM1yInK8X8
-	mDp4I4RxKgQcyz8pK9pdfoXoN6QSEX4S9lGDfJYm8IM2ETpOOUOt12ZjEehojcfSuPJ1gE
-	wYI6TzHblpSXHEoTL5cN9b4Kr7D2xm/aidKFFAr0FhhylAn5UaarwKAixksixw==
+	bh=ZSO46y2MsMCH4n0dK8IGiKeBd1ttkG4kqyrsA9j/Hq4=;
+	b=I4kUfdc6sg9FvyVB2/m/sDCTm7HrDAsS4AI0dp/yO8e7iGyNDcWxXDrJAMTwFK2YPQJQaP
+	tkvBJ96MWbDlUu1tFFL6YCBHOBN01X5oTHcugGECKY8FD1jnLECYaXVg3V3hA9nNsPQ6f3
+	hVKT7pmAGC6dctibGKTTd6usR3qE+AaJtLs3QKfiQWRxS+0Q2vtmJ9xCn4fVHCkQk29xMQ
+	2cTb2fPvdvq2ejsVDHXqIn6ArbxvOAnk/S5swYCLEKm+uveIEP2jh1Cp8RK3Uwtq+ovVO/
+	dFan15jcMyKm2Bv3KV6rp7xt1N8s652vuyDifo8nBJqpP9WLhNhgbpb2yj0W+w==
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 28 Sep 2024 19:05:39 +0200
+Date: Sat, 28 Sep 2024 19:53:33 +0200
 From: barnabas.czeman@mainlining.org
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette
- <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Satya Priya
- Kakitapalli <quic_skakitap@quicinc.com>, Konrad Dybcio
- <konradybcio@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>
-Subject: Re: [PATCH v2] clk: qcom: clk-alpha-pll: Fix pll post div mask when
- width is not set
-In-Reply-To: <jlmnxzkferigmhh5akcr5uumrdychjxyy2flftx5u2sg2w62aa@566u2lqj5od2>
-References: <20240925-fix-postdiv-mask-v2-1-b825048b828b@mainlining.org>
- <jlmnxzkferigmhh5akcr5uumrdychjxyy2flftx5u2sg2w62aa@566u2lqj5od2>
-Message-ID: <b9369ebfeae8bc1aad3f9da4a6453c3d@mainlining.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
+ <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, Marijn Suijten
+ <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, Daniel
+ Vetter <daniel@ffwll.ch>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, Konrad Dybcio
+ <konrad.dybcio@somainline.org>
+Subject: Re: [PATCH 0/2] Add MSM8996/MSM8953 dpu catalog
+In-Reply-To: <CAA8EJpr0C-gXDoJsStTxJzCMEkbZaPeEAcBES3GqZp1FcKb=4Q@mail.gmail.com>
+References: <20240628-dpu-msm8953-msm8996-v1-0-a31c77248db7@mainlining.org>
+ <zeek3j7skstysho5bduxn23xipz3fpqsfwggue66dlyozhepnn@4wnnd7q6xf22>
+ <05c1f93940c38087e8d245d2b6bf90e0@mainlining.org>
+ <CAA8EJpr0C-gXDoJsStTxJzCMEkbZaPeEAcBES3GqZp1FcKb=4Q@mail.gmail.com>
+Message-ID: <675e6c45a3a2297ccc17aad9de1c802e@mainlining.org>
 X-Sender: barnabas.czeman@mainlining.org
 Content-Type: text/plain; charset=UTF-8;
  format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 2024-09-25 23:28, Dmitry Baryshkov wrote:
-> On Wed, Sep 25, 2024 at 08:33:20PM GMT, Barnabás Czémán wrote:
->> Many qcom clock drivers do not have .width set. In that case value of
->> (p)->width - 1 will be negative which breaks clock tree. Fix this
->> by checking if width is zero, and pass 3 to GENMASK if that's the 
->> case.
+On 2024-09-27 18:02, Dmitry Baryshkov wrote:
+> On Fri, 27 Sept 2024 at 17:39, <barnabas.czeman@mainlining.org> wrote:
 >> 
->> Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
->> Fixes: 2c4553e6c485 ("clk: qcom: clk-alpha-pll: Fix the pll post div 
->> mask")
+>> On 2024-08-01 21:25, Dmitry Baryshkov wrote:
+>> > On Fri, Jun 28, 2024 at 04:39:38PM GMT, Barnabás Czémán wrote:
+>> >> This patch series add dpu support for MSM8996/MSM8953 devices.
+>> >>
+>> >> Note, by default these platforms are still handled by the MDP5 driver
+>> >> unless the `msm.prefer_mdp5=false' parameter is provided.
+>> >
+>> > Could you please provide a summary of features actually tested with the
+>> > DPU driver? Have you tested YUV output? Have you tested RGB planes?
+>> I have checked all planes they are working fine.
+>> 
+>> > Which LMs have you tested?
+>> I have done some more testing and msm8953 LMs are fine but i have 
+>> found
+>> out
+>> on msmm8996 LM_3 and LM_4 is not working as i see in downstream sde 
+>> code
+>> they are not exists.
+>> This kind of messages i got for LM_3 and LM_4
+>> [   34.751091] [drm:_dpu_rm_make_reservation] [dpu error]unable to 
+>> find
+>> appropriate mixers
+>> [   34.751112] [drm:dpu_rm_reserve] [dpu error]failed to reserve hw
+>> resources: -119
 > 
-> I think one Fixes tag should be enough.
-Should I send a v3 remove one of them or not needed?
+> I think LM_3 / LM_4 are WB-only, but I didn't have time to check that.
+> Maybe it's easier to omit them for now.
 > 
-> Nevertheless,
-> 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
->> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> ---
->> Changes in v2:
->> - Pass 3 to GENMASK instead of 0.
->> - Add more Fixes tag for reference root cause.
->> - Link to v1: 
->> https://lore.kernel.org/r/20240925-fix-postdiv-mask-v1-1-f70ba55f415e@mainlining.org
->> ---
->>  drivers/clk/qcom/clk-alpha-pll.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
+> I hope to get back to those platforms during the forthcoming or the
+> next development cycle, after (hopefully) finishing the HDMI
+> conversion story.
+I have tested MSM8917 and MSM8937 patches they are also working fine
+at least with video mode panels, maybe they can be added for next 
+iteration
+intr_start also should be removed from CTLs.
 
