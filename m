@@ -1,76 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-32717-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E0CA9893EA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 11:03:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0084E98948F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 11:34:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69A4E1C20D6E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 09:03:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC511281F0F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 09:34:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F6B313AD29;
-	Sun, 29 Sep 2024 09:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 727F213E023;
+	Sun, 29 Sep 2024 09:34:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="c2CDmIZC"
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="cE+DdFn5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2072.outbound.protection.outlook.com [40.107.255.72])
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2052.outbound.protection.outlook.com [40.107.255.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CC6219EB;
-	Sun, 29 Sep 2024 09:03:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.255.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE3013BC26;
+	Sun, 29 Sep 2024 09:34:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.255.52
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727600630; cv=fail; b=Iaik/HCbP3jgQkff/B2DT6wWkR0b8S9hLVsn4z7iar/8BpOWvPyXHikGL2aY0dbI9ak19Wx68EWzLTsjCxc5Sm9O9WD9eLCpDNdP/r2wdyOwuEZ1Rq7UurN5+dvb0EViVkNlA4EcakJNC+hcQezIMtWnj4ciNzq/GZN+DtTuVJQ=
+	t=1727602484; cv=fail; b=FqIHZVjzhJ6FBu7GNkT/6l6H+CU4hOGptD5km/RcbbH+mJDlDsAhSVtwBA+UekTPxkBdktT/SVoavHopvLybGWk/NlAuaztF8NCcJdO4XLDfa6Eq3AOZ4oxMJx6AS0VlJMOIh7ZAY3GnNB7SV2eHNXPQjQyYNLZhUxgvlPXG67c=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727600630; c=relaxed/simple;
-	bh=qi2hPVnD815s5rSNSOSg2+ubhe06gK8wPhlz94A7mcY=;
-	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=LXa1dT62/Fo/G20ef9jNzegZccgaB+jKPauvvg/cYMRjLMSGYCSZf3to7w6lU0g6eYrXKtyzxb5NulaoyLalIevxgOlF7CZaTfvbBY4feuLT5oKN+QXN2iEn7tfct+EO9ZpSvzB0lE/cJM3j7AeYOWgohOZ7thh5gltLVs66GSY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=c2CDmIZC; arc=fail smtp.client-ip=40.107.255.72
+	s=arc-20240116; t=1727602484; c=relaxed/simple;
+	bh=YY6TJJB5VUIqry2FXWkpr0LOdEoJyEqcZTP1SbyZIhY=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=rhQFnV6YcGFZZEQJwwgvit2WA5Q795BwuXHRg0SHWch2puunWGrLZJ9OTrW7CMZyoC20MeenQoANvaDf+XHK0wWCZtmNFd2OqwgUPP0XuZKtPqiMT+67t15fe94S+k1eFtj+nZnbYa7HBbD8ppWm/oZyqhCoWbdXQqLMlZNqEhY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=cE+DdFn5; arc=fail smtp.client-ip=40.107.255.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UuArK1D+N66ws7jgrJrrf5Pj3daSEKNVh+K+hd4UpPeV9yvxumEaYs80LygWFY5rG8DuobJb3OE/6N46mSgBwPO/jBLua4+dQeAtv+q8DEgJbWc6ZvVAOpnQENZdNjVkA0ZQ3Q0kiYXUT6MWKKfz2Xy0VJtYTVYH7jdXiTaYXP3TFmmXpyzN7XUeMq671yWLoYjLMWfrRQoNplatx0ggPWDLXkCFN1m65aYftgQk/lIcRPSxiQ0fp+oUAjYFv23qYVsFfhrBEIeNFcjnzsBcFBFxF8lmJXz18IbbKlBNAJra5K8SKevr9OeqkE22wposbmMIkYhDAejB2Edv9mJ0Xw==
+ b=GEA1TkvFD+r0/teis8iMjTEyLie89d2FQjpzlFu8wP9SWlNe5J/N01Yg2eCLBtDdvpyuHLZCEoe0jxBDxXP2X2dq8dRHUdsLb9IgJuqV4dt5nZ5PlAWT7MvTHlOc7sUrXt5RU1Y63eZ57I91ID2JdSh+fZjWPRdY0fDEBblPdlQlOkh05mQYJ9I8IF2hSydNvR+IFd1Hhno1Xe0iGOLLsk9tnWSyEVZA2FettgtVL1ENTZqNkq6JaavoDCBjApjgs7HE0xA3todyjjypBfNVUj1/puH7KIsAKKwCx6W6f1lKjNPSc0MpQxAzkwCRf7i122P6yFHymANxIvq1bGRiBA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+x02s53iaSINIdnIRj9anIPUf6txTWKDbrWOsppY074=;
- b=MCpx6lgcbG6+mcbJ9hqj4KUGiizrlVZdKX7a0Z9J5huNq03G0O5TG6UMC439QyU2lm8qd0bYxT0C2F5hMbBfJRT5Ye5cFWPqjNjBKZl262AGetllpbIYJLhnLrBGTY2aW/rT8DZESyqMnMzLmnO6cKfR0mHHcOk+Lbnso6ONPLTgUjWh+rSf1FG8ZZAuGuytRknni5ole8uEfYwJpJ56FS754TytNI5kWec5R4ysJNM6Iv1uE+nfsWjKgaO1lIVTXTcigOquiR+JPDAjZWKcTu7s6XsMuw3JM2UE8xYE63WJEVARDpi8zPg2UmrjMnY4tgH3jgt2YIs6xk9DpvvjdA==
+ bh=0dxrxpJS7t+TE633RoR+L6tOplE5LBNxwxcN8s/SCvA=;
+ b=CHv7TaWMSsim+pYZgh089R5y7cPtE2Cor4Mqc3trG0Y8NPeM7CVB8RVCdYPMgyCPJc+M+BFwyKBlwG/DDZYBXqDlnM3INB3JmfTezGZV+N/3Bnd2tDIMmYlAjPrZ9J8ODSydDU9bkvJQbWHQrgxtPN1Zq9vP2rMS008i7zkGvzQRICymLtoyCPO1AfZk8t4faNaanR9FAlTm8fC6POHsZfr4QSCDXr1Uf+Ltx4xFQP2BRd4sM+9LJwCRPCVgojRm7RUZ3n/t17uxFPcQ00iKh1H+06d8IaS/AZjMnB2HGCKkzwzz9vPSAbBS/5Qr1jhivrK1czeb+S3Ia2BTiXNvHw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
  dkim=pass header.d=vivo.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+x02s53iaSINIdnIRj9anIPUf6txTWKDbrWOsppY074=;
- b=c2CDmIZCvToRpwweSJwcXb3k6ql9bo9v2QTvyxD9APCRJuG0Ka3WC8hHJyzWfJTGkteOT2/IN0cnXv6CNxcbNZVM8nhMYY3+4j0jV0ctAwCh+xmQgaFg0YPjwCQSxbNuRfIvTD2Kdk9sA3lE7G3bEqi+DBqnDqOcaZ7EPAnST2SWpxL7qKEvwHwPVbHS3AX8HsXNUUJvE7YrdvdTltQss+x9xCsEcn/UhKlBvDsQHvZ9vO/IPY/uf59Bcr5605X4fmlasJbI9dNpzwG+VYtHLus/uIvHQojZove0kfEY2O6oliYvQo6u4ImSj9bkgZX9hV1XB4KhN4p2wDcOjH/E0A==
+ bh=0dxrxpJS7t+TE633RoR+L6tOplE5LBNxwxcN8s/SCvA=;
+ b=cE+DdFn5wDdVdP/6xQ9fK/8myJURdo6hZNDZafzmt+hUj9HhAR1tnpfZgve27M3ROy8HMuSp6efbxGTWoTUIeq6w/g04tLaba6jJfbQ3uA3BSNV8kGCjNm8ZfhcwcDwU/yxWbHd2sDjdLgz1bMkUcXpPSIw0eazsCZduife1PgLX0pT8lIKRND85J8rhoHCorYTSFfbRhYKak+bz2X+NUFcKi1QuTNSX5uVn2iGHjvi6bi176tuGmjxnE5CIv2LzXlwSbv+Nyz7m6xS8JW+puvelnGyTGNR3J4RI+1rNfHIHovw64AMXtXXXS/R7Ylp5oke0xrZIRY4G4m3Bg7FCvQ==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from KL1PR0601MB4113.apcprd06.prod.outlook.com (2603:1096:820:31::7)
- by SG2PR06MB5213.apcprd06.prod.outlook.com (2603:1096:4:1d2::13) with
+Received: from TYZPR06MB4461.apcprd06.prod.outlook.com (2603:1096:400:82::8)
+ by SEYPR06MB5891.apcprd06.prod.outlook.com (2603:1096:101:d4::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8005.25; Sun, 29 Sep
- 2024 09:03:45 +0000
-Received: from KL1PR0601MB4113.apcprd06.prod.outlook.com
- ([fe80::7e85:dad0:3f7:78a1]) by KL1PR0601MB4113.apcprd06.prod.outlook.com
- ([fe80::7e85:dad0:3f7:78a1%4]) with mapi id 15.20.8005.024; Sun, 29 Sep 2024
- 09:03:45 +0000
-From: Yan Zhen <yanzhen@vivo.com>
-To: manivannan.sadhasivam@linaro.org
-Cc: mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
+ 2024 09:34:37 +0000
+Received: from TYZPR06MB4461.apcprd06.prod.outlook.com
+ ([fe80::9c62:d1f5:ede3:1b70]) by TYZPR06MB4461.apcprd06.prod.outlook.com
+ ([fe80::9c62:d1f5:ede3:1b70%5]) with mapi id 15.20.8005.024; Sun, 29 Sep 2024
+ 09:34:36 +0000
+From: Yu Jiaoliang <yujiaoliang@vivo.com>
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+	linux-mmc@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org,
-	opensource.kernel@vivo.com,
-	Yan Zhen <yanzhen@vivo.com>
-Subject: [PATCH v1] bus: mhi: host: Fix typos in the comments
-Date: Sun, 29 Sep 2024 17:03:34 +0800
-Message-Id: <20240929090334.524543-1-yanzhen@vivo.com>
+	linux-amlogic@lists.infradead.org,
+	imx@lists.linux.dev,
+	s32@nxp.com,
+	linux-arm-msm@vger.kernel.org
+Cc: opensource.kernel@vivo.com
+Subject: [PATCH v1] mmc: Fix typos in comments across various files
+Date: Sun, 29 Sep 2024 17:34:18 +0800
+Message-Id: <20240929093418.526901-1-yujiaoliang@vivo.com>
 X-Mailer: git-send-email 2.34.1
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: TYCPR01CA0121.jpnprd01.prod.outlook.com
- (2603:1096:400:26d::8) To KL1PR0601MB4113.apcprd06.prod.outlook.com
- (2603:1096:820:31::7)
+X-ClientProxiedBy: TYWP286CA0027.JPNP286.PROD.OUTLOOK.COM
+ (2603:1096:400:262::11) To TYZPR06MB4461.apcprd06.prod.outlook.com
+ (2603:1096:400:82::8)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,122 +81,211 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR0601MB4113:EE_|SG2PR06MB5213:EE_
-X-MS-Office365-Filtering-Correlation-Id: 303d7b47-8ffc-47d7-a427-08dce0659f71
+X-MS-TrafficTypeDiagnostic: TYZPR06MB4461:EE_|SEYPR06MB5891:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1c6e019b-523c-42d9-8c8c-08dce069eeec
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|366016|376014|52116014|38350700014;
+	BCL:0;ARA:13230040|366016|1800799024|52116014|376014|38350700014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?gqWXWi6s1XZOkA/tv01V3raAFMYqICR+lw8l59sVRC/IsrIBQEUyMxIUu0lY?=
- =?us-ascii?Q?C+e6b2PBR27EVyE1jpxfdH/ciEwPQHA1o9ElkD+S5w0ibeMpIhB50v5p7S5b?=
- =?us-ascii?Q?ECWn41imH/jEzOmVKe/W0lH2SW8AvppDM29c8UAEi9DGaZYX20Jys36ucuDV?=
- =?us-ascii?Q?NNjba/NGVz+zIgGcWLmAlBUX8fQWGLbfIdNhnj9NApuru/a7uZumUga3HlDX?=
- =?us-ascii?Q?5CQrhhZMklizVwlMS8d3X3ZV+dtQOpZDxWJjS7wRZKPzdQIdOPx+0ghqxrjf?=
- =?us-ascii?Q?ukC16nEgTFKai4eiouquPwwXH/dU02hulc+qKyL0ifTBmqJWG/84Bt2GUNFg?=
- =?us-ascii?Q?blVqzIU5d5/8ugNw0VH7j9WTm1kJTTc56i7COzz8FPi2C4FqQx/Z8xtBfgYW?=
- =?us-ascii?Q?uAphGf06ZWIKF87I1ucPlUi4vDkstA5matgzJd1bt5kMcJXmwgFRgj30CnqG?=
- =?us-ascii?Q?fs4ib41SVp1Ky2uhA+qfVhIILKbivbQWQHhi8KLYL9ZwCq7XiutG614LRReM?=
- =?us-ascii?Q?pG7ao402x/Tw7W6Wg24vkA28yZ94gmxaNzGQypdFykTyq1xEg1X2t1+JClmo?=
- =?us-ascii?Q?4y0DexF7IEwlJa8VA/wbIwfX7XVpR007tNP1wcsRa0VaTlByXAmC0/vYZHZ8?=
- =?us-ascii?Q?L2ft9YBmBiupr86snnkPlxRovaNe2fIvQqSlOHG3MuDAXeMb27JA7Yoae/Bs?=
- =?us-ascii?Q?Zx79FBBcDM+EEwOhXnjvS//iTbWQHRFbXRwBmMeftBZN0yFXw3rTLbhXP5KL?=
- =?us-ascii?Q?gyoIOt9SsUT4PNvQgK3cExHeypum9ILugOJ+aCa9IY6vmQRHWmXQerm/kWsf?=
- =?us-ascii?Q?Rt9Kk5BjxQ48XlOSrKVQ1Be2bP4SZmCEvMYjaL3DfCZAbidCPB5NXcHsvx0V?=
- =?us-ascii?Q?c6JAbMBmmXFyKxk8okU8aQ0iFsnt60UFS89KU7uc5StebF4MBitR4/M2NryP?=
- =?us-ascii?Q?btWbdewoYtYigbV2ioKSwBKN1y7buCy4XrPNL7iJ6aqej1Yya5U+B2HFVevH?=
- =?us-ascii?Q?S5xWIEldybr5dM13hPnEP0t8PmcorYD9UrrbfEJwqknLL7DMM6WEXE9myZG/?=
- =?us-ascii?Q?lHAmmMYyxdsAgbdbC0cL2xtCZd4Jk4JrD/oc8nZf8tAuDDvZXFEuHzAyZdUE?=
- =?us-ascii?Q?AHYOQzk0y9839+iGIY+6CfGKQAejho2y4uLcTS4BPvoWtXBT621flfNYXm0S?=
- =?us-ascii?Q?8oz0OwUyqjLPa1po+G0LMr+jtmgqJszqPwVmsgSaqXu1RtBOBzD4Ju4RItx/?=
- =?us-ascii?Q?o/nqwLxrvavW/Hdz/PIwO7N3TbmpRmSod0D/lX+VxBcjm94/qGF2ie0QAvKK?=
- =?us-ascii?Q?g9UJRFakIgJ4nDKMl23rgQO0uRR0rtY+HjixompUA5XWyw=3D=3D?=
+	=?us-ascii?Q?VrTQG7zum8Zqf/BR7SGOhI/hJNcZp2DmxSCwlZOKvboeKCfZZSDHWFyOJ/Sl?=
+ =?us-ascii?Q?7Jwn+XioqCa/x5D6M38gEmspxUA8AwLUkKJgHWvqPmDz6XJcsJCDFvOL2xZ4?=
+ =?us-ascii?Q?GoLhjrAuRV9tyScEAkJYX0jpfGr8nCBBStBtFbD3p+AojVJ+P7bI7Qykheaj?=
+ =?us-ascii?Q?uXhSLuPfOEId5YKqKa3me3GRciLNAH891GtC6zne31V0VR8ZfmZlH+43s3BV?=
+ =?us-ascii?Q?zq37le6gctl/ThQrk0r7sVi6o06IHhxouN1RyncdIFjaKOORDslWV9PMlg0c?=
+ =?us-ascii?Q?m9d95fVmpr9Gq8gmdct0y2o7NNo37frvPjQRBLaPha+zujVF0jHwhNUA0TxZ?=
+ =?us-ascii?Q?6Tcx8HrZ4oKz6rljQz8f2Jwq0OcWIaOmNYmOBfwcNcTOZnocAsgwQOPTJazA?=
+ =?us-ascii?Q?uH07JrrT3UnIzQiwHf3HBVi6xVw3DGQa+Kk0Ut6w5ungLJuMVKyAFNrxd3Ne?=
+ =?us-ascii?Q?IwtFieK90x3sdWw5+sbFYExL9g4kPL8wVuu7voOVXCPNncaGa3K10QLBQ5mj?=
+ =?us-ascii?Q?uT+1gMPYGDIvLu84P0J+XDlGQXsA6dWHBpZd4/QQaMOCcK52mvOIXhcquYh7?=
+ =?us-ascii?Q?MujbdO8RTpT14+4zNg4s2mRocrcQ5Zl40w95FfOMEY1FrezERDBmgnPblQBs?=
+ =?us-ascii?Q?a0gR3g5LdcJWE+p8zg2n4wpRJIPTGZMPuRk/d5XoBBJlG65mDERvvbCSY3is?=
+ =?us-ascii?Q?SOsOjfu3hSoJ1d58obAjd9Osz18XU6B/1XhKnPxZHSOSW3le+d+z7GhVxa17?=
+ =?us-ascii?Q?CcPkTXK0SGvXXfZOn1G/jGczSranM+x0TwwGBLfJdrl/PfZtpAdCoIkkUSMo?=
+ =?us-ascii?Q?lDoR02SPST3PPVnWgYIkcvVihTaNSql6iANixpPURaCLU0xxQo+PdWQvVYHL?=
+ =?us-ascii?Q?CLxD92S1Fa4Efnk8VljsTwSL7p+Uv8WDZa0kMxxry0sBF8SqKM4pNuAyeuEY?=
+ =?us-ascii?Q?38b6yCTr+135Dyq0FFV3EbH4M+UaikzclnYqBOTFw1xB4Xueq4Az/zZm9/mG?=
+ =?us-ascii?Q?h93OtGab866Bg2utheDzERLPQxzOOVnrSB5kDnJlI9vyNav+bUW5BRKF0bjo?=
+ =?us-ascii?Q?dL27wBrn4eME83CRl36yfkK2zQ8RKpXJzN+sZ/j0rAIJKXACVr8jDjrd/6+Y?=
+ =?us-ascii?Q?ewtgqkXFqZeGSuysfmFiRMjmhHaVUfBnozCukhVkJ7PByacLerRC7cN2q/Kf?=
+ =?us-ascii?Q?DCKj+kRdUMPOQ3p+0PSju4RcyNYGdlMU92al9ZLcwq6e8iGKSi8CPUsKeaZU?=
+ =?us-ascii?Q?987iz6fGcrlKn+gREbLjzYiAvFTzeOYRyyuUYvQQWK+6ddCTY/AImqGKfnd+?=
+ =?us-ascii?Q?He6UHm3ApL78lEYjiBo0j6yoeG+mXX5P3wleRSkSOXD66+9NFsRsM4YJr81g?=
+ =?us-ascii?Q?5UAD6/NPaVD0zV20rxy1eXFL2y4NKsIIkNBNIJr4+x6xUJyyPQ=3D=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR0601MB4113.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(52116014)(38350700014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYZPR06MB4461.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(52116014)(376014)(38350700014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?zZ2FoFuhZ2O4hyrTCCnjkEZv7x+FxzDXPSbh6DybdEZJ8VXzAGsiYiPfhw1x?=
- =?us-ascii?Q?8oqxqmnyJzbT794nGhaZgTUG/cOukuppMkqEDCKTNS0HpXOqWwPPdpsu0bzv?=
- =?us-ascii?Q?Bd+OwbiPmSVVxjN2M6Omm6TyPY6DSPr9YmnOjrblviXrVgNqEAw9N5HQUiTm?=
- =?us-ascii?Q?XqUBd18z/6YrUHTCORSSeCYDPmmS4NHZKAueEmvLlEjQ5QbJ4oTqPTzoF8R5?=
- =?us-ascii?Q?PTNjE2QGrPAQQ5cvbN+GTi/q7LhYx1UBrg+UyVtqn4caL+9/fgYhP4eXIp/+?=
- =?us-ascii?Q?FKCdeGiVNlCKIs6RIMSAVNX14JU/JbwJ2gr9ihj6dbOq/SSvp1z8s8oWrHzr?=
- =?us-ascii?Q?aLVMiTZD1qXXh6rMBXril9FgWifEpOKJYPkkmLOfslwyrUKAHiBO88CUT/4o?=
- =?us-ascii?Q?dr0qSIqV/3plEjpYW62LwJhKAA7fFAE03j/9Ip0NgNJJh/gkmtyFHsEQNENc?=
- =?us-ascii?Q?uFpxYhTKxWHS4MZ/Fb8GTK5ALSwcadtMyD3rRjKqG1FaY1ospEFLuesIYtBf?=
- =?us-ascii?Q?IL0ALo+RGymJ4D7XVEqEAAnqq9QhNYNLT+gV6JRTE1iDHQYX9JAd6IRjBEKT?=
- =?us-ascii?Q?LlDccDgNLIMiyfI+tQfDAwYvue+fud4OIsVRAogdrL4ZJp7tkvZ6FJMGkYrU?=
- =?us-ascii?Q?mi+AIYVGqcxibFAZ+j4KYRiA66MocqqvCw3haJh8VAUv64m+laJIWdM5lcL9?=
- =?us-ascii?Q?YjVQd9GjySX8eKxKCKAyv1TQydygUATEGZZekbGBm+VlvCAXo+ctGly5nmwm?=
- =?us-ascii?Q?njWra+dmMK0eFU3aArzPWAexlruSDwUk8H+8VJ8238mJuDwME+xrpzrVrwPC?=
- =?us-ascii?Q?wfHPj5Z4DyXFsRAUN6Pvn57IkUrUrpMyMRqIhXflZn1hSZOZUe6KxkwuXGLF?=
- =?us-ascii?Q?MrjphMzrnB76HDdLTNtxSFPnGMQV2Vgi5E8h6guwbZyhC6KPht+RxHAzrQOF?=
- =?us-ascii?Q?OrpOVq33VLj7tLo0/wNZKyZ8CKbdwoFgA+gPOBPv1v+Y6n7dYNL728xq3TTu?=
- =?us-ascii?Q?U2eaF0kI5bNb4hE1VUVAyRDuX1GOc/GALck5rgLjnnHTX9nupG7faBuUtjQ0?=
- =?us-ascii?Q?CozfMfTF7O6C7AtkLduKhPbPoBDlmEcJ6cD7H05NOCsSDfLj2bP4QpvX6uk6?=
- =?us-ascii?Q?Ivt65iyix+Fm82eMjxHaORuhS/MxmpqrSKCkWGHx5oM+iYRoCpRppWXyxeLb?=
- =?us-ascii?Q?AmJeEw6ozd/7ZPaKPQachIoAysvFkRTPoOay78PepzWZLoOBtx/Xb4BsxPEE?=
- =?us-ascii?Q?gEAg6rXUdsmvkkG9iNohA5chg68iXFlYQ3TaRtO4bSdBp5Sbu/uAm3mhXSEB?=
- =?us-ascii?Q?9gzEyRTzpNpx30TDm8azrxFW4N0KlT/mCDkw29yr2IF9NVpGYyEWNYCER8Rk?=
- =?us-ascii?Q?zhzDmTcuHWJLnWgIw4nAn+iD5KxdlVpADyB2BCFB+TB3fbn3TIplYDGk/9W9?=
- =?us-ascii?Q?B6PefUBHEkTuFefc5AZpXRbnNa/gelzPOkFLr/NZx5slUUpYNXVZmpDiawC2?=
- =?us-ascii?Q?IT4p1XSRaD7z90+sGPzN2Ihir/4jbOy2+H5JIyNUSSOR8wSmi1RDEDk/by9e?=
- =?us-ascii?Q?lvO9zNaMRYBQhCOEuBAl1ahHVPLIUlc/EZcvnoK7?=
+	=?us-ascii?Q?SpngrYx0TM75Z3/RNYyQlsoYYxe12od4XYiPlObY2gyBC9VMfD+O17AfJEQ7?=
+ =?us-ascii?Q?yEX0QJcNmGr1vh/cfeAANaVmUQbYc9FzM5rvz8tXQ2BnF06ERJAIZMPTiPIH?=
+ =?us-ascii?Q?LCWFdvBDbV3DqdV7bM4i0g/KTqNMJku8JB+gnJYq5jnb0Xi6+FzeUA54D9Zh?=
+ =?us-ascii?Q?5J6ZuZSJJptsmZtdYqkuLDa26jPGvRykbbm5KHWNHWMTdAKBm5Da6HLg8Vvp?=
+ =?us-ascii?Q?ajErj5sneKugBuD32xBeQC4R/FH0KigQ6mJeszcbROmpkE0L9iUsE5H6OFDK?=
+ =?us-ascii?Q?erIboKGwqdrHaxaFu0H9iY/xBQUzoYk18Wy5bY1n88BouGtlsv1dK2W8GWp3?=
+ =?us-ascii?Q?tntYU0es54onNa7TGPOQvWd/mNK1ZRMzrUEF9TuvwGRsVhCmnMHASHCAetMp?=
+ =?us-ascii?Q?fBXVZRfdUEeDWOYeUXGmoN6p/QwQYKillTs4kjSJnv7vRWV7dFo11S1y4CKA?=
+ =?us-ascii?Q?2uG6PBA2l7bWxGdLmJKkpM47NT/TkSf+j8AKmCTr8655Fqtvj/dNVHtsTVdn?=
+ =?us-ascii?Q?s5IP4K/6yLvlYjO7VQp665E/CxiC0iy+G7hfy6UZ8F/hK8zpD+nR7J2yIbqv?=
+ =?us-ascii?Q?Q15bJ8PR5C+y2KTJIXSknsdUM0p28KCYqZ9eEoh9BNFjM/NPKRi3dSg9Cx/F?=
+ =?us-ascii?Q?lMJduBpTl+XmtmSAieIGQhhB+cRIb4EHshnbAW5G1uSa5sSFY1R0V0gcV574?=
+ =?us-ascii?Q?n4aVuMYGkPtt2oTLla5Q4EqiJiv+uHf9ENozyea+aWEwiXPa+H/2JaQo1X9P?=
+ =?us-ascii?Q?VxYNqRBleIujWO7NRdUzvJrzMIxT5hsJgNmO9QvxnthO48BRplCREItDT8PR?=
+ =?us-ascii?Q?FcjEHm2m9LDPh3frlxCXIkjr8/YcFUfJRfwhcexKuhJ5WWS5QhNOOF7pEJFA?=
+ =?us-ascii?Q?x3CDakdKFub21uVbUi2Qaakedi7kuixku64v/rkrU6q4Q8VA6CeLTUbZGcQH?=
+ =?us-ascii?Q?PGF4B8i3hv4rfqRd3xBZ5lDLwAK8nqrHdlKFAZBErsJwZhJYsesY65iIHtXm?=
+ =?us-ascii?Q?F/bB7BHNi4eUbOitT4vI0c8ZY+YnRReDiij+bqk2QivTHpWACNxy1e+F90o/?=
+ =?us-ascii?Q?78MYl2y1rebV3hcJmLFBoM0t5uTbp3EnZxplLO/lVlTYU891BYwNk5JjAPip?=
+ =?us-ascii?Q?zKlh90nAO+kXp//Hkjeg7pXluYF0dnz1t/RIfnxcRrfSX7tZ4xhk7zOTsCmg?=
+ =?us-ascii?Q?HSNO5L+HabMXY8bCX474mxWPqWV/ik9YZsILRpLoohRw4FYoa/oGuIdFzVca?=
+ =?us-ascii?Q?v/62Qr5icVhdezjQs2AxglUM8NWc3NlstMcLL6PBejrXuoekZ/5P3XiEYi+m?=
+ =?us-ascii?Q?GWdonyCAG2OG8nd1HB538fpRshWaBlNZ+kBtUw7tMJYI567M0Y1yr2miXOYI?=
+ =?us-ascii?Q?ZIhm+0qJpyb6dQiRAMwpGeH70jQIclTMhMZHBYlHytJRfCNrOwVhIcLVq9aU?=
+ =?us-ascii?Q?Az71eQGH7/g6L569/5Ido5PIi8VxvK3IIlVeizG1G0P6QYCiFqi+L57H+xuB?=
+ =?us-ascii?Q?yzSg7ggImAY2J7Czv07BXMlAfUhf9diZ5pTjYiD7iTT/1vaI4E9JcxbwZyP0?=
+ =?us-ascii?Q?vbg5eTmAdlU3oR06VqJXIgAmsav4FAyrU+qtI0p4?=
 X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 303d7b47-8ffc-47d7-a427-08dce0659f71
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB4113.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1c6e019b-523c-42d9-8c8c-08dce069eeec
+X-MS-Exchange-CrossTenant-AuthSource: TYZPR06MB4461.apcprd06.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2024 09:03:45.2611
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2024 09:34:36.5898
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0MZMBZmY0oTxz25zfX0UExj0RgBIHq4zoQYO47wlQFgjlA8EZi7Pqz26LRApuyzTeokX/GPqW72RFplGimDpuA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB5213
+X-MS-Exchange-CrossTenant-UserPrincipalName: bG8C25mJTcWFakqvfdnyjdD3rUI/Fs1HpO5qns9knbnQ38C7H/ehptM1VlBUz6TQtcDj1tSI8Kenq55sexqHrg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5891
 
-Correctly spelled comments make it easier for the reader to understand
-the code.
+This patch corrects several typos in comments within the mmc/host
+directory. No functional changes are introduced, only comment
+improvements for better readability.
 
-Fix typos:
-'Normaly' ==> 'Normally',
-'gurantee' ==> 'guarantee',
-'guranteed' ==> 'guaranteed'.
+Detected using codespell.
 
-Signed-off-by: Yan Zhen <yanzhen@vivo.com>
+Signed-off-by: Yu Jiaoliang <yujiaoliang@vivo.com>
 ---
- drivers/bus/mhi/host/boot.c     | 4 ++--
- drivers/bus/mhi/host/internal.h | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/mmc/host/atmel-mci.c       | 2 +-
+ drivers/mmc/host/au1xmmc.c         | 2 +-
+ drivers/mmc/host/cavium-octeon.c   | 2 +-
+ drivers/mmc/host/dw_mmc.c          | 2 +-
+ drivers/mmc/host/meson-gx-mmc.c    | 2 +-
+ drivers/mmc/host/mmci.h            | 2 +-
+ drivers/mmc/host/sdhci-esdhc-imx.c | 4 ++--
+ drivers/mmc/host/sdhci-msm.c       | 2 +-
+ 8 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-index dedd29ca8db3..e8c92972f9df 100644
---- a/drivers/bus/mhi/host/boot.c
-+++ b/drivers/bus/mhi/host/boot.c
-@@ -82,9 +82,9 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
- 	 * other cores to shutdown while we're collecting RDDM buffer. After
- 	 * returning from this function, we expect the device to reset.
- 	 *
--	 * Normaly, we read/write pm_state only after grabbing the
-+	 * Normally, we read/write pm_state only after grabbing the
- 	 * pm_lock, since we're in a panic, skipping it. Also there is no
--	 * gurantee that this state change would take effect since
-+	 * guarantee that this state change would take effect since
- 	 * we're setting it w/o grabbing pm_lock
- 	 */
- 	mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index d057e877932e..3134f111be35 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -255,7 +255,7 @@ struct mhi_chan {
+diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+index 6490df54a6f5..f444ca5dd154 100644
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -860,7 +860,7 @@ static void atmci_send_stop_cmd(struct atmel_mci *host, struct mmc_data *data)
+ }
+ 
+ /*
+- * Configure given PDC buffer taking care of alignement issues.
++ * Configure given PDC buffer taking care of alignment issues.
+  * Update host->data_size and host->sg.
+  */
+ static void atmci_pdc_set_single_buf(struct atmel_mci *host,
+diff --git a/drivers/mmc/host/au1xmmc.c b/drivers/mmc/host/au1xmmc.c
+index 6e80bcb668ec..7393d2ea5e57 100644
+--- a/drivers/mmc/host/au1xmmc.c
++++ b/drivers/mmc/host/au1xmmc.c
+@@ -543,7 +543,7 @@ static void au1xmmc_cmd_complete(struct au1xmmc_host *host, u32 status)
+ 					cmd->resp[i] |= (r[i + 1] & 0xFF000000) >> 24;
+ 			}
+ 		} else {
+-			/* Techincally, we should be getting all 48 bits of
++			/* Technically, we should be getting all 48 bits of
+ 			 * the response (SD_RESP1 + SD_RESP2), but because
+ 			 * our response omits the CRC, our data ends up
+ 			 * being shifted 8 bits to the right.  In this case,
+diff --git a/drivers/mmc/host/cavium-octeon.c b/drivers/mmc/host/cavium-octeon.c
+index 060ec4f4800f..d150d83b41ed 100644
+--- a/drivers/mmc/host/cavium-octeon.c
++++ b/drivers/mmc/host/cavium-octeon.c
+@@ -217,7 +217,7 @@ static int octeon_mmc_probe(struct platform_device *pdev)
+ 		return PTR_ERR(base);
+ 	host->dma_base = base;
  	/*
- 	 * Important: When consuming, increment tre_ring first and when
- 	 * releasing, decrement buf_ring first. If tre_ring has space, buf_ring
--	 * is guranteed to have space so we do not need to check both rings.
-+	 * is guaranteed to have space so we do not need to check both rings.
+-	 * To keep the register addresses shared we intentionaly use
++	 * To keep the register addresses shared we intentionally use
+ 	 * a negative offset here, first register used on Octeon therefore
+ 	 * starts at 0x20 (MIO_EMM_DMA_CFG).
  	 */
- 	struct mhi_ring buf_ring;
- 	struct mhi_ring tre_ring;
+diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+index 41e451235f63..aab1a8df6414 100644
+--- a/drivers/mmc/host/dw_mmc.c
++++ b/drivers/mmc/host/dw_mmc.c
+@@ -1182,7 +1182,7 @@ static void dw_mci_submit_data(struct dw_mci *host, struct mmc_data *data)
+ 		/*
+ 		 * Use the initial fifoth_val for PIO mode. If wm_algined
+ 		 * is set, we set watermark same as data size.
+-		 * If next issued data may be transfered by DMA mode,
++		 * If next issued data may be transferred by DMA mode,
+ 		 * prev_blksz should be invalidated.
+ 		 */
+ 		if (host->wm_aligned)
+diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
+index c7c067b9415a..e87d1c4b9dc1 100644
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -879,7 +879,7 @@ static void meson_mmc_request(struct mmc_host *mmc, struct mmc_request *mrq)
+ 	/*
+ 	 * The memory at the end of the controller used as bounce buffer for
+ 	 * the dram_access_quirk only accepts 32bit read/write access,
+-	 * check the aligment and length of the data before starting the request.
++	 * check the alignment and length of the data before starting the request.
+ 	 */
+ 	if (host->dram_access_quirk && mrq->data) {
+ 		mrq->cmd->error = meson_mmc_validate_dram_access(mmc, mrq->data);
+diff --git a/drivers/mmc/host/mmci.h b/drivers/mmc/host/mmci.h
+index a5eb4ced4d5d..4d3647f9ec06 100644
+--- a/drivers/mmc/host/mmci.h
++++ b/drivers/mmc/host/mmci.h
+@@ -77,7 +77,7 @@
+ #define MCI_CPSM_INTERRUPT	BIT(8)
+ #define MCI_CPSM_PENDING	BIT(9)
+ #define MCI_CPSM_ENABLE		BIT(10)
+-/* Command register flag extenstions in the ST Micro versions */
++/* Command register flag extensions in the ST Micro versions */
+ #define MCI_CPSM_ST_SDIO_SUSP		BIT(11)
+ #define MCI_CPSM_ST_ENCMD_COMPL		BIT(12)
+ #define MCI_CPSM_ST_NIEN		BIT(13)
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index 8f0bc6dca2b0..2bfb86364441 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -1524,7 +1524,7 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
+ 			writel(tmp, host->ioaddr + ESDHC_TUNING_CTRL);
+ 		} else if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING) {
+ 			/*
+-			 * ESDHC_STD_TUNING_EN may be configed in bootloader
++			 * ESDHC_STD_TUNING_EN may be configured in bootloader
+ 			 * or ROM code, so clear this bit here to make sure
+ 			 * the manual tuning can work.
+ 			 */
+@@ -1626,7 +1626,7 @@ sdhci_esdhc_imx_probe_dt(struct platform_device *pdev,
+ 
+ 	/*
+ 	 * If we have this property, then activate WP check.
+-	 * Retrieveing and requesting the actual WP GPIO will happen
++	 * Retrieving and requesting the actual WP GPIO will happen
+ 	 * in the call to mmc_of_parse().
+ 	 */
+ 	if (of_property_read_bool(np, "wp-gpios"))
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e113b99a3eab..d6b3b343b031 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2601,7 +2601,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 	sdhci_msm_handle_pwr_irq(host, 0);
+ 
+ 	/*
+-	 * Ensure that above writes are propogated before interrupt enablement
++	 * Ensure that above writes are propagated before interrupt enablement
+ 	 * in GIC.
+ 	 */
+ 	mb();
 -- 
 2.34.1
 
