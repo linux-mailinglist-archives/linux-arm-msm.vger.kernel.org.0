@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-32720-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 809AA989525
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 13:29:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDB56989527
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 13:29:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3251E1F2278A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 11:29:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C82C281C80
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 11:29:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 117D8178384;
-	Sun, 29 Sep 2024 11:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC34916EBE6;
+	Sun, 29 Sep 2024 11:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lyxavJbp"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DgOqvH3O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C6F184D;
-	Sun, 29 Sep 2024 11:29:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8587D16E892;
+	Sun, 29 Sep 2024 11:29:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727609345; cv=none; b=g+NgAQBhh3t1OlHAfngIuCnEigo20rCwJfYBWQUY0BJpZvcHCFsCGr/n9+Zt6G9pD+kvPEYYyYeH+cPLcugmQdYVPJKEpoDkH1+yhtUiEmFuOOf76gj+HugGMPICjoCJRKWAzHfRBlS9vgWW3HahiceOBgR3jw4j7mTrzByceXg=
+	t=1727609349; cv=none; b=JxsHK369K1kOnLonNMtLsQNt6dLvKHqxovR2D1LBiF7AVT0MVi9d8QwlynLutTeF9bVB2Chk11dHXhc5fUcKbCh21KRMhxtaBbgY4BVKWXUKrfHGauB8gys5AKSUazGeekMn0w3zA28zBayDMULkGKad7Uh2f7VdcMp/1AXyclI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727609345; c=relaxed/simple;
-	bh=3qv3OsFbhHEsFwFzcjtMSL8CLzt+eW9pIWP5pcDqRJs=;
+	s=arc-20240116; t=1727609349; c=relaxed/simple;
+	bh=qykHEKtln4pvKrGg5L3Lxb7V9iSJBEZMdWoRN5Vgcw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GxnMRFwYrYEVMGMJMi/XAdbFBrCa8vDSQvEgOxTYli84Y3ixw0MAPCUm8326Xkcm6Zygz3XbDRZQVGU5p6tSSvezgPLFrgA+1o0+X7wWVfkdp9PrR5TF0qeVq54NbNv9M3ymlRwu80WWi3ACSIm8SICVLhVvSVxTJdYUI1/aVQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lyxavJbp; arc=none smtp.client-ip=209.85.216.50
+	 MIME-Version; b=DGIqfN05kQvpU01pvvg10kEEH2X1XBCCXp6jIv1Lf6r8YKkc2AVkmqVVwmQby1wdEVq9pVZUNePolJhXArbmEpKp8gB/WFt0VWwQ6f9VEu87E8wjMJn2DEg0MAtL5lP8JU+hecOsinZhlVGNcck78n3JeRf1I0yl7Vn4GcEGSCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DgOqvH3O; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2e09d9f2021so2244500a91.0;
-        Sun, 29 Sep 2024 04:29:03 -0700 (PDT)
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2e0a950e2f2so2595132a91.2;
+        Sun, 29 Sep 2024 04:29:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727609343; x=1728214143; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727609348; x=1728214148; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O3i9xLfp9/J52UJ68f+odFhRxtsq2MouTqkwu7BAAmY=;
-        b=lyxavJbp+ayF95L0ZFPdj714ZsPYyUZ6loV1zcxjUtUGT+EmqHgEaTijZUKPgB2D0w
-         gPr1Tca11RYsqZqos1/FNqxY+tSO7okNlkmorAWkk9wUH/clGz+adHW6ejH+28UmbWYc
-         9y/Z7jdKIIXzqlZfhTQBnPoa2OCLih0bH4xSbHjOk32sNXG6YbAD63fRzmGqIwl2WNIk
-         TI+lRBVH/kk/1Xm9NQhvOzB3IBm0c8x81JxeuGnYNI2jWtHr6KmPESEg5sc5Z5FdeWy9
-         95oXiUYA+GTytvMe6LgSc1f3Yjhu25og/Zg9XMqsbroHxHee9TX7f0Af1N97AKRijrCN
-         5X0g==
+        bh=jUS/SWZQ7q5YzY6AaYKV0bt64v6nvcVjZvan/IE5Pxc=;
+        b=DgOqvH3OHFcZWb6uBxfhnNS+655UocfV8s7ir/1AqySzeBEnjFmxsUzn79A0K5iEjg
+         3cW33gcrSPjekLcdeROpYB9/XCwnXuRO3Vep/WEZz//7og1Knbd+KpPGS4l2mvkAYOIl
+         F2o++GVkOcws1FRWDMXmGLLS2y0AdbVFXlwvvK885nTh60xL9srbZgp7LXwwGYh8kf5f
+         dxD0lxgUOSAAeqq+sNlNfyNaz66p0vtcmYxKxQ1oRvKHFjKJQ70OTO2c37N6FKkI/2ui
+         ggsDji8UINrbxUjFgr5mq0/JLCaBoHEm2fnAv2pIOuitkUX4OHC45TUeXkYj2OAQ38s8
+         3nGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727609343; x=1728214143;
+        d=1e100.net; s=20230601; t=1727609348; x=1728214148;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=O3i9xLfp9/J52UJ68f+odFhRxtsq2MouTqkwu7BAAmY=;
-        b=uaz/bJdpmEOKL/K8UHgNqDYeU7QKt31pkn0YWyUUKH1Hsm8xhYRKPFQyBj62X4w4kT
-         UIZp3BQSyhPTzgIceBDQ3nVFg+NfiL5o9W6JBAX+EbhnBLmSYlf3iwvyQzDgHgS9Vv/L
-         3kzIGNZgln0LMsc3BLHgrWrEGAN45/oeFgY8sK9ZkULvIjs5hhJO5UIUuHN0GQYXzCUw
-         2kXIDmp/iKwdJXLlGmi6X2Icvv7vwyNk91z+sOk03Oda0fOtOXopuMZvW4+QIkQ5sZN2
-         PkL2aN+Ih2QwZ0pIiCu61gYMImIkmVZh0DhEM2ZXFNkFaQigz3UNkEyWHk9pyjvTOENf
-         9sXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUh1EhkMlZlp/iBWFb4uOQPEKFVoGpkyDLWMnzpXDPpQ+Ey9j8bFo7UYkwHq33xvBy+dF+FPdswL+UfX5cB@vger.kernel.org, AJvYcCWvt30GjHA+TgFhXb0ZTlM4rjnzXUljMh7C6/CgB1KuakeGwQzHzRw1w+y9nCScROF4CcHpK2gC8kwN@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGuQ19/TewUQcRA5GMqDvGVt6wVWNeX1zG1xohKv11KufLLDZc
-	nUoCBwHwY6coCjpjKSylb0uJZJDg/wrcmZsFCGrWXbWjl1WJPi1M
-X-Google-Smtp-Source: AGHT+IHCEQzumuAx/HhIoMTx9zWAJmwo6jsLknrwbznzBpBuVh6wY9D+4zf3S2mPBCZUXuHRGoUvTQ==
-X-Received: by 2002:a17:90a:f40f:b0:2d1:c9c8:301c with SMTP id 98e67ed59e1d1-2e0b8ec8c02mr9875116a91.29.1727609342866;
-        Sun, 29 Sep 2024 04:29:02 -0700 (PDT)
+        bh=jUS/SWZQ7q5YzY6AaYKV0bt64v6nvcVjZvan/IE5Pxc=;
+        b=N8HbmZaUnwI1USQRl3/0ANl2cLOclcM47QQSWkTN1iDS+O5azPpSX63f/Zwj9oMK1y
+         OGIb22YMGWDS8MjJdyaRHKzBSlNGvrtcFXBjs1N33E40xxw+s8jVVsGkdSXiuPlIzgZC
+         Y3gcg+6v/TcF04hKmj8OGZHohN5i0cjp+1j1VHwkzcjJmshsM36DZWdJI3WY5lVGJUSb
+         NEVtL4F1nRAfn1Pnn/hg9v4iv6W3Vx067+LP3JbtoO4iQFBymxKlESBG1nNio2jzErpz
+         YOM8glsu+GRB1zX3k0E3nlNk32UfRlIUhFHGX9Z+W5Uydu3jKebGHvprcGBJhwmLQAWD
+         t/cg==
+X-Forwarded-Encrypted: i=1; AJvYcCXFA1kwOid8r5rda0ex5GjVwMerV0wbAKX6Q3cRGl7RrOh9MIQquWSvmXxa6RDbnm2OZliPXnljZlqjAW+B@vger.kernel.org, AJvYcCXoD+ktl+qY9XAVU4y5lzKQqIfrblbXMHTzMgWB789Kt8TtnBAiXVJsNJNC0+vSWmmdMe2TjOTQbq4T@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMGH1+fhWPwhzdNlLjBZouGyWkynIcJ0cB5gprM4EkSS0BC+/Y
+	JRa0zB/lZ5jzhalgkjOijiFn4EwZ7hKxO77vVSTNo7RoGlEPOZfiHqjZBdLp
+X-Google-Smtp-Source: AGHT+IH+OOQyOzISI6y4GhbqR3NurzC/djBiRxh8Ust4S38OfFSVGHqhh0XXfrYp8/SMtMqKKGYErQ==
+X-Received: by 2002:a17:90a:684d:b0:2e0:adb6:d0ab with SMTP id 98e67ed59e1d1-2e0b79765f2mr10475404a91.0.1727609347862;
+        Sun, 29 Sep 2024 04:29:07 -0700 (PDT)
 Received: from localhost.localdomain ([103.149.249.231])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e11638e859sm893650a91.8.2024.09.29.04.28.59
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e11638e859sm893650a91.8.2024.09.29.04.29.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Sep 2024 04:29:02 -0700 (PDT)
+        Sun, 29 Sep 2024 04:29:07 -0700 (PDT)
 From: Jianhua Lu <lujianhua000@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -77,9 +77,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Jianhua Lu <lujianhua000@gmail.com>
-Subject: [PATCH 2/3]  arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi node
-Date: Sun, 29 Sep 2024 19:29:07 +0800
-Message-ID: <20240929112908.99612-2-lujianhua000@gmail.com>
+Subject: [PATCH 3/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add bluetooth node
+Date: Sun, 29 Sep 2024 19:29:08 +0800
+Message-ID: <20240929112908.99612-3-lujianhua000@gmail.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240929112908.99612-1-lujianhua000@gmail.com>
 References: <20240929112908.99612-1-lujianhua000@gmail.com>
@@ -91,41 +91,50 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add wifi node and this wifi module is connected to pice port.
+Add bluetooth node and this bluetooth module is connected to uart.
 
 Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 ---
- .../dts/qcom/sm8250-xiaomi-elish-common.dtsi    | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-index ebea283f56ea..05a71462325c 100644
+index 05a71462325c..58e0614cc803 100644
 --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-@@ -680,6 +680,23 @@ &pcie0_phy {
- 	status = "okay";
+@@ -30,6 +30,10 @@ / {
+ 	qcom,msm-id = <QCOM_ID_SM8250 0x20001>; /* SM8250 v2.1 */
+ 	qcom,board-id = <0x10008 0>;
+ 
++	aliases {
++		serial0 = &uart6;
++	};
++
+ 	chosen {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+@@ -797,6 +801,21 @@ wlan_en_state: wlan-default-state {
+ 	};
  };
  
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
++&uart6 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,qca6390-bt";
 +
 +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
 +		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
 +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
 +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
 +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
 +	};
 +};
 +
- &pm8150_gpios {
- 	vol_up_n: vol-up-n-state {
- 		pins = "gpio6";
+ &usb_1 {
+ 	/* USB 2.0 only */
+ 	qcom,select-utmi-as-pipe-clk;
 -- 
 2.46.0
 
