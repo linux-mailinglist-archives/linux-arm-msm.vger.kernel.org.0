@@ -1,168 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-32709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32710-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E109989207
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 01:45:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1056989269
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 03:28:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89D2328263C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Sep 2024 23:45:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 265331C2155D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Sep 2024 01:28:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EFF0188002;
-	Sat, 28 Sep 2024 23:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60981AD5E;
+	Sun, 29 Sep 2024 01:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WUz9WOzS"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jXi+LjSa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.19])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FD0188591;
-	Sat, 28 Sep 2024 23:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858EDB644;
+	Sun, 29 Sep 2024 01:28:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727567108; cv=none; b=l7i2wmVrjBtg1fSVNlg5F2R8jWiogOYjuqA4x6sSzZbU2OdREtoEv6chj+j6r9m997Cj3E2IW2vEhRK3Cf2ny78rEUbMrHqdxrcDLXR5BZRqJOfCf6RbQuyw07PfuSg0/WjZfT33Bz90pmBtz8TyrBHBmiNFH4i3nTlSIVgLpVE=
+	t=1727573325; cv=none; b=HkxZ3nOdztJtfzY2rBSoPFcisx/tyBZp/jeKE0MRUheoqVeVIcsPLXoV9zcs4CIunhai+UkOY9RWMk3MfV5C79v0SRGMA8Bi5oqxcr1117dQfxMH0ZORbZox3iRnGrUp2lLOYgKVyO9Cl2EDYb+ZvkIlIwyRs01u/2pPnfbwNnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727567108; c=relaxed/simple;
-	bh=sRtstZyamgTFvaWC2HT26A4k0j5wMsLi6ZRHUYxbr60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gq/ovcUS3hfP3H8/2Tyx3PDRKsMcBtiVIbrL/DglB/3enY5SuhW5JBwmDvQ5faq1DTg05MwYVFtn5BBUviJZMZIL3+L6I8ntDWPYlRv8uwkDv0t0sSyRJWccr3FxG5PHUpSIM+ICDwUVDZZP0R9shmGtetyFiqhD5A8unCY03J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WUz9WOzS; arc=none smtp.client-ip=192.198.163.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727567105; x=1759103105;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=sRtstZyamgTFvaWC2HT26A4k0j5wMsLi6ZRHUYxbr60=;
-  b=WUz9WOzS9BIiTZaBhzFoKkMMG/TsnKudIYjOh2mR4/md1N5M8LaXKb5t
-   ANUq+yHIz6gFLnDr0coIjKyz1KJXtk5K9N31SQRgh630IBhYg9gEl31i8
-   PIi0u1QiqZycWyO0s/3bFuN4UL0YQZ5HbJsE47omIAj3+yx62NFHOoytK
-   LwDiRS7hXuwIx5DJBB2UzWDDR/Ga8xs9U4++yTPtCh1krdUV5/6dNUmA2
-   jv3v4ztuNte0hCyLfZmfuEmCql++KfVSYNlInGxGZsuWwfYez1pfb8qDU
-   UQ8++1y1i1EkcYDCuOTA+Azn7xorB12gZ7Q4lz3hLh6Ua5lTb9T0Hw+Kn
-   A==;
-X-CSE-ConnectionGUID: kk6aZLPNRA+8fOw/uON2EQ==
-X-CSE-MsgGUID: eoV/FNreT2WdoU8Npx1U+Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11209"; a="26192343"
-X-IronPort-AV: E=Sophos;i="6.11,162,1725346800"; 
-   d="scan'208";a="26192343"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
-  by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2024 16:45:05 -0700
-X-CSE-ConnectionGUID: KI4+d7XNS7iUtlrv57V2gg==
-X-CSE-MsgGUID: LwqmGFfYR5CYkeryjZ8msQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,162,1725346800"; 
-   d="scan'208";a="103705533"
-Received: from lkp-server01.sh.intel.com (HELO 53e96f405c61) ([10.239.97.150])
-  by fmviesa001.fm.intel.com with ESMTP; 28 Sep 2024 16:45:02 -0700
-Received: from kbuild by 53e96f405c61 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1suh7U-000Nkv-22;
-	Sat, 28 Sep 2024 23:45:00 +0000
-Date: Sun, 29 Sep 2024 07:44:33 +0800
-From: kernel test robot <lkp@intel.com>
-To: Dzmitry Sankouski <dsankouski@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Dzmitry Sankouski <dsankouski@gmail.com>
-Subject: Re: [PATCH v5 2/2] gcc-sdm845: Add general purpose clock ops
-Message-ID: <202409290702.jlF0XWJZ-lkp@intel.com>
-References: <20240617-starqltechn_integration_upstream-v5-2-761795ea5084@gmail.com>
+	s=arc-20240116; t=1727573325; c=relaxed/simple;
+	bh=FPNFEZO7Vbgv/3w/V1/AEPDcPi0VNMlmFBJb4qvBuA8=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=H08ZYE+Ju+XgsWrB7MgdBZVz5O9as1p2Mb64EU4cDw7+FuB8231hOZm8ZWRK8fsrwMHTdTwXwNYSA6dkxXQoGNx5ByzehfOIGXiGmZWxar4JCigQ2jNJkYRwgs0ELe04kQp0/Z8UueOk3gI47yDLyZjlnwN3RnRp3Eg4w+/1nCk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jXi+LjSa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48T0SkNH027431;
+	Sun, 29 Sep 2024 01:28:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	CQu+a5I628fSPg2Q3guwDsVA1ZHeGM8a0J7SUXaizjA=; b=jXi+LjSadIbbPHCD
+	51IRcErdYaU5r/NBOzRtpV2mQL8gceFtt+c4iqmiX9v6uo+BecAIFMX6NroYoie0
+	wpAwJ1Jzke2hLB/ONj0qUuxUgvcyKlLYK4Xxg8Lq526z8CRQ9Vy49qIv4X29oa8q
+	4k/VVHYqEDhLbff4LcXTDtlMAu3faZwgg/ouepSGXlav61wzBYCcDMKgBdXYzoEH
+	64EFfItkeTvw/vv9Kb1WCY1ZiADPOjvSX7XHtwE/G3iyDh8xfJSkaljMUc/EOjMg
+	l8+7rq9d/fQj7G0xShHkgouUf2oUUDb2Jv9gTZuOZ2yIANHW6ag4ug7hCYdZMjx4
+	P42dzA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xb38sdbh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 29 Sep 2024 01:28:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48T1SPAU010382
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 29 Sep 2024 01:28:25 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 28 Sep
+ 2024 18:28:19 -0700
+Message-ID: <d842a992-e04f-4a11-abaa-da50808fea77@quicinc.com>
+Date: Sun, 29 Sep 2024 09:28:17 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240617-starqltechn_integration_upstream-v5-2-761795ea5084@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
+From: Depeng Shao <quic_depengs@quicinc.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
+ <6ddaa41b-86cf-44e5-a671-fd70f266642b@linaro.org>
+ <eb77972c-9c9a-48f9-b850-21e6c2df005a@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <eb77972c-9c9a-48f9-b850-21e6c2df005a@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wpz0-A4AWjUzkYP7sq5_5UxUQMQyiZUd
+X-Proofpoint-ORIG-GUID: wpz0-A4AWjUzkYP7sq5_5UxUQMQyiZUd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ mlxlogscore=999 impostorscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409290010
 
-Hi Dzmitry,
+Hi Bryan,
 
-kernel test robot noticed the following build warnings:
+On 8/15/2024 10:21 PM, Depeng Shao wrote:
+> Hi Bryan,
+> 
+> On 8/15/2024 8:25 AM, Bryan O'Donoghue wrote:
+>> On 12/08/2024 15:41, Depeng Shao wrote:
+>>> +void camss_reg_update(struct camss *camss, int hw_id, int port_id, 
+>>> bool is_clear)
+>>> +{
+>>> +    struct csid_device *csid;
+>>> +
+>>> +    if (hw_id < camss->res->csid_num) {
+>>> +        csid = &(camss->csid[hw_id]);
+>>> +
+>>> +        csid->res->hw_ops->reg_update(csid, port_id, is_clear);
+>>> +    }
+>>> +}
+>>
+>> The naming here doesn't make the action clear
+>>
+>> hw_ops->rup_update(csid, port, clear);
+>>
 
-[auto build test WARNING on 92fc9636d1471b7f68bfee70c776f7f77e747b97]
+The register name in SWI is IFE_0_TOP_REG_UPDATE_CMD in SM8250 platform, 
+and it is CSID0_RUP_AUP_CMD in SM8550, so it isn't only RUP, and AUP is 
+also updated, so maybe the original name reg_update is better. This is 
+what VFE 480 driver is using.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Dzmitry-Sankouski/clk-qcom-clk-rcg2-document-calc_rate-function/20240926-184051
-base:   92fc9636d1471b7f68bfee70c776f7f77e747b97
-patch link:    https://lore.kernel.org/r/20240617-starqltechn_integration_upstream-v5-2-761795ea5084%40gmail.com
-patch subject: [PATCH v5 2/2] gcc-sdm845: Add general purpose clock ops
-config: i386-buildonly-randconfig-006-20240929 (https://download.01.org/0day-ci/archive/20240929/202409290702.jlF0XWJZ-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20240929/202409290702.jlF0XWJZ-lkp@intel.com/reproduce)
+>> "is_clear" is not required since the type is a bool the "is" is 
+>> implied in the the logical state so just "clear" will do.
+>>
+>> But re: my previous comment on having the ISR do the clear as is done 
+>> in the VFE 480, I don't think this is_clear parameter is warranted.
+>>
+>> We want the calling function to request the rup_update() for the 
+>> rup_update() function to wait on completion and the ISR() to do the 
+>> clear once the RUP interrupt has been raised.
+>>
+>> At least I think that's how it should work - could you please 
+>> experiment with your code for the flow - as it appears to match the 
+>> VFE 480 logic.
+>>
+> 
+> Thanks for catching this, I forget to add the rup irq, so this logic is 
+> also missed. I have tried it just now, the logic works good, will add it 
+> in next version patch.
+> 
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202409290702.jlF0XWJZ-lkp@intel.com/
+I go through the code again, and find we don't do the wait for 
+completion in VFE 480 driver, this is just used in VFE gen1 driver and 
+just during disabling port.
 
-All warnings (new ones prefixed by >>):
+Here, what I tried is clearing rup_aup when receiving the rup irq.
 
->> drivers/clk/qcom/clk-rcg2.c:431:13: warning: variable 'count' set but not used [-Wunused-but-set-variable]
-     431 |         int i = 2, count = 0;
-         |                    ^
-   1 warning generated.
+Thanks,
+Depeng
 
-
-vim +/count +431 drivers/clk/qcom/clk-rcg2.c
-
-   427	
-   428	static void clk_rcg2_calc_mnd(u64 parent_rate, u64 rate, struct freq_tbl *f,
-   429				unsigned int mnd_max, unsigned int pre_div_max)
-   430	{
- > 431		int i = 2, count = 0;
-   432		unsigned int pre_div = 1;
-   433		unsigned long rates_gcd, scaled_parent_rate;
-   434		u16 m, n = 1, n_candidate = 1, n_max;
-   435	
-   436		rates_gcd = gcd(parent_rate, rate);
-   437		m = div64_u64(rate, rates_gcd);
-   438		scaled_parent_rate = div64_u64(parent_rate, rates_gcd);
-   439		while (scaled_parent_rate > (mnd_max + m) * pre_div_max) {
-   440			// we're exceeding divisor's range, trying lower scale.
-   441			if (m > 1) {
-   442				m--;
-   443				scaled_parent_rate = mult_frac(scaled_parent_rate, m, (m + 1));
-   444			} else {
-   445				f->n = mnd_max + m;
-   446				f->pre_div = pre_div_max;
-   447				f->m = m;
-   448			}
-   449		}
-   450	
-   451		n_max = m + mnd_max;
-   452	
-   453		while (scaled_parent_rate > 1) {
-   454			while (scaled_parent_rate % i == 0) {
-   455				n_candidate *= i;
-   456				if (n_candidate < n_max)
-   457					n = n_candidate;
-   458				else if (pre_div * i < pre_div_max)
-   459					pre_div *= i;
-   460				else
-   461					clk_rcg2_split_div(i, &pre_div, &n, pre_div_max);
-   462	
-   463				scaled_parent_rate /= i;
-   464			}
-   465			i++;
-   466			count++;
-   467		}
-   468	
-   469		f->m = m;
-   470		f->n = n;
-   471		f->pre_div = pre_div > 1 ? pre_div : 0;
-   472	}
-   473	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
 
