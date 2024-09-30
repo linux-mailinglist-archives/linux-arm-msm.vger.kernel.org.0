@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32732-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B0E3989A33
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:38:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 030B6989A5A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:57:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E1361F22980
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 05:38:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9C24D2828A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 05:57:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C27413C8E2;
-	Mon, 30 Sep 2024 05:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E5CE148300;
+	Mon, 30 Sep 2024 05:57:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WmtYzL0T"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CKHdVomb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF64A47;
-	Mon, 30 Sep 2024 05:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE222D7B8;
+	Mon, 30 Sep 2024 05:57:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727674691; cv=none; b=FqfsrMvNuX8TJpIjLOD4OuJT13CR0m7jB8yUc50mHO0JkzSPUEkOSKBI8/grSavOtRHtUlto8AvcK2UImfRMjQWSD/3/1qUB+EDtzh5sC3qfIqRWfxmiRlU1SRI+bqV7qySXCU4F+CLSAWMC1hNEqnp4GrNHuiUw2QkwiJzKj/4=
+	t=1727675860; cv=none; b=kDEAElovZIalLE/0+khL82h+iMsmj/0KsmWOMLP6H9xCtcyqvBb4qb3iLQewuPUHpgqgWjTs+vsmdf+kR5UZ9XBaiarKz3E3lgB3nnyBi2dkFG6VBnWqmCQJ5vragUG6oKG+bjxbXr1uokHinaCff2rufBs6CBDAi0aDQglmfnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727674691; c=relaxed/simple;
-	bh=y6BqW0adLuSNbEpDtlt1wTQwouIIcVZHMgkSlDe6AIg=;
+	s=arc-20240116; t=1727675860; c=relaxed/simple;
+	bh=olHHtOUYKJ4+dKSHsGlVo3M7l/oRSgnwW/o68xo6bEM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=HZ61mahcMT+H5SsRIteDrENN1001mex4YhUaZm7vdXxqn8UEcAAzfEAnssZM0D6Ig4k56dkmDSx2iDOQzGhdFy7OarPhsIq/IvSyiXE7HAVrbni27ygFQ9sr7VQdwNE7fqdHAEMwjSaCvwntOccbSMKePywoaBrvg1vbUFLTpRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WmtYzL0T; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=PG64h4oAjeWwwsFXaT9YkeY1caBqir2J8pN9FLaA1COcQQnLX+FmUiWfwhR+GmvX2tL4hFf5PW9DgNDFTcpmSby4+iH/b5reQtU3GqRfdb6Um4hullyD/u4WICfF3ErUahXItCLdOmTruKvD+iXDF6nxJ/gAX32OtlOXK6i1FDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CKHdVomb; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48TMTuOm001779;
-	Mon, 30 Sep 2024 05:37:52 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U0rVcb001985;
+	Mon, 30 Sep 2024 05:57:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YltmkjNOP5VKAuTTCBOm6ghW3ZDdOOIG25kE35a0XaA=; b=WmtYzL0T5t1Vbk23
-	MnVdr0LI0mOfmKi52+BlFPc0ZGq1+S/J5N+D9N3D6VvaVcg7BwPBek1BZzPKdvbO
-	wLlhCRr/YDEjTIw9J/q/vQWWHp8FlpUqphmWuIURPOuYbmcIWFx5nLowiLCsyZ0S
-	kPZDi6SaFoTE3s1VXYShi/wkRF0UUi3oJT4ukQdnvIYGeEzqHOo7tNjAibWnZDNs
-	Hh+Zj53egUEs3yFTwNRIPykrVlq4N+V1hvr7TK5TW+y2DVrg7qrqW7m/a9cv6RgP
-	S4L/OsKi/WfZRvG2U1BaNQEDvFMqOtZCcI9HkZhMD+8FWfPUJUh2TcUa4hL7/taD
-	LataRQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xa12knd3-1
+	mFYit8cSvR8FTkzXPIxY4RaSog6d/tfpTQTiPM3KVXE=; b=CKHdVombCG58ddK7
+	LWUrust0A7dKoMM5+BHn8NOIPJtdETYEPLI5WBLDUT5xmb2JdX4IeXoUDHq+lZCv
+	yBAuD7o8T/B+peuwpVEabPVANqxo+8T8iX1HCq3sAfsB57bQRL6DYENp4pxtU8SL
+	k+L1/2sSzXGcQVLrNY99TrLm6lr5mB6/u2sU3adfEOJeDFTGwmsYkl4CQ1IemBUo
+	tdjoxqSwBfs8LDZ2Kk13d42eBaQtckX8bo97Eanu2QVUO2qapF4fKhCtKrZCL3o5
+	8E7Ec5VFZwt0ie3FVs1PTtFWIfVRbLJSk/PJbrS4JlRCJWMg7a4tBsaK6Iz1egvn
+	SnrXAA==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xte0tc9m-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 05:37:52 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U5bphg028551
+	Mon, 30 Sep 2024 05:57:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U5vWZs015794
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 05:37:51 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 30 Sep 2024 05:57:32 GMT
+Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 29 Sep
- 2024 22:37:46 -0700
-Message-ID: <f31c2b15-d1ae-41fa-952b-eab806b0e15d@quicinc.com>
-Date: Mon, 30 Sep 2024 13:37:43 +0800
+ 2024 22:57:28 -0700
+Message-ID: <a5540676-9402-45c4-b647-02fdc2b92233@quicinc.com>
+Date: Mon, 30 Sep 2024 11:27:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,109 +65,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
- version Titan 780
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-14-quic_depengs@quicinc.com>
- <6ddaa41b-86cf-44e5-a671-fd70f266642b@linaro.org>
- <eb77972c-9c9a-48f9-b850-21e6c2df005a@quicinc.com>
- <d842a992-e04f-4a11-abaa-da50808fea77@quicinc.com>
- <6b702201-4418-4bbe-95b2-50039c08b4d8@linaro.org>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sm8550: Change camcc power domain
+ from MMCX to MXC
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Stephen Boyd
+	<sboyd@kernel.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>
+CC: Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20240927103212.4154273-1-vladimir.zapolskiy@linaro.org>
+ <20240927103212.4154273-2-vladimir.zapolskiy@linaro.org>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <6b702201-4418-4bbe-95b2-50039c08b4d8@linaro.org>
+From: Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <20240927103212.4154273-2-vladimir.zapolskiy@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iiMyueU0O6mCP_eI_8A9IKY2BvRqXltt
-X-Proofpoint-GUID: iiMyueU0O6mCP_eI_8A9IKY2BvRqXltt
+X-Proofpoint-ORIG-GUID: 84h45fEDulEb0hxbZ88H-63PSBOg33QD
+X-Proofpoint-GUID: 84h45fEDulEb0hxbZ88H-63PSBOg33QD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
- bulkscore=0 malwarescore=0 spamscore=0 clxscore=1015 mlxscore=0
- adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300039
+ suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300041
 
-Hi Bryan,
 
-On 9/30/2024 7:57 AM, Bryan O'Donoghue wrote:
-> On 29/09/2024 02:28, Depeng Shao wrote:
->>>>
->>>
->>> Thanks for catching this, I forget to add the rup irq, so this logic 
->>> is also missed. I have tried it just now, the logic works good, will 
->>> add it in next version patch.
->>>
->>
->> I go through the code again, and find we don't do the wait for 
->> completion in VFE 480 driver, this is just used in VFE gen1 driver and 
->> just during disabling port.
+
+On 9/27/2024 4:02 PM, Vladimir Zapolskiy wrote:
+> Any attempt to enable titan_top_gdsc on SM8550-QRD fails and produces
+> an error message that the gdsc is stuck at 'off' state, this can be
+> easily verified just by setting cci0 status on:
 > 
-> Right but, we _should_ wait for completion there, the fact we don't is a 
-> bug.
+>      cam_cc_titan_top_gdsc status stuck at 'off'
+>      WARNING: CPU: 6 PID: 89 at drivers/clk/qcom/gdsc.c:178 gdsc_toggle_logic+0x154/0x168
 > 
-> One context issues a command to take an action and another context in 
-> this case an ISR has to fire for that action to be complete.
+> However if MMCX power domain is replaced by MXC one, it allows to turn
+> titan_top_gdsc on successfully, even if MMCX is remained off according
+
+MMCX is absolutely required for Camera Clock controller as it is the 
+main power domain. The access will not go through if this domain is not ON.
+While I agree that MXC is also required to be enabled for GDSC powering 
+up, but the below is not the correct way to handle the condition.
+In your case the MMCX could be left ON in hardware and that could be the 
+reason for the access to go through.
+
+I am currently working on the necessary changes to address these 
+conditions where a clock controller (GDSC) has multiple power domain 
+dependencies.
+
+> to /sys/kernel/debug/pm_genpd/pm_genpd_summary report.
 > 
-> Therefore we _should_ wait_for_completion() in the initiating context 
-> and timeout if it exceeds a reasonable timeout.
+> Fixes: e271b59e39a6 ("arm64: dts: qcom: sm8550: Add camera clock controller")
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Granted, we've "dropped the ball" in 480 you're right, it needs to be 
-> fixed and will be but, please in your submission do the right thing.
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 9dc0ee3eb98f..5c07d1b35615 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -2846,7 +2846,7 @@ camcc: clock-controller@ade0000 {
+>   				 <&bi_tcxo_div2>,
+>   				 <&bi_tcxo_ao_div2>,
+>   				 <&sleep_clk>;
+> -			power-domains = <&rpmhpd SM8550_MMCX>;
+> +			power-domains = <&rpmhpd SM8550_MXC>;
 
-Qualcomm downstream camera driver use the rup to move the req to a list 
-to maintenance a state machine. If we don't get rup then we will enter 
-bubble state.
-But we are downplaying this process now due to AUP, and the bubble 
-processing has been disabled in latest code base, since we think the 
-buffer must be filled to the given address if we have configured the AUP 
-and got buf done irq.
 
+>   			required-opps = <&rpmhpd_opp_low_svs>;
+>   			#clock-cells = <1>;
+>   			#reset-cells = <1>;
 
-And this per frame wait_for_completion flow isn't exist in whole camss 
-code, and current camss driver just use buf done irq to trigger the per 
-frame flow.
-
-E.g.,
-irqreturn_t vfe_irq()
-{
-	if (rup_irq)
-		reg_update_clear();
-
-	if (buf_done_irq) {
-		vfe_wm_update();
-		reg_update();    --> We can't do wait_for_completion at here in irq 
-context
-		vb2_buffer_done();
-	}
-}
-
-Just VFE gen1 driver use this wait_for_complete in vfe_disable_output, 
-and this flow has been removed in vfe gen2(camss-vfe.c), so looks like
-we don't need to add this wait_for_completion support and also can 
-remove below code in camss-vfe-480.c
-
-vfe_isr_reg_update()
-{
-	if (output->wait_reg_update) {
-		output->wait_reg_update = 0;
-		complete(&output->reg_update);
-	}
-}
-
-Thanks,
-Depeng
-
+-- 
+Thanks & Regards,
+Taniya Das.
 
