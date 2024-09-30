@@ -1,157 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-32746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32747-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09D86989CCD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 10:32:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 74B2B989CDA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 10:33:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 64D70B2118B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 08:32:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BE021F22360
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 08:33:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C95717B506;
-	Mon, 30 Sep 2024 08:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24A917BEC6;
+	Mon, 30 Sep 2024 08:33:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NzHFNN7G"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="aFtb1pWb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF51154C00
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 08:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 237E011CA9
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 08:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727685132; cv=none; b=UIBjfKI5w8aVPX1A4ep9o5OKVnRG1VhKshCTRgd5pePPI4t6WnV37Y7X4eWpx26cL999DJvslUvCRX3Ot09QWeZ/H0MsQSRdjId9FzPpWJswXnezUVxeVkOdbkERCUSyWhU43+14mgyw3/66sjQahdXJRypJ/e2aoqCk9J3crs8=
+	t=1727685217; cv=none; b=Xn2qiTPTfDQeGILwYXBUFZZP73fIsiIuXKQ84BS1wkqh+D0nD/OfVU5One3c4PnIxFkCVAMRBG5DUJcF9RLhbWHbA48ppOLCoLZuvMQSdtn1pz9PFSvAcdBWI2ojU4WKs2ZFfLF/fIANCR/y/oQiyPEgoakpgJA/gpwHdwZLBAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727685132; c=relaxed/simple;
-	bh=vjDswGq6qzpL0ELCkjz11cU+d1yIUQWLyrv7G9cBs7w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ub6oSwIf5+pG8r1h9HSpIk8i5FM/A4Fd8hyTV7kA4sUMU4YRjKjSvNncyv7bCgGwMJc+mQFadOy0bLz+HppjJFdNH58I0WA9FrHV3dmONgk17RgHvcjyLPd/iHqx3nN4Sa3U+bchjsDj7TvYs7KF1Xwr5X+EB1xd91r3UDuu6yo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NzHFNN7G; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fabe9fbe20so797511fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 01:32:10 -0700 (PDT)
+	s=arc-20240116; t=1727685217; c=relaxed/simple;
+	bh=F+ugbM8rh8xJUmWflA48lW/HaRfLcvq9rMFWC8bGUN0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EtUmB8HIxO2PXnoKjRVVO9vx/HMMD1ATNqAOho0KtN2fH0Un9AbKh8lggRDcpg9nQzpe9kz5iQwX8dwZjfrr5wgOtTc+WH+ypKOzm6cfh8fAD/Eleoj6nMjRBbRSIuKaMxv2d6N19PzwQPLulPsoMeX5fsFpLRNBpsTdMF96u2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=aFtb1pWb; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-42cb6f3a5bcso50713285e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 01:33:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727685128; x=1728289928; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bda1ujvEw2DtigO9xhXKOUzZtK+oOjtZGeAQ6Cgn92c=;
-        b=NzHFNN7GsOmIU4AyHXXROunwO6L2BEFWOJ7jw7ZSqQG7BLOYYqbdVg29kPidBT25/A
-         0rd17z6m8PbTJ7GY3P/xXk/VCNgg+EZ1BzFAviRg/JD5AvnTV1FORSQSjV/DhsyjDr5G
-         JzM6pxT//AlZj3RFyb0tKpO9IIqiO7LFRPRPaXLJBvQYgQU/lKTk1M8wpcomJxtY1o4g
-         4xpg7OLA6tz8qlklMFDpT4eqjpiC4EgGuJcIEw15kYuuWsg2cqaEtqlW5rBvFqxlhwPC
-         +pmF5YxNMY7+jJDf30kT5a2tE+Wexg96k9mB4LwSQOkBvKC5R4VuiYOOvWEtqoZR4Z9h
-         HQyQ==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1727685213; x=1728290013; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RqqnGJumLhN62a61w28siyzdMQ5DEHGmALkk/X4lZgc=;
+        b=aFtb1pWbiY84X6lRuRUXUneM1H5rt+xm+trtsQbHO9Ve0bRWsnxZJEHKICMwPCXvso
+         WdfUULnbixhA99vDmnNkNU+OtVca41g1SKtlINm9kM5ZMdiCqNiB+/A1xMDdl/cjidKj
+         +aUcw5QyNXVjBQfEla/sSVfe0fq80KkF1AfKGHvcHeTYBbtYysuD+AI5ZVQznC5ILkkP
+         /iXogonuRqOcddjbPS8lDhKxRVRPFv0vB6Hl8BN19DpkM/IEeAkemzxcyoRXhBc7qn44
+         gHb581w7T4fn7+zE/n1OMP24d/oWTHZGW4zv3nGlhsOV+07+28oBysh/OaeoT5s6jehD
+         ZZnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727685128; x=1728289928;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bda1ujvEw2DtigO9xhXKOUzZtK+oOjtZGeAQ6Cgn92c=;
-        b=pctOA+xtgqa3AlqEBdqWSm7q23AXHnFYaB7+sKs4HbIgt59q1L738AD/QPsLhazvug
-         FXWnXnl7FjtmLbkGhO6RnGgy+xQG7AD9ckaoDt1srb4Gtdpj6k0ddvvH23csy2vCQYjS
-         TYAi9ru9r1E8OdUQhXJae9zOKj1gly7K8QSywO/g3+zBdCbgs+IagF4PXclXdy6gYaJe
-         dr13WPk1yT+Zwuqs1hDjUCZMBVOHLx7uZNVeAZ9eMfufV/MkWGpLl12YQTLLvL7Hukk/
-         P6dGWCebIrAuyPdyf38zdrTFZjN57roW1ymIL//KW5HlKmwsEK0Xp5U/KOYHU/T1aFRV
-         +AAw==
-X-Gm-Message-State: AOJu0YzYDHwNjo8gogtUgsqh9Wo6B3G4JU+Y9DLYUx7A06DrFQg/oMWT
-	IQHGbiG6j1hLtqBDTgxtrYs44OlwSukEMXXAqQVgInLj7U0XOdGQEtoqNWOtBfU=
-X-Google-Smtp-Source: AGHT+IH0lDtASpU4Bz/yJJ+DPMxpJva/WXZEzaaUSKmBmARfPfs62pt6dBtlPHX5lCsdiTR1si7/Fg==
-X-Received: by 2002:a2e:a595:0:b0:2f1:75f4:a6a4 with SMTP id 38308e7fff4ca-2fabfc3725cmr9211601fa.3.1727685128428;
-        Mon, 30 Sep 2024 01:32:08 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-538a043b060sm1157672e87.227.2024.09.30.01.32.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Sep 2024 01:32:07 -0700 (PDT)
-Message-ID: <18fd8a2c-0563-49a0-b2a4-78f0005576e9@linaro.org>
-Date: Mon, 30 Sep 2024 11:32:05 +0300
+        d=1e100.net; s=20230601; t=1727685213; x=1728290013;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RqqnGJumLhN62a61w28siyzdMQ5DEHGmALkk/X4lZgc=;
+        b=LnwduCERwnuYIDvt4zmDQlThCjYfd3I3vkIQo9pPG8CI41uywnXmmU5hoDoqSSEpmA
+         I5kA5nASbn2qf4R7mI5i8UnLiOhhV/xDQkmC2+r9nPvTTpnOSg+3BU9WJAV/0H//s1Rg
+         +XSYZ7A8/tuLq34xZBGv+j0e2TsPuf8p3vddTS0Imgjzl9g0DGpHP+nJ0JN5iIFz4BOK
+         GXgV5JOBzXog0Sb5DZlm0gUQZTra5GPC05qS5e8h2VU3yXi1Xej8k7zwrmSzVx1OfC3L
+         79gEDoVhmkRyBNrU/nt1uq8vV4YjXLOZ8DMhz25xv04jjioGCuD2tVwSv6JRIXWuIbHA
+         2ICQ==
+X-Gm-Message-State: AOJu0YwHRyUz5XOt6aNlJdAc3A+ndHCHe4wMo3+DAw1vC/G4VOc4Ia5y
+	lliN/DnZOl+iXbXoAMSun05YfLeogpfaSpQ3bA7k+YS5Slh6uBkiyPe8p8qeU1A=
+X-Google-Smtp-Source: AGHT+IEpfKaaF7ng7r33UN1uAzh2QTa7nC6zLFplvgxiU2PQg/kQXr3wXa0AF2YNi+DEP0KP7TMqmQ==
+X-Received: by 2002:a05:600c:1d20:b0:42c:ba83:3f00 with SMTP id 5b1f17b1804b1-42f5840e1efmr126867055e9.1.1727685213448;
+        Mon, 30 Sep 2024 01:33:33 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:8791:e3e5:a9ca:31a6])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-42e96a36251sm144502825e9.37.2024.09.30.01.33.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Sep 2024 01:33:33 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Elliot Berman <quic_eberman@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Thorsten Leemhuis <linux@leemhuis.info>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Rudraksha Gupta <guptarud@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Subject: [RESEND PATCH v2] firmware: qcom: scm: fix a NULL-pointer dereference
+Date: Mon, 30 Sep 2024 10:33:28 +0200
+Message-ID: <20240930083328.17904-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Depeng Shao <quic_depengs@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <9ed92660-5f42-4a1a-9261-b8800133972a@linaro.org>
- <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
- <212c880a-9a09-4433-a049-eb15a0c32322@kernel.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <212c880a-9a09-4433-a049-eb15a0c32322@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 9/30/24 10:26, Krzysztof Kozlowski wrote:
-> On 25/09/2024 17:13, Depeng Shao wrote:
->> Hi Vladimir,
->>
->> On 9/6/2024 11:56 PM, Vladimir Zapolskiy wrote:
->>
->>>> +            compatible = "qcom,sm8550-camss";
->>>> +
->>>> +            reg = <0 0x0acb7000 0 0xd00>,
->>>> +                  <0 0x0acb9000 0 0xd00>,
->>>> +                  <0 0x0acbb000 0 0xd00>,
->>>> +                  <0 0x0acca000 0 0xa00>,
->>>> +                  <0 0x0acce000 0 0xa00>,
->>>> +                  <0 0x0acb6000 0 0x1000>,
->>>> +                  <0 0x0ace4000 0 0x2000>,
->>>> +                  <0 0x0ace6000 0 0x2000>,
->>>> +                  <0 0x0ace8000 0 0x2000>,
->>>> +                  <0 0x0acea000 0 0x2000>,
->>>> +                  <0 0x0acec000 0 0x2000>,
->>>> +                  <0 0x0acee000 0 0x2000>,
->>>> +                  <0 0x0acf0000 0 0x2000>,
->>>> +                  <0 0x0acf2000 0 0x2000>,
->>>> +                  <0 0x0ac62000 0 0xf000>,
->>>> +                  <0 0x0ac71000 0 0xf000>,
->>>> +                  <0 0x0ac80000 0 0xf000>,
->>>> +                  <0 0x0accb000 0 0x2800>,
->>>> +                  <0 0x0accf000 0 0x2800>;
->>>
->>> Please sort the list above in numerical order, this will change positions
->>> of "vfe_lite0", "vfe_lite1" etc.
->>>
->>> Another note, since it's not possible to map less than a page, so I believe
->>> it might make sense to align all sizes to 0x1000.
-> 
-> And if Linux behavior changes then are you going to rewrite all the DTS
-> for new size?
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-If Linux behaves properly with page size alignments today, then the selected
-page size alignment for AMBA device IO memory regions is correct, hence any
-future change from the correct IP device description to another one will be
-invalid or noop.
+Some SCM calls can be invoked with __scm being NULL (the driver may not
+have been and will not be probed as there's no SCM entry in device-tree).
+Make sure we don't dereference a NULL pointer.
 
-There is nothing to worry about, I believe.
+Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
+Reported-by: Rudraksha Gupta <guptarud@gmail.com>
+Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
+Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+Tested-by: Rudraksha Gupta <guptarud@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+I dropped patch 2/2 and am resending this separately rebased on top of
+v6.12-rc1.
 
-> No, the sizes reflect hardware register layout, not concept of pages.
-> 
+ drivers/firmware/qcom/qcom_scm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Absolutely they do. It might be a coincidence that both are aligned in
-this particular case or another one.
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index 10986cb11ec0..8bac4915c211 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -216,7 +216,7 @@ static DEFINE_SPINLOCK(scm_query_lock);
+ 
+ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void)
+ {
+-	return __scm->mempool;
++	return __scm ? __scm->mempool : NULL;
+ }
+ 
+ static enum qcom_scm_convention __get_convention(void)
+-- 
+2.43.0
 
-> I don't think that we should be coming with more nitpicky ideas, one
-> month after the patch was sent and reviewed.
-
-The change is not yet ready to be accepted from the technical perspective.
-
---
-Best wishes,
-Vladimir
 
