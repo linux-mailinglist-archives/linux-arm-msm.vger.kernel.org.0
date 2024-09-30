@@ -1,60 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-32728-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32729-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C279989997
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 05:46:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E6739899A1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 05:55:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF23D28295C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 03:46:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6429A1F21557
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 03:55:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF97224DC;
-	Mon, 30 Sep 2024 03:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F05BD224DC;
+	Mon, 30 Sep 2024 03:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SIWkq1ZU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dnu+o4S/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA751878;
-	Mon, 30 Sep 2024 03:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01421878;
+	Mon, 30 Sep 2024 03:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727668001; cv=none; b=MBQBIvzf6fB7NW4oXDgQ38HtFJTwr8h5jvKDVrWkCa8UT9pqg1TosOWodVx08UrsBwWOOCPbpFihfB8g6zFZl2VeUE1cTYjI0vnqZugeIyT4IZ+VU4az6iIQKqGwHUSkG0yh3RGAm0BlwK+wk2abVBhpmPqQqhRmTFTIG6ruUSM=
+	t=1727668520; cv=none; b=HnBlbMO9InbVoOGNuDgzCOc98Tyt8ZMOdn01+0Q4FzRHVxnfZmn6udmmc0loNGBOGlIHUvr2aY2lcXHdUPMFxZnGxwP8NaGlOMYMLsioaBz7XVvd9xRshbogtyS338pc7Xjm+K20glReJPo6hi0YL9g9AEeQKO43qqMFI+0+Ui4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727668001; c=relaxed/simple;
-	bh=3ZRQb9frZrN0U2tLqZABd0zVgfSMsnleCdXyG8mS+KE=;
+	s=arc-20240116; t=1727668520; c=relaxed/simple;
+	bh=IJa8Mg1aKbFf8WzwjqMhoot4wnFim9U6zMkwBTOCArY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qhS01NF86MJGEhaRbK3mUB5iu4stczBEbd0dv69ZD6Pdd2zI1lFmr/Rays2Vm+QQ39Tz9/+nCXgV/apCBkp/uSXrQDbuHaENJ16wCULMaJzvHZFbEjDoSR4a53QThqq350dMlazzm2FQnr+3xZ1GPopdEJO2kBKnYizq5TAijsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SIWkq1ZU; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFDCAC4CEC4;
-	Mon, 30 Sep 2024 03:46:38 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=GnGKVUaN9kRUSrkZpje7VY9yvdXkGN5H3yaTBNQ+wWZ8L09s6w7paQBihwyab1Skq9E0+dl/QbW3ARkDK/tCKPscJ3PBcZXDEGesuQ8IAvSrnfiUCDenZ8mquLpe+eJ1fZywJdLGSadDHEfNRVz7urEbzk5zxgIHyhG4lGUid58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dnu+o4S/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B64C4CECE;
+	Mon, 30 Sep 2024 03:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727668000;
-	bh=3ZRQb9frZrN0U2tLqZABd0zVgfSMsnleCdXyG8mS+KE=;
+	s=k20201202; t=1727668520;
+	bh=IJa8Mg1aKbFf8WzwjqMhoot4wnFim9U6zMkwBTOCArY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=SIWkq1ZUBe2fdkk+pYKC8athvpuJSOisu9in60smfN355pj3z6/O6qvR+CXJGz/0f
-	 lhp6yECMYO7TDKRLNV9hK9nwn0i63aC6xaqQnkEUMc6R8hoUmXAMtjm4qbORfC8k+X
-	 8DAduYsPQ57h59sWO/Ve5Jhjob+BCdUQc9m7Uc7MeSysREJZmrP+3USHp4HBIY28E4
-	 NFrNEypnmQbNU3DVqdBJiTBe9o6hxOoRFG1k5YOLUaz0W1VVHn6HxJl5nXOAwnYSUI
-	 c8hX9Aqzz+RU6hPdQU9LYCjuG1jra+1e/nx7lJ9xbTRay132Nrk7Z91lgNr9lU9N5l
-	 Z5MTkkt4WYLuQ==
-Date: Sun, 29 Sep 2024 22:46:37 -0500
+	b=dnu+o4S/ksubI4Bb4bxGIsPg0I0Ls0s/LFe4FiTfuXR9HoiHSv7O+jQN6NeeD6cI6
+	 uvgJdLx7RcG385IAINmqVhz97uvR5baPAPLO+s1OOn7z5av3BS/bWoXeKDTIg3jfzZ
+	 En9lw21nLQiZ71bt7zW8g2z9ZGprQopoihqdGb0De+s9x+3EygQmu0HrvxGXwTxTNh
+	 I4BKNy8RNyssS9rLkbx6PIlSz6GlglWeLAs7d1aHleOITRohvrtFnmPMY4Cu0+mE4Q
+	 AkEvwH7sp+gGhs+5apfOgJJEobUEQJCm6av/UVfngGH7Wq2Rb9PafOKGshsq4nqtVy
+	 Xm1Dp8TyV4gFw==
+Date: Sun, 29 Sep 2024 22:55:17 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: konrad.dybcio@linaro.org, andi.shyti@kernel.org, 
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-i2c@vger.kernel.org, conor+dt@kernel.org, agross@kernel.org, 
-	devicetree@vger.kernel.org, vkoul@kernel.org, linux@treblig.org, dan.carpenter@linaro.org, 
-	Frank.Li@nxp.com, konradybcio@kernel.org, bryan.odonoghue@linaro.org, 
-	krzk+dt@kernel.org, robh@kernel.org
-Subject: Re: [PATCH v3 4/4] i2c: i2c-qcom-geni: Enable i2c controller sharing
- between two subsystems
-Message-ID: <lmo4jylfwt3wingdqb6zc6ew2537kqksuckfyd7vwuu4ufg5cr@ic2j7bv2r6e4>
-References: <20240927063108.2773304-1-quic_msavaliy@quicinc.com>
- <20240927063108.2773304-5-quic_msavaliy@quicinc.com>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: cros-qcom-dts-watchers@chromium.org, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v5 11/12] arm64: dts: qcom: starqltechn: add graphics
+ support
+Message-ID: <cbsxqssei5lcsnnphk5cx77qpnnnjticvtzn2jemkm6h333llx@hzygsxsc6t22>
+References: <20240926-starqltechn_integration_upstream-v5-0-d2084672ff2f@gmail.com>
+ <20240926-starqltechn_integration_upstream-v5-11-d2084672ff2f@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,161 +61,120 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240927063108.2773304-5-quic_msavaliy@quicinc.com>
+In-Reply-To: <20240926-starqltechn_integration_upstream-v5-11-d2084672ff2f@gmail.com>
 
-On Fri, Sep 27, 2024 at 12:01:08PM GMT, Mukesh Kumar Savaliya wrote:
-> Add support to share I2C SE by two Subsystems in a mutually exclusive way.
-> Use "qcom,shared-se" flag in a particular i2c instance node if the usecase
-> requires i2c controller to be shared.
-> 
+On Thu, Sep 26, 2024 at 05:22:11PM GMT, Dzmitry Sankouski wrote:
 
-Please start your commit message by describing the problem your patch
-is solving.
+It would be much appreciated if we included "sdm845-starqltechn" in the
+subject. That way it will help me when I try to write the pull request
+later, and try to group sdm845 changes together...
 
-> Sharing of SE(Serial engine) is possible only for GSI mode as each
-> subsystem(SS) can queue transfers over its own GPII Channel. For non GSI
-> mode, we should force disable this feature even if set by user from DT by
-> mistake.
+> Add support for gpu and panel.
 > 
-> I2C driver just need to mark first_msg and last_msg flag to help indicate
-> GPI driver to take lock and unlock TRE there by protecting from concurrent
-> access from other EE or Subsystem.
-> 
-> gpi_create_i2c_tre() function at gpi.c will take care of adding Lock and
-> Unlock TRE for the respective transfer operations.
-> 
-> Since the GPIOs are also shared between two SS, do not unconfigure them
-> during runtime suspend. This will allow other SS to continue to transfer
-> the data without any disturbance over the IO lines.
-> 
-
-This last paragraph describes patch 3, right?
-
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 > ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 24 ++++++++++++++++++++----
->  1 file changed, 20 insertions(+), 4 deletions(-)
+> Changes for v5:
+> - fix label names
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 67 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 67 insertions(+)
 > 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 212336f724a6..479fa8e1c33f 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -1,5 +1,6 @@
->  // SPDX-License-Identifier: GPL-2.0
->  // Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
-> +// Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> index 230e984b5ba3..f7cb09734d2f 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
+> @@ -203,6 +203,52 @@ vib_pwm: pwm {
+>  	};
+>  };
 >  
->  #include <linux/acpi.h>
->  #include <linux/clk.h>
-> @@ -602,6 +603,7 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->  	peripheral.clk_div = itr->clk_div;
->  	peripheral.set_config = 1;
->  	peripheral.multi_msg = false;
-> +	peripheral.shared_se = gi2c->se.shared_geni_se;
->  
->  	for (i = 0; i < num; i++) {
->  		gi2c->cur = &msgs[i];
-> @@ -612,6 +614,8 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->  		if (i < num - 1)
->  			peripheral.stretch = 1;
->  
-> +		peripheral.first_msg = (i == 0);
-> +		peripheral.last_msg = (i == num - 1);
-
-There are multiple error paths in this loop, which would result in us
-never issuing the unlock TRE - effectively blocking other subsystems
-from accessing the serial engine until we perform our next access
-(assuming that APSS issuing a lock TRE when APSS already has the channel
-locked isn't a problem?)
-
->  		peripheral.addr = msgs[i].addr;
->  
->  		ret =  geni_i2c_gpi(gi2c, &msgs[i], &config,
-> @@ -631,8 +635,11 @@ static int geni_i2c_gpi_xfer(struct geni_i2c_dev *gi2c, struct i2c_msg msgs[], i
->  		dma_async_issue_pending(gi2c->tx_c);
->  
->  		time_left = wait_for_completion_timeout(&gi2c->done, XFER_TIMEOUT);
-> -		if (!time_left)
-> +		if (!time_left) {
-> +			dev_dbg(gi2c->se.dev, "I2C timeout gpi flags:%d addr:0x%x\n",
-> +						gi2c->cur->flags, gi2c->cur->addr);
-
-This looks useful, but unrelated to this patch.
-
->  			gi2c->err = -ETIMEDOUT;
-> +		}
->  
->  		if (gi2c->err) {
->  			ret = gi2c->err;
-> @@ -800,6 +807,11 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  		gi2c->clk_freq_out = KHZ(100);
->  	}
->  
-> +	if (of_property_read_bool(pdev->dev.of_node, "qcom,shared-se")) {
-> +		gi2c->se.shared_geni_se = true;
-
-	gi2c->se.shared_geni_se = of_property_read_bool(dev->of_node, "qcom,shared-se");
-
-> +		dev_dbg(&pdev->dev, "I2C is shared between subsystems\n");
-> +	}
+> +&gpu {
+> +	status = "okay";
 > +
->  	if (has_acpi_companion(dev))
->  		ACPI_COMPANION_SET(&gi2c->adap.dev, ACPI_COMPANION(dev));
->  
-> @@ -870,8 +882,10 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  	else
->  		fifo_disable = readl_relaxed(gi2c->se.base + GENI_IF_DISABLE_RO) & FIFO_IF_DISABLE;
->  
-> -	if (fifo_disable) {
-> -		/* FIFO is disabled, so we can only use GPI DMA */
-> +	if (fifo_disable || gi2c->se.shared_geni_se) {
-> +		/* FIFO is disabled, so we can only use GPI DMA.
-> +		 * SE can be shared in GSI mode between subsystems, each SS owns a GPII.
-> +		 **/
-
-I think you're trying to document why we're entering the "GPI-only"
-branch. The addition you made was that if the user has requested
-"shared-se", then it's GPI-only.
-
-But I'm not able to wrap my head around your addition here. Why does it
-matter that each subsystem own a GPII? Is that a reason for choosing
-GPI-only mode?
-
->  		gi2c->gpi_mode = true;
->  		ret = setup_gpi_dma(gi2c);
->  		if (ret) {
-> @@ -883,6 +897,9 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
->  	} else {
->  		gi2c->gpi_mode = false;
+> +	zap-shader {
+> +		memory-region = <&gpu_mem>;
+> +		firmware-name = "qcom/sdm845/starqltechn/a630_zap.mbn";
+> +	};
+> +};
 > +
-> +		/* Force disable shared SE case for non GSI mode */
-
-GSI or GPI mode?
-
-> +		gi2c->se.shared_geni_se = false;
-
-If shared_geni_se was true prior to this assignment, wouldn't we have
-entered the if (fifo_disable ...) branch?
-
->  		tx_depth = geni_se_get_tx_fifo_depth(&gi2c->se);
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dsi0 {
+> +	vdda-supply = <&vreg_l26a_1p2>;
+> +	status = "okay";
+> +
+> +	panel@0 {
+> +		compatible = "samsung,s6e3ha8";
+> +		reg = <0>;
+> +		vci-supply = <&s2dos05_ldo4>;
+> +		vddr-supply = <&s2dos05_buck>;
+> +		vdd3-supply = <&s2dos05_ldo1>;
+> +		te-gpios = <&tlmm 10 GPIO_ACTIVE_HIGH>;
+> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
+> +		pinctrl-0 = <&sde_dsi_default &sde_te>;
+> +		pinctrl-1 = <&sde_dsi_suspend &sde_te>;
+> +		pinctrl-names = "default", "suspend";
+> +
+> +		port {
+> +			panel_in: endpoint {
+> +				remote-endpoint = <&mdss_dsi0_out>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&mdss_dsi0_out {
+> +	data-lanes = <0 1 2 3>;
+> +	remote-endpoint = <&panel_in>;
+> +};
+> +
+> +&mdss_dsi0_phy {
+> +	vdds-supply = <&vdda_mipi_dsi0_pll>;
+> +	status = "okay";
+> +};
 >  
->  		/* I2C Master Hub Serial Elements doesn't have the HW_PARAM_0 register */
-> @@ -964,7 +981,6 @@ static int __maybe_unused geni_i2c_runtime_suspend(struct device *dev)
->  	if (ret) {
->  		enable_irq(gi2c->irq);
->  		return ret;
-> -
+>  &apps_rsc {
+>  	regulators-0 {
+> @@ -837,6 +883,27 @@ &tlmm {
+>  	gpio-reserved-ranges = <27 4>, /* SPI (eSE - embedded Secure Element) */
+>  			       <85 4>; /* SPI (fingerprint reader) */
+>  
+> +	sde_dsi_default: sde-dsi-default-state {
 
-Please avoid such unrelated cleanups.
+I'd prefer we leave the "sde" out of here.
+
+Also, 'sde' > 'sdc2', so in its current form this should be moved down a
+bit.
 
 Regards,
 Bjorn
 
->  	} else {
->  		gi2c->suspended = 1;
->  	}
+> +		pins = "gpio6";
+> +		function = "gpio";
+> +		drive-strength = <8>;
+> +		bias-disable;
+> +	};
+> +
+> +	sde_dsi_suspend: sde-dsi-suspend-state {
+> +		pins = "gpio6";
+> +		function = "gpio";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +
+> +	sde_te: sde-te-state {
+> +		pins = "gpio10";
+> +		function = "mdp_vsync";
+> +		drive-strength = <2>;
+> +		bias-pull-down;
+> +	};
+> +
+>  	sdc2_clk_state: sdc2-clk-state {
+>  		pins = "sdc2_clk";
+>  		bias-disable;
+> 
 > -- 
-> 2.25.1
+> 2.39.2
 > 
 
