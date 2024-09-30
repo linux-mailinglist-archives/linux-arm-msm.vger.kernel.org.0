@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A5DF989E22
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 11:26:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A84C2989E25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 11:27:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0FB1F2861F8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:26:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E35D286F04
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:27:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B266818A93C;
-	Mon, 30 Sep 2024 09:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 421FE188587;
+	Mon, 30 Sep 2024 09:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mysHxrrQ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oILVf8zs"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1380E18A6AF;
-	Mon, 30 Sep 2024 09:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AF417C7C4;
+	Mon, 30 Sep 2024 09:26:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727688377; cv=none; b=UXCwgzHdzHkTiUEcYtxrOeXtXxjp7CQv/GdTEgldh3xBKX5p/Js5/bLuJBD0ZFFrTbpnb9pRvy7Fs30Gkeb7LSJR87Im+/XFrvyU9seqpmWTIkCMUxZcjQ2wF+ot2yuaWSoPXtkl+g2gd0aWmIHqLtju48TrpLEoRYk0aBI22CQ=
+	t=1727688420; cv=none; b=rUBVAW/GWDLGt/JgL/0yILKolfJwAoWN/4D0VMurndXw3jQNcSpVT1INWlNAB8JCNoNxlOO+AOuxT79L3mBfdV2ougctorsL8NcrtqcoINXRzthye3KhKFmFWLTyJH1G/xbXsRyZ2uVfDufvi52M0xmg/8RTQtiqGlAgQAQXdWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727688377; c=relaxed/simple;
-	bh=rCEUlI4599pZcSQ6FVgW4m8VFw0tr91OA8OBXpB9SLY=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
-	 In-Reply-To:Content-Type; b=LMhD7HaRgvaOMFE+Z8WPDTAEZFtq5AUmbRmQQvkN8iM6K4HJ8/SxSM2ICD03+uOpmDZKE0XFW6yjw7RfdjtPvVjMQiBQZbK1/+wpIPDtBSeUSDxBUUV0n1qpbEoCJF1tU+5WRlz33d1cR7C6fVIUigJdAj6eHYU2ILodE4KJA64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mysHxrrQ; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1727688420; c=relaxed/simple;
+	bh=utsQQphS3IjSdBu0mkYu6MlkLg+KTNSdoaUtAA2R+8U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bBUd1/FarQYZuy2QZDlUwL9KWX1UKAqrCWwJ0yFe+Bk1XNdLHdEDasGOSHnaI8QW5/XpjvQQk8XfIpCsjVlVbL3esmbLOdfRe2aR1VvCNN9IyOIhmjjr69+5Ef/IsRh6zYQ5u34WYgNdxc0WMIHnt+lFyFzw4WWUEaXzDdRiztY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oILVf8zs; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48TMrck6028154;
-	Mon, 30 Sep 2024 09:26:11 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48TMtmBv018290;
+	Mon, 30 Sep 2024 09:26:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eSWFRVoTgob4hShoZcNm2EGj/sJnDLjD7nWz/haCgk8=; b=mysHxrrQvQ8TL4I1
-	XKfVbErAFgZ0MKwfhgpBdzj4PFme1X+UUw473a+Ec/9bkXGVVIAimjZ1+rGOptDE
-	dhbe3WWUd7NcUgPoZQmkvKwQlyFWh8cEiAaOc624jWsNeCqBonAWzIXvvnHQxwW3
-	dNyg/PWwiGkX8gmtFYRwpJRjhAGJJrQizXmMt5/SctfF7OMeZXoYzXRJItjf63el
-	m0cfhQVjtcnJLdYfaviVq3LWY1OdEuGEWEFDj06ORx7C7B/Q6yFanU9Guzo2p359
-	eIIjJR13aBGZk4IiJux7cTn3SAvwtw9//Diz9Rl8WMmKdI5nzUiJIhDq/npZjHur
-	2AjpJA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xb38v7fh-1
+	7IqKqpVPKDj9DGIFdBa/FUygEBdydUOZuN74IoXbI8M=; b=oILVf8zso2ovoLYw
+	uYwNh+65dBQd9U9Slc4PPAYZ4B8eCTS6aVUFN9QDunmkbDeSw8WXmLUVpnoSvqes
+	iP1K2c34/EzWgKgIUA7PVEcBrEaWkA63jbJMhixHTohmOpOOOypMwEwYiBYJoZay
+	mUwQf9DrXfDeDcxSY0q4t5vKLOuwUH9qsBJKV6xoAiONWGGZK6ervOYCSUgnaox/
+	dowYih3+K6l9/w8lmOUjx/rxwS53mQAKna5Ohaxy26Ag07kDgxQEKArAKRJ5ytxf
+	Q8tWteuVABYZqcs0lPLz8r50+O5CQDnzPimAl2FAtvjdMRTUd3mQjpNzwdF6ty47
+	FI0WPw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x8t6mav9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 09:26:11 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U9QAvh019310
+	Mon, 30 Sep 2024 09:26:45 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U9QiIR016278
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 09:26:10 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+	Mon, 30 Sep 2024 09:26:44 GMT
+Received: from [10.218.44.178] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 30 Sep
- 2024 02:26:04 -0700
-Message-ID: <53d2b30d-6480-41eb-8dc8-7b3970ad82ef@quicinc.com>
-Date: Mon, 30 Sep 2024 17:26:01 +0800
+ 2024 02:26:40 -0700
+Message-ID: <88ff98ca-c40e-4d78-8f75-e1c35b84612f@quicinc.com>
+Date: Mon, 30 Sep 2024 14:56:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,144 +65,87 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-From: Depeng Shao <quic_depengs@quicinc.com>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>, <krzk+dt@kernel.org>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <todor.too@gmail.com>,
-        <rfoss@kernel.org>, <conor+dt@kernel.org>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
- <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
- <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
- <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
- <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
- <6562a958-47e9-4a49-b235-fe8deba3c051@linaro.org>
- <cab95caa-9ffb-446a-858b-342939e80811@mleia.com>
- <4e94106d-5ca9-485b-8c51-c18dcd4e64b0@linaro.org>
- <b779182f-a963-400a-8fc1-2468710082d2@linaro.org>
- <a0f66292-fb97-40ae-9fb1-d79160e70bb3@quicinc.com>
+Subject: Re: [RESEND PATCH v2] firmware: qcom: scm: fix a NULL-pointer
+ dereference
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Andrew
+ Halaney" <ahalaney@redhat.com>,
+        Elliot Berman <quic_eberman@quicinc.com>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Thorsten
+ Leemhuis" <linux@leemhuis.info>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Rudraksha Gupta <guptarud@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Stephan Gerhold
+	<stephan.gerhold@linaro.org>
+References: <20240930083328.17904-1-brgl@bgdev.pl>
 Content-Language: en-US
-In-Reply-To: <a0f66292-fb97-40ae-9fb1-d79160e70bb3@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Kuldeep Singh <quic_kuldsing@quicinc.com>
+In-Reply-To: <20240930083328.17904-1-brgl@bgdev.pl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CNx7MQM2Cn4XxQMWeWJtt1A60mduxX3X
-X-Proofpoint-ORIG-GUID: CNx7MQM2Cn4XxQMWeWJtt1A60mduxX3X
+X-Proofpoint-GUID: F28ScLqzRunzLE22TN8KSLEr4gdyU7us
+X-Proofpoint-ORIG-GUID: F28ScLqzRunzLE22TN8KSLEr4gdyU7us
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 suspectscore=0 mlxscore=0 phishscore=0
- mlxlogscore=999 impostorscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409300067
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0 spamscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300067
 
-Hi Bryan,
 
-On 9/25/2024 11:40 PM, Depeng Shao wrote:
-> Hi Vladimir, Bryan,
-> 
-> On 9/18/2024 7:16 AM, Vladimir Zapolskiy wrote:
->> Hi Bryan,
->>
->> On 9/18/24 01:40, Bryan O'Donoghue wrote:
->>> On 13/09/2024 06:06, Vladimir Zapolskiy wrote:
->>>> On 9/13/24 01:41, Bryan O'Donoghue wrote:
->>>>> On 12/09/2024 21:57, Vladimir Zapolskiy wrote:
->>>>>>> 3. Required not optional in the yaml
->>>>>>>
->>>>>>>        => You can't use the PHY without its regulators
->>>>>>
->>>>>> No, the supplies shall be optional, since it's absolutely possible to
->>>>>> have
->>>>>> such a board, where supplies are merely not connected to the SoC.
->>>>>
->>>>> For any _used_ PHY both supplies are certainly required.
->>>>>
->>>>> That's what the yaml/dts check for this should achieve.
->>>>
->>>> I believe it is technically possible by writing an enormously complex
->>>> scheme, when all possible "port" cases and combinations are listed.
->>>>
->>>> Do you see any simpler way? Do you insist that it is utterly needed?
->>>
->>> I asked Krzysztof about this offline.
->>>
->>> He said something like
->>>
->>> Quote:
->>> This is possible, but I think not between child nodes.
->>> https://elixir.bootlin.com/linux/v6.11-rc7/source/Documentation/ 
->>> devicetree/bindings/example-schema.yaml#L194
->>>
->>> You could require something in children, but not in parent node. For
->>> children something around:
->>> https://elixir.bootlin.com/linux/v6.4-rc7/source/Documentation/ 
->>> devicetree/bindings/net/qcom,ipa.yaml#L174
->>>
->>> allOf:
->>>     - if:
->>>         required:
->>>           - something-in-parent
->>>       then:
->>>         properties:
->>>           child-node:
->>>             required:
->>>               - something-in-child
->>>
->>> I will see if I can turn that into a workable proposal/patch.
->>>
->>
->> thank you for pushing my review request forward.
->>
->> Overall I believe making supply properties as optional ones is 
->> sufficient,
->> technically straightforward and merely good enough, thus please let me
->> ask you to ponder on this particular variant one more time.
->>
-> 
-> So, we are discussing two things.
-> 
-> 1# Use separate supplies for each CSI block, looks like there is no 
-> doubt about it anymore. So, I will update it just like based on suggestion.
-> 
-> csiphyX-vdda-phy-supply
-> csiphyX-vdda-pll-supply
-> 
-> Then I will need below items in the required list if they are required.
-> required:
->    - csiphy0-vdda-phy-supply
->    - csiphy0-vdda-pll-supply
->    - csiphy1-vdda-phy-supply
->    - csiphy1-vdda-pll-supply
-> ...
->    - csiphy7-vdda-phy-supply
->    - csiphy7-vdda-pll-supply
-> 
-> 2# Regarding the CSI supplies, if they need to be making as optional?
-> Looks like there is no conclusion now.
-> 
-> @Bryan, do you agree with this?
-> 
 
-I'm preparing the new version patches, and will send out for reviewing 
-in few days. I will follow Vladimir's comments if you have no response, 
-it means making supply properties as optional one, so they won't be 
-added to the required list.
+On 9/30/2024 2:03 PM, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Some SCM calls can be invoked with __scm being NULL (the driver may not
+> have been and will not be probed as there's no SCM entry in device-tree).
+> Make sure we don't dereference a NULL pointer.
+> 
+> Fixes: 449d0d84bcd8 ("firmware: qcom: scm: smc: switch to using the SCM allocator")
+> Reported-by: Rudraksha Gupta <guptarud@gmail.com>
+> Closes: https://lore.kernel.org/lkml/692cfe9a-8c05-4ce4-813e-82b3f310019a@gmail.com/
+> Reviewed-by: Konrad Dybcio <konradybcio@kernel.org>
+> Tested-by: Rudraksha Gupta <guptarud@gmail.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Thanks,
-Depeng
+Reviewed-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+
+> ---
+> I dropped patch 2/2 and am resending this separately rebased on top of
+> v6.12-rc1.
+> 
+>  drivers/firmware/qcom/qcom_scm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 10986cb11ec0..8bac4915c211 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -216,7 +216,7 @@ static DEFINE_SPINLOCK(scm_query_lock);
+>  
+>  struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void)
+>  {
+> -	return __scm->mempool;
+> +	return __scm ? __scm->mempool : NULL;
+>  }
+>  
+>  static enum qcom_scm_convention __get_convention(void)
+
+-- 
+Regards
+Kuldeep
 
