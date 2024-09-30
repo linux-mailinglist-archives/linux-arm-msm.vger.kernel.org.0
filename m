@@ -1,299 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-32730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00CD8989A27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:32:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B0E3989A33
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:38:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 626BD280235
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 05:32:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E1361F22980
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 05:38:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3478613B288;
-	Mon, 30 Sep 2024 05:32:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C27413C8E2;
+	Mon, 30 Sep 2024 05:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i5+pA7k5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WmtYzL0T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2125A26AD9;
-	Mon, 30 Sep 2024 05:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF64A47;
+	Mon, 30 Sep 2024 05:38:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727674350; cv=none; b=RZB1dLKBYXoU5xco2INh1jVgAqM3/itrFwRx/R27O9EeYaR8EEP9DJ4dOBxugtqf3Uyiji6HWyN7NR9nu5c/SLrMXT+FB+fJHrHFPIQ17O0ITbgK999C65mhsPiDp9+EvHS1zf5cdSNvV3otjDTyJqYNgBVANqjvILOoJYvgxqQ=
+	t=1727674691; cv=none; b=FqfsrMvNuX8TJpIjLOD4OuJT13CR0m7jB8yUc50mHO0JkzSPUEkOSKBI8/grSavOtRHtUlto8AvcK2UImfRMjQWSD/3/1qUB+EDtzh5sC3qfIqRWfxmiRlU1SRI+bqV7qySXCU4F+CLSAWMC1hNEqnp4GrNHuiUw2QkwiJzKj/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727674350; c=relaxed/simple;
-	bh=NbyetRH8oTFCzTOoilkVMc3XjJuHIU7YcPWd5k/4M5g=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=KxHDk1MSOhRHK7hqMqOhVPP1S9w0NPArIvwV2ScVpe/anY42ve6abx19oJLp/ETWB4/iKXBeGDxXggIK9HgcZQNpCIOPbgd6vMX/2wAkYggjNWQlxF3np97ZlCZJ2wqNEKpxCfK24pYLd7b1uIT5J3G/FZeSGpjC4je7YASHiAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i5+pA7k5; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1727674691; c=relaxed/simple;
+	bh=y6BqW0adLuSNbEpDtlt1wTQwouIIcVZHMgkSlDe6AIg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HZ61mahcMT+H5SsRIteDrENN1001mex4YhUaZm7vdXxqn8UEcAAzfEAnssZM0D6Ig4k56dkmDSx2iDOQzGhdFy7OarPhsIq/IvSyiXE7HAVrbni27ygFQ9sr7VQdwNE7fqdHAEMwjSaCvwntOccbSMKePywoaBrvg1vbUFLTpRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WmtYzL0T; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U0j2Pn013972;
-	Mon, 30 Sep 2024 05:32:00 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48TMTuOm001779;
+	Mon, 30 Sep 2024 05:37:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=jgiOEtWWIEx5t+733crHI5
-	ePVCydglOQi6i5NFfxCyU=; b=i5+pA7k5oeXdlhUN/xBbn7OObUDZ0KuEIQgbdO
-	cA9CIRcdklV5z6tXawM7AsQqiCyGBHXO03Cklmmx0pfG25cusWeqmVBUmoT87xDR
-	QGcMJ6BnERzlkwkTNZ+TDvvJwdZ3OiuNWksr5v9CnGjBzcDop9d8mav1vVOxN1ge
-	6iCH2RAXWYbDAk1AkHl50ws+O4+URlAjMWur8J5T/4KhZlyJU2XHmNCOTyGZ9WzI
-	q+E6vkV6n3HN/l/6ukA6B4F0Nt59awzxoMX9SVHJDfaTOF57NteyO3QHRgJrr8/k
-	Iszw0sUci9MqxC+/iUD15aq5zyyIEAKt6+ITr514e6cl+Ftg==
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YltmkjNOP5VKAuTTCBOm6ghW3ZDdOOIG25kE35a0XaA=; b=WmtYzL0T5t1Vbk23
+	MnVdr0LI0mOfmKi52+BlFPc0ZGq1+S/J5N+D9N3D6VvaVcg7BwPBek1BZzPKdvbO
+	wLlhCRr/YDEjTIw9J/q/vQWWHp8FlpUqphmWuIURPOuYbmcIWFx5nLowiLCsyZ0S
+	kPZDi6SaFoTE3s1VXYShi/wkRF0UUi3oJT4ukQdnvIYGeEzqHOo7tNjAibWnZDNs
+	Hh+Zj53egUEs3yFTwNRIPykrVlq4N+V1hvr7TK5TW+y2DVrg7qrqW7m/a9cv6RgP
+	S4L/OsKi/WfZRvG2U1BaNQEDvFMqOtZCcI9HkZhMD+8FWfPUJUh2TcUa4hL7/taD
+	LataRQ==
 Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xa673j60-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xa12knd3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 05:31:59 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U5VwMW019400
+	Mon, 30 Sep 2024 05:37:52 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U5bphg028551
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 05:31:58 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 29 Sep 2024 22:31:52 -0700
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        "Srinivas
- Kandagatla" <srinivas.kandagatla@linaro.org>
-CC: <linux-sound@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
-        <kernel@quicinc.com>, Rohit kumar <quic_rohkumar@quicinc.com>,
-        "Mohammad Rafi
- Shaik" <quic_mohs@quicinc.com>
-Subject: [PATCH v1] ASoC: codecs: lpass-macro: Add support for channel map mixer control
-Date: Mon, 30 Sep 2024 11:01:11 +0530
-Message-ID: <20240930053111.3986838-1-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	Mon, 30 Sep 2024 05:37:51 GMT
+Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 29 Sep
+ 2024 22:37:46 -0700
+Message-ID: <f31c2b15-d1ae-41fa-952b-eab806b0e15d@quicinc.com>
+Date: Mon, 30 Sep 2024 13:37:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 13/13] media: qcom: camss: Add support for VFE hardware
+ version Titan 780
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <rfoss@kernel.org>,
+        <todor.too@gmail.com>, <mchehab@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-14-quic_depengs@quicinc.com>
+ <6ddaa41b-86cf-44e5-a671-fd70f266642b@linaro.org>
+ <eb77972c-9c9a-48f9-b850-21e6c2df005a@quicinc.com>
+ <d842a992-e04f-4a11-abaa-da50808fea77@quicinc.com>
+ <6b702201-4418-4bbe-95b2-50039c08b4d8@linaro.org>
+Content-Language: en-US
+From: Depeng Shao <quic_depengs@quicinc.com>
+In-Reply-To: <6b702201-4418-4bbe-95b2-50039c08b4d8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: L6BPmGWeKMLibxdNUiIM0oI5Slm5Mksr
-X-Proofpoint-ORIG-GUID: L6BPmGWeKMLibxdNUiIM0oI5Slm5Mksr
+X-Proofpoint-ORIG-GUID: iiMyueU0O6mCP_eI_8A9IKY2BvRqXltt
+X-Proofpoint-GUID: iiMyueU0O6mCP_eI_8A9IKY2BvRqXltt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- priorityscore=1501 bulkscore=0 clxscore=1011 adultscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300038
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ bulkscore=0 malwarescore=0 spamscore=0 clxscore=1015 mlxscore=0
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300039
 
-From: Rohit kumar <quic_rohkumar@quicinc.com>
+Hi Bryan,
 
-Add channel map mixer control for lpass macro codec DAIs.
+On 9/30/2024 7:57 AM, Bryan O'Donoghue wrote:
+> On 29/09/2024 02:28, Depeng Shao wrote:
+>>>>
+>>>
+>>> Thanks for catching this, I forget to add the rup irq, so this logic 
+>>> is also missed. I have tried it just now, the logic works good, will 
+>>> add it in next version patch.
+>>>
+>>
+>> I go through the code again, and find we don't do the wait for 
+>> completion in VFE 480 driver, this is just used in VFE gen1 driver and 
+>> just during disabling port.
+> 
+> Right but, we _should_ wait for completion there, the fact we don't is a 
+> bug.
+> 
+> One context issues a command to take an action and another context in 
+> this case an ISR has to fire for that action to be complete.
+> 
+> Therefore we _should_ wait_for_completion() in the initiating context 
+> and timeout if it exceeds a reasonable timeout.
+> 
+> Granted, we've "dropped the ball" in 480 you're right, it needs to be 
+> fixed and will be but, please in your submission do the right thing.
+> 
 
-Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
-Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- sound/soc/codecs/lpass-macro-common.c | 55 +++++++++++++++++++++++++++
- sound/soc/codecs/lpass-macro-common.h |  2 +
- sound/soc/codecs/lpass-rx-macro.c     | 12 ++++++
- sound/soc/codecs/lpass-tx-macro.c     |  9 +++++
- sound/soc/codecs/lpass-va-macro.c     |  9 +++++
- sound/soc/codecs/lpass-wsa-macro.c    | 12 ++++++
- 6 files changed, 99 insertions(+)
+Qualcomm downstream camera driver use the rup to move the req to a list 
+to maintenance a state machine. If we don't get rup then we will enter 
+bubble state.
+But we are downplaying this process now due to AUP, and the bubble 
+processing has been disabled in latest code base, since we think the 
+buffer must be filled to the given address if we have configured the AUP 
+and got buf done irq.
 
-diff --git a/sound/soc/codecs/lpass-macro-common.c b/sound/soc/codecs/lpass-macro-common.c
-index 6e3b8d0897dd..777af4885245 100644
---- a/sound/soc/codecs/lpass-macro-common.c
-+++ b/sound/soc/codecs/lpass-macro-common.c
-@@ -8,12 +8,67 @@
- #include <linux/platform_device.h>
- #include <linux/pm_domain.h>
- #include <linux/pm_runtime.h>
-+#include <sound/control.h>
-+#include <sound/pcm.h>
-+#include <sound/soc.h>
- 
- #include "lpass-macro-common.h"
- 
- static DEFINE_MUTEX(lpass_codec_mutex);
- static enum lpass_codec_version lpass_codec_version;
- 
-+static int lpass_macro_chmap_ctl_get(struct snd_kcontrol *kcontrol,
-+				     struct snd_ctl_elem_value *ucontrol)
-+{
-+	struct snd_pcm_chmap *info = snd_kcontrol_chip(kcontrol);
-+	struct snd_soc_dai *dai = info->private_data;
-+	u32 *chmap_data = NULL;
-+	u32 rx_ch_cnt = 0;
-+	u32 tx_ch_cnt = 0;
-+	u32 rx_ch, tx_ch;
-+
-+	chmap_data = kzalloc(sizeof(u32) * 2, GFP_KERNEL);
-+	if (!chmap_data)
-+		return -ENOMEM;
-+
-+	snd_soc_dai_get_channel_map(dai, &tx_ch_cnt, &tx_ch, &rx_ch_cnt, &rx_ch);
-+	if (rx_ch_cnt) {
-+		chmap_data[0] = rx_ch_cnt;
-+		chmap_data[1] = rx_ch;
-+	} else if (tx_ch_cnt) {
-+		chmap_data[0] = tx_ch_cnt;
-+		chmap_data[1] = tx_ch;
-+	}
-+	memcpy(ucontrol->value.bytes.data, chmap_data, sizeof(u32) * 2);
-+
-+	kfree(chmap_data);
-+	return 0;
-+}
-+
-+int lpass_macro_add_chmap_ctls(struct snd_soc_pcm_runtime *rtd,
-+			       struct snd_soc_dai *dai, int dir)
-+{
-+	struct snd_pcm_chmap *info;
-+	int ret;
-+
-+	info = kzalloc(sizeof(*info), GFP_KERNEL);
-+	if (!info)
-+		return -ENOMEM;
-+
-+	ret =  snd_pcm_add_chmap_ctls(rtd->pcm, dir, NULL,
-+				      2 * sizeof(u32), 0, &info);
-+	if (ret < 0) {
-+		kfree(info);
-+		return ret;
-+	}
-+
-+	/* override handlers */
-+	info->private_data = dai;
-+	info->kctl->get = lpass_macro_chmap_ctl_get;
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(lpass_macro_add_chmap_ctls);
-+
- struct lpass_macro *lpass_macro_pds_init(struct device *dev)
- {
- 	struct lpass_macro *l_pds;
-diff --git a/sound/soc/codecs/lpass-macro-common.h b/sound/soc/codecs/lpass-macro-common.h
-index fb4b96cb2b23..23ed6836addf 100644
---- a/sound/soc/codecs/lpass-macro-common.h
-+++ b/sound/soc/codecs/lpass-macro-common.h
-@@ -40,6 +40,8 @@ struct lpass_macro *lpass_macro_pds_init(struct device *dev);
- void lpass_macro_pds_exit(struct lpass_macro *pds);
- void lpass_macro_set_codec_version(enum lpass_codec_version version);
- enum lpass_codec_version lpass_macro_get_codec_version(void);
-+int lpass_macro_add_chmap_ctls(struct snd_soc_pcm_runtime *rtd,
-+			       struct snd_soc_dai *dai, int dir);
- 
- static inline void lpass_macro_pds_exit_action(void *pds)
- {
-diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-index 71e0d3bffd3f..05bd0f8d126b 100644
---- a/sound/soc/codecs/lpass-rx-macro.c
-+++ b/sound/soc/codecs/lpass-rx-macro.c
-@@ -1954,10 +1954,22 @@ static int rx_macro_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
- 	return 0;
- }
- 
-+static int rx_macro_pcm_new(struct snd_soc_pcm_runtime *rtd,
-+			    struct snd_soc_dai *dai)
-+{
-+	int dir = SNDRV_PCM_STREAM_PLAYBACK;
-+
-+	if (dai->id == RX_MACRO_AIF_ECHO)
-+		dir = SNDRV_PCM_STREAM_CAPTURE;
-+
-+	return lpass_macro_add_chmap_ctls(rtd, dai, dir);
-+}
-+
- static const struct snd_soc_dai_ops rx_macro_dai_ops = {
- 	.hw_params = rx_macro_hw_params,
- 	.get_channel_map = rx_macro_get_channel_map,
- 	.mute_stream = rx_macro_digital_mute,
-+	.pcm_new = rx_macro_pcm_new,
- };
- 
- static struct snd_soc_dai_driver rx_macro_dai[] = {
-diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-index a134584acf90..c7a8e2694e36 100644
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -1211,10 +1211,19 @@ static int tx_macro_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
- 	return 0;
- }
- 
-+static int tx_macro_pcm_new(struct snd_soc_pcm_runtime *rtd,
-+			    struct snd_soc_dai *dai)
-+{
-+	int dir = SNDRV_PCM_STREAM_CAPTURE;
-+
-+	return lpass_macro_add_chmap_ctls(rtd, dai, dir);
-+}
-+
- static const struct snd_soc_dai_ops tx_macro_dai_ops = {
- 	.hw_params = tx_macro_hw_params,
- 	.get_channel_map = tx_macro_get_channel_map,
- 	.mute_stream = tx_macro_digital_mute,
-+	.pcm_new = tx_macro_pcm_new,
- };
- 
- static struct snd_soc_dai_driver tx_macro_dai[] = {
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index c781da476240..1a13f472ed3a 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -939,10 +939,19 @@ static int va_macro_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
- 	return 0;
- }
- 
-+static int va_macro_pcm_new(struct snd_soc_pcm_runtime *rtd,
-+			    struct snd_soc_dai *dai)
-+{
-+	int dir = SNDRV_PCM_STREAM_CAPTURE;
-+
-+	return lpass_macro_add_chmap_ctls(rtd, dai, dir);
-+}
-+
- static const struct snd_soc_dai_ops va_macro_dai_ops = {
- 	.hw_params = va_macro_hw_params,
- 	.get_channel_map = va_macro_get_channel_map,
- 	.mute_stream = va_macro_digital_mute,
-+	.pcm_new = va_macro_pcm_new,
- };
- 
- static struct snd_soc_dai_driver va_macro_dais[] = {
-diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-index c989d82d1d3c..7c4fd4bf2668 100644
---- a/sound/soc/codecs/lpass-wsa-macro.c
-+++ b/sound/soc/codecs/lpass-wsa-macro.c
-@@ -1344,9 +1344,21 @@ static int wsa_macro_get_channel_map(const struct snd_soc_dai *dai,
- 	return 0;
- }
- 
-+static int wsa_macro_pcm_new(struct snd_soc_pcm_runtime *rtd,
-+			     struct snd_soc_dai *dai)
-+{
-+	int dir = SNDRV_PCM_STREAM_PLAYBACK;
-+
-+	if (dai->id == WSA_MACRO_AIF_VI || dai->id == WSA_MACRO_AIF_ECHO)
-+		dir = SNDRV_PCM_STREAM_CAPTURE;
-+
-+	return lpass_macro_add_chmap_ctls(rtd, dai, dir);
-+}
-+
- static const struct snd_soc_dai_ops wsa_macro_dai_ops = {
- 	.hw_params = wsa_macro_hw_params,
- 	.get_channel_map = wsa_macro_get_channel_map,
-+	.pcm_new = wsa_macro_pcm_new,
- };
- 
- static struct snd_soc_dai_driver wsa_macro_dai[] = {
--- 
-2.25.1
+
+And this per frame wait_for_completion flow isn't exist in whole camss 
+code, and current camss driver just use buf done irq to trigger the per 
+frame flow.
+
+E.g.,
+irqreturn_t vfe_irq()
+{
+	if (rup_irq)
+		reg_update_clear();
+
+	if (buf_done_irq) {
+		vfe_wm_update();
+		reg_update();    --> We can't do wait_for_completion at here in irq 
+context
+		vb2_buffer_done();
+	}
+}
+
+Just VFE gen1 driver use this wait_for_complete in vfe_disable_output, 
+and this flow has been removed in vfe gen2(camss-vfe.c), so looks like
+we don't need to add this wait_for_completion support and also can 
+remove below code in camss-vfe-480.c
+
+vfe_isr_reg_update()
+{
+	if (output->wait_reg_update) {
+		output->wait_reg_update = 0;
+		complete(&output->reg_update);
+	}
+}
+
+Thanks,
+Depeng
 
 
