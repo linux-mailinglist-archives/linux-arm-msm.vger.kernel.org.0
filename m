@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32733-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32734-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1DB47989B34
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:16:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11EE3989B3E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:18:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D33432842AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:16:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C2D7A283A58
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:18:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA91A15E5A6;
-	Mon, 30 Sep 2024 07:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 434DF14E2DF;
+	Mon, 30 Sep 2024 07:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O+5hOCaM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QDO7YiAD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981321509AF;
-	Mon, 30 Sep 2024 07:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127EA13D8B2;
+	Mon, 30 Sep 2024 07:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727680574; cv=none; b=jrfADPi1IKJRX65UouCeAUHZUskrqSehnQGR7zBpWpZ3kP3SQdzLiGQAVnfL7k4iMYeSj6BeP05Y4s2xUkiiZeRbuNDWXc0g6bb2yKijHDikT9PaY6xJIP2dr0n7FbaWoaKHOCcZeMYhs3Kqb7mfUzzl4luGEZl1JXdXRDEFb00=
+	t=1727680672; cv=none; b=Y3t+fwsji1k7rQjWAub0f7+OwVkqcx6dsLYkJP7mzanLoRneWwcZTJHJRDitjhdgDntZC+WyCXRidqTXb5nxssHjimeueGpHvxQxDucB9YK0qxBtHBmXBBxcmxJ3lMjWMUeiqX6I0noW5JEfXBLcsU2gcJsK3+FOoFI7x5iz1bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727680574; c=relaxed/simple;
-	bh=buyP+ms/pBMokoBz5muUX+XZQXW5KuXVs7Je/yX434A=;
+	s=arc-20240116; t=1727680672; c=relaxed/simple;
+	bh=s3raU6J91rvXbwhTIDOuAHiB93wta0uaeIjx+QiY24Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TWQ/ZClqHWyO7N3YHYPR119JMso9snq0VcwlhK+cTe82/tddRlVXdU3GJ75SBnmwwT4w08NqoRUtumM4p4k/TNfBDKz0trN0Ra6l+aKKSpi7BUB+Dp2QOmwfNFkpG/oxD3m458SUjkKhxZA5ezCEC213thy/xuVqhXRFgRn0GsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O+5hOCaM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B29C4CEC7;
-	Mon, 30 Sep 2024 07:16:10 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Wd0nN9G910T9/zSl+hK0tpq2pUy+jMume+Uxa3VPaf2JABxXHZ7o87xF+Wn8P+8dRXXk09OqGSKuDKMESv8UgsodLQw1sgJDMqqLcpKK//sHYtSYwaoNAPKH1mNtFwCNBwsrPTJiV395zP2yBL6A8Xl0CeaJgnjohcuIA+DkHhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QDO7YiAD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544ABC4CEC7;
+	Mon, 30 Sep 2024 07:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727680574;
-	bh=buyP+ms/pBMokoBz5muUX+XZQXW5KuXVs7Je/yX434A=;
+	s=k20201202; t=1727680671;
+	bh=s3raU6J91rvXbwhTIDOuAHiB93wta0uaeIjx+QiY24Q=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=O+5hOCaM2MMVX4bacN9kwqptVtgFTvt18wfF9O6bbkMcAqYqSRJfrI2zP42GwBAXN
-	 eP+W5kx+YX2ZOlBMknzlG9GsMZ7ppVyeaaqUBLjfaI1p3rMVPZJKTYvZiu0QFpqYay
-	 YAXGAEshazVOIiceUJmSWq+zXiGIGCZxuBkYAVpP6fJjDPRrwl0hlhwSe9UjMWe9Nr
-	 c0OK5Tb6nAYA7OBM+gMZ0S7QQsBbg8teQfKYCOYFSLZL6azzgAQvkQ56OC44aG5ISx
-	 g75zG45AGcSLsrnk1KzwhR4x08m+wW4CYjhld32u203pF5onj9KOqEWoHqbmclAaFq
-	 fJ6CxKonQQtfg==
-Message-ID: <65e5796a-8b8d-44f0-aef4-e420083b9d52@kernel.org>
-Date: Mon, 30 Sep 2024 09:16:08 +0200
+	b=QDO7YiAD2O11EIniU+PDa+UccVS3c831k/tozy+GXTyVw215cy0YacBhILLbeESCo
+	 nRIZFkcYa90r+ZAPhMDhcFGMv8se/2ntTzq5yPy7D89liacHX+JPHNisDuuqCMtkt0
+	 fZ6PJy2/kyyvnmNkHFisnE8d4Ci0ycU1K+Q7JtnE49yxRNhI0rh7h6r8Jv6wBcZIy0
+	 AZhzOAuoLFWeE1Mi8mak76bzWXnVL8vCSBIlMWOWeVxLDiWocEOlF3F/vLKkVI0Vh0
+	 AHDigtBR1h133ttXcKnKhcabPEkHUe6pvk7Nrq/Hcq3oGUIjC7eJULU4n8/EehNPn+
+	 4Hs34ioeEOS0A==
+Message-ID: <46cbf0eb-7e7f-4891-8a2e-d331e6703130@kernel.org>
+Date: Mon, 30 Sep 2024 09:17:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,8 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
  binding
-To: Depeng Shao <quic_depengs@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
+To: Depeng Shao <quic_depengs@quicinc.com>, rfoss@kernel.org,
  todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
  robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
 Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
@@ -61,8 +60,8 @@ Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
 References: <20240812144131.369378-1-quic_depengs@quicinc.com>
  <20240812144131.369378-8-quic_depengs@quicinc.com>
- <9ed92660-5f42-4a1a-9261-b8800133972a@linaro.org>
- <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
+ <cb905d5e-6d70-4395-894c-55b3542e2ebe@kernel.org>
+ <aa12fd2e-4869-4909-a04f-6bf24f76ed51@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,51 +107,42 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
+In-Reply-To: <aa12fd2e-4869-4909-a04f-6bf24f76ed51@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 25/09/2024 17:13, Depeng Shao wrote:
-> Hi Vladimir,
+On 16/08/2024 09:45, Depeng Shao wrote:
+> Hi Krzysztof,
 > 
-> On 9/6/2024 11:56 PM, Vladimir Zapolskiy wrote:
+> On 8/16/2024 3:01 PM, Krzysztof Kozlowski wrote:
 > 
->>> +            compatible = "qcom,sm8550-camss";
->>> +
->>> +            reg = <0 0x0acb7000 0 0xd00>,
->>> +                  <0 0x0acb9000 0 0xd00>,
->>> +                  <0 0x0acbb000 0 0xd00>,
->>> +                  <0 0x0acca000 0 0xa00>,
->>> +                  <0 0x0acce000 0 0xa00>,
->>> +                  <0 0x0acb6000 0 0x1000>,
->>> +                  <0 0x0ace4000 0 0x2000>,
->>> +                  <0 0x0ace6000 0 0x2000>,
->>> +                  <0 0x0ace8000 0 0x2000>,
->>> +                  <0 0x0acea000 0 0x2000>,
->>> +                  <0 0x0acec000 0 0x2000>,
->>> +                  <0 0x0acee000 0 0x2000>,
->>> +                  <0 0x0acf0000 0 0x2000>,
->>> +                  <0 0x0acf2000 0 0x2000>,
->>> +                  <0 0x0ac62000 0 0xf000>,
->>> +                  <0 0x0ac71000 0 0xf000>,
->>> +                  <0 0x0ac80000 0 0xf000>,
->>> +                  <0 0x0accb000 0 0x2800>,
->>> +                  <0 0x0accf000 0 0x2800>;
+>>> +required:
+>>> +  - compatible
+>>> +  - clocks
+>>> +  - clock-names
+>>> +  - interconnects
+>>> +  - interconnect-names
+>>> +  - interrupts
+>>> +  - interrupt-names
+>>> +  - iommus
+>>> +  - power-domains
+>>> +  - power-domain-names
+>>> +  - reg
+>>> +  - reg-names
+>>> +  - vdda-phy-supply
+>>> +  - vdda-pll-supply
 >>
->> Please sort the list above in numerical order, this will change positions
->> of "vfe_lite0", "vfe_lite1" etc.
+>> Order is still not as expected. I already commented on this - keep the
+>> same order as in "properties:" block.
 >>
->> Another note, since it's not possible to map less than a page, so I believe
->> it might make sense to align all sizes to 0x1000.
+>> With the order fixed:
 >>
-> 
-> Sure, I previously sorted by the alphabetical order of reg_name.
-> I will update it based on your suggestion. And will also make sure the 
-> align all sizes to 0x1000.
+>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-If I understood correctly, you want to change the order from existing
-devices, so no. You are supposed to keep the same order, as much as
-possible.
+The review tag was given to above code with above changes. If you are
+going to implement some more changes, including changing of orders of
+some lists or adding ports, then drop this tag and explicitly mention in
+patch changelog that tag was not added because of something.
 
 Best regards,
 Krzysztof
