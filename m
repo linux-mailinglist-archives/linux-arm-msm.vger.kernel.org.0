@@ -1,178 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-32793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 997DA98A901
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 17:48:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6744898A9DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 18:34:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC2C5B2A3C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 15:45:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE4211F23785
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 16:34:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3DB81192D97;
-	Mon, 30 Sep 2024 15:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2867192D66;
+	Mon, 30 Sep 2024 16:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZeARaNrO"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="AL0vjq+X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E25192D94
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 15:43:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AB613BB24;
+	Mon, 30 Sep 2024 16:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727711027; cv=none; b=d7IVEDCrORNG27adAlX9DKMTQZZXgXkWOsisd0f9BImKAiEQ031HjGGejnlJmIlkBIe8wtGcdhT/XVXhjuJqIj1oc87mg4ezk4GEfcjkjhuDwFwPbA0K39rCIygjLTM26Ed5IlkgnI42uk9x91q3IRkMsuo/DFi38WCWVH3CEEI=
+	t=1727714061; cv=none; b=U49Gbscijxh5Esl4qWraztG6VpfHTx3vWfWS29bqJ1h65FAmVaSSyP8pmjDJF7BYzlUL13Ke5nyWv9l4vql/pfjazwKxyeHckL2CzU3+aine+bzWeLivA/m2xuBexEiC5vpZl/uwFzwllEzeDIfIuD4O2C0bizfn90el6vSqAHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727711027; c=relaxed/simple;
-	bh=cAsqa3qYXqhnj1agKTZPtloe67eD9YBRbldk75Q8XdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GU9VuNbwZjhJL1Nhk27f1l4VgS2CtvQQ1Jwx9w85WDJlVA5uaCNS3R5mUCtSa+36DZ9+wbsoOEohlMwWk/GqMmYJfc//gfKmU3MnztL1IudWlKn7wL+GZ9oqvCoQPVarLcQGuHWqBTx+xbJWaRilKi/+6zwwn18AtIRJmDxrpX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZeARaNrO; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-7db0fb03df5so3461188a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 08:43:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727711025; x=1728315825; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fNZ4BRKI4heUuNuygwTDPDgSoVqXEGdj+M0ZAo01Wgw=;
-        b=ZeARaNrOSp1o2mVfxWfRRBjHRE0mi+k8ASAskTBtp7s1WMBfucukn7nGWvYzTKDDzI
-         CaPuFq5TO0zznh4sIU+ytGY+wvnkWU8Fbvs6/XSaqaXgDGNWSGdGG9DEBbh1BXTB0zs0
-         LbQAaepT5e3QIgGNnR1xbI9TStHijRecWQkeudtjzIaF6R4OwyrsUDq/RV2whyiUIHaD
-         fCHNUaw+TmajciAgHm4CfuUkBx99gFeljipdtm69Zn6jgGKOmfXe2bU4YE1HC8A82S5u
-         va/1D2oShAOIW0XBO0wMcpISmD2G9lGByBTMUffV2B77LwvP/b1xsgO0F95Vs1Y2/RKC
-         gH+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727711025; x=1728315825;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fNZ4BRKI4heUuNuygwTDPDgSoVqXEGdj+M0ZAo01Wgw=;
-        b=JjvdEJ60kBNY6L1Z180k4hns5i9LccKyhTgFOqihVZ0AYgvik73C3xFWkNU6Ngr9JP
-         C9zXC+ZFdaZMn+t0zl2XoS1c3pKY0XNdYGtxaiVB3Y2UUEe5IHP7kMgam71HOJoMkz+V
-         2IktTe4Iryhi2c+OECH/SPt1QVM0y5Z7HNryh2JsByCIuH1uzx09PPUnURLvuw+nfQzr
-         JikKe+YyXjs5tpRclOdcrUM0MfUVniNdeIOFi4j2B/ff8Le/gS88n2n+OsEjaQjorS+J
-         MklNfaamUZTnaktxeUk/76N/6qWadXH0EHgu6jwmr641jNaDRtAyNMR8rI3fK/lWjTWW
-         qwsg==
-X-Forwarded-Encrypted: i=1; AJvYcCWJW1e8TXuVDui9CuErDhFowxyNWSc7foZX1U5tJN+of/QsrAuPvwToy6ckwFyq5aOJRbCZ8B5wLMtK++wv@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMV/Z7bP793fDSlglcszovuP7IUMMg92r1MWligwApwdP9kl2h
-	EXcm4zdfE40MvT/dniJhugEVTQP34096ejLDEJCcoIxl2fqHpNj0sN/t0atcCA==
-X-Google-Smtp-Source: AGHT+IHHaRFu3mDRiM3/orLs2TA6CzeY6SJU7xXYhg2AH/bZOv0apPv2H6UgsN+fwa3K1V3zM5MW1A==
-X-Received: by 2002:a05:6a21:3414:b0:1d2:e504:52ba with SMTP id adf61e73a8af0-1d4fa78b7a0mr20068809637.38.1727711024765;
-        Mon, 30 Sep 2024 08:43:44 -0700 (PDT)
-Received: from thinkpad ([36.255.17.150])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71b2649ca2dsm6369843b3a.41.2024.09.30.08.43.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2024 08:43:44 -0700 (PDT)
-Date: Mon, 30 Sep 2024 21:13:37 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Manish Pandey <quic_mapa@quicinc.com>
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_nitirawa@quicinc.com,
-	quic_bhaskarv@quicinc.com, quic_narepall@quicinc.com,
-	quic_rampraka@quicinc.com, quic_cang@quicinc.com,
-	quic_nguyenb@quicinc.com
-Subject: Re: [PATCH V3] scsi: ufs: ufs-qcom: add fixup_dev_quirks vops
-Message-ID: <20240930154337.r65qk2bps5jsgbnm@thinkpad>
-References: <20240903131546.1141-1-quic_mapa@quicinc.com>
+	s=arc-20240116; t=1727714061; c=relaxed/simple;
+	bh=Qf8w32+ianb/P6mmXXQkfYYDksr3EPluaIRN2UzchLU=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=qsrhSqicmISPxAAx267mc4mCHyw+yFbO53pD377VQuChVvLG2FEEDxhYi8W90+zqRwdudD//MAcgACa9DBYqLXJ5HE5AChzOWMrGVWDlceaxKfGXGk3aXw7IxWw38RWyA0WCAEi1+PXTZIyNIxv17MUPcVFhWIFGpnJN6ed30eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=AL0vjq+X; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1727714031; x=1728318831; i=markus.elfring@web.de;
+	bh=Elp8feHwzLHEvNgI9yMIUjekemWT/zzJtyACfJwiUIQ=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=AL0vjq+XrUYRdIJT+vEufYJR9dYtYtRZlbH5uqFxSWi0lw7kVHlmzquoYI24nrUc
+	 0tEbu+Rtsa1kp8WXhB5iVN9Gc4MIZNu1X7Y62Mwu57QTdvGZ8KnQxDJC/+Jn0zI6f
+	 bUwis5dxTBV9jwYCT2zshkxzn0xz+3YR1eUwU0LZYn4NbG1sYbjWtqz4uqR4r9ham
+	 5VM0N8+WPjTHxivXyv60d274xnLXyyb+M5K+9m+5r/d96qZxZk5LK2ivgLwSzKhTx
+	 PKyoa9UGsJ3SFrZNRAAtuBqzw7zdkNE6hz75SAL3n0ght8O5y0+WNv3A7U7AjGs8Y
+	 VRJd8EbUmdIJes8ngg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.84.95]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MK574-1sc0Iq3iiE-00QFXj; Mon, 30
+ Sep 2024 18:33:50 +0200
+Message-ID: <30cfc980-3b38-4e98-a753-b149746cf93c@web.de>
+Date: Mon, 30 Sep 2024 18:33:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240903131546.1141-1-quic_mapa@quicinc.com>
+User-Agent: Mozilla Thunderbird
+To: Zichen Xie <zichenxie0106@gmail.com>, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rohit kumar <quic_rohkumar@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: LKML <linux-kernel@vger.kernel.org>, Zijie Zhao <zzjas98@gmail.com>,
+ Chenyuan Yang <chenyuan0y@gmail.com>
+References: <20240930011521.26283-1-zichenxie0106@gmail.com>
+Subject: Re: [PATCH] Fix possible NULL Pointer Dereference in
+ 'asoc_qcom_lpass_cpu_platform_probe'
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20240930011521.26283-1-zichenxie0106@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:wWPrxVgNAW89ZtYL7yCE9yBsQPQ1CEh6dTzMElmw1CIQYjlLjDi
+ ymQyan+7h+OEOJdXyAPBfl2phLYm2KCFUzaFzczAomXzFIp3KGtBDMx771osuQmjqEYJytv
+ G9WUQXWTgqahgur6IolnNTAUmBCQcHVduPyRX1blabpKy8+UQxZUgcajxym9t/Yqnw5ZMar
+ wpa8ptkxJxxV+iHzQQD6A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:X4rV4JRbJeA=;IsqwtxPmorxf/jI/87t0I20eQn9
+ KC2pSZVTtF3/v8Kx2qyOpJQC4H/WrXQKfe2pPvygbpBBdsF8jHLeRdIcPkvGpVje7bCCKNEqm
+ NsIMp3qcdGQWYY4Li5H9sD2au6WT4whXrB8yppJWKFZJxJbE+FFq1y6vINs2zQZ6kZBcfVERd
+ 5kthtfAO6YG2Myyx4suCKzZFiZZBOFG2Xz1ud0D38xF6/9Au0q0jDhRGY5b+gBnofK6lDuGN8
+ /Ef1FJ0JRvIK8lwV68PYYpLRx/zOZLX+2oxGQzaHOHQcwpviqy0uTC8FyHtlrYw0yNvyLtWP0
+ dnHXDn4dqiutTmgYCRPW1kr0tAH/fmRadfh80ak/Pjmq9z5n3SdjlydpVUJ8GHY05AeDQiN5b
+ TZBttdld9R4Frz7nIkGJN3+W4+Il8Z7sUF5B+l8eE3YsvDfjIxUl7sLMgkOl6/KP8haMDX2HE
+ 7fS4zVk+b9GEw/UGMIVGu5E241GW5K/ycsvrxvyvybFlBp5tAAfVzBQ6odUg4CXTIr8V1RhL2
+ 8Nm3/agphLLjDRDQfTuBQGPEUxT2G4EFp3sjuFi58lPFA+NmhXyRITWuf4e+IccVyt+V7gDDX
+ 9AbKqY6cOopzkdv8bdF0s+I3xYvQuCI8XlAa7s5PxzUnwbQYVA4xUr7GVJtKViVcVFlxRvTZI
+ ycg2K2hxZmUOCGwFK6GnNRJp0phAF+KjNrYR2Mg2R7Iv8Yyg9qdBhALLpYtsdZFKIf+bABoTx
+ qP/plC1DTegxmOKesvo8lCfiLXx01e7Fetspzv/imT/ufgR6H9EEBbjudbtDVTRcBcVfG6pOj
+ vWjUakkgumCEpbCz3XlYbwJw==
 
-On Tue, Sep 03, 2024 at 06:45:46PM +0530, Manish Pandey wrote:
-> Add fixup_dev_quirk vops in QCOM UFS platforms and provide an initial
-> vendor-specific device quirk table to add UFS device specific quirks
-> which are enabled only for specified UFS devices.
-> 
-> - Add DELAY_BEFORE_LPM quirk for Skhynix UFS devices to introduce a
->   delay before VCC is powered off in QCOM platforms.
-> - Add DELAY_AFTER_LPM quirk for Toshiba UFS devices to introduce a
->   delay after the VCC power rail is turned off in QCOM platforms.
-> - Move UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE quirk from
->   ufs_qcom_apply_dev_quirks to ufs_qcom_dev_fixups.
-> 
-> Signed-off-by: Manish Pandey <quic_mapa@quicinc.com>
+> A 'devm_kzalloc' in 'asoc_qcom_lpass_cpu_platform_probe' could possibly =
+return NULL pointer.
+> NULL Pointer Dereference may be triggerred in 'asoc_qcom_lpass_cpu_platf=
+orm_probe' without addtional check.
+> Add a null check for the returned pointer.
 
-I'd still like to have these quirks in the core driver if they apply to other
-platforms as well. But I'll leave it up to you to check with respective device
-manufacturers.
+How do you think about a wording variant like the following?
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+  The result from a call of the function =E2=80=9Cdevm_kzalloc=E2=80=9D wa=
+s passed to
+  a subsequent function call without checking for a null pointer before
+  (according to a memory allocation failure).
+  Thus return directly after a failed devm_kzalloc() call.
 
-- Mani
 
-> ---
-> 
-> Changes from v2:
-> - Addressed Mani's comments.
-> - Moved quirk for WDC to ufs_qcom_dev_fixups.
-> 
-> Changes from v2:
-> - Integrated Bart’s feedback and consolidated the patches into one.
-> ---
->  drivers/ufs/host/ufs-qcom.c | 23 ++++++++++++++++++++---
->  1 file changed, 20 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index c87fdc849c62..6a715373d81c 100644
-> --- a/drivers/ufs/host/ufs-qcom.c
-> +++ b/drivers/ufs/host/ufs-qcom.c
-> @@ -828,12 +828,28 @@ static int ufs_qcom_apply_dev_quirks(struct ufs_hba *hba)
->  	if (hba->dev_quirks & UFS_DEVICE_QUIRK_HOST_PA_SAVECONFIGTIME)
->  		err = ufs_qcom_quirk_host_pa_saveconfigtime(hba);
->  
-> -	if (hba->dev_info.wmanufacturerid == UFS_VENDOR_WDC)
-> -		hba->dev_quirks |= UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE;
-> -
->  	return err;
->  }
->  
-> +/* UFS device-specific quirks */
-> +static struct ufs_dev_quirk ufs_qcom_dev_fixups[] = {
-> +	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
-> +	  .model = UFS_ANY_MODEL,
-> +	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM },
-> +	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
-> +	  .model = UFS_ANY_MODEL,
-> +	  .quirk = UFS_DEVICE_QUIRK_DELAY_AFTER_LPM },
-> +	{ .wmanufacturerid = UFS_VENDOR_WDC,
-> +	  .model = UFS_ANY_MODEL,
-> +	  .quirk = UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE },
-> +	{}
-> +};
-> +
-> +static void ufs_qcom_fixup_dev_quirks(struct ufs_hba *hba)
-> +{
-> +	ufshcd_fixup_dev_quirks(hba, ufs_qcom_dev_fixups);
-> +}
-> +
->  static u32 ufs_qcom_get_ufs_hci_version(struct ufs_hba *hba)
->  {
->  	return ufshci_version(2, 0);
-> @@ -1801,6 +1817,7 @@ static const struct ufs_hba_variant_ops ufs_hba_qcom_vops = {
->  	.link_startup_notify    = ufs_qcom_link_startup_notify,
->  	.pwr_change_notify	= ufs_qcom_pwr_change_notify,
->  	.apply_dev_quirks	= ufs_qcom_apply_dev_quirks,
-> +	.fixup_dev_quirks       = ufs_qcom_fixup_dev_quirks,
->  	.suspend		= ufs_qcom_suspend,
->  	.resume			= ufs_qcom_resume,
->  	.dbg_register_dump	= ufs_qcom_dump_dbg_regs,
-> -- 
-> 2.17.1
-> 
+=E2=80=A6
+> Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
+> Reported-by: Zichen Xie <zichenxie0106@gmail.com>
+=E2=80=A6
 
--- 
-மணிவண்ணன் சதாசிவம்
+How good does such a tag combination fit together for the same person?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.12-rc1#n525
+
+
+Can a subject like =E2=80=9C[PATCH] ASoC: qcom: lpass-cpu: Return directly=
+ after a failed devm_kzalloc() call
+in asoc_qcom_lpass_cpu_platform_probe()=E2=80=9D be more appropriate?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.12-rc1#n613
+
+
+=E2=80=A6
+> +++ b/sound/soc/qcom/lpass-cpu.c
+> @@ -1243,6 +1243,9 @@ int asoc_qcom_lpass_cpu_platform_probe(struct plat=
+form_device *pdev)
+>  	drvdata->i2sctl =3D devm_kzalloc(&pdev->dev, sizeof(struct lpaif_i2sct=
+l),
+>  					GFP_KERNEL);
+>
+> +	if (!drvdata->i2sctl)
+> +		return -ENOMEM;
+=E2=80=A6
+
+I suggest to omit a blank line here.
+
+
+By the way:
+Would you become interested to omit the label =E2=80=9Cerr=E2=80=9D from t=
+his function implementation finally?
+
+Regards,
+Markus
 
