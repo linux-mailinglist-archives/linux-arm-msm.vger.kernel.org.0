@@ -1,76 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-32745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32746-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5571989CBB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 10:25:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09D86989CCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 10:32:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60D481F22066
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 08:25:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 64D70B2118B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 08:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 576AB4204B;
-	Mon, 30 Sep 2024 08:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C95717B506;
+	Mon, 30 Sep 2024 08:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CKfgMaEG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NzHFNN7G"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C55175D25
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 08:25:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF51154C00
+	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 08:32:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727684748; cv=none; b=qCtcExA08hONB3JfZURqafAICbZzU0mpaGmLlHJewE5GEL8S5oG4bkUuI5RZw8WBUvfOh0DylPedHq4QQmXfNlT19KWqZSHrecXdF87iKipnOHL5vfDf5lyEUV9XbkE9t9bQIU6Q0TL+xT4Wsp5hvyIXoluC3Ds1p4SBX9+dlpQ=
+	t=1727685132; cv=none; b=UIBjfKI5w8aVPX1A4ep9o5OKVnRG1VhKshCTRgd5pePPI4t6WnV37Y7X4eWpx26cL999DJvslUvCRX3Ot09QWeZ/H0MsQSRdjId9FzPpWJswXnezUVxeVkOdbkERCUSyWhU43+14mgyw3/66sjQahdXJRypJ/e2aoqCk9J3crs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727684748; c=relaxed/simple;
-	bh=zsiP00ciwymr6Mqfn1SwKJ+phDk3RX0XvS24n2F0VnQ=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tdtqE469G+/qLl2dg2qd8zlkHwbt6aUq5GY5EUEHLDBDZAux471TUhLit95cK9FCQ+94KhJgtdSFp7+CluP/Ek65+KZmZktDhqBOYK8XSw9DaftY6SYZFIj37jB2B6y46XrtqtDN35wKAVl6r4YTkITjlrPWG5J8bq3UBuxFgFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CKfgMaEG; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1727685132; c=relaxed/simple;
+	bh=vjDswGq6qzpL0ELCkjz11cU+d1yIUQWLyrv7G9cBs7w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ub6oSwIf5+pG8r1h9HSpIk8i5FM/A4Fd8hyTV7kA4sUMU4YRjKjSvNncyv7bCgGwMJc+mQFadOy0bLz+HppjJFdNH58I0WA9FrHV3dmONgk17RgHvcjyLPd/iHqx3nN4Sa3U+bchjsDj7TvYs7KF1Xwr5X+EB1xd91r3UDuu6yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NzHFNN7G; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-37ce9644daaso550968f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 01:25:46 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fabe9fbe20so797511fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 01:32:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727684745; x=1728289545; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1IWqcxTSUN/vBgbDaR32JO30SbzeonXFdKWKi6BQRCI=;
-        b=CKfgMaEG+Yzsrac5JfMpq337Fc9jeiwdU1T30YUsp8QRLj+2jfj/PmDbFSKiJZKQp2
-         6Dn/Lh+I+NdcLFxHoRWnmaT3sFgqtRiOswgGNfUHRxpSA+OT6XANnDRiZedMpYaZT2oK
-         rm3sYqQKLSXXnEjxPwQCqfU0BX+J5wzb1ONArhljBsRxsjHw+I0BOJQXOuWyRxwtJ/Ee
-         jNW9Q9+U86VWeuRrzjm2rLj56oykcykQN+oTro715zeP5cIln36tT3DoszMJReOT/8Bi
-         +XeWt7OzxITaFtzota7pMTXWE8MAZebA1FJHe7//N03xDqbXmjM7VCi8C18hYR5uRxC5
-         bcRA==
+        d=linaro.org; s=google; t=1727685128; x=1728289928; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bda1ujvEw2DtigO9xhXKOUzZtK+oOjtZGeAQ6Cgn92c=;
+        b=NzHFNN7GsOmIU4AyHXXROunwO6L2BEFWOJ7jw7ZSqQG7BLOYYqbdVg29kPidBT25/A
+         0rd17z6m8PbTJ7GY3P/xXk/VCNgg+EZ1BzFAviRg/JD5AvnTV1FORSQSjV/DhsyjDr5G
+         JzM6pxT//AlZj3RFyb0tKpO9IIqiO7LFRPRPaXLJBvQYgQU/lKTk1M8wpcomJxtY1o4g
+         4xpg7OLA6tz8qlklMFDpT4eqjpiC4EgGuJcIEw15kYuuWsg2cqaEtqlW5rBvFqxlhwPC
+         +pmF5YxNMY7+jJDf30kT5a2tE+Wexg96k9mB4LwSQOkBvKC5R4VuiYOOvWEtqoZR4Z9h
+         HQyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727684745; x=1728289545;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1IWqcxTSUN/vBgbDaR32JO30SbzeonXFdKWKi6BQRCI=;
-        b=iH1b6ooMssOkq/XACUiwhzjSY5irdK3ni/zu5A5kZaTLBQtUt9XM3fqd8wugSs+mhe
-         rh29p+effEJjm3bZhPyDjzTPDEjDndfVcXbKC4fuRLieUF/9Sfhe0+vcp1Cuf8WduOzV
-         U3e6Z6mGtjKQ+jVkp3LOnNqAWmXImDJKZKUxmTxH78sWFOOGT/bFdefPWOV0A/z/wOS1
-         wyiJGKOZrBKk5S18kpUhyv78y3vFYAmIiled7VwxTLZMmaMpOJVJ35G3GvDqI0BDUjI2
-         krZtrZ45UR50cBaVhODId1bOpTDVKlyn3MNf1o9AETE5AGJ2nwe7PP7nlQFzMNw2t6Aj
-         ATDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV4mp3Exr9d2zxUxyJMC0lKZixIVy2DHWCsAeyLnv1iSAhUd+5SWltnxhq0dLdmFPo4cvjgUSfRzu/fStO9@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHTQ/te7lL/TDNK8npVzeCdkeCCi+prZCx7Ktv+t/ztQrB8O/k
-	t0zFk5zeFFZ25N6XZ8g8sVpmRCKcKEBlrijlNDlIemB/Tx9jiJXolm/tPclJ9Pc=
-X-Google-Smtp-Source: AGHT+IFBn+s4YIPH5qH0fLfLhJ1YX7Gx/TD7UutN5ndNwz/BcsR4cyINziFxXLSPa+R68oEZh5okJA==
-X-Received: by 2002:a5d:5145:0:b0:37c:ccc1:17d2 with SMTP id ffacd0b85a97d-37cd5a9d0b6mr5845985f8f.34.1727684744261;
-        Mon, 30 Sep 2024 01:25:44 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:bdc6:abc9:5047:7828? ([2a01:e0a:982:cbb0:bdc6:abc9:5047:7828])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37cd5730fc6sm8384809f8f.76.2024.09.30.01.25.42
+        d=1e100.net; s=20230601; t=1727685128; x=1728289928;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bda1ujvEw2DtigO9xhXKOUzZtK+oOjtZGeAQ6Cgn92c=;
+        b=pctOA+xtgqa3AlqEBdqWSm7q23AXHnFYaB7+sKs4HbIgt59q1L738AD/QPsLhazvug
+         FXWnXnl7FjtmLbkGhO6RnGgy+xQG7AD9ckaoDt1srb4Gtdpj6k0ddvvH23csy2vCQYjS
+         TYAi9ru9r1E8OdUQhXJae9zOKj1gly7K8QSywO/g3+zBdCbgs+IagF4PXclXdy6gYaJe
+         dr13WPk1yT+Zwuqs1hDjUCZMBVOHLx7uZNVeAZ9eMfufV/MkWGpLl12YQTLLvL7Hukk/
+         P6dGWCebIrAuyPdyf38zdrTFZjN57roW1ymIL//KW5HlKmwsEK0Xp5U/KOYHU/T1aFRV
+         +AAw==
+X-Gm-Message-State: AOJu0YzYDHwNjo8gogtUgsqh9Wo6B3G4JU+Y9DLYUx7A06DrFQg/oMWT
+	IQHGbiG6j1hLtqBDTgxtrYs44OlwSukEMXXAqQVgInLj7U0XOdGQEtoqNWOtBfU=
+X-Google-Smtp-Source: AGHT+IH0lDtASpU4Bz/yJJ+DPMxpJva/WXZEzaaUSKmBmARfPfs62pt6dBtlPHX5lCsdiTR1si7/Fg==
+X-Received: by 2002:a2e:a595:0:b0:2f1:75f4:a6a4 with SMTP id 38308e7fff4ca-2fabfc3725cmr9211601fa.3.1727685128428;
+        Mon, 30 Sep 2024 01:32:08 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-538a043b060sm1157672e87.227.2024.09.30.01.32.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Sep 2024 01:25:43 -0700 (PDT)
-Message-ID: <8cd58a86-6cea-43e4-8491-0830f5f0e0d7@linaro.org>
-Date: Mon, 30 Sep 2024 10:25:42 +0200
+        Mon, 30 Sep 2024 01:32:07 -0700 (PDT)
+Message-ID: <18fd8a2c-0563-49a0-b2a4-78f0005576e9@linaro.org>
+Date: Mon, 30 Sep 2024 11:32:05 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,73 +75,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 9/9] arm64: dts: qcom: sm8650-qrd: remove status property
- from dispcc device tree node
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20240924100602.3813725-1-vladimir.zapolskiy@linaro.org>
- <20240924100602.3813725-10-vladimir.zapolskiy@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20240924100602.3813725-10-vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Depeng Shao <quic_depengs@quicinc.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+ <9ed92660-5f42-4a1a-9261-b8800133972a@linaro.org>
+ <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
+ <212c880a-9a09-4433-a049-eb15a0c32322@kernel.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <212c880a-9a09-4433-a049-eb15a0c32322@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 24/09/2024 12:06, Vladimir Zapolskiy wrote:
-> After a change enabling display clock controller for all Qualcomm SM8650
-> powered board by default there is no more need to set a status property
-> of dispcc on SM8650-QRD board.
+On 9/30/24 10:26, Krzysztof Kozlowski wrote:
+> On 25/09/2024 17:13, Depeng Shao wrote:
+>> Hi Vladimir,
+>>
+>> On 9/6/2024 11:56 PM, Vladimir Zapolskiy wrote:
+>>
+>>>> +            compatible = "qcom,sm8550-camss";
+>>>> +
+>>>> +            reg = <0 0x0acb7000 0 0xd00>,
+>>>> +                  <0 0x0acb9000 0 0xd00>,
+>>>> +                  <0 0x0acbb000 0 0xd00>,
+>>>> +                  <0 0x0acca000 0 0xa00>,
+>>>> +                  <0 0x0acce000 0 0xa00>,
+>>>> +                  <0 0x0acb6000 0 0x1000>,
+>>>> +                  <0 0x0ace4000 0 0x2000>,
+>>>> +                  <0 0x0ace6000 0 0x2000>,
+>>>> +                  <0 0x0ace8000 0 0x2000>,
+>>>> +                  <0 0x0acea000 0 0x2000>,
+>>>> +                  <0 0x0acec000 0 0x2000>,
+>>>> +                  <0 0x0acee000 0 0x2000>,
+>>>> +                  <0 0x0acf0000 0 0x2000>,
+>>>> +                  <0 0x0acf2000 0 0x2000>,
+>>>> +                  <0 0x0ac62000 0 0xf000>,
+>>>> +                  <0 0x0ac71000 0 0xf000>,
+>>>> +                  <0 0x0ac80000 0 0xf000>,
+>>>> +                  <0 0x0accb000 0 0x2800>,
+>>>> +                  <0 0x0accf000 0 0x2800>;
+>>>
+>>> Please sort the list above in numerical order, this will change positions
+>>> of "vfe_lite0", "vfe_lite1" etc.
+>>>
+>>> Another note, since it's not possible to map less than a page, so I believe
+>>> it might make sense to align all sizes to 0x1000.
 > 
-> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 4 ----
->   1 file changed, 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> index 8ca0d28eba9b..c5e8c3c2df91 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-> @@ -741,10 +741,6 @@ vreg_l7n_3p3: ldo7 {
->   	};
->   };
->   
-> -&dispcc {
-> -	status = "okay";
-> -};
-> -
->   &gpi_dma1 {
->   	status = "okay";
->   };
+> And if Linux behavior changes then are you going to rewrite all the DTS
+> for new size?
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+If Linux behaves properly with page size alignments today, then the selected
+page size alignment for AMBA device IO memory regions is correct, hence any
+future change from the correct IP device description to another one will be
+invalid or noop.
+
+There is nothing to worry about, I believe.
+
+> No, the sizes reflect hardware register layout, not concept of pages.
+> 
+
+Absolutely they do. It might be a coincidence that both are aligned in
+this particular case or another one.
+
+> I don't think that we should be coming with more nitpicky ideas, one
+> month after the patch was sent and reviewed.
+
+The change is not yet ready to be accepted from the technical perspective.
+
+--
+Best wishes,
+Vladimir
 
