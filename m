@@ -1,130 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-32759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D053989E93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 11:38:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DAFF3989E84
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 11:35:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A780286CD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:38:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 975141F23D51
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:35:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E39A189B80;
-	Mon, 30 Sep 2024 09:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZPvIDbUC"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78C6D18BBB5;
+	Mon, 30 Sep 2024 09:34:29 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8541898EA;
-	Mon, 30 Sep 2024 09:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278331885B4;
+	Mon, 30 Sep 2024 09:34:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727689105; cv=none; b=oaQLyyupk2Q1+mFPJ4TeEt/dYPs6IuwcKnCeRlbk1L/U3XmZDNg2bMT9V8807rWJjVBEGa1swIUfqzWQVd5SzkWj1ToT0w9wtkoKuFbyUg1egc8brUE7oibGQARQqyo33BMTkzcOAiMkT7HfDFzCblEbsYAUcuNUtw11AylUr6I=
+	t=1727688869; cv=none; b=CuxmG/7xsYRiJ28vX2pP7BR2gTcZp3YX13UBRLX2MX8vn9i4h4Sr+DJ1eQYKr+bC0aLalhvBQY5B+2DE6nP8+UdtuNogQU1xphvZzMDh+uI+W6RgQM5Mv+EP63OIRmKxsbeFg1xnMwuMVBJG0/fTf74n4nzCopEriJ9xVERn+1A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727689105; c=relaxed/simple;
-	bh=30jQ/dJisRhLGwyg+rYwjG/FnRoF2YgwaCn/M78cOaA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=W4HIfeYwuKtzHmlC7XQr/OswMHs9M2pOJg/TL0OFGxmrC1S/y5d3HpOPECgbENgViFqztk/P7e6YGtBMHqnTQ4zl1Bwx21FKkuZfNaaexypA4hTjK+bgYdvn+Qhd4MQOEWtJ4q8R7J4hnJnr16E8yQGM/RpzC5K7pkIaYNe0e+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZPvIDbUC; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U0en1H006167;
-	Mon, 30 Sep 2024 09:38:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MaBnQW5Nyhj6nkEK3+o7NmZQzP88S3q+sk+cYabsaOE=; b=ZPvIDbUCQTz/9a02
-	O1qQN6E/j4jLnjNK/0wsJMiMm/9mar0vMUPYNOP57aFL/PfdGzzR6k+uzwuMAEyX
-	nmBVZjJ+7nUIzOHuvvXd03f8QVrtuIG4BjZEI0CGEJYfxy49fwPRcKm33oQJ60n7
-	q0zePQJ0OyPJawq7ehQcGKZQ1qMNSHOO57nburDdRDb9x2dSkR0XV+SOQ1Ua8fRd
-	FjsU1cYfJclYXdUxhZO9ThFiNiNVeOpYWA7KA5RYYa3s3FgFBif/YIcgGheL797B
-	rEekUIPAj3A+czyFeBrUmtC+EEuMRrd0IoFJ95g+RvZ7IkNgcyfsJFXyBJmD5ynr
-	SrEEOQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xa67489e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 09:38:19 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48U9cHTQ003038
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 09:38:17 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 30 Sep
- 2024 02:38:11 -0700
-Message-ID: <689649de-0969-43ae-a48f-4efcde6a9d96@quicinc.com>
-Date: Mon, 30 Sep 2024 17:38:09 +0800
+	s=arc-20240116; t=1727688869; c=relaxed/simple;
+	bh=EunYjZ8Za9/8jYNV0OlNkO07VBM6RVDCo3AylF92MS4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hr7wYLVPkCAHBEWfoxv5/8Wd8t/NcbOfiKMC82+X+VTZGZLb4Lgg3rikkCJQ7qtD+UFEf9MsgyXPn8YzcAckpuqX1gbJsPP4mLl055mskk1lKdiMCrFhVHdp1qbMDQIdUOJxT2MWtYoxbqbwWuJlpu0DFliCZi3hzef6bCeJ6pE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.163.174])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4XHG780Vl2zfcvC;
+	Mon, 30 Sep 2024 17:32:04 +0800 (CST)
+Received: from kwepemh500013.china.huawei.com (unknown [7.202.181.146])
+	by mail.maildlp.com (Postfix) with ESMTPS id 8D6D114011D;
+	Mon, 30 Sep 2024 17:34:23 +0800 (CST)
+Received: from huawei.com (10.90.53.73) by kwepemh500013.china.huawei.com
+ (7.202.181.146) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Mon, 30 Sep
+ 2024 17:34:23 +0800
+From: Jinjie Ruan <ruanjinjie@huawei.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>,
+	<ulf.hansson@linaro.org>, <zhangzekun11@huawei.com>,
+	<linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+CC: <ruanjinjie@huawei.com>
+Subject: [PATCH] pmdomain: qcom: cpr: Fix possible uninitialized value
+Date: Mon, 30 Sep 2024 17:44:56 +0800
+Message-ID: <20240930094456.2593136-1-ruanjinjie@huawei.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/13] media: qcom: camss: Add CSID Gen3 support for
- sm8550
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, <rfoss@kernel.org>,
-        <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-13-quic_depengs@quicinc.com>
- <83b46dcc-c69e-430b-946e-ce9d299a27c8@linaro.org>
-Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <83b46dcc-c69e-430b-946e-ce9d299a27c8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: QOxc0whiX2pP2QkjDEl0ehoTUkSsG9az
-X-Proofpoint-ORIG-GUID: QOxc0whiX2pP2QkjDEl0ehoTUkSsG9az
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300069
+Content-Type: text/plain
+X-ClientProxiedBy: dggems706-chm.china.huawei.com (10.3.19.183) To
+ kwepemh500013.china.huawei.com (7.202.181.146)
 
-Hi Vladimir,
+of_property_read_u64() can fail and left "rate" uninitialized,
+and the zero check in cpr_corner_init() for cpr_get_opp_hz_for_req()
+can not prevent it and it will assign cdata[level - 1].freq to random
+value, so init it to fix it.
 
-On 9/30/2024 5:23 PM, Vladimir Zapolskiy wrote:
+Cc: stable@vger.kernel.org # v6.12
+Fixes: 181c8148556a ("pmdomain: qcom-cpr: Use scope based of_node_put() to simplify code.")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+---
+ drivers/pmdomain/qcom/cpr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->> @@ -1049,7 +1050,10 @@ static int csid_set_test_pattern(struct 
->> csid_device *csid, s32 value)
->>       tg->enabled = !!value;
->> -    return csid->res->hw_ops->configure_testgen_pattern(csid, value);
->> +    if (hw_ops->configure_testgen_pattern)
->> +        return -EOPNOTSUPP;
->> +    else
->> +        return hw_ops->configure_testgen_pattern(csid, value);
->>   }
->>   /*
-> 
-> Here you accedentally break the TPG on all platforms and introduce a NULL
-> pointer dereference, please fix it.
-> 
-> Any generic/non-sm8550 support related changes like the part of this
-> one shall be split into a stand-alone generic change aside of the added
-> SM8550 platform support, it will simplify patch reviews and hunting bugs
-> like the one above.
-> 
+diff --git a/drivers/pmdomain/qcom/cpr.c b/drivers/pmdomain/qcom/cpr.c
+index e1fca65b80be..26a60a101e42 100644
+--- a/drivers/pmdomain/qcom/cpr.c
++++ b/drivers/pmdomain/qcom/cpr.c
+@@ -1052,7 +1052,7 @@ static unsigned long cpr_get_opp_hz_for_req(struct dev_pm_opp *ref,
+ 			of_parse_phandle(child_np, "required-opps", 0);
+ 
+ 		if (child_req_np == ref_np) {
+-			u64 rate;
++			u64 rate = 0;
+ 
+ 			of_property_read_u64(child_np, "opp-hz", &rate);
+ 			return (unsigned long) rate;
+-- 
+2.34.1
 
-Thanks for catching this. This is indeed a bug which is introduced by 
-this patch. And I will follow your suggestion to use a stand-alone 
-generic change for the TPG part.
-
-Thanks,
-Depeng
 
