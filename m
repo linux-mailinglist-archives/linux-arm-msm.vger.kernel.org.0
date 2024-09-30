@@ -1,162 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-32791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 314C498A7A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 16:49:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9701F98A8E4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 17:44:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9ED79B2450C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 14:49:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B22E01C22CE7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 15:44:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80A6E1922FC;
-	Mon, 30 Sep 2024 14:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38180193418;
+	Mon, 30 Sep 2024 15:42:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NS8u7rTo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="oI4L83S1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55B01922E3;
-	Mon, 30 Sep 2024 14:47:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576331922F8;
+	Mon, 30 Sep 2024 15:42:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727707666; cv=none; b=sEAn9Lev9kXJdUMe3WmolM34I30oq3ZXuNX7xDDDKnOwo3QcU8IO6ZQxYenSO2BLDaojIVmCm0vKFWacfr/DjtLPkkUFGVQlU/twOVoNYqtV6DCR66ypo5DKYsgjjR7iPWRP3WjhwOH9IbK/EXUH9DSjIFLrygllMf8I214rHNY=
+	t=1727710948; cv=none; b=miGEXR+yifmdauFS9hPnUmaROYajU6cWqrHXtlphHVWqv/O48f1GnG5i+O6ydIUiwMDrS+sx2rWlzp27G8gaSMF9VFrdr1jeqn0kktLSee6hoqauvv4QdSrMqqy7AWLXTSkeCVW3KsrGBbHKDGArQEltlHGDsfoKt2p2oeFSY8U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727707666; c=relaxed/simple;
-	bh=7ICdLaeBJV7XmJ9jGs7OWALjtaVxkt6At4mEoM1g7OA=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VaWuzFE8pd3zi7zvV0dpoWlDtXUWrIkXi0LzqiA3EOiXOUkVli71q5W2zQ80swvVk3Flze5D6NVZUIaxjD8GrxycFYT9/GfuK4l5jEMCImlscBYpCf++B9Ql/KvFafvmyaKkuaxOIOtdcnEtayyu8d8azc1Fcfa+M+ZjiMGcdDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NS8u7rTo; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1727710948; c=relaxed/simple;
+	bh=Cc7YRhvoDQtKghJg2029k4QYtuU686bB42dKb2xpnTI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=mWYzKnRMC0vw1cmWZ4xrIYbDzPMHB/gs//sO8nq6G/dFftQsXMchmR+OIAkLpwckPB2cwkzMcJyKjBld+vgnLzK8L/FVv5JUazIQEg6RKgfElWw0YrU5q2+2DRKi69HLZp47bKSAfCBzQJ/Iy2bT0uYVld64FmLYx+v388fOzcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=oI4L83S1; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48UBJFjG013905;
-	Mon, 30 Sep 2024 14:47:30 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U6RwYN014784;
+	Mon, 30 Sep 2024 15:41:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=clccw7WHx4ww1zLuegHgD8
-	uebzO0KmHCI4GU1CtcIbQ=; b=NS8u7rToo+OFG74wmCBuI97UTE60s60zz0os1Y
-	sWnlQ4jolf4s2gVyVKgVjd7HKu3l7eAJqAmq6cetRDUGa9cedHDWfjzF8SV53yPl
-	umHL8WVOvsYp8Pg9KWZZgNlNIBWQYeUriOnWwWfOhuRTHmGCfYPCb9aS3DcBfraL
-	jSY0sjSQUlg0JfjtRuGMOoWFOA1EFZ6q7heGIhvAPghzaadHukuGaPbCDf35TTsy
-	ZNAuMw01R/2IQniHYnMB/2GLd1hGwxwnOGQspIxSDB+9qSRXVvF8RS1dCU/cW27X
-	+dmKSXXp2XWIS+iXGjYnHzyN/pEfG3O+3M/PbzegVdQS1ezg==
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Gc55ob5J5ocO4uDw82svtlrKc6l6j/9azVaUVKIUbzg=; b=oI4L83S1Yru2ByEf
+	oaSvklSYWWKAJIYTd4fvvdv+/1FLUWnJikQlFF5FAc63q+qsAwuiyItbPPoS+NPb
+	mEln0G2d5hjOMOnr4VTm9vVGsFq4r2HAGV0KiBCMaVsIx9VEYtwfyxyUcx+zSJHS
+	7Anduf9GAHea1R1mcz6Zm9Wod/1GCg3EqCi1WuMMLi56MFFARyhacR/adVIiO0lI
+	3u2vVTqMs1dPKKNuPn3k1W/FQ3QNqV73fzPlxtmGXyjsm8fvutJjJqbijwvDPrY2
+	Fv96HIwV0e/IxaRio+HnMmGyWqgxy7O1GtfGGZRa/Aa+eAApRZYwKaB9X94Iyvay
+	SpISrQ==
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xa6750ba-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41yprahfsv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 14:47:29 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48UElSH3022046
+	Mon, 30 Sep 2024 15:41:53 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48UFfqHM000802
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 14:47:28 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 30 Sep 2024 07:47:25 -0700
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andi.shyti@kernel.org>, <quic_mmanikan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-Subject: [PATCH v3 1/1] i2c: qcom-geni: Support systems with 32MHz serial engine clock
-Date: Mon, 30 Sep 2024 20:17:09 +0530
-Message-ID: <20240930144709.1222766-1-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	Mon, 30 Sep 2024 15:41:52 GMT
+Received: from [10.216.16.87] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 30 Sep
+ 2024 08:41:41 -0700
+Message-ID: <942f6385-295a-4b48-8c1b-159930eeb828@quicinc.com>
+Date: Mon, 30 Sep 2024 21:11:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/5] drm/msm/dpu: Add SA8775P support
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <robdclark@gmail.com>, <quic_abhinavk@quicinc.com>, <sean@poorly.run>,
+        <marijn.suijten@somainline.org>, <airlied@gmail.com>,
+        <daniel@ffwll.ch>, <maarten.lankhorst@linux.intel.com>,
+        <mripard@kernel.org>, <tzimmermann@suse.de>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <swboyd@chromium.org>,
+        <konrad.dybcio@linaro.org>, <danila@jiaxyga.com>,
+        <bigfoot@classfun.cn>, <neil.armstrong@linaro.org>,
+        <mailingradian@gmail.com>, <quic_jesszhan@quicinc.com>,
+        <andersson@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_kalyant@quicinc.com>, <quic_jmadiset@quicinc.com>,
+        <quic_vpolimer@quicinc.com>
+References: <20240926110137.2200158-1-quic_mahap@quicinc.com>
+ <20240926110137.2200158-5-quic_mahap@quicinc.com>
+ <w26xpuqeltoxjvewo4zesnjazw23onovcasltzcwrejdpgav2h@p6fj2lts2n4s>
+Content-Language: en-US
+From: Mahadevan P <quic_mahap@quicinc.com>
+In-Reply-To: <w26xpuqeltoxjvewo4zesnjazw23onovcasltzcwrejdpgav2h@p6fj2lts2n4s>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: iT_2kTwfrGXGQQHefdwIkTzIAQ-SIOJ1
-X-Proofpoint-ORIG-GUID: iT_2kTwfrGXGQQHefdwIkTzIAQ-SIOJ1
+X-Proofpoint-GUID: dsmez5AIwekIwyx4FTHzul4uvDZHFR0g
+X-Proofpoint-ORIG-GUID: dsmez5AIwekIwyx4FTHzul4uvDZHFR0g
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0
- priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2409300107
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 mlxscore=0 phishscore=0 impostorscore=0
+ clxscore=1015 adultscore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300112
 
-In existing socs, I2C serial engine is sourced from XO (19.2MHz).
-Where as in IPQ5424, I2C serial engine is sourced from GPLL0 (32MHz).
 
-The existing map table is based on 19.2MHz. This patch incorporates
-the clock map table to derive the SCL clock from the 32MHz source
-clock frequency.
+On 9/26/2024 6:39 PM, Dmitry Baryshkov wrote:
+> On Thu, Sep 26, 2024 at 04:31:36PM GMT, Mahadevan wrote:
+>> Add definitions for the display hardware used on the
+>> Qualcomm SA8775P platform.
+>>
+>> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
+>> ---
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Minor nit below.
+>
+>> [v2]
+>> - Reorder compatible string of DPU based on alphabetical order.[Dmitry]
+>>
+>> ---
+>>   .../msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h   | 485 ++++++++++++++++++
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
+>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   3 +-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |   3 +-
+>>   4 files changed, 491 insertions(+), 3 deletions(-)
+>>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+>> new file mode 100644
+>> index 000000000000..14d65b5d4093
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+>> @@ -0,0 +1,485 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2015-2018, 2020 The Linux Foundation. All rights reserved.
+> What exactly is copyrighted by LF?
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
-Changes in v3:
-	- Updated geni_i2c_clk_map_32mhz array values
-	- Added sentinel value to both 19.2MHz, 32MHz clk map arrays
-	- Updated loop termination condition based on sentinel value
 
- drivers/i2c/busses/i2c-qcom-geni.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+LF copyright is not needed.
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 212336f724a6..579c01686823 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -16,6 +16,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/soc/qcom/geni-se.h>
- #include <linux/spinlock.h>
-+#include <linux/units.h>
- 
- #define SE_I2C_TX_TRANS_LEN		0x26c
- #define SE_I2C_RX_TRANS_LEN		0x270
-@@ -146,22 +147,36 @@ struct geni_i2c_clk_fld {
-  * clk_freq_out = t / t_cycle
-  * source_clock = 19.2 MHz
-  */
--static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
-+static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
- 	{KHZ(100), 7, 10, 11, 26},
- 	{KHZ(400), 2,  5, 12, 24},
- 	{KHZ(1000), 1, 3,  9, 18},
-+	{},
-+};
-+
-+/* source_clock = 32 MHz */
-+static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
-+	{KHZ(100), 8, 14, 18, 40},
-+	{KHZ(400), 4,  3, 11, 20},
-+	{KHZ(1000), 2, 3,  6, 15},
-+	{},
- };
- 
- static int geni_i2c_clk_map_idx(struct geni_i2c_dev *gi2c)
- {
--	int i;
--	const struct geni_i2c_clk_fld *itr = geni_i2c_clk_map;
-+	const struct geni_i2c_clk_fld *itr;
-+
-+	if (clk_get_rate(gi2c->se.clk) == 32 * HZ_PER_MHZ)
-+		itr = geni_i2c_clk_map_32mhz;
-+	else
-+		itr = geni_i2c_clk_map_19p2mhz;
- 
--	for (i = 0; i < ARRAY_SIZE(geni_i2c_clk_map); i++, itr++) {
-+	while (itr->clk_freq_out != 0) {
- 		if (itr->clk_freq_out == gi2c->clk_freq_out) {
- 			gi2c->clk_fld = itr;
- 			return 0;
- 		}
-+		itr++;
- 	}
- 	return -EINVAL;
- }
--- 
-2.34.1
+Thanks for pointing out the copyrights in other files too. Will update 
+in subsequent patch.
 
+
+>
+>> + */
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> index dcb4fd85e73b..6f60fff2c9a6 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>> @@ -1,6 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+>> - * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2022-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> I am not a lawyer, but I don't think a single #include is copyrightable.
+> Neither are single data lines in other files.
+>
+>>    */
+>>   
+>>   #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
+>> @@ -699,6 +699,7 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
+>>   
+>>   #include "catalog/dpu_8_0_sc8280xp.h"
+>>   #include "catalog/dpu_8_1_sm8450.h"
+>> +#include "catalog/dpu_8_4_sa8775p.h"
+>>   
+>>   #include "catalog/dpu_9_0_sm8550.h"
+>>   
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> index 37e18e820a20..cff16dcf277f 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>> @@ -1,6 +1,6 @@
+>>   /* SPDX-License-Identifier: GPL-2.0-only */
+>>   /*
+>> - * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2022-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+>>    * Copyright (c) 2015-2018, 2020 The Linux Foundation. All rights reserved.
+>>    */
+>>   
+>> @@ -850,6 +850,7 @@ extern const struct dpu_mdss_cfg dpu_sm8350_cfg;
+>>   extern const struct dpu_mdss_cfg dpu_sc7280_cfg;
+>>   extern const struct dpu_mdss_cfg dpu_sc8280xp_cfg;
+>>   extern const struct dpu_mdss_cfg dpu_sm8450_cfg;
+>> +extern const struct dpu_mdss_cfg dpu_sa8775p_cfg;
+>>   extern const struct dpu_mdss_cfg dpu_sm8550_cfg;
+>>   extern const struct dpu_mdss_cfg dpu_sm8650_cfg;
+>>   extern const struct dpu_mdss_cfg dpu_x1e80100_cfg;
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 9bcae53c4f45..16a0b417435e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -2,7 +2,7 @@
+>>   /*
+>>    * Copyright (C) 2013 Red Hat
+>>    * Copyright (c) 2014-2018, The Linux Foundation. All rights reserved.
+>> - * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+>> + * Copyright (c) 2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>>    *
+>>    * Author: Rob Clark <robdclark@gmail.com>
+>>    */
+>> @@ -1447,6 +1447,7 @@ static const struct dev_pm_ops dpu_pm_ops = {
+>>   static const struct of_device_id dpu_dt_match[] = {
+>>   	{ .compatible = "qcom,msm8998-dpu", .data = &dpu_msm8998_cfg, },
+>>   	{ .compatible = "qcom,qcm2290-dpu", .data = &dpu_qcm2290_cfg, },
+>> +	{ .compatible = "qcom,sa8775p-dpu", .data = &dpu_sa8775p_cfg, },
+>>   	{ .compatible = "qcom,sdm630-mdp5", .data = &dpu_sdm630_cfg, },
+>>   	{ .compatible = "qcom,sdm660-mdp5", .data = &dpu_sdm660_cfg, },
+>>   	{ .compatible = "qcom,sdm670-dpu", .data = &dpu_sdm670_cfg, },
+>> -- 
+>> 2.34.1
+>>
 
