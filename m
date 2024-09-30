@@ -1,89 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-32789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 208CB98A77E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 16:44:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A05C598A788
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 16:45:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C17881F22A0A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 14:44:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3099B1F216BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 14:45:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACF5A192581;
-	Mon, 30 Sep 2024 14:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E09C2191F7C;
+	Mon, 30 Sep 2024 14:45:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ey1iSMRh"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="d14X/7Xp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DF01922F6;
-	Mon, 30 Sep 2024 14:43:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3417B2032A;
+	Mon, 30 Sep 2024 14:45:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727707426; cv=none; b=M8rEBnD+uWJVacQxoyytLuNtmofY0D1EelrO4cC1kan4mn1dxxJA6grtREoIsLDRFGBpsTcpJTBTIM1ai8aI9Ji/pJbWo5AiBzs9DbXydczz2IgFmhyP/+pybz7kotGDLWDcKIeYdt1qoZQeeExg5jcUxFxbhBtDTRUiSX23nVw=
+	t=1727707537; cv=none; b=A3ajj6E1M147YkC/5Gq2BwRD/eifbZOgwi9KmvfxktgJbDoFrJYiPaVeXVVSlz6AIEiSV364QWkBZM/MrF/aKeoljohO+CvYTreXc7gCXEQFVd68anrN11yoiDsm4og2dxkZ74FDXfHRk4RTHd7K3owE+M+YT+zCAEHeFKfVWZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727707426; c=relaxed/simple;
-	bh=Q2YuJhchLQ06poSHZTzxtq2r4V1ioxkny0f6QHo+LAU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=eyNBEhF0DjWg5fqpKeLWEfHOa7Mw0Ug28i8I9DF+J/SBIzcp4IRkhUNN1jseyVp3nohxI+6ceUC3xAJOaPieGr6otLOBweTCSrJyApVKcz1l400lvLlqM/KtDjvqrOCsbG16AK//okcJKefr5KNykCgdbiFnssK5vQP605110J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ey1iSMRh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F900C4CEC7;
-	Mon, 30 Sep 2024 14:43:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727707426;
-	bh=Q2YuJhchLQ06poSHZTzxtq2r4V1ioxkny0f6QHo+LAU=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ey1iSMRhogguUBkHmM2gdxTFxCJ7EEaHnXOcz/fEy5qg/C9Td8rGsuQ7vjC2cL8XD
-	 J/Vt2agO32fRKlkQCoZOfyveSJl4UO9WKfZL2cH50mSKPTJUxL63RaT/nTapEKmjwI
-	 1Cr6J+GBsxFOxBkmlzGYyMYW1JUXtGzyAM2ELYUjb5n0WkouJAgnLmBCZfXt2OVyuZ
-	 vRdGVUn9N86kTUKjUUbSPIBAuk9JsQtvf/Yn/i2XJteH/y3yeQVHGou5ufb8pf2bnY
-	 LMitkZa96iQc1mxIOgHrJGnN2GobBb94MfFWkBuqDK76Aqse7jJ8MA30wHU14q1Jrm
-	 R5PpBJR8u5BRQ==
-From: Lee Jones <lee@kernel.org>
-To: Lee Jones <lee@kernel.org>, Nishanth Menon <nm@ti.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, linux-arm-kernel@lists.infradead.org, 
- linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>, 
- Shawn Guo <shawnguo@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, 
- bcm-kernel-feedback-list@broadcom.com, 
- Florian Fainelli <florian.fainelli@broadcom.com>, 
- linux-stm32@st-md-mailman.stormreply.com, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>
-In-Reply-To: <20240903184710.1552067-1-nm@ti.com>
-References: <20240903184710.1552067-1-nm@ti.com>
-Subject: Re: (subset) [PATCH V2] mfd: syscon: Use regmap max_register_is_0
- as needed
-Message-Id: <172770742318.523866.16912261914335612487.b4-ty@kernel.org>
-Date: Mon, 30 Sep 2024 15:43:43 +0100
+	s=arc-20240116; t=1727707537; c=relaxed/simple;
+	bh=3HetSWB8pauIgHnpbc+Jan/OHiAVA1t62OSsi/uUbGY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=Qi9hJjPkcvdtrinbWgcobNsNFAWiJXodAnwewbWD/+sQDYeAQ3KKtzrmZ70z+GrJJf3hRYmr6W9eCpT1LC0r5DmHj9KRKd1/7faRTNxhDyTofGvARx3KRIY5ntfOOov9/e1yZPaYtV0AWfHyuMiOG/skyOoDl5eJ1nofp4QQ+lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=d14X/7Xp; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48U6RwRZ014784;
+	Mon, 30 Sep 2024 14:45:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WSQC+/onyBzDMrxeEgdTEe7kX3EdK1p7LxLmFcRXzx0=; b=d14X/7XpXp4WxhcQ
+	PcFCmvG1+VHoUhEyH08tHdwj5VwkiE/XNKfaHzRXaGNy4jj8kCFomdwSYxXvLfRR
+	odX4oFSoMOcP5SZBssmC3EKRnnkPOUxmy+dA48e7tf2XGOH2Dzk/UhLyjfwmJR5V
+	65JwDqL3lqG1hMrgr+jMX4sX++7sUM/Y42GazC2LkpnX02+pFxyFxh/FvUCcHqA5
+	6z2q1Q67xfkhTWbfA8roK/fQ0hWv0hJ8piOiJidVoEt4cOIjNySZYeI+Ji8DWK39
+	ng7J3mQV/PZimJPTSBgekt3eEdzBDIC41GuO+Fguo0huyB2hnhRsfNMcaf3mJkvb
+	a+s/Ag==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41yprah8fd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 30 Sep 2024 14:45:32 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48UEjVUI025992
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 30 Sep 2024 14:45:31 GMT
+Received: from [10.152.195.140] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 30 Sep
+ 2024 07:45:28 -0700
+Message-ID: <0e38cd39-ba91-48f8-a4ee-c90bf95acdfe@quicinc.com>
+Date: Mon, 30 Sep 2024 20:15:24 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] i2c: qcom-geni: Support systems with 32MHz serial
+ engine clock
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        <andi.shyti@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-i2c@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20240926034304.3565278-1-quic_mmanikan@quicinc.com>
+ <def1c338-8e41-4622-83d5-7a377d780d76@linaro.org>
+ <2de5f3e7-1fd6-4368-94bc-4eecc8fc6752@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <2de5f3e7-1fd6-4368-94bc-4eecc8fc6752@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.13.0
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NqkfyRA8fxHIJ_Gw0wCPyI82Bhw_ngIA
+X-Proofpoint-ORIG-GUID: NqkfyRA8fxHIJ_Gw0wCPyI82Bhw_ngIA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 mlxscore=0 phishscore=0 impostorscore=0
+ clxscore=1015 adultscore=0 mlxlogscore=999 bulkscore=0 priorityscore=1501
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2409300107
 
-On Tue, 03 Sep 2024 13:47:10 -0500, Nishanth Menon wrote:
-> syscon has always set the optional max_register configuration of
-> regmap to ensure the correct checks are in place. However, a recent
-> commit 0ec74ad3c157 ("regmap: rework ->max_register handling")
-> introduced explicit configuration in regmap framework for register
-> maps that is exactly 1 register, when max_register is pointing to a
-> valid register 0. This commit solved a previous limitation of regmap
-> framework.
+
+
+On 9/29/2024 12:06 PM, Manikanta Mylavarapu wrote:
 > 
-> [...]
+> 
+> On 9/26/2024 3:58 PM, Vladimir Zapolskiy wrote:
+>> Hello Manikanta.
+>>
+>> On 9/26/24 06:43, Manikanta Mylavarapu wrote:
+>>> In existing socs, I2C serial engine is sourced from XO (19.2MHz).
+>>> Where as in IPQ5424, I2C serial engine is sourced from GPLL0 (32MHz).
+>>>
+>>> The existing map table is based on 19.2MHz. This patch incorporate
+>>> the clock map table to derive the SCL clock from the 32MHz source
+>>> clock frequency.
+>>>
+>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>> ---
+>>> Changes in v2:
+>>>     - Dropped IPQ5424 from the commit title
+>>>     - Added else part to assign geni_i2c_clk_map_19p2mhz to itr
+>>>     - Dropped MHZ macro and used HZ_PER_MHZ macro
+>>>     - Expanded SE to serial engine
+>>>     - Added the reason for 32MHz clock in commit message
+>>>
+>>>   drivers/i2c/busses/i2c-qcom-geni.c | 19 ++++++++++++++++---
+>>>   1 file changed, 16 insertions(+), 3 deletions(-)
+>>>
+>>> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> index 212336f724a6..22f2a0d83641 100644
+>>> --- a/drivers/i2c/busses/i2c-qcom-geni.c
+>>> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
+>>> @@ -16,6 +16,7 @@
+>>>   #include <linux/pm_runtime.h>
+>>>   #include <linux/soc/qcom/geni-se.h>
+>>>   #include <linux/spinlock.h>
+>>> +#include <linux/units.h>
+>>>     #define SE_I2C_TX_TRANS_LEN        0x26c
+>>>   #define SE_I2C_RX_TRANS_LEN        0x270
+>>> @@ -146,18 +147,30 @@ struct geni_i2c_clk_fld {
+>>>    * clk_freq_out = t / t_cycle
+>>>    * source_clock = 19.2 MHz
+>>>    */
+>>> -static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
+>>> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
+>>>       {KHZ(100), 7, 10, 11, 26},
+>>>       {KHZ(400), 2,  5, 12, 24},
+>>>       {KHZ(1000), 1, 3,  9, 18},
+>>>   };
+>>>   +/* source_clock = 32 MHz */
+>>> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
+>>> +    {KHZ(100), 7, 14, 18, 40},
+>>> +    {KHZ(400), 4,  3, 11, 20},
+>>> +    {KHZ(1000), 4, 3,  6, 15},
+>>> +};
+>>
+>> Please double check the values.
+>>
+>> This is what I get:
+>> * for 100KHz: 32000000 / (40 * 7) ~ 114286, apparently 32000000 / (40 * 8) would
+>> be a better fit, however it's unclear what would be proper t_high / t_low values,
+>> * for 400KHz: it seems good,
+>> * for 1000KHz: 32000000 / (15 * 4) ~ 533333, which is almost 1/2 of the wanted
+>> bus frequency, so this one looks very wrong.
+>>
+>> Do you have any ideas how to get better bus frequency settings?
+>>
+> 
+> Thanks for pointing this out.
+> 
+> I will double check and get back with the proper data.
+> 
+> Thanks & Regards,
+> Manikanta.
+> 
 
-Applied, thanks!
+Based on Qualcomm's internal hardware programming guide, below values need to be used for 100K & 1000K.
+{KHZ(100), 8, 14, 18, 40}
+{KHZ(1000), 2, 3,  6, 15}
 
-[1/1] mfd: syscon: Use regmap max_register_is_0 as needed
-      commit: bf5b2ddf06da57fa623c11d599697a98f1007752
+I will update these values in next version.
 
---
-Lee Jones [李琼斯]
-
+Thanks & Regards,
+Manikanta.
 
