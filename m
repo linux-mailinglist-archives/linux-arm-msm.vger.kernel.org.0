@@ -1,186 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-32735-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D53E0989B64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:26:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E9DB989B69
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:26:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 909D41F21FD7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:26:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CDDF281128
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:26:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D54B15666D;
-	Mon, 30 Sep 2024 07:26:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B986E155312;
+	Mon, 30 Sep 2024 07:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xqCU1Qmc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Khlt3dO8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0531547E1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 07:26:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D8815445B;
+	Mon, 30 Sep 2024 07:26:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727681164; cv=none; b=hKZZQXcxoFD3Zz/haUwh2nKrWRsb54SgQaNNHD9sSmq+oBJtqbwNzjaffef5THQ8jYFARb7XdV2KF8BTQLgUKK+d8K1YCy4t1j2GGY45fSw5STRxzVEhTZdE4iMV8AYjABtq8yHeS2cb6EIYAKMvxPT6naT57KdUvoZH7xAW6QE=
+	t=1727681210; cv=none; b=WknLKA5YzLEn1G9GpSz5fYLMXxyvsDPQbSQ3SYbqXigpueiIbR+LPD/JxXDAYdJbEs9UDbbqPXbgsBH0kKPgABq1s7o7pdVdzCOSoEweJsFdsD3mEgiLvKTr0ZbysfGh+c2FE0ZAUQ0Pa1MvDU6poNv/NEL23ndcf0zfk2pxUZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727681164; c=relaxed/simple;
-	bh=WKBH9RpmycF/rFa4JiAICMu9B7e2tmlZaMSJHg1A+e4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZHfHsoy8XF9syxG72RF5mddKQxgPpJ9ScpsveS734jOajlIz/0Vs2ap6p6BYUtcJaDpjt0b/2t2lhyp/LAY0tSJMRdZyiPOv6wlgTrvHCA6Ga0+nBRmFHdeh2xQmH5YQabCVwZUDMS/pVvrDjiEyuCivlLv9MtBSyXA6Z0BYF2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xqCU1Qmc; arc=none smtp.client-ip=209.85.216.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e0a950e2f2so3070807a91.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 00:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727681162; x=1728285962; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=XiYNvrHNwoSiNsSeCUdLp/SxlfKq9ylhEZCoyBEobJ4=;
-        b=xqCU1QmcgBOSV4c0u0l+3ZcdyL9gFXADsN8+7UeQOwzChcKof39ZLn0WhZbhQqHI0W
-         G3c5CETJl+sZEfblZbEKYT/8DRXdyalsQJ4SifcSNwl9A8wYtvjIY4CtZs+oZC8pGPxo
-         xSNit5M/LSX9vhcz4nfMTZuupgXshbNepzcelpGa1dWPr5UcU7oGxGfbHxt64ysgYcfv
-         lpJwblWXik9yIl04arPlACDiIXQrgCvv9QGFQASj6y91av+iBpVhFgR9AJchVdzQ/5MN
-         WtVBUt7KcG0aVXb/81G9oRoSoIIXQkMEciZSdEfkzc8f9mL4BgAxP2RBZlyVgq24KHdH
-         SBTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727681162; x=1728285962;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XiYNvrHNwoSiNsSeCUdLp/SxlfKq9ylhEZCoyBEobJ4=;
-        b=qs52PpilD6CIY8EEBDy5RMkPnAK4vb6ItgtfTyPY5PWzQ/sEiipGJGcxKBY5Q4aygK
-         ayn0SZ4hti1sJnJYIdGaDpmYwdhCS4x4RYqsvUl90QiGroTEtuQUusWOmsjsazC68VK2
-         00ztG/+gul2LdZdZ6pIg7onBvLxXAMxBeZl4kXRWBuaH0ciBSFsmeMJ07vR5U/guEMn2
-         m7rbQY72R5z4RrmcOJo2Hv016QjDda4QYd/sZD2C3rHpxGR5j28Od2HehItSnqI+fgCJ
-         YBlFfIgqNcPJpqvslxpoL0CEUsoJFXk+FeODMc2pSxjQE/4rlPnYMnHIPYUsVUEP94Mx
-         iuVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV6nJUruT6M0Hq64LK7OUsknnn7sIz/997eJbUjtkXbMCm+WlWEHZtn2xw2G4yIpG76Oy20Xn7Q4q8iU4ws@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzz1tCKPrGcA2iMjqywJPfKrv7VtXsGwdzERQnkFtibbxstXdrY
-	Snoas6W0SM5V46VP3ck5IyzoAj8B+VCROGzerDmy7gkI3BwNFbAieQVkPgKc9A==
-X-Google-Smtp-Source: AGHT+IH0ZhL7ulk9Zz/JIeZ0eAXcKPWm10c/BmyJgbeW6CC9X3LbTa4pQ4KY597t8qxTugpYl6gXJw==
-X-Received: by 2002:a17:90a:3486:b0:2d8:89ad:a67e with SMTP id 98e67ed59e1d1-2e0b88903famr14733476a91.1.1727681162073;
-        Mon, 30 Sep 2024 00:26:02 -0700 (PDT)
-Received: from thinkpad ([36.255.17.150])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e08c35fed5sm6239192a91.0.2024.09.30.00.25.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Sep 2024 00:26:01 -0700 (PDT)
-Date: Mon, 30 Sep 2024 09:25:53 +0200
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: Johan Hovold <johan@kernel.org>, vkoul@kernel.org, kishon@kernel.org,
-	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
-	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
-	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
-	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v4 5/6] PCI: qcom: Add support for X1E80100 SoC
-Message-ID: <20240930072553.n2tj5jjtltowswbf@thinkpad>
-References: <20240924101444.3933828-1-quic_qianyu@quicinc.com>
- <20240924101444.3933828-6-quic_qianyu@quicinc.com>
- <20240924135021.ybpyoahlpuvedma5@thinkpad>
- <ZvLX_wkh7_y7sjPZ@hovoldconsulting.com>
- <4368503f-fb33-4e6a-bef4-517e2b959400@quicinc.com>
- <20240925080724.vgkgmnqc44aoiarv@thinkpad>
- <1419ba07-5163-4126-8869-2213eea6c492@quicinc.com>
- <fb40afe3-eb27-4136-8942-26a40fb395a7@quicinc.com>
+	s=arc-20240116; t=1727681210; c=relaxed/simple;
+	bh=7URofMgMi5TFK6ZH3IosD7VZaKF1XyhAswqZm9mqRkc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mpdlm7paDuqV6LRymqkYNH6opd0NRvbD4bM4Nlc33Er3N5EPxD76fFSl12TRjUDlE+aTrlYW+/4l4YC1SJelpKjc0dnCU54M2XsfZmKJl18JKzEc7Pz4v4jY2jj6hO3MC1cFvR1zndXSSQQ9xxrgDUY9gMXMLp9LjZU0Dt/W2zA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Khlt3dO8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A8DC4CEC7;
+	Mon, 30 Sep 2024 07:26:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727681210;
+	bh=7URofMgMi5TFK6ZH3IosD7VZaKF1XyhAswqZm9mqRkc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Khlt3dO8JrjcevfHnqUMjQq5l6PAwsNJpH3Hxahuw6mnAlDgLVSyDV1z7cnSV15eD
+	 feVRq6NqlG5xJ5RmDbxYP8pTXqLC8UST5L1B1ueYCnKwYj2MoarCtKyNaewxuO+jhW
+	 zRJ38QxFVxEIH9fADM+XvBVvq5P5rW8Wl0vMzdq9OdVx5ACYauM9d7ulx2VJ+cuvnr
+	 OSjX4zm+jXNH4xEb7Ct4zSLvo6AaTc/LRnVreyh5U/OVvUnGYYkSy5Q0QvlIVTeexk
+	 avnFhJ6XlEXYAK4fIwHBYzjkKcc+txBaeqfNvFT/NaZWExU2kZjcWb7pkrFk65xRN0
+	 e18wev390gNDQ==
+Message-ID: <212c880a-9a09-4433-a049-eb15a0c32322@kernel.org>
+Date: Mon, 30 Sep 2024 09:26:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
+ binding
+To: Depeng Shao <quic_depengs@quicinc.com>,
+ Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
+References: <20240812144131.369378-1-quic_depengs@quicinc.com>
+ <20240812144131.369378-8-quic_depengs@quicinc.com>
+ <9ed92660-5f42-4a1a-9261-b8800133972a@linaro.org>
+ <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fb40afe3-eb27-4136-8942-26a40fb395a7@quicinc.com>
 
-On Thu, Sep 26, 2024 at 01:19:18PM +0800, Qiang Yu wrote:
+On 25/09/2024 17:13, Depeng Shao wrote:
+> Hi Vladimir,
 > 
-> On 9/26/2024 11:28 AM, Qiang Yu wrote:
-> > 
-> > On 9/25/2024 4:07 PM, Manivannan Sadhasivam wrote:
-> > > On Wed, Sep 25, 2024 at 11:47:02AM +0800, Qiang Yu wrote:
-> > > > On 9/24/2024 11:17 PM, Johan Hovold wrote:
-> > > > > On Tue, Sep 24, 2024 at 03:50:21PM +0200, Manivannan Sadhasivam wrote:
-> > > > > > On Tue, Sep 24, 2024 at 03:14:43AM -0700, Qiang Yu wrote:
-> > > > > > > X1E80100 has PCIe ports that support up to Gen4 x8
-> > > > > > > based on hardware IP
-> > > > > > > version 1.38.0.
-> > > > > > > 
-> > > > > > > Currently the ops_1_9_0 which is being used for
-> > > > > > > X1E80100 has config_sid
-> > > > > > > callback to config BDF to SID table. However, this callback is not
-> > > > > > > required for X1E80100 because it has smmuv3 support
-> > > > > > > and BDF to SID table
-> > > > > > > will be not present.
-> > > > > > > 
-> > > > > > > Hence add support for X1E80100 by introducing a new
-> > > > > > > ops and cfg structures
-> > > > > > > that don't require the config_sid callback. This
-> > > > > > > could be reused by the
-> > > > > > > future platforms based on SMMUv3.
-> > > > > > > 
-> > > > > > Oops... I completely overlooked that you are not adding
-> > > > > > the SoC support but
-> > > > > > fixing the existing one :( Sorry for suggesting a commit
-> > > > > > message that changed
-> > > > > > the context.
-> > > > > > 
-> > > > > > For this, you can have something like:
-> > > > > > 
-> > > > > > "PCI: qcom: Fix the ops for X1E80100 SoC
-> > > > > > 
-> > > > > > X1E80100 SoC is based on SMMUv3, hence it doesn't need
-> > > > > > the BDF2SID mapping
-> > > > > > present in the existing cfg_1_9_0 ops. This is fixed by
-> > > > > > introducing new ops
-> > > > > > 'ops_1_38_0' and cfg 'cfg_1_38_0' structures. These are
-> > > > > > exactly same as the
-> > > > > > 1_9_0 ones, but they don't have the 'config_sid()'
-> > > > > > callback that handles the
-> > > > > > BDF2SID mapping in the hardware. These new structures
-> > > > > > could also be used by the
-> > > > > > future SoCs making use of SMMUv3."
-> > > > > Don't we need something like this for sc8280xp and other
-> > > > > platforms using
-> > > > > SMMUv3 as well?
-> > > >  From what I know, sc8280xp and other qcom platforms are not
-> > > > using SMMUv3.
-> > > sc8280xp indeed has SMMUv3 for PCIe, but I'm not sure how it is
-> > > configured. So
-> > > not completely sure whether we can avoid the mapping table or not.
-> > > 
-> > > Qiang, please check with the hw team and let us know.
-> > Sure, will update once I get any response from hw team.
-> HW team confirmed sc8280xp uses smmv3 for PCIe and doesn't support BDF2SID
-> map.
+> On 9/6/2024 11:56 PM, Vladimir Zapolskiy wrote:
 > 
-> Besides, Abel once got confirmation from Joe that we also need to disable
-> L0s for X1E80100. So can we use cfg_sc8280xp for both X1E80100 and SC8280XP
-> and change its ops to ops_1_38_0?
-> 
+>>> +            compatible = "qcom,sm8550-camss";
+>>> +
+>>> +            reg = <0 0x0acb7000 0 0xd00>,
+>>> +                  <0 0x0acb9000 0 0xd00>,
+>>> +                  <0 0x0acbb000 0 0xd00>,
+>>> +                  <0 0x0acca000 0 0xa00>,
+>>> +                  <0 0x0acce000 0 0xa00>,
+>>> +                  <0 0x0acb6000 0 0x1000>,
+>>> +                  <0 0x0ace4000 0 0x2000>,
+>>> +                  <0 0x0ace6000 0 0x2000>,
+>>> +                  <0 0x0ace8000 0 0x2000>,
+>>> +                  <0 0x0acea000 0 0x2000>,
+>>> +                  <0 0x0acec000 0 0x2000>,
+>>> +                  <0 0x0acee000 0 0x2000>,
+>>> +                  <0 0x0acf0000 0 0x2000>,
+>>> +                  <0 0x0acf2000 0 0x2000>,
+>>> +                  <0 0x0ac62000 0 0xf000>,
+>>> +                  <0 0x0ac71000 0 0xf000>,
+>>> +                  <0 0x0ac80000 0 0xf000>,
+>>> +                  <0 0x0accb000 0 0x2800>,
+>>> +                  <0 0x0accf000 0 0x2800>;
+>>
+>> Please sort the list above in numerical order, this will change positions
+>> of "vfe_lite0", "vfe_lite1" etc.
+>>
+>> Another note, since it's not possible to map less than a page, so I believe
+>> it might make sense to align all sizes to 0x1000.
 
-Sounds good. But, OPS naming should be based on the baseline version i.e., it
-should be based on the IP version of SC8280XP and reused by X1E80100. Not the
-other way around.
+And if Linux behavior changes then are you going to rewrite all the DTS
+for new size?
 
-- Mani
+No, the sizes reflect hardware register layout, not concept of pages.
 
-> Thanks,
-> Qiang
-> > 
-> > Thanks,
-> > Qiang
-> > > 
-> > > - Mani
-> > > 
+I don't think that we should be coming with more nitpicky ideas, one
+month after the patch was sent and reviewed.
 
--- 
-மணிவண்ணன் சதாசிவம்
+Best regards,
+Krzysztof
+
 
