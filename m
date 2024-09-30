@@ -1,48 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-32736-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32737-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E9DB989B69
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:26:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B52D989B81
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 09:32:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CDDF281128
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:26:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E2841C21319
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 07:32:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B986E155312;
-	Mon, 30 Sep 2024 07:26:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3CC2155316;
+	Mon, 30 Sep 2024 07:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Khlt3dO8"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="Oz0MJoD/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D8815445B;
-	Mon, 30 Sep 2024 07:26:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA3F1552F6;
+	Mon, 30 Sep 2024 07:32:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727681210; cv=none; b=WknLKA5YzLEn1G9GpSz5fYLMXxyvsDPQbSQ3SYbqXigpueiIbR+LPD/JxXDAYdJbEs9UDbbqPXbgsBH0kKPgABq1s7o7pdVdzCOSoEweJsFdsD3mEgiLvKTr0ZbysfGh+c2FE0ZAUQ0Pa1MvDU6poNv/NEL23ndcf0zfk2pxUZk=
+	t=1727681535; cv=none; b=nQN8jDuhCmS5ERCWJWBDAga9r6ihjzGRnE4So97sKpidhABxweQgDo8R11p4tSKLqG2wMe0iVJv92/62ANKN5K4gexHL0CzGS+W6ArXcx+GkrWVzvcF2tpYWDRq0iaFmVHc/ei2nHT9f2CXxVGhFAssOUYLZAlZFIJ3KHcjdoWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727681210; c=relaxed/simple;
-	bh=7URofMgMi5TFK6ZH3IosD7VZaKF1XyhAswqZm9mqRkc=;
+	s=arc-20240116; t=1727681535; c=relaxed/simple;
+	bh=M3ZGR3m5dE/OcpAuJgNW07sMzVd9xcG6hbRIN3GQi5s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mpdlm7paDuqV6LRymqkYNH6opd0NRvbD4bM4Nlc33Er3N5EPxD76fFSl12TRjUDlE+aTrlYW+/4l4YC1SJelpKjc0dnCU54M2XsfZmKJl18JKzEc7Pz4v4jY2jj6hO3MC1cFvR1zndXSSQQ9xxrgDUY9gMXMLp9LjZU0Dt/W2zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Khlt3dO8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A8DC4CEC7;
-	Mon, 30 Sep 2024 07:26:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727681210;
-	bh=7URofMgMi5TFK6ZH3IosD7VZaKF1XyhAswqZm9mqRkc=;
+	 In-Reply-To:Content-Type; b=ntV7kpBja6qvX7WsGQvHKel6y9q5IcCOyHmPg8GC8I74v6FoC5RCmEjPUGCMviN+aSNotr0FQfJ46ufvK+JrbfxJ08zUTKW+PA+FfvN3Gdi2vLZDiIJhL9rUYhBRnvHRL/53vnkeP/EWf2hox9atjrs0gK8gddk6KT9BezTi+p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=Oz0MJoD/; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1727681531;
+	bh=M3ZGR3m5dE/OcpAuJgNW07sMzVd9xcG6hbRIN3GQi5s=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Khlt3dO8JrjcevfHnqUMjQq5l6PAwsNJpH3Hxahuw6mnAlDgLVSyDV1z7cnSV15eD
-	 feVRq6NqlG5xJ5RmDbxYP8pTXqLC8UST5L1B1ueYCnKwYj2MoarCtKyNaewxuO+jhW
-	 zRJ38QxFVxEIH9fADM+XvBVvq5P5rW8Wl0vMzdq9OdVx5ACYauM9d7ulx2VJ+cuvnr
-	 OSjX4zm+jXNH4xEb7Ct4zSLvo6AaTc/LRnVreyh5U/OVvUnGYYkSy5Q0QvlIVTeexk
-	 avnFhJ6XlEXYAK4fIwHBYzjkKcc+txBaeqfNvFT/NaZWExU2kZjcWb7pkrFk65xRN0
-	 e18wev390gNDQ==
-Message-ID: <212c880a-9a09-4433-a049-eb15a0c32322@kernel.org>
-Date: Mon, 30 Sep 2024 09:26:44 +0200
+	b=Oz0MJoD/WjoceXAqgBvUNpAstd9dV0jBR191CXDs3DaHEQv8fB6tEEkb3khrgiisE
+	 nh7tdsJ05/IcW/muYpcMYD2UbZ59bvLNKjDb7A7RsthSIIYy9ISk7EtNcjZZJJ/j4b
+	 46HY0ZSLujeCZ2Euue+8cxgFYaU/00AGdTSqrFGu+tvTdK4XrGCbrxAmA25H//DWD1
+	 gnBnOgQkZjyB3Rxtdykg0mDYBmcB8VRkDHDSZOdUCxlY8BYcGNoed0Ur7HnpY3zSJe
+	 +ONzA6kcS7zMAeoKr1mZ7/oMykf0KM1jTOBErKvVlvh8ykoNrOxERefW/OQ7/gJea/
+	 VGMkeeuORJQXg==
+Received: from [192.168.50.250] (unknown [171.76.80.165])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: vignesh)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 9E73717E1047;
+	Mon, 30 Sep 2024 09:32:07 +0200 (CEST)
+Message-ID: <5fd48673-571a-4750-9704-e172f7ea372f@collabora.com>
+Date: Mon, 30 Sep 2024 13:01:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,110 +57,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Depeng Shao <quic_depengs@quicinc.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>, rfoss@kernel.org,
- todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <9ed92660-5f42-4a1a-9261-b8800133972a@linaro.org>
- <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v3] docs/gpu: ci: update flake tests requirements
+To: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com,
+ helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch,
+ robdclark@gmail.com, guilherme.gallo@collabora.com,
+ sergi.blanch.torne@collabora.com, deborah.brouwer@collabora.com,
+ dmitry.baryshkov@linaro.org, mripard@kernel.org, quic_abhinavk@quicinc.com,
+ linux-mediatek@lists.infradead.org, linux-amlogic@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, amd-gfx@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ virtualization@lists.linux.dev, linux-kernel@vger.kernel.org
+References: <20240927052416.1833889-1-vignesh.raman@collabora.com>
+ <ZvbCzqvyeTI_j2cD@intel.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <ed012367-1bfd-4eef-931b-37e1ac839176@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Vignesh Raman <vignesh.raman@collabora.com>
+In-Reply-To: <ZvbCzqvyeTI_j2cD@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 25/09/2024 17:13, Depeng Shao wrote:
-> Hi Vladimir,
-> 
-> On 9/6/2024 11:56 PM, Vladimir Zapolskiy wrote:
-> 
->>> +            compatible = "qcom,sm8550-camss";
->>> +
->>> +            reg = <0 0x0acb7000 0 0xd00>,
->>> +                  <0 0x0acb9000 0 0xd00>,
->>> +                  <0 0x0acbb000 0 0xd00>,
->>> +                  <0 0x0acca000 0 0xa00>,
->>> +                  <0 0x0acce000 0 0xa00>,
->>> +                  <0 0x0acb6000 0 0x1000>,
->>> +                  <0 0x0ace4000 0 0x2000>,
->>> +                  <0 0x0ace6000 0 0x2000>,
->>> +                  <0 0x0ace8000 0 0x2000>,
->>> +                  <0 0x0acea000 0 0x2000>,
->>> +                  <0 0x0acec000 0 0x2000>,
->>> +                  <0 0x0acee000 0 0x2000>,
->>> +                  <0 0x0acf0000 0 0x2000>,
->>> +                  <0 0x0acf2000 0 0x2000>,
->>> +                  <0 0x0ac62000 0 0xf000>,
->>> +                  <0 0x0ac71000 0 0xf000>,
->>> +                  <0 0x0ac80000 0 0xf000>,
->>> +                  <0 0x0accb000 0 0x2800>,
->>> +                  <0 0x0accf000 0 0x2800>;
+Hi Rodrigo,
+
+On 27/09/24 20:05, Rodrigo Vivi wrote:
+> On Fri, Sep 27, 2024 at 10:54:14AM +0530, Vignesh Raman wrote:
+>> Update the documentation to specify linking to a relevant GitLab
+>> issue or email report for each new flake entry. Added specific
+>> GitLab issue urls for i915, msm and amdgpu driver.
 >>
->> Please sort the list above in numerical order, this will change positions
->> of "vfe_lite0", "vfe_lite1" etc.
+>> Acked-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # msm
+>> Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
+>> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+>> ---
 >>
->> Another note, since it's not possible to map less than a page, so I believe
->> it might make sense to align all sizes to 0x1000.
+>> v2:
+>> - Add gitlab issue link for msm driver.
+>>
+>> v3:
+>> - Update docs to specify we use email reporting or GitLab issues for flake entries.
+>>
+>> ---
+>>   Documentation/gpu/automated_testing.rst | 13 +++++++++----
+>>   1 file changed, 9 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
+>> index 2d5a28866afe..03769b4a17cf 100644
+>> --- a/Documentation/gpu/automated_testing.rst
+>> +++ b/Documentation/gpu/automated_testing.rst
+>> @@ -68,19 +68,24 @@ known to behave unreliably. These tests won't cause a job to fail regardless of
+>>   the result. They will still be run.
+>>   
+>>   Each new flake entry must be associated with a link to the email reporting the
+>> -bug to the author of the affected driver, the board name or Device Tree name of
+>> -the board, the first kernel version affected, the IGT version used for tests,
+>> -and an approximation of the failure rate.
+>> +bug to the author of the affected driver or the relevant GitLab issue. The entry
+>> +must also include the board name or Device Tree name, the first kernel version
+>> +affected, the IGT version used for tests, and an approximation of the failure rate.
+>>   
+>>   They should be provided under the following format::
+>>   
+>> -  # Bug Report: $LORE_OR_PATCHWORK_URL
+>> +  # Bug Report: $LORE_URL_OR_GITLAB_ISSUE
+>>     # Board Name: broken-board.dtb
+>>     # Linux Version: 6.6-rc1
+>>     # IGT Version: 1.28-gd2af13d9f
+>>     # Failure Rate: 100
+>>     flaky-test
+>>   
+>> +Use the appropriate link below to create a GitLab issue:
+>> +amdgpu driver: https://gitlab.freedesktop.org/drm/amd/-/issues
+>> +i915 driver: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues
+> 
+> Probably good to add:
+> 
+> xe driver: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues
 
-And if Linux behavior changes then are you going to rewrite all the DTS
-for new size?
+Sure, will add it.
 
-No, the sizes reflect hardware register layout, not concept of pages.
+> 
+> Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 
-I don't think that we should be coming with more nitpicky ideas, one
-month after the patch was sent and reviewed.
+Thanks.
 
-Best regards,
-Krzysztof
+> 
+>> +msm driver: https://gitlab.freedesktop.org/drm/msm/-/issues
+>> +
+>>   drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
+>>   -----------------------------------------------------------
+>>   
+>> -- 
+>> 2.43.0
+>>
 
+Regards,
+Vignesh
 
