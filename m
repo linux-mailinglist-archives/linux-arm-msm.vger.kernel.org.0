@@ -1,311 +1,473 @@
-Return-Path: <linux-arm-msm+bounces-32805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3716D98AC47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 20:44:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7254498ACB5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 21:20:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B32871F236CB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 18:44:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EC14283B05
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Sep 2024 19:20:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C5BC14A627;
-	Mon, 30 Sep 2024 18:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 322D6199FAB;
+	Mon, 30 Sep 2024 19:20:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b="Zw91s4Y4"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YY0Z09gX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-00823401.pphosted.com (mx0b-00823401.pphosted.com [148.163.152.46])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72B1198850
-	for <linux-arm-msm@vger.kernel.org>; Mon, 30 Sep 2024 18:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.152.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6662199933;
+	Mon, 30 Sep 2024 19:20:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727721862; cv=none; b=DkBplN+ne5IfLa+kR9vA78uadUMxbpD4LZF+LNlI7duJ62bn6h8eMzFJC5v4AJaUnU+0L9Ec548k8YXPLI5+JuyMwVOYi3Rx7w4Rj5gtDO1SU3gM/rdJkXszFWXRS5JClXc/MBaV2meIU8al0P1x5VFI+mLA/LpzwmSyJBCtN9w=
+	t=1727724023; cv=none; b=EiRNblQ5bLBlsaK2DnisMLWtUF76oM9L07tQY0ipE+tQzpJjVJa/4Z4IYstyZzPJLw7hh0hu2WBTlWV1cyWbqsPZCX0LN9cJgDVpZD0dhi691oLwsM6Yt8/gg/GyDrXkxUNy6qkja6WymylUz3WiNKNi7L/kJYbhHheNTmW1nJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727721862; c=relaxed/simple;
-	bh=Jpl4jI+JpRyg9NOOut78/nE/+eMWUZn6/0PAUHcWDCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FSeCz0aj68o4X0adQVwW4M2IRtg4WanBkKK72Hxpy7H0JpH4ngk9x8P0tVwkGaonN7A7nKlxGK+2+u43SCm7Iign8snjzb8PIt8qszgyJ4jWEVN+wJIv2ER+OFKdLcmZyPcq2k4prg/LUqyS1VgDn+FvKbDwrCwIhZXA2DDcgbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com; spf=pass smtp.mailfrom=motorola.com; dkim=pass (2048-bit key) header.d=motorola.com header.i=@motorola.com header.b=Zw91s4Y4; arc=none smtp.client-ip=148.163.152.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=motorola.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=motorola.com
-Received: from pps.filterd (m0355089.ppops.net [127.0.0.1])
-	by mx0b-00823401.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48UGaWeO006434;
-	Mon, 30 Sep 2024 18:43:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=motorola.com; h=
+	s=arc-20240116; t=1727724023; c=relaxed/simple;
+	bh=UJKvPEmjLzRTkPMKbGyfSLo25LyrJojYVuUosQA2g30=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WmlVM8baVNlT6w6mQM59XmDa+tvXx+iyDo1cVeTU0eNYTkAq1MrR1gAqSgw8PnXDUFHMsN+IVH6uCp6alNgkcYDzFirxQ/GR1OaVWehV0vEfXbdvyK1kwKZ/bP/TSp6MuFPJcNWqLLcQxmERKi8WaMqDF6FNRycbPIL2rFY3Nyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YY0Z09gX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 48UBZIMo029830;
+	Mon, 30 Sep 2024 19:20:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=DKIM202306;
-	 bh=h8WTTHLDO6+nZTqOz8F9jwtmqZJCxUS15PL07amh7DQ=; b=Zw91s4Y4zmQk
-	ZhG6/HL/pWXyscCSQtlOgb+ZTLfdlhb31K5j8287Bf0l3CtLuQ9Pti0hf5BRxzvk
-	Es57zX6w7v9GoL8T+VD1O3YBilWcDpsloU3hOMN8/A+9E+6gkOHRQya0WtR30olv
-	svBNbR1mArO2tdbxyzkC/11MlnlW1U1OPJsmJZ6Z2pWGmfUGu2kaHCyzsN0jqOeL
-	iY4W41Spb274Hu8ZvtG4KHv95qnLqgFpva/MRGNk8/AakBiEYJq2NnRonu/3k3pl
-	qFjgCcfh9t+/6uVyD5EUiUBsN3BhBy7x7TW/uyZfnKNE4cmGUr+Px4B3ilFoZUhD
-	wmfBQ83dkw==
-Received: from iadlppfpol2.lenovo.com ([104.232.228.81])
-	by mx0b-00823401.pphosted.com (PPS) with ESMTPS id 41xxbn3f51-1
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	kIHIsrxB1VgJf5Jm4xx4QA3REGo2kmyAQcw/MfVXEyc=; b=YY0Z09gXJf2/QXdn
+	I9ICjTXXvG543e17PKRw4tTq/CEuvCvAvT3RYz6ln7nYnXbHNIXSd0oe8b22c3Pf
+	nEvjEhiDUg0sg3bo69sWXhYH6biSkAtQgWwYdS1yLNPJdaH4BZRDojz1T293J3qh
+	RdC8lMLZfDdLn1+ugEqVheqvk7cBaO+HA6ZvrtBbFxCHHDikM1Xbg5GqTkvaJOVM
+	zNVq7uiIQagWIGruBkz5gCi+IqGIRNRBw4EhYsQTNI1tYscmAGGvbeosQKbTUghE
+	IxiybV0ePK6wo39PmaXj0Ne8e0fz6fLljQOlfK4Lu8yU6lwSL5d4wbfTULRBYW/9
+	5BIk2w==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xb38wspe-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 30 Sep 2024 18:43:53 +0000 (GMT)
-Received: from ilclmmrp02.lenovo.com (unknown [100.65.83.26])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by iadlppfpol2.lenovo.com (Postfix) with ESMTPS id 4XHVMr0YPpzYkjQw;
-	Mon, 30 Sep 2024 18:43:52 +0000 (UTC)
-Received: from ilclasset02 (ilclasset02.mot.com [100.64.11.15])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: mbland)
-	by ilclmmrp02.lenovo.com (Postfix) with ESMTPSA id 4XHVMr504dz3npb3;
-	Mon, 30 Sep 2024 18:43:52 +0000 (UTC)
-Date: Mon, 30 Sep 2024 13:43:51 -0500
-From: Maxwell Bland <mbland@motorola.com>
-To: Sebastian Ene <sebastianene@google.com>
-Cc: Andy Lutomirski <luto@amacapital.net>, Maxwell Bland <mbland@motorola.com>,
-        Neill Kapron <nkapron@google.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        Andrew Wheeler <awheeler@motorola.com>,
-        Sammy BS2 Que <quebs2@motorola.com>, Todd Kjos <tkjos@google.com>,
-        Viktor Martensson <vmartensson@google.com>,
-        "keescook@chromium.org" <keescook@chromium.org>,
-        Will Drewry <wad@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        kernel-team <kernel-team@android.com>, adelva@google.com,
-        jeffv@google.com
-Subject: Re: [RFC] Proposal: Static SECCOMP Policies
-Message-ID: <gbaorjakcdaxngzlrfbij5tvrqembwmfwctvkax7wpdjbkzbvr@n4shfyvwkvqy>
-References: <ZuNVqvVgXLjNXS5Y@google.com>
- <CANP3RGfez2onSLVT2wC1hsSmKGxD9aFdV3we3Zsngw0BgbeGyw@mail.gmail.com>
- <TYZPR03MB67922FFDE5C9C925D8274677B4652@TYZPR03MB6792.apcprd03.prod.outlook.com>
- <3zxgxxa75znxfvoufhtg3wm2vamjthogyacoybiket5js3kquf@yldiyczms4ou>
- <CALCETrVVo9g=v8dXN_Z1pBPx_194Mcanxz9_CgYUjJ_138_4LQ@mail.gmail.com>
- <tazl5khrfdxifmosasadhexsmm73oolnooevkjwlncydqz4lvl@dxlis7ipxozj>
- <CALCETrW4OkWSc+QCsW-x2OyL0rzbw0-guiN3jNgcr6WfwDMhCA@mail.gmail.com>
- <CANP3RGcYSEd5h_2mV+EAB_ohCKe7zaf-82UotN40wq3K4V5OtQ@mail.gmail.com>
- <CANP3RGceK4sxfk7YP-petxY+dmpD+SVCM9Eb79Fc0u1EwFAVVw@mail.gmail.com>
- <ZvqJ7rAc_pRUdW3b@google.com>
+	Mon, 30 Sep 2024 19:20:03 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 48UJK1YN030822
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 30 Sep 2024 19:20:01 GMT
+Received: from [10.110.71.134] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 30 Sep
+ 2024 12:20:01 -0700
+Message-ID: <866ef212-a00e-48c4-9cf1-d1d4ee78d0ae@quicinc.com>
+Date: Mon, 30 Sep 2024 12:19:44 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/22] drm/msm/dpu: Configure CWB in writeback encoder
+To: <neil.armstrong@linaro.org>, Rob Clark <robdclark@gmail.com>,
+        "Dmitry
+ Baryshkov" <dmitry.baryshkov@linaro.org>,
+        <quic_abhinavk@quicinc.com>, "Sean
+ Paul" <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "David Airlie" <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+References: <20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com>
+ <20240924-concurrent-wb-v2-16-7849f900e863@quicinc.com>
+ <b9e50652-4556-4eed-a013-8e417eccdb69@linaro.org>
+Content-Language: en-US
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <b9e50652-4556-4eed-a013-8e417eccdb69@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZvqJ7rAc_pRUdW3b@google.com>
-X-Proofpoint-ORIG-GUID: 5JZ06UtFGl9JaO5S-ur_kuSZti6jtqec
-X-Proofpoint-GUID: 5JZ06UtFGl9JaO5S-ur_kuSZti6jtqec
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: n3-Ce93zgnkRoy9WHyXn-TxGMgEhznT3
+X-Proofpoint-ORIG-GUID: n3-Ce93zgnkRoy9WHyXn-TxGMgEhznT3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 adultscore=0 mlxscore=0 spamscore=0 phishscore=0
- priorityscore=1501 clxscore=1011 bulkscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2408220000 definitions=main-2409300135
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 suspectscore=0 mlxscore=0 phishscore=0
+ mlxlogscore=999 impostorscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2408220000 definitions=main-2409300140
 
-On Mon, Sep 30, 2024 at 11:22:22AM GMT, Sebastian Ene wrote:
-> On Wed, Sep 25, 2024 at 12:53:11PM -0700, 'Maciej Żenczykowski' via kernel-team wrote:
-> > On Wed, Sep 25, 2024 at 12:52 PM Maciej Żenczykowski <maze@google.com> wrote:
-> > >
-> > > On Wed, Sep 25, 2024 at 11:16 AM Andy Lutomirski <luto@amacapital.net> wrote:
-> > > >
-> > > > On Tue, Sep 17, 2024 at 8:08 AM Maxwell Bland <mbland@motorola.com> wrote:
-> > > > >
-> > > > > On Fri, Sep 13, 2024 at 09:18:58PM GMT, Andy Lutomirski wrote:
-> > > > > > On Fri, Sep 13, 2024 at 10:30 AM Maxwell Bland <mbland@motorola.com> wrote:
-> > > > > > > On Fri, Sep 13, 2024 at 05:07:46PM GMT, Maxwell Bland wrote:
-> > > > > > >
-> > > > > > > But don't let me distract from the issue, which is that
-> > > > > > > cBPF/eBPF/however these filters get allocated to machine code,
-> > > > > > > bpf_int_jit_compile ends up getting called and a new
-> > > > > > > privileged-executable page gets allocated without compile-time
-> > > > > > > provenance (at least, without reverse engineering) for where that code
-> > > > > > > came from.
-> > > > > >
-> > > > > > But what if there was a mechanism to *cryptographically hash* a BPF
-> > > > > > program as part of the loading process?  Then that hash could be
-> > > > > > looked up in a list, and a decision could be made based on the result?
-> > > > > >  Would this help solve any problems?
-> > > > >
-> > > > > The issue I have seen in the prior Qualys linked exploit from my initial
-> > > > > message and from talks by security researchers elsewhere, for example
-> > > > > Google Project Zero's recent "Analyzing a Modern In-the-wild Android
-> > > > > Exploit" by Seth Jenkins, is that people have the ability to target
-> > > > > these pages during the window between the page being allocated as
-> > > > > writable by vmalloc.c and the update to the PTE which makes it
-> > > > > executable, so a signature does help (creates the requirement of more
-> > > > > than one write to commit "forgery"), but doesn't totally 100% solve the
-> > > > > problem.
-> > > > >
-> > > > > Right now, every time I open up chrome on our latest flagship the
-> > > > > browsers sandbox filters trigger my EL2 monitor because they are
-> > > > > attempting to follow the standard W^X protocol. If I were to build one
-> > > > > of these exploits, I'd:
-> > > > >
-> > > > > (1) find out a non-crashing leak for code page and data values
-> > > > > (2) determine from vmalloc's rb-tree where the next one-page allocation
-> > > > >     is likely to occur
-> > > > > (3) prime my write gadget for an offset into that page
-> > > > > (4) spin up chrome in a second thread
-> > > > > (5) attempt to trigger a write (or two) at the right precise time using
-> > > > >     prior empirical measurement or my read gadget for kernel mem
-> > > > >
-> > > > > Which is messy, but people have been known to do more given good enough
-> > > > > stakes. Hell, I spent a few months working on something similar for
-> > > > > airplane communication management units.
-> > > >
-> > > > My vague proposal for a "better JIT API" (which you quoted below)
-> > > > explicitly and completely solves this problem:
-> > > >
-> > > > >
-> > > > > > So what would a good solution look like?  It seem to me that the
-> > > > > > program being supervised (a userspace or kernel JIT) could generate
-> > > > > > some kind of data structure along these lines:
-> > > > > >
-> > > > > > - machine code to be materialized
-> > > > > >
-> > > > > > - address and length at which to materialize it (probably
-> > > > > > page-aligned, but maybe not)
-> > > > > >
-> > > > > > - an "origin" of this code (perhaps a file handle?) -- I'm not 100%
-> > > > > > sure this is useful
-> > > > > >
-> > > > > > - a "justification" for the code.  This could be something like "Hey,
-> > > > > > this is JITted from cBPF for seccomp, and here's the cBPF".
-> > > >
-> > > > Even ignoring the origin and justification parts, there's no WX window
-> > > > in here.  The code is generated, then it's shipped off to the
-> > > > hypervisor/supervisor, and *exactly that code* is materialized !W, X.
-> > > >
-> > > > Of course, this still leaves verification to be handled.
-> > > >
-> > > > > Returning to the idea of origins, at the end of the work day yesterday I
-> > > > > queried Maciej to "have Android choose one compiler for seccomp policies
-> > > > > to BPF and stick with it", because if I knew filters were chosen by
-> > > > > libminijail or some other userspace system, I could pretty easily figure
-> > > > > out what EL2 needs to expect at runtime. An "origin" field would be
-> > > > > equally as effective, and retain flexibility.
-> > > >
-> > > > At the risk of a silly suggestion, what if the entire JIT compiler and
-> > > > verifier (or a sufficient portion) were, itself, a WASM (or similar)
-> > > > program, signed or whatever, and shipped off to the hypervisor?  The
-> > > > hypervisor could run it (in whatever sandbox it likes -- hypervisors
-> > > > are capable of spawning a separate VM to host it if needed), and only
-> > > > then accept the output.
-> > > >
-> > > > I, personally, think that this is of extremely dubious value unless
-> > > > it's paired with a control flow integrity system.  But maybe it could
-> > > > be!  Something like x86 IBT would be a start, and FineIBT would be
-> > > > better, as would an ARM equivalent.
-> > > >
-> > > > --Andy
-> > >
+
+
+On 9/30/2024 7:17 AM, neil.armstrong@linaro.org wrote:
+> On 25/09/2024 00:59, Jessica Zhang wrote:
+>> Cache the CWB block mask in the DPU virtual encoder and configure CWB
+>> according to the CWB block mask within the writeback phys encoder
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        | 83 ++++++++++++ 
+>> +++++++++-
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h   | 16 ++++-
+>>   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c    |  4 +-
+>>   3 files changed, 100 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/ 
+>> gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index b2f0bf412451..2628f2d55cb3 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -24,6 +24,7 @@
+>>   #include "dpu_hw_catalog.h"
+>>   #include "dpu_hw_intf.h"
+>>   #include "dpu_hw_ctl.h"
+>> +#include "dpu_hw_cwb.h"
+>>   #include "dpu_hw_dspp.h"
+>>   #include "dpu_hw_dsc.h"
+>>   #include "dpu_hw_merge3d.h"
+>> @@ -139,6 +140,7 @@ enum dpu_enc_rc_states {
+>>    *            num_phys_encs.
+>>    * @hw_dsc:        Handle to the DSC blocks used for the display.
+>>    * @dsc_mask:        Bitmask of used DSC blocks.
+>> + * @cwb_mask        Bitmask of used CWB muxes
+>>    * @intfs_swapped:    Whether or not the phys_enc interfaces have 
+>> been swapped
+>>    *            for partial update right-only cases, such as pingpong
+>>    *            split where virtual pingpong does not generate IRQs
+>> @@ -185,6 +187,7 @@ struct dpu_encoder_virt {
+>>       struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+>>       unsigned int dsc_mask;
+>> +    unsigned int cwb_mask;
+>>       bool intfs_swapped;
+>> @@ -1063,6 +1066,7 @@ static void 
+>> dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>       int num_cwb = 0;
+>>       bool is_cwb_encoder;
+>>       unsigned int dsc_mask = 0;
+>> +    unsigned int cwb_mask = 0;
+>>       int i;
+>>       if (!drm_enc) {
+>> @@ -1103,8 +1107,12 @@ static void 
+>> dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+>>                                  ARRAY_SIZE(hw_pp));
+>>       }
+>> -    for (i = 0; i < num_cwb; i++)
+>> +    for (i = 0; i < num_cwb; i++) {
+>>           dpu_enc->hw_cwb[i] = to_dpu_hw_cwb(hw_cwb[i]);
+>> +        cwb_mask |= BIT(dpu_enc->hw_cwb[i]->idx - CWB_0);
+>> +    }
+>> +
+>> +    dpu_enc->cwb_mask = cwb_mask;
+>>       dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>>               drm_enc->crtc, DPU_HW_BLK_CTL, hw_ctl, ARRAY_SIZE(hw_ctl));
+>> @@ -2071,6 +2079,9 @@ void dpu_encoder_helper_phys_cleanup(struct 
+>> dpu_encoder_phys *phys_enc)
+>>           }
+>>       }
+>> +    if (dpu_enc->cwb_mask)
+>> +        dpu_encoder_helper_phys_setup_cwb(phys_enc, false);
+>> +
+>>       /* reset the merge 3D HW block */
+>>       if (phys_enc->hw_pp && phys_enc->hw_pp->merge_3d) {
+>>           phys_enc->hw_pp->merge_3d->ops.setup_3d_mode(phys_enc- 
+>> >hw_pp->merge_3d,
+>> @@ -2114,6 +2125,68 @@ void dpu_encoder_helper_phys_cleanup(struct 
+>> dpu_encoder_phys *phys_enc)
+>>       ctl->ops.clear_pending_flush(ctl);
+>>   }
+>> +void dpu_encoder_helper_phys_setup_cwb(struct dpu_encoder_phys 
+>> *phys_enc,
+>> +                       bool enable)
+>> +{
+>> +    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(phys_enc- 
+>> >parent);
+>> +    struct dpu_hw_cwb *hw_cwb;
+>> +    struct dpu_hw_cwb_setup_cfg cwb_cfg;
+>> +
+>> +    struct dpu_kms *dpu_kms;
+>> +    struct dpu_global_state *global_state;
+>> +    struct dpu_hw_blk *rt_pp_list[MAX_CHANNELS_PER_ENC];
+>> +    int num_pp, rt_pp_idx[MAX_CHANNELS_PER_ENC];
+>> +
+>> +    if (!phys_enc || !phys_enc->hw_wb || !dpu_enc->cwb_mask)
+>> +        return;
+>> +
+>> +    dpu_kms = phys_enc->dpu_kms;
+>> +    global_state = dpu_kms_get_existing_global_state(dpu_kms);
+>> +    num_pp = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>> +                           phys_enc->parent->crtc,
+>> +                           DPU_HW_BLK_PINGPONG, rt_pp_list,
+>> +                           ARRAY_SIZE(rt_pp_list));
+>> +
+>> +    if (num_pp == 0 || num_pp > MAX_CHANNELS_PER_ENC) {
+>> +        DPU_DEBUG_ENC(dpu_enc, "invalid num_pp %d\n", num_pp);
+>> +        return;
+>> +    }
+>> +
+>> +    for (int i = 0; i < num_pp; i++) {
+>> +        struct dpu_hw_pingpong *hw_pp = 
+>> to_dpu_hw_pingpong(rt_pp_list[i]);
+>> +
+>> +        for (int j = 0; j < ARRAY_SIZE(dpu_enc->hw_cwb); j++) {
+>> +            hw_cwb = dpu_enc->hw_cwb[i];
+>> +
+>> +            /*
+>> +             * Even CWB muxes must take input from even real-time
+>> +             * pingpongs and odd CWB muxes must take input from odd
+>> +             * pingpongs
+>> +             */
+>> +            if (hw_pp->idx % 2 == hw_cwb->idx % 2) {
 > 
-> Hi,
+> When running igt-test on QRD8650, I get:
+> # IGT_FRAME_DUMP_PATH=$PWD FRAME_PNG_FILE_NAME=pwet /usr/libexec/igt- 
+> gpu-tools/kms_writeback -d
+
+Hi Neil,
+
+Thanks for reporting this. Unfortunately, I'm not able to recreate this 
+on the MTP8650.
+
+How many/which non-WB outputs are you testing with?
+
+Also, can you share the IGT debug logs?
+
+FWIW, I haven't had the chance to test with DP yet so that might be why 
+you're hitting this issue and I'm not.
+
+Thanks,
+
+Jessica Zhang
+
+> [ 2566.668998] Console: switching to colour dummy device 80x25
+> IGT-Version: 1.29-1.28 (aarch64) (Linux: 6.12.0-rc1-00022-ge581f752bf79 
+> aarch64)
+> [ 2566.674859] [IGT] kms_writeback: executing
+> Using IGT_SRANDOM=1709057323 for randomisation
+> Opened device: /dev/dri/card0
+> [ 2566.741375] [IGT] kms_writeback: starting subtest dump-writeback
+> Starting subtest: dump-writeback
+> Subtest dump-writeback: SUCCESS (0.305s)[ 2567.053189] [IGT] 
+> kms_writeback: finished subtest dump-writeback, SUCCESS
 > 
-> In response to your previous message (this is Seb from pKVM team):
+> [ 2567.064505] [IGT] kms_writeback: starting subtest dump-valid-clones
+> Starting subtest: dump-valid-clones
+> [ 2567.762793] Unable to handle kernel NULL pointer dereference at 
+> virtual address 0000000000000010
+> [ 2567.771919] Mem abort info:
+> [ 2567.774888]   ESR = 0x0000000096000006
+> [ 2567.778831]   EC = 0x25: DABT (current EL), IL = 32 bits
+> [ 2567.784371]   SET = 0, FnV = 0
+> [ 2567.787601]   EA = 0, S1PTW = 0
+> [ 2567.790942]   FSC = 0x06: level 2 translation fault
+> [ 2567.796044] Data abort info:
+> [ 2567.799083]   ISV = 0, ISS = 0x00000006, ISS2 = 0x00000000
+> [ 2567.804793]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+> [ 2567.810057]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+> [ 2567.815600] user pgtable: 4k pages, 48-bit VAs, pgdp=00000008d60cf000
+> [ 2567.822290] [0000000000000010] pgd=08000008d6049003, 
+> p4d=08000008d6049003, pud=080000089397e003, pmd=0000000000000000
+> [ 2567.833254] Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
+> [ 2567.839747] Modules linked in: snd_soc_wsa884x q6prm_clocks 
+> q6apm_lpass_dais snd_q6dsp_common q6apm_dai q6prm 8021q garp mrp stp llc 
+> usb_f_fs libcomposite qrtr_mhi snd_soc_hdmi_codec ath12k mac80211 
+> libarc4 mhi panel_visionox_vtdr6130 snd_q6apm pci_pwrctl_pwrseq 
+> pci_pwrctl_core rpmsg_ctrl apr fastrpc qrtr_smd rpmsg_char wcd939x_usbss 
+> nb7vpq904m qcom_pd_mapper goodix_berlin_spi goodix_berlin_core 
+> ucsi_glink typec_ucsi pmic_glink_altmode aux_hpd_bridge qcom_battmgr 
+> leds_qcom_lpg msm ocmem drm_exec hci_uart qcom_pbs gpu_sched 
+> led_class_multicolor btqca phy_qcom_eusb2_repeater btbcm 
+> qcom_spmi_temp_alarm drm_dp_aux_bus phy_qcom_qmp_combo crct10dif_ce 
+> bluetooth drm_display_helper sm3_ce ecdh_generic aux_bridge sm3 
+> snd_soc_sc8280xp pwrseq_qcom_wcn sha3_ce snd_soc_qcom_sdw rtc_pm8xxx 
+> qcom_pon ecc nvmem_qcom_spmi_sdam sha512_ce qcom_stats spi_geni_qcom 
+> snd_soc_qcom_common sha512_arm64 pwrseq_core i2c_qcom_geni cfg80211 
+> drm_kms_helper dispcc_sm8550 gpi ipa snd_soc_lpass_va_macro 
+> snd_soc_lpass_tx_macro soundwire_qcom
+> [ 2567.839860]  pinctrl_sm8650_lpass_lpi snd_soc_lpass_wsa_macro 
+> snd_soc_lpass_rx_macro rfkill slimbus phy_qcom_snps_eusb2 
+> pinctrl_lpass_lpi gpucc_sm8650 snd_soc_lpass_macro_common qcom_q6v5_pas 
+> qcom_pil_info qcom_q6v5 qcrypto authenc icc_bwmon qcom_sysmon 
+> qcom_common qrtr qcom_glink_smem phy_qcom_qmp_pcie mdt_loader libdes 
+> llcc_qcom ufs_qcom phy_qcom_qmp_ufs pmic_glink snd_soc_wcd939x rmtfs_mem 
+> pdr_interface snd_soc_wcd939x_sdw regmap_sdw qcom_pdr_msg 
+> snd_soc_wcd_mbhc qmi_helpers snd_soc_wcd_classh soundwire_bus typec 
+> nvmem_reboot_mode qcom_rng socinfo fuse drm backlight ipv6
+> [ 2567.983445] CPU: 5 UID: 0 PID: 554 Comm: kms_writeback Tainted: G 
+> S                 6.12.0-rc1-00022-ge581f752bf79 #2
+> [ 2567.994390] Tainted: [S]=CPU_OUT_OF_SPEC
+> [ 2567.998483] Hardware name: Qualcomm Technologies, Inc. SM8650 QRD (DT)
+> [ 2568.005244] pstate: 81400005 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS 
+> BTYPE=--)
+> [ 2568.012455] pc : dpu_encoder_helper_phys_setup_cwb+0xb8/0x1ec [msm]
+> [ 2568.019009] lr : dpu_encoder_helper_phys_setup_cwb+0x88/0x1ec [msm]
+> [ 2568.025532] sp : ffff80008939b7e0
+> [ 2568.028999] x29: ffff80008939b810 x28: ffffcbcb66f26068 x27: 
+> ffff37ad962cb080
+> [ 2568.036388] x26: ffff37ad9887ed80 x25: ffff80008939b878 x24: 
+> ffff37ad43642a80
+> [ 2568.043775] x23: 0000000000000000 x22: ffff37ad42812080 x21: 
+> ffff37ad43642a80
+> [ 2568.051163] x20: ffff37ad962cb080 x19: ffff37ad962c8080 x18: 
+> 0000000000000001
+> [ 2568.058552] x17: 000000040044ffff x16: ffffcbcbb0fc8c64 x15: 
+> 00003d08ffff9c00
+> [ 2568.065939] x14: 00000013519b2832 x13: ffff37ad9d392200 x12: 
+> 000000000000000b
+> [ 2568.073325] x11: ffff37ad40dc56c0 x10: ffff37ad9d392200 x9 : 
+> ffff37afbe7bba80
+> [ 2568.080712] x8 : ffff37ad42812718 x7 : 0000000000000004 x6 : 
+> ffff37ad989ac798
+> [ 2568.088098] x5 : 0000000000000002 x4 : ffff80008939b7f8 x3 : 
+> ffff37ad962cb150
+> [ 2568.095480] x2 : 0000000000000002 x1 : 0000000000000000 x0 : 
+> 0000000000000001
+> [ 2568.102868] Call trace:
+> [ 2568.105446]  dpu_encoder_helper_phys_setup_cwb+0xb8/0x1ec [msm]
+> [ 2568.111608]  dpu_encoder_helper_phys_cleanup+0x328/0x3c4 [msm]
+> [ 2568.117692]  dpu_encoder_phys_wb_disable+0x80/0xac [msm]
+> [ 2568.123233]  dpu_encoder_virt_atomic_disable+0xb4/0x160 [msm]
+> [ 2568.129224]  disable_outputs+0x108/0x32c [drm_kms_helper]
+> [ 2568.134858]  drm_atomic_helper_commit_modeset_disables+0x1c/0x4c 
+> [drm_kms_helper]
+> [ 2568.142614]  msm_atomic_commit_tail+0x188/0x514 [msm]
+> [ 2568.147894]  commit_tail+0xa4/0x18c [drm_kms_helper]
+> [ 2568.153065]  drm_atomic_helper_commit+0x17c/0x194 [drm_kms_helper]
+> [ 2568.159482]  drm_atomic_commit+0xb8/0xf4 [drm]
+> [ 2568.164176]  drm_mode_atomic_ioctl+0xad4/0xd88 [drm]
+> [ 2568.169369]  drm_ioctl_kernel+0xc0/0x128 [drm]
+> [ 2568.174039]  drm_ioctl+0x218/0x49c [drm]
+> [ 2568.178165]  __arm64_sys_ioctl+0xac/0xf0
+> [ 2568.182271]  invoke_syscall+0x48/0x10c
+> [ 2568.186217]  el0_svc_common.constprop.0+0xc0/0xe0
+> [ 2568.191109]  do_el0_svc+0x1c/0x28
+> [ 2568.194576]  el0_svc+0x34/0xd8
+> [ 2568.197788]  el0t_64_sync_handler+0x120/0x12c
+> [ 2568.202321]  el0t_64_sync+0x190/0x194
+> [ 2568.206157] Code: 910063e1 f8607822 f8607861 b9401042 (b9401021)
+> [ 2568.212484] ---[ end trace 0000000000000000 ]---
 > 
+> Neil
 > 
-> > > I've heard rumours (probably read some LWN article perhaps
-> > > https://lwn.net/Articles/836693/ ) that protected kvm for Android has
-> > > some mechanism to start the kernel in some higher priv level (EL2?),
-> > > then move most of it to EL1 while keeping a protected VPN shim in EL2.
-> > 
-> > s/VPN/KVM/
+>> +                rt_pp_idx[i] = enable ? hw_pp->idx : PINGPONG_NONE;
+>> +                break;
+>> +            }
+>> +        }
+>> +    }
+>> +
+>> +    /*
+>> +     * The CWB mux supports using LM or DSPP as tap points. For now,
+>> +     * always use LM tap point
+>> +     */
+>> +    cwb_cfg.input = INPUT_MODE_LM_OUT;
+>> +
+>> +    for (int i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
+>> +        hw_cwb = dpu_enc->hw_cwb[i];
+>> +        if (!hw_cwb)
+>> +            continue;
+>> +
+>> +        cwb_cfg.pp_idx = rt_pp_idx[i];
+>> +
+>> +        hw_cwb->ops.config_cwb(hw_cwb, &cwb_cfg);
+>> +    }
+>> +}
+>> +
+>>   void dpu_encoder_helper_phys_setup_cdm(struct dpu_encoder_phys 
+>> *phys_enc,
+>>                          const struct msm_format *dpu_fmt,
+>>                          u32 output_type)
+>> @@ -2557,6 +2630,14 @@ enum dpu_intf_mode 
+>> dpu_encoder_get_intf_mode(struct drm_encoder *encoder)
+>>       return INTF_MODE_NONE;
+>>   }
+>> +unsigned int dpu_encoder_helper_get_cwb(struct dpu_encoder_phys 
+>> *phys_enc)
+>> +{
+>> +    struct drm_encoder *encoder = phys_enc->parent;
+>> +    struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(encoder);
+>> +
+>> +    return dpu_enc->cwb_mask;
+>> +}
+>> +
+>>   unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys 
+>> *phys_enc)
+>>   {
+>>       struct drm_encoder *encoder = phys_enc->parent;
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/ 
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>> index e77ebe3a68da..d7a02d1f8053 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+>> @@ -1,6 +1,6 @@
+>>   /* SPDX-License-Identifier: GPL-2.0-only */
+>>   /*
+>> - * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>>    * Copyright (c) 2015-2018 The Linux Foundation. All rights reserved.
+>>    */
+>> @@ -331,6 +331,12 @@ static inline enum dpu_3d_blend_mode 
+>> dpu_encoder_helper_get_3d_blend_mode(
+>>       return BLEND_3D_NONE;
+>>   }
+>> +/**
+>> + * dpu_encoder_helper_get_cwb - get CWB blocks mask for the DPU encoder
+>> + * @phys_enc: Pointer to physical encoder structure
+>> + */
+>> +unsigned int dpu_encoder_helper_get_cwb(struct dpu_encoder_phys 
+>> *phys_enc);
+>> +
+>>   /**
+>>    * dpu_encoder_helper_get_dsc - get DSC blocks mask for the DPU encoder
+>>    *   This helper function is used by physical encoder to get DSC 
+>> blocks mask
+>> @@ -400,6 +406,14 @@ int dpu_encoder_helper_wait_for_irq(struct 
+>> dpu_encoder_phys *phys_enc,
+>>    */
+>>   void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys 
+>> *phys_enc);
+>> +/**
+>> + * dpu_encoder_helper_phys_setup_cwb - helper to configure CWB muxes
+>> + * @phys_enc: Pointer to physical encoder structure
+>> + * @enable: Enable CWB mux
+>> + */
+>> +void dpu_encoder_helper_phys_setup_cwb(struct dpu_encoder_phys 
+>> *phys_enc,
+>> +                       bool enable);
+>> +
+>>   /**
+>>    * dpu_encoder_helper_phys_setup_cdm - setup chroma down sampling block
+>>    * @phys_enc: Pointer to physical encoder
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/ 
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+>> index 882c717859ce..e88c4d91041f 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+>> @@ -1,6 +1,6 @@
+>>   // SPDX-License-Identifier: GPL-2.0-only
+>>   /*
+>> - * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights 
+>> reserved.
+>> + * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>>    */
+>>   #define pr_fmt(fmt)    "[drm:%s:%d] " fmt, __func__, __LINE__
+>> @@ -342,6 +342,8 @@ static void dpu_encoder_phys_wb_setup(
+>>       dpu_encoder_helper_phys_setup_cdm(phys_enc, dpu_fmt, 
+>> CDM_CDWN_OUTPUT_WB);
+>> +    dpu_encoder_helper_phys_setup_cwb(phys_enc, true);
+>> +
+>>       dpu_encoder_phys_wb_setup_ctl(phys_enc);
+>>   }
+>>
 > 
-> Yes we do initialize the pKVM hypervisor at EL2 fairly early at
-> device_initcall_sync (initcall 5) before we depriviledge the rest of the
-> kernel at EL1.
-> 
-
-Implementing code page integrity checks in pKVM as a reference spec for all the
-other EL2 developers and the kernel to "do the right thing" for
-hypervisor-based exploit prevention and kernel integrity checking would be a
-major success for ARM/Google. I am hoping I can get Moto to release our code.
-                                                                             
-> >                                                                          
-> > >                                                                        
-> > > Perhaps the answer is to leave the bpf verifier + jit compiler in EL2? 
-> >                                                                          
->                                                                            
-> What are the gains to move this at EL2 ? I am a bit late to this party.    
-> We don't have any init at that stage because it is too early. We do        
-> support some EL2 vendor modules loading from a ramdisk but this is a       
-> different story.                                                           
->                                                                            
-                                                                             
-I see moving the full JIT/verifier into EL2 as problematic because of increased
-threat surface. We've seen many project zero originated and third-party
-exploits targeting EL2 SMC interfaces on Android: *cough* a certain
-galactic-themed phone manufacturer's claims to have a system protecting these
-code pages, who never seemed to mention the complications seccomp creates, let
-alone the impossibility of filtering page table updates on snapdragon chipsets
-without reworking vmalloc infrastructure in what must be a GPL-2.0 compliant
-interface they never made open source, had serious SMC-call based CVEs in the
-past *cough* https://project-zero.issues.chromium.org/issues/42452502 *cough*
-
-From empirical evidence of implementing hypervisor-enforced code/data
-integrity, the only runtime interface needed for protecting everything but
-dynamically modifiable data structures (e.g. kworker queues) on Android is the
-standard EL2 page-level permission fault handler.
-
----
-
-I hope it was clear from my base PoC code that to ensure the filter is a "pure
-function" it is enough to reproduce the memory access semantics and protections
-introduced by BPF's verifier.c with additional limited scope. This at least
-practically ensures something using the mechanism of CVE-2021-33909 (_on
-Android in particular, generic linux is another ballpark_) cannot transform the
-seccomp code page into something breaking verifier.c's semantics. Though it may
-break the intended seccomp policy itself, I think that level of checking can be
-added on as an additional layer once this basic exploit is resolved.
-
-This in mind, as of last week, I've gone ahead and gotten my earlier, buggy PoC
-for an EL2-level seccomp verifier (in another earlier email in this chain)
-running on a real device. After I fixed some other bugs (they are pretty
-obvious once you look through the PoC code), I discovered empirically a QCOM
-hardware abstraction layer (HAL) service has a filter program that uses the
-stack (uses a store instruction to BPF_REGS_FP), so my initial hope of
-"banning" stores to memory outright *did* end up a no-go for one empirical
-case. The clear solution seems to be to relax the restrictions the smallest
-amount possible: check that stores in the program are in the predefined stack
-memory scratch area.
-
-Thankfully, BPF_REGS_FP is read-only. And I totally understand and support the
-possibility that a filter program can load/store from its well-defined stack
-space as a scratch area. Additionally, bpf_check_classic and the existence of
-
-        BUILD_BUG_ON(BPF_MEMWORDS * sizeof(u32) > MAX_BPF_STACK);
-
-Seems to communicate to me that the intentions here are that the BPF_STX
-allowed by seccomp's verifier is limited to the defined stack space relative to
-FP. My gut says check_load_and_stores and bpf_check_classic are not technically
-as strict as they should be for the intentions of SECCOMP, but just happen to
-work. I'd expect to see some code that just says "every store must index memory
-from a well-defined offset from the read-only FP", but I don't quite see that,
-unless I missed it (I think something to do with how fp->k is decided for
-struct sock_filter in the classic verfier), despite there being indications
-this was the intention elsewhere.
-
-But maybe I am incorrect to assume the stack is the theoretical limit on what
-can be the destination register for a seccomp filter store instruction for now
-(and into the future)? If not, why? Is there an explicit exception I can make
-in an EL2 verifier for filter programs that do not abide by these rules?
-
-For now, based on what I am seeing in the kernel, I think it may be fine to
-assume BPF_MEMWORDS associated with the stack is the theoretical limit on which
-memory should be store-able, and "hope" that all associated instructions are
-FP-relative.  If not, the alias register should be readily resolvable back to
-FP, though having a formal contract that it would be FP-relative in the
-kernel's JIT for cBPF would be awesome.
-
-Regards,
-Maxwell Bland
 
 
