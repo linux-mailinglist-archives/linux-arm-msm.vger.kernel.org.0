@@ -1,188 +1,890 @@
-Return-Path: <linux-arm-msm+bounces-32865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76A9998BB57
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:38:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A3E598BB63
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:39:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D25E1F20F0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 11:38:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2E3A21C235D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 11:39:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC0431BFE03;
-	Tue,  1 Oct 2024 11:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D047C1C0DF2;
+	Tue,  1 Oct 2024 11:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YoTrGRp1"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="2L+L3aHT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1780719DF53;
-	Tue,  1 Oct 2024 11:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AA71BFE17
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Oct 2024 11:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727782686; cv=none; b=hiKxn/ADTE0KGv4lHtHxrGjfaBsR8lCJ6+PXapJo1vU8bPS55JGulb5Af+Fd8fkqUQjXeOZnWUxI7YfHM9wgiE9PqGPvfb5wJRmFkleCTQ+Kl71r4p7KVXKHBjb3HrPpUhLGGXeKW/XYHNgzasugb+tBrEOuWqLcx9b3EFV6rts=
+	t=1727782786; cv=none; b=GXK/Edn0wGrUIHVQgyVCNrKSUBFvDxvUw4yMD5tn/WGt849VpJgAePTqKsVEaSP+hKUEnfSBGwPEYaVzzTr9RAeQ1m/puP4JoxMYBYxbwCM8GUnzLmACgEInUSzmCVnMQ3bdD1zmrrBdxfQ86VQSOVxthqRdUpeVDZK5GaSKIfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727782686; c=relaxed/simple;
-	bh=8GGy2t+zDlmFEH1+BK+kXfBif5WBL+v0s/d0M+5d6AA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=u4vFW+oQl/29apo/iHBbkkFJPh3SjOvaacCYDusAwtxqJsd4qf92Y7R0xWG8Jz5TKDc6v/EK7t5ztnOoyPZ5sP1dhiSBQiilaifrmEgVJvoTF777rXYx0VVDysaeJWlslBjFYCji0bNPcj4beEXANOKbyR6WZe0m80MAF8MKi/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YoTrGRp1; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491AC8OX001985;
-	Tue, 1 Oct 2024 11:37:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=FCgPRX2Lc/rLHJ6D7iOORv7rJsF1yr5pgyC
-	NDwjUY0I=; b=YoTrGRp1xbB1YyIH4OhWFaSK74Box4yUZMNT/h7PzOlCkUBu5PT
-	Jhn8RKTy4wdNiWMtfWKzq4pH+tBQ0V38BJR63I0POvaeYqXGbfFN0P6ah5KNKeVW
-	8hnjX89oFftYUIqrPQMW5gq0ZCKw9uARyyZo3DkyX5VTxuaZMkNYCMbb25VzHgIk
-	0msjkJlGhu8QFm/qL3kRxROcLcK8hsAVnAbfO+KG7BcaAHHNL0l3cBwHNI15jMmt
-	F8l+i2iLPiLWUp0nSeciESvTS8UgLJs2mn4/mGvnbvqt6td7U0wU6ch2NStBVNx7
-	26EDYujbt0fLQywq1/89/r281MsxsstYErQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xte0xseu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Oct 2024 11:37:50 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 491BbkNZ002799;
-	Tue, 1 Oct 2024 11:37:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 41xavm1wrg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Oct 2024 11:37:46 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 491BbjUO002793;
-	Tue, 1 Oct 2024 11:37:45 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.96.82])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 491BbjWV002790
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Oct 2024 11:37:45 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2370923)
-	id 52A2353F; Tue,  1 Oct 2024 17:07:44 +0530 (+0530)
-From: Vivek Pernamitta <quic_vpernami@quicinc.com>
-To: mhi@lists.linux.dev
-Cc: quic_qianyu@quicinc.com, manivannan.sadhasivam@linaro.org,
-        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
-        quic_skananth@quicinc.com, mrana@quicinc.com,
-        Vivek Pernamitta <quic_vpernami@quicinc.com>,
-        Slark Xiao <slark_xiao@163.com>,
-        Fabio Porcedda <fabio.porcedda@gmail.com>,
-        Mank Wang <mank.wang@netprisma.us>,
-        linux-arm-msm@vger.kernel.org (open list:MHI BUS),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] bus: mhi: host: pci_generic: Add support for QDU100 device
-Date: Tue,  1 Oct 2024 17:07:35 +0530
-Message-Id: <20241001113738.152467-1-quic_vpernami@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1727782786; c=relaxed/simple;
+	bh=pD/nAzh/JC3Yy8vz47LCQ98RO2wbehXfFJev0z3/ntw=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=R6zvY9evjEG0mYo8tNevUHk5jMz/6FM89aQ+J1abahXz1ZfrPtzGD8+EfgJxRKanO2IT7XxQLVJXa+000N+9y4GJyZ7u+Et9g2MpuRKoggMKzmZvjhcqFKhty9bVkhI/QkTUiioymkPrOeGlIZkuTh/VCEFgv1qhGTSMpCYe2bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=2L+L3aHT; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-a8d0d0aea3cso826790966b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2024 04:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1727782782; x=1728387582; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DyZ953iXXKsXJbg3ETb9NgZ074fj5Y+oAKrj8aXIIO8=;
+        b=2L+L3aHTi6RdF1449PBzFIP/H1Hjemmak9Lmb+dla/T1CEfZLL/9kiVKRJUwUmCsd2
+         JYbx/bbWQzA9f9CL+hDIiJXIcsB2wgy3LXZqmGFWEDTxF6WgmxCXpsg9H74c2U9Egr/J
+         XvJv1WRRengTFMC7HDWlTXOdRnATSEG3dPi8JaZbs2Ylq8BT5erSS06Nd/+ppWC3yZ2Z
+         EbmyH21mEuOwiQ1u2C0PEJOV8tdYhAlgV6erHqEjYZJCwY8+UNdstTiCm8pWMVUJQ5so
+         uHM6rfaP5UEZKPVnKj/hr/Vz3MBuTsOppSKH7wXtevKjG2oQnWQOk5LlLAS8za3bVNP8
+         kbyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727782782; x=1728387582;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DyZ953iXXKsXJbg3ETb9NgZ074fj5Y+oAKrj8aXIIO8=;
+        b=wcR5tvEhA7ewutvQgrt8WHB6Qd0WkUiJhoNzFgZIyl5hs+2T8TCmREMTbbsXmfAqC7
+         EbDbeeyOy462V5n/tIDuqR6XcMiIQpJLuGBSG4Zf+4ekL3k2n/VvFdZA/ICeL1mZca3w
+         +5l6F+h9v7cS90lL387hrxdwonmTMbjC7Zncf2ai1EujrMrkkTnkGbPABuOQCU7Ec4UE
+         RYhykHdn9F5KMcTnvryWUN7lqusfdOdZYlgDDc/ZVcz84UATUogVW5I0mRi5lWZVfjOS
+         4Uwq0fo3ktSeVByu+Jwe/vhT6r1Q7qmm/R9Wyk1fA8mIMwvw2oHFDO3eIoH2SMiQb94d
+         QpWA==
+X-Gm-Message-State: AOJu0Yw4/XARysIkgnElBrb1oJYcT8tcuHmxoyNax3ycuoq0SRYjNo+T
+	z4j0+7v6DrcJTJ1rDMzxJ2/EsNOqAaPM4mKsQqEpgR3FCvoUonFBsydINIWoqJM=
+X-Google-Smtp-Source: AGHT+IFtFFJw7nB+YbnAJrkzDoG9jgSGuoqRIpm0eg/MGZ7zZiniA/lrRkvlswGVhecTEwj9BJD56Q==
+X-Received: by 2002:a17:907:96aa:b0:a86:89ea:ee6c with SMTP id a640c23a62f3a-a93c4946cd5mr1836781066b.30.1727782781851;
+        Tue, 01 Oct 2024 04:39:41 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c2978a71sm697271266b.161.2024.10.01.04.39.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Oct 2024 04:39:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: HA-iO2LzxR8uE8Ptc_-sEAJaWS0yY6ad
-X-Proofpoint-GUID: HA-iO2LzxR8uE8Ptc_-sEAJaWS0yY6ad
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0 clxscore=1011
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410010075
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 01 Oct 2024 13:39:40 +0200
+Message-Id: <D4KFVNV1A4KG.CFLT81CFBDTM@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, "Suresh Vankadara"
+ <quic_svankada@quicinc.com>, "Trishansh Bhardwaj"
+ <quic_tbhardwa@quicinc.com>, <stable@vger.kernel.org>, "Hariram
+ Purushothaman" <quic_hariramp@quicinc.com>
+Subject: Re: [PATCH 00/10] (no cover subject)
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Vikram Sharma"
+ <quic_vikramsa@quicinc.com>, "Robert Foss" <rfoss@kernel.org>, "Todor
+ Tomov" <todor.too@gmail.com>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Kapatrala
+ Syed" <akapatra@quicinc.com>, "Hariram Purushothaman"
+ <hariramp@quicinc.com>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
+ Dybcio" <konradybcio@kernel.org>, "Hans Verkuil"
+ <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>, "Catalin
+ Marinas" <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com> <D4JK8TRL7XBL.3TBA1FBF32RXL@fairphone.com> <fc0ce5cd-e42a-432b-ad74-01de67ec0d5c@linaro.org> <D4KBQ3ENKF5Y.3D2AK81PELAEZ@fairphone.com> <e7cc5f91-a0a8-48fc-9eb6-b9c46b22dfeb@linaro.org>
+In-Reply-To: <e7cc5f91-a0a8-48fc-9eb6-b9c46b22dfeb@linaro.org>
 
-Add MHI controller configuration for QDU100 device.
+On Tue Oct 1, 2024 at 11:30 AM CEST, Bryan O'Donoghue wrote:
+> On 01/10/2024 09:24, Luca Weiss wrote:
+> >> media-ctl --reset
+> >> yavta --no-query -w '0x009f0903 2' /dev/v4l-subdev5
+> >> yavta --list /dev/v4l-subdev5
+> >> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> >> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> >> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> >> media-ctl -d /dev/media0 -p
+> > Hi Bryan!
+> >=20
+> > These commands are to set up the pipeline, and what then to grab an
+> > image from it?
+> >=20
+> > I tried this, but it also just hangs:
+> >=20
+> > $ yavta -B capture-mplane --capture=3D3 -n 3 -f SRGGB10P -s 4056x3040 /=
+dev/video0 --file=3Dfoo-#.bin
+> > Device /dev/video0 opened.
+> > Device `Qualcomm Camera Subsystem' on `platform:acb3000.camss' (driver =
+'qcom-camss') supports video, capture, with mplanes.
+> > Video format set: SRGGB10P (41415270) 4056x3040 field none, 1 planes:
+> >   * Stride 5072, buffer size 15418880
+> > Video format: SRGGB10P (41415270) 4056x3040 field none, 1 planes:
+> >   * Stride 5072, buffer size 15418880
+> > 3 buffers requested.
+> > length: 1 offset: 3326519176 timestamp type/source: mono/EoF
+> > Buffer 0/0 mapped at address 0xffffa0c00000.
+> > length: 1 offset: 3326519176 timestamp type/source: mono/EoF
+> > Buffer 1/0 mapped at address 0xffff9fc08000.
+> > length: 1 offset: 3326519176 timestamp type/source: mono/EoF
+> > Buffer 2/0 mapped at address 0xffff9ec10000.
+>
+> No there's no CSIPHY in that case, it should be the TPG inside of CSID0=
+=20
+> @ /dev/v4l-subdev5 which generates the data.
 
-This Qualcomm QDU100 device is inline accelerator card
-which is an extension to QRU100 5G RAN platform.
-which is designed to simplify 5G deployments by offering
-a turnkey solution for ease of deployment with O-RAN
-fronthaul and 5G NR layer 1 High (L1 High) processing,
-and to accelerate operator and infrastructure vendor
-adoption of virtualized RAN platforms.
+I understand the lack of csiphy involvement here, but how's this
+relevant to reading data from /dev/video0? That's the vfe which gets
+hooked up with the media-ctl commands to my understanding?
 
-https://docs.qualcomm.com/bundle/publicresource/87-79371-1_REV_A_Qualcomm_X100_5G_RAN_Accelerator_Card_Product_Brief.pdf
-Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
----
- drivers/bus/mhi/host/pci_generic.c | 49 ++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+And v4l-subdev5 is msm_csid0 on my device.
 
-diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-index 9938bb034c1c..1153697fa858 100644
---- a/drivers/bus/mhi/host/pci_generic.c
-+++ b/drivers/bus/mhi/host/pci_generic.c
-@@ -245,6 +245,52 @@ struct mhi_pci_dev_info {
- 		.channel = ch_num,		\
- 	}
- 
-+static const struct mhi_channel_config modem_qcom_qdu100_mhi_channels[] = {
-+	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 2),
-+	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 2),
-+	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 128, 1),
-+	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 128, 1),
-+	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 3),
-+	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 3),
-+	MHI_CHANNEL_CONFIG_UL(9, "QDSS", 64, 3),
-+	MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 4),
-+	MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 4),
-+	MHI_CHANNEL_CONFIG_UL(16, "CSM_CTRL", 32, 4),
-+	MHI_CHANNEL_CONFIG_DL(17, "CSM_CTRL", 32, 4),
-+	MHI_CHANNEL_CONFIG_UL(40, "MHI_PHC", 32, 4),
-+	MHI_CHANNEL_CONFIG_DL(41, "MHI_PHC", 32, 4),
-+	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 256, 5),
-+	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 256, 5),
-+	MHI_CHANNEL_CONFIG_UL(48, "IP_SW1", 256, 6),
-+	MHI_CHANNEL_CONFIG_DL(49, "IP_SW1", 256, 6),
-+	MHI_CHANNEL_CONFIG_UL(50, "IP_SW2", 256, 7),
-+	MHI_CHANNEL_CONFIG_DL(51, "IP_SW2", 256, 7),
-+};
-+
-+static struct mhi_event_config modem_qcom_qdu100_mhi_events[] = {
-+	/* first ring is control+data ring */
-+	MHI_EVENT_CONFIG_CTRL(0, 64),
-+	/* SAHARA dedicated event ring */
-+	MHI_EVENT_CONFIG_SW_DATA(1, 256),
-+	/* Software channels dedicated event ring */
-+	MHI_EVENT_CONFIG_SW_DATA(2, 64),
-+	MHI_EVENT_CONFIG_SW_DATA(3, 256),
-+	MHI_EVENT_CONFIG_SW_DATA(4, 256),
-+	/* Software IP channels dedicated event ring */
-+	MHI_EVENT_CONFIG_SW_DATA(5, 512),
-+	MHI_EVENT_CONFIG_SW_DATA(6, 512),
-+	MHI_EVENT_CONFIG_SW_DATA(7, 512),
-+};
-+
-+static const struct mhi_controller_config modem_qcom_qdu100_mhi_config = {
-+	.max_channels = 128,
-+	.timeout_ms = 120000,
-+	.num_channels = ARRAY_SIZE(modem_qcom_qdu100_mhi_channels),
-+	.ch_cfg = modem_qcom_qdu100_mhi_channels,
-+	.num_events = ARRAY_SIZE(modem_qcom_qdu100_mhi_events),
-+	.event_cfg = modem_qcom_qdu100_mhi_events,
-+};
-+
- static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
- 	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
- 	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
-@@ -822,6 +868,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
- 	/* NETPRISMA FCUN69 (SDX6X) */
- 	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
- 		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
-+	/* QDU100, x100-DU */
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0601),
-+		.driver_data = (kernel_ulong_t)&modem_qcom_qdu100_mhi_config },
- 	{  }
- };
- MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
--- 
-2.34.1
+>
+> Just for verification purposes do a  `media-ctl -d /dev/media0 -p` and=20
+> confirm that /dev/v4l-subdev5 =3D=3D csid0
+>
+> Rewrite the above as
+>
+> export csid0=3Dv4l-subdevX
+>
+> media-ctl --reset
+> yavta --no-query -w '0x009f0903 2' /dev/$csid0
+> yavta --list /dev/$csid0
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> media-ctl -d /dev/media0 -p
+>
+> basically you have to make sure you've set the TPG on the correct subdev.=
+.
+>
+> Something like in media-ctl subdev4 in my case.
+>
+> - entity 13: msm_csid0 (5 pads, 36 links, 0 routes)
+>               type V4L2 subdev subtype Unknown flags 0
+>               device node name /dev/v4l-subdev4
+>
+
+Sure, here's the output from the commands:
+
+fairphone-fp5:~$ export csid0=3Dv4l-subdev5
+fairphone-fp5:~$ media-ctl --reset
+fairphone-fp5:~$ yavta --no-query -w '0x009f0903 2' /dev/$csid0
+Device /dev/v4l-subdev5 opened.
+Control 0x009f0903 set to 2, is 2
+fairphone-fp5:~$  yavta --list /dev/$csid0
+Device /dev/v4l-subdev5 opened.
+--- Image Processing Controls (class 0x009f0001) ---
+control 0x009f0903 `Test Pattern' min 0 max 9 step 1 default 0 current 2
+  0: Disabled
+  1: Incrementing
+  2: Alternating 0x55/0xAA (*)
+  3: All Zeros 0x00
+  4: All Ones 0xFF
+  5: Pseudo-random Data
+  6: User Specified
+  7: Complex pattern
+  8: Color box
+  9: Color bars
+1 control found.
+Unable to get format: Not a tty (25).
+fairphone-fp5:~$ media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+fairphone-fp5:~$ media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+fairphone-fp5:~$ media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+fairphone-fp5:~$ media-ctl -d /dev/media0 -p
+Media controller API version 6.11.0
+
+Media device information
+------------------------
+driver          qcom-camss
+model           Qualcomm Camera Subsystem
+serial         =20
+bus info        platform:acb3000.camss
+hw revision     0x0
+driver version  6.11.0
+
+Device topology
+- entity 1: msm_csiphy0 (2 pads, 5 links, 0 routes)
+            type V4L2 subdev subtype Unknown flags 0
+            device node name /dev/v4l-subdev0
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_csid0":0 []
+                -> "msm_csid1":0 []
+                -> "msm_csid2":0 []
+                -> "msm_csid3":0 []
+                -> "msm_csid4":0 []
+
+- entity 4: msm_csiphy1 (2 pads, 5 links, 0 routes)
+            type V4L2 subdev subtype Unknown flags 0
+            device node name /dev/v4l-subdev1
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_csid0":0 []
+                -> "msm_csid1":0 []
+                -> "msm_csid2":0 []
+                -> "msm_csid3":0 []
+                -> "msm_csid4":0 []
+
+- entity 7: msm_csiphy2 (2 pads, 5 links, 0 routes)
+            type V4L2 subdev subtype Unknown flags 0
+            device node name /dev/v4l-subdev2
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_csid0":0 []
+                -> "msm_csid1":0 []
+                -> "msm_csid2":0 []
+                -> "msm_csid3":0 []
+                -> "msm_csid4":0 []
+
+- entity 10: msm_csiphy3 (2 pads, 5 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev3
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_csid0":0 []
+                -> "msm_csid1":0 []
+                -> "msm_csid2":0 []
+                -> "msm_csid3":0 []
+                -> "msm_csid4":0 []
+
+- entity 13: msm_csiphy4 (2 pads, 5 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev4
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_csid0":0 []
+                -> "msm_csid1":0 []
+                -> "msm_csid2":0 []
+                -> "msm_csid3":0 []
+                -> "msm_csid4":0 []
+
+- entity 16: msm_csid0 (5 pads, 22 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev5
+        pad0: Sink
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                <- "msm_csiphy0":1 []
+                <- "msm_csiphy1":1 []
+                <- "msm_csiphy2":1 []
+                <- "msm_csiphy3":1 []
+                <- "msm_csiphy4":1 []
+        pad1: Source
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                -> "msm_vfe0_rdi0":0 [ENABLED]
+                -> "msm_vfe1_rdi0":0 []
+                -> "msm_vfe2_rdi0":0 []
+                -> "msm_vfe3_rdi0":0 []
+                -> "msm_vfe4_rdi0":0 []
+        pad2: Source
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                -> "msm_vfe0_rdi1":0 []
+                -> "msm_vfe1_rdi1":0 []
+                -> "msm_vfe2_rdi1":0 []
+                -> "msm_vfe3_rdi1":0 []
+                -> "msm_vfe4_rdi1":0 []
+        pad3: Source
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                -> "msm_vfe0_rdi2":0 []
+                -> "msm_vfe1_rdi2":0 []
+                -> "msm_vfe2_rdi2":0 []
+                -> "msm_vfe3_rdi2":0 []
+                -> "msm_vfe4_rdi2":0 []
+        pad4: Source
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                -> "msm_vfe3_pix":0 []
+                -> "msm_vfe4_pix":0 []
+
+- entity 22: msm_csid1 (5 pads, 22 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev6
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csiphy0":1 []
+                <- "msm_csiphy1":1 []
+                <- "msm_csiphy2":1 []
+                <- "msm_csiphy3":1 []
+                <- "msm_csiphy4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi0":0 []
+                -> "msm_vfe1_rdi0":0 []
+                -> "msm_vfe2_rdi0":0 []
+                -> "msm_vfe3_rdi0":0 []
+                -> "msm_vfe4_rdi0":0 []
+        pad2: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi1":0 []
+                -> "msm_vfe1_rdi1":0 []
+                -> "msm_vfe2_rdi1":0 []
+                -> "msm_vfe3_rdi1":0 []
+                -> "msm_vfe4_rdi1":0 []
+        pad3: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi2":0 []
+                -> "msm_vfe1_rdi2":0 []
+                -> "msm_vfe2_rdi2":0 []
+                -> "msm_vfe3_rdi2":0 []
+                -> "msm_vfe4_rdi2":0 []
+        pad4: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_pix":0 []
+                -> "msm_vfe4_pix":0 []
+
+- entity 28: msm_csid2 (5 pads, 22 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev7
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csiphy0":1 []
+                <- "msm_csiphy1":1 []
+                <- "msm_csiphy2":1 []
+                <- "msm_csiphy3":1 []
+                <- "msm_csiphy4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi0":0 []
+                -> "msm_vfe1_rdi0":0 []
+                -> "msm_vfe2_rdi0":0 []
+                -> "msm_vfe3_rdi0":0 []
+                -> "msm_vfe4_rdi0":0 []
+        pad2: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi1":0 []
+                -> "msm_vfe1_rdi1":0 []
+                -> "msm_vfe2_rdi1":0 []
+                -> "msm_vfe3_rdi1":0 []
+                -> "msm_vfe4_rdi1":0 []
+        pad3: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi2":0 []
+                -> "msm_vfe1_rdi2":0 []
+                -> "msm_vfe2_rdi2":0 []
+                -> "msm_vfe3_rdi2":0 []
+                -> "msm_vfe4_rdi2":0 []
+        pad4: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_pix":0 []
+                -> "msm_vfe4_pix":0 []
+
+- entity 34: msm_csid3 (5 pads, 22 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev8
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csiphy0":1 []
+                <- "msm_csiphy1":1 []
+                <- "msm_csiphy2":1 []
+                <- "msm_csiphy3":1 []
+                <- "msm_csiphy4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi0":0 []
+                -> "msm_vfe1_rdi0":0 []
+                -> "msm_vfe2_rdi0":0 []
+                -> "msm_vfe3_rdi0":0 []
+                -> "msm_vfe4_rdi0":0 []
+        pad2: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi1":0 []
+                -> "msm_vfe1_rdi1":0 []
+                -> "msm_vfe2_rdi1":0 []
+                -> "msm_vfe3_rdi1":0 []
+                -> "msm_vfe4_rdi1":0 []
+        pad3: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi2":0 []
+                -> "msm_vfe1_rdi2":0 []
+                -> "msm_vfe2_rdi2":0 []
+                -> "msm_vfe3_rdi2":0 []
+                -> "msm_vfe4_rdi2":0 []
+        pad4: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_pix":0 []
+                -> "msm_vfe4_pix":0 []
+
+- entity 40: msm_csid4 (5 pads, 22 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev9
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csiphy0":1 []
+                <- "msm_csiphy1":1 []
+                <- "msm_csiphy2":1 []
+                <- "msm_csiphy3":1 []
+                <- "msm_csiphy4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi0":0 []
+                -> "msm_vfe1_rdi0":0 []
+                -> "msm_vfe2_rdi0":0 []
+                -> "msm_vfe3_rdi0":0 []
+                -> "msm_vfe4_rdi0":0 []
+        pad2: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi1":0 []
+                -> "msm_vfe1_rdi1":0 []
+                -> "msm_vfe2_rdi1":0 []
+                -> "msm_vfe3_rdi1":0 []
+                -> "msm_vfe4_rdi1":0 []
+        pad3: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_rdi2":0 []
+                -> "msm_vfe1_rdi2":0 []
+                -> "msm_vfe2_rdi2":0 []
+                -> "msm_vfe3_rdi2":0 []
+                -> "msm_vfe4_rdi2":0 []
+        pad4: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_pix":0 []
+                -> "msm_vfe4_pix":0 []
+
+- entity 46: msm_vfe0_rdi0 (2 pads, 6 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev10
+        pad0: Sink
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                <- "msm_csid0":1 [ENABLED]
+                <- "msm_csid1":1 []
+                <- "msm_csid2":1 []
+                <- "msm_csid3":1 []
+                <- "msm_csid4":1 []
+        pad1: Source
+                [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colorspace:=
+srgb]
+                -> "msm_vfe0_video0":0 [ENABLED,IMMUTABLE]
+
+- entity 49: msm_vfe0_video0 (1 pad, 1 link)
+             type Node subtype V4L flags 0
+             device node name /dev/video0
+        pad0: Sink
+                <- "msm_vfe0_rdi0":1 [ENABLED,IMMUTABLE]
+
+- entity 55: msm_vfe0_rdi1 (2 pads, 6 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev11
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":2 []
+                <- "msm_csid1":2 []
+                <- "msm_csid2":2 []
+                <- "msm_csid3":2 []
+                <- "msm_csid4":2 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_video1":0 [ENABLED,IMMUTABLE]
+
+- entity 58: msm_vfe0_video1 (1 pad, 1 link)
+             type Node subtype V4L flags 0
+             device node name /dev/video1
+        pad0: Sink
+                <- "msm_vfe0_rdi1":1 [ENABLED,IMMUTABLE]
+
+- entity 64: msm_vfe0_rdi2 (2 pads, 6 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev12
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":3 []
+                <- "msm_csid1":3 []
+                <- "msm_csid2":3 []
+                <- "msm_csid3":3 []
+                <- "msm_csid4":3 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe0_video2":0 [ENABLED,IMMUTABLE]
+
+- entity 67: msm_vfe0_video2 (1 pad, 1 link)
+             type Node subtype V4L flags 0
+             device node name /dev/video2
+        pad0: Sink
+                <- "msm_vfe0_rdi2":1 [ENABLED,IMMUTABLE]
+
+- entity 73: msm_vfe1_rdi0 (2 pads, 6 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev13
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":1 []
+                <- "msm_csid1":1 []
+                <- "msm_csid2":1 []
+                <- "msm_csid3":1 []
+                <- "msm_csid4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe1_video0":0 [ENABLED,IMMUTABLE]
+
+- entity 76: msm_vfe1_video0 (1 pad, 1 link)
+             type Node subtype V4L flags 0
+             device node name /dev/video3
+        pad0: Sink
+                <- "msm_vfe1_rdi0":1 [ENABLED,IMMUTABLE]
+
+- entity 82: msm_vfe1_rdi1 (2 pads, 6 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev14
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":2 []
+                <- "msm_csid1":2 []
+                <- "msm_csid2":2 []
+                <- "msm_csid3":2 []
+                <- "msm_csid4":2 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe1_video1":0 [ENABLED,IMMUTABLE]
+
+- entity 85: msm_vfe1_video1 (1 pad, 1 link)
+             type Node subtype V4L flags 0
+             device node name /dev/video4
+        pad0: Sink
+                <- "msm_vfe1_rdi1":1 [ENABLED,IMMUTABLE]
+
+- entity 91: msm_vfe1_rdi2 (2 pads, 6 links, 0 routes)
+             type V4L2 subdev subtype Unknown flags 0
+             device node name /dev/v4l-subdev15
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":3 []
+                <- "msm_csid1":3 []
+                <- "msm_csid2":3 []
+                <- "msm_csid3":3 []
+                <- "msm_csid4":3 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe1_video2":0 [ENABLED,IMMUTABLE]
+
+- entity 94: msm_vfe1_video2 (1 pad, 1 link)
+             type Node subtype V4L flags 0
+             device node name /dev/video5
+        pad0: Sink
+                <- "msm_vfe1_rdi2":1 [ENABLED,IMMUTABLE]
+
+- entity 100: msm_vfe2_rdi0 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev16
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":1 []
+                <- "msm_csid1":1 []
+                <- "msm_csid2":1 []
+                <- "msm_csid3":1 []
+                <- "msm_csid4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe2_video0":0 [ENABLED,IMMUTABLE]
+
+- entity 103: msm_vfe2_video0 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video6
+        pad0: Sink
+                <- "msm_vfe2_rdi0":1 [ENABLED,IMMUTABLE]
+
+- entity 109: msm_vfe2_rdi1 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev17
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":2 []
+                <- "msm_csid1":2 []
+                <- "msm_csid2":2 []
+                <- "msm_csid3":2 []
+                <- "msm_csid4":2 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe2_video1":0 [ENABLED,IMMUTABLE]
+
+- entity 112: msm_vfe2_video1 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video7
+        pad0: Sink
+                <- "msm_vfe2_rdi1":1 [ENABLED,IMMUTABLE]
+
+- entity 118: msm_vfe2_rdi2 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev18
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":3 []
+                <- "msm_csid1":3 []
+                <- "msm_csid2":3 []
+                <- "msm_csid3":3 []
+                <- "msm_csid4":3 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe2_video2":0 [ENABLED,IMMUTABLE]
+
+- entity 121: msm_vfe2_video2 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video8
+        pad0: Sink
+                <- "msm_vfe2_rdi2":1 [ENABLED,IMMUTABLE]
+
+- entity 127: msm_vfe3_rdi0 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev19
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":1 []
+                <- "msm_csid1":1 []
+                <- "msm_csid2":1 []
+                <- "msm_csid3":1 []
+                <- "msm_csid4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_video0":0 [ENABLED,IMMUTABLE]
+
+- entity 130: msm_vfe3_video0 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video9
+        pad0: Sink
+                <- "msm_vfe3_rdi0":1 [ENABLED,IMMUTABLE]
+
+- entity 136: msm_vfe3_rdi1 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev20
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":2 []
+                <- "msm_csid1":2 []
+                <- "msm_csid2":2 []
+                <- "msm_csid3":2 []
+                <- "msm_csid4":2 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_video1":0 [ENABLED,IMMUTABLE]
+
+- entity 139: msm_vfe3_video1 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video10
+        pad0: Sink
+                <- "msm_vfe3_rdi1":1 [ENABLED,IMMUTABLE]
+
+- entity 145: msm_vfe3_rdi2 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev21
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":3 []
+                <- "msm_csid1":3 []
+                <- "msm_csid2":3 []
+                <- "msm_csid3":3 []
+                <- "msm_csid4":3 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe3_video2":0 [ENABLED,IMMUTABLE]
+
+- entity 148: msm_vfe3_video2 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video11
+        pad0: Sink
+                <- "msm_vfe3_rdi2":1 [ENABLED,IMMUTABLE]
+
+- entity 154: msm_vfe3_pix (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev22
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb
+                 compose.bounds:(0,0)/1920x1080
+                 compose:(0,0)/1920x1080]
+                <- "msm_csid0":4 []
+                <- "msm_csid1":4 []
+                <- "msm_csid2":4 []
+                <- "msm_csid3":4 []
+                <- "msm_csid4":4 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb
+                 crop.bounds:(0,0)/1920x1080
+                 crop:(0,0)/1920x1080]
+                -> "msm_vfe3_video3":0 [ENABLED,IMMUTABLE]
+
+- entity 157: msm_vfe3_video3 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video12
+        pad0: Sink
+                <- "msm_vfe3_pix":1 [ENABLED,IMMUTABLE]
+
+- entity 163: msm_vfe4_rdi0 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev23
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":1 []
+                <- "msm_csid1":1 []
+                <- "msm_csid2":1 []
+                <- "msm_csid3":1 []
+                <- "msm_csid4":1 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe4_video0":0 [ENABLED,IMMUTABLE]
+
+- entity 166: msm_vfe4_video0 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video13
+        pad0: Sink
+                <- "msm_vfe4_rdi0":1 [ENABLED,IMMUTABLE]
+
+- entity 172: msm_vfe4_rdi1 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev24
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":2 []
+                <- "msm_csid1":2 []
+                <- "msm_csid2":2 []
+                <- "msm_csid3":2 []
+                <- "msm_csid4":2 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe4_video1":0 [ENABLED,IMMUTABLE]
+
+- entity 175: msm_vfe4_video1 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video14
+        pad0: Sink
+                <- "msm_vfe4_rdi1":1 [ENABLED,IMMUTABLE]
+
+- entity 181: msm_vfe4_rdi2 (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev25
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                <- "msm_csid0":3 []
+                <- "msm_csid1":3 []
+                <- "msm_csid2":3 []
+                <- "msm_csid3":3 []
+                <- "msm_csid4":3 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb]
+                -> "msm_vfe4_video2":0 [ENABLED,IMMUTABLE]
+
+- entity 184: msm_vfe4_video2 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video15
+        pad0: Sink
+                <- "msm_vfe4_rdi2":1 [ENABLED,IMMUTABLE]
+
+- entity 190: msm_vfe4_pix (2 pads, 6 links, 0 routes)
+              type V4L2 subdev subtype Unknown flags 0
+              device node name /dev/v4l-subdev26
+        pad0: Sink
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb
+                 compose.bounds:(0,0)/1920x1080
+                 compose:(0,0)/1920x1080]
+                <- "msm_csid0":4 []
+                <- "msm_csid1":4 []
+                <- "msm_csid2":4 []
+                <- "msm_csid3":4 []
+                <- "msm_csid4":4 []
+        pad1: Source
+                [stream:0 fmt:UYVY8_1X16/1920x1080 field:none colorspace:sr=
+gb
+                 crop.bounds:(0,0)/1920x1080
+                 crop:(0,0)/1920x1080]
+                -> "msm_vfe4_video3":0 [ENABLED,IMMUTABLE]
+
+- entity 193: msm_vfe4_video3 (1 pad, 1 link)
+              type Node subtype V4L flags 0
+              device node name /dev/video16
+        pad0: Sink
+                <- "msm_vfe4_pix":1 [ENABLED,IMMUTABLE]
+
+
+
+
+> =3D>
+>
+> export csid0=3Dv4l-subdev4
+>
+> media-ctl --reset
+> yavta --no-query -w '0x009f0903 2' /dev/$csid0
+> yavta --list /dev/$csid0
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> media-ctl -d /dev/media0 -p
+>
+>
+> ---
+> bod
 
 
