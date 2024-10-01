@@ -1,105 +1,106 @@
-Return-Path: <linux-arm-msm+bounces-32880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32881-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA14B98BCC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 14:51:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 820CE98BCEF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 14:58:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF343285817
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 12:51:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9F7A1C23709
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 12:58:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB6F21C4600;
-	Tue,  1 Oct 2024 12:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73D321C32F7;
+	Tue,  1 Oct 2024 12:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IiFd4R1T"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q3jqfhjh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF751C3317;
-	Tue,  1 Oct 2024 12:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EFF1C2458;
+	Tue,  1 Oct 2024 12:58:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727787071; cv=none; b=f8oF8yGgRmOX22FJHBp1T0HN9DcKl3RGeczUMntxOOv1ZSBcw7XeQbJ6wtnzN24vvZZUTWmcmsC9xTTLur/4mvEzSXYxVaaYB75OZHZfVzHp+K3pIN2XwyJjUWJDkzHHzBvRbtPyttthurH2hp3M38OU+w/l81Op83hb3udH4QY=
+	t=1727787487; cv=none; b=gq1QY0Vhdrby4wESmxEVZmgtCKyzK0bCz//jbMNsnDIlS5/sFgnY1sLdbKwngWhTDggaCCnwtfOAMLxzDF7gK5UsoDyS2zq3UQ7rNjwiqA6qeb5owe/Fw9W1PddQ/HqQpGGFNm8N7hxb26hNKtMCeEg1Q6YJxlvNLiuLCkZFs2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727787071; c=relaxed/simple;
-	bh=8cjBwVE6o2FcnHOa80+/400/+iu70ZSyEBWqXZ6ATdg=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzX5FuI9WF69UVQgtgm+JUKeI2Xx5H6dBz/CEYqK1R/O5sXn37R4JqnI9rSUrEKwre1lhx0tmTTgShrk2IIltPqqo5ivXq+zUlAX55GwrMjd5jAyZPVg0kVwW3z5vbPv/nww5Kxqap1D7Yj9S3OHdlg2BYfIrsBrOGfyW1OgwKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IiFd4R1T; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF09C4CEDB;
-	Tue,  1 Oct 2024 12:51:11 +0000 (UTC)
+	s=arc-20240116; t=1727787487; c=relaxed/simple;
+	bh=QyEZfHdMYJ+lGcIcvHz3IB8FoqlRl1lML5exUpqUBTA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CmFTtRGp9ZJ0sYAZRGiA/3M1H/uCIj5JYJYjHZAMqxJq36B356dkxHrJKa19jIs+TkrO356Tm98+0JBRiaorzP8x8KKd+r5TBWDZg4uN8oxnxMrxI9alEWOB9llSSr5xGveip/BC8Uhus2cVc3p3z2WHq+ZybAuXNmE19kU26jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q3jqfhjh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B902C4CEC6;
+	Tue,  1 Oct 2024 12:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727787071;
-	bh=8cjBwVE6o2FcnHOa80+/400/+iu70ZSyEBWqXZ6ATdg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiFd4R1TuTPnAN1+gACi2ZJdi7dWK4LSz+Z9pOo6XX8n8BptvPCsx1qAH3Ap20tVw
-	 WmINjEt8hNG/1lE93sC8sNDF7RRFEgKIQxkpvwLKy6DTOV6mntxCMUKw7BWDiuZKz7
-	 fohKmBozc2mKDMpk1R1Qc9/gUXMe1HVY8/v91OenxjRJJTGt84miw6rsrYB0OdcOJo
-	 GTbvP4UgYvCzKd9SIj3tDpDhUd0wJL+zL7rGsESDIPYrb0V499LOavAf/2n9WMP6BE
-	 v48fBzQAw4Cn/yagdqAzToywuHa7Dweh5OxxAVp8I54SxvbFA9nEza4CETciOD0YZI
-	 LGQ7GQ5nyddQA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1svcLP-000000002mU-23Hc;
-	Tue, 01 Oct 2024 14:51:11 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2 7/7] serial: qcom-geni: drop unused receive parameter
-Date: Tue,  1 Oct 2024 14:50:33 +0200
-Message-ID: <20241001125033.10625-8-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241001125033.10625-1-johan+linaro@kernel.org>
-References: <20241001125033.10625-1-johan+linaro@kernel.org>
+	s=k20201202; t=1727787486;
+	bh=QyEZfHdMYJ+lGcIcvHz3IB8FoqlRl1lML5exUpqUBTA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Q3jqfhjhJyToS+rPzZEqV2DJHGWKizZqhHmzKQuND2eWzdqfwlCiEcnOC/smQGWQf
+	 xCxKLd07nggWaurz38kUUdZHDyk3A+M6jVagcA7hvkUJP9J11iCirRhkYcfXGA9+l8
+	 b4qdhP3wrEyBCFp446b+WBxr5UkZz1Vs133zl+CP/a0XXg8HtjBjNbXXUX3RnEk1zz
+	 TFTurWbtXnpmAk76Gp9i1lt+djTnXrwIx0vqUDsIEWXyIAnYHhC6P0RbVEhgjUcRez
+	 IBIYsagFf3KlFaijPENMZcVHYQ74vQWpHD14jes0b4HWXzd43+9F6Q+Zn+CfU3vpVo
+	 cSQKhfHvoeEuQ==
+Date: Tue, 1 Oct 2024 13:58:01 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Markus Elfring <Markus.Elfring@web.de>
+Cc: Bjorn Andersson <quic_bjorande@quicinc.com>,
+	alsa-devel@alsa-project.org, linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Rohit kumar <quic_rohkumar@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Takashi Iwai <tiwai@suse.com>, Zichen Xie <zichenxie0106@gmail.com>,
+	Zijie Zhao <zzjas98@gmail.com>
+Subject: Re: [PATCH] Fix possible NULL Pointer Dereference in
+ 'asoc_qcom_lpass_cpu_platform_probe'
+Message-ID: <1b8a5949-2501-4501-b722-137fcf122cf6@sirena.org.uk>
+References: <Zvrb+q28S/C4z2eH@hu-bjorande-lv.qualcomm.com>
+ <cf8e2da5-818d-4783-a3c4-bb6aa62088f2@web.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="/cGtRaFPuIMQKWOf"
+Content-Disposition: inline
+In-Reply-To: <cf8e2da5-818d-4783-a3c4-bb6aa62088f2@web.de>
+X-Cookie: Even a hawk is an eagle among crows.
 
-Serial drivers should not be dropping characters themselves, but at
-least drop the unused 'drop' parameter from the receive handler for now.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/tty/serial/qcom_geni_serial.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+--/cGtRaFPuIMQKWOf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 8bc4b240bf59..daa852785bd9 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -562,7 +562,7 @@ static void handle_rx_console(struct uart_port *uport, u32 bytes, bool drop)
- }
- #endif /* CONFIG_SERIAL_QCOM_GENI_CONSOLE */
- 
--static void handle_rx_uart(struct uart_port *uport, u32 bytes, bool drop)
-+static void handle_rx_uart(struct uart_port *uport, u32 bytes)
- {
- 	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	struct tty_port *tport = &uport->state->port;
-@@ -855,7 +855,7 @@ static void qcom_geni_serial_handle_rx_dma(struct uart_port *uport, bool drop)
- 	}
- 
- 	if (!drop)
--		handle_rx_uart(uport, rx_in, drop);
-+		handle_rx_uart(uport, rx_in);
- 
- 	ret = geni_se_rx_dma_prep(&port->se, port->rx_buf,
- 				  DMA_RX_BUF_SIZE,
--- 
-2.45.2
+On Tue, Oct 01, 2024 at 02:48:54PM +0200, Markus Elfring wrote:
 
+> > Your description and patch looks good to me.
+
+> Interesting =E2=80=9Cview=E2=80=9D =E2=80=A6
+
+Feel free to ignore Markus, he has a long history of sending
+unhelpful review comments and continues to ignore repeated requests
+to stop.
+
+--/cGtRaFPuIMQKWOf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmb78dgACgkQJNaLcl1U
+h9Ae2gf/SjdwIbpI6k7ZUnbe4dgp9xn/Piq0S4chNNyqq3t0wy+zWAyUwLRjL5Y5
++nWCk3X0qImHgisbz6Z0m+4CA3a5voxCYUVtHCMFVljfydvNve5AzxDFQsYhDWub
+nBgHEqiceARe+qyhYooXEnrgeAC0LWU8J+7tXt/ylrIgo14rlGZQSiEw36DeynCG
+tOpBI7eXSjfTJFwn3Q3+o7tA05cI1A2JP5IOcjp2KD6rXqSBg5DzhnZPwH6VGz9w
+gQvhnVBft5ZIXqy+GZPy7dJqnKINZxivNGgnxnV7D7/812hBNDMriEvMQHJtLpe+
+9MqYln6QlWgAyy7xethxx5A46RPpYg==
+=kNGb
+-----END PGP SIGNATURE-----
+
+--/cGtRaFPuIMQKWOf--
 
