@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-32902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D20798C62D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 21:44:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E61B98C62F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 21:45:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E85261F221D0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 19:44:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9EAD1F22520
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 19:45:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FE411CDA03;
-	Tue,  1 Oct 2024 19:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D56891CC898;
+	Tue,  1 Oct 2024 19:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Xf/FLH2Q"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IJ3RKnHn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BF319FA9D;
-	Tue,  1 Oct 2024 19:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4051321D;
+	Tue,  1 Oct 2024 19:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727811871; cv=none; b=ZqJLTtdRWkKIOXlXiTQZjqujCEGixUdZcxNzkEiZ1yHAk6tN02HHRUZAMlX9ZUDU5hccX+up02xRfumjXiR1YREfY7WXZdi7bVz1302TPhElrEBEBoZc8druGogPf1nnFkXGvPZMh5JHmLCSlykuadh1QzKSogUYuETEPjTZ1N4=
+	t=1727811934; cv=none; b=VARoRptDiW0PD9XuCV4rHmRqVPGE2O25oYcK53Z5L00DxS6gnayUl/ROq3h+RhLR5pXpsQ1D8reqTU6p6Hwu421/8dSvN5GiUVc5tK/jabfi3Bwbk3IbYKil3C91CauBxW3hLcsRcUhxVfmkasTa3+zY3HkMnCuRnhgxwUt1mNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727811871; c=relaxed/simple;
-	bh=Ew4qaq7NH/G+x2l2SArBQPdLEmlQb/bUg63E3o4yD2E=;
+	s=arc-20240116; t=1727811934; c=relaxed/simple;
+	bh=0dcHpSThL1HpAZucSpJAzYAzmgO6PumaqA1JSgMYfUc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Rq9EZ7zCetq0u4fCcsP07A+9riOnNLXYu7NHxr7rBWWNP0hn5yOpNFAR67bDg07y3hFTpeG+Ke6Z00wv37AF6FTGIRV6wBz9tLWmbcJYW6Xt8jJOjpjYqCXKXbvugkYVtsamoFJK71YXnTCDm2tQEEEO7/Va8n0pchnEDMA3slg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Xf/FLH2Q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BDAC4CEC6;
-	Tue,  1 Oct 2024 19:44:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=pZTwI82qbP4MaU9qpoHj14Jnd0jG5ljYbehUX27Ee5bgWan0q+O56aToXl1DHLQMXelrS+i8YAfyjFaKQNsrkGg0/njqT7HRZffmeNkmNm5j8aWKmaZ5T1BqU3u3ws9xAg76gfQbt7ZdjvIJ8KzZCkbzseU/MmmkrPcRO+LOr40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IJ3RKnHn; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72819C4CEC6;
+	Tue,  1 Oct 2024 19:45:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727811871;
-	bh=Ew4qaq7NH/G+x2l2SArBQPdLEmlQb/bUg63E3o4yD2E=;
+	s=k20201202; t=1727811934;
+	bh=0dcHpSThL1HpAZucSpJAzYAzmgO6PumaqA1JSgMYfUc=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Xf/FLH2Q9S0H43sjJPfzTEE9C2JYb6oPRXoLmolCx1fRn0gW14rzJtIehQrh8WSJ6
-	 US3yjoOY58X7rUePG2laNOvjcXolxV89CWnLRBADKg1r2P4jb63gkD3l3kUTy4yulu
-	 mJmuW+M6s0PTdMbcwsmd6xr0XDjaYFFPZVkygf4APOVtBx5lTrVsuwUjO13/5rwt4m
-	 U7/uzoTuAVoLCFqKO47+PdrCP86rHPBHrV/4T/01mgQBT0GuLZWwxQeEijljUMQqFa
-	 sqKHntS3inFfDSXR8TPEMhoJATvvPBhFotWO547BewUCgem6Nz190xAcxtWsSmq9Zi
-	 Nwwn2DkLo+GMw==
-Message-ID: <a644059c-428c-4a5b-ba0b-574ef7bb644c@kernel.org>
-Date: Tue, 1 Oct 2024 21:44:24 +0200
+	b=IJ3RKnHnFha5a9c1Z6Ev/ZmCKO5XvH5HgGw1In9MtpbauVe1/lPdrLM7FpnL9IbKI
+	 5F6j8MwZBazoM57lPjlEGl0/+9KgQFuIxncfyE7eU1dnBHUU1jIW0cbUh4AUR0acls
+	 LUXbq9Hs9k6VVYt0eWrSCDj7Yfdj7n0keJa5DXekBlbTtJ8Hm8aocue8b/OdcMbZmK
+	 CWvSd7K5dnf49UKUTEYV2yE6wR4m/jmteRDS2YkNIFji6DlS8Llk72d1FOcXk5R8pT
+	 b3QaK1fa2gw7J2xFb6sZUWXMs+Py0TC1VVy6KwqIgqdImv4RPXwavzDkOZxSYwQWY4
+	 FqZwzJBUeNw0Q==
+Message-ID: <a78e1fa4-3e13-466e-a0ae-04912e90c09a@kernel.org>
+Date: Tue, 1 Oct 2024 21:45:27 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fix possible NULL Pointer Dereference in
- 'asoc_qcom_lpass_cpu_platform_probe'
+Subject: Re: [PATCH] ASoC: qcom: Fix NULL Dereference in
+ asoc_qcom_lpass_cpu_platform_probe()
 To: Gax-c <zichenxie0106@gmail.com>, srinivas.kandagatla@linaro.org,
  lgirdwood@gmail.com, broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
  rohitkr@codeaurora.org
 Cc: alsa-devel@alsa-project.org, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, Zijie Zhao <zzjas98@gmail.com>,
+ linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org, Zijie Zhao <zzjas98@gmail.com>,
  Chenyuan Yang <chenyuan0y@gmail.com>
-References: <20240930011521.26283-1-zichenxie0106@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+References: <20241001002409.11989-1-zichenxie0106@gmail.com>
 Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -104,35 +105,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20240930011521.26283-1-zichenxie0106@gmail.com>
+In-Reply-To: <20241001002409.11989-1-zichenxie0106@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 30/09/2024 03:15, Gax-c wrote:
-> A 'devm_kzalloc' in 'asoc_qcom_lpass_cpu_platform_probe' could possibly return NULL pointer.
-> NULL Pointer Dereference may be triggerred in 'asoc_qcom_lpass_cpu_platform_probe' without addtional check.
-> Add a null check for the returned pointer.
-
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
-
+On 01/10/2024 02:24, Gax-c wrote:
+> A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could possibly return NULL pointer.
+> NULL Pointer Dereference may be triggerred without addtional check.
+> Add a NULL check for the returned pointer.
 > 
 > Fixes: b5022a36d28f ("ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers")
 > Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
 > Reported-by: Zichen Xie <zichenxie0106@gmail.com>
-
-Drop the unnecessary tag. You are the author.
-
 > Reported-by: Zijie Zhao <zzjas98@gmail.com>
 > Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
 
-Why two people reported it? And where?
+Commit still needs improvements.
 
-> ---
->  sound/soc/qcom/lpass-cpu.c | 3 +++
->  1 file changed, 3 insertions(+)
-
+You ignored also Bjorn's review.
 
 Best regards,
 Krzysztof
