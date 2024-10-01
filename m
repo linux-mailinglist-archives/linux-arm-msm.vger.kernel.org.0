@@ -1,99 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-32885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32886-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B22DB98BE1A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 15:39:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B9C398BE53
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 15:49:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 66EDC2853E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:39:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9BF111F22C27
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0C4E1C3F34;
-	Tue,  1 Oct 2024 13:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 052A01C68B4;
+	Tue,  1 Oct 2024 13:48:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i3LBZkwN"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HNwkIeX2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34BB6AA7;
-	Tue,  1 Oct 2024 13:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 572B81C579F;
+	Tue,  1 Oct 2024 13:48:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727789952; cv=none; b=NPoPtfLlqljS9MsKl9UhMt5yJRE5tNaMXbzI+MaTkSFH9XT4JZazVoHB/hJAV7Du95hCFcIT9Ng/18HWbNkebxr16r99Wvuus8eNaL6onQOBhvfBz3JgiaN8/Z9c9/mb7jwNbMns19q55h+rKC/29vjr0g1SJSTmYOANx6lnngE=
+	t=1727790513; cv=none; b=LxUy62IptB7/GSENaoNABA5amEdSq1+Fw2NORTEEPraIidDo1Xe5Sg4eH+C4nxbuTSU81DRUombF31nOZWLZ2CxFd+LUtFkIi9P2vTF2GOKPN2KqdYpvFuBbjR3cxdqtSt4zNTy/FRvDG9Ys1OEQGRA4CHd9hxmFswo21zw6JBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727789952; c=relaxed/simple;
-	bh=aw8Zi8+Zmdb80JGksXuvNr/EE6LmzOtQfwjx4i3y3Ms=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=liu1zGlSvtfwtZCH7o1O0Cpuv3b8zLleiXvP0ce22xlqhpvCW4sffoOVvM9w5NxlReUR7J14Bwl6U5ATHcmIsLlEQwhFyO5EVuTTFVuJdvw6UI128M7Mm0V1HaZQIQTMFtJ9nRqkcHmyq2pXUcKREr+2VeL6gJCkNkslPtf3tw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i3LBZkwN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDD6C4CECD;
-	Tue,  1 Oct 2024 13:39:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727789952;
-	bh=aw8Zi8+Zmdb80JGksXuvNr/EE6LmzOtQfwjx4i3y3Ms=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=i3LBZkwNp5vUpwy3ZnUfzXzvbSGDmnlrmu2dQKB3hn5jfhKJ9Jy0OBNRLV7Z5WacK
-	 01HkNEq4xPZ75IqOXU+ln8/C5A0L4Y91kEMIH0EwkvhA0Uq8FizFbLySDlZeM4b24b
-	 TmVqLHE4Bhe9bhwEBiH4TwIkJb7e+o/vsEHd6oi7Z/YTuM/t6BI8iUN2eCGzsVpN3W
-	 BLHwvdFeD3TAY59ktr3ddvli8I+LtOeU+UQg3xCDgQYg4/cdXB31duDRwMkNPV/Kkz
-	 xOrt8E7opL6XntmLOHI6bMrMtuu+BUp54l7CYDV7dlpPXOKBWwdaLy9q272irAJPUr
-	 A3LmkIiwEKRaA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1svd5r-000000003nU-21Bx;
-	Tue, 01 Oct 2024 15:39:12 +0200
-Date: Tue, 1 Oct 2024 15:39:11 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-serial@vger.kernel.org, stable@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH v2 2/7] serial: qcom-geni: fix shutdown race
-Message-ID: <Zvv7f-3cQ92YlKik@hovoldconsulting.com>
-References: <20241001125033.10625-1-johan+linaro@kernel.org>
- <20241001125033.10625-3-johan+linaro@kernel.org>
- <CAMRc=MeYSsh+MOrOHSabiHuyGOrZK330WuNXcGDtg-siJFya=g@mail.gmail.com>
+	s=arc-20240116; t=1727790513; c=relaxed/simple;
+	bh=hYg0Fu0D6IoftEUgUjWbcBn5SdluW6xHgOAg9+UBNzA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fJ17iRkkELM23Ux+20ljUFWpSL26/ghYtXc4VKEGxZ+rOOmzWXiQrDnGCCajH2aOQJ4coo9FH4KsP1qRE9Tv1E1hxXILg8JJZLPNZzJbE+PQEe+jlpDwwj2Nk//Pgc+2koZ6JF1nNutW1ttQHDCrR6h/+G+SZJE1G3m52VgeUAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HNwkIeX2; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1727790513; x=1759326513;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=hYg0Fu0D6IoftEUgUjWbcBn5SdluW6xHgOAg9+UBNzA=;
+  b=HNwkIeX2M3ZbW84YnM698zxb087PJN++6JW31D4Mddf+hb1rVpFzKQPo
+   PYthRGh/rsHH+VheNasG0bnVN+fzVm3cfH5TPP2+0980ISaPlRE6MuTmZ
+   /8WPez2+kp5T3Z+OzGuqD8aQZObJoijCkR+WVEzEYcY1yS7XAQ75ae7Yy
+   E8H0GrhCHoGUzRVbauGSHPhsXbkJguhkFju3TwMNzWvE5VQLV/0ZlNwxE
+   rnXndD5EhFZ6YqF9UbLZuy+HhdeZlDcXe5SIG6hrzfFRPyJ/Xh+ZkU4pk
+   k2/HKFn/2aWrnDMybh7/SwZA7fFx0hJyFXytW6w+Eozv6OsXnepK3Ygo7
+   Q==;
+X-CSE-ConnectionGUID: CEurDm+zSXK1F7c5n/RCQQ==
+X-CSE-MsgGUID: LhkMJ57JTpaK8Wjlv+nc/g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11212"; a="27018698"
+X-IronPort-AV: E=Sophos;i="6.11,167,1725346800"; 
+   d="scan'208";a="27018698"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2024 06:48:31 -0700
+X-CSE-ConnectionGUID: vvOEWfuOQp6aUElZPlvVAw==
+X-CSE-MsgGUID: jKRp70E6QsmfnSnjQ90fUw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,167,1725346800"; 
+   d="scan'208";a="78534228"
+Received: from aslawinx-mobl.ger.corp.intel.com (HELO [10.94.0.53]) ([10.94.0.53])
+  by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Oct 2024 06:48:25 -0700
+Message-ID: <04f17b40-cb63-4758-80fb-91996f71a07c@linux.intel.com>
+Date: Tue, 1 Oct 2024 15:48:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMRc=MeYSsh+MOrOHSabiHuyGOrZK330WuNXcGDtg-siJFya=g@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v28 18/32] ASoC: doc: Add documentation for SOC USB
+To: Wesley Cheng <quic_wcheng@quicinc.com>, srinivas.kandagatla@linaro.org,
+ mathias.nyman@intel.com, perex@perex.cz, conor+dt@kernel.org,
+ dmitry.torokhov@gmail.com, corbet@lwn.net, broonie@kernel.org,
+ lgirdwood@gmail.com, tiwai@suse.com, krzk+dt@kernel.org,
+ pierre-louis.bossart@linux.intel.com, Thinh.Nguyen@synopsys.com,
+ bgoswami@quicinc.com, robh@kernel.org, gregkh@linuxfoundation.org
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-sound@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-doc@vger.kernel.org, alsa-devel@alsa-project.org
+References: <20240925010000.2231406-1-quic_wcheng@quicinc.com>
+ <20240925010000.2231406-19-quic_wcheng@quicinc.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Amadeusz_S=C5=82awi=C5=84ski?=
+ <amadeuszx.slawinski@linux.intel.com>
+In-Reply-To: <20240925010000.2231406-19-quic_wcheng@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 01, 2024 at 03:36:57PM +0200, Bartosz Golaszewski wrote:
-> On Tue, Oct 1, 2024 at 2:51 PM Johan Hovold <johan+linaro@kernel.org> wrote:
-> >
-> > A commit adding back the stopping of tx on port shutdown failed to add
-> > back the locking which had also been removed by commit e83766334f96
-> > ("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART
-> > shutdown").
-> >
-> > Holding the port lock is needed to serialise against the console code,
-> > which may update the interrupt enable register and access the port
-> > state.
-> >
-> > Fixes: d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in progress at shutdown")
-> > Fixes: 947cc4ecc06c ("serial: qcom-geni: fix soft lockup on sw flow control and suspend")
-> > Cc: stable@vger.kernel.org      # 6.3
-> > Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+On 9/25/2024 2:59 AM, Wesley Cheng wrote:
+> With the introduction of the soc-usb driver, add documentation highlighting
+> details on how to utilize the new driver and how it interacts with
+> different components in USB SND and ASoC.  It provides examples on how to
+> implement the drivers that will need to be introduced in order to enable
+> USB audio offloading.
+> 
+> Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+> ---
 
-> I already reviewed this[1]. I suggest using b4 for automated tag pickup.
+...
 
-There were changes in v2 so I dropped your tag on purpose.
+> +USB Offload Related Kcontrols
+> +=============================
+> +Details
+> +-------
+> +A set of kcontrols can be utilized by applications to help select the proper sound
+> +devices to enable USB audio offloading.  SOC USB exposes the get_offload_dev()
+> +callback that designs can use to ensure that the proper indices are returned to the
+> +application.
+> +
+> +Implementation
+> +--------------
+> +
+> +**Example:**
+> +
+> +  **Sound Cards**:
+> +
+> +	::
+> +
+> +	  0 [SM8250MTPWCD938]: sm8250 - SM8250-MTP-WCD9380-WSA8810-VA-D
+> +						SM8250-MTP-WCD9380-WSA8810-VA-DMIC
+> +	  1 [Seri           ]: USB-Audio - Plantronics Blackwire 3225 Seri
+> +						Plantronics Plantronics Blackwire
+> +						3225 Seri at usb-xhci-hcd.1.auto-1.1,
+> +						full sp
+> +	  2 [C320M          ]: USB-Audio - Plantronics C320-M
+> +                      Plantronics Plantronics C320-M at usb-xhci-hcd.1.auto-1.2, full speed
+> +
+> +  **USB Sound Card** - card#1:
+> +
+> +	::
+> +
+> +	  USB Offload Playback Route PCM#0        -1, -1 (range -1->255)
+> +
+> +  **USB Sound Card** - card#2:
+> +
+> +	::
+> +
+> +	  USB Offload Playback Route PCM#0        0, 1 (range -1->255)
+> +
+> +The above example shows a scenario where the system has one ASoC platform card
+> +(card#0) and two USB sound devices connected (card#1 and card#2).  When reading
+> +the available kcontrols for each USB audio device, the following kcontrol lists
+> +the mapped offload path for the specific device:
+> +
+> +	``USB Offload Playback Route#*``
+> +
 
-Johan
+Those examples would probably be easier to follow if you also provided 
+something similar to "aplay -l" output in addition to above sound card list.
+
+> +The kcontrol is indexed, because a USB audio device could potentially have
+> +several PCM devices.  The above kcontrols are defined as:
+> +
+> +  - ``USB Offload Playback Route PCM`` **(R)**: Returns the ASoC platform sound
+> +    card and PCM device index.  The output **"0, 1"** (card index, PCM device index)
+> +    signifies that there is an available offload path for the USB SND device
+> +    through card#0 - PCM device#1.  If **"-1, -1"** is seen, then no offload path is
+> +    available for the USB SND device.
+> +
+
+
 
