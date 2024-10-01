@@ -1,102 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-32892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F39D98BFC3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 16:22:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96A8998BFC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 16:23:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B2705280D7F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 14:22:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C292280DA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 14:23:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68C951C7B82;
-	Tue,  1 Oct 2024 14:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B4721C6F48;
+	Tue,  1 Oct 2024 14:22:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pjNIQx1H"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="1vvqlon/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F571C68A9
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Oct 2024 14:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1CD1C6893
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Oct 2024 14:22:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727792473; cv=none; b=gZ8kRj8Z6sMSt0hyjfZ6A6rXxqsGimKEIDzYcTaZtW/lQze3hHxQUdclJIZ6sWCbh/OIpx8MPOKMPgLFdpxdGycwlj9ZXCDt0WxvUbuOYtGYWBnhRwE1/N+W9OmATpMiw/JwcueMrh0D0K/hag592OauIDpQTix2SfWghVfgS6w=
+	t=1727792575; cv=none; b=ua6S/Jo2B5llSvU9IOWSoBoq5Y8Z2Uk9TbA3VH4L6FCPArlb/8WWp84zWxGtlT2ejWMzYeFhXUHSC/VHafgZrp7jWL+dTAFcGpdvzE9PFjwJpqCkGyt8EiUh+njV3w/Ae+HSNemntyA0FBsLv7qgm9vLZpSTqydbGZR3otwxREM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727792473; c=relaxed/simple;
-	bh=+fUUg6wXPdekMyvHOeP7/dum9W2P6ZyswtQcSPGP6b0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YR1iN3HsmZqW7iGr8k6B93X5sT78ZXs9ukBKQkPldSOUAbIc1o0gO8KnsJbuJBgA1dqf3AphjSeDehdAF99NIc03qU0JKS+liLY7dJw9Kkwu/czKWgPY0LJUZacwcLriVEoyQMw0aIAx35BlGbCaYR2l+AVSl//7cpUcYbkdbWU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pjNIQx1H; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5398f3be400so3125079e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2024 07:21:11 -0700 (PDT)
+	s=arc-20240116; t=1727792575; c=relaxed/simple;
+	bh=yh036OuWVtZS192RdATSdM1krocVw8uCFUV8hJl9q+c=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=qADbvBAzJdbSsUbD+hwQbjIkzNwbNwwJPTyDQowmRC0eA74D0r9ftCZoV6atdnGzFn6HA/9o5BJiENSSyvBXaT/OdGUzT7uKGa7yZWPoPINymbYbjhxVC+NFoVAeRi/Jv/5i/aJ3lzd7JfpYPQMlvpeCGwbSMEjIzTz9YNACG0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=1vvqlon/; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-42f56ad2afaso60582695e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2024 07:22:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727792470; x=1728397270; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=fairphone.com; s=fair; t=1727792572; x=1728397372; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+fUUg6wXPdekMyvHOeP7/dum9W2P6ZyswtQcSPGP6b0=;
-        b=pjNIQx1HOcGcO6rbLm1K3lUOiwcXNtaOZJvaDW5Qn01Sfyfets/hjr0vJX3BvevEKk
-         NdcwwBfXaNU3eq5F4CdjVGAV83Wc6M1UlQJtttyhlG6RlyKvpwRxMFbBfvOKJABWk8Ay
-         DMygWrB2wcVx8zd3IRZTjYNbkybBZDsj+C1CIsO4vIMdqWSA1W+/LVtsAy3ThVzbE58k
-         +hFy3cR4f1OjZiT+6kJ4BV/3GXdHN1ifAAn/9m4rWUvrlJ0l/5p8hQPavW8q4J1mPEFP
-         01RntXtE2ZZsrjp6yW2ouZaVS2mixlYjwtbvoNfffT0OqQaJFnmQF+vrVU6faU/UAMmT
-         Wx2g==
+        bh=OUXzWwVynlO2farGmzjCRjampG4QkTOOiMVa306g3F4=;
+        b=1vvqlon/Wb0my+FmrnsCC6P3iwhXdkVqtiqptopuzppGeGW6ElTzwNAH15nCgJehQB
+         Z468l9a8p7mrglnuAyFtlJe37bJPs1dOR8FB8JHEVRuJbl8v+1a6EPLshDLxuDIxmVpE
+         Qw6MEF8nQRsm+73H0xcOufZF1rxKI9RMBpGEOtGwKBdzsTgpC+Pn7svs2KAWchlHx0pS
+         7ysjzFszeDImQUZDmrx/myVWmLm3zZbnhndJ86fjx81QeyP6hamTVV47wjh+n57o7sRU
+         atw7LF8h9EoZjxjmR6PfhtT8EQdYzKKXC0LzmA2HBqlbZTEXwACV1zcbpl7tjnxkeAAW
+         +rEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727792470; x=1728397270;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+fUUg6wXPdekMyvHOeP7/dum9W2P6ZyswtQcSPGP6b0=;
-        b=Q7xJS6FaRMZWmXF1jbDU65kAUdtJv7EXwoGk2DpsK188NUPvs9rw6A6s6VKr4WqttW
-         ePIo9K0wt1+kc7TJW6Dekcp4AyIqSSzUkQKMV6iyiBWiW6mGCqF7RNB7NKlxvpMlkicf
-         Ba/kRtFYoVorkqRkADG2FBoEyYvYoaYXKsNW8Ob25Dw06U4w0KZUVAMVe7+0c6/yxOZ5
-         cYWpwUHFJYjQfcapCwdLJPo+9a4Nr7vdZIlrNLM+lEnhSozEpkSse3CahaNxanVleLmm
-         25ZzskO/xbJpVC7B6DenASYIcaDY6W7nZGIwWZ+rxQiG+lN53TH4TOP5/3aCLvCS5trZ
-         aCpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVgeQt05EeSO/2OI38XlB/n0Vw8g0aVNc0tOgiKLLsB+tqfAMaEjHccuv/N8MGKbKWnLWVEZxSxWvKO9F9V@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3/fhkpu/eNG/KVzQu7NZeKLwp5b0h2EdabRmnBuJ0+Ysl4bKi
-	ptHKwvvTs0I7qEcd1csx6Wxb5iwHo6GCh+zvCORekgidCmCammLrS1Gcf11ptaIl/yzMzqlQhm5
-	U2VFh+w9dizhU731Bh236LaQvVN7z8IRnnMApTBqTmTyn0VyZ
-X-Google-Smtp-Source: AGHT+IF2/1pgO9Ijv3SL5ArOgQgiuCkwW6KgrpuffEXoKgOuDtnnsExK5mXWa+CpP2ivtrYXPlT/oaTNKrKCUU633hU=
-X-Received: by 2002:a05:6512:158d:b0:536:545c:bbf6 with SMTP id
- 2adb3069b0e04-5389fc30e6dmr8096481e87.1.1727792469890; Tue, 01 Oct 2024
- 07:21:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1727792572; x=1728397372;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OUXzWwVynlO2farGmzjCRjampG4QkTOOiMVa306g3F4=;
+        b=Q3djacJUA8unCDuZk8CagnpXdKNafZHocJkHYhbTkG2THPAMrVyufqL+ITnhGY6y/7
+         drINKEJ+fIddpfKK2u3I/4RSTpRHLvb6Rc/43097k3a7cq5ZToBhpyO5gxhzq8dPUZkt
+         bIlrwNm7Hh9bTST8ZXnQVU84B8OY76YaleyjEWmg8yhLcPfMwrJ1CUhwg1p2uqAS8Mw4
+         ZPPwvtiplYNNUAt7IezqFgiQRp+0b6ahmywnafIucDeNeq4TYHIYumNf0ltTV5cG5DGq
+         IPC5gN77Ass1fbZLF5Yz7VyrEQ6P+rwXTsjuzNS7L20cg1GERYCb/XRi+k0FWGHCc7et
+         OplQ==
+X-Gm-Message-State: AOJu0YykMGPLIYJl4chAnLOcQdSEEQ8wZrT90O7+SLvD7pCHNjuSBYaF
+	7Cn/UQrpA+Vi051rN04uiLogDhjRovdYVTbqXdfdvzjuNXiH3t3m/BN5h0OLUcQ=
+X-Google-Smtp-Source: AGHT+IE1MDD/pWaftXcta30RJmYNnd36yu433BiXNnM+DOhxjOYYibckt0mh/3U0Wfvp0AGvZHCkkA==
+X-Received: by 2002:a05:600c:4ed3:b0:42c:df29:2366 with SMTP id 5b1f17b1804b1-42f584a1d68mr169077405e9.33.1727792571880;
+        Tue, 01 Oct 2024 07:22:51 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27c7184sm716888766b.83.2024.10.01.07.22.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Oct 2024 07:22:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20240920-add_qcs615_pinctrl_driver-v2-0-e03c42a9d055@quicinc.com>
-In-Reply-To: <20240920-add_qcs615_pinctrl_driver-v2-0-e03c42a9d055@quicinc.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 1 Oct 2024 16:20:58 +0200
-Message-ID: <CACRpkdZk1ZvovjbouNxvDXBBf6h3kvMi5z+AdAgxDJMZTvzUUw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] dt-bindings: pinctrl: describe qcs615-tlmm
-To: Lijuan Gao <quic_lijuang@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, kernel@quicinc.com, 
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 01 Oct 2024 16:22:50 +0200
+Message-Id: <D4KJCLCDGQ96.251XO3OG6DVB6@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, "Suresh Vankadara"
+ <quic_svankada@quicinc.com>, "Trishansh Bhardwaj"
+ <quic_tbhardwa@quicinc.com>, <stable@vger.kernel.org>, "Hariram
+ Purushothaman" <quic_hariramp@quicinc.com>
+Subject: Re: [PATCH 00/10] (no cover subject)
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>, "Vikram Sharma"
+ <quic_vikramsa@quicinc.com>, "Robert Foss" <rfoss@kernel.org>, "Todor
+ Tomov" <todor.too@gmail.com>, "Mauro Carvalho Chehab" <mchehab@kernel.org>,
+ "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Kapatrala
+ Syed" <akapatra@quicinc.com>, "Hariram Purushothaman"
+ <hariramp@quicinc.com>, "Bjorn Andersson" <andersson@kernel.org>, "Konrad
+ Dybcio" <konradybcio@kernel.org>, "Hans Verkuil"
+ <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>, "Catalin
+ Marinas" <catalin.marinas@arm.com>, "Will Deacon" <will@kernel.org>,
+ =?utf-8?q?Matti_Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
+X-Mailer: aerc 0.18.2-0-ge037c095a049
+References: <20240904-camss_on_sc7280_rb3gen2_vision_v2_patches-v1-0-b18ddcd7d9df@quicinc.com> <D4JK8TRL7XBL.3TBA1FBF32RXL@fairphone.com> <fc0ce5cd-e42a-432b-ad74-01de67ec0d5c@linaro.org> <D4KBQ3ENKF5Y.3D2AK81PELAEZ@fairphone.com> <e7cc5f91-a0a8-48fc-9eb6-b9c46b22dfeb@linaro.org> <D4KFVNV1A4KG.CFLT81CFBDTM@fairphone.com> <c912f2da-519c-4bdc-a5cb-e19c3aa63ea8@linaro.org>
+In-Reply-To: <c912f2da-519c-4bdc-a5cb-e19c3aa63ea8@linaro.org>
 
-On Fri, Sep 20, 2024 at 10:00=E2=80=AFAM Lijuan Gao <quic_lijuang@quicinc.c=
-om> wrote:
-
-> Introduce Top Level Mode Multiplexer dt-binding and driver for Qualcomm
-> QCS615 SoC.
+On Tue Oct 1, 2024 at 2:49 PM CEST, Bryan O'Donoghue wrote:
+> On 01/10/2024 12:39, Luca Weiss wrote:
 >
-> Signed-off-by: lijuang <quic_lijuang@quicinc.com>
+> > And v4l-subdev5 is msm_csid0 on my device.
+>
+> <snip>
+>
+> >=20
+> > - entity 16: msm_csid0 (5 pads, 22 links, 0 routes)
+> >               type V4L2 subdev subtype Unknown flags 0
+> >               device node name /dev/v4l-subdev5
+> >          pad0: Sink
+> >                  [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colors=
+pace:srgb]
+> >                  <- "msm_csiphy0":1 []
+> >                  <- "msm_csiphy1":1 []
+> >                  <- "msm_csiphy2":1 []
+> >                  <- "msm_csiphy3":1 []
+> >                  <- "msm_csiphy4":1 []
+> >          pad1: Source
+> >                  [stream:0 fmt:SRGGB10_1X10/4056x3040 field:none colors=
+pace:srgb]
+> >                  -> "msm_vfe0_rdi0":0 [ENABLED]
+> >                  -> "msm_vfe1_rdi0":0 []
+> >                  -> "msm_vfe2_rdi0":0 []
+> >                  -> "msm_vfe3_rdi0":0 []
+> >                  -> "msm_vfe4_rdi0":0 []
+>
+> <snip>
+>
+> media-ctl --reset
+> yavta --no-query -w '0x009f0903 2' /dev/v4l-subdev5
+> yavta --list /dev/v4l-subdev5
+> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> media-ctl -d /dev/media0 -p
+>
+> That command list and this
+>
+> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video=
+0
+>
+> should work.
 
-Patches applied.
+Yeah, unfortunately this is still hanging... Let's also see what Vikram
+sees on their board.
 
-I picked up Rob's ACK from v1 so no need to resend.
+fairphone-fp5:~$ yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x304=
+0 -F /dev/video0
+Device /dev/video0 opened.
+Device `Qualcomm Camera Subsystem' on `platform:acb3000.camss' (driver 'qco=
+m-camss') supports video, capture, with mplanes.
+Video format set: SRGGB10P (41415270) 4056x3040 field none, 1 planes:=20
+ * Stride 5072, buffer size 15418880
+Video format: SRGGB10P (41415270) 4056x3040 field none, 1 planes:=20
+ * Stride 5072, buffer size 15418880
+5 buffers requested.
+length: 1 offset: 3442938648 timestamp type/source: mono/EoF
+Buffer 0/0 mapped at address 0xffff85e00000.
+length: 1 offset: 3442938648 timestamp type/source: mono/EoF
+Buffer 1/0 mapped at address 0xffff84e08000.
+length: 1 offset: 3442938648 timestamp type/source: mono/EoF
+Buffer 2/0 mapped at address 0xffff83e10000.
+length: 1 offset: 3442938648 timestamp type/source: mono/EoF
+Buffer 3/0 mapped at address 0xffff82e18000.
+length: 1 offset: 3442938648 timestamp type/source: mono/EoF
+Buffer 4/0 mapped at address 0xffff81e20000.
 
-Yours,
-Linus Walleij
+> I have to test Vladimir's two patches. I'll verify rb5 TPG while I'm at=
+=20
+> it, perhaps the error is not sdm670 specific.
+
+FWIW this is not sdm670 but sc7280/qcm6490 here :) But I didn't follow
+the sdm670 thread so maybe you mean something there.
+
+>
+> That said last time I tested it, it worked and no changes have gone in,=
+=20
+> in the meantime.
+
+I also had the test pattern working on a 6.8-based kernel on this device
+with camss patches from Matti Lehtim=C3=A4ki.
+
+Regards
+Luca
+
+>
+> ---
+> bod
+
 
