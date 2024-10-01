@@ -1,213 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-32841-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 219BA98B4B3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 08:42:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 902D498B4DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 08:49:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 783EDB23137
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 06:42:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 486011F2353E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 06:49:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 962501BD009;
-	Tue,  1 Oct 2024 06:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 644F419046D;
+	Tue,  1 Oct 2024 06:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J3hqxMrC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PJ9pAEYj"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D1E1BCA07;
-	Tue,  1 Oct 2024 06:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBD463D;
+	Tue,  1 Oct 2024 06:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727764925; cv=none; b=UNXgVB557WC47Sf9ZtrEkJwrOB15LqlwKoIyIIZ324Q8oSdrx2R7bsUXZUbIOSKRNJI91aFA1Elc0OIZhYeGcasHqcLGLA1Ljr7uJ24S/XoZyIXL8WjUxQgNgA5oBhdAZ/I293uM3VSaXUcQPpJHUAXWk6byhJMXRYbqZdaUqNM=
+	t=1727765391; cv=none; b=eH7pD2l2WyTLcNP3cexABV837QFlX7E/B2INSqwlZm4jPZC4i283IBaFnUMewSahXTv+LH636FfYOmOfhkqdcjkIQypvy93jQ1HMfdmpEuKp03FhOFA4PTxGDBnUqnyg1vAN3DqW0mnu868vmGA21mqmY5S31n93XueTVYoYa84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727764925; c=relaxed/simple;
-	bh=eHhi3IE5QYIljEIZfCEN/SVnk/FjMdvW+31klwdSPOA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n58AvE0NHa6vqMCwGQI/TTVFZbOione1LpDNOmBv22mMYdKRLbMbI0EPGQzLJPruGsvNcYG0zV6VNDWjJ3qwCuaKPaimOgNOrYk6856GU44lYhB+QOLr2DEwr4Fs4ttpqq+EE3f/jOgjUJ03RRlMVhAjtl/jxqgqiKVV+Huo0L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J3hqxMrC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id DBEA6C4CEDB;
-	Tue,  1 Oct 2024 06:42:04 +0000 (UTC)
+	s=arc-20240116; t=1727765391; c=relaxed/simple;
+	bh=hJxsQeBzlT9J1ZZCXMzqlk5+K/OSKCOgXR5Pq8enzCg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=C/cV+49c5PbuVTPPs3o9FsHDH2Wyjyxm+Uloo37fcYmTxw5mn1QJN7nEnfDbb/w4GEyYXI7NFBApbNDyv4U6aEd1kruVX831zZTWocRQ5lXxVYVb4FhAe/gVwAD5GbyIjUzsaot41oeqyj8djxCaZSw8N/y4Xg1O+YCdDE8x4V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PJ9pAEYj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8778C4CEC6;
+	Tue,  1 Oct 2024 06:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727764924;
-	bh=eHhi3IE5QYIljEIZfCEN/SVnk/FjMdvW+31klwdSPOA=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=J3hqxMrCvJxWVepJQlPHo2PHHZQ4EeFWui20tkpxEkrd5IA45R8yRYZLJMDGN738R
-	 GUzmf+EjcsZEUuoEmKGi1MDoiBzIHhbxoUKnyi2qnRL8eEi0ald8K90CSD2Mv8YXs8
-	 VE2wCS9otmwQs9WlG2octRcE2MUrk4ILURn7wHlHpwW8aPpQt/dHKRlYsWBmg39oOa
-	 OQ4EOHR5wy7LTAuJA1iR2FsfDKqnixBuPo63A/QyPb0VhxqHGZfLERpALSt18NwVSN
-	 aSGfSj1GXU9U+7hbeZ00vf7uGNl0/Dgt/gdtHFIPZSxA6095gnzDG6WvByTfIZYJiA
-	 kneJlJ1uVSIng==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3868CEB2E8;
-	Tue,  1 Oct 2024 06:42:04 +0000 (UTC)
-From: Mahadevan via B4 Relay <devnull+quic_mahap.quicinc.com@kernel.org>
-Date: Tue, 01 Oct 2024 12:11:40 +0530
-Subject: [PATCH v3 5/5] arm64: dts: qcom: sa8775p: add display dt nodes for
- MDSS0 and DPU
+	s=k20201202; t=1727765390;
+	bh=hJxsQeBzlT9J1ZZCXMzqlk5+K/OSKCOgXR5Pq8enzCg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PJ9pAEYjP0yeL2duGkicfDDaKcSiOWLFRo0kQeCCZsBfDpO5QYNOqN1XPKF3KCe7H
+	 Ld28uY/KrLHRkmjsn+pOv3DynhWZVO3yTg2d5SC1p1K7YGs3zgQs7eOfVCaBY+WuOb
+	 qx+jRlfugMVTTsKBBp84qci5KcKjCaXzkCJbpCypvCrQwpqTrh+4DHHsYXfSuO8IUv
+	 63nHlgIJfYMZHVOxJ0GMmQaJ0niBcTAV7t0t9MFD/fM541tC1jmgqG1W+LXBT7sCFD
+	 v8f8mtbIfkStuMK9q8GSpEk/+h3Dj35h0zlMKhh8ru5VB4ILzyL9d+cMpyP4Y0P32F
+	 YJm3uH2xO9GqQ==
+Date: Tue, 1 Oct 2024 08:49:46 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Richard Acayan <mailingradian@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Loic Poulain <loic.poulain@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Andi Shyti <andi.shyti@kernel.org>, Todor Tomov <todor.too@gmail.com>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-i2c@vger.kernel.org, linux-media@vger.kernel.org, 
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Subject: Re: [PATCH v5 2/7] dt-bindings: i2c: qcom-cci: Document SDM670
+ compatible
+Message-ID: <esxsmaqmfeu7z32xl3x4fhhtafci7tltlr77nsfdgdnwdvgfrk@3espe3tfwqoq>
+References: <20241001023520.547271-9-mailingradian@gmail.com>
+ <20241001023520.547271-11-mailingradian@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241001-patchv3_1-v3-5-d23284f45977@quicinc.com>
-References: <20241001-patchv3_1-v3-0-d23284f45977@quicinc.com>
-In-Reply-To: <20241001-patchv3_1-v3-0-d23284f45977@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>, 
- Abhinav Kumar <quic_abhinavk@quicinc.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Mahadevan <quic_mahap@quicinc.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc: Kalyan Thota <quic_kalyant@quicinc.com>, 
- Jayaprakash Madisetty <quic_jmadiset@quicinc.com>, 
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727764922; l=3736;
- i=quic_mahap@quicinc.com; s=20241001; h=from:subject:message-id;
- bh=mwU+T+g7aZfnj3h6yUCl49ZVraCw0HZEXDEFdRAhnjw=;
- b=XcwdYY/DjaO3MExCm5Duwt4n6hGSj6aUbW5VG4zX8y7dIQpI+o6mNcrdOWmbCWFhrz/64xzR9
- /qDLJy8aXk4DndR0Y+SM5Dyy1wchEKngN/LEnenQZ4LEPHsXx9oyYyV
-X-Developer-Key: i=quic_mahap@quicinc.com; a=ed25519;
- pk=Xc9CA438o9mZKp4uZ8vZMclALnJ8XtlKn/n3Y42mMBI=
-X-Endpoint-Received: by B4 Relay for quic_mahap@quicinc.com/20241001 with
- auth_id=236
-X-Original-From: Mahadevan <quic_mahap@quicinc.com>
-Reply-To: quic_mahap@quicinc.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241001023520.547271-11-mailingradian@gmail.com>
 
-From: Mahadevan <quic_mahap@quicinc.com>
+On Mon, Sep 30, 2024 at 10:35:23PM -0400, Richard Acayan wrote:
+> The CCI on the Snapdragon 670 is the interface for controlling camera
+> hardware over I2C. Add the compatible so it can be added to the SDM670
+> device tree.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> ---
+>  .../devicetree/bindings/i2c/qcom,i2c-cci.yaml | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 
-Add devicetree changes to enable MDSS0 display-subsystem its
-display-controller(DPU) for Qualcomm SA8775P platform.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 89 +++++++++++++++++++++++++++++++++++
- 1 file changed, 89 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 8fd68a8aa916e6595134b470f87b18b509178a51..66bd5e1c82a426f93097dee63a69c03527f04b3e 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -6,6 +6,7 @@
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-+#include <dt-bindings/clock/qcom,sa8775p-dispcc.h>
- #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
- #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
- #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
-@@ -2937,6 +2938,94 @@ camcc: clock-controller@ade0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		mdss0: display-subsystem@ae00000 {
-+			compatible = "qcom,sa8775p-mdss";
-+			reg = <0x0 0x0ae00000 0x0 0x1000>;
-+			reg-names = "mdss";
-+
-+			/* same path used twice */
-+			interconnects = <&mmss_noc MASTER_MDP0 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&mmss_noc MASTER_MDP1 QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
-+					<&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-+					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
-+			interconnect-names = "mdp0-mem",
-+					     "mdp1-mem",
-+					     "cpu-cfg";
-+
-+			resets = <&dispcc0 MDSS_DISP_CC_MDSS_CORE_BCR>;
-+
-+			power-domains = <&dispcc0 MDSS_DISP_CC_MDSS_CORE_GDSC>;
-+
-+			clocks = <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
-+				 <&gcc GCC_DISP_HF_AXI_CLK>,
-+				 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>;
-+
-+			interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			iommus = <&apps_smmu 0x1000 0x402>;
-+
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			status = "disabled";
-+
-+			mdss0_mdp: display-controller@ae01000 {
-+				compatible = "qcom,sa8775p-dpu";
-+				reg = <0x0 0x0ae01000 0x0 0x8f000>,
-+				      <0x0 0x0aeb0000 0x0 0x2008>;
-+				reg-names = "mdp", "vbif";
-+
-+				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_LUT_CLK>,
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_MDP_CLK>,
-+					 <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
-+				clock-names = "bus",
-+					      "iface",
-+					      "lut",
-+					      "core",
-+					      "vsync";
-+
-+				assigned-clocks = <&dispcc0 MDSS_DISP_CC_MDSS_VSYNC_CLK>;
-+				assigned-clock-rates = <19200000>;
-+
-+				operating-points-v2 = <&mdss0_mdp_opp_table>;
-+				power-domains = <&rpmhpd RPMHPD_MMCX>;
-+
-+				interrupt-parent = <&mdss0>;
-+				interrupts = <0>;
-+
-+				mdss0_mdp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-375000000 {
-+						opp-hz = /bits/ 64 <375000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-500000000 {
-+						opp-hz = /bits/ 64 <500000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+
-+					opp-575000000 {
-+						opp-hz = /bits/ 64 <575000000>;
-+						required-opps = <&rpmhpd_opp_turbo>;
-+					};
-+
-+					opp-650000000 {
-+						opp-hz = /bits/ 64 <650000000>;
-+						required-opps = <&rpmhpd_opp_turbo_l1>;
-+					};
-+				};
-+			};
-+		};
-+
- 		dispcc0: clock-controller@af00000 {
- 			compatible = "qcom,sa8775p-dispcc0";
- 			reg = <0x0 0x0af00000 0x0 0x20000>;
-
--- 
-2.34.1
-
+Best regards,
+Krzysztof
 
 
