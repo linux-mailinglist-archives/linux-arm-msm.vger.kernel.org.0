@@ -1,55 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-32888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72A8998BE65
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 15:51:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C77DE98BE67
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 15:51:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CC5B1F241CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:51:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 835781F243F4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:51:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 44BBB1C578B;
-	Tue,  1 Oct 2024 13:50:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 530821C57B7;
+	Tue,  1 Oct 2024 13:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="YKqD4Ys/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GnuMn/Lg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96781C4624;
-	Tue,  1 Oct 2024 13:50:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 824EB1C3F32;
+	Tue,  1 Oct 2024 13:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727790650; cv=none; b=cppJe0aGaMY16zvYvtAoNLXRumbO5NgHtffSZm7q6SXJCUJhfovzbtJoHcsc+Ejg878mSSWjB8PO4qsq+0uhNOlMGMXQL8PL4AF7ETAnz7wCaVcmrqBihv0+X58lIisRA8Heg2stWBjuwUTc9Qh6CxyjdhhU3cQcrmxOQCe6tOo=
+	t=1727790651; cv=none; b=ohkzphgUgVoHAYwEbXWdInK9iLyQxIpW/wP7RdCh/3/atMmGVW6jfNtQe9D94v5yOSRBssLtdwYZ5gDn1arXKJV9qpC1ySquuIvVFIGsG2U0leW5Pvrl+J23ivzJzh7OIq9B3QmQYXwQotlmF0zdAEPtkp2W/yUsGEC9Sx/Ej30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727790650; c=relaxed/simple;
-	bh=Wrdy0e1dz6T5uwCE6i2Zj6+AsBKQNypB0lnUzsj5xCI=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QswNP8V/zr/KlzChTo5U6IPHyLa/XDw85cdKpbkoPj90nMt+5Ek1H/Eg4JCr0FZu5xFrGzneogH9oFqnPTh0tSEx4AzPaL1AkVu31JbusPnXz3IXwidQ+w2c2szb92zadZRzmQhm3YjkffzFU/mUBZ2oxAPa1ph2jfqJWC883Mo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=YKqD4Ys/; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1727790644;
-	bh=Wrdy0e1dz6T5uwCE6i2Zj6+AsBKQNypB0lnUzsj5xCI=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=YKqD4Ys/oGurqoWIOyx7Wn0hRTWDfyPPhsxJBv4liLaL79RWNITs6yYigoa9t0bYR
-	 apYOKXRQwcu6+xBYSMhtRzZYX8riNbY3jwGgx54B/mqtnC6ECCMjvF74G/KjKZbgVO
-	 RJzRdFANc0GPw4iUWTjgPb0VclImiN7kwj4rnOBg0+pqJjlWEITVsXj59SE2r7LUoj
-	 5BPDH1RBCLKq/QZ/2cqqNz0kemyYFg31AZl1ypfI77sHEXKV+OTQMPdPXhzsDquLmV
-	 MCPct2nkHj5eYZYOGgoLbN+JW1S3vLWHHoQv7M/X9CrsLunLU6HnxNWpHM5ZiXsYda
-	 Riy6fn3Jf9ZCg==
-Received: from [192.168.50.250] (unknown [171.76.80.165])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: vignesh)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 6F28B17E0FC0;
-	Tue,  1 Oct 2024 15:50:39 +0200 (CEST)
-Message-ID: <87fea8ea-fe9d-4114-b03c-7ec50a4be874@collabora.com>
-Date: Tue, 1 Oct 2024 19:20:35 +0530
+	s=arc-20240116; t=1727790651; c=relaxed/simple;
+	bh=ya6s4OjLzDBKkaqKYGPBmAej5LeuqLuwewX2rXjZYJs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ZOmt2H1q9Nwl447MNSDKIVbt9mZ83XBrNPm206DYZI7ZJnq2FXNeDDYn/e2eZgjchpnZC2ubIjBQVUNIzDpMU2E7UnJWwmR7iAGutAwdxYpyYqYzmVFZsCkG5/kLbu0BYAJCaDcA37Eamn4ChLQEoWBDuCLCWhHPmW6ZPDZyqxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GnuMn/Lg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4919L1xt008272;
+	Tue, 1 Oct 2024 13:50:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9VLqU+1fU/5jRjetzCchLu2MxMyXC5eBuEI49ITUIwU=; b=GnuMn/LgYS5WJzeo
+	vxSR4oJlHXGYnPLXJIB6IJh5IFsygVUPXf492+3OsH5Dw8iwuqyaPUtolT/ZW3BL
+	B3xC8+n7+lIN1MtunB0gfIDWjOuBX4D1Ww8ccIiAMvRHUo5tjd7DPCU+Ms8BdERl
+	zFN/JCdvbkU+Jy0YeRp0L8yeVIMl/lBUvdjjFLNfD+2NT02t5jMMsChTHjUy5tTt
+	UNtJU5PcA5+zRucXJUQQmBH8HVXJ4ksrKa11yS/PWqcp0aW/f5VDCL53mntZ/I7D
+	zs4ENaL2firkQEFF3AZClkyXoML/xNfCA/I6c67UOl+VZJz4ijBWpp5Nsf/26ZF0
+	yYO+MA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x9vu8dra-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Oct 2024 13:50:44 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 491DohWH000842
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 1 Oct 2024 13:50:43 GMT
+Received: from [10.217.219.207] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 1 Oct 2024
+ 06:50:40 -0700
+Message-ID: <b7c9b01a-3bf7-44f2-be8d-24ef5f3fce74@quicinc.com>
+Date: Tue, 1 Oct 2024 19:20:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,90 +65,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] docs/gpu: ci: update flake tests requirements
-From: Vignesh Raman <vignesh.raman@collabora.com>
-To: alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com,
- amd-gfx@lists.freedesktop.org
-Cc: daniels@collabora.com, helen.koike@collabora.com, airlied@gmail.com,
- daniel@ffwll.ch, robdclark@gmail.com, guilherme.gallo@collabora.com,
- sergi.blanch.torne@collabora.com, deborah.brouwer@collabora.com,
- dmitry.baryshkov@linaro.org, mripard@kernel.org, rodrigo.vivi@intel.com,
- quic_abhinavk@quicinc.com, linux-mediatek@lists.infradead.org,
- linux-amlogic@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
- virtualization@lists.linux.dev, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org
-References: <20240930095255.2071586-1-vignesh.raman@collabora.com>
+Subject: Re: [PATCH v2 1/7] serial: qcom-geni: fix premature receiver enable
+To: Johan Hovold <johan+linaro@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>
+CC: Jiri Slaby <jirislaby@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Douglas Anderson
+	<dianders@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-serial@vger.kernel.org>, <stable@vger.kernel.org>,
+        Aniket Randive <quic_arandive@quicinc.com>
+References: <20241001125033.10625-1-johan+linaro@kernel.org>
+ <20241001125033.10625-2-johan+linaro@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20240930095255.2071586-1-vignesh.raman@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+In-Reply-To: <20241001125033.10625-2-johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: W0LmDSeJrm03zOcYsJ9sRXydL859rAfW
+X-Proofpoint-ORIG-GUID: W0LmDSeJrm03zOcYsJ9sRXydL859rAfW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1011 spamscore=0 suspectscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 mlxscore=0 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
+ definitions=main-2410010089
 
-Hi amdgpu Maintainers,
+Thanks Johan for the fixes.
 
-On 30/09/24 15:22, Vignesh Raman wrote:
-> Update the documentation to specify linking to a relevant GitLab
-> issue or email report for each new flake entry. Added specific
-> GitLab issue urls for amdgpu, i915, msm and xe driver.
+On 10/1/2024 6:20 PM, Johan Hovold wrote:
+> The receiver should not be enabled until the port is opened so drop the
+> bogus call to start rx from the setup code which is shared with the
+> console implementation.
 > 
-> Acked-by: Maxime Ripard <mripard@kernel.org>
-> Acked-by: Rodrigo Vivi <rodrigo.vivi@intel.com> #intel and xe
-> Acked-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # msm
-> Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # msm
-> Signed-off-by: Vignesh Raman <vignesh.raman@collabora.com>
+> This was added for some confused implementation of hibernation support,
+> but the receiver must not be started unconditionally as the port may not
+> have been open when hibernating the system.
+> 
+> Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibernation feature")
+> Cc:stable@vger.kernel.org	# 6.2
+> Cc: Aniket Randive<quic_arandive@quicinc.com>
+> Signed-off-by: Johan Hovold<johan+linaro@kernel.org>
 > ---
+>   drivers/tty/serial/qcom_geni_serial.c | 1 -
+>   1 file changed, 1 deletion(-)
 > 
-> v2:
-> - Add gitlab issue link for msm driver.
-> 
-> v3:
-> - Update docs to specify we use email reporting or GitLab issues for flake entries.
-> 
-> v4:
-> - Add gitlab issue link for xe driver.
-> 
-> ---
->   Documentation/gpu/automated_testing.rst | 14 ++++++++++----
->   1 file changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst
-> index 2d5a28866afe..6d7c6086034d 100644
-> --- a/Documentation/gpu/automated_testing.rst
-> +++ b/Documentation/gpu/automated_testing.rst
-> @@ -68,19 +68,25 @@ known to behave unreliably. These tests won't cause a job to fail regardless of
->   the result. They will still be run.
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> index 6f0db310cf69..9ea6bd09e665 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1152,7 +1152,6 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
+>   			       false, true, true);
+>   	geni_se_init(&port->se, UART_RX_WM, port->rx_fifo_depth - 2);
+>   	geni_se_select_mode(&port->se, port->dev_data->mode);
+> -	qcom_geni_serial_start_rx(uport);
+Does it mean hibernation will break now ? Not sure if its tested with 
+hibernation. I can see this call was added to port_setup specifically 
+for hibernation but now after removing it, where is it getting fixed ?
+I think RX will not be initialized after hibernation.
+>   	port->setup = true;
 >   
->   Each new flake entry must be associated with a link to the email reporting the
-> -bug to the author of the affected driver, the board name or Device Tree name of
-> -the board, the first kernel version affected, the IGT version used for tests,
-> -and an approximation of the failure rate.
-> +bug to the author of the affected driver or the relevant GitLab issue. The entry
-> +must also include the board name or Device Tree name, the first kernel version
-> +affected, the IGT version used for tests, and an approximation of the failure rate.
->   
->   They should be provided under the following format::
->   
-> -  # Bug Report: $LORE_OR_PATCHWORK_URL
-> +  # Bug Report: $LORE_URL_OR_GITLAB_ISSUE
->     # Board Name: broken-board.dtb
->     # Linux Version: 6.6-rc1
->     # IGT Version: 1.28-gd2af13d9f
->     # Failure Rate: 100
->     flaky-test
->   
-> +Use the appropriate link below to create a GitLab issue:
-> +amdgpu driver: https://gitlab.freedesktop.org/drm/amd/-/issues
-
-Please could you ack this patch. Thanks.
-
-> +i915 driver: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues
-> +msm driver: https://gitlab.freedesktop.org/drm/msm/-/issues
-> +xe driver: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues
-> +
->   drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt
->   -----------------------------------------------------------
->   
-
-Regards,
-Vignesh
+>   	return 0;
+> -- 2.45.2
 
