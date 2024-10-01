@@ -1,195 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-32907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DA7C98C76D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 23:16:07 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 026C398C776
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 23:20:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3EF84286225
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 21:16:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBAE2283387
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 21:20:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 63A771CCECE;
-	Tue,  1 Oct 2024 21:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E58C1CCECE;
+	Tue,  1 Oct 2024 21:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lBiSGNRz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slgR241p"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE2513DDB8;
-	Tue,  1 Oct 2024 21:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7324F19C56F;
+	Tue,  1 Oct 2024 21:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727817364; cv=none; b=Dt6vAsGQgqFlBKMsbdnNRjeDibK+Yg2w28NqqiJpIjeYzf1qt/CheXW3dg14xSxFnMbW9YeFSsIuSg8EM3DNtAtR8UnD0wjlaPHXOJ28OSQmOgJXLD4fNpP6oLqpqx1iG5uVNvJa5yTO70UtfAl71Hi6xPVFKFceu4Smr+zce2A=
+	t=1727817599; cv=none; b=EyVgw1N9KcFZMNt1aMHcrYChDjbDm39QXUDIdR5jfbbTZBFO81ai/et1PZvQXnIjr0x3zKbBQ+9k8GDOOqvHmr2Py0G2PaTnD5/OKfuHth+VAT10mDp+YICyaKLo3yvi1Jzl/wkR1ZhuPdHUMCnHDpy0gNoj2UP1PpiYIXo2rac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727817364; c=relaxed/simple;
-	bh=BEWoFEIool2KPYSaFruttx6efsYogde+T1lHsBy+Ps8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FWfk6jjHqHhUxSwAHLIMI7+VnMO37BUYYSeRQz8Pr9WxNE73qAPONq8bobwTgROZIXhk29garpVV1Op6XiveISDLjYG8tDfu4wfHQbsSd8EENvdwk7VxtOCKGrCJBKry4aO8/syjz3/XqXvEJy5iR7G8EoNyEDEz61cETTx9cKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lBiSGNRz; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491BPSAu012388;
-	Tue, 1 Oct 2024 21:15:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=g76O4uFgGk453CC6oPH84sTJ
-	Pbhb0R4Pg3pWVy6eZdw=; b=lBiSGNRzgbJzrKC/MfAuNOT6irBgDtczznoeeW+y
-	uZ7hf+0dmzQPyo06busCHAAmGVHPO2cXq6HoDpYN1wsTo0qSDJM9bcbDr7KfkK9T
-	k0kHvO0rvzrOGPHpDtEYDR7uoAowDRi7vtBqZ/usfDnyRjx0Px8QNl2Z8T0Ci7Mu
-	4T3AckhTG+zC0huiGcikeenZoHcjO5mIh2kVTsHvUvYnyNCviAh8ROiZy8r42vUH
-	HTZ1ZmMKfYgNBYu4OCZsL/WfRx9iZr/1fsmy4mgz5gPPJMebXoqV8MaB+vphupol
-	MQetknHY7WH+jrCXGB+evz+EZGjG6TZ/oTqbJtJUltS8yQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x8t6su21-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 01 Oct 2024 21:15:55 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 491LFrBE007902
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 1 Oct 2024 21:15:53 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 1 Oct 2024 14:15:53 -0700
-Date: Tue, 1 Oct 2024 14:15:52 -0700
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
-To: Mukesh Ojha <quic_mojha@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] remoteproc: qcom: Fix NULL pointer in glink_subdev_stop()
-Message-ID: <ZvxmiEnHprF5q4ug@hu-bjorande-lv.qualcomm.com>
-References: <20240925103351.1628788-1-quic_mojha@quicinc.com>
- <ZvTYA1Rg6DrEEabk@hu-bjorande-lv.qualcomm.com>
- <ZvcJhzDmdhO/wbKq@hu-mojha-hyd.qualcomm.com>
- <ZvcqrbLKqCQyYBsF@hu-bjorande-lv.qualcomm.com>
- <ZvuYYbIycFKRBcCi@hu-mojha-hyd.qualcomm.com>
+	s=arc-20240116; t=1727817599; c=relaxed/simple;
+	bh=UvFS9AEFBRiLrqnwziEbTU80f5qSBbjblSE7Jg3jCZI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=AGrRPtzGSo76OvqOHrbEKQ2Nlr/Qv/PX1it8gXh2lyhNAJhoUwif847Q0/cueOchDVvk9/K9TBLV4WmSvmGE6ypsyfHJaLu2NYATiFngTGhsfCTam8M9lK0W4Exx/5zbPfu1cAKIaHW5LqvPCFlP6v58Yw9TR87hYH7gBnO/Gtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slgR241p; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FF2C4CECD;
+	Tue,  1 Oct 2024 21:19:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727817599;
+	bh=UvFS9AEFBRiLrqnwziEbTU80f5qSBbjblSE7Jg3jCZI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=slgR241pNj7FVdUseXdhRjPnFtvdPDvVYakmHU40zolreBSBusNC/HaoLzxqOSKIV
+	 PvCtfyMmRhgz1HWENNdYkxST1qGEtXRoNXnE4WAEyJOyOgMRsd7CQudXXdmJOSioY8
+	 BfSl1PLS0/GWZivLfwLY/eBo+RZim1Qrbc18e+D18kIs4GrWsHFlRaAtbCkw+7L48U
+	 WhEuydAZFplrmjXiY3gF1TVG/OKg050H9G+sFrT8+vrfrTQY395NS/2qFGjyjNk/bP
+	 I/3lW+jyGU/9liEUFaQFSiwB0UeNiHaEL4W4x9CPLWEdthk4cv48swhVeDl5gr6teS
+	 M36lgmDBQzHwQ==
+Date: Tue, 1 Oct 2024 16:19:57 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_qianyu@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH] PCI: qcom: Enable MSI interrupts together with Link up
+ if global IRQ is supported
+Message-ID: <20241001211957.GA227250@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZvuYYbIycFKRBcCi@hu-mojha-hyd.qualcomm.com>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: UsvrLaTcaGQL9BcNxyuKzbdkzT_Rg-CF
-X-Proofpoint-ORIG-GUID: UsvrLaTcaGQL9BcNxyuKzbdkzT_Rg-CF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410010141
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241001042055.ivf4zspq4fqmaxth@thinkpad>
 
-On Tue, Oct 01, 2024 at 12:06:17PM +0530, Mukesh Ojha wrote:
-> On Fri, Sep 27, 2024 at 02:59:09PM -0700, Bjorn Andersson wrote:
-> > On Sat, Sep 28, 2024 at 01:07:43AM +0530, Mukesh Ojha wrote:
-> > > On Wed, Sep 25, 2024 at 08:41:55PM -0700, Bjorn Andersson wrote:
-> > > > On Wed, Sep 25, 2024 at 04:03:51PM +0530, Mukesh Ojha wrote:
-> > > > > Multiple call to glink_subdev_stop() for the same remoteproc can happen
-> > > > > if rproc_stop() fails from Process-A that leaves the rproc state to
-> > > > > RPROC_CRASHED state later a call to recovery_store from user space in
-> > > > > Process B triggers rproc_trigger_recovery() of the same remoteproc to
-> > > > > recover it results in NULL pointer dereference issue in
-> > > > > qcom_glink_smem_unregister().
-> > > > > 
-> > > > > Fix it by having a NULL check in glink_subdev_stop().
-> > > > > 
-> > > > > 	Process-A                			Process-B
-> > > > > 
-> > > > >   fatal error interrupt happens
-> > > > > 
-> > > > >   rproc_crash_handler_work()
-> > > > >     mutex_lock_interruptible(&rproc->lock);
-> > > > >     ...
-> > > > > 
-> > > > >        rproc->state = RPROC_CRASHED;
-> > > > >     ...
-> > > > >     mutex_unlock(&rproc->lock);
-> > > > > 
-> > > > >     rproc_trigger_recovery()
-> > > > >      mutex_lock_interruptible(&rproc->lock);
-> > > > > 
-> > > > >       adsp_stop()
-> > > > >       qcom_q6v5_pas 20c00000.remoteproc: failed to shutdown: -22
-> > > > >       remoteproc remoteproc3: can't stop rproc: -22
-> > > > 
-> > > > I presume that at this point this remoteproc is in some undefined state
-> > > > and the only way to recover is for the user to reboot the machine?
-> > > 
-> > > Here, 50+ (5s) retry of scm shutdown is failing during decryption of
-> > > remote processor memory region, and i don't think, it is anyway to do
-> > > with remote processor state here, as a best effort more number of
-> > > retries can be tried instead of 50 or wait for some other recovery
-> > > command like recovery_store() to let it do the retry again from
-> > > beginning.
-> > > 
+On Tue, Oct 01, 2024 at 09:50:55AM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Sep 30, 2024 at 12:11:01PM -0500, Bjorn Helgaas wrote:
+> > On Mon, Sep 30, 2024 at 07:14:09PM +0530, Manivannan Sadhasivam wrote:
+> > > Currently, if global IRQ is supported by the platform, only the Link up
+> > > interrupt is enabled in the PARF_INT_ALL_MASK register. But on some Qcom
+> > > platforms like SM8250, and X1E80100, MSIs are getting masked due to this.
+> > > They require enabling the MSI interrupt bits in the register to unmask
+> > > (enable) the MSIs.
 > > 
-> > But are you saying that retrying a bit later would allow us to get out
-> > of this problem? If we just didn't hit the NULL pointer(s)?
+> > "global IRQ" is a very generic name.  If that's the official name, it
+> > should at least be capitalized, e.g., "Global IRQ", to show that it is
+> > a proper noun that refers to a specific IRQ.
 > 
-> I am not sure whether adding more number of retries will solve the issue
-> and initially thinking from perspective that, it is better to retry than
-> to leave the remoteproc in some unknown state however, I do get that
-> letting it retry could give unnecessary patching every code e.g., ssr
-> notifier callbacks, which is not expecting to be called twice as a
-> side-effect of remoteproc unknown state.
-
-That's not what I'm asking you. When the remote processor fails to stop,
-can you recover the system by just trying a bit later, or is the
-remoteproc dead until reboot?
-
-> > 
-> > How long are we talking about here? Is the timeout too short?
+> Sure.
 > 
-> 5sec is very significant amount of time in wait for remote processor to
-> get recovered, we should not change this.
-
-Okay, I'm just trying to understand the problem you're trying to solve.
-
-Regards,
-Bjorn
-
+> > > Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
+> > > described as 'diagnostic' interrupts in the internal documentation,
+> > > disabling them masks MSI on these platforms. Due to this,
 > > 
-> > > > 
-> > > > 
-> > > > The check for glink->edge avoids one pitfall following this, but I'd
-> > > > prefer to see a solution that avoids issues in this scenario in the
-> > > > remoteproc core - rather than working around side effects of this in
-> > > > different places.
+> > > MSIs were not
+> > > reported to be received these platforms while supporting global IRQ.
+> > 
+> > I'm trying to parse "while supporting global IRQ."  We basically
+> > support global IRQ by installing qcom_pcie_global_irq_thread(), but of
+> > course the device doesn't see that, so I assume it would be more
+> > informative to say that MSIs are masked by some register setting.
+> 
+> Hmm, this is what I mentioned in the above paragraph referencing
+> PARF_INT_ALL_MASK register. Is that not clear enough?
+
+It requires the knowledge that the MSI enable bits are set by
+hardware, cleared by 4581403f6792, and set again here.  This will be
+more accessible to non-qcom experts if that information is included
+here.
+
+> > The patch suggests that MSIs are masked internally unless
+> > PARF_INT_MSI_DEV_0_7 is set in PARF_INT_ALL_MASK.
+> > 
+> > Are you saying that prior to 4581403f6792, MSIs did work?  Does that
+> > mean PARF_INT_MSI_DEV_0_7 was set by a bootloader or something, so
+> > MSIs worked?  And then 4581403f6792 came along and implicitly cleared
+> > PARF_INT_MSI_DEV_0_7, so MSIs were then masked?
+> 
+> Yeah. Those bits were enabled by default in hardware, but since they were
+> mentioned as 'diagnostic interrupts' in documentation, commit 4581403f6792
+> intentionally disabled them. But that results in MSIs getting masked in
+> *some* platforms.
+
+Apparently the "*some* platforms" part is more qcom-expert knowledge?
+There are other qcom platforms where MSIs are not disabled by
+4581403f6792?  Information about which platforms are which also sounds
+useful for future maintenance.
+
+> > > So enable the MSI interrupts along with the Link up interrupt in the
+> > > PARF_INT_ALL_MASK register if global IRQ is supported. This ensures that
+> > > the MSIs continue to work and also the driver is able to catch the Link
+> > > up interrupt for enumerating endpoint devices.
 > > > 
-> > > Handling in a remoteproc core means we may need another state something
-> > > like "RPROC_UNKNOWN" which can be kept after one attempt of recovery
-> > > failure and checking the same during another try return immediately with
-> > > some log message.
+> > > Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
+> > > Reported-by: Konrad Dybcio <konradybcio@kernel.org>
+> > > Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
+> > >  1 file changed, 3 insertions(+), 1 deletion(-)
 > > > 
-> > 
-> > Yes, if we are failing to shut down the remoteproc and there's no way
-> > for us to reliably recover from that (e.g. we are not able to reclaim
-> > the memory), it seems reasonable that we have to mark it using a new
-> > state.
-> > 
-> > If that is the case, I'd call it RPROC_DEFUNCT (or something like that
-> > instead), because while in some "unknown" state, from a remoteproc
-> > framework's point of view, it's in a well known (broken) state.
+> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > index ef44a82be058..2b33d03ed054 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > @@ -133,6 +133,7 @@
+> > >  
+> > >  /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+> > >  #define PARF_INT_ALL_LINK_UP			BIT(13)
+> > > +#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
+> > >  
+> > >  /* PARF_NO_SNOOP_OVERIDE register fields */
+> > >  #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
+> > > @@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > >  			goto err_host_deinit;
+> > >  		}
+> > >  
+> > > -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
+> > > +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
+> > > +			       pcie->parf + PARF_INT_ALL_MASK);
+> > >  	}
+> > >  
+> > >  	qcom_pcie_icc_opp_update(pcie);
+> > > -- 
+> > > 2.25.1
+> > > 
 > 
-> Ack.
-> 
-> -Mukesh
-> > 
-> > Regards,
-> > Bjorn
+> -- 
+> மணிவண்ணன் சதாசிவம்
 
