@@ -1,144 +1,247 @@
-Return-Path: <linux-arm-msm+bounces-32861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32862-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7A0B98B8DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 12:03:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C4FF198B917
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 12:16:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C6D0282AC8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 10:03:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 944E2B23646
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 10:16:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C01BA1A01CE;
-	Tue,  1 Oct 2024 10:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E208A1A0AE0;
+	Tue,  1 Oct 2024 10:16:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="clYwriZ9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="v56ybqSL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8DEB67D;
-	Tue,  1 Oct 2024 10:03:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEF719F430
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Oct 2024 10:16:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727777023; cv=none; b=Lwnkblpvju7We6m+HDF74FsiVeyxPkTllmO1qSao8n7nSRGYILJx3M3NGNdHg+mYFShJX0QQv/rBjOFFVO0pOG65FQqh3cGvWnx8udVRyWSNhiG46Zl15RVX2Njwj8JrnJWNRkQktE/S9fpLdFNROcD0P697Za5Aj5uMo3nO7EM=
+	t=1727777791; cv=none; b=eNbJH2PuevnuxbtVYVZKIiy0Bpw/dDqtSa4YY8ViaMPrllceI2rKDSX1IzzYMfmPs1vcPwd7KounXkEv6pgeLHR59/QRu4oGXXwbvFrm75OPwt3oWcMJVJ0ztOyS9pFG7az8TNhYDRtPHPMh/HwuCIXozRvYyUqnUWkjxVVQqy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727777023; c=relaxed/simple;
-	bh=R0yiSX1l72I4yRald3Wlhl78SafQgVaAFg/joVg2G80=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BFeeeT9cq0OWeHUdGVSDG6TUTz4xUlnrPviTpsYt9cm8u1SPMOAZN+MI5udMPozyMSdPm1JiXPNJc/ZeKcmxc4vLTAxd0JgSqzVNfrUEQg9Xeb5+e6tNpc4fSqDpJ8sX5buZ4ZtkZ4zCgnhsRJ56yD1WvZ0klY5/V4NQ15NwXMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=clYwriZ9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AB8C4CEC6;
-	Tue,  1 Oct 2024 10:03:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727777023;
-	bh=R0yiSX1l72I4yRald3Wlhl78SafQgVaAFg/joVg2G80=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=clYwriZ98+588H5Op0vLBIwuTI6WOacnzte8sSIIXqV7E6eePZmQM9ucO2TUub5jp
-	 t2HT1+u4FoP3qoGMTQOV5oZtHsYzctbVbNkBtTTZ/o8hEZb6dIXf5nXnm0pPKZjwVl
-	 r9LGVKSdPi9RvQkupsKzpR+Uc4Ufptw/XJTM6xk66AflMrnG26beSglM236ba0d0la
-	 cdQpAbJb01ViAZvHZe3nH8bKaG3TdzT68hTpDYx70hi8rTNaBLULxEH9+m1e7Jh3mV
-	 a9PZViUahnpgHPusqH98loQqv2EfCJrLW6BHNge8E0O4HG8qIjugDDeFsQ6dI75Lcf
-	 8RO8yBxb6av8w==
-Message-ID: <8f11c99b-f3ca-4501-aec4-0795643fc3a9@kernel.org>
-Date: Tue, 1 Oct 2024 12:03:32 +0200
+	s=arc-20240116; t=1727777791; c=relaxed/simple;
+	bh=SLtTu3IL6LDgby4y+6PpF+5CxE4Cp3ifpTj6cEABEYs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QG2v7AIO4UWLW8WcRjBHqni7mWA+hrXbjtlks2OV9pm2gB3STEceYh7MihCeAiGuUe5iYBGiH7iJl1s4C/wD3ZMVchJbfofT0BwQ2aEaEEugscxCaFiru+uBOZQGkr3L8Y1kUrBAvg6ytenlZUEbDCwxV/APoCs8mGGfZZS7S+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=v56ybqSL; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-7d4fa972cbeso3937847a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2024 03:16:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727777789; x=1728382589; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7xJfFb9OXfKCKyEf8rku/AUF7m8DFvn5lEQLXOiYm1s=;
+        b=v56ybqSLpQL1RMBM3c2QOataNzX/HsLQBY8FeNTnLtSxywxO9mwcfTbCMeVV54qeea
+         cbMBD7Mfa5+YGow+M/3ImltyoPdLbUQA6LwF8Mus6noU1rlHasI1sGsnnzYh5ALX6/y+
+         k85DQiZ7CC+eZgdMYiX27h+0PNjLba0QzEd+Cfar81EZp5h1PPxKWuFLyjgoHpTLEOhi
+         I7vY0kgaEgRRLnrRTZZ3xCtUYS1Ba787ZXdKlY6WZq7xjt3WPqGCQ71nqMEWU98KXb9i
+         3xtNozkEZy4K6jILKvK8RvFczdx8NjOruUkqzLcyQB9WUMkkfKtR0If18pOwlchD2wtr
+         AszA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727777789; x=1728382589;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7xJfFb9OXfKCKyEf8rku/AUF7m8DFvn5lEQLXOiYm1s=;
+        b=e2y9G4ujOcb3lB/f9rMxgn1zQXzicrNKD65+59h4a/BTySqr28bUBiCfs7bIH/WDQP
+         lzKcr54vip8YrSZxXzhF5bVXEtCaz+bzzu8YujAUp2Ehctu9p//FJK1SgEzKW/Fybjra
+         7LDHWPmXoLrfl/hjkNNSFPvaNgjZv8rKCSfggcG6mkZKnKmC45/aX4M7kMWFE/nw8E4n
+         EBgykX0yF4mjdPjrPEy/e+AfSL/+ykJh2lpjZq0cKuO9icM21I6neBdYkqmkznPQ1AhN
+         9QPj5a8+se4Z9nA892dpH4FzZ+RK53YSGOReGdwK4AwNLP4hxBOhC3r61qsQCoFzEF9x
+         SlCg==
+X-Forwarded-Encrypted: i=1; AJvYcCU2yfjp/LQpjYogM5+0YPHKcTwRAbtppysska9q2/VpwUo/XBQMreDTz5kZGolK/g9yTUYjWnOR0+rIawFy@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQYVKEtcX1VaUzLn2Q7po9ooEYeJauMNbkwgxBMvxch7MHi39v
+	ShkF/+rjLJOCa9CCw1yQv3F9Ku37ZV8sVzS1rvh7e6JmuTT99mD342nuebk5Og==
+X-Google-Smtp-Source: AGHT+IG906Y5WrfPvkSFRlwSRimFFyhVffR8lxQBd4ADp4oyVjxHKJ6izFGXe7OZDAtkNUW7jX74EA==
+X-Received: by 2002:a05:6a21:164e:b0:1bd:2214:e92f with SMTP id adf61e73a8af0-1d4fa6a173emr20544864637.14.1727777789459;
+        Tue, 01 Oct 2024 03:16:29 -0700 (PDT)
+Received: from thinkpad ([36.255.17.150])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e6db2b2f73sm7965180a12.25.2024.10.01.03.16.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Oct 2024 03:16:29 -0700 (PDT)
+Date: Tue, 1 Oct 2024 15:46:22 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
+Message-ID: <20241001101622.ys36slymgjbaz26q@thinkpad>
+References: <20240207-enable_pcie-v1-1-b684afa6371c@quicinc.com>
+ <CAA8EJpqjm_2aE+7BtMkFUdet11q7v_jyHbUEpiDHSBSnzhndYA@mail.gmail.com>
+ <dec2976e-6e1e-6121-e175-210377ff6925@quicinc.com>
+ <CAA8EJprsm5Tw=vFpmfEKL8fxS-S+aW+YR0byfyL=v78k75TGEw@mail.gmail.com>
+ <3ad77846-b4a8-80ee-e9e1-d5cbf4add6d8@quicinc.com>
+ <CAA8EJprRF0tVFZK9c=MT8bSRcBdRvcugBaeEzpX5-wfRyNgc3Q@mail.gmail.com>
+ <c8be2bbf-a51c-a38f-6e6f-a88801f953d5@quicinc.com>
+ <20240209075716.GA12035@thinkpad>
+ <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 4/7] dt-bindings: media: camss: Add qcom,sdm670-camss
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Richard Acayan <mailingradian@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Loic Poulain <loic.poulain@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-media@vger.kernel.org,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-References: <20241001023520.547271-9-mailingradian@gmail.com>
- <20241001023520.547271-13-mailingradian@gmail.com>
- <aleot5kegf5xvlvzmws6tmxcqxw3gnmxndclkb7rdzcxnmehel@varsfzbmiszm>
- <306b0806-70c5-4dfb-b7e3-5614a20699d2@linaro.org>
- <094a889a-497d-4569-9798-04918cea63e7@kernel.org>
- <652b3b74-65d0-479c-a863-7e8f32be7fc9@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <652b3b74-65d0-479c-a863-7e8f32be7fc9@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
 
-On 01/10/2024 11:54, Bryan O'Donoghue wrote:
-> On 01/10/2024 10:47, Krzysztof Kozlowski wrote:
->>> These are appearing in address order, which is preferred over reg-name
->>> ordering AFAIU.
->> First time I hear about such rule. Where is this ordering preference
->> documented? We always ask to keep the same order in each file.
+On Fri, Feb 09, 2024 at 12:56:18PM +0200, Dmitry Baryshkov wrote:
+> On Fri, 9 Feb 2024 at 09:57, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > On Fri, Feb 09, 2024 at 12:58:15PM +0530, Krishna Chaitanya Chundru wrote:
+> > >
+> > >
+> > > On 2/8/2024 8:49 PM, Dmitry Baryshkov wrote:
+> > > > On Thu, 8 Feb 2024 at 16:58, Krishna Chaitanya Chundru
+> > > > <quic_krichai@quicinc.com> wrote:
+> > > > > On 2/8/2024 12:21 PM, Dmitry Baryshkov wrote:
+> > > > > > On Thu, 8 Feb 2024 at 08:14, Krishna Chaitanya Chundru
+> > > > > > <quic_krichai@quicinc.com> wrote:
+> > > > > > >
+> > > > > > >
+> > > > > > >
+> > > > > > > On 2/7/2024 5:17 PM, Dmitry Baryshkov wrote:
+> > > > > > > > On Wed, 7 Feb 2024 at 12:42, Krishna chaitanya chundru
+> > > > > > > > <quic_krichai@quicinc.com> wrote:
+> > > > > > > > >
+> > > > > > > > > Enable PCIe1 controller and its corresponding PHY nodes on
+> > > > > > > > > qcs6490-rb3g2 platform.
+> > > > > > > > >
+> > > > > > > > > PCIe switch is connected to PCIe1, PCIe switch has multiple endpoints
+> > > > > > > > > connected. For each endpoint a unique BDF will be assigned and should
+> > > > > > > > > assign unique smmu id. So for each BDF add smmu id.
+> > > > > > > > >
+> > > > > > > > > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > > > > > > > > ---
+> > > > > > > > >     arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 42 ++++++++++++++++++++++++++++
+> > > > > > > > >     1 file changed, 42 insertions(+)
+> > > > > > > > >
+> > > > > > > > > diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > > > > > > index 8bb7d13d85f6..0082a3399453 100644
+> > > > > > > > > --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > > > > > > +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
+> > > > > > > > > @@ -413,6 +413,32 @@ vreg_bob_3p296: bob {
+> > > > > > > > >            };
+> > > > > > > > >     };
+> > > > > > > > >
+> > > > > > > > > +&pcie1 {
+> > > > > > > > > +       perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+> > > > > > > > > +
+> > > > > > > > > +       pinctrl-0 = <&pcie1_reset_n>, <&pcie1_wake_n>;
+> > > > > > > > > +       pinctrl-names = "default";
+> > > > > > > > > +
+> > > > > > > > > +       iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+> > > > > > > > > +                   <0x100 &apps_smmu 0x1c81 0x1>,
+> > > > > > > > > +                   <0x208 &apps_smmu 0x1c84 0x1>,
+> > > > > > > > > +                   <0x210 &apps_smmu 0x1c85 0x1>,
+> > > > > > > > > +                   <0x218 &apps_smmu 0x1c86 0x1>,
+> > > > > > > > > +                   <0x300 &apps_smmu 0x1c87 0x1>,
+> > > > > > > > > +                   <0x400 &apps_smmu 0x1c88 0x1>,
+> > > > > > > > > +                   <0x500 &apps_smmu 0x1c89 0x1>,
+> > > > > > > > > +                   <0x501 &apps_smmu 0x1c90 0x1>;
+> > > > > > > >
+> > > > > > > > Is the iommu-map really board specific?
+> > > > > > > >
+> > > > > > > The iommu-map for PCIe varies if PCIe switch is connected.
+> > > > > > > For this platform a PCIe switch is connected and for that reason
+> > > > > > > we need to define additional smmu ID's for each BDF.
+> > > > > > >
+> > > > > > > For that reason we defined here as these ID's are applicable only
+> > > > > > > for this board.
+> > > > > >
+> > > > > > So, these IDs are the same for all boards, just being unused on
+> > > > > > devices which have no bridges / switches connected to this PCIe host.
+> > > > > > If this is correct, please move them to sc7280.dtsi.
+> > > > > >
+> > > > > Yes ID's will be same for all boards. we can move them sc7280.dtsi
+> > > > > but the BDF to smmu mapping will be specific to this board only.
+> > > > > if there is some other PCIe switch with different configuration is
+> > > > > connected to different board of same variant in future again these
+> > > > > mapping needs to updated.
+> > > >
+> > > > Could you possibly clarify this? Are they assigned one at a time
+> > > > manually? Or is it somehow handled by the board's TZ code, which
+> > > > assigns them sequentially to the known endpoints? And is it done via
+> > > > probing the link or via some static configuration?
+> > >
+> > > There is no assignment of SID's in TZ for PCIe.
+> > > PCIe controller has BDF to SID mapping table which we need to
+> > > program with the iommu map table.
+> > >
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-qcom.c?h=v6.8-rc3#n997
+> > >
+> > > Based upon switch the BDF to SID table will change for example I had two
+> > > switches with one switch has 2 PCIe ports and other has 3 ports one
+> > > embedded port which supports multiple functions.
+> > >
+> > > For the first switch the BDF's are
+> > >       - 0x000(root complex),
+> > >       - 0x100(USP),
+> > >       - 0x208(DSP 0),
+> > >       - 0x210(DSP 1),
+> > >       - 0x300(endpoint connected to DSP 0),
+> > >       - 0x400( endpoint connected to DSP 1).
+> > >
+> > > For 2nd switch the BDF's are
+> > >       - 0x000(root complex),
+> > >       - 0x100(USP),
+> > >       - 0x208(embeeded DSP 0),
+> > >       - 0x210(DSP 1),
+> > >       - 0x218 (DSP 2),
+> > >       - 0x300(embedded endpoint function 0),
+> > >       - 0x301 (embedded endpoint function 1)
+> > >       - 0x400( endpoint connected to DSP 1)
+> > >       - 0x500(endpoint connected to DSP2).
+> > >
+> > > For these two switches we need different BDF to SID table so for that
+> > > reason we are keeping iommu map here as this is specific to this board.
+> > >
+> >
+> > I don't understand why the SID table has to change between PCIe devices. The SID
+> > mapping should be part of the SoC dtsi, where a single SID would be defined for
+> > the devices under a bus. And all the devices under the bus have to use the same
+> > SID.
 > 
-> Eh evidently just my impression because we sort nodes by address.
+> This sounds like a sane default, indeed. Nevertheless, I see a point
+> in having per-device-SID assignment. This increases isolation and can
+> potentially prevent security issues. However in such case SID
+> assignment should be handled in some automagic way. In other words,
+> there must be no need to duplicate the topology of the PCIe bus in the
+> iommu-maps property.
 > 
-> Yes, definitely agree both the regs and interrupts should be sorted the 
-> same way, its inconsistent to have one set sorted by address but the 
-> other sorted by name.
 
-I don't imply sorting by name is any better. The only rule is that all
-devices from same family type must have the same order. This is even
-explicitly expressed for several devices by sharing binding or sharing
-bindings.
+Agree with you on this. This is what I suggested some time back to have the
+logic in the SMMU/PCIe drivers to assign SIDs dynamically. Unfortunately, it is
+not a trivial work and it requires a broader discussion with the community.
 
-Best regards,
-Krzysztof
+Also starting with SMMUv3, there are practically no limitations in SIDs and
+each device should get a unique SID by default.
 
+So I got convinced that we can have these static mappings in the DT *atm* for
+non SMMUv3 based hardwares and at the same time let the discussion happen with
+the community. But this static mapping solution is just an interim one and won't
+scale if more devices are added to the topology.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
