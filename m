@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-32855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97A9598B7D5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 11:04:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3814598B7DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 11:05:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A583D1C2192D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 09:04:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9C441F22695
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 09:05:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0D5719B3C5;
-	Tue,  1 Oct 2024 09:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34F3B19D07B;
+	Tue,  1 Oct 2024 09:04:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IR7nII9K"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K+GR6vBy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC4D1922E8
-	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Oct 2024 09:04:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6624119D889
+	for <linux-arm-msm@vger.kernel.org>; Tue,  1 Oct 2024 09:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727773476; cv=none; b=ILXo0U4MCiJTOrmg2bMPsYr+5W3tzQxJX03MBYVvUm5DL3bDdSMCaxyuVxyfrddeeHle6FukW0ImiFaYHIOJgj2yvj0uWGOI7+iMX55jCtZYezOyN0f0CjKTCQQCvx8GSJJTSA27fQPimJAcOjHmONGov14OOaIMzJLNF01f1QA=
+	t=1727773485; cv=none; b=QzLMQzB4eO5n/3ifu88yr3xFAY927/cinS7Ip+QlHKQBjw1WIOx9LZke8pAj91iGPTA1bxO9XS934DXJy7fP6JZGf8sX02ReV09b2lRG/PC1aPATslG876CYTwgsRLljFX94JVpL7mPmB6RC0R3r/W3wdxB5ivzl7/Ns8h9saFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727773476; c=relaxed/simple;
-	bh=bmTiK36h+6z7r30jTioLLTDLekNBb+Ez7VaFm4dX18I=;
+	s=arc-20240116; t=1727773485; c=relaxed/simple;
+	bh=pqMjjkjt5K+KvXsZn2P4udFNhVmUR8QRNVoiTGhjFsw=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=HDpjnS70y1pdxGfN+HekX2pQwu7Y4+4E4gRpgQdb/AMsIsNwt5ZIcU8+dKCBaETRI/JgNL53NaUo2CMbTAqGMHADAxFluj2ne280Mz3+Ymq3cc4OSeQEyCWMjtQ5wzGPMJjCdBVEIzlgnujSR0o7RWb56qA9ufY085EHpZ2g3cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IR7nII9K; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:Content-Type; b=YuOxhuUfbLbocnSzWa06u3sAqiMKQ2odp/uM1N+QXpA5MTwoYrrloJUo39QiLwyPW4U+rQXWDWU2A1cLhacgyRkpQ/ALvwkRbUTiosrOrBqfq2E4SttQDknJp3FZ5TFamKuIYOfXat5QlZmRVDlH5Bdb4SG7yrA2d4SDDLNw+gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K+GR6vBy; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-37cca239886so2995261f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2024 02:04:34 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-42cacabd2e0so40850075e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 01 Oct 2024 02:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727773473; x=1728378273; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1727773482; x=1728378282; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SoOl3oTeEbaG2GOXACB28sw4PqDD0ifREAp/fJEBuqg=;
-        b=IR7nII9K5lVrl5uOmwOoaR9aqcKavSMD48CNbmdzXtTY4x8DbTSBjbCBvUxTZBPFaR
-         J9Z4VfpQkR1F40/ob6SrSBfITchTvEOk8GaIE7d7KwhKv3yZa1nnz8rRYECx1hSJQn1D
-         0KFQ/IU4m/wpU+sPA68OVuJeD+4mG3UaOh2plp0N9vcRcRxcgN5y/Wiq80XxLBVkjcW1
-         8lQDdAANCjNuSuvV3rfsE3yXIIXAekJx9XEvgHGg1S1eWynIbJKXkLDSiLt65dyJmXjH
-         iSgh6zJHZ1z376FKa5DwX1Dp2HB2y2AF41fHJG4Mx6B9GSlRONlhlFFAxsBJyBfUkGVb
-         VuJA==
+        bh=Iwpzm2KnHc5En/e78r3n2ETfrHl9LgjH5EzFgMnUnXc=;
+        b=K+GR6vBylQbECOAkfbPhuqEWIROTe260XK3DfqJ5qTo74UIzXQgq73/TBbtC3z2WvD
+         dc97by6eNVXkEKiqtShicCwmECh1+zp1O0JD392ysr31atSDULWNMjnhspBVUfQ+YIaL
+         aoMwxqqzLSLTG2XebigXl+y07kNkmUZZXrcvL+252wNlNpxHGxU416Tt7OFannSmWCNV
+         4W7uQVyOjBSmBHW0le9CTHG7i3NvP55w/gBA/1k54IruIZngwhiO4JFkuzV1fAWmAgpi
+         OZEiSyTSdas13io8ArsgPt6Jaj8eLenvUnwiBFm14CnZ4SnAGHkyMJltOjv6PyMDoSEn
+         Jucw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727773473; x=1728378273;
+        d=1e100.net; s=20230601; t=1727773482; x=1728378282;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=SoOl3oTeEbaG2GOXACB28sw4PqDD0ifREAp/fJEBuqg=;
-        b=QR/pW7+oTEKnZmlOrhFVN/SEJP6AbYN66aDGM6z40LHT6Mgg7i/NbWzuNyz77JU5z9
-         qVWhAJD1OsucMfsPv/uUDjXoDwVtIgkRVi0xPoWEUXXRtregwxtLdLmxWbhzNKOnGSQN
-         8CSCrfb3886pInEFM2AD86oZ74LLj+cq40tJcFeF85hVURQ3RBJfjWpaZiszWv0DQFdv
-         Tiru+fr3KDaNgbjIMOzLM/gD8MWEpROKqJlohCXau7VLdArLgKjxoBQJYz9unzZ8VPR3
-         FDMVR+hPSEKSGfxfaVpJlCcO5QoDg7Z8lajBIJy83mAibTdWS5TGpx+tiUxeRp+qpkwn
-         KrbA==
-X-Gm-Message-State: AOJu0YwGpihYh9GVgkAYeiU/hsqCQSCvfzpFY7NhX7GknkpEDboUlPwT
-	cONfwprvjt6nnrg6Vt96coZEEGz3vg7uuLUmv5zLgaupIo4+PUDCIkxKNH5hJiI=
-X-Google-Smtp-Source: AGHT+IHSSvOtabVm0gIUh/kzsVHEg2Jl8p9Rr0MMz6KxOq+Hk6IBhxg7qa0GCnzqbN2dcux4iZCjSg==
-X-Received: by 2002:adf:f34f:0:b0:374:c122:e8b8 with SMTP id ffacd0b85a97d-37cd5aaf90bmr6825772f8f.11.1727773473179;
-        Tue, 01 Oct 2024 02:04:33 -0700 (PDT)
+        bh=Iwpzm2KnHc5En/e78r3n2ETfrHl9LgjH5EzFgMnUnXc=;
+        b=v5zCYLfjzusvL2S2d+2k8kqMK+nNGSpCGdKC8PdU1MN4K/+DnjUydGLnXFsdFTXm2H
+         ZmbZDwl/KhIAnuuDYW8nB64Fl+E6j3B20pHUSOrey72DJcXVDQIVA5ancY1/H5N9tvT1
+         +jJdUCAtC7NnK9H65553GASAKbwxl/LNXDeBhd58TbJf3IBI98+5ANea8Zb1dyCnCaUr
+         l6kZj1jD5n37MMTkxYveMPc5gF5P163l7p2tNZw+u6psn7al8d0VLl7DiPsfgpWWpamb
+         +jfdLKgXJ5C94gJnC5Yloo72WPlkrPKUnciYWiI51ltdWK1avHg/1bSEKdxS55IGDz4l
+         JGzQ==
+X-Gm-Message-State: AOJu0YyeE5w+oy0GorGPuxR30uSPCbr5RtStQ011KI1bY9d2ZoVsBEL5
+	OavbJ4ZquYKb3Uhme1Eco2hiJdMxQky+e0VMMESD2/8K1ZoP3nUA6d5wp154194=
+X-Google-Smtp-Source: AGHT+IFbfr4kqMuq+z3unZenzsZ7NXIlfK7AZreyki8GnXg4bT7oP2lEskit3sj6XQCm/fcqhqsC1A==
+X-Received: by 2002:a05:600c:4e0e:b0:42c:bcc8:5877 with SMTP id 5b1f17b1804b1-42f58415f31mr96088305e9.13.1727773481620;
+        Tue, 01 Oct 2024 02:04:41 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:ec13:4c0:b08d:b067? ([2a01:e0a:982:cbb0:ec13:4c0:b08d:b067])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37cd572fdb0sm11307237f8f.89.2024.10.01.02.04.32
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37cd57429e5sm11281395f8f.98.2024.10.01.02.04.40
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Oct 2024 02:04:32 -0700 (PDT)
-Message-ID: <696d7b9d-affe-4548-9138-6b01d6cca81e@linaro.org>
-Date: Tue, 1 Oct 2024 11:04:31 +0200
+        Tue, 01 Oct 2024 02:04:41 -0700 (PDT)
+Message-ID: <e09e9782-7a60-4ed9-82f4-fb84a32879f3@linaro.org>
+Date: Tue, 1 Oct 2024 11:04:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,9 +77,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: sm8550: extend the register
+Subject: Re: [PATCH v7 1/2] arm64: dts: qcom: sm8650: extend the register
  range for UFS ICE
 To: Bartosz Golaszewski <brgl@bgdev.pl>,
  Bjorn Andersson <andersson@kernel.org>,
@@ -88,9 +88,10 @@ To: Bartosz Golaszewski <brgl@bgdev.pl>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Om Prakash Singh <quic_omprsing@quicinc.com>,
  Gaurav Kashyap <quic_gaurkash@quicinc.com>
 References: <20241001-wrapped-keys-dts-v7-0-a668519b7ffe@linaro.org>
- <20241001-wrapped-keys-dts-v7-2-a668519b7ffe@linaro.org>
+ <20241001-wrapped-keys-dts-v7-1-a668519b7ffe@linaro.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -117,7 +118,7 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20241001-wrapped-keys-dts-v7-2-a668519b7ffe@linaro.org>
+In-Reply-To: <20241001-wrapped-keys-dts-v7-1-a668519b7ffe@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
@@ -126,39 +127,34 @@ On 01/10/2024 10:35, Bartosz Golaszewski wrote:
 > 
 > The Inline Crypto Engine (ICE) for UFS/EMMC supports the Hardware Key
 > Manager (HWKM) to securely manage storage keys. Enable using this
-> hardware on sm8550.
+> hardware on sm8650.
 > 
 > This requires us to increase the register range: HWKM is an additional
 > piece of hardware sitting alongside ICE, and extends the old ICE's
 > register space.
 > 
-> NOTE: Although wrapped keys cannot be independently generated and
-> tested on this platform using generate, prepare and import key calls,
-> there are non-kernel paths to create wrapped keys, and still use the
-> kernel to program them into ICE. Hence, enabling wrapped key support
-> on sm8550 too.
-> 
+> Reviewed-by: Om Prakash Singh <quic_omprsing@quicinc.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
 > Signed-off-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
 > Co-developed-by: Gaurav Kashyap <quic_gaurkash@quicinc.com>
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 9dc0ee3eb98f..93c8aa32e411 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -2076,7 +2076,8 @@ opp-300000000 {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 01ac3769ffa6..5986a33ddd8b 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -2595,7 +2595,7 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
 >   		ice: crypto@1d88000 {
->   			compatible = "qcom,sm8550-inline-crypto-engine",
+>   			compatible = "qcom,sm8650-inline-crypto-engine",
 >   				     "qcom,inline-crypto-engine";
 > -			reg = <0 0x01d88000 0 0x8000>;
 > +			reg = <0 0x01d88000 0 0x18000>;
-> +
+>   
 >   			clocks = <&gcc GCC_UFS_PHY_ICE_CORE_CLK>;
 >   		};
->   
 > 
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
