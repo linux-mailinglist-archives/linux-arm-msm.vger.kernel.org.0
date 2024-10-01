@@ -1,143 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-32864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B33EA98BAD5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:18:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76A9998BB57
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 13:38:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 559FF281967
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 11:18:27 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D25E1F20F0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 11:38:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C8EF19DFAE;
-	Tue,  1 Oct 2024 11:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC0431BFE03;
+	Tue,  1 Oct 2024 11:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dLyWhz/t"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YoTrGRp1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7064839B;
-	Tue,  1 Oct 2024 11:18:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1780719DF53;
+	Tue,  1 Oct 2024 11:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727781504; cv=none; b=WZE68SIELF7d/ddtj0J1NQzipbnNOzMfi4+DduyHe2gqdf8KPYBd/qiZyS0WytBZCDsLr5OZOmsZkls3NH6H00Z03zV8YPobAQvj0WYg3WMOvn6kxi+J9RGaalz8hNS03L1gA6A+UdJVK5FxoII+csqkroBhK2VsSFe7xZA+i8M=
+	t=1727782686; cv=none; b=hiKxn/ADTE0KGv4lHtHxrGjfaBsR8lCJ6+PXapJo1vU8bPS55JGulb5Af+Fd8fkqUQjXeOZnWUxI7YfHM9wgiE9PqGPvfb5wJRmFkleCTQ+Kl71r4p7KVXKHBjb3HrPpUhLGGXeKW/XYHNgzasugb+tBrEOuWqLcx9b3EFV6rts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727781504; c=relaxed/simple;
-	bh=Mioa/5LJHiFVwRnLUJ3TyjnE9QgsmBQmcNPMZ83ReDE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dYbu4PbcoANcRgaaAkdbVNfNW0jddtPhYZlnXbRbSnS1ztnyNzwedm4gSQz8CRlTmYQYk5Dhq6BZmoREY3AH88XEmHf6TSd+362gZ7QFllTQWRwdahPVqxY9HtxUS5vkuhnq2Wrz7pG6iLdfszIbA+xjqD3lLkao9Juz62GCmT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dLyWhz/t; arc=none smtp.client-ip=209.85.218.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a8d51a7d6f5so712492966b.2;
-        Tue, 01 Oct 2024 04:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727781501; x=1728386301; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=M7Y+01ypUJsEmgwdYhnhTchynt4rwwmYzwYQjNI7xpM=;
-        b=dLyWhz/tj+yNwNDWEkh+QTvIVHtXfw6ZbQ2a/OTnAOpgBPKpQ/MYoYiRPZm7SFXfi9
-         4WGOhibVSpL5kBoVqyKQiAKCLG0Hx1awz62WT1p4KOOlx4SVkSex7yKPpyXJsgPJDBzr
-         ZB8hbVQZU7pArkofuHAO/np0xmpbv52bQ5Mj+0wy1ftOJTuFAMzGvUj6EGOzkbnOJOnT
-         De2YFrqyFeu9Uce5p5cZm/1BZBHuNUHr1uVe6tzEuU0N/1lEFzJxc81tDblDF7s28QX/
-         shqG1F2/76QZcySBGiCxFsJESUh/Ea/ITqElTT0oRAUB+3khcGD0sOfwXDeN3I6HfcmP
-         MY4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727781501; x=1728386301;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M7Y+01ypUJsEmgwdYhnhTchynt4rwwmYzwYQjNI7xpM=;
-        b=vGjXtdhPMsE4QWeEHop4Q2vaqN/s9sWAO8PaG+rkLR2Ax77WIY34LmszaPuX0JUA77
-         tM9Pgj5KFS6+ykpRw+UY4aVs/S8wJqeQczCaM7/Zu0gm89rkfd+KQHSRAfZl9v245bUz
-         EJpjBbAn2+mdJaLsW9du/I4jv54XkblASz10rpKLQ3eOBvvKVxzdCZAAOtCy325nRwlA
-         xH/AyWBMLQtniaEvvP4u16WyUS7/InnmmtYgVyvgbGrSpdBJ/S7h0G+c5VWRzcMxEo32
-         xtYRJLn5vFIrlRXhHjG0bqbYLB79ongzPY45SrUVH4TJhhC3UibWI4QTE/Lkhg/atKNz
-         W5Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCVy1WHc3QC+egrkHWANx77YalQ+keIUIf8kf9eIUbzt1gqdi6xHlRO9U7b5WnEV7M8ZcSBR9ptD2v0=@vger.kernel.org, AJvYcCWRM5hJWyXTEzQsRkkmWR6xoTb9U91kQvVD6g1P8vnchfCe37JidNuZOfD0wyzS/h/SlTMFo8cA2cYE2SNz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6p713iawBVutnQHebSmhqjPiuDNyr0pDqQ3z/QYkORb1kQzA5
-	dQWC/F+lNzYyls9J99/nKCVFSADudz8/MHTY/s3YnmqlEGgGzeed
-X-Google-Smtp-Source: AGHT+IEjf7kjW+MgxUTDGHSJNPDYgDC2pVN3zKWGsYHhpG6QGdF/JkSRWRkTQCML9v/lBAseCkcp7g==
-X-Received: by 2002:a17:907:ea7:b0:a8a:8c92:1c76 with SMTP id a640c23a62f3a-a93c4961721mr1478843866b.36.1727781500535;
-        Tue, 01 Oct 2024 04:18:20 -0700 (PDT)
-Received: from [192.168.1.17] (host-79-12-161-203.retail.telecomitalia.it. [79.12.161.203])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27ecf90sm694400766b.97.2024.10.01.04.18.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Oct 2024 04:18:20 -0700 (PDT)
-Message-ID: <0aab9845-b960-477f-b869-e8d0759c4671@gmail.com>
-Date: Tue, 1 Oct 2024 13:18:18 +0200
+	s=arc-20240116; t=1727782686; c=relaxed/simple;
+	bh=8GGy2t+zDlmFEH1+BK+kXfBif5WBL+v0s/d0M+5d6AA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=u4vFW+oQl/29apo/iHBbkkFJPh3SjOvaacCYDusAwtxqJsd4qf92Y7R0xWG8Jz5TKDc6v/EK7t5ztnOoyPZ5sP1dhiSBQiilaifrmEgVJvoTF777rXYx0VVDysaeJWlslBjFYCji0bNPcj4beEXANOKbyR6WZe0m80MAF8MKi/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YoTrGRp1; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491AC8OX001985;
+	Tue, 1 Oct 2024 11:37:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=FCgPRX2Lc/rLHJ6D7iOORv7rJsF1yr5pgyC
+	NDwjUY0I=; b=YoTrGRp1xbB1YyIH4OhWFaSK74Box4yUZMNT/h7PzOlCkUBu5PT
+	Jhn8RKTy4wdNiWMtfWKzq4pH+tBQ0V38BJR63I0POvaeYqXGbfFN0P6ah5KNKeVW
+	8hnjX89oFftYUIqrPQMW5gq0ZCKw9uARyyZo3DkyX5VTxuaZMkNYCMbb25VzHgIk
+	0msjkJlGhu8QFm/qL3kRxROcLcK8hsAVnAbfO+KG7BcaAHHNL0l3cBwHNI15jMmt
+	F8l+i2iLPiLWUp0nSeciESvTS8UgLJs2mn4/mGvnbvqt6td7U0wU6ch2NStBVNx7
+	26EDYujbt0fLQywq1/89/r281MsxsstYErQ==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41xte0xseu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Oct 2024 11:37:50 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 491BbkNZ002799;
+	Tue, 1 Oct 2024 11:37:46 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 41xavm1wrg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Oct 2024 11:37:46 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 491BbjUO002793;
+	Tue, 1 Oct 2024 11:37:45 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.96.82])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 491BbjWV002790
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Oct 2024 11:37:45 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2370923)
+	id 52A2353F; Tue,  1 Oct 2024 17:07:44 +0530 (+0530)
+From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+To: mhi@lists.linux.dev
+Cc: quic_qianyu@quicinc.com, manivannan.sadhasivam@linaro.org,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_skananth@quicinc.com, mrana@quicinc.com,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>,
+        Slark Xiao <slark_xiao@163.com>,
+        Fabio Porcedda <fabio.porcedda@gmail.com>,
+        Mank Wang <mank.wang@netprisma.us>,
+        linux-arm-msm@vger.kernel.org (open list:MHI BUS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] bus: mhi: host: pci_generic: Add support for QDU100 device
+Date: Tue,  1 Oct 2024 17:07:35 +0530
+Message-Id: <20241001113738.152467-1-quic_vpernami@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 11/11] Documentation: document adreno preemption
-To: Bagas Sanjaya <bagasdotme@gmail.com>, Rob Clark <robdclark@gmail.com>,
- Sean Paul <sean@poorly.run>, Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Jonathan Corbet <corbet@lwn.net>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org
-References: <20240926-preemption-a750-t-v6-0-7b6e1ef3648f@gmail.com>
- <20240926-preemption-a750-t-v6-11-7b6e1ef3648f@gmail.com>
- <ZvtMB14Yx5m3TzFJ@archie.me>
-Content-Language: en-US
-From: Antonino Maniscalco <antomani103@gmail.com>
-In-Reply-To: <ZvtMB14Yx5m3TzFJ@archie.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: HA-iO2LzxR8uE8Ptc_-sEAJaWS0yY6ad
+X-Proofpoint-GUID: HA-iO2LzxR8uE8Ptc_-sEAJaWS0yY6ad
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ suspectscore=0 spamscore=0 impostorscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 mlxscore=0 clxscore=1011
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2410010075
 
-On 10/1/24 3:10 AM, Bagas Sanjaya wrote:
-> On Thu, Sep 26, 2024 at 11:16:53PM +0200, Antonino Maniscalco wrote:
->> +.. SPDX-License-Identifier: GPL-2.0
->> +
->> +:orphan:
-> 
-> Why don't this be added to toctree in Documentation/gpu/index.rst?
+Add MHI controller configuration for QDU100 device.
 
-Yes so there is existing orphan documentation for msm so my intention 
-was to add it as orphan then eventually send out a series to organize it 
-properly (so creating an msm directory with an index which then points 
-two files we currently have). Does that sound good to you?
+This Qualcomm QDU100 device is inline accelerator card
+which is an extension to QRU100 5G RAN platform.
+which is designed to simplify 5G deployments by offering
+a turnkey solution for ease of deployment with O-RAN
+fronthaul and 5G NR layer 1 High (L1 High) processing,
+and to accelerate operator and infrastructure vendor
+adoption of virtualized RAN platforms.
 
-> 
->> +
->> +=============
->> +MSM Preemtion
->> +=============
-> s/Preemtion/Preemption/
+https://docs.qualcomm.com/bundle/publicresource/87-79371-1_REV_A_Qualcomm_X100_5G_RAN_Accelerator_Card_Product_Brief.pdf
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 49 ++++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
 
-Thanks for pointing out the typo!
-
-> 
-> 
->> +This mechanism can be used by the kernel to switch between rings. Whenever a
->> +submission occurs the kernel finds the highest priority ring which isn't empty
->> +and preempts to it if said ring is not the one being currently executed. This is
->> +also done whenever a submission completes to make sure execution resumes on a
->> +lower priority ring when a higher priority ring is done.
-> 
-> Do you mean that the kernel finds highest priority ring possible that is not
-> empty? What if all these 4 rings are empty?
-> 
-> Confused...
-> 
-
-Yep, if all rings are empty we don't preempt, same as when the highest 
-priority ring is the current one.
-
-Best regards,
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 9938bb034c1c..1153697fa858 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -245,6 +245,52 @@ struct mhi_pci_dev_info {
+ 		.channel = ch_num,		\
+ 	}
+ 
++static const struct mhi_channel_config modem_qcom_qdu100_mhi_channels[] = {
++	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 2),
++	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 2),
++	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 128, 1),
++	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 128, 1),
++	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 3),
++	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 3),
++	MHI_CHANNEL_CONFIG_UL(9, "QDSS", 64, 3),
++	MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 4),
++	MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 4),
++	MHI_CHANNEL_CONFIG_UL(16, "CSM_CTRL", 32, 4),
++	MHI_CHANNEL_CONFIG_DL(17, "CSM_CTRL", 32, 4),
++	MHI_CHANNEL_CONFIG_UL(40, "MHI_PHC", 32, 4),
++	MHI_CHANNEL_CONFIG_DL(41, "MHI_PHC", 32, 4),
++	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 256, 5),
++	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 256, 5),
++	MHI_CHANNEL_CONFIG_UL(48, "IP_SW1", 256, 6),
++	MHI_CHANNEL_CONFIG_DL(49, "IP_SW1", 256, 6),
++	MHI_CHANNEL_CONFIG_UL(50, "IP_SW2", 256, 7),
++	MHI_CHANNEL_CONFIG_DL(51, "IP_SW2", 256, 7),
++};
++
++static struct mhi_event_config modem_qcom_qdu100_mhi_events[] = {
++	/* first ring is control+data ring */
++	MHI_EVENT_CONFIG_CTRL(0, 64),
++	/* SAHARA dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(1, 256),
++	/* Software channels dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(2, 64),
++	MHI_EVENT_CONFIG_SW_DATA(3, 256),
++	MHI_EVENT_CONFIG_SW_DATA(4, 256),
++	/* Software IP channels dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(5, 512),
++	MHI_EVENT_CONFIG_SW_DATA(6, 512),
++	MHI_EVENT_CONFIG_SW_DATA(7, 512),
++};
++
++static const struct mhi_controller_config modem_qcom_qdu100_mhi_config = {
++	.max_channels = 128,
++	.timeout_ms = 120000,
++	.num_channels = ARRAY_SIZE(modem_qcom_qdu100_mhi_channels),
++	.ch_cfg = modem_qcom_qdu100_mhi_channels,
++	.num_events = ARRAY_SIZE(modem_qcom_qdu100_mhi_events),
++	.event_cfg = modem_qcom_qdu100_mhi_events,
++};
++
+ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+ 	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
+ 	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
+@@ -822,6 +868,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* NETPRISMA FCUN69 (SDX6X) */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
+ 		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
++	/* QDU100, x100-DU */
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0601),
++		.driver_data = (kernel_ulong_t)&modem_qcom_qdu100_mhi_config },
+ 	{  }
+ };
+ MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
 -- 
-Antonino Maniscalco <antomani103@gmail.com>
+2.34.1
+
 
