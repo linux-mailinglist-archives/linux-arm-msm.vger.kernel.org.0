@@ -1,117 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-32953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32947-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09A6A98DF6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 17:39:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72D2E98DEDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 17:24:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9FF58B24D96
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 15:27:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F7381F21B53
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 15:24:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A226E1D1728;
-	Wed,  2 Oct 2024 15:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A1141D041C;
+	Wed,  2 Oct 2024 15:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="TWpgOz8/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qhHKmRag"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FB51D1516;
-	Wed,  2 Oct 2024 15:26:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7AA748F;
+	Wed,  2 Oct 2024 15:24:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727882767; cv=none; b=QECv6Gx9sPoHV2k4+71Z/Szqx9whhkF3zazRTXAbKR2fIUzir7Kdrtl9c+v4iVg5BsAYOA8G9CvbWsOev9//Uet/DbRhj2HPMRJK14Q9vCmMY7hqWl168RyipqKKHM6HQDzZJS+m3o6gVUg+IE+48MnsCAUiJcXksArLfr6wV50=
+	t=1727882678; cv=none; b=D9gd72rcdp+bTg8MRFUqVCx8vp5cA+6Ga0gB4ddKtfLLsxpGbz525hxzKfjqvQdM8c6VWOHP2KdUvoxbLHOujl6yssQDc0E6LjtEU45LN5AIrSldIC8IOiqQAG/P3xZX6xlHZgE6dmH5ZJgVkEA2Uje+Icx3178y6a89aOXh00I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727882767; c=relaxed/simple;
-	bh=UUNAgAv1R6DLPtknbTLKqD48NRSgGCvWXZNp6Cu8omw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPWUHiOZtW/pYAjh6E1CNEyIQe/PFrNrrrkoRzBFB0KkMRDQpa4lnCdyMSJsHVzm/KDa2hbY0fFTJtJ9DFZPJnPj9BrSD0pPPzXZzg3AsajXWG4sj9YthtnYOWCFNCbDg0TxCp8yyRbxY4WSkZaCZ2WOPyw3gQkVYuOPS0VnOTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=TWpgOz8/; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id D321C23CFC;
-	Wed,  2 Oct 2024 17:26:04 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id uAgeXao0KEt7; Wed,  2 Oct 2024 17:26:04 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
-	s=mail; t=1727882764;
-	bh=UUNAgAv1R6DLPtknbTLKqD48NRSgGCvWXZNp6Cu8omw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=TWpgOz8/e+xXXqWT8xZIektJSbGqGBBX9jNcKz7HWicYDdRKJZGydsNNJCjLQ5+5d
-	 3fpoty6M7ghz6RxiKoTM/eOVfiX/vUhv47tOStEtJRkC9ichfrJMgJGeDspkmbFBzY
-	 i/F+gVdAI7Jwiz6FujPhbt9kDYNffO49c60I8lkGyhA+WgC6jZNYWhmUmEcn3e/oRR
-	 BVllIytbNaaKdIr9EiD4jzdhcvQLvt0SqamOplFO8dqg9xKudcpYNFzIph3jxprBFo
-	 /DN5ziIdPzo/FS1w6N6L8LKGsf0CLtHiqO5JsZkf/H4V9AO7s3K4iSlS9pbguzm+0S
-	 3B78w3mKzBKFw==
-From: Karl Chan <exxxxkc@getgoogleoff.me>
-To: linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	linus.walleij@linaro.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	Karl Chan <exxxxkc@getgoogleoff.me>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 5/5] arm: dts: qcom-ipq5018-linksys-jamaica: Include dts from arm64
-Date: Wed,  2 Oct 2024 23:24:19 +0800
-Message-ID: <20241002152419.30364-6-exxxxkc@getgoogleoff.me>
-In-Reply-To: <20241002152419.30364-1-exxxxkc@getgoogleoff.me>
-References: <20241002152419.30364-1-exxxxkc@getgoogleoff.me>
+	s=arc-20240116; t=1727882678; c=relaxed/simple;
+	bh=zpBAyXaoZCDrvbKu4K9Ly8sQIcSLywthtnsAo7N/4SM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=TC9QbXEOF6Q2XBOorjkb8Sa2IrfYXucsJdt4sNkvqsL26SVi/7Xek84Joroed6OV/1dB9NEY+j2yruOE1/lOLmF3HP2q4kGNaVVkTM0ErIGiMjEUjfOCMTypB/vTX14Eqh15mas7cjFuluO07KsroAL5kdVWHhCTe6BJr6TgZc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qhHKmRag; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F4FC4CEC2;
+	Wed,  2 Oct 2024 15:24:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727882677;
+	bh=zpBAyXaoZCDrvbKu4K9Ly8sQIcSLywthtnsAo7N/4SM=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=qhHKmRagHp2UYM0vYEMEjaG8kBLa40p/NUb2JgxtVbiru9AvgVVrAru9+OcDf8fWG
+	 YfYwC/xjSKRT6+La8RAhHYuBTP0OrAYgpPkWs5UNA8gXCedDVcC1bF5itv26RYAYuV
+	 W//5lg20JkNu/yvPh9qaVTkhi2QAyGE2FATHh0aJ5tT+SM1tIwgwiRD1Tv0/kSfKR6
+	 6/y1vtdPsg1WVFwxWKohEBaTcWVVFRF6FPKuIWavjQbRO7VC0XQxMkjPFCcptKNhtM
+	 BuV2sN3u/Y8mrHFZWlfoSPeRm+VXsvnDgfKbb6hmzD9BLXF66iQhffzwmCUOW5Aa7z
+	 Vvcq/1BLTFKjw==
+From: Lee Jones <lee@kernel.org>
+To: lee@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+ conor+dt@kernel.org, Nikunj Kela <quic_nkela@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, kernel@quicinc.com, quic_psodagud@quicinc.com, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Shazad Hussain <quic_shazhuss@quicinc.com>
+In-Reply-To: <20240905194741.3803345-1-quic_nkela@quicinc.com>
+References: <20240905194741.3803345-1-quic_nkela@quicinc.com>
+Subject: Re: (subset) [PATCH v3] dt-bindings: mfd: qcom,tcsr: document
+ support for SA8255p
+Message-Id: <172788267538.1443612.15994548412245580739.b4-ty@kernel.org>
+Date: Wed, 02 Oct 2024 16:24:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.13.0
 
-Build the Linksys EA9350 V3 device trees from the arm64 tree together with the ARM32 include to allow booting this device on ARM32.
+On Thu, 05 Sep 2024 12:47:41 -0700, Nikunj Kela wrote:
+> Add compatible for tcsr representing support on SA8255p SoC.
+> 
+> 
 
-The approach to include device tree files from other architectures is
-inspired from e.g. the Raspberry Pi (bcm2711-rpi-4-b.dts) where this is
-used to build the device tree for both ARM32 and ARM64.
+Applied, thanks!
 
-Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
----
- arch/arm/boot/dts/qcom/Makefile                         | 1 +
- arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts | 2 ++
- 2 files changed, 3 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
+[1/1] dt-bindings: mfd: qcom,tcsr: document support for SA8255p
+      commit: 0dbf6d4496b3f2966f71410768c36a379877f958
 
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index f06c6d425e91..147dbeb30a6a 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -23,6 +23,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-ipq4019-ap.dk04.1-c3.dtb \
- 	qcom-ipq4019-ap.dk07.1-c1.dtb \
- 	qcom-ipq4019-ap.dk07.1-c2.dtb \
-+	qcom-ipq5018-linksys-jamaica.dtb \
- 	qcom-ipq8064-ap148.dtb \
- 	qcom-ipq8064-rb3011.dtb \
- 	qcom-msm8226-microsoft-dempsey.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts b/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-new file mode 100644
-index 000000000000..9a6ad767ebd7
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-@@ -0,0 +1,2 @@
-+// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
-+#include <arm64/qcom/ipq5018-linksys-jamaica.dts>
--- 
-2.46.1
+--
+Lee Jones [李琼斯]
 
 
