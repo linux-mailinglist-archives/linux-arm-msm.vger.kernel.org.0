@@ -1,60 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-32946-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32948-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B6C698DE9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 17:15:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4431698DEE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 17:26:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 34FEE282DF0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 15:15:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BECC11F21B53
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 15:26:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2885E1D097D;
-	Wed,  2 Oct 2024 15:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 800631D097D;
+	Wed,  2 Oct 2024 15:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="J1XuMtHo"
+	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="DCQQJL/s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB34B1D07BF;
-	Wed,  2 Oct 2024 15:14:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953201D095D;
+	Wed,  2 Oct 2024 15:25:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727882083; cv=none; b=X2zuDnFatncqyZgR+Oy3eesiQMDzR1w8zgfiat86RgB2tJUaSzx79T3RBC0KaqDxfsY5xsodsss4qxkpOsgO2R/wEbozFMqiHNOyyavkBc6I1RkqEtVO657lX6FUR09UV0biJu9URJcHZ7qnHWGg08J2ZS96NJ5yLWI6UMr6rHs=
+	t=1727882755; cv=none; b=rjhCM7fg3mCw2ch+FMqixyDZsTaSlESpYvpYhIGodmK9s/PSv2UsXsgRpGC1Rs0lQHkvTI0Ih5FtlUcLmyZJ8Ty/MhCjcNYZlxjHOK0JUFrbDd/YpIdoTyx7UY+OeLtW0vR2O9e9qKrSVHd36dFSs9UDNHKExHGyN5qmnYOVPuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727882083; c=relaxed/simple;
-	bh=2UMd8GmskoKqy4N/TkOwVnnjCGhVBuWUY7EHrHnC5UM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Y3MQi8rEf2ssZvvJFnm/VtW19ZTbLXB06yE8oNvAJeh+oX5HDNWN4IVn9l+nt+OM6RZ64v/yScrp7ovRXSwDD0OB9l5qbYBLp6rv3a7R2TkXHZFv99iZZ4lleBCPQ517lHrLCud+lsTgFDG+GZeEl9tm3SWXQxz837uvCgYpPYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=J1XuMtHo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30BEC4CEC2;
-	Wed,  2 Oct 2024 15:14:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727882082;
-	bh=2UMd8GmskoKqy4N/TkOwVnnjCGhVBuWUY7EHrHnC5UM=;
-	h=From:To:Cc:Subject:Date:From;
-	b=J1XuMtHoVpDXWG+dyY0I5crIMd79WXCziK1/hmmg4BJWOpM4fJYDVIUDL/Y5ZaZxn
-	 3c3s3KqyYm5eKwaMIApqllmhUjJR8t5r9pQxIiaiWN9aeZyaZCIKjYf73PokmtaQqj
-	 GGp0Yqg36aPVKfbZOI5WSL4/6pJQMg4WRrUzwbGmGiW5zmVl2q6VvZFyW3zNejY3Yc
-	 QdIcCvRwYLVqt8o+SF5/veOUD1xAL20IgGytq3g1zJAsPbrQaNFZHfZ0CBMCGFyHpl
-	 19CzOgyM7R/H/YTKaHzQlJ0n8ui92GjSSNerqRpkFlr5watB9KgF1XprF7+x04YfzC
-	 8dsHdG5b4mJ0Q==
-From: Masahiro Yamada <masahiroy@kernel.org>
-To: Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	s=arc-20240116; t=1727882755; c=relaxed/simple;
+	bh=EHuti5/ucjdAYfMdR6yKtYB58metlbUVWQyTrXJjrD0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=sPvvhVl9Q41xJaocbioigGrTqIZzRVXXsqG4fhBIyC6oO6eTya+2/GlAi+3r2NIRM5cCHygGsFkNsPm+MSqjbx3Ivr+HUoiDurgN0JHogHLqpCOkO/vTldKcKjSAcF9cveuRVItTnjCcEoEQzh3GAvlwQt7mz4hfkelpcvlZOkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=DCQQJL/s; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 6823323D44;
+	Wed,  2 Oct 2024 17:25:50 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id PfUC1PlS7uLf; Wed,  2 Oct 2024 17:25:49 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
+	s=mail; t=1727882749;
+	bh=EHuti5/ucjdAYfMdR6yKtYB58metlbUVWQyTrXJjrD0=;
+	h=From:To:Cc:Subject:Date;
+	b=DCQQJL/sVy7uOh/nnJZIgPlIcqGBEfdlPzQKU1LIC7p04U+UAYZcrC9Q+Sq1U1cqm
+	 a52y/W2xS5dOlu4yCpw6zCuBIUQ/bP71gGAzWXRoav84W4IIKOyRkcFGj+WC7adnoY
+	 8HZvKbwRMAJuSa206Fs+YINJ4IVEgy7auNQbvM4BmdSdrUEQFp/0FiWWMFwjj1VOC1
+	 CCjH9Yn6rCpGE6MHsEMh2+ZNJSu0NRmj66GxhwZHGY0+xT5/kyJ19HjmBuw1UO6fzI
+	 q9QMHRjz5SDzoBAlViAfVwa8dQ7rPla1Ex7sziFFQTGKGH6YrNgTMC4nBJuCZCa4Em
+	 ctMU/aggDH1Wg==
+From: Karl Chan <exxxxkc@getgoogleoff.me>
+To: linux-arm-msm@vger.kernel.org
+Cc: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	mturquette@baylibre.com,
+	sboyd@kernel.org,
+	linus.walleij@linaro.org,
+	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH] ASoC: codecs: wcd9335: remove unnecessary MODULE_ALIAS()
-Date: Thu,  3 Oct 2024 00:14:34 +0900
-Message-ID: <20241002151436.43684-1-masahiroy@kernel.org>
-X-Mailer: git-send-email 2.43.0
+	linux-clk@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	Karl Chan <exxxxkc@getgoogleoff.me>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3 0/5] Initial Support for Linksys EA9350 V3 (linksys-jamaica)
+Date: Wed,  2 Oct 2024 23:24:14 +0800
+Message-ID: <20241002152419.30364-1-exxxxkc@getgoogleoff.me>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,26 +74,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Since commit b4b818305578 ("slimbus: generate MODULE_ALIAS() from
-MODULE_DEVICE_TABLE()"), modpost automatically generates MODULE_ALIAS()
-from MODULE_DEVICE_TABLE(slim, ).
+Add device tree source for Linksys EA9350 V3 which is a WiFi router based on the IPQ5018 SoC.
 
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+As of now , only the UART,USB,USB LED,buttons is working.The front PWM LED require the IPQ PWM driver.Therefore the PWM LED isn't configed in the tree.
+
+Also The original firmware from Linksys can only boot ARM32 kernels.
+
+As of now There seems to be no way to boot ARM64 kernels on those device.
+
+However, it is possible to use this device tree by compiling an ARM32 kernel instead.
+
+Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
+Changes in v3:
+  - Add 2 commit that I forgot to send in v1/2.
+  - Link to v2: https://lore.kernel.org/linux-arm-msm/20241002132302.31608-1-exxxxkc@getgoogleoff.me/T/#t
+Changes in v2:
+  - reorder the properties in the tree to follow the
+    usual order pointed out by Krzysztof Kozlowski
+  - Add the missing word to the cover letter
+  - Link to v1: https://lore.kernel.org/linux-arm-msm/20241002120804.25068-1-exxxxkc@getgoogleoff.me/T/#t
+---
+Karl Chan (5):
+  dt-bindings: arm: qcom: add Linksys EA9350 V3
+  arm64: dts: qcom: add Linksys EA9350 V3
+  clk: qcom: ipq5018: allow it to be bulid on arm32
+  pinctrl: qcom: ipq5018: allow it to be bulid on arm32
+  arm: dts: qcom-ipq5018-linksys-jamaica: Include dts from arm64
 
- sound/soc/codecs/wcd9335.c | 1 -
- 1 file changed, 1 deletion(-)
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm/boot/dts/qcom/Makefile               |   1 +
+ .../dts/qcom/qcom-ipq5018-linksys-jamaica.dts |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/ipq5018-linksys-jamaica.dts | 107 ++++++++++++++++++
+ drivers/clk/qcom/Kconfig                      |   2 +-
+ drivers/pinctrl/qcom/Kconfig.msm              |   2 +-
+ 7 files changed, 114 insertions(+), 2 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-linksys-jamaica.dts
 
-diff --git a/sound/soc/codecs/wcd9335.c b/sound/soc/codecs/wcd9335.c
-index 373a31ddccb2..a2521e16c099 100644
---- a/sound/soc/codecs/wcd9335.c
-+++ b/sound/soc/codecs/wcd9335.c
-@@ -5177,4 +5177,3 @@ static struct slim_driver wcd9335_slim_driver = {
- module_slim_driver(wcd9335_slim_driver);
- MODULE_DESCRIPTION("WCD9335 slim driver");
- MODULE_LICENSE("GPL v2");
--MODULE_ALIAS("slim:217:1a0:*");
 -- 
-2.43.0
+2.46.1
 
 
