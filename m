@@ -1,115 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-32977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F56A98E6ED
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 01:31:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 545B598E759
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 01:48:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AD3B6B241DA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 23:31:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8628E1C26101
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 23:48:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C4AE1BFE00;
-	Wed,  2 Oct 2024 23:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B779E19E99B;
+	Wed,  2 Oct 2024 23:46:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="AvslTyRa"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.larumbe@collabora.com header.b="E52gQzv4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010D11BD03B;
-	Wed,  2 Oct 2024 23:29:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727911790; cv=none; b=BG1bIv1HvwGKfZOZO3dX3GCnT/4rndgidJmXkORRMgbtPkBNs1VyBi28zUA6uavTdHHFGXion0iDm0aO4K5pMuxSCc+RVlifodOKq3qzSAyfkovotHnW2V2B/8VZBpJb4xI0ESH0O2LXulfqR5Yo4adaPVwng373a8o2x+Qh/Lk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727911790; c=relaxed/simple;
-	bh=vlT6BUE0i0bCZYlq2mO18x7e5FjTZyQeszvJG4JrHMA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8gC4OPFlrNK4CLsANtRhBvpL2F0vbtzCorPPv5xame3+k7+DxbN/DtFBLhb6c1fq0xcDoTDftWcmZNs2VnG4t2TNA9jwdwueMg2q/NQVzgzHMq4r3+zZGCJQvgFWfDsyr7+dlce6mdVkCIYZUUcSK+iGJ+U9LJDEJi7xwp/974=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=AvslTyRa; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id C124523D68;
-	Thu,  3 Oct 2024 01:29:47 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id Kk32f1i4-bQ0; Thu,  3 Oct 2024 01:29:47 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
-	s=mail; t=1727911787;
-	bh=vlT6BUE0i0bCZYlq2mO18x7e5FjTZyQeszvJG4JrHMA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=AvslTyRaiNSOSrD4XVhc0KuthPRVB8YSuDnwWIqRDA5zGZh4fxh9gxpgA/0623h8H
-	 R7qfh3+Y2MbqKd1902EKAgcgItkouVCT/mbPJoQ/7A8lBfil2y7XnZofAQxPnZkQoB
-	 hUtDzya1ncyIaEWEffs3Zufl1PlLxVXcvzYq3fTfFXj7EsbAtlwttvxvVw+oti7Ekl
-	 urbgfY1zJrmWqo6mDDBsnUrfXydjpKDxB7sslb54svTsFjUa4T2bRDh/NUfxgBjrp/
-	 6LkLjNsmvWxYCPX9rJX3ZMX9fgNEawYbZJD7mi9Yk4MYTQQQefxvc2RwiLhrPlVLgx
-	 27vr2CUUczPmA==
-From: Karl Chan <exxxxkc@getgoogleoff.me>
-To: linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	linus.walleij@linaro.org,
-	devicetree@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD511991A9;
+	Wed,  2 Oct 2024 23:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1727912782; cv=pass; b=oayaQEwxE023dp265pMbJ4WaeatZgCgUsuBRgcTBczIucw85JNS1RZ3WunqOgICr6QcSUbAAOek3MJiAFZs2OOkE+PgwrApJpvdoE/ujK27+a7PNJ3otIl8eB5bPmi0prxKU48mPYDRHZ+ldeg63Jyg5Lp/+7Eq/PLLTR0h0SJ0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1727912782; c=relaxed/simple;
+	bh=a00ti4T/BzcBC9nD+l3FXcTsvxNWoKi2zpfFJfD3HeA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gqLwQ3uISYo2u4YpwDw2nWHvyKF3hK+D0A8F59XOa/93QLwklRnxlMtse0bxC9NdM5vUG9AYZnrsGoZFh7negrvF4Xr7h7EclO/0nC2eX6SF7WDBG8z64QlWU54B1U6fg2oyqgVKkmkZHILPkHFkQLNnPp/9kIZonV9uD+dxt0o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=adrian.larumbe@collabora.com header.b=E52gQzv4; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1727912746; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=lnRxaE9C5ntkhbKfZFu7T+CDVNALbS0pWObKYrcfC/tKIiCmhuP+0JoqWyl1EQ6xe/mMQGEgyMTVmxfjsli0tJqWj/KrC2E4uTMOt/uTqTreHKUZwS3lZcqVhTAenJCU10Ai6G3u4Ni5cqgfX7OtSFxDArtF/xY11jp8bxFtqek=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1727912746; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=AWY4hADE/Gn1eTfd9x/OOmqUqbsp9RNFlmDY3sZq0pQ=; 
+	b=A0bEc6jF60JSnSScPSREBb5/az2f5JUxsiudM2wrHe5nnJEYtbz5KyVKsflJ/XKa6+EH/XX0vv8CKU0qxSQCIe70DzkzjokOkACtN1Zje7dcEFNHdEqVPBhEEbPw1CJyk1zRYXzG+JsSGyUNei1yUWHyHPGH+9tM7NLmKb/JaRs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=adrian.larumbe@collabora.com;
+	dmarc=pass header.from=<adrian.larumbe@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1727912746;
+	s=zohomail; d=collabora.com; i=adrian.larumbe@collabora.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=AWY4hADE/Gn1eTfd9x/OOmqUqbsp9RNFlmDY3sZq0pQ=;
+	b=E52gQzv4xbl+CcDmt2pEAwoTeYMq6mcNkzP16B4qhGEFjqOB1EKdljZwAmtErz7u
+	9EduBM/zp0DlfB4GMWSUZXfQSf5N6Vs9gzQQZwWVI07DgjaZ5rVu114AkmXVyQf/M67
+	v/9SWPP7QRpeaaViauxy9FTRUZdEvy089OmgaVwI=
+Received: by mx.zohomail.com with SMTPS id 1727912744358994.3097024662918;
+	Wed, 2 Oct 2024 16:45:44 -0700 (PDT)
+From: =?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Rob Herring <robh@kernel.org>,
+	Steven Price <steven.price@arm.com>,
+	Melissa Wen <mwen@igalia.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>
+Cc: =?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	Karl Chan <exxxxkc@getgoogleoff.me>
-Subject: [PATCH v5 5/5] arm: dts: qcom-ipq5018-linksys-jamaica: Include dts from arm64
-Date: Thu,  3 Oct 2024 07:28:04 +0800
-Message-ID: <20241002232804.3867-6-exxxxkc@getgoogleoff.me>
-In-Reply-To: <20241002232804.3867-1-exxxxkc@getgoogleoff.me>
-References: <20241002232804.3867-1-exxxxkc@getgoogleoff.me>
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org
+Subject: [RFC PATCH 0/2] Allow fdinfo to display size of internal BO's
+Date: Thu,  3 Oct 2024 00:45:09 +0100
+Message-ID: <20241002234531.3113431-1-adrian.larumbe@collabora.com>
+X-Mailer: git-send-email 2.46.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Build the Linksys EA9350 V3 device trees from the arm64 tree together with the ARM32 include to allow booting this device on ARM32.
+This patch series lets DRM fdinfo stats functions display an additional tag
+that will reflect the amount of memory internal BOs of a DRM driver take
+up.
 
-The approach to include device tree files from other architectures is
-inspired from e.g. the Raspberry Pi (bcm2711-rpi-4-b.dts) where this is
-used to build the device tree for both ARM32 and ARM64.
+The rationale for this is that some drivers, like Panthor, need quite a bit
+of memory for things like queue ring buffers or tiler heap chunks, and
+these will vary dynamically as new scheduler groups, queues or heap chunks
+are created by one or more render contexts.
 
-Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
----
- arch/arm/boot/dts/qcom/Makefile                         | 1 +
- arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts | 2 ++
- 2 files changed, 3 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
+Because these are tied to an open DRM file that represents an ongoing
+render context, then it makes sense to provide users with this information
+in the DRM file fdinfo descriptor, even though they would never be exposed
+to UM through a handle.
 
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index f06c6d425e91..147dbeb30a6a 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -23,6 +23,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-ipq4019-ap.dk04.1-c3.dtb \
- 	qcom-ipq4019-ap.dk07.1-c1.dtb \
- 	qcom-ipq4019-ap.dk07.1-c2.dtb \
-+	qcom-ipq5018-linksys-jamaica.dtb \
- 	qcom-ipq8064-ap148.dtb \
- 	qcom-ipq8064-rb3011.dtb \
- 	qcom-msm8226-microsoft-dempsey.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts b/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-new file mode 100644
-index 000000000000..9a6ad767ebd7
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-@@ -0,0 +1,2 @@
-+// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
-+#include <arm64/qcom/ipq5018-linksys-jamaica.dts>
+These two patches were originally part of a wider series, but broke it down
+into two different submissions for ease of discussion.
+
+The previous debate can be found at [1], in its latest two patches.
+
+[1] https://lore.kernel.org/dri-devel/dqhnxhgho6spfh7xhw6yvs2iiqeqzeg63e6jqqpw2g7gkrfphn@dojsixyl4esv/
+
+Adrián Larumbe (2):
+  drm/drm_file: Add display of driver's internal memory size
+  drm/panthor: register size of internal objects through fdinfo
+
+ drivers/gpu/drm/drm_file.c               |  6 ++-
+ drivers/gpu/drm/msm/msm_drv.c            |  2 +-
+ drivers/gpu/drm/panfrost/panfrost_drv.c  |  2 +-
+ drivers/gpu/drm/panthor/panthor_device.c |  2 +
+ drivers/gpu/drm/panthor/panthor_device.h |  6 +++
+ drivers/gpu/drm/panthor/panthor_drv.c    | 16 +++++--
+ drivers/gpu/drm/panthor/panthor_fw.c     | 14 ++++--
+ drivers/gpu/drm/panthor/panthor_fw.h     |  6 ++-
+ drivers/gpu/drm/panthor/panthor_gem.c    | 55 ++++++++++++++++++++++--
+ drivers/gpu/drm/panthor/panthor_gem.h    | 15 ++++++-
+ drivers/gpu/drm/panthor/panthor_heap.c   | 20 ++++++---
+ drivers/gpu/drm/panthor/panthor_heap.h   |  6 ++-
+ drivers/gpu/drm/panthor/panthor_mmu.c    |  7 ++-
+ drivers/gpu/drm/panthor/panthor_mmu.h    |  3 +-
+ drivers/gpu/drm/panthor/panthor_sched.c  | 19 ++++----
+ drivers/gpu/drm/v3d/v3d_drv.c            |  2 +-
+ include/drm/drm_file.h                   |  7 ++-
+ 17 files changed, 150 insertions(+), 38 deletions(-)
+
 -- 
-2.46.1
+2.46.2
 
 
