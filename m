@@ -1,149 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-32909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 937A098CA63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 03:10:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD86C98CB0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 04:07:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5208A28351B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 01:10:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56C621F22DD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 02:07:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C1211C36;
-	Wed,  2 Oct 2024 01:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 094031C2E;
+	Wed,  2 Oct 2024 02:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eKFMauVS"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JFYdmsac"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A917423CE;
-	Wed,  2 Oct 2024 01:10:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C90637;
+	Wed,  2 Oct 2024 02:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727831429; cv=none; b=Y255p+D8KiAHl2gWiUKuSTLpiU/Xppn6Y0P+E9wlzxBf8fxb5jNbnpQKzbE4WcSn5RX804YgYfruZX7toilmAJqUC6ng/IYPNuXBQf4gA7/sNAHgWd+T6mKCTn1pAYEVzEzN1Xp6jpN54o3P4a/lJOnLWgPgIyU3tlDDmmLwspk=
+	t=1727834823; cv=none; b=ltigP+LxyjWBQ7cz+mMS+D683aCDiCyf5L7AMHj/4vdcTmaKtRcPEAxCx3tO50f6euDFoMyeJXhtFs4S2KIoJs0CSA1mM6wgm5bo+TXkVM1UKczmwv3Lr8TiAwbz97dPq63Z47UYYjEnsb7UEzAIkonDM+jOMKtvrDiLSDrqQrw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727831429; c=relaxed/simple;
-	bh=tdtBC4eH823jJH4vb+iNz8YvRJM6x3+6nYLgNQ+l4Ws=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EkTDLZVZEXQhEo0sHngI8DiaMfKMLxK3yzJNLORlpWoRjK0/pjl70HeUzuScpKNR0V843i7XzsGU8ZA02h4K7Pw1bdNPufF7xM51RxUe4TZ/hMcllmTwoitAojeeuqMizanvnIW3kRPsARkMYGFVkdNZYEJzVdS1C9th0tWZc6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eKFMauVS; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491N6kHC010163;
-	Wed, 2 Oct 2024 01:10:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BIvvku1ejh0YucQTjyVnCCSyOsahvKP6xOzrL1mcUAk=; b=eKFMauVSDZwr6Cob
-	vEojSw2TZhniG+x84nxsq1iEELo5l1Sy8QqH/dZJ3wYaiTsY9l1HvNTvDOQOFQu2
-	gF7WSSsWwP/0aUPD2xC2uDz6Yub6uQ/64bdrnUnoVbZUg0chfnrA1wRXBGCqUslU
-	nxxMBW8YnF3cCVqjdoCX19pIxdfdxMqhQAHYZpqyIar5CTfzS8kh1LQeQGJ4sBsS
-	hLqjj1Tgq8fX3Xq/iRcbH7c9WvjMJAXiyWqdAbBJOpXohmal1nHH9g7Ql91IVa4a
-	BnKvdzfRu1FERI74YRci/3y4jEDBjvf4eNM/JkREOV8Bok/sJCmolo+pUdqhjMT0
-	EeWfPQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x7geaejk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 02 Oct 2024 01:10:19 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4921AILq026868
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 2 Oct 2024 01:10:18 GMT
-Received: from [10.253.11.231] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 1 Oct 2024
- 18:10:16 -0700
-Message-ID: <4a4860d0-3ec9-438f-b984-c9987743076f@quicinc.com>
-Date: Wed, 2 Oct 2024 09:10:13 +0800
+	s=arc-20240116; t=1727834823; c=relaxed/simple;
+	bh=fWahksiwWy8BWmjGXrDX1HY0fkbgJUXbBpvPlngMTD0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J4eRjg5nSq6LvjBl1OXJ5UiwJKGt++hwavpKhSCDjHgX9+JqzMG/YdmHq98V5T8ch62rbkx5qUILw7cvE+4AQ12qNJPdpdAk6KkWUa9AqgGTNPosIonnPp5YbfeTPULbtkXxV3WkD5ePM/VfIOZvMYwuAknYQ5A9FV+TzXL6a0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JFYdmsac; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA0AC4CEC6;
+	Wed,  2 Oct 2024 02:07:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1727834823;
+	bh=fWahksiwWy8BWmjGXrDX1HY0fkbgJUXbBpvPlngMTD0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=JFYdmsac1TQQAO7ep4Er+4M+d+Ledyr651v6gzJwFCU/TKn+4z9t+9kjhMKL8JZCh
+	 ynU6UQR6Z//7Muf2k9MmyPVGwuByi6MyDIQucfEJzd9B0CC8Umk6vxj/MBzKB9IY9F
+	 0rANbHp3lNo8bRaaF9Rkwx9uCLvmvF44MrwGZXuHfmm/T10Qxtb2IvhvFxb5Tf7oq4
+	 gYgUX8spVoPC9wQhPO5yb6gQpxFXh7PoLbn5euvcINYGe1fU+qxgUpIB6JyqnNtAVO
+	 VKNvK46ib9p67UYzziFSjoZUtf/8P+TkAfEQ6J7ZTUxcHhMJCzVO8wIA1xvZus7DZ4
+	 SGsIpbCueX1MQ==
+Date: Tue, 1 Oct 2024 21:07:00 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
+Cc: Johan Hovold <johan+linaro@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Douglas Anderson <dianders@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, 
+	stable@vger.kernel.org, Aniket Randive <quic_arandive@quicinc.com>
+Subject: Re: [PATCH v2 1/7] serial: qcom-geni: fix premature receiver enable
+Message-ID: <ocfbiqmspqlulnxjs7lmmdyq65f2u5dogksqqkmhdq55m3gqyj@7ryn4vrjzemc>
+References: <20241001125033.10625-1-johan+linaro@kernel.org>
+ <20241001125033.10625-2-johan+linaro@kernel.org>
+ <b7c9b01a-3bf7-44f2-be8d-24ef5f3fce74@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] PCI: qcom: Enable MSI interrupts together with Link up if
- global IRQ is supported
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <lpieralisi@kernel.org>, <kw@linux.com>
-CC: <robh@kernel.org>, <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Konrad
- Dybcio <konradybcio@kernel.org>
-References: <20240930134409.168494-1-manivannan.sadhasivam@linaro.org>
-Content-Language: en-US
-From: Qiang Yu <quic_qianyu@quicinc.com>
-In-Reply-To: <20240930134409.168494-1-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JcxjokOBwxeNBTras8nvHCYQvGQEq0FK
-X-Proofpoint-GUID: JcxjokOBwxeNBTras8nvHCYQvGQEq0FK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- bulkscore=0 mlxlogscore=874 lowpriorityscore=0 spamscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 impostorscore=0
- clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410020007
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b7c9b01a-3bf7-44f2-be8d-24ef5f3fce74@quicinc.com>
 
+On Tue, Oct 01, 2024 at 07:20:36PM GMT, Mukesh Kumar Savaliya wrote:
+> Thanks Johan for the fixes.
+> 
+> On 10/1/2024 6:20 PM, Johan Hovold wrote:
+> > The receiver should not be enabled until the port is opened so drop the
+> > bogus call to start rx from the setup code which is shared with the
+> > console implementation.
+> > 
+> > This was added for some confused implementation of hibernation support,
+> > but the receiver must not be started unconditionally as the port may not
+> > have been open when hibernating the system.
+> > 
+> > Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibernation feature")
+> > Cc:stable@vger.kernel.org	# 6.2
+> > Cc: Aniket Randive<quic_arandive@quicinc.com>
+> > Signed-off-by: Johan Hovold<johan+linaro@kernel.org>
+> > ---
+> >   drivers/tty/serial/qcom_geni_serial.c | 1 -
+> >   1 file changed, 1 deletion(-)
+> > 
+> > diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
+> > index 6f0db310cf69..9ea6bd09e665 100644
+> > --- a/drivers/tty/serial/qcom_geni_serial.c
+> > +++ b/drivers/tty/serial/qcom_geni_serial.c
+> > @@ -1152,7 +1152,6 @@ static int qcom_geni_serial_port_setup(struct uart_port *uport)
+> >   			       false, true, true);
+> >   	geni_se_init(&port->se, UART_RX_WM, port->rx_fifo_depth - 2);
+> >   	geni_se_select_mode(&port->se, port->dev_data->mode);
+> > -	qcom_geni_serial_start_rx(uport);
+> Does it mean hibernation will break now ? Not sure if its tested with
+> hibernation. I can see this call was added to port_setup specifically for
+> hibernation but now after removing it, where is it getting fixed ?
 
-On 9/30/2024 9:44 PM, Manivannan Sadhasivam wrote:
-> Currently, if global IRQ is supported by the platform, only the Link up
-> interrupt is enabled in the PARF_INT_ALL_MASK register. But on some Qcom
-> platforms like SM8250, and X1E80100, MSIs are getting masked due to this.
-> They require enabling the MSI interrupt bits in the register to unmask
-> (enable) the MSIs.
->
-> Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
-> described as 'diagnostic' interrupts in the internal documentation,
-> disabling them masks MSI on these platforms. Due to this, MSIs were not
-> reported to be received these platforms while supporting global IRQ.
->
-> So enable the MSI interrupts along with the Link up interrupt in the
-> PARF_INT_ALL_MASK register if global IRQ is supported. This ensures that
-> the MSIs continue to work and also the driver is able to catch the Link
-> up interrupt for enumerating endpoint devices.
->
-> Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
-> Reported-by: Konrad Dybcio <konradybcio@kernel.org>
-> Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Qiang Yu <quic_qianyu@quicinc.com>
+Can you explain how you're testing hibernation and on which platform
+this is done? I'd like to add this to my set of tests, but last time I
+tested I couldn't find a platform where we survived the restore
+processes (it's been a while though).
 
-Thanks,
-Qiang
-> ---
->   drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index ef44a82be058..2b33d03ed054 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -133,6 +133,7 @@
->   
->   /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
->   #define PARF_INT_ALL_LINK_UP			BIT(13)
-> +#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
->   
->   /* PARF_NO_SNOOP_OVERIDE register fields */
->   #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-> @@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->   			goto err_host_deinit;
->   		}
->   
-> -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
-> +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
-> +			       pcie->parf + PARF_INT_ALL_MASK);
->   	}
->   
->   	qcom_pcie_icc_opp_update(pcie);
+> I think RX will not be initialized after hibernation.
+
+qcom_geni_serial_port_setup() is invoked in multiple places, how come
+we don't perform this hibernation-specific operation in
+qcom_geni_serial_sys_hib_resume()? (And why is it called hib_resume when
+the kernel nomenclature for what it does is "restore"?)
+
+Regards,
+Bjorn
+
+> >   	port->setup = true;
+> >   	return 0;
+> > -- 2.45.2
 
