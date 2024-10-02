@@ -1,159 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-32908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 026C398C776
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 23:20:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 937A098CA63
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 03:10:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBAE2283387
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  1 Oct 2024 21:20:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5208A28351B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 01:10:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E58C1CCECE;
-	Tue,  1 Oct 2024 21:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C1211C36;
+	Wed,  2 Oct 2024 01:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="slgR241p"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eKFMauVS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7324F19C56F;
-	Tue,  1 Oct 2024 21:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A917423CE;
+	Wed,  2 Oct 2024 01:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727817599; cv=none; b=EyVgw1N9KcFZMNt1aMHcrYChDjbDm39QXUDIdR5jfbbTZBFO81ai/et1PZvQXnIjr0x3zKbBQ+9k8GDOOqvHmr2Py0G2PaTnD5/OKfuHth+VAT10mDp+YICyaKLo3yvi1Jzl/wkR1ZhuPdHUMCnHDpy0gNoj2UP1PpiYIXo2rac=
+	t=1727831429; cv=none; b=Y255p+D8KiAHl2gWiUKuSTLpiU/Xppn6Y0P+E9wlzxBf8fxb5jNbnpQKzbE4WcSn5RX804YgYfruZX7toilmAJqUC6ng/IYPNuXBQf4gA7/sNAHgWd+T6mKCTn1pAYEVzEzN1Xp6jpN54o3P4a/lJOnLWgPgIyU3tlDDmmLwspk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727817599; c=relaxed/simple;
-	bh=UvFS9AEFBRiLrqnwziEbTU80f5qSBbjblSE7Jg3jCZI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=AGrRPtzGSo76OvqOHrbEKQ2Nlr/Qv/PX1it8gXh2lyhNAJhoUwif847Q0/cueOchDVvk9/K9TBLV4WmSvmGE6ypsyfHJaLu2NYATiFngTGhsfCTam8M9lK0W4Exx/5zbPfu1cAKIaHW5LqvPCFlP6v58Yw9TR87hYH7gBnO/Gtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=slgR241p; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FF2C4CECD;
-	Tue,  1 Oct 2024 21:19:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727817599;
-	bh=UvFS9AEFBRiLrqnwziEbTU80f5qSBbjblSE7Jg3jCZI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=slgR241pNj7FVdUseXdhRjPnFtvdPDvVYakmHU40zolreBSBusNC/HaoLzxqOSKIV
-	 PvCtfyMmRhgz1HWENNdYkxST1qGEtXRoNXnE4WAEyJOyOgMRsd7CQudXXdmJOSioY8
-	 BfSl1PLS0/GWZivLfwLY/eBo+RZim1Qrbc18e+D18kIs4GrWsHFlRaAtbCkw+7L48U
-	 WhEuydAZFplrmjXiY3gF1TVG/OKg050H9G+sFrT8+vrfrTQY395NS/2qFGjyjNk/bP
-	 I/3lW+jyGU/9liEUFaQFSiwB0UeNiHaEL4W4x9CPLWEdthk4cv48swhVeDl5gr6teS
-	 M36lgmDBQzHwQ==
-Date: Tue, 1 Oct 2024 16:19:57 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_qianyu@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH] PCI: qcom: Enable MSI interrupts together with Link up
- if global IRQ is supported
-Message-ID: <20241001211957.GA227250@bhelgaas>
+	s=arc-20240116; t=1727831429; c=relaxed/simple;
+	bh=tdtBC4eH823jJH4vb+iNz8YvRJM6x3+6nYLgNQ+l4Ws=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=EkTDLZVZEXQhEo0sHngI8DiaMfKMLxK3yzJNLORlpWoRjK0/pjl70HeUzuScpKNR0V843i7XzsGU8ZA02h4K7Pw1bdNPufF7xM51RxUe4TZ/hMcllmTwoitAojeeuqMizanvnIW3kRPsARkMYGFVkdNZYEJzVdS1C9th0tWZc6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eKFMauVS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 491N6kHC010163;
+	Wed, 2 Oct 2024 01:10:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BIvvku1ejh0YucQTjyVnCCSyOsahvKP6xOzrL1mcUAk=; b=eKFMauVSDZwr6Cob
+	vEojSw2TZhniG+x84nxsq1iEELo5l1Sy8QqH/dZJ3wYaiTsY9l1HvNTvDOQOFQu2
+	gF7WSSsWwP/0aUPD2xC2uDz6Yub6uQ/64bdrnUnoVbZUg0chfnrA1wRXBGCqUslU
+	nxxMBW8YnF3cCVqjdoCX19pIxdfdxMqhQAHYZpqyIar5CTfzS8kh1LQeQGJ4sBsS
+	hLqjj1Tgq8fX3Xq/iRcbH7c9WvjMJAXiyWqdAbBJOpXohmal1nHH9g7Ql91IVa4a
+	BnKvdzfRu1FERI74YRci/3y4jEDBjvf4eNM/JkREOV8Bok/sJCmolo+pUdqhjMT0
+	EeWfPQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x7geaejk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 02 Oct 2024 01:10:19 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4921AILq026868
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 2 Oct 2024 01:10:18 GMT
+Received: from [10.253.11.231] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 1 Oct 2024
+ 18:10:16 -0700
+Message-ID: <4a4860d0-3ec9-438f-b984-c9987743076f@quicinc.com>
+Date: Wed, 2 Oct 2024 09:10:13 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241001042055.ivf4zspq4fqmaxth@thinkpad>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] PCI: qcom: Enable MSI interrupts together with Link up if
+ global IRQ is supported
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <lpieralisi@kernel.org>, <kw@linux.com>
+CC: <robh@kernel.org>, <bhelgaas@google.com>, <linux-pci@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Konrad
+ Dybcio <konradybcio@kernel.org>
+References: <20240930134409.168494-1-manivannan.sadhasivam@linaro.org>
+Content-Language: en-US
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <20240930134409.168494-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JcxjokOBwxeNBTras8nvHCYQvGQEq0FK
+X-Proofpoint-GUID: JcxjokOBwxeNBTras8nvHCYQvGQEq0FK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
+ bulkscore=0 mlxlogscore=874 lowpriorityscore=0 spamscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 impostorscore=0
+ clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2408220000 definitions=main-2410020007
 
-On Tue, Oct 01, 2024 at 09:50:55AM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Sep 30, 2024 at 12:11:01PM -0500, Bjorn Helgaas wrote:
-> > On Mon, Sep 30, 2024 at 07:14:09PM +0530, Manivannan Sadhasivam wrote:
-> > > Currently, if global IRQ is supported by the platform, only the Link up
-> > > interrupt is enabled in the PARF_INT_ALL_MASK register. But on some Qcom
-> > > platforms like SM8250, and X1E80100, MSIs are getting masked due to this.
-> > > They require enabling the MSI interrupt bits in the register to unmask
-> > > (enable) the MSIs.
-> > 
-> > "global IRQ" is a very generic name.  If that's the official name, it
-> > should at least be capitalized, e.g., "Global IRQ", to show that it is
-> > a proper noun that refers to a specific IRQ.
-> 
-> Sure.
-> 
-> > > Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
-> > > described as 'diagnostic' interrupts in the internal documentation,
-> > > disabling them masks MSI on these platforms. Due to this,
-> > 
-> > > MSIs were not
-> > > reported to be received these platforms while supporting global IRQ.
-> > 
-> > I'm trying to parse "while supporting global IRQ."  We basically
-> > support global IRQ by installing qcom_pcie_global_irq_thread(), but of
-> > course the device doesn't see that, so I assume it would be more
-> > informative to say that MSIs are masked by some register setting.
-> 
-> Hmm, this is what I mentioned in the above paragraph referencing
-> PARF_INT_ALL_MASK register. Is that not clear enough?
 
-It requires the knowledge that the MSI enable bits are set by
-hardware, cleared by 4581403f6792, and set again here.  This will be
-more accessible to non-qcom experts if that information is included
-here.
+On 9/30/2024 9:44 PM, Manivannan Sadhasivam wrote:
+> Currently, if global IRQ is supported by the platform, only the Link up
+> interrupt is enabled in the PARF_INT_ALL_MASK register. But on some Qcom
+> platforms like SM8250, and X1E80100, MSIs are getting masked due to this.
+> They require enabling the MSI interrupt bits in the register to unmask
+> (enable) the MSIs.
+>
+> Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
+> described as 'diagnostic' interrupts in the internal documentation,
+> disabling them masks MSI on these platforms. Due to this, MSIs were not
+> reported to be received these platforms while supporting global IRQ.
+>
+> So enable the MSI interrupts along with the Link up interrupt in the
+> PARF_INT_ALL_MASK register if global IRQ is supported. This ensures that
+> the MSIs continue to work and also the driver is able to catch the Link
+> up interrupt for enumerating endpoint devices.
+>
+> Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
+> Reported-by: Konrad Dybcio <konradybcio@kernel.org>
+> Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Qiang Yu <quic_qianyu@quicinc.com>
 
-> > The patch suggests that MSIs are masked internally unless
-> > PARF_INT_MSI_DEV_0_7 is set in PARF_INT_ALL_MASK.
-> > 
-> > Are you saying that prior to 4581403f6792, MSIs did work?  Does that
-> > mean PARF_INT_MSI_DEV_0_7 was set by a bootloader or something, so
-> > MSIs worked?  And then 4581403f6792 came along and implicitly cleared
-> > PARF_INT_MSI_DEV_0_7, so MSIs were then masked?
-> 
-> Yeah. Those bits were enabled by default in hardware, but since they were
-> mentioned as 'diagnostic interrupts' in documentation, commit 4581403f6792
-> intentionally disabled them. But that results in MSIs getting masked in
-> *some* platforms.
-
-Apparently the "*some* platforms" part is more qcom-expert knowledge?
-There are other qcom platforms where MSIs are not disabled by
-4581403f6792?  Information about which platforms are which also sounds
-useful for future maintenance.
-
-> > > So enable the MSI interrupts along with the Link up interrupt in the
-> > > PARF_INT_ALL_MASK register if global IRQ is supported. This ensures that
-> > > the MSIs continue to work and also the driver is able to catch the Link
-> > > up interrupt for enumerating endpoint devices.
-> > > 
-> > > Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
-> > > Reported-by: Konrad Dybcio <konradybcio@kernel.org>
-> > > Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > ---
-> > >  drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
-> > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > > 
-> > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > index ef44a82be058..2b33d03ed054 100644
-> > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > @@ -133,6 +133,7 @@
-> > >  
-> > >  /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-> > >  #define PARF_INT_ALL_LINK_UP			BIT(13)
-> > > +#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
-> > >  
-> > >  /* PARF_NO_SNOOP_OVERIDE register fields */
-> > >  #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-> > > @@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > >  			goto err_host_deinit;
-> > >  		}
-> > >  
-> > > -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
-> > > +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
-> > > +			       pcie->parf + PARF_INT_ALL_MASK);
-> > >  	}
-> > >  
-> > >  	qcom_pcie_icc_opp_update(pcie);
-> > > -- 
-> > > 2.25.1
-> > > 
-> 
-> -- 
-> மணிவண்ணன் சதாசிவம்
+Thanks,
+Qiang
+> ---
+>   drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index ef44a82be058..2b33d03ed054 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -133,6 +133,7 @@
+>   
+>   /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+>   #define PARF_INT_ALL_LINK_UP			BIT(13)
+> +#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
+>   
+>   /* PARF_NO_SNOOP_OVERIDE register fields */
+>   #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
+> @@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>   			goto err_host_deinit;
+>   		}
+>   
+> -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
+> +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
+> +			       pcie->parf + PARF_INT_ALL_MASK);
+>   	}
+>   
+>   	qcom_pcie_icc_opp_update(pcie);
 
