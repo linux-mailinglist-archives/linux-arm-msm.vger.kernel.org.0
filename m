@@ -1,98 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-32926-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CD7198CF68
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 11:01:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70FD498D0B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 12:02:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C761B1F22FF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 09:01:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CF691F2361C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 10:02:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BA47198A0E;
-	Wed,  2 Oct 2024 09:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55D8A1E6316;
+	Wed,  2 Oct 2024 10:02:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="u9qFAabO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VwJ3dnoH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454861974F4;
-	Wed,  2 Oct 2024 09:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4EF1E503D;
+	Wed,  2 Oct 2024 10:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727859700; cv=none; b=h2my5XH/jS4vRVCZY7L9A6iv5rCsU5P3MQQ4A2EUg1mPzaxzhO+4EDrMQ6WIyKl0tS+QpC34HSn7NnZHf787aBGI8dcONTOALt2oNNupihE3uXlYb4SY85HmqpHWvsQtNjb15+Gf44Vv2JCA3b8htsxEqozhLdbVhLhtH17Nheg=
+	t=1727863355; cv=none; b=pjAVjSAWUzQF7pSOp8Zuu8Cg+Yj7gw1yu4/GpCD7hDO40AIeR8gKFEhlLW+sMIQiASlRoTsYEY//wP+HJNepb4T6Wll1JqAze6fCbaVRnQhq4DaAMX2Qu2iQaar0Wv0mRTwBb0oAnFZKkZAjmTOr79bK9D90q7imZbSn9eLO0J4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727859700; c=relaxed/simple;
-	bh=mR5J9T5uoBBmVi3EDAObOyv9gRAIIYVNiN9Sy4dHNrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iehtDCzOMRztvPY9HRkpkBQm3NiEFhgv8u8/hOvMcRO/sjN2L5iOyAljmw7fH3y9N2DN1W/ZdaAe7jKuhmMDOUEpQpRm8za/uQZggVrieggKA9AlBoIo/KbICuK+zkVwPzs3LxOtL0P8HBXi+HzO/N4NDcWFfuwRPx3LZgkJ+Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=u9qFAabO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B66C4CECE;
-	Wed,  2 Oct 2024 09:01:39 +0000 (UTC)
+	s=arc-20240116; t=1727863355; c=relaxed/simple;
+	bh=0uMyPUeXCbYvDYxu8/2Q36pRaWyEFmQn4NnsBqq3vtI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UYSg5jM5xYwCn1RGjLuGapZSgZ2SqFQ8blkp8zxW3KzXR1kYYbC7KCuk3267fwT7kd8HD0S6dFQUL2atuukd1+3zknT7CMWtmSr1bgOzNrGcEBjjjzHdZCStgGJs2ANpuUAkNxxcIuXdnL+cY/FhUMM5yFl50yjazNbwYHqGuLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VwJ3dnoH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD756C4CEC5;
+	Wed,  2 Oct 2024 10:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727859700;
-	bh=mR5J9T5uoBBmVi3EDAObOyv9gRAIIYVNiN9Sy4dHNrE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=u9qFAabO4cO/uh0xZgskd8qYjLDy2btR8qn+GJI6gPYuTz0Ol9p5WU34OCCssuRHq
-	 9efPvqpGrd88BHiL5p7g2CGCwMyhIYBZRG6klJLOxkhhGIKkPkNo/UGh5wVFCMGVXj
-	 aL5q9l6HU7+N4gjYnzI341RBsV0+aYZprH13Aj1WkVZ7aQK/KjEx3famFJAlfYwx1v
-	 7ldxun44tCKac/XiyHDMeRgaBrB7hiTLFuBHI6F84qY/ebxbDnQ2+lp8KIU4uHYMD2
-	 SCNZ2EKV5FE+isBdZ1ojPX3wLl1qyC3cvlwmC8IjWiqkPR5b3BncT/b5rTqMok+AiL
-	 MPHTscxWr4svw==
-Date: Wed, 2 Oct 2024 11:01:36 +0200
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, quic_srichara@quicinc.com, quic_varada@quicinc.com
-Subject: Re: [PATCH v3 1/1] i2c: qcom-geni: Support systems with 32MHz serial
- engine clock
-Message-ID: <gntoyxafts5vwaqn4oqhsqr5gze3x6aj2dccm7thssetubmj62@hrmkxvxfe537>
-References: <20240930144709.1222766-1-quic_mmanikan@quicinc.com>
+	s=k20201202; t=1727863354;
+	bh=0uMyPUeXCbYvDYxu8/2Q36pRaWyEFmQn4NnsBqq3vtI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=VwJ3dnoHXMkr98OOGTJBH7PRsSZCloBUp+Q7UotMHXYoM2vsSnrVApB4qHOpm6LSX
+	 vjUbOwTAKiaCntFqZsSSCMTDfSSoLZ8EnU+RD8YyP4ewP1/fZhn1wScTF82a9C561L
+	 s1pynv8wIV9oia58wNkzQ0RwUsXYb0rhfc2jbavz5kEHsly1I4DSswlrxH5rOqGR0e
+	 +ihwjtiVkiazKpj0oWhS/3YDOBCohbWcno9eB9YpnrUty+BscEk1tDh4qf9+ewfPfn
+	 IKXX+LJ3cmOsHO6icNKknOX6hZXMdTnYssxKj0EjWqt9fZFjrkqke8wrWDlfR8D13Y
+	 zJV4xfdWgQ/FQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan+linaro@kernel.org>)
+	id 1svwBm-000000004uu-31Nf;
+	Wed, 02 Oct 2024 12:02:34 +0200
+From: Johan Hovold <johan+linaro@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 0/2] firmware: qcom: scm: suppress download mode error
+Date: Wed,  2 Oct 2024 12:01:20 +0200
+Message-ID: <20241002100122.18809-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240930144709.1222766-1-quic_mmanikan@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Manikanta,
+When booting 6.12-rc1 on x1e80100 I noticed a new error in the boot log,
+which I had previously also seen on reboots.
 
-On Mon, Sep 30, 2024 at 08:17:09PM GMT, Manikanta Mylavarapu wrote:
-> In existing socs, I2C serial engine is sourced from XO (19.2MHz).
-> Where as in IPQ5424, I2C serial engine is sourced from GPLL0 (32MHz).
-> 
-> The existing map table is based on 19.2MHz. This patch incorporates
-> the clock map table to derive the SCL clock from the 32MHz source
-> clock frequency.
-> 
-> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Turns out the scm driver is incorrectly logging the fact that the
+download mode feature is not available as an error on both boot and
+shutdown even when the user has not requested the system to enable dump
+mode.
 
-merged to i2c/i2c-host.
+The second patch enables the download mode feature on x1e80100, which
+from 6.12-rc1 specifically results in a reboot instead of entering crash
+dump mode after a hypervisor reset on the x1e80100 CRD by default.
 
-...
+Johan
 
-> -static const struct geni_i2c_clk_fld geni_i2c_clk_map[] = {
-> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_19p2mhz[] = {
->  	{KHZ(100), 7, 10, 11, 26},
->  	{KHZ(400), 2,  5, 12, 24},
->  	{KHZ(1000), 1, 3,  9, 18},
-> +	{},
-> +};
-> +
-> +/* source_clock = 32 MHz */
-> +static const struct geni_i2c_clk_fld geni_i2c_clk_map_32mhz[] = {
-> +	{KHZ(100), 8, 14, 18, 40},
-> +	{KHZ(400), 4,  3, 11, 20},
-> +	{KHZ(1000), 2, 3,  6, 15},
-> +	{},
 
-I took the freedom to remove the ',' as Bjorn suggested.
+Johan Hovold (2):
+  firmware: qcom: scm: suppress download mode error
+  arm64: dts: qcom: x1e80100: describe tcsr download mode register
 
-Thanks,
-Andi
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1 +
+ drivers/firmware/qcom/qcom_scm.c       | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+-- 
+2.45.2
+
 
