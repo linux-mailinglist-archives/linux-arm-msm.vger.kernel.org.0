@@ -1,132 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-32936-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32937-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EF6A98D326
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 14:26:19 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9B6098D3DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 14:59:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 09216283304
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 12:26:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 24377B21DC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  2 Oct 2024 12:59:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E23F1D016D;
-	Wed,  2 Oct 2024 12:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47DD31D04AE;
+	Wed,  2 Oct 2024 12:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b2ZdAEPx"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="V26zbYtg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524311CFED2;
-	Wed,  2 Oct 2024 12:23:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04B781D0486
+	for <linux-arm-msm@vger.kernel.org>; Wed,  2 Oct 2024 12:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727871810; cv=none; b=hh4rJr/4dVwIRutgc4TYEZhugMOB4sfRLesKlqmBYbMMc5AkGyLMEjWwchADS3kEvvOoxAjX0At763FIF9ZAoZ1FQUv4gtqHrrX1ZYnBxUGAPgI0D2PbTJTIqTYkUQokssJIr75v04h7cC2KZ/uyH69P+2XGt+yRkfkuq65tgf0=
+	t=1727873912; cv=none; b=ulfY6NkRQOo29F46RnEGMoxeKaVRGJTbS5gCzYQuOYZ9U/0ndg1oyrvp/VoKcKVnvhvYSaGjXSWhiP0qCDN034mHB/W3nnfBeE3FGBvDR297yaZps7aloKX+tfunBxkN6LXW9oxX9ZPY7o5QD3iPU/GXOEemeEevKO6+LNsrdUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727871810; c=relaxed/simple;
-	bh=P6uiYwN8aF6b5+rvgzGikoFHVdnoMkvebU4Faz9b2kc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=h0O82BQsGaaqymn68gyq8M749rXIPGhBh2vHGOiQkBZcI0J+cog4SESy3TCPs0wfbfWeOUxuXXzEry5J666naVwhKgN6V56WckaWL4qT2nswvRr+JpJ/PnQrhtCX0NP41jU+Bym5sdz7ckL7Zj2B8DUj+B2fdAzCqF2w5SbFCN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b2ZdAEPx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89273C4AF53;
-	Wed,  2 Oct 2024 12:23:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727871809;
-	bh=P6uiYwN8aF6b5+rvgzGikoFHVdnoMkvebU4Faz9b2kc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=b2ZdAEPx4jFMPfZzVBY9TYO9d9agL2aGG1sWZCVk1SyvPCO4Ks7jZiPyEXNTNTIGX
-	 UcNKJ/MWfjLSt2wfAh8AUQhzVRGMAif7qyjMFCDv1JDqgf+sWRHabdAUR1GeGictRs
-	 XM30AtKSwvXLItFms2+aKA1icB600UYePoLurIyOtImZfjNdpb3WLvsIrf7J+v9XBm
-	 bipbgpvM3jw8UgVut4Zqojg5Os40cfCXaJxSSJz89hjFFBJFJxN5UH972Rk0zPj9ym
-	 bg2f9jcjJVFT03QfwopksKYZA3xQvKEF12YAM/WDJTP0Zw0nYSHVIcDS4fsvtgWB65
-	 bBRGZnMvDmr8Q==
-Message-ID: <f5265bcb-aa25-4bd7-a177-c980be1eee7a@kernel.org>
-Date: Wed, 2 Oct 2024 14:23:24 +0200
+	s=arc-20240116; t=1727873912; c=relaxed/simple;
+	bh=xg7z/SeJzhmttlPdDZR21cOqf/AVpCo3yoWnuBllEzw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=D7Go5eCJwfS1HIg9/xG7zl97MIDpiACheOYxlYXW2mQLy1aQUmqCDxTzSsW6fyQdXHyXuiQGT4jJ0H/2pFojmNKJIqReHmHmOv0wtgyD8mgLyqybsimiCLZ0JYe0ExK0xVEfk+zWq2ZkmflEp/uI3euCm4wG70WKq0asNED9kYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=V26zbYtg; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a8a789c4fc5so147378466b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 05:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1727873907; x=1728478707; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vh4uUBQqwVxTdhNiYiNFdtajRwq696yeQxZ3bN9pruM=;
+        b=V26zbYtgziN6t9yhcTlSI7LdGQ2h3YMnWx5MHS9lpqSJUN23oeTTChIfEdDkjXHwA6
+         RpxKHZI6FBUVbl82wMVJ9j5Hv0J/oTbxF54zaF5IeFp2pU2BgS9FUDpH039LCHYTAkd4
+         hD7GRgg0ECqoYYR0dk6Z0/gClY2Twd3PBffI3Dl0ALUHMYrQweUCFRx478V06P/yfgAp
+         o3SOkY0HwdfO2gOQtFQJPvTFQwhfDHIUvfecG1JqLnGSJSMn9MFfbMh2O1eJaMWdo6RS
+         6mMZcsVUfbUes8tsFKgGRXZ0y/PwSZwiyRSeJYT0kAo8zxwX/g3iu1ZorwC99KvhLAdk
+         q8Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727873907; x=1728478707;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vh4uUBQqwVxTdhNiYiNFdtajRwq696yeQxZ3bN9pruM=;
+        b=SuudcHIqfH8XlMmlvpSdpKiUDDcLaLzV5oPquJCA/7nfflqLy/Zcwerp4BpQYinlL0
+         qJmgXB5qtjzIYt5AUJLHqZLdciNsVNREFMQiLfH7DvcflQ1nwgWqf6TuQIJyHhxsTOvh
+         Ter2vzQwJo55HN0hCTEVRlVHjt6U3Wkw1Cevsw+Fw76tBTeeOuWaSDA2e1gCzEph9VbQ
+         CmmJmZxd+3m5xe2QkCQBcmjwer52a+uoSvHCzJK2zf7OI5IxEs81YF8PgxR13tvKplg8
+         VPSNpcl55F3RQhi29GXJaHG2MbzLPZjpbpwiNGQT+aG2yQTnYF+n6yuwNkzB8JW4zqtS
+         bobg==
+X-Forwarded-Encrypted: i=1; AJvYcCUhsu1HyY2P7lJCPDui8+Gk99Q+9+vxHUsEJLJ1j3jO1q2oGrgKBBrjQPI7jzzBHAz4vxcIEi4SQfLcR5Jg@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYQ4yhrIv/CBEaD2a3P+uZclxt9HWR+yhrKVtDFeftZtKPZ8U/
+	mKLirUOVvGDBvoODkALP6wzEl0paB/6qDah4sXcp7a3p7g6J2yzGju2wLUWxOVg=
+X-Google-Smtp-Source: AGHT+IEEsqp5UV464bTdTeAxjMKq8Z5FkvCHJUu8BYbLycd5NPxtGmNemMLEB6zomqETecK2RSD2/A==
+X-Received: by 2002:a17:907:e2a4:b0:a86:91a5:4d09 with SMTP id a640c23a62f3a-a98f834cacfmr325571566b.26.1727873907262;
+        Wed, 02 Oct 2024 05:58:27 -0700 (PDT)
+Received: from [100.64.0.4] (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a93c27773cbsm857066166b.45.2024.10.02.05.58.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Oct 2024 05:58:26 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Date: Wed, 02 Oct 2024 14:58:06 +0200
+Subject: [PATCH] arm64: dts: qcom: sm6350: Fix GPU frequencies missing on
+ some speedbins
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] dt-bindings: arm: qcom: add Linksys EA9350 V3
-To: Karl Chan <exxxxkc@getgoogleoff.me>, linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241002120804.25068-1-exxxxkc@getgoogleoff.me>
- <20241002120804.25068-3-exxxxkc@getgoogleoff.me>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241002120804.25068-3-exxxxkc@getgoogleoff.me>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20241002-sm6350-gpu-speedbin-fix-v1-1-8a5d90c5097d@fairphone.com>
+X-B4-Tracking: v=1; b=H4sIAF1D/WYC/x2MSwqFMAwAryJZG4jxs/Aq4sLaVLOwlgblgXj3V
+ 1zOwMwDJlnFYKweyHKr6RkLNHUF677ETVB9YWDiriFitGNoe8ItXWhJxDuNGPSHHNaWXecWCh5
+ KnbIU/Z2n+X3/x5SwCWkAAAA=
+X-Change-ID: 20241002-sm6350-gpu-speedbin-fix-2fc32b4ba0fd
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
+X-Mailer: b4 0.14.2
 
-On 02/10/2024 14:08, Karl Chan wrote:
-> Document linksys,jamaica for Linksys EA9350 V3.
-> 
-> Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
-> ---
->  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-> index 5cb54d69af0b..fa22f653a55f 100644
-> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
-> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-> @@ -340,6 +340,7 @@ properties:
->            - enum:
->                - qcom,ipq5018-rdp432-c2
->                - tplink,archer-ax55-v1
-> +              - linksys,jamaica
+Make sure the GPU frequencies are marked as supported for the respective
+speedbins according to downstream msm-4.19 kernel:
 
-Keep alphabetical order.
+* 850 MHz: Speedbins 0 + 180
+* 800 MHz: Speedbins 0 + 180 + 169
+* 650 MHz: Speedbins 0 + 180 + 169 + 138
+* 565 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+* 430 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+* 355 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+* 253 MHz: Speedbins 0 + 180 + 169 + 138 + 120
+
+Fixes: bd9b76750280 ("arm64: dts: qcom: sm6350: Add GPU nodes")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 7986ddb30f6e8ce6ceeb0f90772b0243aed6bffe..4f8477de7e1b1e8ea5c4d193e16dcdadc20eb4ff 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1376,43 +1376,43 @@ gpu_opp_table: opp-table {
+ 				opp-850000000 {
+ 					opp-hz = /bits/ 64 <850000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+-					opp-supported-hw = <0x02>;
++					opp-supported-hw = <0x03>;
+ 				};
+ 
+ 				opp-800000000 {
+ 					opp-hz = /bits/ 64 <800000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+-					opp-supported-hw = <0x04>;
++					opp-supported-hw = <0x07>;
+ 				};
+ 
+ 				opp-650000000 {
+ 					opp-hz = /bits/ 64 <650000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+-					opp-supported-hw = <0x08>;
++					opp-supported-hw = <0x0f>;
+ 				};
+ 
+ 				opp-565000000 {
+ 					opp-hz = /bits/ 64 <565000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+-					opp-supported-hw = <0x10>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 
+ 				opp-430000000 {
+ 					opp-hz = /bits/ 64 <430000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+-					opp-supported-hw = <0xff>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 
+ 				opp-355000000 {
+ 					opp-hz = /bits/ 64 <355000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+-					opp-supported-hw = <0xff>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 
+ 				opp-253000000 {
+ 					opp-hz = /bits/ 64 <253000000>;
+ 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+-					opp-supported-hw = <0xff>;
++					opp-supported-hw = <0x1f>;
+ 				};
+ 			};
+ 		};
+
+---
+base-commit: 9852d85ec9d492ebef56dc5f229416c925758edc
+change-id: 20241002-sm6350-gpu-speedbin-fix-2fc32b4ba0fd
 
 Best regards,
-Krzysztof
+-- 
+Luca Weiss <luca.weiss@fairphone.com>
 
 
