@@ -1,205 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-33017-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33018-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FCD698F0BE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 15:47:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3324098F122
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 16:09:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C386C1F21AC0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 13:47:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BCBA3B22C6E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 14:09:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3553D196DA2;
-	Thu,  3 Oct 2024 13:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34BB219C57F;
+	Thu,  3 Oct 2024 14:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YoSJx8J+"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b="EdVEHlGX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62FB1154C12;
-	Thu,  3 Oct 2024 13:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727963218; cv=none; b=SzbBORq/g6ERzdxpxYL4IBsnagAkqBb8tgOlOnTRZIQO3nvYACpkata0qR5g9MPqng+K4QN75KIHKKEJm4N1uX8SIlb/zobT43J5C+GBEY+gqmnMZ5BDOVIkCEdcsF/HXzIK6bplwC7fmBY4v1N8FAU6s19cm8E1ZSoRr8OFXEw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727963218; c=relaxed/simple;
-	bh=n5OHn3QUdpat2aC/O/iKVjfoE6iGTaPoN/6J8frtUYg=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rlZYBYD33wx0FCf3hpmQraHMEP6XkMalZg/xHehRLPvOmhWWOg3hQei+Ef3xjzlvzn1Y1pWnRCnbhDMhSU03y4YGbbM68UKhKPfm+ZGCkAPWoNaaOI+nqdxfGL0pJu7kh0badvv47y41FQyqUYiE9vhWoBV0UUhsUiREPvzWP74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YoSJx8J+; arc=none smtp.client-ip=198.175.65.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1727963217; x=1759499217;
-  h=date:from:to:subject:message-id:references:mime-version:
-   content-transfer-encoding:in-reply-to;
-  bh=n5OHn3QUdpat2aC/O/iKVjfoE6iGTaPoN/6J8frtUYg=;
-  b=YoSJx8J+nOAGpupUZE+M60XfDzYhATyBDvLh1Pyt7oWYpE7QcdXGuwzz
-   FLhuhYWSxZ1RGCaVw9uOQnYJ6qPpA+QUo6zvwzn8pMShC/OpcqiHsCbuT
-   CfNXnZbq9kjilvnWBNfJD9oiWUO+LkDipWrN95v08e+Ji9T7OKabsytCt
-   RG/PXL+y71c7SUWfkZvUlGHLDvWTn5c1URim4E0rKm0ne8hbIpQfn6Bda
-   g8WxF4JZUD9Kgl7Xs30/ew7IP+YdudA3aVD+lBBy0hlJxSbFlDboEX+bq
-   iKcdKnzzEpv/bV1XKZ0MfakioZ5uXigMQNsE32lU19HGXFw+UJJS260x7
-   Q==;
-X-CSE-ConnectionGUID: OcD+5CZvQpex/qRT40oiZg==
-X-CSE-MsgGUID: B9rD4x7wR/KqUXEwrDH67w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11214"; a="27286661"
-X-IronPort-AV: E=Sophos;i="6.11,174,1725346800"; 
-   d="scan'208";a="27286661"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2024 06:46:56 -0700
-X-CSE-ConnectionGUID: H7+f/vSCTa27grfFf3KfqQ==
-X-CSE-MsgGUID: dSiUo7Y0SbyaiImM3Q2NMw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,174,1725346800"; 
-   d="scan'208";a="74451391"
-Received: from stinkpipe.fi.intel.com (HELO stinkbox) ([10.237.72.74])
-  by fmviesa008.fm.intel.com with SMTP; 03 Oct 2024 06:46:50 -0700
-Received: by stinkbox (sSMTP sendmail emulation); Thu, 03 Oct 2024 16:46:48 +0300
-Date: Thu, 3 Oct 2024 16:46:48 +0300
-From: Ville =?iso-8859-1?Q?Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>
-To: dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Inki Dae <inki.dae@samsung.com>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Sandy Huang <hjc@rock-chips.com>, Jyri Sarha <jyri.sarha@iki.fi>,
-	Alexey Brodkin <abrodkin@synopsys.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?iso-8859-1?Q?Ma=EDra?= Canal <mairacanal@riseup.net>,
-	Zack Rusin <zack.rusin@broadcom.com>, amd-gfx@lists.freedesktop.org,
-	linux-mediatek@lists.infradead.org,
-	linux-amlogic@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-	virtualization@lists.linux.dev, spice-devel@lists.freedesktop.org,
-	linux-renesas-soc@vger.kernel.org, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 2/2] drm: Move crtc->{x, y, mode, enabled} to legacy
- sub-structure
-Message-ID: <Zv6gSGMXZZARf3oV@intel.com>
-References: <20241002182200.15363-1-ville.syrjala@linux.intel.com>
- <20241002182200.15363-3-ville.syrjala@linux.intel.com>
- <Zv6QF2EmIcogtlLA@louis-chauvet-laptop>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633D81990AA;
+	Thu,  3 Oct 2024 14:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1727964588; cv=pass; b=W8QMyeHZKVqrUT9iW1GtVutUHgdtd2Lm33iVmyr+P1ZZdGoxU3b/OHuPmJy2HZSBS4Dc6Prg6B2FS5YshQMzrsDD2UrVqFmsCNt0E22Jtku+S/pcyFhsUAfzCHE7TNJHwrM0jL70PuT4Wcvmk8EccQXeuREqOpwcBahnO+nLyR8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1727964588; c=relaxed/simple;
+	bh=LTnd3jdSNvNjGZdqtD6vI/EHupSMLeh5Jy6AQmo5xIU=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=eNQE9s2JadtVpdJ7toyHZXRXoySkwc+ZH8zq6nDSteC1qJfWn9inZrjD3So4fxEU/GHS46PKGJ3lQuzvFw6N8LIOiXRamjUvFBUme1c13O4ewg3MKiDhX6HrRijKFJGK46kRFIlKVMRtT8wJPMGFP5e89j+xtkPe3yjSwGtSW3M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=helen.koike@collabora.com header.b=EdVEHlGX; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1727964567; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=PxzjsxdZoHLLEWUXBUtJIbx9FvlzyWRBvnpXUEH8ZVkpiZfTLPGvy/XA4HWYH3GdXWX+Fz+Ry4cIzMuHahHXJgKCenG8jEWyZTKZyolivk+j54T4ML2Pv/4qbGoKaFOfbRo6H73BvIGULY1NSAmuOjbDWWcC+iPHvUooV3igJ74=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1727964567; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=1OHhhNZ+OELPUq/O9d/iIoYUAyuuf7NZlomVKgtomd4=; 
+	b=ZQ39KtJe+AupNLqYeceIQqzdxeoBXyc7+0+sM3kEHQadskrnS4I2nYcJIKzFZ6S6tT88hqj7BNMI3YkvxswsQoVqav0d37uWoeLGPwvWWGLRC3KyNnFYhzpPcv2naDvBK0ZmHLei4vv1jQtS+gO8XV4X2dxwr8Y1s6xchvBbZfw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=helen.koike@collabora.com;
+	dmarc=pass header.from=<helen.koike@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1727964566;
+	s=zohomail; d=collabora.com; i=helen.koike@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=1OHhhNZ+OELPUq/O9d/iIoYUAyuuf7NZlomVKgtomd4=;
+	b=EdVEHlGXFsAxJN+19yf//ol9ieQSDoRqLCvgjjIZOMKb7c74NYzeDUO6lVicMw25
+	TfSDEhx15h+ibwLHoPb6jl72/1Bqu4PAePPAaebr6aFNNBGM+9Bf1cQHGBqxtcl9Rre
+	77I8HB53JN/onRr797LMXBEI+94fzCMDmNvIoeyc=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1727964564611390.8472928612191; Thu, 3 Oct 2024 07:09:24 -0700 (PDT)
+Date: Thu, 03 Oct 2024 11:09:24 -0300
+From: Helen Mae Koike Fornazier <helen.koike@collabora.com>
+To: "Vignesh Raman" <vignesh.raman@collabora.com>
+Cc: "dri-devel" <dri-devel@lists.freedesktop.org>,
+	"daniels" <daniels@collabora.com>, "airlied" <airlied@gmail.com>,
+	"daniel" <daniel@ffwll.ch>, "robdclark" <robdclark@gmail.com>,
+	"guilherme.gallo" <guilherme.gallo@collabora.com>,
+	"sergi.blanch.torne" <sergi.blanch.torne@collabora.com>,
+	"deborah.brouwer" <deborah.brouwer@collabora.com>,
+	"dmitry.baryshkov" <dmitry.baryshkov@linaro.org>,
+	"mripard" <mripard@kernel.org>,
+	"rodrigo.vivi" <rodrigo.vivi@intel.com>,
+	"quic_abhinavk" <quic_abhinavk@quicinc.com>,
+	"linux-mediatek" <linux-mediatek@lists.infradead.org>,
+	"linux-amlogic" <linux-amlogic@lists.infradead.org>,
+	"linux-rockchip" <linux-rockchip@lists.infradead.org>,
+	"amd-gfx" <amd-gfx@lists.freedesktop.org>,
+	"linux-arm-msm" <linux-arm-msm@vger.kernel.org>,
+	"intel-gfx" <intel-gfx@lists.freedesktop.org>,
+	"virtualization" <virtualization@lists.linux.dev>,
+	"linux-kernel" <linux-kernel@vger.kernel.org>
+Message-ID: <19252b6cc3e.e564b8892647525.6443730088827538481@collabora.com>
+In-Reply-To: <20240930095255.2071586-1-vignesh.raman@collabora.com>
+References: <20240930095255.2071586-1-vignesh.raman@collabora.com>
+Subject: Re: [PATCH v4] docs/gpu: ci: update flake tests requirements
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Zv6QF2EmIcogtlLA@louis-chauvet-laptop>
-X-Patchwork-Hint: comment
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-On Thu, Oct 03, 2024 at 02:38:35PM +0200, Louis Chauvet wrote:
-> Le 02/10/24 - 21:22, Ville Syrjala a écrit :
-> > From: Ville Syrjälä <ville.syrjala@linux.intel.com>
-> > 
-> > Atomic drivers shouldn't be using the legacy state stored
-> > directly under drm_crtc. Move that junk into a 'legacy' sub
-> > structure to highlight the offenders, of which there are
-> > quite a few unfortunately.
-> 
-> Hi,
-> 
-> Do we need to do something particular in an atomic driver except using
-> state content?
-> 
-> I proposed some modifications for VKMS bellow. If you think this is good,
-> I can send a patch to avoid being an offender :-) I just tested it, and it
-> seems to work.
-> 
-> > I'm hoping we could get all these fixed and then declare
-> > the legacy state off limits for atomic drivers (which is
-> > what did long ago for plane->fb/etc). And maybe eventually
-> > turn crtc->legacy into a pointer and only allocate it on
-> > legacy drivers.
-> > 
-> > TODO: hwmode should probably go there too but it probably
-> >       needs a closer look, maybe other stuff too...
-> 
-> [...]
-> 
-> > diff --git a/drivers/gpu/drm/vkms/vkms_composer.c b/drivers/gpu/drm/vkms/vkms_composer.c
-> > index 57a5769fc994..a7f8b1da6e85 100644
-> > --- a/drivers/gpu/drm/vkms/vkms_composer.c
-> > +++ b/drivers/gpu/drm/vkms/vkms_composer.c
-> > @@ -187,7 +187,7 @@ static void blend(struct vkms_writeback_job *wb,
-> >  
-> >  	const struct pixel_argb_u16 background_color = { .a = 0xffff };
-> >  
-> > -	size_t crtc_y_limit = crtc_state->base.crtc->mode.vdisplay;
-> > +	size_t crtc_y_limit = crtc_state->base.crtc->legacy.mode.vdisplay;
-> 
-> 	size_t crtc_y_limit = crtc_state->base.mode.vdisplay;
-> 
-> >  	/*
-> >  	 * The planes are composed line-by-line to avoid heavy memory usage. It is a necessary
-> > @@ -270,7 +270,7 @@ static int compose_active_planes(struct vkms_writeback_job *active_wb,
-> >  	if (WARN_ON(check_format_funcs(crtc_state, active_wb)))
-> >  		return -EINVAL;
-> >  
-> > -	line_width = crtc_state->base.crtc->mode.hdisplay;
-> > +	line_width = crtc_state->base.crtc->legacy.mode.hdisplay;
-> 
-> 	line_width = crtc_state->base.mode.hdisplay;
-> 
-> >  	stage_buffer.n_pixels = line_width;
-> >  	output_buffer.n_pixels = line_width;
-> >  
-> > diff --git a/drivers/gpu/drm/vkms/vkms_crtc.c b/drivers/gpu/drm/vkms/vkms_crtc.c
-> > index a40295c18b48..780681ea77e4 100644
-> > --- a/drivers/gpu/drm/vkms/vkms_crtc.c
-> > +++ b/drivers/gpu/drm/vkms/vkms_crtc.c
-> > @@ -64,7 +64,7 @@ static int vkms_enable_vblank(struct drm_crtc *crtc)
-> >  	struct drm_vblank_crtc *vblank = drm_crtc_vblank_crtc(crtc);
-> >  	struct vkms_output *out = drm_crtc_to_vkms_output(crtc);
-> >  
-> > -	drm_calc_timestamping_constants(crtc, &crtc->mode);
-> > +	drm_calc_timestamping_constants(crtc, &crtc->legacy.mode);
-> 
-> 	drm_calc_timestamping_constants(crtc, &crtc->state->mode);
 
-This one doesn't look safe. You want to call that during your atomic
-commit already.
 
-The rest look reasonable.
 
-> 
-> >  	hrtimer_init(&out->vblank_hrtimer, CLOCK_MONOTONIC, HRTIMER_MODE_REL);
-> >  	out->vblank_hrtimer.function = &vkms_vblank_simulate;
-> > diff --git a/drivers/gpu/drm/vkms/vkms_writeback.c b/drivers/gpu/drm/vkms/vkms_writeback.c
-> > index bc724cbd5e3a..27164cddb94d 100644
-> > --- a/drivers/gpu/drm/vkms/vkms_writeback.c
-> > +++ b/drivers/gpu/drm/vkms/vkms_writeback.c
-> > @@ -131,8 +131,8 @@ static void vkms_wb_atomic_commit(struct drm_connector *conn,
-> >  	struct drm_connector_state *conn_state = wb_conn->base.state;
-> >  	struct vkms_crtc_state *crtc_state = output->composer_state;
-> >  	struct drm_framebuffer *fb = connector_state->writeback_job->fb;
-> > -	u16 crtc_height = crtc_state->base.crtc->mode.vdisplay;
-> > -	u16 crtc_width = crtc_state->base.crtc->mode.hdisplay;
-> > +	u16 crtc_height = crtc_state->base.crtc->legacy.mode.vdisplay;
-> > +	u16 crtc_width = crtc_state->base.crtc->legacy.mode.hdisplay;
-> 
-> 	u16 crtc_height = crtc_state->base.mode.vdisplay;
-> 	u16 crtc_width = crtc_state->base.mode.hdisplay;
-> 
-> >  	struct vkms_writeback_job *active_wb;
-> >  	struct vkms_frame_info *wb_frame_info;
-> >  	u32 wb_format = fb->format->format;
-> 
-> [...]
-> 
-> -- 
-> Louis Chauvet, Bootlin
-> Embedded Linux and Kernel engineering
-> https://bootlin.com
 
--- 
-Ville Syrjälä
-Intel
+---- On Mon, 30 Sep 2024 06:52:47 -0300 Vignesh Raman  wrote ---
+
+ > Update the documentation to specify linking to a relevant GitLab 
+ > issue or email report for each new flake entry. Added specific 
+ > GitLab issue urls for amdgpu, i915, msm and xe driver. 
+ >  
+ > Acked-by: Maxime Ripard mripard@kernel.org> 
+ > Acked-by: Rodrigo Vivi rodrigo.vivi@intel.com> #intel and xe 
+ > Acked-by: Abhinav Kumar quic_abhinavk@quicinc.com> # msm 
+ > Acked-by: Dmitry Baryshkov dmitry.baryshkov@linaro.org> # msm 
+ > Signed-off-by: Vignesh Raman vignesh.raman@collabora.com> 
+
+Applied to drm-misc-next
+Thanks!
+
+Helen
+
+ > --- 
+ >  
+ > v2: 
+ > - Add gitlab issue link for msm driver. 
+ >  
+ > v3: 
+ > - Update docs to specify we use email reporting or GitLab issues for flake entries. 
+ >  
+ > v4: 
+ > - Add gitlab issue link for xe driver. 
+ >  
+ > --- 
+ >  Documentation/gpu/automated_testing.rst | 14 ++++++++++---- 
+ >  1 file changed, 10 insertions(+), 4 deletions(-) 
+ >  
+ > diff --git a/Documentation/gpu/automated_testing.rst b/Documentation/gpu/automated_testing.rst 
+ > index 2d5a28866afe..6d7c6086034d 100644 
+ > --- a/Documentation/gpu/automated_testing.rst 
+ > +++ b/Documentation/gpu/automated_testing.rst 
+ > @@ -68,19 +68,25 @@ known to behave unreliably. These tests won't cause a job to fail regardless of 
+ >  the result. They will still be run. 
+ >  
+ >  Each new flake entry must be associated with a link to the email reporting the 
+ > -bug to the author of the affected driver, the board name or Device Tree name of 
+ > -the board, the first kernel version affected, the IGT version used for tests, 
+ > -and an approximation of the failure rate. 
+ > +bug to the author of the affected driver or the relevant GitLab issue. The entry 
+ > +must also include the board name or Device Tree name, the first kernel version 
+ > +affected, the IGT version used for tests, and an approximation of the failure rate. 
+ >  
+ >  They should be provided under the following format:: 
+ >  
+ > -  # Bug Report: $LORE_OR_PATCHWORK_URL 
+ > +  # Bug Report: $LORE_URL_OR_GITLAB_ISSUE 
+ >  # Board Name: broken-board.dtb 
+ >  # Linux Version: 6.6-rc1 
+ >  # IGT Version: 1.28-gd2af13d9f 
+ >  # Failure Rate: 100 
+ >  flaky-test 
+ >  
+ > +Use the appropriate link below to create a GitLab issue: 
+ > +amdgpu driver: https://gitlab.freedesktop.org/drm/amd/-/issues 
+ > +i915 driver: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues 
+ > +msm driver: https://gitlab.freedesktop.org/drm/msm/-/issues 
+ > +xe driver: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues 
+ > + 
+ >  drivers/gpu/drm/ci/${DRIVER_NAME}-${HW_REVISION}-skips.txt 
+ >  ----------------------------------------------------------- 
+ >  
+ > -- 
+ > 2.43.0 
+ >  
+ > 
 
