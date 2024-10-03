@@ -1,135 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-32996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 303D598EADD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 09:55:29 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0582798EB09
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 10:06:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D649C1F22C8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 07:55:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37C231C21ADA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 08:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA76B126C12;
-	Thu,  3 Oct 2024 07:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 989F4811E2;
+	Thu,  3 Oct 2024 08:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jQTzBMJE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ermykQxv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F36053363;
-	Thu,  3 Oct 2024 07:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A0112F588
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 08:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727942123; cv=none; b=raxqW1OZuCdCePNQXCCCoRuqGWwuDgQjX7oNiTX+MJQKpttkjBVitM8HkTT98SufCrsr3DnYjKg0TqTB/dXa4Hgy/p5iGh+uEmHA5g4IAx676FpbXLrtW6u1cv7BBflX9HLAzjh5o8L8KpmhfZ5gtUH1SRqc7tyVLndIdsYoe7Y=
+	t=1727942760; cv=none; b=qRHs8P0BjtvqBsWVzowRhrA3Spou5L7sKT3j7pkLHPhPFlT74gzaV+LecscA9uiFA2RxaFs+KO1IcwreWzQfLdKMhdO0TgW7vh+0MOvzi/bdvnEWAhOM2PHkwrYfupFwEHxKOauvwCK3xbSZxwdZO9Vbf6O+T3IONVsQa5e6X/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727942123; c=relaxed/simple;
-	bh=B1/LqVGQu6maiREI328zrITlgx61icUEJ8iMvU2ORW8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YIrxnCZy7dUV1LGg1+6k+heV8SI/+ybCJH3s+1EMbdInCWdyFC+2YDSk+oail3iZ+zfkMrCCyYn3FtbBjiAgpHRV55eYkfcxSiV8aIRb6J+FRJ1xupbS+wR4dAsqWlMWyu7wMKuX7nd5/rQqDMyFmlg8lSOdceUO3qKg28Cos0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jQTzBMJE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C5CC4CEC7;
-	Thu,  3 Oct 2024 07:55:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1727942123;
-	bh=B1/LqVGQu6maiREI328zrITlgx61icUEJ8iMvU2ORW8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jQTzBMJEFmHIMxuufG4A0OtBKDnZxUNE3ViK9qhFszU7Adv7WfFmVxF3DevpAnWeh
-	 TuPqXv1W/X0d9FRExwtozTZhY9c7uKgInzKhYUTCPtPo4TV+b+PBFXOqd641+hW5pW
-	 hvSABhXKFxxA2J4ScqVLo790QSdsZ2akf1OGIu3qzGrJR8vO8mgRmvx6xA/7fBGzLe
-	 otuLYiF8SDFEo1fpZPKBaQrm9he/BP03JU4qVuvGvTNLVrl+CnCVBzgLZqikAKy+km
-	 Am/2H7QBR29DySr+CM8qWC77h/WoXfo7Wo2hJXYyw6/SzNt6ZMmOnTvG7oeOIDb78x
-	 S8ZCr9C685eTA==
-Date: Thu, 3 Oct 2024 09:55:19 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Mahadevan <quic_mahap@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Daniel Vetter <daniel@ffwll.ch>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
-	Kalyan Thota <quic_kalyant@quicinc.com>, Jayaprakash Madisetty <quic_jmadiset@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/5] dt-bindings: display/msm: Document the DPU for
- SA8775P
-Message-ID: <mbhafnxq4fmndrszkv5bhvqjaik2c3v4sizjner47zapaagnvc@cfvjuvrjtxxx>
-References: <20241001-patchv3_1-v3-0-d23284f45977@quicinc.com>
- <20241001-patchv3_1-v3-2-d23284f45977@quicinc.com>
+	s=arc-20240116; t=1727942760; c=relaxed/simple;
+	bh=gg/chES/KjfvBsxNlmPolEQpvr/+ChzwpTOgMTdzMrA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sYFVfhe8m583PtpxxRVDdK8mM2yUoDvM5n6wsgtqdAQVt0pN8af2bobpaJ38WijKkpPbCzXlbMQNhXVwCUVbZMt7gQ6/t+73Ovgv1gheyFYQM0BR5I5hQENRze2QnOY3VX43BjHwJNpzxyNCxFmWV5wVOLCaot7TC3ZsKWhZMwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ermykQxv; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fabe9fbe20so589041fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 01:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727942757; x=1728547557; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZSbNP2LSzdURuBvtjjNXE7kOTcPFhv0be643iEbepKU=;
+        b=ermykQxvAVxnUAkP6kwFoi1EeRlq2bVjCedW9l+N71ioA4IoK8nnCgcjj221noYmay
+         R1i79LZF+tALNI70wZrpNEeMX0bNRiJ390gXshxA6Y09MW7nSUDL9AMDiwFpQcGzOj4f
+         BtxqaKbE8a4sm3ITwtrLgrmk72CAhiOYXOIEdXCYhwTawAOrcgCgbibWmq+uCixDZzSA
+         S+5JYuZ912g4PrsHFtBRcXlS6wX6MdCN2/AXjzsbHCw1//sovJ4CLxF895OznryQZ5xp
+         HJvCnXYZ0i/bPkUF79EtBL0Aeq0ltGyn0bPBkCqis2BAHrzGSJc34oLppZd5qg3omVNE
+         POGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727942757; x=1728547557;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZSbNP2LSzdURuBvtjjNXE7kOTcPFhv0be643iEbepKU=;
+        b=fbRGQdVK5+/S6N9vnM+n8XjFHms4hclsPszfgsIfO78FjiKcdbGk00dAw85yYW9O2m
+         FXUOzuZdZaf+QYHw4XjKhMPDkZsmVpLTxzIe7OCuN6DhYliUEccsKSsr7RQyx9P6YHqV
+         RFACltUrGfMs3WbWWDXUxhT2V1qeYkrpRpgj/hx9xg7hAIukHc3qlghPNdvPHG/Ot8ak
+         EPEc6PBXLNH75RKCV/fB0quCVliPoNyguK+P0CLuYij4rLqqzI+faW4RqnHVPQ3ZxeN/
+         GTS8HwuTbUwUZy8GDMiAHjlsDcTDA9n5Z5wyfAB2qTi+HkUzzE3ABu4RACrVkIPb/bHm
+         SbQA==
+X-Forwarded-Encrypted: i=1; AJvYcCX8pTrWYNRfhAcyrpaxcj7IVy3rJxQRJqxUN/Hpw4/+k3iVBvsHTGi7mRZ0+HXETsd7LJ9mxrXe/pP/YVnL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yya90vgkiQtofjFZqehgLFb3ZYUGEr0Hbn0fY/vQNNZOeKuJ20t
+	2GwpXFSMBeOZJ4lacGYxA4dJpwlX7GaQW188KUlN2g3/ys1u+Wh3t2ameIXX2FM=
+X-Google-Smtp-Source: AGHT+IGMyQbMxH01BzNBJrn15VPbDfiUtVf0JbE2MOOeoBTQaQxkYK7qqyWEScuedJ61d8IqRS5Igg==
+X-Received: by 2002:a05:651c:a0b:b0:2f0:29e7:4dc2 with SMTP id 38308e7fff4ca-2fae1013912mr10690501fa.5.1727942756819;
+        Thu, 03 Oct 2024 01:05:56 -0700 (PDT)
+Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539a82979b4sm113489e87.141.2024.10.03.01.05.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Oct 2024 01:05:55 -0700 (PDT)
+Message-ID: <ab85f2ae-6c97-4fbb-a15b-31cc9e1f77fc@linaro.org>
+Date: Thu, 3 Oct 2024 11:05:53 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241001-patchv3_1-v3-2-d23284f45977@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] clk: qcom: Make GCC_6125 depend on QCOM_GDSC
+Content-Language: en-US
+To: Konrad Dybcio <konradybcio@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Konrad Dybcio <quic_kdybcio@quicinc.com>,
+ =?UTF-8?Q?Kamil_Go=C5=82da?= <kamil.golda@protonmail.com>
+References: <20241003-topic-6125kconfig-v1-1-f5e1efbff07c@quicinc.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20241003-topic-6125kconfig-v1-1-f5e1efbff07c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Tue, Oct 01, 2024 at 12:11:37PM +0530, Mahadevan wrote:
-> Document the DPU for Qualcomm SA8775P platform.
+Hi Konrad,
+
+On 10/3/24 02:16, Konrad Dybcio wrote:
+> From: Konrad Dybcio <quic_kdybcio@quicinc.com>
 > 
-> Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
-> ---
->  .../bindings/display/msm/qcom,sa8775p-dpu.yaml     | 122 +++++++++++++++++++++
->  1 file changed, 122 insertions(+)
+> Like all other non-ancient Qualcomm clock drivers, QCOM_GDSC is
+> required, as the GCC driver defines and instantiates a bunch of GDSCs.
 > 
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-dpu.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..fda88bdbd04214e06255e105eae582ff926d72e9
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-dpu.yaml
-> @@ -0,0 +1,122 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/display/msm/qcom,sa8775p-dpu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SA8775P Display DPU
-> +
-> +maintainers:
-> +  - Mahadevan <quic_mahap@quicinc.com>
-> +
-> +$ref: /schemas/display/msm/dpu-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sa8775p-dpu
-> +
-> +  reg:
-> +    items:
-> +      - description: Address offset and size for mdp register set
-> +      - description: Address offset and size for vbif register set
-> +
-> +  reg-names:
-> +    items:
-> +      - const: mdp
-> +      - const: vbif
-> +
-> +  clocks:
-> +    items:
-> +      - description: Display hf AXI
-> +      - description: Display AHB
-> +      - description: Display lut
-> +      - description: Display core
-> +      - description: Display vsync
-> +
-> +  clock-names:
-> +    items:
-> +      - const: bus
-> +      - const: iface
-> +      - const: lut
-> +      - const: core
-> +      - const: vsync
+> Add the missing dependency.
+> 
+> Reported-by: Kamil Gołda <kamil.golda@protonmail.com>
+> Signed-off-by: Konrad Dybcio <quic_kdybcio@quicinc.com>
 
-This looks the same as sm8650-dpu. Add the compatible there.
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-Best regards,
-Krzysztof
+An identical change but for SM8150 GCC is also welcome.
 
+--
+Best wishes,
+Vladimir
 
