@@ -1,129 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-33044-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74C3698F620
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 20:30:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF15A98F65E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 20:42:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A6F391C21193
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 18:30:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7D29282C00
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 18:42:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21A551ABEA5;
-	Thu,  3 Oct 2024 18:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6DFA1AB524;
+	Thu,  3 Oct 2024 18:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="MF/0lNPq"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="0OKKxt81"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9371A7076
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 18:30:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A840319F134;
+	Thu,  3 Oct 2024 18:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727980234; cv=none; b=FennVC7/7UBbNqKVXExiT7YFPSYaZqfFz/R3F+an0u/3zJ42E3RUx15RHdlf2XnpfdERV4Cd9sWzN8YTJbt7lzy4SjKqypgIfhUQ+RSf7wq96KcWG/0nBHA6YWItlHQRSxGghaAmuGV0mjDCgxFXvsbe/m8hwMfL09cjbqfxpbI=
+	t=1727980959; cv=none; b=GoD97RnhDqXI/KV7hG6jwbsDlqEr/73j3nUGhuQZ15ieI7hO7ekq0q4k91iDy/mc3AxUZKP6Xn799YW9btkjCrWDxgAWxCG1ckSAaQAx0aOrx15a7iuxWOvPcFqwPZ2o3MXRWb9Tr+gnVWil3jOH6mxEQlJRW3m7I6nOdQrNhQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727980234; c=relaxed/simple;
-	bh=c++Lte/udt0jLRhLlSKN7fA6Bnq9Rxf2y0Cj+HWhPvA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mfMCNg5wyeW6lFg3vBcxeJsyvGSwaNAu+Uh1/ri3Lx10dyPqDl6Z//ywnVle4zqjY4q9bOQy7GKBUPRCRIRmVplay4Mpj6u3cHYZIoDYmqEOuelYMBIYCqYLjKbMM4QjIKrWS283z3Wa/h//LNFMCTZukTyvy9r/5XhXHoHDQFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=MF/0lNPq; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-53959a88668so1676665e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 11:30:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1727980227; x=1728585027; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c++Lte/udt0jLRhLlSKN7fA6Bnq9Rxf2y0Cj+HWhPvA=;
-        b=MF/0lNPqlpbRaKdx1Jz4sO90iMUNj4GfoaAdgxAEM90mfk9ogcPRzCWcUZeJx4HOyD
-         GYbOKUXE4oFx8ZZzOeKAXHJ0Ack8Fj+Q318S9o5exV5UBOlWsWzZBNzRLqkSjcYgwwEH
-         ebRn+XkmNowvcau17S8PuGRTQb4oQZK6BubzI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727980227; x=1728585027;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c++Lte/udt0jLRhLlSKN7fA6Bnq9Rxf2y0Cj+HWhPvA=;
-        b=XrY4txmu45xMnCk8kvIQrMUNOXa4GDTYNVdDVlyVEBAYVqgJwxtVez+Y7W1jqyg9By
-         YF/Hxf0yP8wSUkTofd8soIhWkrAxaIUQiaIsPLAjktVGIrAcXmM8bT/LA7aXxenbyVeI
-         jlvanfNiAnK86s+9GjDdb3OeDhxYWtBhrduVv18xo32h1N1Th5TvgEkp0GezPpL8gnNl
-         vxRL/jfpNVbF+ucOADdw4AqP3WLmTNfP0jUkBLDxUeAg6RtsXTyA1W418ogANhVWFJaj
-         39NMv6Q0aYywFfdfwwQ2964OORSt1tK/Bg9ZHx4IQTCdiovS1tyo9PdJEXT36e7FdWlI
-         JZjA==
-X-Forwarded-Encrypted: i=1; AJvYcCWZDqh146audKLzk3QMLp0nBegd0xL1YNa93IHtQJm7I9hGSOa5J9Oplg5gvkkxTk9MURFoD4JlLh5pL0RI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzb2jF7MvnEzx7j8nF/VQALa/L6Haikin4svP022ZKLYryF5L7u
-	9Bw7Sf2nmdjLQA1hKdI+Uv129Ymd9sw56XJE4aOvTxvpx3Cg3I3ArKcHqzzCYlA2lztY806P2X5
-	yuZsc
-X-Google-Smtp-Source: AGHT+IFt0qk6KOGCVasd4zyqJ9avSJ8dsAc2fGS5boInnb6/fV/14bBe7sK4x40CcInUh1cqTCgIfg==
-X-Received: by 2002:a05:6512:31cc:b0:52f:154:661b with SMTP id 2adb3069b0e04-539ab85bfdfmr206557e87.11.1727980226876;
-        Thu, 03 Oct 2024 11:30:26 -0700 (PDT)
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com. [209.85.167.49])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539a8256b69sm232501e87.108.2024.10.03.11.30.26
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Oct 2024 11:30:26 -0700 (PDT)
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-5398e33155fso1680921e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 11:30:26 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVVuN4gjPINlW3PEjxdoqgsB5fakstN+dom36WUqTcoQ7/+cVVBeRYGqXHhkPkxNcK84Tspy4CGucHGnQlB@vger.kernel.org
-X-Received: by 2002:a05:6512:2211:b0:539:9155:e8b4 with SMTP id
- 2adb3069b0e04-539ab85c137mr174931e87.2.1727980224394; Thu, 03 Oct 2024
- 11:30:24 -0700 (PDT)
+	s=arc-20240116; t=1727980959; c=relaxed/simple;
+	bh=0q5SSCaXUaMZqbCx0JIierHaddgdHVXpOzVy1vt9hIw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tWe4hVXxKa1AGyAtKEUzGRgaSAB10GgS7N9SQOnFVAMWmmb54+eATx5CjcJYR3x6gnPaTFtG3/4R0QKIcdKqTJRZA9Sfv9tU5ogdkoJ1BTSYEYVjyNx8/njKjze75phOkVsCub36wnVZLrI2ocRhZ4pPs25zZ6ijbwoXZOW3344=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=0OKKxt81; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=2RDjJwzjseFZ2RBERk4BN7b4d/RJVlrbdFG7geetqgs=; b=0OKKxt81bC8V4FGa2ByITtAODv
+	FxcvNjNTGZd1DTFR5x+XXPzIV8mpoS6kZW1lGcL6HpOkd31SBgarDSet5Ew+deEPrGgO80gE4Ie6J
+	FIBjrpKVepAKWyx1b+YrZ+WNxHrJsgL2T4D2NFU2Y9+Dwli4pJ8OvoBCQqm15Jce9OH8=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1swQmP-008yMk-5X; Thu, 03 Oct 2024 20:42:25 +0200
+Date: Thu, 3 Oct 2024 20:42:25 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: "Kiran Kumar C.S.K" <quic_kkumarcs@quicinc.com>
+Cc: netdev@vger.kernel.org, Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Russell King <linux@armlinux.org.uk>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, vsmuthu@qti.qualcomm.com,
+	arastogi@qti.qualcomm.com, linchen@qti.qualcomm.com,
+	john@phrozen.org, Luo Jie <quic_luoj@quicinc.com>,
+	Pavithra R <quic_pavir@quicinc.com>,
+	"Suruchi Agarwal (QUIC)" <quic_suruchia@quicinc.com>,
+	"Lei Wei (QUIC)" <quic_leiwei@quicinc.com>
+Subject: Re: RFC: Advice on adding support for Qualcomm IPQ9574 SoC Ethernet
+Message-ID: <febe6776-53dc-454d-83b0-601540e45f78@lunn.ch>
+References: <f0f0c065-bf7c-4106-b5e2-bfafc6b52101@quicinc.com>
+ <d2929bd2-bc9e-4733-a89f-2a187e8bf917@quicinc.com>
+ <817a0d2d-e3a6-422c-86d2-4e4216468fe6@lunn.ch>
+ <c7d8109d-8f88-4f4c-abb7-6ebfa1f1daa3@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241001125033.10625-1-johan+linaro@kernel.org> <20241001125033.10625-3-johan+linaro@kernel.org>
-In-Reply-To: <20241001125033.10625-3-johan+linaro@kernel.org>
-From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 3 Oct 2024 11:30:08 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=UoU5Nd7sW66cjQzor+BP+W_f7uw0MGRaF6y7PH7KRN_g@mail.gmail.com>
-Message-ID: <CAD=FV=UoU5Nd7sW66cjQzor+BP+W_f7uw0MGRaF6y7PH7KRN_g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/7] serial: qcom-geni: fix shutdown race
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-serial@vger.kernel.org, stable@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c7d8109d-8f88-4f4c-abb7-6ebfa1f1daa3@quicinc.com>
 
-Hi,
+> Agree that switchdev is the right model for this device. We were
+> planning to enable base Ethernet functionality using regular
+> (non-switchdev) netdevice representation for the ports initially,
+> without offload support. As the next step, L2/VLAN offload support using
+> switchdev will be enabled on top. Hope this phased approach is fine.
 
-On Tue, Oct 1, 2024 at 5:51=E2=80=AFAM Johan Hovold <johan+linaro@kernel.or=
-g> wrote:
->
-> A commit adding back the stopping of tx on port shutdown failed to add
-> back the locking which had also been removed by commit e83766334f96
-> ("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART
-> shutdown").
+Since it is not a DSA switch, yes, a phased approach should be O.K.
 
-Hmmm, when I look at that commit it makes me think that the problem
-that commit e83766334f96 ("tty: serial: qcom_geni_serial: No need to
-stop tx/rx on UART shutdown") was fixing was re-introduced by commit
-d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in
-progress at shutdown"). ...and indeed, it was. :(
+> >> 3) PCS driver patch series:
+> >>         Driver for the PCS block in IPQ9574. New IPQ PCS driver will
+> >>         be enabled in drivers/net/pcs/
+> >> 	Dependent on NSS CC patch series (2).
+> > 
+> > I assume this dependency is pure at runtime? So the code will build
+> > without the NSS CC patch series?
+> 
+> The MII Rx/Tx clocks are supplied from the NSS clock controller to the
+> PCS's MII channels. To represent this in the DTS, the PCS node in the
+> DTS is configured with the MII Rx/Tx clock that it consumes, using
+> macros for clocks which are exported from the NSS CC driver in a header
+> file. So, there will be a compile-time dependency for the dtbindings/DTS
+> on the NSS CC patch series. We will clearly call out this dependency in
+> the cover letter of the PCS driver. Hope that this approach is ok.
 
-I can't interact with kgdb if I do this:
+Since there is a compile time dependency, you might want to ask for
+the clock patches to be put into a stable branch which can be merged
+into netdev.
 
-1. ssh over to DUT
-2. Kill the console process (on ChromeOS stop console-ttyMSM0)
-3. Drop in the debugger (echo g > /proc/sysrq-trigger)
+Or you need to wait a kernel cycle.
 
-This bug predates your series, but since it touches the same code
-maybe you could fix it at the same time? I will note that commit
-e83766334f96 ("tty: serial: qcom_geni_serial: No need to stop tx/rx on
-UART shutdown") mentions that it wasn't required for FIFO mode--only
-DMA...
-
-Aside from the pre-existing bug, I agree that the locking should be there.
-
-
--Doug
+   Andrew
 
