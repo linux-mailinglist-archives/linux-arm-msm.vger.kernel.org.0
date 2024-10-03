@@ -1,175 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-32983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFBA698E896
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 04:59:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EB11398E939
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 06:57:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E15081C23363
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 02:59:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 153271C21927
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 04:57:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD438433D8;
-	Thu,  3 Oct 2024 02:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C08E3FB31;
+	Thu,  3 Oct 2024 04:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="chqIecEm"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OXdBAGnL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E2A40BF2
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 02:58:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524A331A60
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 04:57:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727924328; cv=none; b=iOEu6ZEBgEG687OeYPcxenZzSBwzEioncVD3CV92rEFpQxSuNWqZCuhiJiTMJ3YFJa2Rv+rp46nBql8dclWevpLCpHn2xeIa6SuFHjNXhYlr/2OVZlDr9eATHFcfy7Myvq2YnLm8bDEvQK2wbv3zMJOmpGIUKePGkzNJ0HKQ308=
+	t=1727931434; cv=none; b=PmNnx7AwyChgsClnlLS6AXRBTzDREF/wPVefosZz1mJSE07L2DJ0bD2Pn9MN1MAoqSH1jXiOha405bSgfXHQ5b3x8s7oCl1SdfmrZKOhrJ+NLzfK/tX2VWqc5hXfNf08wTiMh/gZB5+ah41YM+ysGma1XExoNAfeiMLCKcZhQYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727924328; c=relaxed/simple;
-	bh=RbbsTxcQGy55FkTg6CEEGqhEsl4ZzuLrgtjdk4G2IrI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=q1WanocrhDjEt6z8/rksiM/UbIqm8qoL9kEnRKqD3V8VlUa/gOs1joSRb1aVj1+IMPuM4m+TGrBg5NNP3IQhyv3mpeumwbtX3K0VyVo2fNIkCUa6niimr8lC9sPEWteXOwbyUwuqTZvOBx/S2q2rlVDt6rN0HYb2H7lQZVatlf8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=chqIecEm; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4932njtY020209
-	for <linux-arm-msm@vger.kernel.org>; Thu, 3 Oct 2024 02:58:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lbSF7jHlkaR5xovzGmMq56CCaUsco0zxxJXKbsOr+IA=; b=chqIecEmoTfYtV0m
-	QD2D7AQld6dNmElt92FjUtUicC4xVeyuLxdSvc5Qa0o04ya0z6IHj72I1D6BnDta
-	uPeO8Mvr8v/kTAsbHxnsJvKuL2K82XtKfJStXa2ubMracmbqDvNQybxdE2mYv+0o
-	2Tb5SdWcy4Oy3nBu56FFcbjy00qlWl7uDDZZcBTt++6QAxW5LmBIHeb/yHYfU87j
-	9eltgaVKlZ3MjbUdkYmb9VIby3jEyP8bWXI7yI4idPd1IVaR4u4OrDc/WuDB9bnq
-	gOHjPykszITyMWvjI4+lx6QPHrJzegQniPDNqbsOZb+3JZsuxfuo0R+sJ+c9+PPM
-	l1DsdQ==
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com [209.85.160.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x8t6wbda-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 02:58:46 +0000 (GMT)
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-287433009bcso397847fac.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 19:58:45 -0700 (PDT)
+	s=arc-20240116; t=1727931434; c=relaxed/simple;
+	bh=qEnoBtsvZoh+9PLGVc+C4bgF5PV/jjkeM8XAPFbyTgc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NgmSFMKHQG1Rl0OPUrU34dsbvf6c0SpJJY08+FqunLhC+M1cqHTmfmxw+iXWqrJV20mQIDKHcqaxn8+cYuXKruFAw16jJNr4YPA4Ez4Y4EenowdeZn5eCbsg7vCMf+Aw0yzxoYyDgRRoER8TfYSdgSfdBEONbng8tRmsP9pBkik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OXdBAGnL; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7e6ed072cdaso293632a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 21:57:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1727931432; x=1728536232; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8dDNfw+NjJwfHr3rs4t9p6Uot6ve0GGTnKxlXQV+iZE=;
+        b=OXdBAGnLfMtY2FG4okmsu4wV8dNTqdhfnpviGhMMVOKbCrgWWqKFZ8LGDIEFj/ayO4
+         rUo/emhztLLyVcBX152jP7IaXzYQOvqGp2/W3ZuwrmjUPZfi2FlnDgzAus1KJJkIv0ay
+         GRjBcCHjGKRIHfAmZWvmrDpYB+UomMWsIaIZJeGuINNVpaDcWyGttnHnURW0w5JzaTVX
+         5HK/i+F1MXPgDFBBr0BdIB99Vq6myj13yfukLVR4+0+p8Y3C9CVHnr/zNoU5v3dBKD6p
+         t6u2MXYRyAkkLnNTqytpqD/A4AN8/bnw6ARRIYeqdjsJanEtjFCD6IYwWz343FmzLUl9
+         TKbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727924325; x=1728529125;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lbSF7jHlkaR5xovzGmMq56CCaUsco0zxxJXKbsOr+IA=;
-        b=oMPAF3Pfxu5O9MA2UB/pj3ZO2YH1Mfrs8oKud4Prx5ISj8btzbAjeajvEzECKpQbO9
-         WsqvbZBcwzkjU6uNaVKPN2WswskKCo+IJ+1W6fWv6g4247GIk6ug/ti9OuoAtoJFgEa1
-         WdDNGXBYLB3fd61QjzS3FFhRgxUotNfiiH2DNsQtnfRnjCGfIqmVCUX4x+PzGnrefSKb
-         OMjL14dUIw00WQWQQ3pGn4A1wkCDFwbd0W3PfawzpQyBwBlsuwqgeIagQ7fKyNGUZHWn
-         137jW7IGx//YRoe/DxhWAjtuEhnH6XP7RMFCIvfv9JBPbbiWAs01b5qSq1ajVSPvQ40P
-         R/mQ==
-X-Gm-Message-State: AOJu0Yw38qlTTFKM/JWICk8Ug38jLbUGe+O5UGFMma3AByVPoahkzzGY
-	C7Dql6tUJUaKn2xn2/2izNDfqyg1ATpovzoWnDDWDxCKnfWyEllhjwsvXCxX5lzcA9qqLdSX/ZL
-	BGSWJsomCpLuxWnONVcuvS9vg3Cv0EKn4ncfI/m6s1i8AQd/gSDp/bYHT3Ff9QeMos0fQyFSGq3
-	XQug48Bg/xe/l8
-X-Received: by 2002:a05:687c:2c5b:b0:277:e457:6057 with SMTP id 586e51a60fabf-28788f4bf55mr3371446fac.44.1727924325201;
-        Wed, 02 Oct 2024 19:58:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEslbkkscbIupCM6YFAHuYU1JfX4Afm5uZdwnidaEUekyOLhEtI1qq/CLEky2lu9R/N3g9GLw==
-X-Received: by 2002:a05:687c:2c5b:b0:277:e457:6057 with SMTP id 586e51a60fabf-28788f4bf55mr3371438fac.44.1727924324832;
-        Wed, 02 Oct 2024 19:58:44 -0700 (PDT)
-Received: from [192.168.86.60] (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-287ab9b5ba5sm188924fac.21.2024.10.02.19.58.41
+        d=1e100.net; s=20230601; t=1727931432; x=1728536232;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8dDNfw+NjJwfHr3rs4t9p6Uot6ve0GGTnKxlXQV+iZE=;
+        b=QoLxK/oRzZXe4NGQjKCm5KyGsNB/Sg3ilYQCXH6dLbEiQHPqH2EMAU+dF/o9lX6YyN
+         9prUl1B12afG+BdrA8cl21Sy4Yx4Xe1huIRMr3lxDVNRKtzKhfnY6vI2xBbswyPoyLtz
+         rfNHV6TYFpMVnKmm98wbDDUWEct+LiGGlMrRUiIt4QDL6H1xPgHhKPZPHLHrUlkMckCe
+         Ax+TJYgo/yeekONOT797ixEedHwywqBuGrjIvvCIjcV5GY7D5OMjtisRWOJA5y/gXG14
+         z8GPkLnsr/kY/KxhzEuUR6E0I5006+FtrkJGAiqA2pNHsDuk65F6OROAsaa4yGPu71IS
+         w1mQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUNGj7PzP/M5I6bgD+2qRuAB2GwhzCDpwC69duBqEFxnVY8YH9ZJUD+Sdld+nKes0nMUulfMh2LHgOrQgY9@vger.kernel.org
+X-Gm-Message-State: AOJu0YzARq9FaVoD4Y17Fiw4LtA/3zIwtjgeAEkEPiqjzyKdNo5VEUBN
+	e4V30yITIvSS9XfF5i8WoLv/wJwYWStZvY1m1/vCKOzJEye5QNW0O4+hjzkFtQ==
+X-Google-Smtp-Source: AGHT+IH6h3pPAfdiE/OAeLgcL5M9L/V1oC+Dm1QHf9XghZuR3HLE9GJaHmWNiuj0yQDfqrO7gF3icw==
+X-Received: by 2002:a05:6a21:6e41:b0:1d4:fc66:30e8 with SMTP id adf61e73a8af0-1d5db163d65mr8252358637.10.1727931432531;
+        Wed, 02 Oct 2024 21:57:12 -0700 (PDT)
+Received: from thinkpad ([36.255.17.222])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e9dbfee44dsm2588a12.64.2024.10.02.21.57.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 19:58:42 -0700 (PDT)
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Date: Wed, 02 Oct 2024 20:01:33 -0700
-Subject: [PATCH RFT 2/2] drm/msm/adreno: Setup SMMU aparture for
- per-process page table
+        Wed, 02 Oct 2024 21:57:12 -0700 (PDT)
+Date: Thu, 3 Oct 2024 10:27:07 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+	bhelgaas@google.com, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_qianyu@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH] PCI: qcom: Enable MSI interrupts together with Link up
+ if global IRQ is supported
+Message-ID: <20241003045707.gy3zemtxrheuipr7@thinkpad>
+References: <20241001042055.ivf4zspq4fqmaxth@thinkpad>
+ <20241001211957.GA227250@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241002-adreno-smmu-aparture-v1-2-e9a63c9ccef5@oss.qualcomm.com>
-References: <20241002-adreno-smmu-aparture-v1-0-e9a63c9ccef5@oss.qualcomm.com>
-In-Reply-To: <20241002-adreno-smmu-aparture-v1-0-e9a63c9ccef5@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1479;
- i=bjorn.andersson@oss.qualcomm.com; h=from:subject:message-id;
- bh=RbbsTxcQGy55FkTg6CEEGqhEsl4ZzuLrgtjdk4G2IrI=;
- b=owEBgwJ8/ZANAwAIAQsfOT8Nma3FAcsmYgBm/gkcRg/Y5KGivcfdeSGJkvp8pEtdIW6yxbLxG
- 8GyBcQb6reJAkkEAAEIADMWIQQF3gPMXzXqTwlm1SULHzk/DZmtxQUCZv4JHBUcYW5kZXJzc29u
- QGtlcm5lbC5vcmcACgkQCx85Pw2ZrcU03xAAqZOMzqIPiya3Ppbf4OVcDQbOrlD+YmTj9ARqMJl
- fYzVwMmwWNYPOAL7IzqyLt8+Ax+FTDtwopgfXtmY87dN/6NsEpuC7sG1XVkRdtxbvrvsWqWEPCr
- nokcf7lY5sVDWtQxdcMhl8TOUIe6at+MnDcbj9uSZ3qK9JiSWXYFzn5syFwz7QiABmjbNmkuZgN
- PNRzH+OLh/yeHP5AkDyDJqbVvTNAipzqXk6yAOV8yIY1WYPmH9MzEuXoJh3p05b4qbTADTJ3zWO
- G1ONmA2aHwvyRkP6YmkaAPCTFH/Uh1oEqEw7/4ftfOfisQazJBKDkWNEQ/Q3s6q+smhuVfLk+gd
- Cdy/38noYbMPzaf16k2OQ6i7mzYtCpFXEhtrjRjohB5XQyr0DzcSGMU4mygHExtHlAviGZb9dyV
- 4ybtfVIs+WVWveOTj4jFtGHrwp5rVJucX+kJcTJjb+kHeAVgsIHXbx4AcXibmaOiwo1gAtV6h+Z
- 2LZoM56C4i+TduAvtGXMiL9pH0xb7fA/EiudQa71FHLgEtxsGMZhL2Wz9mau/hUk2aA4c44UwAR
- DiFA7c5r3qzTUm8N15/BjRKy6bKkippQs+yNh19CRolZP7MBnRAHSGPl0uOLaRmdgtKJaBB7nJT
- uMqxT+jhPd/UfBEjL0Q3Z1Xudz9zz4pq/I3kQ5CLwXb0=
-X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=openpgp;
- fpr=05DE03CC5F35EA4F0966D5250B1F393F0D99ADC5
-X-Proofpoint-GUID: coWwUXXp_cY7NQiAXMwZYv0BPMnxiFRD
-X-Proofpoint-ORIG-GUID: coWwUXXp_cY7NQiAXMwZYv0BPMnxiFRD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- impostorscore=0 lowpriorityscore=0 mlxlogscore=999 bulkscore=0
- priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0 spamscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2408220000 definitions=main-2410030018
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241001211957.GA227250@bhelgaas>
 
-Support for per-process page tables requires the SMMU aparture to be
-setup such that the GPU can make updates with the SMMU. On some targets
-this is done statically in firmware, on others it's expected to be
-requested in runtime by the driver, through a SCM call.
+On Tue, Oct 01, 2024 at 04:19:57PM -0500, Bjorn Helgaas wrote:
+> On Tue, Oct 01, 2024 at 09:50:55AM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Sep 30, 2024 at 12:11:01PM -0500, Bjorn Helgaas wrote:
+> > > On Mon, Sep 30, 2024 at 07:14:09PM +0530, Manivannan Sadhasivam wrote:
+> > > > Currently, if global IRQ is supported by the platform, only the Link up
+> > > > interrupt is enabled in the PARF_INT_ALL_MASK register. But on some Qcom
+> > > > platforms like SM8250, and X1E80100, MSIs are getting masked due to this.
+> > > > They require enabling the MSI interrupt bits in the register to unmask
+> > > > (enable) the MSIs.
+> > > 
+> > > "global IRQ" is a very generic name.  If that's the official name, it
+> > > should at least be capitalized, e.g., "Global IRQ", to show that it is
+> > > a proper noun that refers to a specific IRQ.
+> > 
+> > Sure.
+> > 
+> > > > Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
+> > > > described as 'diagnostic' interrupts in the internal documentation,
+> > > > disabling them masks MSI on these platforms. Due to this,
+> > > 
+> > > > MSIs were not
+> > > > reported to be received these platforms while supporting global IRQ.
+> > > 
+> > > I'm trying to parse "while supporting global IRQ."  We basically
+> > > support global IRQ by installing qcom_pcie_global_irq_thread(), but of
+> > > course the device doesn't see that, so I assume it would be more
+> > > informative to say that MSIs are masked by some register setting.
+> > 
+> > Hmm, this is what I mentioned in the above paragraph referencing
+> > PARF_INT_ALL_MASK register. Is that not clear enough?
+> 
+> It requires the knowledge that the MSI enable bits are set by
+> hardware, cleared by 4581403f6792, and set again here.  This will be
+> more accessible to non-qcom experts if that information is included
+> here.
+> 
 
-One place where configuration is expected to be done dynamically is the
-QCS6490 rb3gen2.
+Okay.
 
-The downstream driver does this unconditioanlly on any A6xx and newer,
-so follow suite and make the call.
+> > > The patch suggests that MSIs are masked internally unless
+> > > PARF_INT_MSI_DEV_0_7 is set in PARF_INT_ALL_MASK.
+> > > 
+> > > Are you saying that prior to 4581403f6792, MSIs did work?  Does that
+> > > mean PARF_INT_MSI_DEV_0_7 was set by a bootloader or something, so
+> > > MSIs worked?  And then 4581403f6792 came along and implicitly cleared
+> > > PARF_INT_MSI_DEV_0_7, so MSIs were then masked?
+> > 
+> > Yeah. Those bits were enabled by default in hardware, but since they were
+> > mentioned as 'diagnostic interrupts' in documentation, commit 4581403f6792
+> > intentionally disabled them. But that results in MSIs getting masked in
+> > *some* platforms.
+> 
+> Apparently the "*some* platforms" part is more qcom-expert knowledge?
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+I already mentioned those platforms in the commit message 'SM8250 and X1E80100'.
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 465a4cd14a43..5b06f7a04fe6 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -572,8 +572,18 @@ struct drm_gem_object *adreno_fw_create_bo(struct msm_gpu *gpu,
- 
- int adreno_hw_init(struct msm_gpu *gpu)
- {
-+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-+	int ret;
-+
- 	VERB("%s", gpu->name);
- 
-+	if (adreno_gpu->info->family >= ADRENO_6XX_GEN1) {
-+		/* We currently always use context bank 0, so hard code this */
-+		ret = qcom_scm_set_gpu_smmu_aperture(0);
-+		if (ret)
-+			DRM_DEV_ERROR(gpu->dev->dev, "unable to set SMMU aperture: %d\n", ret);
-+	}
-+
- 	for (int i = 0; i < gpu->nr_rings; i++) {
- 		struct msm_ringbuffer *ring = gpu->rb[i];
- 
+> There are other qcom platforms where MSIs are not disabled by
+> 4581403f6792?  Information about which platforms are which also sounds
+> useful for future maintenance.
+> 
+
+Yeah, SM8450 is the one which I know so far. I will mention it explicitly.
+
+- Mani
+
+> > > > So enable the MSI interrupts along with the Link up interrupt in the
+> > > > PARF_INT_ALL_MASK register if global IRQ is supported. This ensures that
+> > > > the MSIs continue to work and also the driver is able to catch the Link
+> > > > up interrupt for enumerating endpoint devices.
+> > > > 
+> > > > Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
+> > > > Reported-by: Konrad Dybcio <konradybcio@kernel.org>
+> > > > Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
+> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > > ---
+> > > >  drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
+> > > >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > > > 
+> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > index ef44a82be058..2b33d03ed054 100644
+> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > > > @@ -133,6 +133,7 @@
+> > > >  
+> > > >  /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+> > > >  #define PARF_INT_ALL_LINK_UP			BIT(13)
+> > > > +#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
+> > > >  
+> > > >  /* PARF_NO_SNOOP_OVERIDE register fields */
+> > > >  #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
+> > > > @@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> > > >  			goto err_host_deinit;
+> > > >  		}
+> > > >  
+> > > > -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
+> > > > +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
+> > > > +			       pcie->parf + PARF_INT_ALL_MASK);
+> > > >  	}
+> > > >  
+> > > >  	qcom_pcie_icc_opp_update(pcie);
+> > > > -- 
+> > > > 2.25.1
+> > > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
 
 -- 
-2.45.2
-
+மணிவண்ணன் சதாசிவம்
 
