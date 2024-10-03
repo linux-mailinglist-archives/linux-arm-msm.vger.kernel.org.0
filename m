@@ -1,271 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-33042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2819C98F593
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 19:51:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66D6698F619
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 20:30:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 89946B22964
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 17:50:58 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9823E1C208D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 18:30:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 246DA1A726F;
-	Thu,  3 Oct 2024 17:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A61716EB4A;
+	Thu,  3 Oct 2024 18:30:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ku2IpwA9"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="fb1SgGiY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3755038DD1;
-	Thu,  3 Oct 2024 17:50:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E856B6A8D2
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 18:30:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727977856; cv=none; b=SVVG0Tm5ky+3RNZ2JO/NVeHYe11AOfExfRYbNLeJZDlXeiYDoXw5Z5PpS/JRtY7HJ/dewoiNoKxEIIfq6lEWc7OkhkHMV/cbL8WbZV/ngnPI9Y2djOgxWNVU7/r9C1MKuHwCVbQtzzHkT9l9zIhgIcv1cWCpaAhdLnibyp9+zUs=
+	t=1727980221; cv=none; b=i+w/RVfulGwhFoSBTSbdWRVg2V4N0ZSz35C5L9h9JgmgGdGt+BRVKE/eSoXkusWVc5ksq379RtSgycgL72kshMzP3i2iiS9OO3pbtZuuwe77o06jY5OBhoZVY9QUzw4LHZha1+dkVLExBGV7fx/47w0Aubx1MbGrFClrI18g31w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727977856; c=relaxed/simple;
-	bh=iBjBdCHs/bUGkLTkj1v6dw8uVbnsQmaNTfp+18EilCk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:CC:References:
-	 In-Reply-To:Content-Type; b=kNpXMG2YS+ba+tKLuLntCbWLBQpgY/VvIimyxRUlMiROqEua8kbsuTcNCmStKqr4pb7UlyEbhrKKYWCjDXu89LQGY4QOC0vrfhLsmbJ4SLMIUnlS5FAnpaTib7nViiATK1XDnRvuelYhEavW8X1tRiebxs0g1ZNhdlrnvdR7FGM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ku2IpwA9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4939P9QU027121;
-	Thu, 3 Oct 2024 17:50:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6/m6ITiyDI+jHHJWGVWTFNKipC/rPlkCVT9+CxXpVPY=; b=ku2IpwA9X5S5jJMi
-	EIMaxL/Ngultpxf6OXwBNpZxvdq/ARTAUlPJan9LW4One+a1kkjxUeXupPd2E+u+
-	Cz0RQene8yfqaCstcViPSlyPoTpENuEMHHMKGU4ekWw1EKI36ZGou4I6Yh6zMe0M
-	q9pyWhkM6TEAb+KpTOI4091q7EdxDz43OKuRHDyQDU+wInpW5m3mExebln4sflE7
-	OJL1Z7WiQwSfGU0PIs+EgY3KYi+hz8vcw7IKbW560Tps6ZaB1qJX+ntUOWS+Vc03
-	Y8oIwzxTnpm2OQeq1yOgV4X4BtP8P4CHXjmU8RG76teUgjF7780Rx38U6n52tVRW
-	H9Si1A==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 41x9vuf6m1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Oct 2024 17:50:18 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 493HoHv2003035
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 3 Oct 2024 17:50:17 GMT
-Received: from [10.216.62.135] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 3 Oct 2024
- 10:50:07 -0700
-Message-ID: <c7d8109d-8f88-4f4c-abb7-6ebfa1f1daa3@quicinc.com>
-Date: Thu, 3 Oct 2024 23:20:03 +0530
+	s=arc-20240116; t=1727980221; c=relaxed/simple;
+	bh=Njq0fwvF+5VhnQZ1131zaikWJHtF2S4Q3i8c1LX2lvI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J4LIvkrlSZF6bD9ChRu0nr3WEAGhLPO/zw0kKUb/hQOWLh714BiAkJ6wJ8Y5ZzHREjV4MbSSHOJ+OBW/ehT9eEiHDFeGWH9ZbSmN0TiuQD2FZOuEv9AQBQkUQ0WiJRSMe+irFYoEU9Ym9cTJsW3tLLonNiim5Yr9nF0zQrt+60c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=fb1SgGiY; arc=none smtp.client-ip=209.85.167.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5399041167cso2235256e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 11:30:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1727980217; x=1728585017; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uQhmHIpIANYWDxfaKfnE9P0S3zwxERnpg0mMy9nFKho=;
+        b=fb1SgGiY57LbfmRHv1G3tLy50zXrgozh7jEeNshBWKbqaV6FdXUYA8m15zu3s8Qjru
+         c9wbzOmIclZu1mqCuzil+qlvsPKlGRuPx/ptEx6KqhZ3bobxwpxhAuVIjla6H8/J0n/0
+         q5gxUWq8EVjWmNnpNeCA+JPseHRO6r7WeCBL8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1727980217; x=1728585017;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uQhmHIpIANYWDxfaKfnE9P0S3zwxERnpg0mMy9nFKho=;
+        b=NWtWLCLfhQocqrFFI3p86L27N4PHERfLZmdaZ9EthGq3MWs3skJLemzEA2mKGnvMS8
+         kU3NSL64lDb4sbUyFf00s973BSb1jcN6wYDQivVT1Umrq2vxwB+m21WpHmm/lVjKPpH7
+         cV94z9ScJ6SpUO3gSYs3jgOBqgR2dfZ1/EM2+FibBY1P3Ca6Pg9tWPPBfWqgaHXIEuDv
+         Mr7pLehfnDA7bhYuJY6FRujk/qvq/428VVALZKRH0q6iEaSEyj/G6a6kxKUHmtZhqD9x
+         HTmfkvdHVBpYIX/OLPhzqp4LmE8BjWnHoym6QG30OvEyP6//QF2QgAaTQYepmUw+MLfH
+         nzaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUzp7q2kOOzXw2cKlMToX8ML3HWtjPwQELaFg8hLxjVXVp1XjFJvwIdV2WJEzPy2EhZvVBMJpMbMhBOKB3d@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKuMklxJ+CFGpubIvda/21gGTel7mjaB2sGxQ1kUOxwgleqw0l
+	cOzLzqsN/cboag5m9pZThE1BzHblxyNOdU/5Z82DTKu4SCC+OI25VGJTBHqfy3Z1Tf0XahEW/9z
+	DFWqo
+X-Google-Smtp-Source: AGHT+IH5vwYnwDIgb2AHpJpSfSVS66g0Z0c0nvluN+8ozRelgLKTdkQAzY2zvVjQA5kErYTuSKKpmQ==
+X-Received: by 2002:a05:6512:4015:b0:539:89a8:600f with SMTP id 2adb3069b0e04-539ab867e9fmr262874e87.23.1727980216577;
+        Thu, 03 Oct 2024 11:30:16 -0700 (PDT)
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com. [209.85.208.171])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539a8296c45sm233334e87.132.2024.10.03.11.30.15
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Oct 2024 11:30:15 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fad6de2590so23010691fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 11:30:15 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWeC3TAPLqlxa6PL6CBs8LXjBlu0S9D/2bK4zjUSvBUObDQiDC/EPATr4gtwAiKqw4yQBwg71JypYDANn6W@vger.kernel.org
+X-Received: by 2002:a05:651c:b10:b0:2fa:e52f:4476 with SMTP id
+ 38308e7fff4ca-2fae52f46b7mr54095681fa.45.1727980214619; Thu, 03 Oct 2024
+ 11:30:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Kiran Kumar C.S.K <quic_kkumarcs@quicinc.com>
-Subject: Re: RFC: Advice on adding support for Qualcomm IPQ9574 SoC Ethernet
-To: Andrew Lunn <andrew@lunn.ch>
-CC: <netdev@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        "Jakub
- Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring
-	<robh+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Russell King <linux@armlinux.org.uk>,
-        Jacob Keller <jacob.e.keller@intel.com>,
-        Bhupesh Sharma
-	<bhupesh.sharma@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <vsmuthu@qti.qualcomm.com>,
-        <arastogi@qti.qualcomm.com>, <linchen@qti.qualcomm.com>,
-        <john@phrozen.org>, Luo Jie
-	<quic_luoj@quicinc.com>,
-        Pavithra R <quic_pavir@quicinc.com>,
-        "Suruchi
- Agarwal (QUIC)" <quic_suruchia@quicinc.com>,
-        "Lei Wei (QUIC)"
-	<quic_leiwei@quicinc.com>
-References: <f0f0c065-bf7c-4106-b5e2-bfafc6b52101@quicinc.com>
- <d2929bd2-bc9e-4733-a89f-2a187e8bf917@quicinc.com>
- <817a0d2d-e3a6-422c-86d2-4e4216468fe6@lunn.ch>
-Content-Language: en-US
-In-Reply-To: <817a0d2d-e3a6-422c-86d2-4e4216468fe6@lunn.ch>
+References: <20241001125033.10625-1-johan+linaro@kernel.org> <20241001125033.10625-2-johan+linaro@kernel.org>
+In-Reply-To: <20241001125033.10625-2-johan+linaro@kernel.org>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 3 Oct 2024 11:29:58 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=V31VFVoTWstVUnC_qDBmaUCb5Xv7pyUxUto7mquR5U4Q@mail.gmail.com>
+Message-ID: <CAD=FV=V31VFVoTWstVUnC_qDBmaUCb5Xv7pyUxUto7mquR5U4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] serial: qcom-geni: fix premature receiver enable
+To: Johan Hovold <johan+linaro@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-serial@vger.kernel.org, stable@vger.kernel.org, 
+	Aniket Randive <quic_arandive@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: m22k9veSjcq9AoPsDcDpcIC8gQp9KhwG
-X-Proofpoint-ORIG-GUID: m22k9veSjcq9AoPsDcDpcIC8gQp9KhwG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- lowpriorityscore=0 clxscore=1015 spamscore=0 suspectscore=0 phishscore=0
- priorityscore=1501 malwarescore=0 adultscore=0 mlxscore=0 impostorscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2408220000
- definitions=main-2410030127
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+On Tue, Oct 1, 2024 at 5:51=E2=80=AFAM Johan Hovold <johan+linaro@kernel.or=
+g> wrote:
+>
+> The receiver should not be enabled until the port is opened so drop the
+> bogus call to start rx from the setup code which is shared with the
+> console implementation.
+>
+> This was added for some confused implementation of hibernation support,
+> but the receiver must not be started unconditionally as the port may not
+> have been open when hibernating the system.
+
+Could you provide a motivation for your patch in the description? Is
+patch needed for something (perhaps a future patch in the series)? Is
+it fixing a bug? Does it save power? Is the call harmless but cleaner
+to get rid of?
 
 
+> Fixes: 35781d8356a2 ("tty: serial: qcom-geni-serial: Add support for Hibe=
+rnation feature")
+> Cc: stable@vger.kernel.org      # 6.2
+> Cc: Aniket Randive <quic_arandive@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 1 -
+>  1 file changed, 1 deletion(-)
+>
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
+com_geni_serial.c
+> index 6f0db310cf69..9ea6bd09e665 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1152,7 +1152,6 @@ static int qcom_geni_serial_port_setup(struct uart_=
+port *uport)
+>                                false, true, true);
+>         geni_se_init(&port->se, UART_RX_WM, port->rx_fifo_depth - 2);
+>         geni_se_select_mode(&port->se, port->dev_data->mode);
+> -       qcom_geni_serial_start_rx(uport);
 
-On 10/3/2024 2:58 AM, Andrew Lunn wrote:
-> On Thu, Oct 03, 2024 at 02:07:10AM +0530, Kiran Kumar C.S.K wrote:
->> Hello netdev,
->>
->> We are planning to publish driver patches for adding Ethernet support
->> for Qualcomm's IPQ9574 SoC, and looking for some advice on the approach
->> to follow. There are two new drivers (described below) split across four
->> patch series, totaling to 40 patches. These two drivers depend on a
->> couple of clock controller drivers which are currently in review with
->> the community.
->>
->> Support is currently being added only for IPQ9574 SoC. However the
->> drivers are written for the Qualcomm PPE (packet process engine)
->> architecture, and are easily extendable for additional IPQ SoC (Ex:
->> IPQ5332) that belong to the same network architecture family.
->>
->> Given the number of patches for IPQ9574, we were wondering whether it is
->> preferred to publish the four series together, since having all the code
->> available could help clarify the inter-workings of the code. Or whether
->> it is preferred to publish the patches sequentially, depending on the
->> review progress?
-> 
-> Sequentially. You are likely to learn about working with mainline code
-> from the first patch series, which will allow you to improve the
-> following series before posting them.
-> 
+FWIW, I found at least one thing that's broken by your patch. If you
+enable kgdb (but _not_ "kgdboc_earlycon") and then add "kgdbwait" to
+the kernel command line parameters then things will be broken after
+your patch. You'll drop into the debugger but can't interact with it.
+The "kgdboc_earlycon" path handles this because of
+"qcom_geni_serial_enable_early_read()" but it doesn't seem like
+there's anything that handles it for normal kgdb. If you drop in the
+debugger later it'll probably work if you've got an "agetty" running
+because that'll enable the RX path.
 
-OK, thanks.
 
->>          +---------+
->>          |  48MHZ  |
->>          +----+----+
->>               |(clock)
->>               v
->>          +----+----+
->>   +------| CMN PLL |
->>   |      +----+----+
->>   |           |(clock)
->>   |           v
->>   |      +----+----+           +----+----+  clock   +----+----+
->>   |  +---|  NSSCC  |           |   GCC   |--------->|   MDIO  |
->>   |  |   +----+----+           +----+----+          +----+----+
->>   |  |        |(clock & reset)      |(clock & reset)
->>   |  |        v                     v
->>   |  |   +-----------------------------+----------+----------+---------+
->>   |  |   |       +-----+               |EDMA FIFO |          | EIP FIFO|
->>   |  |   |       | SCH |               +----------+          +---------+
->>   |  |   |       +-----+                      |               |        |
->>   |  |   |  +------+   +------+            +-------------------+       |
->>   |  |   |  |  BM  |   |  QM  |            | L2/L3 Switch Core |       |
->>   |  |   |  +------+   +------+            +-------------------+       |
->>   |  |   |                                   |                         |
->>   |  |   | +-------+ +-------+ +-------+ +-------+ +-------+ +-------+ |
->>   |  |   | |  MAC0 | |  MAC1 | |  MAC2 | |  MAC3 | | XGMAC4| |XGMAC5 | |
->>   |  |   | +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ +---+---+ |
->>   |  |   |     |         |         |         |         |         |     |
->>   |  |   +-----+---------+---------+---------+---------+---------+-----+
->>   |  |         |         |         |         |         |         |
->>   |  |     +---+---------+---------+---------+---+ +---+---+ +---+---+
->>   +--+---->|             PCS0                    | |  PCS1 | | PCS2  |
->>   | clock  +---+---------+---------+---------+---+ +---+---+ +---+---+
->>   |            |         |         |         |         |         |
->>   |        +---+---------+---------+---------+---+ +---+---+ +---+---+
->>   | clock  +----------------+                    | |       | |       |
->>   +------->|Clock Controller|   4-port Eth PHY   | | PHY4  | | PHY5  |
->>            +----------------+--------------------+ +-------+ +-------+
->>
->>
->> 1.1 PPE: Internal blocks overview
->> =================================
->>
->> The Switch core
->> ---------------
->> It has maximum 8 ports, comprising 6 GMAC ports and two DMA interfaces
->> (for Ethernet DMA and EIP security processor) on the IPQ9574.
-> 
-> How are packets from the host directed to a specific egress port? Is
-> there bits in the DMA descriptor of the EDMA? Or is there an
-> additional header in the fields? This will determine if you are
-> writing a DSA switch driver, or a pure switchdev driver. 
-
-The DMA descriptor carries the information on the destination port.
-There is no additional header required in the packet.
-
-> 
->> GMAC/xGMAC
->> ----------
->> There are 6 GMAC and 6 XGMAC in IPQ9574. Depending on the board ethernet
->> configuration, either GMAC or XGMAC is selected by the PPE driver to
->> interface with the PCS. The PPE driver initializes and manages these
->> GMACs, and registers one netdevice per GMAC.
-> 
-> That suggests you are doing a pure switchdev driver.
-> 
-
-Agree that switchdev is the right model for this device. We were
-planning to enable base Ethernet functionality using regular
-(non-switchdev) netdevice representation for the ports initially,
-without offload support. As the next step, L2/VLAN offload support using
-switchdev will be enabled on top. Hope this phased approach is fine.
-
->> 2. List of patch series and dependencies
->> ========================================
->>
->> Clock drivers (currently in review)
->> ===================================
->> 1) CMN PLL driver patch series:
->> 	Currently in review with community.
->> 	https://lore.kernel.org/linux-arm-msm/20240827-qcom_ipq_cmnpll-v3-0-8e009cece8b2@quicinc.com/
->>
->>
->> 2) NSS clock controller (NSSCC) driver patch series
->> 	Currently in review with community.
->> 	https://lore.kernel.org/linux-arm-msm/20240626143302.810632-1-quic_devipriy@quicinc.com/
->>
->>
->> Networking drivers (to be posted for review next week)
->> ======================================================
->>
->> The following patch series are planned to be pushed for the PPE and PCS
->> drivers, to support ethernet function. These patch series are listed
->> below in dependency order.
->>
->> 3) PCS driver patch series:
->>         Driver for the PCS block in IPQ9574. New IPQ PCS driver will
->>         be enabled in drivers/net/pcs/
->> 	Dependent on NSS CC patch series (2).
-> 
-> I assume this dependency is pure at runtime? So the code will build
-> without the NSS CC patch series?
-
-The MII Rx/Tx clocks are supplied from the NSS clock controller to the
-PCS's MII channels. To represent this in the DTS, the PCS node in the
-DTS is configured with the MII Rx/Tx clock that it consumes, using
-macros for clocks which are exported from the NSS CC driver in a header
-file. So, there will be a compile-time dependency for the dtbindings/DTS
-on the NSS CC patch series. We will clearly call out this dependency in
-the cover letter of the PCS driver. Hope that this approach is ok.
-
-> 
-> This should be a good way to start, PCS drivers are typically nice and
-> simple.
-> 
-
-Sure, thanks for the inputs.
-
-> 	Andrew
+-Doug
 
