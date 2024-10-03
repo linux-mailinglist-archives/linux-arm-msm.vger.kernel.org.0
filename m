@@ -1,75 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-33029-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A430098F3D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 18:13:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3ABF898F3DB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 18:13:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 27CF01F221F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 16:13:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 73788B22F5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 16:13:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 478B01A7270;
-	Thu,  3 Oct 2024 16:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 221DE1A76CF;
+	Thu,  3 Oct 2024 16:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AF8RF+kC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i78SLyLR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1FE1A707B;
-	Thu,  3 Oct 2024 16:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF441A7266;
+	Thu,  3 Oct 2024 16:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727971984; cv=none; b=ZZoI5qupyleCsLCDPnW9yWCz1F3zIuHZ8gjnWorbblmmlC4HZtm1aoCIeD7PHi+QT7tn86dkfwJAKKn6940mg2fHJpSB1K0k94dWrKTm6zTrghFdNO78GZoWx5laMiEeKM7ltASc0ayZ06BebtqPJd3yAy0/r85Xm77Z6JoCaUU=
+	t=1727971986; cv=none; b=Va6h7HZlLvTBzxtEmK4gO26sned8V8FscjDH5h2j14P10dcbTN/PtZnDQFXFxpwuq5JWl8oeVF6pj+ihx6k3t742/jREvo34/ukMGpkvDD6MdwkJPILVUu+z6FNRyX5BZ8lastWX6C/C/FCDj2GTaatOcYVO0TNbH1UYt0IkRwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727971984; c=relaxed/simple;
-	bh=yIHp38RtvtLDCz+dKB6Vf596mZ26ig0Y5efzj1HIfzs=;
+	s=arc-20240116; t=1727971986; c=relaxed/simple;
+	bh=mw98QEzBIwYx44vG8hfTrLa/RurlCEDImHR+oHkKWF4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=LccIOo8UXLG1AK96XEy5V2FLKR3Qulo/xeG1J2eWB1ieNuZdCTafQGe6BmGgwUfFkpOhN6rtlJuhgXmEp7PrT/b+5il5RpPEK4Lgo4RBi2pnCR1/z03fpOPFSUIe/0qNJZ6QqraBcg/mZH+Ql4A7SEeibYFXAGrfLo885R6MnWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AF8RF+kC; arc=none smtp.client-ip=209.85.218.48
+	 In-Reply-To:To:Cc; b=RoRQhsGUH8i72EidrAxhOSRz9qdnhqq/NZFHwqEOJx//3bdZMnbm2SLefGwYL0ny9Vscqd5EEZ0mfWMxvm5QIEilg2kqKcpY6775KncAn2ws8ju6nPbKOypBUUhMi/FVnw/pT7utgehVESzdGYg6YfkASRkW+9sVc/2Nidn90Bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i78SLyLR; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a8d2b24b7a8so429362266b.1;
-        Thu, 03 Oct 2024 09:13:02 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a93c1cc74fdso197992066b.3;
+        Thu, 03 Oct 2024 09:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1727971981; x=1728576781; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1727971982; x=1728576782; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qYDoFr9Rcb4U8qB9JjDnoMu8I4N6v3+THQGXkHPg2F0=;
-        b=AF8RF+kCx3FQriNfg4f2rzNVSjaX0GwRcGWx+QblTreM17fPBFblTNZNOa3rYCXDNS
-         pI5jlAjQWEojwcrhExkWAZDTrwKK1z7B7Vhit+8fSO1iWASmP/yFjz6oq2norhZ6oOEh
-         Wxg85Nbr2nSfB9F/v+sUL8a9x/5Zufzp/Dt0tcAFxGAr+r3XxmtrD5LScN3SoIizClGU
-         qfaOX+zO+zRJ7I6oQjTGBRo2TFAm+wVlg+brfm+P2+DRKF9FRq/y7XQh0uToeSCP7AzM
-         hkNIR3P8eH7H0YVwz7Ze7+A5qnCPx84Z+w9LTieoelKP+4+oNKa9cNmM5tAUs9XvocPC
-         hhHw==
+        bh=wyb3geUIdOaiHlo8mwWpCyJKar3stgK5wmtiUF5Pomg=;
+        b=i78SLyLRY/PK+TdyA3wqO+OG8a3CvV5MukDpAC2cx6GMQ+XcLVHdvxmKgD0Tz0ZucI
+         dP2OkF787bBfCbWdAeDjYy+kfCXPckl5jQZgDAJqZbKdS/YwGs/4XrLgMenx0ZCBr5Br
+         KEn/ttMwLPoaiTXy03/S7MUuUdZEqa1zTONU16LgxoEbwueoNBmY+KcTmsdRwMrdEhzp
+         16JXHKNp53gwY5x4t25a2TCAH2ui6uRR8AoIwWvE1m2Gv9upsXUIXwtZzLS2F0IfUkbx
+         Rq7iDyR89EfMGxHBHVh9H/sxv6qlUz9MfXKZGFazJbdjy40GSPPUePYUYHsUKuw9oJfu
+         PqVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727971981; x=1728576781;
+        d=1e100.net; s=20230601; t=1727971982; x=1728576782;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qYDoFr9Rcb4U8qB9JjDnoMu8I4N6v3+THQGXkHPg2F0=;
-        b=cChjgMk8xKQIWe9asyxQc/3SV9qTdQoToprJQ9qhPeC3PE+uMF/j2I1SnOaVNtJyic
-         KB6JQq4DUQ71AT0MZb3QEpGdPQuqauskCWflGEbCYQ91MA5eTR2aHch2CBdKY3QjMfb0
-         SHtTPvjyO0ia2cXFbwSx0FVSnCi2UPcM99Kxiawxbd9qQ10u46NiDd2Pb68mii0WJAMw
-         F2pjM/FsfY0I+/UOJVjyqvNpshNahwc3NWsS9jsGFVG+Cure8wemkyEB1rdmBG6r9JFW
-         Z1zqW/mgBa2XXAijZT3rpY9u9PISWidvGKFIOFk8iyqE9seJ/d6H4opt5YyumlLyHpsg
-         StTw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUHX9P9mGM4V3xw96LYt9VkYjD2j0+LTc4ldFcLDwTcoHeHhQJp1i7CnEsEHJwpQfLzoW9DY/OLAJmh22/@vger.kernel.org, AJvYcCVgyx1TF5ZhgRVV9o1D0SYRKPmDuvnsjKcMU7aH01TXjqsSISU0xJWSlw9CzDN8yx3h916QatHK06A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzWjGBzVuX+YJfZtzDUL+S4NWgHU22LnMw4RNX2roOMgCjpbyFM
-	0ELygm6P0NIfLPjTgy2GpLLlrVFzGUhrDfCGpX7qXwxR6BD8ipcM
-X-Google-Smtp-Source: AGHT+IHeMiyFlC1MxvTcV2ggoC/59dY9QxbRHUK27pt93WfUHzV6urOhFGetVOsNOPjr5bY+y9m+nA==
-X-Received: by 2002:a17:906:db0d:b0:a90:9879:582b with SMTP id a640c23a62f3a-a990a055ac6mr457351766b.14.1727971980458;
-        Thu, 03 Oct 2024 09:13:00 -0700 (PDT)
+        bh=wyb3geUIdOaiHlo8mwWpCyJKar3stgK5wmtiUF5Pomg=;
+        b=aYHMKilrZ6deW/EkR+o0CG4aHx9PjGXrNCBCkaeLll70dkHaeoZKGgIpxTSdm7J28M
+         LJlc8JOaocAF5pHlSVJHYrTRsFg48WF4loGP5iA1kSOJiTFAMqfc9+MAQqXhXiJX34MR
+         1EumShzELV8U819ENHOHxej2FDhrkGHJyF6hzVjam2LlESQplBFAcC+mjz/tunmKSluF
+         Jxj++wnvYw+yqE8gmEjRNAZnh1xkWIB5yrqw2yvPU4BtFbbIOn/iSGSsV/N/51SMMDOU
+         dpWGNW56RNMf093vXxUAgM7CIl+wT2OGCK+YS0y0LIwB2TH54c229xGdCDpXX9tRkWbg
+         MgUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7nOeD4fl6K3R1RamzYZAWCGM4NvXY9IQ03uHNWZK6VaEppGAFA9bmfCqwUCw8tvNFIjrOehE4xZMNhYKO@vger.kernel.org, AJvYcCWiggCsU9yAs4CJcUSzh/JMF9SlgBzGNbo8ZDHDV39hkhm83L0zcj4ESu3l9HifRnQVARU9nwZMm9I=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUgSlOVtFpDWWIDZph+OeRi/WFgXSULdIPzvARfOVObSCnAAfO
+	eh51F4EzOdwlCf5r3ScCV7jCWLCLPJZXnliz7lxq1cUQ2QcmI/pw
+X-Google-Smtp-Source: AGHT+IGfZEdpncoLihfFB8ebzwOnEY+Udb2v0k7UqgH0GTJchQuHmXd0rMuPF5wDpj9ySOR443QKlg==
+X-Received: by 2002:a17:907:7fa5:b0:a90:c411:24e0 with SMTP id a640c23a62f3a-a98f8250998mr675116666b.23.1727971982159;
+        Thu, 03 Oct 2024 09:13:02 -0700 (PDT)
 Received: from [192.168.1.17] (host-79-12-161-203.retail.telecomitalia.it. [79.12.161.203])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99103b314asm102382366b.103.2024.10.03.09.12.58
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99103b314asm102382366b.103.2024.10.03.09.13.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Oct 2024 09:13:00 -0700 (PDT)
+        Thu, 03 Oct 2024 09:13:01 -0700 (PDT)
 From: Antonino Maniscalco <antomani103@gmail.com>
-Date: Thu, 03 Oct 2024 18:12:51 +0200
-Subject: [PATCH v8 02/12] drm/msm/a6xx: Track current_ctx_seqno per ring
+Date: Thu, 03 Oct 2024 18:12:52 +0200
+Subject: [PATCH v8 03/12] drm/msm: Add a `preempt_record_size` field
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241003-preemption-a750-t-v8-2-5c6cb9f256e0@gmail.com>
+Message-Id: <20241003-preemption-a750-t-v8-3-5c6cb9f256e0@gmail.com>
 References: <20241003-preemption-a750-t-v8-0-5c6cb9f256e0@gmail.com>
 In-Reply-To: <20241003-preemption-a750-t-v8-0-5c6cb9f256e0@gmail.com>
 To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
@@ -93,216 +93,79 @@ To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  linux-doc@vger.kernel.org, Antonino Maniscalco <antomani103@gmail.com>, 
+ Akhil P Oommen <quic_akhilpo@quicinc.com>, 
  Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1727971975; l=8467;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1727971975; l=2480;
  i=antomani103@gmail.com; s=20240815; h=from:subject:message-id;
- bh=yIHp38RtvtLDCz+dKB6Vf596mZ26ig0Y5efzj1HIfzs=;
- b=4meiphr9KoscMKIvQ+6FRrwp0DsCf5Bwac0kh9dYNWa+hxu9vhNR25CqTEnkzHvDcEkFZwfdN
- pyCBNbyrXMpD7rW77J7T0YL3a7xlnPgDjcCBmN4kbzVA7PfsbqfD+lz
+ bh=mw98QEzBIwYx44vG8hfTrLa/RurlCEDImHR+oHkKWF4=;
+ b=z+/TNgc/HPX9gfeh5PlsvknjTcGVNf8DSg7n/ZXpQRoD7DYcCFOy5ZKWUWnxKEuLXuL7m92bs
+ 92Sdo8PrHFaCVVaxCYxlJoFortKUOrShPVLahPPteVCI9FpX7tfmpvb
 X-Developer-Key: i=antomani103@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-With preemption it is not enough to track the current_ctx_seqno globally
-as execution might switch between rings.
+Adds a field to `adreno_info` to store the GPU specific preempt record
+size.
 
-This is especially problematic when current_ctx_seqno is used to
-determine whether a page table switch is necessary as it might lead to
-security bugs.
-
-Track current context per ring.
-
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 Tested-by: Rob Clark <robdclark@gmail.com>
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
 Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
 Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
 ---
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c |  2 +-
- drivers/gpu/drm/msm/adreno/a3xx_gpu.c |  2 +-
- drivers/gpu/drm/msm/adreno/a4xx_gpu.c |  2 +-
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c |  6 +++---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++++----
- drivers/gpu/drm/msm/msm_gpu.c         |  2 +-
- drivers/gpu/drm/msm/msm_gpu.h         | 11 -----------
- drivers/gpu/drm/msm/msm_ringbuffer.h  | 10 ++++++++++
- 8 files changed, 23 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c | 4 ++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h   | 1 +
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-index 0dc255ddf5ceba87090f64d5cb9f078b61104063..379a3d346c300f3ccc9e9bd08ef2a32aa3e24ceb 100644
---- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-@@ -22,7 +22,7 @@ static void a2xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
- 			/* ignore if there has not been a ctx switch: */
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-diff --git a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-index 5273dc8498381ce09e878894f4eb56263900be39..945fe64f835cc6094f1880ea20f20584de74a464 100644
---- a/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a3xx_gpu.c
-@@ -40,7 +40,7 @@ static void a3xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
- 			/* ignore if there has not been a ctx switch: */
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-index 8b4cdf95f4453bb76e7efb93d86080ef678c9f68..50c490b492f08a1a7ebfe33b2f206cafd91a84ba 100644
---- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
-@@ -34,7 +34,7 @@ static void a4xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
- 			/* ignore if there has not been a ctx switch: */
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-index c0b5373e90d7139caa023aec6f272545456acb0a..80b441fe8e3a823c5bd1f74cd8c7bb418d0674fb 100644
---- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
-@@ -75,7 +75,7 @@ static void a5xx_submit_in_rb(struct msm_gpu *gpu, struct msm_gem_submit *submit
- 		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-@@ -129,7 +129,7 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	unsigned int i, ibs = 0;
- 
- 	if (IS_ENABLED(CONFIG_DRM_MSM_GPU_SUDO) && submit->in_rb) {
--		gpu->cur_ctx_seqno = 0;
-+		ring->cur_ctx_seqno = 0;
- 		a5xx_submit_in_rb(gpu, submit);
- 		return;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+index 68ba9aed5506ea2f367ff0282a73fdd1122f2526..316f23ca91671d973797f2a5b69344f376707325 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_catalog.c
+@@ -1190,6 +1190,7 @@ static const struct adreno_info a7xx_gpus[] = {
+ 			.protect = &a730_protect,
+ 		},
+ 		.address_space_size = SZ_16G,
++		.preempt_record_size = 2860 * SZ_1K,
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(0x43050a01), /* "C510v2" */
+ 		.family = ADRENO_7XX_GEN2,
+@@ -1209,6 +1210,7 @@ static const struct adreno_info a7xx_gpus[] = {
+ 			.gmu_chipid = 0x7020100,
+ 		},
+ 		.address_space_size = SZ_16G,
++		.preempt_record_size = 4192 * SZ_1K,
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(0x43050c01), /* "C512v2" */
+ 		.family = ADRENO_7XX_GEN2,
+@@ -1227,6 +1229,7 @@ static const struct adreno_info a7xx_gpus[] = {
+ 			.gmu_chipid = 0x7050001,
+ 		},
+ 		.address_space_size = SZ_256G,
++		.preempt_record_size = 4192 * SZ_1K,
+ 	}, {
+ 		.chip_ids = ADRENO_CHIP_IDS(0x43051401), /* "C520v2" */
+ 		.family = ADRENO_7XX_GEN3,
+@@ -1245,6 +1248,7 @@ static const struct adreno_info a7xx_gpus[] = {
+ 			.gmu_chipid = 0x7090100,
+ 		},
+ 		.address_space_size = SZ_16G,
++		.preempt_record_size = 3572 * SZ_1K,
  	}
-@@ -164,7 +164,7 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 32a4faa93d7f072ea6b8d949f4dc9d2a58cec6b9..6e065500b64d6d95599d89c33e6703c92f210047 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -109,7 +109,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
- 	u32 asid;
- 	u64 memptr = rbmemptr(ring, ttbr0);
- 
--	if (ctx->seqno == a6xx_gpu->base.base.cur_ctx_seqno)
-+	if (ctx->seqno == ring->cur_ctx_seqno)
- 		return;
- 
- 	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
-@@ -219,7 +219,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-@@ -305,7 +305,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 		case MSM_SUBMIT_CMD_IB_TARGET_BUF:
- 			break;
- 		case MSM_SUBMIT_CMD_CTX_RESTORE_BUF:
--			if (gpu->cur_ctx_seqno == submit->queue->ctx->seqno)
-+			if (ring->cur_ctx_seqno == submit->queue->ctx->seqno)
- 				break;
- 			fallthrough;
- 		case MSM_SUBMIT_CMD_BUF:
-@@ -843,6 +843,7 @@ static int hw_init(struct msm_gpu *gpu)
- 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
- 	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
- 	u64 gmem_range_min;
-+	unsigned int i;
- 	int ret;
- 
- 	if (!adreno_has_gmu_wrapper(adreno_gpu)) {
-@@ -1138,7 +1139,8 @@ static int hw_init(struct msm_gpu *gpu)
- 	/* Always come up on rb 0 */
- 	a6xx_gpu->cur_ring = gpu->rb[0];
- 
--	gpu->cur_ctx_seqno = 0;
-+	for (i = 0; i < gpu->nr_rings; i++)
-+		gpu->rb[i]->cur_ctx_seqno = 0;
- 
- 	/* Enable the SQE_to start the CP engine */
- 	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 1);
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 3666b42b4ecd7f91b24302d7f229eeefdc3c39b7..c063b3896dc1c193e41b8fc380a91a9076376811 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -783,7 +783,7 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	mutex_unlock(&gpu->active_lock);
- 
- 	gpu->funcs->submit(gpu, submit);
--	gpu->cur_ctx_seqno = submit->queue->ctx->seqno;
-+	submit->ring->cur_ctx_seqno = submit->queue->ctx->seqno;
- 
- 	pm_runtime_put(&gpu->pdev->dev);
- 	hangcheck_timer_reset(gpu);
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 1f02bb9956be2720a2760646ccdf92f8bead7dd0..7cabc8480d7c5461ab8d8726fcc21690cbaf7366 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -193,17 +193,6 @@ struct msm_gpu {
+ };
+ DECLARE_ADRENO_GPULIST(a7xx);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 1ab523a163a00b333a85b099e9eb9209e6a2e646..6b1888280a83e6288c4b071733d5d6097afe3a99 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -111,6 +111,7 @@ struct adreno_info {
+ 	 * {SHRT_MAX, 0} sentinal.
  	 */
- 	refcount_t sysprof_active;
- 
--	/**
--	 * cur_ctx_seqno:
--	 *
--	 * The ctx->seqno value of the last context to submit rendering,
--	 * and the one with current pgtables installed (for generations
--	 * that support per-context pgtables).  Tracked by seqno rather
--	 * than pointer value to avoid dangling pointers, and cases where
--	 * a ctx can be freed and a new one created with the same address.
--	 */
--	int cur_ctx_seqno;
--
- 	/**
- 	 * lock:
- 	 *
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.h b/drivers/gpu/drm/msm/msm_ringbuffer.h
-index 40791b2ade46ef0e16e2a4088291a575d3be9e82..174f83137a49940ec80b1fbf548e214fa3c32784 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.h
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.h
-@@ -100,6 +100,16 @@ struct msm_ringbuffer {
- 	 * preemption.  Can be aquired from irq context.
- 	 */
- 	spinlock_t preempt_lock;
-+
-+	/**
-+	 * cur_ctx_seqno:
-+	 *
-+	 * The ctx->seqno value of the last context to submit to this ring
-+	 * Tracked by seqno rather than pointer value to avoid dangling
-+	 * pointers, and cases where a ctx can be freed and a new one created
-+	 * with the same address.
-+	 */
-+	int cur_ctx_seqno;
+ 	struct adreno_speedbin *speedbins;
++	u64 preempt_record_size;
  };
  
- struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
+ #define ADRENO_CHIP_IDS(tbl...) (uint32_t[]) { tbl, 0 }
 
 -- 
 2.46.1
