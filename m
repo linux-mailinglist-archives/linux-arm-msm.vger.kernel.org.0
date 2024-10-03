@@ -1,104 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-33012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F08298EE16
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 13:26:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8BFBD98EE3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 13:34:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B64C3B228C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 11:26:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BDDB21C20DF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 11:34:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E320C15443C;
-	Thu,  3 Oct 2024 11:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 968D41547ED;
+	Thu,  3 Oct 2024 11:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WwYXdwJa"
+	dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b="QThd4GeQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.ispras.ru (mail.ispras.ru [83.149.199.84])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C2C15382E
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 11:26:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EBC154BEA;
+	Thu,  3 Oct 2024 11:34:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.149.199.84
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727954775; cv=none; b=c6N0FbFMZYMF8Vx2YBtGKqNLzf/96X9JtyUDYyZeJ5xg6lpzlPg2Y34+T7ANip5FY+5Zsq6VPimgkcfZgQ9yMaBF2r5IP2Fwac3kH1l4TulB+wU8ORuyJjEa7wr11X6S/4caae6O1JDRgmLsIu6iMgerM+TMuY7WMZf3iqGMHew=
+	t=1727955267; cv=none; b=TClgb5CzsR/5WMs3beLXZetzXN3ni618gE5hbY2lIRBY0RjsABNzJfNH40/TaL8MHk59e8D1rkmfvGKYaA2ZtDYjN5Ccdk/13ZKL1CFzb8RMK7L7FpDdXZJsv/BbMa1LFz7xudRRGZwApJyfOl3u9YjPJBcWhuzNuKVElvssZCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727954775; c=relaxed/simple;
-	bh=NbODAL29Apvfd6D+JLLYZ5MaHuTJ5svZVOh57sb0hqM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i4O72SyDeVnSgQIB0FZ87mMn2fIdalAyJy+B14uWiOO0afkomxTQ1SkQsFZgadHy/Hd0KyT/RGCcI+VKSPGSxkbvi+HYsDqTR+fgR5yNJareH3jFPL/G+Hs12C9o1LQiOaUtq++V9tz5DJj4tnPWjuLL8h6ssxzC2r+d7DQ5X5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=WwYXdwJa; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5389e24a4d1so915154e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 04:26:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1727954772; x=1728559572; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rlLLunCl6g3gRP7KC52BE84aGo81PObxe/Q5X6ID2V0=;
-        b=WwYXdwJaIlkmeWiuoKrm2W+/77BSIhaCD8dXab51z1H+dNngu816ymTjEfiog+Ej7c
-         gehfcCH962joeC1Yl5jGLPCjdshs4tBqS9tt2VS7tVkTfn3vLscSS1d/7tb8ScPm8TeP
-         TCIykmJfjrtDPH/HZv1cGpPoL/9kwvD20ABSVaFTE1A6azwG1UQruPJJ/TrCx5MPn81D
-         CNV+TasdHwiiX1/ozE3iRA1HinCYDhxM3tnO1145ELge0+KEZ7l6tQVwTYS19v/GwW6S
-         KtEKI4ycnX5kuRmfMluRo0patCV5ObgPTptyFHjzMO6mvQJIJerbSpinmFGn1GYGeB3M
-         OjSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727954772; x=1728559572;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rlLLunCl6g3gRP7KC52BE84aGo81PObxe/Q5X6ID2V0=;
-        b=W4xzC9TeihiyBWveequNEocn61DBXivLChZ0SR+MeRNVT3noc63ZJoBo1UsvA9Zjld
-         jZcmxcC3wT0mEbOcBX4XNXmHpNXHVK4INSs0qnNdatQ9EkHea63M2z3AZkceUz/mhDru
-         CPM0eCe628o0xEVWn6AL/wIQ26PyRxeIFldrJUs9j/2HHpsIqrcMGgHI/FT0TjgKfcse
-         YhQtHB0dhNGO4TfcpifJcrSpZRwd/xE6Xk4gRnPr2dUkIKtXUXR5SAIEWU2cLwN7UPIp
-         4Xeu5C623R0AAq2RhWQrqnUpCmZ54LQpLt8TCrZSpZJkqYR+wQ9eU8voVp66GpmM3i1w
-         D6fQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU/HrdZ2jMFtTwwh1q2UP980uCWW21oxhBzT+HTqlwLKU2O/AF2ISAFhaGRr3x1zmUGnZ4FBBE2qWXsUBQV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzw1fJbsQ/oJH+hwZdHui2HTpfRgEeAtob6Z0rVfl8Nal158DyO
-	t4YN+LoTjp9P3QKk994u8H7I6Dq6suwNCDhtkfg+Kfg80doySp/wwhrNCoGbYNJKeRSWmq2LLei
-	TnVWK5V0jqHVMfSmm027k0IV2bdDk0qKcBNlz2Q==
-X-Google-Smtp-Source: AGHT+IH/EAovmZOtegJhqaVGARHaDU2Egf6EGNvaVpuGE/EmHaXFwEn8LjOg/kYa13GbfjvlQCAqo0kemX+JkhA3oYk=
-X-Received: by 2002:a05:6512:2216:b0:539:9587:dec7 with SMTP id
- 2adb3069b0e04-539a06827ebmr3801825e87.32.1727954771954; Thu, 03 Oct 2024
- 04:26:11 -0700 (PDT)
+	s=arc-20240116; t=1727955267; c=relaxed/simple;
+	bh=lytAF6G7+96t/NGlepWrahjP5r+Dzd+z5hWk2x/EpQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J4GGsw8zvFbTM3lwEd45caoQv8SjM+rIouYpyVbanEuIXtLjOFC1psDcdTs6TtYeBRXw0r4ZTxl3rfC8bROr/Q8jYOwUMM9KmYoO35iUhSGtm6WCCfd/j6ESzWucqt4/HYjJZQ5/X7OOg1xtcR/tJmKRgfmeblsGFJ3vbcLFMjU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru; spf=pass smtp.mailfrom=ispras.ru; dkim=pass (1024-bit key) header.d=ispras.ru header.i=@ispras.ru header.b=QThd4GeQ; arc=none smtp.client-ip=83.149.199.84
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ispras.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ispras.ru
+Received: from fpc (unknown [10.10.165.16])
+	by mail.ispras.ru (Postfix) with ESMTPSA id 895B840B2793;
+	Thu,  3 Oct 2024 11:34:16 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 895B840B2793
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+	s=default; t=1727955256;
+	bh=6xbHfOn/c+B3eQcY8hfAnIh4MQcoqrJCreQsyDmFveo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QThd4GeQjUw2J/0A7AIVrid/DjVOuRS/xg8RDRFkcYwz7iTbQCBo8QvzoXQwLSltz
+	 qLFC6jEgisILQd6WGe5ADyiAV7vp4nmMGdhkg1FdT7Jb2Dp4ApDUpj8k2AE2pYp02i
+	 RsblUiyW1SWJ0WU5cB1O/LyyVWuXR5YiHIUflPZ4=
+Date: Thu, 3 Oct 2024 14:34:12 +0300
+From: Fedor Pchelkin <pchelkin@ispras.ru>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Sujeev Dias <sdias@codeaurora.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Siddartha Mohanadoss <smohanad@codeaurora.org>, mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	lvc-project@linuxtesting.org, stable@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: host: free buffer on error in
+ mhi_alloc_bhie_table
+Message-ID: <20241003-32e517bde58c5f895164efa7-pchelkin@ispras.ru>
+References: <20240207134005.7515-1-pchelkin@ispras.ru>
+ <883d5c25-e607-bfe7-1fc1-cad86e828be6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240930103041.49229-1-brgl@bgdev.pl> <20240930103041.49229-2-brgl@bgdev.pl>
- <Zv50l7U_Rq91I1Dw@hovoldconsulting.com>
-In-Reply-To: <Zv50l7U_Rq91I1Dw@hovoldconsulting.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Thu, 3 Oct 2024 13:26:00 +0200
-Message-ID: <CAMRc=Mf=5H46Rn_zfQjaG_mvyJ4cx2VKOVZxtGuqnA4whSSeGA@mail.gmail.com>
-Subject: Re: [PATCH v4 1/3] arm64: dts: qcom: sc8280xp-crd: model the PMU of
- the on-board wcn6855
-To: Johan Hovold <johan@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kalle Valo <kvalo@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <883d5c25-e607-bfe7-1fc1-cad86e828be6@quicinc.com>
 
-On Thu, Oct 3, 2024 at 12:40=E2=80=AFPM Johan Hovold <johan@kernel.org> wro=
-te:
->
-> > +
-> > +             qcom,ath11k-calibration-variant =3D "QC_8280XP_CRD";
->
-> Not "SC8280XP"?
->
+On Wed, 07. Feb 11:09, Jeffrey Hugo wrote:
+> On 2/7/2024 6:40 AM, Fedor Pchelkin wrote:
+> > img_info->mhi_buf should be freed on error path in mhi_alloc_bhie_table().
+> > This error case is rare but still needs to be fixed.
+> > 
+> > Found by Linux Verification Center (linuxtesting.org).
+> > 
+> > Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+> > Cc: stable@vger.kernel.org
+> > Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+> 
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-This was agreed with Kalle under the previous version.
+Seems the patch is still not applied.
 
-Bart
+A gentle ping.
+
+Thanks!
 
