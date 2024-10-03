@@ -1,81 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-32985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE31F98E954
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 07:18:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7FF5298E95A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 07:26:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBBB11C21D3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 05:18:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9800E1C20BAE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 05:26:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3332D36126;
-	Thu,  3 Oct 2024 05:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D165D40879;
+	Thu,  3 Oct 2024 05:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dzyehmA5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cgo0caG9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1F13C488
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 05:18:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307D73EA83
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 05:26:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727932702; cv=none; b=Fk0DPHrksFog0BDg8diuM3rQ37VtTYJGPlaqjY7s20bNA7mHtvnxtT2yaTXbxCBaK9FsTk3FPeQI+y/HgABKuy4eoWaI1iyjvmcPJzg4YuXn3FT2OpXEobUoPo+98uZ+p9MXN3A9OdCqDPDlTZYRkWtI+qIkuvYMm/QPGBXX/80=
+	t=1727933179; cv=none; b=dsEn51stdHs6Xw5K5RXoig7tDMij08UaQkezjaSUDTHfDP1pfN1tmy4GzQbTjT9nA7j9HyTOn/dxC32Sq8Ya5ht5R7CN5BHP3lWQjPuHu4S/DtdO44h7rV68wo8e3xFm2PegF4d1P7zVcbZPZjj2cTeeZ4rmYvI9BwZ6fO7hgJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727932702; c=relaxed/simple;
-	bh=p9cTNf+ce+MkFrpLZLlHEwPklnOHGHnSpCKPYrEmLd8=;
+	s=arc-20240116; t=1727933179; c=relaxed/simple;
+	bh=sszam0YJeq9hUJhsVD5JKzOxSjLqkB4+aZQNF4yGZU0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P0uf3bMbz5aljFlxa/QZsjqQJpFhxZBCDHMYondTbZGJiizdz+zRHBpft/biiWKPjVYwQqCcT9Q3TnU7CBTtf5E+TOYK5V6I1iqVXH8fIyBQuw1NmxdJ61F+J87HGQ8FhOOp1pjZm5Ivj0jqHuEg9WRE1ANkcY4VbIP+U2XIkQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dzyehmA5; arc=none smtp.client-ip=209.85.210.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=DL11uozI3fYyiYyRAV3wbHQ6Qu/+05z3UyVJ30MrNB+EMCVBrDU6uDnX/yfWSdPO30Kpmw9codT/6fofZHKh9T86OCr5PK9mGSfXKzZAML/BMEiCZNH6cMAzSr45jYRVCPerb0oW/Mh+ey0pGKy3i+PBxmwblNPKoV68pkWifGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Cgo0caG9; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-71970655611so593572b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 22:18:20 -0700 (PDT)
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-20bcae5e482so4327795ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 22:26:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727932700; x=1728537500; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1727933177; x=1728537977; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=La8UkmMy64RUqJRJKCrBaEEk9eBf956ZjgLNFqjYKFk=;
-        b=dzyehmA5+wCV3EgfoJnjZh+SLN3nBVRFArPMo5YrAz/KFeaZYPYE/FBuXBZcUitzP0
-         1uj2UEOCcix0M8lZNH1iIY1ZiR0sVxVW9qFdtEcoo1DkPhSxVEtFKySYtNWIR2KiebrO
-         c4XE0MVN1LAVbBVZkfgf6wEr0200RJMtn+3Nv6HP7PowydGoz66p3+WFj/I7HCD5+KG/
-         8dLvyUG2sR4AOhFUv2VVNsbtQvFs+eYL8wvxxX3vx8dTWTrA95cd94X6Honlx5Vg5f3r
-         k4Aia8WWvrf8V5HQO12isqm0Tk84TF6NZtke0B/rbhedWdukS6MjgNr9JCwmRbFQmkA7
-         srhw==
+        bh=oR5QvxRn7I4F+X0gW6UsQkOXeRecGwMqfBoqqmAEfrA=;
+        b=Cgo0caG9ZjDYK2iEoxEsPqyj+eLv0pJC+Vi3A59SfHQD/CstoRRa+KYEbXU1A0elA0
+         XRqbhZGvK+hAfyeP6b+TLW65jbDIxwGZqy6Ed3dnZNGBO3UmMePk90cFWSshDb390jlN
+         x3Y7S6BKbthdEtyLMGLmSBQBgr915vU75DBoU+xW7+UWL5qZ2iQL85wcrn8yjrHMm1Ls
+         yZwjDxGnvqP9oK7yZ8bmd5k84/HJ+hf/4E7BMM0NxYdYjuHSqLMforBnFfUMgHZ4tUMt
+         ApuGYlOxe5HtGaKPNKV2gjHO322bDI39XGWa+c0h0k0C+BHSIuJ6uoezEDXwpgjOQ+Si
+         oKvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727932700; x=1728537500;
+        d=1e100.net; s=20230601; t=1727933177; x=1728537977;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=La8UkmMy64RUqJRJKCrBaEEk9eBf956ZjgLNFqjYKFk=;
-        b=pw8dM7NzVynFzAp3NfmIwvhx+beQj9B+l2gRJqD6mtu/u6FeuwlbOij2fYwowtCKnA
-         vjP8CMA37b3kAUHBzZIemQGO7lDdfPR+2QAFRNdIWO1Jzem5hGNJuwFJMxlaOEa545+W
-         hjU590LKBYjs+6KflJ5I6vinzGl9vddKrAAxdXOSm1nGf6rRN7qzxI+VOlmfuknRno1R
-         aa4/0vlaVq8a5cE5cbmkdxVDylV1ZjAWSp4Sr27cNUdUX1H2xvvo/Eu8am3RrlgqGnbw
-         UM5hWIiNHsJEzXnxf88Fr61NJ3Wcji4dFbTPwGh5wEZtyxhPWf1FuM1G8S1BUPqfltUP
-         TsQA==
-X-Forwarded-Encrypted: i=1; AJvYcCWn6WQkfkWSDAJV3o5nViBCEa4R/sRTedUT1+Ilx9uM5HfhE05u6Bz7q3ps9HYW0TZoBV7KEojK8nk54vna@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw90xp1qGGeVFP51NlSWH0QAF0xjJT/j2PNG1hpM45mZE3qOokU
-	cCs3lPT1EfU1RYhymY9yoTtzdjz2LdlznUJJJv6EFah5W5Yw5hF9cHPCRsU84n/iX72lqt1J4JU
-	=
-X-Google-Smtp-Source: AGHT+IFZIWorr/HQ8QCSrVUvOBlny0PGSXcekwxov0MUHcurUi3xP8jMoZMLLkGa/k/YVOcbFt4CIA==
-X-Received: by 2002:a05:6a00:181c:b0:70d:2892:402b with SMTP id d2e1a72fcca58-71dc5c66d09mr9998786b3a.7.1727932699794;
-        Wed, 02 Oct 2024 22:18:19 -0700 (PDT)
+        bh=oR5QvxRn7I4F+X0gW6UsQkOXeRecGwMqfBoqqmAEfrA=;
+        b=pBJTaOUMhevZP+RueA9zZnX15PX6EIZjlwOVmXRWZPaFhk4XqLzPji7IKieWXs5364
+         /9QMpl4KxkSrm3A0NlVJu8png8fpDhdYCMxpiwr81wQZEAD++dKVsfdklGXuJwnGwsA5
+         BLOtGAdRU8FvoNzrt0f0WVfSWmiFrsH7SMaheb5kd62Mfc9YmWkcT43yowWHUGNiJVi0
+         8dc6gk6gkd8Nto95SpNOPscifqSfOV1laxzfUG6r54hacBpzs7/TbiOxOjWsKqla1hGs
+         Kbwtu+EW4ou+WMrCVNVr2Kfg2MIrjA5mAdtih9kz+gCBkW4peSqzIz9KNFNu5DbQesEo
+         VeJw==
+X-Forwarded-Encrypted: i=1; AJvYcCWNPTj6+A+CfxtUpyq+iJBU8e5dVTU3AonKY6UlACj4VkrIge7lBZRFa/RL0Hf7owwYgnqcdE6qT8yUVA8+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzagA3WiDEvfyIL8MT8iOCFungHUCa465CqW56scatMP2oKR+iN
+	BlP2DAqgH5ybokzn3cUtgU0bA3r7dshOtALb8sE8bRAMpPdsUkyGUSettmC9wg==
+X-Google-Smtp-Source: AGHT+IHEB1f8pGBuMcmPniimBQ09DleIhVDkzWJXmfPcSVMS6VW9PbLiP5upj1emW3YT7FrlKFEBug==
+X-Received: by 2002:a17:903:2451:b0:20b:983c:f0a0 with SMTP id d9443c01a7336-20bc59fc2f7mr71658925ad.31.1727933177496;
+        Wed, 02 Oct 2024 22:26:17 -0700 (PDT)
 Received: from thinkpad ([36.255.17.222])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71dd9d8c2b9sm444447b3a.79.2024.10.02.22.18.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20beead255asm2102975ad.15.2024.10.02.22.26.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 22:18:19 -0700 (PDT)
-Date: Thu, 3 Oct 2024 10:48:16 +0530
+        Wed, 02 Oct 2024 22:26:17 -0700 (PDT)
+Date: Thu, 3 Oct 2024 10:56:12 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Yan Zhen <yanzhen@vivo.com>
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, opensource.kernel@vivo.com
-Subject: Re: [PATCH v1] bus: mhi: host: Fix typos in the comments
-Message-ID: <20241003051816.lnx6qo5fm43ljygt@thinkpad>
-References: <20240929090334.524543-1-yanzhen@vivo.com>
+To: Vivek Pernamitta <quic_vpernami@quicinc.com>
+Cc: mhi@lists.linux.dev, quic_qianyu@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_krichai@quicinc.com, quic_skananth@quicinc.com,
+	mrana@quicinc.com, Slark Xiao <slark_xiao@163.com>,
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	Mank Wang <mank.wang@netprisma.us>,
+	"open list:MHI BUS" <linux-arm-msm@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for QDU100
+ device
+Message-ID: <20241003052612.o5lbgw274yopmpx6@thinkpad>
+References: <20241001113738.152467-1-quic_vpernami@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,60 +90,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240929090334.524543-1-yanzhen@vivo.com>
+In-Reply-To: <20241001113738.152467-1-quic_vpernami@quicinc.com>
 
-On Sun, Sep 29, 2024 at 05:03:34PM +0800, Yan Zhen wrote:
-> Correctly spelled comments make it easier for the reader to understand
-> the code.
+On Tue, Oct 01, 2024 at 05:07:35PM +0530, Vivek Pernamitta wrote:
+> Add MHI controller configuration for QDU100 device.
 > 
-> Fix typos:
-> 'Normaly' ==> 'Normally',
-> 'gurantee' ==> 'guarantee',
-> 'guranteed' ==> 'guaranteed'.
+> This Qualcomm QDU100 device is inline accelerator card
+> which is an extension to QRU100 5G RAN platform.
+> which is designed to simplify 5G deployments by offering
+> a turnkey solution for ease of deployment with O-RAN
+> fronthaul and 5G NR layer 1 High (L1 High) processing,
+> and to accelerate operator and infrastructure vendor
+> adoption of virtualized RAN platforms.
 > 
-> Signed-off-by: Yan Zhen <yanzhen@vivo.com>
+> https://docs.qualcomm.com/bundle/publicresource/87-79371-1_REV_A_Qualcomm_X100_5G_RAN_Accelerator_Card_Product_Brief.pdf
+> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 49 ++++++++++++++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9938bb034c1c..1153697fa858 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -245,6 +245,52 @@ struct mhi_pci_dev_info {
+>  		.channel = ch_num,		\
+>  	}
+>  
+> +static const struct mhi_channel_config modem_qcom_qdu100_mhi_channels[] = {
+> +	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 2),
+> +	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 2),
+> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 128, 1),
+> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 128, 1),
+> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 3),
+> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 3),
+> +	MHI_CHANNEL_CONFIG_UL(9, "QDSS", 64, 3),
+> +	MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 4),
+> +	MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 4),
+> +	MHI_CHANNEL_CONFIG_UL(16, "CSM_CTRL", 32, 4),
+> +	MHI_CHANNEL_CONFIG_DL(17, "CSM_CTRL", 32, 4),
+> +	MHI_CHANNEL_CONFIG_UL(40, "MHI_PHC", 32, 4),
+> +	MHI_CHANNEL_CONFIG_DL(41, "MHI_PHC", 32, 4),
+> +	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 256, 5),
+> +	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 256, 5),
+> +	MHI_CHANNEL_CONFIG_UL(48, "IP_SW1", 256, 6),
+> +	MHI_CHANNEL_CONFIG_DL(49, "IP_SW1", 256, 6),
+> +	MHI_CHANNEL_CONFIG_UL(50, "IP_SW2", 256, 7),
+> +	MHI_CHANNEL_CONFIG_DL(51, "IP_SW2", 256, 7),
 
-Applied to mhi-next!
+I believe you are going to add support for these channels in mhi_net driver. If
+so, it would be good to mention that in the commit message as these channels
+won't be useable for now.
+
+> +};
+> +
+> +static struct mhi_event_config modem_qcom_qdu100_mhi_events[] = {
+> +	/* first ring is control+data ring */
+> +	MHI_EVENT_CONFIG_CTRL(0, 64),
+> +	/* SAHARA dedicated event ring */
+> +	MHI_EVENT_CONFIG_SW_DATA(1, 256),
+> +	/* Software channels dedicated event ring */
+> +	MHI_EVENT_CONFIG_SW_DATA(2, 64),
+> +	MHI_EVENT_CONFIG_SW_DATA(3, 256),
+> +	MHI_EVENT_CONFIG_SW_DATA(4, 256),
+> +	/* Software IP channels dedicated event ring */
+> +	MHI_EVENT_CONFIG_SW_DATA(5, 512),
+> +	MHI_EVENT_CONFIG_SW_DATA(6, 512),
+> +	MHI_EVENT_CONFIG_SW_DATA(7, 512),
+> +};
+> +
+> +static const struct mhi_controller_config modem_qcom_qdu100_mhi_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 120000,
+> +	.num_channels = ARRAY_SIZE(modem_qcom_qdu100_mhi_channels),
+> +	.ch_cfg = modem_qcom_qdu100_mhi_channels,
+> +	.num_events = ARRAY_SIZE(modem_qcom_qdu100_mhi_events),
+> +	.event_cfg = modem_qcom_qdu100_mhi_events,
+> +};
+> +
+
+Where is the 'mhi_pci_dev_info' struct?
+
+>  static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+>  	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
+>  	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
+> @@ -822,6 +868,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* NETPRISMA FCUN69 (SDX6X) */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
+>  		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
+> +	/* QDU100, x100-DU */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0601),
+> +		.driver_data = (kernel_ulong_t)&modem_qcom_qdu100_mhi_config },
+
+Why are you passing 'mhi_controller_config' instead of 'mhi_pci_dev_info'?
 
 - Mani
-
-> ---
->  drivers/bus/mhi/host/boot.c     | 4 ++--
->  drivers/bus/mhi/host/internal.h | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
-> index dedd29ca8db3..e8c92972f9df 100644
-> --- a/drivers/bus/mhi/host/boot.c
-> +++ b/drivers/bus/mhi/host/boot.c
-> @@ -82,9 +82,9 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
->  	 * other cores to shutdown while we're collecting RDDM buffer. After
->  	 * returning from this function, we expect the device to reset.
->  	 *
-> -	 * Normaly, we read/write pm_state only after grabbing the
-> +	 * Normally, we read/write pm_state only after grabbing the
->  	 * pm_lock, since we're in a panic, skipping it. Also there is no
-> -	 * gurantee that this state change would take effect since
-> +	 * guarantee that this state change would take effect since
->  	 * we're setting it w/o grabbing pm_lock
->  	 */
->  	mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index d057e877932e..3134f111be35 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -255,7 +255,7 @@ struct mhi_chan {
->  	/*
->  	 * Important: When consuming, increment tre_ring first and when
->  	 * releasing, decrement buf_ring first. If tre_ring has space, buf_ring
-> -	 * is guranteed to have space so we do not need to check both rings.
-> +	 * is guaranteed to have space so we do not need to check both rings.
->  	 */
->  	struct mhi_ring buf_ring;
->  	struct mhi_ring tre_ring;
-> -- 
-> 2.34.1
-> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
