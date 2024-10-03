@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-33003-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E66ED98EB42
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 10:15:52 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 935B298EB47
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 10:16:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB2EE28643C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 08:15:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 109A6B21D7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 08:16:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B6BE1487CE;
-	Thu,  3 Oct 2024 08:14:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 936F4149DFF;
+	Thu,  3 Oct 2024 08:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d102nr0h"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LiEQ4yku"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B0614601C
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 08:14:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51961482E8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 08:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727943281; cv=none; b=T/rVMl7Zsmmdl/xHEDbkj32LOnExrcV8u/qULEvK1txLVloA8s+U33K/W3Nh+SnAziOT1rDptoU6Vi6S7ciETkDVCgSt5D95NCCq8mmDLvEEc67WxGOulEcbOZmJs009BT8duZIfLvgfrjsbEJZxsiPFP5PNPxbUwy1NdsD/dhY=
+	t=1727943283; cv=none; b=mapjLfC5OV0PaARi4Lt2hefsFMpnCAtuj63LXi9jQUkM+kB/bqMODLOY15EstveXUWC7kix6My1E3pgPJANfDnMqxcS0rVj4yFOifcmYbldwBXCRrtFM5YNb6Ttd5oKmSVttwXKWMWl66Xtw6sdqDlRKJKh6SS59KSO4yBoA5uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727943281; c=relaxed/simple;
-	bh=AKhgP7q0GaIQSUQKoHkiCv6d3dwP2bPLVjVUtecZON0=;
+	s=arc-20240116; t=1727943283; c=relaxed/simple;
+	bh=519873eizrz1N27nvT3FmdiGwc5SoCwK9tJ1LGTJkmw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UhaYwjBIYEx5TNri+0CZeWwUBcIWmtVoSUdzfFI3YPmiwYgrFEOSU2a9jDrCqRKYSNoSctbVtdUWh8FBsF33bQSXX7zRmkWRlpwh4ggxeKAO5bDjegUbeTluXdVV7UmnPNpNho1ABUgzYdNl26F92+cWE+GPrVdpFK4faESIfaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d102nr0h; arc=none smtp.client-ip=209.85.128.48
+	 In-Reply-To:To:Cc; b=g37zDNKVv6ORcAdHkQpn72JJImVPUE81/LtQzaIojUJ0lK3OU8eVNolmAJ72kBp86LoAvVq43NOlMk/qG5OOK2qeNgAMEtQtfyGdVeJoe48xJh9TEiOrkVPvD/ZK/27jLEuwAWL9zJaJLwfa9rN0xZg+cJ04vngvAkHVUHd3Uh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LiEQ4yku; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42cb1866c8fso815785e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 01:14:38 -0700 (PDT)
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-42cb3c6c353so1113335e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 03 Oct 2024 01:14:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727943277; x=1728548077; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1727943279; x=1728548079; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ArBelTC9NYknk17YOAC0+lV31yeITIe1wOVojgMQpJ4=;
-        b=d102nr0hk8HMMrfif43TAV7maBp1Z8Wd1Tvgu6by5XAkRZeYR1EDAJ/SW8KYNtYSxb
-         i/8Dwxul6Quk9yZqFeuOIrH7u5ocOLVTs1zDZqALcy41miLGd1bjAwSlEutoUvz9vecr
-         2ajmVb4v+twQkH6lQzhJzRQLGOnLabji+OOxyGKpy+AEpVE7WATlGGG8o3nW/7WWE3d7
-         gk8eC5mldzNlyY6U3KzF4AWyOMIu51ecxq2juqDHBwTnJSuODPDDDQBNgGlTQES3bP4g
-         kTe1Ya95ALqTS98arkXm0t3qsVmKEVIbxzF4PtCstucOAi+97HkJlt0Nl+PpgL9Ildl2
-         mnTA==
+        bh=1rwyEFJ4idpDb4iBRYg6Jk2ZQkdCcSf0YAokuJ1SzVA=;
+        b=LiEQ4ykuQNx2cZVv573Lu5sf9QbKUZ9BwUkMMgBNzAJmbS+nFUgEBL1nrWNKIq5YvK
+         5zyjiitEhXSj396yD1Rzf95g1UIMhF1Wk9hrtrpPNUsxTpMqpgHRmbDoNSM5Kimj+hC6
+         M5JfQNBsL+kePcuFqFSVCBKEYnnyrCKxbuMwYuTM3f40E28lSD4JVfD/gYYPtLEMU0w3
+         OpX/vG/eyajtxypSHaY7mpvU9fkdHTbs8XPq4F6OuSPTSN68lHYCita7QDRZRC15l6o5
+         RvZ//Nohc+uBZLmUP4l9ZMNl7WAqv3niVMqAH4dklPBSSGkicfgA/MhysDKTbWlxtukO
+         WSfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727943277; x=1728548077;
+        d=1e100.net; s=20230601; t=1727943279; x=1728548079;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ArBelTC9NYknk17YOAC0+lV31yeITIe1wOVojgMQpJ4=;
-        b=qWcnpr7mDZuwJmmxPJk30NM7ZzMpc3OlEbFrw2ArYMzzT3Yx1/GFaijNoYYQ97nKhb
-         QwRB4FylDV70+/9xVXWLR2ToV3Fu6vB5SyjpcCcIUxql5XgAZy/V5lMNW4Tt2Xdo2yRm
-         fE+tzycwQK+sVe7ccTJ/zhkMMx5hVj4s4XfIl/Tvsu39EnFbm+Qb0RQgY3mI85QdiaAN
-         B1SwJbzoqvLgxSS0zOP9HFKxD9waDQe1xfrHxExk4gYjZ67+eNwbiLtgrUZVqzNtp3j6
-         i86Bh4LppLRnMF2uoPpfhjmR6x/Or2IikIYawe2bpdGC/OCE1SBf1CkB9vO8xMTqlcL5
-         bqYw==
-X-Gm-Message-State: AOJu0YwXPKqyHG7bBEHrMH/0MeDw6xczk5l9w6EBnCnX4FScpf13jhO8
-	jfzEacHdguCjttxZx2cx/IBUG24SGlq6oqPwR7MxLuFfGaBQwEP4d2XzOAaQMzI=
-X-Google-Smtp-Source: AGHT+IEZZ9yqPRpUkj59+2e4tzhm/Y9ZxH9ngz6j0TXb/L0/Y1YM9lMtfkVQV3nVzkU4l8hHAEAmAg==
-X-Received: by 2002:a05:600c:1393:b0:42c:ba61:d20b with SMTP id 5b1f17b1804b1-42f790970b6mr19964015e9.3.1727943277392;
-        Thu, 03 Oct 2024 01:14:37 -0700 (PDT)
+        bh=1rwyEFJ4idpDb4iBRYg6Jk2ZQkdCcSf0YAokuJ1SzVA=;
+        b=ThD3VBL9SGgqBKdkQg0vqyDE5Rzj7ZvkRQ5wKm5+0485TiTn6LSnpM98TuJ6w+wDO2
+         6WsW7sMll/7Wkf/T0Wz82w59/nYJ4ou7NNonNXiC49hylml/Or+MyAsbLCLyNQucU6fO
+         DhUL8jF7kBaz9WYT1jxZ+uEJjoot3eBNmbmPRIeq3o+ySaVJJrOuo4iDSug2nqrWByc2
+         nNBGuQr3B5KfeL1V8colng8MbHFNyMmlY/gmTsD+Bi/ECklc2zJjGPUybkljmv9IwSt1
+         OGjlTDrsb4CwW44wGVneyRO4cPKWgY4XSMgKQTzPAKucIBuDW3jkvQjOpjYXn7a6dDKx
+         b0hQ==
+X-Gm-Message-State: AOJu0Yy8vjDQwyLPdSj7ODRpgrkwzEFWC00fbMEsIkRJBjQphg4/71k6
+	VN7PCkm/Io7ZfohYu1knL1SP6FG5v8Qd6acnk1b7ngALEm8WI/4OZejyds8icIU=
+X-Google-Smtp-Source: AGHT+IGM0q7njLtYkyHsjlENSHcXM/bNjMhqikyJ3G8Gq5rle1uFsdl97+lU80Xh3CPM0h4uTp3hpA==
+X-Received: by 2002:a05:600c:1897:b0:42c:aeee:da86 with SMTP id 5b1f17b1804b1-42f77d30905mr19803775e9.8.1727943279187;
+        Thu, 03 Oct 2024 01:14:39 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.211.167])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d082d230dsm702027f8f.94.2024.10.03.01.14.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d082d230dsm702027f8f.94.2024.10.03.01.14.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Oct 2024 01:14:36 -0700 (PDT)
+        Thu, 03 Oct 2024 01:14:38 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Date: Thu, 03 Oct 2024 10:14:21 +0200
-Subject: [PATCH 4/5] dt-bindings: display/msm: merge SM8450 DPU into SC7280
+Date: Thu, 03 Oct 2024 10:14:22 +0200
+Subject: [PATCH 5/5] dt-bindings: display/msm: merge SM8550 DPU into SC7280
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241003-dt-binding-display-msm-merge-v1-4-91ab08fc76a2@linaro.org>
+Message-Id: <20241003-dt-binding-display-msm-merge-v1-5-91ab08fc76a2@linaro.org>
 References: <20241003-dt-binding-display-msm-merge-v1-0-91ab08fc76a2@linaro.org>
 In-Reply-To: <20241003-dt-binding-display-msm-merge-v1-0-91ab08fc76a2@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -96,21 +96,21 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5495;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5278;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=AKhgP7q0GaIQSUQKoHkiCv6d3dwP2bPLVjVUtecZON0=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm/lJi9PKnUZKPp3bxs4fScDOr+KitJedC3+vAz
- 0o9qOFFaG2JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZv5SYgAKCRDBN2bmhouD
- 11upEACJ0BVnq8qjv3Ph2jKpGDLXGePbTEmqdtBS4tTB4aqUTYWkLBhapJkGGUSa04rNy3eDHdx
- 2Chu4qCpVLpNcHjHfnPQxkeUZYK0fH1ZJvMfTzbNQsq5OeIkWn8ARRPBO3wISAyh/U276apikcf
- 6Pd8hSW0YCJNbyygS807LXfA0RD25MVv8/azvytxtmnLKqvaJpWPdXSI8Fn/7osOh9PcvKs5r19
- rhbTxv6AoRIgeoXHUtKh1/r/tco3c31H9fXHTQsz0J73B6DyoQFjzs7OXXmjDMvwxA/CmDFRlra
- pWEVEAQOC5W2vMFWRp+98Mnj+LlRaeqs+0dCZESTeZg4rlSsknaFiqb9qtqA5yUU+pDBSdIkvL/
- yha2Clkxx243AZ+6wHZd7gVEEBXzFtpkPgOvami5bVTkIW0IDDgE7o1+VRi0z5SrvFiM5JwKUMV
- 2cD7ZFojH7Ivko0G5OQvE5bIftcK1Jhx9lvvSGHRE6dwe3l8YN3lyE9s+O8uY0fxjpdCEXoflpX
- XCHXoAg0Fz0AN1onmNQIruiCEav5AmsJm0L5nlBu7tOnNr93ugJlG4LRtHKtyPdHUcqexzaEuN7
- QVkk0g8ddnRWELvo/slmntpKjvyn5X/SxkkMvYAZWo3JjpbrxEf14mX+MJd9J5U6YjX+4yDUX9f
- akLeIow5PLj1HHQ==
+ bh=519873eizrz1N27nvT3FmdiGwc5SoCwK9tJ1LGTJkmw=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBm/lJjJVqi58VnNZDpSmxF/yPjCq9ttq1x7JffO
+ wwQ5dtGGliJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCZv5SYwAKCRDBN2bmhouD
+ 176aD/4oATjZ3tdEJbCuEHszRygOjNaFfffil0utMA5XmiPMerjNs/BIIOcOH66nbj4ddfmYdUA
+ 0E4vrdl3vSqyfS5V9JU14ebXyzspUgYv7Oo99XyI8vOFm+uOzlYvKBBjLOiRFykamVpRrAcP/rg
+ j+FitluwEgTVQOFoG0HsrDnFtqWy+WuvUeVq0MttvA+2hZUMWCKQbBMpRKUg01Pbv6TGQv3EBSu
+ qQStf0fz3iuwvjCEh0FXTS65QEp0csClhCfeGXLzz1KVjvLT+6szIwzFcURy/ZOUJRlHa36MYvm
+ mR0xjRSYkt/SZWLyFCKEH0No4KEZNi7Hto1t1T44/pk0xAIRRTs5kv3fRxZUXumzs88SpchJBJp
+ 08UVEAmS4hj2tcR2HZUlQNDFcxD3+neEoEPHs4wPqdpGq//uUtFbmRFaeMBBPrS7uKko/M6odnd
+ IStITPXnIEPR3fL8rxiT2loTBwUL8eI4PiZRAVCFSGkyMI1bkHKV9xATWxeMc+ehzHqoXa2ONz9
+ oizmEDr8zkm20TWXT4f5v7RU5wm5SATYTOvZUv2lILuIg/QiK1O88JCfcQDVg35HCxtGjUQjCtX
+ lFbeQKiFqjWfoDDI4rNSOBB05D7+COA7Je1v0lnY332TmB3UVCEAG7exTZ1ApvZdgcOzF5JQ5MU
+ G6kFNAERUhheIbw==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
@@ -118,56 +118,56 @@ Split of the bindings was artificial and not helping - we end up with
 multiple binding files for very similar devices thus increasing the
 chances of using different order of reg and clocks entries.
 
-Unify DPU bindings of SC7280 and SM8450, because they are the same.
+Unify DPU bindings of SC7280 and SM8550, because they are the same.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
  .../bindings/display/msm/qcom,sc7280-dpu.yaml      |   2 +
- .../bindings/display/msm/qcom,sm8450-dpu.yaml      | 139 ---------------------
- 2 files changed, 2 insertions(+), 139 deletions(-)
+ .../bindings/display/msm/qcom,sm8550-dpu.yaml      | 133 ---------------------
+ 2 files changed, 2 insertions(+), 133 deletions(-)
 
 diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml
-index 3d69a573b450..750230839fc9 100644
+index 750230839fc9..6902795b4e2c 100644
 --- a/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml
 +++ b/Documentation/devicetree/bindings/display/msm/qcom,sc7280-dpu.yaml
 @@ -8,6 +8,7 @@ title: Qualcomm Display DPU on SC7280
  
  maintainers:
    - Bjorn Andersson <andersson@kernel.org>
-+  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
++  - Neil Armstrong <neil.armstrong@linaro.org>
+   - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
    - Krishna Manikandan <quic_mkrishn@quicinc.com>
  
- $ref: /schemas/display/msm/dpu-common.yaml#
-@@ -18,6 +19,7 @@ properties:
-       - qcom,sc7280-dpu
+@@ -20,6 +21,7 @@ properties:
        - qcom,sc8280xp-dpu
        - qcom,sm8350-dpu
-+      - qcom,sm8450-dpu
+       - qcom,sm8450-dpu
++      - qcom,sm8550-dpu
  
    reg:
      items:
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml
 deleted file mode 100644
-index 2a5d3daed0e1..000000000000
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8450-dpu.yaml
+index 16a541fca66f..000000000000
+--- a/Documentation/devicetree/bindings/display/msm/qcom,sm8550-dpu.yaml
 +++ /dev/null
-@@ -1,139 +0,0 @@
+@@ -1,133 +0,0 @@
 -# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
 -%YAML 1.2
 ----
--$id: http://devicetree.org/schemas/display/msm/qcom,sm8450-dpu.yaml#
+-$id: http://devicetree.org/schemas/display/msm/qcom,sm8550-dpu.yaml#
 -$schema: http://devicetree.org/meta-schemas/core.yaml#
 -
--title: Qualcomm SM8450 Display DPU
+-title: Qualcomm SM8550 Display DPU
 -
 -maintainers:
--  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+-  - Neil Armstrong <neil.armstrong@linaro.org>
 -
 -$ref: /schemas/display/msm/dpu-common.yaml#
 -
 -properties:
 -  compatible:
--    const: qcom,sm8450-dpu
+-    const: qcom,sm8550-dpu
 -
 -  reg:
 -    items:
@@ -181,9 +181,9 @@ index 2a5d3daed0e1..000000000000
 -
 -  clocks:
 -    items:
+-      - description: Display AHB
 -      - description: Display hf axi
--      - description: Display sf axi
--      - description: Display ahb
+-      - description: Display MDSS ahb
 -      - description: Display lut
 -      - description: Display core
 -      - description: Display vsync
@@ -208,20 +208,19 @@ index 2a5d3daed0e1..000000000000
 -
 -examples:
 -  - |
--    #include <dt-bindings/clock/qcom,sm8450-dispcc.h>
--    #include <dt-bindings/clock/qcom,gcc-sm8450.h>
+-    #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
+-    #include <dt-bindings/clock/qcom,sm8550-gcc.h>
 -    #include <dt-bindings/interrupt-controller/arm-gic.h>
--    #include <dt-bindings/interconnect/qcom,sm8450.h>
 -    #include <dt-bindings/power/qcom,rpmhpd.h>
 -
 -    display-controller@ae01000 {
--        compatible = "qcom,sm8450-dpu";
+-        compatible = "qcom,sm8550-dpu";
 -        reg = <0x0ae01000 0x8f000>,
 -              <0x0aeb0000 0x2008>;
 -        reg-names = "mdp", "vbif";
 -
--        clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
--                <&gcc GCC_DISP_SF_AXI_CLK>,
+-        clocks = <&gcc GCC_DISP_AHB_CLK>,
+-                <&gcc GCC_DISP_HF_AXI_CLK>,
 -                <&dispcc DISP_CC_MDSS_AHB_CLK>,
 -                <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
 -                <&dispcc DISP_CC_MDSS_MDP_CLK>,
@@ -264,11 +263,6 @@ index 2a5d3daed0e1..000000000000
 -        mdp_opp_table: opp-table {
 -            compatible = "operating-points-v2";
 -
--            opp-172000000{
--                opp-hz = /bits/ 64 <172000000>;
--                required-opps = <&rpmhpd_opp_low_svs_d1>;
--            };
--
 -            opp-200000000 {
 -                opp-hz = /bits/ 64 <200000000>;
 -                required-opps = <&rpmhpd_opp_low_svs>;
@@ -284,8 +278,8 @@ index 2a5d3daed0e1..000000000000
 -                required-opps = <&rpmhpd_opp_svs_l1>;
 -            };
 -
--            opp-500000000 {
--                opp-hz = /bits/ 64 <500000000>;
+-            opp-514000000 {
+-                opp-hz = /bits/ 64 <514000000>;
 -                required-opps = <&rpmhpd_opp_nom>;
 -            };
 -        };
