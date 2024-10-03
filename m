@@ -1,84 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-32984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-32985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB11398E939
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 06:57:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AE31F98E954
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 07:18:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 153271C21927
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 04:57:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CBBB11C21D3E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  3 Oct 2024 05:18:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C08E3FB31;
-	Thu,  3 Oct 2024 04:57:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3332D36126;
+	Thu,  3 Oct 2024 05:18:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OXdBAGnL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dzyehmA5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524A331A60
-	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 04:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1F13C488
+	for <linux-arm-msm@vger.kernel.org>; Thu,  3 Oct 2024 05:18:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1727931434; cv=none; b=PmNnx7AwyChgsClnlLS6AXRBTzDREF/wPVefosZz1mJSE07L2DJ0bD2Pn9MN1MAoqSH1jXiOha405bSgfXHQ5b3x8s7oCl1SdfmrZKOhrJ+NLzfK/tX2VWqc5hXfNf08wTiMh/gZB5+ah41YM+ysGma1XExoNAfeiMLCKcZhQYU=
+	t=1727932702; cv=none; b=Fk0DPHrksFog0BDg8diuM3rQ37VtTYJGPlaqjY7s20bNA7mHtvnxtT2yaTXbxCBaK9FsTk3FPeQI+y/HgABKuy4eoWaI1iyjvmcPJzg4YuXn3FT2OpXEobUoPo+98uZ+p9MXN3A9OdCqDPDlTZYRkWtI+qIkuvYMm/QPGBXX/80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1727931434; c=relaxed/simple;
-	bh=qEnoBtsvZoh+9PLGVc+C4bgF5PV/jjkeM8XAPFbyTgc=;
+	s=arc-20240116; t=1727932702; c=relaxed/simple;
+	bh=p9cTNf+ce+MkFrpLZLlHEwPklnOHGHnSpCKPYrEmLd8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NgmSFMKHQG1Rl0OPUrU34dsbvf6c0SpJJY08+FqunLhC+M1cqHTmfmxw+iXWqrJV20mQIDKHcqaxn8+cYuXKruFAw16jJNr4YPA4Ez4Y4EenowdeZn5eCbsg7vCMf+Aw0yzxoYyDgRRoER8TfYSdgSfdBEONbng8tRmsP9pBkik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OXdBAGnL; arc=none smtp.client-ip=209.85.215.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=P0uf3bMbz5aljFlxa/QZsjqQJpFhxZBCDHMYondTbZGJiizdz+zRHBpft/biiWKPjVYwQqCcT9Q3TnU7CBTtf5E+TOYK5V6I1iqVXH8fIyBQuw1NmxdJ61F+J87HGQ8FhOOp1pjZm5Ivj0jqHuEg9WRE1ANkcY4VbIP+U2XIkQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dzyehmA5; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7e6ed072cdaso293632a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 21:57:13 -0700 (PDT)
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-71970655611so593572b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 02 Oct 2024 22:18:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1727931432; x=1728536232; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1727932700; x=1728537500; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8dDNfw+NjJwfHr3rs4t9p6Uot6ve0GGTnKxlXQV+iZE=;
-        b=OXdBAGnLfMtY2FG4okmsu4wV8dNTqdhfnpviGhMMVOKbCrgWWqKFZ8LGDIEFj/ayO4
-         rUo/emhztLLyVcBX152jP7IaXzYQOvqGp2/W3ZuwrmjUPZfi2FlnDgzAus1KJJkIv0ay
-         GRjBcCHjGKRIHfAmZWvmrDpYB+UomMWsIaIZJeGuINNVpaDcWyGttnHnURW0w5JzaTVX
-         5HK/i+F1MXPgDFBBr0BdIB99Vq6myj13yfukLVR4+0+p8Y3C9CVHnr/zNoU5v3dBKD6p
-         t6u2MXYRyAkkLnNTqytpqD/A4AN8/bnw6ARRIYeqdjsJanEtjFCD6IYwWz343FmzLUl9
-         TKbg==
+        bh=La8UkmMy64RUqJRJKCrBaEEk9eBf956ZjgLNFqjYKFk=;
+        b=dzyehmA5+wCV3EgfoJnjZh+SLN3nBVRFArPMo5YrAz/KFeaZYPYE/FBuXBZcUitzP0
+         1uj2UEOCcix0M8lZNH1iIY1ZiR0sVxVW9qFdtEcoo1DkPhSxVEtFKySYtNWIR2KiebrO
+         c4XE0MVN1LAVbBVZkfgf6wEr0200RJMtn+3Nv6HP7PowydGoz66p3+WFj/I7HCD5+KG/
+         8dLvyUG2sR4AOhFUv2VVNsbtQvFs+eYL8wvxxX3vx8dTWTrA95cd94X6Honlx5Vg5f3r
+         k4Aia8WWvrf8V5HQO12isqm0Tk84TF6NZtke0B/rbhedWdukS6MjgNr9JCwmRbFQmkA7
+         srhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1727931432; x=1728536232;
+        d=1e100.net; s=20230601; t=1727932700; x=1728537500;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8dDNfw+NjJwfHr3rs4t9p6Uot6ve0GGTnKxlXQV+iZE=;
-        b=QoLxK/oRzZXe4NGQjKCm5KyGsNB/Sg3ilYQCXH6dLbEiQHPqH2EMAU+dF/o9lX6YyN
-         9prUl1B12afG+BdrA8cl21Sy4Yx4Xe1huIRMr3lxDVNRKtzKhfnY6vI2xBbswyPoyLtz
-         rfNHV6TYFpMVnKmm98wbDDUWEct+LiGGlMrRUiIt4QDL6H1xPgHhKPZPHLHrUlkMckCe
-         Ax+TJYgo/yeekONOT797ixEedHwywqBuGrjIvvCIjcV5GY7D5OMjtisRWOJA5y/gXG14
-         z8GPkLnsr/kY/KxhzEuUR6E0I5006+FtrkJGAiqA2pNHsDuk65F6OROAsaa4yGPu71IS
-         w1mQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUNGj7PzP/M5I6bgD+2qRuAB2GwhzCDpwC69duBqEFxnVY8YH9ZJUD+Sdld+nKes0nMUulfMh2LHgOrQgY9@vger.kernel.org
-X-Gm-Message-State: AOJu0YzARq9FaVoD4Y17Fiw4LtA/3zIwtjgeAEkEPiqjzyKdNo5VEUBN
-	e4V30yITIvSS9XfF5i8WoLv/wJwYWStZvY1m1/vCKOzJEye5QNW0O4+hjzkFtQ==
-X-Google-Smtp-Source: AGHT+IH6h3pPAfdiE/OAeLgcL5M9L/V1oC+Dm1QHf9XghZuR3HLE9GJaHmWNiuj0yQDfqrO7gF3icw==
-X-Received: by 2002:a05:6a21:6e41:b0:1d4:fc66:30e8 with SMTP id adf61e73a8af0-1d5db163d65mr8252358637.10.1727931432531;
-        Wed, 02 Oct 2024 21:57:12 -0700 (PDT)
+        bh=La8UkmMy64RUqJRJKCrBaEEk9eBf956ZjgLNFqjYKFk=;
+        b=pw8dM7NzVynFzAp3NfmIwvhx+beQj9B+l2gRJqD6mtu/u6FeuwlbOij2fYwowtCKnA
+         vjP8CMA37b3kAUHBzZIemQGO7lDdfPR+2QAFRNdIWO1Jzem5hGNJuwFJMxlaOEa545+W
+         hjU590LKBYjs+6KflJ5I6vinzGl9vddKrAAxdXOSm1nGf6rRN7qzxI+VOlmfuknRno1R
+         aa4/0vlaVq8a5cE5cbmkdxVDylV1ZjAWSp4Sr27cNUdUX1H2xvvo/Eu8am3RrlgqGnbw
+         UM5hWIiNHsJEzXnxf88Fr61NJ3Wcji4dFbTPwGh5wEZtyxhPWf1FuM1G8S1BUPqfltUP
+         TsQA==
+X-Forwarded-Encrypted: i=1; AJvYcCWn6WQkfkWSDAJV3o5nViBCEa4R/sRTedUT1+Ilx9uM5HfhE05u6Bz7q3ps9HYW0TZoBV7KEojK8nk54vna@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw90xp1qGGeVFP51NlSWH0QAF0xjJT/j2PNG1hpM45mZE3qOokU
+	cCs3lPT1EfU1RYhymY9yoTtzdjz2LdlznUJJJv6EFah5W5Yw5hF9cHPCRsU84n/iX72lqt1J4JU
+	=
+X-Google-Smtp-Source: AGHT+IFZIWorr/HQ8QCSrVUvOBlny0PGSXcekwxov0MUHcurUi3xP8jMoZMLLkGa/k/YVOcbFt4CIA==
+X-Received: by 2002:a05:6a00:181c:b0:70d:2892:402b with SMTP id d2e1a72fcca58-71dc5c66d09mr9998786b3a.7.1727932699794;
+        Wed, 02 Oct 2024 22:18:19 -0700 (PDT)
 Received: from thinkpad ([36.255.17.222])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-7e9dbfee44dsm2588a12.64.2024.10.02.21.57.09
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71dd9d8c2b9sm444447b3a.79.2024.10.02.22.18.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Oct 2024 21:57:12 -0700 (PDT)
-Date: Thu, 3 Oct 2024 10:27:07 +0530
+        Wed, 02 Oct 2024 22:18:19 -0700 (PDT)
+Date: Thu, 3 Oct 2024 10:48:16 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
-	bhelgaas@google.com, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_qianyu@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH] PCI: qcom: Enable MSI interrupts together with Link up
- if global IRQ is supported
-Message-ID: <20241003045707.gy3zemtxrheuipr7@thinkpad>
-References: <20241001042055.ivf4zspq4fqmaxth@thinkpad>
- <20241001211957.GA227250@bhelgaas>
+To: Yan Zhen <yanzhen@vivo.com>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, opensource.kernel@vivo.com
+Subject: Re: [PATCH v1] bus: mhi: host: Fix typos in the comments
+Message-ID: <20241003051816.lnx6qo5fm43ljygt@thinkpad>
+References: <20240929090334.524543-1-yanzhen@vivo.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,114 +85,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241001211957.GA227250@bhelgaas>
+In-Reply-To: <20240929090334.524543-1-yanzhen@vivo.com>
 
-On Tue, Oct 01, 2024 at 04:19:57PM -0500, Bjorn Helgaas wrote:
-> On Tue, Oct 01, 2024 at 09:50:55AM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Sep 30, 2024 at 12:11:01PM -0500, Bjorn Helgaas wrote:
-> > > On Mon, Sep 30, 2024 at 07:14:09PM +0530, Manivannan Sadhasivam wrote:
-> > > > Currently, if global IRQ is supported by the platform, only the Link up
-> > > > interrupt is enabled in the PARF_INT_ALL_MASK register. But on some Qcom
-> > > > platforms like SM8250, and X1E80100, MSIs are getting masked due to this.
-> > > > They require enabling the MSI interrupt bits in the register to unmask
-> > > > (enable) the MSIs.
-> > > 
-> > > "global IRQ" is a very generic name.  If that's the official name, it
-> > > should at least be capitalized, e.g., "Global IRQ", to show that it is
-> > > a proper noun that refers to a specific IRQ.
-> > 
-> > Sure.
-> > 
-> > > > Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
-> > > > described as 'diagnostic' interrupts in the internal documentation,
-> > > > disabling them masks MSI on these platforms. Due to this,
-> > > 
-> > > > MSIs were not
-> > > > reported to be received these platforms while supporting global IRQ.
-> > > 
-> > > I'm trying to parse "while supporting global IRQ."  We basically
-> > > support global IRQ by installing qcom_pcie_global_irq_thread(), but of
-> > > course the device doesn't see that, so I assume it would be more
-> > > informative to say that MSIs are masked by some register setting.
-> > 
-> > Hmm, this is what I mentioned in the above paragraph referencing
-> > PARF_INT_ALL_MASK register. Is that not clear enough?
+On Sun, Sep 29, 2024 at 05:03:34PM +0800, Yan Zhen wrote:
+> Correctly spelled comments make it easier for the reader to understand
+> the code.
 > 
-> It requires the knowledge that the MSI enable bits are set by
-> hardware, cleared by 4581403f6792, and set again here.  This will be
-> more accessible to non-qcom experts if that information is included
-> here.
+> Fix typos:
+> 'Normaly' ==> 'Normally',
+> 'gurantee' ==> 'guarantee',
+> 'guranteed' ==> 'guaranteed'.
 > 
+> Signed-off-by: Yan Zhen <yanzhen@vivo.com>
 
-Okay.
-
-> > > The patch suggests that MSIs are masked internally unless
-> > > PARF_INT_MSI_DEV_0_7 is set in PARF_INT_ALL_MASK.
-> > > 
-> > > Are you saying that prior to 4581403f6792, MSIs did work?  Does that
-> > > mean PARF_INT_MSI_DEV_0_7 was set by a bootloader or something, so
-> > > MSIs worked?  And then 4581403f6792 came along and implicitly cleared
-> > > PARF_INT_MSI_DEV_0_7, so MSIs were then masked?
-> > 
-> > Yeah. Those bits were enabled by default in hardware, but since they were
-> > mentioned as 'diagnostic interrupts' in documentation, commit 4581403f6792
-> > intentionally disabled them. But that results in MSIs getting masked in
-> > *some* platforms.
-> 
-> Apparently the "*some* platforms" part is more qcom-expert knowledge?
-
-I already mentioned those platforms in the commit message 'SM8250 and X1E80100'.
-
-> There are other qcom platforms where MSIs are not disabled by
-> 4581403f6792?  Information about which platforms are which also sounds
-> useful for future maintenance.
-> 
-
-Yeah, SM8450 is the one which I know so far. I will mention it explicitly.
+Applied to mhi-next!
 
 - Mani
 
-> > > > So enable the MSI interrupts along with the Link up interrupt in the
-> > > > PARF_INT_ALL_MASK register if global IRQ is supported. This ensures that
-> > > > the MSIs continue to work and also the driver is able to catch the Link
-> > > > up interrupt for enumerating endpoint devices.
-> > > > 
-> > > > Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
-> > > > Reported-by: Konrad Dybcio <konradybcio@kernel.org>
-> > > > Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
-> > > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > > > ---
-> > > >  drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
-> > > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > index ef44a82be058..2b33d03ed054 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > @@ -133,6 +133,7 @@
-> > > >  
-> > > >  /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-> > > >  #define PARF_INT_ALL_LINK_UP			BIT(13)
-> > > > +#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
-> > > >  
-> > > >  /* PARF_NO_SNOOP_OVERIDE register fields */
-> > > >  #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-> > > > @@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
-> > > >  			goto err_host_deinit;
-> > > >  		}
-> > > >  
-> > > > -		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
-> > > > +		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
-> > > > +			       pcie->parf + PARF_INT_ALL_MASK);
-> > > >  	}
-> > > >  
-> > > >  	qcom_pcie_icc_opp_update(pcie);
-> > > > -- 
-> > > > 2.25.1
-> > > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
+> ---
+>  drivers/bus/mhi/host/boot.c     | 4 ++--
+>  drivers/bus/mhi/host/internal.h | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/boot.c b/drivers/bus/mhi/host/boot.c
+> index dedd29ca8db3..e8c92972f9df 100644
+> --- a/drivers/bus/mhi/host/boot.c
+> +++ b/drivers/bus/mhi/host/boot.c
+> @@ -82,9 +82,9 @@ static int __mhi_download_rddm_in_panic(struct mhi_controller *mhi_cntrl)
+>  	 * other cores to shutdown while we're collecting RDDM buffer. After
+>  	 * returning from this function, we expect the device to reset.
+>  	 *
+> -	 * Normaly, we read/write pm_state only after grabbing the
+> +	 * Normally, we read/write pm_state only after grabbing the
+>  	 * pm_lock, since we're in a panic, skipping it. Also there is no
+> -	 * gurantee that this state change would take effect since
+> +	 * guarantee that this state change would take effect since
+>  	 * we're setting it w/o grabbing pm_lock
+>  	 */
+>  	mhi_cntrl->pm_state = MHI_PM_LD_ERR_FATAL_DETECT;
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index d057e877932e..3134f111be35 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -255,7 +255,7 @@ struct mhi_chan {
+>  	/*
+>  	 * Important: When consuming, increment tre_ring first and when
+>  	 * releasing, decrement buf_ring first. If tre_ring has space, buf_ring
+> -	 * is guranteed to have space so we do not need to check both rings.
+> +	 * is guaranteed to have space so we do not need to check both rings.
+>  	 */
+>  	struct mhi_ring buf_ring;
+>  	struct mhi_ring tre_ring;
+> -- 
+> 2.34.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
