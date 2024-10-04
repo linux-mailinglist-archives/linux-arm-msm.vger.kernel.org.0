@@ -1,160 +1,173 @@
-Return-Path: <linux-arm-msm+bounces-33140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15C01990986
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 18:41:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B325C9909E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 19:04:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 467941C20C14
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 16:41:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 564E61F226A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 17:04:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 505FB1C8317;
-	Fri,  4 Oct 2024 16:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 85C351CACE5;
+	Fri,  4 Oct 2024 17:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="N4XAVk1+"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QDVpKlof"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836521CACD9;
-	Fri,  4 Oct 2024 16:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D99B1E376B;
+	Fri,  4 Oct 2024 17:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728060062; cv=none; b=sju+482k4gEv/C1OaLvk6DdP+zizIiQKseoS5MeJSkQyXp6JuJcdrzxRV9gZWFCfC9jPZc1G5o7UwigMqcPjXMUUgqZgtjr8zHXiIizIZn4sElGIxMyD8ze3b78q5fhHQXgxqcEJVhrWA4NcXkAsEBkn+VLHVXyy15VRHn/BhPY=
+	t=1728061440; cv=none; b=gOS096ZPQHQCILX5AhyaBX5O680yeVAStf9gXrolwHjdrXk+pjeAzzYxn1NNpeOujrOoUnniG3sGNQrAoK4q5Bp1siQAX0FUc55tJC3g26DPatK0ZRnskIYRDR+O7Lso8V+oikrrj8PEiIauTi5lNXNuHOIZqQx1tK3VzlxAu2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728060062; c=relaxed/simple;
-	bh=cW6o8k7+XVR348Ey8E9O9uFb7YnIrhTusMcLksIwmmI=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=t3txVS2GGNelML1yqMJ0XSuNxsLRbs48j6UENb8un9o1WMcTrz9Z5os7LgsBW/bqvBfhPNauBS3I15vqchRj4vRvEXS0OjsDnBAodbR/j5li04yOjwk3R8OOV8+7E1Cm6rLQqeVrkU/as11L0g4Wg/kkqzl6MC7O9v5vcCRGKt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=N4XAVk1+; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1728061440; c=relaxed/simple;
+	bh=sznZIHiLDeSmSbipNni5vB9jsCt+O6nsKUsc1EyG4xY=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ECqO1iNdyxD96JCL9NXwV/5lccna7lEeWgjBxwvQBHJYuYajh6XvQ6rJHQ/8msRoHurZrORZwxvpaWaVa8AUzn1r1nBOekEYMvGejQAI0CiMqL0pBWc57oPjqNmPn/mqII0KLxw8LGQAjgvygl/xYjlGqhnSop+k3dswBCtH0eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QDVpKlof; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494A4gkf031989;
-	Fri, 4 Oct 2024 16:40:56 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494AgupO013391;
+	Fri, 4 Oct 2024 17:03:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=+DwclTRQXi12Iy/IFCIuX6
-	KK+qMJ7HYg0Ca6ffeDp2A=; b=N4XAVk1+AGEv9DY+5EE9W7iMeRMW6H6nKcJtWd
-	aar9Dx2XjBvGzQMGseZ/KCOZMocAWeGqzbQ1alMiLqLrzVho0LeqmR79XfJN3FtM
-	AVuxl5LVpM2nYNIrJqDyV4gmVXgI1MvGjdPwbIlmbGuet3kA322H53Q5w75y8PEW
-	b4C1M0U+Yf7B/eLAX01eyYK0ULLxFpfFXBM30tM14mW5q9HouLJFRjGCJs1OQ4aO
-	hse1UlRqIltOEl8FzyApsC6IyVGWpTAVb99O7j92RHT9GczaHgGeyytyF3bTGwhO
-	yr8JgCeA59o1bqUP/W41nIGv21bH4fVQfw7cBwhfvRAspOCg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205f2pw8-1
+	:mime-version:subject:to; s=qcppdkim1; bh=Kk+HM1Pmi7EADD72te/P0C
+	u+PfPui5Ooq/jn+8Np8l4=; b=QDVpKlofuvsWNpbBZllw1oaQCw6e2xmqDGgHtO
+	x/CxfUI/tq8egXpBDPI9Zzj603t83NdK4TZzz43CeA7LnIURuFrw78ceTll1xFll
+	Yoegq5vcNIwBJrp3Tci13/l3OsmLJT8G1joRQgdoAbFj8VCGOHg4J7n+8oarRPPP
+	EYwtxn9EY9QTeGXMS6BHBA634/EC0QtokcgP7kkQqWTxhEbaa+Tx+aDvqHhnfO0J
+	okir9U5TuSe/pTxQPbz+SGoBbTOlKbfMhuzSfU1pipa4UZTbNU6l7CsFeQ2SbkOw
+	bU8yv1v/CygfPoXBEYmDtvLHGIuYFNX0guZOCdvMvKEhC6JA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205kar7j-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Oct 2024 16:40:55 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494GesWQ026237
+	Fri, 04 Oct 2024 17:03:55 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494H3sk4022644
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Oct 2024 16:40:54 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Fri, 4 Oct 2024 17:03:54 GMT
+Received: from carlv-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 4 Oct 2024 09:40:54 -0700
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <quic_carlv@quicinc.com>
-CC: <ogabbay@kernel.org>, <corbet@lwn.net>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-doc@vger.kernel.org>,
-        <jacek.lawrynowicz@linux.intel.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Subject: [PATCH] accel/qaic: Add ipc_router channel
-Date: Fri, 4 Oct 2024 10:40:33 -0600
-Message-ID: <20241004164033.3825986-1-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+ 15.2.1544.9; Fri, 4 Oct 2024 10:03:53 -0700
+From: Carl Vanderlip <quic_carlv@quicinc.com>
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC: Carl Vanderlip <quic_carlv@quicinc.com>,
+        kernel test robot
+	<lkp@intel.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, <mhi@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH] bus/mhi: Switch trace_mhi_gen_tre fields to native endian
+Date: Fri, 4 Oct 2024 10:03:20 -0700
+Message-ID: <20241004170321.4047492-1-quic_carlv@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: LGR06R6LCh_XdSeJB5k_XYpJp4cJJY3d
-X-Proofpoint-ORIG-GUID: LGR06R6LCh_XdSeJB5k_XYpJp4cJJY3d
+X-Proofpoint-GUID: 5IUBWfezCZGntg485woq_gCYam_VpM-H
+X-Proofpoint-ORIG-GUID: 5IUBWfezCZGntg485woq_gCYam_VpM-H
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 suspectscore=0
- mlxlogscore=999 priorityscore=1501 phishscore=0 bulkscore=0
- impostorscore=0 clxscore=1011 lowpriorityscore=0 spamscore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410040115
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ clxscore=1011 impostorscore=0 mlxlogscore=916 malwarescore=0 spamscore=0
+ phishscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410040118
 
-The ipc_router channel allows AF_QIPCRTR clients and services to
-communicate with the AIC100 device. The ipc_router MHI transport layer
-expects the channel to be named exactly "IPCR".
+Each of the __field() macros were triggering sparse warnings similar to:
+trace.h:87:1: sparse: sparse: cast to restricted __le64
+trace.h:87:1: sparse: sparse: restricted __le64 degrades to integer
+trace.h:87:1: sparse: sparse: restricted __le64 degrades to integer
 
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Change each little endian type to its similarly sized native integer.
+Convert inputs into native endian.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202402071859.8qMhgJEQ-lkp@intel.com/
+Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 ---
- Documentation/accel/qaic/aic100.rst |  2 ++
- drivers/accel/qaic/mhi_controller.c | 32 +++++++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ drivers/bus/mhi/host/trace.h | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/accel/qaic/aic100.rst b/Documentation/accel/qaic/aic100.rst
-index 590dae77ea12..273da6192fb3 100644
---- a/Documentation/accel/qaic/aic100.rst
-+++ b/Documentation/accel/qaic/aic100.rst
-@@ -229,6 +229,8 @@ of the defined channels, and their uses.
- | _PERIODIC      |         |          | timestamps in the device side logs with|
- |                |         |          | the host time source.                  |
- +----------------+---------+----------+----------------------------------------+
-+| IPCR           | 24 & 25 | AMSS     | AF_QIPCRTR clients and servers.        |
-++----------------+---------+----------+----------------------------------------+
+diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
+index 95613c8ebe06..3e0c41777429 100644
+--- a/drivers/bus/mhi/host/trace.h
++++ b/drivers/bus/mhi/host/trace.h
+@@ -9,6 +9,7 @@
+ #if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
+ #define _TRACE_EVENT_MHI_HOST_H
  
- DMA Bridge
- ==========
-diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-index ada9b1eb0787..8ab82e78dd94 100644
---- a/drivers/accel/qaic/mhi_controller.c
-+++ b/drivers/accel/qaic/mhi_controller.c
-@@ -405,6 +405,38 @@ static const struct mhi_channel_config aic100_channels[] = {
- 		.auto_queue = false,
- 		.wake_capable = false,
- 	},
-+	{
-+		.name = "IPCR",
-+		.num = 24,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_TO_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = false,
-+		.wake_capable = false,
-+	},
-+	{
-+		.name = "IPCR",
-+		.num = 25,
-+		.num_elements = 32,
-+		.local_elements = 0,
-+		.event_ring = 0,
-+		.dir = DMA_FROM_DEVICE,
-+		.ee_mask = MHI_CH_EE_AMSS,
-+		.pollcfg = 0,
-+		.doorbell = MHI_DB_BRST_DISABLE,
-+		.lpm_notify = false,
-+		.offload_channel = false,
-+		.doorbell_mode_switch = false,
-+		.auto_queue = true,
-+		.wake_capable = false,
-+	},
- };
++#include <linux/byteorder/generic.h>
+ #include <linux/tracepoint.h>
+ #include <linux/trace_seq.h>
+ #include "../common.h"
+@@ -97,18 +98,18 @@ TRACE_EVENT(mhi_gen_tre,
+ 		__string(name, mhi_cntrl->mhi_dev->name)
+ 		__field(int, ch_num)
+ 		__field(void *, wp)
+-		__field(__le64, tre_ptr)
+-		__field(__le32, dword0)
+-		__field(__le32, dword1)
++		__field(uint64_t, tre_ptr)
++		__field(uint32_t, dword0)
++		__field(uint32_t, dword1)
+ 	),
  
- static struct mhi_event_config aic100_events[] = {
+ 	TP_fast_assign(
+ 		__assign_str(name);
+ 		__entry->ch_num = mhi_chan->chan;
+ 		__entry->wp = mhi_tre;
+-		__entry->tre_ptr = mhi_tre->ptr;
+-		__entry->dword0 = mhi_tre->dword[0];
+-		__entry->dword1 = mhi_tre->dword[1];
++		__entry->tre_ptr = le64_to_cpu(mhi_tre->ptr);
++		__entry->dword0 = le32_to_cpu(mhi_tre->dword[0]);
++		__entry->dword1 = le32_to_cpu(mhi_tre->dword[1]);
+ 	),
+ 
+ 	TP_printk("%s: Chan: %d TRE: 0x%p TRE buf: 0x%llx DWORD0: 0x%08x DWORD1: 0x%08x\n",
+@@ -176,19 +177,19 @@ DECLARE_EVENT_CLASS(mhi_process_event_ring,
+ 
+ 	TP_STRUCT__entry(
+ 		__string(name, mhi_cntrl->mhi_dev->name)
+-		__field(__le32, dword0)
+-		__field(__le32, dword1)
++		__field(uint32_t, dword0)
++		__field(uint32_t, dword1)
+ 		__field(int, state)
+-		__field(__le64, ptr)
++		__field(uint64_t, ptr)
+ 		__field(void *, rp)
+ 	),
+ 
+ 	TP_fast_assign(
+ 		__assign_str(name);
+ 		__entry->rp = rp;
+-		__entry->ptr = rp->ptr;
+-		__entry->dword0 = rp->dword[0];
+-		__entry->dword1 = rp->dword[1];
++		__entry->ptr = le64_to_cpu(rp->ptr);
++		__entry->dword0 = le32_to_cpu(rp->dword[0]);
++		__entry->dword1 = le32_to_cpu(rp->dword[1]);
+ 		__entry->state = MHI_TRE_GET_EV_STATE(rp);
+ 	),
+ 
 -- 
-2.34.1
+2.25.1
 
 
