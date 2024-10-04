@@ -1,143 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-33113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E7F799019F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 12:53:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 219169901C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 13:04:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 20391B24C3E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 10:53:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 41CB41C221CC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 11:04:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0ACF156F3F;
-	Fri,  4 Oct 2024 10:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 078FB145A17;
+	Fri,  4 Oct 2024 11:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="J8HdUDO5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lJ38FyTj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7DA179BB;
-	Fri,  4 Oct 2024 10:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195A9146D6F
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Oct 2024 11:04:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728039175; cv=none; b=XqywJ/DrEE0NWGPEAmAYilYcfq7Dg3qnxVdAcJqGtztFIaOQR6DsWSU4AW2IjMt+g0JykFfxu6vRECffiGeHZGtGwrIOpgTPafjNz4PW1Y9JxK51Zs9RU1ZztHz5wFk4q85JQNtGwgYj3HrysK6jHhX3twXErMgI+cCw3nzX8bk=
+	t=1728039850; cv=none; b=XdDHNNcEvu89yEq802BaVIKzV5NIBUhKlOP8YLuyG4Zn0wcnuXdwdDiK2QB9PAZxgZeqGga7vE0Ol/VhpKZtVH3R6U+cLGPt21wiBSTlF23hnFd9QswrFBgVa7iW5nLgrA77KLFkXwsS9qfPcNgY9pQrw4FFTFwJsJvib+ah8GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728039175; c=relaxed/simple;
-	bh=pIzOVuVkhc6kXYknrVsMeJOUS3LdK2O+DEcJWZ9sVxw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=sRF6D9xEmZEhLE21HKpWsncyNuZmmWEI7rd0zAoP9tEy5RKHElOKO54ex33SoHC/NbDGWqJHWZEsFtol/GrJz6FgAWNwC8xt39PyN++OqqERf7TXWCPcAe92n71iYon8+Nt9mPHP3qkGnVsZkT7K9JVlknFuUqIo3IEOV3ko8JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=J8HdUDO5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4940ANIJ030783;
-	Fri, 4 Oct 2024 10:52:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=o5StGxFF1dJTjqxaY/vycE
-	WOR0pN7tlMnFVa5OPOTGI=; b=J8HdUDO5QeTbSmF76D8AdWkL5lG1d1KjRmPoKo
-	luyZXQ0ph5Dsd5cYDb2ARP0rw1QEpz2kUzifDzKIRFJmhIw5X7YP30VAwnn7PfZs
-	TFun3T0x1S3sPE6S7YGR9RSdUE+V1CFUaPZ7bgzyPzwH+fBzlBKt49RdmO9jaHCs
-	RbOp7aKy1V8uG89DJvtQ+4PRUjdN/4tc6h9FGwEqqHG0AovRXNUjjVSNA0q96iOp
-	s92QECZNQ9S5ZIb736wwWFC0VsyVPng/g1EChZtUQMpbRquSWmYuiW4/Piro33M+
-	MGGAh9gS4qcscsAM1gPJjGR2ARGgK+lcmY5D5iLWFcQMIpCQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42207v1tsk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Oct 2024 10:52:49 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494Aqm4Y015789
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Oct 2024 10:52:48 GMT
-Received: from [10.213.96.105] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 4 Oct 2024
- 03:52:45 -0700
-From: Vedang Nagar <quic_vnagar@quicinc.com>
-Date: Fri, 4 Oct 2024 16:22:31 +0530
-Subject: [PATCH] arm64: dts: qcom: sc7280: enable venus node
+	s=arc-20240116; t=1728039850; c=relaxed/simple;
+	bh=pFXxe/yUZKlzZQPRtsT1o1siyG3tjwsMkTygaR/xRGI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B3Wxp2GGoHJv08syBpFCO9TULclvFUySWtaJVaxb51B9roLhN4MY6ZSdFkcgyvQ3LVl7qsBhYcaAmiwnDUyoadMkfmW9DD3nN/Nr5TYGg/CXTjrrA0QJ7j3ss8dltG33bQ1RyX0fTvd/HSBIZOLz0CtJuv/fsHtvRtDRnzd5NL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lJ38FyTj; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5389e24a4d1so2350020e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2024 04:04:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728039847; x=1728644647; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=HseLO/WaTB/fjB3bbmzH9nd+LvPABDmeFCtM4k+UA88=;
+        b=lJ38FyTjevDr/gq4Y1RCMeJFcty5OdlsvoYmC44PVJIz1DvMlKAiC9WXSKa+r7PNml
+         x+OArr4uTrgvKrWP1TDq048Sxd9TunBRn5VHZiOXJOIDoeXiI6Uqv4XCJIJwjq6VkdMU
+         b9YN9u+u3nmWcUemdJYEnjEXjTrBfk80fHyhgOi9+aqncjyGH+6gdWZ+njUmo5pirfAQ
+         CGufx6MwwcajIQ7SVhofmLxv09ZNFsecVnE1Qst3KwpcxgbyW0Qom2rRtalGlW9go2PC
+         k1fXr8ehZvT1JG0D8ymbZMDzQ9FgUik1QmwCAPSUxg4cc8npw/aylUrJ6vnbGd7F51Zf
+         uBFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728039847; x=1728644647;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HseLO/WaTB/fjB3bbmzH9nd+LvPABDmeFCtM4k+UA88=;
+        b=a9IUzU+U3+AB9Go0wau0SbwH7ZNIHdqUJ8VO+q84HYThQyjH8pXvv0hi7ZvsIRC5iT
+         TOHo5TyhbNphA9oOzS19IN7l+XzOqJRKiji1/ajCL1v5whKIK3CgNa8askYiN4WnxZSD
+         4wZ6DPGjfcoHqteOAVwq3cjxNBVfrZ6Zb/Y4Uo8c9lfpaSr7/76G90CmPoR9INeQOhYu
+         /8nhuzDHR2Lcdrq/nE/DaslwZrnkXl8cmfnZkkM9dD+G3HHqMq3vUPbKF6eFJQnrD4zF
+         zNE7IBm/j3IVuEM3UScTeqTVl8o6Nn0UhZCekGFUDmdxIl13DICEbieLWyVFK28GpoIg
+         DlKw==
+X-Forwarded-Encrypted: i=1; AJvYcCUDxHFtjdI4J/PwDZQCtgH6k5VB3veLLi5A5NTzmHuRr/Ayju7naBb0vwsSdRqtEQ1s6wpmAsIys1l3BehV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhYtIZBzDj0SE8StDbUBpqzR1bhavChK1h7+hEIv+zolT46kN3
+	CQUyA44AcK0So3Auwtz06RFtPLgeoq2WLqbJZku4n0LnN0eBOYyUgE6tklj72zU=
+X-Google-Smtp-Source: AGHT+IGdUPJ0kntVLqGy38/xVOfnhtlhCAG5dhoWW0n7t+wosHXX10r29uCX8RKPxTxaIWkYlo/tmw==
+X-Received: by 2002:a05:6512:31c4:b0:539:8f68:e034 with SMTP id 2adb3069b0e04-539ab8c888cmr1283317e87.54.1728039846982;
+        Fri, 04 Oct 2024 04:04:06 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef80:e3b7:7a6d:7c39:3d94])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99103b36d0sm211170566b.137.2024.10.04.04.04.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Oct 2024 04:04:06 -0700 (PDT)
+Date: Fri, 4 Oct 2024 13:04:02 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Johan Hovold <johan@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: sc8280xp-x13s: model the PMU of
+ the on-board wcn6855
+Message-ID: <Zv_Lok1BT1Hg13dC@linaro.org>
+References: <20240930103041.49229-1-brgl@bgdev.pl>
+ <20240930103041.49229-4-brgl@bgdev.pl>
+ <Zv565olMDDGHyYVt@hovoldconsulting.com>
+ <CAMRc=Mc9jMe=hSXmcRLLX61abUjetCRZVeOK3G31vdx5JQNNMQ@mail.gmail.com>
+ <CAMRc=Mde8rGT+81ViTX0Qj2sDrD59dkLHeUZd1xkWO_H=QvC0Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20241004-venus_sc7280-v1-1-4d7d8fd7e95b@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAO7I/2YC/0XMQQ6CMBCF4auQWTvJtEUErmKIaesUG7VAK8SEc
- HerLFz+L3nfComj5wRtsULkxSc/hBziUIC96dAz+mtukCRLQaRw4TCnS7InWRNWpdSVqYV2LCB
- fxsjOv3/cuds78jRn9bWPf7QtviQ1QuFkn1XZENrHYO9oh+B8n5Ckapwio405touAbts+qnQnK
- 64AAAA=
-X-Change-ID: 20241003-venus_sc7280-642a6b81afe1
-To: <cros-qcom-dts-watchers@chromium.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Vedang Nagar <quic_vnagar@quicinc.com>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728039165; l=1178;
- i=quic_vnagar@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=pIzOVuVkhc6kXYknrVsMeJOUS3LdK2O+DEcJWZ9sVxw=;
- b=KOHoooR36wnmJL8Y1riiFMamayZK1AvTbW0biugMb1sjHf0GZRig97I6xSop4n9H6i2HbSj7q
- bvqyOnHmnc0BesOVGBqQOegvk9bfczjI+lEqOST363j4+Zb7jCgD4ic
-X-Developer-Key: i=quic_vnagar@quicinc.com; a=ed25519;
- pk=GHqLT8NPue4v+CDHbZork8Ps39CBHq345GQKvCZ1glE=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: c6tkVEw-SvAoFOS9x-evQZjBokLytgrM
-X-Proofpoint-ORIG-GUID: c6tkVEw-SvAoFOS9x-evQZjBokLytgrM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=4 mlxscore=4 clxscore=1011
- bulkscore=0 spamscore=4 adultscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 suspectscore=0 mlxlogscore=133
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410040078
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=Mde8rGT+81ViTX0Qj2sDrD59dkLHeUZd1xkWO_H=QvC0Q@mail.gmail.com>
 
-Enable the venus node on Qualcomm sc7280. It was made disabled
-earlier to avoid bootup crash, which is fixed now with [1].
+On Thu, Oct 03, 2024 at 05:16:59AM -0700, Bartosz Golaszewski wrote:
+> On Thu, 3 Oct 2024 13:38:35 +0200, Bartosz Golaszewski <brgl@bgdev.pl> said:
+> > On Thu, Oct 3, 2024 at 1:07 PM Johan Hovold <johan@kernel.org> wrote:
+> >>
+> >> Without this patch I'm seeing an indefinite probe deferral with
+> >> 6.12-rc1:
+> >>
+> >>         platform 1c00000.pcie:pcie@0:wifi@0: deferred probe pending: pci-pwrctl-pwrseq: Failed to get the power sequencer
+> >>
+> >> Can you please look into that and make sure that the existing DT
+> >> continues to work without such warnings.
+> >>
+> >
+> > Ah, dammit, I missed the fact that X13s already has this node defined
+> > so PCI pwrctl will consume it and try to get the power sequencer
+> > handle. I'm wondering how to tackle it though... It will most likely
+> > require some kind of a driver quirk where we check if we have the PMU
+> > node and if not, then don't try to set up power sequencing. Any other
+> > ideas?
+> >
+> 
+> This is untested but would it make sense?
+> 
+> diff --git a/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
+> b/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
+> index a23a4312574b..071ee77c763d 100644
+> --- a/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
+> +++ b/drivers/pci/pwrctl/pci-pwrctl-pwrseq.c
+> @@ -3,6 +3,7 @@
+>   * Copyright (C) 2024 Linaro Ltd.
+>   */
+> 
+> +#include <linux/cleanup.h>
+>  #include <linux/device.h>
+>  #include <linux/mod_devicetable.h>
+>  #include <linux/module.h>
+> @@ -87,7 +88,31 @@ static struct platform_driver pci_pwrctl_pwrseq_driver = {
+>  	},
+>  	.probe = pci_pwrctl_pwrseq_probe,
+>  };
+> -module_platform_driver(pci_pwrctl_pwrseq_driver);
+> +
+> +static int __init pci_pwrctl_pwrseq_init(void)
+> +{
+> +	/*
+> +	 * Old device trees for the Lenovo X13s have the "pci17cb,1103" node
+> +	 * defined but don't use power sequencing yet. If we register this
+> +	 * driver, it will match against this node and lead to emitting of
+> +	 * a warning in the kernel log when we cannot get the power sequencing
+> +	 * handle. Let's skip registering the platform driver if we're on X13s
+> +	 * but don't have the PMU node.
+> +	 */
+> +	if (of_machine_is_compatible("lenovo,thinkpad-x13s")) {
+> +		struct device_node *dn __free(device_node) =
+> +			of_find_compatible_node(NULL, NULL, "qcom,wcn6855-pmu");
+> +		if (!dn)
+> +			return 0;
+> +	}
+> +
+> +	return platform_driver_register(&pci_pwrctl_pwrseq_driver);
+> +}
+> +
+> +static void __exit pci_pwrctl_pwrseq_exit(void)
+> +{
+> +	platform_driver_unregister(&pci_pwrctl_pwrseq_driver);
+> +}
+> 
+>  MODULE_AUTHOR("Bartosz Golaszewski <bartosz.golaszewski@linaro.org>");
+>  MODULE_DESCRIPTION("Generic PCI Power Control module for power
+> sequenced devices");
+> 
+> X13s is the only platform that would use one of the compatibles supported by
+> this driver before power sequencing so it should be a one-off quirk.
+> 
 
-[1]
-https://lore.kernel.org/linux-media/20231201-sc7280-venus-pas-v3-2-bc132dc5fc30@fairphone.com/
+I'm guessing the pci17cb,1107 node in x1e80100-lenovo-yoga-slim7x is
+also affected?
 
-Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+Maybe you can check if the node has one of the -supply properties and
+return -ENODEV from pci_pwrctl_pwrseq_probe() otherwise?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 3d8410683402fd4c03c5c2951721938fff20fc77..59dafbeeab1dfd6e1b021335ba1b04767d6c24e5 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -4288,8 +4288,6 @@ venus: video-codec@aa00000 {
- 			iommus = <&apps_smmu 0x2180 0x20>;
- 			memory-region = <&video_mem>;
- 
--			status = "disabled";
--
- 			video-decoder {
- 				compatible = "venus-decoder";
- 			};
-
----
-base-commit: 81ee62e8d09ee3c7107d11c8bbfd64073ab601ad
-change-id: 20241003-venus_sc7280-642a6b81afe1
-prerequisite-change-id: 20240913-qcm6490-clock-configs-0239f30babb5:v1
-prerequisite-patch-id: faac726ebdf08240ab0913132beb2c620e52a98a
-
-Best regards,
--- 
-Vedang Nagar <quic_vnagar@quicinc.com>
-
+Thanks,
+Stephan
 
