@@ -1,112 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-33117-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33118-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36ED299024D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 13:45:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A26CD99038E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 15:08:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5FB532848E4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 11:45:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1C7E31F226ED
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 13:08:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80322157484;
-	Fri,  4 Oct 2024 11:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 507C4212F0B;
+	Fri,  4 Oct 2024 13:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HjR8GugK"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YLRrfz6q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90B2115990E
-	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Oct 2024 11:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA94212EF7;
+	Fri,  4 Oct 2024 13:07:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728042303; cv=none; b=RzA8n95Eu3LuTc2zxyDH2ObmQk7H1QPJMM6ckw9wuW3M4BSYEa4eQs62ga8XzdFvip3R9aR3CJ/DYTK/EMydBOv83ARoV81S4O8jDd5I6v15P7DKPJ/HM/Bs6UtfgEjbbTDtLQSQjpIhI2tEcVHjk81gihAKSYfzwX+3IWitKYg=
+	t=1728047265; cv=none; b=dwNFog7mjTExiS0RlrqE8o5p3/6lY8g3gF49RW7GqavSEOxNOP26XkR5f02YQLbASURF8Hev3WchnVRYbAF9Oke+QU+XxLt2CdfTsCfo88LebsKHI8SIF2D7AKGrDgbuLB3itCNzfp7UnP3nvVo5UBAXtO8DBoIzWtHowvBWIk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728042303; c=relaxed/simple;
-	bh=ddGvXf1L/Fq3c4RMPyxrOA14cqgWI9P90J4zJ4pJs4I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JsGJIry7yye/SgqUXPygZiXOOkWbPcjSvgf/XIy43vcerGi5zoih+pEIjwd6pFQpBovpxC7su69ZIERCDSaZWYeuAifd2t/tbVSGzbBmOxJdviMUvFjvl8dSSzJL+VH1tKO5wWT+xBEPH+D6vPPZNBDRrTuayyjYgSofK1fEwa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HjR8GugK; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2fad15b3eeeso24100751fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 04 Oct 2024 04:45:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728042299; x=1728647099; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Khwkr05lsMPVSpq7TCjaX0gPVi7sWovxm4CAOdt4/3s=;
-        b=HjR8GugKRCDjLPeodO8HloyjgQ1OLPxVoLDlQlXKO2iSZOkvjJy0DTvLv2+4rxk8A2
-         9QtantMsXz4bxkjCWgpec8Nhg9JuUgDOeTjdVEFVgGtnNqcOMvwq36OgW1nPFYPT2760
-         H7fUVJRbq7EXeYfn7sEZMaTr1OYR5cJZuYS+tpPdlNKEtALPfKBeh9XkJ/e0Ta61XMXh
-         c6QGKeRXtjX5gB1uBpNfUrarXzxpsKiV52MAsiv86aduOF4HO7FMIT67lAttqYVjp6Ak
-         EoeC3GBL1oqtoKOPwM9D7toIcqNiuokz8gBOFcgK6dl/x0Xsbosk7zgOdMuVK+3hc5uu
-         If+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728042299; x=1728647099;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Khwkr05lsMPVSpq7TCjaX0gPVi7sWovxm4CAOdt4/3s=;
-        b=USr4HHbsIjJiQlHLpkccf7ANGF44bIO/tpFa8gx7B2W9x3d6YkU/ppmxsZQsQUcjSq
-         BGQNrwdhU1qzWkyY+V6RCaL2+W37eEbvFd4cbvKXigD/WDK5Ur/m7eMT7TyUfdjsay3y
-         JkeaNd99UfbV1Pw5//WmO8vEn1/wLWhH2PQ0BxHcyQVmon3PmFdLn8HnmQP876vgZPoM
-         W+fxh0DnwspR8Ukt+ZwjPjG+QeIKUbGbVX8ETrhXzf9RBMS1Sx0JHHatRT5eovBXTTwz
-         ME+moigDKzSflhsDvnrmT9J7fSJQwowINgttfkmfZEH3RTigTPAN7ZnZ6apMwguhVncU
-         aWiA==
-X-Gm-Message-State: AOJu0Yzh1w3VB6yZdk1xrLlWLzo5MS+44+vPC4NbvF/sXnjvBq3/MmnQ
-	TwnAZkMLaL/D4WYkvz819IU0M72Ol+K6JIqKQG/sqTaJ7jc4Hw1n6xKakZYlROhSEjNYcxtXGmG
-	7l96ja3Ij+UYnmymAHkRsuG9b9VpGs5kb+vf/LHfEevXosLgCeAE=
-X-Google-Smtp-Source: AGHT+IGiTQzYERLjm/jzUGh/crV6ATYuQpv4nXIEVrS7JrXOOcQzJB/z1NXK08Yox/oqqZ9WwDQ8tFMFsN0Zrte3h1I=
-X-Received: by 2002:a05:651c:b22:b0:2fa:d4c1:3b6b with SMTP id
- 38308e7fff4ca-2faf3d74e2cmr12168961fa.33.1728042299452; Fri, 04 Oct 2024
- 04:44:59 -0700 (PDT)
+	s=arc-20240116; t=1728047265; c=relaxed/simple;
+	bh=bPu5SGvS9XtlUq9rH2JjvJOk4vEDv0CFKtmqfKKByTc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BH895/7WAADGW1NG7Xizu4zqbq5QXEywvf+B54YTJAbJvr1PT+t3nx4HqqUuljJV3clj8KtQoq6kNviD98b1P8QpYaOnxXaTgzMmemIpK7GOGd0tOfN4Ur2JyfcbOX+TlXLsPmJpDYLTeNvMYZpDTrhpF2wjBPKk+EFdviKYc40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YLRrfz6q; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494ACDAn021335;
+	Fri, 4 Oct 2024 13:07:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Mb3Asfdk0E60FJXI/xdUUy1rmt1HGeVOOZpP7vUIcb0=; b=YLRrfz6qTpubOMyL
+	pjug6nKYmQC4Sy46gBE2Jz4oJ6z9ePRn7COw8/skXljwPjUSywbtHwTXgW4H2knb
+	H/6aljcIPXLnaQhwgOeQmSB4VHhGKUqs/i4tfotmS6POYevv/D6pbteyWPk5EogC
+	Z2qpUpDKUl4Hr6+HCX5cINrzTVhb+nWsirlWsMp3M1ggcOLt3TBDbjZa/fPuYi3I
+	lkW3hx3KJxVHHfHPAKTMmkAeYJJKiwgGV9xK23uctbsdLJWdtHANcarNCMZ2ifkJ
+	lkc1oMjPNL1MggaHRq9ZF6KAdxewhsnsvW6oiPh5A59bQ34+mgYjDhSzqkqFawQP
+	gjPzJw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205pa6bj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 04 Oct 2024 13:07:19 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494D7HX5021541
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 4 Oct 2024 13:07:17 GMT
+Received: from [10.216.10.52] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 4 Oct 2024
+ 06:07:08 -0700
+Message-ID: <6c0118b9-f883-4fb5-9e69-a9095869d37f@quicinc.com>
+Date: Fri, 4 Oct 2024 18:36:59 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241002232804.3867-1-exxxxkc@getgoogleoff.me> <20241002232804.3867-5-exxxxkc@getgoogleoff.me>
-In-Reply-To: <20241002232804.3867-5-exxxxkc@getgoogleoff.me>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 4 Oct 2024 13:44:47 +0200
-Message-ID: <CACRpkdZnBBAEgHZ=HShwvaXaN-6icC5hzwHqDNWWy_PKJDh+Fw@mail.gmail.com>
-Subject: Re: [PATCH v5 4/5] pinctrl: qcom: ipq5018: allow it to be bulid on arm32
-To: Karl Chan <exxxxkc@getgoogleoff.me>, Arnd Bergmann <arnd@arndb.de>
-Cc: linux-arm-msm@vger.kernel.org, andersson@kernel.org, 
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: RFC: Advice on adding support for Qualcomm IPQ9574 SoC Ethernet
+To: Andrew Lunn <andrew@lunn.ch>
+CC: <netdev@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S.
+ Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        "Jakub
+ Kicinski" <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring
+	<robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Russell King <linux@armlinux.org.uk>,
+        Jacob Keller <jacob.e.keller@intel.com>,
+        Bhupesh Sharma
+	<bhupesh.sharma@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <vsmuthu@qti.qualcomm.com>,
+        <arastogi@qti.qualcomm.com>, <linchen@qti.qualcomm.com>,
+        <john@phrozen.org>, Luo Jie
+	<quic_luoj@quicinc.com>,
+        Pavithra R <quic_pavir@quicinc.com>,
+        "Suruchi
+ Agarwal (QUIC)" <quic_suruchia@quicinc.com>,
+        "Lei Wei (QUIC)"
+	<quic_leiwei@quicinc.com>
+References: <f0f0c065-bf7c-4106-b5e2-bfafc6b52101@quicinc.com>
+ <d2929bd2-bc9e-4733-a89f-2a187e8bf917@quicinc.com>
+ <817a0d2d-e3a6-422c-86d2-4e4216468fe6@lunn.ch>
+ <c7d8109d-8f88-4f4c-abb7-6ebfa1f1daa3@quicinc.com>
+ <febe6776-53dc-454d-83b0-601540e45f78@lunn.ch>
+Content-Language: en-US
+From: Kiran Kumar C.S.K <quic_kkumarcs@quicinc.com>
+In-Reply-To: <febe6776-53dc-454d-83b0-601540e45f78@lunn.ch>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XFWGmAu-Zw8ktg_9Gr-qHbmlV4FKyvV7
+X-Proofpoint-ORIG-GUID: XFWGmAu-Zw8ktg_9Gr-qHbmlV4FKyvV7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
+ impostorscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ malwarescore=0 mlxlogscore=999 priorityscore=1501 bulkscore=0 mlxscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410040094
 
-On Thu, Oct 3, 2024 at 1:29=E2=80=AFAM Karl Chan <exxxxkc@getgoogleoff.me> =
-wrote:
 
-> There are some ipq5018 based device's firmware only can able to boot
-> arm32 but the pinctrl driver dont allow it to be compiled on
-> arm32.Therefore this patch needed for those devices.
->
-> Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
-(...)
-> -       depends on ARM64 || COMPILE_TEST
-> +       depends on ARM || ARM64 || COMPILE_TEST
 
-Can we get some more context for this?
+On 10/4/2024 12:12 AM, Andrew Lunn wrote:
+>> Agree that switchdev is the right model for this device. We were
+>> planning to enable base Ethernet functionality using regular
+>> (non-switchdev) netdevice representation for the ports initially,
+>> without offload support. As the next step, L2/VLAN offload support using
+>> switchdev will be enabled on top. Hope this phased approach is fine.
+> 
+> Since it is not a DSA switch, yes, a phased approach should be O.K.
+> 
 
-Is this another one of those cases where the SoC is actually a
-64bit core but vendors just choose to run it in 32bit mode because
-that is what they want or what is the reason here? AFAIK
-IPQ5018 is always Cortex-A53?
+Ok.
 
-I just want to know if this is something we should encourage
-or leave out-of-tree.
+>>>> 3) PCS driver patch series:
+>>>>         Driver for the PCS block in IPQ9574. New IPQ PCS driver will
+>>>>         be enabled in drivers/net/pcs/
+>>>> 	Dependent on NSS CC patch series (2).
+>>>
+>>> I assume this dependency is pure at runtime? So the code will build
+>>> without the NSS CC patch series?
+>>
+>> The MII Rx/Tx clocks are supplied from the NSS clock controller to the
+>> PCS's MII channels. To represent this in the DTS, the PCS node in the
+>> DTS is configured with the MII Rx/Tx clock that it consumes, using
+>> macros for clocks which are exported from the NSS CC driver in a header
+>> file. So, there will be a compile-time dependency for the dtbindings/DTS
+>> on the NSS CC patch series. We will clearly call out this dependency in
+>> the cover letter of the PCS driver. Hope that this approach is ok.
+> 
+> Since there is a compile time dependency, you might want to ask for
+> the clock patches to be put into a stable branch which can be merged
+> into netdev.
+> 
 
-Yours,
-Linus Walleij
+Sure. We will request for such a stable branch merge once the NSS CC
+patches are accepted by the reviewers. Could the 'net' tree be one such
+stable branch option to merge the NSS CC driver?
+
+
+> Or you need to wait a kernel cycle.>
+Understand.
+
+>    Andrew
 
