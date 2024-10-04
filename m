@@ -1,69 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-33149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2382E99100E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 22:17:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A753599114C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 23:24:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BBF991F27442
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:17:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 276491F23CB8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 21:24:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B5021DACB5;
-	Fri,  4 Oct 2024 19:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 43B2F1AE002;
+	Fri,  4 Oct 2024 21:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KZ4CEaZL"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I9GFOTkn"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C37F1C7612;
-	Fri,  4 Oct 2024 19:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841321448C1;
+	Fri,  4 Oct 2024 21:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728071560; cv=none; b=M2+wztAaX3qJQtVSz2lynjSLXeWgO3Ypxu/XBr3K3ycQEwrCu1BI9RgIPzMdzlwW33Ha6wH1wtAaskbbq4bEnAlszquat5+aW8ig0U6aKm6V7FWs6QILIyornVo6OIg+Q7q+ZHeMOr+IkmjR296jehhTtZXq9rj0nWNge4aIpnA=
+	t=1728077062; cv=none; b=DR100NvRXnGDk3Hqnmf8oV7vcv5ij/RKOy6rsHTstqxeRI7lZr6dYvjDObbpcNb4WJEruMbQusAksS1UsYThxL+Y8GLG9ejU0n+x8x4Y1MJhkEOQEWMEwO1Yh51DTyMbZ0CITGMylFoxUL4WzSpcAZZxE4e3j1LNNZKNjmGFVTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728071560; c=relaxed/simple;
-	bh=3Qf7N7Oa/RYSFMHjnt6wKKxCvCNRpA3mIiiOY1vPB3k=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sd/ZNbrcTM9sgPDwUelnX4Mjo6EwLvSZtjCtp314UjRB9HIGJxTtqg4GzDs3miWKDh93NGQviSsA+MiDxf/juHQkiOQzgth+DOUfHVulp3xuFO9YNrY0wJCov13VHrrhQh6vUJS0hONO0V7i7KjXIazoRq5un9fEYL/4XQC8jq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KZ4CEaZL; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1728077062; c=relaxed/simple;
+	bh=UPMCm5/nObHAr3O0W/7izltX4pJE/zinQhH+qCjfW2s=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=gXST+FprGsBJRUU6e2Yqac40IV81X3ay9G6Z/8AMlcQ1ctouaApLwSJr2OcIOPtVg48QBcAE7LltL25gCMr2JLpeQsyVLGp49GplkW0pNNyDOlXT/GBjEx9QXba7dFXvO5ARpQpIBL1PnN7F5c/IAThdUpxmb3pJL7dKNy0PAe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I9GFOTkn; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494BWS6A022414;
-	Fri, 4 Oct 2024 19:52:31 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494BHOBu029872;
+	Fri, 4 Oct 2024 21:24:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=GX4uEn00zKw7iT53262MrW
-	2Y1ED50HxMbsaFMpip2ds=; b=KZ4CEaZLqHvVxH6vhNSj6XYglGAZlrODTU34SB
-	6yXNkufsxK/2zrZGKTKvPruIdTnK9LxcHRDoFE0jLKtyYpaL0CZQuY8VN1P0UMGb
-	BA2JBQ6Cos0bC9d6/vZy+SUFz9W9KwD9b6+6DJ0v3TF4vkMVw0nnQ8vG0MCaeNdt
-	IAN8QPrCpx0WUJuNyGITA35Z+6HbtZx4A+eRoGFT8NmJWR0eaZc5SelpMr5y8oxl
-	oOAg6AqEvkA+Cbw4gAHuk8sus0IGfB2UvkmBSNoz/UaRQ5xmJSzMxC6CBG8ywoTE
-	ubVaCQ4YKV57NwQaG6oeoJcUR7KcWLiWSIg4WE2sTM2TEfdw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205ku5r9-1
+	:mime-version:subject:to; s=qcppdkim1; bh=2VIyCbs4MZo06o5b0xKA14
+	avwyYYm7KQiJNv/fQaSaw=; b=I9GFOTknZyuMsqbBeY4xxYMdw4gbWts8vOnI74
+	pev1YharhkexVj8brT10zU5M0ktQJWBxBQ3sixX/7Fgg9d7RjmrWXPErQX+DlWvu
+	AAZYmY6YiO0ogs9KbqmPqo6Sk2TYp1TRUK8znlSGOEb8wLNVKhurNycGr9z7Rbx1
+	Uosf3jrASv/d/nr8Vuvn72ZLHHwnZgPsH+Z09PodhNTm5KbTX5jmLcRvrBss1g+1
+	9TMO3EvoHxvL/OL9TNQdnuhViy6x1XgrCVSexPvFjom8A08DXN9s0GDzEe7pmMHk
+	V/PDSGKHcG2B5kqpoH5AhHpbBXHdA8f4XX+DP8cQqI6x76oA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205nk8yp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Oct 2024 19:52:30 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494JqTLM004674
+	Fri, 04 Oct 2024 21:24:15 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494LOD8N028159
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Oct 2024 19:52:29 GMT
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+	Fri, 4 Oct 2024 21:24:13 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 4 Oct 2024 12:52:28 -0700
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
-To: <quic_carlv@quicinc.com>
-CC: <ogabbay@kernel.org>, <corbet@lwn.net>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-doc@vger.kernel.org>,
-        <jacek.lawrynowicz@linux.intel.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Troy Hanson <quic_thanson@quicinc.com>
-Subject: [PATCH] accel/qaic: Add AIC080 support
-Date: Fri, 4 Oct 2024 13:52:09 -0600
-Message-ID: <20241004195209.3910996-1-quic_jhugo@quicinc.com>
+ 15.2.1544.9; Fri, 4 Oct 2024 14:24:09 -0700
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Mukesh Ojha
+	<quic_mojha@quicinc.com>
+Subject: [PATCH 0/6] Peripheral Image Loader support for Qualcomm SoCs
+Date: Sat, 5 Oct 2024 02:53:53 +0530
+Message-ID: <20241004212359.2263502-1-quic_mojha@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -71,95 +82,94 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+ nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MB78KD9SVRzxncK9GLChfi3s8JYb-VI4
-X-Proofpoint-ORIG-GUID: MB78KD9SVRzxncK9GLChfi3s8JYb-VI4
+X-Proofpoint-GUID: 77EW0ClZU_1vDkGcOli7ads2nLVa1IT7
+X-Proofpoint-ORIG-GUID: 77EW0ClZU_1vDkGcOli7ads2nLVa1IT7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- adultscore=0 malwarescore=0 suspectscore=0 priorityscore=1501
- clxscore=1015 lowpriorityscore=0 bulkscore=0 mlxscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410040137
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ malwarescore=0 impostorscore=0 clxscore=1011 phishscore=0 adultscore=0
+ spamscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
+ lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410040148
 
-Add basic support for the new AIC080 product. The PCIe Device ID is
-0xa080. AIC080 is a lower cost, lower performance SKU variant of AIC100.
-From the qaic perspective, it is the same as AIC100.
+Qualcomm is looking to enable remote processors on the SA8775p SoC
+running KVM Linux host and is currently trying to figure out an
+upstream-compatible solution for the IOMMU translation scheme problem it
+is facing when SoCs running with KVM. This issue arises due to
+differences in how IOMMU translation is currently handled on SoCs
+running Qualcomm EL2 hypervisor(QHEE) where IOMMU translation for any
+device is completely owned by it and the other issue is that remote
+processors firmware does not contain resource table where these IOMMU
+configuration setting will be present.
 
-Reviewed-by: Troy Hanson <quic_thanson@quicinc.com>
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
- Documentation/accel/qaic/aic080.rst | 14 ++++++++++++++
- Documentation/accel/qaic/index.rst  |  1 +
- drivers/accel/qaic/qaic_drv.c       |  4 +++-
- 3 files changed, 18 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/accel/qaic/aic080.rst
+Qualcomm SoCs running with the QHEE(EL2) have been utilizing the
+Peripheral Authentication Service (PAS) from its TrustZone (TZ) firmware
+to securely authenticate and reset via a single SMC call
+_auth_and_reset_.  This call first gets trapped to QHEE, which then
+makes a call to TZ for authentication. Once it is done, the call returns
+to QHEE, which sets up the IOMMU translation scheme for these remote
+processors and later brings them out of reset. The design of the
+Qualcomm EL2 hypervisor dictates that the Linux host OS running at EL1
+is not allowed to set up IOMMU translation for remote processors,
+and only a single stage is being configured for them.
 
-diff --git a/Documentation/accel/qaic/aic080.rst b/Documentation/accel/qaic/aic080.rst
-new file mode 100644
-index 000000000000..d563771ea6ce
---- /dev/null
-+++ b/Documentation/accel/qaic/aic080.rst
-@@ -0,0 +1,14 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
-+
-+===============================
-+ Qualcomm Cloud AI 80 (AIC080)
-+===============================
-+
-+Overview
-+========
-+
-+The Qualcomm Cloud AI 80/AIC080 family of products are a derivative of AIC100.
-+The number of NSPs and clock rates are reduced to fit within resource
-+constrained solutions. The PCIe Product ID is 0xa080.
-+
-+As a derivative product, all AIC100 documentation applies.
-diff --git a/Documentation/accel/qaic/index.rst b/Documentation/accel/qaic/index.rst
-index ad19b88d1a66..967b9dd8bace 100644
---- a/Documentation/accel/qaic/index.rst
-+++ b/Documentation/accel/qaic/index.rst
-@@ -10,4 +10,5 @@ accelerator cards.
- .. toctree::
- 
-    qaic
-+   aic080
-    aic100
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index bf10156c334e..f139c564eadf 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -34,6 +34,7 @@
- 
- MODULE_IMPORT_NS(DMA_BUF);
- 
-+#define PCI_DEV_AIC080			0xa080
- #define PCI_DEV_AIC100			0xa100
- #define QAIC_NAME			"qaic"
- #define QAIC_DESC			"Qualcomm Cloud AI Accelerators"
-@@ -365,7 +366,7 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev, const struct pci_de
- 		return NULL;
- 
- 	qdev->dev_state = QAIC_OFFLINE;
--	if (id->device == PCI_DEV_AIC100) {
-+	if (id->device == PCI_DEV_AIC080 || id->device == PCI_DEV_AIC100) {
- 		qdev->num_dbc = 16;
- 		qdev->dbc = devm_kcalloc(dev, qdev->num_dbc, sizeof(*qdev->dbc), GFP_KERNEL);
- 		if (!qdev->dbc)
-@@ -607,6 +608,7 @@ static struct mhi_driver qaic_mhi_driver = {
- };
- 
- static const struct pci_device_id qaic_ids[] = {
-+	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, PCI_DEV_AIC080), },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, PCI_DEV_AIC100), },
- 	{ }
- };
+To make the remote processors’ bring-up (PAS) sequence
+hypervisor-independent, the auth_and_reset SMC call is now entirely
+handled by TZ. However, the problem of IOMMU handling still remains with
+the KVM host, which has no knowledge of the remote processors’ IOMMU
+configuration.
+
+We have looked up one approach where SoC remoteproc device tree could
+contain resources like iommus for remoteproc carveout and qcom,devmem
+specific binding for device memory needed for remoteproc and these
+properties are optional and will only be overlaid by the firmware if it
+is running with non-QHEE based hypervisor like KVM.
+
+- Patch 1/6 adds the iommus and qcom,devmem binding for PAS common yaml.
+- Patch 2/6 and 3/6 add helper function to IOMMU map and unmap carveout
+  and device memory region.
+- Patch 4/6 adds a function to parse individual field of qcom,devmem property.
+- Patch 5/6 add helpers to create/destroy SHM bridge for remoteproc
+  carveout and to get memory from tzmem SHM bridge pool for remoteproc
+  firmware metadata.
+- Patch 6/6 enable all the required support to enable remoteproc for
+  non-QHEE hypervisor based systems like KVM host via parsing the iommus
+  properties and mapping/unmapping carveout and device memory based on
+  it.
+
+Komal Bajaj (1):
+  remoteproc: qcom: Add iommu map_unmap helper function
+
+Mukesh Ojha (2):
+  remoteproc: qcom: Add support of SHM bridge to enable memory
+    protection
+  remoteproc: qcom: Enable map/unmap and SHM bridge support
+
+Shiraz Hashim (3):
+  dt-bindings: remoteproc: qcom,pas-common: Introduce iommus and
+    qcom,devmem property
+  remoteproc: qcom: Add helper function to support IOMMU devmem
+    translation
+  remoteproc: qcom: Add support to parse qcom,devmem property
+
+ .../bindings/remoteproc/qcom,pas-common.yaml  |  42 +++++
+ .../bindings/remoteproc/qcom,sa8775p-pas.yaml |  20 +++
+ drivers/firmware/qcom/qcom_scm.c              |  29 +++-
+ drivers/firmware/qcom/qcom_tzmem.c            |  14 +-
+ drivers/remoteproc/qcom_common.c              | 148 ++++++++++++++++++
+ drivers/remoteproc/qcom_common.h              |  38 +++++
+ drivers/remoteproc/qcom_q6v5_pas.c            | 140 ++++++++++++++++-
+ include/linux/firmware/qcom/qcom_scm.h        |   1 +
+ include/linux/firmware/qcom/qcom_tzmem.h      |  10 ++
+ 9 files changed, 423 insertions(+), 19 deletions(-)
+
 -- 
 2.34.1
 
