@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-33143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AC23990B71
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:29:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 75340990C6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:49:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D24EA280DAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 18:28:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3603E282526
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 18:49:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E0341DD554;
-	Fri,  4 Oct 2024 18:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0082621C190;
+	Fri,  4 Oct 2024 18:23:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fYeUm0t+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="McdwyXZq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FB71DD550;
-	Fri,  4 Oct 2024 18:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7E01F709F;
+	Fri,  4 Oct 2024 18:23:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728065985; cv=none; b=IEAOoD7J5pJpmmdd8KV1ylcW5u13ewRuKbXwjR5m+uZLsrsmKuhsxNjptkrkWBxqNuJg8yTLOTQ+3Lq5xlYzLA7UvMPiaC8bES7OVAFYqZuDZUg7yi1bwZKtEpJTumlJJ0tnRNq0fhCWFa5OIFhu9DT/pxSGBayKDOtnNzV4Fyg=
+	t=1728066193; cv=none; b=SS6J9mqFI/qhLXdImPYsDJ8YHTnDVpn+Q2j3+hn/AbazIFEq9rfiItOlkpmoc8GjmqaMW2P0fH/xlyneEwaw5b7czwC2WSYAfObd6xR7mbgGWPM3IUJGvjeQlAa+gOhjTnyTc0NaFGtsKzpWp2OVB4JjvCtr8kw2ocLktIJUmVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728065985; c=relaxed/simple;
-	bh=Zs8FiK2+g6dS1PHwS2EBiLXfQp4xLTz4U1HNtlqNgyI=;
+	s=arc-20240116; t=1728066193; c=relaxed/simple;
+	bh=LV6/8sInqNJQ94n/PHbBsBClTJET/v8G+eUKe4oEfnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tlsPiPBkEeUimOVSZ20qnCSGyrtGo3fQNHx3ZLKecTSl6Kk4ScqpAftH+XejTehgU/gGEuCeySUsYLx4/q7mdOK/zMH8NiT4Xe3tI9igZEdFmqYo2XGDVmTwzMk35PzAqFbzeTjGSX0c5VY5BKrCyNulbBs5lJhoCtxDsY9699U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fYeUm0t+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F3CC4CECC;
-	Fri,  4 Oct 2024 18:19:43 +0000 (UTC)
+	 MIME-Version:Content-Type; b=s3K8AJYcdIJqt3uFME4V8pEDeQi+zxLzaHP/cYS/7kyV6zGIzbVKDfn78nUf/vutrntok2dW+WvemVosd/RwjjYq5J94yYiO30MoQWEcsQN4+6dATwQNjcjzo7s1nKfs0e3PZPfcEV2s3aUvlgRkJlEsPGkst731wnWOfV4Yj2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=McdwyXZq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA905C4CEC6;
+	Fri,  4 Oct 2024 18:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728065984;
-	bh=Zs8FiK2+g6dS1PHwS2EBiLXfQp4xLTz4U1HNtlqNgyI=;
+	s=k20201202; t=1728066193;
+	bh=LV6/8sInqNJQ94n/PHbBsBClTJET/v8G+eUKe4oEfnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYeUm0t+0IIUM/tvO+BnYTQpoJOdLbU+M4XgYLjmgIML25QOo0f60tbjhOx85mkDI
-	 a5vOVTVZmEzgS6nxVrp3CMxcrHg8ClxPG/dG8juEsXWVdnAI7nLELtQTUlwJvXF26q
-	 DcqWR/tYNUdv/qPYm6HW8s1TEavvmFdSGPS0TTKYkPz6z1wRItSRJzt6pcPr1EPw5U
-	 Prj3xjVFImlEWqqGfbCN+MLli4g+Xkj2095EruPh4aoQ43LPth8UGXUnVjyVB65wUR
-	 caqlxgBCx7cZv2IIwZyKL6OzRaSjSR/BK+kVAWTh4NdZTSBitNofxcM5kGBAxjb7ih
-	 Y+t3lOECiw18A==
+	b=McdwyXZqyNir72k0duGxeAbq8mCXRN0EePJAhwN4rL6Q0lBg5MawYREKBuSOtLeHC
+	 dqrb/yoSD2TT32WPM+XQiUQLqv7OMhoIwsO7r5aVraicjmJV99vn4DQi0D00rP20VP
+	 6pr085/Gxev8CuWhSzDF+2upDMm795uyemSMJdfWphK7eL7y5MdzCBUd44ughesgxW
+	 g9c3f6BV3L+BNFBLQRR/c1k32PVyTrdUkqj/9AYkOOkol97Eg717nKSEuBL+UsYR+L
+	 dg8Xa0e7FXRhhI5dvDdrHKhj9o0QMoS3VdhZis20xQVJZa2bpGCIVztTG2rCknHThY
+	 lEUtJ1yy7KFOQ==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
@@ -55,12 +55,12 @@ Cc: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>,
 	bhelgaas@google.com,
 	linux-pci@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.11 40/76] PCI: qcom: Disable mirroring of DBI and iATU register space in BAR region
-Date: Fri,  4 Oct 2024 14:16:57 -0400
-Message-ID: <20241004181828.3669209-40-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.10 37/70] PCI: qcom: Disable mirroring of DBI and iATU register space in BAR region
+Date: Fri,  4 Oct 2024 14:20:35 -0400
+Message-ID: <20241004182200.3670903-37-sashal@kernel.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241004181828.3669209-1-sashal@kernel.org>
-References: <20241004181828.3669209-1-sashal@kernel.org>
+In-Reply-To: <20241004182200.3670903-1-sashal@kernel.org>
+References: <20241004182200.3670903-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,7 +70,7 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.11.2
+X-stable-base: Linux 6.10.13
 Content-Transfer-Encoding: 8bit
 
 From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
@@ -171,7 +171,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  3 files changed, 61 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 1b5aba1f0c92f..bc3a5d6b01779 100644
+index 250cf7f40b858..d59f607b71f17 100644
 --- a/drivers/pci/controller/dwc/pcie-designware.c
 +++ b/drivers/pci/controller/dwc/pcie-designware.c
 @@ -112,6 +112,7 @@ int dw_pcie_get_resources(struct dw_pcie *pci)
@@ -191,10 +191,10 @@ index 1b5aba1f0c92f..bc3a5d6b01779 100644
  			pci->atu_base = pci->dbi_base + DEFAULT_DBI_ATU_OFFSET;
  		}
 diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index 53c4c8f399c88..e518f81ea80cd 100644
+index f8e5431a207bd..ea3c22f713111 100644
 --- a/drivers/pci/controller/dwc/pcie-designware.h
 +++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -407,8 +407,10 @@ struct dw_pcie_ops {
+@@ -387,8 +387,10 @@ struct dw_pcie_ops {
  struct dw_pcie {
  	struct device		*dev;
  	void __iomem		*dbi_base;
@@ -206,10 +206,10 @@ index 53c4c8f399c88..e518f81ea80cd 100644
  	u32			num_ib_windows;
  	u32			num_ob_windows;
 diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 6f953e32d9907..0b3020c7a50a4 100644
+index 7fa1fe5a29e3d..28bfd8b38dc7a 100644
 --- a/drivers/pci/controller/dwc/pcie-qcom.c
 +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -45,6 +45,7 @@
+@@ -43,6 +43,7 @@
  #define PARF_PHY_REFCLK				0x4c
  #define PARF_CONFIG_BITS			0x50
  #define PARF_DBI_BASE_ADDR			0x168
@@ -217,7 +217,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  #define PARF_MHI_CLOCK_RESET_CTRL		0x174
  #define PARF_AXI_MSTR_WR_ADDR_HALT		0x178
  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
-@@ -52,8 +53,13 @@
+@@ -50,8 +51,13 @@
  #define PARF_LTSSM				0x1b0
  #define PARF_SID_OFFSET				0x234
  #define PARF_BDF_TRANSLATE_CFG			0x24c
@@ -232,7 +232,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  #define PARF_DEVICE_TYPE			0x1000
  #define PARF_BDF_TO_SID_TABLE_N			0x2000
  #define PARF_BDF_TO_SID_CFG			0x2c00
-@@ -108,7 +114,7 @@
+@@ -106,7 +112,7 @@
  #define PHY_RX0_EQ(x)				FIELD_PREP(GENMASK(26, 24), x)
  
  /* PARF_SLV_ADDR_SPACE_SIZE register value */
@@ -241,7 +241,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  
  /* PARF_MHI_CLOCK_RESET_CTRL register fields */
  #define AHB_CLK_EN				BIT(0)
-@@ -325,6 +331,50 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
+@@ -323,6 +329,50 @@ static void qcom_pcie_clear_hpc(struct dw_pcie *pci)
  	dw_pcie_dbi_ro_wr_dis(pci);
  }
  
@@ -292,7 +292,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  static void qcom_pcie_2_1_0_ltssm_enable(struct qcom_pcie *pcie)
  {
  	u32 val;
-@@ -541,8 +591,7 @@ static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
+@@ -553,8 +603,7 @@ static int qcom_pcie_init_1_0_0(struct qcom_pcie *pcie)
  
  static int qcom_pcie_post_init_1_0_0(struct qcom_pcie *pcie)
  {
@@ -302,7 +302,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  
  	if (IS_ENABLED(CONFIG_PCI_MSI)) {
  		u32 val = readl(pcie->parf + PARF_AXI_MSTR_WR_ADDR_HALT);
-@@ -629,8 +678,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
+@@ -644,8 +693,7 @@ static int qcom_pcie_post_init_2_3_2(struct qcom_pcie *pcie)
  	val &= ~PHY_TEST_PWR_DOWN;
  	writel(val, pcie->parf + PARF_PHY_CTRL);
  
@@ -312,7 +312,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  
  	/* MAC PHY_POWERDOWN MUX DISABLE  */
  	val = readl(pcie->parf + PARF_SYS_CTRL);
-@@ -812,13 +860,11 @@ static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
+@@ -837,13 +885,11 @@ static int qcom_pcie_post_init_2_3_3(struct qcom_pcie *pcie)
  	u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
  	u32 val;
  
@@ -327,7 +327,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  
  	writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
  		| SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
-@@ -914,8 +960,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+@@ -966,8 +1012,7 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
  	val &= ~PHY_TEST_PWR_DOWN;
  	writel(val, pcie->parf + PARF_PHY_CTRL);
  
@@ -337,7 +337,7 @@ index 6f953e32d9907..0b3020c7a50a4 100644
  
  	/* MAC PHY_POWERDOWN MUX DISABLE  */
  	val = readl(pcie->parf + PARF_SYS_CTRL);
-@@ -1124,14 +1169,11 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+@@ -1181,14 +1226,11 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
  	u32 val;
  	int i;
  
