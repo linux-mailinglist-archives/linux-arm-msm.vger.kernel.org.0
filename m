@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-33154-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33155-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EFC2991156
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 23:25:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id E975999115D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 23:25:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9C8631C23750
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 21:25:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 54796B240C0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 21:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F33C1B4F29;
-	Fri,  4 Oct 2024 21:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B61EB1D89F7;
+	Fri,  4 Oct 2024 21:24:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XleIe/8F"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hX1XYQ8v"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8561C876D;
-	Fri,  4 Oct 2024 21:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27FCD1D89EE;
+	Fri,  4 Oct 2024 21:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728077075; cv=none; b=S1pWJHq8/EMu6VSgFpj4n+eJ/cPI0d/Q4Pqdrc7boCMBPh2WiVoUQc0O3XvY2jCx0OJGkdUIOhpFN1CN0y9gHHDIwHOllmygFAXPL9gPMp9S+ryXVUBKsYCVF6BGf4nymEY6hj+1AWeM7pKzmkOIg912SwXI7rgPKIoGFqGVv9k=
+	t=1728077078; cv=none; b=hpw1qG9Jo13/A+xPFN+dT7jP8WhjsmYMP0xyZc2sBKpyD1X4BEdmcXhXGawCWxQ6mpgHUUK2R2EPY6wlOyzO9EKbS8hRW0lsJg4ey5K9c5YaueBE2pdYpNU8zKfs3lhXbwZZucFvntOhH6sa1UNwT6VmvHv6OgoBeNrb+iO5KmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728077075; c=relaxed/simple;
-	bh=zoxv6uAiNsvDtClhZxDLHvjQsP4e+K2ToA4yyF9n5T4=;
+	s=arc-20240116; t=1728077078; c=relaxed/simple;
+	bh=Ag7eWOnfsome4cLzCawlMX/vVVMLOEIP63UtPxZ4AXk=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NyVgonpNRcCXDsoup4S015oyfDeb+Apb/ca2QpFiMHW3k6TKaqSzm7Zp+WlWAFgiery5pfBAs8C99W5oVAo4DB2zIrOU8KPDalLjW3LMsflqYk6ayo63iLEf9q4uJTCoxmLoQw2WDqYAqQvSxRoNh26L6MsMJCYY907I0DhMVGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XleIe/8F; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=n1qcNPW1JkZuHY+ygACWjkwV7W5zwD7FpWKOGAX1upXcSh08T01W6lqD+4BJnIb5Y+9Kgb3sbRT54GRms12wPXpelFszkQ54rqvwJwQcfP6wrPTvKO/sNq2O6VrzJd0Ae/PSTQsmYW93pQ0pSZglI6ueID0d9SiUedmRr4aI7iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hX1XYQ8v; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494B5gdW000857;
-	Fri, 4 Oct 2024 21:24:30 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 494A4g2L031989;
+	Fri, 4 Oct 2024 21:24:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MkSMFqmq9KpqjkV/7DIt+XPICfTTXaFosim8OCZPukg=; b=XleIe/8F23w5o8Gh
-	shP1Rj6kqDZqZ46nX+tdsW/Y9hLOK+oD6ywI73uvpEmsXExVdwcMNxpxTc+Hobpl
-	BU7q39DmJd5R5R5bPv1kkgBHI72rySwYVCY+yHeYKU2RugwSvhokXNrREjBIcF/t
-	Sgq8yC83o4hf5ix/4Wk56Kzf1Bm4V96l6OgTlfFUJNhTEFLhOCPiO78xFyemTZTe
-	P60YbPvJETiiVXJDsL3Ciyx8MdfZjR3Ohmaj9GS0/0AIh47Dqu4YW0l2YpEQYpX7
-	SaWtKhdtD126K+43SxRB1AjHOweSIQmWCJxdzaZG5eZduhpXir3QDfOQwQ4Tnrf0
-	fZfNEQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205f39aq-1
+	ueMGGG77ORz1rgpGmJ3mMELP2opMMlzqDh7mhU5mBoc=; b=hX1XYQ8vmR55OoPP
+	sMHOOwVUMrD8pUQE7zUvtEzUspIMIhgRln44XZlF9AstZc5C2PxF1p1SkDGQWg1K
+	0+wzL+wWE4OKTUNOYS59pXjlemgzQ//cdQ3lPoiPsp96MVdvfMB06A69mWRIQGd2
+	gMZVjkOg7/AQi396iuO03ynXCAw5UbsSjKvRKm+AahYIaN6ZhocrK7amcq7yUVwf
+	lyHXqFLW3isGfDLqSi35r97jhHnhe1FXbqTuSm6j3i24wIVJABM/tCEybCNxd4hr
+	z6tVDLpaYBFz6R5+gjVaYOdxIHeK8udaBzwlu6JLiHeEjbMSldvJWQ4UdRoMkalk
+	l6MNXg==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42205f39ax-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 04 Oct 2024 21:24:30 +0000 (GMT)
+	Fri, 04 Oct 2024 21:24:34 +0000 (GMT)
 Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494LOTTh028848
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 494LOXXT005498
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 4 Oct 2024 21:24:29 GMT
+	Fri, 4 Oct 2024 21:24:33 GMT
 Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
  nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 4 Oct 2024 14:24:25 -0700
+ 15.2.1544.9; Fri, 4 Oct 2024 14:24:29 -0700
 From: Mukesh Ojha <quic_mojha@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Mathieu Poirier
@@ -75,9 +75,9 @@ CC: <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
         Shiraz Hashim
 	<quic_shashim@quicinc.com>,
         Mukesh Ojha <quic_mojha@quicinc.com>
-Subject: [PATCH 3/6] remoteproc: qcom: Add helper function to support IOMMU devmem translation
-Date: Sat, 5 Oct 2024 02:53:56 +0530
-Message-ID: <20241004212359.2263502-4-quic_mojha@quicinc.com>
+Subject: [PATCH 4/6] remoteproc: qcom: Add support to parse qcom,devmem property
+Date: Sat, 5 Oct 2024 02:53:57 +0530
+Message-ID: <20241004212359.2263502-5-quic_mojha@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241004212359.2263502-1-quic_mojha@quicinc.com>
 References: <20241004212359.2263502-1-quic_mojha@quicinc.com>
@@ -93,8 +93,8 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nasanex01c.na.qualcomm.com (10.45.79.139)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: rEJPNYJazC8d2KQD9hj8ViYb6dLxOmA-
-X-Proofpoint-ORIG-GUID: rEJPNYJazC8d2KQD9hj8ViYb6dLxOmA-
+X-Proofpoint-GUID: X-U1aWEMgeaLRZT-cdi_3nhg9i6jfHUs
+X-Proofpoint-ORIG-GUID: X-U1aWEMgeaLRZT-cdi_3nhg9i6jfHUs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
@@ -106,184 +106,104 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malware
 
 From: Shiraz Hashim <quic_shashim@quicinc.com>
 
-Qualcomm SoCs runnning with Qualcomm EL2 hypervisor(QHEE), IOMMU
-translation set up for remote processors is managed by QHEE itself
-however, for a case when these remote processors has to run under KVM
-hypervisor, IOMMU translation need to setup from Linux remoteproc driver
-before it is brought up.
+Qualcomm remote processors firmware does not contain resource table data
+where devmem setting information should actually be present and for its
+SoC running with Qualcomm EL2 hypervisor(QHEE), IOMMU translation for
+remoteproc is managed by QHEE and it has all the IOMMU resource
+information available to it to apply the settings however, when the same
+SoCs run with KVM hypervisor these translation needs to setup by
+remoteproc PAS driver and required setting information is being overlaid
+from boot firmware to remoteproc device tree node.
 
-Add qcom_devmem_info and qcom_devmem_table data structure and make a
-common helper functions which caller can call if these translation need
-to be taken care by the driver to enable iommu devmem access for
-remoteproc processors.
+Add helper function which parses qcom,devmem information.
 
 Signed-off-by: Shiraz Hashim <quic_shashim@quicinc.com>
 Co-developed-by: Mukesh Ojha <quic_mojha@quicinc.com>
 Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 ---
- drivers/remoteproc/qcom_common.c | 96 ++++++++++++++++++++++++++++++++
- drivers/remoteproc/qcom_common.h | 35 ++++++++++++
- 2 files changed, 131 insertions(+)
+ drivers/remoteproc/qcom_q6v5_pas.c | 55 ++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_common.c b/drivers/remoteproc/qcom_common.c
-index 1c7887dc65b4..644920972b58 100644
---- a/drivers/remoteproc/qcom_common.c
-+++ b/drivers/remoteproc/qcom_common.c
-@@ -658,5 +658,101 @@ int qcom_map_unmap_carveout(struct rproc *rproc, phys_addr_t mem_phys, size_t me
- }
- EXPORT_SYMBOL_GPL(qcom_map_unmap_carveout);
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index ef82835e98a4..bdb071ab5938 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -34,6 +34,7 @@
+ #define ADSP_DECRYPT_SHUTDOWN_DELAY_MS	100
  
-+/**
-+ * qcom_map_devmem() - Map the device memories needed by Remoteproc using IOMMU
-+ *
-+ * When Qualcomm EL2 hypervisor(QHEE) present, device memories needed for remoteproc
-+ * processors is managed by it and Linux remoteproc drivers should not call
-+ * this and its respective unmap function in such scenario. This function
-+ * should only be called if remoteproc IOMMU translation need to be managed
-+ * from Linux side.
-+ *
-+ * @rproc: rproc handle
-+ * @devmem_table: list of devmem regions to map
-+ * @use_sid: decision to append sid to iova
-+ * @sid: SID value
-+ */
-+int qcom_map_devmem(struct rproc *rproc, struct qcom_devmem_table *devmem_table,
-+		    bool use_sid, unsigned long sid)
+ #define MAX_ASSIGN_COUNT 3
++#define DEVMEM_ENTRY_SIZE 4
+ 
+ struct adsp_data {
+ 	int crash_reason_smem;
+@@ -117,6 +118,8 @@ struct qcom_adsp {
+ 
+ 	struct qcom_scm_pas_metadata pas_metadata;
+ 	struct qcom_scm_pas_metadata dtb_pas_metadata;
++
++	struct qcom_devmem_table *devmem;
+ };
+ 
+ static void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
+@@ -683,6 +686,58 @@ static void adsp_unassign_memory_region(struct qcom_adsp *adsp)
+ 	}
+ }
+ 
++static int adsp_devmem_init(struct qcom_adsp *adsp)
 +{
++	unsigned int entry_size = DEVMEM_ENTRY_SIZE;
++	struct qcom_devmem_table *devmem_table;
++	struct rproc *rproc = adsp->rproc;
++	struct device *dev = adsp->dev;
 +	struct qcom_devmem_info *info;
-+	unsigned long sid_def_val;
-+	int ret;
-+	int i;
++	char *pname = "qcom,devmem";
++	size_t table_size;
++	int num_entries;
++	u32 i;
 +
 +	if (!rproc->has_iommu)
 +		return 0;
 +
-+	if (!rproc->domain)
-+		return -EINVAL;
-+
-+	/* remoteproc may not have devmem data */
-+	if (!devmem_table)
-+		return 0;
-+
-+	if (use_sid && sid)
-+		sid_def_val = sid & SID_MASK_DEFAULT;
-+
-+	info = &devmem_table->entries[0];
-+	for (i = 0; i < devmem_table->num_entries; i++, info++) {
-+		/*
-+		 * Remote processor like ADSP supports upto 36 bit device
-+		 * address space and some of its clients like fastrpc uses
-+		 * upper 32-35 bits to keep lower 4 bits of its SID to use
-+		 * larger address space. To keep this consistent across other
-+		 * use cases add remoteproc SID configuration for firmware
-+		 * to IOMMU for carveouts.
-+		 */
-+		if (use_sid)
-+			info->da |= (sid_def_val << 32);
-+
-+		ret = iommu_map(rproc->domain, info->da, info->pa, info->len, info->flags, GFP_KERNEL);
-+		if (ret) {
-+			dev_err(&rproc->dev, "Unable to map devmem, ret: %d\n", ret);
-+			if (use_sid)
-+				info->da &= ~(SID_MASK_DEFAULT << 32);
-+			goto undo_mapping;
-+		}
++	/* devmem property is a set of n-tuple */
++	num_entries = of_property_count_u32_elems(dev->of_node, pname);
++	if (num_entries < 0) {
++		dev_err(adsp->dev, "No '%s' property present\n", pname);
++		return num_entries;
 +	}
++
++	if (!num_entries || (num_entries % entry_size)) {
++		dev_err(adsp->dev, "All '%s' list entries need %d vals\n", pname,
++			entry_size);
++		return -EINVAL;
++	}
++
++	num_entries /= entry_size;
++	table_size = sizeof(*devmem_table) + sizeof(*info) * num_entries;
++	devmem_table = devm_kzalloc(dev, table_size, GFP_KERNEL);
++	if (!devmem_table)
++		return -ENOMEM;
++
++	devmem_table->num_entries = num_entries;
++	info = &devmem_table->entries[0];
++	for (i = 0; i < num_entries; i++, info++) {
++		of_property_read_u32_index(dev->of_node, pname,
++					   i * entry_size, (u32 *)&info->da);
++		of_property_read_u32_index(dev->of_node, pname,
++					   i * entry_size + 1, (u32 *)&info->pa);
++		of_property_read_u32_index(dev->of_node, pname,
++					   i * entry_size + 2, &info->len);
++		of_property_read_u32_index(dev->of_node, pname,
++					   i * entry_size + 3, &info->flags);
++	}
++
++	adsp->devmem = devmem_table;
 +
 +	return 0;
-+
-+undo_mapping:
-+	for (i = i - 1; i >= 0; i--, info--) {
-+		iommu_unmap(rproc->domain, info->da, info->len);
-+		if (use_sid)
-+			info->da &= ~(SID_MASK_DEFAULT << 32);
-+	}
-+
-+	return ret;
 +}
-+EXPORT_SYMBOL_GPL(qcom_map_devmem);
 +
-+/**
-+ * qcom_unmap_devmem() -  unmap the device memories needed by Remoteproc using IOMMU
-+ *
-+ * @rproc:		rproc handle
-+ * @devmem_table:	list of devmem regions to unmap
-+ * @use_sid:		decision to append sid to iova
-+ */
-+void qcom_unmap_devmem(struct rproc *rproc, struct qcom_devmem_table *devmem_table, bool use_sid)
-+{
-+	struct qcom_devmem_info *info;
-+	int i;
-+
-+	if (!rproc->has_iommu || !rproc->domain || !devmem_table)
-+		return;
-+
-+	info = &devmem_table->entries[0];
-+	for (i = 0; i < devmem_table->num_entries; i++, info++) {
-+		iommu_unmap(rproc->domain, info->da, info->len);
-+		if (use_sid)
-+			info->da &= ~(SID_MASK_DEFAULT << 32);
-+	}
-+
-+	return;
-+}
-+EXPORT_SYMBOL_GPL(qcom_unmap_devmem);
-+
- MODULE_DESCRIPTION("Qualcomm Remoteproc helper driver");
- MODULE_LICENSE("GPL v2");
-diff --git a/drivers/remoteproc/qcom_common.h b/drivers/remoteproc/qcom_common.h
-index bbc41054e1ea..bbc684e1df01 100644
---- a/drivers/remoteproc/qcom_common.h
-+++ b/drivers/remoteproc/qcom_common.h
-@@ -41,6 +41,36 @@ struct qcom_rproc_pdm {
- 	struct auxiliary_device *adev;
- };
- 
-+/**
-+ * struct qcom_devmem_info - iommu devmem region
-+ * @da: device address
-+ * @pa: physical address
-+ * @len: length (in bytes)
-+ * @flags: iommu protection flags
-+ *
-+ * The resource entry carries the device address to which a physical address is
-+ * to be mapped with required permissions in flag. The pa, len is expected to
-+ * be a physically contiguous memory region.
-+ */
-+struct qcom_devmem_info {
-+	u64 da;
-+	u64 pa;
-+	u32 len;
-+	u32 flags;
-+};
-+
-+/**
-+ * struct qcom_devmem_table - iommu devmem entries
-+ * @num_entries: number of devmem entries
-+ * @entries: devmem entries
-+ *
-+ * The table that carries each devmem resource entry.
-+ */
-+struct qcom_devmem_table {
-+	int num_entries;
-+	struct qcom_devmem_info entries[0];
-+};
-+
- void qcom_minidump(struct rproc *rproc, unsigned int minidump_id,
- 			void (*rproc_dumpfn_t)(struct rproc *rproc,
- 				struct rproc_dump_segment *segment, void *dest, size_t offset,
-@@ -65,6 +95,11 @@ int qcom_map_unmap_carveout(struct rproc *rproc, phys_addr_t mem_phys, size_t me
- void qcom_add_pdm_subdev(struct rproc *rproc, struct qcom_rproc_pdm *pdm);
- void qcom_remove_pdm_subdev(struct rproc *rproc, struct qcom_rproc_pdm *pdm);
- 
-+int qcom_map_devmem(struct rproc *rproc, struct qcom_devmem_table *table,
-+		    bool use_sid, unsigned long sid);
-+void qcom_unmap_devmem(struct rproc *rproc, struct qcom_devmem_table *table,
-+		       bool use_sid);
-+
- #if IS_ENABLED(CONFIG_QCOM_SYSMON)
- struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 					   const char *name,
+ static int adsp_probe(struct platform_device *pdev)
+ {
+ 	const struct adsp_data *desc;
 -- 
 2.34.1
 
