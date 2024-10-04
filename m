@@ -1,160 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-33146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 852B9990F86
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 22:01:35 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81769990FBC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 22:07:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDCC71F23E09
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:01:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B33AF1C21D7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:07:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 602411FA24D;
-	Fri,  4 Oct 2024 19:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F5EC1DD525;
+	Fri,  4 Oct 2024 19:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LmHB+6+y"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BN9Ss0xr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1EE1F9ABD;
-	Fri,  4 Oct 2024 19:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36A51D8A09;
+	Fri,  4 Oct 2024 19:25:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728068680; cv=none; b=ElaLe8W4GR9YRIJ+YdCidlJdPFAOjC6dvtq9csBvwlm1bg0KUkgxN54huXchnmJjTdSyU2k6ByFnZ+FTSVXvjlYMRypN8kfj1TRtvHiedh5mbeZL/T1mXbId7f+MUm7tXVwPfin0+QQ6/ffWR2W8TfPmAgJ8sshFPVUUKOGf8nw=
+	t=1728069934; cv=none; b=jS1vf+hYxi1lhhHww2x4E8rG99uxhp7wgR736Q8lGLpFjoCgJofWbexLGyME9pVjOvsQ8CbzgSBCidfbXLacFzMpID+KMsMnFuApGuCBD6D6Zml4eq4KzCY4FpmdhfrJYGadXES6uhnSRbDT4shKDrkGdLHJk4JY2d1EWJ7Nqk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728068680; c=relaxed/simple;
-	bh=dg2TEPNt6m3xvH7rSPBqehMHHHswR0bUQaAIRYJds+0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FWSQoyMZkYA2vwYsM1H+eOK8EUBZEJ6myBYM8vBjVkZAmXfynGTZx5ux+uBw0RU3VIWvb8ZB9omQv6l7r6WomrhWfJvaz3ndgJTERdsA1G/EAP9hxOeZfcDBcyiwJkk2QN1Fki/7Rg12BqXtnQr03bUg9OBg7V8Dkph5+QeQwvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LmHB+6+y; arc=none smtp.client-ip=209.85.128.182
+	s=arc-20240116; t=1728069934; c=relaxed/simple;
+	bh=K1FynadGlz7V3pHQQA57EuCuje0t0xMwDt4S8EOAfVo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oNmqjJCmDpphWB86hjd7nqWfNTWy7/I8ZBA68dR9yRQlIhn+b5rKwvvbq26OnT1qHWC30NlVr8oYDSJxVJrjbZisnBS24XXCd5/MizX3neAmUxi/wDcglpzN5Tkk4EqoE1B0KUefXibLKu81z7NxAAAXMBjo/YqDZ4OpWCCEucc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BN9Ss0xr; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6de14e0f050so20180547b3.0;
-        Fri, 04 Oct 2024 12:04:38 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8d6ac24a3bso476972666b.1;
+        Fri, 04 Oct 2024 12:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728068677; x=1728673477; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B5HfbdgHbABODTaTjHs2WrlvZ31IfcWLv08zvorE0ME=;
-        b=LmHB+6+y5me57h2Jk+M7zorgLBLfmL4lbkatp2t3LUeC3pVz7J+H4dpKFDKHcJSSaz
-         EekHA4TmlvuNo3y55Bsli43rvvFYgUoUx2dgLsH0fM/OV19h02yPoQexGrNgafiwE3jL
-         J6yfPeZnoyGbn6ll2KteKWQtNiapYdXz+AwKFy02aKQr3G7jgl30IT8T5qQbbJi7kUND
-         Ddt5Lko8xuZ5okuD0yMfozBlMQym7So+zqr2r4IAu83IOWHNYQ8TMMnk+LJFuRhDcQac
-         LJNfRPjw+cRPL3jpbAe1NoxCpcTBQWkj+ogTqr6uwXvwaAA2oeBd85p53hqOzVH+gT5R
-         aR5A==
+        d=gmail.com; s=20230601; t=1728069931; x=1728674731; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TFvtVp7qirynZb3z2+4/4h9Ar96qEvmsqtgrcr31hec=;
+        b=BN9Ss0xraVhUKb7edYSmRagGvYPU7GKz96SrmTW4U98Z6SACZCBcxKrKbiV6mbm64p
+         cNnBrtlzQV0bCSBbVKWUVb3tTspNi0dFi9H0UER5lK+R/LxbD8/AOmt+FABchPIQbt/S
+         fzxj2d/Ytd+zI+apPeozvVUF6oufMl6ALXU+pHb0JM553DIvkTFwHaVspj3OigoqzpMO
+         k4hWq3Tyt4hQ/d8hy0bvAeK0CJc/rWfYP3XcrsrkLdHoaDaHGFjFFgKs0ojSOngrYytK
+         Axhyx4k+MF8xgD+XJWVs2WaDCKOHbPRob2Uw73/pKftzw4xJjdqNv1PyuTIwEYrCLNv8
+         P2qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728068677; x=1728673477;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=B5HfbdgHbABODTaTjHs2WrlvZ31IfcWLv08zvorE0ME=;
-        b=CEVNcRkRYm1dadIdoZMW/UZJl4mDZRcxBeLmZK0+1nyRa2Js5aGT3lLg1ePwD/qGN0
-         n60p5Z6YpT6LwpRW4IhwxJXb4lH8VKhP8vaAgzKTsg2zP3ak2Xio4Y1OBQaLr38UyEa8
-         rdEywqEQigUBAekFfS8meRlec+QoUiBS3efBTsYymA7r64ZRmEFhRebGDbQ4B/sbA5fa
-         tToR3jJmDRx/9O9KSI/fQmmByrlKWkwtAxhwGeed+lixwGvAxAqVrWuCfGVprlphRaB3
-         1HLh2YT0zkJu/Y0Bdy/hGZNa6hmE2Z77t++pABAf/l+/W81uW03Dg9c0kFqitZ/g16Fy
-         vk3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUbLlQKH0pBe53j9sM2WJf9nGM2xgwDdohp5nRpn8QmEz6JhBQiu7KY9riY5WGY15jEsoHMSVMBjRGf5Tcy@vger.kernel.org, AJvYcCVYfE4tKprEzFA9Ew9X6oplWIYkdajE6anDvdKzqwnsyLTpnUuZRxQ7VdrQ6EVuw6E2kmZ7Hh1B@vger.kernel.org, AJvYcCXeIhL2Rru3MGaykU/nSFE8m0nYHsxfP/HOttpaAOa8oqQB2TbI7qOI25IHLXnp+OBkw2UX+THO4XiYNy2u@vger.kernel.org
-X-Gm-Message-State: AOJu0YyoB0PzttdmvOADSle2f/BSOvYnn0apuEn1oqI3QSd5o3ZUIXVp
-	OhybWp5XLjWLZQIx2/qD3hjErPbwPkQL2g4fzP918qbMDjVcm+hWsHvzVZmcK7h41TeoTI09FA6
-	iqeZbj6lKniW7ulc/pBYvFXloyVI=
-X-Google-Smtp-Source: AGHT+IH9scQLWNqJQHayBVbx3/oOvir8TuLyhF6I1u9sp0NdVUUfeeiiIOFw8tGmDwqe/ZpBUA1tc6SRGklljrBAiUA=
-X-Received: by 2002:a05:690c:6813:b0:6e2:2600:ed86 with SMTP id
- 00721157ae682-6e2c72f779cmr34932837b3.45.1728068677613; Fri, 04 Oct 2024
- 12:04:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728069931; x=1728674731;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TFvtVp7qirynZb3z2+4/4h9Ar96qEvmsqtgrcr31hec=;
+        b=MfeQkuHQUXOm6rpmp3qnioEVlbYM/ExyqeyY8pRKkloGuDcuT3sBc7qgm96hmFw6Sr
+         AjXR+IYtAgALu6AahvsVg7yz2OhTrMEw2ABDMyBL4F+Dzu8bLluWSWH5boqA+geK+X7u
+         jb5wvgfEM9nFWqlb5eiCDm+ultHy+RQhAmLrGtBZunYVFxyoPfcOlRdRwzCjrq1q2E1t
+         Ave8Kow81cb3ucze9iuWLmdI2ucaij2gvkiFDjnBKFT21MrWQ7ceAmNl6MGmmqTgHQ/0
+         Jy9fssoseKnwDCL2/3CRE4Y6vjzlTOBOTr5htBZoGWEAaoQFE7uzyQ9EotMU3XQHiJr5
+         7EMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCULYVsWvM8xhSpBaXt2N0+Pnmy2ldRRJuVImfWtV9A9LwuHZ0q8u8bXSMFw7LpwqKCFnbiO+7KGBc0d/2RXLg==@vger.kernel.org, AJvYcCVEAgo4A4WXNqIF+sMvrSe4tZDWI5j16S3nHGcTr0oI8mORPuf11LVqFMh6BJu2Dwk7NFkxrkzyBhebwGKx@vger.kernel.org, AJvYcCXC8TtF3a4dd4SVE2n0uyAYyBEU3hlBV+lI7AKmKNiNqKt6S7FxXifgGGCoFR9Hw6xRLdBHaHeErA/v@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWJojdMZy+kQjz1phqhsWJ8Ewd6q9ytoj/yEr/SgsoB5pArsOf
+	zUQB+OqJjafIEXu8z/6rPrgNXWmwzu4hsJ0/0OaYWF67ZynrGQqNO6G7XA/o
+X-Google-Smtp-Source: AGHT+IGmho45+TPI13RGkzc9JQ1tKVu2tM0a3OakI2HB6lBsgAaaG0POhSm+BGjnDz5rxq9qO9fNMA==
+X-Received: by 2002:a17:906:1b0a:b0:a99:1929:40fc with SMTP id a640c23a62f3a-a991929414amr365172866b.10.1728069930780;
+        Fri, 04 Oct 2024 12:25:30 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:a311:80b0:1c80:9433:9060:39fc:2954])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e784a3asm31136966b.111.2024.10.04.12.25.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Oct 2024 12:25:30 -0700 (PDT)
+From: Maya Matuszczyk <maccraft123mc@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Maya Matuszczyk <maccraft123mc@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: x1e80100: Add debug uart to Lenovo Yoga Slim 7x
+Date: Fri,  4 Oct 2024 21:24:36 +0200
+Message-ID: <20241004192436.16195-2-maccraft123mc@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241004000015.544297-1-rosenp@gmail.com> <20241004000015.544297-6-rosenp@gmail.com>
- <39dcfa4b-1a22-4296-b190-ac39480d034a@kernel.org>
-In-Reply-To: <39dcfa4b-1a22-4296-b190-ac39480d034a@kernel.org>
-From: Rosen Penev <rosenp@gmail.com>
-Date: Fri, 4 Oct 2024 12:04:26 -0700
-Message-ID: <CAKxU2N9-DxfsANMfT8DZ-LuKJ3bqjckyfd=+Lg_qtRn985BuoQ@mail.gmail.com>
-Subject: Re: [PATCHv2 5/5] documentation: use nvmem-layout in examples
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: devicetree@vger.kernel.org, Miquel Raynal <miquel.raynal@bootlin.com>, 
-	Richard Weinberger <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	"David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	William Zhang <william.zhang@broadcom.com>, Anand Gore <anand.gore@broadcom.com>, 
-	Kursad Oney <kursad.oney@broadcom.com>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	=?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Andrew Lunn <andrew@lunn.ch>, 
-	Gregory Clement <gregory.clement@bootlin.com>, 
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Christian Marangi <ansuelsmth@gmail.com>, 
-	"open list:MEMORY TECHNOLOGY DEVICES (MTD)" <linux-mtd@lists.infradead.org>, open list <linux-kernel@vger.kernel.org>, 
-	"open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>, 
-	"open list:ARM/QUALCOMM MAILING LIST" <linux-arm-msm@vger.kernel.org>, 
-	"moderated list:BROADCOM BCMBCA ARM ARCHITECTURE" <linux-arm-kernel@lists.infradead.org>, 
-	"moderated list:ARM/Mediatek SoC support" <linux-mediatek@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 3, 2024 at 11:25=E2=80=AFPM Krzysztof Kozlowski <krzk@kernel.or=
-g> wrote:
->
-> On 04/10/2024 02:00, Rosen Penev wrote:
-> > nvmem-cells are deprecated and replaced with nvmem-layout. For these
-> > examples, replace. They're not relevant to the main point of the
-> > document anyway.
->
-> Please use subject prefixes matching the subsystem. You can get them for
-> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-> your patch is touching. For bindings, the preferred subjects are
-> explained here:
-> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-pat=
-ches.html#i-for-patch-submitters
->
->
-> >
-> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> > ---
-> >  .../mtd/partitions/qcom,smem-part.yaml        | 19 +++++++++++--------
-> >  .../bindings/net/marvell,aquantia.yaml        | 13 ++++++++-----
-> >  2 files changed, 19 insertions(+), 13 deletions(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/mtd/partitions/qcom,smem=
--part.yaml b/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-par=
-t.yaml
-> > index 1c2b4e780ca9..8ae149534b23 100644
-> > --- a/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.y=
-aml
-> > +++ b/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.y=
-aml
-> > @@ -45,17 +45,20 @@ examples:
-> >              compatible =3D "qcom,smem-part";
-> >
-> >              partition-art {
-> > -                compatible =3D "nvmem-cells";
-> > -                #address-cells =3D <1>;
-> > -                #size-cells =3D <1>;
-> >                  label =3D "0:art";
-> >
-> > -                macaddr_art_0: macaddr@0 {
-> > -                    reg =3D <0x0 0x6>;
-> > -                };
-> > +                nvmem-layout {
-> > +                    compatible =3D "fixed-layout";
->
-> This does not look right - the binding still expects nvmem-cells. I
-> wonder how does the nvmem-cells.yaml work if the compatible is being
-> removed so it is not being selected.
-Not sure I follow here. You mean replace nvmem-cells.yaml with
-nvmem-layout.yaml ?
->
->
-> Best regards,
-> Krzysztof
->
+This commit enables the debug UART found on the motherboard under the SSD
+
+Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+---
+ .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index 3c13331a9ef4..1f292cd4a713 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -15,6 +15,14 @@ / {
+ 	model = "Lenovo Yoga Slim 7x";
+ 	compatible = "lenovo,yoga-slim7x", "qcom,x1e80100";
+ 
++	aliases {
++		serial0 = &uart21;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
+ 	pmic-glink {
+ 		compatible = "qcom,x1e80100-pmic-glink",
+ 			     "qcom,sm8550-pmic-glink",
+@@ -883,6 +891,11 @@ reset-n-pins {
+ 
+ };
+ 
++&uart21 {
++	compatible = "qcom,geni-debug-uart";
++	status = "okay";
++};
++
+ &usb_1_ss0_hsphy {
+ 	vdd-supply = <&vreg_l3j_0p8>;
+ 	vdda12-supply = <&vreg_l2j_1p2>;
+-- 
+2.45.2
+
 
