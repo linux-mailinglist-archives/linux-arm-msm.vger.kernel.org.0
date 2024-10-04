@@ -1,131 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-33147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81769990FBC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 22:07:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3F33991021
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 22:19:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B33AF1C21D7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:07:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 909341F27489
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 20:19:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F5EC1DD525;
-	Fri,  4 Oct 2024 19:25:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4ACFE1D8E17;
+	Fri,  4 Oct 2024 20:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BN9Ss0xr"
+	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="tLw4ZURd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36A51D8A09;
-	Fri,  4 Oct 2024 19:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84CE12F375
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Oct 2024 19:59:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728069934; cv=none; b=jS1vf+hYxi1lhhHww2x4E8rG99uxhp7wgR736Q8lGLpFjoCgJofWbexLGyME9pVjOvsQ8CbzgSBCidfbXLacFzMpID+KMsMnFuApGuCBD6D6Zml4eq4KzCY4FpmdhfrJYGadXES6uhnSRbDT4shKDrkGdLHJk4JY2d1EWJ7Nqk4=
+	t=1728072004; cv=none; b=b0AeLuSi15mH0R09tt0YZIArUpyLeEFd93CdZUgkfx+9yGqvQDOvVLkjApYpsftNGoUM40QHed9JqTBEwhxAwFWsbbfkSyOhgDLkwyJpD3xmc8S8YsnvWAIySwOXW9pqxOfo6fNC1dptXxKnE6vlpKPrAYqyd0vbs+NWnl4O79s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728069934; c=relaxed/simple;
-	bh=K1FynadGlz7V3pHQQA57EuCuje0t0xMwDt4S8EOAfVo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oNmqjJCmDpphWB86hjd7nqWfNTWy7/I8ZBA68dR9yRQlIhn+b5rKwvvbq26OnT1qHWC30NlVr8oYDSJxVJrjbZisnBS24XXCd5/MizX3neAmUxi/wDcglpzN5Tkk4EqoE1B0KUefXibLKu81z7NxAAAXMBjo/YqDZ4OpWCCEucc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BN9Ss0xr; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a8d6ac24a3bso476972666b.1;
-        Fri, 04 Oct 2024 12:25:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728069931; x=1728674731; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TFvtVp7qirynZb3z2+4/4h9Ar96qEvmsqtgrcr31hec=;
-        b=BN9Ss0xraVhUKb7edYSmRagGvYPU7GKz96SrmTW4U98Z6SACZCBcxKrKbiV6mbm64p
-         cNnBrtlzQV0bCSBbVKWUVb3tTspNi0dFi9H0UER5lK+R/LxbD8/AOmt+FABchPIQbt/S
-         fzxj2d/Ytd+zI+apPeozvVUF6oufMl6ALXU+pHb0JM553DIvkTFwHaVspj3OigoqzpMO
-         k4hWq3Tyt4hQ/d8hy0bvAeK0CJc/rWfYP3XcrsrkLdHoaDaHGFjFFgKs0ojSOngrYytK
-         Axhyx4k+MF8xgD+XJWVs2WaDCKOHbPRob2Uw73/pKftzw4xJjdqNv1PyuTIwEYrCLNv8
-         P2qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728069931; x=1728674731;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TFvtVp7qirynZb3z2+4/4h9Ar96qEvmsqtgrcr31hec=;
-        b=MfeQkuHQUXOm6rpmp3qnioEVlbYM/ExyqeyY8pRKkloGuDcuT3sBc7qgm96hmFw6Sr
-         AjXR+IYtAgALu6AahvsVg7yz2OhTrMEw2ABDMyBL4F+Dzu8bLluWSWH5boqA+geK+X7u
-         jb5wvgfEM9nFWqlb5eiCDm+ultHy+RQhAmLrGtBZunYVFxyoPfcOlRdRwzCjrq1q2E1t
-         Ave8Kow81cb3ucze9iuWLmdI2ucaij2gvkiFDjnBKFT21MrWQ7ceAmNl6MGmmqTgHQ/0
-         Jy9fssoseKnwDCL2/3CRE4Y6vjzlTOBOTr5htBZoGWEAaoQFE7uzyQ9EotMU3XQHiJr5
-         7EMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCULYVsWvM8xhSpBaXt2N0+Pnmy2ldRRJuVImfWtV9A9LwuHZ0q8u8bXSMFw7LpwqKCFnbiO+7KGBc0d/2RXLg==@vger.kernel.org, AJvYcCVEAgo4A4WXNqIF+sMvrSe4tZDWI5j16S3nHGcTr0oI8mORPuf11LVqFMh6BJu2Dwk7NFkxrkzyBhebwGKx@vger.kernel.org, AJvYcCXC8TtF3a4dd4SVE2n0uyAYyBEU3hlBV+lI7AKmKNiNqKt6S7FxXifgGGCoFR9Hw6xRLdBHaHeErA/v@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWJojdMZy+kQjz1phqhsWJ8Ewd6q9ytoj/yEr/SgsoB5pArsOf
-	zUQB+OqJjafIEXu8z/6rPrgNXWmwzu4hsJ0/0OaYWF67ZynrGQqNO6G7XA/o
-X-Google-Smtp-Source: AGHT+IGmho45+TPI13RGkzc9JQ1tKVu2tM0a3OakI2HB6lBsgAaaG0POhSm+BGjnDz5rxq9qO9fNMA==
-X-Received: by 2002:a17:906:1b0a:b0:a99:1929:40fc with SMTP id a640c23a62f3a-a991929414amr365172866b.10.1728069930780;
-        Fri, 04 Oct 2024 12:25:30 -0700 (PDT)
-Received: from localhost.localdomain ([2a02:a311:80b0:1c80:9433:9060:39fc:2954])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e784a3asm31136966b.111.2024.10.04.12.25.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Oct 2024 12:25:30 -0700 (PDT)
-From: Maya Matuszczyk <maccraft123mc@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: Maya Matuszczyk <maccraft123mc@gmail.com>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: x1e80100: Add debug uart to Lenovo Yoga Slim 7x
-Date: Fri,  4 Oct 2024 21:24:36 +0200
-Message-ID: <20241004192436.16195-2-maccraft123mc@gmail.com>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1728072004; c=relaxed/simple;
+	bh=Pw1zOI4qVsjiu7mWFvwBZXXQio3Ko8uw7sUQldlbyo8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=XnyicvPRKrebqFQEmsXHQ2crO3u/Olev6VGm2TX3lPCpGv3eUn9tAnyDgdahtKp+nJ7aOcUZFKD3qBurLIYmtkmQBlnZeIeSqurnk46kHAHzfE8zsUHdjDqpLJMSpVMGwqSTySpy/8uiHdFEySjXM6kZknCnBTVJ+4hvEO1FZKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=tLw4ZURd; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id AB2BE233BF
+	for <linux-arm-msm@vger.kernel.org>; Fri,  4 Oct 2024 21:59:52 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id r3mxVrNW7q9w for <linux-arm-msm@vger.kernel.org>;
+ Fri,  4 Oct 2024 21:59:51 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
+	s=mail; t=1728069995;
+	bh=Pw1zOI4qVsjiu7mWFvwBZXXQio3Ko8uw7sUQldlbyo8=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=tLw4ZURdNWziPfzSiMjU+NG8tRE/oQeuV71TltTzKLH4xnMlYEvfuchK44X/V+1wO
+	 EVzgUXrK3t7uI+BhR6GADr7ZCz6KcjWpozYJi1kwdiAp4RdcbPHl4oMrAj0yONxifZ
+	 vk6kq7SxarrL9TONrTSpkpPibwGbipV6NL0ryUADjXCkKCGRKoblrQV9lAm6K873c/
+	 X9rHLv2DsPfr2EHKry3xnbG8eRB4hEGMqBJWsvYBSzmtgOmZNWGhTvR12ZCTiCsKQx
+	 SWpQQBIQzZ1dpQO6P+JhozsbS+3toWKhKLzgVXlsAQBToJtTiY6XifYQ6MhSepOUm9
+	 EwljcveIgAxNA==
+Message-ID: <7c08d987-bb73-4fec-afcb-4197fa78d4be@getgoogleoff.me>
+Date: Sat, 5 Oct 2024 03:25:08 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Subject: Re: [PATCH v5 4/5] pinctrl: qcom: ipq5018: allow it to be bulid on
+ arm32
+To: linux-arm-msm@vger.kernel.org
+References: <20241002232804.3867-1-exxxxkc@getgoogleoff.me>
+ <20241002232804.3867-5-exxxxkc@getgoogleoff.me>
+ <CACRpkdZnBBAEgHZ=HShwvaXaN-6icC5hzwHqDNWWy_PKJDh+Fw@mail.gmail.com>
+Content-Language: en-US
+From: exxxxkc <exxxxkc@getgoogleoff.me>
+In-Reply-To: <CACRpkdZnBBAEgHZ=HShwvaXaN-6icC5hzwHqDNWWy_PKJDh+Fw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-This commit enables the debug UART found on the motherboard under the SSD
 
-Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
----
- .../boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+On 10/4/24 7:44 PM, Linus Walleij wrote:
+> On Thu, Oct 3, 2024 at 1:29 AM Karl Chan <exxxxkc@getgoogleoff.me> wrote:
+>
+>> There are some ipq5018 based device's firmware only can able to boot
+>> arm32 but the pinctrl driver dont allow it to be compiled on
+>> arm32.Therefore this patch needed for those devices.
+>>
+>> Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
+> (...)
+>> -       depends on ARM64 || COMPILE_TEST
+>> +       depends on ARM || ARM64 || COMPILE_TEST
+> Can we get some more context for this?
+>
+> Is this another one of those cases where the SoC is actually a
+> 64bit core but vendors just choose to run it in 32bit mode because
+> that is what they want or what is the reason here? AFAIK
+> IPQ5018 is always Cortex-A53?
+>
+> I just want to know if this is something we should encourage
+> or leave out-of-tree.
+>
+> Yours,
+> Linus Walleij
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index 3c13331a9ef4..1f292cd4a713 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -15,6 +15,14 @@ / {
- 	model = "Lenovo Yoga Slim 7x";
- 	compatible = "lenovo,yoga-slim7x", "qcom,x1e80100";
- 
-+	aliases {
-+		serial0 = &uart21;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
- 			     "qcom,sm8550-pmic-glink",
-@@ -883,6 +891,11 @@ reset-n-pins {
- 
- };
- 
-+&uart21 {
-+	compatible = "qcom,geni-debug-uart";
-+	status = "okay";
-+};
-+
- &usb_1_ss0_hsphy {
- 	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
--- 
-2.45.2
+
+Yeah it is like those MSM8916 based device that only has 32bit 
+firmware.(e.g. samsung e5).
+AFIK , other ipq5018 based linksys router has 64bit firmware but this 
+one dont.
+Also this router seem to be identical to linksys ER5500 but with 32bit 
+firmware and isp exclusive.
+(It is PCCW isp exclusive router (See 
+https://support.linksys.com/kb/article/3723-en/) )
+
 
 
