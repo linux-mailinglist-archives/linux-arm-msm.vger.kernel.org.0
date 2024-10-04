@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-33071-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33072-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CAE398FB50
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 02:01:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1D9598FB59
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 02:02:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7DEAF1C231CE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 00:01:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC6D41C227B7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  4 Oct 2024 00:02:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D63101D14EC;
-	Fri,  4 Oct 2024 00:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02038154C19;
+	Fri,  4 Oct 2024 00:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MyRf2wcx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQUbGIJG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512B1D0F58;
-	Fri,  4 Oct 2024 00:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAD41D1E9B;
+	Fri,  4 Oct 2024 00:00:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728000032; cv=none; b=Xy2sTqV4JPfwejw1wnsDHhw/urWSZIIewa42kVyKjiBWdQEnRBpbSurzFNyV52UcUrOVrC/QjOMHf7yNB6MmYG40sMKRenvB+Z9qGNJKPGzGeYit67dwu3SIHTkBFbwip8J76HGolF9fP9a22mxNFzP/WaejLUimj0ISnurG4A8=
+	t=1728000035; cv=none; b=hMabDoV13YRyz5wSF6vf4YvUeV979zxZo4vWZVB/rXh3M5uSp9Q3EOdVtTihYFNUz9oR4eWuTGaJznJ/dfhJpsGbvCZniYTANlAiGq6Rxi7Jg1Ecq+3m6+8DFjaA6UHZVOKMOToxz+BaMdV3KrUMU0I2i+MWmXcFOgYvVnv+ca4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728000032; c=relaxed/simple;
-	bh=shHER4u0OAOXldgRE1LJnGWQ82XScGlYljOXINFDXdk=;
+	s=arc-20240116; t=1728000035; c=relaxed/simple;
+	bh=0YcDLsbwBepenWfoJZWFdsKWsOmtv44Xzd2Zv1XAZdw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VHJW1azkRI+W6tRzskkPc2/xMb4UF4IOy/ubglr/Rql99RJgDt96RvFlLADvMsDbgtsEGU0WcmraUmEpuN4LlUs4ObCu7WZM+kqFR4Dw9iUZCtRev5pWhJer4Ry5VhWpQYbcL/MBOtSfpkaYf/oIII5umJokOU3lyiDIuHRK0qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MyRf2wcx; arc=none smtp.client-ip=209.85.210.177
+	 MIME-Version; b=P7bLhgauQc18A8ZTw18eq8zumYj1PsStLbCVS9Upu7q7FoVjeg2wQXf1e9h09v2pMXo4jedR7GK0dr5I0TloicMpzbWV3E/IVYeM1qrTH2S088wEIggUiMYNlqiLqQHY0ChUoAb4bCBPrCgfcfNWTXdhU+RqLKXF4zhMDLwVml4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQUbGIJG; arc=none smtp.client-ip=209.85.210.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-71788bfe60eso1295290b3a.1;
-        Thu, 03 Oct 2024 17:00:31 -0700 (PDT)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-71798a15ce5so1951770b3a.0;
+        Thu, 03 Oct 2024 17:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728000030; x=1728604830; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728000033; x=1728604833; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3pFqfOh1/PbuJMZ1ovEQo0qGXsKUQzTf4DVIM+oOnHQ=;
-        b=MyRf2wcxahqMzjwKRyXpNjDR7lIOY5he0Viys+kEKwXY1A+J9XHxdv8uvIXqnXpWdQ
-         vrjxPhpK7TADSWXSZ38CZ2eg8HbSUH0QnakEyvV5ayyKLuEG0ZQPsue3w+RT47PUX072
-         k41zGiE0728gUx6RdZRBqSvVviw3aLanUxEHdK9HCM6Dacy6zfd4CSElgihmY4Po7iID
-         uuLuIIpRiq6ArOm2T608o8hgTeYKhKulravXgkJ8raeH3812iYqx3ACrmj5+gAs4c2KV
-         JoPGrgUoSXwyRvAbBm0hnI8mx16Zrqa1LzE64msQg/gko11B7miRgVxAFFFJlV6KUgBt
-         KZjg==
+        bh=TPG7NWLbTV1K4yXh2AqTy27S5IzvT22XN7gfixbpbfM=;
+        b=XQUbGIJGlHkzXMaNtSuNURtXOGI+Yfqmjm9isHIBMzo2WG4pdmeYBTvoc3/tdSejdL
+         +TISWZYO5Y+MkiY35YA8IUp0iOufi+Bj2wT9ekdC4KVBrU7fc+HCNNThrSEoMn2B1zVB
+         YxDzEG3OhpYAPTtEFZsb4ZFYA+yoI84HF/40xP5/E88BSQ935TmDsBC1XCyzSNgA6w0l
+         aGpnYrvkoOPFsnYSMS09z9nwszHWCedLlLYuPYalStAykUyB3g3+y4OgX+FOuwfMdKXd
+         Q4FG3FvoCxz1mU/18J7AGiXrAfJ6jN4b45ud0zLYMFRCSv3nDZVG4hB3Ge//r+/ki3Es
+         QLsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728000030; x=1728604830;
+        d=1e100.net; s=20230601; t=1728000033; x=1728604833;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3pFqfOh1/PbuJMZ1ovEQo0qGXsKUQzTf4DVIM+oOnHQ=;
-        b=Jein/26PuJQwhLAn+AhkJtrEh1eZrU9A5BpQOOZzqKMTJU+xZS34Sdf6mORh0jgr7c
-         sR8a+yGin8eYKIYnxV/BiTEQK7HTuCWoRmzCG+2rAxkTr/pBhN/8xvnk5cH+E1PixVTv
-         8pNwMugYnUmvKkwFgeARQAn3p3mfIggcrghyzliQXNc8NK4iaIfZyQrTvNHLTyIyNBM4
-         8C5tLUDdutC25aHHdma2yVLGXZC51mku9KHmjjG0XmKpubTVLBfbJjfaecU6YedmbJvS
-         9VzebgUhoeHGF4eLWIgIUya3WiYAMeCI+kc8XR0FVHrfm66N2ngJsN4fRINZkVtBnrcJ
-         42Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCWcBhxnB1QgZZg0GsvmH53YFNDZ89KwDOQw+xgjB1gKCG+RL9dfKkWQB7puGtx69zHbA7Sml43pJF6SFDOP@vger.kernel.org, AJvYcCWuq6A1GhfQiMm1Exd2fNt469Yfyp0h/1CuxnV50L1oouVsXkxIdAUucAvgeUmYvn1//UGzP4/g@vger.kernel.org, AJvYcCX5ku4d54juAUfPcs8sE4T+7fiVhBxIuPySLARYwFZi5UuRTPdouMYSwcWP5tzBcqj4HmCbijUpn+SNu5GP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3PKSHr/6e/J6vTQHXZironmgOMHvuWotC6dKoemXTxLuG/8Oa
-	UlBscvN7WAEKfZS93SsV7GctI4sTk2ppU7FLmUZdBxu/64uxFxcfoJYfdKQx
-X-Google-Smtp-Source: AGHT+IGQKNnEzQ8aL7h/Dh0IMEqkbtSWju+f0UHNIlA9oFQ5gkLCt2cqEgTO8XLsflQWB7i7x/N04A==
-X-Received: by 2002:a05:6a20:db0a:b0:1ce:d9a2:66ed with SMTP id adf61e73a8af0-1d6dfaeef4fmr1477126637.48.1728000030448;
-        Thu, 03 Oct 2024 17:00:30 -0700 (PDT)
+        bh=TPG7NWLbTV1K4yXh2AqTy27S5IzvT22XN7gfixbpbfM=;
+        b=HSOjdj+LBMtVuZS5Z/gTCBUNJjvMcLLqqybztZGkoKMHF50X4dGeGD3gQlIGWSqnvj
+         /2Cbi+YSlI5xl6jAKq9VBSbfYCZUad2qCJtqKNqeptjaMbhIWc+PFSKRNZBlD9nv/CkI
+         cvA3sdkn/nHqkZQcBUR7hlOvOj1xQBgPfclUh2cgN4j0sC5+dxGycs6msSPNs+Pc5JHs
+         ozkM2zEOktzOZ7hb6p8x0W3NlMvqU/M6dZ2VKnBUNKRfen4a0godqxAuw+Bu25Gt91fT
+         RBsTy0G4bafgtdi88TabEBaihygcPv/VrbCtJle4zINo+uSu9ydv3Y0hTeLNDoGPQbdF
+         Hu8A==
+X-Forwarded-Encrypted: i=1; AJvYcCUypgd10SQ8wctiRp+R5QYYJKeMpSIfQOQnLWaeda48KOswXOlPcQuLgiJkeQUMzTd0sldhC3fw0OdqrFNo@vger.kernel.org, AJvYcCX0HQRLK+yDQECxNT7mCsZmKRYdyBdLkJ+q+cDi5tuEzfX6qh8eaCb0JxPmXRZ32qHqEovT1d5j@vger.kernel.org, AJvYcCXPbc5TXNaSoHWxsvKJ2CIjjgshdixNSB+GGJLrPRB/SvC9kAPBIOJ4WorBzt6/fik/QM8pxWXy+dBQZVIt@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGusOhfrqqK08OxeL3+sS5RQeTOtE6xqZAaGnPQor5X40PKjvb
+	HzvbPgjJeMWEaFhFG/E/ABItPGt/HdFf73j0yoUJostgaACY33mjtVP0uf0L
+X-Google-Smtp-Source: AGHT+IFRpqusbyBChPGJdLDMkF4flvi5LdGXwNB5TEbIL5IvxwzIRTPeVbU6C3UfDDB2eSYpuaFaIQ==
+X-Received: by 2002:a05:6a00:238d:b0:717:92d8:ca5c with SMTP id d2e1a72fcca58-71dd5ae0c7dmr9336561b3a.3.1728000033244;
+        Thu, 03 Oct 2024 17:00:33 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8200:dab8::a86])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71dd9cb0b28sm1983047b3a.0.2024.10.03.17.00.27
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71dd9cb0b28sm1983047b3a.0.2024.10.03.17.00.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Oct 2024 17:00:30 -0700 (PDT)
+        Thu, 03 Oct 2024 17:00:32 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: devicetree@vger.kernel.org
 Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
@@ -101,9 +101,9 @@ Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
 	linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM MAILING LIST),
 	linux-arm-kernel@lists.infradead.org (moderated list:BROADCOM BCMBCA ARM ARCHITECTURE),
 	linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC support)
-Subject: [PATCHv2 4/5] arm64: dts: mediatek: 7886cax: use nvmem-layout
-Date: Thu,  3 Oct 2024 17:00:14 -0700
-Message-ID: <20241004000015.544297-5-rosenp@gmail.com>
+Subject: [PATCHv2 5/5] documentation: use nvmem-layout in examples
+Date: Thu,  3 Oct 2024 17:00:15 -0700
+Message-ID: <20241004000015.544297-6-rosenp@gmail.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241004000015.544297-1-rosenp@gmail.com>
 References: <20241004000015.544297-1-rosenp@gmail.com>
@@ -115,25 +115,77 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-nvmem-layout is a more flexible replacement for nvmem-cells.
+nvmem-cells are deprecated and replaced with nvmem-layout. For these
+examples, replace. They're not relevant to the main point of the
+document anyway.
 
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- arch/arm64/boot/dts/mediatek/mt7986a-acelink-ew-7886cax.dts | 1 -
- 1 file changed, 1 deletion(-)
+ .../mtd/partitions/qcom,smem-part.yaml        | 19 +++++++++++--------
+ .../bindings/net/marvell,aquantia.yaml        | 13 ++++++++-----
+ 2 files changed, 19 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7986a-acelink-ew-7886cax.dts b/arch/arm64/boot/dts/mediatek/mt7986a-acelink-ew-7886cax.dts
-index 08b3b0827436..9a6625d8660f 100644
---- a/arch/arm64/boot/dts/mediatek/mt7986a-acelink-ew-7886cax.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7986a-acelink-ew-7886cax.dts
-@@ -121,7 +121,6 @@ partition@100000 {
- 			};
+diff --git a/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml b/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
+index 1c2b4e780ca9..8ae149534b23 100644
+--- a/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
++++ b/Documentation/devicetree/bindings/mtd/partitions/qcom,smem-part.yaml
+@@ -45,17 +45,20 @@ examples:
+             compatible = "qcom,smem-part";
  
- 			partition@180000 {
--				compatible = "nvmem-cells";
- 				reg = <0x180000 0x200000>;
- 				label = "factory";
- 				read-only;
+             partition-art {
+-                compatible = "nvmem-cells";
+-                #address-cells = <1>;
+-                #size-cells = <1>;
+                 label = "0:art";
+ 
+-                macaddr_art_0: macaddr@0 {
+-                    reg = <0x0 0x6>;
+-                };
++                nvmem-layout {
++                    compatible = "fixed-layout";
++                    #address-cells = <1>;
++                    #size-cells = <1>;
++
++                    macaddr_art_0: macaddr@0 {
++                        reg = <0x0 0x6>;
++                    };
+ 
+-                macaddr_art_6: macaddr@6 {
+-                    reg = <0x6 0x6>;
++                    macaddr_art_6: macaddr@6 {
++                        reg = <0x6 0x6>;
++                    };
+                 };
+             };
+         };
+diff --git a/Documentation/devicetree/bindings/net/marvell,aquantia.yaml b/Documentation/devicetree/bindings/net/marvell,aquantia.yaml
+index 9854fab4c4db..5d118553228b 100644
+--- a/Documentation/devicetree/bindings/net/marvell,aquantia.yaml
++++ b/Documentation/devicetree/bindings/net/marvell,aquantia.yaml
+@@ -98,15 +98,18 @@ examples:
+             /* ... */
+ 
+             partition@650000 {
+-                compatible = "nvmem-cells";
+                 label = "0:ethphyfw";
+                 reg = <0x650000 0x80000>;
+                 read-only;
+-                #address-cells = <1>;
+-                #size-cells = <1>;
+ 
+-                aqr_fw: aqr_fw@0 {
+-                    reg = <0x0 0x5f42a>;
++                nvmem-layout {
++                    compatible = "fixed-layout";
++                    #address-cells = <1>;
++                    #size-cells = <1>;
++
++                    aqr_fw: aqr_fw@0 {
++                        reg = <0x0 0x5f42a>;
++                    };
+                 };
+             };
+ 
 -- 
 2.46.2
 
