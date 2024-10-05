@@ -1,129 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-33188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 747F299189C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 18:58:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B70829918EB
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 19:36:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2C5261F22168
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 16:58:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 618141F2225B
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 17:36:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFD3E15886D;
-	Sat,  5 Oct 2024 16:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A451A157E6B;
+	Sat,  5 Oct 2024 17:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="fo9g685j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mTJ4AmFI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132B6155C87
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Oct 2024 16:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729EE15533B;
+	Sat,  5 Oct 2024 17:36:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728147516; cv=none; b=cf50w4vmft2O9t3tULjh4HtIImr/Sj1SVynEHBawF/yg2pFtTmuYBubmbcWYs5aYAG84foj7pXB9HM36OQ/8Pe0vpYC7RWXDUdIhhxR/ExTqdawtfSBZPrLC/IfwjIuFnMEoXRD3GuZ1b8LZJ28AjgdXB2WQUGr9hTNKNiklBFQ=
+	t=1728149809; cv=none; b=qrat6t4LAOKoQF8WHfAAJyR+WHNURLUj7GVg4ad5yQMBr0u2HNp+Lifo3InS8mZnIZgHowz6IXMYR3oVoWDTDM/Lx4EHrxdyab55AxBaSQpQLajX/ACjB9aCwIZKFGGKoL5TtJLL6nGgITpISaybSzkQgbMGbPRzZiMSv5dhKDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728147516; c=relaxed/simple;
-	bh=5T4U1UHrigNQBk+mJQwGMPE/eTCGy/9RZiUgKQnFmlQ=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=XwWgJ/4JC4SAhrdi1yymdQMoi2VtDG3wdJNH/jkllcGIoUD1oC9sFEK3enI6O6pwGjVODdyAYhmDprIE6GXV2pFc7uCLMbeiKVGD7LxsJ5686XkvrRhTDqppHUrrJ1FOelpZMEYZuwcCTE5/glM/cIBVkT1S4aVxN/Sk+ege4UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=fo9g685j; arc=none smtp.client-ip=209.85.219.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6cb2e5d0104so21415016d6.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2024 09:58:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1728147513; x=1728752313; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=534BF0P5lE7Sw6EXBB2MdGwppSsVFm73Tau4PbJd3Pc=;
-        b=fo9g685jiYKwVwKPeGyQPpTLyL/6Ndbzovf7A4GMg0SnJA0Qrzr4V6h4SrpWDF5v5S
-         T0+9M616riiO3Pwr0RRdH3V/4bbAs61naERXXRaRNgP1tkGjT6TswbpEBtLaqDaJ5CZN
-         mdYHIDbukQe9RU11/cnB+StAuktNA6znDUU/LrtTpslF8knQAvCqw1mgGWsTyox+R/iT
-         Z1azhSgGScz/sQ8LFouJlyzGQfrF7qTOHbGFrYHhoR37zERqz/f//NzKplYCqAag2lgK
-         ah3SBMlq4MmGxe9iHMnRznsm/FkN86V1omcIcnrMnAnm0nam5O2znF8B3Jb6Zu98lvkV
-         v57w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728147513; x=1728752313;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=534BF0P5lE7Sw6EXBB2MdGwppSsVFm73Tau4PbJd3Pc=;
-        b=NqTT3RznpXGD87Ajr08wRxjBcd+nZoB3fK0uDd9lAbW9FnDse5V5B3lJWLbN+nVSDi
-         HYLQeMbCHNS8cZXzs5flGl76kY2+UD36M+crPcbil40tgtxrhEv66lxfBjlcjntcgPEd
-         dVjzMjMSBQVyLrw1XxzlHHMdOp6HOV372g1xrcNPXSSUUUrQ739lcLU7l8JpC6xiar73
-         rWPLfFxd2LGOqsGiax8DnJQ2mrFnFLsTWDhBXXpPPqFmbw5MumT4ZxFQHsFsPFM+pg7Z
-         O8holbu+BPvBhEmwlGGABVEQThisk+5ZKmV/5gg3qlgSJdxJk9Kg/yLm2rWyWA81//7C
-         jwdg==
-X-Forwarded-Encrypted: i=1; AJvYcCW0SV8/voeLNWQPc+PZRNm2dd5WaZpztP5Z6uua1jPbFzQzr/+BObvlxPXJJcq+Y1GXF+E6wvYXnXxYt0Sp@vger.kernel.org
-X-Gm-Message-State: AOJu0YzcvHq+lekGQYRXBvUBh4+qKZUQns1oR0g+BnoyjBGlpygpkJWb
-	xm6o3EnnBhn4wpWn1b3mrZpGU72n+V8T9hY1/KF3h20hTqiw+ZUNxk1Dxn/kRWE=
-X-Google-Smtp-Source: AGHT+IHNX/nlmxQbI/WqWLEEy+/8YLvtUS/jHRIC7aZ58AdVpv3bsRE62Z/GKH7EQ1/OcMHcCRnZww==
-X-Received: by 2002:a05:6214:5709:b0:6cb:46ce:744a with SMTP id 6a1803df08f44-6cb9a4fa3b0mr78469376d6.48.1728147512903;
-        Sat, 05 Oct 2024 09:58:32 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cba46efed1sm9795796d6.68.2024.10.05.09.58.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 05 Oct 2024 09:58:32 -0700 (PDT)
-Subject: Re: [PATCH 1/2] drm/msm/dsi: improve/fix dsc pclk calculation
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- freedreno@lists.freedesktop.org
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar
- <quic_abhinavk@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Jessica Zhang <quic_jesszhan@quicinc.com>,
- Konrad Dybcio <konradybcio@kernel.org>,
- "open list:DRM DRIVER for Qualcomm display hardware"
- <linux-arm-msm@vger.kernel.org>,
- "open list:DRM DRIVER for Qualcomm display hardware"
- <dri-devel@lists.freedesktop.org>, open list <linux-kernel@vger.kernel.org>
-References: <20241005143818.2036-1-jonathan@marek.ca>
- <ba56c822-cf3d-4d62-86d4-e04551e443c6@oss.qualcomm.com>
-From: Jonathan Marek <jonathan@marek.ca>
-Message-ID: <e60361b2-29bc-aeee-2ab9-bb19e5c0afa6@marek.ca>
-Date: Sat, 5 Oct 2024 12:55:10 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+	s=arc-20240116; t=1728149809; c=relaxed/simple;
+	bh=yORtFNIGSnwAgf8bQuV+m3VvdFwTYQTdH1kGbfyu6mU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AsS/KrJhSEg0Wzb8gg7KYUeVU5PKytI1bkQSEC50Mh+E53/sy6TyEP4RLurAJ0DY3NA9VlBqV7jjC5asY1AXahZIy+hwiw399d5ll3mPvG/RfUfr4pBIi2HyLpETJuTE33wBQ6o78Tu0JyS96f2OI4+LmQAvMAiWDAM6+CuaXoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mTJ4AmFI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3EAC4CEC7;
+	Sat,  5 Oct 2024 17:36:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728149809;
+	bh=yORtFNIGSnwAgf8bQuV+m3VvdFwTYQTdH1kGbfyu6mU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mTJ4AmFIR0uZzinYkzxm5CrluWmoY0VIiQ5YzNP1l4yZEeM7S4osO6ACHkfZr12Kz
+	 ZTIOdioCzrAQ6lV2jqeTLIsNoRRLIbPTZvnmQFpvDD7cAChrxw9aycCXVChUS8ALvu
+	 LQGmAVki50mGcalaceVmkUVvxYBwmcwO3coGi7ylyCU5JEVWgl0fbAqQcU6NEMHYGV
+	 B1QpUcA+zWLNxt6kSe/fA+3ATOLG9qeOw6PiJUswCykDtRKBDoddWyGi65/PnULJxD
+	 GrTYJ/zqixWAFLb3v0rPtNCtS+BEZjnQzA6sya++/9g2PCtiP5URyUBWJgXVFHJIWt
+	 HvbuNYMo0qq8A==
+Date: Sat, 5 Oct 2024 12:36:47 -0500
+From: Rob Herring <robh@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add Parade PS8830 Type-C
+ retimer bindings
+Message-ID: <20241005173647.GA429341-robh@kernel.org>
+References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
+ <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <ba56c822-cf3d-4d62-86d4-e04551e443c6@oss.qualcomm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
 
-On 10/5/24 12:31 PM, Konrad Dybcio wrote:
-> On 5.10.2024 4:38 PM, Jonathan Marek wrote:
->> drm_mode_vrefresh() can introduce a large rounding error, avoid it.
->>
->> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 185d7de0bf376..1205aa398e445 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -542,7 +542,7 @@ static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mo
->>   
->>   	int new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
->>   
->> -	return new_htotal * mode->vtotal * drm_mode_vrefresh(mode);
->> +	return mult_frac(mode->clock * 1000u, new_htotal, mode->htotal);
+On Fri, Oct 04, 2024 at 04:57:37PM +0300, Abel Vesa wrote:
+> Document bindings for the Parade PS8830 Type-C retimer. This retimer is
+> currently found on all boards featuring Qualcomm Snapdragon X Elite SoCs
+> and it is needed to provide altmode muxing between DP and USB, but also
+> connector orientation handling between.
 > 
-> This seems to ignore mult/div by two on certain mode flags.. is that
-> intended?
-> 
-> Konrad
-> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  .../devicetree/bindings/usb/parade,ps8830.yaml     | 129 +++++++++++++++++++++
+>  1 file changed, 129 insertions(+)
 
-It is intended - those flags are not relevant to DSI panels, and DSC 
-pclk adjustment is only about how DSC affects htotal.
+Missing R-by from Krzysztof?
 
