@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-33163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 979F9991395
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 02:45:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D050991399
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 02:46:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C25031C21B37
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 00:45:51 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A621F1C220F2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 00:46:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C2BD3FD4;
-	Sat,  5 Oct 2024 00:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6EEB01804E;
+	Sat,  5 Oct 2024 00:45:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ecIY4E+j"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uKARuMy0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCD4139B;
-	Sat,  5 Oct 2024 00:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F5B17BD3;
+	Sat,  5 Oct 2024 00:45:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728089147; cv=none; b=lgvkxgRYHH9ZWO8I8M+w4wdALfxVifwOwXsKdo5CnYeEflXd8rL1YM9YrJ1TlX4+Pb+D/UJRX+8EHPN0XB3fTf5P2hGLatYX2WIW7a5fmR9FHD1O5dZu3GPhQGPW92e3swMRby8KopCZt/zOiw2ilLXrU/mMtY1N5TL4wN9F92o=
+	t=1728089150; cv=none; b=oACCkoc+UScyZ5rHluDrzg2SVbdPLfY0cIPM2uGYyBhjIvXRbtAo2AC+j7ozilln6TtKT+6DWOiu5UoXmVovrTh1ipWIWTLbxi9maILfiEzboPhcPKs/VrA+puIPjrkyyvw1BZ3rTsbj2/FVr+xCYb1C4iIuzvZq5RWYqQJJ/+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728089147; c=relaxed/simple;
-	bh=3aDSjqczUa2eG9JCIiEsFfROkl//7/vTr2RrvH3ccDM=;
+	s=arc-20240116; t=1728089150; c=relaxed/simple;
+	bh=D8THuL/WtjamRz9W5coZAbJh0EtstxtlVs5yWnjdESk=;
 	h=Date:Content-Type:MIME-Version:From:To:Cc:In-Reply-To:References:
-	 Message-Id:Subject; b=mhizrznAX4kPrNnzUHbsu1+Xbj1TPc8jc/g/ljbv+Dmjp5aZyCTaReHHhF8amnXglYOSAgEbfpnJPaCh1TDky0R3P50Gum2KBkl6/XXJL/yBJ5FiKgThMbZTrEYZt41ksQr8iiHh6YI8Cy1q6Tzv/clVuJ1aWjF/hapLytFNWuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ecIY4E+j; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD99C4CEC6;
-	Sat,  5 Oct 2024 00:45:46 +0000 (UTC)
+	 Message-Id:Subject; b=AE/uKEgZ5K8jBCEDyk5DXjHO8fXt6TwJzZPWZ6b3WRfH7JyAisxdt99Dp7Eq8JXCS6Y+JZLD/oZR+tkH2qv5DxjAvFCJTsYP1IFaDpRTFRTXjZC3uabnGV+xccFz4SZYxTiZMMh+lItQXDHt1Cbqb4ug0BHyfkOwGTpq5VLdb74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uKARuMy0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D340C4CEC6;
+	Sat,  5 Oct 2024 00:45:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728089146;
-	bh=3aDSjqczUa2eG9JCIiEsFfROkl//7/vTr2RrvH3ccDM=;
+	s=k20201202; t=1728089149;
+	bh=D8THuL/WtjamRz9W5coZAbJh0EtstxtlVs5yWnjdESk=;
 	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=ecIY4E+jHb6ugfa4jKhhpurg/lE1SlDhCK6Ccv8O+EUFzn689FYcoR98dcJoWTJ/a
-	 NRb1uXT8p1+t9IuXFR+lN5k+oUmabkuuY29KPT7YbC4ypDHg7fS+0SS5DIt7Oopp3I
-	 Awf92Xl3NDM4mjbLS0CPmSq5OxtS7CIL6rVB9G+kCpmmaoa2OpZcD+uCO7gPONQ+FT
-	 uPWglMa12LFyrZ1HISQvnc8s+lwmaPihmcgP+rySQm0qNANLfkoSjst5giSRCmuZR4
-	 0ubGsTAjlEbx13Bv/vafE6jkGPZFsvb36q4ASV9biBlVRy4N7Gng7NMIjISg+qCLjL
-	 NRTpjLqFChWEQ==
-Date: Fri, 04 Oct 2024 19:45:45 -0500
+	b=uKARuMy09Q0qxfk2hLo/lsJCQT/NM+khzdhiyM6w+mtS8zviqo4UBbJDBF98P8Wwd
+	 jsTTIfqaD90nJcc+qR03NlkSHw7l29eLm/0q6TqZD/ZwlPZIpO5EGP5kmQqnqYQBdG
+	 j7Yjr4ZrDUOPy2kf5PoSISmH2ZA0MMMK/BBbrlteWeZ4oshlKFDkL6rGBYxrEhSihJ
+	 0ixbLATSjwhFXnIqvgS3rtAHPGRdHJktsqYpKpfvMOHaVMNR9N+97Ku/7a4wP26AaH
+	 pDx17AqmbqfoC0qFh2JEgrGMHAY04nPlFnfTsbwEfn1/FgrpbRuVejpUdjbQZVVriL
+	 OMVHSO67n5Bhw==
+Date: Fri, 04 Oct 2024 19:45:47 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,84 +51,61 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Cc: devicetree@vger.kernel.org, peterdekraker@umito.nl, 
+To: Rosen Penev <rosenp@gmail.com>
+Cc: devicetree@vger.kernel.org, Eric Dumazet <edumazet@google.com>, 
+ Florian Fainelli <florian.fainelli@broadcom.com>, 
+ Christian Marangi <ansuelsmth@gmail.com>, 
+ =?utf-8?q?Rafa=C5=82_Mi=C5=82ecki?= <rafal@milecki.pl>, 
+ "David S. Miller" <davem@davemloft.net>, Conor Dooley <conor+dt@kernel.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ linux-mediatek@lists.infradead.org, 
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, 
+ linux-arm-kernel@lists.infradead.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Miquel Raynal <miquel.raynal@bootlin.com>, netdev@vger.kernel.org, 
+ Andrew Lunn <andrew@lunn.ch>, Vignesh Raghavendra <vigneshr@ti.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Gregory Clement <gregory.clement@bootlin.com>, 
+ Anand Gore <anand.gore@broadcom.com>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Jakub Kicinski <kuba@kernel.org>, linux-mtd@lists.infradead.org, 
+ Richard Weinberger <richard@nod.at>, 
+ William Zhang <william.zhang@broadcom.com>, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>, 
  Konrad Dybcio <konradybcio@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Bryan.Kemp@dell.com, 
- tudor.laurentiu.oss@gmail.com, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, robdclark@gmail.com, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20241003211139.9296-1-alex.vinarskis@gmail.com>
-References: <20241003211139.9296-1-alex.vinarskis@gmail.com>
-Message-Id: <172808887733.121424.1299151912846511014.robh@kernel.org>
-Subject: Re: [PATCH v4 0/3] X1E Dell XPS 9345 support
+ Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
+ Kursad Oney <kursad.oney@broadcom.com>
+In-Reply-To: <20241004000015.544297-1-rosenp@gmail.com>
+References: <20241004000015.544297-1-rosenp@gmail.com>
+Message-Id: <172808887889.121631.5291340274404319375.robh@kernel.org>
+Subject: Re: [PATCHv2 0/5] devicetree: move nvmem-cells users to
+ nvmem-layout
 
 
-On Thu, 03 Oct 2024 23:10:06 +0200, Aleksandrs Vinarskis wrote:
-> Introduce support for the mentioned laptop.
+On Thu, 03 Oct 2024 17:00:10 -0700, Rosen Penev wrote:
+> The former has been soft deprecated by the latter. Move all users to the
+> latter to avoid having nvmem-cells as an example.
 > 
-> Very similar to other X1E laptops, device tree was derived by analyzing dtsi of
-> existing models and ACPI tables of this laptop [1]. Most notable difference were
-> * TZ protected SPI19.
-> * Keyboard only working after suspend/resume sequence, will do a follow up patch
-> to i2c-hid.
-> * Lots of small deviations in LDOs voltages.
+> v2: add missing semicolon to fix dt_binding_check
 > 
-> Successfully tested with Debian 12 and Gnome. Firmware for GPU/aDSP/cDSP was
-> extracted from Windows, WiFi firmware from upstream linux-firmware.
+> Rosen Penev (5):
+>   ARM: dts: qcom: ipq4019: use nvmem-layout
+>   arm64: dts: bcm4908: nvmem-layout conversion
+>   arm64: dts: armada-3720-gl-mv1000: use nvmem-layout
+>   arm64: dts: mediatek: 7886cax: use nvmem-layout
+>   documentation: use nvmem-layout in examples
 > 
-> Quite a few things alraedy work, details in patches, quite a few still in WIP or
-> TODOs. Since fixing these may take me a while due to lack of documentation,
-> sending current progress as its very much usable.
-> 
-> [1] https://github.com/aarch64-laptops/build/blob/master/misc/dell-xps-9345/acpi/DSDT.dsl
-> 
-> --------
-> 
-> Changes to V3:
-> * Rename device from `tributo-13` to `xps13-9345`
-> * Update commit description - identify EC over i2c, likely camera model
-> * Update cover letter - no hacks needed when build on top of linux-next
-> * v3 link: https://lore.kernel.org/all/20240927094544.6966-1-alex.vinarskis@gmail.com/
-> 
-> --------
-> 
-> Changes to V2:
-> * Fix uart21 missing alias
-> * Fix redundant mdss_dp3 defines
-> * Fix touchscreen i2c address
-> * Update commit description - OLED panel reported working
-> * Update commit description - touchscreen reported working
-> * Update commit description - battery info reported working
-> * Update commit description - add keyboard patches link
-> * v2 link: https://lore.kernel.org/all/20240921163455.12577-1-alex.vinarskis@gmail.com/
-> 
-> --------
-> 
-> Changes to V1:
-> * Fix misalignments due to wrong tab/space conversion
-> * Fix regulator namings
-> * Fix reasonable warnings from `scripts/checkpatch.pl`
-> * Restructure all (sub)nodes alphabetically
-> * v1 link: https://lore.kernel.org/all/20240919170018.13672-1-alex.vinarskis@gmail.com/
-> 
-> Aleksandrs Vinarskis (3):
->   dt-bindings: arm: qcom: Add Dell XPS 13 9345
->   firmware: qcom: scm: Allow QSEECOM on Dell XPS 13 9345
->   arm64: dts: qcom: Add support for X1-based Dell XPS 13 9345
-> 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../dts/qcom/x1e80100-dell-xps13-9345.dts     | 863 ++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.c              |   1 +
->  4 files changed, 866 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+>  .../mtd/partitions/qcom,smem-part.yaml        | 19 +++++++-----
+>  .../bindings/net/marvell,aquantia.yaml        | 13 ++++----
+>  .../boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi | 19 +++++++-----
+>  .../bcmbca/bcm4906-netgear-r8000p.dts         | 14 +++++----
+>  .../dts/marvell/armada-3720-gl-mv1000.dts     | 30 +++++++++----------
+>  .../mediatek/mt7986a-acelink-ew-7886cax.dts   |  1 -
+>  6 files changed, 53 insertions(+), 43 deletions(-)
 > 
 > --
-> 2.43.0
+> 2.46.2
 > 
 > 
 > 
@@ -148,14 +125,9 @@ make sure dt-schema is up to date:
   pip3 install dtschema --upgrade
 
 
-New warnings running 'make CHECK_DTBS=y qcom/x1e80100-dell-xps13-9345.dtb' for 20241003211139.9296-1-alex.vinarskis@gmail.com:
+New warnings running 'make CHECK_DTBS=y broadcom/bcmbca/bcm4906-netgear-r8000p.dtb marvell/armada-3720-gl-mv1000.dtb mediatek/mt7986a-acelink-ew-7886cax.dtb' for 20241004000015.544297-1-rosenp@gmail.com:
 
-arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: domain-idle-states: cluster-sleep-0: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: domain-idle-states: cluster-sleep-1: 'idle-state-name' does not match any of the regexes: 'pinctrl-[0-9]+'
-	from schema $id: http://devicetree.org/schemas/power/domain-idle-state.yaml#
-arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dtb: usb@a2f8800: interrupt-names: ['pwr_event', 'dp_hs_phy_irq', 'dm_hs_phy_irq'] is too short
-	from schema $id: http://devicetree.org/schemas/usb/qcom,dwc3.yaml#
+arch/arm64/boot/dts/broadcom/bcmbca/bcm4906-netgear-r8000p.dts:149.4-30: Warning (ranges_format): /bus@ff800000/nand-controller@1800/nand@0/partitions/partition@0:ranges: "ranges" property has invalid length (12 bytes) (parent #address-cells == 1, child #address-cells == 2, #size-cells == 1)
 
 
 
