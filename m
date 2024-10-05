@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-33183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 203E499177B
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 16:44:50 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAC12991780
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 16:45:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1EF571C21168
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 14:44:49 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83018B21117
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 14:45:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9CA51547C9;
-	Sat,  5 Oct 2024 14:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C553D15531B;
+	Sat,  5 Oct 2024 14:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="hb1qbJrS"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="XnL4Orna"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CA414F10E
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Oct 2024 14:44:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3680813B284
+	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Oct 2024 14:45:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728139484; cv=none; b=iD2axjB6JMZoZPRep9tNV1UbvK77mPZPBWgeBfExmgSoI7ZD3JLP/8oSrEg8329zvPVh9HSPj4DQOc76862ySPR8qBDxgzcfVBX6nnaumeaXLn9Fc6Aw3hyF2mdPbe8jZn1+tLN3LCzu1nn/YBJEjN+OivoKMMbW+xVTpl8y/5E=
+	t=1728139539; cv=none; b=U+vK84UIZNJwSC5+mv9LJsjKNzSv3em4LOa1gr/MzJJYC3xkWraT9APIV0+TZbud5ZsuVBm79I5yaNUmqIaZ+9aNS63/sjJ6jIjzmYZcPmXe4GtUeo0gXw8qAUla7WgDemrfE9PxuDt/SKk0+A0tqrAqxVyFRGqRhIy3BsGd4qQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728139484; c=relaxed/simple;
-	bh=iTP6cWkPIw0pnJ4b1Y/YFozqqx/AGnE1FtMJLFjEtCU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=SqN1d88O+kS+LHpO7MUjClj9llfbdQ1QwZVoUJl0Ku1nzqZ+YzlV3cu8yi+Nq3eGMT0ClaVcs6NJSlmn8WMsHhEjd6OWsfUrkL0zQG1BT85Xerkloz/7wsm+sCHpxZeqc3BVDz8F4V9XtESU7Y10iy73ml5x9mr4vfZ0c9ITINE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=hb1qbJrS; arc=none smtp.client-ip=209.85.160.178
+	s=arc-20240116; t=1728139539; c=relaxed/simple;
+	bh=R6ytXgEwWolY5FMfxKOluJmAUWIacFrrSIoP5PhuTac=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WGz1tVVq8UOgYd5L2u5N66n76dWjfx2D9z5r/l3x5ZS+SeitKMJBQ2JMDq+FtfI5ayZ9UIORtTNHN6va3Ve/jJOswosC8DrCzkC1xpuavZGYjDLixI3nrKObTf/u4JyJGHZxqkGlI0Ll1MpkFHrE37QUlG1wxzCrM//xM8x+WIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=XnL4Orna; arc=none smtp.client-ip=209.85.222.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-4581e0ed0f2so33698681cf.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2024 07:44:43 -0700 (PDT)
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7a99d23e036so325732185a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2024 07:45:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1728139482; x=1728744282; darn=vger.kernel.org;
+        d=marek.ca; s=google; t=1728139536; x=1728744336; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=m2irbHzwF9Po9AacQzMPdPlNV6/mUQD92x4MGVS434I=;
-        b=hb1qbJrSr7NF+KQklYyF5TofhiqcFxcjTe7Z5C5JXpb/Rr4xAeDGT15nE4gm2ObZr3
-         BbRZWbe4R+rHYiMRdtkaG8a0xLl/cQ/WppElmI5xoSTDB0yDyX9s3ZXoMKDO10jBPP5f
-         DGtehv+hPiayuVoFkIf3TxwDDRDVbgH+UWFay+x1DNCGcNBzJFjd+nqPc0AjYQWp0QQ7
-         2ljlbf+g2IOKfeQdIUNivrz7RbPcGAsbIUvHLf3xy0JyjsGae1Z2qEMUsAxpLk4cV1W5
-         JnK6DMtP0UinyNMsUKKwRvKveQ8ZQYqgJxSW552yAbG/6/kgeT+JZHp+AxYTtkFNRmw2
-         RfOw==
+        bh=y+XluEkvRL8QfNohRXB4nX3BEfu3BFvUBCb0tOvo608=;
+        b=XnL4Orna0zXcWb1q0DemTssm/eConNkXPo8tohdgVhbCtgF/eqF2t/R6xMZrDxBd6r
+         y3RrUxaCXK+q97PYAAw5ryMwEwXd8AP+diTbVgeuivEcphciI219CpATfhSyrwhKziKH
+         wIchHSQxyjZmICgETsBSADu6+I6S6/qhnoLKdgvIM0p42Xuqv4k73x3tKNzJbc6QDV8l
+         GSO4yIfz/IIQfnVGT5H5V/N2T/2EmpDYsnmjXPr3sS3ALzeH6Pr29bGlPF99bGUvhVFJ
+         02bW5V2Dm33C3BxXaQqALRhOQe0FmNHx9spSDS7wPYXO2iN7Y/WfO431y6iEYcHXHfK6
+         /KXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728139482; x=1728744282;
+        d=1e100.net; s=20230601; t=1728139536; x=1728744336;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=m2irbHzwF9Po9AacQzMPdPlNV6/mUQD92x4MGVS434I=;
-        b=ek9UJ8FP+L8gUjCyUQSgulOcZ5ND0qNSNd6Qzo6dbYWB5AWoIorqxRC/9ealwoh30G
-         yJA04rkfmj8HCrVh9oZg7839wsD/Uu17nxBpsf6BuUWBu8h0w1oreSvs7pqSwXPy60k7
-         Dok83Ly1wM1k4IDtHtlW2UqQC8HCianwLLKLP+DiXWbNsnfqDF7dmQK/bDKdyeU7sE0S
-         wT/devSidwOK7am5JWqGYgv3WUUGUa/EpdrdrjMWpatC6msXc1yeE8Neynhg2+/k+pIl
-         FP9LMn/oOFknpC2QDpBRaB++StQAwNt398y3dN8aB0Qjf+mvt+m3Ba/rWvc3J7Ms/7Wi
-         Uiog==
-X-Gm-Message-State: AOJu0YwJXIAYlUFnzt1evu8s6afRD6OhFaR3RMSOfoVtz21DpLtef95l
-	3MJ/BzOx0LRcnHLGv+Da+eElPJeCL0MoQhCey/kgBFBRpm+xDhcQLdJwgtI9e2V8POL3iDWSmgp
-	5frg=
-X-Google-Smtp-Source: AGHT+IF3OeNdLbZZWgL3Lk8D2SFyQw+kmrlDKPxNWjaeBMLNdMGFxCRq8dzDOwoamcsj9IIQDvGLAg==
-X-Received: by 2002:a05:622a:1990:b0:456:80f9:debd with SMTP id d75a77b69052e-45d8d0994e9mr172726441cf.8.1728139482157;
-        Sat, 05 Oct 2024 07:44:42 -0700 (PDT)
+        bh=y+XluEkvRL8QfNohRXB4nX3BEfu3BFvUBCb0tOvo608=;
+        b=Y/0P90aCmnzclGJ1UP0fDucYIgjBThdSS/69oMJKNkW13tdFFrOCRCfEMKdBU4ol6L
+         3I1Izj4MsyAfEYzQ23fOWpKSm2wY0OAhAA6FM0prAa9P4Kc5GIeCpLbNdXHsy7kAaNeD
+         IsVC2iOKrG5YSHAN44deIz3QGZ/phz4m3TEt6hWoMdJ7mjucTT74nNHRMvRegngmSGKk
+         UsXH6M/giQv7oAZB1GwYLjMyNn/jvpvo/n/qxSfdJ3f9dQ4CbYmlnDaSAw7XkZQ2UUxN
+         7+j2NiwY0GP05PFAesVaJatX5Gd+LiPiQp1IoCGyZd/CeaIG5gFgmU692AXFwW2Kdjwa
+         1tLQ==
+X-Gm-Message-State: AOJu0Ywi6Dx/Il1WGHwJPmXh87V5m2CXFA/zbM0AJZ2+Ut/12WD6/aBb
+	O/41O307ODGyHD+e/rgL8Z+nwqUjIKmGDWeqd3ZPp0rJa6kn4rqT4fM4nBlXv0l0pupmeQjoDUQ
+	7eYg=
+X-Google-Smtp-Source: AGHT+IFBlO9hp1EEq6eeZIwmtBu7626Wfp+mPjRch+fwjE9zC5N1TjETE8tWbqnRJdaSQ8fRu1ObKA==
+X-Received: by 2002:a05:620a:29c9:b0:7ac:b93b:b21b with SMTP id af79cd13be357-7ae6f3af94dmr974750985a.0.1728139536141;
+        Sat, 05 Oct 2024 07:45:36 -0700 (PDT)
 Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45da74ec328sm9104721cf.32.2024.10.05.07.44.41
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45da74e9a87sm9039161cf.22.2024.10.05.07.45.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Oct 2024 07:44:41 -0700 (PDT)
+        Sat, 05 Oct 2024 07:45:35 -0700 (PDT)
 From: Jonathan Marek <jonathan@marek.ca>
 To: linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	linux-clk@vger.kernel.org (open list:COMMON CLK FRAMEWORK),
+Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	linux-usb@vger.kernel.org (open list:QUALCOMM TYPEC PORT MANAGER DRIVER),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] clk: qcom: videocc-sm8550: depend on either gcc-sm8550 or gcc-sm8650
-Date: Sat,  5 Oct 2024 10:40:46 -0400
-Message-ID: <20241005144047.2226-1-jonathan@marek.ca>
+Subject: [PATCH] usb: typec: qcom-pmic-typec: fix sink status being overwritten with RP_DEF
+Date: Sat,  5 Oct 2024 10:41:46 -0400
+Message-ID: <20241005144146.2345-1-jonathan@marek.ca>
 X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -86,33 +86,28 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This driver is compatible with both sm8550 and sm8650, fix the Kconfig
-entry to reflect that.
+This line is overwriting the result of the above switch-case.
 
-Fixes: da1f361c887c ("clk: qcom: videocc-sm8550: Add SM8650 video clock controller")
+This fixes the tcpm driver getting stuck in a "Sink TX No Go" loop.
+
+Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- drivers/clk/qcom/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index a3e2a09e2105b..4444dafa4e3df 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -1230,11 +1230,11 @@ config SM_VIDEOCC_8350
- config SM_VIDEOCC_8550
- 	tristate "SM8550 Video Clock Controller"
- 	depends on ARM64 || COMPILE_TEST
--	select SM_GCC_8550
-+	depends on SM_GCC_8550 || SM_GCC_8650
- 	select QCOM_GDSC
- 	help
- 	  Support for the video clock controller on Qualcomm Technologies, Inc.
--	  SM8550 devices.
-+	  SM8550 or SM8650 devices.
- 	  Say Y if you want to support video devices and functionality such as
- 	  video encode/decode.
+diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+index a747baa297849..c37dede62e12c 100644
+--- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
++++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
+@@ -432,7 +432,6 @@ static int qcom_pmic_typec_port_get_cc(struct tcpc_dev *tcpc,
+ 			val = TYPEC_CC_RP_DEF;
+ 			break;
+ 		}
+-		val = TYPEC_CC_RP_DEF;
+ 	}
  
+ 	if (misc & CC_ORIENTATION)
 -- 
 2.45.1
 
