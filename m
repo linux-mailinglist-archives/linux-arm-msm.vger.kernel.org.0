@@ -1,114 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-33184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id EAC12991780
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 16:45:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A0599917C2
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 17:26:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 83018B21117
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 14:45:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0639B1F22DEC
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 15:26:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C553D15531B;
-	Sat,  5 Oct 2024 14:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E26DE15533B;
+	Sat,  5 Oct 2024 15:26:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="XnL4Orna"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kiDLLgQd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3680813B284
-	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Oct 2024 14:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A25154BE0;
+	Sat,  5 Oct 2024 15:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728139539; cv=none; b=U+vK84UIZNJwSC5+mv9LJsjKNzSv3em4LOa1gr/MzJJYC3xkWraT9APIV0+TZbud5ZsuVBm79I5yaNUmqIaZ+9aNS63/sjJ6jIjzmYZcPmXe4GtUeo0gXw8qAUla7WgDemrfE9PxuDt/SKk0+A0tqrAqxVyFRGqRhIy3BsGd4qQ=
+	t=1728141971; cv=none; b=e2qEz06lhpnbf9QKNPoJhC7a/pNd14gS29Q+USSAAjLZBXEECn6Tad3BZpSzQgSSnCbDtjGg0jUvIPuJDCFfQjogOi1eb5jj+XflGJdQ/JE5z+BinkhQiq24pl3h2frMge58dojms68O5zWOvWtpznAGtX76CCFWw+7jeBfY7ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728139539; c=relaxed/simple;
-	bh=R6ytXgEwWolY5FMfxKOluJmAUWIacFrrSIoP5PhuTac=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=WGz1tVVq8UOgYd5L2u5N66n76dWjfx2D9z5r/l3x5ZS+SeitKMJBQ2JMDq+FtfI5ayZ9UIORtTNHN6va3Ve/jJOswosC8DrCzkC1xpuavZGYjDLixI3nrKObTf/u4JyJGHZxqkGlI0Ll1MpkFHrE37QUlG1wxzCrM//xM8x+WIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=XnL4Orna; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7a99d23e036so325732185a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2024 07:45:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1728139536; x=1728744336; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=y+XluEkvRL8QfNohRXB4nX3BEfu3BFvUBCb0tOvo608=;
-        b=XnL4Orna0zXcWb1q0DemTssm/eConNkXPo8tohdgVhbCtgF/eqF2t/R6xMZrDxBd6r
-         y3RrUxaCXK+q97PYAAw5ryMwEwXd8AP+diTbVgeuivEcphciI219CpATfhSyrwhKziKH
-         wIchHSQxyjZmICgETsBSADu6+I6S6/qhnoLKdgvIM0p42Xuqv4k73x3tKNzJbc6QDV8l
-         GSO4yIfz/IIQfnVGT5H5V/N2T/2EmpDYsnmjXPr3sS3ALzeH6Pr29bGlPF99bGUvhVFJ
-         02bW5V2Dm33C3BxXaQqALRhOQe0FmNHx9spSDS7wPYXO2iN7Y/WfO431y6iEYcHXHfK6
-         /KXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728139536; x=1728744336;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y+XluEkvRL8QfNohRXB4nX3BEfu3BFvUBCb0tOvo608=;
-        b=Y/0P90aCmnzclGJ1UP0fDucYIgjBThdSS/69oMJKNkW13tdFFrOCRCfEMKdBU4ol6L
-         3I1Izj4MsyAfEYzQ23fOWpKSm2wY0OAhAA6FM0prAa9P4Kc5GIeCpLbNdXHsy7kAaNeD
-         IsVC2iOKrG5YSHAN44deIz3QGZ/phz4m3TEt6hWoMdJ7mjucTT74nNHRMvRegngmSGKk
-         UsXH6M/giQv7oAZB1GwYLjMyNn/jvpvo/n/qxSfdJ3f9dQ4CbYmlnDaSAw7XkZQ2UUxN
-         7+j2NiwY0GP05PFAesVaJatX5Gd+LiPiQp1IoCGyZd/CeaIG5gFgmU692AXFwW2Kdjwa
-         1tLQ==
-X-Gm-Message-State: AOJu0Ywi6Dx/Il1WGHwJPmXh87V5m2CXFA/zbM0AJZ2+Ut/12WD6/aBb
-	O/41O307ODGyHD+e/rgL8Z+nwqUjIKmGDWeqd3ZPp0rJa6kn4rqT4fM4nBlXv0l0pupmeQjoDUQ
-	7eYg=
-X-Google-Smtp-Source: AGHT+IFBlO9hp1EEq6eeZIwmtBu7626Wfp+mPjRch+fwjE9zC5N1TjETE8tWbqnRJdaSQ8fRu1ObKA==
-X-Received: by 2002:a05:620a:29c9:b0:7ac:b93b:b21b with SMTP id af79cd13be357-7ae6f3af94dmr974750985a.0.1728139536141;
-        Sat, 05 Oct 2024 07:45:36 -0700 (PDT)
-Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45da74e9a87sm9039161cf.22.2024.10.05.07.45.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Oct 2024 07:45:35 -0700 (PDT)
-From: Jonathan Marek <jonathan@marek.ca>
-To: linux-arm-msm@vger.kernel.org
-Cc: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	linux-usb@vger.kernel.org (open list:QUALCOMM TYPEC PORT MANAGER DRIVER),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] usb: typec: qcom-pmic-typec: fix sink status being overwritten with RP_DEF
-Date: Sat,  5 Oct 2024 10:41:46 -0400
-Message-ID: <20241005144146.2345-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.45.1
+	s=arc-20240116; t=1728141971; c=relaxed/simple;
+	bh=rTovK59roYa4Df258P/59M0Z2NqDIMAJC86yU/KWqXU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QqK9mEREDn9lJFQhLSl91zgwBlUDBI3Chnxxq40sGOxHbzWGpoLcXDmyhJevndL353W6qbnx1tOM5pRtwXceigW23jzP/wtI1KkJQdXk+yqM/snKeXzmBaSu8YjQAMs0NuVt1XjrCYI5w63J1ojDkyYJhLqcieu3CLUu9IAK07U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kiDLLgQd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 495COXDl014328;
+	Sat, 5 Oct 2024 15:26:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/0ZK09A8+iNllHsQ5RUQhUKR+sdGbVMTPWawpop5zmk=; b=kiDLLgQdbWGVfFSJ
+	FfiCBaIFO0gfMmCvbAhOJbqWJeX+b4d6J7qp/rXgEiVD363BZ65fRiJjRZShWHGK
+	1IBvXlVw/if1wXG0zJqgH/I15XR9rAqGsAhKLQy9gGHIGLHJ9Q+MK30RC80liCAd
+	sJ7RZWxxSpx1DWBc25t61Jvn8DrnGc19YY1nSTJAyBaPeDTxM/2vYaJiifGdAt+F
+	ArjUPgqr2opiek+BceoccU/bBXGLtL68JfsfdBofRzCB/82Mc+MSVpAF+8keyrLG
+	LmLai9w/oSdsH4ng+IbWauiB36PtSm9Ap1xUULd0f1NOz+x80fMr0nCdnuPqU0Ku
+	XiAL3Q==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xv88qgu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 05 Oct 2024 15:26:00 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 495FPxig031590
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 5 Oct 2024 15:25:59 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 5 Oct 2024
+ 08:25:55 -0700
+Message-ID: <d07c709e-9040-6b14-634b-f2b62c47e786@quicinc.com>
+Date: Sat, 5 Oct 2024 20:55:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Snapdragon Devkit for
+ Windows
+To: Jeff Johnson <quic_jjohnson@quicinc.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <robh+dt@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <conor+dt@kernel.org>,
+        <abel.vesa@linaro.org>, <srinivas.kandagatla@linaro.org>
+References: <20240911073337.90577-1-quic_sibis@quicinc.com>
+ <20240911073337.90577-2-quic_sibis@quicinc.com>
+ <6a7b60c4-379c-4251-a158-5d9986f37797@quicinc.com>
+Content-Language: en-US
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <6a7b60c4-379c-4251-a158-5d9986f37797@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oE_kpwqEhaTaNpYcWRujBhYlNmTDaAa8
+X-Proofpoint-GUID: oE_kpwqEhaTaNpYcWRujBhYlNmTDaAa8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ spamscore=0 mlxlogscore=999 adultscore=0 clxscore=1011 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410050113
 
-This line is overwriting the result of the above switch-case.
 
-This fixes the tcpm driver getting stuck in a "Sink TX No Go" loop.
 
-Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 1 -
- 1 file changed, 1 deletion(-)
+On 9/11/24 21:14, Jeff Johnson wrote:
+> On 9/11/2024 12:33 AM, Sibi Sankar wrote:
+>> X1E001DE is the speed binned variant of X1E80100 that supports turbo
+>> boost up to 4.3 Ghz.
+> 
+> if you respin, s/Ghz/GHz/
 
-diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-index a747baa297849..c37dede62e12c 100644
---- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-+++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-@@ -432,7 +432,6 @@ static int qcom_pmic_typec_port_get_cc(struct tcpc_dev *tcpc,
- 			val = TYPEC_CC_RP_DEF;
- 			break;
- 		}
--		val = TYPEC_CC_RP_DEF;
- 	}
- 
- 	if (misc & CC_ORIENTATION)
--- 
-2.45.1
+Thanks for taking time to review the series.
 
+Will fix it in the next re-spin.
+
+-Sibi
+
+> 
+>>
+>> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> index 5cb54d69af0b..6a8fc031e51f 100644
+>> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+>> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+>> @@ -1049,6 +1049,12 @@ properties:
+>>                 - qcom,sm8650-qrd
+>>             - const: qcom,sm8650
+>>   
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,x1e001de-devkit
+>> +          - const: qcom,x1e001de
+>> +          - const: qcom,x1e80100
+>> +
+>>         - items:
+>>             - enum:
+>>                 - lenovo,thinkpad-t14s
+> 
 
