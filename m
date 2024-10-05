@@ -1,55 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-33186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7D189917E3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 17:41:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8645C99184F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 18:31:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB3371C21333
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 15:41:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3C4B1C20FFF
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 16:31:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7081547D5;
-	Sat,  5 Oct 2024 15:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9D2F288B1;
+	Sat,  5 Oct 2024 16:31:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="FVAI0//E"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VPXOk3ZP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.15.14])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D1A1537C3;
-	Sat,  5 Oct 2024 15:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C2F417C69
+	for <linux-arm-msm@vger.kernel.org>; Sat,  5 Oct 2024 16:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728142894; cv=none; b=RkOkJxfGQzYg9NxdR03rRLilYHCB5pOlBRLwxAEihXxPGoJ9KXHSc585pb+pzhiCUYp5Wl1uDCoaxzrjPZaIaaYt/fIGtq4PoPFAMbG+AqmxZvd9Q+k507mo1u/2SbC2/r4HX2N2MQ0jyujhb7k9kgwb8rgq7OcovPPolZ/B5r8=
+	t=1728145878; cv=none; b=nOJLet+VFEJ5V/J5deRjWP0ewf/mO9j00pgGQYoKpYoR4am5B/L1w16oxmuD3kpw4yGT1WUSEbE2I08ejW/U+cxHuskFvf6N5Mb9m2/kHgjQ5t5F2UbDfReDQBXHxyI5RAGck3bOGVkoObK7R63H+JlsfBpPnbqCRiG+6dXZkqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728142894; c=relaxed/simple;
-	bh=AA1s0Ci9ozC3WMvOPZhiXoxjx8/13qajUfnk+TtR2Dw=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=SCHdZxfsO2EgWqaebbVzn0M9QET40Db11JW4ZLo5RLDK04cqGbjHam8sfRtdsilq+gpC9jqocZBTlo7eZ0doZf/aZT/Z2j0xoYCuASyy3VbCehoiEXnr7XzvNIztGhvCRCVDKmneqyvcMP7+48xD7NsCAqf1OfYDeZvMmZqScFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=FVAI0//E; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1728142854; x=1728747654; i=markus.elfring@web.de;
-	bh=Oix7kgCYIxahefd/lUj+gnr1RHpaKFan/VSKFUUttN8=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=FVAI0//ER12gz1M7bLVJ/lh4FsxIyFag9DguyOlhqNQ+fwfW1OUcCfcGv2ZnhiaF
-	 UHppkjlpbFDYfwNl4f1u+hODZsjpquibgzXWkxtqnr08fLzpv7jBEgNkMdUMdK2HP
-	 zOL1pcwU06YBNtSCUSOzAB0bY6s7NV91EFB4Hxgag4uh+SSm5zY2RSkN/5TBBAZ0T
-	 DQTc/tKcuoYJvZ8OhfryRkq2RH5GbSgAbRa42dPoxg1IXcIau286GhocJoA1Ok10W
-	 nMcRRs6t2bLUNHokMxsBe5ch2MP1bpOU0TkzM2LBeGaKna6ASqgf6FCZujl+22SfB
-	 P2OXGaueW441TC7AFA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M7Nii-1t4mPS0pQ4-007G3r; Sat, 05
- Oct 2024 17:40:54 +0200
-Message-ID: <ee94b16a-baa7-471c-997e-f1bf17b074b8@web.de>
-Date: Sat, 5 Oct 2024 17:40:53 +0200
+	s=arc-20240116; t=1728145878; c=relaxed/simple;
+	bh=SPLDvAIKA2wal1cbyk5bpbu0Yow0nPLmaGDY1ntAsVc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ihovEO3wA6Ef6DyZWR2Z3G0h03ltfa9J3+8+7vqnaFQcSAV9eRe4qL5Rdk22APpVdBPcKVaEj63i1o9WQ3IJNOy5JvPDlywgf9jZ9Mrgnxg7a5mQi/eJMzmdYSkWk3TA7bzodjxuNbwT9GcDGwGwIJldl2semSCmuTwCCYpQVko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VPXOk3ZP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 495FoMPK002229
+	for <linux-arm-msm@vger.kernel.org>; Sat, 5 Oct 2024 16:31:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	g1DrUfZua4F6fDsbCUaZ1sAuO6WCHxhZhRBSszMS84c=; b=VPXOk3ZPzZzKL5Xu
+	x2ArITegt7t/KEzJ7o53fqvESvVYd8hD6WfPZCknFiwD3Uj9hcOKn6Qxmffj2CxG
+	Rsax4DHC0DkXUlamSz20UXv1tr/nOoZ6PchIw1WU9uHlXl/4427UHagxFvsnh6yt
+	9m38xrE73TW7PmAY12roZ20kM93bZdTIN1HCAZmd6tTWTJtjv/c09R9w/4VLwZNh
+	Oc8n1mHE4S28hs1JvoxPh3IzxQBeli0x8yXfng3eg00sHcnjKduZrvAKQHR7KO5Q
+	a9i5Bwzl4laVZt+Tvfy9N2QkY8TLuORF8azL3RDpXEllNZ+qfeen80IdEIKpsURX
+	ILm7eg==
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xsngtm9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2024 16:31:15 +0000 (GMT)
+Received: by mail-ed1-f71.google.com with SMTP id 4fb4d7f45d1cf-5c8755c4cd2so332004a12.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 05 Oct 2024 09:31:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728145874; x=1728750674;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g1DrUfZua4F6fDsbCUaZ1sAuO6WCHxhZhRBSszMS84c=;
+        b=DzDc/jHwfN8zPcicYjmycOyPyj+Z/n3iVG/AUAzp841xdw3o8+tKMbqa0pEU2xOpTt
+         knOmMjxeFdrZ/jHXsaqzfVdXPqCW++Mu00fB4NmwaKzwmpDQQYOQm4Ea2CfA00ZTBM5M
+         SxK6oBe/jEMdFor8Bk8RC/EyCpdXYqsS0FHd3gP4UoPBlsyM1BXRojGqvGGAPxUODqc0
+         SrGYYxhJFCEgOkq6t3X57jd0FD6HjBz1b1gnWrAUKOZ/KuI5oK49T02sz9OUMBno6Hi7
+         liMPsXHH53UlPdCuDbqIj0Vg0RXY+GcfZAyexNOTYiH23hcUgjwneCNgTqJhNHYlu+Df
+         9H8w==
+X-Forwarded-Encrypted: i=1; AJvYcCW+/DTR9ADU7BNLaTDlT8T6XxEJbEN/EU4J/oVla+kcboNfIxCW5ksmrRJ+1pnnRTNdNGjxoEwKyEWec8As@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4cwdbHUukMHJ34zsKtnqOXadlFb0YEG1P2Xipcf+Khdh8WmyZ
+	vx6i3swQJESorBeilMSdFiQL7v8hTgTC+m9lqMe1tYbl72nWvOaXHA1MA6zL3W4onJcjIuyC7Jh
+	n61hoDjM22FulpupK7VmP6twNmvEJeQ03aPoUsZxv/a54t957mCAVCfFoxuKg5/sX
+X-Received: by 2002:a05:6402:34d0:b0:5c8:8381:c17b with SMTP id 4fb4d7f45d1cf-5c8d2d02685mr2360051a12.2.1728145874128;
+        Sat, 05 Oct 2024 09:31:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFDDW6XxiZgpQtH+HswqMKcQG1qf3+CFB/WbtT35s7v9ACQdUKD14uAlsycQAjBffPIhQy/3g==
+X-Received: by 2002:a05:6402:34d0:b0:5c8:8381:c17b with SMTP id 4fb4d7f45d1cf-5c8d2d02685mr2360018a12.2.1728145873125;
+        Sat, 05 Oct 2024 09:31:13 -0700 (PDT)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05eb4b9sm1157579a12.75.2024.10.05.09.31.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Oct 2024 09:31:11 -0700 (PDT)
+Message-ID: <ba56c822-cf3d-4d62-86d4-e04551e443c6@oss.qualcomm.com>
+Date: Sat, 5 Oct 2024 18:31:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -57,66 +84,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Zichen Xie <zichenxie0106@gmail.com>, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rohit kumar <quic_rohkumar@quicinc.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Takashi Iwai <tiwai@suse.com>
-Cc: stable@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
- Chenyuan Yang <chenyuan0y@gmail.com>, Zijie Zhao <zzjas98@gmail.com>
-References: <20241003152739.9650-1-zichenxie0106@gmail.com>
-Subject: Re: [PATCH] ASoC: qcom: Fix NULL Dereference in
- asoc_qcom_lpass_cpu_platform_probe()
-Content-Language: en-GB
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <20241003152739.9650-1-zichenxie0106@gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/dsi: improve/fix dsc pclk calculation
+To: Jonathan Marek <jonathan@marek.ca>, freedreno@lists.freedesktop.org
+Cc: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+ <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "open list:DRM DRIVER for Qualcomm display hardware"
+ <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER for Qualcomm display hardware"
+ <dri-devel@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20241005143818.2036-1-jonathan@marek.ca>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241005143818.2036-1-jonathan@marek.ca>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FT4PekDjmBCyGrkec/hi9y9+Vtd7tCvznDoAvaVISprcWUYWco5
- dJbyXoyXbt2zGk67OyaHeIwv/Xb144QRPihS/t4Yl9apcFWPRdSKd/+93kPyVXvSYx3XhS4
- a6sk+QiMEFj2cKaa9jgLqGnQJev9X2aPIOZx8vO/D6eEWZtvG9XkN/RJeWXfWqS0Acz8g4o
- c/TG5MdrUGOBS7nSQ4dBw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:bfneBKFioX0=;dvCX7e3cyPK+wwLkUpKtVO0gFQ0
- siD6L3fS2j0Zb3oimAznmc/nfvTKyk/4/0mzI7hUAIynBqh3QQLuxquVN0W5YumtrYP97/xSu
- Lz2Rd1igxLGRhyCdU36y/SWMpzQGy1pfctepFpQ+LL9mFRAyu/PnspTfc1u18QtJc8aaSwbpf
- t6SpJpn5bxHcG7I8ZUKdPlCDOhKzNBVtUMWLVLPAPyw/PdflZ4cwX2lmdGY9Vi3QhCJq7blqk
- Hbaj3XFWTEa2MgVlSKNx4GUDgqLDseRSQvGz0ZlZpQgDIVE5NS9o6Ow4J85QRt1V2Yimo6H//
- 4OLJrzyCNRiKHakvbhYjTBtnB3MpD5FnvigR+3o8bd2ynR3kL/2/CfjSbuedwFpGs1+wfRYWM
- owVEEN33midnIq39gsQu40dJI2CNVwDjAcx8Hp+7NuXF7aNyDYSAI5/WwTFLfA5yRLnrH3/im
- 1cjC1OG+tDRRwClImt/X9XbMQ8LeXwWF/KYjPdNe0wC3mVIATOqQLtDNH841Mh9+yhvUy+VI8
- QWUkSf79DAyBxYAyyzPur42txXj6dV1JbKmQZEUa1p9dJ+rjimhB5lt+nMmpgXMkZUrsp+9Cg
- gg39e7mO07RCcdy3IaQbfhnkZdrnNpsm1TLoHGKTMCjkpGHciFlO9b1v9bdC2dS36k9IGw9nI
- p7C/Xgtp4mFPwj43gUcpag2bl6m8SLqjLk+7Sd8wqL9LcgBF2Ps4GeEM8Viq3/FixODrwOO9h
- JXhiKZqhf41YjWYzXUutiW3aIJLzXeh2qNM+Nwsyy9nvv1pwgFLVCl1mrCNGDTs6lqkW49CE3
- VpYU9fC6mRGcd18rfJBTz92Cymf58hJwsnr2Nnxuv+/DU=
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: nEKfq90vNq6G4DkbNeoE4hkMtIgH6LBJ
+X-Proofpoint-ORIG-GUID: nEKfq90vNq6G4DkbNeoE4hkMtIgH6LBJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ mlxlogscore=943 clxscore=1015 malwarescore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410050122
 
-> A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
-
-                   call?
-
-
-> possibly return NULL pointer. NULL Pointer Dereference may be
-> triggerred without addtional check.
-=E2=80=A6
-
-* How do you think about to use the term =E2=80=9Cnull pointer dereference=
-=E2=80=9D
-  for the final commit message (including the summary phrase)?
-
-* Would you like to avoid any typos here?
-
-
-=E2=80=A6
+On 5.10.2024 4:38 PM, Jonathan Marek wrote:
+> drm_mode_vrefresh() can introduce a large rounding error, avoid it.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  sound/soc/qcom/lpass-cpu.c | 2 ++
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 185d7de0bf376..1205aa398e445 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -542,7 +542,7 @@ static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mo
+>  
+>  	int new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
+>  
+> -	return new_htotal * mode->vtotal * drm_mode_vrefresh(mode);
+> +	return mult_frac(mode->clock * 1000u, new_htotal, mode->htotal);
 
-Did you overlook to add a version description behind the marker line?
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
-cumentation/process/submitting-patches.rst?h=3Dv6.12-rc1#n723
+This seems to ignore mult/div by two on certain mode flags.. is that
+intended?
 
-Regards,
-Markus
+Konrad
 
