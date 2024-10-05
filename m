@@ -1,139 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-33185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A0599917C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 17:26:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7D189917E3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 17:41:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0639B1F22DEC
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 15:26:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB3371C21333
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  5 Oct 2024 15:41:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E26DE15533B;
-	Sat,  5 Oct 2024 15:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0C7081547D5;
+	Sat,  5 Oct 2024 15:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kiDLLgQd"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="FVAI0//E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A25154BE0;
-	Sat,  5 Oct 2024 15:26:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D1A1537C3;
+	Sat,  5 Oct 2024 15:41:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728141971; cv=none; b=e2qEz06lhpnbf9QKNPoJhC7a/pNd14gS29Q+USSAAjLZBXEECn6Tad3BZpSzQgSSnCbDtjGg0jUvIPuJDCFfQjogOi1eb5jj+XflGJdQ/JE5z+BinkhQiq24pl3h2frMge58dojms68O5zWOvWtpznAGtX76CCFWw+7jeBfY7ig=
+	t=1728142894; cv=none; b=RkOkJxfGQzYg9NxdR03rRLilYHCB5pOlBRLwxAEihXxPGoJ9KXHSc585pb+pzhiCUYp5Wl1uDCoaxzrjPZaIaaYt/fIGtq4PoPFAMbG+AqmxZvd9Q+k507mo1u/2SbC2/r4HX2N2MQ0jyujhb7k9kgwb8rgq7OcovPPolZ/B5r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728141971; c=relaxed/simple;
-	bh=rTovK59roYa4Df258P/59M0Z2NqDIMAJC86yU/KWqXU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QqK9mEREDn9lJFQhLSl91zgwBlUDBI3Chnxxq40sGOxHbzWGpoLcXDmyhJevndL353W6qbnx1tOM5pRtwXceigW23jzP/wtI1KkJQdXk+yqM/snKeXzmBaSu8YjQAMs0NuVt1XjrCYI5w63J1ojDkyYJhLqcieu3CLUu9IAK07U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kiDLLgQd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 495COXDl014328;
-	Sat, 5 Oct 2024 15:26:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/0ZK09A8+iNllHsQ5RUQhUKR+sdGbVMTPWawpop5zmk=; b=kiDLLgQdbWGVfFSJ
-	FfiCBaIFO0gfMmCvbAhOJbqWJeX+b4d6J7qp/rXgEiVD363BZ65fRiJjRZShWHGK
-	1IBvXlVw/if1wXG0zJqgH/I15XR9rAqGsAhKLQy9gGHIGLHJ9Q+MK30RC80liCAd
-	sJ7RZWxxSpx1DWBc25t61Jvn8DrnGc19YY1nSTJAyBaPeDTxM/2vYaJiifGdAt+F
-	ArjUPgqr2opiek+BceoccU/bBXGLtL68JfsfdBofRzCB/82Mc+MSVpAF+8keyrLG
-	LmLai9w/oSdsH4ng+IbWauiB36PtSm9Ap1xUULd0f1NOz+x80fMr0nCdnuPqU0Ku
-	XiAL3Q==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xv88qgu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 05 Oct 2024 15:26:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 495FPxig031590
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sat, 5 Oct 2024 15:25:59 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sat, 5 Oct 2024
- 08:25:55 -0700
-Message-ID: <d07c709e-9040-6b14-634b-f2b62c47e786@quicinc.com>
-Date: Sat, 5 Oct 2024 20:55:52 +0530
+	s=arc-20240116; t=1728142894; c=relaxed/simple;
+	bh=AA1s0Ci9ozC3WMvOPZhiXoxjx8/13qajUfnk+TtR2Dw=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=SCHdZxfsO2EgWqaebbVzn0M9QET40Db11JW4ZLo5RLDK04cqGbjHam8sfRtdsilq+gpC9jqocZBTlo7eZ0doZf/aZT/Z2j0xoYCuASyy3VbCehoiEXnr7XzvNIztGhvCRCVDKmneqyvcMP7+48xD7NsCAqf1OfYDeZvMmZqScFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=FVAI0//E; arc=none smtp.client-ip=212.227.15.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1728142854; x=1728747654; i=markus.elfring@web.de;
+	bh=Oix7kgCYIxahefd/lUj+gnr1RHpaKFan/VSKFUUttN8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=FVAI0//ER12gz1M7bLVJ/lh4FsxIyFag9DguyOlhqNQ+fwfW1OUcCfcGv2ZnhiaF
+	 UHppkjlpbFDYfwNl4f1u+hODZsjpquibgzXWkxtqnr08fLzpv7jBEgNkMdUMdK2HP
+	 zOL1pcwU06YBNtSCUSOzAB0bY6s7NV91EFB4Hxgag4uh+SSm5zY2RSkN/5TBBAZ0T
+	 DQTc/tKcuoYJvZ8OhfryRkq2RH5GbSgAbRa42dPoxg1IXcIau286GhocJoA1Ok10W
+	 nMcRRs6t2bLUNHokMxsBe5ch2MP1bpOU0TkzM2LBeGaKna6ASqgf6FCZujl+22SfB
+	 P2OXGaueW441TC7AFA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.83.95]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M7Nii-1t4mPS0pQ4-007G3r; Sat, 05
+ Oct 2024 17:40:54 +0200
+Message-ID: <ee94b16a-baa7-471c-997e-f1bf17b074b8@web.de>
+Date: Sat, 5 Oct 2024 17:40:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: Add Snapdragon Devkit for
- Windows
-To: Jeff Johnson <quic_jjohnson@quicinc.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <krzk+dt@kernel.org>, <robh+dt@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <conor+dt@kernel.org>,
-        <abel.vesa@linaro.org>, <srinivas.kandagatla@linaro.org>
-References: <20240911073337.90577-1-quic_sibis@quicinc.com>
- <20240911073337.90577-2-quic_sibis@quicinc.com>
- <6a7b60c4-379c-4251-a158-5d9986f37797@quicinc.com>
-Content-Language: en-US
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <6a7b60c4-379c-4251-a158-5d9986f37797@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: oE_kpwqEhaTaNpYcWRujBhYlNmTDaAa8
-X-Proofpoint-GUID: oE_kpwqEhaTaNpYcWRujBhYlNmTDaAa8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxlogscore=999 adultscore=0 clxscore=1011 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410050113
+User-Agent: Mozilla Thunderbird
+To: Zichen Xie <zichenxie0106@gmail.com>, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rohit kumar <quic_rohkumar@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: stable@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>,
+ Chenyuan Yang <chenyuan0y@gmail.com>, Zijie Zhao <zzjas98@gmail.com>
+References: <20241003152739.9650-1-zichenxie0106@gmail.com>
+Subject: Re: [PATCH] ASoC: qcom: Fix NULL Dereference in
+ asoc_qcom_lpass_cpu_platform_probe()
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20241003152739.9650-1-zichenxie0106@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:FT4PekDjmBCyGrkec/hi9y9+Vtd7tCvznDoAvaVISprcWUYWco5
+ dJbyXoyXbt2zGk67OyaHeIwv/Xb144QRPihS/t4Yl9apcFWPRdSKd/+93kPyVXvSYx3XhS4
+ a6sk+QiMEFj2cKaa9jgLqGnQJev9X2aPIOZx8vO/D6eEWZtvG9XkN/RJeWXfWqS0Acz8g4o
+ c/TG5MdrUGOBS7nSQ4dBw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:bfneBKFioX0=;dvCX7e3cyPK+wwLkUpKtVO0gFQ0
+ siD6L3fS2j0Zb3oimAznmc/nfvTKyk/4/0mzI7hUAIynBqh3QQLuxquVN0W5YumtrYP97/xSu
+ Lz2Rd1igxLGRhyCdU36y/SWMpzQGy1pfctepFpQ+LL9mFRAyu/PnspTfc1u18QtJc8aaSwbpf
+ t6SpJpn5bxHcG7I8ZUKdPlCDOhKzNBVtUMWLVLPAPyw/PdflZ4cwX2lmdGY9Vi3QhCJq7blqk
+ Hbaj3XFWTEa2MgVlSKNx4GUDgqLDseRSQvGz0ZlZpQgDIVE5NS9o6Ow4J85QRt1V2Yimo6H//
+ 4OLJrzyCNRiKHakvbhYjTBtnB3MpD5FnvigR+3o8bd2ynR3kL/2/CfjSbuedwFpGs1+wfRYWM
+ owVEEN33midnIq39gsQu40dJI2CNVwDjAcx8Hp+7NuXF7aNyDYSAI5/WwTFLfA5yRLnrH3/im
+ 1cjC1OG+tDRRwClImt/X9XbMQ8LeXwWF/KYjPdNe0wC3mVIATOqQLtDNH841Mh9+yhvUy+VI8
+ QWUkSf79DAyBxYAyyzPur42txXj6dV1JbKmQZEUa1p9dJ+rjimhB5lt+nMmpgXMkZUrsp+9Cg
+ gg39e7mO07RCcdy3IaQbfhnkZdrnNpsm1TLoHGKTMCjkpGHciFlO9b1v9bdC2dS36k9IGw9nI
+ p7C/Xgtp4mFPwj43gUcpag2bl6m8SLqjLk+7Sd8wqL9LcgBF2Ps4GeEM8Viq3/FixODrwOO9h
+ JXhiKZqhf41YjWYzXUutiW3aIJLzXeh2qNM+Nwsyy9nvv1pwgFLVCl1mrCNGDTs6lqkW49CE3
+ VpYU9fC6mRGcd18rfJBTz92Cymf58hJwsnr2Nnxuv+/DU=
+
+> A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
+
+                   call?
 
 
+> possibly return NULL pointer. NULL Pointer Dereference may be
+> triggerred without addtional check.
+=E2=80=A6
 
-On 9/11/24 21:14, Jeff Johnson wrote:
-> On 9/11/2024 12:33 AM, Sibi Sankar wrote:
->> X1E001DE is the speed binned variant of X1E80100 that supports turbo
->> boost up to 4.3 Ghz.
-> 
-> if you respin, s/Ghz/GHz/
+* How do you think about to use the term =E2=80=9Cnull pointer dereference=
+=E2=80=9D
+  for the final commit message (including the summary phrase)?
 
-Thanks for taking time to review the series.
+* Would you like to avoid any typos here?
 
-Will fix it in the next re-spin.
 
--Sibi
+=E2=80=A6
+> ---
+>  sound/soc/qcom/lpass-cpu.c | 2 ++
 
-> 
->>
->> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
->> ---
->>   Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
->>   1 file changed, 6 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
->> index 5cb54d69af0b..6a8fc031e51f 100644
->> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
->> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
->> @@ -1049,6 +1049,12 @@ properties:
->>                 - qcom,sm8650-qrd
->>             - const: qcom,sm8650
->>   
->> +      - items:
->> +          - enum:
->> +              - qcom,x1e001de-devkit
->> +          - const: qcom,x1e001de
->> +          - const: qcom,x1e80100
->> +
->>         - items:
->>             - enum:
->>                 - lenovo,thinkpad-t14s
-> 
+Did you overlook to add a version description behind the marker line?
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Do=
+cumentation/process/submitting-patches.rst?h=3Dv6.12-rc1#n723
+
+Regards,
+Markus
 
