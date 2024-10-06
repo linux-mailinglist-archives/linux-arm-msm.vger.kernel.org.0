@@ -1,120 +1,121 @@
-Return-Path: <linux-arm-msm+bounces-33226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36691991E15
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 13:21:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E247991EA5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 15:55:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDBE1282425
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 11:21:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40BC3281B49
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 13:55:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10F32175D2C;
-	Sun,  6 Oct 2024 11:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C917FEACD;
+	Sun,  6 Oct 2024 13:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZRFLoBjT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="cj9Hztmy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35ABE1741C9
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 11:21:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ADFC125;
+	Sun,  6 Oct 2024 13:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728213682; cv=none; b=kIyVm6x8wJm9aYW3eHptsYmHIlQyQskYf2Dx3oir4qD/GhSkoYmb+i/46PTodwG1Aqe4iiNADvaUUCTQwAtE19DpIRgZ7cWv53QjWDWFAifeiLxkx3R0t3tKKpfFoMB9ceTIpuHCBQ3IoXlk8nh5eSurabZHk/50cckFcSBkrog=
+	t=1728222940; cv=none; b=rUjA/llaogscud9AD+P580Lih3GZE4DGx4NXHVG6ZVrEtcwk58Aqv65giuBcB0lIjRnny9UYGIZgLguWWoVe+zAZhyy+lM+uzB7KKNdVIfrLbaXF4D2rh3tSi2EX6u8gEKl3JMs8DkAF2u9rNBQ0NzxWVbyyWxzmqrWoai45mLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728213682; c=relaxed/simple;
-	bh=kAkf6NIhOlen6xkgkrgYREOsdkIOiEOGqa3LkxwXAz4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rANccJXMBsM08FXX4Z1nSUjYJdsO3Wkq6mXSqGXBHNllVif0jReVoh/CEES3k2KeaRTKJxhQZHhUyJw+JBt5nnMZMox19cfGMTJbbH5nOMuJzY4Ds5Tp1jUZCyMWy9PaNrq0Ae6AqwWv0z3eweN+9YY/D1ANV/Pqlnz4yUIQfDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZRFLoBjT; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5c88c9e45c2so7989908a12.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 04:21:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728213678; x=1728818478; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IaSdlUzNDNfxslBW/OGrSNOxQF3vX0DH7/KKjL0CWFE=;
-        b=ZRFLoBjTG8F3mnbaxzhEVD5mJKaLx5/2TTk+hrgvD3rdpHcyXkH0aj+uPy1cA8D4wx
-         Af23dzdoNOYTNwpzbbqx46oCw8/n8HpYvCKG1Qd+xvl8BSGIOil2iyAT7QvsXKizpBWK
-         PUXOoo12LpxhY6HIQIaMCZEtPE64TkBWJVK0J7zpihvQSrhbh8HcbSzL/aR1ETUhORfS
-         2A0I9OMJxJSQTiRQF+1Z2nVOqA5BgPNRE8IO3JZUOLi3TXRC8vcy1KPbR4lAwlXjrpWc
-         Av9hGEa16S8jbnKt+ZESVTlwP8Ygdj36R8Ao5EERaSF78gTr0fKlAQ2mnoeFD0K+6tI1
-         8fqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728213678; x=1728818478;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IaSdlUzNDNfxslBW/OGrSNOxQF3vX0DH7/KKjL0CWFE=;
-        b=UupbUOCeDinN2Kgyehr3szDpucKMoxs6aqWrTNQumyT+AaQaOLer9UfUtbKzUv2vzs
-         +4uMSrQsbvtUtvY/MKdBBFwCBhps3yHxvTwjEVFiitQ4/MCM3cIDZ0NvSFKbY6rUlCji
-         cfthH5j83MQnfJEqZsk+9HrQo1BDQAz4MymHvln3aN5Zoh8F6bJoyvKKjgCVc6JAzjB3
-         Gafi5L+/ixtwR9pczrvUtArpNb5IbwAc0m/eTbeHtTtwnp0DFZTEYL8dnUVkIsPSg6Eb
-         fr/uX/qqDotv3Gx4rQo3WdAeeeWgXVvAp1Xt1v35KOMYiapEaCwc92CGbaYIqgGZyrbO
-         S+5g==
-X-Forwarded-Encrypted: i=1; AJvYcCVBjAL1XaS4EJqF+6IgRAcRhUmbx83dWVnA1qXFzN8XjvkIoNglhuJ45hdXgVcx452eLOgH9fsFx/pjqyhV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9v9aX/WsGpYPxr0r3Zsd+xhjgDUuefSuZeaFKWdVhMdqXZzHN
-	Cydw6sNJPcwhuDE1osX+fqWDFpGz0iFWx9AkOcgnRz+oWhILoJwESroidKM+42U=
-X-Google-Smtp-Source: AGHT+IGhNzL6F7Y3Basq1U7UYWMAXnxAome0GeoM6oq+0r0hVBAogjvQax1Al72V/SfzYXj8LXhFpw==
-X-Received: by 2002:a17:907:360e:b0:a8d:4e69:4030 with SMTP id a640c23a62f3a-a990a0606a4mr1387180166b.19.1728213678283;
-        Sun, 06 Oct 2024 04:21:18 -0700 (PDT)
-Received: from [192.168.0.15] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e7860cbsm242410866b.120.2024.10.06.04.21.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 06 Oct 2024 04:21:17 -0700 (PDT)
-Message-ID: <b9e1c0ae-5651-418a-9b71-897cd739ed0c@linaro.org>
-Date: Sun, 6 Oct 2024 12:21:17 +0100
+	s=arc-20240116; t=1728222940; c=relaxed/simple;
+	bh=HAdrsEY6YlkWBS7ysRiXV9/WdgVSWOyATYuYjcqzqU0=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=gJXAvU2hM71S+SFRv/lsn7RXQt+APagXKx9vop7h+MTMPFgP+Tgme+02qae52E3olTHp4de0NQWD3ck1OvF880xP6Qf6YFhSaMDSQ8GK5oJdb4oE+5SU4MEq+x57bj3rqXPDDpAP7g+77NPAnr79poXrLSI+yKq8MZGGw8TuwvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=cj9Hztmy; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 496BGx6r019907;
+	Sun, 6 Oct 2024 13:55:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=jfCNoTHOpxQs
+	dhAMW7Ej4NZ+kmH7a26ExQ8nsR4Za8g=; b=cj9Hztmy4nvLQXXNULVfjSrtDR2m
+	oSu7LAddoqDDus8omAQCpqHUI4fXN/OdIuezs6qTqJgymOasQeqe8izU4e6mxNDz
+	55UpPywbJSUNXvdnGOic9ALRbKDTyZd1EzbfG9U9VHcuBBlDk0xioyIX/GNj+oQm
+	BUKXvJVvyYt6gI6w6P+CghaF78vnlmaQKNDLPllOZNvihdP5UZV3MM1kp63dq3aL
+	lwpTMBYCeuOeA+CBB4oM1V8Gmw4pchZblVime0E7CPNncbrlyng96vgezuSOF/am
+	bniUgjcuCavoANGOWzcwKBPdOkT5s3IaCqNs+36MG/A7w964kYBMpfcQ0g==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xr5j2cu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sun, 06 Oct 2024 13:55:35 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 496DtV9t015203;
+	Sun, 6 Oct 2024 13:55:31 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 422xhkgnns-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+	Sun, 06 Oct 2024 13:55:31 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 496DtV6F015188;
+	Sun, 6 Oct 2024 13:55:31 GMT
+Received: from hu-maiyas-hyd.qualcomm.com (hu-spuppala-hyd.qualcomm.com [10.213.108.54])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 496DtVJM015184;
+	Sun, 06 Oct 2024 13:55:31 +0000
+Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4137148)
+	id 9AB4E600B71; Sun,  6 Oct 2024 19:25:30 +0530 (+0530)
+From: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
+        quic_bhaskarv@quicinc.com, quic_neersoni@quicinc.com,
+        quic_gaurkash@quicinc.com, quic_spuppala@quicinc.com
+Subject: [PATCH RFC 0/2] Avoid reprogram all keys to Inline Crypto Engine for MMC runtime suspend resume
+Date: Sun,  6 Oct 2024 19:25:28 +0530
+Message-Id: <20241006135530.17363-1-quic_spuppala@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6ANqrEGjwaNJuvmo9WyiiqY5Y8M8mgeA
+X-Proofpoint-ORIG-GUID: 6ANqrEGjwaNJuvmo9WyiiqY5Y8M8mgeA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
+ clxscore=1011 mlxlogscore=531 priorityscore=1501 impostorscore=0
+ adultscore=0 mlxscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410060101
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usb: typec: qcom-pmic-typec: fix sink status being
- overwritten with RP_DEF
-To: Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>,
- "open list:QUALCOMM TYPEC PORT MANAGER DRIVER" <linux-usb@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>
-References: <20241005144146.2345-1-jonathan@marek.ca>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241005144146.2345-1-jonathan@marek.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 05/10/2024 15:41, Jonathan Marek wrote:
-> This line is overwriting the result of the above switch-case.
-> 
-> This fixes the tcpm driver getting stuck in a "Sink TX No Go" loop.
-> 
-> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c | 1 -
->   1 file changed, 1 deletion(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-> index a747baa297849..c37dede62e12c 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-> @@ -432,7 +432,6 @@ static int qcom_pmic_typec_port_get_cc(struct tcpc_dev *tcpc,
->   			val = TYPEC_CC_RP_DEF;
->   			break;
->   		}
-> -		val = TYPEC_CC_RP_DEF;
->   	}
->   
->   	if (misc & CC_ORIENTATION)
+Crypto reprogram all keys is called for each MMC runtime
+suspend/resume in current upstream design. If this is implemented
+as a non-interruptible call to TEE for security, the cpu core is
+blocked for execution while this call executes although the crypto
+engine already has the keys. For example, glitches in audio/video
+streaming applications have been observed due to this. Add mmc_host_ops
+hook to control reprogramming keys to crypto engine for socs which dont
+require this feature.
 
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+This patch addresses the following:
+- Adds vendor hook to control reprogram all keys.
+- Avoids reprogram of keys for Qualcomm SOCs only.
+
+Seshu Madhavi Puppala (2):
+  mmc: core: Add vendor hook to control reprogram keys to Crypto Engine
+  mmc: host: sdhci-msm: Avoid reprogram keys for QCOM socs
+
+ drivers/mmc/core/crypto.c    | 8 +++++---
+ drivers/mmc/host/sdhci-msm.c | 6 ++++++
+ drivers/mmc/host/sdhci.c     | 6 ++++++
+ include/linux/mmc/host.h     | 7 +++++++
+ 4 files changed, 24 insertions(+), 3 deletions(-)
+
+-- 
+2.17.1
+
 
