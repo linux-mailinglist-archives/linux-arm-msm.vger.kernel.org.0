@@ -1,98 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-33203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 356CE991BD4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 03:56:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB9CF991BDE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 03:56:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 66D1F1C2116A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 01:56:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5B40282CAC
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 01:56:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E74416DC3C;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9200170858;
 	Sun,  6 Oct 2024 01:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bHJhnSlc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hw9LcFcy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6F879CD;
-	Sun,  6 Oct 2024 01:55:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEF216F8F5;
+	Sun,  6 Oct 2024 01:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728179746; cv=none; b=LP318No42i0OaqiwKWZMISmKiFXkbwrQCUbJs1F8sfV9Mal+phTOyTebVl2hYn2rvyMB4tpP0RYJAM6NCMNKeuwZovG3k46+qD4Rz9eMVExPMSx1ONhvSx3lXcsDygfv4T7L2wxuQYM9in9YX63v960FPHoizN6I3ePzcuc4QuE=
+	t=1728179746; cv=none; b=qDeV4fqc889OougaoxlodvgJiTjk+3HzY4wy3aacSvMPbEXyDiNR7CfqVtwMmJME3IUu7PrK5ntlzBPkAXHvPvuWDo85MGpXxWlovpcYzzEU4GPZaGqrWKxfN4IEcuy/kN4m5ojVs+cXA/hXMJ54ilY1z+6vfIC30huhbcgK+cA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1728179746; c=relaxed/simple;
-	bh=/4L+Waftv30hJTd8pHAaY7MDs2ik61gNjRPrwI78SK4=;
+	bh=zw+lYmIsUUtG6llFvvFh8py/ONLluzPaFpK3KvDFun4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rs7lWhEgKgtboQkS2yenDkRykYlGFQt5/01n7rhw//hm4PIJrYSZUlKwMb+vZeNZDTa3js21Fwb/g+uKo35QzwZLlbztusZr4Vraiqu8FlrJYeYh115nJjXRIkJ9wQXj6ANLcLYLRoU7HWqQHDlzJ0N7RuTLao5d6zNmxNH+oyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bHJhnSlc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442DCC4CEC2;
-	Sun,  6 Oct 2024 01:55:42 +0000 (UTC)
+	 MIME-Version:Content-Type; b=EnFUxx5rzceiCeZ0bJJi6DREoBzvtKtxTIU/oXRPWBN/HQx1reY82FW6UorcJnnzaYic08iWms/RrFWiNzL62qlaWRTznm8kyI/TxlqYvBZeE36AshnJwSDHJiLvTtMtoiPG3mrxjzVpJbaJ2Y9J4vHLZ4PalU6ZAbWgVhfdRH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hw9LcFcy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C343C4CED0;
+	Sun,  6 Oct 2024 01:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728179745;
-	bh=/4L+Waftv30hJTd8pHAaY7MDs2ik61gNjRPrwI78SK4=;
+	s=k20201202; t=1728179746;
+	bh=zw+lYmIsUUtG6llFvvFh8py/ONLluzPaFpK3KvDFun4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHJhnSlcDypCxKXc9/0e8sSwcsPUcNs5OrzLmNK372VoYuGepvQT+MeJe7gZxz24S
-	 Td8OetlGIX6VQqxeo+oLpBwCwYCr2xh0kr7HWG2dWxJwS9C9I5+F0Ozm3XgnvgOi6R
-	 eyo7cMIiqgZ5im6lRwsEC9egd6IBXTkhxhVOAfSeJ6SqQ1OAUWk36taYJoiLw9dpJ9
-	 1TD2kMI24gaTyunNoaEycYfyV8WJ6EL2ZaaiP5SsbbYsVWCcKHV7TrlwKb7lUEYqTY
-	 l48kzmdHzTLb/dBfgaSN3gUHXAeR3ENezjiB4lZZ+5JAICFVxSM/ycZNnlcwg/pUoP
-	 0Njb/XOnUh7ew==
+	b=Hw9LcFcybMm292buA4T44wu+f7hEkexz7WQPB/Z09LbIi6f3627c0roxRtPg18NFf
+	 ZhOjhHzU1ciCYg53BETGGVAaBseQy6H+21SiPOTTMdpkgVTvmLWYITfCenSj2tiUdm
+	 rfmN+bSCjd5iq1zP2rwy85WU2BO7S4YRDllvvcA69/ak56iq26zK+m6a0/4ohy1m4I
+	 9a0DSeizNNRRHCZNYSpv5qSb0u5NmdVtUbOs33q+fJOK5PBH2WmjWkpQD33nXYfege
+	 ZaSeCbkv+jpiTFBPuaGArlo0N9hXRjoCoNmrsW4sNVPSKy3Amcwzhw2o/fEfc6DCMi
+	 aswT94mE23PIg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-gpio@vger.kernel.org,
-	Julia Lawall <Julia.Lawall@inria.fr>
-Cc: kernel-janitors@vger.kernel.org,
-	audit@vger.kernel.org,
-	linux-mtd@lists.infradead.org,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-usb@vger.kernel.org,
-	linux-mm@kvack.org,
-	maple-tree@lists.infradead.org,
-	alsa-devel@alsa-project.org,
-	Sanyog Kale <sanyog.r.kale@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	dccp@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org,
-	Jan Kara <jack@suse.cz>,
-	drbd-dev@lists.linbit.com,
-	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	linux-omap@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	netdev@vger.kernel.org,
-	nvdimm@lists.linux.dev,
-	linux-leds@vger.kernel.org,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Naveen N Rao <naveen@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	linuxppc-dev@lists.ozlabs.org,
-	tipc-discussion@lists.sourceforge.net,
-	Robin Murphy <robin.murphy@arm.com>,
-	iommu@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	linux-trace-kernel@vger.kernel.org,
-	Neil Brown <neilb@suse.de>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Dai Ngo <Dai.Ngo@oracle.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-nfs@vger.kernel.org,
-	amd-gfx@lists.freedesktop.org,
-	linux-wireless@vger.kernel.org,
-	intel-wired-lan@lists.osuosl.org
-Subject: Re: (subset) [PATCH 00/35] Reorganize kerneldoc parameter names
-Date: Sat,  5 Oct 2024 20:55:35 -0500
-Message-ID: <172817973322.398361.12931602917664759173.b4-ty@kernel.org>
+	Konrad Dybcio <quic_kdybcio@quicinc.com>
+Subject: Re: [PATCH RFC v2] soc: qcom: llcc: Use designated initializers for LLC settings
+Date: Sat,  5 Oct 2024 20:55:36 -0500
+Message-ID: <172817973310.398361.2166607250234825054.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240930112121.95324-1-Julia.Lawall@inria.fr>
-References: <20240930112121.95324-1-Julia.Lawall@inria.fr>
+In-Reply-To: <20240910-topic-llcc_unwrap-v2-1-f0487c983373@quicinc.com>
+References: <20240910-topic-llcc_unwrap-v2-1-f0487c983373@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,23 +63,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 30 Sep 2024 13:20:46 +0200, Julia Lawall wrote:
-> Reorganize kerneldoc parameter names to match the parameter
-> order in the function header.
+On Tue, 10 Sep 2024 17:01:39 +0200, Konrad Dybcio wrote:
+> The current way of storing the configuration is very much
+> unmaintainable. Convert the data to use designated initializers to make
+> it easier both to understand and add/update the slice configuration
+> data.
 > 
-> The misordered cases were identified using the following
-> Coccinelle semantic patch:
 > 
-> // <smpl>
-> @initialize:ocaml@
-> @@
-> 
-> [...]
 
 Applied, thanks!
 
-[24/35] soc: qcom: qmi: Reorganize kerneldoc parameter names
-        commit: eea73fa08e69fec9cdc915592022bec6a9ac8ad7
+[1/1] soc: qcom: llcc: Use designated initializers for LLC settings
+      commit: 20a0a05f40faf82f64f1c2ad3e9f5006b80ca0cb
 
 Best regards,
 -- 
