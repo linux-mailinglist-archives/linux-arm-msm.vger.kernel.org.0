@@ -1,48 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-33222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33223-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4FB5991D51
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 10:40:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C68C991D64
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 10:57:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEE091C20CDF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 08:40:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A89FD1F21D00
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 08:57:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E2E170A3F;
-	Sun,  6 Oct 2024 08:40:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4A711714AE;
+	Sun,  6 Oct 2024 08:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h/Wr0DxP"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="hw9N2iS+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634614C5B5;
-	Sun,  6 Oct 2024 08:40:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75449A31;
+	Sun,  6 Oct 2024 08:57:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728204006; cv=none; b=U31zXaCEyIC3iilIwoHQ4ezY0lSTZPBCuOd64z8zakoAspun0euHAWrv9/cbi1hnL+RgG4INyseWAGVYSMe5LrUYXZVEBftct+RxhAoT+M+G+JK2QtNh9nrvHO35KbYgS86FGpZzV8fWreZfFRHTn2DlklRPZdJD/sHtWxA70o8=
+	t=1728205039; cv=none; b=N0qO6EbrDN7me10vOVlowqIBh/qC/5G6r1k/VTDSnmOqBHhYbQYJaTJqUkEaN3jFUVs2PGrqmphjmMMCENygNOLuWUS5jMWpj0x2lGXAQRgfP0Qc6ZwHz57YlSRMI8ZFr9vNsVcs4yv48+guUhKLgexQ8cb2QlMHgMYmhmRbbWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728204006; c=relaxed/simple;
-	bh=NK1WPXiSEjcSZaJXDrZNLsOJqxz3KCf9iSM7O+vEZr8=;
+	s=arc-20240116; t=1728205039; c=relaxed/simple;
+	bh=Wpido9Kf/hvaKPT3kLqwH4CTFoVCPwgVYoycmspxKVg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qQIAiS0pC+b7oMk1kNOARWzjmi67O/7hFWcd++9440UQyyx3lDS+1GlGBA6CbfrB3uvMDzLGtA4b3Z7oCPrgZ3NLMybuGNjZlgs0TGNYiS4Y2e1yjmfivxjcrqxtO35cJJQj5vkDyC/00GFleR+9/WvAkRZSm6Mnya91fUIUCq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h/Wr0DxP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D04C4CEC5;
-	Sun,  6 Oct 2024 08:39:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728204006;
-	bh=NK1WPXiSEjcSZaJXDrZNLsOJqxz3KCf9iSM7O+vEZr8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h/Wr0DxP69bY+boKntL2ItaHetrMFSXI1yeD0t9qSY65KT5BVvxPXjzUsyd38kgiL
-	 vFOrPT+kd2zLJI2XwAoV91ENbHD+bm19IPqxfjNxykTZHWZU+CG2NpXcOg3R9YyJmN
-	 gjBIXs8iXKPkXWCfee7pnnviLRNCXhCm0TQ5LOFQzEAwQMMTXOYYB9tPvxXoEkuOMi
-	 zs/nkNajEHwx1AcQ4SaKKr01P5PyckYO8K0KJKsd+OF5FpqzmBHWXCUi4fgH2fIu4h
-	 EcubBTNNSPBvVsUSy+w9ypdkApUbL/y+MLv613QLHp4z5E/LOiWEpQ4KxRUgaNK+fD
-	 nsSWgN1IIKgXw==
-Message-ID: <c0e9479c-0a69-4ffe-aab5-0b5af92df31d@kernel.org>
-Date: Sun, 6 Oct 2024 10:39:56 +0200
+	 In-Reply-To:Content-Type; b=QR4WWcb4aOGF0RwabfNJ0Q4NJBaGP4UdWvgOOj0G189/OrWc0WL4rpXKmgocvepm8QglStw9FrsrEX3TPpL6CLu8jBGqtzc85vrfdSqCTX+Clr5yvZ8f4/S8hQcR8CogwBIZqiBbezcyprDvNrzCKd/gdFG+u3jeHVrYNDgzksU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=hw9N2iS+; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1728205013; x=1728809813; i=markus.elfring@web.de;
+	bh=BIrwPlkTYIFaxGZHJcTFOF4qlwUrg6aOe4aE4Kc20jM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=hw9N2iS+tT6yz2seCRkfYGlTsBR9U5M2c3ugP957wVDIf7eXavfmHhqEHVGRFiDx
+	 NGZuD08/HkCN+kTISHP/7w7it4T+A3yGuyF6PIRA0wwzYM534EbwvCl90vH6/fjSM
+	 Bhls+9PCjRWw6MAG9/Apb/sEpw83HwmfyRdsbd5kCevm4ZEdmLP0SX2HeAqeHdqkW
+	 oowvblL0TMjz3SBiB2BDmJtyLzbESTHAQSjJUmSvcrKYoGVYtba7kJMzHMpRqYW4A
+	 iJ3+kWc51XJys9sDHoHgtfvprA1oiO5pkUKzN0zAZPV+j85U5hSW5c9B0w8g/sCU4
+	 BlOEFU7LwhB9Wvj8rw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.21] ([94.31.87.95]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MSqXM-1tQV350QOs-00Ro1A; Sun, 06
+ Oct 2024 10:56:53 +0200
+Message-ID: <6d17006d-ee97-4c7c-a355-245f32fe1fc3@web.de>
+Date: Sun, 6 Oct 2024 10:56:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,115 +58,87 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/7] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
- binding
-To: Sricharan R <quic_srichara@quicinc.com>, andersson@kernel.org,
- konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
- ulf.hansson@linaro.org, linus.walleij@linaro.org, catalin.marinas@arm.com,
- p.zabel@pengutronix.de, geert+renesas@glider.be,
- dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org
-Cc: quic_varada@quicinc.com
-References: <20241004102342.2414317-1-quic_srichara@quicinc.com>
- <20241004102342.2414317-3-quic_srichara@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241004102342.2414317-3-quic_srichara@quicinc.com>
+Subject: Re: [PATCH] ASoC: qcom: Fix NULL Dereference in
+ asoc_qcom_lpass_cpu_platform_probe()
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Zichen Xie <zichenxie0106@gmail.com>, alsa-devel@alsa-project.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Rohit kumar <quic_rohkumar@quicinc.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Takashi Iwai <tiwai@suse.com>, stable@vger.kernel.org,
+ LKML <linux-kernel@vger.kernel.org>, Chenyuan Yang <chenyuan0y@gmail.com>,
+ Zijie Zhao <zzjas98@gmail.com>
+References: <20241003152739.9650-1-zichenxie0106@gmail.com>
+ <ee94b16a-baa7-471c-997e-f1bf17b074b8@web.de>
+ <2024100620-decency-discuss-df6e@gregkh>
+Content-Language: en-GB
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <2024100620-decency-discuss-df6e@gregkh>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:jTPeINaQftL8b2MzXONGYdc/E9Af1aAvOORf/CE0M7cm1Obw5qd
+ LU2OVArBY5A4mwcydPSsvUujrrMYmQ03tvpohyPLy2hkEwsEr3pIRUzhMam251qPZ1XLpOl
+ BvoQ08Xs33MkDj/IUZFJgbupoeZj1JIPrcuLdz785TXdRiswkCZW7cfiCqTNrWdNCj5JKdJ
+ TQ7zKPCYVQu6egYxi9QSw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:wiu11a04sOI=;vU2wESOvjSd2DSRm4DJW2MSEhfc
+ fEVMQ7wruXhyaYrVabKlQhIfv0Npp/t+RBJEn/swIad3aATLganRZshY6Vs0zV8Z+sqZQj8S1
+ OubjqPqqkkjyWywNZrDi/FOBxWYsMYTi0s+Na2t5QHeIrgwTOQg0Ndrtml2sxqqhzkt0ox9I7
+ LeoGz8YDPwy7Yv7I0pt0hBz2M5YH478Z+wR4LteTrYmjW//AH84+9ladv8djjdKseTz162ebV
+ O+s55JAIM1eHQoXyT0cldVVTlEwFHG4yc6wej2OPDeeRLsnjCPvURhMxmKNgNqJpDYjD8PlHX
+ T51milFsMU02UC7G407wsTpx8xakS1EzBh9PnlrTtjIqto4ccDEKzubsv7R3OkU7fjHojynBc
+ hcSL3ly7bM2i1Kmg8RRBpI/oUJNg4gKb3ZM06mdy0ANOZS1tYZ0XJTj7FC0SLibI4nqZmTBHz
+ BT7Eo8ZT0W0sKma8yLEP1OXnXfaS9XyOynPf+P1tfUTK2wdBi6/SdgfDXaLSal34/VJEBGOul
+ cHMfVLjQxRNnMNY20ggTs3qQWj16haf1KVyjwSR17+wonMGbfkFacWLd0nF+Et2PoehLh/AQ6
+ OChJUcZ2W8OXFmAtEtP8iJonjgur70AqSJViX8WiFB5wNBvgXaiGleYP952jXKVY8oLxVJ9mn
+ mbjPkQKuNwVwFMBu3QTBZ15SM9oC2GzYgg3snzj/08fD2tAPiqpRDwKY5pO3O/lDZuviUwR8u
+ 1hr/HM+PYN4QiEiBkqJmrJtg33zQ3yywUsCBRxxRKr1AKSq9CMX9a0YmQemp3i7wnZo5+j6eh
+ fLX5p6bi1vCtPgulWCWz/aNA==
 
-On 04/10/2024 12:23, Sricharan R wrote:
+>>> A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
+>>
+>>                    call?
+>>
+>>
+>>> possibly return NULL pointer. NULL Pointer Dereference may be
+>>> triggerred without addtional check.
+>> =E2=80=A6
+>>
+>> * How do you think about to use the term =E2=80=9Cnull pointer derefere=
+nce=E2=80=9D
+>>   for the final commit message (including the summary phrase)?
+>>
+>> * Would you like to avoid any typos here?
+>>
+>>
+>> =E2=80=A6
+>>> ---
+>>>  sound/soc/qcom/lpass-cpu.c | 2 ++
+>>
+>> Did you overlook to add a version description behind the marker line?
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
+/Documentation/process/submitting-patches.rst?h=3Dv6.12-rc1#n723
+=E2=80=A6
+> This is the semi-friendly patch-bot of Greg Kroah-Hartman.
+>
+> Markus, you seem to have sent a nonsensical or otherwise pointless
+> review comment to a patch submission on a Linux kernel developer mailing
+> list.  I strongly suggest that you not do this anymore.  Please do not
+> bother developers who are actively working to produce patches and
+> features with comments that, in the end, are a waste of time.
+>
+> Patch submitter, please ignore Markus's suggestion; you do not need to
+> follow it at all.  The person/bot/AI that sent it is being ignored by
+> almost all Linux kernel maintainers for having a persistent pattern of
+> behavior of producing distracting and pointless commentary, and
+> inability to adapt to feedback.  Please feel free to also ignore emails
+> from them.
+* Do you care for any spell checking?
 
->  maintainers:
->    - Bjorn Andersson <andersson@kernel.org>
->  
->  description: |
->    Qualcomm global clock control module provides the clocks, resets and power
-> -  domains on IPQ5332.
-> +  domains on IPQ5332 and IPQ5424.
->  
-> -  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
-> -
-> -allOf:
-> -  - $ref: qcom,gcc.yaml#
-> +  See also::
+* Do you find any related advice (from other automated responses) helpful?
 
-s/::/:/
 
-> +    include/dt-bindings/clock/qcom,gcc-ipq5332.h
-> +    include/dt-bindings/clock/qcom,gcc-ipq5424.h
->  
->  properties:
->    compatible:
-> -    const: qcom,ipq5332-gcc
-> +    enum:
-> +      - qcom,ipq5332-gcc
-> +      - qcom,ipq5424-gcc
->  
->    clocks:
-> +    minItems: 5
->      items:
->        - description: Board XO clock source
->        - description: Sleep clock source
->        - description: PCIE 2lane PHY pipe clock source
->        - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
-> +      - description: PCIE 2-lane PHY2 pipe clock source
-> +      - description: PCIE 2-lane PHY3 pipe clock source
->        - description: USB PCIE wrapper pipe clock source
-
-Why do you change fifth clock on ipq5332?
-
-Please test your patches - change DTS for ipq5332 and provide PCIE
-2-lane PHY2 there.
-
-Best regards,
-Krzysztof
-
+Regards,
+Markus
 
