@@ -1,55 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-33213-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F934991C33
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 04:46:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D43EF991C3E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 05:29:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42E091F21ABA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 02:46:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7C60B1F21F18
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 03:29:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C39E1DFE4;
-	Sun,  6 Oct 2024 02:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E40CE14A0A4;
+	Sun,  6 Oct 2024 03:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N7Gp1ezb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QvlS4A0N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70A8628EC;
-	Sun,  6 Oct 2024 02:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6090AD55;
+	Sun,  6 Oct 2024 03:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728182789; cv=none; b=uBIOqQCk2dzLY0RDqVdx3/wSPplBuWsp17LD7UY39qI+UuiiQxN1V0fu2YaMnF0aCvOw2q0MVjiWV8I3BjzCEwnQ45YUC4n+NAPQ09iUzDEBNfeXB3N7D/skVdb5NH4Suhy9Fllm8wC3Heaie6eHlkzbtew2R/ee1LFMJzTXlOI=
+	t=1728185345; cv=none; b=NDUSCIKT2Ss28kN2O14kKf+/84q6ABDHKUNMLZZ8Ngp9RZEdXRkNtkrMVmc+nhsxe6Kidp6pZ7Y84PVtkL+8gyrrNplEL0pZk7kqjoKVmdKipiNPwcVl+kiKulLCGeL8xCOsbSLjj5Bq3wgzEUUSa2sm3JhYqqdKqy0r5XXLBYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728182789; c=relaxed/simple;
-	bh=Z2/gnog6ibCVaeY477MA2OTBXT9XH3hqgsYCopAGr28=;
+	s=arc-20240116; t=1728185345; c=relaxed/simple;
+	bh=sn+rhuJFS4QcAX7nHTjMNJqUeOzV5xBHQDk6dVxGcFI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PY0M/ksLTfR4o7DKusweiQWu2R6VANBnJRTEbOh0t0SPzsj9RPWssRef6MymNExUPw+BxNmkQJ05NGsLoGxUdEHxtgf2iL9zVTPHT1ZFKy6bd5sk9tluHZGNrxyQQ8NpYkyrnVN+OZrrF4Dx5k4O4ycwV/hTMhOK+QttOyJdSMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N7Gp1ezb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65780C4CEC2;
-	Sun,  6 Oct 2024 02:46:28 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ssZpC7buYp7TptimgZ/zTlpFCd7iBoGJSXtMHkZeG/puIztmBAbdn8+lnVoZ+7+sFlNocCOURsHGVKOKyywwh66K/aBOu3sdOF8hqAcauTc7FRpNv17MekyDH1l04BMi9j0jObSG+w/PKCjAhHReGPaf3gKcx3QFaci7XvpwRr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QvlS4A0N; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD55C4CEC7;
+	Sun,  6 Oct 2024 03:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728182788;
-	bh=Z2/gnog6ibCVaeY477MA2OTBXT9XH3hqgsYCopAGr28=;
+	s=k20201202; t=1728185345;
+	bh=sn+rhuJFS4QcAX7nHTjMNJqUeOzV5xBHQDk6dVxGcFI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=N7Gp1ezb12tDoxtjHz23w9GfTenf2phj004JFoh7FhA/qzcx3n5rQ5ciH4iPZmpqe
-	 IEGYA3dK7r1t2K6vgCD7rPqKdzBxBw1lz8iUSUp/DAZJoftrUMv972y4xS2yrG1W2h
-	 Lb4wkk7NNIlteOrvdZ2F/qLE4NBqiFnexnxeipot3Kuthnb511Kga01TQVeV+gi0ok
-	 EQ1A6yLm8V24imySFurx9M7crXcM7qTHkNrrsAL/J0GAbUjvgIBgyZA07FkvIIz1rk
-	 I/DCwXLW1DenwOXKxq+CltuTorfZRkAd1fvqh7xFaWOOS00cqN2LHGC3bE+RX+INzx
-	 /a1FXNY1wz/Mw==
-Date: Sat, 5 Oct 2024 21:46:26 -0500
+	b=QvlS4A0NP0//x72QRsOWfdhC16oDn8p0xxy1TS2pbVn7BySM0+RvCzHr79SFWIYZ4
+	 4Otz53pJGhB8YFCpiHL+3StUBGkLIXo2NwLlI7JLe+kR+ojPFoNJl7kWBIejQgwPrv
+	 itUAv7lUGBBibBkMqdDjcZDndEg+KZlNax6RoGv1fyW++2yCexdy5uw86xCR6KlFZC
+	 BKePBEqcp/LoKFF9kaobmq6KOmdzvKtIA3MKiwsJPkB74GiMAW85gBOzOxSA7Aq0yJ
+	 hmNZ/0SJ3SbMR8+bacqjmeV2rUQGVclJVhfL518JZuBpHoSXbY0zn1YYt+zhasapB4
+	 PVIKAoH4137sQ==
+Date: Sat, 5 Oct 2024 22:29:02 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Wasim Nazir <quic_wasimn@quicinc.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] firmware: qcom: scm: Add check for NULL-pointer
- dereference
-Message-ID: <zxzjrnmoun6fm2tzrx6eaxbvy5kddvld7hezknt7k7mvfcqw5a@u3fgfo5yqw4q>
-References: <20240920181317.391918-1-quic_wasimn@quicinc.com>
+To: Rakesh Kota <quic_kotarake@quicinc.com>
+Cc: konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, quic_kamalw@quicinc.com, quic_jprakash@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490: Allow UFS regulators
+ load/mode setting
+Message-ID: <qwkuuh4yceordfjsvfn4gs6kpj6fkqx77yrsz3fbw5efffjjsx@dnsiz3eqj5cr>
+References: <20241004080110.4150476-1-quic_kotarake@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -58,85 +59,85 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240920181317.391918-1-quic_wasimn@quicinc.com>
+In-Reply-To: <20241004080110.4150476-1-quic_kotarake@quicinc.com>
 
-On Fri, Sep 20, 2024 at 11:43:17PM GMT, Wasim Nazir wrote:
-> Avoid NULL pointer dereference while using any qcom SCM calls.
-> Add macro to easy the check at each SCM calls.
+On Fri, Oct 04, 2024 at 01:31:10PM GMT, Rakesh Kota wrote:
+> The UFS driver expects to be able to set load (and by extension, mode)
+> on its supply regulators. Add the necessary properties to make that
+> possible.
+> 
+> While at it, UFS rails have different voltage requirement for UFS2.x
+> v/s UFS3.x. Bootloader sets the proper voltage based on UFS type.
+> There can be case where the voltage set by bootloader is overridden
+> by HLOS client.
 > 
 
-We already have a way to deal with this in the general case. Client
-drivers should call qcom_scm_is_available() before calling the scm
-interface.
+It's generally not accepted to do "while at it"-changes, but it happens
+that I accept it. This one however, is controversial. We tend to want to
+properly describe the voltage constraints, so this departure from that
+stance definitely isn't an acceptable "while at it"-change...
 
-Unfortunately your commit message makes it impossible to know if you're
-referring to a case where this wasn't done, or isn't possible, or if
-you've hit a bug.
+> To prevent above issue, add change to remove voltage voting support
+> for dedicated UFS rails.
 
-> Changes in v2:
-> - Cleanup in commit-message
+You state that the bootloader will configure the appropriate voltage, I
+don't see a issue description.
 
-This goes below the '---', by the diffstat. I don't know why you don't
-have a diffstat, please figure out how to make your patches looks like
-everyone else's.
 
-> 
-> Signed-off-by: Wasim Nazir <quic_wasimn@quicinc.com>
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm-legacy.c b/drivers/firmware/qcom/qcom_scm-legacy.c
-> index 029e6d117cb8..3247145a6583 100644
-> --- a/drivers/firmware/qcom/qcom_scm-legacy.c
-> +++ b/drivers/firmware/qcom/qcom_scm-legacy.c
-> @@ -148,6 +148,9 @@ int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->  	__le32 *arg_buf;
->  	const __le32 *res_buf;
-> 
-> +	if (!dev)
-> +		return -EPROBE_DEFER;
-
--EPROBE_DEFER only makes sense to the caller during probe. In all other
-cases this is an invalid error value.
-
-> +
->  	cmd = kzalloc(PAGE_ALIGN(alloc_len), GFP_KERNEL);
->  	if (!cmd)
->  		return -ENOMEM;
-[..]
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-[..]
-> @@ -387,7 +397,7 @@ static int qcom_scm_set_boot_addr(void *entry, const u8 *cpu_bits)
->  	desc.args[0] = flags;
->  	desc.args[1] = virt_to_phys(entry);
-> 
-> -	return qcom_scm_call_atomic(__scm ? __scm->dev : NULL, &desc, NULL);
-> +	return qcom_scm_call_atomic(__scm->dev, &desc, NULL);
-
-I don't think you understand why this is written the way it is.
-
->  }
-> 
-[..]
-> @@ -1986,6 +2113,13 @@ static int qcom_scm_probe(struct platform_device *pdev)
->  	/* Let all above stores be available after this */
->  	smp_store_release(&__scm, scm);
-> 
-> +	__scm->reset.ops = &qcom_scm_pas_reset_ops;
-> +	__scm->reset.nr_resets = 1;
-> +	__scm->reset.of_node = pdev->dev.of_node;
-> +	ret = devm_reset_controller_register(&pdev->dev, &__scm->reset);
-> +	if (ret)
-> +		return ret;
-> +
-
-Why did this move?
+Either way, please split this in two.
 
 Regards,
 Bjorn
 
->  	irq = platform_get_irq_optional(pdev, 0);
->  	if (irq < 0) {
->  		if (irq != -ENXIO)
-> --
-> 2.46.1
+> 
+> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> index 84c45419cb8d..8a4df9c2a946 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> @@ -258,13 +258,15 @@ vreg_l6b_1p2: ldo6 {
+>  			regulator-name = "vreg_l6b_1p2";
+>  			regulator-min-microvolt = <1140000>;
+>  			regulator-max-microvolt = <1260000>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+>  		vreg_l7b_2p952: ldo7 {
+>  			regulator-name = "vreg_l7b_2p952";
+> -			regulator-min-microvolt = <2400000>;
+> -			regulator-max-microvolt = <3544000>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+> @@ -277,8 +279,8 @@ vreg_l8b_0p904: ldo8 {
+>  
+>  		vreg_l9b_1p2: ldo9 {
+>  			regulator-name = "vreg_l9b_1p2";
+> -			regulator-min-microvolt = <1200000>;
+> -			regulator-max-microvolt = <1304000>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+> @@ -467,6 +469,8 @@ vreg_l10c_0p88: ldo10 {
+>  			regulator-name = "vreg_l10c_0p88";
+>  			regulator-min-microvolt = <720000>;
+>  			regulator-max-microvolt = <1050000>;
+> +			regulator-allow-set-load;
+> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
+>  
+> -- 
+> 2.34.1
 > 
 
