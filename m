@@ -1,82 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-33274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CD69992108
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 22:07:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9176699210A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 22:09:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2723A1F215AD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 20:07:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 326231F213CD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 20:09:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC5C818B46C;
-	Sun,  6 Oct 2024 20:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 603CA18A95B;
+	Sun,  6 Oct 2024 20:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FVAB5WRP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ym7gB86w"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5CF189F43
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 20:07:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B290318A928
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 20:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728245233; cv=none; b=WdkAN4T59u5HygDF2tXLAXynq7vJ9IDPdJFKJdAEdfS208SyL29mXTCQmDqDoTOn51D1zWYOmHMFV1YwyGU9O2ky9a1Q47TDt6PHcohIj5P3gQyJK4rnb3+pur4s2REt5xm72jKcCGxAQR3KXZayaN1RlG1Ef3/18IAZqg7t0iQ=
+	t=1728245342; cv=none; b=HoyCYPUM06b+OitWI9pIwCTILkBk9qpkwSxmdf+O22IBkxYBabMrU/J/HFJUqv+PMtUsSwiFj16hMQ0VqYZ6T4OteeBREPrhYnp+kbdr1Gl/odK1AkqX0vPw9ag1WOiC/+ShOArrnm+NzpnGrzezxThTKS0vAQMFdCywKieR6d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728245233; c=relaxed/simple;
-	bh=hWlVn6wqYOiZf/D380nxzst1Ny3r+QrTd4JE5sBLCm0=;
+	s=arc-20240116; t=1728245342; c=relaxed/simple;
+	bh=9xGDpi/jA95ojqNc9c3wQkAfuzmzm+dGXz6YwpBqnhE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CW/PhMiKIAL83KAVM/ReGvjxL5gKTcectYumuQHiDPRTIAnqXSqNhKbMv6Gets9zGTlpCVXXZ0OjFOZT18oRJkj3DXMoPjyVFmnU7GmZFQX5QM1ZDbes33gnE4ghH/CQQS2LkD4XhkNTLHdaS10f4u1l2ix2O5fR741LVbpYYyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FVAB5WRP; arc=none smtp.client-ip=209.85.167.53
+	 Content-Type:Content-Disposition:In-Reply-To; b=GGuvXAG1pX8yBFPmHyV9NqUAK7uZO5kKHays3nIizv5yA01pKrljRALrWMRglFSBJtMDw7iObx5tJYFJnGn9xDA1CMKY/VBI1xEEpWjd5KBatQUs0c/WGPJpZ+Tobem3wxOzT4TYnsPB88g6Asr3nPwJbyf5etTiSoeNN4yCGjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ym7gB86w; arc=none smtp.client-ip=209.85.208.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53994aadb66so3313240e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 13:07:10 -0700 (PDT)
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fac3f20f1dso37935031fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 13:09:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728245229; x=1728850029; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728245339; x=1728850139; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=S1aKTq90Vhx5SEGbGXZgfVnFGr2p8A90AYr+7ozDiYY=;
-        b=FVAB5WRP5WKmhHJlnq4Rvj8inClkLG1ReUyfc09COMcSSL/ELs+ju4YyiSrvu3ktIb
-         cXQszaDwIrmZhHrOcGYghofr4ngQYSYRtcZPnR7UsHdRVCwmsXJwbvbkX+xiW9W+DZu/
-         JVZCLgW/7YQlgV55tCcxfl+sUBfDguQFAJGtNSUdHG04DvzLQlWycFLIt8z8F9kvF/21
-         N5yMPAEOOMo0PLVHgi8PkqquOEapbnecYBQon7LEMxwLZxbeWzJ3VixJkXu9uT/PT5UU
-         Sh1vXCPTzVHyCSOnCd9lvmf1EF3rUqu1F+XIkc0ao/SmAsYhNSITYhUpL0oTRqNoNdAt
-         yqVA==
+        bh=1CNIHOt8fvcwETMUAw0ufzYaZKbLYWoq5arc8dbVRfg=;
+        b=Ym7gB86w5MXrtMLyaDAGw+upAcxgLYxAPhcqWqMLvZ087kJUjUMXhBfldPBqNKkUtf
+         r1Swb459MBr+6NsfowzZ6NXX2E9kUZ0tRYJAMeEWAHijrDdlb1ayRrhyevMrnLZnJbwW
+         yqXXxan8JTwPJ2YXoVPzcgHjYXsBrWBKMi8Nmcmtf79BmksV1WrD7jo5Qa3TgMozwyoW
+         hPHWY8+EzxA4iHYr08y3O/8fYU/Q5wRgzQ6CuYQbb2fEf2fWg18ucGJgIO906oKCJxk/
+         zNyiS9EVf5GBQJzFrQUdbFemLv2rF/XNjlLQcO6jNF2FFwF6w8pHyI6wOKH0+poNYdcJ
+         c1XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728245229; x=1728850029;
+        d=1e100.net; s=20230601; t=1728245339; x=1728850139;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S1aKTq90Vhx5SEGbGXZgfVnFGr2p8A90AYr+7ozDiYY=;
-        b=M0KErTCIB11HUXq0Q5loDa4s9VCOv+SEH5IobVdR7nkHnnN4gkXfpQMZQT//0hmBXO
-         b/jDnRzgB/iDZYOkBwH0cJV6OKUFzIXVKwsB3m3FovvdqQNdtE48+w7mwFkvua4QCNdm
-         YcetHTubggTI7wcAixIlsGGG51TBzssRLACQ+hdM5O+ItcYbltjDrDf0DuCdlxNWdrXQ
-         u3VIQFytXovX36WfexnxM3DcrFwkKKUK3JD79rF2dU2jjHBo7ydJZmN1Z2s6J3dobIx9
-         8FZSgan4SAfn/qhAAFDz7yPckeECbQH6G86WJcSkLoK1GpLnmTGWxpzTwEQhFvroyn+/
-         Mwvw==
-X-Forwarded-Encrypted: i=1; AJvYcCVw4IO0zmcfCrRPYzecHq6aChpGnsyImq3/PWrHPli4/XnmeDoikRI8LkTFar3cOGQtPh9TcpBsOjgiEUJQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YyevWOQDsq+2oMXFk79Cjwf5PPRgU6Eqn4dLtNzWuqUJBwtnOVy
-	z+OCg2p80TeS70VB2Z+3DD3PeNUd94CevQM7MB5bl4lfZBmsRPWPLjhqyZFnS24=
-X-Google-Smtp-Source: AGHT+IFKknDCxNnpYRFa+g3cPJbjZFRd+fx1yS92WOXtOwvo4hAI4DPBzjNxMcxwiu6wMUNEhhPAqQ==
-X-Received: by 2002:a05:6512:3d0c:b0:533:455c:8a49 with SMTP id 2adb3069b0e04-539ab8adbccmr4075594e87.38.1728245228683;
-        Sun, 06 Oct 2024 13:07:08 -0700 (PDT)
+        bh=1CNIHOt8fvcwETMUAw0ufzYaZKbLYWoq5arc8dbVRfg=;
+        b=am0dnSx9IOqkRVYz5q5dH5nnWfp9cKD/1njx/MiCGXvgA0pS/vKeaeecFXNOCRYdvK
+         QQacx5PVXEnwIBK4WOkLxhaAJRStQ8GbY3b8sNJX47PWj978+7J17H4QiXsh7fkS8Taf
+         Dbr3Ce/fzdGpYbEDrwoI3VgwIcDl1mzhDmWmSFZnridiMFwYFr6LV07nh+n+YRMwGvsp
+         LcxIE9Lv3Q65VbmyF5DF8ENQ6jyFLeaT1wFnp1o4drP7LjeLYdsAzjQVYvKPmAZcnomq
+         DbR3488PsYBC0asAGKLelDiinpWx3/cYLN768kBDZlbU2yoh9xMsZ9Gx+v4MD+/3O3zC
+         Wuwg==
+X-Forwarded-Encrypted: i=1; AJvYcCXON1IaoqDewaERAOSjFEVJ6J3o3Kd8trNviJ8zme+pMQMFs1pd1UkyPUERUQGyhnmxJNr/Qyvb9Q8pQgdD@vger.kernel.org
+X-Gm-Message-State: AOJu0YyNP8ifcMHd3WmENUCwn5nOxh5sFwRYa9jqF+qQqEDTtT5Bnvao
+	Ky0bxIXElrpUfBlJIHuaf0lGctcEkAF0sW9pqePckm+912kBmQ2+nJs6imXt9xM=
+X-Google-Smtp-Source: AGHT+IF6OTa70sIjp7tcQGOntDCvvftTUjqZUMbgta3o2jm6LLM0vAoPx5aZuA/nwzvRdyDNRSh4eA==
+X-Received: by 2002:a2e:bc28:0:b0:2fa:c387:745b with SMTP id 38308e7fff4ca-2faf3c64c28mr37712301fa.31.1728245338878;
+        Sun, 06 Oct 2024 13:08:58 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00-89ea-67f6-92cd-b49.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:89ea:67f6:92cd:b49])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539aff1d1f3sm599873e87.153.2024.10.06.13.07.07
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2faf9adcb37sm5870681fa.60.2024.10.06.13.08.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 13:07:07 -0700 (PDT)
-Date: Sun, 6 Oct 2024 23:07:05 +0300
+        Sun, 06 Oct 2024 13:08:58 -0700 (PDT)
+Date: Sun, 6 Oct 2024 23:08:56 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Rakesh Kota <quic_kotarake@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_kamalw@quicinc.com, 
-	quic_jprakash@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: qcm6490: Allow UFS regulators
- load/mode setting
-Message-ID: <jid5coqe4tpsafbi2haem6ye4vrpwyymkepduxkporfxzdi6cx@bfbodoxoq67l>
-References: <20241004080110.4150476-1-quic_kotarake@quicinc.com>
+To: Sumit Semwal <sumit.semwal@linaro.org>
+Cc: stable@vger.kernel.org, agross@kernel.org, bjorn.andersson@linaro.org, 
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] Revert "arm64: dts: qcom: sm8250: switch UFS QMP PHY to
+ new style of bindings"
+Message-ID: <ebbksal6u5kkvywrlq4d7f7vjntfjvjtfbrtmt3roj77dr2gg5@nzocu3q5har5>
+References: <20241003143532.108444-1-sumit.semwal@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,79 +84,25 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241004080110.4150476-1-quic_kotarake@quicinc.com>
+In-Reply-To: <20241003143532.108444-1-sumit.semwal@linaro.org>
 
-On Fri, Oct 04, 2024 at 01:31:10PM GMT, Rakesh Kota wrote:
-> The UFS driver expects to be able to set load (and by extension, mode)
-> on its supply regulators. Add the necessary properties to make that
-> possible.
+On Thu, Oct 03, 2024 at 08:05:32PM GMT, Sumit Semwal wrote:
+> This reverts commit cf9c7b34b90b622254b236a9a43737b6059a1c14.
 > 
-> While at it, UFS rails have different voltage requirement for UFS2.x
-> v/s UFS3.x. Bootloader sets the proper voltage based on UFS type.
-> There can be case where the voltage set by bootloader is overridden
-> by HLOS client.
+> This commit breaks UFS on RB5 in the 6.1 LTS kernels. The original patch
+> author suggests that this is not a stable kernel patch, hence reverting
+> it.
 > 
-> To prevent above issue, add change to remove voltage voting support
-> for dedicated UFS rails.
-
-add change to remove smth doesn't sound correct to me.
-Please don't depend on the bootloader and describe hardware
-configuration. If there can be two types of IDP boards and you can not
-identify the voltage via other means, please create something like
-qcm6490-idp-ufs3.dts. Please add proper Fixes tags.
-Last, but not least, as Bjorn wrote, please split into two patches.
-
+> This was reported during testing with 6.1.103 / 5.15.165 LTS kernels
+> merged in the respective Android Common Kernel branches.
 > 
-> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> index 84c45419cb8d..8a4df9c2a946 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-> @@ -258,13 +258,15 @@ vreg_l6b_1p2: ldo6 {
->  			regulator-name = "vreg_l6b_1p2";
->  			regulator-min-microvolt = <1140000>;
->  			regulator-max-microvolt = <1260000>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
->  		vreg_l7b_2p952: ldo7 {
->  			regulator-name = "vreg_l7b_2p952";
-> -			regulator-min-microvolt = <2400000>;
-> -			regulator-max-microvolt = <3544000>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> @@ -277,8 +279,8 @@ vreg_l8b_0p904: ldo8 {
->  
->  		vreg_l9b_1p2: ldo9 {
->  			regulator-name = "vreg_l9b_1p2";
-> -			regulator-min-microvolt = <1200000>;
-> -			regulator-max-microvolt = <1304000>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> @@ -467,6 +469,8 @@ vreg_l10c_0p88: ldo10 {
->  			regulator-name = "vreg_l10c_0p88";
->  			regulator-min-microvolt = <720000>;
->  			regulator-max-microvolt = <1050000>;
-> +			regulator-allow-set-load;
-> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
->  
-> -- 
-> 2.34.1
-> 
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi | 20 ++++++++++++++------
+>  1 file changed, 14 insertions(+), 6 deletions(-)
+
+As an important note, this patch is targeting stable kernels, not the
+main tree.
 
 -- 
 With best wishes
