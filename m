@@ -1,58 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-33204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB9CF991BDE
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 03:56:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F143991BE4
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 03:56:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5B40282CAC
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 01:56:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 06CDC1F22270
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 01:56:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9200170858;
-	Sun,  6 Oct 2024 01:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9DB115D5C1;
+	Sun,  6 Oct 2024 01:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hw9LcFcy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ANAu7fCF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEF216F8F5;
-	Sun,  6 Oct 2024 01:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40DC171E7C;
+	Sun,  6 Oct 2024 01:55:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728179746; cv=none; b=qDeV4fqc889OougaoxlodvgJiTjk+3HzY4wy3aacSvMPbEXyDiNR7CfqVtwMmJME3IUu7PrK5ntlzBPkAXHvPvuWDo85MGpXxWlovpcYzzEU4GPZaGqrWKxfN4IEcuy/kN4m5ojVs+cXA/hXMJ54ilY1z+6vfIC30huhbcgK+cA=
+	t=1728179748; cv=none; b=S4PHFAEefz0hTPKlWRH5F7sJAfsaeic4LuYhmw/bGxNdZkBdZ2o7w0xs0ElLZ0qi1zdgY2ZupyJztVSPKml8T5Ae3Y/sErC9pgTpGAN5ea5ULV3Mw5lYKy1y3xus9Q7kYDFGyjNuNah73hrxK4JgYnuUZiqfKwonP9ZnL7GipiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728179746; c=relaxed/simple;
-	bh=zw+lYmIsUUtG6llFvvFh8py/ONLluzPaFpK3KvDFun4=;
+	s=arc-20240116; t=1728179748; c=relaxed/simple;
+	bh=rC+M5Q4mJ52FdeEm7n0DqxEJm1JtZU9xFaRkElGY0cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EnFUxx5rzceiCeZ0bJJi6DREoBzvtKtxTIU/oXRPWBN/HQx1reY82FW6UorcJnnzaYic08iWms/RrFWiNzL62qlaWRTznm8kyI/TxlqYvBZeE36AshnJwSDHJiLvTtMtoiPG3mrxjzVpJbaJ2Y9J4vHLZ4PalU6ZAbWgVhfdRH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hw9LcFcy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C343C4CED0;
-	Sun,  6 Oct 2024 01:55:45 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mHRG2b31dyvYGEHMjel1bH+kVQQm15GBq+Pjg+rzKIqD/VlcCCfyNCtMvRItm8/9ZjDiOYvei0DQOCONzaUqxzC6M8xFRLeuZf6S1LwCw2zSoufPutphwaDkjp/5dN5n+9zl+uQ3xxK5a8ZxqYL3pe5KjSu9smWinOn6HFKQrC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ANAu7fCF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C38EC4CEC2;
+	Sun,  6 Oct 2024 01:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728179746;
-	bh=zw+lYmIsUUtG6llFvvFh8py/ONLluzPaFpK3KvDFun4=;
+	s=k20201202; t=1728179748;
+	bh=rC+M5Q4mJ52FdeEm7n0DqxEJm1JtZU9xFaRkElGY0cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hw9LcFcybMm292buA4T44wu+f7hEkexz7WQPB/Z09LbIi6f3627c0roxRtPg18NFf
-	 ZhOjhHzU1ciCYg53BETGGVAaBseQy6H+21SiPOTTMdpkgVTvmLWYITfCenSj2tiUdm
-	 rfmN+bSCjd5iq1zP2rwy85WU2BO7S4YRDllvvcA69/ak56iq26zK+m6a0/4ohy1m4I
-	 9a0DSeizNNRRHCZNYSpv5qSb0u5NmdVtUbOs33q+fJOK5PBH2WmjWkpQD33nXYfege
-	 ZaSeCbkv+jpiTFBPuaGArlo0N9hXRjoCoNmrsW4sNVPSKy3Amcwzhw2o/fEfc6DCMi
-	 aswT94mE23PIg==
+	b=ANAu7fCFnOLld8npK91JMiF0SSNILGzX7Zxq3t17I20gMXHlfLIAhNINRBVvQ+MFh
+	 wLrNy6x7BrJNiI0rDjIRCpBXFGLNJ+ZGLkE5gEKh7CSZd7NjXbkUOk4z34uP+DH4hR
+	 aIKX0fAbD2476S++uZJvu/P3+YutJuBIqWYihXM+tsAjjdBjNqc31cvaas2hZ8cY5l
+	 yMH+ywiAd5e6YRLZUDWyQf8MQX40fK3D9IvPcdpVlPMej83wmuQT/V3ayrRZWmyzoo
+	 T/xp1m3R6zLBTXdN+5tk8kvKHVzjHjoRMNFoY/P/dfJu72jb5EVvVmnWWhSgrxfSXo
+	 N759TeFLHt1pA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <quic_kdybcio@quicinc.com>
-Subject: Re: [PATCH RFC v2] soc: qcom: llcc: Use designated initializers for LLC settings
-Date: Sat,  5 Oct 2024 20:55:36 -0500
-Message-ID: <172817973310.398361.2166607250234825054.b4-ty@kernel.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	David Airlie <airlied@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Simona Vetter <simona.vetter@ffwll.ch>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	devicetree@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	Arnaud Vrac <avrac@freebox.fr>,
+	Pierre-Hugues Husson <phhusson@freebox.fr>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>
+Subject: Re: (subset) [PATCH v7 0/6] HDMI TX support in msm8998
+Date: Sat,  5 Oct 2024 20:55:37 -0500
+Message-ID: <172817973327.398361.7245928166448591196.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240910-topic-llcc_unwrap-v2-1-f0487c983373@quicinc.com>
-References: <20240910-topic-llcc_unwrap-v2-1-f0487c983373@quicinc.com>
+In-Reply-To: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
+References: <20240724-hdmi-tx-v7-0-e44a20553464@freebox.fr>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,18 +84,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 10 Sep 2024 17:01:39 +0200, Konrad Dybcio wrote:
-> The current way of storing the configuration is very much
-> unmaintainable. Convert the data to use designated initializers to make
-> it easier both to understand and add/update the slice configuration
-> data.
-> 
+On Wed, 24 Jul 2024 17:01:33 +0200, Marc Gonzalez wrote:
+> DT bits required for HDMI TX support in qcom APQ8098 (MSM8998 cousin)
 > 
 
 Applied, thanks!
 
-[1/1] soc: qcom: llcc: Use designated initializers for LLC settings
-      commit: 20a0a05f40faf82f64f1c2ad3e9f5006b80ca0cb
+[5/6] arm64: dts: qcom: msm8998: add HDMI GPIOs
+      commit: 1b97f00d1b11ed6e349816ba7e60fa76e477fcbb
+[6/6] arm64: dts: qcom: add HDMI nodes for msm8998
+      commit: 2150c87db80cf7eed3939f32cbb18393055c58ce
 
 Best regards,
 -- 
