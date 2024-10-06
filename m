@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-33220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B232991D43
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 10:31:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6F24991D46
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 10:32:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 86B8DB21E5C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 08:31:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA5951C209EB
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 08:32:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E2E216D9AF;
-	Sun,  6 Oct 2024 08:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D27B016D9AF;
+	Sun,  6 Oct 2024 08:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KIj4x5lK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sMHlRysQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF02023CB;
-	Sun,  6 Oct 2024 08:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E26623CB;
+	Sun,  6 Oct 2024 08:32:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728203492; cv=none; b=n1ZkWV1459d7HO6ue3Sh3eGEDbiIGJXMDOO4bL+OG8NUyS0TAuBbSuOQnbeEzCXfJM7GPL4mvZkGCaJFu6wdvRSoGRVL1V8RHBIMZud1vpsajR6r3/fnCjnyGlKXGQBsubCVnl8oSsU7uV5YULF44HIBWzcohgHcWgzxYapJFkg=
+	t=1728203551; cv=none; b=VYf8BSABT3oDP41Bi2wix0CyuxmSDXESEO471K8wy5v+nEZIEv4SGydc/ZzDp/pgejl+Wuc0P9IvkeOyCOT236Enu04306lyJgMMUIPRmOmSpp5TdCocVe3Bg6OSqtrutLSkc1pnZ/ST0SDQkFXhLkJu406L0iDIMf+NT8ClrjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728203492; c=relaxed/simple;
-	bh=ky4Cl0NYnrtNL83WodG+Q3JnUTShTWIMLDk1RoxZrhw=;
+	s=arc-20240116; t=1728203551; c=relaxed/simple;
+	bh=claH/7BldzicEj6PBtravPltI+nexV7FMkLbKC8oozw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SY7ksdTlKx6wgq7TF0E9TGOpNGmE2muoBUncKqFFi91JD8hFvvj09/MRuTijyH2asYSsqAN5BnQ9PPIHJ1yNzhTQKihZUZoNlARg6TZXZY3i1Avjy/YnzAe7YhHOy7KImqoh5t8A1UFzveIDm9AzYA2K0zhtML578SNfz0TU7j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KIj4x5lK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE895C4CEC5;
-	Sun,  6 Oct 2024 08:31:25 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ZCLoe8KhfIyRVj6J7MAsMEYrQ1MdHV9STfS4fnshVd2PnU0MLetQQtqfa/xzK9vii4Asu/Ar1/h0bVxCmoq29CszqneoM5WD4D3d0VbYfo3q5lMSYN34ySCA0lfg7rJaVS1+69+Dh+1jXKBwCRnkfLpK3j52XOaHLohHxSOgBhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sMHlRysQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E849EC4CEC5;
+	Sun,  6 Oct 2024 08:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728203491;
-	bh=ky4Cl0NYnrtNL83WodG+Q3JnUTShTWIMLDk1RoxZrhw=;
+	s=k20201202; t=1728203551;
+	bh=claH/7BldzicEj6PBtravPltI+nexV7FMkLbKC8oozw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KIj4x5lK6ihzkFctDXYiewps4lCsjAhMTGQ+NJ2E7+Pc0cFpP1eXEfeCHaxdXmWe5
-	 BAh9GXhuwH13eNOcb4r5ckOl9dCqcLwRGjk0ytRBBFsZ/vvdwBWeioJAVsODWVTJLl
-	 0hSZwMfya+XK4fyFea1HhOgy6KTBbJecfJI8ZBHcl8IRBSk4W/qx63AbCiMNmpbUr2
-	 SeLwRNWqSIUMCnr4pWd0l0Ry15uMDDGAaU3KOEQ4uDZ7nhCVAyKgQkWuljNiYj+GAy
-	 a3ZNPWpCFzVBkXxEBzPbAkQA387+tUA9Uf0JQ+lHgeePRkgtXwPV8q71dKU7MPb4Kc
-	 LItksIjPL0xRQ==
-Message-ID: <834100a0-ffc3-4206-9fc1-50f1dbd2d57f@kernel.org>
-Date: Sun, 6 Oct 2024 10:31:23 +0200
+	b=sMHlRysQgn1zaz8HEv872FS5YgSoTTnDJVPwcZ4WEuLLfhOEa+2lLQRcZoy/tAy9X
+	 50rMIe141/QOR29J6Hy894lgp5RnvOob1G0PzQ94ChHfgWejNCcraXCNlZT+abCUwW
+	 TT7/j3FdrqCXnvmhHPy7AH79bpsIEwtM7nraK1HSOGvknEW10Tg1P4pF5cVSGcQAXL
+	 RqPYd9oOyfiLe5ruFY4BMwy/q6tLsFreAaFMI0Cn2By8JTtg5tTMjnLDSA1ew3DrYv
+	 MOxaMYoWfHlUprgG+danlcIAa29LpOWE5a+8M91qNefL+XeyyGZTrwBLxp3PcS8fWm
+	 f2TNbIj99VyaQ==
+Message-ID: <070bd760-9095-496b-8f46-1825c592754c@kernel.org>
+Date: Sun, 6 Oct 2024 10:32:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 1/3] dt-bindings: ufs: qcom: Document ice configuration
- table
+Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8650: Add ICE algorithm
+ entries
 To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
  manivannan.sadhasivam@linaro.org, alim.akhtar@samsung.com,
  avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org,
@@ -62,7 +62,7 @@ Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
  quic_narepall@quicinc.com, quic_nitirawa@quicinc.com
 References: <20241005064307.18972-1-quic_rdwivedi@quicinc.com>
- <20241005064307.18972-2-quic_rdwivedi@quicinc.com>
+ <20241005064307.18972-3-quic_rdwivedi@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,7 +108,7 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241005064307.18972-2-quic_rdwivedi@quicinc.com>
+In-Reply-To: <20241005064307.18972-3-quic_rdwivedi@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
@@ -116,20 +116,46 @@ On 05/10/2024 08:43, Ram Kumar Dwivedi wrote:
 > There are three algorithms supported for inline crypto engine:
 > Floor based, Static and Instantaneous algorithm.
 > 
-> Document the compatible used for the algorithm configurations
-> for inline crypto engine found.
+> Add ice algorithm entries and enable instantaneous algorithm
+> by default.
 > 
 > Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
 > Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
 > Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 9d9bbb9aca64..56a7ca6a3af4 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -2590,6 +2590,25 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+>  			#reset-cells = <1>;
+>  
+>  			status = "disabled";
+> +
+> +			ice_cfg: ice-config {
+> +				alg1 {
+> +					alg-name = "alg1";
+> +					rx-alloc-percent = <60>;
+> +					status = "disabled";
+> +				};
+> +
+> +				alg2 {
+> +					alg-name = "alg2";
+> +					status = "disabled";
+> +				};
+> +
+> +				alg3 {
+> +					alg-name = "alg3";
+> +					num-core = <28 28 15 13>;
+> +					status = "ok";
 
-Three people developed the code, but none of them cared to test it? Or
-make it even slightly correct?
-
-Sorry, this code is not ready for upstream. Please work internally on
-doing meaningful review and basic tests BEFORE posting.
+NAK. This has so many issues... First, describes OS policy. Second,
+there is no "ok".
 
 Best regards,
 Krzysztof
