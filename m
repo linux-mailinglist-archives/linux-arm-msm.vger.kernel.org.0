@@ -1,121 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-33293-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33294-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DCF6992176
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 22:56:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C70C2992179
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 22:57:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4642F1F20EF9
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 20:56:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5DC5AB210B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 20:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4CE7189B86;
-	Sun,  6 Oct 2024 20:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 129261482E2;
+	Sun,  6 Oct 2024 20:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nz/QpsOE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i2LSRqMe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-qk1-f194.google.com (mail-qk1-f194.google.com [209.85.222.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F71EAD8
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 20:56:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B902EAD8;
+	Sun,  6 Oct 2024 20:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728248167; cv=none; b=DjAb8gGMLJoBn3HoPrCJB+eliQSQYb9jyECj7T1LdJVlhbHByMBQsH8eY3Xb7nKNqKUeXe8zD3DM3Yj3ym4r9miGDcE8fnOqqHEAR6UAwHL0MebhbPNoBmUlCLHuuNxjRgjaGFGiKq8Gz7xbPIsoEi3wuPQO4n7F6IMdIb2O/Ec=
+	t=1728248271; cv=none; b=VzceKHO0PzfmdEPcecpSQwpGVvM8Lok0dBxZSSIib25P0NJhs2FKod/y56QfhyUIN8naKy20ObbLqXg1c35VcuPA4JIzHbXmDreZmiT1p89sJMNjHFHF7VQ77SAAnw6kA1C9KA8FcL2bL0Hfo37jUIhNEIqQrmmQM1CZ7INX4kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728248167; c=relaxed/simple;
-	bh=jiFpyTdZ+o1J+cBAXzVZD4nkRrWgrG6mHlLauSbhxd0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GeICfPdZOYZZzqhaPvu/pb9cr9gHSomp8UfqQW+dbo3apXLDc6G5PvLnP9qdP0/Zp1pLvq5CSfdWEMxkjELkCfFsPq6/Tuk0NWLLmlHwu6hHYRmwxggkj6oqL6O7vLvbUxvXkG7HTSAMfAgd9kH2zAH27TFhPSRGTFzzrM/NpCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nz/QpsOE; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2fad15b3eeeso38673601fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 13:56:05 -0700 (PDT)
+	s=arc-20240116; t=1728248271; c=relaxed/simple;
+	bh=9k26v9n7uWvM7DAabG5+dgfZHDOlxCvPXYF25rHiFLY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jFY4sr8uPakikFq8no2Ffab1YqIwHv269ZDKKRW0jD7Ofvd3r4BxsOHDF1apwy64AeqWTIh6GsivQ1AfuCKK8p2rgnI6+UG41f/Db/fnEmQvPIVYEmpjZBzPVIA91isL3JpAyUHVws4yE2wj646Sb+G9coE54ROUm/gZr2Wl7VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i2LSRqMe; arc=none smtp.client-ip=209.85.222.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f194.google.com with SMTP id af79cd13be357-7a9a7bea3cfso220630785a.1;
+        Sun, 06 Oct 2024 13:57:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728248164; x=1728852964; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SM7DgNpNIL7c0svz2U898QeDIrjZkM596M9Pbx8v2ZY=;
-        b=Nz/QpsOEExZPDrG2kt1EcZq6n2Pp/PMhNjl5RB+/l+AgdQefCqAIlHQdhSY+9/rTnx
-         L+VVLynsfVaH3NeiIRCHcwFPs0Lss7fCBRERdS2npSKEytqoZ3Nrcva0JmyToTTiCBGE
-         bLsiOGjpb8Z/JlOb42MGnWYxo2pzyrwior08bDvqE1PlRDmOhMWBKAwBVJrJ93siHkEk
-         BME9UCkHncNEk5DH402EtwfCfiDa/6NTiEGPmVGMDRXTtmcGydexsi8gi3T8CSBRQUVi
-         WlyzBIIXtczvEs2/TI8I4IxczFC/pnqiFf8A0oow3tdS7OtP6uGAGDjLimrfhn4fOD/M
-         FsLg==
+        d=gmail.com; s=20230601; t=1728248268; x=1728853068; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PnmB+ZQHx2VRbqXrqnFk/p0zOAvgwQ1BHnY11BPXuhY=;
+        b=i2LSRqMeeP4YeoD23WG8+Ql2a/tXoeK1P/hoiZhOpuo8g2qPKJdmXmzzeJ+FfxH+ea
+         2/zDqfIu1OoU7xGPkfYMV4BuUB92PPTVd+CgFlmrQ+HYpmUi5y2gCNY5qw0wyIuza1mY
+         01igesngfzt/Sup7mhM/bfA9qo0QcbKo9GhjzD2/hj7A6VBdH9xHN+B5GuPQmdg9RnHy
+         nvh6soYaTaMehC1/fbh7l5IhoiunOoqbL/RRY0V2Q87kGAtvG4txGdOvGlM2mZrEj0tM
+         FuT2/utsQ9yOpDSGQNjick/p51IxuAJsMBhX+F/o+1ONLVYoqaxglHSE3Wkx3yL/DGmm
+         CAUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728248164; x=1728852964;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SM7DgNpNIL7c0svz2U898QeDIrjZkM596M9Pbx8v2ZY=;
-        b=dUuDQz3je/akI9OoDcBC+g4wKBCMWKJHA1Sna3mq6HTWQKj+l7W7nxc88skTG2qPIu
-         aF9W/QgrhxScZX5cYhSBH6pTcoL5tariyhPr74ce+iXK5YtJJAnyKH6SrqMkYc4dx+xQ
-         Jwk5sCPAzMP82m5nZW3UwvZK2jVq53wQMFy8f9AQtotalLmvJKJCK6T5wqRnXL6Z8Tn0
-         Z+A8klaAD4CyjPVrP4dLRP64loAoGSZwVcaxVtvCUTgBDQW2CW6Oy7PnPy67WzB4SPnl
-         ESLrBmxCOUvEYLFQexa/dtbcdFsxI7Pe7l00/hhAkY6bEASK/2kr+A6Hcn71K1aAMF6v
-         GkTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVuC0Yj1wWE4gN3aHsBoe0FJbn8oGdaHAbgHuM8vEXzVJNPsW0OJiJVr4JM+Q4mi/OxeWgKJyzkbD08S0Lh@vger.kernel.org
-X-Gm-Message-State: AOJu0YyeDjOn0cVS7FdHMS6EdRZtROHLaP3j8TxWLKB65mF5dQAuVLSA
-	WDPMfgHIW5dw3fV69NbRpr6SMg4Iml8wuGSZ8Zr4W8Sd2nXCk0adA+KdQhddxm1tVEukaf0Zc2A
-	12OKmnwSh
-X-Google-Smtp-Source: AGHT+IGzsqnMOSj1/ufudmrnnAIigKHHXKQOr+ikBVGert6uQzR5jB/vVWo0xMp7pxWXV0ud2NhqDg==
-X-Received: by 2002:a2e:a58a:0:b0:2fa:cb44:7bd4 with SMTP id 38308e7fff4ca-2faf3c01131mr43192421fa.5.1728248164302;
-        Sun, 06 Oct 2024 13:56:04 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00-89ea-67f6-92cd-b49.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:89ea:67f6:92cd:b49])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2faf9ab14f7sm6254161fa.17.2024.10.06.13.56.02
+        d=1e100.net; s=20230601; t=1728248268; x=1728853068;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PnmB+ZQHx2VRbqXrqnFk/p0zOAvgwQ1BHnY11BPXuhY=;
+        b=qcdcEsefeNbiLeaMNZi1TJk71mnnPfOazWUTC8jQD2kUP779fXcQ95XOwmIeAwDvWV
+         aPE9VXFm6sNpqa5HA7n/iU2nzuWjxJjN3lJOZCIDNQjKW5rR42OJdhUfZ1WV/2JnwL6B
+         lGn0PHsvoSAHOx8avwb6PT8TsWRwShwXJEviD5B0oU3ZAR5zHlk0EcztQ8+T2KVHadOa
+         2g8ddKAiLTfoOZ/ECPv2nixYmdrwp8e7aquuHrKox1R3ijE9UhL1o4Z/GJ8nheqVgHuL
+         oFdJhSMYbwzAeccPWGyVTKe5PtZdmfjEOfveflZKhNkSLOELfV9HBixYyp264H42Z/gA
+         j8Kg==
+X-Forwarded-Encrypted: i=1; AJvYcCVaK+WWgLWvDxg4vNfULaa2HjPYyrl51h35XG9XfDs8r5KqNXF+t9Cq+1rh+OrUNs3DPSkHMWZGvKqcHWpB@vger.kernel.org, AJvYcCWEYujRSq55Lw6PNqzk0XfWQTRMWkSSgU4P5hzRM5G8vQZ7WdTM8gom+scPMA1nsQvkxoeBO2N/@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXwVYXIGU4nN4fAciCy7/pdo6OJuTy0DYjEA6Ss6WAsgYGglG+
+	b/cB94aBRzK9ZBjQ93jPbQhmj91S3sX0aNhaczlEKcsEgYE/8042
+X-Google-Smtp-Source: AGHT+IEDrQ4cpe6u1eaulg32wqYdo/IErgLQDzGzYL/7nLTp4wfVTQNvuokBIZBhTIBZIX5rF0MlBg==
+X-Received: by 2002:a05:620a:3705:b0:7a9:bf33:c17a with SMTP id af79cd13be357-7ae6f44cd13mr1634916685a.33.1728248268355;
+        Sun, 06 Oct 2024 13:57:48 -0700 (PDT)
+Received: from localhost.localdomain (mobile-130-126-255-54.near.illinois.edu. [130.126.255.54])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ae7562c677sm192360085a.31.2024.10.06.13.57.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 13:56:03 -0700 (PDT)
-Date: Sun, 6 Oct 2024 23:56:01 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com, 
-	quic_anupkulk@quicinc.com
-Subject: Re: [RESEND PATCH v2] arm64: dts: qcom: sa8775p: Populate additional
- UART DT nodes
-Message-ID: <uk3zgyee62vrkcwtujkuw754wacvullmsjnimlqhmmbjit24rm@sqcrmbn7ngsg>
-References: <20240930085533.17119-1-quic_vdadhani@quicinc.com>
+        Sun, 06 Oct 2024 13:57:47 -0700 (PDT)
+From: Gax-c <zichenxie0106@gmail.com>
+To: srinivas.kandagatla@linaro.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	rohitkr@codeaurora.org
+Cc: linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	stable@vger.kernel.org,
+	zzjas98@gmail.com,
+	chenyuan0y@gmail.com,
+	Zichen Xie <zichenxie0106@gmail.com>
+Subject: [PATCH v3] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe()
+Date: Sun,  6 Oct 2024 15:57:37 -0500
+Message-Id: <20241006205737.8829-1-zichenxie0106@gmail.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240930085533.17119-1-quic_vdadhani@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 30, 2024 at 02:25:33PM GMT, Viken Dadhaniya wrote:
-> Currently, UART configuration is populated for few
-> SEs(Serial engine) only in sa8775p DTSI file.
-> 
-> Populate UART configurations of remaining SEs for sa8775p soc.
+From: Zichen Xie <zichenxie0106@gmail.com>
 
-I think this is a long standing tradition of adding UART configuration
-only to those nodes that actually will be used for UART on one or
-another device. Is this the case for all these UART nodes?
+A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
+possibly return NULL pointer. NULL Pointer Dereference may be
+triggerred without addtional check.
+Add a NULL check for the returned pointer.
 
-> 
-> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> ---
-> v1 -> v2:
-> 
-> - Modifed commit log as requested by Krzysztof.
-> - Added co-developed-by tag.
-> 
-> v1 Link: https://lore.kernel.org/linux-arm-msm/98e7dc28-4413-4247-bad1-98b529f6d62d@kernel.org/T/
-> ---
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
->  1 file changed, 231 insertions(+)
-> 
+Fixes: b5022a36d28f ("ASoC: qcom: lpass: Use regmap_field for i2sctl and dmactl registers")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zichen Xie <zichenxie0106@gmail.com>
+---
+v2: Fix "From" tag.
+v3: Format tags to Fixes/Cc/Signed-off-by.
+---
+ sound/soc/qcom/lpass-cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index 5a47f661e0c6..242bc16da36d 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -1242,6 +1242,8 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+ 	/* Allocation for i2sctl regmap fields */
+ 	drvdata->i2sctl = devm_kzalloc(&pdev->dev, sizeof(struct lpaif_i2sctl),
+ 					GFP_KERNEL);
++	if (!drvdata->i2sctl)
++		return -ENOMEM;
+ 
+ 	/* Initialize bitfields for dai I2SCTL register */
+ 	ret = lpass_cpu_init_i2sctl_bitfields(dev, drvdata->i2sctl,
 -- 
-With best wishes
-Dmitry
+2.25.1
+
 
