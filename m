@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-33232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30F73991F5B
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 17:29:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 752CF991F62
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 17:31:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 916E2B20F3E
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 15:29:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 37689281895
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 15:31:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A456217C9BE;
-	Sun,  6 Oct 2024 15:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B26217E47A;
+	Sun,  6 Oct 2024 15:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K/a9ul9Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D9052Klo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFF017C9B4
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 15:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D45713CFBC
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 15:31:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728228539; cv=none; b=OhzctwaVpsAYmvE5N5pPwd044guyzkKSYZGyBKDJ2KMsyQ4HhvvZBsKlhoiGpwtU2mUNITXp+PQxAF3Onl8WRNglc/7Ihx2zhGJJyGH73Bwy/dW23czCdatVYKCj7n5u/y4Qy8oK1H3lB1x2UA34J7G0+4QAKhuBo3aZYR+jNVY=
+	t=1728228663; cv=none; b=Ve56SFYhQTBmvVCZLl5eMx5QbjFaT1u6mcUiUKzT0VPVkg8h164EBdlWAQQhi4a5RWWIG8CD4IGAn+KfeZaFJdh4SArGnTKqthv0b1uP5bYdj8izoWv7IR6Y/fF5vGz9dp7DOM+pteVsS2aGWyiv1/wJ7DF9Zrbh8LqHD+UOr3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728228539; c=relaxed/simple;
-	bh=Nx3HWT2Zr7VmN+DjiFf8rjZsEQjnvNf09OHEoSGc59Y=;
+	s=arc-20240116; t=1728228663; c=relaxed/simple;
+	bh=erRy1y6DhhNLxLmbX0MPP5rQSPnOxJr65raopGbn/jk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=swwakWZizcLzlo6CmfhlR3Gblqii9OZNSX/XtU5BP1fLVuDl3zhaZ7Gg3e5viK1tTyJpAQodvJrst3BKTYxX3Ttmg/jH6GzbwPd/gL4akqAPIIvfp2gzXlSSdpPv15ZoaGAhvnoEHglNGGL5c1pAhIvY3W7pbGezbTuTcDIPym0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K/a9ul9Z; arc=none smtp.client-ip=209.85.208.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=dXNLLCHjUmO4Eb+ZTGw7VXnwAH4IwYG71SAFR5gyBVQChiPGjoS0HXJsxopoHwr7tLHb1yW7TOX5C5gX9dWoaCnetg5MtqsK6Nj8QqF8gKXtTLOEqzIPwaYYn7BuNsMGf0u4oixgW03PKMyix86DC1OpoAT7/GY4IS6gaFBLPgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D9052Klo; arc=none smtp.client-ip=209.85.167.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso35587511fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 08:28:57 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-539885dd4bcso4424003e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 08:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728228536; x=1728833336; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728228660; x=1728833460; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ThlZWj7Dx9fwP3BeAQPiHzm2d1SypJQ5DEsbdDuRU2s=;
-        b=K/a9ul9ZfIv/qyRl6AZIdsvtbuogYXHbNwv5bjUI0OkAh6WIxJXZ8DAgCWHeFLqOmq
-         XGTRexSG4Qf30TiiCxTxkP7OoPMvLpJ2HOwNrmAFVradi9UBBIGSaAnJn5+I6ieaoto7
-         5/jTgzRxIZr8xO9RoeTz6aJ+GR3TMIal272t+/OZ+Zx02kCR4VMIl1gAr9+AnzNK7bGk
-         /s6zrnmZzaKyLnhNI4e9ydsUhgoVOCenTHIpTE5ZvQ3bx1NypcKNG0WJVOrBHZiLoJfH
-         WvQ97BeuYBvks2kMyPUt3xcWg2respsWNv5eWsO1Ft30vnm2mJlVnVC24kP5grnbKYCO
-         2aQw==
+        bh=Y7TMEEqlSgL1dfZyYHelcPxHIJNxM8Us8dWe6PWlibc=;
+        b=D9052KloMBUvcX9EsWW7HBCXS8S7lH4VRB/q/rdMqpEsQQrTQhIAmtMQ+K7k7CYouW
+         vBAh1sLAQxByCLVUjFvH68dIEv40JlqRhtcatPqaGVP0Otca8YCGP/UwQZFcAxAsofvk
+         isxGXIcOnavqJe3A14AXT9HoP2pWkzJPezwJle3u/vjVJI2trk1PSv1hu5wrOylrvfDo
+         fLZ64GjETfYqjXSJwYNKKlyFJzMUiLaQRWM4x6UQh6o/aGUmj3Ds7VusTmSI67um28sE
+         +0YZUK4uSmeSFL/EBfI5xVF1sJBPTrxRzAf9Neh3+UQli+iMd+aH1SVcgDc0h0FI4FPy
+         VlhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728228536; x=1728833336;
+        d=1e100.net; s=20230601; t=1728228660; x=1728833460;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ThlZWj7Dx9fwP3BeAQPiHzm2d1SypJQ5DEsbdDuRU2s=;
-        b=CpuQmv6h7uKBYGLad2vOU+OXUTSFWcR0lm3uGp70dUYpOyvqtKwu/6JqCMB/zOZOV3
-         Hj7oxRx9YEOSFl6r9e6Wmk3SoHE4BtxFgphho16SAaonQxncC6zPrhm8PuP5SuecbkYs
-         4QEjbNbXglgslRK/v2KNiEwiLuM6i9EnZxvJ0u3bQVq9ZJUeXUgCxQim7fq95Fpo/BXs
-         3XKN5j6JFSiSdIelMA5pAtGTGQj5DKFddDsX8k+sfRcrOkIAmWFWdlA3LSr8C7Rmh/bo
-         0F2X7MyDlyCJwhquSDeUYoO2YQJKuf8S83wT7J5DTmOuXXq/Lv6Tkz7PPBIgqgAwau8+
-         sRjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUp7v6+hnz7PoAGLr3gkzxl0MxaInAiFlBNVvr3SS1vl7V26nc01w6qT8+p9sAZdMgFs174AFtlNY4oZwPb@vger.kernel.org
-X-Gm-Message-State: AOJu0YzhD0GczgwprTpdwCngczDs3X8PjDT9AyxuKVnFbF1/kmie7UvR
-	MBJy6xVLM0lW2i+PBjOGbhvtuulbsMsF1uD7Hygb8rA9Pu5//T8gNgm5AxY+ieQ=
-X-Google-Smtp-Source: AGHT+IEJ8wxuoS6Go6cFGbv5TTVaMKmUAiBI7qUeJwG6vs5acx5f9vVLKLFZQLz0o4NTGs6UYlInUA==
-X-Received: by 2002:a05:651c:220d:b0:2fa:d84a:bd93 with SMTP id 38308e7fff4ca-2faf3c6635fmr39135041fa.32.1728228535812;
-        Sun, 06 Oct 2024 08:28:55 -0700 (PDT)
+        bh=Y7TMEEqlSgL1dfZyYHelcPxHIJNxM8Us8dWe6PWlibc=;
+        b=VvwQE6encca/vcQIxc2kOOrHg60RcUhRfM4M4u4dGSfMJypAjptdVbUNbxEgZl6zIl
+         RpBsQK0Z00oFVOseOYLIMNxAn6cb0Vux/Ifrw2sqItw6RPnzL09+lsmpwx6mjvH4yKNv
+         dKP8JtjBWMjMa46DS1xlquH5ZBUEXgGj5x8ii/eOP8aK05OzujA0B8VwK9wD1ipe8iVO
+         cvp8HucZoY82JA+P2qZCP2u5iN5xOiwne3wrVy1gv3xKVo3o+8ornhmB2W3b0tYZKLkA
+         gEMkuTkzc4ZddPiWLynlLgjBWkG6U4qK/XJeDPE47JWszOrhrkVnLRMp89oZxbjbN0e0
+         HmwA==
+X-Forwarded-Encrypted: i=1; AJvYcCXubV9mY0AC1i9x1mJciBfYLdB8trjqSFB8YlKEQ9zz6G8db25O/VZOQA0y8cLa69KES/mfwdpY7xvpZD/C@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2pNWtDri0R7t+0nf5w2cNyUPxiQrMKxo2qKKu3XEhZi+3f6pz
+	Y2E+OHpfsjrOnDK6UKJypp2ZMZeiFnOYqXaCMd4t0jQTR8oP106hQyN/n2FEqlY=
+X-Google-Smtp-Source: AGHT+IF7ACVC7HZGbcKBxEQyUtp+e5EN1rZXSjWwtyEKwdKBEfuWVUaUzhzkFcYwLgaVR/978B0VAg==
+X-Received: by 2002:a05:6512:3c9f:b0:539:8f2d:a3bc with SMTP id 2adb3069b0e04-539ab9ec4c3mr4129183e87.49.1728228660095;
+        Sun, 06 Oct 2024 08:31:00 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00-89ea-67f6-92cd-b49.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:89ea:67f6:92cd:b49])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2faf9b3ace7sm5526791fa.132.2024.10.06.08.28.54
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539aff1d0d3sm547835e87.135.2024.10.06.08.30.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 08:28:54 -0700 (PDT)
-Date: Sun, 6 Oct 2024 18:28:52 +0300
+        Sun, 06 Oct 2024 08:30:58 -0700 (PDT)
+Date: Sun, 6 Oct 2024 18:30:57 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Abel Vesa <abel.vesa@linaro.org>
 Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
@@ -79,7 +79,7 @@ Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	devicetree@vger.kernel.org
 Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add Parade PS8830 Type-C
  retimer bindings
-Message-ID: <657a2qb727tm5ndz2wokxb5aiyqysppufm7evtwfbplu34yzmp@mlm4k775zm7a>
+Message-ID: <rgmmvai43o3vkag3mtoqrye55vq7j3pbcjuakg7pnwfqgigc2e@uv6ehbht7xmh>
 References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
  <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
 Precedence: bulk
@@ -153,9 +153,6 @@ On Fri, Oct 04, 2024 at 04:57:37PM GMT, Abel Vesa wrote:
 > +
 > +  vddat-supply:
 > +    description: power supply (1.07V)
-
-Any additional details?
-
 > +
 > +  vddio-supply:
 > +    description: power supply (1.2V or 1.8V)
@@ -173,27 +170,17 @@ Any additional details?
 > +      port@1:
 > +        $ref: /schemas/graph.yaml#/$defs/port-base
 > +        description: Super Speed (SS) Input endpoint from the Super-Speed PHY
-
-or from another SS signal source, which can be a mux, a switch or
-anything else. I'd say, just 'Input Super Speed (SS)'
-
 > +        unevaluatedProperties: false
+
+BTW: could you please also use usb/usb-switch.yaml for these ports ?
+Maybe we should also add port@2 to that schema.
+
 > +
 > +      port@2:
 > +        $ref: /schemas/graph.yaml#/properties/port
 > +        description:
 > +          Sideband Use (SBU) AUX lines endpoint to the Type-C connector for the purpose of
 > +          handling altmode muxing and orientation switching.
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +allOf:
-> +  - $ref: usb-switch.yaml#
-> +
-> +additionalProperties: false
-> +
 
 -- 
 With best wishes
