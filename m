@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-33221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6F24991D46
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 10:32:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B4FB5991D51
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 10:40:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DA5951C209EB
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 08:32:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEE091C20CDF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 08:40:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D27B016D9AF;
-	Sun,  6 Oct 2024 08:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E2E170A3F;
+	Sun,  6 Oct 2024 08:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sMHlRysQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h/Wr0DxP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E26623CB;
-	Sun,  6 Oct 2024 08:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6634614C5B5;
+	Sun,  6 Oct 2024 08:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728203551; cv=none; b=VYf8BSABT3oDP41Bi2wix0CyuxmSDXESEO471K8wy5v+nEZIEv4SGydc/ZzDp/pgejl+Wuc0P9IvkeOyCOT236Enu04306lyJgMMUIPRmOmSpp5TdCocVe3Bg6OSqtrutLSkc1pnZ/ST0SDQkFXhLkJu406L0iDIMf+NT8ClrjY=
+	t=1728204006; cv=none; b=U31zXaCEyIC3iilIwoHQ4ezY0lSTZPBCuOd64z8zakoAspun0euHAWrv9/cbi1hnL+RgG4INyseWAGVYSMe5LrUYXZVEBftct+RxhAoT+M+G+JK2QtNh9nrvHO35KbYgS86FGpZzV8fWreZfFRHTn2DlklRPZdJD/sHtWxA70o8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728203551; c=relaxed/simple;
-	bh=claH/7BldzicEj6PBtravPltI+nexV7FMkLbKC8oozw=;
+	s=arc-20240116; t=1728204006; c=relaxed/simple;
+	bh=NK1WPXiSEjcSZaJXDrZNLsOJqxz3KCf9iSM7O+vEZr8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZCLoe8KhfIyRVj6J7MAsMEYrQ1MdHV9STfS4fnshVd2PnU0MLetQQtqfa/xzK9vii4Asu/Ar1/h0bVxCmoq29CszqneoM5WD4D3d0VbYfo3q5lMSYN34ySCA0lfg7rJaVS1+69+Dh+1jXKBwCRnkfLpK3j52XOaHLohHxSOgBhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sMHlRysQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E849EC4CEC5;
-	Sun,  6 Oct 2024 08:32:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qQIAiS0pC+b7oMk1kNOARWzjmi67O/7hFWcd++9440UQyyx3lDS+1GlGBA6CbfrB3uvMDzLGtA4b3Z7oCPrgZ3NLMybuGNjZlgs0TGNYiS4Y2e1yjmfivxjcrqxtO35cJJQj5vkDyC/00GFleR+9/WvAkRZSm6Mnya91fUIUCq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h/Wr0DxP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D04C4CEC5;
+	Sun,  6 Oct 2024 08:39:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728203551;
-	bh=claH/7BldzicEj6PBtravPltI+nexV7FMkLbKC8oozw=;
+	s=k20201202; t=1728204006;
+	bh=NK1WPXiSEjcSZaJXDrZNLsOJqxz3KCf9iSM7O+vEZr8=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=sMHlRysQgn1zaz8HEv872FS5YgSoTTnDJVPwcZ4WEuLLfhOEa+2lLQRcZoy/tAy9X
-	 50rMIe141/QOR29J6Hy894lgp5RnvOob1G0PzQ94ChHfgWejNCcraXCNlZT+abCUwW
-	 TT7/j3FdrqCXnvmhHPy7AH79bpsIEwtM7nraK1HSOGvknEW10Tg1P4pF5cVSGcQAXL
-	 RqPYd9oOyfiLe5ruFY4BMwy/q6tLsFreAaFMI0Cn2By8JTtg5tTMjnLDSA1ew3DrYv
-	 MOxaMYoWfHlUprgG+danlcIAa29LpOWE5a+8M91qNefL+XeyyGZTrwBLxp3PcS8fWm
-	 f2TNbIj99VyaQ==
-Message-ID: <070bd760-9095-496b-8f46-1825c592754c@kernel.org>
-Date: Sun, 6 Oct 2024 10:32:22 +0200
+	b=h/Wr0DxP69bY+boKntL2ItaHetrMFSXI1yeD0t9qSY65KT5BVvxPXjzUsyd38kgiL
+	 vFOrPT+kd2zLJI2XwAoV91ENbHD+bm19IPqxfjNxykTZHWZU+CG2NpXcOg3R9YyJmN
+	 gjBIXs8iXKPkXWCfee7pnnviLRNCXhCm0TQ5LOFQzEAwQMMTXOYYB9tPvxXoEkuOMi
+	 zs/nkNajEHwx1AcQ4SaKKr01P5PyckYO8K0KJKsd+OF5FpqzmBHWXCUi4fgH2fIu4h
+	 EcubBTNNSPBvVsUSy+w9ypdkApUbL/y+MLv613QLHp4z5E/LOiWEpQ4KxRUgaNK+fD
+	 nsSWgN1IIKgXw==
+Message-ID: <c0e9479c-0a69-4ffe-aab5-0b5af92df31d@kernel.org>
+Date: Sun, 6 Oct 2024 10:39:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,19 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V1 2/3] arm64: dts: qcom: sm8650: Add ICE algorithm
- entries
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
- manivannan.sadhasivam@linaro.org, alim.akhtar@samsung.com,
- avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, andersson@kernel.org,
- konrad.dybcio@linaro.org, James.Bottomley@HansenPartnership.com,
- martin.petersen@oracle.com, agross@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-scsi@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- quic_narepall@quicinc.com, quic_nitirawa@quicinc.com
-References: <20241005064307.18972-1-quic_rdwivedi@quicinc.com>
- <20241005064307.18972-3-quic_rdwivedi@quicinc.com>
+Subject: Re: [PATCH V3 2/7] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
+ binding
+To: Sricharan R <quic_srichara@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ ulf.hansson@linaro.org, linus.walleij@linaro.org, catalin.marinas@arm.com,
+ p.zabel@pengutronix.de, geert+renesas@glider.be,
+ dmitry.baryshkov@linaro.org, neil.armstrong@linaro.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+ linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org
+Cc: quic_varada@quicinc.com
+References: <20241004102342.2414317-1-quic_srichara@quicinc.com>
+ <20241004102342.2414317-3-quic_srichara@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,54 +110,53 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241005064307.18972-3-quic_rdwivedi@quicinc.com>
+In-Reply-To: <20241004102342.2414317-3-quic_srichara@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 05/10/2024 08:43, Ram Kumar Dwivedi wrote:
-> There are three algorithms supported for inline crypto engine:
-> Floor based, Static and Instantaneous algorithm.
-> 
-> Add ice algorithm entries and enable instantaneous algorithm
-> by default.
-> 
-> Co-developed-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Signed-off-by: Naveen Kumar Goud Arepalli <quic_narepall@quicinc.com>
-> Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8650.dtsi | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 9d9bbb9aca64..56a7ca6a3af4 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -2590,6 +2590,25 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
->  			#reset-cells = <1>;
->  
->  			status = "disabled";
-> +
-> +			ice_cfg: ice-config {
-> +				alg1 {
-> +					alg-name = "alg1";
-> +					rx-alloc-percent = <60>;
-> +					status = "disabled";
-> +				};
-> +
-> +				alg2 {
-> +					alg-name = "alg2";
-> +					status = "disabled";
-> +				};
-> +
-> +				alg3 {
-> +					alg-name = "alg3";
-> +					num-core = <28 28 15 13>;
-> +					status = "ok";
+On 04/10/2024 12:23, Sricharan R wrote:
 
-NAK. This has so many issues... First, describes OS policy. Second,
-there is no "ok".
+>  maintainers:
+>    - Bjorn Andersson <andersson@kernel.org>
+>  
+>  description: |
+>    Qualcomm global clock control module provides the clocks, resets and power
+> -  domains on IPQ5332.
+> +  domains on IPQ5332 and IPQ5424.
+>  
+> -  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
+> -
+> -allOf:
+> -  - $ref: qcom,gcc.yaml#
+> +  See also::
+
+s/::/:/
+
+> +    include/dt-bindings/clock/qcom,gcc-ipq5332.h
+> +    include/dt-bindings/clock/qcom,gcc-ipq5424.h
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,ipq5332-gcc
+> +    enum:
+> +      - qcom,ipq5332-gcc
+> +      - qcom,ipq5424-gcc
+>  
+>    clocks:
+> +    minItems: 5
+>      items:
+>        - description: Board XO clock source
+>        - description: Sleep clock source
+>        - description: PCIE 2lane PHY pipe clock source
+>        - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
+> +      - description: PCIE 2-lane PHY2 pipe clock source
+> +      - description: PCIE 2-lane PHY3 pipe clock source
+>        - description: USB PCIE wrapper pipe clock source
+
+Why do you change fifth clock on ipq5332?
+
+Please test your patches - change DTS for ipq5332 and provide PCIE
+2-lane PHY2 there.
 
 Best regards,
 Krzysztof
