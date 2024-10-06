@@ -1,72 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-33268-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC2FF9920DF
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 21:47:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 088BA9920E3
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 21:48:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6BCF1C20A02
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 19:47:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C44B5281784
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 19:48:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A865818B482;
-	Sun,  6 Oct 2024 19:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2994018A933;
+	Sun,  6 Oct 2024 19:48:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Spebq7Yy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from inva020.nxp.com (inva020.nxp.com [92.121.34.13])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E359188907;
-	Sun,  6 Oct 2024 19:47:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763F318A6CC
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 19:48:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728244022; cv=none; b=ksnA7SQ+Po30Y58UPjOjdwlGh/u33OJXeBQ8f/sGHil7IZjkO/NLtZsEzhRHdrZAWIbMCWmel5TK3l6si5Ax9kpCiAxLKlqyyXEetmN2jVgMvRZKaUujnMJ1/nvKdW1Sbd7r3YXIoUnpXYah9BVUo0zAngVbZ681vG+uJ3UpktY=
+	t=1728244094; cv=none; b=NuG8oUgJahvBc0Uc8aHapLCNsbqYEbhVJgPLR6gXKc1zaHAOzGA+hpaL5cD5PiKyt8TuskkmhSYbTrGwMyexOQ6OeMyNydiChRWlAW9HKrzXBTY+frgq1zrj/GNHPZrJQmNroWoVXvAasDrOjY2Bri8RCCNjhZWrxWgjX9Ays3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728244022; c=relaxed/simple;
-	bh=/5+qwFumjf/F5w49XogsExrwXrqnypx6YvGQF3Zl1Ks=;
+	s=arc-20240116; t=1728244094; c=relaxed/simple;
+	bh=7gGr/1x4FJaI8JV+T1vMBbIYC3bt1kEMXPucKcUwsl0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dYBKbUghKqA5Tlyy/rW/4JTMzm4FLNgcOPbR+CgUNfnXHR1SfR9aBJDwZLCGVN1nc3aXMSIAoJlzXjVoROrc1z+zw1rpbXH7YGEzGW9DO8jZeREC5a6hZFCc6eWWutUycI3ahtZXBzRkl6egsHsvVbngIi6dh9N7RWXoz0Ooui0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-Received: from inva020.nxp.com (localhost [127.0.0.1])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 7B5DC1A0B7C;
-	Sun,  6 Oct 2024 21:46:59 +0200 (CEST)
-Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
-	by inva020.eu-rdc02.nxp.com (Postfix) with ESMTP id 6486A1A074D;
-	Sun,  6 Oct 2024 21:46:59 +0200 (CEST)
-Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
-	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 37236202E3;
-	Sun,  6 Oct 2024 21:47:00 +0200 (CEST)
-Date: Sun, 6 Oct 2024 21:46:59 +0200
-From: Jan Petrous <jan.petrous@oss.nxp.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	"netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux-stm32@st-md-mailman.stormreply.com" <linux-stm32@st-md-mailman.stormreply.com>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-	dl-S32 <S32@nxp.com>
-Subject: Re: [PATCH v2 5/7] net: stmmac: dwmac-s32cc: add basic NXP S32G/S32R
- glue driver
-Message-ID: <ZwLpMylhr/mHgV3Y@lsv051416.swis.nl-cdc01.nxp.com>
-References: <AM9PR04MB8506DECD381225ACFB311329E2832@AM9PR04MB8506.eurprd04.prod.outlook.com>
- <0104f251-f032-4082-835f-01ca2279c1b1@intel.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=JtKMwW7VnZc3ijo+kkxc0hPhR9I9KxapqUwU/Ma24d//Zg76mqHVCrifgbo+ZxpVBnbY643x0amNSoZnqRjhnXL8ycMhRbwhdHZ71GUw2GbPduYKwyCLyRfNMCYIp4Dzc9UUY+0/TzB2byvLNkWxKouHejgvnlvWNDpRZJRIrGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Spebq7Yy; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fadc95ccfcso39131371fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 12:48:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728244091; x=1728848891; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7zPAywQKFEQfn9opQrxQlIKiUkH56Yv86B8xhIow7Vk=;
+        b=Spebq7Yy4N09cSYol4aVRtzW9qllcgblEvVo7g5YnrxtGSslzbBj6tEGVeZI00Ah+K
+         NPIDv77vDMPAkgTLU+az836RtHl5fkTKOtsWvJo13IpH/ak6+6BJCqDWK+hUHTKFR63V
+         zbLYftzzgwouaxW4nG6pzRz2fPfO+bLn+iIG8rUcnhDzPVUVT9DGlIzij2gr20v+1XXs
+         xxI43WRxjZ0cez4EFoiIaKmkKQukwWJdTb6XRJUFLFSdAihVRjglhX8GE9JClqh2tPYl
+         sKouEq2yisA7qQpZZywwGfqQfCYxU/7Ao4zq4PTEreZLcTIvEpveNKnWkObiTf8pGX5u
+         gokQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728244091; x=1728848891;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7zPAywQKFEQfn9opQrxQlIKiUkH56Yv86B8xhIow7Vk=;
+        b=lVDjLver2WYrAUZel4duCvW0k6OtsNEvFXcgxrUbJArjFcOvcfnV7l/aQPa11k/CFf
+         MeIsbaIs3s1FHeZ9cdiHfmPgpHKWpi2L5bONBqEqPk2EHFAbRO+kU6qQdx4MdDavOKDt
+         bVQriL+DwRGneLsLKzyGIRmmr2GsdejuCcev9J6HESuPaAj0kHhYibueffsb/4Xv06wH
+         R9D4XVUjnUD3521QZq7zkdLy9Fh0nfNEWxeEpZ9YPacyu9AKkrczxlX+vVPgTs65l+YN
+         wnmBMsHIuw7LNWXFBAltvRDc1vm1q6ECfD1r52JfB+vtp4E3cRa4jgZtjcyXZW07OCXk
+         nwYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVa+MF0ZHTscveFC4lo3V2Fffrh3xmFFfTu2nc7tQLH+0xxSu/zxz4WWE8vgOVvFFleqF0VktsgLyGn6UuR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx99+T+2xmZrpW+1Ogw5vAZDEY9k5GuIuw1GqjrZ2wtV2PZjQfY
+	d6I0IAzEfbgY3kHhBWhe/RvawcGystD+Mgq/6Co/1ox2lB09rQ8QcPLAbedBnxo=
+X-Google-Smtp-Source: AGHT+IHY5ZORs3+Wb3ECmHlouFQcuEaBcJxb2p9hKDZPfCVa6bzsWfoaIuyi5HYXkPDDxvoiVveE9w==
+X-Received: by 2002:a05:651c:11c5:b0:2f7:7cf7:474d with SMTP id 38308e7fff4ca-2faf3d72e7bmr32340251fa.27.1728244090660;
+        Sun, 06 Oct 2024 12:48:10 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00-89ea-67f6-92cd-b49.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:89ea:67f6:92cd:b49])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2faf9ac4b5bsm6162501fa.52.2024.10.06.12.48.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Oct 2024 12:48:09 -0700 (PDT)
+Date: Sun, 6 Oct 2024 22:48:06 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: srinivas.kandagatla@linaro.org
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, johan+linaro@kernel.org, 
+	abel.vesa@linaro.org
+Subject: Re: [PATCH v3] arm64: dts: qcom: x1e80100-t14s: add another trackpad
+ support
+Message-ID: <d4i6yrwx4loeojylsiijnsdemgb4u6hn5ccd74yn3mhqytwlc4@6gdejdv6jiwv>
+References: <20241004130849.2944-1-srinivas.kandagatla@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,61 +85,40 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0104f251-f032-4082-835f-01ca2279c1b1@intel.com>
-X-Virus-Scanned: ClamAV using ClamSMTP
+In-Reply-To: <20241004130849.2944-1-srinivas.kandagatla@linaro.org>
 
-On Tue, Aug 20, 2024 at 02:15:46PM -0700, Jacob Keller wrote:
+On Fri, Oct 04, 2024 at 02:08:49PM GMT, srinivas.kandagatla@linaro.org wrote:
+> From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 > 
+> Trackpad HID device on T14s could be found on two possible slave addresses
+> (hid@15 and hid@2c) on i2c0 instance.
+> With the current state of DT boot, there is no way to patch the device
+> tree at runtime during boot. This, however results in non-functional
+> trackpad on Product Models 21N2ZC5PUS which have trackpad on hid@2c
+> slave address.
 > 
-> On 8/18/2024 2:50 PM, Jan Petrous (OSS) wrote:
-> > NXP S32G2xx/S32G3xx and S32R45 are automotive grade SoCs
-> > that integrate one or two Synopsys DWMAC 5.10/5.20 IPs.
-> > 
-> > The basic driver supports only RGMII interface.
-> > 
+> This patch adds hid@2c device along with hid@15 to get it working on
+> both the variants. This should work as i2c-hid driver will stop
+> probing the device if there is nothing on the slave address, we can
+> actually keep both devices enabled in DT, and i2c-hid driver will
+> only probe the existing one.
 > 
-> You mention that it only supports RGMII.. so...
+> The only problem is that we cannot setup pinctrl in both device nodes,
+> as two devices with the same pinctrl will cause pin conflict that makes
+> the second device fail to probe.  Let's move the pinctrl state up to
+> parent node along with the parent pinctrl to solve this problem.
 > 
-> > +static int s32cc_gmac_write_phy_intf_select(struct s32cc_priv_data *gmac)
-> > +{
-> > +	u32 intf_sel;
-> > +
-> > +	switch (gmac->intf_mode) {
-> > +	case PHY_INTERFACE_MODE_SGMII:
-> > +		intf_sel = PHY_INTF_SEL_SGMII;
-> > +		break;
-> > +	case PHY_INTERFACE_MODE_RGMII:
-> > +	case PHY_INTERFACE_MODE_RGMII_ID:
-> > +	case PHY_INTERFACE_MODE_RGMII_TXID:
-> > +	case PHY_INTERFACE_MODE_RGMII_RXID:
-> > +		intf_sel = PHY_INTF_SEL_RGMII;
-> > +		break;
-> > +	case PHY_INTERFACE_MODE_RMII:
-> > +		intf_sel = PHY_INTF_SEL_RMII;
-> > +		break;
-> > +	case PHY_INTERFACE_MODE_MII:
-> > +		intf_sel = PHY_INTF_SEL_MII;
-> > +		break;
-> > +	default:
-> > +		dev_err(gmac->dev, "Unsupported PHY interface: %s\n",
-> > +			phy_modes(gmac->intf_mode));
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	writel(intf_sel, gmac->ctrl_sts);
-> > +
-> > +	dev_dbg(gmac->dev, "PHY mode set to %s\n", phy_modes(gmac->intf_mode));
-> > +
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> ---
 > 
-> Why does this code seem to support others?
+> Changes since v2:
+> - updated commit log
+> - added missing parent pinctrl
 > 
-> Is that support just not yet fully baked?
 
-Exactly. I have more functionality already implemented, but I started
-from very basic driver to simplify review process.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-I will remove all occurence of other interfaces but RGMII in v3.
-
-BR.
-/Jan
+-- 
+With best wishes
+Dmitry
 
