@@ -1,81 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-33253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 456ED992045
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 20:12:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FD3B992047
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 20:13:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0438928150C
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 18:12:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CEDF11F2192E
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 18:13:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3A40189F43;
-	Sun,  6 Oct 2024 18:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A25FF189F43;
+	Sun,  6 Oct 2024 18:13:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rqh3khzU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lHSVlzyw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 377F8189917
-	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 18:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E91C189917
+	for <linux-arm-msm@vger.kernel.org>; Sun,  6 Oct 2024 18:13:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728238323; cv=none; b=aYzfG/LmjJXCIE7KaS515GwlESYI2c3AbIjCBveXupBvNaUwCCxIoBbA9J8J+8CwW+FpEzVeQuzA1dN9B2wLAujGj5GBJmf+VMqZyqpqxaaxszs4KpEFS2PWd+dAfcReSd32eH7mfIVvkWfD1rM22MDJx8blaWCX78p8SuwRvgk=
+	t=1728238428; cv=none; b=MOtMXGzexJ4VbPK8Cm5kmqTCbrM1/jmyema+k/rh2QF+mLkfvW50YwH+KlrGfjf6nIQU3dhx+1HTkw61NOXei5gQoOLD+NQ+wtYTrsvocG6iriYJb6q/XOFzyCJ7PzOC+kEd2SkCayeetFkgRHwh6P6wUp8MpG+yV3FWSYv6IkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728238323; c=relaxed/simple;
-	bh=3t9+E9CkOzIKHHSuceCwjRc7U0X0Sf01y7bJoxelwWk=;
+	s=arc-20240116; t=1728238428; c=relaxed/simple;
+	bh=Ua9EPz2F0ax/VTNXjs0OZ+SzQLhTYERlSHK26OI8qU4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RVGSt8gTY+h/23NGDaw3hTNANwfg5ZR9GsO3asbnwxyiucG8nIGP487qXJfm8wbZPtmZDAjn/GkuCQhDwbxOcnUAU9ok0xLRaGE1/dI4JaJIuX9ApBDE+pruZBmOkz0eCkozG/vDCPaOt2KDwV0PEd32TdeJppOsx9UX6+pYKS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rqh3khzU; arc=none smtp.client-ip=209.85.214.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=qQJXupDO99KI7tDbgRm1Dp8KXc0d57OoD2T5fqM/uo/pTbME9cx7aHyvbz/j2vbJQTLlQ8YpAcOuQF5oLMbPLpfSSeGfItgJKywIA8M9SO9UPq/eXR5cgVfRD2BMNzhdpmgj9zUqxHrN171UhjkZUsdZmf63Xbr1JvlNAdI0DYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lHSVlzyw; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-20bcae5e482so31704805ad.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 11:12:02 -0700 (PDT)
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2e0b93157caso3351658a91.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 11:13:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728238321; x=1728843121; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728238426; x=1728843226; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=ifUrSYHSPVHdHJVoduKWjUHX04NMhaW9v3wwctCAnpY=;
-        b=rqh3khzUByvHtTpai2PvjCZxpRtCaMwItGfZmvMnF6AaAO4Mf7quADipnjiCqTTi7I
-         5YD1u+h5AZWWUNbfYGmctCaldQQH9c2+Nl0BbdZEd6ODjVA4zd7yyHz8Wnj8kgw+VK7m
-         Bp03V7A3qYoeJ9Ia5frcAVI2UXTPUjEqJTkL2V4my0SHXDn/5seRaXdCOlp9CHccBrbd
-         w5kxgBKgiOdJm37xk8u37rt753N+yEYTc5NZGZXB+WAqWUJQPXGI5zuCQkAs9mxgBP5a
-         eVP2WBv9xWuD/2UFRMhNTLXEV9Pog28IV8ULLmotNX7TGjtqzvPOl9m1TGFar85uLWz2
-         Ic8w==
+        bh=2/0dUjW4cyzgF6yaoe7/JlUubqxNdOah7f3VO0ZqngU=;
+        b=lHSVlzywUJpd+ykKrwbEuPgwrZKxjFm3jGZvjJb8oE9ehjEd/BM3BA47aR6RALPYMi
+         vH/4jgnKLb/HE8Jg3EoOX13o+hfpeOpjgybJCXbCBiVWXbBsNgkianVdM6ktK3IKlX6I
+         Ez7VBIFgzJydqIHDZbxAHfKXE/+eJv4vbzJPD6BlH4uDYcAdU8iBt2MnxPQvUBvpxDT3
+         1m406a6gQ1pCOVlEWlIL/ss1BUtv31ix0fmL9nHGG3kXSve8nLHYCZtrBP7aeyT9gUjJ
+         2h7W41AXAh6pKTUlbRpj0Hb2Sb+4GGjnHS3clRuoRiyBZ1I4k+4ufnW/LtAvt6lubW6X
+         HhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728238321; x=1728843121;
+        d=1e100.net; s=20230601; t=1728238426; x=1728843226;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ifUrSYHSPVHdHJVoduKWjUHX04NMhaW9v3wwctCAnpY=;
-        b=tLCDYkNOClJB6x0T8ystfyqF51RMPUaWYeDvLaa3hvnoHXJSHwr0PomaujWsZg0PT4
-         /tfogMmDKJ1XqIaAg3GocIVb+VlOVqclGscHBrisiK5jJEDuHKUZT4f/1nLIUavuh8Ca
-         dCl9qm8iU7+8sXZQIbjls9vsUxIEE15gBA6bHCvVFy4K4fsTRsVZFWg8VfWqxmhCGYIH
-         Lc5Bmm+uRwk1EyFYIRBS5k9ZLNMAC0Re5mYiGUNiFJSHOlYHpXzROIvQL0nXX4D3yXBz
-         X7vAWY/g63zlLZCZ0GKB/U6oceVm0ZX8okn1qWSUaTskr/YTpqKzh67+RCmewqhPRObQ
-         lyCw==
-X-Forwarded-Encrypted: i=1; AJvYcCV/SMjbBJBKDVOsVs4qx+J1aeER0goHcziBQJw6VhKz2JW3gNu7w91urCkhUfsECaVAz8V7JmpdoseByBQ8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzkvwp9T9JQh/GDP6kc/PjdjnL6YKg8nrCTmIS+JdcCHDXHZGwk
-	t1SKHARQL1JFz7vu/BKqegZ2IUBwY7kjvFGvUUxdRFmDyUKWxJAniJyQmbOgTg==
-X-Google-Smtp-Source: AGHT+IGsV/4alrASeuoSgOfzTV6TQhEtk58m258R8GIYcduuYNXsWKmOLFCw4X2JUrLC+VGgGpHEMQ==
-X-Received: by 2002:a17:902:cecb:b0:20b:b0c1:712b with SMTP id d9443c01a7336-20bfe05e682mr132892225ad.15.1728238321593;
-        Sun, 06 Oct 2024 11:12:01 -0700 (PDT)
+        bh=2/0dUjW4cyzgF6yaoe7/JlUubqxNdOah7f3VO0ZqngU=;
+        b=olpHGCjPnfnl1/CCE4CtrjEZA43HfFKPSoqqG+kUPLriQG5KPW9gUEye63XTd2loYN
+         qKd8m56bSi0kHz6X6kjpAZ5rtzx6g5gs+edHNkuxeFZHMHpsxHycdhrx/XqQ9OzWJOvw
+         KPBE1U5eCWhq221qDGhuMXPqTmGIH1WGKY+F3uRNXO3iXZe8cF6x6j8KnhpWT6yCE1+U
+         P7eVm9NK4WGp77x6kHybnZO7ufkQ1ccq8dwHdDq5xqAWlnk39NJ5oSQ0oWJ0c6jkfHxm
+         RvK/8GAIK3PQdefmaq/TEP67ag2YhuK5LHrJTgQDFfI1hoiSABfG8K88ocv6HkpsyFD2
+         Afpg==
+X-Gm-Message-State: AOJu0Ywn9Lj0y+4O4uQ3Mzhh4K7rlaUQ0yjMPOjjT5Woy8htHF2rYY+e
+	nVFmH8gFwSBQzIqPTyv2StnyonbA+GMOoKtobSI3UV4x38HAT2IvrLXFigEjKw==
+X-Google-Smtp-Source: AGHT+IGR+azJ48oun8zo9Wf54stSUamrDzyOck3wVNecSl83OrIq+R2fL++Y4u9uqPUWdAaT8lZzWQ==
+X-Received: by 2002:a17:90b:4a46:b0:2da:8edf:ddc with SMTP id 98e67ed59e1d1-2e1e5dbc080mr13800947a91.19.1728238426412;
+        Sun, 06 Oct 2024 11:13:46 -0700 (PDT)
 Received: from thinkpad ([220.158.156.57])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c139a4b50sm27426525ad.306.2024.10.06.11.11.59
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e20b0fb8c1sm3673804a91.43.2024.10.06.11.13.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 11:12:01 -0700 (PDT)
-Date: Sun, 6 Oct 2024 23:41:58 +0530
+        Sun, 06 Oct 2024 11:13:45 -0700 (PDT)
+Date: Sun, 6 Oct 2024 23:43:43 +0530
 From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Carl Vanderlip <quic_carlv@quicinc.com>
-Cc: kernel test robot <lkp@intel.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] bus/mhi: Switch trace_mhi_gen_tre fields to native endian
-Message-ID: <20241006181158.s6g6h2lwn6vxgv2o@thinkpad>
-References: <20241004170321.4047492-1-quic_carlv@quicinc.com>
+To: mhi@lists.linux.dev
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Loic Poulain <loic.poulain@linaro.org>
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Use pcim_iomap_region() to
+ request and map MHI BAR
+Message-ID: <20241006181343.bng5gkwvmofefomv@thinkpad>
+References: <20241004023351.6946-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,93 +84,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241004170321.4047492-1-quic_carlv@quicinc.com>
+In-Reply-To: <20241004023351.6946-1-manivannan.sadhasivam@linaro.org>
 
-On Fri, Oct 04, 2024 at 10:03:20AM -0700, Carl Vanderlip wrote:
-> Each of the __field() macros were triggering sparse warnings similar to:
-> trace.h:87:1: sparse: sparse: cast to restricted __le64
-> trace.h:87:1: sparse: sparse: restricted __le64 degrades to integer
-> trace.h:87:1: sparse: sparse: restricted __le64 degrades to integer
+On Fri, Oct 04, 2024 at 08:03:51AM +0530, Manivannan Sadhasivam wrote:
+> Use of both pcim_iomap_regions() and pcim_iomap_table() APIs are
+> deprecated. Hence, switch to pcim_iomap_region() API which handles both the
+> request and map of the MHI BAR region.
 > 
-> Change each little endian type to its similarly sized native integer.
-> Convert inputs into native endian.
-> 
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202402071859.8qMhgJEQ-lkp@intel.com/
-> Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
+> Cc: Loic Poulain <loic.poulain@linaro.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
 Applied to mhi-next!
 
 - Mani
 
-> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 > ---
->  drivers/bus/mhi/host/trace.h | 25 +++++++++++++------------
->  1 file changed, 13 insertions(+), 12 deletions(-)
 > 
-> diff --git a/drivers/bus/mhi/host/trace.h b/drivers/bus/mhi/host/trace.h
-> index 95613c8ebe06..3e0c41777429 100644
-> --- a/drivers/bus/mhi/host/trace.h
-> +++ b/drivers/bus/mhi/host/trace.h
-> @@ -9,6 +9,7 @@
->  #if !defined(_TRACE_EVENT_MHI_HOST_H) || defined(TRACE_HEADER_MULTI_READ)
->  #define _TRACE_EVENT_MHI_HOST_H
+> Compile tested only.
+> 
+>  drivers/bus/mhi/host/pci_generic.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9938bb034c1c..07645ce2119a 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -917,12 +917,12 @@ static int mhi_pci_claim(struct mhi_controller *mhi_cntrl,
+>  		return err;
+>  	}
 >  
-> +#include <linux/byteorder/generic.h>
->  #include <linux/tracepoint.h>
->  #include <linux/trace_seq.h>
->  #include "../common.h"
-> @@ -97,18 +98,18 @@ TRACE_EVENT(mhi_gen_tre,
->  		__string(name, mhi_cntrl->mhi_dev->name)
->  		__field(int, ch_num)
->  		__field(void *, wp)
-> -		__field(__le64, tre_ptr)
-> -		__field(__le32, dword0)
-> -		__field(__le32, dword1)
-> +		__field(uint64_t, tre_ptr)
-> +		__field(uint32_t, dword0)
-> +		__field(uint32_t, dword1)
->  	),
+> -	err = pcim_iomap_regions(pdev, 1 << bar_num, pci_name(pdev));
+> -	if (err) {
+> +	mhi_cntrl->regs = pcim_iomap_region(pdev, 1 << bar_num, pci_name(pdev));
+> +	if (IS_ERR(mhi_cntrl->regs)) {
+> +		err = PTR_ERR(mhi_cntrl->regs);
+>  		dev_err(&pdev->dev, "failed to map pci region: %d\n", err);
+>  		return err;
+>  	}
+> -	mhi_cntrl->regs = pcim_iomap_table(pdev)[bar_num];
+>  	mhi_cntrl->reg_len = pci_resource_len(pdev, bar_num);
 >  
->  	TP_fast_assign(
->  		__assign_str(name);
->  		__entry->ch_num = mhi_chan->chan;
->  		__entry->wp = mhi_tre;
-> -		__entry->tre_ptr = mhi_tre->ptr;
-> -		__entry->dword0 = mhi_tre->dword[0];
-> -		__entry->dword1 = mhi_tre->dword[1];
-> +		__entry->tre_ptr = le64_to_cpu(mhi_tre->ptr);
-> +		__entry->dword0 = le32_to_cpu(mhi_tre->dword[0]);
-> +		__entry->dword1 = le32_to_cpu(mhi_tre->dword[1]);
->  	),
->  
->  	TP_printk("%s: Chan: %d TRE: 0x%p TRE buf: 0x%llx DWORD0: 0x%08x DWORD1: 0x%08x\n",
-> @@ -176,19 +177,19 @@ DECLARE_EVENT_CLASS(mhi_process_event_ring,
->  
->  	TP_STRUCT__entry(
->  		__string(name, mhi_cntrl->mhi_dev->name)
-> -		__field(__le32, dword0)
-> -		__field(__le32, dword1)
-> +		__field(uint32_t, dword0)
-> +		__field(uint32_t, dword1)
->  		__field(int, state)
-> -		__field(__le64, ptr)
-> +		__field(uint64_t, ptr)
->  		__field(void *, rp)
->  	),
->  
->  	TP_fast_assign(
->  		__assign_str(name);
->  		__entry->rp = rp;
-> -		__entry->ptr = rp->ptr;
-> -		__entry->dword0 = rp->dword[0];
-> -		__entry->dword1 = rp->dword[1];
-> +		__entry->ptr = le64_to_cpu(rp->ptr);
-> +		__entry->dword0 = le32_to_cpu(rp->dword[0]);
-> +		__entry->dword1 = le32_to_cpu(rp->dword[1]);
->  		__entry->state = MHI_TRE_GET_EV_STATE(rp);
->  	),
->  
+>  	err = dma_set_mask_and_coherent(&pdev->dev, dma_mask);
 > -- 
 > 2.25.1
 > 
