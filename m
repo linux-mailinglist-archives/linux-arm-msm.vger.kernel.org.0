@@ -1,126 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-33406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33407-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 865A6992F84
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 16:37:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C86FC992FA2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 16:42:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 386371F238E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 14:37:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7414DB208D6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 14:42:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1BBE1D4353;
-	Mon,  7 Oct 2024 14:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EAD91D4159;
+	Mon,  7 Oct 2024 14:42:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RahSImvC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CBTSsIBD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E568C188588;
-	Mon,  7 Oct 2024 14:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A900918BB90
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 14:42:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728311843; cv=none; b=fIVAPtMuiOd8fYImGIg+aKajF39UW57RKPRMi75ZPbNjZK4kZdAnnMyH5fsw5lT/Cl+pnietEXcLhlHt52lWm4y4iAJtgdQ22H8bq7cD9NiiP02RGJVMZAHPm2udUiYgNViKwHlKP3h4/UgPbG/TNeQQTrNc5alcfcSz/rCtVMY=
+	t=1728312155; cv=none; b=X7FiNSjelEgbw85LNXZ9r6zrGWfRadkv0H1brOzuowFaVMT5HyOeBiPhT9+XFyXiznLua51zOJjdy71Aj65qU4esHCKc4MKK3k7ftFBdvFHiJSaYDxeAhHk+H7DaDTfC6g9jjPTSGOsty4yjmyuu15GHJIWvr+Yj5daJibhteIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728311843; c=relaxed/simple;
-	bh=PQBd4ZyJpwY+UYzMQdcq96al0+Oaadfgarg0/2UDdi8=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X5NLotLvmQK0iOF/nbezq4cbQaBryz5vx3TpDgP0iNlhUJXHJJ+rJy+3WVzo1wy6iTXHdAZ2fzd4f182oMoQYFa3SkOlU5h4MccsS97P3ues7V4VOFuOCm23omm0b10ACbsMrxk0R4o5oj5plaQ43qE55XpzNyPZl64B15UmmyM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RahSImvC; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497ESDdO003776;
-	Mon, 7 Oct 2024 14:37:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=nr8ntL29nq83RMnS527uHszP
-	tMzlRgHfx+H0N0jfDd0=; b=RahSImvCPTBDB4CWw0aWbkMGYvCCwj+uZkNLYslm
-	pB9FqeSGsXaWISyNKRmG1XC+NaAwfClQWSp30p3o4MuWotY85yp7Uh5DUg0w2K1l
-	6MskHDWyf9YJ5in3A2b5ECRoS5bd/k3+kO38H0CiybwnFob3TO5oKp855wo8qZcY
-	n4lxJrJyGozq8MMFBf9RLihubcPkviEKz8U8NphnQElM+nnHo4OxgYEO8r94+fnK
-	csBjU7xWWxI/9Lo9+pRYZNDvmFI/cRQ39UQ0r5IuCQS3sMODWsNXoKuKiV0VcgVg
-	XbOcmQSqJh5vv89VxfRvVmEOTcpnV1UAsfmqbKI2c5uTTA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xv6vesd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Oct 2024 14:37:15 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497EbFOv013613
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 7 Oct 2024 14:37:15 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Mon, 7 Oct 2024 07:37:10 -0700
-Date: Mon, 7 Oct 2024 20:07:07 +0530
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-To: <neil.armstrong@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier
-	<mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Shiraz Hashim <quic_shashim@quicinc.com>
-Subject: Re: [PATCH 3/6] remoteproc: qcom: Add helper function to support
- IOMMU devmem translation
-Message-ID: <ZwPyE/rQOH181rqz@hu-mojha-hyd.qualcomm.com>
-References: <20241004212359.2263502-1-quic_mojha@quicinc.com>
- <20241004212359.2263502-4-quic_mojha@quicinc.com>
- <83e23090-0390-4c2e-91e3-e222baaa889a@linaro.org>
+	s=arc-20240116; t=1728312155; c=relaxed/simple;
+	bh=7+PUGisIgdPujtqbJDkydZ+R2/by8q6Rd45lfxEcTJk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S9Cg+locK92PECEKrG/IiltEpgEMkZSqu9ITsAeIjbaEdhU4uaEiCQCVZYGzrMOXE/cq4ke1SRv60p/yrUuSWKdmpivaT/Y15dKGN+lS9+cjO1rSYYYI9aIqAEBJYt1O70GiwvbU16IPnuwRDtc5jw5IjCqm62cZhAnRcAAAvjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CBTSsIBD; arc=none smtp.client-ip=209.85.128.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6e2e424ab49so13334627b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 07:42:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728312152; x=1728916952; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OQVz0vOtE/vhE4JxfRN39I/kekE4gMvxJaTmqdYN4Hk=;
+        b=CBTSsIBD09AH0zmL+BdQcIHiQwCnF9IOSODocRRF83oVMOO6D3WTeoHzKQDmAbjS2K
+         kNsd1egW74s5FBmZj55qp/eKyu//VwMF94LaE22jyHEOcwvKHrc+JZF2KdKmx/eG/FgA
+         kVXmD6aegLhlKo0E+y/X7xInpTU9Up5DFfHuHcJTuMpILwExzx62DL9x2EJ5/tYQeSaW
+         qLm96/SUIyxNcwCDCUuIFdJYdtAuww7kIKhYiWnAz2FlflnvLWAQRZZ2Rh8bIj2UuQsv
+         CCvpdTey/E7rF5eefimDZJPzB4rHkB2jfFoIwwVqChElDxzqkc55rZR65XNxdh5oyPZC
+         pVDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728312152; x=1728916952;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OQVz0vOtE/vhE4JxfRN39I/kekE4gMvxJaTmqdYN4Hk=;
+        b=R9WDvxVVVVYQndfv73r9WDPmCbGsG5ITecUxxwtSo5rhwtBbpyyW8z9eyQ4acktdPE
+         iJufZ7VA2w2YsKognoGOdbTsiMg42uwg3MJbEGe38XCem1J0XVQNkd74W04VohZyj/Y3
+         WNizUX+lSXa+iH1eYhuzytICbcv3bU6UI2epgdJJIax01bcZH5JezP1JcoYxpFp4GG1H
+         yliE/VcFR+i2RzoOW/U6b6kx7jDeS1rmBX7xFHmiszk0EezL6LZUwKTWycstpjiAUcnt
+         HU9kp0mPlPux+PENh4fvAS02CAZKs8uWw9HjTR5FGzMAddyY+j9o6ypHnX5IxCgke+E0
+         qDog==
+X-Forwarded-Encrypted: i=1; AJvYcCXSA+MQaW6IPSLDXM+XfV1uxiJ1T2M0jj+5fhkd9j9FYxRII0VWXOcCRq+tPnPXMdKzAmUFxF1UtCOu3nz3@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvrBmQ94s7d4xYxgQ3VvF+sVFlz914yNv/ZAvZ9M65hn3Fjvuk
+	rdItizO0Mr+ooODLBU3i5wKPnE7mHwQbi9Za/SDa8z9/JIEf9E1fbmT3v16AL5A/U/609hiET/c
+	tvSVr12s/IYMQrzc5hgO60z77TppJGZLUAhdvID6zPFGmtegVFUcy7emq
+X-Google-Smtp-Source: AGHT+IFtLx92+g4Im4BYq0IF/nuPhymbQIsBhoZ0lME72v6xi/Y1yH6ePIkFIQAOuj840/kCSHbxUC0u4ACUasl+Ueg=
+X-Received: by 2002:a05:690c:6ac8:b0:6de:a3:a7ca with SMTP id
+ 00721157ae682-6e2c728a25fmr86622347b3.32.1728312152659; Mon, 07 Oct 2024
+ 07:42:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <83e23090-0390-4c2e-91e3-e222baaa889a@linaro.org>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xgcwnnmgVE3Tl4Kadex-ZQYuJlMy7sp6
-X-Proofpoint-GUID: xgcwnnmgVE3Tl4Kadex-ZQYuJlMy7sp6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
- mlxlogscore=589 mlxscore=0 bulkscore=0 phishscore=0 malwarescore=0
- spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410070103
+References: <20240812-tdp158-v5-0-78684a84ec23@freebox.fr> <172536721812.2552069.2889737892670833119.b4-ty@kernel.org>
+ <40ffacc2-fa04-4e6d-b817-c547aa75a21c@freebox.fr>
+In-Reply-To: <40ffacc2-fa04-4e6d-b817-c547aa75a21c@freebox.fr>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 7 Oct 2024 16:42:21 +0200
+Message-ID: <CAA8EJpqYp8uBNVdNSAmSbeev=itxNKS_scb2xAwe63aS5bdhkg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] Basic support for TI TDP158
+To: Marc Gonzalez <mgonzalez@freebox.fr>
+Cc: Robert Foss <rfoss@kernel.org>, dri-devel@lists.freedesktop.org, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>, 
+	Konrad Dybcio <konradybcio@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 07, 2024 at 10:08:16AM +0200, neil.armstrong@linaro.org wrote:
-> On 04/10/2024 23:23, Mukesh Ojha wrote:
-> > From: Shiraz Hashim <quic_shashim@quicinc.com>
-> > 
-> > Qualcomm SoCs runnning with Qualcomm EL2 hypervisor(QHEE), IOMMU
-> > translation set up for remote processors is managed by QHEE itself
-> > however, for a case when these remote processors has to run under KVM
-> 
-> This is not true, KVM is a Linux hypervisor, remote processors have
-> nothing to do with KVM, please rephrase.
+On Mon, 7 Oct 2024 at 16:33, Marc Gonzalez <mgonzalez@freebox.fr> wrote:
+>
+> On 03/09/2024 14:40, Robert Foss wrote:
+>
+> > On Mon, 12 Aug 2024 16:51:00 +0200, Marc Gonzalez wrote:
+> >
+> >> TDP158 is an AC-coupled DVI / HDMI to TMDS level shifting Redriver.
+> >>
+> >> Like the TFP410, the TDP158 can be set up in 2 different ways:
+> >> 1) hard-coding its configuration settings using pin-strapping resistors
+> >> 2) placing it on an I2C bus, and defer set-up until run-time
+> >>
+> >> The mode is selected by pin 8 = I2C_EN
+> >> I2C_EN = 1 ==> I2C Control Mode
+> >> I2C_EN = 0 ==> Pin Strap Mode
+> >>
+> >> [...]
+> >
+> > Applied, thanks!
+> >
+> > [1/2] dt-bindings: display: bridge: add TI TDP158
+> >       https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/887665792b99
+> > [2/2] drm/bridge: add support for TI TDP158
+> >       https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/a15710027afb
+>
+> Hello Robert,
+>
+> I expected this series to be included in v6.12-rc1, since you applied it
+> before the v6.12 merge window opened. Did I misunderstand the process?
 
-Thanks, perhaps something like this,
+drm-misc-next stops propagating new changes to drm-next one or two
+weeks before the release.
 
-"However, when same SoC runs with KVM configuration, remoteproc IOMMU
-translation needs to be set from Linux host running remoteproc PAS
-driver"
+> If not in v6.12, does that mean it will be in v6.13?
 
--Mukesh
+Yes.
 
+-- 
+With best wishes
+Dmitry
 
