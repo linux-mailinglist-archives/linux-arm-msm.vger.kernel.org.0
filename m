@@ -1,264 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-33322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F012099244B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 08:13:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DD98992510
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 08:46:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A67FD1F22BD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 06:13:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B3791C2091F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 06:46:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68683185B46;
-	Mon,  7 Oct 2024 06:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90713154429;
+	Mon,  7 Oct 2024 06:46:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="lLU0qMYw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="B5ygwbKb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59C017DFF7;
-	Mon,  7 Oct 2024 06:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117B2800;
+	Mon,  7 Oct 2024 06:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728281484; cv=none; b=V9FTLSexko15dfscmUWk4nLTotSkzP2nmRz30PPrakyAnqs/HpCrMmKU7t4VmBk3RLwKzosq1KuiILV3Lyno7x1/D03keQMT3lodXs2RPV10aWi9Cpt1eKvdsvxO2EoljreXz04gEPDEelJqkXxqAURQbXbEcq7R6g8ViHivKdI=
+	t=1728283614; cv=none; b=uRWZXIZrn+zXllqrmbMrkiLLic9RSaMDLXa2R0/F6iKmZ5ZMWJiFw5jpHytyJuwpiBnYvJhkHBxwjIJd6yGEQnrXBWg+ozUruLC0z07a9kWu3D/z3cZE7SVx0FuEdNsiM3vyEBWDvgJK39ZO4Cz/qgrU0mBdsbPFuZDv/cpCico=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728281484; c=relaxed/simple;
-	bh=zCpC649Gw0V0bNMN8vuw8E3p9dvzvqA/OfOrN4EJA5E=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DE6ETgHBMN7Po+HBb6W4M3Dv2sASnruzZCESgORbvxBvOxW/l82+jVMvWIJDGeGo7P4sXGT8MjBvOAKZc81y23jRsru1IsexHkxZRyxgPPwVA80v6sd9PZSMiOC2b2kfBJlCNUs13UrqzKh/UB7+iF3ry+0TyCp3+twPJrP4IL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=lLU0qMYw; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1728283614; c=relaxed/simple;
+	bh=cNY2nrdMv6aabHJ9NXS+rxks/Prd558HSxXEB83NhDY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=C+ussF6PycZ3vu+DB8tdUgLrlsnm5DoFfKoKD+usHDR3RGX5o+HI3Rr7gM8HsPKzPeZ+YLkeRcPNLydbrnhpOx4yxLkJkDN/hILg2U9nOKkdkNZdQgfWHHIRFoOuXJGIzhZx+LvgtwKMy32V/dbq3+Z1Z6rG6gT/d6UL8l6Uads=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=B5ygwbKb; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4974SkCD026815;
-	Mon, 7 Oct 2024 06:11:13 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4974ThPZ028062;
+	Mon, 7 Oct 2024 06:46:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+XsnJmQ6qjXHSljaiwdTrTyOI6pTwJNl2FAkI9q3fwE=; b=lLU0qMYwt3vsj3dp
-	BwR843t9iuSbDrILz1mm9EjwB95IDSh4K8h0+40KWSnyB6ckac+dGq8WRRu7pRhx
-	2f0ENQ7EQMDx40Jizrw0En9gH0V7+tEhaS7aBOwI6kfEXvWIvOFOf6cWpsieKbh1
-	75lKrS/kf3zxAfQBwdDeAvh8Grx8kfieWWcETpKwspPktS3JW/vZzX3hccmY+AU7
-	Q9VNDVcBrAKY/lQq1nSdkybXItM3h88M+k9Hol7jXtuzwEPCV8RGyoPvleLf8oGj
-	c6N4v0XZ5D8JV9BxL6DCv9fum5ybZTeOn+dj6Fe4EsgDbauAYwc1V3GZDBhC3QFe
-	xNmXBQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xq9u5me-1
+	/IdtmFjDcebfRKLdsNGn1hp4C2PV3KOn4Gi//ljWIaU=; b=B5ygwbKb5djK+5zM
+	po78X3lrKH0K4o5flBnUA0vbqrXWckn0ffOPSX8XvAcqqdEASGcc5lvLlgsHgIxt
+	L/IeG0SHB0QyX99Y4UR8l5I7EFo02SY7GWRNtgzEyIc1/G6Vmh90/7lk388l00D8
+	H9VG0jJO18N9++fXdLfrpe0NN/dL7j0mdZe6hkeI3yRP8th2WZrzpOEqTPqrq+fY
+	v/mB8K9F15a4GQvzZ2+0oMRNLwexaEZD6ZDisOjf31Ka3F5Ep/bFKAKhx1U/tqS7
+	MKVfCDKWBypQrAeaj3Q7nPe9ONPz0m44U6RHeW2i7bnet2V3Any0hEHudnb0g06z
+	WEsO5g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xq9u7sa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Oct 2024 06:11:12 +0000 (GMT)
+	Mon, 07 Oct 2024 06:46:45 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4976B7dk015235
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4976kis3017857
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 7 Oct 2024 06:11:08 GMT
-Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Sun, 6 Oct 2024 23:11:03 -0700
-From: Sibi Sankar <quic_sibis@quicinc.com>
-To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-CC: <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <quic_rgottimu@quicinc.com>, <quic_kshivnan@quicinc.com>,
-        <quic_sibis@quicinc.com>, <conor+dt@kernel.org>,
-        <arm-scmi@vger.kernel.org>
-Subject: [PATCH V4 5/5] arm64: dts: qcom: x1e80100: Enable LLCC/DDR/DDR_QOS dvfs
-Date: Mon, 7 Oct 2024 11:40:23 +0530
-Message-ID: <20241007061023.1978380-6-quic_sibis@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241007061023.1978380-1-quic_sibis@quicinc.com>
-References: <20241007061023.1978380-1-quic_sibis@quicinc.com>
+	Mon, 7 Oct 2024 06:46:45 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 6 Oct 2024
+ 23:46:42 -0700
+Message-ID: <31655ff6-a020-6f4e-0851-cfa8d0d45803@quicinc.com>
+Date: Mon, 7 Oct 2024 12:16:39 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 1/2] firmware: arm_scmi: Ensure that the message-id
+ supports fastchannel
+To: Konrad Dybcio <konradybcio@kernel.org>,
+        Cristian Marussi
+	<cristian.marussi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>
+CC: Johan Hovold <johan@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <arm-scmi@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20240904031324.2901114-1-quic_sibis@quicinc.com>
+ <20240904031324.2901114-2-quic_sibis@quicinc.com>
+ <ZtgFj1y5ggipgEOS@hovoldconsulting.com>
+ <d482dca4-e61b-4a94-887b-d14422243929@kernel.org> <ZthU36Qkzwa5Ilrb@bogus>
+ <ZthrRHmV8xTsPbZ8@pluto> <7d47081b-e7f8-4391-946a-f23e110976ec@kernel.org>
+Content-Language: en-US
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <7d47081b-e7f8-4391-946a-f23e110976ec@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: WI3ajMQnc0E_pXSm-x2RF5CtWFpd5PyA
-X-Proofpoint-GUID: WI3ajMQnc0E_pXSm-x2RF5CtWFpd5PyA
+X-Proofpoint-ORIG-GUID: q2DQLfUora7ZLny4OWpFGodogz6IBK8k
+X-Proofpoint-GUID: q2DQLfUora7ZLny4OWpFGodogz6IBK8k
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
  spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
- bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxlogscore=920
+ bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
  mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410070042
+ engine=8.19.0-2409260000 definitions=main-2410070046
 
-Enable LLCC/DDR/DDR_QOS bus scaling through the QCOM SCMI Generic
-Extension protocol.
 
-Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 138 +++++++++++++++++++++++++
- 1 file changed, 138 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index aec3ceb502f6..24ebccd8c124 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -10,6 +10,7 @@
- #include <dt-bindings/clock/qcom,x1e80100-gpucc.h>
- #include <dt-bindings/clock/qcom,x1e80100-tcsr.h>
- #include <dt-bindings/dma/qcom-gpi.h>
-+#include <dt-bindings/firmware/qcom,scmi-memlat.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
- #include <dt-bindings/interconnect/qcom,x1e80100-rpmh.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-@@ -325,6 +326,143 @@ scmi_dvfs: protocol@13 {
- 				reg = <0x13>;
- 				#power-domain-cells = <1>;
- 			};
-+
-+			scmi_vendor: protocol@80 {
-+				reg = <0x80>;
-+
-+				memory-0 {
-+					qcom,memory-type = <QCOM_MEM_TYPE_DDR>;
-+					freq-table-hz = /bits/ 64 <200000000 4224000000>;
-+
-+					monitor-0 {
-+						cpus = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6
-+							&CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
-+						qcom,ipm-ceil = <20000000>;
-+						operating-points-v2 = <&memory0_monitor0_opp_table>;
-+
-+						memory0_monitor0_opp_table: opp-table {
-+							compatible = "operating-points-v2";
-+
-+							opp-999000000 {
-+								opp-hz = /bits/ 64 <999000000 547000000>;
-+							};
-+
-+							opp-1440000000 {
-+								opp-hz = /bits/ 64 <1440000000 768000000>;
-+							};
-+
-+							opp-1671000000 {
-+								opp-hz = /bits/ 64 <1671000000 1555000000>;
-+							};
-+
-+							opp-2189000000 {
-+								opp-hz = /bits/ 64 <2189000000 2092000000>;
-+							};
-+
-+							opp-2516000000 {
-+								opp-hz = /bits/ 64 <2516000000 3187000000>;
-+							};
-+
-+							opp-3860000000 {
-+								opp-hz = /bits/ 64 <3860000000 4224000000>;
-+							};
-+						};
-+					};
-+
-+					monitor-1 {
-+						cpus = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6
-+							&CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
-+						operating-points-v2 = <&memory0_monitor1_opp_table>;
-+						qcom,compute-type;
-+
-+						memory0_monitor1_opp_table: opp-table {
-+							compatible = "operating-points-v2";
-+
-+							opp-1440000000 {
-+								opp-hz = /bits/ 64 <1440000000 200000000>;
-+							};
-+
-+							opp-2189000000 {
-+								opp-hz = /bits/ 64 <2189000000 768000000>;
-+							};
-+
-+							opp-2516000000 {
-+								opp-hz = /bits/ 64 <2516000000 1555000000>;
-+							};
-+
-+							opp-3860000000 {
-+								opp-hz = /bits/ 64 <3860000000 4224000000>;
-+							};
-+						};
-+					};
-+				};
-+
-+				memory-1 {
-+					qcom,memory-type = <QCOM_MEM_TYPE_LLCC>;
-+					freq-table-hz = /bits/ 64 <300000000 1067000000>;
-+
-+					monitor-0 {
-+						cpus = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6
-+							&CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
-+						qcom,ipm-ceil = <20000000>;
-+						operating-points-v2 = <&memory1_monitor0_opp_table>;
-+
-+						memory1_monitor0_opp_table: opp-table {
-+							compatible = "operating-points-v2";
-+
-+							opp-999000000 {
-+								opp-hz = /bits/ 64 <999000000 300000000>;
-+							};
-+
-+							opp-1440000000 {
-+								opp-hz = /bits/ 64 <1440000000 466000000>;
-+							};
-+
-+							opp-1671000000 {
-+								opp-hz = /bits/ 64 <1671000000 600000000>;
-+							};
-+
-+							opp-2189000000 {
-+								opp-hz = /bits/ 64 <2189000000 806000000>;
-+							};
-+
-+							opp-2516000000 {
-+								opp-hz = /bits/ 64 <2516000000 933000000>;
-+							};
-+
-+							opp-3860000000 {
-+								opp-hz = /bits/ 64 <3860000000 1066000000>;
-+							};
-+						};
-+					};
-+				};
-+
-+				memory-2 {
-+					qcom,memory-type = <QCOM_MEM_TYPE_DDR_QOS>;
-+					freq-table-hz = /bits/ 64 <QCOM_DDR_LEVEL_AUTO QCOM_DDR_LEVEL_PERF>;
-+
-+					monitor-0 {
-+						qcom,ipm-ceil = <20000000>;
-+						cpus = <&CPU0 &CPU1 &CPU2 &CPU3 &CPU4 &CPU5 &CPU6
-+							&CPU7 &CPU8 &CPU9 &CPU10 &CPU11>;
-+						operating-points-v2 = <&memory2_monitor0_opp_table>;
-+
-+						memory2_monitor0_opp_table: opp-table {
-+							compatible = "operating-points-v2";
-+
-+							opp-2189000000 {
-+								opp-hz = /bits/ 64 <2189000000>;
-+								opp-level = <QCOM_DDR_LEVEL_AUTO>;
-+							};
-+
-+							opp-3860000000 {
-+								opp-hz = /bits/ 64 <3860000000>;
-+								opp-level = <QCOM_DDR_LEVEL_PERF>;
-+							};
-+						};
-+					};
-+				};
-+			};
- 		};
- 	};
- 
--- 
-2.34.1
+On 9/5/24 18:24, Konrad Dybcio wrote:
+> On 4.09.2024 4:20 PM, Cristian Marussi wrote:
+>> On Wed, Sep 04, 2024 at 01:38:55PM +0100, Sudeep Holla wrote:
+>>> On Wed, Sep 04, 2024 at 01:29:29PM +0200, Konrad Dybcio wrote:
+>>>> On 4.09.2024 9:00 AM, Johan Hovold wrote:
+>>>
+>>> [...]
+>>>
+>>>>>
+>>>>> Unfortunately, this patch breaks resume from suspend on the x1e80100 crd:
+>>>>>
+>>>>>          [   26.919676] CPU4: Booted secondary processor 0x0000010000 [0x511f0011]
+>>>>>          [   26.960607] arm-scmi firmware:scmi: timed out in resp(caller: do_xfer+0x164/0x568)
+>>>>>          [   26.987142] cpufreq: cpufreq_online: ->get() failed
+>>>>>
+>>>>> and then the machine hangs (mostly, I saw an nvme timeout message after a
+>>>>> while).
+>>>>>
+>>>>> Make sure you test suspend as well as some of the warnings I reported
+>>>>> only show up during suspend.
+>>>>
+>>>> Eh it looks like PERF_LEVEL_GET (msgid 8) requires the use of FC, but
+>>>> the firmware fails to inform us about it through BIT(0) in attrs..
+>>>>
+>>>
+>>> Just trying to understand things better here. So the firmware expects OSPM
+>>> to just use FC only for PERF_LEVEL_GET and hence doesn't implement the
+>>> default/normal channel for PERF_LEVEL_GET(I assume it returns error ?)
+>>> but fails to set the attribute indicating FC is available for the domain.
+>>>
+>>
+>> Is not that FCs are optional BUT PERF_LEVEL_GET standard messages is
+>> support is mandatory by the spec anyway ?
+> 
+> So doing a bit of poking I think it's that FC is not marked as supported,
+> but we need to read out the frequency from the .get_addr.. which is only
+> populated if we go through fastchannel_init
 
+On further debug it was found that the SCP was servicing the request
+but mailbox had the interrupt disabled during suspend which caused the
+timeout. I just re-spun the series wit hte fix. So yeah PERF_LEVEL_GET 
+is expectedto work without any problems. There is no dependence on EC as
+Konrad speculated. Just a straight forward case of interrupt being
+disabled in the resume path.
+
+-Sibi
+
+> 
+> Konrad
 
