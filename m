@@ -1,86 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-33310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33314-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 102AC9923CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 07:13:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C602992425
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 08:08:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B40862821CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 05:13:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B70ED28323E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 06:08:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0DB2136352;
-	Mon,  7 Oct 2024 05:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4002515B97D;
+	Mon,  7 Oct 2024 06:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H+iptQHF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o+w9MCZ0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1523FBA5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 05:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D2C1531C1;
+	Mon,  7 Oct 2024 06:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728277996; cv=none; b=b8QMsXgKc6Q+w21PWdCXuE3a0hsYKlqJbHZnner2mkwt2PXet3etOAl9W/0bFP6BO8gHcX1689e6AIm5ozaRO0c7h/vvVT95iQ9NfDlE4RbNJ8tqTjdHyYV4daHMHSSKhC6NALDXxKc36+CQqBGFadeDq81cBgkzm6fRF2s5TYA=
+	t=1728281268; cv=none; b=ahUA8QmlP0b1utZVGDZh0vJaDS8TB+brG6SJvD26fYCd7BUH4sriW4ROHOPPH08FEmPtWkV7iiMtvX6R4a+HxTtkVFdgP7nHzoF57zEa6Fms/LNW+Ba1KJEJfnkjSOaY7Nyw0fbU8sew7KkTd8KpE0t3z1pZWqmopCZW1pCjL2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728277996; c=relaxed/simple;
-	bh=Xl7npExBXXB/m29YQcRR5cFMvxfN8fXQJgX1ModzhYQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=Gr4sIkXWeQlEyaqeOpBJURSpkVRXLkdKcv35l+npAX9+s8GSFvp4oCEErLMGFzoRNYLzOudwaLY22UPtZtT8kqMWn0gvvY8Vp8Zw8/Bvd5YbyNn2W3LMcJGQTzA+51Kh22AwEo5bU8rv9B5XTFrOBA6RbQtUqAVrDU6QikZJBtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H+iptQHF; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20bb92346caso24925985ad.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 22:13:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728277994; x=1728882794; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6jslguiZl6FGAJBiDxlsSwtiDEosNNmbWrk82rYwT2c=;
-        b=H+iptQHFy13tYDdidpEyxRy+Zj+rRTj2uE9xeR9K5tcumR0vMrpmAWqhyxsIYbD4Mc
-         PR8xgOPlcr76g6AF98DVR6iHqf6KruG1Hz5WH1KlacIZOwDhdY9F94qXI0UYtwbirOnI
-         CfQ4yP6goWa3cC4yX0kj/TtpbbA9O25kEljjBC62WTvzFNZqWrqatpGMtxnE8LmaxK8S
-         /qnhhlzyAShMr4MeE1BbsoaNueiiKLpCM6mWkkWityfQmYPFAgvupZ6QcSNF3/S2C79a
-         eQ/mHrRYEaBuo1HcxXMqDruOJhZi3x/a+CHm2uHQ2ZU8bpiSL7Wg5/m61UhOt0SMv5Hp
-         J54w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728277994; x=1728882794;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6jslguiZl6FGAJBiDxlsSwtiDEosNNmbWrk82rYwT2c=;
-        b=lVnDv8jVp5azIVpPdm4blSCifS1bZ2LBjIHuG0Fxy+1ZMkYeWadXYL4NXO8i+8qJu3
-         6ZcMJvxIE7ljO+lLwBmmFAdSAqPbHi7aJmMknwP+tSEPAzbp70nrYY6q/BGLXJ9PK7fx
-         lrp96R0MLuX3G9f/PPE6BqK7v5xxhNi2WVBxHwwx63orcPFC7l8Q0hMxtZP+pPaVBJ0q
-         zIVE/phjaVLqxJChKk0Q/TElpm+CjxthALaXfvuL4VNHAiDqHgj74YrPlNdPFcfWEO7c
-         a9Gbr846NFmAKzojBYZW3l3M9FO3wGcMy2ie5IhXMwTTahVBkliJ0EwIcRWfcq8CsRVf
-         kBBA==
-X-Forwarded-Encrypted: i=1; AJvYcCXUYEzGW2/+1D1ZHTJ2ABj55wWNMxtlJq3N0wsZFZFJ2rklq7kcOft3NJqxAImqRKruuHtiY83MXbsPvlpz@vger.kernel.org
-X-Gm-Message-State: AOJu0YycJcyRBpKJ5FLWkxNsDK/24v/WRu34bayD+RCUFv7gYz3QF5XL
-	XQMXM8nWZEFcbuGgCGxODUSO9hOEBB61fWk7TRIAXvfAQqGMiOnXiJq7TxfZVQ==
-X-Google-Smtp-Source: AGHT+IHAx9gVDA+7k4KjSFKdMpF9NHRdObEoyyAYXc7/CdU+GE9B2kUhrT0lx83zu20SnP8Zs8x+xA==
-X-Received: by 2002:a17:902:dad0:b0:207:6d2:1aa5 with SMTP id d9443c01a7336-20bff49bc78mr146295585ad.13.1728277994500;
-        Sun, 06 Oct 2024 22:13:14 -0700 (PDT)
-Received: from localhost.localdomain ([220.158.156.57])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c139353e8sm32173535ad.164.2024.10.06.22.13.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 22:13:14 -0700 (PDT)
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: lpieralisi@kernel.org,
-	kw@linux.com
-Cc: robh@kernel.org,
-	bhelgaas@google.com,
-	linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	quic_qianyu@quicinc.com,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH v2] PCI: qcom: Enable MSI interrupts together with Link up if 'Global IRQ' is supported
-Date: Mon,  7 Oct 2024 10:42:55 +0530
-Message-Id: <20241007051255.4378-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+	s=arc-20240116; t=1728281268; c=relaxed/simple;
+	bh=1zkhF5j0Yfw8wEglWFoGgfvTDXqYAccNbdeOJh5HwDk=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sUv/OJU2yEBUAdRAEyD5Ouped8cU+dxZsp638DKHCu+Nn4cXK9NGY9ZFxdDuzpEgG6EGBRhSWeyyL/xwpanFbxBWrjIK2BhU9v/9V2y2C96/3Z1xlaUj2XnuuIAeeHyMaNdnAIiJfkgIXxrZUXOUN3Xm+grv5JOfb9+hpniTDws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o+w9MCZ0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4974TBtD027139;
+	Mon, 7 Oct 2024 06:07:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=pqc2VP+MLjp0hUrnxVvMv5
+	GmaCVOoqr7kCbfwtJ+IGg=; b=o+w9MCZ0QjFq+KWkAv+heKkLjHm/mHpXXjDbrk
+	4Zzld/MSVTTDvDgqGYEa/ZVuyivLnkvEl3gP69BhgQFrBYfprljg7gAGEtUTXHga
+	6B3PZ04gewxT+eAU8IczytxFWmCEzxuFz+LzsXvmtYQFspWHyhlfeWHGptOCb688
+	+Fv1sf8GNkePgxZ82rJPVKEZkLp0hyHzeTmZOst8PLXfH0aW/bd/pHP4NlhVXXzv
+	+UdWx8MhkVsu13LHo4ZoBnNzPfzVpcuLs+58IykfP2VxIzIXMzmVabRQ59cZtXWV
+	72R+Rzg5X+z1RPkD8PqpNZW/sHuxWPEI1vBdN9Rk0m+CVOlQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xu6b4dk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Oct 2024 06:07:21 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49767KFe007798
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 7 Oct 2024 06:07:20 GMT
+Received: from hu-sibis-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sun, 6 Oct 2024 23:07:16 -0700
+From: Sibi Sankar <quic_sibis@quicinc.com>
+To: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
+        <ulf.hansson@linaro.org>, <jassisinghbrar@gmail.com>
+CC: <linux-kernel@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_sibis@quicinc.com>,
+        <johan@kernel.org>, <konradybcio@kernel.org>,
+        <linux-pm@vger.kernel.org>, <tstrudel@google.com>, <rafael@kernel.org>
+Subject: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
+Date: Mon, 7 Oct 2024 11:36:38 +0530
+Message-ID: <20241007060642.1978049-1-quic_sibis@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,67 +73,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: wJGfF22zYrib2cyoxMDWMUaAIZOt_JD3
+X-Proofpoint-ORIG-GUID: wJGfF22zYrib2cyoxMDWMUaAIZOt_JD3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 clxscore=1011
+ spamscore=0 mlxscore=0 malwarescore=0 suspectscore=0 mlxlogscore=999
+ impostorscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410070041
 
-Currently, if 'Global IRQ' is supported by the platform, only the Link up
-interrupt is enabled in the PARF_INT_ALL_MASK register. This masks MSIs
-on some platforms. The MSI bits in PARF_INT_ALL_MASK register are enabled
-by default in the hardware, but commit 4581403f6792 ("PCI: qcom: Enumerate
-endpoints based on Link up event in 'global_irq' interrupt") disabled them
-and enabled only the Link up interrupt. While MSI continued to work on the
-SM8450 platform that was used to test the offending commit, on other
-platforms like SM8250, X1E80100, MSIs are getting masked. And they require
-enabling the MSI interrupt bits in the register to unmask (enable) the
-MSIs.
+The series addresses the kernel warnings reported by Johan at [1] and are
+are required to X1E cpufreq device tree changes [2] to land.
 
-Even though the MSI interrupt enable bits in PARF_INT_ALL_MASK are
-described as 'diagnostic' interrupts in the internal documentation,
-disabling them masks MSI on these platforms. Due to this, MSIs were not
-reported to be received these platforms while supporting 'Global IRQ'.
+[1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+[2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
 
-So enable the MSI interrupts along with the Link up interrupt in the
-PARF_INT_ALL_MASK register if 'Global IRQ' is supported. This ensures that
-the MSIs continue to work and also the driver is able to catch the Link
-up interrupt for enumerating endpoint devices.
+The following warnings remain unadressed:
+arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
 
-Fixes: 4581403f6792 ("PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt")
-Reported-by: Konrad Dybcio <konradybcio@kernel.org>
-Closes: https://lore.kernel.org/linux-pci/9a692c98-eb0a-4d86-b642-ea655981ff53@kernel.org/
-Tested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com> # SL7
-Reviewed-by: Qiang Yu <quic_qianyu@quicinc.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
+Duplicate levels:
+arm-scmi arm-scmi.0.auto: Level 2976000 Power 218062 Latency 30us Ifreq 2976000 Index 10
+arm-scmi arm-scmi.0.auto: Level 3206400 Power 264356 Latency 30us Ifreq 3206400 Index 11
+arm-scmi arm-scmi.0.auto: Level 3417600 Power 314966 Latency 30us Ifreq 3417600 Index 12
+arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+arm-scmi arm-scmi.0.auto: Level 4012800 Power 528848 Latency 30us Ifreq 4012800 Index 15
 
-Changes in v2:
+^^ exist because SCP reports duplicate values for the highest sustainable
+freq for perf domains 1 and 2. These are the only freqs that appear as
+duplicates and will be fixed with a firmware update. FWIW the warnings
+that we are addressing in this series will also get fixed by a firmware
+update but they still have to land for devices already out in the wild.
 
-* Reworded the commit message
-* Collected tags
+V2:
+* Include the fix for do_xfer timeout
+* Include the fix debugfs node creation failure
+* Include Cristian's fix for skipping opp duplication
 
- drivers/pci/controller/dwc/pcie-qcom.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+V1:
+* add missing MSG_SUPPORTS_FASTCHANNEL definition.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index ef44a82be058..2b33d03ed054 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -133,6 +133,7 @@
- 
- /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
- #define PARF_INT_ALL_LINK_UP			BIT(13)
-+#define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
- 
- /* PARF_NO_SNOOP_OVERIDE register fields */
- #define WR_NO_SNOOP_OVERIDE_EN			BIT(1)
-@@ -1716,7 +1717,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 			goto err_host_deinit;
- 		}
- 
--		writel_relaxed(PARF_INT_ALL_LINK_UP, pcie->parf + PARF_INT_ALL_MASK);
-+		writel_relaxed(PARF_INT_ALL_LINK_UP | PARF_INT_MSI_DEV_0_7,
-+			       pcie->parf + PARF_INT_ALL_MASK);
- 	}
- 
- 	qcom_pcie_icc_opp_update(pcie);
+Base branch: next-20241004
+
+Cristian Marussi (1):
+  firmware: arm_scmi: Skip adding bad duplicates
+
+Sibi Sankar (3):
+  firmware: arm_scmi: Ensure that the message-id supports fastchannel
+  pmdomain: core: Fix debugfs node creation failure
+  mailbox: qcom-cpucp: Mark the irq with IRQF_NO_SUSPEND flag
+
+ drivers/firmware/arm_scmi/driver.c    |  9 ++++++
+ drivers/firmware/arm_scmi/perf.c      | 37 +++++++++++++++++++------
+ drivers/firmware/arm_scmi/protocols.h |  2 ++
+ drivers/mailbox/qcom-cpucp-mbox.c     |  2 +-
+ drivers/pmdomain/core.c               | 40 +++++++++++++++++----------
+ include/linux/pm_domain.h             |  1 +
+ 6 files changed, 66 insertions(+), 25 deletions(-)
+
 -- 
-2.25.1
+2.34.1
 
 
