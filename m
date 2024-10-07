@@ -1,120 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-33306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B547F9923BA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 06:52:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 689DF9923BD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 06:55:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 419E62816EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 04:52:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA2DAB20F4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 04:55:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFC932AD05;
-	Mon,  7 Oct 2024 04:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C95312E1D1;
+	Mon,  7 Oct 2024 04:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="f7PKCYpE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VJLWc1hf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1044204D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 04:52:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567822AD05
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 04:55:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728276762; cv=none; b=Ue9W4Ot/01hGe2WgB6ImCyN/VmdNm8zIqGVS72Tv7alYPkMGTvx8NTL/+ADbShce5hujC662ELEYIAwYo1WGSucbP1c1lcqQQdvgtpxbiC1wKrvVRGmFodswzOscsONIaN7Thp4ud+Ilg/pNfyXqCr0o1yiAoBtrShoLu//SiEM=
+	t=1728276934; cv=none; b=EtslvG2qTPCtT+neSlaFpO+sQ5EeJrjKt9zIeK2XUc0G2GzkgKxHe//YPhHwaIauNUMiPfxL5KYdigzWoTLKi1nmwJnda6Qv3dcgDbfNfL/vRWZYp9o9bPqPz5Slm9HbayaZH0bfNr3zyVTaPbjnePff0pXM6C6LBdqDroZT46c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728276762; c=relaxed/simple;
-	bh=Pe51Lg/PsZLWAqG9WRRKbxZ4v4+EdZ8UaY5o4W06xTA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rBSAT+4O1mBsRJbgF32CdqxuFcwbESFxVGtyu+7ZV4vymPFtG0+OFfiPTX/DjQr8xiZPNL3ujFWg3G3sxJxUXPKw3qH5RCRsLctO/IxNOMwFvupUTO5uGhEr2N9XRPkl1W06yvfDWeG9myTwjtOAkyyg4S7L4ly2XlgkU4Betks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=f7PKCYpE; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4582c4aa2c2so30621051cf.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 21:52:40 -0700 (PDT)
+	s=arc-20240116; t=1728276934; c=relaxed/simple;
+	bh=Y2bda3mGfiwGlrzgQPpEpMIie5Ls/ev+55m5OE+yNF4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LcQmk+z9DwPBweYqiqnYE8xETqrfYeyNz+f4EMOW5v25IMNiVDYO98QHq3qcXd6OI7t2HH3GqAkKlQ3vea66T5THVHjdC3OTtMN+uBuc8Zaa4V/xb9gZ+BqctpQH/IBXshIXDtf3XsjuV/JtCJUvJNo2d7i5ha3rGxiR79ldo0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VJLWc1hf; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fada911953so47471461fa.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 21:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1728276759; x=1728881559; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0JH+eeGvKfz71oS0W6AeXi5f58Oy8T9dmTdRTdFrBnI=;
-        b=f7PKCYpEyASYIm9Zx+2bSByq6wqn8r12rCjhHOb503a9RR7oTvEhPCgd9XrZ60DNdW
-         +jxhl9mtpI6ONwPRk6yjUrG1G4s7Tdvc0HnpRfPtFwgWBOSA23eZuXHwnRvZTrkQWIJj
-         i3U8OxSkCSAjgsUsp5BvaCpNGnQTGM5Tf9baUcYhc8bwYOhvl/KEzYJ0h1KzfHCb+iCF
-         A41ROm9rqwDxTaKU+WHRjjaKiq6NQ16kDhveIb+i4RDk/CiB/bKPdnjXj4uDhLw8VYqp
-         S+f6+hby1hSaLzvG4Z5x3JC5t2mehY5NzQSOe3Ky61aYPrX2+SLEM+zxLo+sFNtITZep
-         kH8A==
+        d=linaro.org; s=google; t=1728276929; x=1728881729; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/6xcwrBoXuHmz7DbARIgYbfXwaKZHrTi0jMKEdF4o40=;
+        b=VJLWc1hfsmjBxsO0V14wicVv3UxLtIZNwxetwIBLFIZcb4HS5HzzZPFuhd4nqF2OHY
+         Ctk/8ERi0/diPo4Br1S5cNbStpEXPfPQyKspW3FRGe86acHAirPwxYz6X8DWeKVePkoi
+         OGOm/r2JCFbPW43XeJUC8OP6F7TJ5l1PjBYodpAQGrYNdhUPBO3X+qoygTiUaiTk3l9j
+         we1dpRQqb/ZduyeZ87nwfQhmyid2+9ZSvbWq9x/cTRV0TDbZaGuvHkROSmDuw6J0C5eL
+         6vwN6eG8IYmBIC6TZUFnOpl3uf69BXqphLhaJ5NW1BKVQvt9v0UuF+HuhHFmN6VofHPr
+         Cdmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728276759; x=1728881559;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0JH+eeGvKfz71oS0W6AeXi5f58Oy8T9dmTdRTdFrBnI=;
-        b=o9cZeGxkjv0KUOl2d9sPfc+PWxOgmUvhd/hxivKEJoVaaqErxnmBNkPcaJLFqH+VXm
-         G7lMuNpn2zayO0GdHun6mVvFkAm+qhzotzRFxNdUdh0CBNO7q4V+c7cs0Apxx7PRkL9y
-         fIpDcjm0OWCSANdTplz8VoxtvI05Wxu70Hk6Nt26k+zAklguh9WumT4JOY5D1WgpMwaD
-         Y6sSGRLUDAgw/ed6IO8Xb/2FM38bqYW7pgucxo9MTlpVKvVtShohJFKVqoaQTzWwgfKZ
-         Tlo8PV3jyhqo/wB4Ous2YKjuZTb7gKuNdWxCqtTQ6fIwHfLwstT9f7g++t941b+EJ1Ds
-         clow==
-X-Gm-Message-State: AOJu0YwHqce5ni3CXfJ34Io1DcEjocAJvMXOAFIPXfKSDvIUhLMCJsi1
-	JTCoORWo6F0Q1Qh+nPpsWzJ+vcUSQFK8rr+ZvEWDOESS79SwkMfntsLcBkWzm2bAaezk0UUJeqF
-	0nUY=
-X-Google-Smtp-Source: AGHT+IH/9bsZq7uHy78secXuJvI/6P0sWacsBbySahkLVEBVoPJhgQSm4YakQO1cbX3fBAenHpNq8g==
-X-Received: by 2002:a05:622a:450:b0:45d:5d31:89f0 with SMTP id d75a77b69052e-45d9ba2f03dmr192178031cf.3.1728276759124;
-        Sun, 06 Oct 2024 21:52:39 -0700 (PDT)
-Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45da764043esm22666351cf.88.2024.10.06.21.52.38
+        d=1e100.net; s=20230601; t=1728276929; x=1728881729;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/6xcwrBoXuHmz7DbARIgYbfXwaKZHrTi0jMKEdF4o40=;
+        b=v5sbKoG5XTDFgtLZkh+pf6P7FTkBUiUtNPPAAEUy+bcS9T0++OZFQXui0mkhYIzWGk
+         iEaXIoyACLgdh3otI3RA5Az3sEHJtRlQ6wjHOQPleDW6Hnyj9RocZHQXQUojKx65kdLj
+         4zT2TeXBPvBTCvOGzRnQ1OrafEK3m7fO80Okv7hfvvqtRKAe52NZuDF0Yot15/eNZphP
+         AyP9wF+IBENId1ONqc2dG8IusX24om28tW9LuDV5oXAdcOF3KzSvywbhqOWEExZPSZjJ
+         rUhkxORHowxonjmStY89v0mZnHZkWkPNtKLVBYyrchqrhr42+956UA5zipHjGQoXxiQA
+         CiKg==
+X-Forwarded-Encrypted: i=1; AJvYcCWDVojHUuvgLh6moKuaEa1ADVpP3FAl7PdpDdWobzD6A6WzqykQ2NGqzRU38aJWW2pnuaPHSFiBKBJ9WOD+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRA68+cwow5gxxIdMOsHRvWETXopULyQzbc2wE3F0z4UdtL72F
+	d/K1vopjQ0VkaIQfEI2Y1Oi7o9sHsrMo2ySIkoptrkizthDygWlnF6jvzelrBHM=
+X-Google-Smtp-Source: AGHT+IGXMAuGqMtBvrWsmOq7ynzzo7ewDWrA4vrd6ryejLcyARqvVHqB/yG3diLj17MPbt7U0IKkfA==
+X-Received: by 2002:a05:6512:b90:b0:539:93e8:7ed8 with SMTP id 2adb3069b0e04-539a626a412mr4461045e87.15.1728276929284;
+        Sun, 06 Oct 2024 21:55:29 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00-89ea-67f6-92cd-b49.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:89ea:67f6:92cd:b49])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539aff1d168sm705946e87.142.2024.10.06.21.55.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 21:52:38 -0700 (PDT)
-From: Jonathan Marek <jonathan@marek.ca>
-To: linux-arm-msm@vger.kernel.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-	Arun Kumar Neelakantam <quic_aneela@quicinc.com>,
-	linux-remoteproc@vger.kernel.org (open list:REMOTE PROCESSOR MESSAGING (RPMSG) SUBSYSTEM),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
-Date: Mon,  7 Oct 2024 00:47:22 -0400
-Message-ID: <20241007044723.25347-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.45.1
+        Sun, 06 Oct 2024 21:55:28 -0700 (PDT)
+Date: Mon, 7 Oct 2024 07:55:27 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jianhua Lu <lujianhua000@gmail.com>, Kalle Valo <kvalo@kernel.org>, 
+	Jeff Johnson <jjohnson@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	ath11k@lists.infradead.org
+Subject: Re: [PATCH 2/3]  arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi node
+Message-ID: <nxkw7osy3cpd2ts7jeidknd6mgt4wfjaf5pzabzy54aiza5mij@dpbznolilbnf>
+References: <20240929112908.99612-1-lujianhua000@gmail.com>
+ <20240929112908.99612-2-lujianhua000@gmail.com>
+ <p75ivby5ajlmnvebqkn3mq7t5xh6awewjwkwpa5rjiqv2ijijl@aqemqgxveu55>
+ <ZwNODSqKNJmkY-l2@localhost.localdomain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZwNODSqKNJmkY-l2@localhost.localdomain>
 
-The name len field of the CMD_OPEN packet is only 16-bits and the upper
-16-bits of "param2" are a different field, which can be nonzero in certain
-situations, and CMD_OPEN packets can be unexpectedly dropped because of
-this.
+On Mon, Oct 07, 2024 at 10:57:17AM GMT, Jianhua Lu wrote:
+> On Mon, Oct 07, 2024 at 12:02:34AM +0300, Dmitry Baryshkov wrote:
+> > On Sun, Sep 29, 2024 at 07:29:07PM GMT, Jianhua Lu wrote:
+> > > Add wifi node and this wifi module is connected to pice port.
+> > 
+> > Could you please add ath11k probe messages to the log? We might need to
+> > add an additional node with the calibration variant.
+> > 
+> Hi, Dmitry. Do you mean that I should add ath11k probe message to the commit message?
+> The following is ath11k probe message:
+> [   10.285469] ath11k_pci 0000:01:00.0: Adding to iommu group 12
+> [   10.285637] ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x604fffff 64bit]: assigned
+> [   10.285699] ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
+> [   10.286003] ath11k_pci 0000:01:00.0: MSI vectors: 32
+> [   10.286023] ath11k_pci 0000:01:00.0: qca6390 hw2.0
+> [   10.652407] ath11k_pci 0000:01:00.0: chip_id 0x0 chip_family 0xb board_id 0xff soc_id 0xffffffff
+> [   10.652429] ath11k_pci 0000:01:00.0: fw_version 0x10121492 fw_build_timestamp 2021-11-04 11:23 fw_build_id
+> 
+> I'm not sure if it's necessary to add calibration variant because wifi
+> works normally on this board without adding calibration variant.
 
-Fix this by masking out the upper 16 bits of param2.
+Added ath11k ML and corresponding maintainers to cc. Please cc them in
+future revisions of this patchset. If you were to send the next
+iteration of the series, please include the quoted log into the commit
+message.
 
-(the commit in this Fixes tag is not where the original code was introduced
-but it should be far back enough not to matter)
+The board_id 0xff most likely requires calibration variant. Please
+consider adding one and submitting board.elf following the process
+specified at [1].
 
-Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/rpmsg/qcom_glink_native.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+[1] https://wireless.wiki.kernel.org/en/users/drivers/ath10k/boardfiles
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 0b2f290069080..e4933b823238c 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1204,7 +1204,7 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
- 			ret = qcom_glink_rx_open_ack(glink, param1);
- 			break;
- 		case GLINK_CMD_OPEN:
--			ret = qcom_glink_rx_defer(glink, param2);
-+			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
- 			break;
- 		case GLINK_CMD_TX_DATA:
- 		case GLINK_CMD_TX_DATA_CONT:
 -- 
-2.45.1
-
+With best wishes
+Dmitry
 
