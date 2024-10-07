@@ -1,256 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-33451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA15B993807
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 22:14:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4723993828
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 22:24:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E1821F22037
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 20:14:01 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7EA11C20FE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 20:24:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 08A7E1DE4DD;
-	Mon,  7 Oct 2024 20:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 148061DE4E3;
+	Mon,  7 Oct 2024 20:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MnID6JNF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yFJfitYo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAA01DE2A5
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 20:13:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9701D8E1F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 20:24:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728332039; cv=none; b=hXecJ56ffaOpi0ekQJ55vGHEd/aLkojuhfMwSS6vsf59DhBoOJtEkBBLeAs5Vk+Ni6m2jhJ3eFdnWBSedIOWu3CIM4g1RaVq1XhNne9pWF9uqv06zRBNC/a7rDAN/9KNcMryoGHqWotee+M4yMZTdESi9H/8YANqvh0Og/Kbdx8=
+	t=1728332648; cv=none; b=QcVdxz3A++gRxcGyUZKWNJpC2grxgXmAKUyBCzI6a/caAJbkOT60RScpvTZyAURSiRThtyQR+gSZVbBQ+EHOxEjaF3eGcZ0K97ILr7rwgJMpVCkQp+lqMbd2KOSgQZ+cPezJTJ8EpAWNbmkOSLUiva1ii7WqsV9EAw5jYx5d/tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728332039; c=relaxed/simple;
-	bh=dYf0vNhufwXL6YYKPS8LYNCtI04PBWt28yE5E2EJ0pw=;
+	s=arc-20240116; t=1728332648; c=relaxed/simple;
+	bh=rm2osUWB4IgyVq8ykVYBpG6R1/gpKjI5PBwVzeViHPk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sn/39RydSTFP49D+hGtOjacBbicKujzJxAI6Au2sq/3fOELV1wIAXFp+i7UwTSWsFqsvuvULjg65jVJ5GcXHibbCYTQBrbpSc2I9lZfgoK6AjodKR++IJ5ocMSQwRbffjVWnXhWMkIuSGQigbzMsprHFveRS2XBuY1zipgRqbcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MnID6JNF; arc=none smtp.client-ip=209.85.128.170
+	 To:Cc:Content-Type; b=eNy6NXwccqatNbWSCNdvdd/NpYoxPuk37yK1QIEpLq4JN0WnRGNwH1SQAbXyH3jTwbQ2H5VZ2pVtgWAH0e4PbjRO/Ja2booF1k0xDjb4WSSv31ldfHeBKSp1Kg2kgetSC5jS6qZKm2sutIwTq+QKlwOpnUowylCzr29lvLh7dEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yFJfitYo; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6e2fef23839so10176517b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 13:13:58 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fac3f1287bso52816941fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 13:24:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728332037; x=1728936837; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728332644; x=1728937444; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZoXiivIPsvv87cjrNNR6k9YUkmVHQ+v2vRTV4AcmfZ4=;
-        b=MnID6JNFHUlPiZFc0c0r2z16VY+0JNmVm3xUosojF3OgMYx17/buG6PGI0jEGPTdJH
-         19637EUMvhi3NuibMqAU7SVwaQYYdSDGOvsukx3RID+xasLXZ7fUeFzSEfxv+Dcptwal
-         GShqPF+vy/j7HivtUp0XeHhZa0Vjm5aKe1Wi7dwUCOUTqceTr0DKetT6e5yPIvQz90/5
-         FvdWIxP/Rn8nXEF0tCEMRa9XpIsz6oH3BCI4erc1I0FhBdK0excPsa8XDXLkrit7J1Iu
-         DO5h7tBspQoNORyeFgB/8QGB1V9AkRFc+hAyBnR8vgE56IaYJrkg1aIQRAVpgitS9r57
-         Msdw==
+        bh=lFvl/yEangr8owxbos5zhVtsni37SUgFVrliUsmDQcc=;
+        b=yFJfitYo7WdgQQpQQX90y9ySU/jtNTZEb8VdNervJOiLWt2ZoKZ3eyQxlu1aLNFfXH
+         036q56kgR1aZ3DgIwiw00Z+//NIEt7se1aNo2O9/Ili0vXba4mUnPELixeKgJsKjRn+T
+         RpzUW1VAbfObmTFVvrmn0J4XHZ4YN1+y1TQ5or2VSXx+FC4/J7K4UuZViK9i7jIK7Mp3
+         VN1LHPSAXS39klKqOgiR/OIMZgMqNtbS7LJq+R18DoxQcoduEHTfn7ikpTc593Rq2wSV
+         r6cZe302wQX1LJn0ACWeafftYNHQKlNfiKENgwDwPscM1rX7e8d9ClPWRzzcuQBaUNHL
+         eu8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728332037; x=1728936837;
+        d=1e100.net; s=20230601; t=1728332644; x=1728937444;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZoXiivIPsvv87cjrNNR6k9YUkmVHQ+v2vRTV4AcmfZ4=;
-        b=GeXk66H+c9WN3oAPUij/viMxJgrBmo7Mic37lQczku+cZK1/K1i/eJkf6CiW++ZDYw
-         WNCdoesnKn6yUeQMLB50z2oiTiulv2D8t46mi7zJSZ0k2cIFH66FUY6ar1nsoK3VVhf3
-         NF5dpbYoXKnCNpf3JX9TqVUpbUo92ZPtU4zBA5xTCplwgdxnf18dL5v1XwWxBACPVqgA
-         97oCy79ZUHIswN2wTYJxtRvEY177hzzJHNQ0LzaLUBXt0f7KSGbhPyfS/PE+AYtXBvfN
-         0prEszAfuL6iY2F4TqlQ6p2lVskjk0hOeDPlDarROg8KIRebz4+yu/KJMPNdhmwA/LKD
-         zBhA==
-X-Forwarded-Encrypted: i=1; AJvYcCViI0n5+YOkVGCKJiDmmNIaYIhCgZBnEylIWyLmPjwC8CTPtO/5Xf/N3yvER8zkeqgvJp0cMQwl8eReMrHG@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMP335uIURljcCco9aoYoLzUF+XyAZ75BcO0Z311jOShsWMqTR
-	aO1epy8Fext5U9FVzSGPvl7Bu8FBWIKA6/9Dbpd9f+9TJM5+3z27D3dcY+8Fz35IIx80t1dEV4V
-	tQUcEfvCZh7U8EoGmgBxNIguGft8MNwRkr9D8zpGJOmqQdfbXylpGvXsB
-X-Google-Smtp-Source: AGHT+IEemXp+EwkiqGhHJcXGCpvIbGD3LaTbLUsZH/iRvPEavrRlY5OGsv6kRpFh6IICBCS1cCjdPY7p2JkZOKY8R8c=
-X-Received: by 2002:a05:690c:b:b0:6e2:167e:814f with SMTP id
- 00721157ae682-6e2c7289b2emr91643627b3.31.1728332037260; Mon, 07 Oct 2024
- 13:13:57 -0700 (PDT)
+        bh=lFvl/yEangr8owxbos5zhVtsni37SUgFVrliUsmDQcc=;
+        b=odn+Bi+LEzdiJ0TMl9B+bOa1Fyx06DHKSMdpIapOXWG67uVjo9TiAvG9BuYKeP79Qj
+         bZ28OlnSXrt+jweOZQ16/RFRvZ0T/7wDygjYC2uiKDXi712G/0H0pDwWV0M4paEJnx2Q
+         0ZBcs1w0gwqzIaiCI1zzz1OE7s6M9bs9K9kwTsOYfrpOIz7V/1FbitjJXNrGE/dJ8d+Y
+         0nJMhKs62SjnnJFJ3tQUfW40S13t6QO07Q5vxcijmugNCQXBO+gwO8wU54zgFrTQY3lY
+         I4pdyxXRImAYq1EdzaqYbxNhdqsXeS7sqluyyfYXaxgptHyQCXkbqA+C5EXlmCfXUbXr
+         6diw==
+X-Gm-Message-State: AOJu0YzD/Totaat9pE/RfRlL8KLyp7zf+UGpzPX+6+TkdP4qPD9WjUW8
+	T5Eh5ItIOCrR/DghSODDXdkVyXAcHaUMTZ3zYOhMUNVvsSXfHJ00eSQ4Hr/VpEUjyLsQU+IDFZG
+	ubRqnzEtKgcLisUThAZ4mYNzBKGPHnAMT9HCQXQ==
+X-Google-Smtp-Source: AGHT+IF2J2KtODAOg6E0IGOtSHekx3v4Zat7hWdd2giyI0z5Dhlv+dq60y4SCVzsX3JaLj0NPvweMQR6zXmaZGoQZbk=
+X-Received: by 2002:a2e:a545:0:b0:2fa:c913:936 with SMTP id
+ 38308e7fff4ca-2faf3c0184emr72904611fa.1.1728332644356; Mon, 07 Oct 2024
+ 13:24:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241005140150.4109700-1-quic_kuldsing@quicinc.com>
- <20241005140150.4109700-3-quic_kuldsing@quicinc.com> <wzrj4vhrb4h3pe5dft7vqz2tl55txdyuciuxlysuck5isi7r4z@bs2ts3popy2t>
- <2eb53ea6-848a-48bb-8c31-83a118bc5a73@quicinc.com>
-In-Reply-To: <2eb53ea6-848a-48bb-8c31-83a118bc5a73@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 7 Oct 2024 22:13:46 +0200
-Message-ID: <CAA8EJppEQKJ=oQh=TeFaP0z1sXDQhz=LN_TC4YygiLOe_EX6Tw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] firmware: qcom: qcom_tzmem: Implement sanity checks
-To: Kuldeep Singh <quic_kuldsing@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
+References: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
+In-Reply-To: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Mon, 7 Oct 2024 22:23:52 +0200
+Message-ID: <CACRpkdbj8fkQf38n0t-==cFZj55TPgoTGM-dzESWgeRGfPHofQ@mail.gmail.com>
+Subject: Re: [PATCH v6 0/5] Initial Support for Linksys EA9350 V3 (linksys-jamaica)
+To: Karl Chan <exxxxkc@getgoogleoff.me>, Arnd Bergmann <arnd@arndb.de>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, andersson@kernel.org, 
+	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 7 Oct 2024 at 21:17, Kuldeep Singh <quic_kuldsing@quicinc.com> wrot=
-e:
->
->
-> On 10/7/2024 1:00 AM, Dmitry Baryshkov wrote:
-> > On Sat, Oct 05, 2024 at 07:31:50PM GMT, Kuldeep Singh wrote:
-> >> The qcom_tzmem driver currently has multiple exposed APIs that lack
-> >> validations on input parameters. This oversight can lead to unexpected
-> >> crashes due to null pointer dereference when incorrect inputs are
-> >> provided.
-> >>
-> >> To address this issue, add required sanity for all input parameters in
-> >> the exposed APIs.
-> >
-> > Please don't be overprotective. Inserting guarding conditions is good,
-> > inserting useless guarding conditions is bad, it complicates the driver
-> > and makes it harder to follow. Please validate return data rather than
-> > adding extra checks to the functions.
->
-> Sure, I=E2=80=99ll remove the redundant checks.
-> Please see below for explanations.
->
-> My intention here is to handle erroneous conditions gracefully to avoid s=
-ystem crashes, as crashes can be detrimental.
+On Mon, Oct 7, 2024 at 6:35=E2=80=AFPM Karl Chan <exxxxkc@getgoogleoff.me> =
+wrote:
 
-Please fix the callers first, rather than adding band-aids.
-
+> Also The original firmware from Linksys can only boot ARM32 kernels.
 >
-> >>
-> >> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-> >> ---
-> >>  drivers/firmware/qcom/qcom_tzmem.c | 17 ++++++++++++++++-
-> >>  1 file changed, 16 insertions(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qco=
-m/qcom_tzmem.c
-> >> index 92b365178235..2f2e1f2fa9fc 100644
-> >> --- a/drivers/firmware/qcom/qcom_tzmem.c
-> >> +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> >> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_pool_c=
-onfig *config)
-> >>
-> >>      might_sleep();
-> >>
-> >> +    if (!config || !config->policy)
-> >
-> > config can not be NULL
-> > Ack for config->policy check.
->
-> Considering a scenario where user doesn't fill config struct details and =
-call devm_qcom_tzmem_pool_new.
-> config will be null in that case.
+> As of now There seems to be no way to boot ARM64 kernels on those device.
 
-Likewise other driver (not the user!) can pass NULL to other
-functions, crashing the kernel. This is not a way to go.
+So this is a Cortex-A53 Aarch64 system running in ARM32 mode.
 
->
-> >
-> >> +            return ERR_PTR(-EINVAL);
-> >> +
-> >>      switch (config->policy) {
-> >>      case QCOM_TZMEM_POLICY_STATIC:
-> >>              if (!config->initial_size)
-> >> @@ -316,6 +319,9 @@ devm_qcom_tzmem_pool_new(struct device *dev,
-> >>      struct qcom_tzmem_pool *pool;
-> >>      int ret;
-> >>
-> >> +    if (!dev || !config)
-> >> +            return ERR_PTR(-EINVAL);
-> >
-> > dev can not be NULL
-> > config can not be NULL
->
-> dev may not be always __scm->dev.
-> For ex: qcom_qseecom_uefisecapp.c pass it's own dev.
-> If new calling driver pass dev as null, will lead to NPD.
+So I got this interactive U-boot log from Karl showing how the attempt
+to boot an Aarch64 kernel manifests:
 
-Just don't. I don't see other devm_ functions checking the dev param,
-because generally we believe in the sanity of driver authors.
+CBT U-Boot ver: 3.2.08  ([IPQ5018].[SPF11.3].[CSU2])
 
->
-> >
-> >> +
-> >>      pool =3D qcom_tzmem_pool_new(config);
-> >>      if (IS_ERR(pool))
-> >>              return pool;
-> >> @@ -366,7 +372,7 @@ void *qcom_tzmem_alloc(struct qcom_tzmem_pool *poo=
-l, size_t size, gfp_t gfp)
-> >>      unsigned long vaddr;
-> >>      int ret;
-> >>
-> >> -    if (!size)
-> >> +    if (!pool || !size)
-> >
-> > Is it really possible to pass NULL as pool? Which code path leads to
-> > this event?
->
-> qcom_tzmem_alloc/free need to be used once pool is already created with d=
-evm_qcom_tzmem_pool_new API.
-> If pool isn't created, then calling qcom_tzmem_alloc/free will be erroneu=
-s.
+## Loading kernel from FIT Image at 44000000 ...
+   Using 'standard' configuration
+   Trying 'kernel' kernel subimage
+     Description:  Kernel
+     Type:         Kernel Image
+     Compression:  uncompressed
+     Data Start:   0x440000a8
+     Data Size:    8249289 Bytes =3D 7.9 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x41208000
+     Entry Point:  0x41208000
+   Verifying Hash Integrity ... OK
+(...)
+## Loading ramdisk from FIT Image at 44000000 ...
+(...)
+## Loading fdt from FIT Image at 44000000 ...
+(...)
+fdt_fixup_qpic: QPIC: unable to find node '/soc/qpic-nand@79b0000'
+Could not find PCI in device tree
+Using machid 0x8040001 from environment
 
-If your driver doesn't check pool_new() result, then it's broken.
+Starting kernel ...
 
->
-> >
-> >>              return NULL;
-> >>
-> >>      size =3D PAGE_ALIGN(size);
-> >> @@ -412,6 +418,9 @@ void qcom_tzmem_free(void *vaddr)
-> >>  {
-> >>      struct qcom_tzmem_chunk *chunk;
-> >>
-> >> +    if (!vaddr)
-> >> +            return;
-> >
-> > Ack, simplifies error handling and matches existing kfree-like function=
-s.
-> >
-> >> +
-> >>      scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock)
-> >>              chunk =3D radix_tree_delete_item(&qcom_tzmem_chunks,
-> >>                                             (unsigned long)vaddr, NULL=
-);
-> >> @@ -446,6 +455,9 @@ phys_addr_t qcom_tzmem_to_phys(void *vaddr)
-> >>      void __rcu **slot;
-> >>      phys_addr_t ret;
-> >>
-> >> +    if (!vaddr)
-> >
-> > Is it possible?
->
-> Yes, A scenario where qcom_tzmem_alloc fails resulting vaddr as 0 followe=
-d by no null check.
-> Now, immediately passing vaddr to qcom_tzmem_to_phys will again cause NPD=
-.
+undefined instruction
+pc : [<41208004>]          lr : [<4a921f8f>]
+reloc pc : [<41208004>]    lr : [<4a921f8f>]
+sp : 4a822838  ip : 00000001     fp : 00000000
+r10: 4a83b914  r9 : 4a822ea0     r8 : 00000000
+r7 : 00000000  r6 : 41208000     r5 : 4a97d848  r4 : 00000000
+r3 : 644d5241  r2 : 4a0ae000     r1 : 08040001  r0 : 00000000
+Flags: nzCV  IRQs off  FIQs off  Mode SVC_32
+Resetting CPU ...
 
-Likewise. If you driver doesn't check qcom_tzmem_alloc(), it's broken
-and must be fixed. Null pointer exception will help fix the driver.
-Adding such band-aids will hide the issue.
+resetting ...
 
->
-> >
-> >> +            return 0;
-> >> +
-> >>      guard(spinlock_irqsave)(&qcom_tzmem_chunks_lock);
-> >>
-> >>      radix_tree_for_each_slot(slot, &qcom_tzmem_chunks, &iter, 0) {
-> >> @@ -466,6 +478,9 @@ EXPORT_SYMBOL_GPL(qcom_tzmem_to_phys);
-> >>
-> >>  int qcom_tzmem_enable(struct device *dev)
-> >>  {
-> >> +    if (!dev)
-> >> +            return -EINVAL;
-> >
-> > Definitely not possible.
->
-> Ack, by this time __scm->dev will be initialised in qcom_scm driver and c=
-annot be null.
-> If some other caller even try and qcom_tzmem_dev is already set hence, re=
-turn -EBUSY.
-> Will drop the check.
+So perhaps someone knows how we can get around this.
 
+It seems to me the U-Boot is in 32bit mode and tries to just
+execute an Aarch64 binary and that doesn't work.
 
---=20
-With best wishes
-Dmitry
+What we need is a 32bit mode preamble that can switch
+the machine to Aarch64 and continue.
+
+I don't know *how* to do that, but I would *guess* a botched
+return from exception where you provide your own stack
+with the Aarch64 state hardcoded on it should do the job?
+
+The Aarch64 maintainers will know what to do.
+
+Surely it should be possible to add a little code snippet
+to do this somewhere in memory, and that in turn jumps
+to execute the actual Aarch64 kernel in Aarch64 mode?
+
+Yours,
+Linus Walleij
 
