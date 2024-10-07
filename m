@@ -1,209 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-33445-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECDD59936E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 20:54:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C9009936FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 21:09:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 171831C23381
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 18:54:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE4F1282DE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 19:09:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7EC01DE2C4;
-	Mon,  7 Oct 2024 18:54:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 718BB1DDA20;
+	Mon,  7 Oct 2024 19:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="b66dAsxT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eBt3MUGV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E251F1DDC14
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 18:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840F522098;
+	Mon,  7 Oct 2024 19:09:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728327247; cv=none; b=ubXjAM3GMBeJKOuGKsXkjWZsbq6Z8yvbFN8QU5QAO9ZaT0YFleZLl1gS1Ca9OtaFz+GGWCfkY7aw0VaNlXPqCXVqGdqZGZevpYJYKxDAGnFBW50MSy0hnIRDmgSfHnG60fej/wSjbvKlssZM2fbYV0ppwR+QM+/ZsEA3dLSak70=
+	t=1728328175; cv=none; b=OoCh4eISXRZ/p/VYfI/C6DtneuTZ/GoOu62zBr1kFlhRAhUjoLc+8O1PXBZOXZm42OtlRfkE+EWsfeU7NtoME22iUlggSAVNtkXFEb/Kkh18yJXb4dSYiVPVPHq48MRXwAwkqIpLMNdwLijXJhaliuze9d4D1hJO/DzvP2zHcH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728327247; c=relaxed/simple;
-	bh=hnTBwamPDAsTLDF+Js1D5YUZ3/8QsfQbBw6PXRBHvlw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mi8zUiDln0hGFFW/DFEA0wrdQso4x/FGPYfHjvcUMDd3ti0TfeJLGTDI/mSDAgbnmiwDxpaBdiCqBlO0ns1EVSbQrIQtYK9H/cd11/SXWe15k4ehYTfiKp73/6Sjxgd2ZweRqAJpDOZpKKA7QFEjzFkptyow+S8HUrT5ccX21lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=b66dAsxT; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1728327244;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TXl/fSOrjemj+ajnFjFM4CSMF/fXgBTJBQOb6whFU1E=;
-	b=b66dAsxTTZQYW6SCSUHKilVUrLSbRtFCt7TYcuc+BcbKccz7u8wk65fzxX9Rgq3wncpkCK
-	ygLnlkydYaYELag6+M6RG8bjMNyvu8kZshvdal4Keu7CNlEkpxsUm/Xf7Yw/LNcHZ70U4J
-	nWBixa2FHUfigboTdVSvISsnnkeP8UU=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-31-YKObQWTBM0OqC-NvQMokQg-1; Mon, 07 Oct 2024 14:54:03 -0400
-X-MC-Unique: YKObQWTBM0OqC-NvQMokQg-1
-Received: by mail-ed1-f70.google.com with SMTP id 4fb4d7f45d1cf-5c829e582e5so4239773a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 11:54:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728327242; x=1728932042;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TXl/fSOrjemj+ajnFjFM4CSMF/fXgBTJBQOb6whFU1E=;
-        b=RpbXYrJynQpcc2HvC/BGKQnmPbqrRmGKPJ2Iv4jfyAVjloCdGRk9txOR9tD8dts3Zj
-         wT3sIG/RdiFiKCaLebtqdx2E6Xjk41Yy8rDqElahUYIcyRKfnQna4x3r2gQBYRJAh5nC
-         EacWiBFLV1Xg+3GvPcrOzev8GVoEmP5mmcB3t2DTmqzpbf+LwYQSgVxCHy/dHnrqYfba
-         Zf+MrwiiTJMygesBlJQMR6pNteu21R97shBQ+q4st8+hs6skZbLLCwZZ6CuD0FtjYGfb
-         3SirAg8MzPH5m2Gi3cw91VQdXnf2zcgixMBoSGvwUxqshWra3ehx1VldJkgXf8w2cIej
-         dt0A==
-X-Forwarded-Encrypted: i=1; AJvYcCV4VYXUcgAtabSmGXg5wFJn/UxMrZJNShlvaLAyszuOKLkXsLYMHWZeDSYlogI5ejjJi5mh1StGnoDlDUI7@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw28L/JEfaq3R7bHUv5O6Ou4YVhYTWtMqVvghqypC7eh8iu3eOe
-	Tj3b7ErceoO9p/vLIO1XofhguR0+VOEfe1PAQtqP1o8hEiUCniSzW33CGKzQdrvPHycfuMggJKp
-	SS7nhRh0/Ujne8kJS2STdJ0hlB4zjQIAVsH1sRrHrRQjaN13K/PPSQ0HEV6BLtm8=
-X-Received: by 2002:a05:6402:35d1:b0:5c9:3f2:e69c with SMTP id 4fb4d7f45d1cf-5c903f2ea42mr1122642a12.9.1728327242262;
-        Mon, 07 Oct 2024 11:54:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtc/wASbpmCC3oX4yHn0opV5qAfwjsWz7nSRdYzab2WVqdaotFQbRwUdiaixLyJyahsBAPsA==
-X-Received: by 2002:a05:6402:35d1:b0:5c9:3f2:e69c with SMTP id 4fb4d7f45d1cf-5c903f2ea42mr1122594a12.9.1728327241693;
-        Mon, 07 Oct 2024 11:54:01 -0700 (PDT)
-Received: from ?IPV6:2001:1c00:c32:7800:5bfa:a036:83f0:f9ec? (2001-1c00-0c32-7800-5bfa-a036-83f0-f9ec.cable.dynamic.v6.ziggo.nl. [2001:1c00:c32:7800:5bfa:a036:83f0:f9ec])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e05ecda3sm3473540a12.73.2024.10.07.11.53.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Oct 2024 11:54:00 -0700 (PDT)
-Message-ID: <8370d062-b3d2-46f5-9e7b-8e16edde8480@redhat.com>
-Date: Mon, 7 Oct 2024 20:53:59 +0200
+	s=arc-20240116; t=1728328175; c=relaxed/simple;
+	bh=fEFHXNifSDqcdgC2PtIYIoO64Kj+N+TM9ZorMGL31PM=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I2wH6T/YHLLrBvimfCEAYPDxh7eXFb00h3J/BIY3MunCj9B6Va9KMgcVCIMj3tjAQIRt9NYI3EEfZ26kHv59Srg5uCh72i/mFCE7spukIot7aoFbnw0qD1SENlPp9vF4jIFnxfT0RTU5hlcmzJfP3Sa5XZvwxce7B+4fnUzkFLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eBt3MUGV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497GaOVx022694;
+	Mon, 7 Oct 2024 19:09:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Bzwvv81UXqjNB2FoSpGguXIM
+	mYyCLc6yZvdrbJ6MPMQ=; b=eBt3MUGVBlqEqyazPgTx62ehWHNcX7PblJVs0v+7
+	L9QfNSE4dtHsgSchmKnISXEGvvWQ/DAUGjg1Xkpkiq+3jMD2TCGz7vk7BVVXKOye
+	WPAGXCSTlTAsxlweYsYEBLJ/x+F7U/V56bhtc//zcfPXRtgrzpbKTFllLcPlSEz4
+	U/tKpvTH2ljhG/cBK8k9Vd4gYk0RxYan+GjF9l5aTVbQNmEV2gxFKScPTxAOMKn3
+	ZXOn9cO7lErOgQtDKW64kvDe01le9JkqTYr8Gqxb1k/nx9U4n1g1ufBpMWyl2QO0
+	4RedQWfxUmABLOB/GAqDf3+TdgwwEmTpcOXRJuMSnpQIGQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424kaerb40-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Oct 2024 19:09:29 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497J9Sih020695
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 7 Oct 2024 19:09:28 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 7 Oct 2024 12:09:25 -0700
+Date: Tue, 8 Oct 2024 00:39:22 +0530
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Bjorn Andersson <quic_bjorande@quicinc.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] remoteproc: qcom: Fix NULL pointer in glink_subdev_stop()
+Message-ID: <ZwQx4h3gtyX30PMh@hu-mojha-hyd.qualcomm.com>
+References: <20240925103351.1628788-1-quic_mojha@quicinc.com>
+ <ZvTYA1Rg6DrEEabk@hu-bjorande-lv.qualcomm.com>
+ <ZvcJhzDmdhO/wbKq@hu-mojha-hyd.qualcomm.com>
+ <ZvcqrbLKqCQyYBsF@hu-bjorande-lv.qualcomm.com>
+ <ZvuYYbIycFKRBcCi@hu-mojha-hyd.qualcomm.com>
+ <ZvxmiEnHprF5q4ug@hu-bjorande-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] platform/surface: aggregator_registry: Add Surface
- Pro 9 5G
-To: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
- Maximilian Luz <luzmaximilian@gmail.com>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org
-References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
- <20240908223505.21011-4-jerome.debretagne@gmail.com>
- <f9cbd1c3-eb05-4262-bdc6-6d37e83179e5@gmail.com>
- <CA+kEDGEdd_s+DGKsVNY6Jy870B72eHuaj2EgEnwP8J46ZGbxpQ@mail.gmail.com>
-Content-Language: en-US, nl
-From: Hans de Goede <hdegoede@redhat.com>
-In-Reply-To: <CA+kEDGEdd_s+DGKsVNY6Jy870B72eHuaj2EgEnwP8J46ZGbxpQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZvxmiEnHprF5q4ug@hu-bjorande-lv.qualcomm.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LDvqDFHDrclBiLrd5zB7dW11ptHdLJQ9
+X-Proofpoint-GUID: LDvqDFHDrclBiLrd5zB7dW11ptHdLJQ9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410070132
 
-Hi Jérôme,
-
-On 7-Oct-24 8:44 PM, Jérôme de Bretagne wrote:
-> Hi,
+On Tue, Oct 01, 2024 at 02:15:52PM -0700, Bjorn Andersson wrote:
+> On Tue, Oct 01, 2024 at 12:06:17PM +0530, Mukesh Ojha wrote:
+> > On Fri, Sep 27, 2024 at 02:59:09PM -0700, Bjorn Andersson wrote:
+> > > On Sat, Sep 28, 2024 at 01:07:43AM +0530, Mukesh Ojha wrote:
+> > > > On Wed, Sep 25, 2024 at 08:41:55PM -0700, Bjorn Andersson wrote:
+> > > > > On Wed, Sep 25, 2024 at 04:03:51PM +0530, Mukesh Ojha wrote:
+> > > > > > Multiple call to glink_subdev_stop() for the same remoteproc can happen
+> > > > > > if rproc_stop() fails from Process-A that leaves the rproc state to
+> > > > > > RPROC_CRASHED state later a call to recovery_store from user space in
+> > > > > > Process B triggers rproc_trigger_recovery() of the same remoteproc to
+> > > > > > recover it results in NULL pointer dereference issue in
+> > > > > > qcom_glink_smem_unregister().
+> > > > > > 
+> > > > > > Fix it by having a NULL check in glink_subdev_stop().
+> > > > > > 
+> > > > > > 	Process-A                			Process-B
+> > > > > > 
+> > > > > >   fatal error interrupt happens
+> > > > > > 
+> > > > > >   rproc_crash_handler_work()
+> > > > > >     mutex_lock_interruptible(&rproc->lock);
+> > > > > >     ...
+> > > > > > 
+> > > > > >        rproc->state = RPROC_CRASHED;
+> > > > > >     ...
+> > > > > >     mutex_unlock(&rproc->lock);
+> > > > > > 
+> > > > > >     rproc_trigger_recovery()
+> > > > > >      mutex_lock_interruptible(&rproc->lock);
+> > > > > > 
+> > > > > >       adsp_stop()
+> > > > > >       qcom_q6v5_pas 20c00000.remoteproc: failed to shutdown: -22
+> > > > > >       remoteproc remoteproc3: can't stop rproc: -22
+> > > > > 
+> > > > > I presume that at this point this remoteproc is in some undefined state
+> > > > > and the only way to recover is for the user to reboot the machine?
+> > > > 
+> > > > Here, 50+ (5s) retry of scm shutdown is failing during decryption of
+> > > > remote processor memory region, and i don't think, it is anyway to do
+> > > > with remote processor state here, as a best effort more number of
+> > > > retries can be tried instead of 50 or wait for some other recovery
+> > > > command like recovery_store() to let it do the retry again from
+> > > > beginning.
+> > > > 
+> > > 
+> > > But are you saying that retrying a bit later would allow us to get out
+> > > of this problem? If we just didn't hit the NULL pointer(s)?
+> > 
+> > I am not sure whether adding more number of retries will solve the issue
+> > and initially thinking from perspective that, it is better to retry than
+> > to leave the remoteproc in some unknown state however, I do get that
+> > letting it retry could give unnecessary patching every code e.g., ssr
+> > notifier callbacks, which is not expecting to be called twice as a
+> > side-effect of remoteproc unknown state.
 > 
-> I'm replying with Hans and Ilpo, who I initially forgot for this
-> patch, sorry about that.
+> That's not what I'm asking you. When the remote processor fails to stop,
+> can you recover the system by just trying a bit later, or is the
+> remoteproc dead until reboot?
 
-No worries thank you for forwarding Maximilian's review.
+I cannot say this with certainty. For the current issue, the remoteproc
+fails to stop as it is running out of heap memory.
 
-> Le mar. 10 sept. 2024 à 23:29, Maximilian Luz
-> <luzmaximilian@gmail.com> a écrit :
->>
->> Looks good. Two very small nit-picks below, if this goes for a v3:
+-Mukesh
 > 
-> Atm I'm not planning for a v3 as Bjorn has applied the other v2
-> patches earlier today.
-> Feel free to include the 2 small suggestions when applying this patch maybe?
+> > > 
+> > > How long are we talking about here? Is the timeout too short?
+> > 
+> > 5sec is very significant amount of time in wait for remote processor to
+> > get recovered, we should not change this.
 > 
->> On 9/9/24 12:35 AM, Jérôme de Bretagne wrote:
->>> Add SAM client device nodes for the Surface Pro 9 5G, with the usual
->>> battery/AC and HID nodes for keyboard and touchpad support.
->>>
->>> Signed-off-by: Jérôme de Bretagne <jerome.debretagne@gmail.com>
->>> ---
->>>   .../surface/surface_aggregator_registry.c       | 17 +++++++++++++++++
->>>   1 file changed, 17 insertions(+)
->>>
->>> diff --git a/drivers/platform/surface/surface_aggregator_registry.c b/drivers/platform/surface/surface_aggregator_registry.c
->>> index 25c8aa2131d6..8b34d7e465c2 100644
->>> --- a/drivers/platform/surface/surface_aggregator_registry.c
->>> +++ b/drivers/platform/surface/surface_aggregator_registry.c
->>> @@ -390,6 +390,21 @@ static const struct software_node *ssam_node_group_sp9[] = {
->>>       NULL,
->>>   };
->>>
->>> +/* Devices for Surface Pro 9 5G. */
->>
->> Would be nice if you could change the comment on the SP9 node group to
->> "Surface Pro 9 (Intel/x86)" and the comment here to "Surface Pro 9 5G
->> (ARM/QCOM)" or something along those lines to make things a bit more
->> clear.
->>
->>> +static const struct software_node *ssam_node_group_sp9_5G[] = {
->>
->> (This is really just me being a bit obsessive:) It would be nice to have
->> all-lowercase variable names (regarding the 5G).
+> Okay, I'm just trying to understand the problem you're trying to solve.
 > 
-> :)
+> Regards,
+> Bjorn
 > 
->>> +     &ssam_node_root,
->>> +     &ssam_node_hub_kip,
->>> +     &ssam_node_bat_ac,
->>> +     &ssam_node_bat_main,
->>> +     &ssam_node_tmp_sensors,
->>> +     &ssam_node_hid_kip_keyboard,
->>> +     &ssam_node_hid_kip_penstash,
->>> +     &ssam_node_hid_kip_touchpad,
->>> +     &ssam_node_hid_kip_fwupd,
->>> +     &ssam_node_hid_sam_sensors,
->>> +     &ssam_node_kip_tablet_switch,
->>> +     NULL,
->>> +};
->>>
->>>   /* -- SSAM platform/meta-hub driver. ---------------------------------------- */
->>>
->>> @@ -462,6 +477,8 @@ static const struct acpi_device_id ssam_platform_hub_acpi_match[] = {
->>>   MODULE_DEVICE_TABLE(acpi, ssam_platform_hub_acpi_match);
->>>
->>>   static const struct of_device_id ssam_platform_hub_of_match[] __maybe_unused = {
->>> +     /* Surface Pro 9 5G */
->>> +     { .compatible = "microsoft,arcata", (void *)ssam_node_group_sp9_5G },
->>>       /* Surface Laptop 7 */
->>>       { .compatible = "microsoft,romulus13", (void *)ssam_node_group_sl7 },
->>>       { .compatible = "microsoft,romulus15", (void *)ssam_node_group_sl7 },
->>
->> Thanks!
->>
->> Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
-> 
-> Thanks for your review and all the work about SSAM for Surface owners!
-
-FWIW I agree with Maximilian's remarks and I would really like to
-see these applied to clearly differentiate the x86 and ARM versions.
-
-Normally I would pick up a patch like this which just adds hw-ids as
-a fix for 6.12-rc# and squash in the suggested changes.
-
-But looking at the test of the series this is more 6.13 material
-since the rest is landing in 6.13, right ?
-
-Patches for linux-next / 6.13 are managed by Ilpo this cycle.
-
-So I'll leave it up to Ilpo if he will squash in the suggested changes
-or if he wants a new version (of just this patch, no need for a v3
-of the already applied patches).
-
-Regards,
-
-Hans
-
-
-
+> > > 
+> > > > > 
+> > > > > 
+> > > > > The check for glink->edge avoids one pitfall following this, but I'd
+> > > > > prefer to see a solution that avoids issues in this scenario in the
+> > > > > remoteproc core - rather than working around side effects of this in
+> > > > > different places.
+> > > > 
+> > > > Handling in a remoteproc core means we may need another state something
+> > > > like "RPROC_UNKNOWN" which can be kept after one attempt of recovery
+> > > > failure and checking the same during another try return immediately with
+> > > > some log message.
+> > > > 
+> > > 
+> > > Yes, if we are failing to shut down the remoteproc and there's no way
+> > > for us to reliably recover from that (e.g. we are not able to reclaim
+> > > the memory), it seems reasonable that we have to mark it using a new
+> > > state.
+> > > 
+> > > If that is the case, I'd call it RPROC_DEFUNCT (or something like that
+> > > instead), because while in some "unknown" state, from a remoteproc
+> > > framework's point of view, it's in a well known (broken) state.
+> > 
+> > Ack.
+> > 
+> > -Mukesh
+> > > 
+> > > Regards,
+> > > Bjorn
 
