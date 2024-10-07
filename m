@@ -1,148 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-33345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDB909927E1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 11:15:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 670D09927ED
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 11:16:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0B9CC1C224B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 09:15:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E6E161F20F86
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 09:16:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5F7818D652;
-	Mon,  7 Oct 2024 09:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6351F17DFE9;
+	Mon,  7 Oct 2024 09:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kirljLBc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gKvHaltE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E6C18CC0A;
-	Mon,  7 Oct 2024 09:14:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96D1231CA9;
+	Mon,  7 Oct 2024 09:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728292496; cv=none; b=W+7abUObp3FI1colrF4/IKFiqinDw2R0jUh9+7TTgYG64jwuNqZ7ucNo2UDoQqNhzfOTLrDMgHin+aSlkmDfBlLMLaJ7+ELHEVZUcqPCpJsEc+JO2b5KETC7PA/Zzthgq2oHF1YAzsnLlEaQSXvPCrG0lSAFUp6DnCAHTDyHnVg=
+	t=1728292600; cv=none; b=ZN6ksL2bERoTt3ARmyfJWrosKbycyjV45GfW+YgLbjRD5sG7a/YgmKX5A7eWiHxJ1oz+GEKZU1lTzbrjc61/ykr2nJwytItUtUSWxY6k/7eCuet9GsuYGcUaifyBu2cd98d0rzwZ+rCmc7WzkahwLqSzeVF/zruLmenui08PdCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728292496; c=relaxed/simple;
-	bh=orHHvBCFGutCM41vFPHAljUU7OO3BD272KMLX4hir6g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oJLpvroxWeCWvEEXxuuggj+FRR51nsoyY18EeOb70f7wTz5riDGXfouMpXKwh0F6QJKc7ExljJRjqSkLWhBufEncpTORsa9fa1joVyPgnN1oGzElxLc6zOFUwpsP58Z3+6Jcw6rDdDyE9oJl/jw0qRMj4DSu3vqEpMDRZcLPh60=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kirljLBc; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1728292600; c=relaxed/simple;
+	bh=YHoTprxdP0+daJj8yvPMUEEhFKpS9JjWg/OEw4mPUNk=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=IVKLsNocHSJKybdb5jOWod9b697veMbI71bbL2VNRI4KY7d2r7V2g7qTJ1UKYF8s0sSy4glLaOTEKWpjUT6FmosduidKLcSD0Bj03QWX5p8SOLZV+8fNgdLGJPmVZqwXmuoCCATxE3Vaz9dxe1amXFt8RcQ7d3LFIYYr22oSWKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gKvHaltE; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4974SrKR021306;
-	Mon, 7 Oct 2024 09:14:51 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4974Sppv019025;
+	Mon, 7 Oct 2024 09:16:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Tq7aRWIkV3GEwCHN8H9VtzFR3yhqTAAhfgZQXGGZXDg=; b=kirljLBcD/WhYrAk
-	hUACXAj87D6pt5QkYgcK5lHxzwWneF+5lXsMk36Q4a1rt6VlzK5nXipAKFTI/hBN
-	lc2uAO0SF17xq1t5cOg6R2g2cIV9rfI5f7FDiaHmYJkAq3T8bV2v14j8g448J1oi
-	lPONG/BTHOzfOqJd3TgozyVKcxAO1VqTC3Gud2aqT0t3hugfyTRj/ivjcL0+E5TB
-	r8COJAUXK1Xz3+Ipy1YUDDx+uMkEv03lKyaEfWEmLRACbq4RhMEj13UQjk339e+Y
-	AJeaXFI4ZQqwRumjww7I05h1Nne7Nd4m0uYiUYAnUz6dYhf67WiJHWcZufNCsFaG
-	eKCW2Q==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xr5kjym-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=x27etQNEHnfLHGBL8UDVEFViQ8il40EdXTo
+	FzqGNF9E=; b=gKvHaltEca3SI7thTQGR4AWkimW9b0G3YEle8PBvxLkz/wVQufz
+	jXMQ2Jyb6Rn10e34UT0ZodUKZOQ7bxttoBjWthZ83h7PP8BSzP4k+zyVx6Yb9yNy
+	V+Dancl2IPM+QTlSK1ti7QeJ40UeHnRdbqAyZ3Qsi1T//GHnAdtWSni26trLsfpC
+	bnshUYxA/Fc2jvfm3rUrb96fUDnS6bg57JGrEggLbtRWxejgyQUCNG9rMVMQt+qu
+	fZTAjopRLdR+5BBwuxiqQZmmW3lKqUsZWbmfR89QoNqkcIngFX6gNwWVwraEBBaB
+	Jb8kG7h+g9q8cbGs0W6J71VSz3ZmsvWZXdg==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xsn3m01-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Oct 2024 09:14:51 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4979EpWD020836
+	Mon, 07 Oct 2024 09:16:28 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 4979GPcU030548;
+	Mon, 7 Oct 2024 09:16:25 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 422xhkns04-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 7 Oct 2024 09:14:51 GMT
-Received: from [10.216.15.15] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
- 02:14:47 -0700
-Message-ID: <38e3730f-7fb2-4ea6-b55a-f6501e43d799@quicinc.com>
-Date: Mon, 7 Oct 2024 14:44:44 +0530
+	Mon, 07 Oct 2024 09:16:25 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 4979GPAG030542;
+	Mon, 7 Oct 2024 09:16:25 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.96.82])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 4979GOSO030538
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Oct 2024 09:16:25 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 2370923)
+	id 5C9C456A; Mon,  7 Oct 2024 14:46:24 +0530 (+0530)
+From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+To: mhi@lists.linux.dev
+Cc: quic_qianyu@quicinc.com, manivannan.sadhasivam@linaro.org,
+        quic_vbadigan@quicinc.com, quic_krichai@quicinc.com,
+        quic_skananth@quicinc.com, quic_mrana@quicinc.com,
+        Vivek Pernamitta <quic_vpernami@quicinc.com>,
+        Slark Xiao <slark_xiao@163.com>, Mank Wang <mank.wang@netprisma.us>,
+        Jeff Johnson <quic_jjohnson@quicinc.com>,
+        Fabio Porcedda <fabio.porcedda@gmail.com>,
+        linux-arm-msm@vger.kernel.org (open list:MHI BUS),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v3] bus: mhi: host: pci_generic: Add support for QDU100 device
+Date: Mon,  7 Oct 2024 14:46:20 +0530
+Message-Id: <20241007091622.3497928-1-quic_vpernami@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RESEND PATCH v2] arm64: dts: qcom: sa8775p: Populate additional
- UART DT nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        <quic_anupkulk@quicinc.com>
-References: <20240930085533.17119-1-quic_vdadhani@quicinc.com>
- <uk3zgyee62vrkcwtujkuw754wacvullmsjnimlqhmmbjit24rm@sqcrmbn7ngsg>
- <1fd4b0db-f9c1-44db-9aec-45f3aa269e19@quicinc.com>
- <B12D1E5C-76DC-4B71-B1E4-39F83B1FFFC5@linaro.org>
-Content-Language: en-US
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-In-Reply-To: <B12D1E5C-76DC-4B71-B1E4-39F83B1FFFC5@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CbreTk-CW7pcV-7JH3TJ-a-v8fCFPLCF
-X-Proofpoint-ORIG-GUID: CbreTk-CW7pcV-7JH3TJ-a-v8fCFPLCF
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: db4kjahMSgN9_UjH8yZP-j8Mqpqg72f1
+X-Proofpoint-GUID: db4kjahMSgN9_UjH8yZP-j8Mqpqg72f1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- clxscore=1015 mlxlogscore=885 priorityscore=1501 impostorscore=0
- adultscore=0 mlxscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410070064
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ malwarescore=0 spamscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410070065
 
+Add MHI controller configuration for QDU100 device
 
+The Qualcomm X100 5G RAN Accelerator Card is designed to
+enhance Open vRAN servers by offloading CPUs from intensive
+5G baseband functions.
 
-On 10/7/2024 1:03 PM, Dmitry Baryshkov wrote:
-> On October 7, 2024 9:06:52 AM GMT+03:00, Viken Dadhaniya <quic_vdadhani@quicinc.com> wrote:
->>
->>
->> On 10/7/2024 2:26 AM, Dmitry Baryshkov wrote:
->>> On Mon, Sep 30, 2024 at 02:25:33PM GMT, Viken Dadhaniya wrote:
->>>> Currently, UART configuration is populated for few
->>>> SEs(Serial engine) only in sa8775p DTSI file.
->>>>
->>>> Populate UART configurations of remaining SEs for sa8775p soc.
->>>
->>> I think this is a long standing tradition of adding UART configuration
->>> only to those nodes that actually will be used for UART on one or
->>> another device. Is this the case for all these UART nodes?
->>
->> Recently, we have begun adding all possible UART configurations, similar to what we’ve done with I2C and SPI.
->> We will continue this approach for future targets.
-> 
-> 
-> Please describe why it is done, not what is being done by the patch. In other words, why do you need all uarts in this case.
+Currently IP_SW1/2 channel support is not present in
+mhi_net driver, will be supporting them in future.
 
-Sure, Updated commit log in v3.
+Link: https://docs.qualcomm.com/bundle/publicresource/87-79371-1_REV_A_Qualcomm_X100_5G_RAN_Accelerator_Card_Product_Brief.pdf
 
-> 
-> 
->>
->>>
->>>>
->>>> Co-developed-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
->>>> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
->>>> ---
->>>> v1 -> v2:
->>>>
->>>> - Modifed commit log as requested by Krzysztof.
->>>> - Added co-developed-by tag.
->>>>
->>>> v1 Link: https://lore.kernel.org/linux-arm-msm/98e7dc28-4413-4247-bad1-98b529f6d62d@kernel.org/T/
->>>> ---
->>>> ---
->>>>    arch/arm64/boot/dts/qcom/sa8775p.dtsi | 231 ++++++++++++++++++++++++++
->>>>    1 file changed, 231 insertions(+)
->>>>
->>>
-> 
-> 
+Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+
+---
+changs from V2:
+- updated commit text.
+
+changes from V1:
+- Changing naming convention from modem_qcom_qdu100*
+  to mhi_qcom_qdu100*.
+- Updated commit text.
+- Fixed and corrected by passing mhi_pci_dev_info struct
+  instead of mhi_controller_config.
+---
+ drivers/bus/mhi/host/pci_generic.c | 60 ++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
+
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index 9938bb034c1c..b9b7dd8d9411 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -245,6 +245,63 @@ struct mhi_pci_dev_info {
+ 		.channel = ch_num,		\
+ 	}
+ 
++static const struct mhi_channel_config mhi_qcom_qdu100_channels[] = {
++	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 2),
++	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 2),
++	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 128, 1),
++	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 128, 1),
++	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 3),
++	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 3),
++	MHI_CHANNEL_CONFIG_UL(9, "QDSS", 64, 3),
++	MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 4),
++	MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 4),
++	MHI_CHANNEL_CONFIG_UL(16, "CSM_CTRL", 32, 4),
++	MHI_CHANNEL_CONFIG_DL(17, "CSM_CTRL", 32, 4),
++	MHI_CHANNEL_CONFIG_UL(40, "MHI_PHC", 32, 4),
++	MHI_CHANNEL_CONFIG_DL(41, "MHI_PHC", 32, 4),
++	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 256, 5),
++	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 256, 5),
++	MHI_CHANNEL_CONFIG_UL(48, "IP_SW1", 256, 6),
++	MHI_CHANNEL_CONFIG_DL(49, "IP_SW1", 256, 6),
++	MHI_CHANNEL_CONFIG_UL(50, "IP_SW2", 256, 7),
++	MHI_CHANNEL_CONFIG_DL(51, "IP_SW2", 256, 7),
++};
++
++static struct mhi_event_config mhi_qcom_qdu100_events[] = {
++	/* first ring is control+data ring */
++	MHI_EVENT_CONFIG_CTRL(0, 64),
++	/* SAHARA dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(1, 256),
++	/* Software channels dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(2, 64),
++	MHI_EVENT_CONFIG_SW_DATA(3, 256),
++	MHI_EVENT_CONFIG_SW_DATA(4, 256),
++	/* Software IP channels dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(5, 512),
++	MHI_EVENT_CONFIG_SW_DATA(6, 512),
++	MHI_EVENT_CONFIG_SW_DATA(7, 512),
++};
++
++static const struct mhi_controller_config mhi_qcom_qdu100_config = {
++	.max_channels = 128,
++	.timeout_ms = 120000,
++	.num_channels = ARRAY_SIZE(mhi_qcom_qdu100_channels),
++	.ch_cfg = mhi_qcom_qdu100_channels,
++	.num_events = ARRAY_SIZE(mhi_qcom_qdu100_events),
++	.event_cfg = mhi_qcom_qdu100_events,
++};
++
++static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
++	.name = "qcom-lassen",
++	.fw = "qcom/lassen/xbl_s.melf",
++	.edl = "qcom/lassen/edl.mbn",
++	.edl_trigger = true,
++	.config = &mhi_qcom_qdu100_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.sideband_wake = false,
++};
++
+ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+ 	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
+ 	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
+@@ -822,6 +879,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 	/* NETPRISMA FCUN69 (SDX6X) */
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
+ 		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
++	/* QDU100, x100-DU */
++	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0601),
++		.driver_data = (kernel_ulong_t)&mhi_qcom_qdu100_info },
+ 	{  }
+ };
+ MODULE_DEVICE_TABLE(pci, mhi_pci_id_table);
+-- 
+2.34.1
+
 
