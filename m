@@ -1,159 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-33452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33453-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4723993828
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 22:24:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A70FC99386D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 22:40:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B7EA11C20FE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 20:24:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4E20A28478F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 20:40:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 148061DE4E3;
-	Mon,  7 Oct 2024 20:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 457011865FC;
+	Mon,  7 Oct 2024 20:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yFJfitYo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K1egh3ae"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9701D8E1F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 20:24:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F78C81727;
+	Mon,  7 Oct 2024 20:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728332648; cv=none; b=QcVdxz3A++gRxcGyUZKWNJpC2grxgXmAKUyBCzI6a/caAJbkOT60RScpvTZyAURSiRThtyQR+gSZVbBQ+EHOxEjaF3eGcZ0K97ILr7rwgJMpVCkQp+lqMbd2KOSgQZ+cPezJTJ8EpAWNbmkOSLUiva1ii7WqsV9EAw5jYx5d/tI=
+	t=1728333644; cv=none; b=JD7Q1RmB+CZ2nTcOG1xsU90kLwU8WfxAQuKTEjBEYdNFEFdm+dtMiNHv4Gf/+6VbAwdjKHwZei4B9qtw1RvZfcSejPo6gCJJpYXZIvbDAkQuPyD8M5b1DLAj67/PZbBJHa13w2Sb/NTgyLa57/Ova+Kd/D/VqZiAO9Nmn9mLE9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728332648; c=relaxed/simple;
-	bh=rm2osUWB4IgyVq8ykVYBpG6R1/gpKjI5PBwVzeViHPk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eNy6NXwccqatNbWSCNdvdd/NpYoxPuk37yK1QIEpLq4JN0WnRGNwH1SQAbXyH3jTwbQ2H5VZ2pVtgWAH0e4PbjRO/Ja2booF1k0xDjb4WSSv31ldfHeBKSp1Kg2kgetSC5jS6qZKm2sutIwTq+QKlwOpnUowylCzr29lvLh7dEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yFJfitYo; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fac3f1287bso52816941fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 13:24:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728332644; x=1728937444; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lFvl/yEangr8owxbos5zhVtsni37SUgFVrliUsmDQcc=;
-        b=yFJfitYo7WdgQQpQQX90y9ySU/jtNTZEb8VdNervJOiLWt2ZoKZ3eyQxlu1aLNFfXH
-         036q56kgR1aZ3DgIwiw00Z+//NIEt7se1aNo2O9/Ili0vXba4mUnPELixeKgJsKjRn+T
-         RpzUW1VAbfObmTFVvrmn0J4XHZ4YN1+y1TQ5or2VSXx+FC4/J7K4UuZViK9i7jIK7Mp3
-         VN1LHPSAXS39klKqOgiR/OIMZgMqNtbS7LJq+R18DoxQcoduEHTfn7ikpTc593Rq2wSV
-         r6cZe302wQX1LJn0ACWeafftYNHQKlNfiKENgwDwPscM1rX7e8d9ClPWRzzcuQBaUNHL
-         eu8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728332644; x=1728937444;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lFvl/yEangr8owxbos5zhVtsni37SUgFVrliUsmDQcc=;
-        b=odn+Bi+LEzdiJ0TMl9B+bOa1Fyx06DHKSMdpIapOXWG67uVjo9TiAvG9BuYKeP79Qj
-         bZ28OlnSXrt+jweOZQ16/RFRvZ0T/7wDygjYC2uiKDXi712G/0H0pDwWV0M4paEJnx2Q
-         0ZBcs1w0gwqzIaiCI1zzz1OE7s6M9bs9K9kwTsOYfrpOIz7V/1FbitjJXNrGE/dJ8d+Y
-         0nJMhKs62SjnnJFJ3tQUfW40S13t6QO07Q5vxcijmugNCQXBO+gwO8wU54zgFrTQY3lY
-         I4pdyxXRImAYq1EdzaqYbxNhdqsXeS7sqluyyfYXaxgptHyQCXkbqA+C5EXlmCfXUbXr
-         6diw==
-X-Gm-Message-State: AOJu0YzD/Totaat9pE/RfRlL8KLyp7zf+UGpzPX+6+TkdP4qPD9WjUW8
-	T5Eh5ItIOCrR/DghSODDXdkVyXAcHaUMTZ3zYOhMUNVvsSXfHJ00eSQ4Hr/VpEUjyLsQU+IDFZG
-	ubRqnzEtKgcLisUThAZ4mYNzBKGPHnAMT9HCQXQ==
-X-Google-Smtp-Source: AGHT+IF2J2KtODAOg6E0IGOtSHekx3v4Zat7hWdd2giyI0z5Dhlv+dq60y4SCVzsX3JaLj0NPvweMQR6zXmaZGoQZbk=
-X-Received: by 2002:a2e:a545:0:b0:2fa:c913:936 with SMTP id
- 38308e7fff4ca-2faf3c0184emr72904611fa.1.1728332644356; Mon, 07 Oct 2024
- 13:24:04 -0700 (PDT)
+	s=arc-20240116; t=1728333644; c=relaxed/simple;
+	bh=FLCwmZ/Hn/iyF5AwvBG6cLSb/FnSNdu7VYbYWE8S6oI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=TGaHHg//t8vAsFSANvJ5DIQr1BkMhaZ2ctaHqJsK1vMs9vsEj/bydJMrTkTx3VVxZ0CS5kwN0dNUo0uVnOXCmDlbv+BodCkUdtTN72DrCAtj+NXcTRyQF8+9A8DDunUhye8Ys4C+iPJ9n54r09PZfjVzON/i7KSTezJpRMXv1H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K1egh3ae; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497KdOU0017237;
+	Mon, 7 Oct 2024 20:40:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XPSKTPCTTPqJMs0Azumv01NrakAMCZY5uO45cD8tIxg=; b=K1egh3aeU6PtPU+m
+	XLYKMuUmzd+IErNoTmhq7TbHc19M7Z9Co/6FrMB1UI89o6cFClSKctVOojU2JzKi
+	61V/GHFtrJTOPTuUBizJRlBYtrjVuURo2V3rAj79vtU4emhfzwQJzGGHFKyTXg6l
+	2TNBGWLCDNU3aDXaB7q1XAvhHnWa69vVAQmdKMGNN9DZiJfzoKSlIVg6XjURln8j
+	uCLpOPbdkfMGs2OBjyxcRTWPxsXJONuoN7zgV6A4KCNCSl41NH6YaJ588FQaCVAw
+	B8KUTu6ICPt/12jk8sGnLdgXA4SJHpb9/8zfe36fpiFGps2KnQyjs4IpuFCE9or4
+	NBi/7w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424kaerg1b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Oct 2024 20:40:37 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497Ke7mo013908
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 7 Oct 2024 20:40:07 GMT
+Received: from [10.216.6.71] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
+ 13:40:05 -0700
+Message-ID: <87f778cf-0e1e-4505-a0e8-7434316a9537@quicinc.com>
+Date: Tue, 8 Oct 2024 02:10:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
-In-Reply-To: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Mon, 7 Oct 2024 22:23:52 +0200
-Message-ID: <CACRpkdbj8fkQf38n0t-==cFZj55TPgoTGM-dzESWgeRGfPHofQ@mail.gmail.com>
-Subject: Re: [PATCH v6 0/5] Initial Support for Linksys EA9350 V3 (linksys-jamaica)
-To: Karl Chan <exxxxkc@getgoogleoff.me>, Arnd Bergmann <arnd@arndb.de>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, andersson@kernel.org, 
-	konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-gpio@vger.kernel.org
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] firmware: qcom: scm: Return -EOPNOTSUPP for
+ unsupported SHM bridge enabling
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Konrad Dybcio <konradybcio@kernel.org>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Qingqing Zhou <quic_qqzhou@quicinc.com>
+References: <20241005140150.4109700-1-quic_kuldsing@quicinc.com>
+ <20241005140150.4109700-2-quic_kuldsing@quicinc.com>
+ <mgdj5xvqby3ftnnhma7dxvxskavx4p2pkzyorg4z3cza5xkimr@sqe4k2szwfbq>
+Content-Language: en-US
+From: Kuldeep Singh <quic_kuldsing@quicinc.com>
+In-Reply-To: <mgdj5xvqby3ftnnhma7dxvxskavx4p2pkzyorg4z3cza5xkimr@sqe4k2szwfbq>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: x23qsIMJTBjEfkr5cq9gLwJnm7sWz66e
+X-Proofpoint-GUID: x23qsIMJTBjEfkr5cq9gLwJnm7sWz66e
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ adultscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410070142
 
-On Mon, Oct 7, 2024 at 6:35=E2=80=AFPM Karl Chan <exxxxkc@getgoogleoff.me> =
-wrote:
 
-> Also The original firmware from Linksys can only boot ARM32 kernels.
->
-> As of now There seems to be no way to boot ARM64 kernels on those device.
+On 10/7/2024 7:10 AM, Bjorn Andersson wrote:
+> On Sat, Oct 05, 2024 at 07:31:49PM GMT, Kuldeep Singh wrote:
+> 
+> Please shorten the subject a bit, perhaps:
+> "firmware: qcom: scm: Improve unsupported SHM bridge detection"
+> 
+>> From: Qingqing Zhou <quic_qqzhou@quicinc.com>
+>>
+>> Currently for enabling shm bridge, QTEE will return 0 and put error 4 into
+> 
+> s/for/when/
 
-So this is a Cortex-A53 Aarch64 system running in ARM32 mode.
+Ack.
 
-So I got this interactive U-boot log from Karl showing how the attempt
-to boot an Aarch64 kernel manifests:
+> 
+>> result[0] to qcom_scm for unsupported platform, tzmem will consider this
+>> as an unknown error not the unsupported case on the platform.
+>>
+>> Error log:
+>> [    0.177224] qcom_scm firmware:scm: error (____ptrval____): Failed to enable the TrustZone memory allocator
+>> [    0.177244] qcom_scm firmware:scm: probe with driver qcom_scm failed with error 4
+>>
+>> Change the function call qcom_scm_shm_bridge_enable() to remap this
+>> result[0] into the unsupported error and then tzmem can consider this as
+>> unsupported case instead of reporting an error.
+>>
+> 
+> Sounds like we want a Fixes tag here.
 
-CBT U-Boot ver: 3.2.08  ([IPQ5018].[SPF11.3].[CSU2])
+Ack.
 
-## Loading kernel from FIT Image at 44000000 ...
-   Using 'standard' configuration
-   Trying 'kernel' kernel subimage
-     Description:  Kernel
-     Type:         Kernel Image
-     Compression:  uncompressed
-     Data Start:   0x440000a8
-     Data Size:    8249289 Bytes =3D 7.9 MiB
-     Architecture: AArch64
-     OS:           Linux
-     Load Address: 0x41208000
-     Entry Point:  0x41208000
-   Verifying Hash Integrity ... OK
-(...)
-## Loading ramdisk from FIT Image at 44000000 ...
-(...)
-## Loading fdt from FIT Image at 44000000 ...
-(...)
-fdt_fixup_qpic: QPIC: unable to find node '/soc/qpic-nand@79b0000'
-Could not find PCI in device tree
-Using machid 0x8040001 from environment
+> 
+>> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
+>> Co-developed-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+>> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+>> ---
+>>  drivers/firmware/qcom/qcom_scm.c | 12 +++++++++++-
+>>  1 file changed, 11 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+>> index 10986cb11ec0..620313359042 100644
+>> --- a/drivers/firmware/qcom/qcom_scm.c
+>> +++ b/drivers/firmware/qcom/qcom_scm.c
+>> @@ -111,6 +111,10 @@ enum qcom_scm_qseecom_tz_cmd_info {
+>>  	QSEECOM_TZ_CMD_INFO_VERSION		= 3,
+>>  };
+>>  
+>> +enum qcom_scm_shm_bridge_result {
+>> +	SHMBRIDGE_RESULT_NOTSUPP	= 4,
+>> +};
+> 
+> This is not an enumeration, but a fixed defined constant. Please use
+> #define.
 
-Starting kernel ...
+Ack.
 
-undefined instruction
-pc : [<41208004>]          lr : [<4a921f8f>]
-reloc pc : [<41208004>]    lr : [<4a921f8f>]
-sp : 4a822838  ip : 00000001     fp : 00000000
-r10: 4a83b914  r9 : 4a822ea0     r8 : 00000000
-r7 : 00000000  r6 : 41208000     r5 : 4a97d848  r4 : 00000000
-r3 : 644d5241  r2 : 4a0ae000     r1 : 08040001  r0 : 00000000
-Flags: nzCV  IRQs off  FIQs off  Mode SVC_32
-Resetting CPU ...
+>> +
+>>  #define QSEECOM_MAX_APP_NAME_SIZE		64
+>>  
+>>  /* Each bit configures cold/warm boot address for one of the 4 CPUs */
+>> @@ -1361,6 +1365,8 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh_available);
+>>  
+>>  int qcom_scm_shm_bridge_enable(void)
+>>  {
+>> +	int ret;
+>> +
+>>  	struct qcom_scm_desc desc = {
+>>  		.svc = QCOM_SCM_SVC_MP,
+>>  		.cmd = QCOM_SCM_MP_SHM_BRIDGE_ENABLE,
+>> @@ -1373,7 +1379,11 @@ int qcom_scm_shm_bridge_enable(void)
+>>  					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
+>>  		return -EOPNOTSUPP;
+>>  
+>> -	return qcom_scm_call(__scm->dev, &desc, &res) ?: res.result[0];
+>> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
+>> +	if (!ret && res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
+>> +		return -EOPNOTSUPP;
+>> +
+>> +	return ret ?: res.result[0];
+> 
+> I'd prefer, with the additional check, that you'd structure it like this:
+> 
+> 	if (ret)
+> 		return ret;
+> 
+> 	if (res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
+> 		return -EOPNOTSUPP;
+> 
+> 	return res.result[0];
 
-resetting ...
+Sure, above looks more cleaner. Will update in next rev.
 
-So perhaps someone knows how we can get around this.
+> 
+> That way we deal with SCM-call errors first, otherwise we inspect and
+> act on the returned data.
+> 
+> That said, the return value of this function, if non-zero, will trickle
+> back to and be returned from qcom_scm_probe(), where Linux expects to
+> see a valid error code. Are there any other result[0] values we should
+> handle, which would allow us to end this function with "return 0"?
 
-It seems to me the U-Boot is in 32bit mode and tries to just
-execute an Aarch64 binary and that doesn't work.
+As qcom_scm_shm_bridge_enable() is an shm enablement call, need to handle
+supported(or unsupported) scenario appropriately and other errors can be
+propagated to qcom_tzmem/qcom_scm_probe.
 
-What we need is a 32bit mode preamble that can switch
-the machine to Aarch64 and continue.
+Please note, other return values(related to access control) from QTEE are
+failures and do not require conversion to Linux error codes.
 
-I don't know *how* to do that, but I would *guess* a botched
-return from exception where you provide your own stack
-with the Aarch64 state hardcoded on it should do the job?
-
-The Aarch64 maintainers will know what to do.
-
-Surely it should be possible to add a little code snippet
-to do this somewhere in memory, and that in turn jumps
-to execute the actual Aarch64 kernel in Aarch64 mode?
-
-Yours,
-Linus Walleij
+-- 
+Regards
+Kuldeep
 
