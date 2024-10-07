@@ -1,112 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-33305-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 578CD9922D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 04:57:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B547F9923BA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 06:52:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D010EB22182
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 02:57:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 419E62816EE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 04:52:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46D41125BA;
-	Mon,  7 Oct 2024 02:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DFC932AD05;
+	Mon,  7 Oct 2024 04:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jYfNWiiz"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="f7PKCYpE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB041E574;
-	Mon,  7 Oct 2024 02:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1044204D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 04:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728269823; cv=none; b=T9JIBBdAD5Y5liSyU7Qy6LDlw0noGjxwe4sU/s8j2nPX9u7sUx2z9wHdSe1d8P9qv7LJTyhU6wmuKskqwE89pqN+d26Glxvzp2BjT5I7QBA4cG9Ps397ipmyiZb7ufWKkMGIfmEcjg8ZIRhuPFHmN8N5imxnxn83EsM3Fn8evGQ=
+	t=1728276762; cv=none; b=Ue9W4Ot/01hGe2WgB6ImCyN/VmdNm8zIqGVS72Tv7alYPkMGTvx8NTL/+ADbShce5hujC662ELEYIAwYo1WGSucbP1c1lcqQQdvgtpxbiC1wKrvVRGmFodswzOscsONIaN7Thp4ud+Ilg/pNfyXqCr0o1yiAoBtrShoLu//SiEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728269823; c=relaxed/simple;
-	bh=fCvIs1nwp96x+JVT//3xLsH7McgWe0ybdKYlG2H/j9E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tM2DsDaGCpyUrMEYG2zR9aVRy8lfSHlTd9Kjm/7JQSz4HND3/+knz/s/KIBb3O7/yAmsMpcQAx5/KxV/UbBdZgOJsoGHHxowiF7SiZef6MURIAM1/3xFFgu6l4yMqSLrrX/HFXnBUkSpPmTe1TIRj9p2OnAIkxKUjd4UYuO8tJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jYfNWiiz; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71dfc250001so682698b3a.2;
-        Sun, 06 Oct 2024 19:57:01 -0700 (PDT)
+	s=arc-20240116; t=1728276762; c=relaxed/simple;
+	bh=Pe51Lg/PsZLWAqG9WRRKbxZ4v4+EdZ8UaY5o4W06xTA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=rBSAT+4O1mBsRJbgF32CdqxuFcwbESFxVGtyu+7ZV4vymPFtG0+OFfiPTX/DjQr8xiZPNL3ujFWg3G3sxJxUXPKw3qH5RCRsLctO/IxNOMwFvupUTO5uGhEr2N9XRPkl1W06yvfDWeG9myTwjtOAkyyg4S7L4ly2XlgkU4Betks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=f7PKCYpE; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4582c4aa2c2so30621051cf.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 06 Oct 2024 21:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728269821; x=1728874621; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Bo8yVY2LwYLpMiHODLXo99yxSx6R1pGfgpw5S+JeFJQ=;
-        b=jYfNWiizuOXHKm/caQGC/VkxR3ZOLUgGsVjKyHjguAwh1e5NrtPIk/kureN+ZyfN45
-         tWl41Ktw7IRFv6gay5naK1RtKNJTNbCnZX/Rybok5EIT9raOKG7WPxyTF/2PrCkRGNlL
-         UL9rvN3kOtBQwnYm0iHyYTBTRXcnjgV6tW+E18K0E/zM0p+sbwfvQu9OjUA06Ar1ApF5
-         oxT3Pepprgi4y8y1Udb6X8vvIoxmK9ps9AMSc4r79m8Hg5kfqE3o31SVdNmTpJRd7lop
-         kpgq3TCe11I+fwRTRBRRk6EayAHFAY6L7/xOsRoRPfXBhHPbslu9q1TQ0vXvs1ubU02X
-         b3/A==
+        d=marek.ca; s=google; t=1728276759; x=1728881559; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0JH+eeGvKfz71oS0W6AeXi5f58Oy8T9dmTdRTdFrBnI=;
+        b=f7PKCYpEyASYIm9Zx+2bSByq6wqn8r12rCjhHOb503a9RR7oTvEhPCgd9XrZ60DNdW
+         +jxhl9mtpI6ONwPRk6yjUrG1G4s7Tdvc0HnpRfPtFwgWBOSA23eZuXHwnRvZTrkQWIJj
+         i3U8OxSkCSAjgsUsp5BvaCpNGnQTGM5Tf9baUcYhc8bwYOhvl/KEzYJ0h1KzfHCb+iCF
+         A41ROm9rqwDxTaKU+WHRjjaKiq6NQ16kDhveIb+i4RDk/CiB/bKPdnjXj4uDhLw8VYqp
+         S+f6+hby1hSaLzvG4Z5x3JC5t2mehY5NzQSOe3Ky61aYPrX2+SLEM+zxLo+sFNtITZep
+         kH8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728269821; x=1728874621;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Bo8yVY2LwYLpMiHODLXo99yxSx6R1pGfgpw5S+JeFJQ=;
-        b=coKrFUco5QfD7H/gr/klh7XCkoUgLnXsAAJBJM73Vmz168qMTBxU+EPhZXAvtSe0XG
-         b5J1GKBOBRLORIip1B6y2MI4lslObJZq9fXzrKEZ94kS/Fdmq+0KDedjgilTdY+aIHff
-         fRmwiaVgt16pI+2IEeff9Y8gwYoGCUJLsEapVyGU4qFHcv3vLyPf9KkjwAEpV2cPt0ek
-         sR8+hBwaJRqSdJUpWa451YWFEQu6cS/DfOrz5X/aAm+VQM12cRm66qj6zeu8TYqtf8uy
-         +H8zv6tdJqzInOn+jtbbiLNez7cvq09JBE+ZKteNtnh3arKyYnl8WiTjuKjjnyb5Gsm8
-         RKJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUXn9Do66WbWzM617tkJW3R2mYOEFAhaeHjSlpUEz2Uml3LNjC2/pvt/hxJmlQQok1nSpWS5DGGIYCL@vger.kernel.org, AJvYcCUhNPpovc4aZjbqftki+La3M78jGNfX7CUvQz29g61zBSuKfynP1DLGJtRrC+fOlLNm+nv0pMLs6BdMn0QGcw==@vger.kernel.org, AJvYcCVs/ESIuhdtFo9zztO/+B4S1B06ucH+Nsa8x+Ik0ZqWUyK7ji0kFAL+67zxftmYvhKfExE9IXxLVC1qx8wI@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywdrrmt9dndxUYe9JMyFx2VfRTMvrk5IzoiA5TKxUir65X3kVWz
-	hN2gAKUBUDMokU3vwW2zFUp5w5+gwuaKimGqOpgGortm8h/cpSQb
-X-Google-Smtp-Source: AGHT+IGW9oMmDOsTCVG026ZXmF6CK6Q7T6eNTgbZHZYoi1OLJqrQ9a+OxM7yJ6iEqCkYoq0mfmBxXA==
-X-Received: by 2002:a05:6a00:2302:b0:719:8f48:ff00 with SMTP id d2e1a72fcca58-71de23e8f6fmr15928243b3a.15.1728269820924;
-        Sun, 06 Oct 2024 19:57:00 -0700 (PDT)
-Received: from localhost.localdomain ([103.149.249.231])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71df0cbccffsm3408998b3a.32.2024.10.06.19.56.56
+        d=1e100.net; s=20230601; t=1728276759; x=1728881559;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0JH+eeGvKfz71oS0W6AeXi5f58Oy8T9dmTdRTdFrBnI=;
+        b=o9cZeGxkjv0KUOl2d9sPfc+PWxOgmUvhd/hxivKEJoVaaqErxnmBNkPcaJLFqH+VXm
+         G7lMuNpn2zayO0GdHun6mVvFkAm+qhzotzRFxNdUdh0CBNO7q4V+c7cs0Apxx7PRkL9y
+         fIpDcjm0OWCSANdTplz8VoxtvI05Wxu70Hk6Nt26k+zAklguh9WumT4JOY5D1WgpMwaD
+         Y6sSGRLUDAgw/ed6IO8Xb/2FM38bqYW7pgucxo9MTlpVKvVtShohJFKVqoaQTzWwgfKZ
+         Tlo8PV3jyhqo/wB4Ous2YKjuZTb7gKuNdWxCqtTQ6fIwHfLwstT9f7g++t941b+EJ1Ds
+         clow==
+X-Gm-Message-State: AOJu0YwHqce5ni3CXfJ34Io1DcEjocAJvMXOAFIPXfKSDvIUhLMCJsi1
+	JTCoORWo6F0Q1Qh+nPpsWzJ+vcUSQFK8rr+ZvEWDOESS79SwkMfntsLcBkWzm2bAaezk0UUJeqF
+	0nUY=
+X-Google-Smtp-Source: AGHT+IH/9bsZq7uHy78secXuJvI/6P0sWacsBbySahkLVEBVoPJhgQSm4YakQO1cbX3fBAenHpNq8g==
+X-Received: by 2002:a05:622a:450:b0:45d:5d31:89f0 with SMTP id d75a77b69052e-45d9ba2f03dmr192178031cf.3.1728276759124;
+        Sun, 06 Oct 2024 21:52:39 -0700 (PDT)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-45da764043esm22666351cf.88.2024.10.06.21.52.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Oct 2024 19:57:00 -0700 (PDT)
-Date: Mon, 7 Oct 2024 10:57:17 +0800
-From: Jianhua Lu <lujianhua000@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        Sun, 06 Oct 2024 21:52:38 -0700 (PDT)
+From: Jonathan Marek <jonathan@marek.ca>
+To: linux-arm-msm@vger.kernel.org
 Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3]  arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi node
-Message-ID: <ZwNODSqKNJmkY-l2@localhost.localdomain>
-References: <20240929112908.99612-1-lujianhua000@gmail.com>
- <20240929112908.99612-2-lujianhua000@gmail.com>
- <p75ivby5ajlmnvebqkn3mq7t5xh6awewjwkwpa5rjiqv2ijijl@aqemqgxveu55>
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+	Arun Kumar Neelakantam <quic_aneela@quicinc.com>,
+	linux-remoteproc@vger.kernel.org (open list:REMOTE PROCESSOR MESSAGING (RPMSG) SUBSYSTEM),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
+Date: Mon,  7 Oct 2024 00:47:22 -0400
+Message-ID: <20241007044723.25347-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <p75ivby5ajlmnvebqkn3mq7t5xh6awewjwkwpa5rjiqv2ijijl@aqemqgxveu55>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Oct 07, 2024 at 12:02:34AM +0300, Dmitry Baryshkov wrote:
-> On Sun, Sep 29, 2024 at 07:29:07PM GMT, Jianhua Lu wrote:
-> > Add wifi node and this wifi module is connected to pice port.
-> 
-> Could you please add ath11k probe messages to the log? We might need to
-> add an additional node with the calibration variant.
-> 
-Hi, Dmitry. Do you mean that I should add ath11k probe message to the commit message?
-The following is ath11k probe message:
-[   10.285469] ath11k_pci 0000:01:00.0: Adding to iommu group 12
-[   10.285637] ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x604fffff 64bit]: assigned
-[   10.285699] ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
-[   10.286003] ath11k_pci 0000:01:00.0: MSI vectors: 32
-[   10.286023] ath11k_pci 0000:01:00.0: qca6390 hw2.0
-[   10.652407] ath11k_pci 0000:01:00.0: chip_id 0x0 chip_family 0xb board_id 0xff soc_id 0xffffffff
-[   10.652429] ath11k_pci 0000:01:00.0: fw_version 0x10121492 fw_build_timestamp 2021-11-04 11:23 fw_build_id
+The name len field of the CMD_OPEN packet is only 16-bits and the upper
+16-bits of "param2" are a different field, which can be nonzero in certain
+situations, and CMD_OPEN packets can be unexpectedly dropped because of
+this.
 
-I'm not sure if it's necessary to add calibration variant because wifi
-works normally on this board without adding calibration variant.
+Fix this by masking out the upper 16 bits of param2.
+
+(the commit in this Fixes tag is not where the original code was introduced
+but it should be far back enough not to matter)
+
+Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/rpmsg/qcom_glink_native.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 0b2f290069080..e4933b823238c 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1204,7 +1204,7 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
+ 			ret = qcom_glink_rx_open_ack(glink, param1);
+ 			break;
+ 		case GLINK_CMD_OPEN:
+-			ret = qcom_glink_rx_defer(glink, param2);
++			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
+ 			break;
+ 		case GLINK_CMD_TX_DATA:
+ 		case GLINK_CMD_TX_DATA_CONT:
+-- 
+2.45.1
+
 
