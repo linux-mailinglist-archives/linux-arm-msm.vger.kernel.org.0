@@ -1,140 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-33361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6CA1992C56
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 14:48:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 312D5992C7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 15:02:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91C1E1F22F65
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 12:48:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E9B1C283213
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 13:02:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5041D279F;
-	Mon,  7 Oct 2024 12:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E846C1D0E24;
+	Mon,  7 Oct 2024 13:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dl443a54"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FroXhAIF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAC31D3185
-	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 12:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A2218BC14;
+	Mon,  7 Oct 2024 13:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728305234; cv=none; b=fV7D5nHAwKwds3RG5SindNx2a7c6xNEwA1Vk/+DyrCcqhqtDE1Z/X7mKT4Z6ak2tz/Lib61z5y9ZqDqXR6yGNIHd7nABaDkN/vUh/SKGncIBLZuvdhdFZTovssUgJIX60gE1zRQH2t2tnGuXhaQ06Bqp37JKbNUGdEpQkjVnYzc=
+	t=1728306159; cv=none; b=XLareVmL4D4VREty9r4IMsgoDPZ/qfZbFDf5p5F2wq9KUvmcweIfVjOxXLDoB98l5OFhbCNkwZiCZWeLQVwFbESmJIfMQlK7GbAXxSaw1O4yTkhYNbMdWTJM3GSzfygLViRzW7sxoINI5VXT2NWZ8fTmYx+ZbCve8l37DaBrmgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728305234; c=relaxed/simple;
-	bh=jo6zA17WYEVKD4kAqrD5bI/uK/hqU/C2jgKYXrjvDXw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H0cWO8VIi3iV/e60HWDwL8JogcRJ/YSLFvv/YTZFiWKG4z3TeLLMmAg2RG0UZ3Goyng5UanGYqooV4Rc4GclS4PG6VbRfLtOXb67u+eZ3XxPW9Aa8BpFApgv8KNj1ogh5m/iGAOEKUwuWd55fIp6fmeh2ZrGIS8ZEVVwVLrL1B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dl443a54; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6e2e4237da4so13685487b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 05:47:12 -0700 (PDT)
+	s=arc-20240116; t=1728306159; c=relaxed/simple;
+	bh=wikcKEX649wF6wZpeFvNl3HiQFi46qad0PLBCHQAJog=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=iwwl8C7R5uc3hIf1COxm2yToCKPMGke0yX7RTba5T41XKZHfoVdZFQpMEbr0KwSBFSdwvawqQWcTs6q3x89Cy5q+KPif0RdcFtDetEwC+yHj/F7c8aJWYfeh6RrhACiMQv8QM9RYr7Vp81v6QnzzEmHloR92c2LV9lMGcCi+a5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FroXhAIF; arc=none smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-7e9f998e1e4so1514985a12.1;
+        Mon, 07 Oct 2024 06:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728305231; x=1728910031; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OCFd3AswX/UvsHDjGk8fmcWJKuiqqQyLNfZu18RpBKc=;
-        b=dl443a54a0VaC4qwaIDne7ufYge0BK6G6DjDTACR6ZyR40oJpVBnQk0FVnC05L9qkB
-         lpGH8K1T92tCZ1mnQmfFPlIybdYCQOM+RGg+9pyiqL51qBUDxOJ64H196UVcA2YxgknA
-         TybBNuK3rD3KUD5ltU6pItFrBxi1eHVL/SNgMuveGP3w1i3XM4Z8oCcSQn8KE6HYc2tz
-         UsmGb+difN4H6wAvvW/DoO3BcUmrw7vqFDJzhQ3nOmr/WQZwnpLkBMkIh6w+VdRqvWiJ
-         zlMVrf7E1kjXcWUXweGAh3uYZDr47J+xIcz2WIt5Yylkwmzt6/bOzPtC+huJCEOHYjt1
-         rVqA==
+        d=gmail.com; s=20230601; t=1728306158; x=1728910958; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZWMilAdAhXOxfk4TdLStJoaJ1G5RmvUuFw/ETpmqfO8=;
+        b=FroXhAIFIwpOtWUyRKQUBYNmlw6JjkSdDJ80ENzJFLF9RGGFIfW4gGDkYGuRqlIBem
+         CrkLfH02hTNCHh68MU6bbyGDp2356pz59GfKLZj1J0dpUI4FBl1OL3LEHFMrn5Qc9XIC
+         ntUzhV8gNwgO/paotaI7lsoT1UITvGcBJkUE4PE6ZmNBOqhpx9vAfvKQTYJwFsSmR5gp
+         vyag/9uTE4zKqfYIHVcGL5hE08FwrZYRMCCyHPnj9c7TWvfDFKLV/9PxjQnouDzdmCwv
+         O0+pg8qd/O1SFWrDRH5WnVuxSD9il2pjE4cAuoemzXFd7DpZZ1Tv7ZtgbjkB/ux9li6x
+         f3xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728305231; x=1728910031;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1728306158; x=1728910958;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=OCFd3AswX/UvsHDjGk8fmcWJKuiqqQyLNfZu18RpBKc=;
-        b=to8VG1sV3NqtrtsNp2mM5A4f27iz/5TdhgpzDd6VozCt3QyHc9pXULFm8hJqyEjDJW
-         iiiQTGQ7IW3ioer+ldBlgC0iLti3jBJehAtgQCj6vQ2IC5/t+RPgNDQ79yCkAlpNtvwt
-         /reH/PEXsSQHorCo2f0GosFKU9jakIN/Pn5Su0oaXOJr5RGHtc7iUUZ70KLTjMQSLlPf
-         Pccha25Ly+VPZHZE9H0sTinZvpeCy0EFAxw+CpD9UyzJuwbZ7z9gsjjY1yIwCNxEYBV7
-         vkyfdA4BctpCa1xU1LHtRTNKAtVU7phuPNU32tH04jNz/QgPqM40bRg/55ft7h1wSAb0
-         EF9A==
-X-Forwarded-Encrypted: i=1; AJvYcCUYJ08+ZN3pV43ToThMaMCUM7M6m7LrZyW0fJYREYzY+4jynfFYRpwVDBiz6aZ4kwHdRVbgeeWcXWWj7JBI@vger.kernel.org
-X-Gm-Message-State: AOJu0YxguBNMa+JOJ6J1yMLwZwtITHlBpxMFNP2AMU01WcqHT8V5V9dU
-	V3JmmDYAxKQGbp6AqLcZu8/zC5Dtbq3Jcp7ZnFqy4mh+PVhc81oczwLYAmDx4gNLYIDYWPNDp4n
-	pyUtThtD7Tw0mMdGHWVyAtRKruwYrz58kxXvWmg==
-X-Google-Smtp-Source: AGHT+IHcN86fNTn9NJS9sEdYsHveChw5c5a4u8Q17Bg6k1OV8AmiweKXXUKwE6aCQZaVkcm5WHu+zP0RnPEZbICAVoo=
-X-Received: by 2002:a05:690c:6609:b0:6d1:41:5b35 with SMTP id
- 00721157ae682-6e2c6ff649amr82400577b3.13.1728305230862; Mon, 07 Oct 2024
- 05:47:10 -0700 (PDT)
+        bh=ZWMilAdAhXOxfk4TdLStJoaJ1G5RmvUuFw/ETpmqfO8=;
+        b=aiV87bTSZa9RAmVfv2xhKF1VbRzb2LeFeF5JqpIzOsur7rUQ1oqE95lThZK7DZanWB
+         hvcQZoIiX2fxvjMeh3Lqn+4bDzTWKpC+3LAgzxjSyr06eeyBceXQzjPE4hzApbJfbPpH
+         HqO+it7yb2Ck43+UBxD2ENjHHTp5y3Id2yQAPM2EOHHoJOhZU/XrY51ftrvRUNyyuIU8
+         Y5b0BeNBM+rQXZ1ipQmnBGCjOKFmT41KbgpivT+OIdJcyedvmBtd20kutSYrEjV/o9KS
+         TkEe2B9CZ79qZ9M3oi62MWBLyRddnOtoH9EKg0h3O2LvA/nbAhbavi2P0SKwdUemM9dO
+         6+RA==
+X-Forwarded-Encrypted: i=1; AJvYcCVFStNoW5JXWgaGSLE8cld2jJphcMGGvdpICEXPfT8nkMDTa1lq4/S8AzKW82eaFeUp+elORosHksf7eoa2@vger.kernel.org, AJvYcCX8nmxTMT4VWgG+2UAM7EwNlPgYEfgBxtgCesNPcZ0d9zR3C+vdRvI7iuby0ZUaACyawR/ttNtFld9Y@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8J5Rj77kd+V+AEphwurzz2D6a5wa4LWXjTDa/l3eCfSyEDvQ8
+	QYhvaeB5FOXTYhtk8sApU9nxeGOT0lUJ2/H+yjNjVL6RQq6cKT2B
+X-Google-Smtp-Source: AGHT+IGNUSBKOHPdq8ZkRSZF/M2tlelAs87E7dApEhcF1aDWG6JeTrj/gl/a6o1XgptXcmacfg3L7g==
+X-Received: by 2002:a17:90a:db8b:b0:2e0:7495:93bb with SMTP id 98e67ed59e1d1-2e1e631e1b0mr13471545a91.31.1728306157731;
+        Mon, 07 Oct 2024 06:02:37 -0700 (PDT)
+Received: from localhost.localdomain ([103.149.249.231])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e20b128847sm5306654a91.49.2024.10.07.06.02.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Oct 2024 06:02:37 -0700 (PDT)
+From: Jianhua Lu <lujianhua000@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	ath11k@lists.infradead.org,
+	Jianhua Lu <lujianhua000@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add qca6390-pmu node
+Date: Mon,  7 Oct 2024 21:02:49 +0800
+Message-ID: <20241007130251.125022-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.46.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241002-fp5-ufs-therm-v1-1-1d2d8c1f08b5@fairphone.com>
- <fshhw6lknar4z36rc2sjjcgkiixpp7hak7gq3j373mjvbokax3@7s7kmzlmtjal> <D4PE64JTYDCL.3MC81CYK49TI0@fairphone.com>
-In-Reply-To: <D4PE64JTYDCL.3MC81CYK49TI0@fairphone.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 7 Oct 2024 14:46:59 +0200
-Message-ID: <CAA8EJpoYpiuVkD3ohoVhd9VXvCxpHPPfXfY0YqrQhABUc3WPdw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: qcm6490-fairphone-fp5: Add thermistor
- for UFS/RAM
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, 7 Oct 2024 at 09:22, Luca Weiss <luca.weiss@fairphone.com> wrote:
->
-> On Sun Oct 6, 2024 at 10:26 PM CEST, Dmitry Baryshkov wrote:
-> > On Wed, Oct 02, 2024 at 03:01:08PM GMT, Luca Weiss wrote:
-> > > Configure the ADC and thermal zone for the thermistor next to the
-> > > UFS+RAM chip which is connected to GPIO_12 of PM7250B. It is used to
-> > > measure the temperature of that area of the PCB.
-> > >
-> > > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 40 ++++++++++++++++++++++
-> > >  1 file changed, 40 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> > > index 8ab30c01712e0b7c0cc1b403e0fe01650315b9e2..fdc62f1b1c5a398abaa71818fdf2858fdc445d28 100644
-> > > --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-> > > @@ -207,6 +207,20 @@ active-config0 {
-> > >                     };
-> > >             };
-> > >
-> > > +           mem-thermal {
-> > > +                   polling-delay-passive = <0>;
-> > > +
-> > > +                   thermal-sensors = <&pm7250b_adc_tm 2>;
-> > > +
-> > > +                   trips {
-> > > +                           active-config0 {
-> > > +                                   temperature = <125000>;
-> > > +                                   hysteresis = <1000>;
-> > > +                                   type = "passive";
-> >
-> > Is it really just "passive"? Especially with no cooling devices it
-> > sounds more like "critical". LGTM otherwise.
->
-> Hi Dmitry,
->
-> To be clear, I'm adding the thermal zones now as a first step so that
-> that they are declared and that they show up in /sys.
->
-> This is for sure not the complete thermal configuration. Most other
-> thermal zones in this dts also currently have 125 degC "passive" trip
-> point, which I'd hope the device would never ever reach.
-
-Sounds sane.
+Add qca6390-pmu node, which is used to manage power supply sequence for wifi and
+bluetooth on sm8250 soc based devices.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+changes in v2:
+1. pick up Dmitry Baryshkov's Reviewed-by
 
+ .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 77 +++++++++++++++++++
+ 1 file changed, 77 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index 3596dd328c31..ebea283f56ea 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -97,6 +97,67 @@ key-vol-up {
+ 		};
+ 	};
+ 
++	qca6390-pmu {
++		compatible = "qcom,qca6390-pmu";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
++
++		vddaon-supply = <&vreg_s6a_0p95>;
++		vddpmu-supply = <&vreg_s6a_0p95>;
++		vddrfa0p95-supply = <&vreg_s6a_0p95>;
++		vddrfa1p3-supply = <&vreg_s8c_1p35>;
++		vddrfa1p9-supply = <&vreg_s5a_1p9>;
++		vddpcie1p3-supply = <&vreg_s8c_1p35>;
++		vddpcie1p9-supply = <&vreg_s5a_1p9>;
++		vddio-supply = <&vreg_s4a_1p8>;
++
++		wlan-enable-gpios = <&tlmm 20 GPIO_ACTIVE_HIGH>;
++		bt-enable-gpios = <&tlmm 21 GPIO_ACTIVE_HIGH>;
++
++		regulators {
++			vreg_pmu_rfa_cmn: ldo0 {
++				regulator-name = "vreg_pmu_rfa_cmn";
++			};
++
++			vreg_pmu_aon_0p59: ldo1 {
++				regulator-name = "vreg_pmu_aon_0p59";
++			};
++
++			vreg_pmu_wlcx_0p8: ldo2 {
++				regulator-name = "vreg_pmu_wlcx_0p8";
++			};
++
++			vreg_pmu_wlmx_0p85: ldo3 {
++				regulator-name = "vreg_pmu_wlmx_0p85";
++			};
++
++			vreg_pmu_btcmx_0p85: ldo4 {
++				regulator-name = "vreg_pmu_btcmx_0p85";
++			};
++
++			vreg_pmu_rfa_0p8: ldo5 {
++				regulator-name = "vreg_pmu_rfa_0p8";
++			};
++
++			vreg_pmu_rfa_1p2: ldo6 {
++				regulator-name = "vreg_pmu_rfa_1p2";
++			};
++
++			vreg_pmu_rfa_1p7: ldo7 {
++				regulator-name = "vreg_pmu_rfa_1p7";
++			};
++
++			vreg_pmu_pcie_0p9: ldo8 {
++				regulator-name = "vreg_pmu_pcie_0p9";
++			};
++
++			vreg_pmu_pcie_1p8: ldo9 {
++				regulator-name = "vreg_pmu_pcie_1p8";
++			};
++		};
++	};
++
+ 	vph_pwr: vph-pwr-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vph_pwr";
+@@ -701,6 +762,22 @@ &slpi {
+ 
+ &tlmm {
+ 	gpio-reserved-ranges = <40 4>;
++
++	bt_en_state: bt-default-state {
++		pins = "gpio21";
++		function = "gpio";
++		drive-strength = <16>;
++		output-low;
++		bias-pull-up;
++	};
++
++	wlan_en_state: wlan-default-state {
++		pins = "gpio20";
++		function = "gpio";
++		drive-strength = <16>;
++		output-low;
++		bias-pull-up;
++	};
+ };
+ 
+ &usb_1 {
 -- 
-With best wishes
-Dmitry
+2.46.0
+
 
