@@ -1,120 +1,218 @@
-Return-Path: <linux-arm-msm+bounces-33449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id F219A99377A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 21:36:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A93B99937D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 22:00:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6A76EB22A0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 19:36:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CD0651C20A8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 20:00:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 172361DE3B7;
-	Mon,  7 Oct 2024 19:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6FA51DE3DB;
+	Mon,  7 Oct 2024 20:00:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e4ZT6AZP"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CIzmc+uO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00EB1DE3B0;
-	Mon,  7 Oct 2024 19:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C151865FC;
+	Mon,  7 Oct 2024 20:00:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728329765; cv=none; b=rZ5RWQSOFp19DvVStFe6vr3NoylCAkbYiRwy/PITB4JIJq6Yo7rv9E1sA2UwDJUrKH3Ufj1F2rEHDfoOJfwRu5w+ZO5EdveMDS3QDgR7QdCq2+jIunz5RMVpTacD5gjoqjMLaigPbwoJIZXh8jZl5+IYvH6wB4jeZZHUqkbGBMQ=
+	t=1728331229; cv=none; b=fk80x7Ebgs1umyvbuf5cKDDg3tkX3cKd2cNS5LqKnz4h9BeLk/W6NMvf2h2gnXN0fZfi2hor91rs4XLGAL1CMS2+PELtM2x/4AFY0H4K7DRcijKJq6pxqw7Gff93OMe6iS4eovOegkfquApJBxmcyDiWQEUZiyVPkT1wRw6m2rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728329765; c=relaxed/simple;
-	bh=Xsgc5Pdw+KK67mn4AZN9ETwiLbrQZLAUVL7JeM3gwxY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=f7wIDn+2DFeWSmTRVfe1TI4MRdIbiAdrGUE6TB7Y/ZbN4DGZ9yBpDOHZKjtbqpU5PKyaI81743ULSMlcrkvcXcRWk6IaILYFZ0Z6IxbZms45yUj1xtWIJoCaYgr3EinvSZHVPuoWwAGEvYIXJesER+ZmpyAMvv9eeyuOasK114k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e4ZT6AZP; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497F81Le032294;
-	Mon, 7 Oct 2024 19:35:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Wpog1ABLB2x8/aZCselyEutmW3wSs/BapgUEkqGBFQo=; b=e4ZT6AZPIzHDHarR
-	bGIv0FVpnyIAcZ8FBuKggQygvBhq+pSOq2bPQ4BQjq949lCQ4/4js3EySK4HEyNy
-	fVHSIdPrOvmvvnbjEa9+H6sfFUf5Afl/mmxuetg8u4UR7TKRPY7gLW2nfuBUUd3i
-	NoCu82l+LHwYw38OKOcPG/Krof/y9ccKiDzUi8nKkl6CfH0YxfNPYoVrzGZX+WeI
-	bwG5xohmIybjcQYo4Le4Hm9ayb3BdWusD/AlNRswieE9/Ge32hyd93/9T9QHZcpy
-	gjC1Ngn0ryTQ8AQuNZviaqgdTyvCwtSkiQA52Q2BRe5C/56s8z+2GMkSg7CTbjfj
-	b7ynuQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xv8d5am-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 07 Oct 2024 19:35:58 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497JZvrp020809
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 7 Oct 2024 19:35:57 GMT
-Received: from [10.216.6.71] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
- 12:35:55 -0700
-Message-ID: <5b4510dc-bc41-4fd4-b06b-75a3f0c25309@quicinc.com>
-Date: Tue, 8 Oct 2024 01:05:52 +0530
+	s=arc-20240116; t=1728331229; c=relaxed/simple;
+	bh=TtJAzQM2NtR+aEQK2OIN2Vn/FJlu03Hlz0x+rB3C5eQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rJ2EhC9SQvOsf+cx3aqcooEHYJx1ubA8epm0rYXOymHd1ANQTohYwQ17oChOGuMzY3J92gGfhfuH9Dbfg6oP0+XUZxX99JrukYOqMWTmyr5ccyeNvIUYnj2ygdvoqhCkNQgI7iapm5wTRHAphpGoJq2/e6Ipxm4CTM+ByKzDuDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CIzmc+uO; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a9963e47b69so84917466b.1;
+        Mon, 07 Oct 2024 13:00:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728331226; x=1728936026; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OT6xKH/kSeLVKNU9JNpMOg+05Q9qIAbICN9iB6I+k6g=;
+        b=CIzmc+uOZOeBALHeyJgbNDGuKWANrttG+bhVmfa4TmQFV44BVDFI4sx5AR29gyZsQ0
+         Dxah56TG+klX9NKgMB+EZuGQgH+qRVaKwtwO/u67gCOxyGwTeueHjWF4EVP5z6lzPMKC
+         AZzCkJlDp0cAeh//RzFhoB/TCpQfGCKVvpMG46ZL5Y8QjtMXWlMYrQbS+xeyT9hjEL3X
+         FjpI0Dha713Ev20zYn90cwuRL4UnZp+ZNhBahhe//c5zP3/ElJ73I33RsKJvkd/7+K2s
+         oc8Erwhf2GF4ozl+4WD5gckvpxkMKJppVbLhVTQt4A5cTesl0S/befEzoXyk5SlV4HDc
+         O8xQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728331226; x=1728936026;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OT6xKH/kSeLVKNU9JNpMOg+05Q9qIAbICN9iB6I+k6g=;
+        b=bkcQH5bf1Fn5E3EIjerFz8546XgAKs0ATnJQv8SC0y5O0/48U5eQCbUvLE6TBWb9L3
+         iSLNFyhxhSfwyZLk70xGAJ2iC7v9ZcYySBeqzis6pm0y/vvlMYfzW85Owe1dOcAnYSsk
+         gCswkxkY7ZY8izb3D0WWnMqrcDbT+OyNk1trz82keCJtwonUfm3ewqHwvBZhJQRwhVKG
+         LpqNzDE8TfI6ZMg7cwCiR2I1hNhBuWNkGoPLxdWGiYusmmRzrvg99b/TScx1SLR50Cnz
+         mBhNoHUl3SidVeRcfJeP0gH+7r8m67GcssUlhS5IKFbgBe+Q3qvKHlh5SLHhsaWtqbxH
+         2rSA==
+X-Forwarded-Encrypted: i=1; AJvYcCV2ZoLSByIKN+GIz3KoOzG8RM1dC8GOlsj6xKDek8N920SxyEndJ6sgr4KqHcWS2mtGtK4zmRfjCk/6NAiwPvjt59/+xQ==@vger.kernel.org, AJvYcCWcKIZ5JWXtbTts9cwknlDI2doo1gItYR5F30R2/OXXCsNtlol0mqrRR49EcebYIoB+biCK0nfSKLGEu8nW@vger.kernel.org, AJvYcCX+Dy8u+UDNUGvOLA+p2f3Mo675wtvvvLM4og2QKDvQKmBsq/VZbJCfFBe+7nWl+BzjybhQ9f8SUDnzjViygw==@vger.kernel.org, AJvYcCX+HR6qsNjLLvDhGEyrZlGaTb+vpzUlXqVm0fosc9Wlop/wVnbUJknpiJZEk62O9iyitICFQrVE85Ll@vger.kernel.org
+X-Gm-Message-State: AOJu0YxeUYxH1m8LKfXb6WbLjBLL3N8g/gDyJVIKogmzsKCb3Ifz/rb8
+	UOPVCUKTzaFtPyfXLWu176UhQTJORX/kh0oHImbruVjFkEg7dwuDDQwcJ55Fd+CYqbAqDVULUSc
+	D4f8FwTND/aHESZUXIm4pxkQq1w==
+X-Google-Smtp-Source: AGHT+IHSzR3rAqiy5pJIgwzaNywFeckBD2pUNplX4II9/i4ncSd1RgLLQujAJ9bVoefSp9M0aiuooG/0Ogm5Nkot8Yk=
+X-Received: by 2002:a17:907:3183:b0:a8d:29b7:ecf3 with SMTP id
+ a640c23a62f3a-a991bce3fbcmr1478655766b.13.1728331225883; Mon, 07 Oct 2024
+ 13:00:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] qcom_tzmem: Enhance Error Handling for shmbridge
-To: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241005140150.4109700-1-quic_kuldsing@quicinc.com>
- <CACMJSesUCVXu8qdFgp88KL9KZxL80ki0UE09f5ciEbe23NvamA@mail.gmail.com>
-Content-Language: en-US
-From: Kuldeep Singh <quic_kuldsing@quicinc.com>
-In-Reply-To: <CACMJSesUCVXu8qdFgp88KL9KZxL80ki0UE09f5ciEbe23NvamA@mail.gmail.com>
+References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
+ <20240908223505.21011-4-jerome.debretagne@gmail.com> <f9cbd1c3-eb05-4262-bdc6-6d37e83179e5@gmail.com>
+ <CA+kEDGEdd_s+DGKsVNY6Jy870B72eHuaj2EgEnwP8J46ZGbxpQ@mail.gmail.com> <8370d062-b3d2-46f5-9e7b-8e16edde8480@redhat.com>
+In-Reply-To: <8370d062-b3d2-46f5-9e7b-8e16edde8480@redhat.com>
+From: =?UTF-8?B?SsOpcsO0bWUgZGUgQnJldGFnbmU=?= <jerome.debretagne@gmail.com>
+Date: Mon, 7 Oct 2024 21:59:49 +0200
+Message-ID: <CA+kEDGHfXa27HJ1KEcRfss9-FeQ-cCqrcQ8pYeWjWZf_N8YaHw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] platform/surface: aggregator_registry: Add Surface
+ Pro 9 5G
+To: Hans de Goede <hdegoede@redhat.com>
+Cc: Maximilian Luz <luzmaximilian@gmail.com>, 
+	=?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -ixQMf7AWZZwAuuiBK6Ywie2orgJMNI_
-X-Proofpoint-GUID: -ixQMf7AWZZwAuuiBK6Ywie2orgJMNI_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- impostorscore=0 phishscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- spamscore=0 mlxlogscore=603 adultscore=0 clxscore=1015 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410070135
+Content-Transfer-Encoding: quoted-printable
 
+Le lun. 7 oct. 2024 =C3=A0 20:54, Hans de Goede <hdegoede@redhat.com> a =C3=
+=A9crit :
+>
+> Hi J=C3=A9r=C3=B4me,
+>
+> On 7-Oct-24 8:44 PM, J=C3=A9r=C3=B4me de Bretagne wrote:
+> > Hi,
+> >
+> > I'm replying with Hans and Ilpo, who I initially forgot for this
+> > patch, sorry about that.
+>
+> No worries thank you for forwarding Maximilian's review.
+>
+> > Le mar. 10 sept. 2024 =C3=A0 23:29, Maximilian Luz
+> > <luzmaximilian@gmail.com> a =C3=A9crit :
+> >>
+> >> Looks good. Two very small nit-picks below, if this goes for a v3:
+> >
+> > Atm I'm not planning for a v3 as Bjorn has applied the other v2
+> > patches earlier today.
+> > Feel free to include the 2 small suggestions when applying this patch m=
+aybe?
+> >
+> >> On 9/9/24 12:35 AM, J=C3=A9r=C3=B4me de Bretagne wrote:
+> >>> Add SAM client device nodes for the Surface Pro 9 5G, with the usual
+> >>> battery/AC and HID nodes for keyboard and touchpad support.
+> >>>
+> >>> Signed-off-by: J=C3=A9r=C3=B4me de Bretagne <jerome.debretagne@gmail.=
+com>
+> >>> ---
+> >>>   .../surface/surface_aggregator_registry.c       | 17 ++++++++++++++=
++++
+> >>>   1 file changed, 17 insertions(+)
+> >>>
+> >>> diff --git a/drivers/platform/surface/surface_aggregator_registry.c b=
+/drivers/platform/surface/surface_aggregator_registry.c
+> >>> index 25c8aa2131d6..8b34d7e465c2 100644
+> >>> --- a/drivers/platform/surface/surface_aggregator_registry.c
+> >>> +++ b/drivers/platform/surface/surface_aggregator_registry.c
+> >>> @@ -390,6 +390,21 @@ static const struct software_node *ssam_node_gro=
+up_sp9[] =3D {
+> >>>       NULL,
+> >>>   };
+> >>>
+> >>> +/* Devices for Surface Pro 9 5G. */
+> >>
+> >> Would be nice if you could change the comment on the SP9 node group to
+> >> "Surface Pro 9 (Intel/x86)" and the comment here to "Surface Pro 9 5G
+> >> (ARM/QCOM)" or something along those lines to make things a bit more
+> >> clear.
+> >>
+> >>> +static const struct software_node *ssam_node_group_sp9_5G[] =3D {
+> >>
+> >> (This is really just me being a bit obsessive:) It would be nice to ha=
+ve
+> >> all-lowercase variable names (regarding the 5G).
+> >
+> > :)
+> >
+> >>> +     &ssam_node_root,
+> >>> +     &ssam_node_hub_kip,
+> >>> +     &ssam_node_bat_ac,
+> >>> +     &ssam_node_bat_main,
+> >>> +     &ssam_node_tmp_sensors,
+> >>> +     &ssam_node_hid_kip_keyboard,
+> >>> +     &ssam_node_hid_kip_penstash,
+> >>> +     &ssam_node_hid_kip_touchpad,
+> >>> +     &ssam_node_hid_kip_fwupd,
+> >>> +     &ssam_node_hid_sam_sensors,
+> >>> +     &ssam_node_kip_tablet_switch,
+> >>> +     NULL,
+> >>> +};
+> >>>
+> >>>   /* -- SSAM platform/meta-hub driver. ------------------------------=
+---------- */
+> >>>
+> >>> @@ -462,6 +477,8 @@ static const struct acpi_device_id ssam_platform_=
+hub_acpi_match[] =3D {
+> >>>   MODULE_DEVICE_TABLE(acpi, ssam_platform_hub_acpi_match);
+> >>>
+> >>>   static const struct of_device_id ssam_platform_hub_of_match[] __may=
+be_unused =3D {
+> >>> +     /* Surface Pro 9 5G */
+> >>> +     { .compatible =3D "microsoft,arcata", (void *)ssam_node_group_s=
+p9_5G },
+> >>>       /* Surface Laptop 7 */
+> >>>       { .compatible =3D "microsoft,romulus13", (void *)ssam_node_grou=
+p_sl7 },
+> >>>       { .compatible =3D "microsoft,romulus15", (void *)ssam_node_grou=
+p_sl7 },
+> >>
+> >> Thanks!
+> >>
+> >> Reviewed-by: Maximilian Luz <luzmaximilian@gmail.com>
+> >
+> > Thanks for your review and all the work about SSAM for Surface owners!
+>
+> FWIW I agree with Maximilian's remarks and I would really like to
+> see these applied to clearly differentiate the x86 and ARM versions.
 
-On 10/7/2024 7:55 PM, Bartosz Golaszewski wrote:
-> On Sat, 5 Oct 2024 at 16:02, Kuldeep Singh <quic_kuldsing@quicinc.com> wrote:
->>
->> This patchset addresses the tzmem driver probe failure caused by
->> incorrect error handling. The qcom_scm_shm_bridge_enable() SCM call
->> captures SCM success/failure in a0 and E_NOT_SUPPORTED in a1.
->>
->> Previously, qcom_scm returned values based solely on a0, without
->> capturing not_supported scenario. This patchset corrects that behavior.
->>
-> 
-> Ah, I guess this may be the reason for the SHM bridge enablement to
-> seemingly work on certain platforms and then lead to crashes when we
-> actually try to use it?
+I stuck to the official names but they can be confusing as-is.
 
-This patchset corrects the behavior for handling unsupported SHM bridge scenarios.
-If the SHM bridge is supported and enabled for a target, any subsequent failures
-should be investigated to understand what went wrong.
-I am willing to put effort in that case.
+> Normally I would pick up a patch like this which just adds hw-ids as
+> a fix for 6.12-rc# and squash in the suggested changes.
+>
+> But looking at the test of the series this is more 6.13 material
+> since the rest is landing in 6.13, right ?
 
--- 
-Regards
-Kuldeep
+The rest is in arm64-for-6.13 and drivers-for-6.13 in Bjorn's tree indeed.
+
+> Patches for linux-next / 6.13 are managed by Ilpo this cycle.
+>
+> So I'll leave it up to Ilpo if he will squash in the suggested changes
+> or if he wants a new version (of just this patch, no need for a v3
+> of the already applied patches).
+>
+> Regards,
+>
+> Hans
+
+Sure, let's see what Ilpo prefers.
+
+Regards,
+J=C3=A9r=C3=B4me
 
