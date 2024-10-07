@@ -1,74 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-33416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25496993174
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 17:38:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C925993292
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 18:08:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCB731F22D60
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 15:38:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 32FD61F23A17
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 16:08:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20DBB1D8E1D;
-	Mon,  7 Oct 2024 15:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9269C1DA61E;
+	Mon,  7 Oct 2024 16:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="JdUXqybO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lXKwUn+2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3260E1D86DC;
-	Mon,  7 Oct 2024 15:38:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65D4A1DA0ED;
+	Mon,  7 Oct 2024 16:08:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728315488; cv=none; b=UFnmtnBYdP//nTBiYq6TDsonCdNlbtLpMmHmtUZ6HNrGj4NejjnDF60EIKsJm55CuSf7twIrk+xrmk6sRaDAOFxEbBmTY00YDntedq8CifgjeJtxPurEdf7xbs9aI1hx2WSjir5feiAAc013YHpMia+yyka4M0AD6r2/P4NNh0I=
+	t=1728317323; cv=none; b=bmqdz0mD5wOOxbAj0PZoRY4sudDE0lFUAg5GKytByFyz1/olgG7IhQfYznGGkoy4+36mGEQK+BBlpi64npKNFZ07w30QaLzuk1Orsts/CffXlPVl9qliSmLYGhqfpZb1tdEywF5TB8tbe4qd2LGSQ0SMpDft1sCj8s1srgpd6kA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728315488; c=relaxed/simple;
-	bh=n3jEEEScjRiJdzU+uck0EUzhi+iFSZ7MgBHOuwVnAYo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LBqe72rONIDHLK8tWWgfPMWJaEO/AesCMveWSXPCFCqTdqDRsJYS1hOPQZDR+j4ycy4YsQ3ql4l48yKT5bQz2q/kU+LDyaLs4qJAJ59XfEZX4MbIOE8l8yzitR0R9oKItr3WC7BWvswyPbEJrEUY/pDpwViFD3VVqKP3wO++11Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=JdUXqybO; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id BE7EC23FE7;
-	Mon,  7 Oct 2024 17:38:03 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id XqSCnSJ1L9Jj; Mon,  7 Oct 2024 17:38:03 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
-	s=mail; t=1728315483;
-	bh=n3jEEEScjRiJdzU+uck0EUzhi+iFSZ7MgBHOuwVnAYo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=JdUXqybOvJ1gDaW6VfvHimxHvoNR04PKBQyKg/QivMqUR4sFv27GjVqxvkTHmvLnY
-	 0ZltLX/ng1sxcMGXz7/QSbNhEvK9DNy8Slls5A+R/OcD+dQvlt8EI3ChEcNyGbemVq
-	 ETC9F29vPNREp4Km3gfJ9EeW+fDJHQmM5CiH8hNtQjz4p4RqREXjxitMt+w9n4p/Vo
-	 aEaXXpNWcotau0cihQ1A3EloOmPycaddBcHyHLJoFZf2P0uirQFRy/5OYmlRqnCeg0
-	 jJUl+SV/TpXPRGRB72GVAyZ4yIITAJiUyX/QtwyC381XjLeGDsvjbvQ7D3PXUUcxga
-	 gJqQujtfyMg5Q==
-From: Karl Chan <exxxxkc@getgoogleoff.me>
-To: linus.walleij@linaro.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 4/5] pinctrl: qcom: ipq5018: allow it to be bulid on arm32
-Date: Mon,  7 Oct 2024 23:36:31 +0800
-Message-ID: <20241007153631.638-1-exxxxkc@getgoogleoff.me>
-In-Reply-To: <20241007153252.31449-1-exxxxkc@getgoogleoff.me>
-References: <20241007153252.31449-1-exxxxkc@getgoogleoff.me>
+	s=arc-20240116; t=1728317323; c=relaxed/simple;
+	bh=mUuo6txmIEDR3eT02qMPxRUkQ3pSgtSh8zOcBTnydIg=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=JklTRWpkNOGIEpio8mLhwLTXjdwg68SWPPXAwwdzJidHe8JPNqHcwSeDGjJ5bO5TLritPZNymT+CQyPd1blbJg5KPhZ7TS1mpTCmHy008OTSvP1jTssxKf5S54yP8UvoaFJ07av1EFeuEGRN5YHYdrviJHUytjz5KVYPcYcZWjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lXKwUn+2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41E5C4CECF;
+	Mon,  7 Oct 2024 16:08:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728317323;
+	bh=mUuo6txmIEDR3eT02qMPxRUkQ3pSgtSh8zOcBTnydIg=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=lXKwUn+2eA5vK7xBDkdcvVubwbOLgLpDLu0LodP6iOoJI1B5v8YeEzP5rFHZ7L+5j
+	 NgmUDFi6/9MnViCLgB8Ezru8PzldP8u8RzwzLMNSU0poBI6W+PE9LnqvXWQ4CsOhQh
+	 LnFmSYqnY7oDQxLdYPMnLCXp8FaDGs5SVdpqhGZUnMOCZYdaMqFD77oZ0A10bH9agv
+	 XOr3RbntTzdsmLVVmjiusqEEdLsbtz0I2AiP7bnynJ5L8bln1Ucs+F0BkYdTQoULqK
+	 93/9yOU+W8S9OXFVYidxmoyNZnjz75RE0dTX4VfvIF6A378K8ztNp/CsQA1Wg3Z7FH
+	 xrXB7oichItHA==
+From: Mark Brown <broonie@kernel.org>
+To: srinivas.kandagatla@linaro.org, lgirdwood@gmail.com, perex@perex.cz, 
+ tiwai@suse.com, Gax-c <zichenxie0106@gmail.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ stable@vger.kernel.org, zzjas98@gmail.com, chenyuan0y@gmail.com
+In-Reply-To: <20241006205737.8829-1-zichenxie0106@gmail.com>
+References: <20241006205737.8829-1-zichenxie0106@gmail.com>
+Subject: Re: [PATCH v3] ASoC: qcom: Fix NULL Dereference in
+ asoc_qcom_lpass_cpu_platform_probe()
+Message-Id: <172831732069.2397838.4870703241089364783.b4-ty@kernel.org>
+Date: Mon, 07 Oct 2024 17:08:40 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-99b12
 
-=0D
-Here is the boot log of the stock bootloader trying to boot arm64 kernel :=
-=0D
-=0D
+On Sun, 06 Oct 2024 15:57:37 -0500, Gax-c wrote:
+> A devm_kzalloc() in asoc_qcom_lpass_cpu_platform_probe() could
+> possibly return NULL pointer. NULL Pointer Dereference may be
+> triggerred without addtional check.
+> Add a NULL check for the returned pointer.
+> 
+> 
+
+Applied to
+
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+
+Thanks!
+
+[1/1] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe()
+      commit: 49da1463c9e3d2082276c3e0e2a8b65a88711cd2
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
