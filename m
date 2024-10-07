@@ -1,121 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-33424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4B4D993381
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 18:37:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6C8A99339A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 18:39:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C3581C236C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 16:37:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB6631C23A20
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 16:39:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 209C41DC74F;
-	Mon,  7 Oct 2024 16:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C77391DC73E;
+	Mon,  7 Oct 2024 16:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="UK1er1sL"
+	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="ixZh1NFR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C821DC73A;
-	Mon,  7 Oct 2024 16:36:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0771A1DC732
+	for <linux-arm-msm@vger.kernel.org>; Mon,  7 Oct 2024 16:37:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728318973; cv=none; b=Zbi90ZgPiunNXlatFGEtLMwU4xe0lxzCuXEyYhAK5ZuJcgFVbkn5+cyPOX1cBypJZLFXvtYn1Q953koBBGYuN6GLqSIw735aYYMTsRYPNNd/Q20GBIjJotb2o5D/wDHrnuSoUq5v7qB2DwqnTlc/mDSmT0+HSVUk37YAOqF6ha4=
+	t=1728319073; cv=none; b=Qbh4StKJuWrUk9GJYlg7bLvQQN/XQRj1M94aXVMoylsBXqTWd+9qHtUGb8wqGym+/oVNFnolIdpcGQ+tgd4/+xQx+iOZ0GRX9pJgjDIyg1LQmU4c93/f+Yi0+iCEr6RHaiZFV9ye1HOLFsusDmGxm2C/hd2Clq5i3usDFXdZzR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728318973; c=relaxed/simple;
-	bh=qgs6djftKMsHaoIbJPCzIEn9PiUmxfooSvy4LW9HDeE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZhAQEWNZlnwz5/kXQgSxx0wly7U9HCxaJTipj3GjGbwchgg05Wv1MK33N4UO3+30HUKNTQQjXKLLI2TiVgW3D2RzXCUzPjmDGYgrgx9ubjX7cACr+75HSPcEKcO4xLyH2PB+/ralnPVMQ510k+RQ5x5UL93jchTSJ3MbhENdr30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=UK1er1sL; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 0C9B023F20;
-	Mon,  7 Oct 2024 18:36:10 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id BWkq9wvynVqm; Mon,  7 Oct 2024 18:36:09 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
-	s=mail; t=1728318969;
-	bh=qgs6djftKMsHaoIbJPCzIEn9PiUmxfooSvy4LW9HDeE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UK1er1sLrFZL6z2v8psaTd7elv1uOAjOY5KF+Q13ynWGZCILbtIkFjC8JoRbKY7vx
-	 ux2lMsS145kQogdpABgARonVYoFCPwLS6kNPfMdDT4UTNLDPtJ1z1mmL78GXxx8JLt
-	 NHI7SrswHcw++B4ToPWjb+6kLGsmyojFCJE5kxM08IjwLnse6acZunh4MdDAVavLX6
-	 apBwMFLGEnP8Ngqj89GxvnbZAiWc0eDMe1RhmXboNbgfa+vYcpxRfiXowDx57HwgFr
-	 xyYCKPjhb2k+TEmBMFRkPPcgBl2phasyYBZe6p/dEHHcoGQQhpSlrOpE3O962Z7E2A
-	 Af0Qxx57sgTdQ==
-From: Karl Chan <exxxxkc@getgoogleoff.me>
-To: linux-arm-msm@vger.kernel.org
-Cc: andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	mturquette@baylibre.com,
-	sboyd@kernel.org,
-	linus.walleij@linaro.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	Karl Chan <exxxxkc@getgoogleoff.me>
-Subject: [PATCH v6 5/5] arm: dts: qcom-ipq5018-linksys-jamaica: Include dts from arm64
-Date: Tue,  8 Oct 2024 00:34:14 +0800
-Message-ID: <20241007163414.32458-6-exxxxkc@getgoogleoff.me>
-In-Reply-To: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
-References: <20241007163414.32458-1-exxxxkc@getgoogleoff.me>
+	s=arc-20240116; t=1728319073; c=relaxed/simple;
+	bh=0mzLrB2OomyLtoMgMpkUXKBQAaht79Vh1csmlF+3YCk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T6e46SyhcvNlaGCczajTelVUDlalD296CidQsW6PUal+UThQGHeF8lSEJlUUdoZXqLGkVBnGBoW2aGwIBNE3MrnsmLvn8+oKtuKwCBPChoj3XxgHIQ+V9cli4qtggp10kyjb/F3Pv44YcllgEnR1pHh+ep0tPZeg1/X9l7+RlL8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=ixZh1NFR; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7a9a23fc16fso416962285a.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 09:37:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fooishbar.org; s=google; t=1728319071; x=1728923871; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=W4CFFIJB0/w1KDKpJP7Na0Tu7Wo8uI2KSmr76xqMrKs=;
+        b=ixZh1NFRp0ea8wKvo0Iw723PpYrfpp4mtK/OzwvBIh8Le09kGbxl7daPYLs2o8QFoS
+         wSUWfXqMzptRJ01pUlxnUCUCv9s3FsAHV1NJ/i/saAe5+Lryqtc+1x+LJ8P1NVmrZ+sY
+         dl5v8mB91IQH1826eVz8uywUfYs/39ZfktY7biGxOafcmXkl3ZR0pfWh007o8vWKA7zT
+         sMRTkrPljOB0gifHCn1TH2yi3rYmwmPKz6NkUlMTi38nfw0v0LqaVW+H5OjFriY8X9Cj
+         bRN3RnHPSTnTDcHqzNsNKUKQTCKHNaVLh291pN+hde75nmEh3pVp7wfG1HK58VAnRjoW
+         Rrvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728319071; x=1728923871;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W4CFFIJB0/w1KDKpJP7Na0Tu7Wo8uI2KSmr76xqMrKs=;
+        b=cLzEgXfhZCwLLBbyqJ16ABScxW14l2gvNPqpipvpmF6KSytaSrZwizS4Mf7lom3lBC
+         AmHDaLYXt3AN6iX+QXobp44xDo5NeWjgPSbH4PsFOdljDjC7wFHiE+O3lUIX1fcT5prz
+         qX3P7fXjpU65tG4EgecG8BWtUu+p0/YhPyYNMJZJLbwqamqMcei73WdOGqrQLlkaWN6f
+         xg4K+pWXSWplAfu6Voge3RYr9litsCfmQNWSV0UkUgLWqjWkMrsPKY6ZSMzE8JwEFBoF
+         ibCE0Z/nIUQFvQwUZaBu3+3TVVLaayhDR7bRnzpMYHXRn8nn4FHl4MCqjGRubuA7USrg
+         queQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVyjtXIyrwSD8utcKrwMZo+yi+3xyCyCBR8LTIvfwvBKr7Y/FD9w1EaYZPiz/LQW7AOqjnJVv5bls+qqs26@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgaEtbxKqasjutKPUyeAi7yzf09azALuk2+MzODD9ZGJUNWFKH
+	cU5EOS5z31wW83kP3IYABsw5bkBV2NCzAAQh0Xn/MIRmPEss2Le3zFdTU1uq0vPuMwJNsFEvZqW
+	V3dTJin/gUh+GTpCi/r1XcsEqg4w6OX3yzTT6XQ==
+X-Google-Smtp-Source: AGHT+IFUEdp+6Zfk/3canOH8YLTeCDElWZbOWdFUC/AjiXkqb6tWoEUHRz5ImwY747H/eYo44KjaW8o6FN6Tmv1CB1Q=
+X-Received: by 2002:a05:620a:1aa0:b0:7ac:b3bf:c30c with SMTP id
+ af79cd13be357-7ae6f48ae1fmr1890545885a.45.1728319070658; Mon, 07 Oct 2024
+ 09:37:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20241004133126.2436930-1-vignesh.raman@collabora.com> <20241004133126.2436930-2-vignesh.raman@collabora.com>
+In-Reply-To: <20241004133126.2436930-2-vignesh.raman@collabora.com>
+From: Daniel Stone <daniel@fooishbar.org>
+Date: Mon, 7 Oct 2024 12:37:39 -0400
+Message-ID: <CAPj87rPGD8Pu_CSPXfRtsS_w8UYVJGR9CoLx7RAT69EUKefs3A@mail.gmail.com>
+Subject: Re: [PATCH v1 1/3] drm/ci: refactor software-driver stage jobs
+To: Vignesh Raman <vignesh.raman@collabora.com>
+Cc: dri-devel@lists.freedesktop.org, daniels@collabora.com, 
+	helen.koike@collabora.com, airlied@gmail.com, daniel@ffwll.ch, 
+	robdclark@gmail.com, guilherme.gallo@collabora.com, 
+	sergi.blanch.torne@collabora.com, deborah.brouwer@collabora.com, 
+	dmitry.baryshkov@linaro.org, linux-arm-msm@vger.kernel.org, 
+	intel-gfx@lists.freedesktop.org, virtualization@lists.linux.dev, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-The original firmware of EA9350V3 from Linksys can only boot ARM32 kernels
-and there are seems to be no way to boot ARM64 kernels on EA9350.
-It is possible to use this device tree by compiling an ARM32 kernel
-for getting the kernel to boot on EA9350 V3 firmware however.
+Hi Vignesh,
 
-Building the Linksys EA9350 V3 device trees from the arm64 tree together
-with the ARM32 include to allow booting this device on ARM32.
+On Fri, 4 Oct 2024 at 09:31, Vignesh Raman <vignesh.raman@collabora.com> wrote:
+> +.software-driver:
+> +  stage: software-driver
+> +  extends:
+> +    - .test-gl
+> +    - .test-rules
+> +  timeout: "1h30m"
+> +  tags:
+> +    - kvm
+> +  script:
+> +    - ln -sf $CI_PROJECT_DIR/install /install
+> +    - mv install/bzImage /lava-files/bzImage
+> +    - mkdir -p /lib/modules
+> +    - mkdir -p $CI_PROJECT_DIR/results
+> +    - ln -sf $CI_PROJECT_DIR/results /results
+> +    - install/crosvm-runner.sh install/igt_runner.sh
 
-The approach to include device tree files from other architectures is
-inspired from e.g. the Raspberry Pi (bcm2711-rpi-4-b.dts) where this is
-used to build the device tree for both ARM32 and ARM64.
-
-Signed-off-by: Karl Chan <exxxxkc@getgoogleoff.me>
----
- arch/arm/boot/dts/qcom/Makefile                         | 1 +
- arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts | 2 ++
- 2 files changed, 3 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-
-diff --git a/arch/arm/boot/dts/qcom/Makefile b/arch/arm/boot/dts/qcom/Makefile
-index f06c6d425e91..147dbeb30a6a 100644
---- a/arch/arm/boot/dts/qcom/Makefile
-+++ b/arch/arm/boot/dts/qcom/Makefile
-@@ -23,6 +23,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-ipq4019-ap.dk04.1-c3.dtb \
- 	qcom-ipq4019-ap.dk07.1-c1.dtb \
- 	qcom-ipq4019-ap.dk07.1-c2.dtb \
-+	qcom-ipq5018-linksys-jamaica.dtb \
- 	qcom-ipq8064-ap148.dtb \
- 	qcom-ipq8064-rb3011.dtb \
- 	qcom-msm8226-microsoft-dempsey.dtb \
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts b/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-new file mode 100644
-index 000000000000..9a6ad767ebd7
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq5018-linksys-jamaica.dts
-@@ -0,0 +1,2 @@
-+// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
-+#include <arm64/qcom/ipq5018-linksys-jamaica.dts>
--- 
-2.46.2
-
+Instead of inlining this here, can we please move towards reusing more
+of .gitlab-ci/common/init-stage[12].sh? If those files need to be
+modified then that's totally fine, but I'd rather have something more
+predictable, and fewer random pieces of shell in each job section.
 
