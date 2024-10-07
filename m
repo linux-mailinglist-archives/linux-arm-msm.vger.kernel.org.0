@@ -1,169 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-33411-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DBC799314C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 17:34:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CD0699315F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 17:35:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 462881F23B61
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 15:34:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D364AB28D8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 15:35:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA4F31D7E58;
-	Mon,  7 Oct 2024 15:34:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AE431D86DC;
+	Mon,  7 Oct 2024 15:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b="XUSdbYE/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gxYaGbRV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0285125B9;
-	Mon,  7 Oct 2024 15:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CC018BBB2;
+	Mon,  7 Oct 2024 15:35:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728315277; cv=none; b=hxxKPK3jcIBHJ/pBzLalPLuDZZ1xC+meLvsgyfPROH+JuMfCE60btEunMdkSoI1o+KoqdOn/U/i//aPK7EkI4rmx7LFNSFqBWGFxA2Djz3IBZP7nF+/62+3aS6s2po70PJBIyOIcnThqUDbWVsOGOlq8iiKxO72+B7zJHHLY/RM=
+	t=1728315330; cv=none; b=K+3Vc8oj4yqllYMPGhHDfv3+kpNSZyaG+qdRWZlhI9TufmKXCyn4/yaOaSizD2KSHtf6zNGW5Yne94Ix8tjhRijv/Sxr+32zl+5PF/zTPXj2quCfmFOpOV/WzMQSGbEUUCu4vMfgg23oX1gq/0PEBnjr9NagKEhdjHntENhZdQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728315277; c=relaxed/simple;
-	bh=8GMwkqkKcW/+VQjyMBni5YMGJslvG+i9TFyetnJVeSA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SW8NlfUCaT3rsh15V3/IH4Z56gPl9SLoTfg0PnJ5jYW7vcgKBTiyv5JKIRD3iv+loXHbPPXW9z8K7xUiTfjPejvZlZ8kT9RLmzK6wGlxQ+lx9YbSk2WcbufxUGXusItRc/gmE5E5mZfekHJrSLzCxJx88S2g9BKO+tvzHrack3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me; spf=pass smtp.mailfrom=getgoogleoff.me; dkim=pass (2048-bit key) header.d=getgoogleoff.me header.i=@getgoogleoff.me header.b=XUSdbYE/; arc=none smtp.client-ip=178.21.23.139
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=getgoogleoff.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=getgoogleoff.me
-Received: from mail01.disroot.lan (localhost [127.0.0.1])
-	by disroot.org (Postfix) with ESMTP id 74B5023E90;
-	Mon,  7 Oct 2024 17:34:25 +0200 (CEST)
-X-Virus-Scanned: SPAM Filter at disroot.org
-Received: from layka.disroot.org ([127.0.0.1])
- by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
- id PL0UiTgmvZOa; Mon,  7 Oct 2024 17:34:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=getgoogleoff.me;
-	s=mail; t=1728315264;
-	bh=8GMwkqkKcW/+VQjyMBni5YMGJslvG+i9TFyetnJVeSA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=XUSdbYE/h5uP5gRvyn0Unu7VpQoMCF9S24mcv3HBGtKTFqQj6mOdKfGOwzspgEcmH
-	 lvbWGCw6OTmYwoa7UHHpU2SN/nSFiiNHjHY4vODlcYCRKziMFv1ioVgLYvh3W+nHOt
-	 1UoZgRdrmJoephEK+/kHXZOnO0fkzFoaxEj3lRiFy6yC6F2mULxDkrqp/D6nUTG6fC
-	 FHfk9X7WJR1OLph5OmdoYkhdSVrHOTNqTMlB/boIfVNOqL3iT1cKvIQwXv65QZJ2cB
-	 UJBFQ4RMJ5No3xUdcTD5jQKiPNpJd+x1ZoieAQpIlX++LrFMmvxZ5GTAKS/DLTh8fn
-	 7H8RRtcpH6KYg==
-From: Karl Chan <exxxxkc@getgoogleoff.me>
-To: linus.walleij@linaro.org
-Cc: linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5 4/5] pinctrl: qcom: ipq5018: allow it to be bulid on arm32
-Date: Mon,  7 Oct 2024 23:32:52 +0800
-Message-ID: <20241007153252.31449-1-exxxxkc@getgoogleoff.me>
-In-Reply-To: <CACRpkdZnBBAEgHZ=HShwvaXaN-6icC5hzwHqDNWWy_PKJDh+Fw@mail.gmail.com>
-References: <CACRpkdZnBBAEgHZ=HShwvaXaN-6icC5hzwHqDNWWy_PKJDh+Fw@mail.gmail.com>
+	s=arc-20240116; t=1728315330; c=relaxed/simple;
+	bh=vmDcUWR28r4GCm7mjHQRvGrAOByN1ZiGI13saHCCk4E=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BN6yf5lZ3e05PIYYoEKyLa2p3r30hoSo0A6QgrmV/tdcvUrYGpjCH3eqIjhYNV9D0k6MqRlmjvXeD2D4rqTAykvsDCGnL6vyAzeWKYt5L+ixx0+McvODi2wCvdDvJ4jZ6ah600ToR3Z4e/OXBdkdz8RNGvgENfyvOtr17693+XE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gxYaGbRV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497F6f9t003930;
+	Mon, 7 Oct 2024 15:35:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	T8D5E2ZeSNmgSSEISntkVqY99/wGIdZ25++9fHbZMf4=; b=gxYaGbRVPGhIgP4C
+	mDcAw4e98KHBNTSC/sD807WG+v4Iy1YHGjYW9bCijZcQP7ehjB2T9uShgn79YIvq
+	/eOwuRxReArKf9AwZBEtt2MN0ac84w6zxtgibC5Eiua2sOGqVnRE0+STWrNJPb25
+	WgpTqTRrEoJ+BOnRww6PdZYApYi/nsk3ivSYSQpoaKYgJILQHjf+opVausS71FQe
+	9GhIr/8LqgdjY2G9B1nDrkjENoBtMQnwcz5Hc9OTaxkLeHRrJpSEH1FoErgAIXrY
+	CipCpo4Cs5mU277nfXIGd3zwULKJohyPCBN5COYoPrO8RSFKuHYgvoveZ+SZwZus
+	kmcavQ==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xv6vn66-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Oct 2024 15:35:24 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 497FZO07024422
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 7 Oct 2024 15:35:24 GMT
+Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Mon, 7 Oct 2024 08:35:20 -0700
+Date: Mon, 7 Oct 2024 21:05:16 +0530
+From: Mukesh Ojha <quic_mojha@quicinc.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier
+	<mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Shiraz Hashim <quic_shashim@quicinc.com>
+Subject: Re: [PATCH 1/6] dt-bindings: remoteproc: qcom,pas-common: Introduce
+ iommus and qcom,devmem property
+Message-ID: <ZwP/tA06k6we7uUh@hu-mojha-hyd.qualcomm.com>
+References: <20241004212359.2263502-1-quic_mojha@quicinc.com>
+ <20241004212359.2263502-2-quic_mojha@quicinc.com>
+ <pt5x7miszg3vrqjimhdfesxghnpdsu4zzdr37vcmuze7yccmkn@twjeb5cfdqph>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pt5x7miszg3vrqjimhdfesxghnpdsu4zzdr37vcmuze7yccmkn@twjeb5cfdqph>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: XsO2qa38GjycV4QpXfsqKnxdo7dq3tT4
+X-Proofpoint-GUID: XsO2qa38GjycV4QpXfsqKnxdo7dq3tT4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 impostorscore=0 adultscore=0 lowpriorityscore=0
+ mlxlogscore=504 mlxscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410070110
 
-=0DCBT U-Boot ver: 3.2.08  ([IPQ5018].[SPF11.3].[CSU2])=0D
-=0D=0D
-=0DDRAM:  smem ram ptable found: ver: 1 len: 4=0D
-=0D512 MiB=0D
-=0DNAND:  QPIC controller support serial NAND=0D
-=0DID =3D 22c822c8=0D
-=0DVendor =3D c8=0D
-=0DDevice =3D 22=0D
-=0DSerial Nand Device Found With ID : 0xc8 0x22=0D
-=0DSerial NAND device Manufacturer:GD5F2GQ5REYIH=0D
-=0DDevice Size:256 MiB, Page size:2048, Spare Size:64, ECC:4-bit=0D
-=0DSF: Unsupported flash IDs: manuf 00, jedec 0000, ext_jedec 0000=0D
-=0Dipq_spi: SPI Flash not found (bus/cs/speed/mode) =3D (0/0/48000000/0)=0D
-=0D256 MiB=0D
-=0DMMC:   sdhci: Node Not found, skipping initialization=0D
-=0D=0D
-=0DPCI Link Intialized=0D
-=0DPCI1 is not defined in the device tree=0D
-=0DIn:    serial@78AF000=0D
-=0DOut:   serial@78AF000=0D
-=0DErr:   serial@78AF000=0D
-=0Dmachid: 8040001=0D
-=0Deth0 MAC Address from ART is not valid=0D
-=0Deth1 MAC Address from ART is not valid=0D
-=0D=0D
-=0DUpdating boot_count ... done=0D
-=0D=0D
-=0DSaving Environment to NAND...=0D
-=0DErasing NAND...=0D
-=0D=0DErasing at 0x5c0000 --  25% complete.=0DErasing at 0x5e0000 --  50% c=
-omplete.=0DErasing at 0x600000 --  75% complete.=0DErasing at 0x620000 -- 1=
-00% complete.=0D
-=0DWriting to NAND... OK=0D
-=0DHit any key to stop autoboot:  3 =08=08=08 2 =08=08=08 1 =08=08=08 0 =0D
-=0Dstarting USB...=0D
-=0DUSB0:   Register 2000140 NbrPorts 2=0D
-=0DStarting the controller=0D
-=0DUSB XHCI 1.10=0D
-=0Dscanning bus 0 for devices... 2 USB Device(s) found=0D
-=0Dreading boot-image.itb=0D
-=0D16048071 bytes read in 8855 ms (1.7 MiB/s)=0D
-=0D## Loading kernel from FIT Image at 44000000 ...=0D
-=0D   Using 'standard' configuration=0D
-=0D   Trying 'kernel' kernel subimage=0D
-=0D     Description:  Kernel=0D
-=0D     Type:         Kernel Image=0D
-=0D     Compression:  uncompressed=0D
-=0D     Data Start:   0x440000a8=0D
-=0D     Data Size:    8249289 Bytes =3D 7.9 MiB=0D
-=0D     Architecture: AArch64=0D
-=0D     OS:           Linux=0D
-=0D     Load Address: 0x41208000=0D
-=0D     Entry Point:  0x41208000=0D
-=0D   Verifying Hash Integrity ... OK=0D
-=0D## Loading ramdisk from FIT Image at 44000000 ...=0D
-=0D   Using 'standard' configuration=0D
-=0D   Trying 'initrd' ramdisk subimage=0D
-=0D     Description:  Initramfs image=0D
-=0D     Type:         RAMDisk Image=0D
-=0D     Compression:  Unknown Compression=0D
-=0D     Data Start:   0x447ec43c=0D
-=0D     Data Size:    7738968 Bytes =3D 7.4 MiB=0D
-=0D     Architecture: AArch64=0D
-=0D     OS:           Linux=0D
-=0D     Load Address: unavailable=0D
-=0D     Entry Point:  unavailable=0D
-=0D   Verifying Hash Integrity ... OK=0D
-=0D## Loading fdt from FIT Image at 44000000 ...=0D
-=0D   Using 'standard' configuration=0D
-=0D   Trying 'fdt' fdt subimage=0D
-=0D     Description:  DTB=0D
-=0D     Type:         Flat Device Tree=0D
-=0D     Compression:  uncompressed=0D
-=0D     Data Start:   0x447de10c=0D
-=0D     Data Size:    58042 Bytes =3D 56.7 KiB=0D
-=0D     Architecture: AArch64=0D
-=0D   Verifying Hash Integrity ... OK=0D
-=0D   Booting using the fdt blob at 0x447de10c=0D
-=0D   Loading Kernel Image ... OK=0D
-=0D   Loading Ramdisk to 4a0c0000, end 4a821658 ... OK=0D
-=0D   Loading Device Tree to 4a0ae000, end 4a0bf2b9 ... OK=0D
-=0Dfdt_fixup_qpic: QPIC: unable to find node '/soc/qpic-nand@79b0000'=0D
-=0DCould not find PCI in device tree=0D
-=0DUsing machid 0x8040001 from environment=0D
-=0D=0D
-=0DStarting kernel ...=0D
-=0D=0D
-=0Dundefined instruction=0D
-=0Dpc : [<41208004>]	   lr : [<4a921f8f>]=0D
-=0Dreloc pc : [<41208004>]	   lr : [<4a921f8f>]=0D
-=0Dsp : 4a822838  ip : 00000001	 fp : 00000000=0D
-=0Dr10: 4a83b914  r9 : 4a822ea0	 r8 : 00000000=0D
-=0Dr7 : 00000000  r6 : 41208000	 r5 : 4a97d848  r4 : 00000000=0D
-=0Dr3 : 644d5241  r2 : 4a0ae000	 r1 : 08040001  r0 : 00000000=0D
-=0DFlags: nzCV  IRQs off  FIQs off  Mode SVC_32=0D
-=0DResetting CPU ...=0D
-=0D=0D
-=0Dresetting ...=0D
-=0D
+On Sun, Oct 06, 2024 at 10:38:01PM +0300, Dmitry Baryshkov wrote:
+> On Sat, Oct 05, 2024 at 02:53:54AM GMT, Mukesh Ojha wrote:
+> > From: Shiraz Hashim <quic_shashim@quicinc.com>
+> > 
+> > Qualcomm’s PAS implementation for remote processors only supports a
+> > single stage of IOMMU translation and is presently managed by the
+> > Qualcomm EL2 hypervisor (QHEE) if it is present. In the absence of QHEE,
+> > such as with a KVM hypervisor, IOMMU translations need to be set up by
+> > the KVM host. Remoteproc needs carveout memory region and its resource
+> > (device memory) permissions to be set before it comes up, and this
+> > information is presently available statically with QHEE.
+> > 
+> > In the absence of QHEE, the boot firmware needs to overlay this
+> > information based on SoCs running with either QHEE or a KVM hypervisor
+> > (CPUs booted in EL2).
+> > 
+> > The qcom,devmem property provides IOMMU devmem translation information
+> > intended for non-QHEE based systems.
+> > 
+> > Signed-off-by: Shiraz Hashim <quic_shashim@quicinc.com>
+> > Co-Developed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> > ---
+> >  .../bindings/remoteproc/qcom,pas-common.yaml  | 42 +++++++++++++++++++
+> >  .../bindings/remoteproc/qcom,sa8775p-pas.yaml | 20 +++++++++
+> >  2 files changed, 62 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+> > index 63a82e7a8bf8..068e177ad934 100644
+> > --- a/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,pas-common.yaml
+> > @@ -52,6 +52,48 @@ properties:
+> >      minItems: 1
+> >      maxItems: 3
+> >  
+> > +  iommus:
+> > +    maxItems: 1
+> > +
+> > +  qcom,devmem:
+> > +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> > +    description:
+> > +      Qualcomm’s PAS implementation for remote processors only supports a
+> > +      single stage of IOMMU translation and is presently managed by the
+> > +      Qualcomm EL2 hypervisor (QHEE) if it is present. In the absence of QHEE,
+> > +      such as with a KVM hypervisor, IOMMU translations need to be set up by
+> > +      the KVM host. Remoteproc might need some device resources and related
+> > +      access permissions to be set before it comes up, and this information is
+> > +      presently available statically with QHEE.
+> > +
+> > +      In the absence of QHEE, the boot firmware needs to overlay this
+> > +      information based on SoCs running with either QHEE or a KVM hypervisor
+> > +      (CPUs booted in EL2).
+> > +
+> > +      The qcom,devmem property provides IOMMU devmem translation information
+> > +      intended for non-QHEE based systems. It is an array of u32 values
+> > +      describing the device memory regions for which IOMMU translations need to
+> > +      be set up before bringing up Remoteproc. This array consists of 4-tuples
+> > +      defining the device address, physical address, size, and attribute flags
+> > +      with which it has to be mapped.
+> 
+> I'd expect that this kind of information is hardware-dependent. As such
+> it can go to the driver itself, rather than the device tree. The driver
+> can use compatible string to select the correct table.
+> 
+
+IIUC, are you saying that to move this into driver file and override the
+compatible string via overlay ?
+
+> > +
+> > +      remoteproc@3000000 {
+> > +          ...
+> > +
+> > +          qcom,devmem = <0x82000 0x82000 0x2000 0x3>,
+> > +                        <0x92000 0x92000 0x1000 0x1>;
+> > +      }
+> > +
+> > +    items:
+> > +      items:
+> > +        - description: device address
+> > +        - description: physical address
+> > +        - description: size of mapping
+> > +        - description: |
+> > +            iommu attributes - IOMMU_READ, IOMMU_WRITE, IOMMU_CACHE, IOMMU_NOEXEC, IOMMU_MMIO
+> > +          enum: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
+> > +                  25, 26, 27, 28, 29, 30, 31 ]
+> 
+> Attributes should definitely be defined and then the DT should use
+> defines rather than the raw values.
+>
+
+Ack.
+
+-Mukesh
+
 
