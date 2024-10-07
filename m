@@ -1,136 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-33300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0CC6899220B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 00:01:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E02A99228A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 03:18:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 57360B20FB8
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  6 Oct 2024 22:01:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E8AEE1F21AD0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 01:18:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DACE16EC19;
-	Sun,  6 Oct 2024 22:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DEDFDDC7;
+	Mon,  7 Oct 2024 01:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T4fu389D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+6EDAXl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF94E152165;
-	Sun,  6 Oct 2024 22:01:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1A5C8D7;
+	Mon,  7 Oct 2024 01:18:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728252110; cv=none; b=kJrwcXZyNozxns4nbHB5uct3Dei2r96hb0HEn67B24xTKVXGCg3vg3u0ncOHc5Tj53wcgrLw/+zmDyeLC3Hx8J2zvK3HznReMaHQ0tapXEjL4CY53ART25n5zTGbtxt08tfT/SoI0/w7gafrpBFXYxH+LYfL01UqvTE6Tkr/A6c=
+	t=1728263914; cv=none; b=qGf2eUmLXn5d7F45wkEE4Zu/1wnqRrSvnluc/+uKYx4dncpQ83Zctvo1kbi2HdtQarAG0ca8NaEl0YNBafjMcYD+8oIeY++oztC4eUjuvPqHQMCBf7DwmQYYpxENXDoi7LmC3VkDTIOH1qjzPTlu6QSH6MoyNmW1ZxKOgWQ96BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728252110; c=relaxed/simple;
-	bh=Gy67jPuTIKdx+LMTo6vm6+onZ+nJSx1uLoldMnvmPvY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=m8Ugg1Baf14c4L20iXDuOV79Dm/2ffJ+lqiGNCDU2VJz6P0fEZNvhoFGjWxhpOHYPrtgfN1GZr6EH/ZAmVtx1KIEsY0tC2vodO1KOeatE+3+FV93JE2cTN5dCJ4j1jltbPSErssH1gEH4galiKPNeKAh8Y6tJnYTIY4gUl+0+DM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T4fu389D; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 496M0mTb026839;
-	Sun, 6 Oct 2024 22:01:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	J39T85wvcA9vqhR4XPwXvsan9PQikhcxXtHsdQc70DE=; b=T4fu389DH97+TKYh
-	sQnEabgHDXCp8rARDVBsEtoWOcvCRvZznG+BK1c26xkypVdXXrOtUkDmUEPtzH6t
-	Fe4DiG+5Ah67dWn38QqSS9IsJ8VthKBgJRS+IEw4sQMjLSQuKIAWXrD2h99u98FT
-	0FW85B6MFst6DcT+wHWN1EBXdHJgllEJX0BqVrmV2J4c1WXP0DsOYanfzeR0LMK6
-	ZVkJ+AR8YO0BpZYb1dOGtWhlxpY6KOnNSv8BvkStYD7iI2T2YCrJEAhQbNixVrYJ
-	Ye03pOYnhuBOyDex7rO0OeqU/DL0VeQ5ldsA2BzGqup/mjot9+vIrSSK3Ve1hre+
-	5WwMdw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xr5jj6e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 06 Oct 2024 22:01:32 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 496M1WY0026764
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Sun, 6 Oct 2024 22:01:32 GMT
-Received: from [10.216.56.130] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 6 Oct 2024
- 15:01:29 -0700
-Message-ID: <9c8ae6ef-dd71-4a2f-91c7-49eddd36e4f7@quicinc.com>
-Date: Mon, 7 Oct 2024 03:31:15 +0530
+	s=arc-20240116; t=1728263914; c=relaxed/simple;
+	bh=jIeIDhuD7B6PYQz4howXktaATGkaNZIsJZVVjgkjcTk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mvH55Deki2wVqKSPf5pt+j96VDV+d9Cecnn4YolK8eTdmJoNnksUR7hiTTe0eojG7H1b+00MgHpmeXz3uSH4eUUY/u/1IhiX4nmoOdXcahDycXjlKo09iNIjRWCTwR81bPbgXRag4bz8AUvtAqG1my093sZGhb0CDf6wdd1iHbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+6EDAXl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B74C4CEC5;
+	Mon,  7 Oct 2024 01:18:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728263913;
+	bh=jIeIDhuD7B6PYQz4howXktaATGkaNZIsJZVVjgkjcTk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=a+6EDAXlNOOeJqTi76IspB4TOMesu0BGTg31mLIFZvw6hJsArpmC6KX1zJ5E6ZKu8
+	 2/ZIpzwyAVcVXBajOOXxFlU+/Rlz1eTsTS8p2iJPSjC35hHsCmpukIzOYe3TlJ5kvJ
+	 a5SLvN5GPnTRX+LBBjETgaN3ifc2xF/G4DmgMsz9RUbchWv9x63aq3KmHY/y9M7PMS
+	 aw0E3KBkLJXwLkwzJsVOF7Hz65kMydVCbqWk8Dj69rLKpMxQZjVb6y7qapxtyH2GfI
+	 n3DYkyqzXMGB6+56cd2EmVyRT3CEfr0Etlnpg3ksCi3vfQCg+INdtq7q0LM0uHBLga
+	 27VHQ7B6/NODg==
+Date: Sun, 6 Oct 2024 20:18:30 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] firmware: qcom: qcom_tzmem: Implement sanity checks
+Message-ID: <ylfkupkpy26gupri4lbwij3sh4uwrm7lxr7q7q2rhrgiwai6mc@bkplz3mlrsxb>
+References: <20241005140150.4109700-1-quic_kuldsing@quicinc.com>
+ <20241005140150.4109700-3-quic_kuldsing@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] firmware: qcom: scm: Return -EOPNOTSUPP for
- unsupported SHM bridge enabling
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Qingqing Zhou <quic_qqzhou@quicinc.com>
-References: <20241005140150.4109700-1-quic_kuldsing@quicinc.com>
- <20241005140150.4109700-2-quic_kuldsing@quicinc.com>
- <2fi7pyhpetqyhipjiihuafddggwdrh7abuvfkks5hu5qid2rfm@ibuiecrhijey>
-Content-Language: en-US
-From: Kuldeep Singh <quic_kuldsing@quicinc.com>
-In-Reply-To: <2fi7pyhpetqyhipjiihuafddggwdrh7abuvfkks5hu5qid2rfm@ibuiecrhijey>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: innUSPBNFarW1hbGYU9UfRKsaKlhZS1d
-X-Proofpoint-ORIG-GUID: innUSPBNFarW1hbGYU9UfRKsaKlhZS1d
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 suspectscore=0
- clxscore=1015 mlxlogscore=865 priorityscore=1501 impostorscore=0
- adultscore=0 mlxscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410060158
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241005140150.4109700-3-quic_kuldsing@quicinc.com>
 
+On Sat, Oct 05, 2024 at 07:31:50PM GMT, Kuldeep Singh wrote:
+> The qcom_tzmem driver currently has multiple exposed APIs that lack
+> validations on input parameters. This oversight can lead to unexpected
+> crashes due to null pointer dereference when incorrect inputs are
+> provided.
+> 
+> To address this issue, add required sanity for all input parameters in
+> the exposed APIs.
+> 
 
->>  int qcom_scm_shm_bridge_enable(void)
->>  {
->> +	int ret;
->> +
->>  	struct qcom_scm_desc desc = {
->>  		.svc = QCOM_SCM_SVC_MP,
->>  		.cmd = QCOM_SCM_MP_SHM_BRIDGE_ENABLE,
->> @@ -1373,7 +1379,11 @@ int qcom_scm_shm_bridge_enable(void)
->>  					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
->>  		return -EOPNOTSUPP;
->>  
->> -	return qcom_scm_call(__scm->dev, &desc, &res) ?: res.result[0];
->> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
->> +	if (!ret && res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
->> +		return -EOPNOTSUPP;
->> +
->> +	return ret ?: res.result[0];
-> 
-> Could you please make it less cryptic?
-> 
-> if (ret)
-> 	return ret;
-> 
-> if (res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
-> 	return -EOPNOTSUPP;
-> 
-> return res.result[0];
+Unless there's good reason for the opposite, I rather see that we define
+the API to only accept valid pointers. Then if a client passes a NULL we
+get a oops with a nice callstack, which is easy to debug.
 
-Sure Dmitry, this looks more cleaner.
-Will update in next rev.
+The alternative is that we return -EINVAL, which not unlikely is
+propagated to some application which may or may not result in a bug
+report from a user - without any tangible information about where things
+went wrong.
 
--- 
-Regards
-Kuldeep
+But, if you think there's a good reason, please let me know.
+
+Regards,
+Bjorn
+
+> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+> ---
+>  drivers/firmware/qcom/qcom_tzmem.c | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+> index 92b365178235..2f2e1f2fa9fc 100644
+> --- a/drivers/firmware/qcom/qcom_tzmem.c
+> +++ b/drivers/firmware/qcom/qcom_tzmem.c
+> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_pool_config *config)
+>  
+>  	might_sleep();
+>  
+> +	if (!config || !config->policy)
+> +		return ERR_PTR(-EINVAL);
+> +
+>  	switch (config->policy) {
+>  	case QCOM_TZMEM_POLICY_STATIC:
+>  		if (!config->initial_size)
+> @@ -316,6 +319,9 @@ devm_qcom_tzmem_pool_new(struct device *dev,
+>  	struct qcom_tzmem_pool *pool;
+>  	int ret;
+>  
+> +	if (!dev || !config)
+> +		return ERR_PTR(-EINVAL);
+> +
+>  	pool = qcom_tzmem_pool_new(config);
+>  	if (IS_ERR(pool))
+>  		return pool;
+> @@ -366,7 +372,7 @@ void *qcom_tzmem_alloc(struct qcom_tzmem_pool *pool, size_t size, gfp_t gfp)
+>  	unsigned long vaddr;
+>  	int ret;
+>  
+> -	if (!size)
+> +	if (!pool || !size)
+>  		return NULL;
+>  
+>  	size = PAGE_ALIGN(size);
+> @@ -412,6 +418,9 @@ void qcom_tzmem_free(void *vaddr)
+>  {
+>  	struct qcom_tzmem_chunk *chunk;
+>  
+> +	if (!vaddr)
+> +		return;
+> +
+>  	scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock)
+>  		chunk = radix_tree_delete_item(&qcom_tzmem_chunks,
+>  					       (unsigned long)vaddr, NULL);
+> @@ -446,6 +455,9 @@ phys_addr_t qcom_tzmem_to_phys(void *vaddr)
+>  	void __rcu **slot;
+>  	phys_addr_t ret;
+>  
+> +	if (!vaddr)
+> +		return 0;
+> +
+>  	guard(spinlock_irqsave)(&qcom_tzmem_chunks_lock);
+>  
+>  	radix_tree_for_each_slot(slot, &qcom_tzmem_chunks, &iter, 0) {
+> @@ -466,6 +478,9 @@ EXPORT_SYMBOL_GPL(qcom_tzmem_to_phys);
+>  
+>  int qcom_tzmem_enable(struct device *dev)
+>  {
+> +	if (!dev)
+> +		return -EINVAL;
+> +
+>  	if (qcom_tzmem_dev)
+>  		return -EBUSY;
+>  
+> -- 
+> 2.34.1
+> 
 
