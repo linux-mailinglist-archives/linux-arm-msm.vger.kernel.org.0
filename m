@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-33363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4A9F992C81
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 15:03:00 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D1BF992C84
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 15:03:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 72C191F23A91
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 13:03:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B3941C22523
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 13:03:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B89091CC159;
-	Mon,  7 Oct 2024 13:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59B9C1D3185;
+	Mon,  7 Oct 2024 13:02:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+gCwTPe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LpANlU4e"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3FC18BC14;
-	Mon,  7 Oct 2024 13:02:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC0F18BC14;
+	Mon,  7 Oct 2024 13:02:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728306166; cv=none; b=iGrG4DBk7UMcav5I3i1g0fujultDWFe4jBn92znJkS5iL0EPuaCPDOKFlt+7P1z/fRMeW6CYq+y3o2ZieJsT5sUEg9Xkn7mxhbrADlBwTzczJjqOANNk6R8pYdBtDDKc8dqVX6y8pDCf1a189A8b4MqJTGLTR5zCixV/gW3oUHo=
+	t=1728306171; cv=none; b=r66NvpJ3KGwEDXhwN/oZShhu0YVKLBU7dearuMsLmW06LQlymn0rsoW6lfDQ+et9rfRnjyeTfgjFYzawP8o8u2ZcmFoyucuUxS0qibb4Rhd3RPjGYZUtpfkjj7uStGG54hFk7SXkVCYsz13hQvbO8+BbzbwfSrt4sjFhp0nkqN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728306166; c=relaxed/simple;
-	bh=XRKirzTFIMSNivmZVp/8Jy1ydUCi/RswBiDISnxwc/A=;
+	s=arc-20240116; t=1728306171; c=relaxed/simple;
+	bh=IYDtZxIA7LZg7GJ4+ijktScBKAXI1nBZ6evgJqXugw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SfI1/xOUG5wy3ODDZQ0rdFxBIHDST9LmO11I6eGpKY6PJh2dwXHfIOrVXY4md38+QgykxRsKtMNMV5e6HXvfLxBiwgAo8/UsGYqyyHNyBjahSsy4laumhMijVChgKrPiVVeW3KPap9NNDjPbrInF70Ihq+cDWteMvh1bjHJ1Ewc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+gCwTPe; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version; b=KVuK3PNpEN1nos2DWcn79QrGsliG+A7ujqIN3lzRuKOuOUzHdVw11zYs/g7KHB2OAHmFBqkY9kbtpY3x1w+nZO3a2rqdlt4/HNXwE4sCkNYI4Cj8epEVSbGHiD84+VpmG2tWJpOob7v/9BDJwSsMxolTZjCVrsys2iwsTnlMvEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LpANlU4e; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-20b86298710so36347865ad.1;
-        Mon, 07 Oct 2024 06:02:44 -0700 (PDT)
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2e0a060f6e8so3120465a91.1;
+        Mon, 07 Oct 2024 06:02:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728306164; x=1728910964; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728306169; x=1728910969; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Rqykl1jSbR3Xf0wddDtKRGArfsd/LgQPVty+FehECcE=;
-        b=g+gCwTPewa6G2h4g10u8ojAanT70ML0MvZd/K/XMH4spbVtehXo5B1ayMUis8FvPk+
-         ffqlON8Gl4NV0IjfO/4G8oip6R5b0JXtXHo9et9zn9GdK1sBAcfRktb/xNn6wSx55O/i
-         Jc6ThKpUKPe+kO7brijSqNOGnjvE//vpXg5OvKZPTaHbj/GJ5mdmgPNVvyyR9yuc0bIq
-         GTrMPrLoz8fDlDdbuUs9e6rV7MQIBrggikUqccsLCxrOW6IX5cmrVCDuz3S7DGpFEwOM
-         0IP/oVLAUGgiuufoJjQQHCoQMWZEARDoLHBGc3WcSW95UU36WUuHWNGZ1ObIPPFgNcZe
-         hGIg==
+        bh=6CwQatre7HDmPEfiwWXMhAxTYd1eDybO1wBnpMYOLMc=;
+        b=LpANlU4eLhRYCWBNkiCK/HtSAlZzap36f5EVXHFgRv0aMeDFNl6dblYHb67JFf/t91
+         c/Vzk44TrQvbQDkzSHGdjJoW7ofwN3eK2J0rBUU8ALUyDH8ddV0etmv8TX+bakF6bBXc
+         X/kKZpQn0yLmf12QYigDwFzHpTYktnHqu30q6pcc+tLq2NF52xuzjWEyN60Ak0A+0ESS
+         65JLtBLadsRAc2ZDE7PHHekOkr9nSBYyAGHhjW2VID9HhpB7zjdVnqKUPPDG9eaSkLjT
+         5MalfQi2ZJc9/Q71M8XtD7LAPHvPmVmDWwaDI0w6Rxjs4CylHZr9ALLhaOCe1lAIbYMW
+         JECg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728306164; x=1728910964;
+        d=1e100.net; s=20230601; t=1728306169; x=1728910969;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Rqykl1jSbR3Xf0wddDtKRGArfsd/LgQPVty+FehECcE=;
-        b=W0oxLojkBps36MffQljqQN4EB56OYXkqO+o2Nj8n5Ll4+nbUUEco9/Q6/hZgPtiPmt
-         HrHKqhsIN+C0UQ2Y2GkwNeb9SK4kfotLpdlh/KaMDjT097FFW3zBLElvoWRENFq4QkrC
-         7mvNKMDycRoY00L/sdu6QaA8A6qoo9OzZzWVVQ25WLEE+01szA5aw3qgQxQ5OIAiaqUa
-         +xmC4qy13bjFlk8eraas/rrcR5dW9uHmrM9CPBhkupXeM8PZu14d+OJBb6Sq7SPBmJwk
-         42R8v70BrAUgpg8vZzuUjjbUMkdfn8bVzun5WaZMMTpVkzZK7x983IAs2uWdj72k3DjB
-         IaKg==
-X-Forwarded-Encrypted: i=1; AJvYcCVjyl+q0rNTiL27Io1RGM+HR+GDR2emBPrdQUoVAWPv38Jn4KFe9h+zk0tvUzRJaQj8+hABSlpDaTov3iQd@vger.kernel.org, AJvYcCVumAJ/Q3ByoIpmtgj0LnUUJVspYXkVu9wve5TZIiYjy+Ykn9YizT0KEqnJs303ii6yHXmhTtTiVTiq@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMbRLNSJ35aWN+L8Ipt5a/V1LOTYxdBpD+nhApNQLNglSzE0iQ
-	1X2RdHEBrjB9HjJuUiUjlXAGXpePL5Dv9vJvt2KQjjsSS04BXw8x
-X-Google-Smtp-Source: AGHT+IHgj18A/vjl7cwbS7J5GjAsyapY1A8uAmSx9GKN/DSCI14RjjrVWvOelKONI7gJCiAOxdqTIQ==
-X-Received: by 2002:a17:903:41c2:b0:20b:c1e4:2d5d with SMTP id d9443c01a7336-20bfe494d53mr158699775ad.34.1728306163666;
-        Mon, 07 Oct 2024 06:02:43 -0700 (PDT)
+        bh=6CwQatre7HDmPEfiwWXMhAxTYd1eDybO1wBnpMYOLMc=;
+        b=o/dDvp21tM7fmr1zCgz6udY2qQ0u+KE4z+PdQZNLsmfwNBViAMJmzl0c2gFBJ41gPj
+         y3jbYGJqkKjajXeRzkIq62TMY9tIBdFr3DUM0tfTCr2jHnbRrRrxueJRm4svTiXEK0sA
+         BiN3vgILW9BZVNbBAoXT7oPtZ2NrS20B/fKrvxvr1bTfXIJXaV/GsDnWylmB8B88qwkO
+         kiPmYrdApt/wLWPEbAPdT1RkC7p5RPxEr68zrZYIB1x7HjtdXAOLABCId5QB76kooljs
+         ZcuevpK4r9faOXI6tlaPkxGaXCm2VuPPADHqUnYKVwUBMzmsPcMaSvP/l/dXAH2Z84fe
+         moyQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUoCFSCtoz0U+ioyLgTFGIF2NhzVqVk5Wq+rnHGfO4qdsNWYjkxKViLXbkGImIAnyRODcCaYNPO8dq9GTf/@vger.kernel.org, AJvYcCUvTr7fo8yxXOKt6TyDHe7zyaCey8nXk0ETNYR25VdOPW/1S3DxaTzLov/8WPdRFTVlsPujf5Op3mji@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyqs/EcAoBNAk19VWp3+vUn+5HGyvuTJy+7azd1WlaFahvHCfP/
+	LTZFQtNarMVEWjTT2toh5XrPTgVs2HDLAkjwoavd/hzw69fagqK1Ewfutw==
+X-Google-Smtp-Source: AGHT+IHphNi8wQvW0Re22UFHYUWUX4stPnQdkVdx94eKxUrXesf/TgfdflxgAcmdcunP3HnAr5R2+g==
+X-Received: by 2002:a17:90a:db87:b0:2d1:bf48:e767 with SMTP id 98e67ed59e1d1-2e1e631e7a5mr12276086a91.29.1728306168961;
+        Mon, 07 Oct 2024 06:02:48 -0700 (PDT)
 Received: from localhost.localdomain ([103.149.249.231])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e20b128847sm5306654a91.49.2024.10.07.06.02.39
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e20b128847sm5306654a91.49.2024.10.07.06.02.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 06:02:43 -0700 (PDT)
+        Mon, 07 Oct 2024 06:02:48 -0700 (PDT)
 From: Jianhua Lu <lujianhua000@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -79,10 +79,11 @@ Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	ath11k@lists.infradead.org,
-	Jianhua Lu <lujianhua000@gmail.com>
-Subject: [PATCH v2 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi node
-Date: Mon,  7 Oct 2024 21:02:50 +0800
-Message-ID: <20241007130251.125022-2-lujianhua000@gmail.com>
+	Jianhua Lu <lujianhua000@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 3/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add bluetooth node
+Date: Mon,  7 Oct 2024 21:02:51 +0800
+Message-ID: <20241007130251.125022-3-lujianhua000@gmail.com>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20241007130251.125022-1-lujianhua000@gmail.com>
 References: <20241007130251.125022-1-lujianhua000@gmail.com>
@@ -94,54 +95,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add wifi node and this wifi module is connected to pice port.
-The following is qca6390 probe message:
-  ath11k_pci 0000:01:00.0: Adding to iommu group 12
-  ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x604fffff 64bit]: assigned
-  ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
-  ath11k_pci 0000:01:00.0: MSI vectors: 32
-  ath11k_pci 0000:01:00.0: qca6390 hw2.0
-  ath11k_pci 0000:01:00.0: chip_id 0x0 chip_family 0xb board_id 0xff soc_id 0xffffffff
-  ath11k_pci 0000:01:00.0: fw_version 0x10121492 fw_build_timestamp 2021-11-04 11:23 fw_build_id
+Add bluetooth node and this bluetooth module is connected to uart.
 
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 ---
 changes in v2:
-1. add ath11k-calibration-variant property.
+1. pick up Dmitry Baryshkov's Reviewed-by
 
  .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 19 +++++++++++++++++++
  1 file changed, 19 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-index ebea283f56ea..7a55e271c3ac 100644
+index 7a55e271c3ac..100607da42ad 100644
 --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-@@ -680,6 +680,25 @@ &pcie0_phy {
- 	status = "okay";
+@@ -30,6 +30,10 @@ / {
+ 	qcom,msm-id = <QCOM_ID_SM8250 0x20001>; /* SM8250 v2.1 */
+ 	qcom,board-id = <0x10008 0>;
+ 
++	aliases {
++		serial0 = &uart6;
++	};
++
+ 	chosen {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+@@ -799,6 +803,21 @@ wlan_en_state: wlan-default-state {
+ 	};
  };
  
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
++&uart6 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,qca6390-bt";
 +
 +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
 +		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
 +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
 +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
 +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+
-+		qcom,ath11k-calibration-variant = "Xiaomi_Pad_5Pro";
 +	};
 +};
 +
- &pm8150_gpios {
- 	vol_up_n: vol-up-n-state {
- 		pins = "gpio6";
+ &usb_1 {
+ 	/* USB 2.0 only */
+ 	qcom,select-utmi-as-pipe-clk;
 -- 
 2.46.0
 
