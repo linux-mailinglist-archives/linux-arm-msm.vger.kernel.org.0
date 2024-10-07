@@ -1,117 +1,97 @@
-Return-Path: <linux-arm-msm+bounces-33359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26F5D992B8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 14:21:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC20D992B9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 14:24:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4EEF21C23807
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 12:21:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F1CC285741
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  7 Oct 2024 12:24:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 263661D26FE;
-	Mon,  7 Oct 2024 12:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E42F01D2F6D;
+	Mon,  7 Oct 2024 12:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="bHLM+SVZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E409GX0H"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31471D27A5;
-	Mon,  7 Oct 2024 12:20:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69FB1D2F64;
+	Mon,  7 Oct 2024 12:24:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728303662; cv=none; b=LhtVHy2L3S9BytasY5kPaRD+lAIRv7fiJC2dx3ICGN5GsmK/H3AS6MIHNhXpAG/HA8IYGtprLOrX3NJevjulBBoumzCpS3y7hNZB7pk/qpnCRV70gJqpoesQz9clHD0luV8VEi0joKR94OlncV6VJKdHS7igDDf1iFeE3ePirWA=
+	t=1728303862; cv=none; b=DWEIsypDoHY4ydcw3jZR4KheynMixrSklL4QCvAmlT8toQhqzOSznYC4irmm7HUIjYZB6UtY7M5LjxqvEOXvCbTK3pzSuy0hyd/WT+1ccG1bJdyOFBip4SGDDqSWE4FRT//ZY1f5BRJNTVrxxM0ZuqzcouzDCuZChP0i8Oqq6WM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728303662; c=relaxed/simple;
-	bh=/GmggK7t18GXzw5zOZycQRz+IDt5txZjeSYlbdPeeY4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MuChDahf4ewcfP2RgdOkonwGRs+tj12W+LQAUTlccil31wkLSS9UP3z5r1i2Gk2EBQFyshS1AwWiyms1LIXQeH1QFRXEZHasBW4OabNgdaYTOY7rmY6bN4rCyqnNTSGRFxwB7Yjwr+wQvnVdY2tt4AjXo6SVc8OJbhZb6RZ3rcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=bHLM+SVZ; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1728303634; x=1728908434; i=markus.elfring@web.de;
-	bh=/GmggK7t18GXzw5zOZycQRz+IDt5txZjeSYlbdPeeY4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=bHLM+SVZWlGSCFlphG9GUsIP7D8znN7Rdsr4oAww3t1c/KttrgRLnXh4cN4WJt4u
-	 mEz1P95u8o5h50Ut7gRb59Es1KeIbA8w9PRWd91yiXXepiGYhHTgdXl9IG9d9YJtx
-	 GpL3c418aEO7XEVXYl8uL7g7cmL0tw49AyJ/hGQo87q0sceUY6lJcbd34d0u9FuE1
-	 YzzcB2t3R3hWK7zFnYdz7S3wNDOzl+i2MYQRQLJf63bca01kDZTC+I2lBRMT/qstw
-	 AdX8sQwBdKy+ob+YXbU1SYkfVE+F9hGnipVi+2B38F9l2anx+jsVwFfBn8/s15aIY
-	 ziZe2Qy33Djq5Oa8Yw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.21] ([94.31.81.95]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MuF8x-1trPmp0v7t-00se2x; Mon, 07
- Oct 2024 14:20:34 +0200
-Message-ID: <78ce32f1-0037-4caf-98fd-1e73216e3778@web.de>
-Date: Mon, 7 Oct 2024 14:20:32 +0200
+	s=arc-20240116; t=1728303862; c=relaxed/simple;
+	bh=jk4pZRGL3Zjmo2JffXD0fvRZYzW7fgPSuGEaLM2fUuU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R65TiyxjMsBwkWDXLmSpcurVUuwh/8t6H3fsml0mg55eVFetN50RXvEpeGt8sSpo9Xk2ZfhfdIfA6UT9c5JnZyKnf0/ST3XGebVs2WLKaLiuIS8mI0Tf6oURJQQjufOzigwv5czPe6DrxLdDgEVi1o+pH5FQdwGI6TiwGqXp994=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E409GX0H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD0CC4CEC6;
+	Mon,  7 Oct 2024 12:24:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728303862;
+	bh=jk4pZRGL3Zjmo2JffXD0fvRZYzW7fgPSuGEaLM2fUuU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=E409GX0H/jaqb6bz9o6eSHvfuvQ8sGAmCCYifU04aV7Wgu4vZuVvnq4VL67ecpakF
+	 xfSz730iLIrM4h2Q5yKtZvksXl93LzS47IAsYrY2XXUtGPnz2uhW+9uFvkiYsC0UcZ
+	 0eBACoBXoqsjoWh6dGxby1eJEyofkgALLMuQHkGc5h8h77Ss0wxhGm/m/Nd0YWkCRt
+	 0gn++AmTq3BqyphEMMuFB1rg7LIMrCLDrJObp/wK5kza9me7anWqNZaDYiPqp7IBga
+	 4tffqxlLvqbUUnxr7RobfLlmRUgA/R6rKe+hNO80WQRpKk4Z6H3T8MrOvIOHYX/9gH
+	 gsOPqIAW+7LBA==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1sxmmi-0000000005s-3lyU;
+	Mon, 07 Oct 2024 14:24:20 +0200
+Date: Mon, 7 Oct 2024 14:24:20 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100: Switch PCIe 6a to 4 lanes
+ mode
+Message-ID: <ZwPS9AB27h7KbtqB@hovoldconsulting.com>
+References: <20241004-x1e80100-dts-fixes-pcie6a-v2-1-3af9ff7a5a71@linaro.org>
+ <ZwPDxd9JJbgDeJTi@hovoldconsulting.com>
+ <ZwPNsTL+5f/6Gtte@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ASoC: qcom: Fix NULL Dereference in
- asoc_qcom_lpass_cpu_platform_probe()
-From: Markus Elfring <Markus.Elfring@web.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Zichen Xie <zichenxie0106@gmail.com>, alsa-devel@alsa-project.org,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: Jaroslav Kysela <perex@perex.cz>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rohit kumar <quic_rohkumar@quicinc.com>,
- Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
- Takashi Iwai <tiwai@suse.com>, stable@vger.kernel.org,
- LKML <linux-kernel@vger.kernel.org>, Chenyuan Yang <chenyuan0y@gmail.com>,
- Zijie Zhao <zzjas98@gmail.com>
-References: <20241003152739.9650-1-zichenxie0106@gmail.com>
- <ee94b16a-baa7-471c-997e-f1bf17b074b8@web.de>
- <2024100620-decency-discuss-df6e@gregkh>
- <6d17006d-ee97-4c7c-a355-245f32fe1fc3@web.de>
- <2024100608-chomp-undiluted-c3e2@gregkh>
- <8e4fe108-cfde-40c0-83f5-c1ce60b0940f@web.de>
-Content-Language: en-GB
-In-Reply-To: <8e4fe108-cfde-40c0-83f5-c1ce60b0940f@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0/I9nLZtNHJn+8QIWefoO9WcBYmjaQQoCt5aoy4FevRamxm7P0Q
- Q9foGI8xfnQEOl8gd8qHaI4rbnwqgXDrPSvIVNBZxHpmO2S/51vo9R1PidVJ9ShIAjYGEe/
- I3y1XsZLH0yNLQpanCWT2Px+hVrkD9sQQa85Gk+gFp9Xmhsmm1G1GTBdw3jPWVwkIsmkPLo
- O6RGxdOCvKk9XmGiTLNXQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:9C7O/4L1sAY=;q/IaW97ObEBUXcpA1ESM21aujM2
- aPpH6dgfr8LrKuNnoKkSuHYPMaIKQkVpFDQ/j87UpMeh1FNFOXCeR9RBnKPRPs4NZ/Fip6EXj
- 79Gks+a3lZFWS60vXOEO1ZOwugvU/Or1rbLX7A8O7lIIyJfDjfwpUHGFXNv374M8WgyaaGR6J
- 0nAyGEpiVwAJWPlc2Q36PaJB4OLFwwCt+Q6Ez9Q2Fm5ssFW7Rk70VoSIfEj77+kKacfBDO33B
- BZyi97p/a4Frs9xo4J9kupmxpbmP7ci9/pGwowMd8BbMWQ4W0vv3Qwrt6oYNqt82lhE3SVsn6
- H6eRC4hZAeCbEsSaSvylUUzcop9RWafF3C+4tiNa5Mih/TVQ82JZypApr3sNbSWuAJQcbr2p9
- rofnZQIwjUu+ET5YuGdqmM9fbf2DXfeyIOFxkL0/sDz0rRxbi/kVwPDeSbR+K2gUXFvg9eJob
- 7lj4PHRb/6Biok0jzutVZI/mGQMi9d8d8JmIrljoRB9Q+6sWde7ah8Ci9fdZCKtmQd7t1Gcvf
- Y1TCwznjPMXgev6J7br+fN48lmXMctT7OJ63GL/jxMbC9aqvJoALKxSsZk7IE28ID7mLJoWzp
- sYMfNYkiBGRMrCsk1cbPSCXs9pJHGhQCkeA2tVyVX0V/nRshIG260EjfJbNdaPcnaY1fdpcB4
- ZGgc4mPVr9j5RGetnKskUyA9ps0yaVu91Dx8g3ltsu+3FXNwc0RivmhzO5H7En1psa6Rl/FBJ
- JdePx+nHyophij3lhiA77rqHfVSb1ORcHa8172Il21JH64Tu+2KhgbOuaOBV9+LmHDJPDVFXs
- TJ0FwmNsv0RKyJly8dQz1Wbw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZwPNsTL+5f/6Gtte@linaro.org>
 
->>> * Do you find any related advice (from other automated responses) help=
-ful?
->>
->> No.
->
-> I wonder how this answer fits to reminders for the Linux patch review pr=
-ocess
-> (which were also automatically sent) according to your inbox filter rule=
-s.
+On Mon, Oct 07, 2024 at 03:01:53PM +0300, Abel Vesa wrote:
+> On 24-10-07 13:19:33, Johan Hovold wrote:
 
-See also:
-https://lore.kernel.org/all/?q=3D%22This+looks+like+a+new+version+of+a+pre=
-viously+submitted+patch%22
+> > So you should perhaps rather say that you are fixing the description and
+> > compatible of pcie6a, which *is* a 4-lane controller, that can also be
+> > used in 2-lane mode. Or similar.
+> 
+> Agreed. Will reword to say fixing the description as suggested.
+> 
+> Just to be sure. We still don't want this backported (even with such
+> rewording), so no fixes tag, right?
 
-Regards,
-Markus
+We don't want this one backported (because of the missing deps) but you
+can still add a Fixes tag. Just tell Sasha to drop the patch if autosel
+picks it up anyway or use the new do-not-backport stable tag to achieve
+the same:
+
+	Cc: <stable+noautosel@kernel.org> # reason goes here, and must be present
+
+See Documentation/process/stable-kernel-rules.rst.
+
+Johan
 
