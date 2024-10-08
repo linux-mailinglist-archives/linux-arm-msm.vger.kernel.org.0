@@ -1,161 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-33576-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33578-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 172AA995128
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:13:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A33AB9951ED
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:37:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4F019B2AB01
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:07:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8C1C21C23E7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:37:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C44B1E008B;
-	Tue,  8 Oct 2024 14:06:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3D411E04A6;
+	Tue,  8 Oct 2024 14:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L2UEhF5V"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="klnyPQ4v"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E571DFDAD
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 14:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14BF1E0480
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 14:36:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728396390; cv=none; b=sW8gRZKwrbD2hdeMZUz1IgZn7mXkmrtaD6wtnzTJEdxRbGW/M+ZUzDkVNwy2ZBvTSzHhAFOU8N389lPV29hCiWpmPsG5THIBii+iUEfkKp3z/VB6BjT89d9xTh3hmSmrRk4rsUitNyxb7L7a4d2NigjhQWRPSaaJh8ca5urUZ+U=
+	t=1728398196; cv=none; b=D0pDVYTp0JNZPTSzTgbN9wAj9cbT2cuYlAz49v9A1+Z4bkG6x/h24xbwkSp9et9cLnJr2nYFVECb5LC9fp5nCOeqHKl9igmMuTxiDGA8B6sNUGQq3kqzBpG7zMIKy9SWhp9BEQYZRkxt5f5pYDZ+ZH9bRir/8vG/dydthZSk1S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728396390; c=relaxed/simple;
-	bh=HnTSSieNZnln6w8Vcr1MEzPJufKQo6Dj8CE0MlH5veg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HVGJAHWi48vzab7b0+jgBbnhHsYAHoNsw020Avji/sIOYsnBdIo3UAOsenh818O+cvKLj1q5iqCSEzGw+jh2cOMjqtKiYl+wORbmqFztVtIchQ6eYlO6ZEzTDotbBhBrUQm3sbqaHfCQuD12bkNiQRSmWOEABSdgn8ISOGhOzgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L2UEhF5V; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1728398196; c=relaxed/simple;
+	bh=Y0lMjW2jKMZwN0M6TbGXmhtEUEKSCT8WCvQRmIGn5HU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=B/BeAnWAe1hIw3MHC7OSA/8A6hf7bqJaTv+bvfDD0UzkREHyM8/nVFa2l0JTZgPGkUlFrf28ImAQ0d5IvIc9Xp/dBSobOuIFEXZymidCNH11jkEMElbmwQruu3/kkpoa6bFC11LsE6ei97pSHAhqvMcEP0T51Qcb+7nAQYVtrKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=klnyPQ4v; arc=none smtp.client-ip=209.85.128.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c88b5c375fso6943881a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 07:06:28 -0700 (PDT)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e2e4d16c2fso24043907b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 07:36:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728396387; x=1729001187; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zW3qGb3ZL5G/B18IQmAOlU1aRnTk8u0KXdkSlfqu380=;
-        b=L2UEhF5VUs9R12tbWFCoX8Et9NTFKu8WyrjwUfTgaebieVH5Glf7udVwKSKR+x+RCc
-         WTIDomeuXolsobBkJ3dXg5s4H6ZehFj2JzXO08l2YyZtAQ7g7LhL9Be+HjyHHutnM83i
-         +SI/ow9Kt6xzOd9Tjj74Xj1F4zkO3Ha2VMjUK2v4pod5yz7EwMzEJiNoEzp2peoim7Jy
-         WcVb46oN2thPvMdddlLEJbA6tJgstDO0tsEh6W8eG6RDvM83ZztyRkMZ7aZD5YRhSUlP
-         3ejnL608nG5OBSyI6Dju/CZFnQMD1sMpuuUcnhSIJUqmtUKZN4foUCVdqdA7T1hjRDkH
-         w0zQ==
+        d=linaro.org; s=google; t=1728398193; x=1729002993; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bvdDxu0uUFcfRftNtzBrq68CTjswU4MR/lPRKPBVJUA=;
+        b=klnyPQ4v1Jl38wqrEP6jzFLr2/TGq6vbgO0SHF/OByias5VQjZpph/PEXNBl+sz70n
+         nMjZDbuoszXPyooPXgcdWiafK3LfGGCAqDzPL1uGg+DJ9JSA5+6nwX5+19jhT5cag4mZ
+         r/tNA9ksJ51EVJJunn9REuhTD1kueNwpUw4G6+GU96JUFvCLI1K4DrI82vg+nwbSuNJf
+         8ReXhSldt3FyDDdrG7dbSCNXWXB4s5gPZgZjcseDVyWhO7CHL+Cp+guTnNJ2nSDAqHtz
+         hhjgVBJpdFPSJiCfCJyq9SbV72+5FueEFQu1Q7KbJnb/v6sN+yVvziLlUbszfzlQ+wpH
+         MrOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728396387; x=1729001187;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zW3qGb3ZL5G/B18IQmAOlU1aRnTk8u0KXdkSlfqu380=;
-        b=DdjjJEn3hgSERalClpN/jdYyRkEhdflwc7CgNmin0nD/N0wOPc8pOx8dwTN7JwpNaX
-         2N4PUyx+kkVYGHNHqeKBulrFS90bSpQ6+QhSdU037rhUCdCykZFBUcUJMLSFp0Q14PYQ
-         QiozbeqUqPKrYnrg1+7KhiFO7I+muAx/D2Rz3gD1wADkgtNzJWqZ+NFCUUAavbNt4mS+
-         7+jDKg3Fzfl8HnhGJeL4/H4YF+3sQ1+6Xum0+jaZwjeEtTiKuTHHNUknhPpKZDq4+vkI
-         cB1bMGhd4YgsHNXDgGBEMU6gc5gRPMJBFs8ApZfg9pOq0WyqFA0/q0eQnqZNdzUYJaQG
-         z4uQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVImZFF/AOHW+KNVcvc4i2JObALtOmgkwVs24xjcruJgzf33I7x/wFVC6FMmlyPebBIP/DkPTuLlGR8Fsvv@vger.kernel.org
-X-Gm-Message-State: AOJu0YydB9qUn89QwFsZhZHnY8l77e1bkQnBNjBBVKuDzYI5HqYQvl3Y
-	E9d0LSp4gSCxQhk50Hk+PhiVWSS6zQxmNH+vJv8lJQ/lPIsew8CYzzt5Y1zoMZg=
-X-Google-Smtp-Source: AGHT+IGAPJkU/2BX77pEu6SdzFy5D21IvcpFCtEIlOIooAmaIEi6IbF3ADl1oZs59SG5qUVOIXYKVg==
-X-Received: by 2002:a17:907:f767:b0:a99:4acc:3a0c with SMTP id a640c23a62f3a-a994acc3ab6mr795246066b.53.1728396387114;
-        Tue, 08 Oct 2024 07:06:27 -0700 (PDT)
-Received: from [127.0.1.1] ([82.77.84.93])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a994f50fcd4sm320714266b.171.2024.10.08.07.06.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 07:06:26 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Tue, 08 Oct 2024 17:05:58 +0300
-Subject: [PATCH 4/4] arm64: dts: qcom: x1e80100-qcp: Enable SD card support
+        d=1e100.net; s=20230601; t=1728398193; x=1729002993;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bvdDxu0uUFcfRftNtzBrq68CTjswU4MR/lPRKPBVJUA=;
+        b=Vespl44h/thB1tWm4RIRmT5+VzonPE+Yp+MnDnB0thVU3jsRIBuy0/1iRiKwGyzjbK
+         DDNFZ+GHW0v7t1McBfzXciUH8k2sRwOumBIsqjcH2/MzU9eqHVcQ2vVZXxSCvQpohewz
+         tr7auk+r0duNL4wiWdGudgJlTGE9HdqzX6L5wHVXe8dfDIKlkar9WPODbGIQTGM4cdN4
+         qFngKilc+Yx4ZeCrP0M1KfBNtXrMiKyPR4coBvu5nyidq78FxcphgBC9lA73jCZwC/0n
+         JFsyjvecT8NF3hlvfsN0zc39ckg02h8Y26tt8ZgIlqEZgHdUfW+0+iP0dCYAI3cpNcY8
+         NRKw==
+X-Forwarded-Encrypted: i=1; AJvYcCWhUR/8w4a8Aei8c8Arx+WsSWAAL0Yb/IuthaU/sU9B75DQNxuY9UuwweUm1qW/Hs0J1qxVfCeVNAUHPZmi@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjhkcMW52ol6iF2V5FjNN0OPfhH2M8MoDs0XAgwc3bu5EXElJ7
+	KDbCjHYJEmQ0gXaKmVxY+nOXcKgQnjUOUAU3SGdGCUmBmGpysCnhp/SjtXuEbkOqPunXz8xo6RB
+	AxIS54QO9ufqv7dfUPcQ3eJ844PFKzv623l7gaA==
+X-Google-Smtp-Source: AGHT+IH7JBySBe+ugLiwdV9z9D3yRskW3fQHkZaPcUF8iKpr4058P83ZY+ritDjNryL38gb8s14NXcVeCTMnJZxK7bU=
+X-Received: by 2002:a05:6902:2e0b:b0:e28:f668:b41d with SMTP id
+ 3f1490d57ef6-e28f668cd1bmr765146276.48.1728398192886; Tue, 08 Oct 2024
+ 07:36:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241008-x1e80100-qcp-sdhc-v1-4-dfef4c92ae31@linaro.org>
-References: <20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org>
-In-Reply-To: <20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org>
-To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-mmc@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1388; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=HnTSSieNZnln6w8Vcr1MEzPJufKQo6Dj8CE0MlH5veg=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnBTxZ5pw5/X59abM1PzRowDFyBM4dfWvQvCZKC
- 68ku9qUTSiJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZwU8WQAKCRAbX0TJAJUV
- VsDpD/47F+PiwUrg4V1wuq9sTBq0KrtQ4LmgaCq02mRN7AU7b/+bCIEpW9nYZw7XIs0WhZZp3xP
- DdVQeHV5HUcPZr4CA0ZghAO1InQYeiwD6sciR0tuN02VYftouZx+Eu9LD2zamJslkzZiaFcbCQ5
- gXzgh4S0lyOXM/d6Rsdn3H27D+z5BVRgBXCBEUzRGxFxPCJnCMjCyjl3KTqPBwTBxi5EHGgue2n
- MHo1wohwNVZ8K6Y5gEha9m6c0RZub5OMgVls5z3I4UQY7DSHcAc3kOHP2bgiTfDBHJK/CMqevP1
- oW3emd8H3KMhEqW9HwgW4bzTkiIUgIkSw0CS/os5GK6bEv8A3jRS50wizmaKSij/DJmqnkxTJwy
- yauuZs0Sd2HxFITFWNv5IxPL9blpOhtgQaZviOcFmBn3KGY0mbnIn6cuaXbACC8H2b74lQXQRAD
- Xm30RKgAFAZRx5WVPFozoMsZx6JFiCNgHl/X83uU1UlxOobqgrf6HVpf+l6P+PTIX0M2mBREkZ/
- aMHzq8jxS+d/PYnOzU1wDj9CQ0IJ2NXlFMMp1byiG7ccklfWVJG0WU5SLHjorLK76IjtktFfL1T
- U+k6IBktWgDNVdBDhRSgRTn5aq1VgDSZhkvu9UsjadAF0FX3xnFO//J5dx3px54cc8vrrjV+iDO
- +mI/ECC0kKtrJeA==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+References: <20240929093418.526901-1-yujiaoliang@vivo.com>
+In-Reply-To: <20240929093418.526901-1-yujiaoliang@vivo.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 8 Oct 2024 16:35:54 +0200
+Message-ID: <CAPDyKFohKSPqhuPVYijtvhY2DmG20ar+MY9OqWWLu5_MnB4ReQ@mail.gmail.com>
+Subject: Re: [PATCH v1] mmc: Fix typos in comments across various files
+To: Yu Jiaoliang <yujiaoliang@vivo.com>
+Cc: linux-mmc@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org, linux-amlogic@lists.infradead.org, 
+	imx@lists.linux.dev, s32@nxp.com, linux-arm-msm@vger.kernel.org, 
+	opensource.kernel@vivo.com
+Content-Type: text/plain; charset="UTF-8"
 
-One of the SD card slots found on the X Elite QCP board is
-controlled by the SDC2. Enable it and describe the board
-specific resources.
+On Sun, 29 Sept 2024 at 11:34, Yu Jiaoliang <yujiaoliang@vivo.com> wrote:
+>
+> This patch corrects several typos in comments within the mmc/host
+> directory. No functional changes are introduced, only comment
+> improvements for better readability.
+>
+> Detected using codespell.
+>
+> Signed-off-by: Yu Jiaoliang <yujiaoliang@vivo.com>
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Applied for next, thanks!
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 1c3a6a7b3ed628e9e05002cf4b4505d9f4fb1a63..a82fabaaac9010ce3b8d6718b3425e84d8864171 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -729,6 +729,19 @@ &remoteproc_cdsp {
- 	status = "okay";
- };
- 
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 71 GPIO_ACTIVE_LOW>;
-+	pinctrl-0 = <&sdc2_default &sdc2_card_det_n>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_card_det_n>;
-+	pinctrl-names = "default", "sleep";
-+	vmmc-supply = <&vreg_l9b_2p9>;
-+	vqmmc-supply = <&vreg_l6b_1p8>;
-+	bus-width = <4>;
-+	no-sdio;
-+	no-mmc;
-+	status = "okay";
-+};
-+
- &smb2360_0_eusb2_repeater {
- 	vdd18-supply = <&vreg_l3d_1p8>;
- 	vdd3-supply = <&vreg_l2b_3p0>;
-@@ -870,6 +883,13 @@ wake-n-pins {
- 		};
- 	};
- 
-+	sdc2_card_det_n: sdc2-card-det-state {
-+		pins = "gpio71";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	wcd_default: wcd-reset-n-active-state {
- 		pins = "gpio191";
- 		function = "gpio";
+Kind regards
+Uffe
 
--- 
-2.34.1
 
+> ---
+>  drivers/mmc/host/atmel-mci.c       | 2 +-
+>  drivers/mmc/host/au1xmmc.c         | 2 +-
+>  drivers/mmc/host/cavium-octeon.c   | 2 +-
+>  drivers/mmc/host/dw_mmc.c          | 2 +-
+>  drivers/mmc/host/meson-gx-mmc.c    | 2 +-
+>  drivers/mmc/host/mmci.h            | 2 +-
+>  drivers/mmc/host/sdhci-esdhc-imx.c | 4 ++--
+>  drivers/mmc/host/sdhci-msm.c       | 2 +-
+>  8 files changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+> index 6490df54a6f5..f444ca5dd154 100644
+> --- a/drivers/mmc/host/atmel-mci.c
+> +++ b/drivers/mmc/host/atmel-mci.c
+> @@ -860,7 +860,7 @@ static void atmci_send_stop_cmd(struct atmel_mci *host, struct mmc_data *data)
+>  }
+>
+>  /*
+> - * Configure given PDC buffer taking care of alignement issues.
+> + * Configure given PDC buffer taking care of alignment issues.
+>   * Update host->data_size and host->sg.
+>   */
+>  static void atmci_pdc_set_single_buf(struct atmel_mci *host,
+> diff --git a/drivers/mmc/host/au1xmmc.c b/drivers/mmc/host/au1xmmc.c
+> index 6e80bcb668ec..7393d2ea5e57 100644
+> --- a/drivers/mmc/host/au1xmmc.c
+> +++ b/drivers/mmc/host/au1xmmc.c
+> @@ -543,7 +543,7 @@ static void au1xmmc_cmd_complete(struct au1xmmc_host *host, u32 status)
+>                                         cmd->resp[i] |= (r[i + 1] & 0xFF000000) >> 24;
+>                         }
+>                 } else {
+> -                       /* Techincally, we should be getting all 48 bits of
+> +                       /* Technically, we should be getting all 48 bits of
+>                          * the response (SD_RESP1 + SD_RESP2), but because
+>                          * our response omits the CRC, our data ends up
+>                          * being shifted 8 bits to the right.  In this case,
+> diff --git a/drivers/mmc/host/cavium-octeon.c b/drivers/mmc/host/cavium-octeon.c
+> index 060ec4f4800f..d150d83b41ed 100644
+> --- a/drivers/mmc/host/cavium-octeon.c
+> +++ b/drivers/mmc/host/cavium-octeon.c
+> @@ -217,7 +217,7 @@ static int octeon_mmc_probe(struct platform_device *pdev)
+>                 return PTR_ERR(base);
+>         host->dma_base = base;
+>         /*
+> -        * To keep the register addresses shared we intentionaly use
+> +        * To keep the register addresses shared we intentionally use
+>          * a negative offset here, first register used on Octeon therefore
+>          * starts at 0x20 (MIO_EMM_DMA_CFG).
+>          */
+> diff --git a/drivers/mmc/host/dw_mmc.c b/drivers/mmc/host/dw_mmc.c
+> index 41e451235f63..aab1a8df6414 100644
+> --- a/drivers/mmc/host/dw_mmc.c
+> +++ b/drivers/mmc/host/dw_mmc.c
+> @@ -1182,7 +1182,7 @@ static void dw_mci_submit_data(struct dw_mci *host, struct mmc_data *data)
+>                 /*
+>                  * Use the initial fifoth_val for PIO mode. If wm_algined
+>                  * is set, we set watermark same as data size.
+> -                * If next issued data may be transfered by DMA mode,
+> +                * If next issued data may be transferred by DMA mode,
+>                  * prev_blksz should be invalidated.
+>                  */
+>                 if (host->wm_aligned)
+> diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
+> index c7c067b9415a..e87d1c4b9dc1 100644
+> --- a/drivers/mmc/host/meson-gx-mmc.c
+> +++ b/drivers/mmc/host/meson-gx-mmc.c
+> @@ -879,7 +879,7 @@ static void meson_mmc_request(struct mmc_host *mmc, struct mmc_request *mrq)
+>         /*
+>          * The memory at the end of the controller used as bounce buffer for
+>          * the dram_access_quirk only accepts 32bit read/write access,
+> -        * check the aligment and length of the data before starting the request.
+> +        * check the alignment and length of the data before starting the request.
+>          */
+>         if (host->dram_access_quirk && mrq->data) {
+>                 mrq->cmd->error = meson_mmc_validate_dram_access(mmc, mrq->data);
+> diff --git a/drivers/mmc/host/mmci.h b/drivers/mmc/host/mmci.h
+> index a5eb4ced4d5d..4d3647f9ec06 100644
+> --- a/drivers/mmc/host/mmci.h
+> +++ b/drivers/mmc/host/mmci.h
+> @@ -77,7 +77,7 @@
+>  #define MCI_CPSM_INTERRUPT     BIT(8)
+>  #define MCI_CPSM_PENDING       BIT(9)
+>  #define MCI_CPSM_ENABLE                BIT(10)
+> -/* Command register flag extenstions in the ST Micro versions */
+> +/* Command register flag extensions in the ST Micro versions */
+>  #define MCI_CPSM_ST_SDIO_SUSP          BIT(11)
+>  #define MCI_CPSM_ST_ENCMD_COMPL                BIT(12)
+>  #define MCI_CPSM_ST_NIEN               BIT(13)
+> diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+> index 8f0bc6dca2b0..2bfb86364441 100644
+> --- a/drivers/mmc/host/sdhci-esdhc-imx.c
+> +++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+> @@ -1524,7 +1524,7 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
+>                         writel(tmp, host->ioaddr + ESDHC_TUNING_CTRL);
+>                 } else if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING) {
+>                         /*
+> -                        * ESDHC_STD_TUNING_EN may be configed in bootloader
+> +                        * ESDHC_STD_TUNING_EN may be configured in bootloader
+>                          * or ROM code, so clear this bit here to make sure
+>                          * the manual tuning can work.
+>                          */
+> @@ -1626,7 +1626,7 @@ sdhci_esdhc_imx_probe_dt(struct platform_device *pdev,
+>
+>         /*
+>          * If we have this property, then activate WP check.
+> -        * Retrieveing and requesting the actual WP GPIO will happen
+> +        * Retrieving and requesting the actual WP GPIO will happen
+>          * in the call to mmc_of_parse().
+>          */
+>         if (of_property_read_bool(np, "wp-gpios"))
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e113b99a3eab..d6b3b343b031 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2601,7 +2601,7 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>         sdhci_msm_handle_pwr_irq(host, 0);
+>
+>         /*
+> -        * Ensure that above writes are propogated before interrupt enablement
+> +        * Ensure that above writes are propagated before interrupt enablement
+>          * in GIC.
+>          */
+>         mb();
+> --
+> 2.34.1
+>
 
