@@ -1,256 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-33577-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 910C2995116
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:08:13 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26F3599515B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:21:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 42107281C8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:08:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0BAD1B29D8E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACDB71E0498;
-	Tue,  8 Oct 2024 14:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56C701DFE2E;
+	Tue,  8 Oct 2024 14:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hhXUDw8q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EBUarpO2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB3A1E00A2
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 14:06:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDB61DFDB3
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 14:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728396392; cv=none; b=gIPfPr2CvURdu4l0gB4fxsE3iZO6lGx8ss7yjCT68dJ4z6BRiwX3y+qTJnXwW86mWq+tu7fq+/RDJY7Xt8BIQHZVFjeuuCioIGPhRCClWFLrHzDOrRzsilhzyb/uoZrhA/mNC8B0/WfQyaDuMXAZcKcZOfCN7cOxRKy3JgsKjzE=
+	t=1728396389; cv=none; b=Lvms7YR5SCiYFFHFKfiQvtkM7cKaX+KYuL3jiMTV6oBkB721PCXMm5NotjXqqHqJLz92jYcx91EBis2gtkI2bQgMJLoKUA26GEViji2a7pEM6Bctpis1W3IxY/xGh5wekBKyYqUDPPaiv/YJWYY2EuX6nKItkvfNxevbwHR5RnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728396392; c=relaxed/simple;
-	bh=BXOGQA6mvWgbyjnw+Dpeyg4FhDykouyx7I2lmxPK/Ew=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Vh+k9iT4N8VDM7ZdoQY4Z6LpGa9kgLnXls8/A2aoHiQ0ADt3Jg6XiT8UGgV1kW4cHZHkFqT4coJVlilBiTwT5dt7D3lDiCU8FimcpbQwKbPYXox80x8aY8KFvdKR2WV8lDRIYyLjQH78rPhQS4lIo1GAeP1pcLMngA3UvJtwupY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hhXUDw8q; arc=none smtp.client-ip=209.85.208.181
+	s=arc-20240116; t=1728396389; c=relaxed/simple;
+	bh=jbN6Xob5YJFb0MxA9IvVkAB2WqTY7IjHlPTtNsNyFV0=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=SvcYGYXT7RMJHX5N44gdfBFlb8OVkOo04wFAS6l9tMqxDqWW3/jnGGQQ+d4HB/MXXicYrhL1+Bx4W2v7E7o39ip6qtbGkUs2Y6W7werWxjuk46X0V/V5F+T8yAumVtew2bgOf6rbVDIKAzrJcV8ud0AjSrMzNsCXkXHTrgPuusk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EBUarpO2; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2fad6de2590so85466981fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 07:06:30 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9944c4d5d4so345892966b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 07:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728396389; x=1729001189; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L4YJLWqBXYOC24Bw1ONw1fQX4wAbzBRC8sG3hZFWAGE=;
-        b=hhXUDw8q+LurIQb/aMpbB4bQG3TczdP5UW2OjmCLSmRbnfetN1Ic2XGU06YJ/Kuj0L
-         eP6el9zIYqeSM8Xt5t8qyDI9/lfbUh2lyVsNnsHP9+5I2Td8kpGIwxOYHwtWMnST1nDc
-         cds+vTD/YXivX3Vn1InTfL6sbGsEMpRQ8bj60nvq1V2zkE9rxUlOrWKKZxatqdA6EXg+
-         EYKl/Sk/zU5f/gA+rLbfFj1CzONtMol7f1RsQK2IuuJPUj2nYcohe4UEh7O3X42i5R9k
-         /jEh1W7y3qMyYSDu06aPGuFPdvTREvpHgrFYUr5+XOZZIbgyU6aVuh+ToFJypSF2pAEt
-         b4wg==
+        d=linaro.org; s=google; t=1728396386; x=1729001186; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NflfzsECyCfaJvqWC3uEW8VerFUatJHPUS26i/9U2CU=;
+        b=EBUarpO2YR3VXowUhhd4h9xCnur/K7WCMT9L5rA7PWvab3PgZAD3LaIYXMmdHcqE+7
+         0FPO8O1SkHPq4cGr+53KOl3fJsizrUu060GFCjMdUPeRrH1cAqVhT4Wvgp1hVgrJkl1Y
+         xNeCenN49wtGpfF3Rkt9PqHGXlkQY+YRAHmWo2gtl0MxPrJi+cla46mj0sUntDLx6YxM
+         zxhPTsL1iXUE2LqS0BOvdib8udZBC4OAb5tIzFqKxkPT1BIXmLLJNGoonOzw4YlDHlWa
+         yecPu5ET/6VXRjbccVQAoF9f84uBWKPi3NOE4+blMRFAMxBnU+V9PXXBItn4fkVqC/SL
+         JTLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728396389; x=1729001189;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L4YJLWqBXYOC24Bw1ONw1fQX4wAbzBRC8sG3hZFWAGE=;
-        b=TvcvtNxpYzW0EThn8IpUnizz2ZPtIcTQ8PtNmHu7iAsEtk45AYT48pQnYklWYTVqAZ
-         pZ6QROGdvILP8F46TOyY/TdW2Ee1Ibps6NvKZ0zuKXo7cQU14K+C1WsWlcFs6hNixUPq
-         HKQ1QeYWRWuR7SkKOYuV5p994YL/GiZ2dd6suXXwWNnexp8WPOwDnxtO0JZT1PJmQuwk
-         iAVOFQf+Z3VOP9x7O9oMpNfwvv260ngejZbZm5kJHKh9aIs7Qjq0sm5bGTVVxYDLY9j7
-         vK1HNec0PsG3Ptsy3mJTMhbnAfFOifYjTU0sF0ZEbEKjFPFhqW+NMAIRG06fz/aDQZ7K
-         fOqQ==
-X-Gm-Message-State: AOJu0YzlaR5cD66bEuHOwctSrSisYA1ssGDrSvNp89LWhGlQC7X2ruZL
-	u7ufeqTQvBddsIlb+mecPdzsR1G/LYo8pyMpAbmssm2wbxsZhW4CNOenlygz2Ew=
-X-Google-Smtp-Source: AGHT+IEtXKRVvXCTBO+Hn+2lXi+dDepJNjwT3ZoxXz/aKFuaRDewqMiBd/3inniqYPigQyAxPcFhvw==
-X-Received: by 2002:a05:651c:1545:b0:2f7:712d:d08 with SMTP id 38308e7fff4ca-2faf3c2978amr107548661fa.23.1728396388703;
-        Tue, 08 Oct 2024 07:06:28 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a994787fa61sm377678766b.169.2024.10.08.07.06.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 07:06:28 -0700 (PDT)
-Message-ID: <7dd6132f-52c2-4f0a-8eec-26791f250111@linaro.org>
-Date: Tue, 8 Oct 2024 15:06:27 +0100
+        d=1e100.net; s=20230601; t=1728396386; x=1729001186;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NflfzsECyCfaJvqWC3uEW8VerFUatJHPUS26i/9U2CU=;
+        b=Mf9h3nc3Av8S9/DCFnaAvBwQdZi1t0mBFEK326nAGzOaFtZYyHgAxI87kxIgQisXp1
+         mQzSXGTvk8IiW/fbQYLRjKH/ZG5DuYnvaIhe8URMigTihzqnUIu6KbUIruehgJEwxjjr
+         MkRmtjxvSNDGPfZ2aP5AVo0pRdStxGcVdHjk8/2far2z316x4gDJGlHfiNZ7ZaDZ89SD
+         AfF7YcJ44ojkWZwt95aqA8QKqQycD25RFvXC17uWYV4K4EOTWZsmeq4Vr4JvWgZvDHWU
+         XijHGoFM2qkjLFhUqyUHTvZVZOjc1NN/WvKbtmXuhQKqBqYJiGiKQim/boOkDX/QU4Xg
+         kWrA==
+X-Forwarded-Encrypted: i=1; AJvYcCWdB6+NpsvCKXJsGxV4zO3mpNqFqd/zlqo6/OIMiexVRkxoweV+8eTXCd49EoAXDGKbOqGkatF9Gj8X08KY@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLrXPLbd9zGG1cnZSTDHk3vI8JXzKZF8PWrnLoaeU1L+xtDe9g
+	K1CkT6ONdsgiEDCZFw7wyS28AAydLIVXQOVvGUnDpEdB4NMlHmoIK3dzfdRgtzA=
+X-Google-Smtp-Source: AGHT+IE+0DAkXXos4GnYBRjs/P0JSyfBjz5jp0PZnBLxlFgUf8/Ko8GHIgcDAweYj6NHkpsX8OEU9Q==
+X-Received: by 2002:a17:906:7303:b0:a99:b0:b97d with SMTP id a640c23a62f3a-a991c02fe6cmr1617204266b.50.1728396385644;
+        Tue, 08 Oct 2024 07:06:25 -0700 (PDT)
+Received: from [127.0.1.1] ([82.77.84.93])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a994f50fcd4sm320714266b.171.2024.10.08.07.06.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2024 07:06:25 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Date: Tue, 08 Oct 2024 17:05:57 +0300
+Subject: [PATCH 3/4] arm64: dts: qcom: x1e80100: Describe TLMM pins for
+ SDC2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Depeng Shao <quic_depengs@quicinc.com>, krzk+dt@kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>, mchehab@kernel.org,
- robh@kernel.org, todor.too@gmail.com, rfoss@kernel.org, conor+dt@kernel.org
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
- <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
- <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
- <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
- <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
- <6562a958-47e9-4a49-b235-fe8deba3c051@linaro.org>
- <cab95caa-9ffb-446a-858b-342939e80811@mleia.com>
- <4e94106d-5ca9-485b-8c51-c18dcd4e64b0@linaro.org>
- <b779182f-a963-400a-8fc1-2468710082d2@linaro.org>
- <a0f66292-fb97-40ae-9fb1-d79160e70bb3@quicinc.com>
- <53d2b30d-6480-41eb-8dc8-7b3970ad82ef@quicinc.com>
- <2b5f4043-1e23-446a-aba4-96e40fb8d197@linaro.org>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <2b5f4043-1e23-446a-aba4-96e40fb8d197@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241008-x1e80100-qcp-sdhc-v1-3-dfef4c92ae31@linaro.org>
+References: <20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org>
+In-Reply-To: <20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org>
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1463; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=jbN6Xob5YJFb0MxA9IvVkAB2WqTY7IjHlPTtNsNyFV0=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnBTxYQTKHwucGS/OGdimtbGnaPUMArcmMQ7JX8
+ rcqbhODueWJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZwU8WAAKCRAbX0TJAJUV
+ Vg8lEACPG35Z6Zn05gn/sIL8J0/b4S8uZWJy4WKvZ5by0ZPSwE6ODc49CczU6elO/z0lx7JQea9
+ p8z4uUKz3GdFN3JWGphlKd2OoRp+cv9jW35gp71zZGN91ZHHdVPWWYK7YBjm6hRRxL9f2NJfJMG
+ I2209FL/LMW1XI/WZiJyJggbLkySLWK3XLwHCdl6iecIO+w4sPsUK3RdZ3isAUWwOx/tlxy3vIc
+ SCSF9Q5h216Q0NCNf8rwvOhQ9m6CWASPsxwF/ebC57786WzeUx4JrHKMme2Mw/4grm9o84rlYCr
+ Zpk+PWfniEtkDYJBrKEyniTRCpS4mzFVpy4+4bJvhjzjju1XfIMLTE+ycD182fSs/j3Zgilr4XU
+ 1t2ryHVynColYGBRx+JVM5JcZwFSN7oOlNq5ObUmUyI3+XdjrX6H+33xwv4S5j8MeGtyFUN6eLT
+ FnmiGSZmqtDQqMKaV3KaEvmPGzBxY5qbo966fAUhoJH+zQQlOHr3YFlZGFWf2lQol7y0+N/QfwP
+ u+awWSiSuoLG5dgJzMpzJlPqQczf4OIQkpIjWt3O9Cf4GJBmDUzqR20njeKRb6C9+K64Lim29NU
+ 0jT3uTlz30KW0Zv7NWbngBHLukHpxFnJL0C0lEkazYt+I4eoCk1Y8rMyP5wmNgsr9aw7tXhp8qC
+ BIZ/Sj+Ko5+R7/Q==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-On 08/10/2024 14:50, Vladimir Zapolskiy wrote:
-> Hi Depeng.
-> 
-> On 9/30/24 12:26, Depeng Shao wrote:
->> Hi Bryan,
->>
->> On 9/25/2024 11:40 PM, Depeng Shao wrote:
->>> Hi Vladimir, Bryan,
->>>
->>> On 9/18/2024 7:16 AM, Vladimir Zapolskiy wrote:
->>>> Hi Bryan,
->>>>
->>>> On 9/18/24 01:40, Bryan O'Donoghue wrote:
->>>>> On 13/09/2024 06:06, Vladimir Zapolskiy wrote:
->>>>>> On 9/13/24 01:41, Bryan O'Donoghue wrote:
->>>>>>> On 12/09/2024 21:57, Vladimir Zapolskiy wrote:
->>>>>>>>> 3. Required not optional in the yaml
->>>>>>>>>
->>>>>>>>>         => You can't use the PHY without its regulators
->>>>>>>>
->>>>>>>> No, the supplies shall be optional, since it's absolutely 
->>>>>>>> possible to
->>>>>>>> have
->>>>>>>> such a board, where supplies are merely not connected to the SoC.
->>>>>>>
->>>>>>> For any _used_ PHY both supplies are certainly required.
->>>>>>>
->>>>>>> That's what the yaml/dts check for this should achieve.
->>>>>>
->>>>>> I believe it is technically possible by writing an enormously complex
->>>>>> scheme, when all possible "port" cases and combinations are listed.
->>>>>>
->>>>>> Do you see any simpler way? Do you insist that it is utterly needed?
->>>>>
->>>>> I asked Krzysztof about this offline.
->>>>>
->>>>> He said something like
->>>>>
->>>>> Quote:
->>>>> This is possible, but I think not between child nodes.
->>>>> https://elixir.bootlin.com/linux/v6.11-rc7/source/Documentation/
->>>>> devicetree/bindings/example-schema.yaml#L194
->>>>>
->>>>> You could require something in children, but not in parent node. For
->>>>> children something around:
->>>>> https://elixir.bootlin.com/linux/v6.4-rc7/source/Documentation/
->>>>> devicetree/bindings/net/qcom,ipa.yaml#L174
->>>>>
->>>>> allOf:
->>>>>      - if:
->>>>>          required:
->>>>>            - something-in-parent
->>>>>        then:
->>>>>          properties:
->>>>>            child-node:
->>>>>              required:
->>>>>                - something-in-child
->>>>>
->>>>> I will see if I can turn that into a workable proposal/patch.
->>>>>
->>>>
->>>> thank you for pushing my review request forward.
->>>>
->>>> Overall I believe making supply properties as optional ones is
->>>> sufficient,
->>>> technically straightforward and merely good enough, thus please let me
->>>> ask you to ponder on this particular variant one more time.
->>>>
->>>
->>> So, we are discussing two things.
->>>
->>> 1# Use separate supplies for each CSI block, looks like there is no
->>> doubt about it anymore. So, I will update it just like based on 
->>> suggestion.
->>>
->>> csiphyX-vdda-phy-supply
->>> csiphyX-vdda-pll-supply
->>>
->>> Then I will need below items in the required list if they are required.
->>> required:
->>>     - csiphy0-vdda-phy-supply
->>>     - csiphy0-vdda-pll-supply
->>>     - csiphy1-vdda-phy-supply
->>>     - csiphy1-vdda-pll-supply
->>> ...
->>>     - csiphy7-vdda-phy-supply
->>>     - csiphy7-vdda-pll-supply
->>>
->>> 2# Regarding the CSI supplies, if they need to be making as optional?
->>> Looks like there is no conclusion now.
->>>
->>> @Bryan, do you agree with this?
->>>
->>
->> I'm preparing the new version patches, and will send out for reviewing
->> in few days. I will follow Vladimir's comments if you have no response,
->> it means making supply properties as optional one, so they won't be
->> added to the required list.
->>
-> 
-> Recently I published the change, which moves regulator supplies from CSID
-> to CSIPHY, I believe it makes sense to base the SM8550 change and 
-> regulators
-> under discussion on top of the series:
-> 
-> https://lore.kernel.org/all/20240926211957.4108692-1- 
-> vladimir.zapolskiy@linaro.org/
-> 
-> Note, that SM8250 regulators are not changed, however their names are 
-> wrong,
-> the correction shall be a separate change later on...
-> 
-> Next, I developed my opinion regarding the supply regulator property names:
-> 
-> 1) voltage supply regulator property names match the pattern "*v*-supply",
->     and the most common name is "vdd*-supply", the match to the pattern 
-> shall
->     be preserved,
-> 2) also it would be much better and it will exclude any confusion, if 
-> SoC pin
->     names are put into the name, like it is done in a multitude of similar
->     cases.
-> 
-> So, in my opinion for SM8550 CAMSS a proposed set of voltage supply 
-> regulator
-> names should be this one:
-> 
-> - vdda-csi01-0p9-supply
-> - vdda-csi01-1p2-supply
-> - vdda-csi23-0p9-supply
-> - vdda-csi23-1p2-supply
-> - vdda-csi46-0p9-supply
-> - vdda-csi46-1p2-supply
-> - vdda-csi57-0p9-supply
-> - vdda-csi57-1p2-supply
+Describe the SDC2 default and sleep state pins configuration
+in TLMM. Do this in SoC dtsi file since they will be shared
+across multiple boards.
 
-So I communicated to Depeng to take the patch for the regulators but, I 
-still don't think the above is the right way to do this.
-
-I will take a pass at constructing something in the schema to capture 
-the case where a regulator is required if and only if it is instantiated.
-
-May not be possible with our current syntax/tools but is 100% how the 
-hardware works so IMO is the right thing to try to do.
-
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
-bod
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 40 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index b835fd87b977ae81f687c4ea15f6f2f89e02e9b1..f9f5da60244cdda7499883dd593b809c4274510a 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -5740,6 +5740,46 @@ rx-pins {
+ 					bias-disable;
+ 				};
+ 			};
++
++			sdc2_sleep: sdc2-sleep-state {
++				clk-pins {
++					pins = "sdc2_clk";
++					bias-disable;
++					drive-strength = <2>;
++				};
++
++				cmd-pins {
++					pins = "sdc2_cmd";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++
++				data-pins {
++					pins = "sdc2_data";
++					bias-pull-up;
++					drive-strength = <2>;
++				};
++			};
++
++			sdc2_default: sdc2-default-state {
++				clk-pins {
++					pins = "sdc2_clk";
++					bias-disable;
++					drive-strength = <16>;
++				};
++
++				cmd-pins {
++					pins = "sdc2_cmd";
++					bias-pull-up;
++					drive-strength = <10>;
++				};
++
++				data-pins {
++					pins = "sdc2_data";
++					bias-pull-up;
++					drive-strength = <10>;
++				};
++			};
+ 		};
+ 
+ 		apps_smmu: iommu@15000000 {
+
+-- 
+2.34.1
 
 
