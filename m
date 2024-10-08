@@ -1,240 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-33570-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33571-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 326909950A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 15:50:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 064489950E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:02:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF08B284154
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 13:50:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B007C1F2577D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:02:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D90FC1DF72E;
-	Tue,  8 Oct 2024 13:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A99271DF97B;
+	Tue,  8 Oct 2024 14:01:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MrXuKXHh"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MBAuS3bw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C2F1DF279
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 13:50:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89971E4B0
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 14:01:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728395413; cv=none; b=nuFprtOFRPz9b7tJS321/XhK8OvPGqyFxNH0+CdFdZXPwmfoVmqCdNuTMfL13aD/Q+lT2Ci2G2DwJQDhxN/QWSSzATl4SRL8AMwV9B1x23Jo5T+QDHLbWID9WEbutye8p3WFlPWQVwREDJ9Utg5sSZJtz1l/JqjHHghZw0wBBf8=
+	t=1728396079; cv=none; b=GywE0lVW2GkIwWmiUfpZ2pU/Ws4YsbK97h0FcUbZ3r0P+SIB4rl58CQwHyks7USAt6xAqKvM7l8nBAHwNNz9m+u2O0Tg4SbV6owtBdViO7ZSQrXcSY+kh/lO+8ODr8Ru0SVtiX23GZ9ot+kM6o+Dk/lB4MJ/AashLAjDYnvqmrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728395413; c=relaxed/simple;
-	bh=VlikFOOadkZ0FXGNOiqEJI3JCeW2l+bF3hf/oo4lAtQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lDsZFYj73l6KnGBvRnpq88uAimQuHTqyC6xRqzyNcz8ed9C7uhDSMvLIeFhjG2CPEYe+pLtVKVI5SqlfQgR2tg9srouHuLDKCwQr60VRFKfFcEXvg5+36DbtqVPftHMem7OMehaTvNdQJLUzuH0qH1MBTisLNGrPJQ8I1t19TQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MrXuKXHh; arc=none smtp.client-ip=209.85.167.50
+	s=arc-20240116; t=1728396079; c=relaxed/simple;
+	bh=mmoCWWBPMNWN5Pi3PCZomIL/c01m10Ls09k6EAKhgOQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qpN/yCT/jhqSrVshV2tGs2Ph0mGRgFFMJPLSvfFHLBFJP6cWTcs4zdwTAZyPh3jZJf118Owv/vgOq+oV8ywbKFk8DusdjtXWSouv4Xx5u8m3XjL4YP5mjBEIi9e87806VeHHv/n+iBwSR25WzKuqu3FnAr8/TIZp9flwKruew+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MBAuS3bw; arc=none smtp.client-ip=209.85.219.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5389fca1fdbso746405e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 06:50:11 -0700 (PDT)
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e263920b6bbso4596677276.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 07:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728395410; x=1729000210; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WpfdK0DkSLSW2fAjRxdwV8F/aWadlnjGjQ8QBOWzH/4=;
-        b=MrXuKXHh3mN/uRnW4sDK9jQT8B4hXgwY1k3dKUFxViPw4wFXmsBaIA7zLxp5UsN+nd
-         wZzZhFlMglTx9/ge2Lj4bs7suP+eoZYXA7Eif6e0Rt7Yz5uqePfOJjrHPqjhBCAL33Lt
-         QWvVU1ftBg3dMyWCiMCyGJLQMJc10KUid2EuJbELJeqEEHAve+qJVKqozwTQzlhaLCQR
-         jIkAYfHpkwvHYrmHILKVCM2QKoThKQhQ9CidZ2HxOXluPN4nS5hTIn3G+bcl+Yv6klA+
-         Je312ZEojkify6kwzS0Zu1aFVCRKkjrvZioMY7U4B61ojE7YIikPcNb00qQWVfurfqpy
-         eSUA==
+        d=linaro.org; s=google; t=1728396077; x=1729000877; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QE44MjvjGlXQo09X4aaBHeiy26kXCM/N88w8ksHxsYY=;
+        b=MBAuS3bw5xb8b7v/CDwLubK8FowYK+3HfFrFV2cGSbysjONNHUxJVJMwMeMiCd4W1Y
+         YEfnoj2vE3gQpgz6Da2apn8VA7NPp64x9HLDyTr7IR5le6svttU7oHqiBMDbGgBRIztK
+         +tTYm84a9XKFeHbMpMIuw1SGW8gT6OsyQo2rzwAA3NQCG90bAlA7tVW2g0ckPUhAV7eZ
+         VQQrpVZgXJvaZZhs0VfVrWxZGLvFsWTgtCFKXFSelOc+/sQSSkrBcH8pcgcyGrlsxiyQ
+         V+ontU2i5HePpgvd0LpXqW0O4ZCU3HMgsjiIunqUOCbRIzmvjUsKwB840lkRcnGXNnsB
+         ZH+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728395410; x=1729000210;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WpfdK0DkSLSW2fAjRxdwV8F/aWadlnjGjQ8QBOWzH/4=;
-        b=gBosUPZ542BapXD+VgWyvYuRuzlCQ76UrENNZqLtixpOYWz20e9BoPLLoQ5HioPdew
-         I++B+vr9rB57kmyPQHP2hs5gFO11xJCVRLoq5Ps96T5OeXUNoia/lkScZwhcKBJJGOJ5
-         dgzbOGEF2GVvLgq+9W96LzMbkxQud0BdFZVqmi6xB+uFuI2GyestLo1KLNsv0UxjH2NQ
-         fMxggrQgJ6kkJ3KEJf6Qzh5nXNaI433bcA5EBj9Pkvh/YDmlASauPTvJUGihOsfr8WXg
-         x2Ugf4Vh0A1t5F85HlskDBfbnjL07DDuQTJbpYYYIos+lxm8PPEnBrusFcgah5kItXnd
-         pC/g==
-X-Gm-Message-State: AOJu0Yy/1XtRAA1wjRoS/U3RsAcjC9+kLJdW6K4EhZrysjHzbkH9ng0Z
-	StZzTPMw/sbTe57opMCWI0j7Od10J5jfL/HA4Py2f8z7qpJ9Gmj0tQJF5EuCFafr5UDOCjxLbQx
-	TQwQ=
-X-Google-Smtp-Source: AGHT+IGGDDy/C3JNq8sdXqLgFX4dPMMWga1oSVN0B8s30L1lSj5q2xVN4nsf1rKLRKkvbZcCirzniA==
-X-Received: by 2002:a05:6512:158e:b0:536:7c0d:e54c with SMTP id 2adb3069b0e04-539ab9ec64cmr2040832e87.9.1728395409820;
-        Tue, 08 Oct 2024 06:50:09 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539afec84f7sm1219959e87.92.2024.10.08.06.50.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 06:50:09 -0700 (PDT)
-Message-ID: <2b5f4043-1e23-446a-aba4-96e40fb8d197@linaro.org>
-Date: Tue, 8 Oct 2024 16:50:08 +0300
+        d=1e100.net; s=20230601; t=1728396077; x=1729000877;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QE44MjvjGlXQo09X4aaBHeiy26kXCM/N88w8ksHxsYY=;
+        b=FYTggGVQgmaLilE0SgLs3KJyy2WvUSU8Lsv/rCRxDrT4Nn6UgUARN3pnwkd6LwxfSC
+         QU0PuW6878dXo3nL5IqUMQf8A3ojfRdUyIoaFwvE00QHonnF1z1K10TUVJmWowju+19u
+         UeAflTpiPKEcfV7ttLSwkXkPqHFleV43fjisG3rR73zWlGl6yl5Yc+Ee3SzqZWjvF434
+         eyvNXqcg7AAe5m5Br5bPACkhJQyW6imVOMj5klpb3UQBefcdQ1QsKAAm5vypQsqZ3dYz
+         tuqHHa/jMXBgi5mpVY7OqA4ap8sIfSvRjxP+40HQRk7LOln+qvuO/LlgGjOb3JZBW/lf
+         eUhA==
+X-Forwarded-Encrypted: i=1; AJvYcCX9M5vs2XnrCtAcvyJk3YqalZCCEvx3k6FqzXroxugzRf0imiHZ8ABP3IdYXsv3rbcikcpCLZdL5SDaMF4A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0K+zRbQFCJ25jI50I/zSg/X3tOlpc+8IzDiF4P3AJYVDkRLYA
+	Jlk0gSPUOqXuC1jATITSX0AUJRtqPXVCBNlsBDOeo5ml0DJsaZidSwdtv0Fi2brQUm/tefLWxsp
+	dlXRLF5VJ/BerNqaT8FVM2yqmancfANp+GRcDAA==
+X-Google-Smtp-Source: AGHT+IGTV6VC/pNSzGY+RUb51i/BTSuNpuC7jBoq5cv/Bck9LWu2cuxkJriYebercZ+lkwSPCxUa4kcq1oYG0RIOv+c=
+X-Received: by 2002:a05:6902:727:b0:e25:c6a3:797d with SMTP id
+ 3f1490d57ef6-e28936c984amr13384867276.6.1728396076638; Tue, 08 Oct 2024
+ 07:01:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-Content-Language: en-US
-To: Depeng Shao <quic_depengs@quicinc.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, krzk+dt@kernel.org,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@quicinc.com, Yongsheng Li <quic_yon@quicinc.com>, mchehab@kernel.org,
- robh@kernel.org, todor.too@gmail.com, rfoss@kernel.org, conor+dt@kernel.org
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
- <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
- <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
- <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
- <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
- <6562a958-47e9-4a49-b235-fe8deba3c051@linaro.org>
- <cab95caa-9ffb-446a-858b-342939e80811@mleia.com>
- <4e94106d-5ca9-485b-8c51-c18dcd4e64b0@linaro.org>
- <b779182f-a963-400a-8fc1-2468710082d2@linaro.org>
- <a0f66292-fb97-40ae-9fb1-d79160e70bb3@quicinc.com>
- <53d2b30d-6480-41eb-8dc8-7b3970ad82ef@quicinc.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <53d2b30d-6480-41eb-8dc8-7b3970ad82ef@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20241006135530.17363-1-quic_spuppala@quicinc.com> <20241006135530.17363-2-quic_spuppala@quicinc.com>
+In-Reply-To: <20241006135530.17363-2-quic_spuppala@quicinc.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 8 Oct 2024 16:00:39 +0200
+Message-ID: <CAPDyKFpXh0vZrK6PU2V+y92Q_+y6Q2+VUEONXiBrqAp_qqp_jA@mail.gmail.com>
+Subject: Re: [PATCH RFC v3 1/2] mmc: core: Add vendor hook to control
+ reprogram keys to Crypto Engine
+To: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	quic_rampraka@quicinc.com, quic_nitirawa@quicinc.com, 
+	quic_sachgupt@quicinc.com, quic_bhaskarv@quicinc.com, 
+	quic_neersoni@quicinc.com, quic_gaurkash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Depeng.
+On Sun, 6 Oct 2024 at 15:55, Seshu Madhavi Puppala
+<quic_spuppala@quicinc.com> wrote:
+>
+> Add mmc_host_ops hook avoid_reprogram_allkeys to control
+> reprogramming keys to Inline Crypto Engine by vendor as some
+> vendors might not require this feature.
+>
+> Signed-off-by: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
+> Co-developed-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+> ---
+>  drivers/mmc/core/crypto.c | 8 +++++---
+>  drivers/mmc/host/sdhci.c  | 6 ++++++
+>  include/linux/mmc/host.h  | 7 +++++++
+>  3 files changed, 18 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
+> index fec4fbf16a5b..4168f7d135ff 100644
+> --- a/drivers/mmc/core/crypto.c
+> +++ b/drivers/mmc/core/crypto.c
+> @@ -14,9 +14,11 @@
+>
+>  void mmc_crypto_set_initial_state(struct mmc_host *host)
+>  {
+> -       /* Reset might clear all keys, so reprogram all the keys. */
+> -       if (host->caps2 & MMC_CAP2_CRYPTO)
+> -               blk_crypto_reprogram_all_keys(&host->crypto_profile);
+> +       if (host->ops->avoid_reprogram_allkeys && !host->ops->avoid_reprogram_allkeys()) {
+> +               /* Reset might clear all keys, so reprogram all the keys. */
+> +               if (host->caps2 & MMC_CAP2_CRYPTO)
+> +                       blk_crypto_reprogram_all_keys(&host->crypto_profile);
 
-On 9/30/24 12:26, Depeng Shao wrote:
-> Hi Bryan,
-> 
-> On 9/25/2024 11:40 PM, Depeng Shao wrote:
->> Hi Vladimir, Bryan,
->>
->> On 9/18/2024 7:16 AM, Vladimir Zapolskiy wrote:
->>> Hi Bryan,
->>>
->>> On 9/18/24 01:40, Bryan O'Donoghue wrote:
->>>> On 13/09/2024 06:06, Vladimir Zapolskiy wrote:
->>>>> On 9/13/24 01:41, Bryan O'Donoghue wrote:
->>>>>> On 12/09/2024 21:57, Vladimir Zapolskiy wrote:
->>>>>>>> 3. Required not optional in the yaml
->>>>>>>>
->>>>>>>>         => You can't use the PHY without its regulators
->>>>>>>
->>>>>>> No, the supplies shall be optional, since it's absolutely possible to
->>>>>>> have
->>>>>>> such a board, where supplies are merely not connected to the SoC.
->>>>>>
->>>>>> For any _used_ PHY both supplies are certainly required.
->>>>>>
->>>>>> That's what the yaml/dts check for this should achieve.
->>>>>
->>>>> I believe it is technically possible by writing an enormously complex
->>>>> scheme, when all possible "port" cases and combinations are listed.
->>>>>
->>>>> Do you see any simpler way? Do you insist that it is utterly needed?
->>>>
->>>> I asked Krzysztof about this offline.
->>>>
->>>> He said something like
->>>>
->>>> Quote:
->>>> This is possible, but I think not between child nodes.
->>>> https://elixir.bootlin.com/linux/v6.11-rc7/source/Documentation/
->>>> devicetree/bindings/example-schema.yaml#L194
->>>>
->>>> You could require something in children, but not in parent node. For
->>>> children something around:
->>>> https://elixir.bootlin.com/linux/v6.4-rc7/source/Documentation/
->>>> devicetree/bindings/net/qcom,ipa.yaml#L174
->>>>
->>>> allOf:
->>>>      - if:
->>>>          required:
->>>>            - something-in-parent
->>>>        then:
->>>>          properties:
->>>>            child-node:
->>>>              required:
->>>>                - something-in-child
->>>>
->>>> I will see if I can turn that into a workable proposal/patch.
->>>>
->>>
->>> thank you for pushing my review request forward.
->>>
->>> Overall I believe making supply properties as optional ones is
->>> sufficient,
->>> technically straightforward and merely good enough, thus please let me
->>> ask you to ponder on this particular variant one more time.
->>>
->>
->> So, we are discussing two things.
->>
->> 1# Use separate supplies for each CSI block, looks like there is no
->> doubt about it anymore. So, I will update it just like based on suggestion.
->>
->> csiphyX-vdda-phy-supply
->> csiphyX-vdda-pll-supply
->>
->> Then I will need below items in the required list if they are required.
->> required:
->>     - csiphy0-vdda-phy-supply
->>     - csiphy0-vdda-pll-supply
->>     - csiphy1-vdda-phy-supply
->>     - csiphy1-vdda-pll-supply
->> ...
->>     - csiphy7-vdda-phy-supply
->>     - csiphy7-vdda-pll-supply
->>
->> 2# Regarding the CSI supplies, if they need to be making as optional?
->> Looks like there is no conclusion now.
->>
->> @Bryan, do you agree with this?
->>
-> 
-> I'm preparing the new version patches, and will send out for reviewing
-> in few days. I will follow Vladimir's comments if you have no response,
-> it means making supply properties as optional one, so they won't be
-> added to the required list.
-> 
+Don't you even need to call this once, during the first initialization
+of the card?
 
-Recently I published the change, which moves regulator supplies from CSID
-to CSIPHY, I believe it makes sense to base the SM8550 change and regulators
-under discussion on top of the series:
+> +       }
+>  }
+>
 
-https://lore.kernel.org/all/20240926211957.4108692-1-vladimir.zapolskiy@linaro.org/
+[...]
 
-Note, that SM8250 regulators are not changed, however their names are wrong,
-the correction shall be a separate change later on...
-
-Next, I developed my opinion regarding the supply regulator property names:
-
-1) voltage supply regulator property names match the pattern "*v*-supply",
-    and the most common name is "vdd*-supply", the match to the pattern shall
-    be preserved,
-2) also it would be much better and it will exclude any confusion, if SoC pin
-    names are put into the name, like it is done in a multitude of similar
-    cases.
-
-So, in my opinion for SM8550 CAMSS a proposed set of voltage supply regulator
-names should be this one:
-
-- vdda-csi01-0p9-supply
-- vdda-csi01-1p2-supply
-- vdda-csi23-0p9-supply
-- vdda-csi23-1p2-supply
-- vdda-csi46-0p9-supply
-- vdda-csi46-1p2-supply
-- vdda-csi57-0p9-supply
-- vdda-csi57-1p2-supply
-
-Comments, corrections and objections are always welcome.
-
---
-Best wishes,
-Vladimir
+Kind regards
+Uffe
 
