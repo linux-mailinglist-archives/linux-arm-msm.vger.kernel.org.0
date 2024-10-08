@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-33514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A06259944FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:02:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43DA3994523
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:15:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 227261F2205E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:02:26 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DB4832840EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:15:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67AAB18CC07;
-	Tue,  8 Oct 2024 10:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45B2F17D36A;
+	Tue,  8 Oct 2024 10:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uUgrDllf"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JTG7K03b"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC3818BC03
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 10:02:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5738F6C;
+	Tue,  8 Oct 2024 10:15:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728381741; cv=none; b=YyC1+5WJTpvRo+Fbj9gYMyNdGW7urS6lh6HKg7BOnx+clx81H489y7GVWs3Sg/0+4fwH2e/Y7pbTmN8tgf4untbKJNwVFM+Syql1hBB8dH3q8Ujuqr1J+HcJt3oq8U8Hy5lRXx4S5MmnERkSlWZ9aa5YEGTND81wp66uHIJMIgE=
+	t=1728382554; cv=none; b=ddLrBEmJgYr3cmZP62sLXYVjRnP9JywJ2pkPUvV3qxZX7Tuxs4otwGlW8E4PKv2Z0iqarYClL+vvzPdEMS/4Wiw05fwv9JvgHPq93yhnZr1GecdsUDeUc2bqx4iysURmw/mhYGSSIUWuTH4AeujqdTIbbQMOPYXDMjbzTqq31G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728381741; c=relaxed/simple;
-	bh=n8j8JNXdThPtkvPES1j61HnDlzBM8+UCGYT2Xypot7A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f7hKMbKvsHCfTQayVuai6zZA7vFeTPnPK1bTSOxCa2jZINLsGJ2X7bNXN9Y8BkO3T7Eg8tqP5SRy0fHy9VI7+mi1gYt661r0jRmgOmS635t+nlAkG0Nu+kttpnszEm7uO3oArK198VbCt8Le5DttCeBNdnuKNhz/PNweGhLO+y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uUgrDllf; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5389e190518so796460e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 03:02:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728381737; x=1728986537; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tpOfxtVlCj+ReW9oGgsP720DcMraaz2lPqesL3hVXXY=;
-        b=uUgrDllf6hl/GtudNKK5p5mMqKShlKNQ29vQjsx5ar16r9CbW1nzqLtYeRk5p9H6BI
-         dIpAcAqSqErGZaitsHxEbmCVASah34vsGwQ6B+ZCpYE1lQMgt6cL7jQ/4AoFT1DGg46d
-         QTK83PxkawQI8/LU65XpKQv8NQU3xjXuTk9dfLmDf6Hg3POh7FOjFjiu84ElLrtyaDBR
-         4ECBplpfW2pWE8zQ3xiVL9j7jsx4Nte6MPnpvIgyo5pV0rBsfV0MPZ1hGxvX12Tx/6LI
-         Ak1XxpbRqgmb5UtygB7RStatCO5E+wQ8Wjk5CizKyxYVSlVLjUInViM8SHQQ5Fa2heE2
-         PW0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728381737; x=1728986537;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tpOfxtVlCj+ReW9oGgsP720DcMraaz2lPqesL3hVXXY=;
-        b=B6McfhuCy2t/5n4hBH0H1jOXjk4YLr1Ed0RxRWRVRuD+nB5/v7V92ez0AYhiU7nNjr
-         WBitFqoop/dP6NjMgEnZr3vZEVKt4LBkXQomu4sLRLkHEzQ/vypiNhnhndzJfpTnCPLG
-         B+dO5MYmsXdact7yn3ecknLzbFQu+duknGZsa9TazTY5jRgb+f5Z1Ao6xz32XsSJdgjV
-         vNXUSf+OoOxL7M9+WjyYuij3K3FKmr+qfPNLgcYQrkyeqK10DMPHLE6R+b9lps/Lfxhs
-         2vC8QI0W7Nka2p6YXJMEs/IZi0B9P9QA992ccOMsLXjTXM4rQ7fUrvPhv0wbEZ/0RPzD
-         JqNw==
-X-Forwarded-Encrypted: i=1; AJvYcCVfhkfymMcK1giyf+6CqPm7lcOtimB8tzeZbB13xh74EQW4UJsA4G0GuQjTuWpEQubr0UqvZ6R082ZqJevd@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrLCyuP1kJ2ReTzBM22OPJ50CzkRh7NYImtDf5INrkcTtGOOCp
-	vxWTV1ToaRDnTccE3mNcjTAdAozv6FtimKNwx9NvWTrFQUmE/RdWZtH4FxUt0Gw=
-X-Google-Smtp-Source: AGHT+IHgeqyXij4u+nD1ePGJkAgVf28uEoo4swmpnqI06xa99FGkCCQPWG4HGuN7zAGO55WXBD4cFg==
-X-Received: by 2002:a05:6512:3a8c:b0:52f:287:a083 with SMTP id 2adb3069b0e04-539ab6d8d5amr2325191e87.0.1728381737052;
-        Tue, 08 Oct 2024 03:02:17 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539aff23390sm1155019e87.212.2024.10.08.03.02.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 03:02:15 -0700 (PDT)
-Message-ID: <3f87e855-8779-4df3-8f26-e3d2b611d3e9@linaro.org>
-Date: Tue, 8 Oct 2024 13:02:07 +0300
+	s=arc-20240116; t=1728382554; c=relaxed/simple;
+	bh=ZLYahmtyndIk4/pqcHsKdqny7r1Sl4aYqUTjLcYh8Ak=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kH7AupOxVDZDDtT738o4AtQQ9p6VBlFwEZLSx+IamostYg1uNooMC9oXkxUc7Z5cSY798fcE2h3gHXI1vH27/MiryVX4OrU30DpUBihWm90I+Flveu9g767eRMHw0tV66ZoinxGHNzvjJ4uIXEKNmI+3rN03iMUL4KLypFqGKM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JTG7K03b; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49867ppI027160;
+	Tue, 8 Oct 2024 10:15:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	3RJTAwrBMMifMwMRVvCFjx7Qj9rE9rKp95xJNGZcrlQ=; b=JTG7K03bVEF4d9wS
+	NALr5kZyAqxAcbJ2rvbb2VOB8L8Zssr1YZYesKKkVgc4PGt2Si4fmMnyrKm0RH0w
+	z34W66So35oivg7bO5EvWAUsFZ5a2PKFphKHXRo5H2SjboAglCQULWai5lzWc1Au
+	6xZWD0RiVgvQZ1WicYURXIRt+W6PPBojySPvkXSgrne9wp1tC8Jy4K7yRvEmwTcl
+	tnhPygrI97B5UJIVePjnb5YT6aMJjJcGJjly1Gkpj6+uuU+I7yBtBRv0Z2Pk9Fk8
+	4Xuy8sDhX2xkg42h59ile0QN8QCPL8F2RohVFvVZBHjjLo/V3huAnMXqF7l7F7iB
+	m+O9Gg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xq9y0xc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Oct 2024 10:15:34 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 498AFXE4009912
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 8 Oct 2024 10:15:33 GMT
+Received: from [10.50.47.90] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Oct 2024
+ 03:15:26 -0700
+Message-ID: <0aa2599b-a77c-428d-a475-0be63e49d0ca@quicinc.com>
+Date: Tue, 8 Oct 2024 15:45:23 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,124 +65,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: media: qcom,sc8280xp-camss: Fix
- interrupt types
+Subject: Re: [PATCH V3 2/7] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
+ binding
+To: Krzysztof Kozlowski <krzk@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <ulf.hansson@linaro.org>, <linus.walleij@linaro.org>,
+        <catalin.marinas@arm.com>, <p.zabel@pengutronix.de>,
+        <geert+renesas@glider.be>, <dmitry.baryshkov@linaro.org>,
+        <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>
+CC: <quic_varada@quicinc.com>
+References: <20241004102342.2414317-1-quic_srichara@quicinc.com>
+ <20241004102342.2414317-3-quic_srichara@quicinc.com>
+ <c0e9479c-0a69-4ffe-aab5-0b5af92df31d@kernel.org>
 Content-Language: en-US
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
- <20240923072827.3772504-2-vladimir.zapolskiy@linaro.org>
- <datahu33nmsser2p4fb2hyncsujtkwaca377ivwmpc6yj2naut@2sjsbebfm3gf>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <datahu33nmsser2p4fb2hyncsujtkwaca377ivwmpc6yj2naut@2sjsbebfm3gf>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <c0e9479c-0a69-4ffe-aab5-0b5af92df31d@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: YL0vpv9p-5X-LFf5aMjhRP2uguTED-sN
+X-Proofpoint-GUID: YL0vpv9p-5X-LFf5aMjhRP2uguTED-sN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 phishscore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410080067
 
-Hi Bjorn,
 
-On 10/6/24 05:36, Bjorn Andersson wrote:
-> On Mon, Sep 23, 2024 at 10:28:22AM GMT, Vladimir Zapolskiy wrote:
->> The expected type of all CAMSS interrupts is edge rising, fix it in
->> the documented example from CAMSS device tree bindings for sc8280xp.
->>
+
+On 10/6/2024 2:09 PM, Krzysztof Kozlowski wrote:
+> On 04/10/2024 12:23, Sricharan R wrote:
 > 
-> Who/what expects them to be RISING?
-
-I've checked CAMSS device tree bindings in a number of downstream kernels,
-all of them describe interrupt types as edge rising.
-
-$ grep -Hn IRQF_TRIGGER drivers/media/platform/qcom/camss/*
-drivers/media/platform/qcom/camss/camss-csid.c:619:			       IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN,
-drivers/media/platform/qcom/camss/camss-csiphy.c:605:			       IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN,
-drivers/media/platform/qcom/camss/camss-ispif.c:1164:			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
-drivers/media/platform/qcom/camss/camss-ispif.c:1168:			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
-drivers/media/platform/qcom/camss/camss-vfe.c:1327:			       IRQF_TRIGGER_RISING, vfe->irq_name, vfe);
-
- From runtime point of view it's more important to get re-probed camss
-driver, see an absolutely similar and previously discussed case (in the
-cover letter):
-
-https://lore.kernel.org/lkml/20220530080842.37024-4-manivannan.sadhasivam@linaro.org/
-
-Now in runtime I get this error, it's easy to check by unbinding/binding any
-camss device:
-
-irq: type mismatch, failed to map hwirq-509 for interrupt-controller@17a00000!
-
-Basically camss devices can not be bound on the second time on the
-number of platforms touched by this changeset.
-
->> Fixes: bc5191e5799e ("media: dt-bindings: media: camss: Add qcom,sc8280xp-camss binding")
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   .../bindings/media/qcom,sc8280xp-camss.yaml   | 40 +++++++++----------
->>   1 file changed, 20 insertions(+), 20 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->> index c0bc31709873..9936f0132417 100644
->> --- a/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->> +++ b/Documentation/devicetree/bindings/media/qcom,sc8280xp-camss.yaml
->> @@ -328,26 +328,26 @@ examples:
->>               vdda-phy-supply = <&vreg_l6d>;
->>               vdda-pll-supply = <&vreg_l4d>;
+>>   maintainers:
+>>     - Bjorn Andersson <andersson@kernel.org>
 >>   
->> -            interrupts = <GIC_SPI 359 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 360 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 448 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 464 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 465 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 466 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 467 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 468 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 469 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 477 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 478 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 479 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 640 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 758 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 759 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 760 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 761 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 762 IRQ_TYPE_LEVEL_HIGH>,
->> -                         <GIC_SPI 764 IRQ_TYPE_LEVEL_HIGH>;
->> +            interrupts = <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 758 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 759 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 760 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 761 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 762 IRQ_TYPE_EDGE_RISING>,
->> +                         <GIC_SPI 764 IRQ_TYPE_EDGE_RISING>;
+>>   description: |
+>>     Qualcomm global clock control module provides the clocks, resets and power
+>> -  domains on IPQ5332.
+>> +  domains on IPQ5332 and IPQ5424.
 >>   
->>               interrupt-names = "csid1_lite",
->>                                 "vfe_lite1",
->> -- 
->> 2.45.2
->>
+>> -  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
+>> -
+>> -allOf:
+>> -  - $ref: qcom,gcc.yaml#
+>> +  See also::
+> 
+> s/::/:/
+> 
+>> +    include/dt-bindings/clock/qcom,gcc-ipq5332.h
+>> +    include/dt-bindings/clock/qcom,gcc-ipq5424.h
+>>   
+>>   properties:
+>>     compatible:
+>> -    const: qcom,ipq5332-gcc
+>> +    enum:
+>> +      - qcom,ipq5332-gcc
+>> +      - qcom,ipq5424-gcc
+>>   
+>>     clocks:
+>> +    minItems: 5
+>>       items:
+>>         - description: Board XO clock source
+>>         - description: Sleep clock source
+>>         - description: PCIE 2lane PHY pipe clock source
+>>         - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
+>> +      - description: PCIE 2-lane PHY2 pipe clock source
+>> +      - description: PCIE 2-lane PHY3 pipe clock source
+>>         - description: USB PCIE wrapper pipe clock source
+> 
+> Why do you change fifth clock on ipq5332?
+> 
+> Please test your patches - change DTS for ipq5332 and provide PCIE
+> 2-lane PHY2 there.
 
---
-Best wishes,
-Vladimir
+Ho ok, these 2 additional clocks are required only for IPQ5424.
+I ran the check_dtbs/dt_binding_check for both IPQ5332/IPQ5424.
+Agree that fifth clock should not be changed in default.
+So, would it be fine to add these 2 clocks in the end and re-send ?
+
+Regards,
+  Sricharan
 
