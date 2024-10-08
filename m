@@ -1,63 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-33583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33584-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9925B9953C0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 17:47:48 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFC549953C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 17:49:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2D5D1C20CE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 15:47:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 621631F21469
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 15:49:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D6F21E04B6;
-	Tue,  8 Oct 2024 15:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F5FF3BBDE;
+	Tue,  8 Oct 2024 15:49:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="culxwM3z"
+	dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b="P3XlmGrM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74B7F1E0B6F;
-	Tue,  8 Oct 2024 15:47:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A872E1D31A0
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 15:49:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728402452; cv=none; b=JG2VFuY2zPGByTT4qLmpQTB9F16zFwQnSVYPs5RpTlrL/Uml3KFYK4NIA4NQ2n6eDDb7dg6e0Tiqg4qz2ER4KAbIqF/uTqipd8nAp78sGWH1pKLGILNt8xzBQn+dq/z9cdf6CVeddRK4cAo+eJfMcXTNdrYEX+wktdz6LdT9Wac=
+	t=1728402556; cv=none; b=tWluL3YXYkbkvC25MBO0G9rdeEA7yUbm9dzv3N6NChzg6AC2fZVHEVI3WAo1RQPiyTKEMkj3s7EimbvzUoISaZrhAXwPgfyaBZTx3h+PBDpfvowivA9xD2I5ZEDMjoJM+F2GnFs4egGDdl+MmVYyFGAPSU7+/gOG3r+QjlWe2p0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728402452; c=relaxed/simple;
-	bh=jrGUCCOFgNET5QepnhaGPl/liH/doUk2RMTSUuE+YPY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=jxvpXxCnAKBI+MAaFl3X4gHa89rbRd6EFGtubFI4v8fM6gK8+Hh9dufk/753Fd+ljlGZts2RFsFMWjpUSNl/mQIj4uyzmNl1APwqu3nTJirvPBicDFihCfJwLTnCp6Gu+vtDSwrHjx8Mpne4nyIYSkuWj9i+NQ6P/iAMHVLo27w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=culxwM3z; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4989nd0j007007;
-	Tue, 8 Oct 2024 15:47:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XVeSEijPfHz4/1LtiqnJSCYCnP8GhN9ttkns2qfpwRU=; b=culxwM3zFc/5t8BU
-	Vy761btLeXc+ALBec92oBs0pnbxdqoV3LafwaG/HlKzzoyr6rmbLqnBu6TplCChh
-	rJPN6gbM9duADNo6BkhRjst2rSIDUa39zWKOC2ieggfl+L2D3NXFz88hXfMhAd7g
-	1B246NLArjhAq4jf1qjdk2zNFw8i050vTa9+kyNeWdjM+70WfVgDUsywGIqbyn2z
-	0SKD2rYEuYwCFgZdMSceGJa+ye5b6wtX6IKRv7HPYadnWQu+3c1obllrp4bGEXMr
-	hGuc82YaMIV1EOsF5+4tPtkPF0+6AJ/yowh2MYoRifzYiwemPtuzdQC4bgm/Uys8
-	YE9ZOA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424cy7cdtp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 15:47:24 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 498FlNNR015158
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Oct 2024 15:47:23 GMT
-Received: from [10.239.97.152] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Oct 2024
- 08:47:16 -0700
-Message-ID: <3cb945b7-4270-4e10-8ff8-020d31726ee3@quicinc.com>
-Date: Tue, 8 Oct 2024 23:47:13 +0800
+	s=arc-20240116; t=1728402556; c=relaxed/simple;
+	bh=kvIEUq6lQOonXvMeeETUDhU/87tOBln1EkRtqekczS4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Roebb1rzXfV8gI7aJV9Et/VirTpdJsSTvceYLUgULIv/H5n1r0ZISLVi5XmemAh4ah6mnerTS9iL0FTSp8y6KvWsa3+JWwnqbz2jkoG2wNE+q3ZSIujIsUPkY+ZSPMdfX30gBZTvxbwlqoTXRgJkDbLSOGkmrIcdnKueTw9KXPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr; spf=pass smtp.mailfrom=freebox.fr; dkim=pass (2048-bit key) header.d=freebox-fr.20230601.gappssmtp.com header.i=@freebox-fr.20230601.gappssmtp.com header.b=P3XlmGrM; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=freebox.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freebox.fr
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42e5e1e6d37so59632405e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 08:49:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=freebox-fr.20230601.gappssmtp.com; s=20230601; t=1728402551; x=1729007351; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UV0xhuPGi7akzhMCY3jQ9J7SRS3lJqpZQcl7buLWaQU=;
+        b=P3XlmGrMGnLCuCczr98zDdU+MTUBKh9y9jl4CKg7KKCUGfBp7A4cflfmaf53qdPGTc
+         bFe1ejuWWdgUa/OhrlfjDslDdIQG6H46iNXzCfWKaxR6cSKtMf5+/nN9b2SS5BMOQQ6G
+         9sf2yo4w5qH2mmPqo7NFq6q/FNKExVjxaPbhMGBYqYyWBFQKxdacFtyF7orST41+PqWE
+         V9MnM70VoTTfK/0aBrOP8rW+vmEqYkdDHITQPcVyT+f05qk6mADnC3BDE1eAWyXG+9i7
+         KhjSnUVgqvtr+Bha1ulzv4uCABouPYFzJQC31LOks79cxP18DnhhygVvjTLdFp48v1OL
+         5bpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728402551; x=1729007351;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UV0xhuPGi7akzhMCY3jQ9J7SRS3lJqpZQcl7buLWaQU=;
+        b=egRuRizR5+sE/k7bJsicUUZH4RkuySBnEd+K33QoHqc/Gsniii8ta/YovaSJDXGQ3P
+         VibhGezYdb7H79+1rwWA1wKDYfUNjbvfYGdJV3m8X85WwFiS4m7yX7hqwMaugvZ5tfxc
+         a+Aa8JwVzyP/sOr5iVTCdbukJC0Gg2Wo3fkrml+yKGWBgSNLNFzj6Ql8HjRPeeYwmwt7
+         em7dNumkhKb95mRn9ozGZyPIm1Y01SOcy7P467sTZyndiasSFy7izawrdE5QK9eUVo2x
+         4/WkJ7NWKseqcmjBj0zeH0B1ubBWBjfEHB6xicCkPz07/BOtH+Jf1A4dCLkbAZHwxqKC
+         aq8w==
+X-Gm-Message-State: AOJu0YwdkkfAdDABaypFEMa0tKvo8q5D2PUZ+G/dVqEeQ15DAeu0R6o0
+	g1iU27/CeBq7je+xJcNSosdSmxDnmEDj+g4EP91AuRswPxZ+vpck12ud5UFvR85PXAxAlD2dng3
+	7
+X-Google-Smtp-Source: AGHT+IGKD8WC3wRG6K0q3TdpG5/U/6y2UB/o5uIkqrlbYU4kBq52xrt/4SyLJtlwgFVNT+aE3vwLJQ==
+X-Received: by 2002:a05:600c:510d:b0:42c:b7f9:4bbd with SMTP id 5b1f17b1804b1-42f85ae90b0mr130369345e9.26.1728402550727;
+        Tue, 08 Oct 2024 08:49:10 -0700 (PDT)
+Received: from [192.168.108.50] (freebox.vlq16.iliad.fr. [213.36.7.13])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43050578facsm25093265e9.19.2024.10.08.08.49.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2024 08:49:10 -0700 (PDT)
+Message-ID: <96969a70-bf3b-4df4-b6fa-60eb20a15e13@freebox.fr>
+Date: Tue, 8 Oct 2024 17:49:09 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,217 +76,113 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/13] dt-bindings: media: camss: Add qcom,sm8550-camss
- binding
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vladimir Zapolskiy
-	<vladimir.zapolskiy@linaro.org>,
-        <krzk+dt@kernel.org>, Neil Armstrong
-	<neil.armstrong@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>, Yongsheng Li <quic_yon@quicinc.com>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <todor.too@gmail.com>,
-        <rfoss@kernel.org>, <conor+dt@kernel.org>
-References: <20240812144131.369378-1-quic_depengs@quicinc.com>
- <20240812144131.369378-8-quic_depengs@quicinc.com>
- <b1b4a866-fa64-4844-a49b-dfdcfca536df@linaro.org>
- <82dd61ab-83c0-4f9c-a2ee-e00473f4ff23@linaro.org>
- <da60cf71-13a4-465d-a0ee-ca2ad3775262@linaro.org>
- <97e4f888-1ed7-4d82-b972-3e0b95610198@linaro.org>
- <6eadc285-f413-4bf0-8795-59ff19c734da@linaro.org>
- <6562a958-47e9-4a49-b235-fe8deba3c051@linaro.org>
- <cab95caa-9ffb-446a-858b-342939e80811@mleia.com>
- <4e94106d-5ca9-485b-8c51-c18dcd4e64b0@linaro.org>
- <b779182f-a963-400a-8fc1-2468710082d2@linaro.org>
- <a0f66292-fb97-40ae-9fb1-d79160e70bb3@quicinc.com>
- <53d2b30d-6480-41eb-8dc8-7b3970ad82ef@quicinc.com>
- <2b5f4043-1e23-446a-aba4-96e40fb8d197@linaro.org>
- <7dd6132f-52c2-4f0a-8eec-26791f250111@linaro.org>
+Subject: Re: Working on audio for qcom apq8098 / msm8998
+From: Marc Gonzalez <mgonzalez@freebox.fr>
+To: MSM <linux-arm-msm@vger.kernel.org>, alsa-devel@alsa-project.org
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Arnaud Vrac <avrac@freebox.fr>, Pierre-Hugues Husson <phhusson@freebox.fr>
+References: <d9a7bfde-ea1e-4676-9993-62024e1b790d@freebox.fr>
 Content-Language: en-US
-From: Depeng Shao <quic_depengs@quicinc.com>
-In-Reply-To: <7dd6132f-52c2-4f0a-8eec-26791f250111@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Ht3Q_3K6pJu7QKwKdkd0X-5dM6r1J6-m
-X-Proofpoint-GUID: Ht3Q_3K6pJu7QKwKdkd0X-5dM6r1J6-m
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- priorityscore=1501 clxscore=1011 bulkscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410080099
+In-Reply-To: <d9a7bfde-ea1e-4676-9993-62024e1b790d@freebox.fr>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Vladimir,
+On 08/10/2024 15:46, Marc Gonzalez wrote:
 
-On 10/8/2024 10:06 PM, Bryan O'Donoghue wrote:
-> On 08/10/2024 14:50, Vladimir Zapolskiy wrote:
->> Hi Depeng.
->>
->> On 9/30/24 12:26, Depeng Shao wrote:
->>> Hi Bryan,
->>>
->>> On 9/25/2024 11:40 PM, Depeng Shao wrote:
->>>> Hi Vladimir, Bryan,
->>>>
->>>> On 9/18/2024 7:16 AM, Vladimir Zapolskiy wrote:
->>>>> Hi Bryan,
->>>>>
->>>>> On 9/18/24 01:40, Bryan O'Donoghue wrote:
->>>>>> On 13/09/2024 06:06, Vladimir Zapolskiy wrote:
->>>>>>> On 9/13/24 01:41, Bryan O'Donoghue wrote:
->>>>>>>> On 12/09/2024 21:57, Vladimir Zapolskiy wrote:
->>>>>>>>>> 3. Required not optional in the yaml
->>>>>>>>>>
->>>>>>>>>>         => You can't use the PHY without its regulators
->>>>>>>>>
->>>>>>>>> No, the supplies shall be optional, since it's absolutely 
->>>>>>>>> possible to
->>>>>>>>> have
->>>>>>>>> such a board, where supplies are merely not connected to the SoC.
->>>>>>>>
->>>>>>>> For any _used_ PHY both supplies are certainly required.
->>>>>>>>
->>>>>>>> That's what the yaml/dts check for this should achieve.
->>>>>>>
->>>>>>> I believe it is technically possible by writing an enormously 
->>>>>>> complex
->>>>>>> scheme, when all possible "port" cases and combinations are listed.
->>>>>>>
->>>>>>> Do you see any simpler way? Do you insist that it is utterly needed?
->>>>>>
->>>>>> I asked Krzysztof about this offline.
->>>>>>
->>>>>> He said something like
->>>>>>
->>>>>> Quote:
->>>>>> This is possible, but I think not between child nodes.
->>>>>> https://elixir.bootlin.com/linux/v6.11-rc7/source/Documentation/
->>>>>> devicetree/bindings/example-schema.yaml#L194
->>>>>>
->>>>>> You could require something in children, but not in parent node. For
->>>>>> children something around:
->>>>>> https://elixir.bootlin.com/linux/v6.4-rc7/source/Documentation/
->>>>>> devicetree/bindings/net/qcom,ipa.yaml#L174
->>>>>>
->>>>>> allOf:
->>>>>>      - if:
->>>>>>          required:
->>>>>>            - something-in-parent
->>>>>>        then:
->>>>>>          properties:
->>>>>>            child-node:
->>>>>>              required:
->>>>>>                - something-in-child
->>>>>>
->>>>>> I will see if I can turn that into a workable proposal/patch.
->>>>>>
->>>>>
->>>>> thank you for pushing my review request forward.
->>>>>
->>>>> Overall I believe making supply properties as optional ones is
->>>>> sufficient,
->>>>> technically straightforward and merely good enough, thus please let me
->>>>> ask you to ponder on this particular variant one more time.
->>>>>
->>>>
->>>> So, we are discussing two things.
->>>>
->>>> 1# Use separate supplies for each CSI block, looks like there is no
->>>> doubt about it anymore. So, I will update it just like based on 
->>>> suggestion.
->>>>
->>>> csiphyX-vdda-phy-supply
->>>> csiphyX-vdda-pll-supply
->>>>
->>>> Then I will need below items in the required list if they are required.
->>>> required:
->>>>     - csiphy0-vdda-phy-supply
->>>>     - csiphy0-vdda-pll-supply
->>>>     - csiphy1-vdda-phy-supply
->>>>     - csiphy1-vdda-pll-supply
->>>> ...
->>>>     - csiphy7-vdda-phy-supply
->>>>     - csiphy7-vdda-pll-supply
->>>>
->>>> 2# Regarding the CSI supplies, if they need to be making as optional?
->>>> Looks like there is no conclusion now.
->>>>
->>>> @Bryan, do you agree with this?
->>>>
->>>
->>> I'm preparing the new version patches, and will send out for reviewing
->>> in few days. I will follow Vladimir's comments if you have no response,
->>> it means making supply properties as optional one, so they won't be
->>> added to the required list.
->>>
->>
->> Recently I published the change, which moves regulator supplies from CSID
->> to CSIPHY, I believe it makes sense to base the SM8550 change and 
->> regulators
->> under discussion on top of the series:
->>
->> https://lore.kernel.org/all/20240926211957.4108692-1- 
->> vladimir.zapolskiy@linaro.org/
->>
->> Note, that SM8250 regulators are not changed, however their names are 
->> wrong,
->> the correction shall be a separate change later on...
->>
->> Next, I developed my opinion regarding the supply regulator property 
->> names:
->>
->> 1) voltage supply regulator property names match the pattern "*v*- 
->> supply",
->>     and the most common name is "vdd*-supply", the match to the 
->> pattern shall
->>     be preserved,
->> 2) also it would be much better and it will exclude any confusion, if 
->> SoC pin
->>     names are put into the name, like it is done in a multitude of 
->> similar
->>     cases.
->>
->> So, in my opinion for SM8550 CAMSS a proposed set of voltage supply 
->> regulator
->> names should be this one:
->>
->> - vdda-csi01-0p9-supply
->> - vdda-csi01-1p2-supply
->> - vdda-csi23-0p9-supply
->> - vdda-csi23-1p2-supply
->> - vdda-csi46-0p9-supply
->> - vdda-csi46-1p2-supply
->> - vdda-csi57-0p9-supply
->> - vdda-csi57-1p2-supply
-> 
-> So I communicated to Depeng to take the patch for the regulators but, I 
-> still don't think the above is the right way to do this.
-> 
-> I will take a pass at constructing something in the schema to capture 
-> the case where a regulator is required if and only if it is instantiated.
-> 
-> May not be possible with our current syntax/tools but is 100% how the 
-> hardware works so IMO is the right thing to try to do.
-> 
+> [   15.106412] qcom,apr 17300000.remoteproc:glink-edge.apr_audio_svc.-1.-1: Adding APR/GPR dev: aprsvc:apr-service:4:3
+> [   15.109935] qcom,apr 17300000.remoteproc:glink-edge.apr_audio_svc.-1.-1: Adding APR/GPR dev: aprsvc:apr-service:4:4
+> [   15.119041] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_probe:1759
+> [   15.134672] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: YOA: q6afe_dai_dev_probe
+> [   15.137948] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: YOA: of_q6afe_parse_dai_data
+> [   15.146461] qcom,apr 17300000.remoteproc:glink-edge.apr_audio_svc.-1.-1: Adding APR/GPR dev: aprsvc:apr-service:4:7
+> [   15.153563] remoteproc remoteproc0: powering up 4080000.remoteproc
+> [   15.166371] remoteproc remoteproc0: Booting fw image mba.mbn, size 234152
+> [   15.169747] q6asm-dai 17300000.remoteproc:glink-edge:apr:apr-service@7:dais: Adding to iommu group 5
+> [   15.170559] qcom,apr 17300000.remoteproc:glink-edge.apr_audio_svc.-1.-1: Adding APR/GPR dev: aprsvc:apr-service:4:8
+> [   15.179732] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: YOA: msm_dai_q6_dai_probe
+> [   15.199345] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_find_port:860
+> [   15.208834] msm-snd-msm8998 sound: ASoC: registered pcm #0 MultiMedia1 (*)
+> [   15.216194] msm-snd-msm8998 sound: snd-soc-dummy-dai <-> MultiMedia1 mapping ok
+> [   15.221994] msm-snd-msm8998 sound: ASoC: registered pcm #1 MultiMedia2 (*)
+> [   15.229582] msm-snd-msm8998 sound: snd-soc-dummy-dai <-> MultiMedia2 mapping ok
+> [   15.236045] msm-snd-msm8998 sound: ASoC: registered pcm #2 (HDMI)
+> [   15.243211] msm-snd-msm8998 sound: i2s-hifi <-> HDMI mapping ok
+> [   15.285770] input: batfish Headset Jack as /devices/platform/sound/sound/card0/input2
+> [   15.298010] qcom-q6v5-mss 4080000.remoteproc: MBA booted without debug policy, loading mpss
+> [   15.542937] remoteproc remoteproc0: remote processor 4080000.remoteproc is now up
+
+If I try to play sound on the HDMI link:
+
+# tinymix set "HDMI Mixer MultiMedia1" 1
+(no logs on the command line or in dmesg)
+
+# tinyplay /home/equinox.wav
+playing '/home/equinox.wav': 2 ch, 48000 hz, 16 bit
+error playing sample
+
+The corresponding kernel logs are:
+
+[  204.324095] msm-snd-msm8998 sound: ASoC: find BE for widget MultiMedia1 Playback
+[  204.324280] msm-snd-msm8998 sound: ASoC: try BE : HDMI Playback
+[  204.330832] msm-snd-msm8998 sound: ASoC: try BE : I2S Playback
+[  204.336452] msm-snd-msm8998 sound: ASoC: find BE for widget MM_DL1
+[  204.342361] msm-snd-msm8998 sound: ASoC: try BE : HDMI Playback
+[  204.348471] msm-snd-msm8998 sound: ASoC: try BE : I2S Playback
+[  204.354319] msm-snd-msm8998 sound: ASoC: find BE for widget HDMI Mixer
+[  204.360152] msm-snd-msm8998 sound: ASoC: try BE : HDMI Playback
+[  204.366702] msm-snd-msm8998 sound: ASoC: try BE : I2S Playback
+[  204.372545] msm-snd-msm8998 sound: ASoC: find BE for widget HDMI_RX
+[  204.378439] msm-snd-msm8998 sound: ASoC: try BE : HDMI Playback
+[  204.384520] msm-snd-msm8998 sound: ASoC: try BE : I2S Playback
+[  204.390471] msm-snd-msm8998 sound: ASoC: find BE for widget HDMI Playback
+[  204.396400] msm-snd-msm8998 sound: ASoC: try BE : HDMI Playback
+[  204.403231]  MultiMedia1: ASoC: found 2 audio Playback paths
+[  204.408912]  MultiMedia1: YO: dpcm_add_paths:1595
+[  204.414855]  MultiMedia1: YO: dpcm_add_paths:1601
+[  204.419435]  MultiMedia1: YO: dpcm_add_paths:1605 widget=MM_DL1
+[  204.424105]  MultiMedia1: YO: dpcm_add_paths:1605 widget=HDMI Mixer
+[  204.429867]  MultiMedia1: YO: dpcm_add_paths:1605 widget=HDMI_RX
+[  204.436139]  MultiMedia1: YO: dpcm_add_paths:1605 widget=HDMI Playback
+[  204.442394] msm-snd-msm8998 sound: ASoC: find BE for widget HDMI Playback
+[  204.448691] msm-snd-msm8998 sound: ASoC: try BE : HDMI Playback
+[  204.455581]  MultiMedia1: YO: dpcm_add_paths:1638
+[  204.461316]  MultiMedia1: connected new DPCM Playback path MultiMedia1 -> HDMI
+[  204.466220]  MultiMedia1: ASoC: found 1 new BE paths
+[  204.473232]  HDMI: ASoC: open Playback BE HDMI
+[  204.478379]  MultiMedia1: ASoC: open FE MultiMedia1
+[  204.482911]  HDMI: ASoC: hw_params BE HDMI
+[  204.487489] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: YOA: q6hdmi_hw_params
+[  204.491715]  MultiMedia1: ASoC: hw_params FE MultiMedia1 rate 48000 chan 2 fmt 2
+[  204.500814]  MultiMedia1: ASoC: prepare FE MultiMedia1
+[  204.508108]  HDMI: ASoC: prepare BE HDMI
+[  204.512978] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: YOA: q6afe_dai_prepare
+[  204.517117] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_hdmi_port_prepare:1317
+[  204.525864] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_port_start:1511
+[  204.533151] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_port_set_param_v2:1050
+[  204.540129] qcom-q6afe aprsvc:apr-service:4:4: YO: afe_apr_send_pkt:947
+[  204.547820] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_callback:880
+[  204.553692] qcom-q6afe aprsvc:apr-service:4:4: cmd = 0x100ef returned error = 0x18
+[  204.560292] qcom-q6afe aprsvc:apr-service:4:4: YO: q6afe_find_port:860
+[  204.567937] qcom-q6afe aprsvc:apr-service:4:4: DSP returned error[18]
+[  204.574262] qcom-q6afe aprsvc:apr-service:4:4: AFE enable for port 0x100e failed -22
+[  204.583561] qcom-q6afe aprsvc:apr-service:4:4: AFE enable for port 0x100e failed -22
+[  204.591317] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: fail to start AFE port 1
+[  204.599101] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: ASoC: error at snd_soc_pcm_dai_prepare on HDMI: -22
+[  204.608501]  MultiMedia1: ASoC: hw_free FE MultiMedia1
+[  204.619781]  HDMI: ASoC: hw_free BE HDMI
+[  204.624821] q6afe-dai 17300000.remoteproc:glink-edge:apr:apr-service@4:dais: YOA: q6afe_dai_shutdown
+[  204.628835]  MultiMedia1: ASoC: close FE MultiMedia1
+[  204.637798]  HDMI: ASoC: BE HDMI event 2 dir 0
+[  204.642745]  MultiMedia1: ASoC: BE Playback disconnect check for HDMI
+[  204.646987]  MultiMedia1: freed DSP Playback path MultiMedia1 -> HDMI
 
 
-Yes, I have picked your patch and rebased the SM8550 change based on 
-your patch. I also verified them and it works good.
+Looks like the audio DSP might not be correctly initialized?
 
-But I don't understand why the names are csi01, csi23, csi46, csi57. 
-Could you please elaborate more?
+Regards
 
-I'm using csiphyX-vdda-phy-supply and csiphyX-vdda-pll-supply now.
-
-Thanks,
-Depeng
 
 
