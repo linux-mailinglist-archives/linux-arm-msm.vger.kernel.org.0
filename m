@@ -1,129 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-33612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 831829958F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 23:10:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FAA699593D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 23:22:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9D021C21652
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 21:10:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 041F2286D04
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 21:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469B4215F53;
-	Tue,  8 Oct 2024 21:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E0611FA257;
+	Tue,  8 Oct 2024 21:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=ijzerbout.nl header.i=@ijzerbout.nl header.b="iMrmLS85"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kOrceErb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bout3.ijzerbout.nl (bout3.ijzerbout.nl [136.144.140.114])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7DF5213ED6;
-	Tue,  8 Oct 2024 21:10:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=136.144.140.114
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6826A1C1AC0;
+	Tue,  8 Oct 2024 21:22:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728421821; cv=none; b=PMSmSjTLLqTeT8NbtAGfebFPAqKmg2h+E7FxYNdRwA1Z02+iGtpvonocC5Y0p1R4m1LZ0R06B2ilaxIu/YWzJFdVC3O69B36ce7X/M4RmoTIgzJ0SrkNDUFd3LKTbEEzjy1v6N8X3M4C0aZRJcLIt1cB1GgO4bwCyhWrnfdYhMo=
+	t=1728422535; cv=none; b=A/exI3VjmhpSKs/w6IVCSfWxg9l2WOEjNTPs96wwcQfV7sd7T4b0bHteeEZoZb/b/aLH/eEZXq//GGyonu/IZs4UMGRUIq/DKs1kSkvxV4hE+WNSVXo5oeuYa760sFssqW7wcSmVtYCNMmCalUejcIVMBwmDc8iatsLN5B4JdSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728421821; c=relaxed/simple;
-	bh=lp34xle93S64JDLrFewD47jcAq158vsvHfk6XjoYYqs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JRZIs3dROzz1LiAW0BOa7J/7flq55Wi33ml+cMCPq0hjdSKGd9UmiJPoRcy/Pb0YlAeqeRJkDXk8j8REiE5kxbftORTeBjkpWhP1AJChDHsFeF7rFO6g1cpK0fufnobcVPqYwfHm3uUH848swBK71eVVRYDZZ0CvPFBCv4OheoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ijzerbout.nl; spf=pass smtp.mailfrom=ijzerbout.nl; dkim=pass (4096-bit key) header.d=ijzerbout.nl header.i=@ijzerbout.nl header.b=iMrmLS85; arc=none smtp.client-ip=136.144.140.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ijzerbout.nl
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ijzerbout.nl
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ijzerbout.nl; s=key;
-	t=1728421817; bh=lp34xle93S64JDLrFewD47jcAq158vsvHfk6XjoYYqs=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iMrmLS853loo0HAldVopE0pLNxAhpMt24hXWKsvcwmLTsDeZSG04JOrEnQzzfggRM
-	 ofvMczhyer48zQmPTwav/TKFaxsM+EIr3gfFL4XT70bkSsmLLPGFNJ7WjavDMoMXCM
-	 XQj1sjDApUXfQPp+bZ9WnjJA9yXBjNE/hIClhpddnYP9KfkxP0YeMO/au0d56okYC/
-	 qkQxZSz5pjO76hqsBrUoSvDeO2xJn75o6Qu7EDdM0HN/Dudg+Kzas2c6zOezzHn4Bn
-	 5jvoz2IBa5x8DhtrRiA9lEciZ/UWnlwAI3PGdL4AtFfyu4jXOV5J2k9oDKeVFTwzPh
-	 mo8xWu4/HRz3OP9zDqYMRDBMRIlNnwV3+AIOeQdvulDyarO1aThWhkV5pAuVhXcUA+
-	 +pqKIRRBEC+v6oZ/v7kD2bDp0laVA6SrCU4fFKgDQefPxpu9jw3yMbYqwcIREvi0yc
-	 AuuImkurDVtHLpF1zlV80lmB3YzYkWGNusrV3ztK3u1DWiojUqrYdfoyuNTXhBHF0B
-	 CmQueOQvzubkRB4/wkqS/xyXAQS7QeAZB1u41plaYuyhn3uT/u1+TkUiBqlpaazMSU
-	 tkjLb6hx2PgM+lGKL6qNtLeILttuJOm75VODMsxHEkzkCRln8oiywPxcg1ftROmPM6
-	 J4Q+Tp55TrdaQoWq+2JNaWVc=
-Received: from [IPV6:2a10:3781:99:1:1ac0:4dff:fea7:ec3a] (racer.ijzerbout.nl [IPv6:2a10:3781:99:1:1ac0:4dff:fea7:ec3a])
-	by bout3.ijzerbout.nl (Postfix) with ESMTPSA id 0420C16B16D;
-	Tue,  8 Oct 2024 23:10:16 +0200 (CEST)
-Message-ID: <1b9afb20-d608-464c-ae6b-c535564b7e5a@ijzerbout.nl>
-Date: Tue, 8 Oct 2024 23:10:14 +0200
+	s=arc-20240116; t=1728422535; c=relaxed/simple;
+	bh=Bh+xK+qKuAd2TI9AIJjUI6bTu6iXh0GH/7H0qsy207A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VaKG2gufKER+TuihH09E3N7egPLrjdVpkZndYMEgIvWt9xeoD0tuQMBdvLAUsEpElQ/4WbJOHZOrZWpzljutcnu7BxlR/S3omfzd2zScQkSf4RHI3qpToYdq76agQyhG4HSmcQfN7VMAUPH8YDLDhiIkCKM3Rlja/uRTIRU1p4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kOrceErb; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1728422534; x=1759958534;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Bh+xK+qKuAd2TI9AIJjUI6bTu6iXh0GH/7H0qsy207A=;
+  b=kOrceErbG3l6z8NRR5xskJvXhV+T+VxkK4jpP44hHHncFWLbCWsIOMo+
+   WJLCbZ/+I17RFxR2Ats8GbIfjbmtSBGLo5YssE2cBvy80FtWA1guzoE5R
+   NftIxYIljo0S3r6EEKxWRtGECeP388yyb0LtUtDw7hxJ1J3tdH5NprjPL
+   QwZ+4OxiOxRlQWuSf7KuHojVdSsRe9xlAyUz3kKFHEqQHvbc+Ik3bypwO
+   tnl/VUyP0s6jgiA6x10FmT3BomvPM84aX0CRLgn5UuTjHCMiKkfQ+ncI2
+   o5OgE+1lwET7ECEJ7qTfd1WRDNzWDPGPU5LKrwNBayGvJlX6tghYMBbJl
+   g==;
+X-CSE-ConnectionGUID: 0y2ckAE/Tj+WxllfWY0wCg==
+X-CSE-MsgGUID: p5r7juEPSLK3SmWf7gekTw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="53073593"
+X-IronPort-AV: E=Sophos;i="6.11,188,1725346800"; 
+   d="scan'208";a="53073593"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2024 14:22:13 -0700
+X-CSE-ConnectionGUID: 1KAYVdPASCyWQ1zp5/xwPQ==
+X-CSE-MsgGUID: fDmfUm0jQ6C+6O/XAo1cZg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,188,1725346800"; 
+   d="scan'208";a="80573533"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by fmviesa004.fm.intel.com with ESMTP; 08 Oct 2024 14:22:10 -0700
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1syHei-0008OB-0O;
+	Tue, 08 Oct 2024 21:22:08 +0000
+Date: Wed, 9 Oct 2024 05:21:59 +0800
+From: kernel test robot <lkp@intel.com>
+To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
+	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
+	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
+	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
+	arnd@arndb.de
+Subject: Re: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2
+ request
+Message-ID: <202410090402.lospEFvZ-lkp@intel.com>
+References: <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [v8,09/12] drm/msm/a6xx: Add traces for preemption
-To: Antonino Maniscalco <antomani103@gmail.com>,
- Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- Jonathan Corbet <corbet@lwn.net>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-doc@vger.kernel.org, Akhil P Oommen <quic_akhilpo@quicinc.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
-References: <20241003-preemption-a750-t-v8-9-5c6cb9f256e0@gmail.com>
-Content-Language: en-US
-From: Kees Bakker <kees@ijzerbout.nl>
-In-Reply-To: <20241003-preemption-a750-t-v8-9-5c6cb9f256e0@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
 
-Op 03-10-2024 om 18:12 schreef Antonino Maniscalco:
-> Add trace points corresponding to preemption being triggered and being
-> completed for latency measurement purposes.
->
-> Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> Tested-by: Rob Clark <robdclark@gmail.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8450-HDK
-> Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_preempt.c |  6 ++++++
->   drivers/gpu/drm/msm/msm_gpu_trace.h       | 28 ++++++++++++++++++++++++++++
->   2 files changed, 34 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> index 21e333cb6342d33425eb96f97bcc853e9b041b36..6803d5af60cc8fb0f2a52ee160ffdbf0e8ef0209 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-> @@ -7,6 +7,7 @@
->   #include "a6xx_gpu.h"
->   #include "a6xx_gmu.xml.h"
->   #include "msm_mmu.h"
-> +#include "msm_gpu_trace.h"
->   
->   /*
->    * Try to transition the preemption state from old to new. Return
-> @@ -174,6 +175,8 @@ void a6xx_preempt_irq(struct msm_gpu *gpu)
->   
->   	set_preempt_state(a6xx_gpu, PREEMPT_NONE);
->   
-> +	trace_msm_gpu_preemption_irq(a6xx_gpu->cur_ring->id);
-> +
->   	/*
->   	 * Retrigger preemption to avoid a deadlock that might occur when preemption
->   	 * is skipped due to it being already in flight when requested.
-> @@ -294,6 +297,9 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
->   	 */
->   	ring->restore_wptr = false;
->   
-> +	trace_msm_gpu_preemption_trigger(a6xx_gpu->cur_ring->id,
-> +		ring ? ring->id : -1);
-> +
-There is no need for the ternary operator. "ring" should be non-NULL, 
-otherwise the code would have already crashed.
-So the change can just be
-     trace_msm_gpu_preemption_trigger(a6xx_gpu->cur_ring->id, ring->id);
+Hi Ekansh,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on char-misc/char-misc-testing]
+[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.12-rc2 next-20241008]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-CRC-support-using-invokeV2-request/20241007-164734
+base:   char-misc/char-misc-testing
+patch link:    https://lore.kernel.org/r/20241007084518.3649876-2-quic_ekangupt%40quicinc.com
+patch subject: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2 request
+config: alpha-randconfig-r112-20241008 (https://download.01.org/0day-ci/archive/20241009/202410090402.lospEFvZ-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 13.3.0
+reproduce: (https://download.01.org/0day-ci/archive/20241009/202410090402.lospEFvZ-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202410090402.lospEFvZ-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/misc/fastrpc.c:1696:19: sparse: sparse: incorrect type in assignment (different base types) @@     expected unsigned long long [usertype] args @@     got struct fastrpc_invoke_args *[assigned] args @@
+   drivers/misc/fastrpc.c:1696:19: sparse:     expected unsigned long long [usertype] args
+   drivers/misc/fastrpc.c:1696:19: sparse:     got struct fastrpc_invoke_args *[assigned] args
+>> drivers/misc/fastrpc.c:1716:18: sparse: sparse: incorrect type in argument 1 (different base types) @@     expected void const *objp @@     got unsigned long long [addressable] [usertype] args @@
+   drivers/misc/fastrpc.c:1716:18: sparse:     expected void const *objp
+   drivers/misc/fastrpc.c:1716:18: sparse:     got unsigned long long [addressable] [usertype] args
+   drivers/misc/fastrpc.c:1734:23: sparse: sparse: incorrect type in argument 1 (different base types) @@     expected void const *objp @@     got unsigned long long [addressable] [usertype] args @@
+   drivers/misc/fastrpc.c:1734:23: sparse:     expected void const *objp
+   drivers/misc/fastrpc.c:1734:23: sparse:     got unsigned long long [addressable] [usertype] args
+   drivers/misc/fastrpc.c: note: in included file (through include/linux/swait.h, include/linux/completion.h):
+   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+
+vim +1696 drivers/misc/fastrpc.c
+
+  1677	
+  1678	static int fastrpc_copy_args(struct fastrpc_invoke *inv)
+  1679	{
+  1680		struct fastrpc_invoke_args *args = NULL;
+  1681		u32 nscalars;
+  1682	
+  1683		/* nscalars is truncated here to max supported value */
+  1684		nscalars = REMOTE_SCALARS_LENGTH(inv->sc);
+  1685		if (nscalars) {
+  1686			args = kcalloc(nscalars, sizeof(*args), GFP_KERNEL);
+  1687			if (!args)
+  1688				return -ENOMEM;
+  1689	
+  1690			if (copy_from_user(args, (void __user *)(uintptr_t)inv->args,
+  1691					   nscalars * sizeof(*args))) {
+  1692				kfree(args);
+  1693				return -EFAULT;
+  1694			}
+  1695		}
+> 1696		inv->args = args;
+  1697	
+  1698		return 0;
+  1699	}
+  1700	
+  1701	static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
+  1702	{
+  1703		struct fastrpc_invoke_v2 ioctl = {0};
+  1704		struct fastrpc_invoke inv;
+  1705		int err;
+  1706	
+  1707		if (copy_from_user(&inv, argp, sizeof(inv)))
+  1708			return -EFAULT;
+  1709	
+  1710		err = fastrpc_copy_args(&inv);
+  1711		if (err)
+  1712			return err;
+  1713	
+  1714		ioctl.inv = inv;
+  1715		err = fastrpc_internal_invoke(fl, false, &ioctl);
+> 1716		kfree(inv.args);
+  1717	
+  1718		return err;
+  1719	}
+  1720	
+
 -- 
-Kees
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
