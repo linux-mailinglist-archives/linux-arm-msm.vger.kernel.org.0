@@ -1,113 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-33537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id D15CB994795
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 13:47:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4B049947BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 13:52:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0E81D1C229C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 11:47:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30603B26B6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 11:52:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5B5D1D2B28;
-	Tue,  8 Oct 2024 11:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DF98E1D54D3;
+	Tue,  8 Oct 2024 11:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="OBm/oqIp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JtjM9NNi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAD04C97;
-	Tue,  8 Oct 2024 11:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1863F4C97
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 11:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728388041; cv=none; b=gUTFthd/RM1GVyDjJb9fKLdVAUTVohgGMZrCq2f2XYKwATjLAcl7N8UJP3ym9Yh4qGTbAgjleVhGw4rkbKK+Bj+pPvmSLMSVMqZFIwYyLe7SKxrs50N/G1MkzSl8uPlnIN210OkKHkvfcE3ZJQofKMGRKtuBCGVDSF+N1OXfohI=
+	t=1728388232; cv=none; b=kMWdwp89NWqSObIZurm971uHbKY/RGRbDFFIxqSUqpYqvcxiLuGK1/bpEKsmUPSeD3RC78FO/jkfOzh4xRhc/5W3ZThGYV6he2RZNZNB2+IZdHqHxKMyjAhdFGwg2kXKkxyHKrY8C31xW1qv2rHQoSa/3JBz53TYP9qPULvlw4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728388041; c=relaxed/simple;
-	bh=/y0f7YzkVyLWlST+5tehkw0EW7lI2XHxBGCE/ESVb40=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=chVjCevPpO5XEiesey1plN+Fz4KBFvwBHSxRnxNdcvSPlv1LTy0+jk0V8hZTq5C70mtijw1t1KHuoSc0Rlvf62+XiYltzz0AKHkG4ssURIv+ZEs6jzx78JJHSy66gbENT2en6dD5ELezucKW7729zRW8VrnkO+au/xlurmtzWoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=OBm/oqIp; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=bHJknnUwvn2irDVg9N3GrQUk2xrtJqkLpnVNrWGUTUg=; b=OBm/oqIpDPEwYJzGEEYmGHodos
-	4nb5iEN+li/o1811E+zuz4e13n8B5l0kVy64gH+itqqJ+6MMgIxz67I3vuppMSv/TLQkvUhtXu8f8
-	JdDJr2TK5JBVfDowKunhgzPeLGiIVyCzIqqfPnqCiw13Muj5k4NIF8el6/OETD8nLFgKJAWYJ1z9k
-	PlCw8baNajsnF9wvz2Fn32B4W5cgoJXG/oohqQuCvct/gqH2VMmy4CKIrwazuFtuIqNGB+ofJmlvv
-	ORv3ADQUSxQI9VmtfeU+LYQvN1FunfJN1Wc0TfQSv3lVbOzp0ObKeesgHdcQHjZvaWCNfrmcLir7P
-	d6g0NIig==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1sy8g6-00000005ggR-3zEE;
-	Tue, 08 Oct 2024 11:46:58 +0000
-Date: Tue, 8 Oct 2024 04:46:58 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Julian Vetter <jvetter@kalrayinc.com>
-Cc: Arnd Bergmann <arnd@arndb.de>, Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, Guo Ren <guoren@kernel.org>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
-	Matt Turner <mattst88@gmail.com>,
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Naveen N Rao <naveen@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
-	linux-m68k@lists.linux-m68k.org, linux-alpha@vger.kernel.org,
-	linux-parisc@vger.kernel.org, linux-sh@vger.kernel.org,
-	linux-um@lists.infradead.org, linux-arch@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org, linux-s390@vger.kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-mtd@lists.infradead.org, linux-sound@vger.kernel.org,
-	Yann Sionneau <ysionneau@kalrayinc.com>
-Subject: Re: [PATCH v8 01/14] Consolidate IO memcpy/memset into iomap_copy.c
-Message-ID: <ZwUbsviaqFUtjKEQ@infradead.org>
-References: <20241008075023.3052370-1-jvetter@kalrayinc.com>
- <20241008075023.3052370-2-jvetter@kalrayinc.com>
+	s=arc-20240116; t=1728388232; c=relaxed/simple;
+	bh=AvIf/cAXb7gv7K7QltyPmNlWcZlQEGDKitfw4yfs74I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QJ9McPiYHzaVDZYvCNFWYVMxp3fjuL5kCAUx7tEgDc3uemLri4EffmK3PaB6pPARDWyi5LYm/H/FkY1mTyQNL/07lHNYlQTPKS8RLvQvA74eUH4m0jfkbBtlb7ph2rvpRfpMt5QzzPea77dnms8oo7nPuPbDaViMErWs8jM6RGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JtjM9NNi; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5398ec2f3c3so6942153e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 04:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728388229; x=1728993029; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=orTo5qvkhHaghQfSFG2C3pKNVKQQ230FuuT1v/qSo3k=;
+        b=JtjM9NNiYxQkGzA/S/xxuo9t6Q+yGrwzd6y85xpZ94kL5jqFzp240qcIFjiAU0J+u8
+         SGd5OFo2LaxJQVdTauGk1PPRNMvxy7623p7snz2/hMKB2T45DRZ8QasQmd4xveQpx6u1
+         7JaN5I3yDlJBr1+aY6xT+4wcrgDQAYpOYAGjOzaGj6HzRnCkLn+cso2eOpGhmOrkH1wW
+         Ag4h1j2fuJNlF7fgmWnNZfrnFuN/GyRYj0OCNeSqHHaXLbpidXH4vgxatBbKrfvCEaKd
+         Xg0G7shLWDyCzTRaKMwXq1QiTaljPHnLVCQsWfC0RYiI9TXRJG5Yny2cqd9QhZ1K9B4A
+         6JEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728388229; x=1728993029;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=orTo5qvkhHaghQfSFG2C3pKNVKQQ230FuuT1v/qSo3k=;
+        b=R8b8fZK1TE+dgUR2fxBzhIU2jLjjhPr1VSLv/KqYpHMMG79gGHzZEN8mikJDzPxfEt
+         JzdC61pRq5iraj5NshEKnRi++kZvxklh1LHR68Phgh3qwbHw48ZUmbl4vI6O/nFN4P3O
+         dqBnHjlUHPkbl666RtBEVwf0UwYpzzGWexHuGY3FOFmIqJzWTeux/LhtPvUbNqC/YAby
+         9XkIvp4FcxmApnw+mqO/zvfoTbOIIwYKz+AduzbVplaYSXhudrPbyVpsZ5qTQWVaniAZ
+         5SE9y4PUXeJle0XsmBiCtFdeRiobPSKoffNRGScffL+TM4oI3I1iKLp/Zqscm3Ly6rdF
+         kCFw==
+X-Forwarded-Encrypted: i=1; AJvYcCUfkn6bVXxYMdNf9zhSrgSo6TfsmaOLleFqYV8rjd6upl/AIHIMN3JHo/hUmQoz1AfdTg6sK8SKTHQt7Xe4@vger.kernel.org
+X-Gm-Message-State: AOJu0YzKzhDqzrSsdov1zGK/1yDGH/DnUw9F3+29XzzO0wVKKGrpYOPI
+	xeebMof0dmyXyW2vgXBHILh9RQ8neTMlchKWX5G8k8fwe0htBXFLwtnaSRNUsTo=
+X-Google-Smtp-Source: AGHT+IFmYoMJxA79DffYEVCVfEsjDHlDmeVIQITg9i1+ZFlfwyf0+DWMFtDh0XjYziiaQGCHLlLUvw==
+X-Received: by 2002:a05:6512:2810:b0:533:43e2:6ac4 with SMTP id 2adb3069b0e04-539ab9f0ccdmr6848774e87.49.1728388229117;
+        Tue, 08 Oct 2024 04:50:29 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9937615e85sm476763566b.175.2024.10.08.04.50.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2024 04:50:28 -0700 (PDT)
+Message-ID: <27f39cda-932c-4b79-84d4-be78d266ebdf@linaro.org>
+Date: Tue, 8 Oct 2024 12:50:27 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241008075023.3052370-2-jvetter@kalrayinc.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] dt-bindings: media: qcom,sc8280xp-camss: Fix
+ interrupt types
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
+ <20240923072827.3772504-2-vladimir.zapolskiy@linaro.org>
+ <datahu33nmsser2p4fb2hyncsujtkwaca377ivwmpc6yj2naut@2sjsbebfm3gf>
+ <3f87e855-8779-4df3-8f26-e3d2b611d3e9@linaro.org>
+ <313667a6-afcd-44cb-a6f6-0d550e8f68a0@linaro.org>
+ <4bf490cb-228d-4f01-a956-cacbafa94e2a@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <4bf490cb-228d-4f01-a956-cacbafa94e2a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 08, 2024 at 09:50:09AM +0200, Julian Vetter wrote:
->  lib/iomap_copy.c         | 127 +++++++++++++++++++++++++++++++++++++++
+On 08/10/2024 12:37, Vladimir Zapolskiy wrote:
+> 
+> I don't have access to datasheets or hardware of sc8280xp powered board,
+> someone may either verify, if CAMSS level high type interrupts are
+> supported/working at all or not (obviously its current presence in dts is
+> insufficient), or check the SoC datasheet.
 
-On top of the previous comments:  this really should be iomem_copy.c
-instead.
+I've tested both as was submitted and your change.
 
+I _always_ test my patches. I'm not sure there's a datasheet which 
+spells this out to be honest.
+
+Rising or High can both be justified, its really down to how your 
+interrupt controller latches the state change. However I personally am 
+fine with the change you've provided because I trust it fixes an error 
+for you.
+
+I didn't try loading and unloading that module but, since you did I'm 
+happy to Ack the change and trust your work.
+
+---
+bod
 
