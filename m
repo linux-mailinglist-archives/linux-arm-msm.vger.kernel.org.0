@@ -1,178 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-33613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FAA699593D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 23:22:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD7B2995B70
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 01:16:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 041F2286D04
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 21:22:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A2202834D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 23:16:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E0611FA257;
-	Tue,  8 Oct 2024 21:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67D64213EFB;
+	Tue,  8 Oct 2024 23:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kOrceErb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DAr3j8s5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6826A1C1AC0;
-	Tue,  8 Oct 2024 21:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C57E33986;
+	Tue,  8 Oct 2024 23:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728422535; cv=none; b=A/exI3VjmhpSKs/w6IVCSfWxg9l2WOEjNTPs96wwcQfV7sd7T4b0bHteeEZoZb/b/aLH/eEZXq//GGyonu/IZs4UMGRUIq/DKs1kSkvxV4hE+WNSVXo5oeuYa760sFssqW7wcSmVtYCNMmCalUejcIVMBwmDc8iatsLN5B4JdSo=
+	t=1728429396; cv=none; b=UTD6Yj1+f6hKQ9qimjGn4RQZTfmq0X4Zar3PLyfto2rTiKDE2EtoY2z8HT4eUO1q+pp3CCR0Bk3JO1wXaauMjLggsE/KOGj0+XQ/GlSyDm5anY9PvkekcsKZNEAUrqbim9gRvOZ+SPOhmwUwADntNW/txH2dKnncgRsDAnktWKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728422535; c=relaxed/simple;
-	bh=Bh+xK+qKuAd2TI9AIJjUI6bTu6iXh0GH/7H0qsy207A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VaKG2gufKER+TuihH09E3N7egPLrjdVpkZndYMEgIvWt9xeoD0tuQMBdvLAUsEpElQ/4WbJOHZOrZWpzljutcnu7BxlR/S3omfzd2zScQkSf4RHI3qpToYdq76agQyhG4HSmcQfN7VMAUPH8YDLDhiIkCKM3Rlja/uRTIRU1p4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kOrceErb; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1728422534; x=1759958534;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Bh+xK+qKuAd2TI9AIJjUI6bTu6iXh0GH/7H0qsy207A=;
-  b=kOrceErbG3l6z8NRR5xskJvXhV+T+VxkK4jpP44hHHncFWLbCWsIOMo+
-   WJLCbZ/+I17RFxR2Ats8GbIfjbmtSBGLo5YssE2cBvy80FtWA1guzoE5R
-   NftIxYIljo0S3r6EEKxWRtGECeP388yyb0LtUtDw7hxJ1J3tdH5NprjPL
-   QwZ+4OxiOxRlQWuSf7KuHojVdSsRe9xlAyUz3kKFHEqQHvbc+Ik3bypwO
-   tnl/VUyP0s6jgiA6x10FmT3BomvPM84aX0CRLgn5UuTjHCMiKkfQ+ncI2
-   o5OgE+1lwET7ECEJ7qTfd1WRDNzWDPGPU5LKrwNBayGvJlX6tghYMBbJl
-   g==;
-X-CSE-ConnectionGUID: 0y2ckAE/Tj+WxllfWY0wCg==
-X-CSE-MsgGUID: p5r7juEPSLK3SmWf7gekTw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11219"; a="53073593"
-X-IronPort-AV: E=Sophos;i="6.11,188,1725346800"; 
-   d="scan'208";a="53073593"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2024 14:22:13 -0700
-X-CSE-ConnectionGUID: 1KAYVdPASCyWQ1zp5/xwPQ==
-X-CSE-MsgGUID: fDmfUm0jQ6C+6O/XAo1cZg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,188,1725346800"; 
-   d="scan'208";a="80573533"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by fmviesa004.fm.intel.com with ESMTP; 08 Oct 2024 14:22:10 -0700
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1syHei-0008OB-0O;
-	Tue, 08 Oct 2024 21:22:08 +0000
-Date: Wed, 9 Oct 2024 05:21:59 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ekansh Gupta <quic_ekangupt@quicinc.com>,
-	srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, gregkh@linuxfoundation.org,
-	quic_bkumar@quicinc.com, linux-kernel@vger.kernel.org,
-	quic_chennak@quicinc.com, dri-devel@lists.freedesktop.org,
-	arnd@arndb.de
-Subject: Re: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2
- request
-Message-ID: <202410090402.lospEFvZ-lkp@intel.com>
-References: <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
+	s=arc-20240116; t=1728429396; c=relaxed/simple;
+	bh=sgRdB6GHGNFkcHdj8XNl55fFHOIehVfGXwJ3yVIuoHs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=lEwngF7674lYsBr8maCrZDXIZWJBFdRr/BKKhrj1k2g5vBWaHYTVvaNehwWYaI7DEBfvdgvxw5fMQ8GO8FGIsNzLnUTnWFemJn/QGbFsGf2jUVSgVbwkSNrpEnzNqO4pKFp1R4Tf+6ltxfcuXa2G1f1TJPQQVRQvdPgY804zarI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DAr3j8s5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A457EC4CEC7;
+	Tue,  8 Oct 2024 23:16:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728429395;
+	bh=sgRdB6GHGNFkcHdj8XNl55fFHOIehVfGXwJ3yVIuoHs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=DAr3j8s5ni9LSRzFbT4nXGcCy6z4CXH2+SXbxT+4C2czApXDu6hAf8uKLK06sjlUT
+	 T9CRF0/cPlftvxNjMd4VP/mDKCc6XaPYF+qwxhuAXWEhtC1VJrMcUK1Z51ZC/f2BKZ
+	 VUdCCPip6ds+y72ZE9AF1aaCL3D8zB9nJWLoOBAh+/QbN29w2uzs3P2S2vaANko1Sw
+	 cpPJEpPiAphyropwX+JLu9p/xlKBJaP+ARankm1sjNPSFp8WpJeBSSW4lB75q4riah
+	 IH7Zc48yga+Mr4P9IV93GkakkBCf7649DnUTR3n1oTCsCF06x75kgdS5YyF0oovwAD
+	 wxQiYFbsCnXOw==
+From: djakov@kernel.org
+To: broonie@kernel.org
+Cc: ruanjinjie@huawei.com,
+	dmitry.baryshkov@linaro.org,
+	dan.carpenter@linaro.org,
+	naresh.kamboju@linaro.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Georgi Djakov <djakov@kernel.org>,
+	Linux Kernel Functional Testing <lkft@linaro.org>
+Subject: [PATCH] spi: geni-qcom: Fix boot warning related to pm_runtime and devres
+Date: Wed,  9 Oct 2024 02:16:15 +0300
+Message-Id: <20241008231615.430073-1-djakov@kernel.org>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241007084518.3649876-2-quic_ekangupt@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-Hi Ekansh,
+From: Georgi Djakov <djakov@kernel.org>
 
-kernel test robot noticed the following build warnings:
+During boot, users sometimes observe the following warning:
 
-[auto build test WARNING on char-misc/char-misc-testing]
-[also build test WARNING on char-misc/char-misc-next char-misc/char-misc-linus linus/master v6.12-rc2 next-20241008]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+[7.841431] WARNING: CPU: 4 PID: 492 at
+drivers/interconnect/core.c:685 __icc_enable
+(drivers/interconnect/core.c:685 (discriminator 7))
+[..]
+[7.841494] CPU: 4 PID: 492 Comm: (udev-worker) Not tainted 6.1.111-rc1 #1
+[7.841497] Hardware name: Thundercomm Dragonboard 845c (DT)
+[7.841499] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[7.841502] pc : __icc_enable (drivers/interconnect/core.c:685
+(discriminator 7))
+[7.841505] lr : icc_disable (drivers/interconnect/core.c:708)
+[..]
+[7.841541] Call trace:
+[7.841542] __icc_enable (drivers/interconnect/core.c:685 (discriminator 7))
+[7.841545] icc_disable (drivers/interconnect/core.c:708)
+[7.841547] geni_icc_disable (drivers/soc/qcom/qcom-geni-se.c:862)
+[7.841553] spi_geni_runtime_suspend+0x3c/0x4c spi_geni_qcom
+[7.841561] pm_generic_runtime_suspend (drivers/base/power/generic_ops.c:28)
+[7.841565] __rpm_callback (drivers/base/power/runtime.c:395)
+[7.841568] rpm_callback (drivers/base/power/runtime.c:532)
+[7.841570] rpm_suspend (drivers/base/power/runtime.c:672)
+[7.841572] rpm_idle (drivers/base/power/runtime.c:504 (discriminator 1))
+[7.841574] update_autosuspend (drivers/base/power/runtime.c:1662)
+[7.841576] pm_runtime_disable_action (include/linux/spinlock.h:401
+drivers/base/power/runtime.c:1703 include/linux/pm_runtime.h:599
+drivers/base/power/runtime.c:1517)
+[7.841579] devm_action_release (drivers/base/devres.c:720)
+[7.841581] release_nodes (drivers/base/devres.c:503)
+[7.841583] devres_release_all (drivers/base/devres.c:532)
+[7.841585] device_unbind_cleanup (drivers/base/dd.c:531)
+[7.841589] really_probe (drivers/base/dd.c:710)
+[7.841592] __driver_probe_device (drivers/base/dd.c:785)
+[7.841594] driver_probe_device (drivers/base/dd.c:815)
+[7.841596] __driver_attach (drivers/base/dd.c:1202)
+[7.841598] bus_for_each_dev (drivers/base/bus.c:301)
+[7.841600] driver_attach (drivers/base/dd.c:1219)
+[7.841602] bus_add_driver (drivers/base/bus.c:618)
+[7.841604] driver_register (drivers/base/driver.c:246)
+[7.841607] __platform_driver_register (drivers/base/platform.c:868)
+[7.841609] spi_geni_driver_init+0x28/0x1000 spi_geni_qcom
+[7.841615] do_one_initcall (init/main.c:1298)
+[7.841619] do_init_module (kernel/module/main.c:2469)
+[7.841623] load_module (kernel/module/main.c:2878)
+[..]
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ekansh-Gupta/misc-fastrpc-Add-CRC-support-using-invokeV2-request/20241007-164734
-base:   char-misc/char-misc-testing
-patch link:    https://lore.kernel.org/r/20241007084518.3649876-2-quic_ekangupt%40quicinc.com
-patch subject: [PATCH v1 1/4] misc: fastrpc: Add CRC support using invokeV2 request
-config: alpha-randconfig-r112-20241008 (https://download.01.org/0day-ci/archive/20241009/202410090402.lospEFvZ-lkp@intel.com/config)
-compiler: alpha-linux-gcc (GCC) 13.3.0
-reproduce: (https://download.01.org/0day-ci/archive/20241009/202410090402.lospEFvZ-lkp@intel.com/reproduce)
+This occurs when the spi-geni driver receives an -EPROBE_DEFER error
+from spi_geni_grab_gpi_chan(), causing devres to start releasing all
+resources as shown below:
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202410090402.lospEFvZ-lkp@intel.com/
+[7.138679] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_icc_release (8 bytes)
+[7.138751] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_icc_release (8 bytes)
+[7.138827] geni_spi 880000.spi: DEVRES REL ffff800081443800 pm_runtime_disable_action (16 bytes)
+[7.139494] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_pm_opp_config_release (16 bytes)
+[7.139512] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_spi_release_controller (8 bytes)
+[7.139516] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_clk_release (16 bytes)
+[7.139519] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_ioremap_release (8 bytes)
+[7.139524] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_region_release (24 bytes)
+[7.139527] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_kzalloc_release (22 bytes)
+[7.139530] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_pinctrl_release (8 bytes)
+[7.139539] geni_spi 880000.spi: DEVRES REL ffff800081443800 devm_kzalloc_release (40 bytes)
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/misc/fastrpc.c:1696:19: sparse: sparse: incorrect type in assignment (different base types) @@     expected unsigned long long [usertype] args @@     got struct fastrpc_invoke_args *[assigned] args @@
-   drivers/misc/fastrpc.c:1696:19: sparse:     expected unsigned long long [usertype] args
-   drivers/misc/fastrpc.c:1696:19: sparse:     got struct fastrpc_invoke_args *[assigned] args
->> drivers/misc/fastrpc.c:1716:18: sparse: sparse: incorrect type in argument 1 (different base types) @@     expected void const *objp @@     got unsigned long long [addressable] [usertype] args @@
-   drivers/misc/fastrpc.c:1716:18: sparse:     expected void const *objp
-   drivers/misc/fastrpc.c:1716:18: sparse:     got unsigned long long [addressable] [usertype] args
-   drivers/misc/fastrpc.c:1734:23: sparse: sparse: incorrect type in argument 1 (different base types) @@     expected void const *objp @@     got unsigned long long [addressable] [usertype] args @@
-   drivers/misc/fastrpc.c:1734:23: sparse:     expected void const *objp
-   drivers/misc/fastrpc.c:1734:23: sparse:     got unsigned long long [addressable] [usertype] args
-   drivers/misc/fastrpc.c: note: in included file (through include/linux/swait.h, include/linux/completion.h):
-   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
-   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
-   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
-   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
-   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
-   include/linux/list.h:83:21: sparse: sparse: self-comparison always evaluates to true
+The issue here is that pm_runtime_disable_action() results in a call to
+spi_geni_runtime_suspend(), which attempts to suspend the device and
+disable an interconnect path that devm_icc_release() has just released.
 
-vim +1696 drivers/misc/fastrpc.c
+Resolve this by calling geni_icc_get() before enabling runtime PM. This
+approach ensures that when devres releases resources in reverse order,
+it will start with pm_runtime_disable_action(), suspending the device,
+and then proceed to free the remaining resources.
 
-  1677	
-  1678	static int fastrpc_copy_args(struct fastrpc_invoke *inv)
-  1679	{
-  1680		struct fastrpc_invoke_args *args = NULL;
-  1681		u32 nscalars;
-  1682	
-  1683		/* nscalars is truncated here to max supported value */
-  1684		nscalars = REMOTE_SCALARS_LENGTH(inv->sc);
-  1685		if (nscalars) {
-  1686			args = kcalloc(nscalars, sizeof(*args), GFP_KERNEL);
-  1687			if (!args)
-  1688				return -ENOMEM;
-  1689	
-  1690			if (copy_from_user(args, (void __user *)(uintptr_t)inv->args,
-  1691					   nscalars * sizeof(*args))) {
-  1692				kfree(args);
-  1693				return -EFAULT;
-  1694			}
-  1695		}
-> 1696		inv->args = args;
-  1697	
-  1698		return 0;
-  1699	}
-  1700	
-  1701	static int fastrpc_invoke(struct fastrpc_user *fl, char __user *argp)
-  1702	{
-  1703		struct fastrpc_invoke_v2 ioctl = {0};
-  1704		struct fastrpc_invoke inv;
-  1705		int err;
-  1706	
-  1707		if (copy_from_user(&inv, argp, sizeof(inv)))
-  1708			return -EFAULT;
-  1709	
-  1710		err = fastrpc_copy_args(&inv);
-  1711		if (err)
-  1712			return err;
-  1713	
-  1714		ioctl.inv = inv;
-  1715		err = fastrpc_internal_invoke(fl, false, &ioctl);
-> 1716		kfree(inv.args);
-  1717	
-  1718		return err;
-  1719	}
-  1720	
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Closes: https://lore.kernel.org/r/CA+G9fYtsjFtddG8i+k-SpV8U6okL0p4zpsTiwGfNH5GUA8dWAA@mail.gmail.com
+Fixes: 89e362c883c6 ("spi: geni-qcom: Undo runtime PM changes at driver exit time")
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+---
+ drivers/spi/spi-geni-qcom.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+index f6e40f90418f..768d7482102a 100644
+--- a/drivers/spi/spi-geni-qcom.c
++++ b/drivers/spi/spi-geni-qcom.c
+@@ -1116,6 +1116,11 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	init_completion(&mas->tx_reset_done);
+ 	init_completion(&mas->rx_reset_done);
+ 	spin_lock_init(&mas->lock);
++
++	ret = geni_icc_get(&mas->se, NULL);
++	if (ret)
++		return ret;
++
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
+ 	ret = devm_pm_runtime_enable(dev);
+@@ -1125,9 +1130,6 @@ static int spi_geni_probe(struct platform_device *pdev)
+ 	if (device_property_read_bool(&pdev->dev, "spi-slave"))
+ 		spi->target = true;
+ 
+-	ret = geni_icc_get(&mas->se, NULL);
+-	if (ret)
+-		return ret;
+ 	/* Set the bus quota to a reasonable value for register access */
+ 	mas->se.icc_paths[GENI_TO_CORE].avg_bw = Bps_to_icc(CORE_2X_50_MHZ);
+ 	mas->se.icc_paths[CPU_TO_GENI].avg_bw = GENI_DEFAULT_BW;
 
