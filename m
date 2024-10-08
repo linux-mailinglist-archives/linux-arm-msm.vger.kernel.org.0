@@ -1,116 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-33463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38F69993B8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 02:03:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D8C7993B91
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 02:07:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6ADC11C22BB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 00:03:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C1EA81C23AF6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 00:07:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E5D4529A5;
-	Tue,  8 Oct 2024 00:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C1081EC4;
+	Tue,  8 Oct 2024 00:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="AJaihXU3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msOndidB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE810E5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 00:03:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4846E625;
+	Tue,  8 Oct 2024 00:07:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728345809; cv=none; b=RwdwC3/VVR6vuzPMXOtUaDR7K3NeB2OuUZptFRWaF2q/uNBksytX4bztWH4n4jXpdEsDLzd4gve3tJOqXkGafpsjR+rcOY0wC2CYVwwLMqEXOET7CqQxh+EmB2F9/drhBOTr3EKOv+YPDzaD13o0jo3DqxXpA0C7zKF6shI494E=
+	t=1728346067; cv=none; b=PVRMv+hHuPaxwhekIF2RQMutrEqpO5kg4xvAc8B2stZEsrEMMM9KJHpy7BRcJwPKfZ7wqQsoJY88YRh/qBoUOGuvkBIIyr1kQKUMH6Zp7xyl9YMeUetSqldQQbifpJ8LFKY7ATyibDM/+GyW8Z89us3lCvRKPZOlc/udguFqmMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728345809; c=relaxed/simple;
-	bh=v/cGjRKPEtXmv7RwDeyzOSBu/wmVaWL2ZuBnO42bLf8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YimUK8HtcF9lJbauGYJsWGITwCvYokT/yoPoQC7IYIcQers7axPq1WtJzTpr9JPxGdffpEsLTZHNgWi0gfp5IvPtUmIeOyOzwtKKChDpC0Wbn+yNH32PqmWVRhFmsqahMQBHRxc4eNJ4PgCxyG05uWQSnqUml+EkeLdHCaOafVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=AJaihXU3; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6cb2aaf4a73so52352306d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 17:03:27 -0700 (PDT)
+	s=arc-20240116; t=1728346067; c=relaxed/simple;
+	bh=0ZiPvMVxIXnmgpbTOX9Pm5lEjwMw7/tpiKgJMEpIy68=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uwz6dxmw00a5THHcgETfub6WQ0xPqRA+UcIrzKcwjzeRjc7lGrfJ+0v86Rua6dh2gDuAU4t2dMJOvdxhMftLL3DZ4TuadkDokboS8/jsCBv2O7YM2jpt05egyoey+2kErtPspmVInM+l0IJ/A/SPlIe87zrtNsPS+C69jV2+tpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msOndidB; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2e18856feb4so4209953a91.3;
+        Mon, 07 Oct 2024 17:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1728345807; x=1728950607; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bUhSEJ0yAaeMQ5+BVSRaapV0sFetukkSF95MlT02JR4=;
-        b=AJaihXU3hl1mR+ywM7s4r6oByM0BQgArnjAk3i+CnTU47w0hIYmKtyCD9mlzd0+PF3
-         D/CbI52KSpx2weCNeJ06HWdBLnQid8BYkBnuJJarzo587M5sSfgUT0GegHkHWt7yk29d
-         EnWglgIXffkjmK33zQPqHdsKtfiTtHl3n9Aof0Cw33zMIQJ37YdfLTO0PEgH0zDnYncP
-         dZIehlt92SBzHC4mBzwYrIKrAVfgTziXaIlPgjWJDJ1qABm2aU/KC/bHrER2jP1VhqES
-         MTxpMnnzW1TOTfShcmpd24EWqBc/K0R5r4Z57wIoFnl3Xx08EfrJlIIFtgknRTPBKGKb
-         UafA==
+        d=gmail.com; s=20230601; t=1728346066; x=1728950866; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=miFjzeWy++5orkxZQhpnOaD2jAcQZeozu/hleuos2cM=;
+        b=msOndidB1TtMUqCSI0/Ux9TZjzDEID7H84HhTke1Nr40uqxehypZNQVu8Xg1/EHtOe
+         nTz8FyklTZTrR9z0Zb/SoFFTfmhcQh72ejNRTvbKpuWvEo8foTVPUsZTCcwydmd+0twP
+         6dto9TjeXrEa/VilqJnzS/z/Dz9y9g5L3RwmizTJQQ3U1gkbPtbzz+TRi0/+lbaIiXXz
+         X7HnPcFuuqw76jzFTgJR71EUnkF/NtiufKXJZJoA6Qi0lNjFDjjuwWQsN5DCcF1QnKe/
+         QFmSDUvHmFi6TcNMmxdXyqWt4UqgEEKtXGZHFy0ImmgoVq7gH/vx2dnFqnN/20tre1qu
+         Ws2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728345807; x=1728950607;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bUhSEJ0yAaeMQ5+BVSRaapV0sFetukkSF95MlT02JR4=;
-        b=oYZnsDUCCfNl5qqSmc9RXJG7kx4/NR1uqGov3V9lzMosl3Ww4RhSADQq2DOvJ0uGJC
-         NU01F0aUtffmPL+30KbVN4W0SK8IJRiy17Vkw9gnmWPrD2dHqnAZLB7TUZZ/pdadZh0m
-         /OYxQOJoTOeGiPNA6ZQnEfSCI4X71YdKEL5Nq47+PPSjwtubWHTFv3/DPCxx3AHOyD79
-         GdV2Habm/0HsoW0zHAwpNRVziCfh5qvmah6qvjnGKO3Dk3BFt6wkJBxph2SvvoP2IhF9
-         zFi7/1gMkaKw5RFnEdG9qCpVzTe3l/ZRWvXblIZ0S48S6fbzz4T/0J0MQHh7kVElVm6e
-         yxew==
-X-Gm-Message-State: AOJu0YzPzezMZR9anJbotEhLpBlJP8ORA+vdoTRRAlVMOaDcZiDYvSMZ
-	kHQop1p2loZU7Gvfw97MxnLPYYpos8z4coBHtlEjuDgnDCUCfjF/ZcRpcA6X+pFl7di8WpHIKSk
-	2/zI=
-X-Google-Smtp-Source: AGHT+IEx3bklsQStYmee6ZmH3DEMApP2qVX1WSbpsnNhNBWyboJaq2oNlhHvvvoCROpV/zglNNL0Ew==
-X-Received: by 2002:a05:6214:3386:b0:6c5:8ab0:60cc with SMTP id 6a1803df08f44-6cb9a472824mr193319236d6.40.1728345806863;
-        Mon, 07 Oct 2024 17:03:26 -0700 (PDT)
-Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cba46cad28sm30487096d6.18.2024.10.07.17.03.25
+        d=1e100.net; s=20230601; t=1728346066; x=1728950866;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=miFjzeWy++5orkxZQhpnOaD2jAcQZeozu/hleuos2cM=;
+        b=jDROP3g/+ZVQu72GS9dqQyU0jjD8RVgElZHY27tK2pSEPOxgQVdiAi+J4pZiSvugW+
+         cFg9pyovbZIm+al41qHMYUwJqOju8Qp1lhhdn76Ep8hCTI4p48RVI3ZzIUw9meajfTza
+         CJW8+1CJWHQ8G3u7Jo0gMVC8RkP77Ld2eOtUxiNu/8nQo+cCxWuZHDm1Rxp025AmWo+D
+         qZpIxBr/xWONvulbkilay7dreSSfq0GdR3k76GdkujswhkOk1d5iqIPP7Ph5NlPn+TIM
+         wbMsrnfcpHvTxTrHxPlfF2M/k1Js0q55HtergB8dRDPO1tPnJC7qTkwTTGA1r6eAtPIJ
+         +R3g==
+X-Forwarded-Encrypted: i=1; AJvYcCVCDETsqBp3BDLGP9psbWzE/CLbCOdM85m1nHXrbGycBnai+mwGR29hP2eUhy+deVfdMcs63yH1+E0GBrJz9Q==@vger.kernel.org, AJvYcCVuwbtOgCwIh5W/9donSWWtvDGh/RfPnVDbwWm+4Gah3hdWo8Dw3tdZOyG9fUTyJ/xe/lp4pf8AI6dW@vger.kernel.org, AJvYcCW3Hb/Ji3xjZZ977AFcwlrRWWi51xb/qLGUH1WZ+7sgWYi5ym4BriXR1dYrHL6MmBgGU+tJp+vxMvNClH8K@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywp3pRlkM5quWVfstMxCcdZdfzFDRL+DKid32xkdGx9MoMu2PUd
+	Cdcn6tpoFTQtOGlObEJ4aa46NQ6lBGoTyj0I+S9gtAEU8Om/ERLS
+X-Google-Smtp-Source: AGHT+IF0RBKwgW4tthfAQBSAoJIijBpe1n0ZQjkbJYge4bFLQtS9TcqoaC+egoNNjETfPykOZdtVwg==
+X-Received: by 2002:a17:90a:43c4:b0:2c9:7ebd:b957 with SMTP id 98e67ed59e1d1-2e1e621e54bmr16491664a91.11.1728346065564;
+        Mon, 07 Oct 2024 17:07:45 -0700 (PDT)
+Received: from localhost.localdomain ([103.149.249.231])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e1e83cabbasm7921653a91.9.2024.10.07.17.07.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Oct 2024 17:03:26 -0700 (PDT)
-From: Jonathan Marek <jonathan@marek.ca>
-To: linux-arm-msm@vger.kernel.org
+        Mon, 07 Oct 2024 17:07:45 -0700 (PDT)
+Date: Tue, 8 Oct 2024 08:08:03 +0800
+From: Jianhua Lu <lujianhua000@gmail.com>
+To: Jeff Johnson <quic_jjohnson@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	linux-remoteproc@vger.kernel.org (open list:REMOTE PROCESSOR MESSAGING (RPMSG) SUBSYSTEM),
-	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2] rpmsg: glink: use only lower 16-bits of param2 for CMD_OPEN name length
-Date: Mon,  7 Oct 2024 19:59:35 -0400
-Message-ID: <20241007235935.6216-1-jonathan@marek.ca>
-X-Mailer: git-send-email 2.45.1
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	ath11k@lists.infradead.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi
+ node
+Message-ID: <ZwR341pdImJf_z_b@localhost.localdomain>
+References: <20241007130251.125022-1-lujianhua000@gmail.com>
+ <20241007130251.125022-2-lujianhua000@gmail.com>
+ <181d03f6-9a1d-449f-a8af-b4d0fcc8b188@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <181d03f6-9a1d-449f-a8af-b4d0fcc8b188@quicinc.com>
 
-The name len field of the CMD_OPEN packet is only 16-bits and the upper
-16-bits of "param2" are a different "prio" field, which can be nonzero in
-certain situations, and CMD_OPEN packets can be unexpectedly dropped
-because of this.
+On Mon, Oct 07, 2024 at 11:40:48AM -0700, Jeff Johnson wrote:
+> On 10/7/2024 6:02 AM, Jianhua Lu wrote:
+> > Add wifi node and this wifi module is connected to pice port.
+> 
+> s/pici/pcie/ (or perhaps better: PCIe)
+> 
+Acked
+> > The following is qca6390 probe message:
+> >   ath11k_pci 0000:01:00.0: Adding to iommu group 12
+> >   ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x604fffff 64bit]: assigned
+> >   ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
+> >   ath11k_pci 0000:01:00.0: MSI vectors: 32
+> >   ath11k_pci 0000:01:00.0: qca6390 hw2.0
+> >   ath11k_pci 0000:01:00.0: chip_id 0x0 chip_family 0xb board_id 0xff soc_id 0xffffffff
+> >   ath11k_pci 0000:01:00.0: fw_version 0x10121492 fw_build_timestamp 2021-11-04 11:23 fw_build_id
+> > 
+> > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+> > ---
+> > changes in v2:
+> > 1. add ath11k-calibration-variant property.
+> > 
+> >  .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 19 +++++++++++++++++++
+> >  1 file changed, 19 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> > index ebea283f56ea..7a55e271c3ac 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+> > @@ -680,6 +680,25 @@ &pcie0_phy {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&pcieport0 {
+> > +	wifi@0 {
+> > +		compatible = "pci17cb,1101";
+> > +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+> > +
+> > +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+> > +		vddaon-supply = <&vreg_pmu_aon_0p59>;
+> > +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+> > +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+> > +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+> > +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+> > +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+> > +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+> > +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+> > +
+> > +		qcom,ath11k-calibration-variant = "Xiaomi_Pad_5Pro";
+> 
+> Are you going to submit the board file per the guidance Dmitry provided?
 
-Fix this by masking out the upper 16 bits of param2.
-
-Fixes: b4f8e52b89f6 ("rpmsg: Introduce Qualcomm RPM glink driver")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
----
- drivers/rpmsg/qcom_glink_native.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 0b2f290069080..b534b88db3f8e 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1204,7 +1204,8 @@ void qcom_glink_native_rx(struct qcom_glink *glink)
- 			ret = qcom_glink_rx_open_ack(glink, param1);
- 			break;
- 		case GLINK_CMD_OPEN:
--			ret = qcom_glink_rx_defer(glink, param2);
-+			/* upper 16 bits of param2 are the "prio" field */
-+			ret = qcom_glink_rx_defer(glink, param2 & 0xffff);
- 			break;
- 		case GLINK_CMD_TX_DATA:
- 		case GLINK_CMD_TX_DATA_CONT:
--- 
-2.45.1
-
+I want to get comment for this patch, then send board file.
+I have send board file to ath11k@lists.infradead.org now.
+> 
+> Note that I am not up to speed on the firmware/board maintenance procedures so
+> we'll need to wait for Kalle to have bandwidth to handle the request (and show
+> me how he handles it).
+> 
+> /jeff
+> 
 
