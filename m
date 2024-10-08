@@ -1,128 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-33470-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1ECD7993D2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 04:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 82389993D66
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 05:18:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC05F285964
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 02:59:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B676285378
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 03:18:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3D64273F9;
-	Tue,  8 Oct 2024 02:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0457F22611;
+	Tue,  8 Oct 2024 03:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nH9WiOoo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l82YMVBp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8493BBCB;
-	Tue,  8 Oct 2024 02:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E238722066;
+	Tue,  8 Oct 2024 03:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728356390; cv=none; b=dKgXaJnqn/9M0O/YG90UUEFdEIMvaJ/SQanZ2Ua4TltCGJl2k4lMT1liIurHds65Di9c3tzpopGSBEIoLmogDa390qrWa34p3VlhvefOtDygqz6OQn/eeCg7cDiHQxI8H5DIUwHsjdFeDH0TpjzGuNF+XF6UhB+UXOlS1TA78Xs=
+	t=1728357524; cv=none; b=rLSjk+pSG5N6OR9mc+c/MaJNZ9ym/rV0gCud+Jr9yrg6QuK79IkHAdZ4BsmfX6Jswp6xijF33WDqz+TAKS4RoSUCBl8SvbX5SEICH9poOzPywE9wkj5LSfjcw7MuL0pXwZ+9ex28ro95zMyAsG/KXbIelIHgWLpCzTA3sd01LKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728356390; c=relaxed/simple;
-	bh=ZcKDowProDmhu5b83EBqZxpmpVmwkoG/PgPBMcVpNfE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oQBmLww+R1Rqnu65at4KIFEajmhEesBJvpwHkiJmVMcBghEAOfn0sBABkFPBWAl6nwilHBEsF5gAGyMfLNumH3MLgwIXA8cimqH8MZN5JUabFejoEftjCgU4Eh/g1hOYJFTKfdB3NEybksiJIs3xHK4AcXKB1tv2NLFOY7dJrCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nH9WiOoo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 76E6CC4CECC;
-	Tue,  8 Oct 2024 02:59:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728356390;
-	bh=ZcKDowProDmhu5b83EBqZxpmpVmwkoG/PgPBMcVpNfE=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=nH9WiOoohQycLBVD3GCPLQDJm43732R4DyWc8Ok+S3s43cuoll5xKk9TZMHJsf0hV
-	 oATVRIa6aPnz28dpKSetwIREZv5lj0EXbXGsrScMNmgN1ZrlRbyChoOCP97lmgKF6T
-	 rKqjsNXI/AnRQ6uO9sgZ0GbiCJPhS1OgGKE88H5475QJcNSVyfTuqrybT6WxOFCU9C
-	 kDTxOERV7nA8eQOfJmfLlmTzEml1bKYL+M3ENPfvSofPR1Fl/bz/EXW42/me8ltVtz
-	 A8lwrQOMBHoIC9W+6/iouod5dPTXYIXJ22jdEBk+8WHUJlQnt2yVBFivbFiYkle/OQ
-	 5iXIRLMH23MZA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66465CED25B;
-	Tue,  8 Oct 2024 02:59:50 +0000 (UTC)
-From: Joel Selvaraj via B4 Relay <devnull+foss.joelselvaraj.com@kernel.org>
-Date: Mon, 07 Oct 2024 21:59:28 -0500
-Subject: [PATCH 3/3] arm64: dts: qcom: sdm845-xiaomi-beryllium-ebbg:
- introduce touchscreen support
+	s=arc-20240116; t=1728357524; c=relaxed/simple;
+	bh=KKHx9kn/FjIYnQaVL2sf7HaPXDJxY/zu1C6EOOGVVDk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=aKKIfqaK7sluDK9Hvv3HhVWoP4VC83+RVG5JEjFOBIWlQlAivo3VWvQKRw2Keqi9okwkbstUhPWZG/sjPjbb/HLFdLy2spTRu4gSMrVPHAZ4gm9ha5g0YxwDBqfhLbRsgkXQn5Ffvj80rJDUWYVWyVbEmg5nLIlxOnPSKc/92i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l82YMVBp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497GaHxm022365;
+	Tue, 8 Oct 2024 03:18:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	dowEqxgbLavKo9589+GmS3dK4EJlyj9ChKyl8PXyNag=; b=l82YMVBpdj8LbNwy
+	4rlJSc+o4a8MkNciXFYQnxEYUOiN8bd8zXeBKUbUc51MGHfgtzvm5Co9R+sUyJj5
+	tRGzRXryRj4bAb5f23Ejy3/ZqcQo9DGeHfVP/ahstZA4jEr0s30fLWkMaQMiDQE0
+	QM6ucWqdHQBMYq8r1MnQOJG2MeuZsWdsb27h7ojlpzS2boWzbJDSaSuJwKye4Esd
+	+PkzpJbMIwufSIIlxfseFPFKKAEGJP9hIhcIIqc4YsXCb5IOWwz+kMdDqy0jRTWq
+	V+M8CYpTKnSXrXsN8BhLWobU3ucZrVNAPUya8ZjzYC79UR0FPZ3Xb8rP6yk5ePam
+	9bsR5Q==
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424kaes6sn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Oct 2024 03:18:38 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4983Ibrb005539
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 8 Oct 2024 03:18:37 GMT
+Received: from [10.239.133.118] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
+ 20:18:31 -0700
+Message-ID: <d275829f-190c-4b73-a378-1025ca8277ed@quicinc.com>
+Date: Tue, 8 Oct 2024 11:18:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] soc: qcom: llcc: Add configuration data for QCS615
+To: Bjorn Andersson <andersson@kernel.org>
+CC: Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>, <kernel@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20240924-add_llcc_support_for_qcs615-v1-0-a9f3289760d3@quicinc.com>
+ <20240924-add_llcc_support_for_qcs615-v1-2-a9f3289760d3@quicinc.com>
+ <p72feqwqhs3gjzzq53gfaz4ljk2qjdgeanhzomyzvk5ymjdbg2@7jxdlknz2onv>
+Content-Language: en-US
+From: Song Xue <quic_songxue@quicinc.com>
+In-Reply-To: <p72feqwqhs3gjzzq53gfaz4ljk2qjdgeanhzomyzvk5ymjdbg2@7jxdlknz2onv>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241007-pocof1-touchscreen-support-v1-3-db31b21818c5@joelselvaraj.com>
-References: <20241007-pocof1-touchscreen-support-v1-0-db31b21818c5@joelselvaraj.com>
-In-Reply-To: <20241007-pocof1-touchscreen-support-v1-0-db31b21818c5@joelselvaraj.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Joel Selvaraj <foss@joelselvaraj.com>, 
- Joel Selvaraj <joelselvaraj.oss@gmail.com>
-X-Mailer: b4 0.14-dev
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728356389; l=1227;
- i=foss@joelselvaraj.com; s=20241007; h=from:subject:message-id;
- bh=LzIMPE3ViRJU1UTWVo3cnkkmA8lzQjLUoj4fs+6HbJc=;
- b=vpIT0gb6NjMD35qJacElRqjhRkTb4LgFehg394RPiCDic/cixjr3COAQuciI1N2Ec1tD21HXn
- OuX2PUajRe6CpenCVaqj2T9oJyJ5e17mb+eMeiGAco+vV2NF20a++5b
-X-Developer-Key: i=foss@joelselvaraj.com; a=ed25519;
- pk=pqYvzJftxCPloaoUbVsfQE7Gwv8bynZPy8mjYohwMCc=
-X-Endpoint-Received: by B4 Relay for foss@joelselvaraj.com/20241007 with
- auth_id=238
-X-Original-From: Joel Selvaraj <foss@joelselvaraj.com>
-Reply-To: foss@joelselvaraj.com
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wn2P2qXVvnaezRP7GECic5lSWQnrdd8F
+X-Proofpoint-GUID: wn2P2qXVvnaezRP7GECic5lSWQnrdd8F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
+ adultscore=0 spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
+ impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410080019
 
-From: Joel Selvaraj <joelselvaraj.oss@gmail.com>
 
-Enable the Focaltech FT8719 touchscreen controller used in the Poco F1
-(EBBG) panel variant.
 
-Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
----
- .../boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts | 23 ++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+On 10/6/2024 10:03 AM, Bjorn Andersson wrote:
+> On Tue, Sep 24, 2024 at 06:07:12PM GMT, Song Xue wrote:
+>> Add LLCC configuration support for the QCS615 platform.
+>>
+>> Signed-off-by: Song Xue <quic_songxue@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/llcc-qcom.c | 23 +++++++++++++++++++++++
+>>   1 file changed, 23 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+>> index 8fa4ffd3a9b5921d95c20648048dcdfa20dde5db..11507eb3efff101e4f330e7f4282a31aa172369d 100644
+>> --- a/drivers/soc/qcom/llcc-qcom.c
+>> +++ b/drivers/soc/qcom/llcc-qcom.c
+>> @@ -151,6 +151,13 @@ enum llcc_reg_offset {
+>>   	LLCC_COMMON_STATUS0,
+>>   };
+>>   
+>> +static const struct llcc_slice_config qcs615_data[] =  {
+>> +	{ LLCC_CPUSS,    1,  128, 1, 0, 0xF, 0x0, 0, 0, 0, 0, 1, 1 },
+> 
+> I accepted Konrad's reformatting of these tables, so please check
+> linux-next in a couple of days (or the qcom for-next today), update and
+> resubmit this.
+> 
+> While doing so, please use lowercase hex digits.
+> 
+> No other concerns.
+> 
+> Thanks,
+> Bjorn
+> 
+Got it. I will follow Konrad's reformatting and resubmit it.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
-index 76931ebad065e..2d6f0e382a6cb 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium-ebbg.dts
-@@ -13,3 +13,26 @@ &display_panel {
- 	compatible = "ebbg,ft8719";
- 	status = "okay";
- };
-+
-+&i2c14 {
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "focaltech,ft8719";
-+		reg = <0x38>;
-+
-+		interrupts-extended = <&tlmm 31 IRQ_TYPE_EDGE_RISING>;
-+		reset-gpios = <&tlmm 32 GPIO_ACTIVE_LOW>;
-+		panel = <&display_panel>;
-+
-+		iovcc-supply = <&vreg_l14a_1p8>;
-+		vcc-supply = <&lab>;
-+
-+		pinctrl-0 = <&ts_int_default &ts_reset_default>;
-+		pinctrl-1 = <&ts_int_sleep &ts_reset_sleep>;
-+		pinctrl-names = "default", "sleep";
-+
-+		touchscreen-size-x = <1080>;
-+		touchscreen-size-y = <2246>;
-+	};
-+};
+Thanks,
+Song
 
--- 
-2.46.2
-
+>> +	{ LLCC_MDM,      8,  256, 0, 1, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
+>> +	{ LLCC_GPUHTW,   11, 128, 1, 1, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
+>> +	{ LLCC_GPU,      12, 128, 1, 0, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
+>> +};
+>> +
+>>   static const struct llcc_slice_config sa8775p_data[] =  {
+>>   	{LLCC_CPUSS,    1, 2048, 1, 0, 0x00FF, 0x0, 0, 0, 0, 1, 1, 0, 0},
+>>   	{LLCC_VIDSC0,   2, 512, 3, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
+>> @@ -539,6 +546,16 @@ static const u32 llcc_v2_1_reg_offset[] = {
+>>   	[LLCC_COMMON_STATUS0]	= 0x0003400c,
+>>   };
+>>   
+>> +static const struct qcom_llcc_config qcs615_cfg[] = {
+>> +	{
+>> +		.sct_data	= qcs615_data,
+>> +		.size		= ARRAY_SIZE(qcs615_data),
+>> +		.need_llcc_cfg	= true,
+>> +		.reg_offset	= llcc_v1_reg_offset,
+>> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
+>> +	},
+>> +};
+>> +
+>>   static const struct qcom_llcc_config qdu1000_cfg[] = {
+>>   	{
+>>   		.sct_data       = qdu1000_data_8ch,
+>> @@ -721,6 +738,11 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
+>>   	},
+>>   };
+>>   
+>> +static const struct qcom_sct_config qcs615_cfgs = {
+>> +	.llcc_config	= qcs615_cfg,
+>> +	.num_config	= ARRAY_SIZE(qcs615_cfg),
+>> +};
+>> +
+>>   static const struct qcom_sct_config qdu1000_cfgs = {
+>>   	.llcc_config	= qdu1000_cfg,
+>>   	.num_config	= ARRAY_SIZE(qdu1000_cfg),
+>> @@ -1375,6 +1397,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+>>   }
+>>   
+>>   static const struct of_device_id qcom_llcc_of_match[] = {
+>> +	{ .compatible = "qcom,qcs615-llcc", .data = &qcs615_cfgs },
+>>   	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
+>>   	{ .compatible = "qcom,sa8775p-llcc", .data = &sa8775p_cfgs },
+>>   	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfgs },
+>>
+>> -- 
+>> 2.25.1
+>>
 
 
