@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-33544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7E8A99484A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:11:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C33A799485B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:12:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 385071F25C52
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:11:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E88761C24B0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:12:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FC4F1DE8B1;
-	Tue,  8 Oct 2024 12:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8EFB61DE2C4;
+	Tue,  8 Oct 2024 12:12:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O8cuz91g"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GVzi9CmA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3401DE88B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 12:11:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F53518CC12;
+	Tue,  8 Oct 2024 12:12:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728389490; cv=none; b=Dw1Wz6hmu9/oba58DWXRO2VjwKkjHlHOEB5tZHRWoDmpBBQUvSjRJQt/ScpDmeREesCoRssARK9HWc4/I9tydiwmGl2chyP5vVn0arNrgK4EnljKTAuiDFBTXyFPFOd4B4TVPTSYNTGWT7JgZ+qP/H90f5n5FjF4mxl8z/XMzDY=
+	t=1728389528; cv=none; b=Wou02v2EQJwRZ2Pz6sO6W4pRVJ4BOT8fBlu18Kyac7I9VQ9nagO9PI3GNfwQwsICqdXJcP3XoCKVeuWBiDCYCZVMSxQd1HV22jMyJuL/S48I6r+0lYZc/+8Wgb6e0ypUs2BR2BKTTgl7EJgEKViabkZlAx2R9OrC/ZUgOqQUels=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728389490; c=relaxed/simple;
-	bh=RsjroUMGmd0Q1BPiY1Xz7P+prrM74WtXWZeF75uCLMs=;
+	s=arc-20240116; t=1728389528; c=relaxed/simple;
+	bh=KlBR1MH8Rh8hpM1HuqPKv4q8YHC9OAIn5n12UExty34=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PZq/e9K1PeD7TIhfbG2TkT0QHa85fr6paHvgUVljJI+d+iOw+sRGgN+Vi4rWGqZjvLHGxT4Gnk8ufTcyxMXW8KFAK/hx0JKRSTd8SiO6nqfoZayp567cTfCloKEZlGttv9mEHE5lce7TPEJWGV1rSgkO/jwVlaX5g+OT0amvVnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O8cuz91g; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2fad25e3c44so2743521fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 05:11:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728389487; x=1728994287; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Q7tsc5AFiFd1L+hyqDI7tkY1clM0x3yYY6pzn4xsyE=;
-        b=O8cuz91gNHdcMa+ZWj6ha9SyANjf+1NJ69QJ5DTO2lofv4D+ETRhLddAlDhuuxXX43
-         bvHRqWL9x8H9dUMkTX4IXuurG4LZhXyTjc0adXaRdHcO1J/+f09OCR1MMS6ELNtpfllG
-         BgYQr4Gi2vcVnNLPe2jMz2nrGI7MA9GJJDVlamS7APgRspJiAikctqtVh8MTIKYjJdAE
-         mC22/cZfV0Y2XNzJj3SVPSmu7CEh0pmdhB2GJ91nh9+4xweXHk/nyLF0ojH+Ixkg7Edt
-         d+u2aMc0hsWiFXxQ1JnQbubct7G9pI72F1Mkqd0pWgL9cOpfRIqvLRddcvKHQIJ1hE34
-         orIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728389487; x=1728994287;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Q7tsc5AFiFd1L+hyqDI7tkY1clM0x3yYY6pzn4xsyE=;
-        b=lR6QNI+QKnbSVMb2pd+lgtKOgUPZwyTTLxIt7gzkCumthSUyvFy05Dyz6460yGSM0m
-         9JqdFJQtSDcj0GJyYhZE5g1LcgmUqiL7NCGdXVGRd4MKQ+/ay4Il09xdj5dQfPNpbBfs
-         PmBL8pVGiIsLPP+iZXaQTTzUdE437Bopi1QkCKh79UatoYhT4iZyfJXBfGvhyeaWD3/9
-         hrAnwoCJJADpfVci7iSpugK4oQpxys14A5Qq75B087Rfs+u3h9PaSDWSp/PWMEfVOia7
-         eEYPqcYGtI+aa7dS6SoWb3hV54i/nnozq1L9+rhyujTz2f69XDx1v0GHVXT5XLaAiG73
-         YziA==
-X-Forwarded-Encrypted: i=1; AJvYcCWGxlMz8FvEM3y3O+sqnx4KRKW27tPspIOYHl5Y7nnvD0TflL5lzHe72JMfDqdXUebrpZzBFU8IRice2Nc1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZlL/k9Oaq6lrZC/IL87vEL6SGH/lh+WSBpspl07GY3/nGFNPP
-	ka0b3Hw4KV9WrAhyuuu32sMzB61hqww3oXSis91nhd6p+T+Jvf8DKULeMLQV4jY=
-X-Google-Smtp-Source: AGHT+IHTwnTD2IN6p3N+ddlrobE2SkJKnwpl/OlwTinXRVO9nB/H5sJZQKaFeuHb1cLrgWUIpabxSQ==
-X-Received: by 2002:a05:651c:150b:b0:2fa:e67d:e436 with SMTP id 38308e7fff4ca-2faf3c66496mr22372681fa.7.1728389486764;
-        Tue, 08 Oct 2024 05:11:26 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539aff1d0e9sm1202257e87.181.2024.10.08.05.11.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 05:11:26 -0700 (PDT)
-Message-ID: <429f933a-e91a-4533-8cf0-3c97d410df5a@linaro.org>
-Date: Tue, 8 Oct 2024 15:11:24 +0300
+	 In-Reply-To:Content-Type; b=MZ6qUbPGxMhfPU9J0gf7HVSU5aBQatuN7ZdUhJle+0l9s6cESx5X2UUHOBiUv+ugKmiXMQbqH2OWFFVwktiDztKs8tAfcp/Axww319AAYw9dIkfCk3l/zbPTGZhfRlaBEQo7p0RLoGuenVt4Vqqqt9j2T/ne2c4ZgC9jImgTjIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GVzi9CmA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9C4C4CECC;
+	Tue,  8 Oct 2024 12:12:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728389527;
+	bh=KlBR1MH8Rh8hpM1HuqPKv4q8YHC9OAIn5n12UExty34=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=GVzi9CmAGVrCI4ZRM4mWPwaBEGQgZDXmItn7YJXFeDrXbmiT4HPBFMUYbX6EKCMq0
+	 cASuHgpP7eYCQvHhRXYA50wAugIsM3jKalZqBBZy3aVhDAvYUjj27R+EhuB/cDT0vx
+	 W+t/DN8LE9J/jy9AXsWXEGBItyv1L98HdJEEk0WpttsLEq06q/Na/E989IdzDLXNSc
+	 mwpI8Stq3GUvh2Jnp4vVa6wwXB/515mSWbC3+SVdVWnkYZbpm6MQff0LbexSb5w+7V
+	 0a0yN0C6sotvwujB5b53hUJ3cESetWjwh3Ru357Nqa7kw+sQ5VgzieYGY6TNlIkQ6d
+	 dz+RNkHwm9dYA==
+Message-ID: <3765cf3d-8477-45a7-af0e-b0c78f41eaad@kernel.org>
+Date: Tue, 8 Oct 2024 14:11:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,82 +50,89 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: media: qcom,sc8280xp-camss: Fix
- interrupt types
+Subject: Re: [PATCH V4 1/5] dt-bindings: firmware: Document bindings for QCOM
+ SCMI Generic Extension
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>, sudeep.holla@arm.com,
+ cristian.marussi@arm.com, andersson@kernel.org, konrad.dybcio@linaro.org,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ quic_rgottimu@quicinc.com, quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+ arm-scmi@vger.kernel.org
+References: <20241007061023.1978380-1-quic_sibis@quicinc.com>
+ <20241007061023.1978380-2-quic_sibis@quicinc.com>
+ <q2vuiru7sqetwqyitg7azgqg7kge622i2zgq52b55zivwtbev4@4qgzb54xjioq>
+ <hxfg6ztpqy7qdsgzhvvapeyh2f55mj7hhuqqkz7si6g5i7nsng@xoyfwztk66aj>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
- <20240923072827.3772504-2-vladimir.zapolskiy@linaro.org>
- <datahu33nmsser2p4fb2hyncsujtkwaca377ivwmpc6yj2naut@2sjsbebfm3gf>
- <3f87e855-8779-4df3-8f26-e3d2b611d3e9@linaro.org>
- <313667a6-afcd-44cb-a6f6-0d550e8f68a0@linaro.org>
- <4bf490cb-228d-4f01-a956-cacbafa94e2a@linaro.org>
- <27f39cda-932c-4b79-84d4-be78d266ebdf@linaro.org>
- <8aa5135b-386a-42bf-923b-6ff999694da8@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <8aa5135b-386a-42bf-923b-6ff999694da8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <hxfg6ztpqy7qdsgzhvvapeyh2f55mj7hhuqqkz7si6g5i7nsng@xoyfwztk66aj>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/8/24 15:01, Krzysztof Kozlowski wrote:
-> On 08/10/2024 13:50, Bryan O'Donoghue wrote:
->> On 08/10/2024 12:37, Vladimir Zapolskiy wrote:
->>>
->>> I don't have access to datasheets or hardware of sc8280xp powered board,
->>> someone may either verify, if CAMSS level high type interrupts are
->>> supported/working at all or not (obviously its current presence in dts is
->>> insufficient), or check the SoC datasheet.
+On 08/10/2024 14:10, Dmitry Baryshkov wrote:
+> On Tue, Oct 08, 2024 at 08:49:27AM GMT, Krzysztof Kozlowski wrote:
+>> On Mon, Oct 07, 2024 at 11:40:19AM +0530, Sibi Sankar wrote:
+>>> +/*
+>>> + * QCOM_MEM_TYPE_DDR_QOS supports the following states.
+>>> + *
+>>> + * %QCOM_DDR_LEVEL_AUTO:	DDR operates with LPM enabled
+>>> + * %QCOM_DDR_LEVEL_PERF:	DDR operates with LPM disabled
+>>> + */
+>>> +#define QCOM_DDR_LEVEL_AUTO	0x0
+>>> +#define QCOM_DDR_LEVEL_PERF	0x1
 >>
->> I've tested both as was submitted and your change.
->>
->> I _always_ test my patches. I'm not sure there's a datasheet which
->> spells this out to be honest.
+>> I could not find any driver using these. Can you point me to usage in
+>> the drivers?
 > 
-> Datasheet, HPG, interrupt list in the IP catalog. They all might provide
-> some hints, e.g. recommendation.
-> 
->>
->> Rising or High can both be justified, its really down to how your
->> interrupt controller latches the state change. However I personally am
->> fine with the change you've provided because I trust it fixes an error
->> for you.
-> 
-> That's a GIC, right? So most of the GIC interrupts are level high.
-> 
-> I can easily imagine that 10 years ago one engineer made mistake and
-> wrote camss downstream DTS with edge and this kept going, because
-> "99.999% it works" and no one will ever hit that 0.001%. And if it is
-> hit, we blame something else because debugging is very difficult.
+> It's well hidden. These are the raw values used for DDR_QOS memory.
 
-Debugging of what? Again, nobody ever tested high level type of interrupts
-of CAMSS IP. Why some irrelevant imaginary "races" are into the discussion,
-have you or any other CAMSS user ever seen them? If no, this argument shall
-be excluded.
+So not a binding? Then these should be dropped.
 
-Apparently nobody followerd the link in the cover letter to comprehend
-the problem...
+Best regards,
+Krzysztof
 
-> If this entire patchset is based on downstream driver code, not
-> datasheets, then it should be clearly explained in commit msg, not just
-> "The expected type is...".
-> 
-> Why? Because "the expected type" means datasheet or some hardware
-> engineer says it, not driver.
-> 
-
-The driver and only the driver dictates what's been tested so far in
-this respect.
-
---
-Best wishes,
-Vladimir
 
