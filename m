@@ -1,262 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-33520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 300FF994551
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:26:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 57F8C9945C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:47:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A9E811F24750
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:26:27 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B1CC1B27A9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:47:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E0831C2434;
-	Tue,  8 Oct 2024 10:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F0AA18CBE1;
+	Tue,  8 Oct 2024 10:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="2XtFOQgd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DqiSeIi5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9504B1BAEEA
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 10:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA411C75F8
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 10:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728383162; cv=none; b=OY97f624rqOuoyGmq6lSYzvds2iuLNO9Lt7wr05/cEuV3PLiwJAWaWdqTJzz5qSbycjGQnE/gSppn799jAF48LaoeCwOUtbcqzWG4wJrmfbfJDojNdUhufFnN3oDuvePDrTcdUtV14xgIUQWdBTNeVdzYOgKAD0fyg+EUt4yeao=
+	t=1728384424; cv=none; b=hmY39W7FNc/eYwIP6ZEteUXQuz/75TjsFzFEhnEyINY9klFbsP2AP30LNFD0tZ8aTTjHk9lze7rQsn+vzTwYWl9VhvyT23GxigfHHbA0WzYJCux0bfo7Hjd7Ac0C6EdS3yW0en9IA3dA+XpNO+21MovkTgNgJiyomdrblTsNGsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728383162; c=relaxed/simple;
-	bh=lDqIh3H/vWELixQK7kH36Vf7D/HlGgVTg57Mysl6ug4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=me1G8WY1rEBPKjakfyNh0+ooGunNJEfXUrmD1QI11VcP5wiw7t8nJrUk+NzefEmj/KTeMgznUDwva40kxs4NAjEb2Fryu8MJj2EDXvYhx43bbQOFpJaursFZoBojrgzNV1DSAxVj1EB8p9xWxfjTQ5WKDkJkq7ILFXqAtwWO33s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=2XtFOQgd; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-42cae6bb895so56107575e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 03:26:00 -0700 (PDT)
+	s=arc-20240116; t=1728384424; c=relaxed/simple;
+	bh=BTK1twW5R9PAw75WIcXBsshF/UQ2BRp7G3EWibEwO6E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DohSL7hdE9JuihqdHThtJoeU++bw/1CbJYVgB9QQ3Bn3+zGRWM+jec68nj8BRKzDVXkIw7sHv4e6O0Oxrnnl+mUPQji1YmXEgBH7PDAgnCCxaAQ3IPRtgNPvrSrRQtjIBNv8Jqldk126kIDwVFePt4HW/YnYX6hAN8GEgKSXqD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DqiSeIi5; arc=none smtp.client-ip=209.85.128.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6e2e508bd28so19886167b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 03:47:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1728383159; x=1728987959; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1728384422; x=1728989222; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NiFzJljIZK6K18VBx2o+5L+9T8qGzII0DZ/h6IKErVs=;
-        b=2XtFOQgddsaAoevgbrlHxMe6psGEjLjkB20fbMUMFKkWw2guFS28KeuQLSXYaLsH0s
-         odq4/a/lY3smCpcr7hInG2bTnJBVXLnikTpEdSCb0yAob5r212P3a3Op/4cPYQULbOKE
-         RcBJ0Wxk+8hrzAGkcVPpmjUNzeV+N+vF5VZVOqe0pdCpXIFdWCvGx/PU572CkDtraBqv
-         0b1lAOFAWVONbHwKb9K2vUfz3RVkhvTY3SkQIPs/RYkarMf14RY1901AIeRgzhmzjnhq
-         bPCIK+7L26a8rDplwvnIXPCYk2+zoR/EEshIxuDjloQMsJPdAhWSX/htWLjj+lLI+jcp
-         pRtA==
+        bh=TD+ghPU2ZLooa9x0HWTILmd0XsXwmDoPDULmRLdUyoc=;
+        b=DqiSeIi5Qkc7IQ0IH8U4uyl5Bcry9anKZmcRthCIYHp4n8uWVW8qrR3XGnrTW+Ktwu
+         uyNhWunn4TEwu9Mo6ybFqQCX5x04fv8ZozckFrAT1X9YhBGbdHxv/FYyYDInEzZ/5gF4
+         w5mQH+nZ+ggPexLKlO3gcQ0+Kd7ZJ4wL5KeDvhaP10VDF1FKQ3sJq0/kREQatlrZXpk0
+         2dYdWKKgnPrjJK0DTJ54dJw9RQvx3693gtZGYyhBs+m9GfCuL5LGmLQJ8YkEVm6SaCHp
+         xvu1Atp8IHgU/BiYKFh1MVj0ioLsPqB9rXtq64sQ5BlsR3LTAcoJqLgHVHF931V6HvgF
+         64fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728383159; x=1728987959;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1728384422; x=1728989222;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NiFzJljIZK6K18VBx2o+5L+9T8qGzII0DZ/h6IKErVs=;
-        b=mYbUEW3IzCrXs+WyTGyLS4bbhJZp5ZtY+l/ZR+OQgWmmljtCVVapH9wWZ+wqyV8+Zz
-         dPRUqDWY92bN2Wo1Gu+496hlArzgIP/B/G/1PdXnTKBcyHVXk85kphnDlhAHM8OSPqHx
-         67drfPHhwtVW0PRkCMPSj4VKWor+W01lbDajlJ65nSY6S/9g0q3tQHi6eUaJzjrqOO3r
-         FPY9lKsyDbuzm2sn9r3f78lHmnZJjI9EhfmHRuTw9UP4l3GVugzlzdMsp2LGDRgJ4JVz
-         cmJaHgnvuWO9WBDOd7LM8Z60AhedViiOI9Tvmy+559RWg0TaStv1z94QSKRnTNX67lty
-         OLIQ==
-X-Gm-Message-State: AOJu0YzBUGFmSO59c+J3GYkzKMUxDP40RqoDrJ09lR+qD3zgNh5J70fy
-	WEr29xQx6hWBFtzyhUvGxUBn9DQ3Ha3suinDUoz2HRIpG69sp8U9AJihF24bU2c=
-X-Google-Smtp-Source: AGHT+IEGcrxEhyJl+MXEaIJ+7wi+2eFIF0HFIrWSMUS9U40XllI18QLKQiArpLJr4U/01gV7YwnE6A==
-X-Received: by 2002:a05:600c:1c8a:b0:42b:af52:2525 with SMTP id 5b1f17b1804b1-42f85ab7cd9mr119677385e9.16.1728383158933;
-        Tue, 08 Oct 2024 03:25:58 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:738a:20da:f541:94ff])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d1691b505sm7766800f8f.43.2024.10.08.03.25.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 03:25:58 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Kalle Valo <kvalo@kernel.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>
-Subject: [PATCH v5 3/3] arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
-Date: Tue,  8 Oct 2024 12:25:44 +0200
-Message-ID: <20241008102545.40003-4-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241008102545.40003-1-brgl@bgdev.pl>
-References: <20241008102545.40003-1-brgl@bgdev.pl>
+        bh=TD+ghPU2ZLooa9x0HWTILmd0XsXwmDoPDULmRLdUyoc=;
+        b=bIZJdr+ceBGI/P4kumICoFx4q9kWXPZqwEPypJrnJupAbz/9b+lYPO8XtOgzvBGA9o
+         YPCWT+szpILiRbXmpwOwkRgd4HpeWsOLs5CJhgYSNAAjDfLtuc68GfKLIbtWTgPMZUvi
+         jSED4s59tSg9wll1FTenoJIHqRTd3RwnTMKcdj4s6wD9oQQiTVaKTvwMVN21AApNRqD/
+         FHPnKlFU6KMfpHpLj3OEUsv8zEmM7oIx6soqxt51sLkBQBVKHDzMbOb+JeoYoSFQyOlt
+         xlHPwJASkf7IfmbRY7fQMa0S9E40zFXjLopmzgJdiV22wptY0eyh5VfADRuUVpIR8j0y
+         jPDA==
+X-Forwarded-Encrypted: i=1; AJvYcCW/i2oWn1qyW6vk3RxhwaVaRFfSTzACyzaAFTuZLp/e7rGAMbAIwiSPfxELg8TW/KuOjNnW7gFKNNKG0nM9@vger.kernel.org
+X-Gm-Message-State: AOJu0YyH87B98YCZzHOrkaGRg8r+xrG447QvVngE8570G/4ixNuhiqNK
+	jGvDhQRnc/4KBWHpzvdREZPqFwfvgiXP2ohW8NTiknzPnao18YNRNc7tld47z2Z2AkGtQxQL2Fy
+	imQycFZiRYG8VfSQ/iyKOR3TfGqCUKKEAJ0++qg==
+X-Google-Smtp-Source: AGHT+IECP10UjEJdYbc48ykgN+rdUK38iSJ8CKS1U/S3BZgrH0DuUNb4uJosYAr3Ei6C8lCvYX9wCfuCS4n0ARKeuYQ=
+X-Received: by 2002:a05:690c:ec1:b0:686:1240:621a with SMTP id
+ 00721157ae682-6e2c728a26emr122806547b3.31.1728384421737; Tue, 08 Oct 2024
+ 03:47:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20241004080110.4150476-1-quic_kotarake@quicinc.com>
+ <jid5coqe4tpsafbi2haem6ye4vrpwyymkepduxkporfxzdi6cx@bfbodoxoq67l> <b900d558-8ab0-436f-87bd-7a3d83e3dea0@quicinc.com>
+In-Reply-To: <b900d558-8ab0-436f-87bd-7a3d83e3dea0@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 8 Oct 2024 13:46:44 +0300
+Message-ID: <CAA8EJpr9pOc4i983ZoiwffTVNyJzH=6ka=m-k=BAT92d3K-OXA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490: Allow UFS regulators load/mode setting
+To: Rakesh Kota <quic_kotarake@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_kamalw@quicinc.com, quic_jprakash@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Tue, 8 Oct 2024 at 12:39, Rakesh Kota <quic_kotarake@quicinc.com> wrote:
+>
+>
+>
+> On 10/7/2024 1:37 AM, Dmitry Baryshkov wrote:
+> > On Fri, Oct 04, 2024 at 01:31:10PM GMT, Rakesh Kota wrote:
+> >> The UFS driver expects to be able to set load (and by extension, mode)
+> >> on its supply regulators. Add the necessary properties to make that
+> >> possible.
+> >>
+> >> While at it, UFS rails have different voltage requirement for UFS2.x
+> >> v/s UFS3.x. Bootloader sets the proper voltage based on UFS type.
+> >> There can be case where the voltage set by bootloader is overridden
+> >> by HLOS client.
+> >>
+> >> To prevent above issue, add change to remove voltage voting support
+> >> for dedicated UFS rails.
+> >
+> > add change to remove smth doesn't sound correct to me.
+> > Please don't depend on the bootloader and describe hardware > configura=
+tion. If there can be two types of IDP boards and you can not
+> > identify the voltage via other means, please create something like
+> > qcm6490-idp-ufs3.dts. Please add proper Fixes tags.
+> > Last, but not least, as Bjorn wrote, please split into two patches.
+> >
+> sure, i will split the change into two.
+>
+> Since we can=E2=80=99t differentiate IDP boards based on UFS versions whi=
+le
+> loading the DT and we have only single board ID for the IDP's, it=E2=80=
+=99s not
+> possible to create separate UFS-based DT files like qcm6490-idp-ufs3.dts
+> and ufs2.dtsi... etc.
 
-Add a node for the PMU of the WCN6855 and rework the inputs of the wifi
-and bluetooth nodes to consume the PMU's outputs.
+It is definitely possible to create a second DT file. And upstream
+doesn't have board IDs (not to mention that nothing stops you from
+using another board ID for IDP with a different UFS revision. Qualcomm
+owns the board ID registry.)
 
-With this we can drop the regulator-always-on properties from vreg_s11b
-and vreg_s12b as they will now be enabled by the power sequencing
-driver.
+>
+> And also UFS driver does not vote for voltage on UFS rails & they just
+> vote on load only.
+> Hence to support both UFS 2.x and 3.x, we need to remove the voltage
+> min/max voting. if add the min and max voltages in DT, then those
+> initial voltage set by bootloader is overridden by regulator
+> framework with min voltage specified in DT.
 
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 101 +++++++++++++++---
- 1 file changed, 87 insertions(+), 14 deletions(-)
+Yes, this is correct. Regulator framework should know min and max
+voltages. Once the voltage is in the specified range, the UFS driver
+doesn't have to cast a particular vote on it.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 6a28cab97189..863412842102 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -400,6 +400,68 @@ usb1_sbu_mux: endpoint {
- 			};
- 		};
- 	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		pinctrl-0 = <&bt_default>, <&wlan_en>;
-+		pinctrl-names = "default";
-+
-+		wlan-enable-gpios = <&tlmm 134 GPIO_ACTIVE_HIGH>;
-+		bt-enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-+
-+		vddio-supply = <&vreg_s10b>;
-+		vddaon-supply = <&vreg_s12b>;
-+		vddpmu-supply = <&vreg_s12b>;
-+		vddrfa0p95-supply = <&vreg_s12b>;
-+		vddrfa1p3-supply = <&vreg_s11b>;
-+		vddrfa1p9-supply = <&vreg_s1c>;
-+		vddpcie1p3-supply = <&vreg_s11b>;
-+		vddpcie1p9-supply = <&vreg_s1c>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn_0p8: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn_0p8";
-+			};
-+
-+			vreg_pmu_aon_0p8: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p8";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p8: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p8";
-+			};
-+
-+			vreg_pmu_btcmx_0p8: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p8";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo5 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo6 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo8 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo9 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -426,7 +488,6 @@ vreg_s11b: smps11 {
- 			regulator-min-microvolt = <1272000>;
- 			regulator-max-microvolt = <1272000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-always-on;
- 		};
- 
- 		vreg_s12b: smps12 {
-@@ -434,7 +495,6 @@ vreg_s12b: smps12 {
- 			regulator-min-microvolt = <984000>;
- 			regulator-max-microvolt = <984000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--			regulator-always-on;
- 		};
- 
- 		vreg_l1b: ldo1 {
-@@ -927,6 +987,16 @@ wifi@0 {
- 		compatible = "pci17cb,1103";
- 		reg = <0x10000 0x0 0x0 0x0 0x0>;
- 
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-+		vddaon-supply = <&vreg_pmu_aon_0p8>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
-+
- 		qcom,ath11k-calibration-variant = "LE_X13S";
- 	};
- };
-@@ -1258,20 +1328,16 @@ &uart2 {
- 	bluetooth {
- 		compatible = "qcom,wcn6855-bt";
- 
--		vddio-supply = <&vreg_s10b>;
--		vddbtcxmx-supply = <&vreg_s12b>;
--		vddrfacmn-supply = <&vreg_s12b>;
--		vddrfa0p8-supply = <&vreg_s12b>;
--		vddrfa1p2-supply = <&vreg_s11b>;
--		vddrfa1p7-supply = <&vreg_s1c>;
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-+		vddaon-supply = <&vreg_pmu_aon_0p8>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p8>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p8>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p8-supply = <&vreg_pmu_rfa_1p7>;
- 
- 		max-speed = <3200000>;
--
--		enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
--		swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
--
--		pinctrl-0 = <&bt_default>;
--		pinctrl-names = "default";
- 	};
- };
- 
-@@ -1761,4 +1827,11 @@ reset-pins {
- 			bias-disable;
- 		};
- 	};
-+
-+	wlan_en: wlan-en-state {
-+		pins = "gpio134";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-down;
-+	};
- };
--- 
-2.30.2
+So, dropping the regulator min/max is still NAKed.
 
+>
+> Note: Bootloader have capability to detect the UFS version (where as
+> HLOS does not have that capability)
+>
+> Thank you for quick review!!
+> >>
+> >> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 12 ++++++++----
+> >>   1 file changed, 8 insertions(+), 4 deletions(-)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boo=
+t/dts/qcom/qcm6490-idp.dts
+> >> index 84c45419cb8d..8a4df9c2a946 100644
+> >> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> >> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> >> @@ -258,13 +258,15 @@ vreg_l6b_1p2: ldo6 {
+> >>                      regulator-name =3D "vreg_l6b_1p2";
+> >>                      regulator-min-microvolt =3D <1140000>;
+> >>                      regulator-max-microvolt =3D <1260000>;
+> >> +                    regulator-allow-set-load;
+> >> +                    regulator-allowed-modes =3D <RPMH_REGULATOR_MODE_=
+LPM RPMH_REGULATOR_MODE_HPM>;
+> >>                      regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+PM>;
+> >>              };
+> >>
+> >>              vreg_l7b_2p952: ldo7 {
+> >>                      regulator-name =3D "vreg_l7b_2p952";
+> >> -                    regulator-min-microvolt =3D <2400000>;
+> >> -                    regulator-max-microvolt =3D <3544000>;
+> >> +                    regulator-allow-set-load;
+> >> +                    regulator-allowed-modes =3D <RPMH_REGULATOR_MODE_=
+LPM RPMH_REGULATOR_MODE_HPM>;
+> >>                      regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+PM>;
+> >>              };
+> >>
+> >> @@ -277,8 +279,8 @@ vreg_l8b_0p904: ldo8 {
+> >>
+> >>              vreg_l9b_1p2: ldo9 {
+> >>                      regulator-name =3D "vreg_l9b_1p2";
+> >> -                    regulator-min-microvolt =3D <1200000>;
+> >> -                    regulator-max-microvolt =3D <1304000>;
+> >> +                    regulator-allow-set-load;
+> >> +                    regulator-allowed-modes =3D <RPMH_REGULATOR_MODE_=
+LPM RPMH_REGULATOR_MODE_HPM>;
+> >>                      regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+PM>;
+> >>              };
+> >>
+> >> @@ -467,6 +469,8 @@ vreg_l10c_0p88: ldo10 {
+> >>                      regulator-name =3D "vreg_l10c_0p88";
+> >>                      regulator-min-microvolt =3D <720000>;
+> >>                      regulator-max-microvolt =3D <1050000>;
+> >> +                    regulator-allow-set-load;
+> >> +                    regulator-allowed-modes =3D <RPMH_REGULATOR_MODE_=
+LPM RPMH_REGULATOR_MODE_HPM>;
+> >>                      regulator-initial-mode =3D <RPMH_REGULATOR_MODE_H=
+PM>;
+> >>              };
+> >>
+> >> --
+> >> 2.34.1
+> >>
+> >
+
+
+
+--=20
+With best wishes
+Dmitry
 
