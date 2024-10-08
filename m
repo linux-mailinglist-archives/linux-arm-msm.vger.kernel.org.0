@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-33596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA2279954FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 18:53:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1B5DF995500
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 18:53:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 82275285657
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:53:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C95BE28530B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 16:53:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9BE7E1E1C30;
-	Tue,  8 Oct 2024 16:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C0991E22E0;
+	Tue,  8 Oct 2024 16:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iEHFXJ47"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqAFsXWx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC161E1C1C;
-	Tue,  8 Oct 2024 16:52:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF341E1C2C;
+	Tue,  8 Oct 2024 16:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728406331; cv=none; b=nbLu67sEkTHY8B5t71vHC6C+a0xoYbdjesju3AiRrRhcLQJLr+ZijfHCdHRDLxEZx8CXk7QNp6BR77u6I7Lx7sulHeyrc9ur2Y5vtHD2t59ucL/jR641wvZf9r/wjDIF3ev8sa0M4vGHV+WYyrpBf0y+cBABb1iO7RtVMPVcGKU=
+	t=1728406333; cv=none; b=DszyPqdRT6iVCDx6iTVffc28jCkdgWaU/DlV4oLMj7ZOO0zyjjF8v6sTI7QoC/vZmyPIEyIH3Yr2AVm/fWVPdVfvGw3lpUwOg5jBkyRchLv0I3RVh4gSk9A9erNckUMyhzmgX0HzTVwMp62ESGBLcdaxSchu9KKsg3ZE7Q1SJFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728406331; c=relaxed/simple;
-	bh=EyvxYgmd+WlVODzcYuBQPU4RuBQO8y3BQCMsMeHqzBY=;
+	s=arc-20240116; t=1728406333; c=relaxed/simple;
+	bh=NqCQWLggrQIjnF5xOmH7+34dA1dVfMw9uR64fLM6aMM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=CIN09LTmzOjUVc+mSVBVcAiIZc+kUQrACYJKEJW0jFofrmCJTPuauTBlu7OWd7SDmUaOTpkTicIdXtcR3UBH1ao4FVEQYGAm5tjRlyhnkHwZJxWrYyQH6kLSZNev9FmfYPkvMXMUQT3sF22At1ew+Pbgrpx+ho4T+tJNB8/BN9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEHFXJ47; arc=none smtp.client-ip=209.85.167.41
+	 In-Reply-To:To:Cc; b=llw3PjP+mJnAv8NcbD5J3ZFb4Ibph/+hvINdSc4LfCtexUYgIuUlyltLf5+gRUEwWfruYTpKU+0KK7GDb4cWo710xhR8yzEz+KOQVj39SCG0F9AaoxtQLSAIu6D8vT+rk0gOB1JjJi+4x6gj45JJJTrztBgSWd+8KjPGx0DjHXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FqAFsXWx; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53959a88668so7386141e87.2;
-        Tue, 08 Oct 2024 09:52:09 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5389e24a4d1so7252508e87.3;
+        Tue, 08 Oct 2024 09:52:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728406328; x=1729011128; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728406329; x=1729011129; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=moZlQ1Ms1cEUAdorR6NqtqJIQ081uxz/faO2ZLvLXrE=;
-        b=iEHFXJ47p/PVCwsYyN3kf0X///oImy2Y03As7LaUZtpJADn6Ee+nfeXkAptaPoxXSj
-         IP/Rq3X9nVBHQQ/W1UvqiinuxGYLcsjkHFPTk6bXB+B8vbttCYZV6041hC8z2GU3pBC/
-         fzobcCXMEsWz1WoA/QUB+yu0sIAbnPLURPSB1kqHtBxZPyJuAtTpoNrBuwKJWB7C9+zb
-         cDWi5FOLAEiGHlkT78z6IhSKQZvb6UqUJLy7uX3G+RPcM3mUlkUANdLKts0IcPcZMoPB
-         9cm+6yD1uog/jX0elq6jsZ19XZORq9Y4iXcCYau9mOiJj5N4/W7CZj/+UD7KfXHpSndZ
-         fp2Q==
+        bh=AKESfSYrQ7Ve/4e2rVvyOg4YJptWBqaLBaB6huUwNz8=;
+        b=FqAFsXWx3OYiVTH93giB6MchA5MxpVdhDoXUg3UST2m4KPkFsHEN3uTEtdR6xxHo8c
+         vk06x252pghBe1J/Dce72wQpOW8T224fGWn2wav1410yl5qk7KO8R6A1sUMx5WKA7UWB
+         3obEMp+hNKU3qg2pkKxg9MX720g9wrKqQLCu26+tZT5Z8FcLdnIUrhqELhQe17kHACMh
+         KNNc/CIFn8IJv7P3cUfVPkUbb1XUoncbXyoD68ihwtbElMRk5h2D/2LLtzMxAHlqbgcB
+         xOQlfvqPNOAQ4TkxdTElpBAPkQn09Kp0qLZ0FsbAIWG2Ttwk7aEB4USQtJws1HyfCbyx
+         LAww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728406328; x=1729011128;
+        d=1e100.net; s=20230601; t=1728406329; x=1729011129;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=moZlQ1Ms1cEUAdorR6NqtqJIQ081uxz/faO2ZLvLXrE=;
-        b=lZ3f67qp3AmB1fPto/V2AxuSNqXABAk5JEP8SoyF97LPUIr+FnM/uv9k0Xv9KgNfMq
-         BgrxEPr7OG2y7ucQSqK/O8wG1EEjQI7mHcrOVOA0d6zQ2vv6iUXzWQCt1umm/fupHlCS
-         ngjE+MB9cFiFN6FElbGsjESGJcDRNufF2nt+MIAiQxe8WkmnYUpUwlCXtm3INhcU8TeX
-         oqTVnmTjEWy8z70zlEw3R+evHGui+i2H5SN5/4iK6n09Lxfz5+ukpX50vOvOfEr5o3wa
-         HtjH5Evj4NGoGBUCkr1wpBzzb0neqZE4DIhFMTz2uiQCm4r6qzvxcfwYvZin9xG8XmWF
-         Adsg==
-X-Forwarded-Encrypted: i=1; AJvYcCU7qWDiKOmwoMBv7PJrmSMMdeIMLK6fB0An6MBYZajNrbr5sqVMQS0hQIpX9VpXSKAHBnAsvJfivYx9fLhS@vger.kernel.org, AJvYcCXUw6xfV582G/nAtRYNWgaW7OQtfQ4FrSAM/VTSaa60DxqDdkSx2iGEK9WcLqUYxl/rFn/+1jBWFTFy@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz9MJJ973bak2FjxgYRgNPIFN1HoPTsYfV0Fv5kdP3qnDyg99zp
-	4yPY7gmisB5vhFMDRPaRIRVqhzfQxZ/nqq/9f043lIOvVL5Qhs9micsNwQ==
-X-Google-Smtp-Source: AGHT+IGUYycy+d6O4ecEpPZjbIc6a1uVjG5ooRd+slnWU7zOMiVsdqqO/Cc6nJkDn3HtrmSed5mC6g==
-X-Received: by 2002:a05:6512:2398:b0:52f:1ef:bafe with SMTP id 2adb3069b0e04-539ab877af4mr10250473e87.22.1728406327837;
-        Tue, 08 Oct 2024 09:52:07 -0700 (PDT)
+        bh=AKESfSYrQ7Ve/4e2rVvyOg4YJptWBqaLBaB6huUwNz8=;
+        b=nUWzY1e5cPV5+4EfHhkomFaBNC1kuR2prL9IpnwAgqQgcp2Uh148vhF+RwtQteJILH
+         kTn4P/ntFiW9NZez5N6fSj88frupZVwnmpyBjN+ccMWUjKKNkjB8aF/MrRjDuDhWYS1d
+         C02hzET2Nnz1h2T1/RKAhUYkXOgkAUT6HPqTtJbLBDsy3Urqe0q1DxRE/pdJNOHVqBtT
+         YAMsg1KIuV3b3aoMCLnUGhUEJlQMcI+HKrW39X5deDa1QXscNH/sd4ozSQ5RPK/CmpME
+         yhp3Br5ybYY6JZjkffCpWfkhkUOcHZ3Nl7CYMK0fLjk+m+b4VtnrEHc6/kgoS6kBgUFs
+         sgWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUGPV89w2XwdnQVcLE+ejc6xmoMSThGU9CnQaIhuef55RxwbwqW30rsHQoRikLoiaX8yph4MhIfO2r6@vger.kernel.org, AJvYcCUV/aU9R5zY6FMu15VTLEpN+7LhUQ7me9Cg0NJbDqLXXniX4E3fvqx/XQuNQybsOKm/ZitqIRLLYnMn1ryo@vger.kernel.org
+X-Gm-Message-State: AOJu0YypbWlY5F5kKRKLMeC/Hqt0SJeSY9AXgInykNzItKiTY8hNyLp3
+	gyK778db50ZnafrE0IWk52lnH+aY1rXLBWYAQuuw/nX7joufx2BZ
+X-Google-Smtp-Source: AGHT+IHzHuCKrE/GYG+/n1LZNg5C1sg99PXkpAVYsU0V5JQE5eXOKAKz8Y+VFTzmaub4bdPYS3lFhA==
+X-Received: by 2002:a05:6512:3b1e:b0:533:47b5:c023 with SMTP id 2adb3069b0e04-539ab8577a5mr8436746e87.13.1728406329085;
+        Tue, 08 Oct 2024 09:52:09 -0700 (PDT)
 Received: from [127.0.1.1] (nat6-minsk-pool-46-53-210-75.telecom.by. [46.53.210.75])
-        by smtp.googlemail.com with ESMTPSA id 2adb3069b0e04-539aff23e5fsm1260736e87.235.2024.10.08.09.52.05
+        by smtp.googlemail.com with ESMTPSA id 2adb3069b0e04-539aff23e5fsm1260736e87.235.2024.10.08.09.52.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Oct 2024 09:52:06 -0700 (PDT)
+        Tue, 08 Oct 2024 09:52:08 -0700 (PDT)
 From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Tue, 08 Oct 2024 19:51:43 +0300
-Subject: [PATCH v6 06/12] arm64: dts: qcom: sdm845-starqltechn: add gpio
- keys
+Date: Tue, 08 Oct 2024 19:51:44 +0300
+Subject: [PATCH v6 07/12] arm64: dts: qcom: sdm845-starqltechn: add
+ max77705 PMIC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +79,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241008-starqltechn_integration_upstream-v6-6-5445365d3052@gmail.com>
+Message-Id: <20241008-starqltechn_integration_upstream-v6-7-5445365d3052@gmail.com>
 References: <20241008-starqltechn_integration_upstream-v6-0-5445365d3052@gmail.com>
 In-Reply-To: <20241008-starqltechn_integration_upstream-v6-0-5445365d3052@gmail.com>
 To: cros-qcom-dts-watchers@chromium.org, 
@@ -90,89 +90,169 @@ To: cros-qcom-dts-watchers@chromium.org,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
 X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728406308; l=1845;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1728406308; l=3954;
  i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=EyvxYgmd+WlVODzcYuBQPU4RuBQO8y3BQCMsMeHqzBY=;
- b=JWqDp7M2+ZYC5WYL41gywdCaHFnqtWeryQYgONbro5uF5Y9gQI73Xj6siquUEi0yL0qDhzmRs
- M+ohI4R2sk4A0raP1aI4S8lItz+3+SOqc0DqmUWcHFADkn0JbW3x/0h
+ bh=NqCQWLggrQIjnF5xOmH7+34dA1dVfMw9uR64fLM6aMM=;
+ b=NgoMpvP2GeGALJHFuf0oQPmlCBGqhkV3vMDQcA6GpN6IBnPLSHDpbj6QLsea8KNxGUeidhgJT
+ bzmPxwjCkkXCveMKlkvpAOIkxtLE5iwOsVCfTYJ05utfckUj77XeqBP
 X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
  pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-Add support for phone buttons.
+Add support for max77705 MFD device. Supported sub-devices:
+ charger, fuelgauge, haptic, led
 
 Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-
 ---
 Changes in v6:
-- refactor: s/starqltechn/sdm845-starqltechn in subject.
+- refactor: s/starqltechn/sdm845-starqltechn in subject
+- refactor: 'm' < 's', so putting motor tlmm nodes first
+
+Changes in v5:
+- fix according to binding changes
+- reorder vib_pwm node
 ---
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 36 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 103 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 5948b401165c..a3bd5231569d 100644
+index a3bd5231569d..7d1d57f41024 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
 +++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -7,9 +7,11 @@
+@@ -18,6 +18,16 @@ / {
+ 	model = "Samsung Galaxy S9 SM-G9600";
+ 	compatible = "samsung,starqltechn", "qcom,sdm845";
  
- /dts-v1/;
- 
-+#include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sdm845.dtsi"
-+#include "pm8998.dtsi"
- 
- / {
- 	chassis-type = "handset";
-@@ -69,6 +71,25 @@ memory@a1300000 {
- 			pmsg-size = <0x40000>;
++	battery: battery {
++		compatible = "simple-battery";
++		constant-charge-current-max-microamp = <2150000>;
++		charge-full-design-microamp-hours = <3000000>;
++
++		over-voltage-threshold-microvolt = <4500000>;
++		voltage-min-design-microvolt = <3400000>;
++		voltage-max-design-microvolt = <4350000>;
++	};
++
+ 	chosen {
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+@@ -90,6 +100,27 @@ key-wink {
+ 			debounce-interval = <15>;
  		};
  	};
 +
-+	gpio_keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
++	vib_regulator: gpio-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "haptic";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		regulator-boot-on;
++		enable-active-high;
++		gpio = <&pm8998_gpios 18 GPIO_ACTIVE_HIGH>;
++	};
 +
-+		key-vol-up {
-+			label = "volume_up";
-+			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+
-+		key-wink {
-+			label = "key_wink";
-+			gpios = <&pm8998_gpios 19 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_ENTER>;
-+			debounce-interval = <15>;
-+		};
++	vib_pwm: pwm {
++		compatible = "clk-pwm";
++		#pwm-cells = <2>;
++		assigned-clock-parents = <&rpmhcc RPMH_CXO_CLK>;
++		assigned-clocks = <&gcc GCC_GP1_CLK_SRC>;
++		clocks = <&gcc GCC_GP1_CLK>;
++		pinctrl-0 = <&motor_pwm_default_state>;
++		pinctrl-1 = <&motor_pwm_suspend_state>;
++		pinctrl-names = "default", "suspend";
 +	};
  };
  
  
-@@ -417,6 +438,21 @@ &usb_1_qmpphy {
+@@ -385,10 +416,66 @@ &qupv3_id_1 {
  	status = "okay";
  };
  
-+&pm8998_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
++&gpi_dma1 {
 +	status = "okay";
 +};
 +
-+&pm8998_gpios {
-+	chg_int_default: chg-int-default-state {
-+		pins = "gpio11";
-+		function = "normal";
-+		input-enable;
-+		bias-disable;
-+		power-source = <0>;
+ &uart9 {
+ 	status = "okay";
+ };
+ 
++&i2c14 {
++	status = "okay";
++
++	pmic@66 {
++		compatible = "maxim,max77705";
++		reg = <0x66>;
++		interrupt-parent = <&pm8998_gpios>;
++		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-0 = <&chg_int_default>;
++		pinctrl-names = "default";
++
++		leds {
++			compatible = "maxim,max77705-led";
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			led@1 {
++				reg = <1>;
++				label = "red:usr1";
++			};
++
++			led@2 {
++				reg = <2>;
++				label = "green:usr2";
++			};
++
++			led@3 {
++				reg = <3>;
++				label = "blue:usr3";
++			};
++		};
++
++		max77705_charger: charger {
++			compatible = "maxim,max77705-charger";
++			monitored-battery = <&battery>;
++		};
++
++		fuel-gauge {
++			compatible = "maxim,max77705-fuel-gauge";
++			monitored-battery = <&battery>;
++			power-supplies = <&max77705_charger>;
++			shunt-resistor-micro-ohms = <5000>;
++		};
++
++		haptic {
++			compatible = "maxim,max77705-haptic";
++			haptic-supply = <&vib_regulator>;
++			pwms = <&vib_pwm 0 100000>;
++		};
 +	};
 +};
 +
- &tlmm {
+ &ufs_mem_hc {
+ 	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
+ 	vcc-supply = <&vreg_l20a_2p95>;
+@@ -457,6 +544,22 @@ &tlmm {
  	gpio-reserved-ranges = <27 4>, /* SPI (eSE - embedded Secure Element) */
  			       <85 4>; /* SPI (fingerprint reader) */
+ 
++	motor_pwm_default_state: motor-pwm-active-state {
++		pins = "gpio57";
++		function = "gcc_gp1";
++		drive-strength = <2>;
++		bias-disable;
++		output-high;
++	};
++
++	motor_pwm_suspend_state: motor-pwm-suspend-state {
++		pins = "gpio57";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		output-low;
++	};
++
+ 	sdc2_clk_state: sdc2-clk-state {
+ 		pins = "sdc2_clk";
+ 		bias-disable;
 
 -- 
 2.39.2
