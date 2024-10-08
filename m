@@ -1,133 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-33516-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7F545994532
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:18:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28A12994548
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:26:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B18211C23E96
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:18:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CB1FF1F23F87
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:26:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A23C1AC441;
-	Tue,  8 Oct 2024 10:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4E5A199E98;
+	Tue,  8 Oct 2024 10:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="c3lregHn"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="tpq6IVS0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7B11AD401;
-	Tue,  8 Oct 2024 10:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9743A192D7A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 10:25:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728382725; cv=none; b=JmEI5y6ycNt7QfdysmSDraoQqPfuh5AyUoENS5Q5i6qa3jJTHdlpZJfK7/E9uuvIuWnlUQKhQypaJz9LNECRbrzd+PCbPSfTnrJFTElNS4Kp/1WxfreqJWZLitKsgeYEeMxg93lqjjjYDIM7RtvEarw1ahDzMiaAGhedhJZ0b54=
+	t=1728383159; cv=none; b=T2+9fRsECp95toPyBWm607cIdJwIk7PH9onEGOmg6YqkfkMGzN3D99v34B0kUg/k9cnlhwdcOKwwhHT1rtxKfLuMKctc9z6lBvOQOutLun8RqsXfzS8O5uZ4PvuXzCEap/Wo+4RAkLLvYtKRjQOP/BQMtaVRYjRgtiM5lnVOcf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728382725; c=relaxed/simple;
-	bh=u8xPnDu0qAYu6LejKWYoWWMdvK8gJRvYrhiJGpOdTLg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=USFZyqxg1F6EZa77haswD1NOVwk/7SuUDGa7v6kbWJS3ftJTVnZILotFexI+v6uSCGmCddeS5iJuuaJBY4jZnSqUV4A4U13MDerhWbGWcv8/F9t9KtjR8gJTleCO6lfWAqtnHTUJjnil4yWE7wwwdJQ9yDHVO+5s7O78Hux6HYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=c3lregHn; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49896gcp004100;
-	Tue, 8 Oct 2024 10:18:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	sqpFdTY+6jzDWQR097kkAMWTTO8iAiSE8pceKsB4sbM=; b=c3lregHnCu6sgvl0
-	IlAwZ2V8iFuSl5HXydolufxefzYRLOfjIfHvl1Y8ayfsOci9k8Uhxumg/Ka+D3Ec
-	IARenIIyvDYbyAKcQUATpms1qh7bU1nLbmkwGDX/pKxa9VNbE0QHrq+xh7S28aaU
-	hYh8utWbhkjaF3hZfRHC5XhXnulwaDbLTJxwGLXBEV9VGxzTsvB9GOUkRh5DG0sE
-	QE3CNZCpwzjLKRmGmF3ef3IkPkmKVeHKgGbWvSLybR+zSheqe9ELwrk8T2cawejk
-	LdAJvWdM697LCAUWcNN77d8KHBh5YMiTyvGfwx7j3rPaZf8AhGnY8MVk2vmx8hWB
-	OoB8aQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424ndy9vd5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 10:18:21 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 498AIK0o006896
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Oct 2024 10:18:20 GMT
-Received: from [10.50.47.90] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Oct 2024
- 03:18:13 -0700
-Message-ID: <5e8bac8a-8e6b-423c-8e13-b73db9a226fd@quicinc.com>
-Date: Tue, 8 Oct 2024 15:48:10 +0530
+	s=arc-20240116; t=1728383159; c=relaxed/simple;
+	bh=cEOnqj5/taNdqs7wqZHJLE/H1nb6Cudd8JQkaXdwQeg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JMMvUgFe8WWqQtuHAR5QY6SY2gbJ5NtmALJaUd9Ydvujy9EwBYn3VcWQQ5/biyJ6vOW+deRbRwnV6cx5KBoxtJ1KlFnjpKwKdCwGy7EVsx6oWvFG5S3rqhp8chVIGomhKj72hCgouLcHo67/G6IEX/NsA3U7RtL93EZrNKn3RV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=tpq6IVS0; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-42ca4e0299eso48623715e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 03:25:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1728383156; x=1728987956; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EI/4C1YBupkU8pa4hZnKaHzVnRWuBc+sLm07dr7BR90=;
+        b=tpq6IVS0wIhafuOrNCF4p2NvI73pEyzZ46uQpy/r1QTW7qfutv6s0EVP+6ZvGUBP4+
+         NuJBuYrDxoNO9AnZhXMsmyPB9CqMLUzcGjvIIsrucOp1uDSZqiLiop2Cq8Ot05+BK8WQ
+         TDGnK4oa/T93fPw75778XANCmwr4l1U7U/2NpoLHcQToe/8udcXa4OnIyJmQwKCtSCmG
+         Zv3PgXuWtO9rkSeHAlcL+ogEFB18tALTo+B4gubTwH4Zclb6o5r6lP9erKE6eExfHhju
+         0w7PQaqF/Y9qaD/slI9jYhx4smOQc0bVJiIfI877qIqFSLMBHMIpa/sN0Vq2nVt5mu97
+         MLwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728383156; x=1728987956;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EI/4C1YBupkU8pa4hZnKaHzVnRWuBc+sLm07dr7BR90=;
+        b=gBIYRgEOIdCZDxmSLMSjzj74mdzCHUGILHLgzHEhAHM6Jxe7UXUMgx4YNOmySuVu+9
+         C4h/8YOQ1oh3Dcw5MHrEpX5SaPpUvC8/y+BMM8h1KCrYZv6L/SpOj9cUCRq6o1D5CAcg
+         A7vndAvqk1JStfRhFB/2yp68lqfElI7cPgUjAqjHWvebkb/XZiWXFOw/CZWiZ1lXVCxQ
+         CN7Wod7su/+kBGgv9HyVSzlNycuiFyZhhV+WIitUJkUTCK3EDEzkphxjtM9ekUwthE6+
+         JDvNUK3abO5MQyKFDuLYyk5UmRfxsdWpjyQdfyvSpyKyF9kSA1rYjwhIr1hJEKMSpddX
+         UJIg==
+X-Gm-Message-State: AOJu0YxhqSDYG9h9rJJkaTRcHaD5PKQxI35F4Fv/im7HFsVtFr2eNFrD
+	MQMXP2DJZuTtMXkW0px+7a5SW/Hp+0vxMZQf7srydxY1D4MHbeklVHRGX/nwgsM=
+X-Google-Smtp-Source: AGHT+IFY6KPUaMK+qzf2Zm9ZWecXwxFv6eiu5QHuPmZPBeE7Q/AAZ0VjrtO0RZyy9X4qOeKZ00jCsw==
+X-Received: by 2002:a05:600c:1d2a:b0:42c:a72a:e8f4 with SMTP id 5b1f17b1804b1-42f85ab645bmr118620325e9.14.1728383155751;
+        Tue, 08 Oct 2024 03:25:55 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:738a:20da:f541:94ff])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d1691b505sm7766800f8f.43.2024.10.08.03.25.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Oct 2024 03:25:55 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Kalle Valo <kvalo@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH v5 0/3] arm64: dts: qcom: sc8280xp: enable WLAN and Bluetooth
+Date: Tue,  8 Oct 2024 12:25:41 +0200
+Message-ID: <20241008102545.40003-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/7] clk: qcom: add Global Clock controller (GCC)
- driver for IPQ5424 SoC
-To: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <p.zabel@pengutronix.de>, <geert+renesas@glider.be>,
-        <dmitry.baryshkov@linaro.org>, <neil.armstrong@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-mmc@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-CC: <quic_varada@quicinc.com>
-References: <20241004102342.2414317-1-quic_srichara@quicinc.com>
- <20241004102342.2414317-5-quic_srichara@quicinc.com>
- <1ac5e0e5-06c1-4930-8c03-f465d6e07848@quicinc.com>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <1ac5e0e5-06c1-4930-8c03-f465d6e07848@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: R4sxhw8CqABc2bubWh1F1geSuX3Npj5I
-X-Proofpoint-ORIG-GUID: R4sxhw8CqABc2bubWh1F1geSuX3Npj5I
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=999 spamscore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410080067
 
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-> 
-> <snip>
-> 
->> +
->> +static const struct freq_tbl ftbl_gcc_qupv3_uart0_clk_src[] = {
->> +    F(960000, P_XO, 10, 2, 5),
->> +    F(4800000, P_XO, 5, 0, 0),
->> +    F(9600000, P_XO, 2, 4, 5),
->> +    F(16000000, P_GPLL0_OUT_MAIN, 10, 1, 5),
->> +    F(24000000, P_XO, 1, 0, 0),
->> +    F(25000000, P_GPLL0_OUT_MAIN, 16, 1, 2),
->> +    F(50000000, P_GPLL0_OUT_MAIN, 16, 0, 0),
->> +    F(64000000, P_GPLL0_OUT_MAIN, 12.5, 0, 0),
->> +    { }
->> +};
->> +
-> 
-> There are few more frequencies got added to this table. Can we 
-> incorporate that as well?
-> 
+This correctly models the WLAN and Bluetooth modules on two boards using
+the sc8280xp SoC. For the sc8280xp-crd we add the PMU, wifi and bluetooth
+nodes with the correctly modelled wiring between them. For the X13s, we
+rework existing nodes so that they align with the new DT bindings
+contract.
 
-ok, yeah, since these patches are already reviewed, will send the
-additional updates here and also for dts etc in a separate series.
+v4 -> v5:
+- put vreg_s10b under the "B" PMIC on the CRD instead of modeling it as a
+  fixed regulator
+- order pinctrl nodes alphabetically
+- restore the drive-strength property for all pins to what bootfw sets it to
+- disable bias on wlan-en pin on the CRD
+- remove stray newline
+- add the swctrl pins to the PMU node
 
-Regards,
-  Sricharan
+v3 -> v4:
+- bind bluetooth pins on X13s in patch 3/3
+- only drop the regulator-always-on properties for vreg_s11b and vreg_s12b
+  and fold this change into patch 3/3
+
+v2 -> v3:
+- move adding the bt-enable-gpios to the PMU on the CRD to patch 2/4
+- add a patch removing the regulator-always-on property from regulators
+  on X13s that no longer need it
+
+v1 -> v2:
+- fix commit message in patch 1/3
+- drop drive-strength from the wlan enable pin function
+- drop the calibration variant property from the wifi node of the CRD
+
+Bartosz Golaszewski (3):
+  arm64: dts: qcom: sc8280xp-crd: model the PMU of the on-board wcn6855
+  arm64: dts: qcom: sc8280xp-crd: enable bluetooth
+  arm64: dts: qcom: sc8280xp-x13s: model the PMU of the on-board wcn6855
+
+ arch/arm64/boot/dts/qcom/sc8280xp-crd.dts     | 167 ++++++++++++++++++
+ .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 101 +++++++++--
+ 2 files changed, 254 insertions(+), 14 deletions(-)
+
+-- 
+2.30.2
 
 
