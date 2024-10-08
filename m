@@ -1,186 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-33473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82389993D66
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 05:18:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3769C993DB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 05:53:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B676285378
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 03:18:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 534871C2335B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 03:53:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0457F22611;
-	Tue,  8 Oct 2024 03:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52CB164A8F;
+	Tue,  8 Oct 2024 03:52:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l82YMVBp"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bCpvyWzE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E238722066;
-	Tue,  8 Oct 2024 03:18:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A25F40858
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 03:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728357524; cv=none; b=rLSjk+pSG5N6OR9mc+c/MaJNZ9ym/rV0gCud+Jr9yrg6QuK79IkHAdZ4BsmfX6Jswp6xijF33WDqz+TAKS4RoSUCBl8SvbX5SEICH9poOzPywE9wkj5LSfjcw7MuL0pXwZ+9ex28ro95zMyAsG/KXbIelIHgWLpCzTA3sd01LKU=
+	t=1728359576; cv=none; b=uuRS3CQsIvcRSLEaky9XMuXOjJ8gNco0XPCfOVVmvUw1CFdxt9DIvalykXPyG5pqIoi6MyuUuVDSw6hEohhruD/+5znxUZ/GN341c22E7hR53/48JFo0uio67QH+2LjrciHVPo5AY2LDkDQUKncjxjjslbvoYaKvNkXYRl2Fj2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728357524; c=relaxed/simple;
-	bh=KKHx9kn/FjIYnQaVL2sf7HaPXDJxY/zu1C6EOOGVVDk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aKKIfqaK7sluDK9Hvv3HhVWoP4VC83+RVG5JEjFOBIWlQlAivo3VWvQKRw2Keqi9okwkbstUhPWZG/sjPjbb/HLFdLy2spTRu4gSMrVPHAZ4gm9ha5g0YxwDBqfhLbRsgkXQn5Ffvj80rJDUWYVWyVbEmg5nLIlxOnPSKc/92i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l82YMVBp; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 497GaHxm022365;
-	Tue, 8 Oct 2024 03:18:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	dowEqxgbLavKo9589+GmS3dK4EJlyj9ChKyl8PXyNag=; b=l82YMVBpdj8LbNwy
-	4rlJSc+o4a8MkNciXFYQnxEYUOiN8bd8zXeBKUbUc51MGHfgtzvm5Co9R+sUyJj5
-	tRGzRXryRj4bAb5f23Ejy3/ZqcQo9DGeHfVP/ahstZA4jEr0s30fLWkMaQMiDQE0
-	QM6ucWqdHQBMYq8r1MnQOJG2MeuZsWdsb27h7ojlpzS2boWzbJDSaSuJwKye4Esd
-	+PkzpJbMIwufSIIlxfseFPFKKAEGJP9hIhcIIqc4YsXCb5IOWwz+kMdDqy0jRTWq
-	V+M8CYpTKnSXrXsN8BhLWobU3ucZrVNAPUya8ZjzYC79UR0FPZ3Xb8rP6yk5ePam
-	9bsR5Q==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424kaes6sn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 03:18:38 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4983Ibrb005539
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Oct 2024 03:18:37 GMT
-Received: from [10.239.133.118] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 7 Oct 2024
- 20:18:31 -0700
-Message-ID: <d275829f-190c-4b73-a378-1025ca8277ed@quicinc.com>
-Date: Tue, 8 Oct 2024 11:18:28 +0800
+	s=arc-20240116; t=1728359576; c=relaxed/simple;
+	bh=hCLWlw0j3aBtBWIKToAqdb5t72nChThzzCfqeoBaQ1w=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=m/HRqrbEzWK7QaSW3qNLT9QW0eFapWeV+cs3KMPEaIxGugbXLoMRVZOMx8JtjKigbIZH08VhJ9N7KNVUpBVGu2bMUwtKnJ9hm2Gttup0LWo0db9lTeOZ/sYGfsXzDmkZKYfGrtj5x3QevyD6dbCJdl4HjBddv4/a3Lvqz4kiKS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bCpvyWzE; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-37d2d320711so115019f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 07 Oct 2024 20:52:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728359572; x=1728964372; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ElqD9Hm+WZEodZrxK7bnkSFLALYB9eCjiPyOgKg3kGo=;
+        b=bCpvyWzEP5LSnVcRqcNWjCHuHeJjxXZHv/OwcJjS8n5mEO722I+wvpJc42/vds/7fA
+         A9R98j4/SXT8nDLRZ9d+jJCwRw9vHRbPxomkltbQxZTELx92nJEHfJpouraiZvXkyKdY
+         HfS5495e6Ws8OUPSkuWY2sPr2B4gU2H+85q2EUcC5o03bV/fdBA+Z1o3PFzNEtGJxrH0
+         C24bWz0100aegzcPlqIGLkaXA4BprKXzoKdlzckASB2nnOrzmOuMfuNC6ePXbOX0QV8M
+         DOWdzcUYDGydX4QTTxm/XJrqtC7vF8H/Yi2PcGrKjMB1OrjRGHB954O8RM64n+5Re/4p
+         F30A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728359572; x=1728964372;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ElqD9Hm+WZEodZrxK7bnkSFLALYB9eCjiPyOgKg3kGo=;
+        b=fo0KVwlEsD9iVkQKKogIO3XXgxvTNBoKJMo6cZQ1/xzchcM3uxEfL65Xhn4g2IdKnG
+         qbG9Fn+2gE4urqIcstXVH39HJDSAX4nyHLVzDmRLVlkg3mKq1ZlcSefNOrzK+rtdAh89
+         7ZK5my/JskE4l9e7LK7ESYokS6B41b8YKFNbsN1vJzR+mxaWY89OKX2RwcmCCjTDifpL
+         792tDtj0hExxASmRM4duIZIyUKz2oQpCfhD89SiszmaHr71W3/mEOMq5+JyJ8QkuDsRg
+         MAM1E/1MTNb9RxM6GExpFHBH1zEpo5Avxmgo7oAvOhBrlDZGfro4ENNRdnPq1g7twg7t
+         Tq6A==
+X-Forwarded-Encrypted: i=1; AJvYcCXe1mZ/gvLCL0Not4cd5AfLgKELDPrwqjs3heAlykmRT5piXZDiFOYRBSzbT/wsTK2ENMhgh4opuAqB9Cw0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyPX4no9uug4rVnv+7cezD7Q7OZ4ei4MFZIgjBZrGvIFiGIxxL
+	06BKsMNVUugm0MBx9iaZcC95WzdLxFro9Kd3h7ovNQHuv+TKcxoRsXOEoan5Y2s=
+X-Google-Smtp-Source: AGHT+IG0BGCL/uld55vxEnmyp6p8cfwtL2b0uOPAyw08t7e4tq0ydjKfo3AyQfjiW9owlo+MdBT4cQ==
+X-Received: by 2002:a5d:5105:0:b0:374:d130:a43b with SMTP id ffacd0b85a97d-37d291a9ccdmr959081f8f.4.1728359571913;
+        Mon, 07 Oct 2024 20:52:51 -0700 (PDT)
+Received: from localhost ([2.125.184.148])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d16972b97sm6973289f8f.99.2024.10.07.20.52.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Oct 2024 20:52:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] soc: qcom: llcc: Add configuration data for QCS615
-To: Bjorn Andersson <andersson@kernel.org>
-CC: Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>, <kernel@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20240924-add_llcc_support_for_qcs615-v1-0-a9f3289760d3@quicinc.com>
- <20240924-add_llcc_support_for_qcs615-v1-2-a9f3289760d3@quicinc.com>
- <p72feqwqhs3gjzzq53gfaz4ljk2qjdgeanhzomyzvk5ymjdbg2@7jxdlknz2onv>
-Content-Language: en-US
-From: Song Xue <quic_songxue@quicinc.com>
-In-Reply-To: <p72feqwqhs3gjzzq53gfaz4ljk2qjdgeanhzomyzvk5ymjdbg2@7jxdlknz2onv>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wn2P2qXVvnaezRP7GECic5lSWQnrdd8F
-X-Proofpoint-GUID: wn2P2qXVvnaezRP7GECic5lSWQnrdd8F
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- adultscore=0 spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
- impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410080019
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 08 Oct 2024 04:52:50 +0100
+Message-Id: <D4Q4C17E1A8J.3O1CD1PDP51HH@linaro.org>
+Cc: <linux-sound@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <alsa-devel@alsa-project.org>, <linux-arm-msm@vger.kernel.org>,
+ <kernel@quicinc.com>, "Rohit kumar" <quic_rohkumar@quicinc.com>
+Subject: Re: [PATCH v1] ASoC: codecs: lpass-macro: Add support for channel
+ map mixer control
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Mohammad Rafi Shaik" <quic_mohs@quicinc.com>, "Liam Girdwood"
+ <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Jaroslav Kysela"
+ <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>, "Srinivas Kandagatla"
+ <srinivas.kandagatla@linaro.org>
+X-Mailer: aerc 0.18.2
+References: <20240930053111.3986838-1-quic_mohs@quicinc.com>
+In-Reply-To: <20240930053111.3986838-1-quic_mohs@quicinc.com>
 
+On Mon Sep 30, 2024 at 6:31 AM BST, Mohammad Rafi Shaik wrote:
+> From: Rohit kumar <quic_rohkumar@quicinc.com>
+>
+> Add channel map mixer control for lpass macro codec DAIs.
+>
+> Signed-off-by: Rohit kumar <quic_rohkumar@quicinc.com>
+> Co-developed-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+> ---
 
+IIUC there was off-the-list discussion about why it is needed.
+Could you please elaborate a bit more in the commit message?
 
-On 10/6/2024 10:03 AM, Bjorn Andersson wrote:
-> On Tue, Sep 24, 2024 at 06:07:12PM GMT, Song Xue wrote:
->> Add LLCC configuration support for the QCS615 platform.
->>
->> Signed-off-by: Song Xue <quic_songxue@quicinc.com>
->> ---
->>   drivers/soc/qcom/llcc-qcom.c | 23 +++++++++++++++++++++++
->>   1 file changed, 23 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
->> index 8fa4ffd3a9b5921d95c20648048dcdfa20dde5db..11507eb3efff101e4f330e7f4282a31aa172369d 100644
->> --- a/drivers/soc/qcom/llcc-qcom.c
->> +++ b/drivers/soc/qcom/llcc-qcom.c
->> @@ -151,6 +151,13 @@ enum llcc_reg_offset {
->>   	LLCC_COMMON_STATUS0,
->>   };
->>   
->> +static const struct llcc_slice_config qcs615_data[] =  {
->> +	{ LLCC_CPUSS,    1,  128, 1, 0, 0xF, 0x0, 0, 0, 0, 0, 1, 1 },
-> 
-> I accepted Konrad's reformatting of these tables, so please check
-> linux-next in a couple of days (or the qcom for-next today), update and
-> resubmit this.
-> 
-> While doing so, please use lowercase hex digits.
-> 
-> No other concerns.
-> 
-> Thanks,
-> Bjorn
-> 
-Got it. I will follow Konrad's reformatting and resubmit it.
+> --- a/sound/soc/codecs/lpass-macro-common.c
+> +++ b/sound/soc/codecs/lpass-macro-common.c
+> @@ -8,12 +8,67 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_domain.h>
+>  #include <linux/pm_runtime.h>
+> +#include <sound/control.h>
+> +#include <sound/pcm.h>
+> +#include <sound/soc.h>
+> =20
+>  #include "lpass-macro-common.h"
+> =20
+>  static DEFINE_MUTEX(lpass_codec_mutex);
+>  static enum lpass_codec_version lpass_codec_version;
+> =20
+> +static int lpass_macro_chmap_ctl_get(struct snd_kcontrol *kcontrol,
+> +				     struct snd_ctl_elem_value *ucontrol)
+> +{
+> +	struct snd_pcm_chmap *info =3D snd_kcontrol_chip(kcontrol);
+> +	struct snd_soc_dai *dai =3D info->private_data;
+> +	u32 *chmap_data =3D NULL;
+
+You don't really need to set chmap_data to NULL if you're going to overwrit=
+e
+it with a kzalloc() call a couple of lines below.
+
+> +	u32 rx_ch_cnt =3D 0;
+> +	u32 tx_ch_cnt =3D 0;
+> +	u32 rx_ch, tx_ch;
+> +
+> +	chmap_data =3D kzalloc(sizeof(u32) * 2, GFP_KERNEL);
+> +	if (!chmap_data)
+> +		return -ENOMEM;
+> +
+
+[...]
 
 Thanks,
-Song
+Alexey
 
->> +	{ LLCC_MDM,      8,  256, 0, 1, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
->> +	{ LLCC_GPUHTW,   11, 128, 1, 1, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
->> +	{ LLCC_GPU,      12, 128, 1, 0, 0xF, 0x0, 0, 0, 0, 0, 1, 0 },
->> +};
->> +
->>   static const struct llcc_slice_config sa8775p_data[] =  {
->>   	{LLCC_CPUSS,    1, 2048, 1, 0, 0x00FF, 0x0, 0, 0, 0, 1, 1, 0, 0},
->>   	{LLCC_VIDSC0,   2, 512, 3, 1, 0x00FF, 0x0, 0, 0, 0, 1, 0, 0, 0},
->> @@ -539,6 +546,16 @@ static const u32 llcc_v2_1_reg_offset[] = {
->>   	[LLCC_COMMON_STATUS0]	= 0x0003400c,
->>   };
->>   
->> +static const struct qcom_llcc_config qcs615_cfg[] = {
->> +	{
->> +		.sct_data	= qcs615_data,
->> +		.size		= ARRAY_SIZE(qcs615_data),
->> +		.need_llcc_cfg	= true,
->> +		.reg_offset	= llcc_v1_reg_offset,
->> +		.edac_reg_offset = &llcc_v1_edac_reg_offset,
->> +	},
->> +};
->> +
->>   static const struct qcom_llcc_config qdu1000_cfg[] = {
->>   	{
->>   		.sct_data       = qdu1000_data_8ch,
->> @@ -721,6 +738,11 @@ static const struct qcom_llcc_config x1e80100_cfg[] = {
->>   	},
->>   };
->>   
->> +static const struct qcom_sct_config qcs615_cfgs = {
->> +	.llcc_config	= qcs615_cfg,
->> +	.num_config	= ARRAY_SIZE(qcs615_cfg),
->> +};
->> +
->>   static const struct qcom_sct_config qdu1000_cfgs = {
->>   	.llcc_config	= qdu1000_cfg,
->>   	.num_config	= ARRAY_SIZE(qdu1000_cfg),
->> @@ -1375,6 +1397,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->>   }
->>   
->>   static const struct of_device_id qcom_llcc_of_match[] = {
->> +	{ .compatible = "qcom,qcs615-llcc", .data = &qcs615_cfgs },
->>   	{ .compatible = "qcom,qdu1000-llcc", .data = &qdu1000_cfgs},
->>   	{ .compatible = "qcom,sa8775p-llcc", .data = &sa8775p_cfgs },
->>   	{ .compatible = "qcom,sc7180-llcc", .data = &sc7180_cfgs },
->>
->> -- 
->> 2.25.1
->>
 
 
