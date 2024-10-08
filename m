@@ -1,128 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-33512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7629994456
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 11:32:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09301994477
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 11:39:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D2761F22083
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 09:32:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFED12840E3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 09:39:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFF35433DF;
-	Tue,  8 Oct 2024 09:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E7B818C922;
+	Tue,  8 Oct 2024 09:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="XYRYWS+z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iQ6TFrB8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869711667DA;
-	Tue,  8 Oct 2024 09:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62BF184551;
+	Tue,  8 Oct 2024 09:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728379945; cv=none; b=E2tjqs1lvZl7rvMwFas6/bFJ9zwAyzY265ih0XtEMrL3vftGpRSDflA60KD2L/TAtUoCWWyfneS8s4Ne0X7iyBtTYbpogBSshyApvavqtGGPIQD98oJF2siUL1oVi5rEC6EueEWaUY4q4J08GOBWIdph/ElBA/4D0axDpg3zRE0=
+	t=1728380350; cv=none; b=DmntDA+4wZknXvWYXc+YrJYfdFKbPalW3XED2hgFJiS0cmrxFLr2Anoy8P97qNQ5cPkNN5RloEECJ35+xiWhm4DNeo4fKTzSZFY7C8dDkcNwVKBNP9RPMcTap7LfbGrGk4SsBncFTEqsW+9TC5th5vEEanCSZ9Vv5wAUSRSCOJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728379945; c=relaxed/simple;
-	bh=DtNUvaG5aVRQZwY0O9ZpeWHToiPPIKHxJRMBlZXkudw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DKS+pAOXzT3gEFjxtMeySaszEAofHpp5gZ/sT+H3gct8bFdbte1/zwlsZU95yLhPTfXlFZcmn3cupuj6fnVxVebxaWJgHRAvJq4u+30l0ZHPH0qe000rM576Yghu+RCZ6DIzYUEA1tEkc8fE1+6XoMKSwIAVzuNn5XCeDSfYj8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=XYRYWS+z; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bombadil.srs.infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=xyGcAKqyXdq1kSPPIkmS99LVfnBS63wwbbsowm8iq4M=; b=XYRYWS+z8RIT/Be1e2fyTGrd8w
-	OBh+/6Eu8oetgJeuRXO6F/qwYxKs93aV+jSBfCUQZUZJuwswFVdCV8cfUI/KPCr+hpqzu915OEm38
-	tOkHhS0ZfpNycGScxB0pgnhWhUBXr1err78VRrD3tQLvcSDFYWQtqqJBzV69jpNmY/3khV+Co/aDq
-	VAIA7JLYOQlPeuZkAryO/CFCwR0gDMl3wekA74MHSI/HWLqOt0qqjilQGRw9Le8RRVAnc6G4GFaDe
-	TxfCMXqTAfi6s1U0TizGEdFRJSL/eLiVdQlFOPtJnNWrO9Y0b6Ay4himMovud1gGUhvuJOVQDhQDk
-	z93gEE8Q==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.98 #2 (Red Hat Linux))
-	id 1sy6ZW-00000005Jsk-3rIF;
-	Tue, 08 Oct 2024 09:32:02 +0000
-Date: Tue, 8 Oct 2024 02:32:02 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Julian Vetter <jvetter@kalrayinc.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, guoren <guoren@kernel.org>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
-	Matt Turner <mattst88@gmail.com>,
-	"James E . J . Bottomley" <James.Bottomley@hansenpartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Naveen N Rao <naveen@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	"linux-csky@vger.kernel.org" <linux-csky@vger.kernel.org>,
-	loongarch@lists.linux.dev, linux-m68k@lists.linux-m68k.org,
-	linux-alpha@vger.kernel.org, linux-parisc@vger.kernel.org,
-	linux-sh@vger.kernel.org, linux-um@lists.infradead.org,
-	Linux-Arch <linux-arch@vger.kernel.org>,
-	linuxppc-dev@lists.ozlabs.org, linux-s390@vger.kernel.org,
-	mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-mtd@lists.infradead.org, linux-sound@vger.kernel.org,
-	Yann Sionneau <ysionneau@kalrayinc.com>
-Subject: Re: [PATCH v8 01/14] Consolidate IO memcpy/memset into iomap_copy.c
-Message-ID: <ZwT8EjvlknRYeDas@infradead.org>
-References: <20241008075023.3052370-1-jvetter@kalrayinc.com>
- <20241008075023.3052370-2-jvetter@kalrayinc.com>
- <a9fa56b4-b00c-4941-8c8c-1d3b58b573e2@app.fastmail.com>
+	s=arc-20240116; t=1728380350; c=relaxed/simple;
+	bh=9z/cJJVc5YTvNuiK49ul3aPqJ+/9WhArwBDPx5yF/Kw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=GkgXVQkLpSuoM8SjuUFATYf3E1fjjd3yPR7B18K2a090TLfKW8D3Tb5iyn0fj10686h3dMlITKhoIJMEob8NUOi1RDRZp87tq28vBaRIupqgX2b6QJMkkn29IyzrQSzLqJtxe/FKE0TPZTZOsd+Mr/lxM5DK6vFnu7ysIKPe8V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iQ6TFrB8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4986in9T026816;
+	Tue, 8 Oct 2024 09:39:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	a3T3UzKLu9ltViqwnfnBybuDfhJZbIfLFf2Zb3zliP8=; b=iQ6TFrB8iPIW/nNU
+	JK2KRjxrkFtKoaM8kk+Ria4E0mv70ixlHZPEk9ENB5H+7/txpcPzkCu/+UC4fOk+
+	IAlw120zml3/dTUZ/k3V8rU8eaYQ9rRlpRADLhVG2qHeZ6q5RFRHrKQ9b9DzXHGz
+	9v61fFmGnpE4H7CwweCJGsWY+bEksc1a+HaqxKrbV7QLC8wrEgTPXe4QUr5G9Zyq
+	Pv1K0Fv9eEIRN/DErUsnBpcs+Mhs+mYMFR4mxvaw41y+XqmqaACO9l08IBkOHZk5
+	P1oxM5NNj2U3hBCnkBCecPSdx0Om7IVIj5bSqOtKsk/tfl/s7v/GGq9ACAAz0N5o
+	Gj3l6A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 422xq9xwhb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 08 Oct 2024 09:39:04 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4989d3ko023539
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 8 Oct 2024 09:39:03 GMT
+Received: from [10.217.216.81] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 8 Oct 2024
+ 02:38:59 -0700
+Message-ID: <b900d558-8ab0-436f-87bd-7a3d83e3dea0@quicinc.com>
+Date: Tue, 8 Oct 2024 15:08:56 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a9fa56b4-b00c-4941-8c8c-1d3b58b573e2@app.fastmail.com>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qcm6490: Allow UFS regulators load/mode
+ setting
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_kamalw@quicinc.com>,
+        <quic_jprakash@quicinc.com>
+References: <20241004080110.4150476-1-quic_kotarake@quicinc.com>
+ <jid5coqe4tpsafbi2haem6ye4vrpwyymkepduxkporfxzdi6cx@bfbodoxoq67l>
+Content-Language: en-US
+From: Rakesh Kota <quic_kotarake@quicinc.com>
+In-Reply-To: <jid5coqe4tpsafbi2haem6ye4vrpwyymkepduxkporfxzdi6cx@bfbodoxoq67l>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1euXo7adzyRVhTVUxUO76-tQsoulUmOF
+X-Proofpoint-GUID: 1euXo7adzyRVhTVUxUO76-tQsoulUmOF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 phishscore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 impostorscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0 mlxlogscore=843
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410080063
 
-On Tue, Oct 08, 2024 at 09:27:20AM +0000, Arnd Bergmann wrote:
-> >  #endif /* CONFIG_TRACE_MMIO_ACCESS */
-> > 
-> > +extern void memcpy_fromio(void *to, const volatile void __iomem *from,
-> > +			  size_t count);
-> > +extern void memcpy_toio(volatile void __iomem *to, const void *from,
-> > +			size_t count);
-> > +extern void memset_io(volatile void __iomem *dst, int c, size_t count);
-> > +
+
+
+On 10/7/2024 1:37 AM, Dmitry Baryshkov wrote:
+> On Fri, Oct 04, 2024 at 01:31:10PM GMT, Rakesh Kota wrote:
+>> The UFS driver expects to be able to set load (and by extension, mode)
+>> on its supply regulators. Add the necessary properties to make that
+>> possible.
+>>
+>> While at it, UFS rails have different voltage requirement for UFS2.x
+>> v/s UFS3.x. Bootloader sets the proper voltage based on UFS type.
+>> There can be case where the voltage set by bootloader is overridden
+>> by HLOS client.
+>>
+>> To prevent above issue, add change to remove voltage voting support
+>> for dedicated UFS rails.
 > 
-> I think having this globally visible is the reason you are running
-> into the mismatched prototypes.
+> add change to remove smth doesn't sound correct to me.
+> Please don't depend on the bootloader and describe hardware > configuration. If there can be two types of IDP boards and you can not
+> identify the voltage via other means, please create something like
+> qcm6490-idp-ufs3.dts. Please add proper Fixes tags.
+> Last, but not least, as Bjorn wrote, please split into two patches.
+> 
+sure, i will split the change into two.
 
-Yes, especially as architectures sometimes actually implement this
-as macro or inline function.
+Since we can’t differentiate IDP boards based on UFS versions while 
+loading the DT and we have only single board ID for the IDP's, it’s not 
+possible to create separate UFS-based DT files like qcm6490-idp-ufs3.dts 
+and ufs2.dtsi... etc.
 
-Please also drop the pointless externs while you're at it.
+And also UFS driver does not vote for voltage on UFS rails & they just 
+vote on load only.
+Hence to support both UFS 2.x and 3.x, we need to remove the voltage
+min/max voting. if add the min and max voltages in DT, then those
+initial voltage set by bootloader is overridden by regulator
+framework with min voltage specified in DT.
 
+Note: Bootloader have capability to detect the UFS version (where as 
+HLOS does not have that capability)
+
+Thank you for quick review!!
+>>
+>> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 12 ++++++++----
+>>   1 file changed, 8 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> index 84c45419cb8d..8a4df9c2a946 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+>> @@ -258,13 +258,15 @@ vreg_l6b_1p2: ldo6 {
+>>   			regulator-name = "vreg_l6b_1p2";
+>>   			regulator-min-microvolt = <1140000>;
+>>   			regulator-max-microvolt = <1260000>;
+>> +			regulator-allow-set-load;
+>> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>   		};
+>>   
+>>   		vreg_l7b_2p952: ldo7 {
+>>   			regulator-name = "vreg_l7b_2p952";
+>> -			regulator-min-microvolt = <2400000>;
+>> -			regulator-max-microvolt = <3544000>;
+>> +			regulator-allow-set-load;
+>> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>   		};
+>>   
+>> @@ -277,8 +279,8 @@ vreg_l8b_0p904: ldo8 {
+>>   
+>>   		vreg_l9b_1p2: ldo9 {
+>>   			regulator-name = "vreg_l9b_1p2";
+>> -			regulator-min-microvolt = <1200000>;
+>> -			regulator-max-microvolt = <1304000>;
+>> +			regulator-allow-set-load;
+>> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>   		};
+>>   
+>> @@ -467,6 +469,8 @@ vreg_l10c_0p88: ldo10 {
+>>   			regulator-name = "vreg_l10c_0p88";
+>>   			regulator-min-microvolt = <720000>;
+>>   			regulator-max-microvolt = <1050000>;
+>> +			regulator-allow-set-load;
+>> +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+>>   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>   		};
+>>   
+>> -- 
+>> 2.34.1
+>>
+> 
 
