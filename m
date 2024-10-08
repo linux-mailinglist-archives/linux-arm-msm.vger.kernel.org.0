@@ -1,261 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-33551-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F864994934
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:21:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B780994962
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:23:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 737C91C2335B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:21:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5D08B1C222A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:23:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38FCD178CC5;
-	Tue,  8 Oct 2024 12:20:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dH4tfhBP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 318F91DED58;
+	Tue,  8 Oct 2024 12:22:09 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236631DEFF1
-	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 12:20:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F291DEFE6;
+	Tue,  8 Oct 2024 12:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728390035; cv=none; b=a6YsuxO0Bg/fE/8yybijSwezYajk80omc5v8LljHAGK6h0rW9ng0MaZ8Wq/DkcYrsmWAub3dHzf8BVDAQ69sPwKgkx5YxEH0QJpAM0DXrxb3WESjPaKBhfQx2zfmYK6EMkHuIJHUKeUsId4aPjRDHWhKnT2ZLq/qLodbaJHECwA=
+	t=1728390129; cv=none; b=RuYW/D5Y93asvdBrrxLZufAO5PFBqMa7VruV7+K+pgALQ8VhT18HsfUfelv+jQ0SVMz+u+xrsu3UfQ5Yc93EnyXEnc5mTt5KbiZzQhPzhsWYwphjc6yjayqzXykZTBGQIP1S2shTf7DaANLKakS6AcMVqlPP/bEg262E9498Xxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728390035; c=relaxed/simple;
-	bh=5y/cz5R08rOxJCHK0Aj/mnQ+ztZX2npGMkE7PNgHu6w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oYpt96kY6yLt7cOLZaEPeAex3x4qnphycem3clwHzmi34DKcZmlsCWi3tbRb6/U4X5svvJimr3ChbIeGZTJkAXRMf8uq4dP4FDIp+nWyTdpHYrLSGGDuh9VDMqUzOzoZS1+rJUIojVpaX5qGsSlbuMyglDVoXpMk2Nn0iKwyh3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dH4tfhBP; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-5389ef4c28eso723456e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 05:20:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728390031; x=1728994831; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=o4ywl6VI0bSfSJ7uxcOzTs5VABfElpBNGL9ce9UraIM=;
-        b=dH4tfhBPben+Puc0RDD0jKQlOfzZBZmmb/HWJjFkqDBYodP3CC+f2C68UWC1JrL5cB
-         BC58omwn3t9BbVlWwnClBuL3/7Ig+PV2GaqDebGYn2sIHFqFIZCAeYMfB9R3C/yKynL/
-         L2Pe+oYk0OkS8kuOfMsf7s0n0xJpJrh/X3KbZAB75DD+uPg3Jc/GRzRmBHrIGoLR1J76
-         oVWpLvfjwHyp1v1Z7zIGxFiQ1SnNQMn7TnM/7BQd1TElQXmeBBab8uNg3NaZeOxCd82K
-         hy/UhmQXlKzWUGTVWcppjRRbAuOjTuAU9qjejT5N+aWUKfNOfkuYUgo80hOsEMK6pOa2
-         eSPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728390031; x=1728994831;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=o4ywl6VI0bSfSJ7uxcOzTs5VABfElpBNGL9ce9UraIM=;
-        b=tyoLEJdWkHEgCKyFRagHC5vlouN5uSRr7zY7g44iy1J3c1qcfKJgDB8Y9FCo5V5ray
-         xE23G3htTWB9DQOKi3uoeTwX8zO+VJFBgoEagEjkTcy8IOzbdodQ9RBLjeoMyV0B07RK
-         S2xJ2JwS+X5Uz7DFL0k8yYbRaIr4nGK0uuo/+9Tgr+AanDdj2BH9kWC7gQ443ZWGI0BT
-         5auNYjq/lUCFtyjq0mdfFsNWvK4G3ClTggc3IOqf2t++Kej9X58+kmwP4xWXSpUQyEW3
-         8CRMUeSo3JpfsJIrVnKi3zbO7jj/LjNPL+1zu2JXIHiSwOIEGqM6YqCB3EObetoeuMoG
-         qxUA==
-X-Forwarded-Encrypted: i=1; AJvYcCWS8kc0c6dOD+8peHoe7Ke6z7Efn25+aZpO8IEka/0GfhxFummfa1EN1bSsv6FOklRh8r1hT+6D9RCNrKKY@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyWimfYqd3cNXMWEDHYfKhnSTR83XLP/vHnmaL2v7ca/9ni2XB
-	R0ov2qd+D8MtuMt+TWfad3+peBmzaf7rQaGBPe8r3i2Vjg7zQKNV52cYYR88nOo=
-X-Google-Smtp-Source: AGHT+IGymtG1stGaLIEddofyRWh4PDJDMQ6v/DjXHnxk8nnHcuv85Ktp65IIT7bGYpbTHQbYBWdcbg==
-X-Received: by 2002:a05:6512:3190:b0:536:55a9:4b62 with SMTP id 2adb3069b0e04-539ab866580mr1980570e87.3.1728390031057;
-        Tue, 08 Oct 2024 05:20:31 -0700 (PDT)
-Received: from [192.168.1.4] (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539afec1187sm1185026e87.32.2024.10.08.05.20.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Oct 2024 05:20:29 -0700 (PDT)
-Message-ID: <f446c493-17d5-41ec-9848-8c8e31702fc4@linaro.org>
-Date: Tue, 8 Oct 2024 15:20:28 +0300
+	s=arc-20240116; t=1728390129; c=relaxed/simple;
+	bh=+kJ9fXDK/6WJEeAzWsbpG+CnS97D8U/z3i52apM6/Qk=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=dgPsAembGXlz7Oz38LOKlcKsVYrsJ5gCwzFmcLvp+SZFjeJNDdQafTYt8tcyTPIgE9QM7nJjkA7MptZntczmpO3iPJJGp3YUgVTVeX5ukq5vGUD2zkJrdB18E/DaZKTuHz07wNYzEKrQP7B83w59Hx/AbXzIieCFfHP6vswV+3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XNFWJ30y7z6K5rY;
+	Tue,  8 Oct 2024 20:21:48 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+	by mail.maildlp.com (Postfix) with ESMTPS id 49386140D1D;
+	Tue,  8 Oct 2024 20:22:03 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 8 Oct
+ 2024 14:21:58 +0200
+Date: Tue, 8 Oct 2024 13:21:57 +0100
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
+	<daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
+	<lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
+	<thara.gopinath@gmail.com>, Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>, Vasily Khoruzhick
+	<anarsoul@gmail.com>, Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai
+	<wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland
+	<samuel@sholland.org>, <linux-pm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-tegra@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-sunxi@lists.linux.dev>, Chen-Yu Tsai <wenst@chromium.org>
+Subject: Re: [PATCH v3 3/6] thermal: of: Use scoped device node handling to
+ simplify of_thermal_zone_find()
+Message-ID: <20241008132157.00006789@Huawei.com>
+In-Reply-To: <20241008-b4-cleanup-h-of-node-put-thermal-v3-3-825122398f71@linaro.org>
+References: <20241008-b4-cleanup-h-of-node-put-thermal-v3-0-825122398f71@linaro.org>
+	<20241008-b4-cleanup-h-of-node-put-thermal-v3-3-825122398f71@linaro.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] dt-bindings: media: qcom,sc8280xp-camss: Fix
- interrupt types
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>
-Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-media@vger.kernel.org, devicetree@vger.kernel.org
-References: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
- <20240923072827.3772504-2-vladimir.zapolskiy@linaro.org>
- <datahu33nmsser2p4fb2hyncsujtkwaca377ivwmpc6yj2naut@2sjsbebfm3gf>
- <3f87e855-8779-4df3-8f26-e3d2b611d3e9@linaro.org>
- <313667a6-afcd-44cb-a6f6-0d550e8f68a0@linaro.org>
- <4bf490cb-228d-4f01-a956-cacbafa94e2a@linaro.org>
- <5ea36051-1e1b-44ca-b5ef-d6305079201b@linaro.org>
- <80744e19-71f8-4ae7-b2e8-1dc14e55385c@linaro.org>
- <268d0dd0-a65f-4eaa-a317-fe9fcc06e718@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <268d0dd0-a65f-4eaa-a317-fe9fcc06e718@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ frapeml500008.china.huawei.com (7.182.85.71)
 
-On 10/8/24 15:06, Krzysztof Kozlowski wrote:
-> On 08/10/2024 14:03, Vladimir Zapolskiy wrote:
->>
->>
->> On 10/8/24 14:45, Krzysztof Kozlowski wrote:
->>> On 08/10/2024 13:37, Vladimir Zapolskiy wrote:
->>>> Hi Krzysztof.
->>>>
->>>> On 10/8/24 14:15, Krzysztof Kozlowski wrote:
->>>>> On 08/10/2024 12:02, Vladimir Zapolskiy wrote:
->>>>>> Hi Bjorn,
->>>>>>
->>>>>> On 10/6/24 05:36, Bjorn Andersson wrote:
->>>>>>> On Mon, Sep 23, 2024 at 10:28:22AM GMT, Vladimir Zapolskiy wrote:
->>>>>>>> The expected type of all CAMSS interrupts is edge rising, fix it in
->>>>>>>> the documented example from CAMSS device tree bindings for sc8280xp.
->>>>>>>>
->>>>>>>
->>>>>>> Who/what expects them to be RISING?
->>>>>>
->>>>>> I've checked CAMSS device tree bindings in a number of downstream kernels,
->>>>>> all of them describe interrupt types as edge rising.
->>>>>>
->>>>>> $ grep -Hn IRQF_TRIGGER drivers/media/platform/qcom/camss/*
->>>>>> drivers/media/platform/qcom/camss/camss-csid.c:619:			       IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN,
->>>>>> drivers/media/platform/qcom/camss/camss-csiphy.c:605:			       IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN,
->>>>>> drivers/media/platform/qcom/camss/camss-ispif.c:1164:			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
->>>>>> drivers/media/platform/qcom/camss/camss-ispif.c:1168:			       IRQF_TRIGGER_RISING, ispif->irq_name, ispif);
->>>>>> drivers/media/platform/qcom/camss/camss-vfe.c:1327:			       IRQF_TRIGGER_RISING, vfe->irq_name, vfe);
->>>>>
->>>>> Downstream has a lot of bad code, so I am not sure how good argument
->>>>> this is.
->>>>>
->>>>> I acked the patch because I assumed you *checked in hardware*.
->>>>>
->>>>>>
->>>>>>     From runtime point of view it's more important to get re-probed camss
->>>>>> driver, see an absolutely similar and previously discussed case (in the
->>>>>> cover letter):
->>>>>>
->>>>>> https://lore.kernel.org/lkml/20220530080842.37024-4-manivannan.sadhasivam@linaro.org/
->>>>>>
->>>>>> Now in runtime I get this error, it's easy to check by unbinding/binding any
->>>>>> camss device:
->>>>>>
->>>>>> irq: type mismatch, failed to map hwirq-509 for interrupt-controller@17a00000!
->>>>>>
->>>>>> Basically camss devices can not be bound on the second time on the
->>>>>> number of platforms touched by this changeset.
->>>>>
->>>>> This is solveable different way and I do not understand this rationale.
->>>>> The driver should not request trigger type but use what DTS is
->>>>> providing, unless of course only one valid trigger is possible.
->>>>
->>>> Right at the moment the driver uses rising edge type of interrupts, and
->>>> it works properly.
->>>>
->>>>> But so
->>>>> far you did not provide any arguments for this. Downstream crappy code?
->>>>
->>>> Downstream code works, that's the argument to support the change.
->>>
->>> That is not acceptable argument. If downstream has a bug, but somehow
->>> works, you will implement the same bug upstream?
->>>
->>> Downstream is well known of shortcuts, incomplete solutions and crappy
->>> code, which passes some tests but might not be really correct.
->>>
->>> I understand that downstream can be a supportive case, but not for level
->>> of interrupts! People, not only downstream but it's even worse there, do
->>> not see the difference between level and edge, between GPIO ACTIVE_HIGH
->>> and ACTIVE_LOW.
->>>
->>>>
->>>>> Nope. Existing driver? Same.
->>>>
->>>> The existing driver works, that's the argument to support the change.
->>>
->>> We are not going to get into such discussions. Code might be incorrect,
->>> but mostly works because race issues are very tricky to spot, yet you
->>> use that code as argument to say hardware is like that.
->>>
->>> No. Hardware is not because driver is written that way.
->>>
->>>
->>>>
->>>>> Was anything here actually checked with datasheets/hardware?
->>>>
->>>> The initially open question is unanswered, why sc8280xp CAMSS does
->>>
->>> This is about all CAMSS, not only sc8280xp.
->>>
->>>> specify interrupts as level high type, was it actually checked with
->>>> datasheets/hardware, as you say it? It has never been tested by anyone
->>>> and anywhere, downstream or upstream wise, only rising edge interrupts
->>>> were tested, and they do work.
->>>
->>> I did not ask about testing. I ask how the manual, hardware engineers
->>> designed it.
->>>
->>>>
->>>> I don't have access to datasheets or hardware of sc8280xp powered board,
->>>> someone may either verify, if CAMSS level high type interrupts are> supported/working at all or not (obviously its current presence in dts is
->>>> insufficient), or check the SoC datasheet.
->>>>
->>>> To sum up, the intention of this change:
->>>> 1) fix the unpleasant runtime issue with no regressions (it's been tested),
->>>
->>> Did you test races and all the tricky issues arising when you use
->>> incorrectly edged interrupts? Or you just checked that "interrupt works"?
->>
->> Right from the beginning and any other day CAMSS interrupts are tested as
->> rising edge interrupts. So, I don't undestand your point here, please
->> elaborate.
+On Tue, 08 Oct 2024 11:00:03 +0200
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
+
+> Obtain the device node reference with scoped/cleanup.h to reduce error
+> handling and make the code a bit simpler.
 > 
-> So you did not test whether these are correct interrupt types. What to
-> elaborate more? You have very tricky race condition, for example, so you
-> test that it is not possible.
+> Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Ah. I was wondering why you didn't do this in patch 1.
+Sensible to split though I'd have put it as patch 2 for the lazy reviewer
+to spot more easily ;)
 
-Krzysztof, we are going rounds...
-
-Every single user of CAMSS test only rising edge type of interrupts of
-the IP. What are the races you are talking about? I kindly ask to read
-the cover letter, it describes the problem fixed by the changeset.
-
->>>> 2) align CAMSS device description in firmware with known to work well
->>>> IP hardware configuration.
->>>
->>> Where is this description in firmware? Where is this IP hardware
->>> configuration? You just said it is purely on downstream driver.
->>
->> CAMSS IP configuration, in particular interrupt type, is done by the
->> upstream driver, note that the fixes in this changeset is also sent
->> against the upstream driver, tested on the upstream driver etc.
-> 
-> What does it even mean? You said "device description in firmware" and
-
-"Device description in firmware" is DTB.
-
-> "IP hardware configuration", but now speak about drivers.
-> 
-
-"IP hardware configuration" is done by the driver, this terminology does
-not cause any surprises or ambiguity, I hope.
-
-It's been always that "IP hardware configuration" of CAMSS interrupt types
-completely ignores "device description in firmware" of CAMSS interrupt types.
-
-By design due to endless problems with firmware like the one under discussion
-interrupt types derived from firmware are ignored, and their correction in DTS
-is problematic for whatever reason.
-
---
-Best wishes,
-Vladimir
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 
