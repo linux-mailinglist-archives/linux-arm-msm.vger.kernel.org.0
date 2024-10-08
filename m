@@ -1,61 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-33562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE495994C92
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:56:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98A9D994C95
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:56:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8B4E31F21D20
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:56:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BBC271C24F97
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:56:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55F9D1DF963;
-	Tue,  8 Oct 2024 12:55:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A62791DF977;
+	Tue,  8 Oct 2024 12:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e+0oo4Kq"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kUKEqIuz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03771DED7B;
-	Tue,  8 Oct 2024 12:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BB61DEFC8;
+	Tue,  8 Oct 2024 12:55:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392110; cv=none; b=j2DPw0l8x391IYt+SUe6Urrz+9Xem4t/YYI9haHJomymFgOtkefi12Tk/eObWy597HKrcL0o+4iTrB1d2j32DFPzBuTX+Delwp9sKTa7lH2gBD1lV7b5JtylykMOb/n9sfN+U1lt2qFkL85Mre37qftI39+Z5BzElF19vLO33YY=
+	t=1728392111; cv=none; b=eQIr/VqJaqXcq1Zb4Jm1qLslyeNKdU8WRc09DjoWAK+DPFv3FZUgKhKmlwGKu6mqYPKgQ4tT96X3SQPVl/Q4hUBLSMlCktvbFBQJ2p0/hyPqCdlQuXRzVCQepRVSkEI+R9tj81Q7RN5soZz+nmZwWyA8nvbeSUJR68Ik80kS6tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392110; c=relaxed/simple;
-	bh=W/8REqrQdTHd+qDJ2/5iMp35YiTZ1QX/JbTCEoy5fAo=;
+	s=arc-20240116; t=1728392111; c=relaxed/simple;
+	bh=zIKMNymzh3calR2YcOJ4dzupVmC+bIcnl6WLAC79MkY=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oWQCoQWgTUSSA5OdNCCP4BhIf1oiDa6Wy/sid2rMEoXkwVUaRYaKmiGRcHI9YaNJO4WIrlR0gxVFfdqMF933/BJJNAM7/Imyo2QGIBvF717P6EAIQqeY5QsXybUzk5Ng8+IeBnsQWcdsrZ6g1+mb9tAyhb2sDj0H1sUu/2RZZKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e+0oo4Kq; arc=none smtp.client-ip=205.220.168.131
+	 MIME-Version:Content-Type; b=O1d3okyxLvQrYV8oDyCIgfHnZUUbM4EeboAkOhK1jgWbXUim5YHwDkX6N5QFsoj4Z2oe3249By/046o+iFyr3kMeFohwva/sIfgphif6fz47I9vgw1xIaw9M4lPRxsb4jGfpmnsZ2Sh4SUKFHvCv47wnM3OOzOfRam4XsIRcUaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kUKEqIuz; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 498ALU3W000694;
-	Tue, 8 Oct 2024 12:54:51 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4984SZUj008683;
+	Tue, 8 Oct 2024 12:54:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	BFMDpKJoC3gGbeSWhMHemYJkkG9EX71QI5JoK2DDUbY=; b=e+0oo4KqfoV8iXvg
-	OjNkK/bnQdOQIYudGSsR33iWCYtZ/uVyXPglewose0r32zXTk9RgqWGwFTpEY+eh
-	bUFJu8C5wqpMDD1PqwF68Qxi3zZCfex++QnTSxNb/FJJ0JNhYZfHJqkOkT1i/x8i
-	8B3PXmE1ffBw/y/JrtelmpUrw+PuHavQLNjaT2Qf02PqLD2jF2ctIa6u1pUUfL7h
-	7HdQfNFnsYxIFj6lrbifEbM7Fpovs9L0/Bgkr6szATUAUKZmf2upHKGYD/WVi/qj
-	VJlw+cpkYbxFINA6hJb+bGv/vjncPTTOYOB3UDOZttyYnb1knYxPBzwhFQ91iWHV
-	vmQGGg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4252wsrdyj-1
+	5Y3aDgfRVLGgN3HidyyMfEpSeROSQeQY3w2wK0D8Bno=; b=kUKEqIuzgveRlMxZ
+	h3oUIAcJ5m/MU7eVvfS+AY+ztwe/dj9kCTDjEgdwGnObt3KKJK6RFjder0B/bFgm
+	X6hnOG8OHnNoAdXcUuH1WsBnzT1XGLA9gFUaBIJqHYX4K6+AaDV4x12GPHfVVw3d
+	AE7IEtU5U+tZIGjU3noSYWO5KpLCB7BjVj9zOowMgzrXMEBPRLopfAgfIYL/OPQT
+	KqfiyEXbKg5GjYoJXLrZrYV0p5bsF3R+TzhERSkID7txhLjafuJUXtqB8RDLCimt
+	SM2RdzdLdC7UHtP7AzdSYUr4ruFmoyOon2dTRjSwOAKebGtB9RXRWdzwuxqizX7f
+	HOjZ+A==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424wrc1a87-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 12:54:51 +0000 (GMT)
+	Tue, 08 Oct 2024 12:54:55 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 498Csodi001466
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 498CstDD018302
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Oct 2024 12:54:50 GMT
+	Tue, 8 Oct 2024 12:54:55 GMT
 Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
  nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 8 Oct 2024 05:54:45 -0700
+ 15.2.1544.9; Tue, 8 Oct 2024 05:54:50 -0700
 From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
 To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
         <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
@@ -64,9 +64,9 @@ To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
 CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
         <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
         <quic_bibekkum@quicinc.com>
-Subject: [PATCH v16 3/5] iommu/arm-smmu: add support for PRR bit setup
-Date: Tue, 8 Oct 2024 18:24:08 +0530
-Message-ID: <20241008125410.3422512-4-quic_bibekkum@quicinc.com>
+Subject: [PATCH v16 4/5] iommu/arm-smmu: introduction of ACTLR for custom prefetcher settings
+Date: Tue, 8 Oct 2024 18:24:09 +0530
+Message-ID: <20241008125410.3422512-5-quic_bibekkum@quicinc.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
 References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
@@ -82,136 +82,91 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TEYJNcOi95Yv8HFFnGUto--n2WI3sk8n
-X-Proofpoint-GUID: TEYJNcOi95Yv8HFFnGUto--n2WI3sk8n
+X-Proofpoint-GUID: G2XJY01WNtfEcPUb8q1pQCvDGAxK6gmS
+X-Proofpoint-ORIG-GUID: G2XJY01WNtfEcPUb8q1pQCvDGAxK6gmS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 spamscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 bulkscore=0 clxscore=1015 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 mlxscore=0 clxscore=1015 spamscore=0
+ adultscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410080081
 
-Add an adreno-smmu-priv interface for drm/msm to call
-into arm-smmu-qcom and initiate the PRR bit setup or reset
-sequence as per request.
+Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
+the TLB to fetch just the next page table. MMU-500 features ACTLR
+register which is implementation defined and is used for Qualcomm SoCs
+to have a custom prefetch setting enabling TLB to prefetch the next set
+of page tables accordingly allowing for faster translations.
 
-This will be used by GPU to setup the PRR bit and related
-configuration registers through adreno-smmu private
-interface instead of directly poking the smmu hardware.
+ACTLR value is unique for each SMR (Stream matching register) and stored
+in a pre-populated table. This value is set to the register during
+context bank initialisation.
 
-Suggested-by: Rob Clark <robdclark@gmail.com>
 Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 37 ++++++++++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu.h      |  2 ++
- include/linux/adreno-smmu-priv.h           | 10 +++++-
- 3 files changed, 48 insertions(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 26 ++++++++++++++++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  1 +
+ 2 files changed, 27 insertions(+)
 
 diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 6e0a2a43e45a..38ac9cab763b 100644
+index 38ac9cab763b..2d2c1e75632c 100644
 --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
 +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -25,6 +25,7 @@
-
- #define CPRE			(1 << 1)
- #define CMTLB			(1 << 0)
-+#define GFX_ACTLR_PRR		(1 << 5)
-
- static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
- {
-@@ -109,6 +110,40 @@ static void qcom_adreno_smmu_resume_translation(const void *cookie, bool termina
- 	arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_RESUME, reg);
+@@ -252,6 +252,20 @@ static bool qcom_adreno_can_do_ttbr1(struct arm_smmu_device *smmu)
+ 	return true;
  }
 
-+static void qcom_adreno_smmu_set_prr_bit(const void *cookie, bool set)
++static void qcom_smmu_set_actlr_dev(struct device *dev, struct arm_smmu_device *smmu, int cbndx,
++		const struct of_device_id *client_match)
 +{
-+	struct arm_smmu_domain *smmu_domain = (void *)cookie;
-+	struct arm_smmu_device *smmu = smmu_domain->smmu;
-+	const struct device_node *np = smmu->dev->of_node;
-+	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
-+	u32 reg = 0;
++	const struct of_device_id *match =
++			of_match_device(client_match, dev);
 +
-+	if (of_device_is_compatible(np, "qcom,smmu-500") &&
-+			of_device_is_compatible(np, "qcom,adreno-smmu")) {
-+		reg =  arm_smmu_cb_read(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR);
-+		reg &= ~GFX_ACTLR_PRR;
-+		if (set)
-+			reg |= FIELD_PREP(GFX_ACTLR_PRR, 1);
-+		arm_smmu_cb_write(smmu, cfg->cbndx, ARM_SMMU_CB_ACTLR, reg);
++	if (!match) {
++		dev_dbg(dev, "no ACTLR settings present\n");
++		return;
 +	}
++
++	arm_smmu_cb_write(smmu, cbndx, ARM_SMMU_CB_ACTLR, (unsigned long)match->data);
 +}
 +
-+static void qcom_adreno_smmu_set_prr_addr(const void *cookie, phys_addr_t page_addr)
-+{
-+	struct arm_smmu_domain *smmu_domain = (void *)cookie;
+ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+ 		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+ {
+@@ -316,8 +330,20 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
+ static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
+ 		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
+ {
 +	struct arm_smmu_device *smmu = smmu_domain->smmu;
-+	const struct device_node *np = smmu->dev->of_node;
++	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
++	const struct of_device_id *client_match;
++	int cbndx = smmu_domain->cfg.cbndx;
 +
-+	if (of_device_is_compatible(np, "qcom,smmu-500") &&
-+			of_device_is_compatible(np, "qcom,adreno-smmu")) {
-+		writel_relaxed(lower_32_bits(page_addr),
-+					smmu->base + ARM_SMMU_GFX_PRR_CFG_LADDR);
-+
-+		writel_relaxed(upper_32_bits(page_addr),
-+					smmu->base + ARM_SMMU_GFX_PRR_CFG_UADDR);
-+	}
-+}
-+
- #define QCOM_ADRENO_SMMU_GPU_SID 0
+ 	smmu_domain->cfg.flush_walk_prefer_tlbiasid = true;
 
- static bool qcom_adreno_smmu_is_gpu_device(struct device *dev)
-@@ -249,6 +284,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
- 	priv->get_fault_info = qcom_adreno_smmu_get_fault_info;
- 	priv->set_stall = qcom_adreno_smmu_set_stall;
- 	priv->resume_translation = qcom_adreno_smmu_resume_translation;
-+	priv->set_prr_bit = qcom_adreno_smmu_set_prr_bit;
-+	priv->set_prr_addr = qcom_adreno_smmu_set_prr_addr;
-
++	client_match = qsmmu->data->client_match;
++
++	if (!client_match)
++		return 0;
++
++	qcom_smmu_set_actlr_dev(dev, smmu, cbndx, client_match);
++
  	return 0;
  }
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.h b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-index e2aeb511ae90..2dbf3243b5ad 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.h
-@@ -154,6 +154,8 @@ enum arm_smmu_cbar_type {
- #define ARM_SMMU_SCTLR_M		BIT(0)
 
- #define ARM_SMMU_CB_ACTLR		0x4
-+#define ARM_SMMU_GFX_PRR_CFG_LADDR	0x6008
-+#define ARM_SMMU_GFX_PRR_CFG_UADDR	0x600C
-
- #define ARM_SMMU_CB_RESUME		0x8
- #define ARM_SMMU_RESUME_TERMINATE	BIT(0)
-diff --git a/include/linux/adreno-smmu-priv.h b/include/linux/adreno-smmu-priv.h
-index c637e0997f6d..03466eb16933 100644
---- a/include/linux/adreno-smmu-priv.h
-+++ b/include/linux/adreno-smmu-priv.h
-@@ -49,7 +49,13 @@ struct adreno_smmu_fault_info {
-  *                 before set_ttbr0_cfg().  If stalling on fault is enabled,
-  *                 the GPU driver must call resume_translation()
-  * @resume_translation: Resume translation after a fault
-- *
-+ * @set_prr_bit:   Extendible interface to be used by GPU to modify the
-+ *		   ACTLR register bits, currently used to configure
-+ *		   Partially-Resident-Region (PRR) bit for feature's
-+ *		   setup and reset sequence as requested.
-+ * @set_prr_addr:  Configure the PRR_CFG_*ADDR register with the
-+ *		   physical address of PRR page passed from
-+ *		   GPU driver.
-  *
-  * The GPU driver (drm/msm) and adreno-smmu work together for controlling
-  * the GPU's SMMU instance.  This is by necessity, as the GPU is directly
-@@ -67,6 +73,8 @@ struct adreno_smmu_priv {
-     void (*get_fault_info)(const void *cookie, struct adreno_smmu_fault_info *info);
-     void (*set_stall)(const void *cookie, bool enabled);
-     void (*resume_translation)(const void *cookie, bool terminate);
-+    void (*set_prr_bit)(const void *cookie, bool set);
-+    void (*set_prr_addr)(const void *cookie, phys_addr_t page_addr);
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+index b55cd3e3ae48..8addd453f5f1 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
+@@ -28,6 +28,7 @@ struct qcom_smmu_match_data {
+ 	const struct qcom_smmu_config *cfg;
+ 	const struct arm_smmu_impl *impl;
+ 	const struct arm_smmu_impl *adreno_impl;
++	const struct of_device_id * const client_match;
  };
 
- #endif /* __ADRENO_SMMU_PRIV_H */
+ irqreturn_t qcom_smmu_context_fault(int irq, void *dev);
 --
 2.34.1
 
