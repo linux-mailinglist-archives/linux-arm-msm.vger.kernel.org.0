@@ -1,153 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-33564-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33565-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B0C3994C9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 14:56:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6D90994F5E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 15:27:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7302F1C25003
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 12:56:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9D7C8287878
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 13:27:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE0691DFD89;
-	Tue,  8 Oct 2024 12:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4ABA1DF966;
+	Tue,  8 Oct 2024 13:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kVs9Gj79"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LBeopE5t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AB41DEFF3;
-	Tue,  8 Oct 2024 12:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319A21DF263
+	for <linux-arm-msm@vger.kernel.org>; Tue,  8 Oct 2024 13:24:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728392116; cv=none; b=AdB3Z1VOayJUy9uMtVb1ns4UBOrz1VavGY3G1oSMZ866sRcENT+qv7XFS7YbGAGvzgTYKLjIm83wKpsQqusa3D4UEewoAePHTZ+D+rbZ2cPtzhBd9qcrC5zcQIKEZY/uiQa2nqWqwbeN2rDDtptPT6v9zeGwdIcp9h1I2duMc34=
+	t=1728393875; cv=none; b=DSDIr5G1p6y1U+aUypWrU7JuhunqsXL7ps4/sbhBZDv+qhrT2VTGtw3wXGghPj6IaWq4LEKDAsA4QYkwTiu3kT9tr5H30yD6u39NaJFEAjS8BYlAHLIcPqzL8pdS05hcj+GtHmjgRR5rbpdKVD1tEpwdPhR6r5IBOtf6RtY22n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728392116; c=relaxed/simple;
-	bh=l/b19yHhRgowD8uZbq6v6nd8mEoqlnR2l3DgywaCr+k=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m2qseMmCCPEFyh28nlxxpu16fGs3K5RRQUIsuEuV2j1Bbwmek4DTCw2zFFewQFv+JFlGmXMKYvGsKO3LTpULJENCBmZvkb2WPbRT0rxJRwVSQVCbs2O5jWQJCpO8dT/S33eWMig4jTSgJVpgVdnXr0TdbZKJDmSbpUxKQd+w8HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kVs9Gj79; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4984Sbkm008697;
-	Tue, 8 Oct 2024 12:55:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fgmdtKlode30qWQkEogieWVhsRaELfprkiUceOphRvQ=; b=kVs9Gj79jI1cZTEv
-	oL+mPYKT28MdNx+ceE/8oxO/MliFHCgtm5uzcPVfx3ZDVV0bAubLOpxCtf+dPOtn
-	C8nihZFxTlVEB/uvh506KrDHM+1r1ON27SMpbExq3m6BomutSqr0fDd7bTtIvWMT
-	M3/taqdDxoBqteYsY1zeZzOEOSiughmlNycly9KEL+u+hAUzCxsJGZW+LhvRJahZ
-	rfg6xvyAnlZvB9OcEtmak2rqJONzyjiH+i0836929AqG61KNyW43+qQRPovZhLSu
-	N9w2IEM2vs2Ccs0g1l4gQS0FK5qS2SDrxXEn5jF3cwGMhLjJfIfXhgkAlpcxvASR
-	rkDxzA==
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424wrc1a8h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 12:55:00 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 498CsxOV026523
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 8 Oct 2024 12:54:59 GMT
-Received: from hu-bibekkum-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 8 Oct 2024 05:54:55 -0700
-From: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
-To: <robdclark@gmail.com>, <will@kernel.org>, <robin.murphy@arm.com>,
-        <joro@8bytes.org>, <jgg@ziepe.ca>, <jsnitsel@redhat.com>,
-        <robh@kernel.org>, <krzysztof.kozlowski@linaro.org>,
-        <quic_c_gdjako@quicinc.com>, <dmitry.baryshkov@linaro.org>
-CC: <iommu@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <quic_bibekkum@quicinc.com>
-Subject: [PATCH v16 5/5] iommu/arm-smmu: add ACTLR data and support for qcom_smmu_500
-Date: Tue, 8 Oct 2024 18:24:10 +0530
-Message-ID: <20241008125410.3422512-6-quic_bibekkum@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
-References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
+	s=arc-20240116; t=1728393875; c=relaxed/simple;
+	bh=y1H4tFAZHXilginmSUS70vvO9bbl+xN0spDfhc8WWaw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HDtYx2X5FQRmuCYe+MZjFwPQElzrVsl5w1iuxjlzrogGOqN2RTxrUj2rUHkCAjl9cH3zNeiFrLhP3cjQebEH4TqSGQx4uZDU/aE3m03h1XltMRbw9JB3HdukScSQFFAFK1N+8kFjVv5TY7/bdd3zT+/1sSqs+ikPceffk6DTQYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LBeopE5t; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c721803a89so7603509a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 08 Oct 2024 06:24:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728393871; x=1728998671; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jhVJPgejSr18zw9jTwWHWbDuUXIWkeFlgvOaW5vk+Ro=;
+        b=LBeopE5tpNMl3ZZ/CmE3dBJ+SLbbHtArnIvY+JtEoBNGtw/zb4WeL2ehaTWPrsH72V
+         1mvPU+Js9hdrezoN8q5QLIqJ5w2vEayKdIpEQPNR3uu6Ul3gjHpFqs7KP0px3fsOdR36
+         7oW/siBtCW4S7brBq7VDdG00evqDfu6CRAOgl5MRn/UX6WPubHRKN/T+TM1neM0Htdxs
+         R9tuBD/qe2zuAG3zjDkMht2JTHN0zSC+5Hip1K6c1XH4hg59z6l6A733KTRbSDQVWmQp
+         OlUcrZY0GVlILpnGI0KZmScoQlTSCRAkcG8Jgr37uQE9DNVU10IvSYboFKyjbL/2EzWV
+         OZYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728393871; x=1728998671;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jhVJPgejSr18zw9jTwWHWbDuUXIWkeFlgvOaW5vk+Ro=;
+        b=iE2Axc1DxA/baD2UE6w0M7tinCSXPwuiTEbgTw6sj6b3/i9tpyk2+7Ik2XNfrhivl5
+         QB980AmbnN3feBJXMYJusuMOZEY/OX76EhDQtC/yq80Tm26UonjhZW+LeCgwYB677+g4
+         7fQa1LU/VLLmB9+nXFVljlt41QoYPNPZtGTOOxiAYjpbvK/TOeQo+jbHswiYrrkWE0g3
+         ML0vkYHvU/1hiwkmC8HpZFCuiCJNcMdlq0QJaxflhLbUnu9MZOp2UP9r/EXpuFE8ndPN
+         1mIACKQUlSJxL3eUdHutTRei6CeMW0eFgNxn3xPsDUTOzOBEMi2sQYOpMPMl69HRSER4
+         02cQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXJCv+sOcpgxu4Ix6x1zPgMfYa85ZU+r4hGQaxX68Q3rhDS3c9ZfRZFYM1QkAvHbvJhGCxa3QQhRfd42vw9@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVUKth2lgGoxH/OlmQh6Wf6tMNNk5UV1w7DDXd5KOspTpJvbDX
+	N5gNWwK3jZeMRS1n4qXMX+9bAB3ayovd3iX2dEFcAGZO5YVsjWAC/Wd9YcHSepw=
+X-Google-Smtp-Source: AGHT+IHebkivZhrf6qbuAzEVcNiLs2OZJfPKKnHfW2X4gCMsFW3tO1DlQoGICsbXkwZ5EyF+Brot7g==
+X-Received: by 2002:a05:6402:3717:b0:5c8:8610:98b0 with SMTP id 4fb4d7f45d1cf-5c8d2e71a2bmr15714624a12.27.1728393871511;
+        Tue, 08 Oct 2024 06:24:31 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c8e0598abdsm4327357a12.3.2024.10.08.06.24.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Oct 2024 06:24:31 -0700 (PDT)
+Message-ID: <bb138ed9-2abe-43ec-80af-2d77b7349b37@linaro.org>
+Date: Tue, 8 Oct 2024 14:24:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: tbrYY9ZAs0jOHVCenqJBWH9BW1rFzCEn
-X-Proofpoint-ORIG-GUID: tbrYY9ZAs0jOHVCenqJBWH9BW1rFzCEn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
- impostorscore=0 suspectscore=0 mlxscore=0 clxscore=1015 spamscore=0
- adultscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410080081
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] dt-bindings: media: qcom,sc8280xp-camss: Fix
+ interrupt types
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-media@vger.kernel.org, devicetree@vger.kernel.org
+References: <20240923072827.3772504-1-vladimir.zapolskiy@linaro.org>
+ <20240923072827.3772504-2-vladimir.zapolskiy@linaro.org>
+ <datahu33nmsser2p4fb2hyncsujtkwaca377ivwmpc6yj2naut@2sjsbebfm3gf>
+ <3f87e855-8779-4df3-8f26-e3d2b611d3e9@linaro.org>
+ <313667a6-afcd-44cb-a6f6-0d550e8f68a0@linaro.org>
+ <4bf490cb-228d-4f01-a956-cacbafa94e2a@linaro.org>
+ <27f39cda-932c-4b79-84d4-be78d266ebdf@linaro.org>
+ <c18a92f0-5824-417c-94b2-ed10f4580cfd@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <c18a92f0-5824-417c-94b2-ed10f4580cfd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add ACTLR data table for qcom_smmu_500 including
-corresponding data entry and set prefetch value by
-way of a list of compatible strings.
+On 08/10/2024 13:00, Vladimir Zapolskiy wrote:
+>> Rising or High can both be justified, its really down to how your
+>> interrupt controller latches the state change. However I personally am
+>> fine with the change you've provided because I trust it fixes an error
+>> for you.
+> 
+> Please share the change to the driver, which you've used to test
+> high level type of interrupts, shall it be send for upstream inclusion?
+> 
+> Such a change has never been a subject of discussion.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+I tried running libcamera "cam" application to capture a data stream 
+before and after your change - from memory at least on the sc8280xp and 
+I think on 8250 too.
+
+What I haven't tested is unloading and reloading the kernel module. My 
+understanding of your bug report is your change fixes an error on reload.
+
+?
+
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 24 ++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 2d2c1e75632c..dd4fb883ebcd 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -25,8 +25,31 @@
-
- #define CPRE			(1 << 1)
- #define CMTLB			(1 << 0)
-+#define PREFETCH_SHIFT		8
-+#define PREFETCH_DEFAULT	0
-+#define PREFETCH_SHALLOW	(1 << PREFETCH_SHIFT)
-+#define PREFETCH_MODERATE	(2 << PREFETCH_SHIFT)
-+#define PREFETCH_DEEP		(3 << PREFETCH_SHIFT)
- #define GFX_ACTLR_PRR		(1 << 5)
-
-+static const struct of_device_id qcom_smmu_actlr_client_of_match[] = {
-+	{ .compatible = "qcom,adreno",
-+			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-+	{ .compatible = "qcom,adreno-gmu",
-+			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-+	{ .compatible = "qcom,adreno-smmu",
-+			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-+	{ .compatible = "qcom,fastrpc",
-+			.data = (const void *) (PREFETCH_DEEP | CPRE | CMTLB) },
-+	{ .compatible = "qcom,sc7280-mdss",
-+			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
-+	{ .compatible = "qcom,sc7280-venus",
-+			.data = (const void *) (PREFETCH_SHALLOW | CPRE | CMTLB) },
-+	{ .compatible = "qcom,sm8550-mdss",
-+			.data = (const void *) (PREFETCH_DEFAULT | CMTLB) },
-+	{ }
-+};
-+
- static struct qcom_smmu *to_qcom_smmu(struct arm_smmu_device *smmu)
- {
- 	return container_of(smmu, struct qcom_smmu, smmu);
-@@ -640,6 +663,7 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
- 	.impl = &qcom_smmu_500_impl,
- 	.adreno_impl = &qcom_adreno_smmu_500_impl,
- 	.cfg = &qcom_smmu_impl0_cfg,
-+	.client_match = qcom_smmu_actlr_client_of_match,
- };
-
- /*
---
-2.34.1
-
+bod
 
