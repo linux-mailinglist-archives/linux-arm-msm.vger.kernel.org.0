@@ -1,281 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-33606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95C449957D6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 21:46:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B9CA999582B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 22:10:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EC99AB21D4D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 19:46:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3C82F28A8DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 20:10:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 670FD212D3E;
-	Tue,  8 Oct 2024 19:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 495BD213EFB;
+	Tue,  8 Oct 2024 20:10:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ik4UzACq"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="kMRjwYXQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05on2049.outbound.protection.outlook.com [40.107.22.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E52F9C0;
-	Tue,  8 Oct 2024 19:46:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728416806; cv=none; b=gCGc3C7+ldpXBpyq0YXM82UXQaRoXgLb0YLqxkhaS8+AEepfcQ8hUlPMIb59rcW5HRX7ipM4URtd5tC5VnwZRL7FA0YXAwwGTTaNN5w/3snKKDEHqLmmnvhqeyuEQwCN/ymK32lPnhmUe11cJv3dF2hT2z1DT1nxnGMFowxn6Eo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728416806; c=relaxed/simple;
-	bh=vTQ93XUpOUKF6OTPDRe2FpgaOt0EU8TN1/c5J7zUW7g=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=q7Jc6y6E0ibNnUDUKdHYPxIRZDNYxDRTmV+Qft2/p1U4UqmZI299ynzMs6ki3KaepodLq/IIdVGJgoHvqQZMmnYB2o6R6XUEuSLN1WorU0HGTCQKZ0w4q9BnPJ8IbNTLxc6ZbeAt+JZWwIROykyNKBbn9v/vnyFxOm6s1HyRVtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ik4UzACq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 498ET5Mu025622;
-	Tue, 8 Oct 2024 19:46:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=UTKztLeRZ5Zeh58cINrurW5qOVBYrEVcmjr
-	tJ5gkR7Q=; b=ik4UzACqPZpfNhW7zZMJW1DEPlLZaW2uqeASEb3PbABTzgTWnNn
-	PGfPflEKVENUoI5SV9FV+wy2Pvx21gtjl+9R44kdGisZXfhfBR9jrOyjZ1zHUY4R
-	2IziO9caZAF4zyollAIvXieWfKC4TZhZiuZqIpbq5p2piD3wnMuuFMBZY8Vi7XiB
-	6poJfb06y24mmTWmdqg/SyYy2EsvmYlRDjCEsVjMcl5X2YsG+Wrl3ll/gMtv+z5G
-	9eraEJWgZQQ85PjNArLN4k7Mk+GIt2rjxdih08ZFxFijBSNbSjOxRjkSobltKxeA
-	iDljb1MyACGNYzQOAFerFgYQHkEolfeNrIw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4252wssk93-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 19:46:40 +0000 (GMT)
-Received: from pps.filterd (NALASPPMTA02.qualcomm.com [127.0.0.1])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 498JedqQ004700;
-	Tue, 8 Oct 2024 19:46:40 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 424xwbpp9v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 19:46:40 +0000
-Received: from NALASPPMTA02.qualcomm.com (NALASPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 498Jf3Ui005037;
-	Tue, 8 Oct 2024 19:46:40 GMT
-Received: from hu-devc-lv-u22-c.qualcomm.com (hu-uchalich-lv.qualcomm.com [10.81.89.1])
-	by NALASPPMTA02.qualcomm.com (PPS) with ESMTPS id 498JkdSG011613
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 08 Oct 2024 19:46:39 +0000
-Received: by hu-devc-lv-u22-c.qualcomm.com (Postfix, from userid 4184210)
-	id B878039C; Tue,  8 Oct 2024 12:46:39 -0700 (PDT)
-From: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: Unnathi Chalicheemala <quic_uchalich@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@quicinc.com
-Subject: [PATCH] soc: qcom: llcc: Add per slice counter and common llcc slice descriptor
-Date: Tue,  8 Oct 2024 12:46:36 -0700
-Message-Id: <20241008194636.3075093-1-quic_uchalich@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1354A20CCF7;
+	Tue,  8 Oct 2024 20:09:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.22.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1728418200; cv=fail; b=fmLSuXEQsSIKm8Y+RG2DozAIYFW+X24/0iV5oK4NSTumCvr+7H2O6xlMU7AEgBIBwq3JRPBqjTTmtXi4StDBg9unOavQpMAaFDv6rlLAVu+Jfk9kiHB7beE0D/BdQIaIFtWyeuFDKTeLix6I4aCkKL+eak74xG5Ksi71F2BAF7c=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1728418200; c=relaxed/simple;
+	bh=1GW5fgvxQO5QAYnmuV2Hs2L7faplbrMuFiLzCQ0wokE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=uJMb3kEPT+2pSLk749Z7wg2vf+bjrXuujKmBud2jMNxjmvYysy953qk8UFYPbTwHvlR8U6RkKqOk/XvkXhfDIcSfkiyZrEkuQZ6XLRHoRHQ8ja42zAq7UsDU0eLl+2mXyAKXKhpzDYZ5qN6iDD6nO9BLEaTF5G492md/H2btAV4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=kMRjwYXQ; arc=fail smtp.client-ip=40.107.22.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SjP1/RUqA7Lc9ni6Zv5QGV/IycIwodF+joTq52+gmts9HhwIwDeWFWs8rV/I5LR+sFrlCW28eBDYNXizcdr/72rmAkkm80HRc8h6z+i6J/Rbyxd2hY/sBYhe8g43rAzSuuvH1BKuwSSHv5OtUt68+aobHYrogfhgzKmIQyILaFMcX/YBRYACL9E4x3VFuLIKdsYkOP9NSerzUjkQVGUsc0WRFrvySy8Wcl6fz1IubBsMN1NemlY+eFUNyalOfifDPJANFiIeSuZTfxQjfm8vqlpIgR82DanvTW8uVc4NVyzAlEnwoRFYu9ONUmeqe8/At8CvgnJWRc1xAg+1KHMetg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=2ls5buFucBZ5jJe9UmhFWr+aTdk7frj8BsQRHjZ7YOk=;
+ b=odcefle2a7TiNmA7kIiuU5r2QfHhwEiTbSTAiaxjxeh2i+ykRf9zjzHht7xdV08t2WYDNi0Je06R/auWyEznOtYFbK+3AF8mFKk+5K21lfzt8wQrNZdQcC9Q7dRGYMEBX54757ZYTMGCjcd8E2cAjSK6lqg4w2HX2SJxjicI/ySn3Gg6lWf+ba1qHKXG3Y6dunLXblCu7UUERl2hSj1UNzC4WC8R9dxJr2FaQorkFrpbRy/u3JUYlczhke0/e8jrbrdmJd7kSJJcTNeoWKOpEUtJxky22BdSYucMwljk3HnnBp/zcacaCHHxTYpbShYDF3Pu7c3POdMEkMswxULGwQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=2ls5buFucBZ5jJe9UmhFWr+aTdk7frj8BsQRHjZ7YOk=;
+ b=kMRjwYXQMvFxhIgW1Xt4eIPOSnkh/kgRj6Ydwf5rsYnLv8wqEpNkn/JqwHpl0eC/EA2ylZKS9MgfVS7TKRHOmc4iA+92hKI5br3qxEdljq3bqtDKPNLTab29kVCBQVsKT/a7Et3y/XuaQHs7aNw1YD+OzjEPbGBbDkZRNfnQWfcp3mw3KmuCsmG+Fe00j2WYWmMxrrefpOxN9OXkQK7SNdMi8pkVpHZV5VHyA20xVfTM7QZai6rfn7l5kW2Aiarn8cwRjaSGBxQRdaMinf4Wy5nq4A3CEwoXJEI2D123tPfcBndLAEu8cbZ+fN6EpnYA8nupcPHRc0pKROAnINl9EQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from DB9PR04MB9626.eurprd04.prod.outlook.com (2603:10a6:10:309::18)
+ by PA4PR04MB9685.eurprd04.prod.outlook.com (2603:10a6:102:26e::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8026.22; Tue, 8 Oct
+ 2024 20:09:54 +0000
+Received: from DB9PR04MB9626.eurprd04.prod.outlook.com
+ ([fe80::e81:b393:ebc5:bc3d]) by DB9PR04MB9626.eurprd04.prod.outlook.com
+ ([fe80::e81:b393:ebc5:bc3d%3]) with mapi id 15.20.8026.019; Tue, 8 Oct 2024
+ 20:09:54 +0000
+Date: Tue, 8 Oct 2024 16:09:45 -0400
+From: Frank Li <Frank.li@nxp.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Felipe Balbi <balbi@kernel.org>,
+	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Saravana Kannan <saravanak@google.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>, linux-usb@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v2 0/7] usb: dwc3: qcom: Flatten dwc3 structure
+Message-ID: <ZwWRieC0D3Q13VW7@lizhi-Precision-Tower-5810>
+References: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com>
+ <ZrugxSqzhzxvVqV3@lizhi-Precision-Tower-5810>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZrugxSqzhzxvVqV3@lizhi-Precision-Tower-5810>
+X-ClientProxiedBy: BYAPR06CA0055.namprd06.prod.outlook.com
+ (2603:10b6:a03:14b::32) To DB9PR04MB9626.eurprd04.prod.outlook.com
+ (2603:10a6:10:309::18)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mQFo6onQZ8gFcNkKp9opHcySav8pY819
-X-Proofpoint-GUID: mQFo6onQZ8gFcNkKp9opHcySav8pY819
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 spamscore=0 mlxscore=0 suspectscore=0
- impostorscore=0 malwarescore=0 bulkscore=0 clxscore=1011 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410080127
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DB9PR04MB9626:EE_|PA4PR04MB9685:EE_
+X-MS-Office365-Filtering-Correlation-Id: 143a8442-7639-4609-0c9e-08dce7d52cae
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|52116014|7416014|1800799024|376014|366016|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?WPUO+lPWzl3KAkGsO5GaeyboXv9gW9wIZQJqfwF8q4dFxB+EZCnWlw663JzP?=
+ =?us-ascii?Q?QZFQyZkpHZRVX1GkMn+HRZuh1/dublNzm6bIreJLq/5mfdnTGsm/VEHnrDAw?=
+ =?us-ascii?Q?rUmtyoJINdHtsQrxSRGLIeEXN9/LjIqT2BPFh/rGF3mQkthKG7eIZBREZGKJ?=
+ =?us-ascii?Q?Yicq+v53YWsB/pyWcdc4nL40rxB519v5wJzz6JVOMlG8oHopC1Q+9V2jQJLa?=
+ =?us-ascii?Q?r9cXRvgth4rRA6KwF0hfeGEiRROrmbpkulxbrHOfv9pchqRCnlE/eV9CG9r+?=
+ =?us-ascii?Q?KkELc0axyY2r8pQfSKUsE0SZ8rtH1l2LigQcwQfr+jl27VTFHAc2C/hpUY/g?=
+ =?us-ascii?Q?yK4ywQnElKVxxQrNLVxdWdVWvgpfx48iW4e/5HKPIYZz7DVysPc0b41AMgqL?=
+ =?us-ascii?Q?b5lmbtwuPogeXdC5j1AiwSgsFZZW9+iHSBUxe1SdaMvjA9XQOHlRIZK/qY6m?=
+ =?us-ascii?Q?VbXBooPbWhaFCF7V8e5LdPED24tgqTPFbcA+hjF2oiwn+JRbjEhR4u5nVmaX?=
+ =?us-ascii?Q?mLjrxYab7d0wpCnFwTGsNmimGgGdb/wgEMwA4rZ0K9DNDk1KaZdfOIhVxZQx?=
+ =?us-ascii?Q?JMEC6QPpmtoNdr7oo2/632++xUMgTjfBlLPf4exz/Zfw2veFGy3jLRRQHmA0?=
+ =?us-ascii?Q?juUNDDp6HAuVQuw17//MHVlqeLW7SKQicb+QUcIhSyOZa42QiISKSX3EPEwC?=
+ =?us-ascii?Q?gbFBIghlNP6EP2Yx5FS2xoYwiyl1xdfA++gFMAptdvt42hzzZ0N6oqy2sZ/N?=
+ =?us-ascii?Q?FjwyVJg5Y7VOOslWqeP5NwG30XrGaScOqPTHPURxPiDa+uFpUw7Swmp5wl4e?=
+ =?us-ascii?Q?RiZoql9l5Mh19bvhjj21cCmX5Amz2VQoyDB0ZfSRUTggbSsVN6Mq1BEfmTeA?=
+ =?us-ascii?Q?OV2H/W1MggG0tHZQ4PiNwbG1Z02KAKOf498LcrASPZUV1txwoqnqJmwKfbU3?=
+ =?us-ascii?Q?aqKylgs++NJIZxbPJs8wsHOhgQGJwNPlSYhnsff1vtfLrZ6ZLn12j8G4IadF?=
+ =?us-ascii?Q?yBYVLkZ8O0J/88uLfH11NcDY8y+FW7BzNfTR7UIwUqGAxVxJcgrg3pVXGk4I?=
+ =?us-ascii?Q?Q1QadcI2REtlDIL+k+oWaUMbrmJBkRnb+l2cz2gDP5vCSOmyoFeMz6K+TRT/?=
+ =?us-ascii?Q?ncUcAgh1aaOdN1VqnK9X8gwT3fPwpp6WTlqlpCLsz4F/+in7QEGrZzSXTHI8?=
+ =?us-ascii?Q?b5Fp1WTX6xfjYTwNTm1Io+i3+Is2k5lHCCsXvAnOxfdTSOfzAu2dm21IvsAm?=
+ =?us-ascii?Q?lAtAPYZ28egZUQyBW4H6x/Qb6A+STzF6ermOQXvvUKrsk/QJCtqKv9R2IuTe?=
+ =?us-ascii?Q?2nPSijpFe5ifl/DmbVQB2bdgBuvh8ZUpWEOQ5vgLsC4G4A=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR04MB9626.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(52116014)(7416014)(1800799024)(376014)(366016)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?xxhwje+dAr5q5zbhlmjpEpbn0q3NOPZr2y9PYTY2tqN8UVtYpiqo/uduVWpa?=
+ =?us-ascii?Q?dpJIRU0Yp4dncEWXsqO2RS0eEKFCHYW4eXxRK2/T9QjwhjuaIeJDNG8aGl3R?=
+ =?us-ascii?Q?XGrsEN5zHtc3nms//K6VPBhYP6+Jf5CaknXx9aL5GbDFLcIXpBg7VQLVJw03?=
+ =?us-ascii?Q?qigSwkRlgCbIXu4ec4QU0U+McuYL2VLZbJ9Lo+TgmYH6vG7h3I7Ikgqwh8RG?=
+ =?us-ascii?Q?9iVddWG9UGLjtwoOaCymUUWkLIMwBLdI3pEvSWeekj1C0HZrm5hf8bIUURdI?=
+ =?us-ascii?Q?FONahv+ChiEn7kXGNwTa/gN7SQneX2pXuRTH7P6pTFRZUDFeis3Uu9LvGjcL?=
+ =?us-ascii?Q?UveY1InnzwG1LHfVA2La9PL0uuaYMOX/t+CYA0ayBmX+SXD0mpr8JCh4IiOi?=
+ =?us-ascii?Q?8jr/OD90tB1/grTCV9riL0IuxmaaXPq5M6EcCxA5rId9uiifbnqxfNE4+ceC?=
+ =?us-ascii?Q?Xu+YaPRVTUB1Bzf7vt4Gry4PH0+X7dr4jzB00o+L2RQJw+kv4/pFcylMhAEs?=
+ =?us-ascii?Q?Ryd7pmSlVDeUM0p/2CV8oE2h0sm8+K9EDSTI33vBytmoNZzemOTJMEx1DMst?=
+ =?us-ascii?Q?n+OvS2+aalX8oYM6xiMA2kUuij+wsJZOi1cOY8vDEuv1MhHCHLmMaU03/WVz?=
+ =?us-ascii?Q?Pp+RXzyTjBEycr9T82x9x08iLbdbJOfNMv/OtlU7kHTlwxgaHxtrb2Omn5m+?=
+ =?us-ascii?Q?igE1r43ckBPkMiAvSBZKn+7LDZUaYZCaLgXBEbJILlh4VNDeajYiNAzysiVZ?=
+ =?us-ascii?Q?hVNS6lNgGuXM+FE8qvNzOFshUAX13lUiQTYnwrS4lJ5rWjWOxYSsOkb1k/kb?=
+ =?us-ascii?Q?31B3MTyFdbLum88eVsCklxWbFrKfqtaMyY726NMD4+eAKxaeMg/ABcd54tRl?=
+ =?us-ascii?Q?5PHXZdcQTZ3K4Ze+K00DNlVOufzM0dhY8Ub+KwOyePzLNwnUDOdQyg0CepsD?=
+ =?us-ascii?Q?Wuky0XuzD5xnUsT2RncqevzQnoP58PIi5M0JsYnVWUdRMZRmtx4JV6QwHnJE?=
+ =?us-ascii?Q?25BRFWgwYL9wRvoqinzStCApbhrLV0Q6Kj0pXMkmUFc1QQgrUNHw6+fgWHFn?=
+ =?us-ascii?Q?zNp7Tm6I9OpFFPXqmrMm5DxNo+EWy0oxmNDuy7ASr7r8Pn5+eoA2NUCGcX8y?=
+ =?us-ascii?Q?5MNBqYgRCRqEn8Hkdq35ljnTFFJKE8mGIDj5ktn9x+t6ZJwjvbsqHB4EcMOm?=
+ =?us-ascii?Q?RMLjghlO7AhFSs51JctlnO4HUf4rh/M8OewDFeRaXwFumW49wMMOQ1YZZR2f?=
+ =?us-ascii?Q?L4XPjTNLGN5sIQW1gZnISok7MD672ga3cqLH4iVcf+LHfogsYfH0ql4ipuwN?=
+ =?us-ascii?Q?pg3TrjOrWYV8ItbxahnPaqKfg0/NyhCR7yUi6AURJZZMk3GgOPPhS8nE1xdx?=
+ =?us-ascii?Q?zdBOAFbXS7xrVn22RYvZ6D+H6yTRjd4rZ/kgdBkbvBk2pz1Yu7gFSupPQ78i?=
+ =?us-ascii?Q?h8SzSVqKXuhlXyo+AdEp2ehvFKIf8mY8dHNDcWAi+vsoDu6uN6QWqF1Lx8s0?=
+ =?us-ascii?Q?hJ2l2MsZqoQHZhCEmShUvqV29lPE8JGNZvXi3Vm5mlhEeAqS0+XtysuMbwQH?=
+ =?us-ascii?Q?e60zS5xslK13sIsjJ5g=3D?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 143a8442-7639-4609-0c9e-08dce7d52cae
+X-MS-Exchange-CrossTenant-AuthSource: DB9PR04MB9626.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Oct 2024 20:09:54.4680
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: guvuqErQVDdM3DwXQda2yOFcoWNOo1dV3czx/mjCFuNcXZbYsRoZUXoPyA00ALXFRKLmYGtyUnIa5Dg27yCr7A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB9685
 
-Introduce atomic per-slice counter to keep track of the
-activate/deactivate count per slice and a common llcc slice
-descriptor to maintain accurate count.
+On Tue, Aug 13, 2024 at 02:07:01PM -0400, Frank Li wrote:
+> On Sun, Aug 11, 2024 at 08:11:57PM -0700, Bjorn Andersson wrote:
+> > The USB IP-block found in most Qualcomm platforms is modelled in the
+> > Linux kernel as 3 different independent device drivers, but as shown by
+> > the already existing layering violations in the Qualcomm glue driver
+> > they can not be operated independently.
+> >
+> > With the current implementation, the glue driver registers the core and
+> > has no way to know when this is done. As a result, e.g. the suspend
+> > callbacks needs to guard against NULL pointer dereferences when trying
+> > to peek into the struct dwc3 found in the drvdata of the child.
+> >
+> > Missing from the upstream Qualcomm USB support is handling of role
+> > switching, in which the glue needs to be notified upon DRD mode changes.
+> > Several attempts has been made through the years to register callbacks
+> > etc, but they always fall short when it comes to handling of the core's
+> > probe deferral on resources etc.
+> >
+> > Furhtermore, the DeviceTree binding is a direct representation of the
+> > Linux driver model, and doesn't necessarily describe "the USB IP-block".
+> >
+> > This series therefor attempts to flatten the driver split, and operate
+> > the glue and core out of the same platform_device instance. And in order
+> > to do this, the DeviceTree representation of the IP block is flattened.
+>
 
-In case a client driver calls llcc_slice_getd more than once,
-it will get the same descriptor for given use case. And if two
-client drivers are voting for same slice, this count variable
-will help track enable/disable of slice accurately.
+Bjorn Andersson:
+	Any follow up on this thread?
 
-Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
----
- drivers/soc/qcom/llcc-qcom.c       | 50 +++++++++++++++++++++---------
- include/linux/soc/qcom/llcc-qcom.h |  4 +++
- 2 files changed, 40 insertions(+), 14 deletions(-)
+Frank
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 8fa4ffd3a9b5..0cb4fd18fd2c 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -813,7 +813,6 @@ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
- struct llcc_slice_desc *llcc_slice_getd(u32 uid)
- {
- 	const struct llcc_slice_config *cfg;
--	struct llcc_slice_desc *desc;
- 	u32 sz, count;
- 
- 	if (IS_ERR(drv_data))
-@@ -826,17 +825,10 @@ struct llcc_slice_desc *llcc_slice_getd(u32 uid)
- 		if (cfg->usecase_id == uid)
- 			break;
- 
--	if (count == sz || !cfg)
-+	if (count == sz || !cfg || IS_ERR_OR_NULL(drv_data->desc))
- 		return ERR_PTR(-ENODEV);
- 
--	desc = kzalloc(sizeof(*desc), GFP_KERNEL);
--	if (!desc)
--		return ERR_PTR(-ENOMEM);
--
--	desc->slice_id = cfg->slice_id;
--	desc->slice_size = cfg->max_cap;
--
--	return desc;
-+	return &drv_data->desc[count];
- }
- EXPORT_SYMBOL_GPL(llcc_slice_getd);
- 
-@@ -847,7 +839,8 @@ EXPORT_SYMBOL_GPL(llcc_slice_getd);
- void llcc_slice_putd(struct llcc_slice_desc *desc)
- {
- 	if (!IS_ERR_OR_NULL(desc))
--		kfree(desc);
-+		WARN(atomic_read(&desc->refcount), " Slice %d is still active\n",
-+					desc->slice_id);
- }
- EXPORT_SYMBOL_GPL(llcc_slice_putd);
- 
-@@ -923,6 +916,12 @@ int llcc_slice_activate(struct llcc_slice_desc *desc)
- 		return -EINVAL;
- 
- 	mutex_lock(&drv_data->lock);
-+	if ((atomic_read(&desc->refcount)) >= 1) {
-+		atomic_inc_return(&desc->refcount);
-+		mutex_unlock(&drv_data->lock);
-+		return 0;
-+	}
-+
- 	if (test_bit(desc->slice_id, drv_data->bitmap)) {
- 		mutex_unlock(&drv_data->lock);
- 		return 0;
-@@ -937,6 +936,7 @@ int llcc_slice_activate(struct llcc_slice_desc *desc)
- 		return ret;
- 	}
- 
-+	atomic_inc_return(&desc->refcount);
- 	__set_bit(desc->slice_id, drv_data->bitmap);
- 	mutex_unlock(&drv_data->lock);
- 
-@@ -963,6 +963,12 @@ int llcc_slice_deactivate(struct llcc_slice_desc *desc)
- 		return -EINVAL;
- 
- 	mutex_lock(&drv_data->lock);
-+	if ((atomic_read(&desc->refcount)) > 1) {
-+		atomic_dec_return(&desc->refcount);
-+		mutex_unlock(&drv_data->lock);
-+		return 0;
-+	}
-+
- 	if (!test_bit(desc->slice_id, drv_data->bitmap)) {
- 		mutex_unlock(&drv_data->lock);
- 		return 0;
-@@ -976,6 +982,7 @@ int llcc_slice_deactivate(struct llcc_slice_desc *desc)
- 		return ret;
- 	}
- 
-+	atomic_dec_return(&desc->refcount);
- 	__clear_bit(desc->slice_id, drv_data->bitmap);
- 	mutex_unlock(&drv_data->lock);
- 
-@@ -1020,7 +1027,7 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
- 	u32 attr1_val;
- 	u32 attr0_val;
- 	u32 max_cap_cacheline;
--	struct llcc_slice_desc desc;
-+	struct llcc_slice_desc *desc;
- 
- 	attr1_val = config->cache_mode;
- 	attr1_val |= config->probe_target_ways << ATTR1_PROBE_TARGET_WAYS_SHIFT;
-@@ -1165,8 +1172,11 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
- 	}
- 
- 	if (config->activate_on_init) {
--		desc.slice_id = config->slice_id;
--		ret = llcc_slice_activate(&desc);
-+		desc = llcc_slice_getd(config->usecase_id);
-+		if (PTR_ERR_OR_ZERO(desc))
-+			return -EINVAL;
-+
-+		ret = llcc_slice_activate(desc);
- 	}
- 
- 	return ret;
-@@ -1183,6 +1193,12 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
- 	sz = drv_data->cfg_size;
- 	llcc_table = drv_data->cfg;
- 
-+	for (i = 0; i < sz; i++) {
-+		drv_data->desc[i].slice_id = llcc_table[i].slice_id;
-+		drv_data->desc[i].slice_size = llcc_table[i].max_cap;
-+		atomic_set(&drv_data->desc[i].refcount, 0);
-+	}
-+
- 	for (i = 0; i < sz; i++) {
- 		ret = _qcom_llcc_cfg_program(&llcc_table[i], cfg);
- 		if (ret)
-@@ -1331,6 +1347,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 	llcc_cfg = cfg->sct_data;
- 	sz = cfg->size;
- 
-+	drv_data->desc = devm_kzalloc(dev, sizeof(struct llcc_slice_desc) * sz, GFP_KERNEL);
-+	if (IS_ERR_OR_NULL(drv_data->desc)) {
-+		ret = -ENOMEM;
-+		goto err;
-+	}
-+
- 	for (i = 0; i < sz; i++)
- 		if (llcc_cfg[i].slice_id > drv_data->max_slices)
- 			drv_data->max_slices = llcc_cfg[i].slice_id;
-diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-index 9e9f528b1370..5eca861e2837 100644
---- a/include/linux/soc/qcom/llcc-qcom.h
-+++ b/include/linux/soc/qcom/llcc-qcom.h
-@@ -60,10 +60,12 @@
-  * struct llcc_slice_desc - Cache slice descriptor
-  * @slice_id: llcc slice id
-  * @slice_size: Size allocated for the llcc slice
-+ * @refcount: Counter to track activate/deactivate slice count
-  */
- struct llcc_slice_desc {
- 	u32 slice_id;
- 	size_t slice_size;
-+	atomic_t refcount;
- };
- 
- /**
-@@ -126,6 +128,7 @@ struct llcc_edac_reg_offset {
-  * @bitmap: Bit map to track the active slice ids
-  * @ecc_irq: interrupt for llcc cache error detection and reporting
-  * @version: Indicates the LLCC version
-+ * @desc: Array pointer of llcc_slice_desc
-  */
- struct llcc_drv_data {
- 	struct regmap **regmaps;
-@@ -140,6 +143,7 @@ struct llcc_drv_data {
- 	unsigned long *bitmap;
- 	int ecc_irq;
- 	u32 version;
-+	struct llcc_slice_desc *desc;
- };
- 
- #if IS_ENABLED(CONFIG_QCOM_LLCC)
--- 
-2.34.1
-
+> Thanks, we faced the same problem. Can you cc me next time?
+>
+> Frank
+> >
+> > ---
+> > Changes in v2:
+> > - Rewrite after ACPI removal, multiport support and interrupt fixes
+> > - Completely changed strategy for DeviceTree binding, as previous idea
+> >   of using snps,dwc3 as a generic fallback required unreasonable changes
+> >   to that binding.
+> > - Abandoned idea of supporting both flattened and unflattened device
+> >   model in the one driver. As Johan pointed out, it will leave the race
+> >   condition holes and will make the code harder to understand.
+> >   Furthermore, the role switching logic that we intend to introduce
+> >   following this would have depended on the user updating their
+> >   DeviceTree blobs.
+> > - Per above, introduced the dynamic DeviceTree rewrite
+> > - Link to v1: https://lore.kernel.org/all/20231016-dwc3-refactor-v1-0-ab4a84165470@quicinc.com/
+> >
+> > ---
+> > Bjorn Andersson (7):
+> >       dt-bindings: usb: snps,dwc3: Split core description
+> >       dt-bindings: usb: Introduce qcom,snps-dwc3
+> >       of: dynamic: Don't discard children upon node attach
+> >       usb: dwc3: core: Expose core driver as library
+> >       usb: dwc3: qcom: Don't reply on drvdata during probe
+> >       usb: dwc3: qcom: Transition to flattened model
+> >       arm64: dts: qcom: sc8280x: Flatten the USB nodes
+> >
+> >  .../devicetree/bindings/usb/qcom,dwc3.yaml         |  13 +-
+> >  .../devicetree/bindings/usb/qcom,snps-dwc3.yaml    | 608 +++++++++++++++++++++
+> >  .../devicetree/bindings/usb/snps,dwc3-common.yaml  | 417 ++++++++++++++
+> >  .../devicetree/bindings/usb/snps,dwc3.yaml         | 391 +------------
+> >  arch/arm64/boot/dts/qcom/sa8295p-adp.dts           |  12 +-
+> >  arch/arm64/boot/dts/qcom/sa8540p-ride.dts          |   5 +-
+> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          |  12 +-
+> >  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     |  11 +-
+> >  arch/arm64/boot/dts/qcom/sc8280xp.dtsi             | 138 +++--
+> >  drivers/of/dynamic.c                               |   1 -
+> >  drivers/usb/dwc3/core.c                            | 169 ++++--
+> >  drivers/usb/dwc3/core.h                            |   3 +
+> >  drivers/usb/dwc3/dwc3-qcom.c                       | 323 ++++++++---
+> >  13 files changed, 1483 insertions(+), 620 deletions(-)
+> > ---
+> > base-commit: 864b1099d16fc7e332c3ad7823058c65f890486c
+> > change-id: 20231016-dwc3-refactor-931e3b08a8b9
+> >
+> > Best regards,
+> > --
+> > Bjorn Andersson <quic_bjorande@quicinc.com>
+> >
 
