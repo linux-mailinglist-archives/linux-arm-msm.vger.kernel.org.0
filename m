@@ -1,240 +1,581 @@
-Return-Path: <linux-arm-msm+bounces-33497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E590F994271
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:44:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A4D9994286
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 10:46:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BB3B28EE74
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 08:44:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E43F1C22D80
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  8 Oct 2024 08:46:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0BC318C35A;
-	Tue,  8 Oct 2024 08:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D066C1BFE1F;
+	Tue,  8 Oct 2024 08:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="MHkADYXc";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="V/U2fsX/";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="1nVYAKpC";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="/aBSaAny"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Jpv0nGoS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35460185B5B;
-	Tue,  8 Oct 2024 08:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48991AC441;
+	Tue,  8 Oct 2024 08:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728375360; cv=none; b=VzlY2B9J9FVOReGvLaJILes216vEyK4NtvdZiwYZoA1J39yDjxcnm6mPLNETJwkyYgoDLlbOOIWgc7DTRIQepI5baC2RLc6uFlNLPZTqKW0z7n9h4frcz/HnY36uDRBVQIV8cyq8FgZrhJ/jPmOiwVrTVu5MdgQ43CgrAap1vI0=
+	t=1728375532; cv=none; b=fRyD57yOGiFelbMcHRJ09lAmN0iWPMvI+TQb+m+ToPQpvY23xbY0Mgvpy7MzojWhHE64Rz1iHXDEYa/sCQkPSgJZAaKT91qV2JIoVj8uRFtSwzlk9s0RtxpFB/pV+pahBhhROgF1Bw37X7hCF/0QS2CkO2n8dlBKUWoaY7Yz8XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728375360; c=relaxed/simple;
-	bh=jDYdha4sOPtiOfdubvu72XKdm8jM5sJ8JT4lCWEV6Xs=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ONsX8oLe2dj7Vr6wzabHwRpdzRGKgPtKsK181/Pb/yEsOA4YMgrdpxhG1b0vRJT4zx+06Hi6ipds92U9SsNxBHB0z84giuWaZ0V1AkL1KSkPapEQkt5z6jtzBDz+Kn7ZcKKyVs5EA6jXTvJy7W1blvWR9DK2id3dem1P1mmDbGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=MHkADYXc; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=V/U2fsX/; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=1nVYAKpC; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=/aBSaAny; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 224AF21A21;
-	Tue,  8 Oct 2024 08:15:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1728375357; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3HLSPTPFPl4JHmlxfANPp3i77QSJovILHZdFbYUFp7Q=;
-	b=MHkADYXc2+D2goxdzm7wzWveFN4vvvN/L+1Zm0UvmnLuJ0AbkL8b4K3JQ7itjD1mxwM+zm
-	F7bARxwffL1ghA279FW268ng6qIZcMphj7qZQD40gXdPYxzhfw3uElubQA+a0cqJ0y/Lbn
-	qmS9pTYCVXNxrDFRlS4nfouaru3Kc4E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1728375357;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3HLSPTPFPl4JHmlxfANPp3i77QSJovILHZdFbYUFp7Q=;
-	b=V/U2fsX/TOYl6A27Fp+iOycqXu0yPxIf356cOV+gFVJZguaVkgBcxATfwz8yuPmntidiXT
-	G0wInHb6Es4K+bBQ==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1nVYAKpC;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="/aBSaAny"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1728375356; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3HLSPTPFPl4JHmlxfANPp3i77QSJovILHZdFbYUFp7Q=;
-	b=1nVYAKpCfTW9yzkEP2bqhnuozIrTnA+rUyCfaFURPWUHx/DnxXHz3ge1G84bJfMZo74ReB
-	1DsSbu8EBvxXrLU2Kh9/PQX3AuXOctVLJX5ghqJ8dQs3qDzVeHqVSGzsEOKTgQZeP3W9Ih
-	GN38j+a0+8Ejt0keBE+XBkeTkwBSQNM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1728375356;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=3HLSPTPFPl4JHmlxfANPp3i77QSJovILHZdFbYUFp7Q=;
-	b=/aBSaAnygMw5K+Wj8fSmcTiDg64EoVC/sBf9RU9CM7B9mNZbJyh8eFmIQIbUzAdYdPQTJP
-	uizbYKad5+RPZzCg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D3E271340C;
-	Tue,  8 Oct 2024 08:15:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id 9F9lMjrqBGeEHgAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 08 Oct 2024 08:15:54 +0000
-Date: Tue, 08 Oct 2024 10:16:50 +0200
-Message-ID: <87iku3vwjx.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Julian Vetter <jvetter@kalrayinc.com>
-Cc: Arnd Bergmann <arnd@arndb.de>,
-	Russell King <linux@armlinux.org.uk>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Guo Ren <guoren@kernel.org>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG
- Xuerui <kernel@xen0n.name>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Geert
- Uytterhoeven <geert@linux-m68k.org>,
-	Richard Henderson
- <richard.henderson@linaro.org>,
-	Ivan Kokshaysky <ink@jurassic.park.msu.ru>,
-	Matt Turner <mattst88@gmail.com>,
-	"James E . J . Bottomley"
- <James.Bottomley@hansenpartnership.com>,
-	Helge Deller <deller@gmx.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Richard Weinberger
- <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes
- Berg <johannes@sipsolutions.net>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Christophe Leroy
- <christophe.leroy@csgroup.eu>,
-	Naveen N Rao <naveen@kernel.org>,
-	Madhavan
- Srinivasan <maddy@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily
- Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Sven Schnelle
- <svens@linux.ibm.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Manivannan
- Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Miquel Raynal
- <miquel.raynal@bootlin.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Jaroslav
- Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org,
-	linux-csky@vger.kernel.org,
-	loongarch@lists.linux.dev,
-	linux-m68k@lists.linux-m68k.org,
-	linux-alpha@vger.kernel.org,
-	linux-parisc@vger.kernel.org,
-	linux-sh@vger.kernel.org,
-	linux-um@lists.infradead.org,
-	linux-arch@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
-	linux-s390@vger.kernel.org,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-mtd@lists.infradead.org,
-	linux-sound@vger.kernel.org,
-	Yann Sionneau
- <ysionneau@kalrayinc.com>
-Subject: Re: [PATCH v8 14/14] sound: Make CONFIG_SND depend on INDIRECT_IOMEM instead of UML
-In-Reply-To: <20241008075023.3052370-15-jvetter@kalrayinc.com>
-References: <20241008075023.3052370-1-jvetter@kalrayinc.com>
-	<20241008075023.3052370-15-jvetter@kalrayinc.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1728375532; c=relaxed/simple;
+	bh=uItnrWW+h9WOCfW4wij5jD8dv3TkJwtdgaE9MbkHG6Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bYPH3OdWKes0EyXbnevNd8/nEVZ/QbyiI62RGRzdnKfIW9+jTrwrks5Bd7ptHrIPHPhTAXStc2fQ9IAq3VPBaPt78RQy56yU7LMtTo9BpN73hh5pji8R32WQqxXfNo0IsORPOSDYjOM/Y2N8+WdC03W5lDE02yPpgm0DV2FvKCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Jpv0nGoS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC95C4CEC7;
+	Tue,  8 Oct 2024 08:18:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728375532;
+	bh=uItnrWW+h9WOCfW4wij5jD8dv3TkJwtdgaE9MbkHG6Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Jpv0nGoSFK0PdwSL8uQ+RajvrVTanhQezKnKbD8ZuyLyvpKWdWpe2ewSxvUlkQpj5
+	 LCf4lLw6GxpFr4KkjWO15oX9tkkRoI04dXHNIL1wvjA9WUlWb2bXEk5DY4DGMk3I0g
+	 ewERSvKa2Uh9LFEweuV+47nRDQa8ouM51DGPmIIBhefPzZhxH+miJfhEXuD2IdPylT
+	 NNiEqgBHUkSsyqxonISb2sn9dfzFLvXe85jW/vH9LcoHgtvQJ56jJBw5oe/JJMaA+y
+	 GyRLD82MEshSpXE69WlnIfs8+JuZBVPx7/yKdC2PNpjRxHbCmjHMrbNEmIBWLL1XJQ
+	 2U/R1oUbjgnLA==
+Date: Tue, 8 Oct 2024 10:18:49 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	quic_abhinavk@quicinc.com, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	Rob Clark <robdclark@chromium.org>, Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Subject: Re: [PATCH v2 16/22] drm/msm/dpu: Configure CWB in writeback encoder
+Message-ID: <20241008-bouncy-sawfish-of-temperance-2e9e5f@houat>
+References: <20240924-concurrent-wb-v2-0-7849f900e863@quicinc.com>
+ <20240924-concurrent-wb-v2-16-7849f900e863@quicinc.com>
+ <b9e50652-4556-4eed-a013-8e417eccdb69@linaro.org>
+ <866ef212-a00e-48c4-9cf1-d1d4ee78d0ae@quicinc.com>
+ <a58abb00-f941-48e0-b2a0-3c401e5220a7@linaro.org>
+ <4e0ccd07-fdd1-4e92-bda7-ea6ec9d54c80@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Rspamd-Queue-Id: 224AF21A21
-X-Spam-Score: -3.51
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.51 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	MID_CONTAINS_FROM(1.00)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[arndb.de,armlinux.org.uk,arm.com,kernel.org,xen0n.name,linux-foundation.org,linux-m68k.org,linaro.org,jurassic.park.msu.ru,gmail.com,hansenpartnership.com,gmx.de,users.sourceforge.jp,libc.org,physik.fu-berlin.de,nod.at,cambridgegreys.com,sipsolutions.net,ellerman.id.au,csgroup.eu,linux.ibm.com,bootlin.com,ti.com,perex.cz,suse.com,lists.infradead.org,vger.kernel.org,lists.linux.dev,lists.linux-m68k.org,lists.ozlabs.org,kalrayinc.com];
-	R_RATELIMIT(0.00)[to_ip_from(RL7rz6n1sdsaw5gxxy5soxc6on)];
-	RCVD_COUNT_TWO(0.00)[2];
-	RCVD_TLS_ALL(0.00)[];
-	TO_MATCH_ENVRCPT_SOME(0.00)[];
-	RCPT_COUNT_GT_50(0.00)[54];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spam-Flag: NO
-X-Spam-Level: 
-
-On Tue, 08 Oct 2024 09:50:22 +0200,
-Julian Vetter wrote:
-> 
-> When building for the UM arch and neither INDIRECT_IOMEM=y, nor
-> HAS_IOMEM=y is selected, the build fails because the memcpy_fromio and
-> memcpy_toio functions are not defined. Fix it here by depending on
-> HAS_IOMEM or INDIRECT_IOMEM.
-> 
-> Reviewed-by: Yann Sionneau <ysionneau@kalrayinc.com>
-> Signed-off-by: Julian Vetter <jvetter@kalrayinc.com>
-> ---
-> Changes for v8:
-> - New patch
-> ---
->  sound/Kconfig | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/sound/Kconfig b/sound/Kconfig
-> index 4c036a9a420a..8b40205394fe 100644
-> --- a/sound/Kconfig
-> +++ b/sound/Kconfig
-> @@ -1,7 +1,7 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  menuconfig SOUND
->  	tristate "Sound card support"
-> -	depends on HAS_IOMEM || UML
-> +	depends on HAS_IOMEM || INDIRECT_IOMEM
->  	help
->  	  If you have a sound card in your computer, i.e. if it can say more
->  	  than an occasional beep, say Y.
-
-Acked-by: Takashi Iwai <tiwai@suse.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="yyzazgzbhs7ae6h2"
+Content-Disposition: inline
+In-Reply-To: <4e0ccd07-fdd1-4e92-bda7-ea6ec9d54c80@linaro.org>
 
 
-thanks,
+--yyzazgzbhs7ae6h2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Takashi
+On Tue, Oct 08, 2024 at 10:00:57AM GMT, Neil Armstrong wrote:
+> Hi,
+>=20
+> On 01/10/2024 09:37, neil.armstrong@linaro.org wrote:
+> > Hi,
+> >=20
+> > On 30/09/2024 21:19, Jessica Zhang wrote:
+> > >=20
+> > >=20
+> > > On 9/30/2024 7:17 AM, neil.armstrong@linaro.org wrote:
+> > > > On 25/09/2024 00:59, Jessica Zhang wrote:
+>=20
+> <snip>
+>=20
+> > > >=20
+> > > > When running igt-test on QRD8650, I get:
+> > > > # IGT_FRAME_DUMP_PATH=3D$PWD FRAME_PNG_FILE_NAME=3Dpwet /usr/libexe=
+c/igt- gpu-tools/kms_writeback -d
+> > >=20
+> > > Hi Neil,
+> > >=20
+> > > Thanks for reporting this. Unfortunately, I'm not able to recreate th=
+is on the MTP8650.
+> > >=20
+> > > How many/which non-WB outputs are you testing with?
+> >=20
+> > Here's the modetest output:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D><=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > Encoders:
+> > id=A0=A0=A0 crtc=A0=A0=A0 type=A0=A0=A0 possible crtcs=A0=A0=A0 possibl=
+e clones
+> > 32=A0=A0=A0 103=A0=A0=A0 DSI=A0=A0=A0 0x00000007=A0=A0=A0 0x00000005
+> > 34=A0=A0=A0 0=A0=A0=A0 TMDS=A0=A0=A0 0x00000007=A0=A0=A0 0x00000006
+> > 37=A0=A0=A0 0=A0=A0=A0 Virtual=A0=A0=A0 0x00000007=A0=A0=A0 0x00000007
+> >=20
+> > Connectors:
+> > id=A0=A0=A0 encoder=A0=A0=A0 status=A0=A0=A0=A0=A0=A0=A0 name=A0=A0=A0=
+=A0=A0=A0=A0 size (mm)=A0=A0=A0 modes=A0=A0=A0 encoders
+> > 33=A0=A0=A0 32=A0=A0=A0 connected=A0=A0=A0 DSI-1=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0 71x157=A0=A0=A0=A0=A0=A0=A0 1=A0=A0=A0 32
+> >  =A0 modes:
+> >  =A0=A0=A0=A0index name refresh (Hz) hdisp hss hse htot vdisp vss vse v=
+tot
+> >  =A0 #0 1080x2400 144.00 1080 1100 1102 1122 2400 2420 2422 2440 394225=
+ flags: ; type: preferred, driver
+> >  =A0 props:
+> >  =A0=A0=A0=A01 EDID:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable blob
+> >  =A0=A0=A0=A0=A0=A0=A0 blobs:
+> >=20
+> >  =A0=A0=A0=A0=A0=A0=A0 value:
+> >  =A0=A0=A0=A02 DPMS:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: enum
+> >  =A0=A0=A0=A0=A0=A0=A0 enums: On=3D0 Standby=3D1 Suspend=3D2 Off=3D3
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> >  =A0=A0=A0=A05 link-status:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: enum
+> >  =A0=A0=A0=A0=A0=A0=A0 enums: Good=3D0 Bad=3D1
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> >  =A0=A0=A0=A06 non-desktop:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable range
+> >  =A0=A0=A0=A0=A0=A0=A0 values: 0 1
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> >  =A0=A0=A0=A04 TILE:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable blob
+> >  =A0=A0=A0=A0=A0=A0=A0 blobs:
+> >=20
+> >  =A0=A0=A0=A0=A0=A0=A0 value:
+> > 35=A0=A0=A0 0=A0=A0=A0 disconnected=A0=A0=A0 DP-1=A0=A0=A0=A0=A0=A0=A0=
+=A0=A0=A0=A0=A0=A0=A0 0x0=A0=A0=A0=A0=A0=A0=A0 0=A0=A0=A0 34
+> >  =A0 props:
+> >  =A0=A0=A0=A01 EDID:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable blob
+> >  =A0=A0=A0=A0=A0=A0=A0 blobs:
+> >=20
+> >  =A0=A0=A0=A0=A0=A0=A0 value:
+> >  =A0=A0=A0=A02 DPMS:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: enum
+> >  =A0=A0=A0=A0=A0=A0=A0 enums: On=3D0 Standby=3D1 Suspend=3D2 Off=3D3
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> >  =A0=A0=A0=A05 link-status:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: enum
+> >  =A0=A0=A0=A0=A0=A0=A0 enums: Good=3D0 Bad=3D1
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> >  =A0=A0=A0=A06 non-desktop:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable range
+> >  =A0=A0=A0=A0=A0=A0=A0 values: 0 1
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> >  =A0=A0=A0=A04 TILE:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable blob
+> >  =A0=A0=A0=A0=A0=A0=A0 blobs:
+> >=20
+> >  =A0=A0=A0=A0=A0=A0=A0 value:
+> >  =A0=A0=A0=A036 subconnector:
+> >  =A0=A0=A0=A0=A0=A0=A0 flags: immutable enum
+> >  =A0=A0=A0=A0=A0=A0=A0 enums: Unknown=3D0 VGA=3D1 DVI-D=3D3 HDMI=3D11 D=
+P=3D10 Wireless=3D18 Native=3D15
+> >  =A0=A0=A0=A0=A0=A0=A0 value: 0
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D><=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >=20
+> > and dri state:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D><=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > # cat /sys/kernel/debug/dri/0/state
+> > plane[43]: plane-0
+> >  =A0=A0=A0=A0crtc=3Dcrtc-0
+> >  =A0=A0=A0=A0fb=3D106
+> >  =A0=A0=A0=A0=A0=A0=A0 allocated by =3D [fbcon]
+> >  =A0=A0=A0=A0=A0=A0=A0 refcount=3D2
+> >  =A0=A0=A0=A0=A0=A0=A0 format=3DXR24 little-endian (0x34325258)
+> >  =A0=A0=A0=A0=A0=A0=A0 modifier=3D0x0
+> >  =A0=A0=A0=A0=A0=A0=A0 size=3D1080x2400
+> >  =A0=A0=A0=A0=A0=A0=A0 layers:
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 size[0]=3D1080x2400
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 pitch[0]=3D4352
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 offset[0]=3D0
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 obj[0]:
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 name=3D0
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 refcount=3D1
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 start=3D0010102d
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 size=3D10444800
+> >  =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 imported=3Dno
+> >  =A0=A0=A0=A0crtc-pos=3D1080x2400+0+0
+> >  =A0=A0=A0=A0src-pos=3D1080.000000x2400.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D1
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_0
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D1080x2400+0+0
+> >  =A0=A0=A0=A0dst[0]=3D1080x2400+0+0
+> > plane[49]: plane-1
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_1
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[55]: plane-2
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_2
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[61]: plane-3
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_3
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[67]: plane-4
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_8
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[73]: plane-5
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_9
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[79]: plane-6
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_10
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[85]: plane-7
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_11
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[91]: plane-8
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_12
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > plane[97]: plane-9
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0fb=3D0
+> >  =A0=A0=A0=A0crtc-pos=3D0x0+0+0
+> >  =A0=A0=A0=A0src-pos=3D0.000000x0.000000+0.000000+0.000000
+> >  =A0=A0=A0=A0rotation=3D1
+> >  =A0=A0=A0=A0normalized-zpos=3D0
+> >  =A0=A0=A0=A0color-encoding=3DITU-R BT.601 YCbCr
+> >  =A0=A0=A0=A0color-range=3DYCbCr limited range
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0stage=3D0
+> >  =A0=A0=A0=A0sspp[0]=3Dsspp_13
+> >  =A0=A0=A0=A0multirect_mode[0]=3Dnone
+> >  =A0=A0=A0=A0multirect_index[0]=3Dsolo
+> >  =A0=A0=A0=A0src[0]=3D0x0+0+0
+> >  =A0=A0=A0=A0dst[0]=3D0x0+0+0
+> > crtc[103]: crtc-0
+> >  =A0=A0=A0=A0enable=3D1
+> >  =A0=A0=A0=A0active=3D1
+> >  =A0=A0=A0=A0self_refresh_active=3D0
+> >  =A0=A0=A0=A0planes_changed=3D1
+> >  =A0=A0=A0=A0mode_changed=3D0
+> >  =A0=A0=A0=A0active_changed=3D0
+> >  =A0=A0=A0=A0connectors_changed=3D0
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0plane_mask=3D1
+> >  =A0=A0=A0=A0connector_mask=3D1
+> >  =A0=A0=A0=A0encoder_mask=3D1
+> >  =A0=A0=A0=A0mode: "1080x2400": 144 394225 1080 1100 1102 1122 2400 242=
+0 2422 2440 0x48 0x0
+> >  =A0=A0=A0=A0lm[0]=3D0
+> >  =A0=A0=A0=A0ctl[0]=3D2
+> > crtc[104]: crtc-1
+> >  =A0=A0=A0=A0enable=3D0
+> >  =A0=A0=A0=A0active=3D0
+> >  =A0=A0=A0=A0self_refresh_active=3D0
+> >  =A0=A0=A0=A0planes_changed=3D0
+> >  =A0=A0=A0=A0mode_changed=3D0
+> >  =A0=A0=A0=A0active_changed=3D0
+> >  =A0=A0=A0=A0connectors_changed=3D0
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0plane_mask=3D0
+> >  =A0=A0=A0=A0connector_mask=3D0
+> >  =A0=A0=A0=A0encoder_mask=3D0
+> >  =A0=A0=A0=A0mode: "": 0 0 0 0 0 0 0 0 0 0 0x0 0x0
+> > crtc[105]: crtc-2
+> >  =A0=A0=A0=A0enable=3D0
+> >  =A0=A0=A0=A0active=3D0
+> >  =A0=A0=A0=A0self_refresh_active=3D0
+> >  =A0=A0=A0=A0planes_changed=3D0
+> >  =A0=A0=A0=A0mode_changed=3D0
+> >  =A0=A0=A0=A0active_changed=3D0
+> >  =A0=A0=A0=A0connectors_changed=3D0
+> >  =A0=A0=A0=A0color_mgmt_changed=3D0
+> >  =A0=A0=A0=A0plane_mask=3D0
+> >  =A0=A0=A0=A0connector_mask=3D0
+> >  =A0=A0=A0=A0encoder_mask=3D0
+> >  =A0=A0=A0=A0mode: "": 0 0 0 0 0 0 0 0 0 0 0x0 0x0
+> > connector[33]: DSI-1
+> >  =A0=A0=A0=A0crtc=3Dcrtc-0
+> >  =A0=A0=A0=A0self_refresh_aware=3D0
+> >  =A0=A0=A0=A0max_requested_bpc=3D0
+> >  =A0=A0=A0=A0colorspace=3DDefault
+> > connector[35]: DP-1
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0self_refresh_aware=3D0
+> >  =A0=A0=A0=A0max_requested_bpc=3D0
+> >  =A0=A0=A0=A0colorspace=3DDefault
+> > connector[42]: Writeback-1
+> >  =A0=A0=A0=A0crtc=3D(null)
+> >  =A0=A0=A0=A0self_refresh_aware=3D0
+> >  =A0=A0=A0=A0max_requested_bpc=3D0
+> >  =A0=A0=A0=A0colorspace=3DDefault
+> > resource mapping:
+> >  =A0=A0=A0=A0pingpong=3D103 # # # # # # # # # -
+> >  =A0=A0=A0=A0mixer=3D103 # # # # # -
+> >  =A0=A0=A0=A0ctl=3D# # 103 # # #
+> >  =A0=A0=A0=A0dspp=3D# # # #
+> >  =A0=A0=A0=A0dsc=3D# # # # # #
+> >  =A0=A0=A0=A0cdm=3D-
+> >  =A0=A0=A0=A0cwb=3D# # # #
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D><=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> >=20
+> > I pasted all the kms_writeback log, I have nothing more.
+> >=20
+> > If I specify `--run-subtest dump-valid-clones` I get:
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D><=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> > IGT_FRAME_DUMP_PATH=3D$PWD FRAME_PNG_FILE_NAME=3Dout.png /usr/libexec/i=
+gt-gpu-tools/kms_writeback -d --run-subtest dump-valid-clones
+> > [=A0=A0 33.250236] Console: switching to colour dummy device 80x25
+> > IGT-Version: 1.29-1.28 (aarch64) (Linux: 6.12.0-rc1-00022-ge581f752bf79=
+ aarch64)
+> > Using IGT_SRANDOM=3D1709054789 for randomisation[=A0=A0 33.256171] [IGT=
+] kms_writeback: executing
+> >=20
+> > Opened device: /dev/dri/card0
+> > [=A0=A0 33.360023] [IGT] kms_writeback: starting subtest dump-valid-clo=
+nes
+> > Starting subtest: dump-valid-clones
+> > [=A0=A0 34.063316] [drm:dpu_encoder_virt_atomic_disable:1314] [dpu erro=
+r]enc32 timeout pending
+> > [=A0=A0 34.244272] Unable to handle kernel NULL pointer dereference at =
+virtual address 0000000000000010
+> > [=A0=A0 34.253385] Mem abort info:
+> > [=A0=A0 34.256328]=A0=A0 ESR =3D 0x0000000096000006
+> > [=A0=A0 34.260272]=A0=A0 EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+> > [=A0=A0 34.265816]=A0=A0 SET =3D 0, FnV =3D 0
+> > [=A0=A0 34.269043]=A0=A0 EA =3D 0, S1PTW =3D 0
+> > [=A0=A0 34.272332]=A0=A0 FSC =3D 0x06: level 2 translation fault
+> > [=A0=A0 34.277430] Data abort info:
+> > [=A0=A0 34.280460]=A0=A0 ISV =3D 0, ISS =3D 0x00000006, ISS2 =3D 0x0000=
+0000
+> > [=A0=A0 34.286170]=A0=A0 CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =3D 0
+> > [=A0=A0 34.291438]=A0=A0 GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =
+=3D 0
+> > [=A0=A0 34.296975] user pgtable: 4k pages, 48-bit VAs, pgdp=3D000000088=
+24fc000
+> > [=A0=A0 34.303673] [0000000000000010] pgd=3D08000008dc4e0003, p4d=3D080=
+00008dc4e0003, pud=3D08000008dd4af003, pmd=3D0000000000000000
+> > [=A0=A0 34.314647] Internal error: Oops: 0000000096000006 [#1] PREEMPT =
+SMP
+> > [=A0=A0 34.321144] Modules linked in: snd_soc_wsa884x q6prm_clocks q6ap=
+m_dai
+> > q6apm_lpass_dais snd_q6dsp_common q6prm 8021q garp mrp stp llc usb_f_fs
+> > libcomposite qrtr_mhi snd_q6apm rpmsg_ctrl fastrpc apr qrtr_smd
+> > rpmsg_char snd_soc_hdmi_codec ath12k mac80211 libarc4 mhi
+> > panel_visionox_vtdr6130 qcom_pd_mapper goodix_berlin_spi ucsi_glink
+> > pmic_glink_altmode pci_pwrctl_pwrseq pci_pwrctl_core typec_ucsi
+> > aux_hpd_bridge qcom_battmgr nb7vpq904m wcd939x_usbss goodix_berlin_core
+> > crct10dif_ce phy_qcom_eusb2_repeater msm sm3_ce sm3 qcom_q6v5_pas
+> > sha3_ce hci_uart sha512_ce sha512_arm64 leds_qcom_lpg ocmem
+> > qcom_pil_info qcom_q6v5 qcom_pbs btqca ipa btbcm drm_exec qcom_sysmon
+> > pwrseq_qcom_wcn snd_soc_sc8280xp led_class_multicolor snd_soc_qcom_sdw
+> > qrtr qcom_common gpu_sched snd_soc_wcd939x drm_dp_aux_bus
+> > qcom_spmi_temp_alarm snd_soc_qcom_common qcom_glink_smem
+> > snd_soc_wcd939x_sdw rtc_pm8xxx drm_display_helper
+> > pinctrl_sm8650_lpass_lpi regmap_sdw cfg80211 bluetooth qcom_pon
+> > pmic_glink ecdh_generic pdr_interface phy_qcom_qmp_combo ecc rfkill
+> > [=A0=A0 34.321268]=A0 nvmem_qcom_spmi_sdam qcom_stats spi_geni_qcom pwr=
+seq_core i2c_qcom_geni aux_bridge phy_qcom_snps_eusb2 dispcc_sm8550 drm_kms=
+_helper gpi soundwire_qcom snd_soc_lpass_va_macro pinctrl_lpass_lpi snd_soc=
+_wcd_mbhc snd_soc_lpass_tx_macro snd_soc_lpass_rx_macro snd_soc_lpass_wsa_m=
+acro llcc_qcom snd_soc_lpass_macro_common slimbus snd_soc_wcd_classh mdt_lo=
+ader qcom_pdr_msg qcrypto gpucc_sm8650 icc_bwmon qmi_helpers authenc phy_qc=
+om_qmp_ufs libdes soundwire_bus ufs_qcom nvmem_reboot_mode phy_qcom_qmp_pci=
+e typec qcom_rng rmtfs_mem socinfo fuse drm backlight ipv6
+> > [=A0=A0 34.464862] CPU: 5 UID: 0 PID: 513 Comm: kms_writeback Tainted: =
+G S=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 6.12.0-rc1-00022-ge581f=
+752bf79 #2
+> > [=A0=A0 34.475812] Tainted: [S]=3DCPU_OUT_OF_SPEC
+> > [=A0=A0 34.479905] Hardware name: Qualcomm Technologies, Inc. SM8650 QR=
+D (DT)
+> > [=A0=A0 34.486667] pstate: 81400005 (Nzcv daif +PAN -UAO -TCO +DIT -SSB=
+S BTYPE=3D--)
+> > [=A0=A0 34.493880] pc : dpu_encoder_helper_phys_setup_cwb+0xb8/0x1ec [m=
+sm]
+> > [=A0=A0 34.500441] lr : dpu_encoder_helper_phys_setup_cwb+0x88/0x1ec [m=
+sm]
+> > [=A0=A0 34.506969] sp : ffff800085fc37e0
+> > [=A0=A0 34.510437] x29: ffff800085fc3810 x28: ffffb8c93c953068 x27: fff=
+f5af315c90880
+> > [=A0=A0 34.517826] x26: ffff5af359c55780 x25: ffff800085fc3878 x24: fff=
+f5af35a956e80
+> > [=A0=A0 34.525217] x23: 0000000000000000 x22: ffff5af355dc2080 x21: fff=
+f5af35a956e80
+> > [=A0=A0 34.532607] x20: ffff5af315c90880 x19: ffff5af315c90c80 x18: 000=
+0000000000001
+> > [=A0=A0 34.539997] x17: 0000000000000018 x16: ffffb8c95c9c8c64 x15: 000=
+0000000000038
+> > [=A0=A0 34.547385] x14: 0000001971602a24 x13: 00000000000000e1 x12: 000=
+000000000000b
+> > [=A0=A0 34.554774] x11: 0000000000000000 x10: e7125de8a27ae014 x9 : 5ae=
+f79bd13b1e2a7
+> > [=A0=A0 34.562162] x8 : ffff5af355dc2718 x7 : 0000000000000004 x6 : fff=
+f5af356374d98
+> > [=A0=A0 34.569550] x5 : 0000000000000002 x4 : ffff800085fc37f8 x3 : fff=
+f5af315c90950
+> > [=A0=A0 34.576938] x2 : 0000000000000002 x1 : 0000000000000000 x0 : 000=
+0000000000001
+> > [=A0=A0 34.584328] Call trace:
+> > [=A0=A0 34.586905]=A0 dpu_encoder_helper_phys_setup_cwb+0xb8/0x1ec [msm]
+> > [=A0=A0 34.593075]=A0 dpu_encoder_helper_phys_cleanup+0x328/0x3c4 [msm]
+> > [=A0=A0 34.599165]=A0 dpu_encoder_phys_wb_disable+0x80/0xac [msm]
+> > [=A0=A0 34.604713]=A0 dpu_encoder_virt_atomic_disable+0xb4/0x160 [msm]
+> > [=A0=A0 34.610711]=A0 disable_outputs+0x108/0x32c [drm_kms_helper]
+> > [=A0=A0 34.616351]=A0 drm_atomic_helper_commit_modeset_disables+0x1c/0x=
+4c [drm_kms_helper]
+> > [=A0=A0 34.624110]=A0 msm_atomic_commit_tail+0x188/0x514 [msm]
+> > [=A0=A0 34.629396]=A0 commit_tail+0xa4/0x18c [drm_kms_helper]
+> > [=A0=A0 34.634570]=A0 drm_atomic_helper_commit+0x17c/0x194 [drm_kms_hel=
+per]
+> > [=A0=A0 34.640990]=A0 drm_atomic_commit+0xb8/0xf4 [drm]
+> > [=A0=A0 34.645690]=A0 drm_mode_atomic_ioctl+0xad4/0xd88 [drm]
+> > [=A0=A0 34.650889]=A0 drm_ioctl_kernel+0xc0/0x128 [drm]
+> > [=A0=A0 34.655564]=A0 drm_ioctl+0x218/0x49c [drm]
+> > [=A0=A0 34.659697]=A0 __arm64_sys_ioctl+0xac/0xf0
+> > [=A0=A0 34.663804]=A0 invoke_syscall+0x48/0x10c
+> > [=A0=A0 34.667755]=A0 el0_svc_common.constprop.0+0xc0/0xe0
+> > [=A0=A0 34.672648]=A0 do_el0_svc+0x1c/0x28
+> > [=A0=A0 34.676117]=A0 el0_svc+0x34/0xd8
+> > [=A0=A0 34.679330]=A0 el0t_64_sync_handler+0x120/0x12c
+> > [=A0=A0 34.683864]=A0 el0t_64_sync+0x190/0x194
+> > [=A0=A0 34.687699] Code: 910063e1 f8607822 f8607861 b9401042 (b9401021)
+> > [=A0=A0 34.694014] ---[ end trace 0000000000000000 ]---
+> > =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D><=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Anything I can try to get past the crash ?
+
+The call to dpu_kms_get_existing_global_state in
+dpu_encoder_helper_phys_setup_cwb looks suspicious to me, can you check
+whether the returned global state is NULL?
+
+Maxime
+
+--yyzazgzbhs7ae6h2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZwTq6QAKCRAnX84Zoj2+
+dlixAYDxDfW7La4zSTBTDOT6FWKqC5AujJFMJtQ+PdJf+OArWTo94IXV/ox04Rjl
+XI6x+xMBf1ToVB7mEXGkeik31TeryLrQlCbmjN8jwM/ua1vrM6LcEAo5Pj7eaZKU
+5dcsMa1lcg==
+=tSgD
+-----END PGP SIGNATURE-----
+
+--yyzazgzbhs7ae6h2--
 
