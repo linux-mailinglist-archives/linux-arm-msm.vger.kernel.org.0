@@ -1,275 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-33615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D6CE995CF1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 03:28:31 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 994CF995DF0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 04:55:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F1DEFB234A0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 01:28:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 555CB285113
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 02:55:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 505D11F947;
-	Wed,  9 Oct 2024 01:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DCB113635F;
+	Wed,  9 Oct 2024 02:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="i9msE94f"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="keQhcz4t"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E11D364AE;
-	Wed,  9 Oct 2024 01:28:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DEC20B0F;
+	Wed,  9 Oct 2024 02:55:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728437305; cv=none; b=fhDBoiyIZamFlaLj1MagNJpo+izNoRvscOxK4LNViGUmYXWU8hCf7c2wz/HxBvr4ki+D8uKK0HyljjxIeVmePGCOK48zhP0ornfCiQ16FJWls0qwVGdapRuFHgqser1cuf9K7sLBOtT99qkLi68eRVx0Y3Wq0jwQZToSVWjAY6I=
+	t=1728442507; cv=none; b=bhGSFDcYJK0YcJWwzNegBWdt9Sqwjmj+LiiVB9AaQeuPYhNKeg7h2XzFEqIKD9JjoA1fcqatmxG6VDR+j9Dge37wtcV1xCVEkc3XHf56PEiItpqp0/RFb7KfYrsRzUbzprCkIwiV5Rqp/gtGoXHjiO1nGkU1vSvNXpP/Qv3aP5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728437305; c=relaxed/simple;
-	bh=oKrWsj0O/Nlo4rrHs/iCycL28wO1QB8vzihNMhgc2eY=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=TNDs+z3SUer8yuLPTsHUfHZmGYpMh8FIi7xyNuzueMn/FYUAS3OGNJ+wNErBs1DILmceXuFdvkE0oCYua5HxCkSqkM/aqYpMZHvz8Zw8ORaTsOyFwR0R++oMnxR1UOjab93TLIyD6Z6tIF/XlOiwEnoE791Puyo1DAo1fJBnX2w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=i9msE94f; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1728442507; c=relaxed/simple;
+	bh=oxm1Ff3vxNyn1mbJxKeZbnMvDmPaCTYcZp501d21ls8=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=f9MeVUfuHZAJlAbw9tiRREFFwKVYWyixMRPrvs8L3i9b4dS1TLQKXvXFEPAakZ3qE/7Atjunfyaee0p5SkLmGHvs1Ipi/NRk5MzhDSxQvhvE8N0puO7KhyKkw+6R1m0ffFoIHa27ONgVnw6QC08wNr1+w7qMq1rsilIl9v0nu5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=keQhcz4t; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 498H3xpr022606;
-	Wed, 9 Oct 2024 01:28:18 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 498D2kbj010523;
+	Wed, 9 Oct 2024 02:54:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=T1ngBHzXAUC6PWjMk0KSVS
-	3Ni9BJwLovX98Row3Sw2U=; b=i9msE94fGKR3E8tCE22GUnndM0FLV17REh4cMP
-	9x5Pel0qo5a+0xuncIdvn8k3hbcAg8MS9Rj4EAZtuyHjPIsQ6O3z2ivJGjME8ulH
-	DENmaL+aRlsGz9ySKZhZVQ0SkH6qPpLhnaNj2BUsqfCDcOjm/444wbGUn4MdtnsV
-	GNcp+sn5yoNmRP5aZhgUFZ8WhNx7na4Bk7QWQK44RQP1QzpOCu7xKXSHGgEUgU+M
-	bjYTLMWva7NkxgsSKjv0kU6VQrdxVn1eGyXtEgWK2YbaOwVCFSBJWdA8MTaUd+Cu
-	TxwJNtdESdD2PlpVlMD9fu6C8CF9KEwTbEefBMNOb4Ovu+QQ==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424kaevey6-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=vfgF9EMGlGzSd0FlTmezTu1P
+	DT0ku04Q94Tou5aFIy4=; b=keQhcz4tVzSyxE5TJUxXWBCQPQY7IkV4j9hlypoe
+	7LGPBZ/xPgXRmUFhy32sm5CJ68Q+Q3dRS25kkTgdaguBNVmBp5Ds137eCd9ndk7X
+	OMGmmt+G1s3oMcpWHJGCP66HSquiwla/W1l6SummKoUaQbpW8ZahsmwKEljoGqwO
+	ylSug5VPFa9VM0LAIef1aiGNwTLm662wFGNbkmCmAge1JMJO9PFIhM1JUo6rwFE1
+	n2UDyVHrlTEeYhKKTWhRAtZFrCL/TyrMTB9B4YTaTq4a2Jn6pDVxx8Cvkj4R2mOh
+	ydUv60+MD+iH12gV3sTyW+s5xiaZpheOzRU80cm2cy4tMA==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424x7ru93e-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Oct 2024 01:28:17 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4991SGKN024884
+	Wed, 09 Oct 2024 02:54:51 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4992sofX016702
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 9 Oct 2024 01:28:16 GMT
-Received: from Z2-SFF-G9-MQ.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Wed, 9 Oct 2024 02:54:50 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 8 Oct 2024 18:28:14 -0700
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-To: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>, <quic_vgarodia@quicinc.com>,
-        <stanimir.k.varbanov@gmail.com>,
-        Miaoqing Pan <quic_miaoqing@quicinc.com>
-Subject: [PATCH v3] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Date: Wed, 9 Oct 2024 09:27:38 +0800
-Message-ID: <20241009012738.2840558-1-quic_miaoqing@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+ 15.2.1544.9; Tue, 8 Oct 2024 19:54:49 -0700
+Date: Tue, 8 Oct 2024 19:54:48 -0700
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
+To: Frank Li <Frank.li@nxp.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, "Felipe
+ Balbi" <balbi@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        "Saravana
+ Kannan" <saravanak@google.com>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Konrad Dybcio
+	<konrad.dybcio@linaro.org>, <linux-usb@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v2 0/7] usb: dwc3: qcom: Flatten dwc3 structure
+Message-ID: <ZwXweChRh5bjc1nS@hu-bjorande-lv.qualcomm.com>
+References: <20240811-dwc3-refactor-v2-0-91f370d61ad2@quicinc.com>
+ <ZrugxSqzhzxvVqV3@lizhi-Precision-Tower-5810>
+ <ZwWRieC0D3Q13VW7@lizhi-Precision-Tower-5810>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <ZwWRieC0D3Q13VW7@lizhi-Precision-Tower-5810>
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: R2rx9bkmIcoL0smXS9fJdr1jD0_maAgj
-X-Proofpoint-GUID: R2rx9bkmIcoL0smXS9fJdr1jD0_maAgj
+X-Proofpoint-GUID: ZM-Qi9yHp8KQBwteTcbygHTHuEph1dtt
+X-Proofpoint-ORIG-GUID: ZM-Qi9yHp8KQBwteTcbygHTHuEph1dtt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 malwarescore=0
- adultscore=0 spamscore=0 clxscore=1011 lowpriorityscore=0 phishscore=0
- impostorscore=0 priorityscore=1501 mlxlogscore=999 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410090008
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ phishscore=0 mlxlogscore=845 spamscore=0 clxscore=1011 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410090017
 
-Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+On Tue, Oct 08, 2024 at 04:09:45PM -0400, Frank Li wrote:
+> On Tue, Aug 13, 2024 at 02:07:01PM -0400, Frank Li wrote:
+> > On Sun, Aug 11, 2024 at 08:11:57PM -0700, Bjorn Andersson wrote:
+> > > The USB IP-block found in most Qualcomm platforms is modelled in the
+> > > Linux kernel as 3 different independent device drivers, but as shown by
+> > > the already existing layering violations in the Qualcomm glue driver
+> > > they can not be operated independently.
+> > >
+> > > With the current implementation, the glue driver registers the core and
+> > > has no way to know when this is done. As a result, e.g. the suspend
+> > > callbacks needs to guard against NULL pointer dereferences when trying
+> > > to peek into the struct dwc3 found in the drvdata of the child.
+> > >
+> > > Missing from the upstream Qualcomm USB support is handling of role
+> > > switching, in which the glue needs to be notified upon DRD mode changes.
+> > > Several attempts has been made through the years to register callbacks
+> > > etc, but they always fall short when it comes to handling of the core's
+> > > probe deferral on resources etc.
+> > >
+> > > Furhtermore, the DeviceTree binding is a direct representation of the
+> > > Linux driver model, and doesn't necessarily describe "the USB IP-block".
+> > >
+> > > This series therefor attempts to flatten the driver split, and operate
+> > > the glue and core out of the same platform_device instance. And in order
+> > > to do this, the DeviceTree representation of the IP block is flattened.
+> >
+> 
+> Bjorn Andersson:
+> 	Any follow up on this thread?
+> 
 
-Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
----
-v2:
-  - fix wcn6855-pmu compatible to "qcom,wcn6855-pmu".
-  - relocate pcieport0 node in alphabetical order.
-v3:
-  - add 'qcom,ath11k-calibration-variant = "SA8775P"'.
+Thanks for reaching out, Frank. I did pick this up again a few days
+back.
 
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 121 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
- 2 files changed, 122 insertions(+), 1 deletion(-)
+I'm struggling with Rob's request for not peeking into struct property
+and/or utilizing overlays. Hoping to figure this out shortly, so I can
+get v3 in shape.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 0c1b21def4b6..2546e9b86555 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -27,6 +27,83 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	vreg_conn_1p8: vreg_conn_1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_1p8";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pmm8654au_1_gpios 4 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_conn_pa: vreg_conn_pa {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_pa";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pmm8654au_1_gpios 6 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+
-+		vddio-supply = <&vreg_conn_pa>;
-+		vddaon-supply = <&vreg_l2c>;
-+		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddrfa0p95-supply = <&vreg_l2c>;
-+		vddrfa1p3-supply = <&vreg_l6e>;
-+		vddrfa1p9-supply = <&vreg_s5a>;
-+		vddpcie1p3-supply = <&vreg_l6e>;
-+		vddpcie1p9-supply = <&vreg_s5a>;
-+
-+		bt-enable-gpios = <&pmm8654au_1_gpios 8 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&pmm8654au_1_gpios 7 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -453,6 +530,20 @@ &pmm8654au_1_gpios {
- 			  "USB2_PWR_EN",
- 			  "USB2_FAULT";
- 
-+	wlan_en_state: wlan-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
-+	bt_en_state: bt-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
- 	usb2_en_state: usb2-en-state {
- 		pins = "gpio9";
- 		function = "normal";
-@@ -702,6 +793,25 @@ &pcie1_phy {
- 	status = "okay";
- };
- 
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		qcom,ath11k-calibration-variant = "SA8775P";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/sa8775p/adsp.mbn";
- 	status = "okay";
-@@ -744,6 +854,17 @@ &uart17 {
- 	pinctrl-0 = <&qup_uart17_default>;
- 	pinctrl-names = "default";
- 	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+	};
- };
- 
- &ufs_mem_hc {
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index e8dbc8d820a6..8d42b5e9c7d6 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -5570,7 +5570,7 @@ pcie0: pcie@1c00000 {
- 
- 		status = "disabled";
- 
--		pcie@0 {
-+		pcieport0: pcie@0 {
- 			device_type = "pci";
- 			reg = <0x0 0x0 0x0 0x0 0x0>;
- 			bus-range = <0x01 0xff>;
--- 
-2.25.1
-
+Regards,
+Bjorn
 
