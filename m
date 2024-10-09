@@ -1,68 +1,67 @@
-Return-Path: <linux-arm-msm+bounces-33740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33741-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB6A7997782
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 23:31:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6FDD99778A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 23:32:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 272271C21A3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 21:31:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87699284A24
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 21:32:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 329FA1E1311;
-	Wed,  9 Oct 2024 21:31:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D67661E25F6;
+	Wed,  9 Oct 2024 21:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fKX0jZfw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dte6lDD4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F247317A583;
-	Wed,  9 Oct 2024 21:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A5E40849;
+	Wed,  9 Oct 2024 21:32:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728509478; cv=none; b=VPAKmrkWVkefwFPzId7KhBkDEL7yzhS+EbnYoKpJA5DXnKKSsuqiP0P5eeJcoO0zGw1RQEmphSHw4jCXdk11rWIFf84Zj1E+6HH2LLvlI7p+7NqQ3HXsLRDzfe7+MH1rXO6picCtZrNjlt7UJ+wno1YiLbZjR2xxk9udIhYc/yY=
+	t=1728509564; cv=none; b=kebb7C8Gbb3akm5iJEu0IHKfIHsjuLqO80SjxLkIywVhtD/fyL++LhfHtJXOvEEJfxUooiwoPtGrzQ9L678sqt3OgtO9wjfclgVLfOML0KEX11/q0OGqn8FNY6c1sUiF8XTnQM3ilAwgPeFTF32Z+tqdGtkfRZCeAVEAU/V76kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728509478; c=relaxed/simple;
-	bh=CDmpHt4cVnqH2CMq/UZ5gellTMhqUaoAikzncUK3EyI=;
+	s=arc-20240116; t=1728509564; c=relaxed/simple;
+	bh=k4l2bGxX3ZLEwSZGVSUBeP6tqyyYf5DoUtxR8lkUQnw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jH8Cl0GCRbq+YYfd1c625iNRKaXvwYq+qAntQJWJ/KACIovJl7YDG2/D3z/H+7Hp+FXBmoPngodvglAorTFZ32Jw+Jjrlq+hkg7YTHnVqnlQBsjqBe40tB/S+y4g1U+ijRtWUrcUYFE78nTTd0yMZQ5HfXzqks4Lglo713eA9Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fKX0jZfw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66189C4CECE;
-	Wed,  9 Oct 2024 21:31:17 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=cjwjKG4OM6wJEb/hfzwPjrNRP28+LaXcQu5cLGVuTHI9r/FtmnmZt3bVFo4iClEYFYwk9vtUUpIB/HcfwHN2XtC4AgN1+OpXpCR58/l5GVXhhyIAIawW68oB7Sx95xPek9pazLKbNBLKc5aaRU/d7xZKMEtzwOW4fXT5ud7JTbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dte6lDD4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08140C4CEC3;
+	Wed,  9 Oct 2024 21:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728509477;
-	bh=CDmpHt4cVnqH2CMq/UZ5gellTMhqUaoAikzncUK3EyI=;
+	s=k20201202; t=1728509564;
+	bh=k4l2bGxX3ZLEwSZGVSUBeP6tqyyYf5DoUtxR8lkUQnw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fKX0jZfwvEI6+/cfTuvHWPCQAu78JEr7r5kIJ4yyqhLTQ7LaaFd9jUJXNkNrHOA4k
-	 SyGb7YOqnaNCSY+RLxmLt8aCxiRLPfqIQOg96gZgw3zfTRhiS+Docl21mdJ5i/+vHN
-	 j5sMy+WJlODGqoaQnrHmjzkLbTgMGUCiDraZ2L56wm+Rbu9HMALs1iC2PXVIJRwP8Z
-	 dXFOnBwVrUgiQbalOfaurxuGZeM2ms7C5ZbKolb7JMj4+Wc13YBKUw48Ts7pNBZPKD
-	 8ttlmj52TAKy9EERvJ7K8AKpWAZoUSeH+L6NIiDbxmzdFRP/vz5GSMhxixpJHA+/tu
-	 6B4r5v11Tf70w==
-Date: Wed, 9 Oct 2024 16:31:16 -0500
-From: Rob Herring <robh@kernel.org>
+	b=Dte6lDD4x3WQww5KVG7zR1g7a7pBEF0d/UV/fJIK9MEFrOzakuj5kyAY2D0GS9JgS
+	 gqS+cMcTlz5Q3qLXrNuxojFFe42fCy1I8ryQNohVtP10NlVG3zBWxBV/IfvXN21OCk
+	 nsyJ5QCYYb7BGozON355Cnom8QwBu9cW4ffk/A9smxo7fl6vgXlksjSnl+txGNApiS
+	 pkUXbQW7NyG1adXWlglKJtcoXukki7QrXebulv4EVA8dKYfKBXjna2ULAJS/ND/cQd
+	 gh3//3mNVCsgtZsYKm3tMZLejoixOSMG1awrbgf5x7PwDtmSDLygZCtwbtD+weZkmn
+	 a/Xj9gRuVTALw==
+Date: Wed, 9 Oct 2024 16:32:43 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
+Cc: linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-usb@vger.kernel.org, Mantas Pucka <mantas@8devices.com>,
+	quic_ppratap@quicinc.com, Vinod Koul <vkoul@kernel.org>,
 	Wesley Cheng <quic_wcheng@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Mantas Pucka <mantas@8devices.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-phy@lists.infradead.org, quic_ppratap@quicinc.com,
-	quic_jackp@quicinc.com
-Subject: Re: [PATCH 1/4] dt-bindings: usb: qcom,dwc3: Add QCS8300 to USB DWC3
- bindings
-Message-ID: <20241009213116.GA740340-robh@kernel.org>
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	quic_jackp@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>
+Subject: Re: [PATCH 3/4] dt-bindings: phy: qcom,sc8280xp-qmp-usb3-uni: Add
+ QCS8300 compatible
+Message-ID: <172850948209.746650.7541249019180404346.robh@kernel.org>
 References: <20241009195348.2649368-1-quic_kriskura@quicinc.com>
- <20241009195348.2649368-2-quic_kriskura@quicinc.com>
+ <20241009195348.2649368-4-quic_kriskura@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,17 +70,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241009195348.2649368-2-quic_kriskura@quicinc.com>
+In-Reply-To: <20241009195348.2649368-4-quic_kriskura@quicinc.com>
 
-On Thu, Oct 10, 2024 at 01:23:45AM +0530, Krishna Kurapati wrote:
-> Update dt-bindings to add QCS8300 to USB DWC3 controller list.
-> The second controller of QCS8300 is High speed only capable and
-> doesn't have ss_phy_irq.
+
+On Thu, 10 Oct 2024 01:23:47 +0530, Krishna Kurapati wrote:
+> Update dt-bindings to add QCS8300 to QMP Uni Phy list.
 > 
 > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 4 ++++
->  1 file changed, 4 insertions(+)
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
 Acked-by: Rob Herring (Arm) <robh@kernel.org>
+
 
