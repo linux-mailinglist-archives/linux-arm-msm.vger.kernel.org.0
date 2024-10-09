@@ -1,142 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-33724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6256A997157
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 18:27:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 109EB9971CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 18:38:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C5C48283F5E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 16:27:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C75AC281B8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 16:38:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B6731E1059;
-	Wed,  9 Oct 2024 16:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A23B1A0B06;
+	Wed,  9 Oct 2024 16:34:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Evxtcdys"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OitXDxRF"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4BB11991B6;
-	Wed,  9 Oct 2024 16:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8DE38DE5;
+	Wed,  9 Oct 2024 16:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728490681; cv=none; b=EPCo5dce2m8cqZkcSdkHsWbJmtmNJbd69dCD3QfSiEvE7n97jksJBa7XelV9nb/H9+qtqsblX5ttLjm6dO4Xbe43ApB/qm6beivLUKsFgucuzSVw/HzjuXI7JXhZ8HVhvbRsF4db270jTjVwaHzJQSb1D7R45uXNsSkFa6IIS8M=
+	t=1728491661; cv=none; b=U20QMeH7Sm3/YD2bW+em7kHy8MwadeNyFIZYxAjXBCwQ4N9E5a2g+KdSsjBX2AMX070UKiRKL+IB/PlC98dBPSbT8z52MgnJAYzvTGQij6FZySEuCBqgXGgTu1zmFSr5DsKZtFbJsEl8+kTnaPvXtyniqSn6cZ92wtediy4IlOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728490681; c=relaxed/simple;
-	bh=7mcya0dQ16YUCdd0MtCNhc87iiZ1eu9QcqUo8uN0tE4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TjGQds0vj1GGsPVJzERbi+i88dTu97hFMjdghKouEijloBEO0jofBTvHkCz/Pz26kLMbQ40ndsjDKGZhFyLo/ecpHN28Y6y/o5TQ8XXd4nVBMLbBcWVMtk6n1CSfgB15t/qKm87Jum6RxPbJtSb6Mn0pGJ4XmyANZKRiMpmJwOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Evxtcdys; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5E2C4CEC3;
-	Wed,  9 Oct 2024 16:18:01 +0000 (UTC)
+	s=arc-20240116; t=1728491661; c=relaxed/simple;
+	bh=K5athNe1/NvnaRmNTmFsQwsUp9p+aYNd5zMwqloPMQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rb+qfeVTrs7n+cpceMrY7BuHww9UYIQlliXcQqcyF5QpIPnL6fO3Tzk2KzRJaGFQ0fRVQqbgftzS5zoVcZsCqQN7gjBSIanP2sqvL/1/KpshQW7ICiTNAKifaitqUgbwQu0GlP6SWtqFGeP678e4r8JNMpHtMK3+DbBPeiyWblU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OitXDxRF; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FF6C4CEC3;
+	Wed,  9 Oct 2024 16:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728490681;
-	bh=7mcya0dQ16YUCdd0MtCNhc87iiZ1eu9QcqUo8uN0tE4=;
-	h=From:To:Cc:Subject:Date:From;
-	b=EvxtcdysIn1KMGFpOHgZ4Hw3oCrCC6DN/ho2eeqCXtgBbHqjBKHVHmI84w+kvAQI+
-	 Z6Jz4pnlGGYflOg9jUFjDgC60Nn5uXuXPoyYeVUDywOv70u1B9Doc1k7K24V4WiChv
-	 eWJgufDd4ebI4YjoFO1fgjsebuvuuwiKamHcDJq7Taq9A5iwOk+oD7NMUnzTFrfk36
-	 qGFeiVQTf6ejtLKIQ9x41v1OXyRZ5sHGQeFPgbHmGD9WFDbSHCGq3pmvo1DX0rDc5i
-	 /aj6ZKov50g4bGoAzVWYCY7VSwmlrZxwFcmbtNMOnNHfRLqNSrAmcD0XYfkDVIO8wa
-	 SjkRwEFimzB1g==
+	s=k20201202; t=1728491660;
+	bh=K5athNe1/NvnaRmNTmFsQwsUp9p+aYNd5zMwqloPMQg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OitXDxRFnp1UlcuCm875dCX+SvbASzcx22JV0ZGCer7G7XreuuTkzhK9buH7LHOOK
+	 WzpOBl9ZxQxRoCbJIWkEbXCUqSqcmCoBXSF8L7BDSbjOIffHuTVH0r6k2ENV/NZ0mH
+	 W3tXC3JVqtvaKi+wwuIp6P6Jp5eX6idpXEy1ZSdeN5ZUMneZZkt0AeSqgezGm5fpXG
+	 SglM3YZgT/QkKFDzZD797oSbWkxRdtpS3EVGJ0GL5H6aff3SvoZCX7luiwMf6zkuiy
+	 aEEm9zhzDfh5RhRHNvueT19o0cs2uIOJEUFlL9IJzKA+PBN/H9etLWAUH20/dgkDyK
+	 Zz1Zbxtg/njvg==
 Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1syZO0-000000003uw-21xE;
-	Wed, 09 Oct 2024 18:18:05 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
+	(envelope-from <johan@kernel.org>)
+	id 1syZdo-000000005Y2-1KZR;
+	Wed, 09 Oct 2024 18:34:24 +0200
+Date: Wed, 9 Oct 2024 18:34:24 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: x1e80100: enable GICv3 ITS for PCIe
-Date: Wed,  9 Oct 2024 18:17:15 +0200
-Message-ID: <20241009161715.14994-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: sm8450: Add Broadcast_AND region in
+ LLCC block
+Message-ID: <ZwawkF17sxYRk_vC@hovoldconsulting.com>
+References: <20240718-x1e80100-dts-llcc-add-broadcastand_region-v1-1-20b6edf4557e@linaro.org>
+ <39df7ff4-7f22-4715-a0f7-eb2475bd7b55@linaro.org>
+ <Zpj8cWfcqYj8rUOP@hovoldconsulting.com>
+ <ZpkOgpGCKp/w13la@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZpkOgpGCKp/w13la@linaro.org>
 
-The DWC PCIe controller can be used with its internal MSI controller or
-with an external one such as the GICv3 Interrupt Translation Service
-(ITS).
+On Thu, Jul 18, 2024 at 03:45:54PM +0300, Abel Vesa wrote:
+> On 24-07-18 13:28:49, Johan Hovold wrote:
+> > On Thu, Jul 18, 2024 at 01:20:37PM +0200, Konrad Dybcio wrote:
+> > > On 18.07.2024 12:20 PM, Abel Vesa wrote:
+> > > > Add missing Broadcast_AND region to the LLCC block for x1e80100,
+> > > > as the LLCC version on this platform is 4.1 and it provides the region.
+> > > > 
+> > > > This also fixes the following error caused by the missing region:
+> > > > 
+> > > > [    3.797768] qcom-llcc 25000000.system-cache-controller: error -EINVAL: invalid resource (null)
+> > 
+> > Please say something about this error only showing up in linux-next,
+> > which has 055afc34fd21 ("soc: qcom: llcc: Add regmap for Broadcast_AND region"
+> > region")).
+> 
+> Hm, now that I think of it, maybe I should drop the fixes tag
+> altogether, as it fits more into the "new support" category strictly
+> because of that commit you mentioned.
 
-Add the msi-map properties needed to use the GIC ITS. This will also
-make Linux switch to the ITS implementation, which allows for assigning
-affinity to individual MSIs. This specifically allows NVMe and Wi-Fi
-interrupts to be processed on all cores (and not just on CPU0).
+Looks like you forgot to respin this one so that the error is now logged
+with mainline since 6.11 and commit 055afc34fd21 ("soc: qcom: llcc: Add
+regmap for Broadcast_AND region"):
 
-Note that using the GIC ITS on x1e80100 will cause Advanced Error
-Reporting (AER) interrupts to be received on errors unlike when using
-the internal MSI controller. Consequently, notifications about
-(correctable) errors may now be logged for errors that previously went
-unnoticed.
+	qcom-llcc 25000000.system-cache-controller: error -EINVAL: invalid resource (null)
 
-Also note that PCIe5 (and PCIe3) can currently only be used with the
-internal MSI controller due to a platform (firmware) limitation.
+Can you please respin as soon as possible with an updated commit message
+and a CC stable tag to suppress the error?
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
+> > > > Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
+> > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > > ---
+> > > 
+> > > Please fix the commit title
+> > 
+> > And that.
+> 
+> Yep. Will do.
 
-The PCIe Gen4 stability fixes [1] are now in 6.12-rc1 so that we can enable
-the GIC ITS without being flooded with link error notifications [2].
+Don't forget to update Subject.
 
 Johan
-
-[1] https://lore.kernel.org/lkml/20240911-pci-qcom-gen4-stability-v7-0-743f5c1fd027@linaro.org/
-[2] https://lore.kernel.org/lkml/ZpDnSL8as7km9_0b@hovoldconsulting.com/
-
-Changes in v2
- - amend commit message with comment about PCIe3 and PCIe5 only
-   supporting the internal MSI controller
-
-
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 1743fe229ded..4d978fe936e5 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2934,6 +2934,8 @@ pcie6a: pci@1bf8000 {
- 			linux,pci-domain = <6>;
- 			num-lanes = <4>;
- 
-+			msi-map = <0x0 &gic_its 0xe0000 0x10000>;
-+
- 			interrupts = <GIC_SPI 773 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 774 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 837 IRQ_TYPE_LEVEL_HIGH>,
-@@ -3183,6 +3185,8 @@ pcie4: pci@1c08000 {
- 			linux,pci-domain = <4>;
- 			num-lanes = <2>;
- 
-+			msi-map = <0x0 &gic_its 0xc0000 0x10000>;
-+
- 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 143 IRQ_TYPE_LEVEL_HIGH>,
-@@ -5773,8 +5777,6 @@ gic_its: msi-controller@17040000 {
- 
- 				msi-controller;
- 				#msi-cells = <1>;
--
--				status = "disabled";
- 			};
- 		};
- 
--- 
-2.45.2
-
 
