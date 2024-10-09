@@ -1,188 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-33685-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 35F76996807
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 13:07:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0AA099681A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 13:12:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D64931F23122
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 11:07:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 77B7C1F23883
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 11:12:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2049190499;
-	Wed,  9 Oct 2024 11:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E370E1917F0;
+	Wed,  9 Oct 2024 11:11:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="D7MQGR69"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="nh0dJ8bq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85FA18FDCE
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 11:07:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455F7191484
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 11:11:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728472055; cv=none; b=IV1Kwt2NxuKxcPQS2RsSX9ettxSpQcaE2u6AqqJnkps867Cndo9wJ5ijDwULdGWp8dRlErmEryDAeyRcxFQFI5+mIugyTt3ib7NpXNQJDFppJeTb+ZBxWSpriOfN7AbeZPoYEUtXNSD0YztiwPxjH95NLjQ9qBELqLKU+PYz1TA=
+	t=1728472313; cv=none; b=h13fVfrcZCi9bWvZfnmmsk+lAAdZOLiNOtTEDHf/tXXTeYXorVuFuS2IxP/To1nmFaOd4gfI6p9yU+Ugje2KvbKBeFXwiIHPEzjBhbgCmNInTqyy3gyH4q4J5nkn85gOIoUdiTjor7R3Bki1D4f31zgNlVGE6VDObS0eYfNGXG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728472055; c=relaxed/simple;
-	bh=ii6GfROU9ArrFjcWdpR1qIu/SeG4G9OZDXuOJJXuIU4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ealjZhJ6BWQi14gp38ysmoRupcErgUBy/Ze/5OfnCTf4OEb7woxRpXE81mra1uKgYpPVsKZLCw+T6SsLZlQBcoEJ401LzcULM4533ZXLVDMi/GIP0OMHrEW2f7Wsa5/NQP31AyL8ubrETkBz2Unvf4ojD6RttbOhZeFbXVaDl9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=D7MQGR69; arc=none smtp.client-ip=209.85.218.49
+	s=arc-20240116; t=1728472313; c=relaxed/simple;
+	bh=zkyoiyol/ZE9sPqTK4uVntBSTJv2678Uo5yX8kEiBq0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mpovJGfH5Qa3wJ8QOjs8yvwkk4WbZgqWHOU1RtrU9pETe+nxGCM8DXBcE0Bwke84PBL1THPbCYFhGdPXrc3P3YlkN2Gx0P8dT74camCgnaRE0voEUhNl5t9UTdnDt0cBM47eoTux2votD21fAfd6P1eXksgPJRPvesPkISLtmnw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=nh0dJ8bq; arc=none smtp.client-ip=209.85.219.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-a9952ea05c5so487501266b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 04:07:33 -0700 (PDT)
+Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e0875f1e9edso5427237276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 04:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728472052; x=1729076852; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qC5xZXHruBUTfMPlyF7fUtQuDa89P4OUqC7YMxKyj+g=;
-        b=D7MQGR69PCvSdiNKXzHbVmoEiEXxWrPSSdnV8Z6vKccWTLLWArnHL8JNxNt9TXsEnj
-         pIgQUjfi9Q/abLhkxVey2ZoxNOVUbTy39xBkze1uL6XJgfgqoRGCSw+2Blv+JxJhFmM0
-         lxbuy1GcXoirSvvA8cfyBQ+Md5Gsc99aoO4LHX5hRPvjXjx5b4M++ffAH48LeO7IIBaU
-         VMXQNUZk/L+efOmBKQ+FS2R/cMP8sIptwa+D9bInmmMhLdm4xS+Fh2fxdXP+xAkOWu9w
-         MvA7/bafQfpQRolZ238I+CEccZ0ldj5D+Rh87yccCiejWc3yAUO8oO2xjIacxrYiPMZG
-         JK0A==
+        d=linaro.org; s=google; t=1728472311; x=1729077111; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zkyoiyol/ZE9sPqTK4uVntBSTJv2678Uo5yX8kEiBq0=;
+        b=nh0dJ8bqC4EQMc/3Qbf1FwWdncm+cWLSK/BrI+6m8mQ7c8E3uVL4/oMLZux7myniSc
+         rfhcSG01gVQ6i8pQtdVEoG1fC+ZA93PRdTqAVcLCO2M/nehbFiZmCH8iq4fO4oiFf9/s
+         t2/yLqG4Xuhr7/c1P4O+ptZJLIxDD14tNNs+hAj0abwm1lPVgtSiHCkVAazW06fqqPPq
+         urZ9W7D0Fmd3Eh1nebfXq/00RvsrkEZRKENQMifKqjYKFm2epCgtsKqWNlxyRNlA96j1
+         zdZHgFLLDAORR74rMsqJhz9iu3r4ORR6QZ9E8LuO4i/90DmoVJxdcKmg0uDUzFfGqESs
+         n7QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728472052; x=1729076852;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1728472311; x=1729077111;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qC5xZXHruBUTfMPlyF7fUtQuDa89P4OUqC7YMxKyj+g=;
-        b=v/6omMZdhl3+DnwuZya+idBGzaIQmB72TjMr+0NhrRC47tGugXDCj16XBiJdYsbgv6
-         dZlvPDZZzvKOP3Io46fa71C6SIyemqiUC8DcQ1u7Pb2nPCj9hoX2uykDZErC8m0F7Ira
-         WcmrFBhBjwgfOgu7WMn2egTTzV53CrzQo2iQw478Yv3fM7Og1nMIrH28YZ+2IjWOHF36
-         YHWPcsuVa1FA76cO1z0Ev0ctnXn2NlqYM6QxUAeLP1Ae9EE8I8apm5d9anvC/NqMq1hM
-         WjEc7LwZlM23ybdZiNle5wwTXFxIm+hiCdMzBA2XKkZlO9nfZrDclwKC7hYFVXk48EhF
-         jWtA==
-X-Forwarded-Encrypted: i=1; AJvYcCUfdGE7DBAH/f74bTJrBrDCDi3WSQDbVOGnoF18zCy4Ic2BweJ4mtbYFperzWo4yFu5TI66C6DRigQ3g7vt@vger.kernel.org
-X-Gm-Message-State: AOJu0YwDjgMJ6DA5gVpMtvDCNExyorr9CF3axiXGkX+8qBCa1A/cVwnn
-	PvcshTc5BKYY9q5IklPlfDLujsf7Piu483vFuynGBJWYOCgFClxFbDG5zoKjzLQ/lOpSn0f7cVh
-	o
-X-Google-Smtp-Source: AGHT+IGhVpiLHwqHc0CC0SliGgvD5yURBzLT+qTi/vHuNL2ufLFKFmwTrP+FPEtGv/VEq7sYbPQUTA==
-X-Received: by 2002:a17:907:e654:b0:a99:585a:42a9 with SMTP id a640c23a62f3a-a998d117cb5mr181447166b.9.1728472052033;
-        Wed, 09 Oct 2024 04:07:32 -0700 (PDT)
-Received: from [127.0.1.1] ([82.77.84.93])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a992e787eecsm635551766b.125.2024.10.09.04.07.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 04:07:31 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Wed, 09 Oct 2024 14:07:23 +0300
-Subject: [PATCH v3] arm64: dts: qcom: x1e80100: Fix PCIe 6a lanes
- description
+        bh=zkyoiyol/ZE9sPqTK4uVntBSTJv2678Uo5yX8kEiBq0=;
+        b=Y+0UYnDAhpAPZjuaEcati19V5GOTOs5w6bxjB9YXfLjoswaRM4mRo3sTReccAwg1s8
+         IRzxYGetxdFqu7fjlZqwzgJKMKJ7ycf9M1akJdTOuM2F6hT/rFsT4rqbhuM1ElcIauvZ
+         9d1z+hZ1M17ZlqN1EZC/lPsPO3uZOg4B4X0mfMjCx/9CSM/0IOqjuhp8k4aLOq4eSWVO
+         LyuKkaL020QPwwJEk1y8SpOb60gpVnNxSqP2gxlCY9bxm/Y5vOv1dVbUiPxLUP10vsBu
+         Deyeumo8mtSkHT/0Kfe6ifyCzM15nJfKWoyoLSk1qZFEyAgiuAnNHyZ1vNO7eY4oI/uK
+         WrMg==
+X-Forwarded-Encrypted: i=1; AJvYcCUi+DRxLNeF8LuOGHXvwGppz3KCrTDisimcff8gGWmvGeyse1LFgHRUeSeRm8aymQx6k8V4nu+iFAf4SoRU@vger.kernel.org
+X-Gm-Message-State: AOJu0YxJTcUQp5LjPahRjy/Hpctul30cQMAsQEplI2DTGNrVmsSeZt9h
+	DNIeg/78z/KzOgBTuGJi7e+JHI8kgD/kvfS91hV2G82UZ5hTUJPQNdofZiDerJZ5D4iPz9L2buI
+	SX+WImJx2+L2TnVwLVwnx6tdVt5JOovyS1DtTTA==
+X-Google-Smtp-Source: AGHT+IHuD7E8KK89qc/ZYJOshuMtFnxvbP22ktfO63zcv6l6glVmf7j+aAYtHbiv8eOva1PMvU0Zz5C/WEcPv6VWwRo=
+X-Received: by 2002:a05:6902:909:b0:e11:7474:f296 with SMTP id
+ 3f1490d57ef6-e28fe44cae7mr1770214276.19.1728472311248; Wed, 09 Oct 2024
+ 04:11:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241009-x1e80100-dts-fixes-pcie6a-v3-1-14a1163e691b@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOpjBmcC/33NzQ6CMAwH8FchO1uzbsypJ9/DeBjQwRIDZCMLh
- vDuFg4mXrj1349fF5EoBkriXiwiUg4pDD0HfSpE3bm+JQgNZ6GkKlFKDTPSVXIFzZTAh5kSjHW
- gi4Pq5hEtjxtTCb4fI+1zPn++OHchTUP87K8ybt1dlUbjgZoRFKCxmqraEa893qF3cTgPsRUbm
- 9WPYqA8ohgC7fzNe+uMs/hHrev6BWQbnegOAQAA
-X-Change-ID: 20241003-x1e80100-dts-fixes-pcie6a-b9f1171e8d5b
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable+noautosel@kernel.org, 
- Abel Vesa <abel.vesa@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2808; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=ii6GfROU9ArrFjcWdpR1qIu/SeG4G9OZDXuOJJXuIU4=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnBmPsd17EksgNHsxvLDT/1tOvJuFbgytOOAarn
- l8Y0fSNG+OJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZwZj7AAKCRAbX0TJAJUV
- Vmf3D/wPMZaogmU6Ff48lf1t2IP2Q6tuSUBLQgoKPxyPdxrEau4qKDzRFUw4mCfjDQrZFSa7Drz
- /T4VAcV2QnMFAcUmpmdJQXRL3OmGmrUog2Ii77Loc/UaRMEPVQrLnREwiOvoUx5D1kDlI9GjOmg
- +FnJBaufmiLB8s35ihNuju6C1LN9GXdYPHTgJ6hbCxHw8RxFDn/dbUy1p84L8Ia+1w2NiU9sV6R
- 1WSYHmKNu8pntJfkTN5jiAzD3qlmbYqFeUsGDyhv3rv3EVqO+C4om6+yLhQe4RYDwBHF3dPOLqB
- eT1mHic42ZUv0IM6KBRp8t9QZsh6U2HWDtM81ggWOBUO2i/Vm8Pv44IDO0EVcLGKX5iIVPbPG58
- mg6vLjJJtx0JRelAq/Nijzv3rWoSPrVJfANV8opj3W13bE1pRFj3j0lJKUlO/0jhr3AUAed42Md
- gPVhRAfAEvzN0H0UDYYwxqu7z1+yiClO7K6rno8UUTVKlg0DpqzyNQnXN8sFMsBMUyFSuv/T32h
- M1Fzqb62LiWbreWA8CrrOaTv1qEiWqJF7cy3h2JbJhFMX6vyO4QmUHfAA1tXzSaen0CZEM3uj1B
- PCxslJulb5GPMpknGgXrP+bKEig4rBNrYuwAjJsNZCbnH8+mfWIJdAmAIpjjlcTIKXfTvFUWwyA
- PgmRc8ANIKpmWXg==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
+References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
+ <20241007060642.1978049-4-quic_sibis@quicinc.com> <nlmz5adfxtnhgutblddlf2nlasmd5q3jpcsziaegmfvzsbkk7d@cb6e5qslk7vl>
+In-Reply-To: <nlmz5adfxtnhgutblddlf2nlasmd5q3jpcsziaegmfvzsbkk7d@cb6e5qslk7vl>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Wed, 9 Oct 2024 13:11:14 +0200
+Message-ID: <CAPDyKFrG1ZEOOhk1Cb=RqZ-8eeuMEFe0ACz2DGC3=qejjj7Mkw@mail.gmail.com>
+Subject: Re: [PATCH V3 3/4] pmdomain: core: Fix debugfs node creation failure
+To: Sibi Sankar <quic_sibis@quicinc.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, jassisinghbrar@gmail.com, 
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	johan@kernel.org, konradybcio@kernel.org, linux-pm@vger.kernel.org, 
+	tstrudel@google.com, rafael@kernel.org, 
+	Johan Hovold <johan+linaro@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Fix the description and compatible for PCIe 6a, as it is in fact a
-4-lanes controller and PHY, but it can also be used in 2-lanes mode. For
-4-lanes mode, it uses the lanes provided by PCIe 6b. For 2-lanes mode,
-PCIe 6a uses 2 lanes and then PCIe 6b uses the other 2 lanes. The number
-of lanes in which the PHY should be configured depends on a TCSR register
-value on each individual board.
+On Mon, 7 Oct 2024 at 19:33, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Mon, Oct 07, 2024 at 11:36:41AM GMT, Sibi Sankar wrote:
+> > The domain attributes returned by the perf protocol can end up
+> > reporting identical names across domains, resulting in debugfs
+> > node creation failure. Fix this failure by ensuring that pm domains
+> > get a unique name using ida in pm_genpd_init.
 
-Cc: stable+noautosel@kernel.org # Depends on pcie-qcom 16.0 GT/s support
-Fixes: 5eb83fc10289 ("arm64: dts: qcom: x1e80100: Add PCIe nodes")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
-Changes in v3:
-- Re-worded the commit message once more to suggest a fix w.r.t
-  lanes.
-- Added back fixes tag and CC stable but with noautosel reason
-- Picked up Konrad's R-b tag.
-- Link to v2: https://lore.kernel.org/r/20241004-x1e80100-dts-fixes-pcie6a-v2-1-3af9ff7a5a71@linaro.org
+Thanks for working on this!
 
-Changes in v2:
-- Re-worded the commit message according to Johan's suggestions
-- Dropped the clocks changes.
-- Dropped the fixes tag as this relies on the Gen4 4-lanes stability
-  patchset which has been only merged in 6.12, so backporting this patch
-  would break NVMe support for all platforms.
-- Link to v1: https://lore.kernel.org/r/20240531-x1e80100-dts-fixes-pcie6a-v1-2-1573ebcae1e8@linaro.org
----
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+>
+> Can we make this opt-in or opt-out? Seeing numeric suffixes next to
+> well-known power domain names (e.g. those comin from RPMh or the CPU
+> domains) is a bit strange. Or maybe you can limit the IDA suffix just to
+> the SCMI / perf domains?
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index a36076e3c56b5b8815eb41ec55e2e1e5bd878201..4ec712cb7a26d8fe434631cf15949524fd22c7d9 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -2931,7 +2931,7 @@ pcie6a: pci@1bf8000 {
- 			dma-coherent;
- 
- 			linux,pci-domain = <6>;
--			num-lanes = <2>;
-+			num-lanes = <4>;
- 
- 			interrupts = <GIC_SPI 773 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 774 IRQ_TYPE_LEVEL_HIGH>,
-@@ -2997,8 +2997,9 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
- 		};
- 
- 		pcie6a_phy: phy@1bfc000 {
--			compatible = "qcom,x1e80100-qmp-gen4x2-pcie-phy";
--			reg = <0 0x01bfc000 0 0x2000>;
-+			compatible = "qcom,x1e80100-qmp-gen4x4-pcie-phy";
-+			reg = <0 0x01bfc000 0 0x2000>,
-+			      <0 0x01bfe000 0 0x2000>;
- 
- 			clocks = <&gcc GCC_PCIE_6A_PHY_AUX_CLK>,
- 				 <&gcc GCC_PCIE_6A_CFG_AHB_CLK>,
-@@ -3021,6 +3022,8 @@ pcie6a_phy: phy@1bfc000 {
- 
- 			power-domains = <&gcc GCC_PCIE_6_PHY_GDSC>;
- 
-+			qcom,4ln-config-sel = <&tcsr 0x1a000 0>;
-+
- 			#clock-cells = <0>;
- 			clock-output-names = "pcie6a_pipe_clk";
- 
+I was also thinking something along the lines of this.
 
----
-base-commit: c02d24a5af66a9806922391493205a344749f2c4
-change-id: 20241003-x1e80100-dts-fixes-pcie6a-b9f1171e8d5b
+Another thing on top of what Dmitry suggests, could be to iterate
+through the &gpd_list and compare the existing genpd->names with the
+one that we are adding in pm_genpd_init(). In this way, we don't need
+to add the IDA to more than those that really need it.
 
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
+What do you think?
 
+[...]
+
+Kind regards
+Uffe
 
