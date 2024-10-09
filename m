@@ -1,141 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-33679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12AD39966AF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 12:12:12 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6EB5996710
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 12:22:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3D48328336C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 10:12:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C2340B24AD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 10:22:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E41CB18FC65;
-	Wed,  9 Oct 2024 10:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2051E18FDAB;
+	Wed,  9 Oct 2024 10:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="a1Mp+NNM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s5gzntXx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F72818D640;
-	Wed,  9 Oct 2024 10:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB1218FC8C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 10:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728468626; cv=none; b=iLd1C9fG3m98nZC0ODUSMPPrbq/Vxmb4Vu3PDY7YfnwxAv316h8Gc1m55MP0kGhh0CtQkDHOxD1s6QkQQhNnjmcr5wpQliEEsbNaF8vTK//GRu5F3FH9jpsBcFXLHGyHIELtzF7Ow5ixPlFfs4JCc5pUpZbvorSsAyi0TJCbB04=
+	t=1728469361; cv=none; b=hXAb/ODC5XPNroRG+JyWG3ODJ7p8Gpa3pNXvDOrtQG4lDkGtTg7F1/dTQ3Xv1u8Nafp9NUdbhyzCx4Z0oVB5CHSB65eEecHgiQ8zptYUUZTIfPonMUudz1fCRGsuLW46kHcO7IZW97r7C1MziN8FEZeXaCDLSYfJDNl5cTqXX0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728468626; c=relaxed/simple;
-	bh=+ffdGvydL+K0g6GT+woMHoeS9IAo6WhvHNnz7JWbWaM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=mrZz/LVJIQ/wi+npBcXz+mZnEH7H9qYiKXXCp3kVp3YdT4celQBc1nR8UrZ7v1Liw/To04NQPQjwinCl9IH85moix6FMGcuU3e8ZY5rd4nPaqItn/LRwJk80nNe/X1csAjxxwATTpLJk1eYZcGEJ0vxxRbRFeWi9QECpdJV72a8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=a1Mp+NNM; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4999p7bO006880;
-	Wed, 9 Oct 2024 10:10:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	eRCqpdgyku5vfU+giMUh7zvuCPuY8rnO6KeBTnScM0M=; b=a1Mp+NNM8p544DZp
-	Elsnvb5owye02M36jQnRAx8bkFD2CUDeTWyM7ieLaqlvVZ0d0o6WDUjvwAXgQwbl
-	HWWL7+FM8LJpqQqo6wceykQzenFWb62SDz8VU+1coJUDA7oOx6brEOBv7T29XdY1
-	2JAi03UwrJdWhYw6B+UnvgidxZfBaKBpvE7kvo32lTKsZPUXR5pnkCra6y6oMDn+
-	QUatioQ2OBlHpRnV/BBfB/7hOdqLxAQlBFsWj/Q2MBqWuWvCEyw3ZmCoiaW5iZdz
-	vN4HuPLt7/Z436FKDm1XBeonlPmqVT7QTz0CDshY3w1A43tHgur9iSFE0FcNwlMu
-	GycIUQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424cy7ewma-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 09 Oct 2024 10:10:04 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 499AA3gv006978
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 9 Oct 2024 10:10:03 GMT
-Received: from [10.64.68.153] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 9 Oct 2024
- 03:09:56 -0700
-Message-ID: <e9b2bd7d-1e4f-4f0e-8be5-18033a8ec964@quicinc.com>
-Date: Wed, 9 Oct 2024 18:09:53 +0800
+	s=arc-20240116; t=1728469361; c=relaxed/simple;
+	bh=1muRWa+wXawPE1eQ9HosXZjWY4RSa8MbWKpe3P4P9uQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c6TRZ4EttyVWTC58XE6H897odqW4Jx9Ta5NP8krIwKSOS5XHEZov4Ftm+FhfcAwkhTh7zj3Vt76Zyp1IpGRH9lG9vZboYwrw+jmmvz8z3SLV4Tw3ZFShrTMi9nLtzVVaJgNmn4QCkrLG9wK+30MKB6yjNIpauxgv/9NPWp9WCk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s5gzntXx; arc=none smtp.client-ip=209.85.218.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a993f6916daso559038566b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 03:22:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728469357; x=1729074157; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=s5VgD+wTXaNucrBWnqcE02bPzDtE/QymMPp7ZrJAaRA=;
+        b=s5gzntXx4N7oERKAZOKw8cZVIoRR0oYv5ClDy9hnyIHznRa0Y+V/JjL0F8ujk7wcKk
+         E/QAnNRso08a67lItzn8TZO3TrPiIxSRu9UTEVksSEKIj1wuDn6732r7eR1ps7WgfUme
+         MgyOuj/1ctCaFzJHN+//X5bMX4oGjSKwpMdN+yBUel/xGhEE6V7tIkcNPqwxPnIHP7gw
+         EZQ7MnZvjGW7MVLFItEbcuPvNUfN7Ym5K4sjnpcVDfQaRJSGQ2IoV/xo6s1ibNhCASdN
+         RxNRVPft5wyRiEerj//GDNw9r7EeazOliUZ512mOcMfjkAv3RjLlOJ23zEmioUhXle8L
+         BUMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728469357; x=1729074157;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=s5VgD+wTXaNucrBWnqcE02bPzDtE/QymMPp7ZrJAaRA=;
+        b=LEZzT4opFYfwQO45i1wZfMuzRwv4TiucV29+WkLKwC8nH3R8KaPET68jfNHQGRucDr
+         LE0kRnbPhz4cn1Vkb5GLLzJI6TN0Mepa+mM13HHh10J4iDIosftPpqr+2vZITOzu8POv
+         T64D/1j8G3cvartSTEsuZiaPGTZnF9h4B2Zfn6j1QfwzyFgYPr9sS9rgRDUJQphU+LhO
+         BOKDzwM6ORGNCZPhSADa6oa4K8o09+2pk4QFeVWDCdnmnPCimwIJ0eoLWxYZR+hU63n+
+         YDPkrk1VB0BSPyOgm1D9w5Ey7i19s3bL/U/dDGHyVSy5LOF3+F1v4G0G7iM8XaGyBege
+         hOWg==
+X-Forwarded-Encrypted: i=1; AJvYcCUNVxHQUyIOXF8pygvqSmaeP6AKlM2ccHCYlkRfUqU3+7i70SMKj+nyzQzZLoO8YPq0udZXHI4NJJe5ISrK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkkaWbq1H10qJGb2x0YyPf3hmtNurcJFqbaTz8ZgbT6Xb/hy7i
+	JWaNN0i4sbtPX8nMQ8aMzNMiIExYA91QxLKdWwq5TvVmMHBKJIKberI+imz3ybE=
+X-Google-Smtp-Source: AGHT+IFgNDo1cyZoG4YBSn4FWa6hWBarcKKT8WDru+XyTCt2NUHvDMU1kIaP/0lbJiHrbIG5gGBXag==
+X-Received: by 2002:a17:907:9728:b0:a80:f81c:fd75 with SMTP id a640c23a62f3a-a998cf4d7a3mr166864766b.0.1728469356565;
+        Wed, 09 Oct 2024 03:22:36 -0700 (PDT)
+Received: from linaro.org ([82.77.84.93])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a994ce357b2sm472465666b.144.2024.10.09.03.22.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2024 03:22:36 -0700 (PDT)
+Date: Wed, 9 Oct 2024 13:22:34 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: x1e80100: Describe the SDHC
+ controllers
+Message-ID: <ZwZZalFKXiQh0BAK@linaro.org>
+References: <20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org>
+ <20241008-x1e80100-qcp-sdhc-v1-2-dfef4c92ae31@linaro.org>
+ <syf3uyoyh55rxieyjnhsskmythce6vnkuq77asgml736gcysd7@op5b2pd6ijsj>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 RESEND 0/5] Coresight: Add Coresight TMC Control Unit
- driver
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
-	<mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        "Alexander
- Shishkin" <alexander.shishkin@linux.intel.com>,
-        Maxime Coquelin
-	<mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang
-	<quic_taozha@quicinc.com>,
-        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>
-References: <20241009095556.1754876-1-quic_jiegan@quicinc.com>
- <dc93578d-0ef6-4446-ae40-ad9f4ba6af15@arm.com>
-Content-Language: en-US
-From: Jie Gan <quic_jiegan@quicinc.com>
-In-Reply-To: <dc93578d-0ef6-4446-ae40-ad9f4ba6af15@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mtbhRxcC0UxtiCWLGHcW7yXGFS_zwCWU
-X-Proofpoint-GUID: mtbhRxcC0UxtiCWLGHcW7yXGFS_zwCWU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0
- mlxlogscore=932 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410090066
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <syf3uyoyh55rxieyjnhsskmythce6vnkuq77asgml736gcysd7@op5b2pd6ijsj>
 
-
-
-On 10/9/2024 6:00 PM, Suzuki K Poulose wrote:
-> On 09/10/2024 10:55, Jie Gan wrote:
->> The Coresight TMC Control Unit(CTCU) device hosts miscellaneous 
->> configuration
->> registers to control various features related to TMC ETR device.
->>
+On 24-10-09 08:49:03, Krzysztof Kozlowski wrote:
+> On Tue, Oct 08, 2024 at 05:05:56PM +0300, Abel Vesa wrote:
+> > Describe the two SHDC v5 controllers found on x1e80100 platform.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 108 +++++++++++++++++++++++++++++++++
+> >  1 file changed, 108 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index a36076e3c56b5b8815eb41ec55e2e1e5bd878201..b835fd87b977ae81f687c4ea15f6f2f89e02e9b1 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -3880,6 +3880,114 @@ lpass_lpicx_noc: interconnect@7430000 {
+> >  			#interconnect-cells = <2>;
+> >  		};
+> >  
+> > +		sdhc_2: mmc@8804000 {
+> > +			compatible = "qcom,x1e80100-sdhci", "qcom,sdhci-msm-v5";
+> > +			reg = <0 0x08804000 0 0x1000>;
+> > +
+> > +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
+> > +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
+> > +			interrupt-names = "hc_irq", "pwr_irq";
+> > +
+> > +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+> > +				 <&gcc GCC_SDCC2_APPS_CLK>,
+> > +				 <&rpmhcc RPMH_CXO_CLK>;
+> > +			clock-names = "iface", "core", "xo";
+> > +			iommus = <&apps_smmu 0x520 0>;
+> > +			qcom,dll-config = <0x0007642c>;
+> > +			qcom,ddr-config = <0x80040868>;
+> > +			power-domains = <&rpmhpd RPMHPD_CX>;
+> > +			operating-points-v2 = <&sdhc2_opp_table>;
+> > +
+> > +			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
+> > +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
+> > +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
+> > +			bus-width = <4>;
+> > +			dma-coherent;
+> > +
+> > +			/* Forbid SDR104/SDR50 - broken hw! */
 > 
-> Please rebase this on the v6.12-rc1, which has the sink specific trace
-> id allocation changes and drop the "Depends-on" tags on the patches
-> which don't make any sense at all.
-Sure, I will drop all depends-on tags and those patches already rebased 
-on tag next-20241008.
+> Is it still valid or was it just copied from old code?
 
-Shall I resend those patches with V5 RESEND or V6 after fixed the issues?
+So when I did the bring-up of this controller, for some reason I thought
+this was needed. But I guess that's not the case since I get this
+without it:
+
+[    5.168918] mmc0: new ultra high speed SDR104 SDHC card at address
+
+So will drop in the next version.
+
+Keep in mind that I have no way to test the sdhc_4, so I'll drop it from
+there as well.
 
 > 
+> > +			sdhci-caps-mask = <0x3 0>;
 > 
-> Suzuki
-> 
+> Best regards,
+> Krzysztof
 > 
 
-Thanks,
-Jie
+Thanks for reviewing.
 
+Abel
 
