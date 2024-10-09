@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-33645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D7279963F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 10:53:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49DBF9963FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 10:53:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D795F281C09
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 08:53:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0A91C281098
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 08:53:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5DEC18FC81;
-	Wed,  9 Oct 2024 08:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEAA018FDAB;
+	Wed,  9 Oct 2024 08:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H48P8Zx7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kH+TOkgH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B7319148A
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 08:51:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0D8191493
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 08:51:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728463863; cv=none; b=uK6g5Fj6WdrLV7900RFglgE0iOZeQqnXPdYmU1dADil8dnRE87A2WavzZsmBbfrlkDYQzxGu67UR43szclaR6CUjK9c23wbanYFIdGaXm30QJncOWjsfJsSHmdfBa/cgg/5JcdWsnt6aQHqSq4crT0ptZaTJlVyUt6s5E/Le05o=
+	t=1728463869; cv=none; b=FOdhVdw1Wy0g9jDFwzZLvhcprq4s8uJhDKwh/XiEAYA/gWWJxW2Ozth+gJuFE+2cr/T0S727UlByym5HHgTkQbuXpyAfHiYvKl0U+flrg9l83Cg8XtMGVaVrr38TuDfrvJt45xLNsu183buxFdrvvK2Ed87N//l0XpZq/bihLi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728463863; c=relaxed/simple;
-	bh=9RRYODS3A2d0Z0V8KOVcb66YQ53zyJFTZeiR1EUXh1U=;
+	s=arc-20240116; t=1728463869; c=relaxed/simple;
+	bh=zBBzWdWsfyqBIiT9wbwcVNQEKc8lnnOJ9lwiSkj7ngI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iFQrqdRP8X9wUicEof0nTxNu8WxcMLR7IDbkOYpnhOFSfq6Hg/zJXDwy8JoXTbw9h+Sc9JFJxmSzWrX2uj/K7T+fX7GtRR9BBShd/NVc+1WpCYvR3fY2GoiTd3qNy1x4t/AErTx54oDeENq2eCz+Nyx/pNxULIxckkAk853RA+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H48P8Zx7; arc=none smtp.client-ip=209.85.215.169
+	 In-Reply-To:To:Cc; b=i1S3P4Pov+k+HkvslS0atpv9R6SUoHtB/uMli+5DUPpZqmkTTz8hSNTOVQpUnnrWU59JaWw+h04h59UoDPugyWSv66KQEVXqYTOPMM5sJb/45KmWrYpwWkpLxrYuIDjagj1iKiIn6g5wAHg4Cd++dO203CS+OmtKpTe5QgI3OaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kH+TOkgH; arc=none smtp.client-ip=209.85.216.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-7e9f955cb97so2008792a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 01:51:02 -0700 (PDT)
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2e28ba2d96aso1268387a91.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 01:51:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728463861; x=1729068661; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728463867; x=1729068667; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1LPn0pitWd582eaxpygCPJ3KnkuQTc8TgGjrVLwJiU4=;
-        b=H48P8Zx74UAMRXrhQWz07AO1Y0eNDJ3+Lzx/VHVMBfLrrxMjj6bZnBe/eAipQM81X1
-         4F67FVWU60/oO4WsJ2zG/VmC9GfF8pEyD6KrLOrZS+VZqZ+RdKGJ1FfDT3G8bT1EHhQ+
-         +Iyr09dZZD+jrW70/J+kbND8dZKm+648nVlVqmd4N3rhQl0oqpL0dNTnKzvYHueXffyG
-         qgAj7lRS+h77V4MX7AGdk7HSSBo8sLwrpynq5jgMF7j3SWJDgoys/4IY3vrSbRQf6dgi
-         EP3RstnK+3kSsWatRcoM2a2PxiTSNFkccz1gmS5y/t/Vey3vHasquWe48sdn1gp5sUBE
-         3bvQ==
+        bh=Xeuc89940OyZEzmfZGsShlcWun218secJztkD+/huVg=;
+        b=kH+TOkgHtOBytMNN7smX3WjzUD7Yt7NiUvjkXLPuZDMqLVM9h4rxNo9U3uet9m1Ipv
+         /5Yi7d8CjqGdiMFaX8JeJ/j7NJB5nGp32YBsPAGru4Z4YAXAhGkyip4vMrEs/UaxAdRr
+         G02zWjK828/YEksgerytgm6sjb4pjY+ITEexNT4E6vbNRhUCP3JhalRuUeN9P58nNF1T
+         Vw3B7SYRVZyxU1z9pVaEFCoECEX3vn/4SxlMvx2BFTyKBlcaANo14OZeTdAEFpci4Ypq
+         Hz8IzjlO223DiDhQlbNcH7PIptPvp9AOqQrGHa8VTrH19zOuej7nzgSc9gU5rLL7srWs
+         m18A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728463861; x=1729068661;
+        d=1e100.net; s=20230601; t=1728463867; x=1729068667;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1LPn0pitWd582eaxpygCPJ3KnkuQTc8TgGjrVLwJiU4=;
-        b=bmdLiZdMjMo5HvAjn2uI1hodY1M2jDHv1wqTD9ybqZZEPBsPZiatJr5lngPwWRpwU9
-         u2yEQWECVr6BTNqKs2jZrDPuanageEoT2jDQGbnksBS//4DjlUQdFHCjDHoNcgX1ctsp
-         qLAlf9H860JLBm34BvgWKUM9FrxG0MOist6vQ+INpKAnSOjvY6/zXlsZHEH4eRewLzNO
-         nDq0LTMxlA/UqoJQuPPswTIHRyKu5AaFDxYPmlGCqwAjQ6u0Vy57sr/3gO4wJmOM9FT7
-         mk8cLr8S1+AYy/jLPVfpRnVpnKB6nbIOUNRyq3KMDvfbIhgpOoAsSj9SKG9Rr2946bwG
-         Yy+g==
-X-Gm-Message-State: AOJu0YyAu13mWc65KNKxtt8m2zcRT5w3XUTChHbYMC+dm9pVkFIkScPa
-	XyIpO6Kyv5qvrCdErmLySy+WgWxE1vczCtZn/RTgvxpAkeRy4+Zyh2tPpz0r/RQ=
-X-Google-Smtp-Source: AGHT+IEuBbVEOzp/44KTvogO+2Pwv6ey+PCRNhpJDBXR48nTEps9zZhOE/C5TsBcWU49Kk9eDonz1w==
-X-Received: by 2002:a05:6a21:4006:b0:1d4:fd63:95bc with SMTP id adf61e73a8af0-1d8a3be149bmr3557677637.9.1728463861596;
-        Wed, 09 Oct 2024 01:51:01 -0700 (PDT)
+        bh=Xeuc89940OyZEzmfZGsShlcWun218secJztkD+/huVg=;
+        b=OHlwOCBO2XY4aXlPq/h7yj1lR/YPTK91pqKewL9wDJ818n+zEOET+qtD5Q/ec49NVo
+         g3MTtq283jsgo1WqhHvpBow52DOnbZQPDNXXhZ3RZypNHb14lzd0yGcfohMyUQMJk7TU
+         08eys4zPsMuZVG1+5Vc2zRIbiqjvoFNmFr8y9j/fjhXbfJAs+IuWovEjJ6SzM3Hy/HjG
+         LVES+kIFB1Gil8ujzef3sRNGSGrPeDp/HHDyqi9J2DsWCF48X1qynjSFs5WvSKn73tsM
+         NiHcMPGq2utizG3fNeacpLPhKhay8h/IKfQZdkcR5CQeZ0zSdWZ8/3H07KrHDN6ySzPz
+         BjYg==
+X-Gm-Message-State: AOJu0Yxftj2ds6XkhTy1s4pBMdza6bq3zE6gebjZHMntkJnonIqAu6lN
+	HEqf/Y4fec4eLIVGf3oHsuRuAVf3vVefm7VEqLOr08kJgFwLK8oikIC0nDfOSUQ=
+X-Google-Smtp-Source: AGHT+IF0F7RtB5DS5euGqhy7U7rhzvEMjBeGrvubLOfvxfogUs8BIv6homsplq8ODB4C0o2n6DXgtQ==
+X-Received: by 2002:a17:90b:1104:b0:2e2:9522:279e with SMTP id 98e67ed59e1d1-2e2a25247e0mr2201199a91.31.1728463867148;
+        Wed, 09 Oct 2024 01:51:07 -0700 (PDT)
 Received: from [127.0.1.1] ([112.65.12.217])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2abad236esm898157a91.10.2024.10.09.01.50.56
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2abad236esm898157a91.10.2024.10.09.01.51.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 01:51:01 -0700 (PDT)
+        Wed, 09 Oct 2024 01:51:06 -0700 (PDT)
 From: Jun Nie <jun.nie@linaro.org>
-Date: Wed, 09 Oct 2024 16:50:20 +0800
-Subject: [PATCH v2 07/14] drm/msm/dpu: bind correct pingpong for quad pipe
+Date: Wed, 09 Oct 2024 16:50:21 +0800
+Subject: [PATCH v2 08/14] drm/msm/dpu: update mixer number info earlier
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-7-76d4f5d413bf@linaro.org>
+Message-Id: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-8-76d4f5d413bf@linaro.org>
 References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
 In-Reply-To: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
@@ -89,60 +89,59 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Jun Nie <jun.nie@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728463820; l=1834;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1728463820; l=1729;
  i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=9RRYODS3A2d0Z0V8KOVcb66YQ53zyJFTZeiR1EUXh1U=;
- b=zI/fFfLWAz2Rx1/Bo0e+EbbQoShERiEAOqxWMBxb+PzQbh3DuBOpjimccwD4p8gsYHq+UnPTf
- qnLp6+iodCIDPeqPBs96CqtOwscwnDXQLGLGX3o192BuKvN1lM195gy
+ bh=zBBzWdWsfyqBIiT9wbwcVNQEKc8lnnOJ9lwiSkj7ngI=;
+ b=olKDHeGrWWSragjDEGtR+qG7l03ad9g8wQu7Scz79ICx2dg8oxIEAOpVwrukiQ+/+oPfeExdI
+ 7EvMgTVIa78DCYbucqzqXSwayrVfw07ZG1dzLBNsZo+LiJkdMYaFHoI
 X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
  pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-There are 2 interfaces and 4 pingpong in quad pipe. Map the 2nd
-interface to 3rd PP instead of the 2nd PP.
+Update mixer number info earlier so that the plane nopipe check
+can have the info to clip the plane. Otherwise, the first nonpipe
+check will have mixer number as 0 and plane is not checked.
 
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index bd2509985c4d0..dfe282c607933 100644
+index dfe282c607933..68655c8817bf8 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1100,7 +1100,7 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
- 	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
- 	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
--	int num_lm, num_ctl, num_pp, num_dsc;
-+	int num_lm, num_ctl, num_pp, num_dsc, num_pp_per_intf;
- 	unsigned int dsc_mask = 0;
- 	int i;
+@@ -638,6 +638,7 @@ static int dpu_encoder_virt_atomic_check(
+ 	struct dpu_global_state *global_state;
+ 	struct drm_framebuffer *fb;
+ 	struct drm_dsc_config *dsc;
++	struct dpu_crtc_state *cstate;
+ 	int ret = 0;
  
-@@ -1171,9 +1171,14 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+ 	if (!drm_enc || !crtc_state || !conn_state) {
+@@ -662,6 +663,8 @@ static int dpu_encoder_virt_atomic_check(
+ 	dsc = dpu_encoder_get_dsc_config(drm_enc);
+ 
+ 	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, dsc);
++	cstate = to_dpu_crtc_state(crtc_state);
++	cstate->num_mixers = topology.num_lm;
+ 
+ 	/*
+ 	 * Use CDM only for writeback or DP at the moment as other interfaces cannot handle it.
+@@ -1170,7 +1173,13 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+ 	}
  
  	cstate->num_dscs = num_dsc;
- 	cstate->num_mixers = num_lm;
--
+-	cstate->num_mixers = num_lm;
++	if (cstate->num_mixers != num_lm) {
++		if (!cstate->num_mixers)
++			DPU_ERROR_ENC(dpu_enc,
++				      "mixer number %d is not as expected %d\n",
++				      num_lm, cstate->num_mixers);
++		cstate->num_mixers = num_lm;
++	}
  	dpu_enc->connector = conn_state->connector;
  
-+	/*
-+	 * There may be 4 PP and 2 INTF for quad pipe case, so INTF is not
-+	 * mapped to PP 1:1. Let's calculate the stride with pipe/INTF
-+	 */
-+	num_pp_per_intf = num_lm / dpu_enc->num_phys_encs;
-+
- 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
- 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
- 		struct dpu_hw_ctl *ctl0 = to_dpu_hw_ctl(hw_ctl[0]);
-@@ -1195,7 +1200,7 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
- 			return;
- 		}
- 
--		phys->hw_pp = dpu_enc->hw_pp[i];
-+		phys->hw_pp = dpu_enc->hw_pp[num_pp_per_intf * i];
- 
- 		phys->cached_mode = crtc_state->adjusted_mode;
- 		if (phys->ops.atomic_mode_set)
+ 	/*
 
 -- 
 2.34.1
