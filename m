@@ -1,68 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-33725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33726-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 109EB9971CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 18:38:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B91E399755C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 21:05:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C75AC281B8E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 16:38:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DD1C01C21BB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 19:05:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A23B1A0B06;
-	Wed,  9 Oct 2024 16:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 221191E1C36;
+	Wed,  9 Oct 2024 19:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OitXDxRF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zU+55hIO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8DE38DE5;
-	Wed,  9 Oct 2024 16:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2931E1C2C
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 19:02:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728491661; cv=none; b=U20QMeH7Sm3/YD2bW+em7kHy8MwadeNyFIZYxAjXBCwQ4N9E5a2g+KdSsjBX2AMX070UKiRKL+IB/PlC98dBPSbT8z52MgnJAYzvTGQij6FZySEuCBqgXGgTu1zmFSr5DsKZtFbJsEl8+kTnaPvXtyniqSn6cZ92wtediy4IlOc=
+	t=1728500529; cv=none; b=DDgt5nc5CiOOmhXGd3ez3hAn23nmorqX66nkGoQA4nqZpb//Ia01yE2RAjWa/IYQmvJaRN3PwKOtCo5+edoDvao8sB2ln/9eQMho75OidxWHyuQX8kYfLlNfK5v6r7n6kjJiVm0qKydQlBBayCIRfYRlkOiy7QVomzvHpR9UqFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728491661; c=relaxed/simple;
-	bh=K5athNe1/NvnaRmNTmFsQwsUp9p+aYNd5zMwqloPMQg=;
+	s=arc-20240116; t=1728500529; c=relaxed/simple;
+	bh=Y9AhP4Ij9yYbpvP42cTvVt9kdtqB5fM50/MgwEp4SyY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rb+qfeVTrs7n+cpceMrY7BuHww9UYIQlliXcQqcyF5QpIPnL6fO3Tzk2KzRJaGFQ0fRVQqbgftzS5zoVcZsCqQN7gjBSIanP2sqvL/1/KpshQW7ICiTNAKifaitqUgbwQu0GlP6SWtqFGeP678e4r8JNMpHtMK3+DbBPeiyWblU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OitXDxRF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FF6C4CEC3;
-	Wed,  9 Oct 2024 16:34:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728491660;
-	bh=K5athNe1/NvnaRmNTmFsQwsUp9p+aYNd5zMwqloPMQg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OitXDxRFnp1UlcuCm875dCX+SvbASzcx22JV0ZGCer7G7XreuuTkzhK9buH7LHOOK
-	 WzpOBl9ZxQxRoCbJIWkEbXCUqSqcmCoBXSF8L7BDSbjOIffHuTVH0r6k2ENV/NZ0mH
-	 W3tXC3JVqtvaKi+wwuIp6P6Jp5eX6idpXEy1ZSdeN5ZUMneZZkt0AeSqgezGm5fpXG
-	 SglM3YZgT/QkKFDzZD797oSbWkxRdtpS3EVGJ0GL5H6aff3SvoZCX7luiwMf6zkuiy
-	 aEEm9zhzDfh5RhRHNvueT19o0cs2uIOJEUFlL9IJzKA+PBN/H9etLWAUH20/dgkDyK
-	 Zz1Zbxtg/njvg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1syZdo-000000005Y2-1KZR;
-	Wed, 09 Oct 2024 18:34:24 +0200
-Date: Wed, 9 Oct 2024 18:34:24 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: Add Broadcast_AND region in
- LLCC block
-Message-ID: <ZwawkF17sxYRk_vC@hovoldconsulting.com>
-References: <20240718-x1e80100-dts-llcc-add-broadcastand_region-v1-1-20b6edf4557e@linaro.org>
- <39df7ff4-7f22-4715-a0f7-eb2475bd7b55@linaro.org>
- <Zpj8cWfcqYj8rUOP@hovoldconsulting.com>
- <ZpkOgpGCKp/w13la@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=amuvgHllesqRNvNu6R0Wbu8IRMeHG0UKGnPOKz3YhhxiFyYov0tMY6NML4KoD+Nef13e2tj1T/72bAQ689oug6ZqCYbp83NgVLtOUo9nVILOfVoFP9GC7Eb+tpqp643BkBexK8grofHhTLUZWDlu9xoXLBlOd8iFPwg1NszGhGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zU+55hIO; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fac187eef2so1195021fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 12:02:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728500525; x=1729105325; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qQ5+ACbZx+UOJv09QvSfDOymcofkqLkZcQ+uGiaQiAI=;
+        b=zU+55hIONCx7BtqzCi6BofLui7OcuQnSWKJmK3EJY1hRFC2OOX+YNxpwoKvULCEjrV
+         CA7S2bcMyzpXgWkfAHPIS/cOcUPW+q5FjHKOH8NULbimnUGDbY1mUs9t6rt2lpEY+3Q/
+         iIEJy8/VGYTWRwEh8rXKvlhfEQXKkHj8JtvsIVT+LYSqpxLtXRaMmojp2YBpVjXGm4+5
+         heA5XJhtmH+gxj1BpKxblyZR6CeTM95MjOXY34/onPMGk91NM/di/tE1SUyFQQT/G1QR
+         jLiJfee+Hy/VLTKnM2ewuzvqbJWXzhxcGYhO43eZIvSzoVIv4Kw14tIkJ/PnKfCJ3/56
+         wCsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728500525; x=1729105325;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qQ5+ACbZx+UOJv09QvSfDOymcofkqLkZcQ+uGiaQiAI=;
+        b=keN+MmDh/jfw6TMK6H0llyhyZF5pefVNNFkdyWGZ6FerI8xcXj+NSwS5MiLn6znezC
+         0CEz6IPwubU2oK3TBavAikmPk38I4mSO5R83rcmEi4FGSkQqa16phsXyI+Q1VV63kyCV
+         tcEAwIsVWsMRRg+GMjMbe85JRWtUuaZOClDvnNxRiPfzXifNjBe5hZiJM1crQvlaDL1k
+         YiOzo2A0wsyIDKePjEeFKaWE/Pfs4Xkpk0daqRDbkH81tdfpBJ8t14QFCWh3A08syywb
+         U8pgVjKEXbW/57IxZF2fK99liK9jh93w1MeeJQgPa4oYKQwUKjOqIkAMnT/V9zdtR8Ji
+         zLjg==
+X-Forwarded-Encrypted: i=1; AJvYcCVTZC/488I/JZTxX5UgcD8+61ioKdieYkTTAaPnTsZI3glEnc1NXyhHbO8PgBUvzLvxoPraQ2dkWqcpVMoa@vger.kernel.org
+X-Gm-Message-State: AOJu0Yznqu1d4OJvkEGRuMjuL1yVhg7hU5wQrl9u+v8lKE6hwZv4fLHM
+	WdrL/B51LcCIe1+SNMirFH7ZF2rLGF4n8F7PKKH1mtiH6HaoI792MDc40K4gvgA=
+X-Google-Smtp-Source: AGHT+IEekgkxN0FoqtvPj+djHpCzoAdpqcQVG0lO0MMFyXD4siMsEcttXGyf6xKYoA9aRSDcmj33Jg==
+X-Received: by 2002:a05:6512:3ca7:b0:538:9e40:94b with SMTP id 2adb3069b0e04-539c489754fmr2427993e87.19.1728500525147;
+        Wed, 09 Oct 2024 12:02:05 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539aff28034sm1594268e87.250.2024.10.09.12.02.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Oct 2024 12:02:03 -0700 (PDT)
+Date: Wed, 9 Oct 2024 22:02:00 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+Cc: robdclark@gmail.com, will@kernel.org, robin.murphy@arm.com, 
+	joro@8bytes.org, jgg@ziepe.ca, jsnitsel@redhat.com, robh@kernel.org, 
+	krzysztof.kozlowski@linaro.org, quic_c_gdjako@quicinc.com, iommu@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v16 4/5] iommu/arm-smmu: introduction of ACTLR for custom
+ prefetcher settings
+Message-ID: <qfglrrksmb5674fxwtnqs7osku4wqri7nxrymju6fa4ey6zrto@e7ww725n3cfc>
+References: <20241008125410.3422512-1-quic_bibekkum@quicinc.com>
+ <20241008125410.3422512-5-quic_bibekkum@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,47 +87,29 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZpkOgpGCKp/w13la@linaro.org>
+In-Reply-To: <20241008125410.3422512-5-quic_bibekkum@quicinc.com>
 
-On Thu, Jul 18, 2024 at 03:45:54PM +0300, Abel Vesa wrote:
-> On 24-07-18 13:28:49, Johan Hovold wrote:
-> > On Thu, Jul 18, 2024 at 01:20:37PM +0200, Konrad Dybcio wrote:
-> > > On 18.07.2024 12:20 PM, Abel Vesa wrote:
-> > > > Add missing Broadcast_AND region to the LLCC block for x1e80100,
-> > > > as the LLCC version on this platform is 4.1 and it provides the region.
-> > > > 
-> > > > This also fixes the following error caused by the missing region:
-> > > > 
-> > > > [    3.797768] qcom-llcc 25000000.system-cache-controller: error -EINVAL: invalid resource (null)
-> > 
-> > Please say something about this error only showing up in linux-next,
-> > which has 055afc34fd21 ("soc: qcom: llcc: Add regmap for Broadcast_AND region"
-> > region")).
+On Tue, Oct 08, 2024 at 06:24:09PM GMT, Bibek Kumar Patro wrote:
+> Currently in Qualcomm  SoCs the default prefetch is set to 1 which allows
+> the TLB to fetch just the next page table. MMU-500 features ACTLR
+> register which is implementation defined and is used for Qualcomm SoCs
+> to have a custom prefetch setting enabling TLB to prefetch the next set
+> of page tables accordingly allowing for faster translations.
 > 
-> Hm, now that I think of it, maybe I should drop the fixes tag
-> altogether, as it fits more into the "new support" category strictly
-> because of that commit you mentioned.
-
-Looks like you forgot to respin this one so that the error is now logged
-with mainline since 6.11 and commit 055afc34fd21 ("soc: qcom: llcc: Add
-regmap for Broadcast_AND region"):
-
-	qcom-llcc 25000000.system-cache-controller: error -EINVAL: invalid resource (null)
-
-Can you please respin as soon as possible with an updated commit message
-and a CC stable tag to suppress the error?
-
-> > > > Fixes: af16b00578a7 ("arm64: dts: qcom: Add base X1E80100 dtsi and the QCP dts")
-> > > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > > ---
-> > > 
-> > > Please fix the commit title
-> > 
-> > And that.
+> ACTLR value is unique for each SMR (Stream matching register) and stored
+> in a pre-populated table. This value is set to the register during
+> context bank initialisation.
 > 
-> Yep. Will do.
+> Signed-off-by: Bibek Kumar Patro <quic_bibekkum@quicinc.com>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 26 ++++++++++++++++++++++
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h |  1 +
+>  2 files changed, 27 insertions(+)
+> 
 
-Don't forget to update Subject.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Johan
+-- 
+With best wishes
+Dmitry
 
