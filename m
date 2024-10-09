@@ -1,228 +1,281 @@
-Return-Path: <linux-arm-msm+bounces-33671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A93CC996626
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 11:56:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59F6799663D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 11:57:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B88A71C24CD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 09:56:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3BE71F27085
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 09:57:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 55DEE18D658;
-	Wed,  9 Oct 2024 09:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6314518E04B;
+	Wed,  9 Oct 2024 09:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hPl4YKKI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5177218BB9E;
-	Wed,  9 Oct 2024 09:54:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4EC18D643;
+	Wed,  9 Oct 2024 09:57:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728467694; cv=none; b=aVNFz1eR9OvSGUKEutgMvobDA9cDW4fPDP5HBoMG+xi/jo3ahhXFHRkgB9pjAokVrk6/IUkaO+Y1MWOvXLiQmcomFdvDfdhhD0Wms+c06/4N1x2r7o4s/IUUiGaCOMJvvv6XcbY7pccEhmJGKo8Gsrqxfbbpc1R7/UC7FQo/92I=
+	t=1728467822; cv=none; b=fsakZpEYMF4n1C9DDTthVUoMIG2aKtLrCR0O+9eZWEPzr0z21RvtRTuhPjlMuNKYh0p46D+At02vIob6GsdCGPsrwCapKvaAyTZTu1+36P0wiwWbR1NwXqNTwfS/nU9GkkGirm9RxYmX1/zCmlzamhe2AVzhTdWnlIXHZt/m3d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728467694; c=relaxed/simple;
-	bh=HcBWktRVj7yOa0Q3x+sfHF6i79Q77mvz/xLNMXrAngk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MS7bD+/Ej9Ntlu1ZKxEzHKUkt0ooEU/FxVJxalrquasCOLwTdiQTQMMuo/0ieEU+eeN7BwrWTCps3lj9g3l9zJAiKKg4hW/k9HBH6JXq4z3nU3og8n4qs+vlYQ+QoBuaMYQ6veRhwM9VgDAhODhom44DFvfLqypsGIlwlyNEvuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 320A8FEC;
-	Wed,  9 Oct 2024 02:55:21 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C36353F64C;
-	Wed,  9 Oct 2024 02:54:49 -0700 (PDT)
-Message-ID: <bc94a937-0b61-4f96-87e4-80af544d6453@arm.com>
-Date: Wed, 9 Oct 2024 10:54:48 +0100
+	s=arc-20240116; t=1728467822; c=relaxed/simple;
+	bh=CI7u0w+bq/DL/3FEsk6L8bhRyQm0cFvD/+plp4WgcN4=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=kDNiqtqgiQCLXh4dKOwP5CY3iNPj2UAaJa944gAiE0+jVuj2A/ZdG41w0tIiMuM7v+snR9cSrbnsx+0p4SYxhjweFpN+hzYWTWmuDDkFa1uAgIT+9Psvsgx9xgsE1l3uk/VLBnCMzuLr85vOc8gYVIrNA50r8ywmEvONvDQla3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hPl4YKKI; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49938CJI010523;
+	Wed, 9 Oct 2024 09:56:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=0nQoCRyM/bxEMjY1c6KTol
+	+9O8pkIq3lvfcdCIkEF/k=; b=hPl4YKKI8b8Z3wLMNxxOYbYg2NChMaBctIxaaY
+	xW0B8+x70tzAUZJNqizNIRkQ3AkHejSEjTuV3f3f19+a4FLUP1NlOJbxBuxX3dwd
+	4BtVC4FHpZofb2gAvYTLbTWiLwF3WFN9up7KJ2f9/KQmzFWqOsmNjrFzlIykgu88
+	k/T3BgllyRatmYboJkTC25g/Sd2Jg6kVzzVIg5ia7kIzMqtEfFwFwuQeEFbYp1c1
+	CnPNb7illWYceGt/enyKgxFWP4iE4QHw3IGC69JHfeTRLQHKZz9AuGoLZBiyFPwH
+	HR+2t0JNAf7j+4JtZlOvhs9iYHsY66KOs+sfPjHR8HW/29RA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424x7rva9r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 09 Oct 2024 09:56:20 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4999uKTU010076
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 9 Oct 2024 09:56:20 GMT
+Received: from jiegan-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 9 Oct 2024 02:56:14 -0700
+From: Jie Gan <quic_jiegan@quicinc.com>
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
+	<mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>,
+        "Alexander
+ Shishkin" <alexander.shishkin@linux.intel.com>,
+        Maxime Coquelin
+	<mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC: Jinlong Mao <quic_jinlmao@quicinc.com>, <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang
+	<quic_taozha@quicinc.com>,
+        Song Chai <quic_songchai@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-stm32@st-md-mailman.stormreply.com>
+Subject: [PATCH v5 RESEND 0/5] Coresight: Add Coresight TMC Control Unit driver
+Date: Wed, 9 Oct 2024 17:55:51 +0800
+Message-ID: <20241009095556.1754876-1-quic_jiegan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 RESEND 3/3] coresight: dummy: Add static trace id
- support for dummy source
-To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
- <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240910100127.8948-1-quic_jinlmao@quicinc.com>
- <20240910100127.8948-4-quic_jinlmao@quicinc.com>
-Content-Language: en-US
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <20240910100127.8948-4-quic_jinlmao@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: HLY2340A6EXs7tnYoIY4mN25j7toJ8aI
+X-Proofpoint-ORIG-GUID: HLY2340A6EXs7tnYoIY4mN25j7toJ8aI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 suspectscore=0
+ phishscore=0 mlxlogscore=999 spamscore=0 clxscore=1011 malwarescore=0
+ lowpriorityscore=0 priorityscore=1501 mlxscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410090064
 
-On 10/09/2024 11:01, Mao Jinlong wrote:
-> Some dummy source has static trace id configured in HW and it cannot
-> be changed via software programming. Configure the trace id in device
-> tree and reserve the id when device probe.
-> 
-> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
-> ---
->   .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
->   drivers/hwtracing/coresight/coresight-dummy.c | 59 +++++++++++++++++--
->   2 files changed, 70 insertions(+), 4 deletions(-)
->   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-> new file mode 100644
-> index 000000000000..db770bc972d9
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
-> @@ -0,0 +1,15 @@
-> +What:		/sys/bus/coresight/devices/dummy_source<N>/enable_source
-> +Date:		July 2024
+The Coresight TMC Control Unit(CTCU) device hosts miscellaneous configuration
+registers to control various features related to TMC ETR device.
 
-Update the date please
+The CTCU device works as a helper device physically connected to the TMC ETR device.
+---------------------------------------------------------
+             |ETR0|             |ETR1|
+              . \                 / .
+              .  \               /  .
+              .   \             /   .
+              .    \           /    .
+---------------------------------------------------
+ETR0ATID0-ETR0ATID3     CTCU    ETR1ATID0-ETR1ATID3
+---------------------------------------------------
+Each ETR has four ATID registers with 128 bits long in total.
+e.g. ETR0ATID0-ETR0ATID3 registers are used by ETR0 device.
 
-> +KernelVersion:	6.9
+Based on the trace id which is programed in CTCU ATID register of
+specific ETR, trace data with that trace id can get into ETR's buffer
+while other trace data gets ignored. The number of CTCU ATID registers
+depends on the number of defined TMC ETR devices. For example, two TMC
+ETR devices need eight ATID registers. ETR0 with ETR0ATID0-ETR0ATID3
+and ETR1 with ETR1ATID0-ETRATID3.
 
-6.13
+The significant challenge in enabling the data filter function is how
+to collect the trace ID of the source device. The introduction of
+trace_id callback function addresses this challenge. The callback function
+collects trace ID of the device and return it back. The trace ID will be
+stored in the structure called cs_sink_data and transmitted to helper
+and sink devices.
 
-Similarly for the ones below.
+The cs_sink_data structure is created to address how to transmit
+parameters needs by coresight_enable_path/coresight_disbale_path
+functions.
 
+Here is an example of the struct cs_sink_data:
+struct cs_sink_data {
+        struct perf_output_handle  *handle; //used by perf mode
+        struct coresight_device    *sink;   //used to retrieve atid_offset
+        u32                        traceid; //traceid needed by CTCU
+};
 
-> +Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
-> +Description:	(RW) Enable/disable tracing of dummy source. A sink should be activated
-> +		before enabling the source. The path of coresight components linking
-> +		the source to the sink is configured and managed automatically by the
-> +		coresight framework.
-> +
-> +What:		/sys/bus/coresight/devices/dummy_source<N>/traceid
-> +Date:		July 2024
-> +KernelVersion:	6.9
-> +Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
-> +Description:	(R) Show the trace ID that will appear in the trace stream
-> +		coming from this trace entity.
-> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
-> index ac70c0b491be..3bf5437cbfb1 100644
-> --- a/drivers/hwtracing/coresight/coresight-dummy.c
-> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
-> @@ -11,10 +11,12 @@
->   #include <linux/pm_runtime.h>
->   
->   #include "coresight-priv.h"
-> +#include "coresight-trace-id.h"
->   
->   struct dummy_drvdata {
->   	struct device			*dev;
->   	struct coresight_device		*csdev;
-> +	u8				traceid;
->   };
->   
->   DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
-> @@ -67,6 +69,32 @@ static const struct coresight_ops dummy_sink_cs_ops = {
->   	.sink_ops = &dummy_sink_ops,
->   };
->   
-> +/* User can get the trace id of dummy source from this node. */
-> +static ssize_t traceid_show(struct device *dev,
-> +			    struct device_attribute *attr, char *buf)
-> +{
-> +	unsigned long val;
-> +	struct dummy_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	val = drvdata->traceid;
-> +	return scnprintf(buf, PAGE_SIZE, "%#lx\n", val);
-> +}
-> +static DEVICE_ATTR_RO(traceid);
-> +
-> +static struct attribute *coresight_dummy_attrs[] = {
-> +	&dev_attr_traceid.attr,
-> +	NULL,
-> +};
-> +
-> +static const struct attribute_group coresight_dummy_group = {
-> +	.attrs = coresight_dummy_attrs,
-> +};
-> +
-> +static const struct attribute_group *coresight_dummy_groups[] = {
-> +	&coresight_dummy_group,
-> +	NULL,
-> +};
-> +
->   static int dummy_probe(struct platform_device *pdev)
->   {
->   	struct device *dev = &pdev->dev;
-> @@ -74,6 +102,11 @@ static int dummy_probe(struct platform_device *pdev)
->   	struct coresight_platform_data *pdata;
->   	struct dummy_drvdata *drvdata;
->   	struct coresight_desc desc = { 0 };
-> +	int ret, trace_id;
-> +
-> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-> +	if (!drvdata)
-> +		return -ENOMEM;
->   
->   	if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
->   
-> @@ -85,6 +118,25 @@ static int dummy_probe(struct platform_device *pdev)
->   		desc.subtype.source_subtype =
->   					CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
->   		desc.ops = &dummy_source_cs_ops;
-> +		desc.groups = coresight_dummy_groups;
-> +
-> +		ret = coresight_get_static_trace_id(dev, &trace_id);
-> +		if (!ret) {
-> +			/* Get the static id if id is set in device tree. */
-> +			ret = coresight_trace_id_get_static_system_id(trace_id);
-> +			if (ret < 0)
-> +				return ret;
-> +
-> +		} else {
-> +			/* Get next available id if id is not set in device tree. */
-> +			trace_id = coresight_trace_id_get_system_id();
-> +			if (trace_id < 0) {
-> +				ret = trace_id;
-> +				return ret;
-> +			}
-> +		}
-> +		drvdata->traceid = (u8)trace_id;
-> +
->   	} else if (of_device_is_compatible(node, "arm,coresight-dummy-sink")) {
->   		desc.name = coresight_alloc_device_name(&sink_devs, dev);
->   		if (!desc.name)
-> @@ -103,10 +155,6 @@ static int dummy_probe(struct platform_device *pdev)
->   		return PTR_ERR(pdata);
->   	pdev->dev.platform_data = pdata;
->   
-> -	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
-> -	if (!drvdata)
-> -		return -ENOMEM;
-> -
->   	drvdata->dev = &pdev->dev;
->   	platform_set_drvdata(pdev, drvdata);
->   
-> @@ -126,7 +174,10 @@ static void dummy_remove(struct platform_device *pdev)
->   {
->   	struct dummy_drvdata *drvdata = platform_get_drvdata(pdev);
->   	struct device *dev = &pdev->dev;
-> +	struct device_node *node = dev->of_node;
->   
-> +	if (of_device_is_compatible(node, "arm,coresight-dummy-source"))
+The atid_offset mentioned before is the offset to ATID register in CTCU
+device.
 
-	if (drvdata->traceid) ?
+Enabling the source device will configure one bit in the ATID register based
+on its trace ID.
+Disabling the source devices will reset the bit in the AITD register
+based on its trace ID.
 
-Or even
+Useage:
+Enable:
+STM device with trace ID 5 and ETR0 is activated.
+Bitmap before the enablement:
+ETR0ATID0:
+31..................543210
+==========================
+0000000000000000000000...0
+==========================
 
-	if (IS_VALID_CS_TRACE_ID(drvdata->traceid))
+Bitmap after the enablement:
+31..................543210
+==========================
+0000000000000...0000100000
+==========================
 
-> +		coresight_trace_id_put_system_id(drvdata->traceid);
->   	pm_runtime_disable(dev);
->   	coresight_unregister(drvdata->csdev);
->   }
+The bit 5 of the ETR0ATID0 register is configured to 1 when enabling the
+STM device.
 
+Disable:
+STM device with trace ID 5 and ETR0 is activated.
+Bitmap before the disablement:
+ETR0ATID0:
+31................6543210
+=========================
+000000000010111...0100000
+=========================
 
+Bitmap after the disablement
+ETR0ATID0:
+31................6543210
+=========================
+000000000010111...0000000
+=========================
 
-Rest looks fine.
+The bit 5 of the ETR0ATID0 register is reset to 0 when disabling the STM
+device.
 
-Suzuki
+Previous discussion for V1:
+https://lore.kernel.org/lkml/20240618072726.3767974-1-quic_jiegan@quicinc.com/T/#t
+
+Changes in V2:
+1. Rename the device to Coresight Control Unit.
+2. Introduce the trace_id function pointer to address the challeng how to
+properly collect the trace ID of the device.
+3. Introduce a new way to define the qcom,ccu-atid-offset property in
+device tree.
+4. Disabling the filter function blocked on acquiring the ATID-offset,
+which will be addressed in a separate patch once it’s ready.
+
+Previous discussion for V2:
+https://lore.kernel.org/linux-arm-msm/20240705090049.1656986-1-quic_jiegan@quicinc.com/T/#t
+
+Changes in V3:
+1. Rename the device to Coresight TMC Control Unit(CTCU).
+2. Introduce a new way to define the platform related configs. The new
+   structure, qcom_ctcu_config, is used to store configurations specific
+   to a platform. Each platform should have its own qcom_ctcu_config structure.
+3. In perf mode, the ETM devices allocate their trace IDs using the
+   perf_sink_id_map. In sysfs mode, the ETM devices allocate their trace
+   IDs using the id_map_default.
+4. Considering the scenario where both ETR devices might be enabled simultaneously
+   with multiple sources, retrieving and using trace IDs instead of id_map is more effective
+   for the CTCU device in sysfs mode. For example, We can configure one ETR as sink for high
+   throughput trace data like ETM and another ETR for low throughput trace data like STM.
+   In this case, STM data won’t be flushed out by ETM data quickly. However, if we use id_map to
+   manage the trace IDs, we need to create a separate id_map for each ETR device. Addtionally, We
+   would need to iterate through the entire id_map for each configuration.
+5. Add support for apb's clock name "apb". If the function fails to obtain the clock with
+   the name "apb_pclk", it will attempt to acquire the clock with the name "apb".
+
+Previous discussion for V3:
+https://lore.kernel.org/linux-arm-kernel/20240812024141.2867655-1-quic_jiegan@quicinc.com/
+
+Changes in V4:
+1. Add TMC description in binding file.
+2. Restrict the number of ports for the CTCU device to a range of 0 to 1 in the binding file,
+because the maximum number of CTCU devices is 2 for existing projects.
+
+Changes in V5:
+1. Fix the format issue for description paragrah in dt binding file.
+2. Previous discussion for why use "in-ports" property instead of "ports".
+Please help to comment this point if the platform driver must be fixed before
+submit this patch series.
+https://lore.kernel.org/linux-arm-msm/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com/
+
+V5 Resend:
+1. Collected reviewed-by tag from Rob for dt-binding patch.
+
+Jie Gan (5):
+  Coresight: Add support for new APB clock name
+  Coresight: Add trace_id function to retrieving the trace ID
+  dt-bindings: arm: Add Coresight TMC Control Unit hardware
+  Coresight: Add Coresight TMC Control Unit driver
+  arm64: dts: qcom: Add CTCU and ETR nodes for SA8775p
+
+ .../bindings/arm/qcom,coresight-ctcu.yaml     |  84 +++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 160 ++++++++++
+ drivers/hwtracing/coresight/Kconfig           |   8 +
+ drivers/hwtracing/coresight/Makefile          |   1 +
+ drivers/hwtracing/coresight/coresight-core.c  |  59 +++-
+ drivers/hwtracing/coresight/coresight-ctcu.c  | 292 ++++++++++++++++++
+ drivers/hwtracing/coresight/coresight-ctcu.h  |  21 ++
+ drivers/hwtracing/coresight/coresight-etb10.c |   3 +-
+ .../hwtracing/coresight/coresight-etm-perf.c  |  37 ++-
+ .../coresight/coresight-etm3x-core.c          |  30 ++
+ .../coresight/coresight-etm4x-core.c          |  29 ++
+ drivers/hwtracing/coresight/coresight-priv.h  |  13 +-
+ drivers/hwtracing/coresight/coresight-stm.c   |  22 ++
+ drivers/hwtracing/coresight/coresight-sysfs.c |  24 +-
+ .../hwtracing/coresight/coresight-tmc-etf.c   |   3 +-
+ .../hwtracing/coresight/coresight-tmc-etr.c   |   6 +-
+ drivers/hwtracing/coresight/coresight-tpda.c  |  20 ++
+ drivers/hwtracing/coresight/coresight-trbe.c  |   4 +-
+ drivers/hwtracing/coresight/ultrasoc-smb.c    |   3 +-
+ include/linux/coresight.h                     |  16 +-
+ 20 files changed, 807 insertions(+), 28 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-ctcu.yaml
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.c
+ create mode 100644 drivers/hwtracing/coresight/coresight-ctcu.h
+
+-- 
+2.34.1
+
 
