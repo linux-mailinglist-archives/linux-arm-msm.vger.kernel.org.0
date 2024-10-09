@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-33744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33745-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 137CD9977D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 23:49:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6E119977D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 23:49:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 93EF8B22E53
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 21:49:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 111731C227B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 21:49:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA7061E3DD5;
-	Wed,  9 Oct 2024 21:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B20251E47DF;
+	Wed,  9 Oct 2024 21:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="In4MECCV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B7e/+TTA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6BA1E32A4;
-	Wed,  9 Oct 2024 21:48:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469EB1E47BC;
+	Wed,  9 Oct 2024 21:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728510536; cv=none; b=bBsOBXZN107ASIRf3a15VaO/jl/NWI6y1YB3WZiYeh3yBaGw9K/wJd8L99Zg374T2Tjhz4ouUAmSzmi8vHe3GscNoXNbudEfwxkOrjsgKClV7J4pPDyBO4FmKZLcFoVt1B9rGGo5/LgCwiGj926c5UXMpSfiQ3Ks4enfygLvHTw=
+	t=1728510539; cv=none; b=XKQB2DAaptq0/NsY/ozUbe0Nr1CA9W7pDsr6SuPC5snnRyBWOdgl9WtfnTNmJcx+TkIJuiDaH4V1sjmhd4XgFTwkapw7z9jIFt0hzJPKWAEuW+HGbw23448dUXjzR1xZ2Di/4UnZSIjHyTPN0t3O4Sq1JRlozVJ1DZaVizVfcuY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728510536; c=relaxed/simple;
-	bh=8W1ncdfuUr/pmKqqzrfdU2GbcujlsBW9bxCSyhfwVQA=;
+	s=arc-20240116; t=1728510539; c=relaxed/simple;
+	bh=gbCv8Hj0hrgFmiKZHVb+fygiodK3HtVEgN3izlzRLtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SKwJSEtKUMPBplD80pnSJoFoZkrwrlZmWFhoQHIqWCuFvDAPLoBxU2qJAMHBcFNifJ9AHsRjsvrLIDgcAkKdvgqWtLB15xXV8tNDu8pj7R+NmxJP58WvRShIW71gteyKOKWSYrTyNYMoBsHw/kgWi7HZQNPdNw5xUNhp2Fu7D50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=In4MECCV; arc=none smtp.client-ip=209.85.215.170
+	 MIME-Version; b=AS7DnNfANuWk51yiRuMThCePN77Cr5gDN58HYUh9FeLh9O6552vmPeiFsHhOdstLHkZPxxuUjp5AvPMuLSQID1RRUyAUZBIrFg+FSM6SeH4SKFhsrYZY1hpSGAF9dJw9sVfZ6KfB3NfN63vjrULrRfUNvzz8ijPrOx0XIO/Z7mQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B7e/+TTA; arc=none smtp.client-ip=209.85.215.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7e9f998e1e4so192464a12.1;
-        Wed, 09 Oct 2024 14:48:55 -0700 (PDT)
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7ea0ff74b15so139533a12.3;
+        Wed, 09 Oct 2024 14:48:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728510535; x=1729115335; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1728510537; x=1729115337; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DckmO3GetrEG9p87L1DNtWdqDrBGlrP6K5aSd93K3po=;
-        b=In4MECCV4RvI3b+RDkgjC6OIlObnvFduMwP7024uHs06rWZmFPKL5I6Rbya/xj8dCe
-         khc7EUw4PXxNnbAYlrBtcVzCd77mfDqomRfTRhynQdaFnKVaCEgrnyn5/vaHLTGl2lMY
-         jjKYtz77EDu+3asKJldG412Pv+RnvhmCOuq7Jc7Nko1yvonJRNUW18HQnN3sW/sTccGf
-         nNAHd7OojOy9gKB/3+5KZd6RED+GHTCpm2q19NWfgk5GZM4pr3A4vJzPM20e92iJlPAg
-         kLE12suBkosFBd7OVQkyymxKRn8cYrvC/q+ippgi82oiDnBnKxyjzkcMl4osSn6Jsm3z
-         lUFQ==
+        bh=jjMZ4asDtbZI1OpBAaaU9600/p3BCgdIVo5rxbXzhhs=;
+        b=B7e/+TTAf2TNUWYTuR6kyBsPayeT9eoU7HJusfYXjfTSPQX5EtgH3s/wQWto8Z+UWz
+         ZVg7O94xesQljlbaqxZGeUlgffLd2CBe787cWydqcZj1spFuBubko4Ob8eb37jsNZqJw
+         ibQJFFhtLviL+K1caQHEuhUTHjWoiSf4vsebqvKUJbPhlD9bd9RRhokQvkvv0zft+fUw
+         tEXTwBZkz+IMAFEk3x/4Q4B7llN96YMNrhPet044b/hSA1TL9hzx0JzgWUwCmIl3rOgW
+         sgn2OLorOjsfZkjxbECWsofRcT30dfQWmoraUI/RkLTRTt+fnvkg292lE/mghtvk0M0t
+         7bEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728510535; x=1729115335;
+        d=1e100.net; s=20230601; t=1728510537; x=1729115337;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DckmO3GetrEG9p87L1DNtWdqDrBGlrP6K5aSd93K3po=;
-        b=hwqr2tJbGrs1wXuXcUt+OBGo1i5Eg0tzcWThLBp25WJ8W2ZKVKGdDDh7kLJ5xcCFnu
-         VLS3dUtjV/LtHiRvfNFHJQWzbGqM/+O+AS3rAHv4YEHsOWOtpo33kRNPFC+I7nEKtDt1
-         vXcwTflMwErqkeRr3vA/UVldcEYIgaLFgbrDYK6ZedyOKkNRWQ+Cfigq7JL9z013NdpL
-         t3hVRe3Ue7YbMRdWJI/7qNgH2Gm9FncG4Y/pcOmgnKxZJ9RRzjZeDo6M/cu4oihZxaVQ
-         MAkqJiy/CWwK3/c/zwOqgjjPMkevahfbaf2/r3tx1emoTKchfgNBhnzaVWJJ0/2K2Rrn
-         0p8A==
-X-Forwarded-Encrypted: i=1; AJvYcCV5XrxAEdvVY5BQ8d639uYXU87ocV1nA6CDPu1GYSK3QsxnkUvCFYB8r1L/E5IdTNSMWQXryjkZ0nKCxwqE@vger.kernel.org, AJvYcCVFOegdRrFDNB+ddCkHv3ohds7fyxbBLnWkTxEcpCSO1pnsyyiawe7dh53D7BUHR6QyCbznNX5I@vger.kernel.org, AJvYcCVO/YCcgk335aBgfJF4oLXa4mErepRyW/OTI2E62tL0Mq3FIo3iGUc/2vjCx2Bd1kHwIKfpJOt8i2OWyRdl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw94f4L0bITVgas7UQ05ZN2fU0OD2aYL3zMbWE0pkol5MpZ9m3/
-	SrqNqRYpz3Dmw0IiLVbAwE4avbJy0qiVaGXv5G9HHxOwX7tSm3HrqdE3Kssd
-X-Google-Smtp-Source: AGHT+IGhwngumyAYyqZ1symFrdRfFaXP4R+sFpGQBU93XFua+hCTTIL0kqZrLusjEuP0mO4Kr5kc/Q==
-X-Received: by 2002:a17:90b:347:b0:2d8:8175:38c9 with SMTP id 98e67ed59e1d1-2e2a2476181mr4650725a91.20.1728510534600;
-        Wed, 09 Oct 2024 14:48:54 -0700 (PDT)
+        bh=jjMZ4asDtbZI1OpBAaaU9600/p3BCgdIVo5rxbXzhhs=;
+        b=hdTmdfH6hO20n0fqqkILjnnRqm0VqI0svgdhMZo3mmPReQhpYBwZj0fJUZzCo+umBh
+         3peal2/Jmcx08aYQlK+KwH2IqT1fW5w6fKwTJMmFDXsjbQUVNZrTm3DRA6vzvOE2N0j+
+         bDenUD15Dn3LExTVG4701Gc1KKH0fljFKb/1QEhP0o0wVGPBLxzQVimQYpR8mDmJva18
+         q8pocG733N7TS8UL64YLGOBmY8s05UvYuXKBIdLh2iRkrO3zdO6T+M/OtAKmMTnXKubx
+         a+e0CHK39hQgs4m5aQFinM4WqpB8WLTafbhFO1GVEW4hRqNmfB91BRw7Sd0cQsRpQPpU
+         Gdaw==
+X-Forwarded-Encrypted: i=1; AJvYcCUAyqv9kYVKtSCmfMXKCfQbApiWKvfdqfAMCvoTdyNsXJ3IcAqXdkaSRfBTlnUyk+MOIR9U0B+jyGLB0kw6@vger.kernel.org, AJvYcCUOC0RG4KuVuPflKSF5Oy9EOcZofvPNXHDKkzky93PQ3N9uhzEIWPccu0mjYEHS8+4ZIxcoNOu/R1/mrD9Q@vger.kernel.org, AJvYcCXWyH2yHhm47AFm4WZObBgyfjkSw5mRwkr5Rqu8yUoaEKn+fva7SJORzWXi/84lutjmt8dJvnsB@vger.kernel.org
+X-Gm-Message-State: AOJu0YyK/UbVdzghGcDpW23pPhjyL+LiXBfhBDAjXKJQNke+T55vpvbg
+	xeMGSkxCzcRwoiWgws33WN8tCp5tMl55FP9LEMpXHKNGc7h2FZlcYD654RLx
+X-Google-Smtp-Source: AGHT+IELYP0yGIhGAlZNDRXRCQNBpF6TBCDwk0p6CIeGBqN+IhhJq6fhE5zhJrcK45Fi8aeSvj9fuQ==
+X-Received: by 2002:a17:90b:d85:b0:2cb:4c25:f941 with SMTP id 98e67ed59e1d1-2e2a2471edcmr4392095a91.17.1728510537440;
+        Wed, 09 Oct 2024 14:48:57 -0700 (PDT)
 Received: from ryzen.lan ([2601:644:8200:dab8::a86])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a5707cacsm2250091a91.21.2024.10.09.14.48.51
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a5707cacsm2250091a91.21.2024.10.09.14.48.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 14:48:54 -0700 (PDT)
+        Wed, 09 Oct 2024 14:48:57 -0700 (PDT)
 From: Rosen Penev <rosenp@gmail.com>
 To: devicetree@vger.kernel.org
 Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
@@ -101,9 +101,9 @@ Cc: Miquel Raynal <miquel.raynal@bootlin.com>,
 	linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
 	linux-arm-kernel@lists.infradead.org (moderated list:BROADCOM BCMBCA ARM ARCHITECTURE),
 	linux-mediatek@lists.infradead.org (moderated list:ARM/Mediatek SoC support)
-Subject: [PATCHv3 1/5] ARM: dts: qcom: ipq4019: use nvmem-layout
-Date: Wed,  9 Oct 2024 14:48:43 -0700
-Message-ID: <20241009214847.67188-2-rosenp@gmail.com>
+Subject: [PATCHv3 2/5] arm64: dts: bcm4908: nvmem-layout conversion
+Date: Wed,  9 Oct 2024 14:48:44 -0700
+Message-ID: <20241009214847.67188-3-rosenp@gmail.com>
 X-Mailer: git-send-email 2.46.2
 In-Reply-To: <20241009214847.67188-1-rosenp@gmail.com>
 References: <20241009214847.67188-1-rosenp@gmail.com>
@@ -119,40 +119,37 @@ nvmem-layout is a more flexible replacement for nvmem-cells.
 
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- .../boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ .../dts/broadcom/bcmbca/bcm4906-netgear-r8000p.dts   | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi b/arch/arm/boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi
-index 0d23c03fae33..a6d4390efa7c 100644
---- a/arch/arm/boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi
-+++ b/arch/arm/boot/dts/qcom/qcom-ipq4018-ap120c-ac.dtsi
-@@ -166,16 +166,19 @@ partition@170000 {
- 				label = "ART";
- 				reg = <0x00170000 0x00010000>;
- 				read-only;
--				compatible = "nvmem-cells";
--				#address-cells = <1>;
--				#size-cells = <1>;
+diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4906-netgear-r8000p.dts b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4906-netgear-r8000p.dts
+index 999d93730240..a5f9ec92bd5e 100644
+--- a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4906-netgear-r8000p.dts
++++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4906-netgear-r8000p.dts
+@@ -144,16 +144,20 @@ partitions {
+ 		#size-cells = <1>;
  
--				precal_art_1000: precal@1000 {
--					reg = <0x1000 0x2f20>;
--				};
-+				nvmem-layout {
-+					compatible = "fixed-layout";
-+					#address-cells = <1>;
-+					#size-cells = <1>;
+ 		partition@0 {
+-			compatible = "nvmem-cells";
+ 			label = "cferom";
+ 			reg = <0x0 0x100000>;
+-
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges = <0 0x0 0x100000>;
+ 
+-			base_mac_addr: mac@106a0 {
+-				reg = <0x106a0 0x6>;
++			nvmem-layout {
++				compatible = "fixed-layout";
++				#address-cells = <1>;
++				#size-cells = <1>;
 +
-+					precal_art_1000: precal@1000 {
-+						reg = <0x1000 0x2f20>;
-+					};
- 
--				precal_art_5000: precal@5000 {
--					reg = <0x5000 0x2f20>;
-+					precal_art_5000: precal@5000 {
-+						reg = <0x5000 0x2f20>;
-+					};
- 				};
++				base_mac_addr: mac@106a0 {
++					reg = <0x106a0 0x6>;
++				};
  			};
+ 		};
  
 -- 
 2.46.2
