@@ -1,73 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-33638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DBB339963E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 10:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6C63B9963E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 10:52:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3AD22288062
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 08:52:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FFD0287EFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  9 Oct 2024 08:52:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2436118DF7D;
-	Wed,  9 Oct 2024 08:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 19DB818CBFE;
+	Wed,  9 Oct 2024 08:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BkKyFXdK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e2u4kKfZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBCD18CBE7
-	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 08:50:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8675F18E022
+	for <linux-arm-msm@vger.kernel.org>; Wed,  9 Oct 2024 08:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728463829; cv=none; b=hp34aU3b359AMC+axYp99AKd7nde41FnQXcHJmqAdSc2t4+EOvHDlmJxew7WA6eYQ9NLwIffV0k7WL3BPBju9JI5SDPPSLiFG4GaiwbyOrLMhXQXvMfj/qM4CZ+LChEpucMzn1EzfOMj5H9ZA745UmsZHZ8A3L6WNS6wOQCdHRU=
+	t=1728463832; cv=none; b=otSAbOiihG8G5bhWltWLCS4CPh3XCF4+MuqcQ/SZn4iiLPRUAhhS45GSheMISU2xu5cOIRSK/b4SU532RVvuG9xb0Sgg1jUuOqe+c0wDTYTR9UZu0OZIG1h1C2hmClM5Ay8K77D2mDciChR7eGsA6gMJbJMJYkpm+MLXeKsJiIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728463829; c=relaxed/simple;
-	bh=ogiCJCZuk6UCulrrNj6IiPVgq9KKz3uKFmixSequ9dc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LxSwjCY4ow2xuPLPoThxOIEk+Qliic6z8gnUc4c8e3KZ9aOwTdYNDUrxyUzFplvl9mINC08HS3ffO10QUOsZ7a7BYLO9QRJGIi7ULCV8naXkLMr2BU2Gvoxm5iYyc2qdUmOEthGwRASxOIpfCaxp79OTB0jmbPhYFHkWTP+iQts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BkKyFXdK; arc=none smtp.client-ip=209.85.216.51
+	s=arc-20240116; t=1728463832; c=relaxed/simple;
+	bh=AOnvev//l48K9poLpI3b2jyK6oiNPwqIXWbViweShqc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Ys9CUBHSl0e7EyY/zIQRajLkScrAMCAVtph88/cqEHpHKAuMTfivQWJRKMbsC0cAONt0Qr8BKhZKyLjcxnlguJQ1X5Yj9v3D4b6Yb3jl2kUup1BmW0z/l8HFwIY+KZnAsMwTlSSOL/fRYiQD++a/MMoIBWM1fmOjw1JAUUDTHTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e2u4kKfZ; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2e221a7e7baso2519952a91.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 01:50:25 -0700 (PDT)
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2e2a96b23e4so260732a91.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 01:50:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728463825; x=1729068625; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2OyEUM3ayYo8115Z625s6QVnBUkxirDaFIlKShu8dWI=;
-        b=BkKyFXdKnzTwSODVnrUZ9KZs5PV2yjy1U+YghK1tXiqdomwke9sG7Rz010392Phqy5
-         rhj+KgThMfc+yCb8X6zFjGhYnP+F11XKGqbmutPYVAoBQjEp1b0X/GNBD/0Iw86tjhZk
-         ROSmne5QdJqqKx+rzO9SQjkjYb/8OADJpE1+1WXjY+Nbd+0p/vlIfoS7bWwGq3UU3ljp
-         3sq7bPOk8Ytyclf1wicG1EILMiZ8wvZ9iX/H3n49xTicvS2nUXJQtPt37w/56Xes1hli
-         a+CX4h51OtOwnaL+a4Q7RuwXg2dn7WHOxjSDCNdeVkCLtLexNIIgM3U0sjpd8k9g4jc3
-         705w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728463825; x=1729068625;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1728463830; x=1729068630; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2OyEUM3ayYo8115Z625s6QVnBUkxirDaFIlKShu8dWI=;
-        b=YbQJLnr6LILgF7YE4Rd3xtu4ux/IXfMH1KT8QC+rlizSf6w3la+PFN8ENQpJJjZvF4
-         AuwnU7mF/DbK/ws3Mu45u7+DqT5NK8JRcmDbPN+xkwc4ELGz1WEiLpDkAB6DnShLcn6L
-         11qYDUOFhWiMYmpI5N5b84CqGU+nKXWSbyrN+ZW3gYBDMi2lgsow9Ry9RKmjpX/qFrkK
-         2fL7iVS8quj/gHC4KfAM1bfjwRHGzKI7J58+WWgLD9EAEl+o16O+3AK2ITMaSO9Lz6yf
-         TcsDYwTj9ouiQYRuRQHhN7Weh0Jhnt7M+6vOUyu3X2Rl1FzFdFt4uvhF8zMXcmRqtnNO
-         gxLg==
-X-Gm-Message-State: AOJu0YxuTs4gRqaQgNbR39uJlyvfn8GPnOLh2+bac/skrEGViPMjjk7M
-	ggTvo8lrrP1niF9xe+MtDulHbLbjNZSO7R2KxhygjVxQBp0xPT6/mPW6jAIi/14=
-X-Google-Smtp-Source: AGHT+IEi7ccLOgI20JoLj/kcBWBw13/ExjkVwWKywTKVTU9eWF12FpV2TM3Gltp794cZr9uzgadrLg==
-X-Received: by 2002:a17:90a:8a04:b0:2e2:bd4b:ac2c with SMTP id 98e67ed59e1d1-2e2bd4bacdfmr3881a91.31.1728463825310;
-        Wed, 09 Oct 2024 01:50:25 -0700 (PDT)
+        bh=c7bIuQoomWT/rx9ticSN25UJS+k6AR92dNlVIMn4xi0=;
+        b=e2u4kKfZuBliioggdDtrXMdMyJ8fU22MxCvqohdZJTgX2t/2fCghwRDNetylRT1+5E
+         17BP5gfcc1Q1Z0b39w1VnVDTNny6h0VpbkRMJLj20OhazKVRQS4p6te/aBUoXQo5yN1h
+         rSDRKddOhE22TrYCG2NmTuyb9ZADj9WKCiQdmxDqor1XT5+mWS4AR5gxLC5VEgdQNJTB
+         ypobbUpVaAhNkFlYVNIeLCEyGHGq36USGo0DddRffBlrZ0RRgkg0DwaGLJfJ2ZX1PHg8
+         si+U6VdVEzb7PALKo5z39XrlhBAJG0PRZ9HcWIyJbXhQ6JEkEbs/QUVDtO94+iXbbf0y
+         fagg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728463830; x=1729068630;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=c7bIuQoomWT/rx9ticSN25UJS+k6AR92dNlVIMn4xi0=;
+        b=PFOPl2KH6M7UGVonoxvUlw9ERdUzZUlHojzkZNs7SsMR6wWCHmCvwC+q7r7O35W1Xs
+         /9CZ0Af5A47PR0uGDkVNQCY8U7kfaNucn5iJTTT8zZ+77bLv86i0eSOpX1/Fpw1/0Edz
+         lvCEDj6PrVdb3B/tgUpd31pZiz2mZE4rkmK2RWeoGlH4DZzrJ1BkW5OQtiKElnXNhjBP
+         GQaF0V18bZtjvxLBNKFu31vp3zU/VJOELZiNcmcu9z4aDOnr27/PKyP3DN8f2tjTC17I
+         azkzND0MyF31lKDZqgsuFylVtGTVmNTd/n80Ht2J8t3xI/gT3G3HbnLKmuM65N/QEaPM
+         EGwQ==
+X-Gm-Message-State: AOJu0Yxjanj8dyPMYkMMLCiqPZyGSN4PmQczo7bUaevOEvFW4XjKOhZA
+	GWQEkA4qiQR0c7exW+WyTOQRVICBgyWDALdRZz0adfkg5ao0fu6ZDgNKAIatKq0=
+X-Google-Smtp-Source: AGHT+IESUTwygnYBSZdBsUDXgtACJ/v1ab4RJl/GTGW8J3oCmqBYI3AAq2s4v5mchDc9OY7NZ7CVOQ==
+X-Received: by 2002:a17:90a:cb01:b0:2e2:9314:2785 with SMTP id 98e67ed59e1d1-2e2a21ef23cmr2286037a91.5.1728463829841;
+        Wed, 09 Oct 2024 01:50:29 -0700 (PDT)
 Received: from [127.0.1.1] ([112.65.12.217])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2abad236esm898157a91.10.2024.10.09.01.50.20
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2abad236esm898157a91.10.2024.10.09.01.50.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Oct 2024 01:50:25 -0700 (PDT)
+        Wed, 09 Oct 2024 01:50:29 -0700 (PDT)
 From: Jun Nie <jun.nie@linaro.org>
-Subject: [PATCH v2 00/14] drm/msm/dpu: Support quad pipe with dual-DSI
-Date: Wed, 09 Oct 2024 16:50:13 +0800
-Message-Id: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
+Date: Wed, 09 Oct 2024 16:50:14 +0800
+Subject: [PATCH v2 01/14] drm/msm/dpu: polish log for resource allocation
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,9 +77,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMVDBmcC/x2NQQqDMBAAvyJ77sJm0bT2K6WH1Kx1D9E0q1IQ/
- 97Q48Awc4BJUTG4NwcU2dV0mSvwpYFhCvNbUGNlYOLWEfVo6eY7wt2jcziliHkZRkzRDD9biLh
- lW4uEhOyq0XJHV9/zK0At5iKjfv+3x/M8f677qxR9AAAA
+Message-Id: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-1-76d4f5d413bf@linaro.org>
+References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
+In-Reply-To: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
 To: Rob Clark <robdclark@gmail.com>, 
  Abhinav Kumar <quic_abhinavk@quicinc.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sean Paul <sean@poorly.run>, 
@@ -88,87 +89,67 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Jun Nie <jun.nie@linaro.org>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728463820; l=3537;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1728463820; l=1834;
  i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=XuK8SW++hJbjdzuyT7G+3SNIautCdVNCl8sCs8qP274=;
- b=ypkLgaejJJBfn8jsdKs5HuLSGpjaaUfbXDqk4/kz6wm2nHJj7vcUY3P8taEhMblC4agtxfgWQ
- Azg2zfY8HxMATfMLlvCfmkvT4cBepPS1zuDt+iWQaLiu/jHWkCI5hpA
+ bh=AOnvev//l48K9poLpI3b2jyK6oiNPwqIXWbViweShqc=;
+ b=ZoaNma48RD560N7Wpt6QTcmjBW200b4i9cEzu0XKgwNwqPVL8i7T69/tEfkxovejkPIu+Mr28
+ li84Bu4qOo4AR+M+tDz5CECNYXgVmRhxQvGYnbyCwDuNNtvMOBsqH7e
 X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
  pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-
----
-2 or more SSPPs and dual-DSI interface are need for super wide DSI panel.
-And 4 DSC are prefered for power optimal in this case. This patch set
-extend number of pipes to 4 and revise related mixer blending logic
-to support quad pipe.  All these changes depends on the virtual plane
-feature to split a super wide drm plane horizontally into 2 or more sub
-clip. Thus DMA of multiple SSPPs can share the effort of fetching the
-whole drm plane.
-
-The first pipe pair co-work with the first mixer pair to cover the left
-half of screen and 2nd pair of pipes and mixers are for the right half
-of screen. If a plane is only for the right half of screen, only one
-or two of pipes in the 2nd pipe pair are valid, and no SSPP or mixer is
-assinged for invalid pipe.
-
-For those panel that does not require quad-pipe, only 1 or 2 pipes in
-the 1st pipe pair will be used. There is no concept of right half of
-screen.
-
-For legacy non virtual plane mode, the first 1 or 2 pipes are used for
-the single SSPP and its multi-rect mode.
-
-This patch set depends on virtual plane patch set v5 and flexible
-number of DSC patch set:
-https://patchwork.freedesktop.org/series/135456/
-
-Changes in v2:
-- Revise the patch sequence with changing to 2 pipes topology first. Then
-  prepare for quad-pipe setup, then enable quad-pipe at last.
-- Link to v1: https://lore.kernel.org/all/20240829-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-8-v1-0-bdb05b4b5a2e@linaro.org/
+Add resource allocation type info.
 
 Signed-off-by: Jun Nie <jun.nie@linaro.org>
-
 ---
-Jun Nie (14):
-      drm/msm/dpu: polish log for resource allocation
-      drm/msm/dpu: decide right side per last bit
-      drm/msm/dpu: fix mixer number counter on allocation
-      drm/msm/dpu: switch RM to use crtc_id rather than enc_id for allocation
-      drm/msm/dpu: handle pipes as array
-      drm/msm/dpu: split PIPES_PER_STAGE definition per plane and mixer
-      drm/msm/dpu: bind correct pingpong for quad pipe
-      drm/msm/dpu: update mixer number info earlier
-      drm/msm/dpu: blend pipes per mixer pairs config
-      drm/msm/dpu: Support quad-pipe in SSPP checking
-      drm/msm/dpu: Share SSPP info for multi-rect case
-      drm/msm/dpu: support plane splitting in quad-pipe case
-      drm/msm/dpu: support SSPP assignment for quad-pipe case
-      drm/msm/dpu: Enable quad-pipe for DSC and dual-DSI case
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         |  74 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  12 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      |  69 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |   3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |   1 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c       |   2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h       |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |   4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h      |   2 +
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h          |  12 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c        | 408 +++++++++++++----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h        |  12 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c           | 210 ++++++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h           |  19 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_trace.h        |  10 +-
- 15 files changed, 478 insertions(+), 364 deletions(-)
----
-base-commit: eac5b436019c2eeb005f7bdf3ca29d5e8f443d67
-change-id: 20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-1142507692ba
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index 15b42a6683639..2b03ab907c2bc 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -778,6 +778,21 @@ void dpu_rm_release_all_sspp(struct dpu_global_state *global_state,
+ 		ARRAY_SIZE(global_state->sspp_to_crtc_id), crtc_id);
+ }
+ 
++static char *dpu_hw_blk_type_name[] = {
++	[DPU_HW_BLK_TOP] = "TOP",
++	[DPU_HW_BLK_SSPP] = "SSPP",
++	[DPU_HW_BLK_LM] = "LM",
++	[DPU_HW_BLK_CTL] = "CTL",
++	[DPU_HW_BLK_PINGPONG] = "pingpong",
++	[DPU_HW_BLK_INTF] = "INTF",
++	[DPU_HW_BLK_WB] = "WB",
++	[DPU_HW_BLK_DSPP] = "DSPP",
++	[DPU_HW_BLK_MERGE_3D] = "merge_3d",
++	[DPU_HW_BLK_DSC] = "DSC",
++	[DPU_HW_BLK_CDM] = "CDM",
++	[DPU_HW_BLK_MAX] = "none",
++};
++
+ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 	struct dpu_global_state *global_state, uint32_t enc_id,
+ 	enum dpu_hw_blk_type type, struct dpu_hw_blk **blks, int blks_size)
+@@ -828,13 +843,13 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 			continue;
+ 
+ 		if (num_blks == blks_size) {
+-			DPU_ERROR("More than %d resources assigned to enc %d\n",
+-				  blks_size, enc_id);
++			DPU_ERROR("More than %d %s assigned to enc %d\n",
++				  blks_size, dpu_hw_blk_type_name[type], enc_id);
+ 			break;
+ 		}
+ 		if (!hw_blks[i]) {
+-			DPU_ERROR("Allocated resource %d unavailable to assign to enc %d\n",
+-				  type, enc_id);
++			DPU_ERROR("%s unavailable to assign to enc %d\n",
++				  dpu_hw_blk_type_name[type], enc_id);
+ 			break;
+ 		}
+ 		blks[num_blks++] = hw_blks[i];
 
-Best regards,
 -- 
-Jun Nie <jun.nie@linaro.org>
+2.34.1
 
 
