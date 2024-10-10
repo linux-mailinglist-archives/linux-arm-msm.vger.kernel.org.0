@@ -1,161 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-33901-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED48A998B58
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 17:23:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C4C5998BD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 17:36:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ED52B1C25894
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 15:23:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6755D28C3F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 15:36:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C19E1CC146;
-	Thu, 10 Oct 2024 15:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B5A1F1CDA24;
+	Thu, 10 Oct 2024 15:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="criQrlcX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G6GOVFPU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEE41CBEBE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:23:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4472A1CCB45;
+	Thu, 10 Oct 2024 15:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728573801; cv=none; b=C4/4ar9IMFxLCQHVn1pNcl2ZNfGee1AqQituWKtylUGCPEwnwmPxTiIWoeeC5KUVWA+uX0O90XO7DJz5ylUesIB89r6c8TVpEIURngQC7jkBi5jCpCSIObXu/CmWmrCL/gSgBoJ42/2558T3VhDt+ThB53qr4RKIeFwWiY5Ojow=
+	t=1728574510; cv=none; b=my3C0is79O4OrTFxfjQfLK7odcFJ7bI766xRfls/ZI2clZStse7r0UgV1fqv41vDIeGtkORGVLfzAiSlLCZXlwMjcl7ujfKrtQBtaIqcpaW95eGjcEngjaaveE5uy1QfJE1gW2YnGsOtr7r8UOyXqQdWvDGN5y4MJIkkdwtC92M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728573801; c=relaxed/simple;
-	bh=DRKgFKv94g5YAPgj5pxf8fO74OXv4fm6MAmTKKGF5e8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UCUCNepEcrJ+wbNGTsUaguQW5++5+nu7XtV1efnbhsX7jPFAsOQHh6oZ/egjVMMbURKwSrcj979/BC1qKPPvGhIlvQctf3toux9DBOYaKjdYuRSfNLOkXdsilTGYT9hhp+mdXkjMmnQO26JS6f464fMV0G782tomewZLWm50Zcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=criQrlcX; arc=none smtp.client-ip=209.85.208.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2fabc9bc5dfso10700931fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 08:23:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728573798; x=1729178598; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OOD5DwUqAaTqFWYMU+ma6xf+DD2ITHdyJRhnL7XRons=;
-        b=criQrlcXTyAuof5P2YjJh2oWbV9d0zSu2l+BCOlgWrLlRyhvsaROAub/XmREJv1mG3
-         /lYRxI+3ntgiOIi2Rp3cdv2ISfNchhSJAdb6yVfNC4otH5xB8Y1Uppwc/LfSnqNdKy+c
-         dHNSVkI6gUsZpTMpXW0FjaDOfU7dZrSrPGVQI0D3xJd1tyOmKXPtN5MS9WV5sJgE/ofs
-         8wQd6lTLAVQcPU/qWd54T3787fqlaCSj7jhcvwKPxiVrHyCXIqZPTEkZO/KiI0kRSRrg
-         xqENiUFnif9wiKJUPpjWUArXMk1jreCKELo9+wsTEG4PXr/jPuT60eTQ7sMhSP7AWYUw
-         TG2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728573798; x=1729178598;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OOD5DwUqAaTqFWYMU+ma6xf+DD2ITHdyJRhnL7XRons=;
-        b=RbqVp0dIgXH91sTSQcNUirQvzGMxPcK55FDHp3Mw4f89V9qvdlNZ3UczvBSjbIZfws
-         jhFB1QKYcbP4gViUAhFHTZJmLLH82/oFtwzjE3Y+uzGGare9L8JpAcz5bVJnKEVTMRDI
-         R+bz4QIJnpm+draFp/yJ5KOLHvsKquN5MD/OGhoBgMDUEDLbkhCeSSTUAjgVy+1kbms4
-         rF+f2MgM6/0r2KFgK3oXIlap2C65f/Ejbl/YNsj47lBaHl0dJ6GVeeWaVq1H+isB9ZAq
-         kEYWP6nVzaZCNg2SCZHbmKZ5z8Xg81bJ/BxK3MVi5XIQChLN6vfynSQoVYMKuxwfLuXw
-         Eoyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVC1C6kw2a/V5l3K1bVXaZC5t6eC8Y9kYpGIEW2dGyQi6koWgDm/x1+erH0JST7WvN7Dt6kRE1FOJJrCn1x@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy38mXLplIjsglpZyrSL/aaGs6W/PnsRzeQm3I5Ki/RKvaPKvvt
-	0/hCTRPe1MwvuXnVc5Nfejii3ub6gwa/hJSI8ieEVvLCFcZDe0Klakg/fmiLWcQ=
-X-Google-Smtp-Source: AGHT+IEa5hpavgqgZqGFwEHuAsxoJBx3cVv/1siI/qnLJ973fo+Si2V4A3zYjPXD22esXxAAbTEQUg==
-X-Received: by 2002:a05:651c:1992:b0:2f5:2ba:2c99 with SMTP id 38308e7fff4ca-2fb187121d1mr44544341fa.9.1728573797764;
-        Thu, 10 Oct 2024 08:23:17 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb2470646dsm2329581fa.85.2024.10.10.08.23.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 08:23:16 -0700 (PDT)
-Date: Thu, 10 Oct 2024 18:23:13 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jianhua Lu <lujianhua000@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Kalle Valo <kvalo@kernel.org>, Jeff Johnson <jjohnson@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	ath11k@lists.infradead.org
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi
- node
-Message-ID: <pbsooimr6l65hgyxezyp6ha3zqibgdlphmeb7vtghgy2wti66b@fsmptbss2zvi>
-References: <20241010072243.10227-1-lujianhua000@gmail.com>
- <20241010072243.10227-2-lujianhua000@gmail.com>
+	s=arc-20240116; t=1728574510; c=relaxed/simple;
+	bh=M6ArSolFyRhvgkpKBLV7GgtTxF0gj+vbVhIhSxcQfz4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=oU+VdF/qpLPtrTw33TqPW24/y8QS0fPt7BzBaj1FVi0I5gSinWcXSo9Nq+de5TeneD8AgccNqOL6+YZomDxSi7BYVhC1lTLC8eU54/w1nP37UQYiwKGQ/OsSYh4YtUhCk6ACOGySvi2/6WGR9hacXNutX08EFHBzrfMhQxLYyPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G6GOVFPU; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ACUXAm011324;
+	Thu, 10 Oct 2024 15:35:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xhv5/1S/V1CCa4a0mCm7Uj1o1bdgK4qmxRkHgQo8kPM=; b=G6GOVFPUj4kQEOl2
+	vFVBryxGsrCCUHTrghdSdPAkb4C2RceiiOOua7u6TSsCGKuBV7FI4dHIuIwrojD4
+	Nk1j5n1gvRmHUh3s1lOe1Uwjzdo/Svx2jUBxLaErUfMoO+rTrDwuRgVEHOLRN8Pp
+	pVenwF7LN7rLrTgA/T5k9oUogzIF6eWLCShrHp1c6nnyazwb666P0DoHBgkAHGJ5
+	clJmzMy3wUe0TRMi9IfMdFnYmLiIRhFqBn8uZ4UYqVZovVIloI+CyitV4umhoPbm
+	vOjbxcsyLo0NdL1pufAPQODg68mDmMQN11/GArhEXh57MeFvd5ivz/i2+yQi/ays
+	plWe0Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425xthu0ng-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Oct 2024 15:35:03 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49AFZ3oR004477
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Oct 2024 15:35:03 GMT
+Received: from [10.216.26.125] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Oct
+ 2024 08:34:59 -0700
+Message-ID: <b03d111c-7e58-4320-b909-becb35f53767@quicinc.com>
+Date: Thu, 10 Oct 2024 21:04:55 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241010072243.10227-2-lujianhua000@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: Add support for usb nodes on
+ QCS8300
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <quic_ppratap@quicinc.com>, <quic_jackp@quicinc.com>
+References: <20241009195636.2649952-1-quic_kriskura@quicinc.com>
+ <20241009195636.2649952-2-quic_kriskura@quicinc.com>
+ <xwidjnw3fqc2slwl3vftw7yi4j7juiw6rwszjhtxepqd6zz33s@ncoi4aikbb4e>
+ <fe3ebd31-946c-499f-ac96-2cf71c6752e6@quicinc.com>
+ <CAA8EJpojz9-xhoxdp78b5=6R8gpjjHQgjb_P0LGfHs4PsdS3vA@mail.gmail.com>
+Content-Language: en-US
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
+In-Reply-To: <CAA8EJpojz9-xhoxdp78b5=6R8gpjjHQgjb_P0LGfHs4PsdS3vA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 75O4s2h5osZLlMSJgUpzP-Rv_2rt-VyH
+X-Proofpoint-GUID: 75O4s2h5osZLlMSJgUpzP-Rv_2rt-VyH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ phishscore=0 clxscore=1015 mlxlogscore=959 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410100103
 
-On Thu, Oct 10, 2024 at 03:22:42PM GMT, Jianhua Lu wrote:
-> Add wifi node and this wifi module is connected to PCIe port.
-> The following is qca6390 probe message:
->   ath11k_pci 0000:01:00.0: Adding to iommu group 12
->   ath11k_pci 0000:01:00.0: BAR 0 [mem 0x60400000-0x604fffff 64bit]: assigned
->   ath11k_pci 0000:01:00.0: enabling device (0000 -> 0002)
->   ath11k_pci 0000:01:00.0: MSI vectors: 32
->   ath11k_pci 0000:01:00.0: qca6390 hw2.0
->   ath11k_pci 0000:01:00.0: chip_id 0x0 chip_family 0xb board_id 0xff soc_id 0xffffffff
->   ath11k_pci 0000:01:00.0: fw_version 0x10121492 fw_build_timestamp 2021-11-04 11:23 fw_build_id
+
+
+On 10/10/2024 8:42 PM, Dmitry Baryshkov wrote:
+> On Thu, 10 Oct 2024 at 17:57, Krishna Kurapati
+> <quic_kriskura@quicinc.com> wrote:
+>>
+
+[...]
+
+>>>> +                    resets = <&gcc GCC_USB20_PRIM_BCR>;
+>>>> +
+>>>> +                    interconnects = <&aggre1_noc MASTER_USB2 0 &mc_virt SLAVE_EBI1 0>,
+>>>> +                                    <&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB2 0>;
+>>>> +                    interconnect-names = "usb-ddr", "apps-usb";
+>>>
+>>> As this is a USB2-only host, shouldn't it also have qcom,select-utmi-as-pipe-clk ?
+>>>
+>>
+>> Hi Dmitry,
+>>
+>> Thanks for the catch. You are right, it needs to be added according to
+>> bindings. Since I would be sending another patch after this series to
+>> enable the second controller, would it be fine if I add it in that patch
+>> or do you suggest updating this one.
 > 
-> Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
-> ---
-> changes in v3:
-> 1. fix commit message typo (pice -> PCIe).
+> I think it's better to fix it from the beginning.
+>
+
+Ok, Will send a v2 adding this quirk.
+Can you also help review the DTS change. So that I can carry forward and 
+RB Tags I get to v2.
+
+Regards,
+Krishna,
+
+>>
+>> Also I see some others are not using it as well, like sc7280 which also
+>> might need to be updated.
 > 
-> changes in v2:
-> 1. add qcom,ath11k-calibration-variant property.
+> Interesting enough I don't see this option being enabled on SC7280 platforms.
 > 
->  .../dts/qcom/sm8250-xiaomi-elish-common.dtsi  | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
+>>
+>> Regards,
+>> Krishna,
+>>
+>>>> +
+>>>> +                    status = "disabled";
+>>>> +
+>>>> +                    usb_2_dwc3: usb@a400000 {
+>>>> +                            compatible = "snps,dwc3";
+>>>> +                            reg = <0x0 0x0a400000 0x0 0xe000>;
+>>>> +                            interrupts = <GIC_SPI 442 IRQ_TYPE_LEVEL_HIGH>;
+>>>> +                            iommus = <&apps_smmu 0x20 0x0>;
+>>>> +                            phys = <&usb_2_hsphy>;
+>>>> +                            phy-names = "usb2-phy";
+>>>> +                            snps,dis_u2_susphy_quirk;
+>>>> +                            snps,dis_enblslpm_quirk;
+>>>> +                    };
+>>>> +            };
+>>>>       };
+>>>>
+>>>>       arch_timer: timer {
+>>>> --
+>>>> 2.34.1
+>>>>
+>>>
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-> index ebea283f56ea..7a55e271c3ac 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-> @@ -680,6 +680,25 @@ &pcie0_phy {
->  	status = "okay";
->  };
->  
-> +&pcieport0 {
-> +	wifi@0 {
-> +		compatible = "pci17cb,1101";
-> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +
-> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
-> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-> +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-> +
-> +		qcom,ath11k-calibration-variant = "Xiaomi_Pad_5Pro";
-
-Let's wait for Kalle's response.
-
-Nevertheless,
-
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-
-> +	};
-> +};
-> +
->  &pm8150_gpios {
->  	vol_up_n: vol-up-n-state {
->  		pins = "gpio6";
-> -- 
-> 2.46.1
 > 
-
--- 
-With best wishes
-Dmitry
+> 
 
