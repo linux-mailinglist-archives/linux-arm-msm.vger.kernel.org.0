@@ -1,130 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-33842-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33843-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B56A998351
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 12:14:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE7A499837E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 12:25:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C7F8E1F2287A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 10:14:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 245C2B26DB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 10:25:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DE901BF7E7;
-	Thu, 10 Oct 2024 10:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 312F41BF324;
+	Thu, 10 Oct 2024 10:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n80285aQ"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="pRXMscBv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A0C18C03D;
-	Thu, 10 Oct 2024 10:14:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72DB21BE857
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 10:24:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728555275; cv=none; b=j7D80a0JJcccr2Pl0agU+7kqDLZH/tIFY0HzJNAg6kLNLDzEqrkiBNKZWq6u0G7jni0ogMcjNYWBomdxqJtpIzOBlyTFaC6xdAoAqXeLaZgcy/I8Khw0WciqZPlOBv6s8ZlRvTjkSmU+23/uO947B3M/i3kngPYyJCzC4VbpcZs=
+	t=1728555877; cv=none; b=cmnCgHclrTGLabNKxirisFodGqLQsUKKb+a3DSnlowHd4h12zssRVslijl6X4eI9qQ/Kwnlz/PN7r86061tpR0rTB8GI+Tloy2P9K9qzf/TIrkel0pRYvXgE2ePAjgP68eCWOZs/WSBp2sk8zza3pnpIi39i58uWAEnuYe1cGtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728555275; c=relaxed/simple;
-	bh=MrI7UO9DkNILrgrGDxPJFW3FSW9WF1yU5y98aHjfB9Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=UJi6VttoWMXw0zXrBcLjOdpeNLKRBKPXu/BqYfjWF6cpZ7/fa8PrdBCmKurlJbRPGMpKu/hEmn+FHgiaSNiVAAZk9htur0ombcjv2HK/xPfNDys/zeE79JMrqGEAG4C6Gnh4fholD3wm76FTeU38TRVe9niF/nNUP6mKQdOv7mI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n80285aQ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A1bLcD023702;
-	Thu, 10 Oct 2024 10:14:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OM06fI4SwiEmMbVmLrFK9GDPa/CstAMR3gUBg0vz79Q=; b=n80285aQdJnkAKZL
-	5GMTU2qvXkYA+qmS1u8mlgPl6hbIBfhzc3jm82073rr3gINzF4e6k3kpONmUz/TP
-	SPU0pnAx+J+xOktEmDe/vcVEHHLsBQz6eeM3rWLq2wkFjlxgBOFDJnIH0gc8iW5e
-	22uT11+zKjhbYKQ8oSg6DNzMqdwU25n+Ot4hUxi/9rMTjOah/M3cE3fHhv74Qvhv
-	d7GyWFApmVoK9FqOr/Pu/EamiG2THk8JfkJpHFGzgIjMd14LqgK46ob3+P4SUNca
-	aP7HueTsdiRa11n3wgoDgdAKaL8ym69P9F4EhzIEDr7w1Ka5LPhcz8+P3WLuIz54
-	4miyIg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424ndyh21r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 10:14:29 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49AAEScq005747
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 10:14:28 GMT
-Received: from [10.253.78.114] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Oct
- 2024 03:14:24 -0700
-Message-ID: <bd209e3c-41b5-4e70-ad15-b3f2ff265afb@quicinc.com>
-Date: Thu, 10 Oct 2024 18:14:21 +0800
+	s=arc-20240116; t=1728555877; c=relaxed/simple;
+	bh=fFCNlWru5+pdNkh5QLeCqMQctRHkljYByudCKs4aFmk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lSO+aAZLr8UrhfxdSTA5jF/AKpkuspDlIDCIo9g6P30zxEtB8yRCwbDBIIdGaW8b4/dh/QoS6cs8zPvB5hz25XuEYX3QRypthWINGkUeYX1fQHDnD1jb46Cny2LgVUThRlr03Tb9RR6Bv2kKpPJoiUhtcxGq45AjY14lxtnKV2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=pRXMscBv; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-431157f7e80so158765e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 03:24:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1728555873; x=1729160673; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OzRLepl01rBIXpKHqICQ+VG1MuVzX81celcTfUwqlgU=;
+        b=pRXMscBvWOklh5qqGefn55MF5TZ+PgIdn9PG4HliizTi3aFK3J1MiZ2EFshqp6knBX
+         ljuGWaa++VNlUXKx9xFLsIE+1nYVtnUQmA+6hRheVxVE/gjXYZKPQiDHl32VpgXIW1wG
+         6dIXRKQk0cKtKnRaBbJV8Alxe1x0w9JFoDJ7bTqtxKzK1mgcrF7LNEFXsh6uz8UhZxYQ
+         IhN4Y0r4cdwImmw3ukP4Ta7KnD30/MEFnfpu9q2m0yNBRqpHpSS00SDczGkeIeM0O1To
+         1If17pamiRJKEROLwWJF6TClGh7DHdaRJFZfL+29qC9zQbQZn6a8D96ugyknZIKEMJcc
+         I3pQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728555873; x=1729160673;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OzRLepl01rBIXpKHqICQ+VG1MuVzX81celcTfUwqlgU=;
+        b=wufRSUyjVW+cCxxGW/ddxTPkFEQvSirbY4rb2+E9m/EE89qpmxAmENV9TzwtB68g9D
+         KQB2OUeKGsYBQvOwvD5HCRGbIUaLDrSlqhagOEYswjwzJuZnP30rC1h1RZOocX6QShm0
+         Toane1p60cs/WmLixOYbtBlZOwF1mxRa1RvhOYGtn9crNiO3/c8TWAvZ0xgFQ21TMvJp
+         iLDTgqtZiYoVvmR7JmH7NF4mrmfbalRGZ7Jv5ZNN/DFjsGQWdc4DxEa1LmrAuFnx1cts
+         qDE6QYJ/PYrtbCoGecIBKUq6psctsEcgOqHBpshzMNvoUSCvkr0CuguR+0bKTv00FahJ
+         W1gQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUNCvcUggHelTfnibprb1yUMEUEWxdLHt5yLAaO9g9sb03CaezyNKWKwUzK50n2hXkKirCmIL/+wTQGoK+X@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3KpvsjNcAvwkAcTzYhEuCxSMLE8qf8gKY9kZFquwroisHIzqJ
+	4JtVwY+UbL4KK3TjRfwcZL8gLZIfGWMTFBQKaXSgPWP9pEI0DofaUxRg+YYr1dJ3MGKgnyRH3Ny
+	9ymckHM0ktC4XgRu+Gb9UdHBoWbdlLQODleT1y3QZcVBnLeN4pHLa
+X-Google-Smtp-Source: AGHT+IGFf0e8gomwA6a0slETrpo9MsW4kTd5EZtJLAbPns5yYHIued/ItYJ6plaUZhkrBipZGu+G9pNHAZZCl+u+1Kk=
+X-Received: by 2002:a05:600c:1e21:b0:42b:a8fc:3937 with SMTP id
+ 5b1f17b1804b1-431161b4011mr3744105e9.4.1728555872435; Thu, 10 Oct 2024
+ 03:24:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] arm64: dts: qcom: move common parts for qcs8300-ride
- variants into a .dtsi
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran
-	<richardcochran@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>
-References: <20241010-dts_qcs8300-v1-0-bf5acf05830b@quicinc.com>
- <20241010-dts_qcs8300-v1-4-bf5acf05830b@quicinc.com>
- <75vxiq4n2tdx3ssmnbq7qpp2ujtzjs4bkgpkpsi623fs3mpslx@ijmaos2gg5ps>
-Content-Language: en-US
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-In-Reply-To: <75vxiq4n2tdx3ssmnbq7qpp2ujtzjs4bkgpkpsi623fs3mpslx@ijmaos2gg5ps>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TmYmN6RgKUPYTndxeSdPKTmNcd4aObyj
-X-Proofpoint-ORIG-GUID: TmYmN6RgKUPYTndxeSdPKTmNcd4aObyj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- bulkscore=0 adultscore=0 phishscore=0 lowpriorityscore=0 malwarescore=0
- mlxlogscore=949 spamscore=0 suspectscore=0 impostorscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410100067
+References: <20241010085930.1546800-1-tabba@google.com> <20241010085930.1546800-5-tabba@google.com>
+ <i44qkun5ddu3vwli7dxh27je72ywlrb7m5ercjhvprhleapv6x@52dwi3kwp2zx>
+In-Reply-To: <i44qkun5ddu3vwli7dxh27je72ywlrb7m5ercjhvprhleapv6x@52dwi3kwp2zx>
+From: Fuad Tabba <tabba@google.com>
+Date: Thu, 10 Oct 2024 11:23:55 +0100
+Message-ID: <CA+EHjTwOsbNRN=6ZQ4rAJLhpVNifrtmLLs84q4_kOixghaSHBg@mail.gmail.com>
+Subject: Re: [PATCH v3 04/11] KVM: guest_memfd: Allow host to mmap
+ guest_memfd() pages when shared
+To: "Kirill A. Shutemov" <kirill@shutemov.name>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Kirill,
 
+On Thu, 10 Oct 2024 at 11:14, Kirill A. Shutemov <kirill@shutemov.name> wrote:
+>
+> On Thu, Oct 10, 2024 at 09:59:23AM +0100, Fuad Tabba wrote:
+> > +out:
+> > +     if (ret != VM_FAULT_LOCKED) {
+> > +             folio_put(folio);
+> > +             folio_unlock(folio);
+>
+> Hm. Here and in few other places you return reference before unlocking.
+>
+> I think it is safe because nobody can (or can they?) remove the page from
+> pagecache while the page is locked so we have at least one refcount on the
+> folie, but it *looks* like a use-after-free bug.
+>
+> Please follow the usual pattern: _unlock() then _put().
 
-On 2024-10-10 14:18, Krzysztof Kozlowski wrote:
-> On Thu, Oct 10, 2024 at 10:57:18AM +0800, Yijie Yang wrote:
->> In order to support multiple revisions of the qcs8300-ride board, create
->> a .dtsi containing the common parts and split out the ethernet bits into
->> the actual board file as they will change in revision 2.
->>
->> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs8300-ride.dts  | 373 +----------------------------
->>   arch/arm64/boot/dts/qcom/qcs8300-ride.dtsi | 364 ++++++++++++++++++++++++++++
-> 
-> This is tricky to review. Use proper -M/-B/-C arguments for
-> format-patch, so the rename will be detected.
-> 
-> You basically renamed entire file!
+That is deliberate, since these patches rely on the refcount to check
+whether the host has any mappings, and the folio lock in order not to
+race. It's not that it's not safe to decrement the refcount after
+unlocking, but by doing that i cannot rely on the folio lock to ensure
+that there aren't any races between the code added to check whether a
+folio is mappable, and the code that checks whether the refcount is
+safe. It's a tiny window, but it's there.
 
-Sure, I'll handle the optimization of that.
+What do you think?
 
-> 
-> Best regards,
-> Krzysztof
-> 
+Thanks,
+/fuad
 
+> --
+>   Kiryl Shutsemau / Kirill A. Shutemov
 
