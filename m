@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-33784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4CAD997DFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 08:58:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF382997E0C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 08:59:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EEAC2B25498
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 06:58:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1DB911C241CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 06:59:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB5941B533F;
-	Thu, 10 Oct 2024 06:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE5211B5808;
+	Thu, 10 Oct 2024 06:59:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DH6K8b1t"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TYir694c"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10DD197A9A
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 06:57:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63C61B5337
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 06:59:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728543482; cv=none; b=j2E4Bk7vqJKBerk55qPhRu2qMOzFjCfmBO5T7Qx2UwPVnBJ5d2wGwLdyHxaDtvmMaUAKw21SSBN711++jydLXT84w6Trd0zFKWPFr/bwC7wf0YNLF8QGQ66WIiWEG0YihqndrvQ6LGefw81jLKit6KlGJjMR5XYqG3F3oP0szBw=
+	t=1728543549; cv=none; b=oF+V2eHemBhMD7E6Y6kBGq9ILP1SUATzfc4JieCOPLEFiHd1mGWjFdQWDHvPvX7/SlYeejrLWiAx9PQ9seTBUPjx7KvPLhbW9/cfVKxtOu5aTxEMUAuYWgr7kReCxrTkGUP/koWVdSrX6drJiOMAf5r0EOvYC/TTcYhWI6L1R+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728543482; c=relaxed/simple;
-	bh=PA3elQSlk7BZiC6WL58fCozS0fJse0btcH66cdahyuQ=;
+	s=arc-20240116; t=1728543549; c=relaxed/simple;
+	bh=mQX9jQU0DPHWRiNPFczNQNp6e4J+Co2WY0aP+fHFmFw=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=sZWi+D6AJuN4QjY5F/FY+WUbIw2jmMwEX0Su/3vw7CYNo0WN6kvhqxndTC0eIP7heQIbsHXWQEhTNc9dPgfpa0UL0Ox6TLgReF+pRtABwZ+irrFF7hWTds0Q6BSwsMBa1dYxbcakyNdiL83zySbMLfVV+OdkdEHCxxiOfthwcsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DH6K8b1t; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:Content-Type; b=ZazNF8nvJScQWyZEH3rM8Gde88eBfoJL5I9KK5vJ7jW5GZZu5V2rqcwa+Bd4F7xzPa59d8jXIjzvJPD7WsduyK+r1mvG1g3/HZSvv/VqOEpbR7aGvsVfB22KXXIkJmfQLuWlq6Qth4LfURXD2JDwugchTjtMA4hUqYViefUS/UY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TYir694c; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-42f6bec84b5so5038935e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 23:57:59 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-37d4b0943c7so184315f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 09 Oct 2024 23:59:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728543478; x=1729148278; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728543546; x=1729148346; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=DDana86kmJ+tmSzGzoEiMN//QimA0FRz1mHK/CksBPM=;
-        b=DH6K8b1tnUsqE8pqJHXu6PiaYhDEZ0RWXDw32BXBKc6mZYkh/PbVXAPJ+XGWPTaMLz
-         ZkQ/3A+YgV2Al60qQURCsRda3nHsLvwfPmYO7Kl0zOh1i6dOsJz8sqA/9xgy478L+2JZ
-         b1asfehlkLkLvY0PJJVPrVZLecrWI/Drw6NAMwZP307hscF0LjhdUI3rIZtqb0ztSb7M
-         J35+OmH8Muijm5czx2HRudlVNnUSgVIg+undAPGxtu7r89nAytZ++UhXxr1grBbSnLUI
-         JPD2L8DIYJNk8L+RXTa7U+vdVMCbctk3cSY7/dmRGELoKiT0NuLT7zpVuUdTvz2F5b0C
-         C9oQ==
+        bh=Fu5UKmO88VBg+uZPHlg4bMbsMyVFn+ft6QBZVzUL7Tc=;
+        b=TYir694c/weWob2Ry5hIRZKqGHm/RPxblpDNPQQrmeENNcdum3xmaQyCJiKOwTKjzl
+         ULvap9HQ+O0JZVqyGo7frOaFeWNYFEG6nTnTHPIKliR4zaeF2c6xLraDGPWYQuumD+gh
+         2s/GsPR5KlVZKu3GvLUEHWttlptYvhTZZOokMicvaGTa2O8EDHciTUV7IUdU4MkaMywo
+         /pMyJuwJvd4HSzWVDQbhWOqEPWAniBiszQcR4GPRQTW1LNhWER9Qwh88J1mVnil2hkbw
+         gsZTrkrbDcNuIM58vspS2SCy95bKbnrsOEDyE16f9pykSvTNrdzwdQx2Tjd7m/payMma
+         c74w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728543478; x=1729148278;
+        d=1e100.net; s=20230601; t=1728543546; x=1729148346;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=DDana86kmJ+tmSzGzoEiMN//QimA0FRz1mHK/CksBPM=;
-        b=Wuy8NCHT1AFH0PdWwUhiLW/j5/ybrptEUctsDyek4YjTfjj7whTcDuUle36XioxZL1
-         GO1I385STMQSAEMN9SKFsyPzzDyrlkI+/GCB4XgnpoWISVJNCWKelopB98KiGqozZCrB
-         VzPLbu3KbUg0Lv+mbeFzKz+x9qt6lke9qQf9szeSFhaTt0EYzFCSamlT+en8J/DUmH6o
-         GRNxGQF1Blb9QujkHb/ybQZZiCfmjF2KRWsqwZ+wo0Fgtpr1uYM/YOhHhwLiK6s/aiU0
-         O6xApnDiRmyG/B6khJ9cEPwFu+T1HFJlih45oHj96Bykz/uugPzYZC7RMC88pNi70Y+6
-         lJdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX6TE6JDj4zgAZQncgm5Vraj3808ulcYvFFnXe6QHD4XF8CsOfKC0h/AQS5GR4kTFtOWfTHURODqchXnkRA@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywl2PCf4R0o96eOKV3mhk6fjVcaKgsbABQ19CasVk5b+ApNabtX
-	xS7nTc8dfQY8QH6BI/YzftZFruXw+pJHTvbX3UTCq2h6vDy/gpwScFZEuFfHO+s=
-X-Google-Smtp-Source: AGHT+IFlWI7JNx0Q9soty/nyquv4PsucmpWSKJ/xN4uty/LrtcQoVZDJSf68jeLeBuulZwx2DFoTCw==
-X-Received: by 2002:a05:600c:3ac4:b0:426:602d:a246 with SMTP id 5b1f17b1804b1-430d7487f4fmr45681415e9.32.1728543478134;
-        Wed, 09 Oct 2024 23:57:58 -0700 (PDT)
+        bh=Fu5UKmO88VBg+uZPHlg4bMbsMyVFn+ft6QBZVzUL7Tc=;
+        b=q3w40o4XJnvbdnFQVeFBwIDnv7CsSBSzxW8r7b6Me+S/MuZMZ0gelTio+bMBYTbNbQ
+         ZmK8MHTcKBKFXJ46Zg8ZBrOpwyrdMJdPuh3rnJSeRp1SzEQwvhl5vig6nzCvGMlkchwP
+         u32vB/nUl7lqk0/WOA8/4tnKtXYTaAI13Qfw1YkrIMzZNXwpFf7PuGGb6bpaK5GZpSNN
+         6PEso0xGvxwtivgkenIKE8hqASGuBn0PUlEUukrXUcDvGzCUohKrAogpkKBXX4q2Qipq
+         sjhAEpdcAHO2WcoryajCubYPca5ItJpkhIyc6f41Smy4fSXKBTgmuqyULNcPKya+yLAc
+         PJrQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwYyM5HkOXwmabnwBwknOITFsUH++bQoKaCduSCXdqU9M/X4MEmisOOadce2N99qO2L+PG2D9/1W0rPecX@vger.kernel.org
+X-Gm-Message-State: AOJu0YzxCbGJzlqD67qNqw+Z6Uw24TvwJbspAjXMLVhIRAjhlpnaUOXo
+	LyJCd++ej3HmiIrVw53xWQy5Sl0gD+MDWsP6lnU+tB+lS3A4AynpJvFk0g4hAiw=
+X-Google-Smtp-Source: AGHT+IHuGKmwEjsezbeyACGUv6HYsE4XqNQZhrvfZtA6jtX0+67T0GwfuToRr3c9bzLP77yPOnCRsw==
+X-Received: by 2002:a5d:490f:0:b0:37d:49cd:7b46 with SMTP id ffacd0b85a97d-37d49cd7e80mr834783f8f.27.1728543546142;
+        Wed, 09 Oct 2024 23:59:06 -0700 (PDT)
 Received: from [192.168.7.189] ([212.114.21.58])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4311835c4fbsm6621825e9.39.2024.10.09.23.57.57
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b9190f7sm654282f8f.114.2024.10.09.23.59.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Oct 2024 23:57:57 -0700 (PDT)
-Message-ID: <dfe46653-5243-47c8-8de9-17a38d13da53@linaro.org>
-Date: Thu, 10 Oct 2024 08:57:56 +0200
+        Wed, 09 Oct 2024 23:59:05 -0700 (PDT)
+Message-ID: <5fc9d581-14a6-45e8-8eda-4df49b81f15d@linaro.org>
+Date: Thu, 10 Oct 2024 08:59:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,8 +80,8 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: neil.armstrong@linaro.org
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 6/6] remoteproc: qcom: Enable map/unmap and SHM bridge
- support
+Subject: Re: [PATCH 3/6] remoteproc: qcom: Add helper function to support
+ IOMMU devmem translation
 To: Mukesh Ojha <quic_mojha@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
  Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -90,12 +90,12 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
  Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
  Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
  linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Shiraz Hashim <quic_shashim@quicinc.com>
 References: <20241004212359.2263502-1-quic_mojha@quicinc.com>
- <20241004212359.2263502-7-quic_mojha@quicinc.com>
- <9eb910d4-e521-4c14-8e73-8fd3d5ff9573@linaro.org>
- <ZwP1t45ni/gk754B@hu-mojha-hyd.qualcomm.com>
- <ZwTPghV36CSIpkE4@hu-mojha-hyd.qualcomm.com>
+ <20241004212359.2263502-4-quic_mojha@quicinc.com>
+ <83e23090-0390-4c2e-91e3-e222baaa889a@linaro.org>
+ <ZwPyE/rQOH181rqz@hu-mojha-hyd.qualcomm.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -122,117 +122,38 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <ZwTPghV36CSIpkE4@hu-mojha-hyd.qualcomm.com>
+In-Reply-To: <ZwPyE/rQOH181rqz@hu-mojha-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 08/10/2024 08:21, Mukesh Ojha wrote:
-> On Mon, Oct 07, 2024 at 08:22:39PM +0530, Mukesh Ojha wrote:
->> On Mon, Oct 07, 2024 at 10:05:08AM +0200, neil.armstrong@linaro.org wrote:
->>> On 04/10/2024 23:23, Mukesh Ojha wrote:
->>>> For Qualcomm SoCs runnning with Qualcomm EL2 hypervisor(QHEE), IOMMU
->>>> translation for remote processors is managed by QHEE and if the same SoC
->>>> run under KVM, remoteproc carveout and devmem region should be IOMMU
->>>> mapped from Linux PAS driver before remoteproc is brought up and
->>>> unmapped once it is tear down and apart from this, SHM bridge also need
->>>> to set up to enable memory protection on both remoteproc meta data
->>>> memory as well as for the carveout region.
->>>>
->>>> Enable the support required to run Qualcomm remoteprocs on non-QHEE
->>>> hypervisors.
->>>>
->>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
->>>> ---
->>>>    drivers/remoteproc/qcom_q6v5_pas.c | 41 +++++++++++++++++++++++++++++-
->>>>    1 file changed, 40 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
->>>> index ac339145e072..13bd13f1b989 100644
->>>> --- a/drivers/remoteproc/qcom_q6v5_pas.c
->>>> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
->>>> @@ -122,6 +122,7 @@ struct qcom_adsp {
->>>>    	struct qcom_devmem_table *devmem;
->>>>    	struct qcom_tzmem_area *tzmem;
->>>> +	unsigned long sid;
->>>>    };
->>>>    static void adsp_segment_dump(struct rproc *rproc, struct rproc_dump_segment *segment,
->>>> @@ -310,9 +311,21 @@ static int adsp_start(struct rproc *rproc)
->>>>    	if (ret)
->>>>    		return ret;
->>>> +	ret = qcom_map_unmap_carveout(rproc, adsp->mem_phys, adsp->mem_size, true, true, adsp->sid);
->>>> +	if (ret) {
->>>> +		dev_err(adsp->dev, "iommu mapping failed, ret: %d\n", ret);
->>>> +		goto disable_irqs;
->>>> +	}
->>>> +
->>>> +	ret = qcom_map_devmem(rproc, adsp->devmem, true, adsp->sid);
->>>> +	if (ret) {
->>>> +		dev_err(adsp->dev, "devmem iommu mapping failed, ret: %d\n", ret);
->>>> +		goto unmap_carveout;
->>>> +	}
->>>> +
->>>>    	ret = adsp_pds_enable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
->>>>    	if (ret < 0)
->>>> -		goto disable_irqs;
->>>> +		goto unmap_devmem;
->>>>    	ret = clk_prepare_enable(adsp->xo);
->>>>    	if (ret)
->>>> @@ -400,6 +413,10 @@ static int adsp_start(struct rproc *rproc)
->>>>    	clk_disable_unprepare(adsp->xo);
->>>>    disable_proxy_pds:
->>>>    	adsp_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
->>>> +unmap_devmem:
->>>> +	qcom_unmap_devmem(rproc, adsp->devmem, adsp->sid);
->>>> +unmap_carveout:
->>>> +	qcom_map_unmap_carveout(rproc, adsp->mem_phys, adsp->mem_size, false, true, adsp->sid);
->>>>    disable_irqs:
->>>>    	qcom_q6v5_unprepare(&adsp->q6v5);
->>>> @@ -445,6 +462,9 @@ static int adsp_stop(struct rproc *rproc)
->>>>    			dev_err(adsp->dev, "failed to shutdown dtb: %d\n", ret);
->>>>    	}
->>>> +	qcom_unmap_devmem(rproc, adsp->devmem, adsp->sid);
->>>> +	qcom_map_unmap_carveout(rproc, adsp->mem_phys, adsp->mem_size, false, true, adsp->sid);
->>>> +
->>>>    	handover = qcom_q6v5_unprepare(&adsp->q6v5);
->>>>    	if (handover)
->>>>    		qcom_pas_handover(&adsp->q6v5);
->>>> @@ -844,6 +864,25 @@ static int adsp_probe(struct platform_device *pdev)
->>>>    	}
->>>>    	platform_set_drvdata(pdev, adsp);
->>>> +	if (of_property_present(pdev->dev.of_node, "iommus")) {
->>>> +		struct of_phandle_args args;
->>>> +
->>>> +		ret = of_parse_phandle_with_args(pdev->dev.of_node, "iommus", "#iommu-cells", 0, &args);
->>>> +		if (ret < 0)
->>>> +			return ret;
->>>> +
->>>> +		rproc->has_iommu = true;
->>>> +		adsp->sid = args.args[0];
->>>> +		of_node_put(args.np);
->>>> +		ret = adsp_devmem_init(adsp);
->>>> +		if (ret)
->>>> +			return ret;
->>>
->>> Why don't you get this table from the firmware like presumably QHEE does ?
->>
->> Well, AFAIK, QHEE(EL2) has this information statically present and does
->> not get it from anywhere., but will confirm this twice..
-> 
-> Double confirmed, device memory region required by remoteproc is
-> statically present with QHEE.
+Hi,
 
-Right, in this case why those tables can't be embedded in the elf .resource_table
-like it's done with qcom_q6v5_adsp.c by calling rproc_elf_load_rsc_table()
-and let the remoteproc framework load the resource table and setup
-the devmem ssmu_map ?
+On 07/10/2024 16:37, Mukesh Ojha wrote:
+> On Mon, Oct 07, 2024 at 10:08:16AM +0200, neil.armstrong@linaro.org wrote:
+>> On 04/10/2024 23:23, Mukesh Ojha wrote:
+>>> From: Shiraz Hashim <quic_shashim@quicinc.com>
+>>>
+>>> Qualcomm SoCs runnning with Qualcomm EL2 hypervisor(QHEE), IOMMU
+>>> translation set up for remote processors is managed by QHEE itself
+>>> however, for a case when these remote processors has to run under KVM
+>>
+>> This is not true, KVM is a Linux hypervisor, remote processors have
+>> nothing to do with KVM, please rephrase.
+> 
+> Thanks, perhaps something like this,
+> 
+> "However, when same SoC runs with KVM configuration, remoteproc IOMMU
+> translation needs to be set from Linux host running remoteproc PAS
+> driver"
+
+Thanks but I still don't see what KVM has to do here, KVM is an an optional
+Linux kernel feature, Linux can be configured without KVM and still perfectly
+startup those remoteprocs.
 
 Neil
 
 > 
 > -Mukesh
 > 
->>
->> -Mukesh
->>
 
 
