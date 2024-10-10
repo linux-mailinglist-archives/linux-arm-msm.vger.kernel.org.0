@@ -1,83 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-33892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9285E998A73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 16:55:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A214B998A7B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 16:55:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5EC728965E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 14:55:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D1C141C249EB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 14:55:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA1091CC89F;
-	Thu, 10 Oct 2024 14:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F12B81E47C2;
+	Thu, 10 Oct 2024 14:42:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IBrfrGOO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sFwvTDLR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23D11CEAB2
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 14:40:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298931CEAD8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 14:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728571255; cv=none; b=Y7AADFRhNkOkBKcowONxnrocJUqgKp2Wnl5cTMpiVIy7NYWel4OGjXuwHizLnVQJuJNw269S/3n9NtBfqYl8KLHtHN+t1KFg7LvX/27FaQbfq+tGObLplWRUCGp/WmbwC9PKYjONbvekPbv7sNdpqKOWNtfbIsjQmFGAxL6EvCQ=
+	t=1728571333; cv=none; b=pz11IPnvAU5rOJbo1QFRJh0IoMkW5L5br0AFn3mUBYG5dZ992SstxFsGxtqCgM79wCXeNe5Swpz/HuPNaIYI9m1wwljNCTDLyI8RWhM0w5QV27s6JaSxbxBJg4G4e18Eo1jpqUdNtXlbeDCBOkhYH88yDpw6+2KFsNxjkoF1xow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728571255; c=relaxed/simple;
-	bh=fHaTG50T+XNNagn5TCtb74sk7q6Zn6Tnl5l5AASz3rw=;
+	s=arc-20240116; t=1728571333; c=relaxed/simple;
+	bh=J8h7ZogSRVYi3JZp242VuIB8P5Hx5C5R4FBhWsIGOgc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SZbscz1MiIdF9zfhQGjS2cK2bj99xJmn1XSoaXGiFDIDgus3br9EeUeMMBHnjEEMdUnas3dugaaXtldEpfP315dGxFRxWs4kRYovJviypqU6E1JOQC2aKEaPE3tIEbc9HtFABuZIryvEIXWQGHnuhQFHLl12Zc1HQcCf7kMpZsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IBrfrGOO; arc=none smtp.client-ip=209.85.167.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=Npqm0cNYlAo1WN2Ip8SXCzXkk7WIbwgqSTUtVQGbVwBbSJ9o0Bv5X9v4NPtD1bd45WDGb+y0cW5fDdKGjMRI62e67lgQ9lMcU4bsXTkoqjnOK7XpCOpSh+WKn00rM2h9sZF2/MqDhjz1ol6mxXGAS4SG1hAL0lWZqL5x8kRWEBY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sFwvTDLR; arc=none smtp.client-ip=209.85.208.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5398e53ca28so1093475e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 07:40:53 -0700 (PDT)
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fabb837ddbso14790461fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 07:42:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728571252; x=1729176052; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728571330; x=1729176130; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1mtk3swPKSpsu2qGiM0596EX3cWtxyHnGiYTHhFIO7M=;
-        b=IBrfrGOOn6WYdK8I0pcRITxvW73FhdwJN9XxPwuEJtqQVhfMw6y1vq66Jg2Z9dqlNV
-         Cd2NXlLfkDlYcyvaVnuPWGWVLK61Nc5897p6eBGzmoNQeEyaApSYOX1zF6P19hoiLVkX
-         eBzR8oMgCwxch4J5DSP23+8NopHr5yBV+RlvlmwcDHscL6pl+5y07s5cyVcwjoSD+eSM
-         n1qAKQz9Q+OFcBKTue6VBwPM1nfWTpNCSvLlt+xgVVsH1uvYrUE5sDVkxTutELtPVCZ8
-         Fph5tk/T9bDI80Xyxm5UEJg4ySOrtyHMZZ7BY5nUNxc11MA8RJ4Nd+Aqv8IlZq6iYp3F
-         BfBA==
+        bh=TSCYi8JcMLXDaF73CrzXwPeVuGXfVTJYUL9WPyu/FF4=;
+        b=sFwvTDLRAUoUFyGMt2lhgs0iOLJL8JKxM/29HP3LIkkwC1lvLo4hcExukLDQqOVAuf
+         GfnINho++2kGxZwwAWCLLEDZAGPARBdPetTTsz7BL479RaJHfeG/KT1RmQ95av20eQgf
+         D4xG/XXcw6QZQhwaYJmZJ64d5D8LSsOGe0KiHBYR2KCIp7nsttZ3OKaFeekT6QvOQ6tr
+         DMCp1idfFO2mrqYFwazzrOft5p3CBxvXhA7eTNXpOdCSakU6D7+h5Gh8gAA5Lbfrgs36
+         WugVMPPXgXcLGA+oY2dm4V3476VvctmoUYpQghM4VoR5hrTfHFSE3oqcKWzyfuZl1jEY
+         Otvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728571252; x=1729176052;
+        d=1e100.net; s=20230601; t=1728571330; x=1729176130;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1mtk3swPKSpsu2qGiM0596EX3cWtxyHnGiYTHhFIO7M=;
-        b=AC3DiAYOJjrhMt3A7RcDdmsh/OnK4SFCgvcYsydKvvhI89C337Y6GEvO/V26S/ROxd
-         HBy7U9m/3l4kbcG5W8hba1L71mUlVTxB4tBPNvKlZzSn92E9rGYxqu+kK7cjMYRCapZy
-         /hTCYY/wZHNm72N8Sf/drm74Kh0W9kRffEWP0jQONo2RYIhr+n83R6oSzpPrUNx6EUqa
-         yo832F3qgdApc0pYsM3sGpvG0vq9MZ8i/fjZ1KNVYNo3oXDUKcyYetbnGMEdNsfIFCf+
-         hUFCvkbH4G82/HwkBJOSZOYFPRMv8WAruxOfzzF0pHw/WTV//OM3CTf0f/ZXQXpbYCNZ
-         xJlA==
-X-Gm-Message-State: AOJu0YzIbMFsq9xKOeLSzjaN8IKPl/2AS5dnYKqyeAoHuqCC5iZmkEhQ
-	63L90peLpXNFIrUKSmwaQ51JMbJhIHDRniRJQrf6zmTupGMB8M1NUmHaiAh6DR8=
-X-Google-Smtp-Source: AGHT+IFUFKq0lYxlNzsXXq0fVnKrrxCKW8Nx3h/E3Xc0xNLj22cjL5q4txAh0aZwNXPW20/Wr1C2qg==
-X-Received: by 2002:a05:6512:2348:b0:52e:9b9e:a6cb with SMTP id 2adb3069b0e04-539c4899755mr4276741e87.15.1728571252194;
-        Thu, 10 Oct 2024 07:40:52 -0700 (PDT)
+        bh=TSCYi8JcMLXDaF73CrzXwPeVuGXfVTJYUL9WPyu/FF4=;
+        b=DjYqPBaMwmt0hKnDq2bbKbdrvLwW3V+eKH91GKsdYmjfCnceZrSxAnhO42N5KKJmHS
+         szxnmePw9gZvzcbSLZ+W8iZdHTCdvNttpPN1XDb9OFnqCgnAC48xfAGGPKYEk18y2DJR
+         XQIoJ9jGGFqUylge2E9DbraNXJ04p3fepq+533dcG/hdyQq/FOPQ3Dz7WNF2SQAZTfHG
+         G7BFAihzw0De6XPrf3Gb9YyfuHp9xUED3npplwLnvuUQq1WfZO4lW0R6qMOBV/kVr7ok
+         7QpmhWmkV/smL3t6sJnMMm7elakOIwhIBZ3+2aaCGnYW7liLPJrYw0wOp3WY/Q4OCks5
+         sOJA==
+X-Forwarded-Encrypted: i=1; AJvYcCWMJiA8/X8SPLh37bzRkL4O10D29kT8Yym4e0dPhPMeBfWl/QcKAXRKATFHolww7XF1M42ScQXExesX6FXV@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCnXVnjMJoMUCnErV09NponJNRfB/z/q+WeWevOiraCsO1hoIz
+	uOUlHwjNa3HxvAQKHo9SJ0N4+89YjD0aa7KKt+UrcIbqS5GyIIoXRueLlf8+94E=
+X-Google-Smtp-Source: AGHT+IHTXbpgPQx1CNya5s++GATNvkC8R0h710vIpZWBj7Fxa5x0RbTR+gUaQHMlnVb3y0lAfmds6g==
+X-Received: by 2002:a2e:be23:0:b0:2ef:1b1b:7f42 with SMTP id 38308e7fff4ca-2fb187e7de2mr63367001fa.36.1728571330142;
+        Thu, 10 Oct 2024 07:42:10 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539cb6c8a54sm273302e87.115.2024.10.10.07.40.49
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb2459c93esm2249621fa.55.2024.10.10.07.42.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 07:40:49 -0700 (PDT)
-Date: Thu, 10 Oct 2024 17:40:47 +0300
+        Thu, 10 Oct 2024 07:42:08 -0700 (PDT)
+Date: Thu, 10 Oct 2024 17:42:05 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Miaoqing Pan <quic_miaoqing@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	agross@kernel.org, andersson@kernel.org, linux-kernel@vger.kernel.org, 
-	konrad.dybcio@linaro.org, mchehab@kernel.org, quic_vgarodia@quicinc.com, 
-	stanimir.k.varbanov@gmail.com, kvalo@kernel.org, quic_jjohnson@quicinc.com, 
-	ath11k@lists.infradead.org
-Subject: Re: [PATCH v4] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Message-ID: <3giotvkrwailt75gndhup7xhqvlc3vdowdoypi5vaeebuojp45@vkqxbtjsbksf>
-References: <20241010132902.2882939-1-quic_miaoqing@quicinc.com>
- <asvhh4kzq6s6yz3wrqfmuolcnlonoobogoh45pnq4zdr44lpxs@zgarzpduk2sk>
- <cc8358b1-2442-4a40-8eb3-0912423db554@quicinc.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: neil.armstrong@linaro.org, Johan Hovold <johan+linaro@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Chris Lew <quic_clew@quicinc.com>, Stephan Gerhold <stephan.gerhold@linaro.org>, 
+	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	regressions@lists.linux.dev, stable@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: mark pd-mapper as broken
+Message-ID: <2fqd3hkj7j2lppxzfl2fjfzrik3jql2gk7chexaajeybcrz3kc@rvx565zzmlmp>
+References: <CAA8EJpoiu2hwKWGMTeA=Kr+ZaPL=JJFq1qQOJhUnYz6-uTmHWw@mail.gmail.com>
+ <ZweoZwz73GaVlnLB@hovoldconsulting.com>
+ <CAA8EJprg0ip=ejFOzBe3iisKHX14w0BnAQUDPqzuPRX6d8fvRA@mail.gmail.com>
+ <Zwe-DYZKQpLJgUtp@hovoldconsulting.com>
+ <c84dd670-d417-4df7-b95f-c0fbc1703c2d@linaro.org>
+ <ZwfVg89DAIE74KGB@hovoldconsulting.com>
+ <jtxci47paynh3uuulwempryixgbdvcnx3fhtkru733s6rkip7l@jxoaaxdxvp3d>
+ <Zwffi40TyaMZruHj@hovoldconsulting.com>
+ <CAA8EJppWgcyzS14rY2TfX2UNR1iqKBo1=qxHAbwkbeXLrZ2MPw@mail.gmail.com>
+ <ZwfiuJW1gkYPFic1@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,55 +94,27 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <cc8358b1-2442-4a40-8eb3-0912423db554@quicinc.com>
+In-Reply-To: <ZwfiuJW1gkYPFic1@hovoldconsulting.com>
 
-On Thu, Oct 10, 2024 at 09:59:11PM GMT, Miaoqing Pan wrote:
+On Thu, Oct 10, 2024 at 04:20:40PM GMT, Johan Hovold wrote:
+> On Thu, Oct 10, 2024 at 05:13:44PM +0300, Dmitry Baryshkov wrote:
+> > On Thu, 10 Oct 2024 at 17:07, Johan Hovold <johan@kernel.org> wrote:
 > 
-> 
-> On 10/10/2024 9:47 PM, Dmitry Baryshkov wrote:
-> > On Thu, Oct 10, 2024 at 09:29:02PM GMT, Miaoqing Pan wrote:
-> > > Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-> > > board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
-> > > 
-> > > Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
-> > > ---
-> > > v2:
-> > >    - fix wcn6855-pmu compatible to "qcom,wcn6855-pmu".
-> > >    - relocate pcieport0 node in alphabetical order.
-> > > v3:
-> > >    - add 'qcom,ath11k-calibration-variant = "SA8775P"'.
-> > > v4:
-> > >    - update 'ath11k-calibration-variant' to "Ride".
+> > > Yes, Chris's analysis of the ECANCELED issue suggests that this is not
+> > > SoC specific.
 > > 
-> > What exactly is Ride? Is there just one Ride board? I thought it's a
-> > board family name.
+> > "When the firmware implements the glink channel this way...", etc.
+> > Yes, it doesn't sound like being SoC-specific, but we don't know which
+> > SoC use this implementation.
 > 
-> I just follow the existing boards, 'Ride' is a board name. Both 'Ride' and
-> 'Ride r3' boards are attached with WCN6855 WLAN chip.
-> 
-> arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts:1112:
-> qcom,ath11k-calibration-variant = "Fairphone_5";
-> arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts:958:
-> qcom,ath11k-calibration-variant = "SHIFTphone_8";
-> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts:879:	
-> qcom,ath11k-calibration-variant = "LE_X13S";
+> So let's err on the safe side until we have more information and avoid
+> having distros drop the user-space daemon until these known bugs exposed
+> by the in-kernel pd-mapper have been fixed.
 
-There definitely are other Ride boards. I see patches related to
-qcs8300-ride. Does that board use the same BDF file?  If not,
-Qualcomm_SA8775P_Ride or QC_SA8775P_Ride sounds like a better approach.
+Then default n + revert X1E sounds like a better approach?
 
-> > 
-> > Also, could you please extend the commit message with messages from the
-> > ath11k driver, showing the chip_id / board_id ?
 > 
-> The board-id is non 0xff, do you still think we need to add
-> 'qcom,ath11k-calibration-variant', following is the WLAN chip board data
-> info,
-> 
-> bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=519.bin
-
-I'd ask Kalle / Jeff to answer this question. Are we sure that this
-board-id won't be reused by any else device?
+> Johan
 
 -- 
 With best wishes
