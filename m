@@ -1,64 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-33766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33767-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87086997B0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 05:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 932D8997B64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 05:41:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D6D43B23755
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 03:06:44 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CAE38B220E0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 03:41:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB113194C6A;
-	Thu, 10 Oct 2024 03:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CCE553D966;
+	Thu, 10 Oct 2024 03:41:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ks6ZbyL7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SFwT0PtT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC801940A2;
-	Thu, 10 Oct 2024 03:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B25BE57;
+	Thu, 10 Oct 2024 03:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728529570; cv=none; b=rne2xLBkGUwO9TxlD7otYLILsWUGHsdKpNb4ZopRPTBoxSJXPbteEaVEPDu2gzhRKQCdpabKP84tnRXqzFp2+jNwutKmcbhuGjyxk88amwlVVBPw56mNxvwwHPNPTQ31WaRxZB6svLtmzuqOhPzVgznZuVFHo/ADTk2V99q5rzc=
+	t=1728531699; cv=none; b=Hg2GSX2aGzRc5B1Dx7hR2iV32vv9rwKFeRXE5qGqOwhAcYBt/2zLqsK7iAsPf6JYZSSmUeyGIVc/OdZinYWXdEHgI36b86XWKILXHzXuH4uue92NxSbK58RjDjdfzSFhAOpCLEaI1IhbkgB46QMpSll3uNlmvkEaKlpYSH36psY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728529570; c=relaxed/simple;
-	bh=9YCyxIsRM6izsmOAxvQ6MGg38sG9/3r68pXXG7ExYFM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=dO9NjUwY0AQj8CVHZvQplcIAsSMwW1BAwp+9KqOrId0n73bk2RGrzskwEPe+KTz965bkSpBSCGFPelEdbK3ssYhRNKfXMd0m/u51U7YKVZvr19jTTybcmlSwZOimYhSHI4Zf5LGxCcRxgj4LnxUWlCnufgNamcxxiCaV7T6oul0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ks6ZbyL7; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1728531699; c=relaxed/simple;
+	bh=Y6J43y1bm4oYmPAAl5URkUEdqTZ6Hp2/YqXXEVJdI7c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=sDCzIPNbJnMAKhgmuZn5odvU1Fv4fodY4SYJ+Tl5zfHaTtESIYe69+zxxwVSCbFH+BL0rk+Fu/gnfZBr0W0AdJMYQvUrdc9Ucej7pAT202uuyRkLDF+f4bRv7cabu84Kt/52rqLt1QrNEgfk69DSQvIRr7YcVPI63NDH6pN7vAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SFwT0PtT; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
 Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A1bH5D005751;
-	Thu, 10 Oct 2024 03:06:05 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A1bejp006584;
+	Thu, 10 Oct 2024 03:41:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	54Gs2TdaP32tbXmbUdDNxHbcqBpDi2RDOnqU6iQKvjY=; b=Ks6ZbyL7Y6IxG1Ra
-	PtRSRDwU4yiw7cJHJjEOgTRdSOipj7Nbv8vBcUiIM+JzqfIJGUgkarJ+2PP7Pq8F
-	/7EbuaDfpdDE5tCMrgaQ6cPln3PAxdYSuXdWijD4FTrlP5vCCoeWLm2pSsfEU7J7
-	+V84Wk78KPlqJtSx/ybBBmsVFuU0HX5dsmGrSfAsfXTZQTMljoWm/AQCDLohZ8cR
-	tgtjrB9xf7z3odMK4nsi+xvXeSGfEtAXu1iw8zovZzJBfO7Hr+RP7KXfVrN1X4/j
-	lnXLGx7t/frqk1GiLxrhN2sor0kUzBk5wU6FZWqwuAwIP6FgK0L9vG35yII6DYik
-	uSaQmQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424yj06xgu-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=fYrdB4/WfycN1oxps4sUnN
+	zNaq2Ih9iUawmH75fg1ig=; b=SFwT0PtTeXiKBpNAeFi0sy03YIpnqLCuwzjoiX
+	lAFlFfAHfgprUXnFRCLhWlvL9hv3cZQCBN0N1DVf/jWsVV/aKWFDDWomQusBRGlo
+	DWV3JE7EDZ/joNZeZ8rT3EgvzbM5+I03rf7hGAaMrDwj6uP5Od/WvOrxEaGIILrz
+	sHRbfBD66+PunDmJOIGzGd0Swl4GxMbXXn7bRoDOH/7FrtR3CadtcP7BKYiEwzhY
+	nsiz9nV5pXlEEYjAiHgQQB/KPHIQ1QC5Mab4QFHY0OkkC/3T3PLw70sOjLClOILP
+	Om7AqsU8AmEV4MrRGa23515ld09jSMylHC7jwNmyXeZRcj4Q==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424yj070v5-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 03:06:05 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49A364kp017058
+	Thu, 10 Oct 2024 03:41:29 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49A3fSHb021560
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 03:06:04 GMT
-Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+	Thu, 10 Oct 2024 03:41:28 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 9 Oct 2024 20:06:00 -0700
-From: Yijie Yang <quic_yijiyang@quicinc.com>
-Date: Thu, 10 Oct 2024 11:05:37 +0800
-Subject: [PATCH 2/2] arm64: dts: qcom: qcs615-ride: Enable ethernet node
+ 15.2.1544.9; Wed, 9 Oct 2024 20:41:28 -0700
+From: Jessica Zhang <quic_jesszhan@quicinc.com>
+Date: Wed, 9 Oct 2024 20:41:13 -0700
+Subject: [PATCH] drm/msm/dpu: Don't always set merge_3d pending flush
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,36 +65,38 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241010-dts_qcs615-v1-2-05f27f6ac4d3@quicinc.com>
-References: <20241010-dts_qcs615-v1-0-05f27f6ac4d3@quicinc.com>
-In-Reply-To: <20241010-dts_qcs615-v1-0-05f27f6ac4d3@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran
-	<richardcochran@gmail.com>
-CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <quic_tingweiz@quicinc.com>, <quic_aiquny@quicinc.com>,
-        Yijie Yang
-	<quic_yijiyang@quicinc.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728529551; l=3052;
- i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
- bh=9YCyxIsRM6izsmOAxvQ6MGg38sG9/3r68pXXG7ExYFM=;
- b=dgh861b23saf/FNbtnESHX1IjuTy5fsFXSgi/0/Oz/IGO+rxTnRwv5WoPyPfMSAJERQPTI6nA
- 9axfAesxLcgDCLb1cDCJIikv0vZvG3nwk6pFrlhjfuhNYbZ/1N4q4yQ
-X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
- pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
+Message-ID: <20241009-mode3d-fix-v1-1-c0258354fadc@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIANhMB2cC/x2MQQqAIBAAvyJ7TnDVi30lOpSutYc0FCIQ/550n
+ IGZBpUKU4VZNCj0cOWcBuAkwJ9bOkhyGAxaaYtKOXnlQCbIyK+03nhEGyPtDkZwFxr6ny1r7x/
+ Un9L4XAAAAA==
+X-Change-ID: 20241009-mode3d-fix-4c3c114ffeb9
+To: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>
+CC: <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, Rob Clark <robdclark@chromium.org>,
+        "Jessica
+ Zhang" <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.15-dev-2a633
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1728531688; l=3939;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=Y6J43y1bm4oYmPAAl5URkUEdqTZ6Hp2/YqXXEVJdI7c=;
+ b=oDYbdcFbDtbkDgf9z7G/1rcUYR2l1oc1E3KbCxWa3i/sfVb0m+WrV5WrZML2oi9oTlyXpmrTB
+ Mft34ncN/LEBFtzVLEy1ikFY4BOtkAi3eD3bwwL0YO3iL6tR96y6Unr
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lt8JC8ChscMu0ZV7lSD8ioPEsg83RgOH
-X-Proofpoint-ORIG-GUID: lt8JC8ChscMu0ZV7lSD8ioPEsg83RgOH
+X-Proofpoint-GUID: iJMSKF0DvP_KOkIfz9UCW92_jaExW2J5
+X-Proofpoint-ORIG-GUID: iJMSKF0DvP_KOkIfz9UCW92_jaExW2J5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
@@ -104,147 +104,97 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishsc
  bulkscore=0 mlxlogscore=999 mlxscore=0 adultscore=0 clxscore=1015
  lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
  malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410100019
+ engine=8.19.0-2409260000 definitions=main-2410100022
 
-Enable the ethernet node, add the phy node and pinctrl for ethernet.
+Don't set the merge_3d pending flush bits if the mode_3d is
+BLEND_3D_NONE.
 
-Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+Always flushing merge_3d can cause timeout issues when there are
+multiple commits with concurrent writeback enabled.
+
+This is because the video phys enc waits for the hw_ctl flush register
+to be completely cleared [1] in its wait_for_commit_done(), but the WB
+encoder always sets the merge_3d pending flush during each commit
+regardless of if the merge_3d is actually active.
+
+This means that the hw_ctl flush register will never be 0 when there are
+multiple CWB commits and the video phys enc will hit vblank timeout
+errors after the first CWB commit.
+
+[1] commit fe9df3f50c39 ("drm/msm/dpu: add real wait_for_commit_done()")
+
+Fixes: 3e79527a33a8 ("drm/msm/dpu: enable merge_3d support on sm8150/sm8250")
+Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/qcs615-ride.dts | 105 +++++++++++++++++++++++++++++++
- 1 file changed, 105 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 5 ++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c  | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-index 538e697e2dac..3d3c9edd860b 100644
---- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
-@@ -5,6 +5,7 @@
- /dts-v1/;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index ba8878d21cf0e1945a393cca806cb64f03b16640..8864ace938e03483492e25734f834fbdd615d127 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -440,10 +440,12 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
+ 	struct dpu_hw_ctl *ctl;
+ 	const struct msm_format *fmt;
+ 	u32 fmt_fourcc;
++	u32 mode_3d;
  
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/gpio/gpio.h>
- #include "qcs615.dtsi"
- #include "qcs615-pmic.dtsi"
+ 	ctl = phys_enc->hw_ctl;
+ 	fmt_fourcc = dpu_encoder_get_drm_fmt(phys_enc);
+ 	fmt = mdp_get_format(&phys_enc->dpu_kms->base, fmt_fourcc, 0);
++	mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
  
-@@ -201,6 +202,60 @@ vreg_l17a: ldo17 {
- 	};
- };
+ 	DPU_DEBUG_VIDENC(phys_enc, "\n");
  
-+&ethernet {
-+	status = "okay";
-+
-+	pinctrl-0 = <&ethernet_defaults>;
-+	pinctrl-names = "default";
-+
-+	phy-handle = <&rgmii_phy>;
-+	phy-mode = "rgmii";
-+	max-speed = <1000>;
-+
-+	snps,mtl-rx-config = <&mtl_rx_setup>;
-+	snps,mtl-tx-config = <&mtl_tx_setup>;
-+
-+	mdio: mdio {
-+		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		rgmii_phy: phy@7 {
-+			compatible = "ethernet-phy-ieee802.3-c22";
-+			reg = <0x7>;
-+
-+			interrupts-extended = <&tlmm 121 IRQ_TYPE_EDGE_FALLING>;
-+			device_type = "ethernet-phy";
-+			reset-gpios = <&tlmm 104 GPIO_ACTIVE_LOW>;
-+			reset-assert-us = <11000>;
-+			reset-deassert-us = <70000>;
-+		};
-+	};
-+
-+	mtl_rx_setup: rx-queues-config {
-+		snps,rx-queues-to-use = <1>;
-+		snps,rx-sched-sp;
-+
-+		queue0 {
-+			snps,dcb-algorithm;
-+			snps,map-to-dma-channel = <0x0>;
-+			snps,route-up;
-+			snps,priority = <0x1>;
-+		};
-+	};
-+
-+	mtl_tx_setup: tx-queues-config {
-+		snps,tx-queues-to-use = <1>;
-+		snps,tx-sched-wrr;
-+
-+		queue0 {
-+			snps,weight = <0x10>;
-+			snps,dcb-algorithm;
-+			snps,priority = <0x0>;
-+		};
-+	};
-+};
-+
- &gcc {
- 	clocks = <&rpmhcc RPMH_CXO_CLK>,
- 		 <&rpmhcc RPMH_CXO_CLK_A>,
-@@ -292,6 +347,56 @@ &mdss_dsi0_phy {
- 	vdds-supply = <&vreg_l5a>;
- };
+@@ -466,7 +468,8 @@ static void dpu_encoder_phys_vid_enable(struct dpu_encoder_phys *phys_enc)
+ 		goto skip_flush;
  
-+&tlmm {
-+	ethernet_defaults: ethernet-defaults-state {
-+		mdc-pins {
-+			pins = "gpio113";
-+			function = "rgmii";
-+			bias-pull-up;
-+		};
-+
-+		mdio-pins {
-+			pins = "gpio114";
-+			function = "rgmii";
-+			bias-pull-up;
-+		};
-+
-+		rgmii-rx-pins {
-+			pins = "gpio81", "gpio82", "gpio83", "gpio102", "gpio103", "gpio112";
-+			function = "rgmii";
-+			bias-disable;
-+			drive-strength = <2>;
-+		};
-+
-+		rgmii-tx-pins {
-+			pins = "gpio92", "gpio93", "gpio94", "gpio95", "gpio96", "gpio97";
-+			function = "rgmii";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+
-+		phy-intr-pins {
-+			pins = "gpio121";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <8>;
-+		};
-+
-+		pps-pins {
-+			pins = "gpio91";
-+			function = "rgmii";
-+			bias-disable;
-+			drive-strength = <8>;
-+		};
-+
-+		phy-reset-pins {
-+			pins = "gpio104";
-+			function = "gpio";
-+			bias-pull-up;
-+			drive-strength = <16>;
-+		};
-+	};
-+};
+ 	ctl->ops.update_pending_flush_intf(ctl, phys_enc->hw_intf->idx);
+-	if (ctl->ops.update_pending_flush_merge_3d && phys_enc->hw_pp->merge_3d)
++	if (mode_3d && ctl->ops.update_pending_flush_merge_3d &&
++	    phys_enc->hw_pp->merge_3d)
+ 		ctl->ops.update_pending_flush_merge_3d(ctl, phys_enc->hw_pp->merge_3d->idx);
  
- &tlmm {
- 	ioexp_intr_active: ioexp_intr_active {
+ 	if (ctl->ops.update_pending_flush_cdm && phys_enc->hw_cdm)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index 882c717859cec6dfc4b646200e68a748a5294ac9..07035ab77b792e76c08eb3e18c12a4afddeac902 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -275,6 +275,7 @@ static void _dpu_encoder_phys_wb_update_flush(struct dpu_encoder_phys *phys_enc)
+ 	struct dpu_hw_pingpong *hw_pp;
+ 	struct dpu_hw_cdm *hw_cdm;
+ 	u32 pending_flush = 0;
++	u32 mode_3d;
+ 
+ 	if (!phys_enc)
+ 		return;
+@@ -283,6 +284,7 @@ static void _dpu_encoder_phys_wb_update_flush(struct dpu_encoder_phys *phys_enc)
+ 	hw_pp = phys_enc->hw_pp;
+ 	hw_ctl = phys_enc->hw_ctl;
+ 	hw_cdm = phys_enc->hw_cdm;
++	mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+ 
+ 	DPU_DEBUG("[wb:%d]\n", hw_wb->idx - WB_0);
+ 
+@@ -294,7 +296,8 @@ static void _dpu_encoder_phys_wb_update_flush(struct dpu_encoder_phys *phys_enc)
+ 	if (hw_ctl->ops.update_pending_flush_wb)
+ 		hw_ctl->ops.update_pending_flush_wb(hw_ctl, hw_wb->idx);
+ 
+-	if (hw_ctl->ops.update_pending_flush_merge_3d && hw_pp && hw_pp->merge_3d)
++	if (mode_3d && hw_ctl->ops.update_pending_flush_merge_3d &&
++	    hw_pp && hw_pp->merge_3d)
+ 		hw_ctl->ops.update_pending_flush_merge_3d(hw_ctl,
+ 				hw_pp->merge_3d->idx);
+ 
 
+---
+base-commit: a20a91fb1bfac5d05ec5bcf9afe0c9363f6c8c93
+change-id: 20241009-mode3d-fix-4c3c114ffeb9
+
+Best regards,
 -- 
-2.34.1
+Jessica Zhang <quic_jesszhan@quicinc.com>
 
 
