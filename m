@@ -1,64 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-33758-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FD11997AD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 04:57:53 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68EFA997AD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 04:58:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8DEC51C2376B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 02:57:52 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B2AB5B23BDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 02:58:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C3F21885A4;
-	Thu, 10 Oct 2024 02:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 591F319149F;
+	Thu, 10 Oct 2024 02:57:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="e6NnE8AH"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="AcW1ZCv4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15767179A3;
-	Thu, 10 Oct 2024 02:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27E218D623;
+	Thu, 10 Oct 2024 02:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728529068; cv=none; b=cVGFK3S6vhnW13XpfTARZpYtlIIJ4lgLooXuv59X7SvYSeVE84uq+uqZwwgjVP5WcBh/O7Mixr0LnnWF5oLJzzTNxYcVDDk0H3s2zYkMrF3IFJfUvUmyWFzPdK4j77mQP81wz0ak7NnYjX/8erFXPlskpHou6kZAN+GAbPg6IzA=
+	t=1728529071; cv=none; b=EAbdQFRGyNn+hkWHldmiFoEfr15w6KeGznN8dYTVxJSIRxfE5R0ebmK9HvgWB/rgeEbc/1dewV/4vxCfeo0/5VROEQt1tLmqZ7ZgafE+jkY0CJah4d1LUT1LLH/9bW5/rRebRbnmTgzORdI8jUbPWvgymAG5MO3lPdl3NQhQGSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728529068; c=relaxed/simple;
-	bh=iaqSMLc3QNBuxVTN1N+Fj3j3TlNbzdkT0nZ9xBlyk6Q=;
+	s=arc-20240116; t=1728529071; c=relaxed/simple;
+	bh=QpoSpjPCLu/ZNgvBi29MHKrtjF7sQ+pJQxRCbLYoiNM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=ER3bmGrMGcgPYj36Xl+NxBxyzsRo9akdtsS17NOeEDXzsSWr5T6spg4Lal2lbDfpM3tcHEAQjc1aofhCqIZ9ncwxkUrGZPpkvebQbyne7y1CB9m87C9zAW3dzNt53fnC/DqsWcnzaXj+it3WvCoC0oUxb0hEnG8gpB2yMFD8N3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=e6NnE8AH; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=f4o9taDRAFLWNQNs+OTu9LqnJkNrdJzrmhUKJRcS6P8PG/crBpZY6/bPr+B6k7PFVQ4fycJ7BTqgww3NbglXXiB0wZ3pGENULax3Q9aX1shNWTmnpYUoLmlxYk+aUWI715T4JN6RHMnCDRKoqhAobFAwvY7sY7xOoXF/XhTnx7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=AcW1ZCv4; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A1bNZH022439;
-	Thu, 10 Oct 2024 02:57:42 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49A1bI23011345;
+	Thu, 10 Oct 2024 02:57:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u4+hgc1LVw70QJY+V4ECEEzJXp70/fdYXvje7yF07JY=; b=e6NnE8AHFodXp9xT
-	lnebs9IzvhQWGmSfYomPbuFakd9W56ywHeLjJEiECEFWue9BZQspYQCSlk/b1k3W
-	pDrq37PQ6Qkiom4YTdx6S6enVNPeN6tnTceG8XxpOAsdJ94tEfjl+Ep5CptVr0ka
-	2iOr818iJDdjbsd2eK/DX5QjuDXB/mbIV/aeomWZqHeM2GYVb5qutEbzdvxcLvLH
-	EfxGfdv3G2eZvQagAtYIzr2N6nohLklA9vYFq2ow3lYt1Arr03Ay7YUOsZ+Wi0r4
-	BIv7D9ynuEwLunZGvAk/2bfNg91CasdGH33pUNyDnnbSXxCV1p2t4m8zCBoN3tIl
-	sLtZTA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425xpts2x0-1
+	RzV/CYDhuLH7rENvOez8U+6ZovO7somL73ud/l8kAd0=; b=AcW1ZCv4cPhVzAUJ
+	jIDv8WodaPsKKIeIcBXFEzTwwncAYCRlEXdij7fX/GGO2My3KRfgie/EeUFK39Xf
+	qfzeim7slUpjk8dQv/vHFEeE4Nz1R8kAzGh7CfsaT6BUzBFC+kDPTJS/082FBLJ1
+	bzUZdYZVYAfG3LXPWdJW4uSRpH4hE3etxXf5PiFg01geCtOrq+PH7qhtCTO1InCD
+	o4/lssxVfkWu1yKwb+FwKu3L9j7CxRY2npKFk1xgtZ3weA+M788sVNZDSzTNJQXd
+	BlCScL0qIT4Mn0IyAiSjGfrC5WIeZ7WwNZnsBCjD/c7HF6fT/IvXU2vBjfJsVZDT
+	6b2s1Q==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425xths1ya-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 02:57:41 +0000 (GMT)
+	Thu, 10 Oct 2024 02:57:45 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49A2vfQ7017578
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49A2vjxq028412
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 02:57:41 GMT
+	Thu, 10 Oct 2024 02:57:45 GMT
 Received: from yijiyang-gv.ap.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 9 Oct 2024 19:57:36 -0700
+ 15.2.1544.9; Wed, 9 Oct 2024 19:57:41 -0700
 From: Yijie Yang <quic_yijiyang@quicinc.com>
-Date: Thu, 10 Oct 2024 10:57:16 +0800
-Subject: [PATCH 2/5] arm64: dts: qcom: qcs8300: add the first 1Gb ethernet
+Date: Thu, 10 Oct 2024 10:57:17 +0800
+Subject: [PATCH 3/5] arm64: dts: qcom: qcs8300-ride: enable ethernet0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,7 +67,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241010-dts_qcs8300-v1-2-bf5acf05830b@quicinc.com>
+Message-ID: <20241010-dts_qcs8300-v1-3-bf5acf05830b@quicinc.com>
 References: <20241010-dts_qcs8300-v1-0-bf5acf05830b@quicinc.com>
 In-Reply-To: <20241010-dts_qcs8300-v1-0-bf5acf05830b@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -84,97 +84,167 @@ CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
         Yijie Yang
 	<quic_yijiyang@quicinc.com>
 X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1728529047; l=2198;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1728529047; l=3088;
  i=quic_yijiyang@quicinc.com; s=20240408; h=from:subject:message-id;
- bh=iaqSMLc3QNBuxVTN1N+Fj3j3TlNbzdkT0nZ9xBlyk6Q=;
- b=rVok7YNyjTpEjLbBE2hzPqODH0DGWafWQ6mZK5EpiVTNY04IsICy3g74ioOl7h003c0SI4eDx
- jJFYB1pGgADDSf2gLZ8bDbzomjNL6+jvLMPkgfV/WEiPIrHWTNrUx7J
+ bh=QpoSpjPCLu/ZNgvBi29MHKrtjF7sQ+pJQxRCbLYoiNM=;
+ b=SS3HDQpKqwWxABC5JEEFLE6ZhHKe9o/QTohGfUwkJ28NeGTmbovCWPF3VoSCbDq2ZNfh3nQT7
+ ji90q0SezdqAGKVo4wdincDWQseqcjGd+8HNpTjB0gS9xaliH8SxH2+
 X-Developer-Key: i=quic_yijiyang@quicinc.com; a=ed25519;
  pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kR47oiugNYvkBvSbU8gK1sfk_C1hSMvK
-X-Proofpoint-GUID: kR47oiugNYvkBvSbU8gK1sfk_C1hSMvK
+X-Proofpoint-ORIG-GUID: 4if4stgDg6g7p8qhaXbTwO7aRxYTZ2NU
+X-Proofpoint-GUID: 4if4stgDg6g7p8qhaXbTwO7aRxYTZ2NU
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 suspectscore=0 spamscore=0 mlxscore=0 bulkscore=0
- phishscore=0 mlxlogscore=710 lowpriorityscore=0 clxscore=1011
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410100018
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ phishscore=0 clxscore=1015 mlxlogscore=899 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410100018
 
-Add the node for the first ethernet interface on qcs8300 platform.
-Add the internal SGMII/SerDes PHY node as well.
+Enable the SerDes PHY on qcs8300-ride.
+Add the MDC and MDIO pin functions for ethernet0 on qcs8300-ride.
+Enable the first 1Gb ethernet port on qcs8300-ride development board.
 
 Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
 ---
- arch/arm64/boot/dts/qcom/qcs8300.dtsi | 43 +++++++++++++++++++++++++++++++++++
- 1 file changed, 43 insertions(+)
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 112 ++++++++++++++++++++++++++++++
+ 1 file changed, 112 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-index 2c35f96c3f28..bf6030d33e56 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcs8300.dtsi
-@@ -772,6 +772,15 @@ lpass_ag_noc: interconnect@3c40000 {
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+index 7eed19a694c3..b1c9f2cb9749 100644
+--- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+@@ -210,6 +210,95 @@ vreg_l9c: ldo9 {
+ 	};
+ };
  
-+		serdes0: phy@8909000 {
-+			compatible = "qcom,qcs8300-dwmac-sgmii-phy", "qcom,sa8775p-dwmac-sgmii-phy";
-+			reg = <0x0 0x8909000 0x0 0xe10>;
-+			clocks = <&gcc GCC_SGMI_CLKREF_EN>;
-+			clock-names = "sgmi_ref";
-+			#phy-cells = <0>;
-+			status = "disabled";
++&ethernet0 {
++	phy-mode = "sgmii";
++	phy-handle = <&sgmii_phy0>;
++
++	pinctrl-0 = <&ethernet0_default>;
++	pinctrl-names = "default";
++
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
++	snps,ps-speed = <1000>;
++
++	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		sgmii_phy0: phy@8 {
++			compatible = "ethernet-phy-id0141.0dd4";
++			reg = <0x8>;
++			device_type = "ethernet-phy";
++			interrupts-extended = <&tlmm 4 IRQ_TYPE_EDGE_FALLING>;
++			reset-gpios = <&tlmm 31 GPIO_ACTIVE_LOW>;
++			reset-assert-us = <11000>;
++			reset-deassert-us = <70000>;
++		};
++	};
++
++	mtl_rx_setup: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
 +		};
 +
- 		pmu@9091000 {
- 			compatible = "qcom,qcs8300-llcc-bwmon", "qcom,sc7280-llcc-bwmon";
- 			reg = <0x0 0x9091000 0x0 0x1000>;
-@@ -1308,6 +1317,40 @@ IPCC_MPROC_SIGNAL_GLINK_QMP
- 			};
- 		};
- 
-+		ethernet0: ethernet@23040000 {
-+			compatible = "qcom,qcs8300-ethqos", "qcom,sa8775p-ethqos";
-+			reg = <0x0 0x23040000 0x0 0x10000>,
-+			      <0x0 0x23056000 0x0 0x100>;
-+			reg-names = "stmmaceth", "rgmii";
-+
-+			interrupts = <GIC_SPI 946 IRQ_TYPE_LEVEL_HIGH>,
-+			             <GIC_SPI 783 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "macirq", "sfty";
-+
-+			clocks = <&gcc GCC_EMAC0_AXI_CLK>,
-+			         <&gcc GCC_EMAC0_SLV_AHB_CLK>,
-+			         <&gcc GCC_EMAC0_PTP_CLK>,
-+			         <&gcc GCC_EMAC0_PHY_AUX_CLK>;
-+			clock-names = "stmmaceth",
-+			              "pclk",
-+			              "ptp_ref",
-+			              "phyaux";
-+			power-domains = <&gcc GCC_EMAC0_GDSC>;
-+
-+			phys = <&serdes0>;
-+			phy-names = "serdes";
-+
-+			iommus = <&apps_smmu 0x120 0xf>;
-+			dma-coherent;
-+
-+			snps,tso;
-+			snps,pbl = <32>;
-+			rx-fifo-depth = <16384>;
-+			tx-fifo-depth = <20480>;
-+
-+			status = "disabled";
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
 +		};
 +
- 		nspa_noc: interconnect@260c0000 {
- 			compatible = "qcom,qcs8300-nspa-noc";
- 			reg = <0x0 0x260c0000 0x0 0x16080>;
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++		snps,tx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
+ &gcc {
+ 	clocks = <&rpmhcc RPMH_CXO_CLK>,
+ 		 <&sleep_clk>,
+@@ -247,6 +336,29 @@ &rpmhcc {
+ 	clock-names = "xo";
+ };
+ 
++&serdes0 {
++	phy-supply = <&vreg_l5a>;
++	status = "okay";
++};
++
++&tlmm {
++	ethernet0_default: ethernet0-default-state {
++		ethernet0_mdc: ethernet0-mdc-pins {
++			pins = "gpio5";
++			function = "emac0_mdc";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++
++		ethernet0_mdio: ethernet0-mdio-pins {
++			pins = "gpio6";
++			function = "emac0_mdio";
++			drive-strength = <16>;
++			bias-pull-up;
++		};
++	};
++};
++
+ &uart7 {
+ 	status = "okay";
+ };
 
 -- 
 2.34.1
