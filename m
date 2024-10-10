@@ -1,148 +1,225 @@
-Return-Path: <linux-arm-msm+bounces-33845-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F350F99843A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 12:55:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B4F299843F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 12:57:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 279451C20B47
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 10:55:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CE921C2151B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 10:57:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F6E71C2300;
-	Thu, 10 Oct 2024 10:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A1881C1755;
+	Thu, 10 Oct 2024 10:57:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xXQPah5z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZlerYW/4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9141BF324
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 10:55:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77BF29AF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 10:57:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728557726; cv=none; b=tp/HTrlIdy8M/J/byO/b4cPJZCRTujQKTg6/MvfRIxOnDhMSOi370N+XJizka2XgX3ChOtvf0Ojh5wKmOJuR40geuwa8CQ7oHYwGj/z1GgaXj9RxLZGXobzNzUD7X7DjfyJWz15M/HEDvQZc9EMpPjBye94e+NaVoLqmp3f92pM=
+	t=1728557826; cv=none; b=tbjYy7Ze2Qvna8GLH9e72UDYqNkIqd77mK0EvRqNpbr81MoFpIRGX/jxtvem/CAEqDTctTkvYB3aBR9wNdGYGcV3tkdLHi0ws26DtVK6OGzycpcqKOLkv2yPLMICQ8Ean+wQl1z9T8ie4fTuB711x+dGqz0s4VlnFDxig0STr+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728557726; c=relaxed/simple;
-	bh=WwiIGmhyGOdZon8LAJcoEDUYGTqw+cL2/HmhFVSNbQ4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nfWavURJV8mmvyLBIDzqHVCiSBuLpz8sgcSrnHHYbeyjM7IlwwuQom4F9b9FAT8SFHfv97HDSsM5dMnil01HUEd5CbkBukTAddXTCJ37Hv4+E/K8f44muFM/FEjhTNKU6kpPYnvG70tPoKDrVwx2jYH+FFALX1Vd5sCj+9kqv2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xXQPah5z; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1728557826; c=relaxed/simple;
+	bh=d4HU0SLzlcKFVQeiO2JNDPW9qbPHKjFdAn3qjg617pg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a5l5qGcUgPjDLyH/3vkqYQIQWiTfJyo85Dl9Sj6eS8/M8XyWQVyrGdAvmlAFLvspAQGfUVilVClVNqoMSeCcp/lBLT876phD8V2HOag1Z4Hr6oHJngjDz8lavlHLOO7R2LFjuFkwLcZ+Q+Zpl2o2OzNtmLr1ISXtKzUI+EWMc0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZlerYW/4; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6dbb24ee2ebso9129767b3.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 03:55:23 -0700 (PDT)
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-7e6d04f74faso511651a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 03:57:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728557722; x=1729162522; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7VGs/fU4SpegpQzbG2AYNWcbAGbbD3orYU7SBex+GqM=;
-        b=xXQPah5zkZ3pXMjl1jQjwPztSHx6T/n0fnHKw3PEHMU2/uREicaX8QP99Z9vczKgiC
-         CmZxMVVZEAMQqQ9jWOZ18X8q9+MGrh/Tax/NdrWjF/aHoFralMo6V7Qbd9PW6LVO5y2x
-         RjeZSg7DikOCLKuqginmSrXOSkD/e9q4s4Bgya7889BdyjBJoO6EGaCigkyEErKmFsvV
-         CKQZd6e0QfQN+OQbBRgE6mRNNPiElJVYGmZO/7+J5O1cpn6iozzDsUn5PUB2v1go5wtT
-         +Eya94CbMX8TxpsojZo2atXjVUo2Dh0AcW+9zhGf4ZGpv+DHAfwcoYI8hFiRGHxLTK+W
-         QE7g==
+        d=linaro.org; s=google; t=1728557824; x=1729162624; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RT2TNTxcIr9d5WrKWzX+3XBsz0hui3Hv6T/2YvST6a8=;
+        b=ZlerYW/4wxCfHZqFMNuRaX7Wz3xIsAWW5akgioOrTK8jtp6Ul4mFvgEiODRv5S5c5w
+         0qhdV6qGLGWTf1BYE5sHPkxn4FbdsZY/gil0kldnCDg2RwXNw/k65uswgqeOAJ7EyULL
+         lk/NAg4y57Q55LuJFEGXnVpWqz/tmQ7zbhS+QEODiCym1ZoFUuRRb4pMPt2rkcz4IgHE
+         7QHyQFXmT3A4sjQmWAvpAWMHDy5bvTD6QL9k0xVWNLhWVrUaSqJW4NvFY1Bg3TjI6CRh
+         WYzGVnXvLnM+8oiA2pSdDd9binHVP09CRLDRu6UdswCRuRPEdGZqxQFwY+9l1XqADWpu
+         mB5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728557722; x=1729162522;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7VGs/fU4SpegpQzbG2AYNWcbAGbbD3orYU7SBex+GqM=;
-        b=Oam3kk60t0yQEcdL6+325yucSL/7DgC5X6sahCXikCsmA8/VbtOAecjlwYnqaYHQgB
-         Hg/jRAgXEbATxVJCTdcqeajc3lXP/Z3+I1hBNcDjeYlcnWY8MDOCTFPLiJxHxpBipvlU
-         ZrOY0mZaJiAxk8Dv8nuNQ/fztbJ8440oTvkqqbX5MIcJp2bvyxKp8i+E4apfyomcQIyr
-         7ov4J6IzVT8Bxl6kYkkDeqz2lHBPnhpZHaUikiwoeb8SUPWKsJTxE44W3irH4gBal3ph
-         3nowkxIHJQ64zZTngSUZQMVoarDx9646un4w4PNMCeHt3nyHM2E00rGH5We6gWX1sY+R
-         OWwg==
-X-Forwarded-Encrypted: i=1; AJvYcCXo4742CMg5gEgL3zo7ipNJ01BQ0TN1I9fjCQhDLinHW7qOFjx5JGacdzpPi88DFPI+7p53t86TSUMzM0IH@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5UjcgV7oJoY/3JGOEekfjL+SDA9FwzCFIVS09Rguj2Ifwi55B
-	nWasDxAaOtvjnfGAzcD5ns11YszdJJ2R3cxYUv6RWsr/9q7EzxBq3MRmpVs6QcEqhNwZEAjG48w
-	51eMP3mYnH9yEI6CBNnBdRL6MV99XLKEbDFRuYw==
-X-Google-Smtp-Source: AGHT+IG1+R1ihC/1zJ5/CzYx7qkYB8pOlHdDW4xPGn5q3The6Ty0NU52LviZm5BHoiKxIMgoBbp/st/dwycsc6TdX98=
-X-Received: by 2002:a05:690c:298:b0:6e3:36fd:d985 with SMTP id
- 00721157ae682-6e336fdd9eamr4919897b3.23.1728557722397; Thu, 10 Oct 2024
- 03:55:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728557824; x=1729162624;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RT2TNTxcIr9d5WrKWzX+3XBsz0hui3Hv6T/2YvST6a8=;
+        b=ku9JbB3r+/Bt0i3ygja+JoDedOg96riWpU6//MOdJbk/jpObbb8CnhDOJPPw1qdTAV
+         em898GRXeRQVneJXNqfXO6Lk+7ldYiNMR95gxNAUjw0i2tuPJwKh8aAxZeDCSY/n0EDi
+         3yrbeStHcSyT9M11UGhqgXK+IWhecqJgdHwp6EIPkzOvEqaWfwvU2jrG69MgkrYdTHMQ
+         Tl5RIKCKdmoW6lN0CNGALQgoYDSrljtBs7O8rE8RZGyDhM/ojcy64/iZS+fqHhWZClYy
+         qvdqHDodRAVxtrFGnjURBD54AXwDYo69wFVYv9uKOWHnLbrJ+3u9xV6O+iATXN///PmD
+         ua3g==
+X-Forwarded-Encrypted: i=1; AJvYcCX/rKwP7BXSGotCq+URu16htRol4dtc7nK2SG/pbsbuKETYKdgdlvDrgOHIBrwCZF1hkR7/yROh+e2bK5Uz@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpN8kEtXFioxnrPlP4wM5xa/2/xHn95f0Jpfu0smh6Nf3Lx7Vw
+	3iaht1zz2gOT5kZeqVUvZASE85hz97DXJrEnGmqA58QG395TgzkbAcmxGxFGKmc9zSduDOPGqPA
+	=
+X-Google-Smtp-Source: AGHT+IGu+kMq+uRASxcspqSsFqZQjDiE2MpxVF9EDhrlqDoOU3Ztf7Xx1Pk65uGaqBvkRjdyk6326A==
+X-Received: by 2002:a17:90b:1803:b0:2d8:9fbe:6727 with SMTP id 98e67ed59e1d1-2e2c800c7a1mr4355972a91.4.1728557824211;
+        Thu, 10 Oct 2024 03:57:04 -0700 (PDT)
+Received: from thinkpad ([220.158.156.184])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e2a5caa753sm3303473a91.54.2024.10.10.03.57.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 03:57:03 -0700 (PDT)
+Date: Thu, 10 Oct 2024 16:26:58 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Vivek Pernamitta <quic_vpernami@quicinc.com>
+Cc: mhi@lists.linux.dev, quic_qianyu@quicinc.com, quic_vbadigan@quicinc.com,
+	quic_krichai@quicinc.com, quic_skananth@quicinc.com,
+	quic_mrana@quicinc.com, Slark Xiao <slark_xiao@163.com>,
+	Mank Wang <mank.wang@netprisma.us>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Fabio Porcedda <fabio.porcedda@gmail.com>,
+	"open list:MHI BUS" <linux-arm-msm@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] bus: mhi: host: pci_generic: Add support for QDU100
+ device
+Message-ID: <20241010105658.mckqvumjrglu6236@thinkpad>
+References: <20241007081543.3475027-1-quic_vpernami@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241010074246.15725-1-johan+linaro@kernel.org>
- <CAA8EJpoiu2hwKWGMTeA=Kr+ZaPL=JJFq1qQOJhUnYz6-uTmHWw@mail.gmail.com> <ZweoZwz73GaVlnLB@hovoldconsulting.com>
-In-Reply-To: <ZweoZwz73GaVlnLB@hovoldconsulting.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 10 Oct 2024 13:55:11 +0300
-Message-ID: <CAA8EJprg0ip=ejFOzBe3iisKHX14w0BnAQUDPqzuPRX6d8fvRA@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: mark pd-mapper as broken
-To: Johan Hovold <johan@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Chris Lew <quic_clew@quicinc.com>, 
-	Stephan Gerhold <stephan.gerhold@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, 
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	regressions@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241007081543.3475027-1-quic_vpernami@quicinc.com>
 
-On Thu, 10 Oct 2024 at 13:11, Johan Hovold <johan@kernel.org> wrote:
->
-> On Thu, Oct 10, 2024 at 12:55:48PM +0300, Dmitry Baryshkov wrote:
-> > On Thu, 10 Oct 2024 at 10:44, Johan Hovold <johan+linaro@kernel.org> wrote:
-> > >
-> > > When using the in-kernel pd-mapper on x1e80100, client drivers often
-> > > fail to communicate with the firmware during boot, which specifically
-> > > breaks battery and USB-C altmode notifications. This has been observed
-> > > to happen on almost every second boot (41%) but likely depends on probe
-> > > order:
-> > >
-> > >     pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to send altmode request: 0x10 (-125)
-> > >     pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to request altmode notifications: -125
-> > >
-> > >     ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: failed to send UCSI read request: -125
-> > >
-> > >     qcom_battmgr.pmic_glink_power_supply pmic_glink.power-supply.0: failed to request power notifications
-> > >
-> > > In the same setup audio also fails to probe albeit much more rarely:
-> > >
-> > >     PDR: avs/audio get domain list txn wait failed: -110
-> > >     PDR: service lookup for avs/audio failed: -110
-> > >
-> > > Chris Lew has provided an analysis and is working on a fix for the
-> > > ECANCELED (125) errors, but it is not yet clear whether this will also
-> > > address the audio regression.
-> > >
-> > > Even if this was first observed on x1e80100 there is currently no reason
-> > > to believe that these issues are specific to that platform.
-> > >
-> > > Disable the in-kernel pd-mapper for now, and make sure to backport this
-> > > to stable to prevent users and distros from migrating away from the
-> > > user-space service.
-> > >
-> > > Fixes: 1ebcde047c54 ("soc: qcom: add pd-mapper implementation")
-> > > Cc: stable@vger.kernel.org      # 6.11
-> > > Link: https://lore.kernel.org/lkml/Zqet8iInnDhnxkT9@hovoldconsulting.com/
-> > > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> >
-> > Please don't break what is working. pd_mapper is working on all
-> > previous platforms. I suggest reverting commit bd6db1f1486e ("soc:
-> > qcom: pd_mapper: Add X1E80100") instead.
->
-> As I tried to explain in the commit message, there is currently nothing
-> indicating that these issues are specific to x1e80100 (even if you may
-> not hit them in your setup depending on things like probe order).
+On Mon, Oct 07, 2024 at 01:45:41PM +0530, Vivek Pernamitta wrote:
+> Add MHI controller configuration for QDU100 device.
+> 
+> This Qualcomm QDU100 device is inline accelerator card
+> which is an extension to QRU100 5G RAN platform.
+> which is designed to simplify 5G deployments by offering
+> a turnkey solution for ease of deployment with O-RAN
+> fronthaul and 5G NR layer 1 High (L1 High) processing,
+> and to accelerate operator and infrastructure vendor
+> adoption of virtualized RAN platforms.
+> 
+> Currently IP_SW1/2 channel support is not present in
+> mhi_net driver, will be supporting them in future.
 
-I have the understanding that the issues are related to the ADSP
-switching the firmware on the fly, which is only used on X1E8.
+I don't know what column width you are using, but please use 75 columns for
+patch descriptions.
 
->
-> Let's disable it until the underlying bugs have been addressed.
->
-> Johan
+> 
+> https://docs.qualcomm.com/bundle/publicresource/87-79371-1_REV_A_Qualcomm_X100_5G_RAN_Accelerator_Card_Product_Brief.pdf
+> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
+> 
+> ---
+> changes from V1:
+> - Changing naming convention from modem_qcom_qdu100*
+>   to mhi_qcom_qdu100*
+> - Added more commit test for IP_SW1/2 channels.
+> - Fixed and corrected by passing mhi_pci_dev_info struct
+>   instead of mhi_controller_config.
+> ---
+> ---
+>  drivers/bus/mhi/host/pci_generic.c | 60 ++++++++++++++++++++++++++++++
+>  1 file changed, 60 insertions(+)
+> 
+> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> index 9938bb034c1c..b9b7dd8d9411 100644
+> --- a/drivers/bus/mhi/host/pci_generic.c
+> +++ b/drivers/bus/mhi/host/pci_generic.c
+> @@ -245,6 +245,63 @@ struct mhi_pci_dev_info {
+>  		.channel = ch_num,		\
+>  	}
+>  
+> +static const struct mhi_channel_config mhi_qcom_qdu100_channels[] = {
+> +	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 2),
+> +	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 2),
+> +	MHI_CHANNEL_CONFIG_UL_SBL(2, "SAHARA", 128, 1),
+> +	MHI_CHANNEL_CONFIG_DL_SBL(3, "SAHARA", 128, 1),
+> +	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 64, 3),
+> +	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 64, 3),
+> +	MHI_CHANNEL_CONFIG_UL(9, "QDSS", 64, 3),
+> +	MHI_CHANNEL_CONFIG_UL(14, "NMEA", 32, 4),
+> +	MHI_CHANNEL_CONFIG_DL(15, "NMEA", 32, 4),
+> +	MHI_CHANNEL_CONFIG_UL(16, "CSM_CTRL", 32, 4),
+> +	MHI_CHANNEL_CONFIG_DL(17, "CSM_CTRL", 32, 4),
+> +	MHI_CHANNEL_CONFIG_UL(40, "MHI_PHC", 32, 4),
+> +	MHI_CHANNEL_CONFIG_DL(41, "MHI_PHC", 32, 4),
+> +	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 256, 5),
+> +	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 256, 5),
+> +	MHI_CHANNEL_CONFIG_UL(48, "IP_SW1", 256, 6),
+> +	MHI_CHANNEL_CONFIG_DL(49, "IP_SW1", 256, 6),
+> +	MHI_CHANNEL_CONFIG_UL(50, "IP_SW2", 256, 7),
+> +	MHI_CHANNEL_CONFIG_DL(51, "IP_SW2", 256, 7),
 
+Please drop these unsupported IP_SW channels until you add support in mhi-net
+driver.
 
+> +};
+> +
+> +static struct mhi_event_config mhi_qcom_qdu100_events[] = {
+> +	/* first ring is control+data ring */
+> +	MHI_EVENT_CONFIG_CTRL(0, 64),
+> +	/* SAHARA dedicated event ring */
+> +	MHI_EVENT_CONFIG_SW_DATA(1, 256),
+> +	/* Software channels dedicated event ring */
+> +	MHI_EVENT_CONFIG_SW_DATA(2, 64),
+> +	MHI_EVENT_CONFIG_SW_DATA(3, 256),
+> +	MHI_EVENT_CONFIG_SW_DATA(4, 256),
+> +	/* Software IP channels dedicated event ring */
+> +	MHI_EVENT_CONFIG_SW_DATA(5, 512),
+> +	MHI_EVENT_CONFIG_SW_DATA(6, 512),
+> +	MHI_EVENT_CONFIG_SW_DATA(7, 512),
+> +};
+> +
+> +static const struct mhi_controller_config mhi_qcom_qdu100_config = {
+> +	.max_channels = 128,
+> +	.timeout_ms = 120000,
+> +	.num_channels = ARRAY_SIZE(mhi_qcom_qdu100_channels),
+> +	.ch_cfg = mhi_qcom_qdu100_channels,
+> +	.num_events = ARRAY_SIZE(mhi_qcom_qdu100_events),
+> +	.event_cfg = mhi_qcom_qdu100_events,
+> +};
+> +
+> +static const struct mhi_pci_dev_info mhi_qcom_qdu100_info = {
+> +	.name = "qcom-lassen",
+
+I don't think you can use internal chip name in the drivers. Please use the
+actual chip code like QDU100.
+
+> +	.fw = "qcom/lassen/xbl_s.melf",
+> +	.edl = "qcom/lassen/edl.mbn",
+
+Could you please push these fw to linux-firmware repo? This is a requirement to
+get this patch accepted. I should've imposed this at the start itself...
+
+> +	.edl_trigger = true,
+> +	.config = &mhi_qcom_qdu100_config,
+> +	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
+> +	.dma_data_width = 32,
+> +	.sideband_wake = false,
+> +};
+> +
+>  static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+>  	MHI_CHANNEL_CONFIG_UL(4, "DIAG", 16, 1),
+>  	MHI_CHANNEL_CONFIG_DL(5, "DIAG", 16, 1),
+> @@ -822,6 +879,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+>  	/* NETPRISMA FCUN69 (SDX6X) */
+>  	{ PCI_DEVICE(PCI_VENDOR_ID_NETPRISMA, 0x1001),
+>  		.driver_data = (kernel_ulong_t) &mhi_netprisma_fcun69_info },
+> +	/* QDU100, x100-DU */
+> +	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0601),
+> +		.driver_data = (kernel_ulong_t)&mhi_qcom_qdu100_info },
+
+Spare after (kernel_ulong_t) and also sort the entries as per the comment above
+mhi_pci_id_table[].
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
