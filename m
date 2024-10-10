@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-33864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6AD1998746
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 15:12:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 028E8998753
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 15:15:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 373762817E4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 13:12:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7565F1F20D46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 13:15:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E8451C8FC7;
-	Thu, 10 Oct 2024 13:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 60CF82209B;
+	Thu, 10 Oct 2024 13:15:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pZpbwVFi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aJn7f9b4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02D71C6F76
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 13:12:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EA91DA5E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 13:15:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728565939; cv=none; b=rx/9NrqGLuYV+KVl2yuNhKqwS58rq0Vn0NcCrhq0DVfL795fB44VHxHYgJlhOvEyquIDjWePBJnsnI7ksSBLLmlozqO758SKogZ26Cx/zw4wtc1Ww3/iK4FeCQgTIIhYwGqs7Z1S32opwUT/JPx0x6eKISlHFL0/7rIlm6bLxAQ=
+	t=1728566125; cv=none; b=ljWZU4iKOxUvQmuhccso6jWFK2+VGbWffgfBc65hh2wgLGKFVP1dh6VNnXwGOu28FdfMxoALD2wc/qxEq6XMVnM7p9cM20Xj0GY1JbeR+IgBbozt38UGqIZ/8b08X7bPs9sJ7oJeDeUSoTtil7nmf+Gs/M6gTWZmdGDnDP/x1dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728565939; c=relaxed/simple;
-	bh=SOVGQ0j1vHnuQ3KnCTLaMZr0IoVM1KBu/R1Xr3Ui2ZU=;
+	s=arc-20240116; t=1728566125; c=relaxed/simple;
+	bh=piG7spDyI4SMwG425xbizqqdIg+64jbDc/2NxOiLfaI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TqtEPWM2Ilv5lzOAyUiBQQTxWNJRD1lTbSjLCYSv0BO1kMTWrOwYbNOXEojh8pRU9aTjUigtACBlOdgzfT4NAKAyM5HlWbRTqUggKpz8iCPZGTj91KpedqHAtd8fCQAs/rJY8ntOPN5gUFtUlzglCfsDC/m8Kuq7FEMFAF9dtus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pZpbwVFi; arc=none smtp.client-ip=209.85.208.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=r0lPbEyCna7v7FoW2KzdoTGFTVc/1bT9h2ycd0ZBbSGH3fyrV64xJl05pKfn+nj+KpR4GIHiKVM+ZiZ1HVljoa/ikmNl1MyqJdGAo5XckwFfMBNhHPtSy2NLXR2jFUnZMuzzldFdmo+Nxn3l1DC45LvbTykfe1m8jOmVSYkqicE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aJn7f9b4; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2fabe5c8c26so8507031fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 06:12:17 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fad6de2590so13308481fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 06:15:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728565936; x=1729170736; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728566122; x=1729170922; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8oQ6GD8MQZYcrXheM1dKv/EP5g/yYfuhywKE4ovWK+c=;
-        b=pZpbwVFixyviTYVM0dRRtLCZl6mmWx3ON/XsQPYDWnMMiSyqGC5rQ3ZaRSwDvphXsN
-         zMS5z9mUXNnmHHXVR5jS1pNBTh7x9ScvrLopyDOMMACA+aNtAmOE3ezlJQBBlET0Tjaw
-         Q1NjPD/RoY1K4FTCuFI076bfZXpPjXmFZsx55XnJdAYvTOiDVCslu1QlT0umvsU5b9gZ
-         2LL8fX7FF37Hw1eIUgFDmIcQZUm2bRJ8qVB+DA6lbqLWbBNOhOboGZjpxhW8Ky1QI+ED
-         5RNIBFP5EWor1zNoN2M87XcDKU/mWe2RR5407tV8XarMXWtFlFZK3ZnQqvJZ/9XEOm2N
-         Vd8w==
+        bh=HtB9kAVv9ewzwyyxT2HgaIAbvdU2B8U0xWvscjF8+ew=;
+        b=aJn7f9b4gbjOHQxvjS+Ve63R3PLePG13ArDTBUctr2lVa+gt2Q8aYFIZQVme1LfHzF
+         x6oOcQsOL4Og3rf2jwtTDSAp4p+/U9bd3Qg8wYHOmqIa4ePKmorSoAVz4mzrnY+VJyG2
+         dO74CJlS8yNsj6O/h4CehcYOv74B1dOViUfAtzsIGV86M5iOwQJbD3XwFo6Plf/LiecU
+         6HnglD72Rj+Zvfz1biMWUtNFB2mNTMcKR0jSmJfOoolD1NZAue9KX1Ri3u9t5J4M+TBF
+         Rs8kUSLgkaOuGP7SOCXbeGxI27yZOelWJ1aFDdaUvZn+f3t01FNNEGZY44B31vtB8v7V
+         BBhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728565936; x=1729170736;
+        d=1e100.net; s=20230601; t=1728566122; x=1729170922;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8oQ6GD8MQZYcrXheM1dKv/EP5g/yYfuhywKE4ovWK+c=;
-        b=U7FWVCU/yMeTpHY8dVbSoxl2c7U/wYQW3ukfqRvkplxkICInxbXXH3HMxH4C6une4D
-         ePw2DNN8D73ZWNdoH9rL6fXlIG+PWpBfMJD87mXi2ychlO6e5vDTAsxdIgcAiqYgVzN6
-         f36SoaEJ1wbq69TOTs28T6TvRvvQ713toVzqonNSmUKudvxMK8l+wph0Yi2heL1B0jrQ
-         u8ctvExn4XyJh6GLlVK8CtQd+W9So/Jp1b3LSDeUMXTkPxs4vOpSF5UujfbU/2fOUn9t
-         JiPCB9glCBAOWswmSx3NVxoAonIqzaIS5GcR8kBLyqDbjaM/8T0OwwGNRuWdIjFpZFoU
-         9B7g==
-X-Forwarded-Encrypted: i=1; AJvYcCXt2P639GdKNFwXOWwpalGMPdp+qrVxtfW3l77YUU+KFxO06Xf4qu7FrAXfr07hVuJwv2zwt2EvgJIsXo8V@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrEIvie4nyYHJZF8XPt1W5wXYIg9icwpbsHAc/xdJM+0hqatR8
-	RUGY+NUvZcyyhlCSfI68TDRDMJaBxAohidrUIlEuM5NNL7gxxu/++f3fD6VRS4I=
-X-Google-Smtp-Source: AGHT+IF3He53CvkRJkxofe5tl8tnrXaXIeMvIqxCeWY4+8hdVEZb6tiIi6SGDk3CRN6Uet1MYDTxFg==
-X-Received: by 2002:a2e:a985:0:b0:2f5:806:5d00 with SMTP id 38308e7fff4ca-2fb187be78bmr39711411fa.32.1728565935651;
-        Thu, 10 Oct 2024 06:12:15 -0700 (PDT)
+        bh=HtB9kAVv9ewzwyyxT2HgaIAbvdU2B8U0xWvscjF8+ew=;
+        b=YgI6FSe261LUM35CVX7S5aREJoder6g6r72pndhF3WpZXRwtFtpCQlGOb80g2ygUVv
+         51iMjb1+rQcF+7QGYypr0v0rhZrXJxE4Yd2F1uvr5xTe4LuaB7XdN+KaaHGyVHYomFz1
+         /q+9I9heT3t02h2AAC/r4eISyrWcHNBqfA/+1m52tU+kmreryHs53b8NCzP9xhLsj5vl
+         593PL7HY6uc6xBP6nT2TKxbjoSYUf9UjBCxcq1zlqjXsHaUDvfBGzbRfg+P/iuPjzuBg
+         zaiWcrDV7PTWk4YABUQT1lB1VkrvsUn92T+NVGzji4ahdSgkY9uZFZjY7aoHUAcNLsMN
+         SbNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWaOQlF1/wcJB2m45CPswvJxCYDlv9XUr3KTSccXSc8A8+VSSs2wfwOapJ8KqGHv6e+2bk7kyy0UO7fd9ap@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw2v9IF50FXTVLpBV7oNoDmPk9jPloItPLVf5lohH6+NpcGo6UK
+	2vQF/5kocbsNza3He1UfdBJQKcYIKQFlGDpPX4tnKe/lF/BqCAahGfNx3AJVC3E=
+X-Google-Smtp-Source: AGHT+IH87YK8uHv2ZWN1NNC54PbY4gQ2AIlsgM9SMaLpPP1t+mq+ARbZWeCTLYn1opz9zUFkkR2P9A==
+X-Received: by 2002:a2e:be23:0:b0:2ef:1b1b:7f42 with SMTP id 38308e7fff4ca-2fb187e7de2mr59795661fa.36.1728566121685;
+        Thu, 10 Oct 2024 06:15:21 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb29fb4b61sm403631fa.128.2024.10.10.06.12.12
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb2aeec78esm156381fa.96.2024.10.10.06.15.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 06:12:14 -0700 (PDT)
-Date: Thu, 10 Oct 2024 16:12:11 +0300
+        Thu, 10 Oct 2024 06:15:20 -0700 (PDT)
+Date: Thu, 10 Oct 2024 16:15:17 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Jun Nie <jun.nie@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, 
@@ -74,10 +74,10 @@ Cc: Rob Clark <robdclark@gmail.com>,
 	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
 	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
 	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 08/14] drm/msm/dpu: update mixer number info earlier
-Message-ID: <n7bkvvxph2wxaxf2s7vonj273ouonlb2nisl7n7ora6j5stnlv@tt3v3uawwh2q>
+Subject: Re: [PATCH v2 09/14] drm/msm/dpu: blend pipes per mixer pairs config
+Message-ID: <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3>
 References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
- <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-8-76d4f5d413bf@linaro.org>
+ <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -86,57 +86,114 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-8-76d4f5d413bf@linaro.org>
+In-Reply-To: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
 
-On Wed, Oct 09, 2024 at 04:50:21PM GMT, Jun Nie wrote:
-> Update mixer number info earlier so that the plane nopipe check
-> can have the info to clip the plane. Otherwise, the first nonpipe
-> check will have mixer number as 0 and plane is not checked.
+On Wed, Oct 09, 2024 at 04:50:22PM GMT, Jun Nie wrote:
+> Blend pipes by set of mixer pair config. The first 2 pipes are for left
+> half screen with the first set of mixer pair config. And the later 2 pipes
+> are for right in quad pipe case.
 > 
 > Signed-off-by: Jun Nie <jun.nie@linaro.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 ++++++++++-
->  1 file changed, 10 insertions(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 38 ++++++++++++++++++-----------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
+>  2 files changed, 25 insertions(+), 14 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index dfe282c607933..68655c8817bf8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -638,6 +638,7 @@ static int dpu_encoder_virt_atomic_check(
->  	struct dpu_global_state *global_state;
->  	struct drm_framebuffer *fb;
->  	struct drm_dsc_config *dsc;
-> +	struct dpu_crtc_state *cstate;
->  	int ret = 0;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 43d9817cd858f..66f745399a602 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>  	const struct msm_format *format;
+>  	struct dpu_hw_ctl *ctl = mixer->lm_ctl;
 >  
->  	if (!drm_enc || !crtc_state || !conn_state) {
-> @@ -662,6 +663,8 @@ static int dpu_encoder_virt_atomic_check(
->  	dsc = dpu_encoder_get_dsc_config(drm_enc);
+> -	uint32_t lm_idx, i;
+> +	uint32_t lm_idx, lm_pair, i, pipe_idx;
+>  	bool bg_alpha_enable = false;
+>  	DECLARE_BITMAP(fetch_active, SSPP_MAX);
 >  
->  	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state, dsc);
-> +	cstate = to_dpu_crtc_state(crtc_state);
-> +	cstate->num_mixers = topology.num_lm;
+> @@ -463,15 +463,20 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_crtc *crtc,
+>  		if (pstate->stage == DPU_STAGE_BASE && format->alpha_enable)
+>  			bg_alpha_enable = true;
 >  
->  	/*
->  	 * Use CDM only for writeback or DP at the moment as other interfaces cannot handle it.
-> @@ -1170,7 +1173,13 @@ static void dpu_encoder_virt_atomic_mode_set(struct drm_encoder *drm_enc,
+> -		for (i = 0; i < PIPES_PER_LM_PAIR; i++) {
+> -			if (!pstate->pipe[i].sspp)
+> -				continue;
+> -			set_bit(pstate->pipe[i].sspp->idx, fetch_active);
+> -			_dpu_crtc_blend_setup_pipe(crtc, plane,
+> -						   mixer, cstate->num_mixers,
+> -						   pstate->stage,
+> -						   format, fb ? fb->modifier : 0,
+> -						   &pstate->pipe[i], i, stage_cfg);
+> +		/* loop pipe per mixer pair */
+> +		for (lm_pair = 0; lm_pair < PIPES_PER_PLANE / 2; lm_pair++) {
+> +			for (i = 0; i < PIPES_PER_LM_PAIR; i++) {
+> +				pipe_idx = i + lm_pair * PIPES_PER_LM_PAIR;
+> +				if (!pstate->pipe[pipe_idx].sspp)
+> +					continue;
+> +				set_bit(pstate->pipe[pipe_idx].sspp->idx, fetch_active);
+> +				_dpu_crtc_blend_setup_pipe(crtc, plane,
+> +							   mixer, cstate->num_mixers,
+> +							   pstate->stage,
+> +							   format, fb ? fb->modifier : 0,
+> +							   &pstate->pipe[pipe_idx], i,
+> +							   &stage_cfg[lm_pair]);
+> +			}
+>  		}
+>  
+>  		/* blend config update */
+> @@ -503,7 +508,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+>  	struct dpu_crtc_mixer *mixer = cstate->mixers;
+>  	struct dpu_hw_ctl *ctl;
+>  	struct dpu_hw_mixer *lm;
+> -	struct dpu_hw_stage_cfg stage_cfg;
+> +	struct dpu_hw_stage_cfg stage_cfg[LM_PAIRS_PER_PLANE];
+
+After seeing this code, can we define STAGES_PER_PLANE (and
+also keep PLANES_PER_STAGE defined to 2)?
+
+>  	int i;
+>  
+>  	DRM_DEBUG_ATOMIC("%s\n", dpu_crtc->name);
+> @@ -516,9 +521,9 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
 >  	}
 >  
->  	cstate->num_dscs = num_dsc;
-> -	cstate->num_mixers = num_lm;
-> +	if (cstate->num_mixers != num_lm) {
-> +		if (!cstate->num_mixers)
-> +			DPU_ERROR_ENC(dpu_enc,
-> +				      "mixer number %d is not as expected %d\n",
-> +				      num_lm, cstate->num_mixers);
-> +		cstate->num_mixers = num_lm;
-> +	}
-
-Is it a possible case or just defensive coding?
-
->  	dpu_enc->connector = conn_state->connector;
+>  	/* initialize stage cfg */
+> -	memset(&stage_cfg, 0, sizeof(struct dpu_hw_stage_cfg));
+> +	memset(&stage_cfg, 0, sizeof(stage_cfg));
 >  
->  	/*
+> -	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, &stage_cfg);
+> +	_dpu_crtc_blend_setup_mixer(crtc, dpu_crtc, mixer, &stage_cfg[0]);
+>  
+>  	for (i = 0; i < cstate->num_mixers; i++) {
+>  		ctl = mixer[i].lm_ctl;
+> @@ -535,8 +540,13 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *crtc)
+>  			mixer[i].mixer_op_mode,
+>  			ctl->idx - CTL_0);
+>  
+> +		/*
+> +		 * call dpu_hw_ctl_setup_blendstage() to blend layers per stage cfg.
+> +		 * There is 4 mixers at most. The first 2 are for the left half, and
+> +		 * the later 2 are for the right half.
+> +		 */
+>  		ctl->ops.setup_blendstage(ctl, mixer[i].hw_lm->idx,
+> -			&stage_cfg);
+> +			&stage_cfg[i / 2]);
+>  	}
+>  }
+>  
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> index 3277debe11689..d8f5cffa60ea6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
+> @@ -34,6 +34,7 @@
+>  
+>  #define PIPES_PER_PLANE			2
+>  #define PIPES_PER_LM_PAIR		2
+> +#define LM_PAIRS_PER_PLANE		2
+>  #ifndef DPU_MAX_DE_CURVES
+>  #define DPU_MAX_DE_CURVES		3
+>  #endif
 > 
 > -- 
 > 2.34.1
