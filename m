@@ -1,96 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-33931-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97943999543
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 00:36:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9A6D99954A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 00:37:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 31869284AF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 22:36:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8D69D2849F7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 22:37:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C7171C172A;
-	Thu, 10 Oct 2024 22:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CC71E8837;
+	Thu, 10 Oct 2024 22:36:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Wa9j1rSx"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="YvNjgkKB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33BA1A2645
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 22:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F271E7658
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 22:36:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728599801; cv=none; b=s+Tzq02gUCQCNQlUv1rzyynLIJsHZQ3/n/Hu0m/HbPdN0rBfu1r+bVpEgUz4mIqbyl+UEc1HeXny/lICGC6VPHVdoVLiLKDF+QoK0DLcVug4KSA383UyGhA+Rad2pj9xVqyFKfZnCR1LAVPrnINJ8onJHuO4CQGhtLkUa4LpeMk=
+	t=1728599815; cv=none; b=a9jkB/9Jn9sYp1w7q3ISZgq4X+RuXlrM9b8w+rcXY7cPi+8m+MB81sIANqKYRnN+iYGuLQ94A30pla5dczyZSfznNda0MWjJqpVvjAkmSA8QK8LXof2goe4iJStzFgKyY/ieIVC4i0+isiD5LFdFOdJm29jWrQ0m1BwA2EWFz9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728599801; c=relaxed/simple;
-	bh=ndGUOdbmf0XLXi5qOt0/OM43ZwpMxj5j0YR7mZtrb0o=;
+	s=arc-20240116; t=1728599815; c=relaxed/simple;
+	bh=S8MzrVyVXYrrKDN3sreSlr2FvATE3GpWfAgeOexSlnw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L7x5jMTIduKTFx60oNWy6YYVbuXkVWdgUolTQG2WhOpCTYBtSXOQkpoGr9Ju+tX1A6kPcuMala3+oV6fQxpfTa5dt+fR0k/IicYrmFhWM88+u75BFuKVe757PA0zEuFn6ZboK+UqlhKdseNt2KnkIHrZD8x7U7sDQ4nD0pRLErE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Wa9j1rSx; arc=none smtp.client-ip=209.85.208.174
+	 To:Cc:Content-Type; b=jo8VU8vK4ktgYpJ0D5E+WTlJJfZTllk/v7x7keaavb64n01dn69Uw87hFM7Z5E43UlOOwAbAIfmnxWyiy2ba0kiz48k2ul52NJNujwOQlGUh2oyx4Ex0GJuLmZ7EWQwvte65FqbdUO2bjXTAaaIDYuGlhPqIn60yDEWREXfNOhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=YvNjgkKB; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2fad784e304so16223911fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:36:39 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-53993564cb1so1793544e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1728599796; x=1729204596; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1728599809; x=1729204609; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eyyxlBvtxdIx44gC6sdEnPAxTnLbnwRQOcfiWPcHmqE=;
-        b=Wa9j1rSxtkPuaG2PLhc1lMwrXA3NrJHkqCdfv4ccIwGm28b7A1+vXWde6ATyk9H8VM
-         3ggLieKpgCmnkMzSEiC4mkpRH+n+Yqc9+YRskfJ4ygFPzs5jy2kDPypDteNjw7g9XvK2
-         tn9N+00xm58W35PV6dmdV3k8h8co4c3kY8tno=
+        bh=wWMUsztqHY1RJBiR4O9/uVA8A37ER1fCtc2N/7pUsd0=;
+        b=YvNjgkKBYyjKZ/WALtWCkYyhluwEZoU9YeIh4nsxhyp9EWiIasFdMOSGWlLGXHeJ5a
+         C3O2fOqxTWvA+6R40ZbfNAG/7XFgHj+RZ6LpPk/muHJLFNZnYs8J7utt8+/sdNac8yH9
+         Lr231vVxWZa6EIc/IKrKt8Ug4Hfd+6KsHq59w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728599796; x=1729204596;
+        d=1e100.net; s=20230601; t=1728599809; x=1729204609;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eyyxlBvtxdIx44gC6sdEnPAxTnLbnwRQOcfiWPcHmqE=;
-        b=BjJKugw1wVPeO6q6UiBEyTa0j/tPxfDZyYU32xNdR1NBiwlDdFmgq4zEEgyRP/ZcYw
-         93/hmKPlBT51UOeVcYQ7K0qXEquXg8z/TnyYiyz0d6SHBuXJ7NpYNc0I6G0OVIZwMNq+
-         CB1OtaVbJd3YGvmBcSw3SMB23W1HjJK8WTn1Yt5xNrZ4EURluHEwIM405GPaPja8KsXc
-         olR3djZPRAonBJ30lh0bDN4ppY/47h6o1Sd1yCtHZ0voRg0vbEdd2R9p4jZ6Bewerfmq
-         KQaFwJ2eFclpKUmVjZfk+REjF8fVUTc4/P6CR1VKiVYPi7bBSJj+Ezf9jQEdSW8tsSnK
-         bHUg==
-X-Forwarded-Encrypted: i=1; AJvYcCXwCohVNbvfNZGv61GyzUF765nQYsawAD8zXQUMmhyF82yZgKGyjUrnU9XRc8iy037hOWuUohZvccXyjW/c@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCUGgsadVOi5axBl8j7zo07w78VZZu9Y4jOlraQkl0+C7+qrFJ
-	SHfTk6HNETtnq4sAog5sFXLHAuu6ZmRBHACVj2QL6ufXLs6lPRx+uobdXSeD3uHmQdUTSnzLS5b
-	Lk9nG
-X-Google-Smtp-Source: AGHT+IHCvTR9hl0mHfy7lfReDu9kaC8UzU/NA6BSg9aqjEA31BxQYeehkIteDlhj1uEpF+dOBhB2eQ==
-X-Received: by 2002:a05:651c:2223:b0:2ef:2b38:879c with SMTP id 38308e7fff4ca-2fb326f5564mr1616421fa.3.1728599795748;
-        Thu, 10 Oct 2024 15:36:35 -0700 (PDT)
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com. [209.85.167.53])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb247064absm3313791fa.93.2024.10.10.15.36.34
+        bh=wWMUsztqHY1RJBiR4O9/uVA8A37ER1fCtc2N/7pUsd0=;
+        b=qpQmOrFe5Le+ryARVhHt0RSFhDzePvzZbAJrWiRlaFb9ulvY0zk53cMgfVpIhNwXE5
+         1vO8UcSotuUmAFTRJ5krRHOe2T2RvfU3Tpa46fjDVdvAYWmiuRlaOUTy92cUFkyK7n90
+         BwcqT2EJNplZJtyU+TV37Bg0+EKDSMQ2Z9sS+mXtMQddtbsDP9P/Ny8s69nOX8SzEDUp
+         J82FdgiU9Mg+GKP/NK20F93RCAodoyYbjwB8fk76njOTf3xFSiT4Ori0Tk/NkNCZyVOb
+         QKkUysu7ws/XRMUMGyY5gyw51+kDGPpNWdfhzN/o2fEE8DK0/C3d7zZvEBUhnSTy/zla
+         V1XA==
+X-Forwarded-Encrypted: i=1; AJvYcCVRQ7JqQydFDWuc3SV2zwYt5I2Uv/FvlCqT5/rgas0WQf2HKy6JLubMO+R6v0nOjem7fLi2WiLo9dNuOpVR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yza8uY/JL7mXzqnpfChKC+3YjO8r6ycF2Mi+1Lh5MChNrtcu2Ho
+	xjE1LCfx7xFNu6ND0qY32Bc/1Kybkxlo2K6cyBuqxBSQpQUt+6LKJnkz2JGaRvd/6wUXWiO3RhK
+	IrNxF
+X-Google-Smtp-Source: AGHT+IGPwvqBfghbsTGM/twhsXWAcappyPggUz434twrkDsbMLV60hkIAeAwXN5Y3luyAzSu3QhyCA==
+X-Received: by 2002:a05:6512:1305:b0:539:d05c:f553 with SMTP id 2adb3069b0e04-539da3c6967mr186397e87.21.1728599808813;
+        Thu, 10 Oct 2024 15:36:48 -0700 (PDT)
+Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com. [209.85.167.50])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539cb6c86eesm409580e87.82.2024.10.10.15.36.47
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Oct 2024 15:36:34 -0700 (PDT)
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5389917ef34so1708902e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:36:34 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVoMyIc5FpxYwZgrerCfGZqww53Ro3RxSlDX3MUTysnI+XNCid/3gfTpvTUknCrnH5wdkLQm1bl1QMk2Dcv@vger.kernel.org
-X-Received: by 2002:a05:6512:3189:b0:535:6cbf:51a3 with SMTP id
- 2adb3069b0e04-539da3d5293mr199479e87.25.1728599794291; Thu, 10 Oct 2024
- 15:36:34 -0700 (PDT)
+        Thu, 10 Oct 2024 15:36:48 -0700 (PDT)
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-5398cc2fcb7so1819354e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:36:47 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXwsPwuPik1DE3HEWONcM8/jrsGOyoYnc/0y3pvABbcyNbpVeE94Z/Hsy3Qui+PmO6IZvfha+yakhQWTdqQ@vger.kernel.org
+X-Received: by 2002:a05:6512:3091:b0:52e:9f6b:64 with SMTP id
+ 2adb3069b0e04-539da4e09a3mr158626e87.34.1728599806982; Thu, 10 Oct 2024
+ 15:36:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241009145110.16847-1-johan+linaro@kernel.org> <20241009145110.16847-2-johan+linaro@kernel.org>
-In-Reply-To: <20241009145110.16847-2-johan+linaro@kernel.org>
+References: <20241009145110.16847-1-johan+linaro@kernel.org> <20241009145110.16847-4-johan+linaro@kernel.org>
+In-Reply-To: <20241009145110.16847-4-johan+linaro@kernel.org>
 From: Doug Anderson <dianders@chromium.org>
-Date: Thu, 10 Oct 2024 15:36:19 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WvpOx1RHFdo7NSss3m922VqRSdsV6G+NnxyCjcp2XMVA@mail.gmail.com>
-Message-ID: <CAD=FV=WvpOx1RHFdo7NSss3m922VqRSdsV6G+NnxyCjcp2XMVA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/9] serial: qcom-geni: fix polled console initialisation
+Date: Thu, 10 Oct 2024 15:36:30 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WdxCbQm36sq4RtPMGyi+ZefPYoOQortAN+SDYTAY_m9g@mail.gmail.com>
+Message-ID: <CAD=FV=WdxCbQm36sq4RtPMGyi+ZefPYoOQortAN+SDYTAY_m9g@mail.gmail.com>
+Subject: Re: [PATCH v3 3/9] serial: qcom-geni: fix shutdown race
 To: Johan Hovold <johan+linaro@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
 	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>, linux-arm-msm@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org, 
-	stable@vger.kernel.org
+	stable@vger.kernel.org, Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -99,21 +99,31 @@ Hi,
 On Wed, Oct 9, 2024 at 7:51=E2=80=AFAM Johan Hovold <johan+linaro@kernel.or=
 g> wrote:
 >
-> The polled console (KGDB/KDB) implementation must not call port setup
-> unconditionally as the port may already be in use by the console or a
-> getty.
+> A commit adding back the stopping of tx on port shutdown failed to add
+> back the locking which had also been removed by commit e83766334f96
+> ("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART
+> shutdown").
 >
-> Only make sure that the receiver is enabled, but do not enable any
-> device interrupts.
+> Holding the port lock is needed to serialise against the console code,
+> which may update the interrupt enable register and access the port
+> state.
 >
-> Fixes: d8851a96ba25 ("tty: serial: qcom-geni-serial: Add a poll_init() fu=
-nction")
-> Cc: stable@vger.kernel.org      # 6.4
-> Cc: Douglas Anderson <dianders@chromium.org>
+> Fixes: d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in p=
+rogress at shutdown")
+> Fixes: 947cc4ecc06c ("serial: qcom-geni: fix soft lockup on sw flow contr=
+ol and suspend")
+> Cc: stable@vger.kernel.org      # 6.3
+> Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->  drivers/tty/serial/qcom_geni_serial.c | 20 +++++++++++++++++++-
->  1 file changed, 19 insertions(+), 1 deletion(-)
+>  drivers/tty/serial/qcom_geni_serial.c | 2 ++
+>  1 file changed, 2 insertions(+)
+
+Though this doesn't fix the preexisting bug I talked about [1] that
+we'll need to touch the same code to fix:
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
+
+[1] https://lore.kernel.org/r/CAD=3DFV=3DUZtZ1-0SkN2sOMp6YdU02em_RnK85Heg5z=
+0jkH4U30eQ@mail.gmail.com
 
