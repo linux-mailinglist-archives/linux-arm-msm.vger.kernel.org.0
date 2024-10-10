@@ -1,64 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-33919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10D849991B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 21:06:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B3D89991BD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 21:06:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD73C1F267D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 19:05:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1A1A51F26A2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 19:06:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 532731C9B93;
-	Thu, 10 Oct 2024 18:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39B9A1E8834;
+	Thu, 10 Oct 2024 18:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gcr3X+6P"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="mCUnPJ3g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD4F1CDFCB;
-	Thu, 10 Oct 2024 18:59:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0C61E882F;
+	Thu, 10 Oct 2024 18:59:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728586743; cv=none; b=mJJIVsrVG+P/mlwLFt6FV5IurJNRcfzvW/V2wnnVEXUNcQUqo/kpQl+FlJGDotb8yxbTbq1JvkTgEOJYbD92Xnq/hHSWjjXq/kzFE9KPNGqf8fl/KdlQOwupptKbjG/r5tu/6nGdQ0IUJcehCyWPptNK4MiqWDyFgFpSgU17RME=
+	t=1728586748; cv=none; b=sS/6MJPdVo2PMZcMTKiZPsgC1x4SHuh+xzno+FsjYHI0EzhfuFaT67/LpjL+46PawUgHISCOfEXo42O4kKem6ZC/Wv0bncOalsJd52NZIRPDob0zOqNzMdl+759qRRn4xKvqGqmOgq6NFhmrgLVtIu6Nv+rsdfMWpJkk1h4IGo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728586743; c=relaxed/simple;
-	bh=EUpVs7K66Zr7JjXFtP5vwk0CEZGRLh4gbhryYwMvN+s=;
-	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ETMNHiQL0IS2gdJ4bmHbC+vy0JjX21NVBJ1xcG2UGn95wwh1Az9UC2lidrR7rKO4Vd3svlGH/lopPcWuOtBc4+SNmYZYCoImimRCNA1vdH5dMeIVu13hImw+XKwiNxxrwIpm7IwNZg60NhvjQiW2yxZ43IyoZus/e/FJNNTAEXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gcr3X+6P; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1728586748; c=relaxed/simple;
+	bh=+A8RFRUS61uWhuEoNyF8u4O922mStjHv/1XJ2RoSNjA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=uxdyLlkWMYKrj82ps2i6xRRKad6Y4Zda/3ZIwsb3cQAn1L7LD3XhyLKfCS2aB9Xmx9EdDPad6dKunqtdLULGLDlgB7QVZhW+T5lSBKwBXyM1BXNTg+rHOqyQHiN6zTWid8rQC3Uy1FVGhFiDflUh4GmgojI1WhPMiraJHmB6CXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=mCUnPJ3g; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ACWS8b011352;
-	Thu, 10 Oct 2024 18:58:56 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49AHLBAi024403;
+	Thu, 10 Oct 2024 18:59:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Nd63vaGxJiqCYtQj0CNWoa
-	q9wm+Z9QM/ORIEM2y0Pt0=; b=gcr3X+6PiXGpdS2imrs2NH6G7MJTvcBV1gYlNx
-	DaGqxfqFWn+4dRF6H3wzKgq78nSf7XhTRw1Gq+fYixMJ4bEXvlpf95UUnUP4iU2P
-	4ntek4b5/Ah5fjgPCtb66zAy/reWbU2nfM5qGVw2aS7n2E+zrrj6ouiWijqphhlX
-	Yv08yiNqCY+Iu2yrKtafkpJ/ldC0zjQpKGbmcBxN8qFn+iLE0I8mHv3KBjQe2aOw
-	+DbOXdvXQJzkQ9fgwdeoqLpVA90xpgUSmDLB0dOtTP5VNkEwaRJ7DxMouDY1pHDG
-	SKOxLo1X97jaWoX9HvQBQv86fF9N4bBSm4S7DukrCtU7/tFg==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425xthugfd-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1csGEs8fBZ7XAK8K+fr3BSgM/C/Dzd0jMdLdzpnxTx8=; b=mCUnPJ3gZcp+7njd
+	X0qQYUO/oDnSWs49WTBvf0/wPVfEeXZkKUneA+OaZgYAIb2SS4IRPTWjERvOs/FN
+	AVupxyi/SdCC7owrjhCBYQs3P4nYEGNkKwcdRU90GAeELL3Hq4bgLaV2F/Ncv37F
+	nBA5Hw1HIAHDa+BoekyevxaTwhOlFmX3t5ICzyp+mnOruBMwJ9kIlFBgNIaJAinB
+	+8ET7E9XHEFVH8r2nKhDx41FU8nJnRKIlJlbxJLhzN0SbKOZHjCZh9jmzdV7yfEZ
+	AehCSau+Vc7F1hfkxGWJ2l3RMPCPdErVZjemDVqjlEmShRa4JZmGwX9qxNo2yffA
+	pbShXQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 426adhhun4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 18:58:56 +0000 (GMT)
+	Thu, 10 Oct 2024 18:59:01 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49AIwtFY019181
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49AIx07u006716
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 18:58:55 GMT
+	Thu, 10 Oct 2024 18:59:00 GMT
 Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
  nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 10 Oct 2024 11:58:50 -0700
+ 15.2.1544.9; Thu, 10 Oct 2024 11:58:55 -0700
 From: Taniya Das <quic_tdas@quicinc.com>
-Subject: [PATCH v5 0/8] Add support for videocc, camcc, dispcc0 and dispcc1
- on Qualcomm SA8775P platform.
-Date: Fri, 11 Oct 2024 00:28:30 +0530
-Message-ID: <20241011-sa8775p-mm-v4-resend-patches-v5-0-4a9f17dc683a@quicinc.com>
+Date: Fri, 11 Oct 2024 00:28:31 +0530
+Subject: [PATCH v5 1/8] dt-bindings: clock: qcom: Add SA8775P video clock
+ controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,10 +68,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANYjCGcC/y3NwQrCMBCE4Vcpe3YhjQkRX0U8hGZq99AYs20RS
- t/doB6/Ofyzk6IKlK7dThWbqDxzgz91NEwxP8CSmska63rTG9Z4CcEXnmfeHFcocuISl2GCsrP
- h7BNGb6OhligVo7y/+dv954rX2l6W/3gcHyMyPRmDAAAA
-X-Change-ID: 20241010-sa8775p-mm-v4-resend-patches-42735def52a0
+Message-ID: <20241011-sa8775p-mm-v4-resend-patches-v5-1-4a9f17dc683a@quicinc.com>
+References: <20241011-sa8775p-mm-v4-resend-patches-v5-0-4a9f17dc683a@quicinc.com>
+In-Reply-To: <20241011-sa8775p-mm-v4-resend-patches-v5-0-4a9f17dc683a@quicinc.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette
 	<mturquette@baylibre.com>,
@@ -87,86 +87,156 @@ CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
         <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         Taniya Das
 	<quic_tdas@quicinc.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
+        Krzysztof Kozlowski <krzk@kernel.org>
 X-Mailer: b4 0.15-dev-aa3f6
 X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sqsOdff03max4xpZJeyJgbD4xjfq99kA
-X-Proofpoint-GUID: sqsOdff03max4xpZJeyJgbD4xjfq99kA
+X-Proofpoint-GUID: 5vsDWuj-ZGJXIamu9O5qBnChJblhJ3fM
+X-Proofpoint-ORIG-GUID: 5vsDWuj-ZGJXIamu9O5qBnChJblhJ3fM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501 bulkscore=0
- phishscore=0 clxscore=1015 mlxlogscore=999 impostorscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410100125
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 clxscore=1015 mlxscore=0 impostorscore=0 phishscore=0
+ bulkscore=0 lowpriorityscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410100125
 
-[v5]
-  Rebased the device tree patch to add clock controller nodes.
+Add device tree bindings for the video clock controller on Qualcomm
+SA8775P platform.
 
-[v4]
-  Changes in [v4] compared to [v3]
-  Videocc: Update the mvs0/mvs1 gdsc to use HW_CTRL_TRIGGER [Konrad and Qualcomm
-  internal discussions]
-  Camcc:   Add new clock to the clock tree.
-  Change the patch order for 'Update sleep_clk frequency to 32000 on SA8775P' [Krzysztof]
-
-Changes in [v3] compared to [v2]:
-  Update the qcom_cc_really_probe() to use &pdev->dev, for the CAMCC, DISPCC & VIDEOCC drivers.
-
-[v2]
-https://lore.kernel.org/all/20240612-sa8775p-mm-clock-controllers-v1-0-db295a846ee7@quicinc.com/
-Changes in [v2] compared to [v1]:
-  [PATCH 1/8]: Updated bindings to reference qcom,gcc.yaml
-  [PATCH 3/8]: Updated bindings to reference qcom,gcc.yaml
-  [PATCH 5/8]: Updated bindings to reference qcom,gcc.yaml
-  [PATCH 7/8]: Split updating sleep_clk frequency to separate patch
-  [PATCH 8/8]: Newly added to update sleep_clk frequency to 32000
-  These multimedia clock controller and device tree patches are split from the below [v1] series.
-
-[v1]
-https://lore.kernel.org/all/20240531090249.10293-1-quic_tdas@quicinc.com/
-
+Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
-Taniya Das (8):
-      dt-bindings: clock: qcom: Add SA8775P video clock controller
-      clk: qcom: Add support for Video clock controller on SA8775P
-      dt-bindings: clock: qcom: Add SA8775P camera clock controller
-      clk: qcom: Add support for Camera Clock Controller on SA8775P
-      dt-bindings: clock: qcom: Add SA8775P display clock controllers
-      clk: qcom: Add support for Display clock Controllers on SA8775P
-      arm64: dts: qcom: Update sleep_clk frequency to 32000 on SA8775P
-      arm64: dts: qcom: Add support for multimedia clock controllers
+ .../bindings/clock/qcom,sa8775p-videocc.yaml       | 62 ++++++++++++++++++++++
+ include/dt-bindings/clock/qcom,sa8775p-videocc.h   | 47 ++++++++++++++++
+ 2 files changed, 109 insertions(+)
 
- .../bindings/clock/qcom,sa8775p-camcc.yaml         |   62 +
- .../bindings/clock/qcom,sa8775p-dispcc.yaml        |   79 +
- .../bindings/clock/qcom,sa8775p-videocc.yaml       |   62 +
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi         |    2 +-
- arch/arm64/boot/dts/qcom/sa8775p.dtsi              |   57 +
- drivers/clk/qcom/Kconfig                           |   31 +
- drivers/clk/qcom/Makefile                          |    3 +
- drivers/clk/qcom/camcc-sa8775p.c                   | 1868 ++++++++++++++++++++
- drivers/clk/qcom/dispcc0-sa8775p.c                 | 1481 ++++++++++++++++
- drivers/clk/qcom/dispcc1-sa8775p.c                 | 1481 ++++++++++++++++
- drivers/clk/qcom/videocc-sa8775p.c                 |  576 ++++++
- include/dt-bindings/clock/qcom,sa8775p-camcc.h     |  108 ++
- include/dt-bindings/clock/qcom,sa8775p-dispcc.h    |   87 +
- include/dt-bindings/clock/qcom,sa8775p-videocc.h   |   47 +
- 14 files changed, 5943 insertions(+), 1 deletion(-)
----
-base-commit: 0cca97bf23640ff68a6e8a74e9b6659fdc27f48c
-change-id: 20241010-sa8775p-mm-v4-resend-patches-42735def52a0
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..928131bff4c1954871cd4067ba331d0cc7233307
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
+@@ -0,0 +1,62 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sa8775p-videocc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Video Clock & Reset Controller on SA8775P
++
++maintainers:
++  - Taniya Das <quic_tdas@quicinc.com>
++
++description: |
++  Qualcomm video clock control module provides the clocks, resets and power
++  domains on SA8775P.
++
++  See also: include/dt-bindings/clock/qcom,sa8775p-videocc.h
++
++properties:
++  compatible:
++    enum:
++      - qcom,sa8775p-videocc
++
++  clocks:
++    items:
++      - description: Video AHB clock from GCC
++      - description: Board XO source
++      - description: Board active XO source
++      - description: Sleep Clock source
++
++  power-domains:
++    maxItems: 1
++    description: MMCX power domain
++
++required:
++  - compatible
++  - clocks
++  - power-domains
++  - '#power-domain-cells'
++
++allOf:
++  - $ref: qcom,gcc.yaml#
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++    #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
++    videocc: clock-controller@abf0000 {
++      compatible = "qcom,sa8775p-videocc";
++      reg = <0x0abf0000 0x10000>;
++      clocks = <&gcc GCC_VIDEO_AHB_CLK>,
++               <&rpmhcc RPMH_CXO_CLK>,
++               <&rpmhcc RPMH_CXO_CLK_A>,
++               <&sleep_clk>;
++      power-domains = <&rpmhpd SA8775P_MMCX>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,sa8775p-videocc.h b/include/dt-bindings/clock/qcom,sa8775p-videocc.h
+new file mode 100644
+index 0000000000000000000000000000000000000000..e6325f68c31733f46e5d33281df86902e1f75095
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,sa8775p-videocc.h
+@@ -0,0 +1,47 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_SA8775P_VIDEO_CC_H
++#define _DT_BINDINGS_CLK_QCOM_SA8775P_VIDEO_CC_H
++
++/* VIDEO_CC clocks */
++#define VIDEO_CC_AHB_CLK					0
++#define VIDEO_CC_AHB_CLK_SRC					1
++#define VIDEO_CC_MVS0_CLK					2
++#define VIDEO_CC_MVS0_CLK_SRC					3
++#define VIDEO_CC_MVS0_DIV_CLK_SRC				4
++#define VIDEO_CC_MVS0C_CLK					5
++#define VIDEO_CC_MVS0C_DIV2_DIV_CLK_SRC				6
++#define VIDEO_CC_MVS1_CLK					7
++#define VIDEO_CC_MVS1_CLK_SRC					8
++#define VIDEO_CC_MVS1_DIV_CLK_SRC				9
++#define VIDEO_CC_MVS1C_CLK					10
++#define VIDEO_CC_MVS1C_DIV2_DIV_CLK_SRC				11
++#define VIDEO_CC_PLL_LOCK_MONITOR_CLK				12
++#define VIDEO_CC_SLEEP_CLK					13
++#define VIDEO_CC_SLEEP_CLK_SRC					14
++#define VIDEO_CC_SM_DIV_CLK_SRC					15
++#define VIDEO_CC_SM_OBS_CLK					16
++#define VIDEO_CC_XO_CLK						17
++#define VIDEO_CC_XO_CLK_SRC					18
++#define VIDEO_PLL0						19
++#define VIDEO_PLL1						20
++
++/* VIDEO_CC power domains */
++#define VIDEO_CC_MVS0C_GDSC					0
++#define VIDEO_CC_MVS0_GDSC					1
++#define VIDEO_CC_MVS1C_GDSC					2
++#define VIDEO_CC_MVS1_GDSC					3
++
++/* VIDEO_CC resets */
++#define VIDEO_CC_INTERFACE_BCR					0
++#define VIDEO_CC_MVS0_BCR					1
++#define VIDEO_CC_MVS0C_CLK_ARES					2
++#define VIDEO_CC_MVS0C_BCR					3
++#define VIDEO_CC_MVS1_BCR					4
++#define VIDEO_CC_MVS1C_CLK_ARES					5
++#define VIDEO_CC_MVS1C_BCR					6
++
++#endif
 
-Best regards,
 -- 
-Taniya Das <quic_tdas@quicinc.com>
+2.45.2
 
 
