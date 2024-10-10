@@ -1,280 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-33918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EF61998F73
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 20:10:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10D849991B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 21:06:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D7A31C23EF1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 18:10:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AD73C1F267D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 19:05:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1251CCEC7;
-	Thu, 10 Oct 2024 18:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 532731C9B93;
+	Thu, 10 Oct 2024 18:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImVHqF34"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gcr3X+6P"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264619D07B;
-	Thu, 10 Oct 2024 18:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD4F1CDFCB;
+	Thu, 10 Oct 2024 18:59:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728583732; cv=none; b=u5DfrM4sJiPRitVW01qvVrnlYoKzSiPXSPYnKVeHYlt/swwnxIp6Sxs3IBSW29XGXFKJ2RkncRmC5uk+Qpc0nF6KYNTsE8CbcVba4Qpx2XBvtbU/mbi1joyRI1zhIgH4HtcUdyWnSN3Hxni76WokqDKx8SGC2q38NuEu9zJhU08=
+	t=1728586743; cv=none; b=mJJIVsrVG+P/mlwLFt6FV5IurJNRcfzvW/V2wnnVEXUNcQUqo/kpQl+FlJGDotb8yxbTbq1JvkTgEOJYbD92Xnq/hHSWjjXq/kzFE9KPNGqf8fl/KdlQOwupptKbjG/r5tu/6nGdQ0IUJcehCyWPptNK4MiqWDyFgFpSgU17RME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728583732; c=relaxed/simple;
-	bh=kRyuQEirx8OT3QxshSDoNDq0jtdqV++P9IE7Wa7d97Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ehp1ZgOcpf45mmb4wX6UTR4K6VIlmsMUiJp0B4J//WR5bDYryuyOAh2TbBkrNsJp0SIIpezXvsClTBUKTFo2J/b4+KUdwY/gpbj8Ohr2BWdp9+zlqVESMJs431f0/BAMIpOIt0t+e7Zor/4APM6RODpOp/Ifnx6QLYrSmsKZISQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImVHqF34; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185C8C4CEC5;
-	Thu, 10 Oct 2024 18:08:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728583732;
-	bh=kRyuQEirx8OT3QxshSDoNDq0jtdqV++P9IE7Wa7d97Y=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ImVHqF34ZN8lV6UT/hSHMhvJ6R6TsRCOwj0xZPU5jUPfDOOi11a+8mbryjMJbw4Qc
-	 KIO/1QcnAGcTU/AY1Cb09cW+lzxuFUhE9CgRoxfrEQB65iREMGsjj7/RcXQpuiZl0a
-	 VdtCbBw34u6eApoKmfZAes1t6CRZeDcO31PasH4wuH6EMvDSWJiEZ6wJ6PPnzU8QIX
-	 U0iCzKpCa+VWoKjqdM3KdI71NFx7iTKXLdwxJ6BS/5PYa4mY+aZKvzCgqn3MFqG+AY
-	 cZzJj8+AAGmBPSxl/o1k+WKd0qUkaMCoBmJcycLyurJ0PsvAdpHQoFVMn4uYnAO3Sz
-	 Hsc+9IxuoIHig==
-Date: Thu, 10 Oct 2024 13:08:48 -0500
-From: Rob Herring <robh@kernel.org>
-To: Songwei Chai <quic_songchai@quicinc.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@arm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andy Gross <agross@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/7] dt-bindings: arm: Add support for Coresight TGU
- trace
-Message-ID: <20241010180848.GA2094931-robh@kernel.org>
-References: <20241010073917.16023-1-quic_songchai@quicinc.com>
- <20241010073917.16023-2-quic_songchai@quicinc.com>
+	s=arc-20240116; t=1728586743; c=relaxed/simple;
+	bh=EUpVs7K66Zr7JjXFtP5vwk0CEZGRLh4gbhryYwMvN+s=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=ETMNHiQL0IS2gdJ4bmHbC+vy0JjX21NVBJ1xcG2UGn95wwh1Az9UC2lidrR7rKO4Vd3svlGH/lopPcWuOtBc4+SNmYZYCoImimRCNA1vdH5dMeIVu13hImw+XKwiNxxrwIpm7IwNZg60NhvjQiW2yxZ43IyoZus/e/FJNNTAEXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gcr3X+6P; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ACWS8b011352;
+	Thu, 10 Oct 2024 18:58:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Nd63vaGxJiqCYtQj0CNWoa
+	q9wm+Z9QM/ORIEM2y0Pt0=; b=gcr3X+6PiXGpdS2imrs2NH6G7MJTvcBV1gYlNx
+	DaGqxfqFWn+4dRF6H3wzKgq78nSf7XhTRw1Gq+fYixMJ4bEXvlpf95UUnUP4iU2P
+	4ntek4b5/Ah5fjgPCtb66zAy/reWbU2nfM5qGVw2aS7n2E+zrrj6ouiWijqphhlX
+	Yv08yiNqCY+Iu2yrKtafkpJ/ldC0zjQpKGbmcBxN8qFn+iLE0I8mHv3KBjQe2aOw
+	+DbOXdvXQJzkQ9fgwdeoqLpVA90xpgUSmDLB0dOtTP5VNkEwaRJ7DxMouDY1pHDG
+	SKOxLo1X97jaWoX9HvQBQv86fF9N4bBSm4S7DukrCtU7/tFg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425xthugfd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Oct 2024 18:58:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49AIwtFY019181
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 10 Oct 2024 18:58:55 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 10 Oct 2024 11:58:50 -0700
+From: Taniya Das <quic_tdas@quicinc.com>
+Subject: [PATCH v5 0/8] Add support for videocc, camcc, dispcc0 and dispcc1
+ on Qualcomm SA8775P platform.
+Date: Fri, 11 Oct 2024 00:28:30 +0530
+Message-ID: <20241011-sa8775p-mm-v4-resend-patches-v5-0-4a9f17dc683a@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241010073917.16023-2-quic_songchai@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANYjCGcC/y3NwQrCMBCE4Vcpe3YhjQkRX0U8hGZq99AYs20RS
+ t/doB6/Ofyzk6IKlK7dThWbqDxzgz91NEwxP8CSmska63rTG9Z4CcEXnmfeHFcocuISl2GCsrP
+ h7BNGb6OhligVo7y/+dv954rX2l6W/3gcHyMyPRmDAAAA
+X-Change-ID: 20241010-sa8775p-mm-v4-resend-patches-42735def52a0
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, <quic_imrashai@quicinc.com>,
+        <quic_jkona@quicinc.com>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das
+	<quic_tdas@quicinc.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>
+X-Mailer: b4 0.15-dev-aa3f6
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: sqsOdff03max4xpZJeyJgbD4xjfq99kA
+X-Proofpoint-GUID: sqsOdff03max4xpZJeyJgbD4xjfq99kA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ phishscore=0 clxscore=1015 mlxlogscore=999 impostorscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410100125
 
-On Thu, Oct 10, 2024 at 03:39:09PM +0800, Songwei Chai wrote:
-> The Trigger Generation Unit (TGU) is designed to detect patterns or
-> sequences within a specific region of the System on Chip (SoC). Once
-> configured and activated, it monitors sense inputs and can detect a
-> pre-programmed state or sequence across clock cycles, subsequently
-> producing a trigger.
-> 
->    TGU configuration space
->         offset table
->  x-------------------------x
->  |                         |
->  |                         |
->  |                         |                           Step configuration
->  |                         |                             space layout
->  |   coresight management  |                           x-------------x
->  |        registers        |                     |---> |             |
->  |                         |                     |     |  reserve    |
->  |                         |                     |     |             |
->  |-------------------------|                     |     |-------------|
->  |                         |                     |     | priority[3] |
->  |         step[7]         |<--                  |     |-------------|
->  |-------------------------|   |                 |     | priority[2] |
->  |                         |   |                 |     |-------------|
->  |           ...           |   |Steps region     |     | priority[1] |
->  |                         |   |                 |     |-------------|
->  |-------------------------|   |                 |     | priority[0] |
->  |                         |<--                  |     |-------------|
->  |         step[0]         |-------------------->      |             |
->  |-------------------------|                           |  condition  |
->  |                         |                           |             |
->  |     control and status  |                           x-------------x
->  |           space         |                           |             |
->  x-------------------------x                           |Timer/Counter|
->                                                        |             |
-> 						       x-------------x
-> TGU Configuration in Hardware
-> 
-> The TGU provides a step region for user configuration, similar
-> to a flow chart. Each step region consists of three register clusters:
-> 
-> 1.Priority Region: Sets the required signals with priority.
-> 2.Condition Region: Defines specific requirements (e.g., signal A
-> reaches three times) and the subsequent action once the requirement is
-> met.
-> 3.Timer/Counter (Optional): Provides timing or counting functionality.
-> 
-> Add a new coresight-tgu.yaml file to describe the bindings required to
-> define the TGU in the device trees.
-> 
-> Signed-off-by: Songwei Chai <quic_songchai@quicinc.com>
-> ---
->  .../bindings/arm/qcom,coresight-tgu.yaml      | 133 ++++++++++++++++++
->  1 file changed, 133 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
-> new file mode 100644
-> index 000000000000..25b464486fe2
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
-> @@ -0,0 +1,133 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tgu.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Trigger Generation Unit - TGU
-> +
-> +description: |
-> +  The Trigger Generation Unit (TGU) is a Data Engine which can be utilized
-> +  to sense a plurality of signals and create a trigger into the CTI or
-> +  generate interrupts to processors. The TGU is like the trigger circuit
-> +  of a Logic Analyzer.The corresponding trigger logic can be realized by
+[v5]
+  Rebased the device tree patch to add clock controller nodes.
 
-space                    ^
+[v4]
+  Changes in [v4] compared to [v3]
+  Videocc: Update the mvs0/mvs1 gdsc to use HW_CTRL_TRIGGER [Konrad and Qualcomm
+  internal discussions]
+  Camcc:   Add new clock to the clock tree.
+  Change the patch order for 'Update sleep_clk frequency to 32000 on SA8775P' [Krzysztof]
 
-> +  configuring the conditions for each step after sensing the signal.
-> +  Once setup and enabled, it will observe sense inputs and based upon
-> +  the activity of those inputs, even over clock cycles, may detect a
-> +  preprogrammed state/sequence and then produce a trigger or interrupt.
-> +
-> +  The primary use case of the TGU is to detect patterns or sequences on a
-> +  given set of signals within some region of the SoC.
-> +
-> +maintainers:
-> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
-> +  - Sam Chai <quic_songchai@quicinc.com>
-> +
-> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
-> +select:
-> +  properties:
-> +    compatible:
-> +      contains:
-> +        enum:
-> +          - qcom,coresight-tgu
-> +  required:
-> +    - compatible
-> +
-> +properties:
-> +  compatible:
-> +    items:
-> +      - const: qcom,coresight-tgu
-> +      - const: arm,primecell
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    items:
-> +      - const: apb_pclk
-> +
-> +  qcom,tgu-steps:
-> +    description:
-> +      The trigger logic is realized by configuring each step after sensing
-> +      the signal. The parameter here is used to describe the maximum of steps
-> +      that could be configured in the current TGU.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 1
-> +    maximum: 8
-> +
-> +  qcom,tgu-regs:
-> +    description:
-> +      There are some "groups" register clusters in each step, which are used to configure the signal
-> +      that we want to detect.Meanwhile, each group has its own priority, and the priority increases
+Changes in [v3] compared to [v2]:
+  Update the qcom_cc_really_probe() to use &pdev->dev, for the CAMCC, DISPCC & VIDEOCC drivers.
 
-space                           ^
+[v2]
+https://lore.kernel.org/all/20240612-sa8775p-mm-clock-controllers-v1-0-db295a846ee7@quicinc.com/
+Changes in [v2] compared to [v1]:
+  [PATCH 1/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 3/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 5/8]: Updated bindings to reference qcom,gcc.yaml
+  [PATCH 7/8]: Split updating sleep_clk frequency to separate patch
+  [PATCH 8/8]: Newly added to update sleep_clk frequency to 32000
+  These multimedia clock controller and device tree patches are split from the below [v1] series.
 
-> +      with number of groups.For example, group3 has a higher priority than group2 ,the signal configured
+[v1]
+https://lore.kernel.org/all/20240531090249.10293-1-quic_tdas@quicinc.com/
 
-space                          ^
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+---
+Taniya Das (8):
+      dt-bindings: clock: qcom: Add SA8775P video clock controller
+      clk: qcom: Add support for Video clock controller on SA8775P
+      dt-bindings: clock: qcom: Add SA8775P camera clock controller
+      clk: qcom: Add support for Camera Clock Controller on SA8775P
+      dt-bindings: clock: qcom: Add SA8775P display clock controllers
+      clk: qcom: Add support for Display clock Controllers on SA8775P
+      arm64: dts: qcom: Update sleep_clk frequency to 32000 on SA8775P
+      arm64: dts: qcom: Add support for multimedia clock controllers
 
-Wrong spacing around the ','.
+ .../bindings/clock/qcom,sa8775p-camcc.yaml         |   62 +
+ .../bindings/clock/qcom,sa8775p-dispcc.yaml        |   79 +
+ .../bindings/clock/qcom,sa8775p-videocc.yaml       |   62 +
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi         |    2 +-
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |   57 +
+ drivers/clk/qcom/Kconfig                           |   31 +
+ drivers/clk/qcom/Makefile                          |    3 +
+ drivers/clk/qcom/camcc-sa8775p.c                   | 1868 ++++++++++++++++++++
+ drivers/clk/qcom/dispcc0-sa8775p.c                 | 1481 ++++++++++++++++
+ drivers/clk/qcom/dispcc1-sa8775p.c                 | 1481 ++++++++++++++++
+ drivers/clk/qcom/videocc-sa8775p.c                 |  576 ++++++
+ include/dt-bindings/clock/qcom,sa8775p-camcc.h     |  108 ++
+ include/dt-bindings/clock/qcom,sa8775p-dispcc.h    |   87 +
+ include/dt-bindings/clock/qcom,sa8775p-videocc.h   |   47 +
+ 14 files changed, 5943 insertions(+), 1 deletion(-)
+---
+base-commit: 0cca97bf23640ff68a6e8a74e9b6659fdc27f48c
+change-id: 20241010-sa8775p-mm-v4-resend-patches-42735def52a0
 
-> +      in group3 will be sensed more preferentially than the signal which is configured in group2.
-> +      The parameter here is used to describe the signal number that each group could be configured.
+Best regards,
+-- 
+Taniya Das <quic_tdas@quicinc.com>
 
-Wrap lines at 80 unless there's some exception not to.
-
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 1
-> +    maximum: 18
-> +
-> +  qcom,tgu-conditions:
-> +    description:
-> +      A condition sets a specific requirement for a step and defines the subsequent
-> +      action once the requirement is met. For example, in step two, if signal A is
-> +      detected three times, the process jumps back to step one. The parameter describes
-> +      the register number for each functionality, whether it is setting a specific
-> +      requirement or defining a subsequent action.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 1
-> +    maximum: 4
-> +
-> +  qcom,tgu-timer-counters:
-> +    description:
-> +      TGU has timer and counter which are used to set some requirement on each step.
-> +      For example, we could use counter to create a trigger into CTI once TGU senses
-> +      the target signal three times.This parameter is used to describe the number of
-> +      Timers/Counters in TGU.
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 0
-> +    maximum: 2
-> +
-> +  in-ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    additionalProperties: false
-> +
-> +    properties:
-> +      port:
-> +        description: AXI Slave connected to another Coresight component
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    tgu@10b0e000 {
-> +        compatible = "qcom,coresight-tgu", "arm,primecell";
-> +        reg = <0x10b0e000 0x1000>;
-> +
-> +        clocks = <&aoss_qmp>;
-> +        clock-names = "apb_pclk";
-> +
-> +        qcom,tgu-steps = <3>;
-> +        qcom,tgu-regs = <4>;
-> +        qcom,tgu-conditions = <4>;
-> +        qcom,tgu-timer-counters = <1>;
-> +
-> +        in-ports {
-> +            port {
-> +                tgu_in_tpdm_swao: endpoint{
-> +                    remote-endpoint = <&tpdm_swao_out_tgu>;
-> +                };
-> +            };
-> +        };
-> +    };
-> +...
 
