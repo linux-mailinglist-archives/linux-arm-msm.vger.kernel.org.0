@@ -1,279 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-33869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EA7F9987B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 15:29:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BBF289987B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 15:29:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DB2511F24CE9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 13:29:37 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5CCEC283AA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 13:29:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B96641C9DE6;
-	Thu, 10 Oct 2024 13:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 099631C9DFA;
+	Thu, 10 Oct 2024 13:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UZF5idD2"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ojjqJL/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4B61C9DC6;
-	Thu, 10 Oct 2024 13:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC091C68B2
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 13:29:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728566971; cv=none; b=pSNE61NYJtMr89l0xjXA9HHVjItmK31XiAlDSta60AjLqR85YC9QBXJwDTKcuVnN092eoOyYAA8lRp/h26b1kxYmjt9aYWXVMfVYzm60h8CAnbqK+uSBHqjqa4yOIbBBZV66hXmcsxAx8mjuF5TMxT97UmhpC3eUuxU6j1/kHtg=
+	t=1728566971; cv=none; b=C14Tg35KtME3mQcZcJvtN3ulARF/JDOXkFYPKXXds8e0W5xTtdMqJXLCrdGxNaM2JnhDPU8oJEOz/KSQxXTkMoyUJMfLxQ+EqEdXabQOb4VlZGg15VURxpoUzS25k/edkvMuwkw90ryHlQox++VjZmSGCjpPpbQhhK/PgqeGazs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1728566971; c=relaxed/simple;
-	bh=g7Pu4FRo+vCqeFeApJg/g8wXcECSdHMLtJvR3WKsTgg=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=diV4qwTYF7w9pXa1UnQBCxVAXCQ4rsu9Y+wq3kDKTQ8DDVKMfUD/OKE7Q9lvfXQs99h2BHpN24+WdP63juqbIcDXzRwsWUkAvZsVjaEobii2sK6VbfS++Eo30fOeN5dxZrXlijdq5R1TXHJQP96M9vEGU9s7SzfAq2TB4RLO4uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UZF5idD2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ACSVaM022390;
-	Thu, 10 Oct 2024 13:29:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=C31M4jaPVMKlbUfqDyDfRQ
-	tphS2CDBdvDZIs9LzKHTw=; b=UZF5idD2vSZlEQG+e47DRITNywEYsKGK0JCiws
-	Ya5/UFuSmyevDoBQ5CMN4noFmICbiiDHXFrn7bnhGXqcFqV1XFk8JTqeMps2HUYO
-	03Fwa3kBa6YjiScSmFWpZ1YkVmRTuUTqRwo3ETJ3QgQCaSbdfxy5mWXj9EDNfEEF
-	v/Vrg3Zhz/FRR+TiIBjNpsenPda0IRSW31ornY4MYliM6TUwURHezz0r0RreQFHu
-	IyVn66CmOujzV4Y7CnUZmOxAXuh+gzIU67FBxxDXM1eX1Q4++B88MpTH9WMJJ/nh
-	TuEyhakSI22gSKwcil7IC75JPA9kK+7JMrDcwia/ImekUVWA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425xpttmw0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 13:29:20 +0000 (GMT)
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49ADTJ2S031814
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 13:29:19 GMT
-Received: from Z2-SFF-G9-MQ.ap.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 10 Oct 2024 06:29:15 -0700
-From: Miaoqing Pan <quic_miaoqing@quicinc.com>
-To: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <agross@kernel.org>, <andersson@kernel.org>
-CC: <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
-        <mchehab@kernel.org>, <quic_vgarodia@quicinc.com>,
-        <stanimir.k.varbanov@gmail.com>, <kvalo@kernel.org>,
-        <quic_jjohnson@quicinc.com>, <ath11k@lists.infradead.org>,
-        <dmitry.baryshkov@linaro.org>,
-        Miaoqing Pan <quic_miaoqing@quicinc.com>
-Subject: [PATCH v4] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Date: Thu, 10 Oct 2024 21:29:02 +0800
-Message-ID: <20241010132902.2882939-1-quic_miaoqing@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+	bh=8O3bS7Nh8L1/0UqHv7/Np2KbSxTu/gTSt7f9I6tsAhg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Uvjs2MSIsr+q2Ng+Q9aoAdtAFC30UjHJVaFu3l+g8FVVM/XJtrcZyaIdkNQ8gb+C4B6EhpoE8edGRwEIxsc5tZUn8q4CKv5xyq9XcX3QbdKlfI/aKaY+lUqH2JeOZd4OtcCov1Kk8crzjpyz20HGeHE5Y+jbYSPlpO3JOnVEM50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ojjqJL/q; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2facf00b0c7so19344991fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 06:29:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728566968; x=1729171768; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=aIRrb2wEe1hj9N3JMi3Dpdq5hzianelOOR87NEysFh8=;
+        b=ojjqJL/qzVrPhjX7n9x+6IDZuREVHkwZbuGLU4EMVUTfFN1c88vWPCBUbPMeti+pgM
+         94DYSCcQ3doCpGhiCnOAxJ//4he3boXxsZTH9rzSEsbiCUKjIxn2lLr3OLMx8IT+THs1
+         ds3W3AAyssECIGc7LrKVrBp48RzR0yptGAc7MJYh4n+tHFepk1xkGbMenvlNJAQizNga
+         dVNF0m5r3AZObCeoK511xPJRjhprlKQhKY65OEysr28lwclauClzo9sGfg+pdgezAcl0
+         WUXiV/njJc0QsTHnKyCgzuB0iH9cgnbzplqVbWxv1oiQNx241+Ud2an9JsGvYMRpieqz
+         2Igg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728566968; x=1729171768;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aIRrb2wEe1hj9N3JMi3Dpdq5hzianelOOR87NEysFh8=;
+        b=Fi8M9zEyuDKzNVC9q4528nEw8TZt4F8wQvnxFweopgsQ7m1IpFABJxGqY61HaZsfOv
+         UDYPaGSYW+/uAPrNv8a2bN3B2PRFGoOl5FuGOFHe6rt4CTfDc+ggXDP1f63BOAG3dh8j
+         z7zG1MSz6gIIcUW31G+n6mN3Rf0YVHJEaeRZpeCSPsRsldetucE4YftbfkR/mZEyxPhn
+         oAS+z4PNVcmMe2N8z1HB2sItWf/WvW5cEwll/2zKQIMIa7VFxpqcpu7WJ4a5fGBnPUD1
+         JyXCG7ZqgjdDUt0fC/ZysneTgx/0xzxEGmD+GSRFDaEkbEoR8ydGEn8F8uVNdQfjxrvk
+         x5sg==
+X-Forwarded-Encrypted: i=1; AJvYcCUMn04xobdxURbk7NsB90telcQf6vurAGufDYhTUr8gef6WuLs+EQ9bYA2VBfUehdEXmSvH/9hnzIRTIIJx@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxWjimHAPep6WbIMMUOft0tEvRPQcbbqzV7mQkbnL5C7Y8D0ku
+	2cdtNx0sQu89bSpa2oihnI3xB54hEwo4ArhXxRiDuhLgfnyz04xLjvzGebwfsxE=
+X-Google-Smtp-Source: AGHT+IGMe8PYLFKDdJ+rZpvGWnekbe6xbW3i8IXiFfzFUZoZ5UqBHRrrc/oUIH85ZxmH4Lx2PbhaBQ==
+X-Received: by 2002:a05:6512:10c9:b0:539:a2e0:4e94 with SMTP id 2adb3069b0e04-539c98964afmr997624e87.30.1728566967869;
+        Thu, 10 Oct 2024 06:29:27 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539cb905177sm253339e87.250.2024.10.10.06.29.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 06:29:26 -0700 (PDT)
+Date: Thu, 10 Oct 2024 16:29:24 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 12/14] drm/msm/dpu: support plane splitting in
+ quad-pipe case
+Message-ID: <fbqhq7zvusll377oxi4tcr4bpgwhab2xbnfw2izotua5me4ufe@syy4jundvccf>
+References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
+ <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-12-76d4f5d413bf@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AB9hU1LlmF4iFN1KclVtwTEifDdHrPOc
-X-Proofpoint-GUID: AB9hU1LlmF4iFN1KclVtwTEifDdHrPOc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 suspectscore=0 spamscore=0 mlxscore=0 bulkscore=0
- phishscore=0 mlxlogscore=999 lowpriorityscore=0 clxscore=1011
- impostorscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410100090
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-12-76d4f5d413bf@linaro.org>
 
-Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+On Wed, Oct 09, 2024 at 04:50:25PM GMT, Jun Nie wrote:
+> Clip plane into pipes per left and right half screen ROI if topology
+> is quad pipe.
 
-Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
----
-v2:
-  - fix wcn6855-pmu compatible to "qcom,wcn6855-pmu".
-  - relocate pcieport0 node in alphabetical order.
-v3:
-  - add 'qcom,ath11k-calibration-variant = "SA8775P"'.
-v4:
-  - update 'ath11k-calibration-variant' to "Ride".
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 121 +++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
- 2 files changed, 122 insertions(+), 1 deletion(-)
+Why? Please provide an explanation for the reviewers not knowing the
+details.
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 0c1b21def4b6..c41fac1eb6c2 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -27,6 +27,83 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	vreg_conn_1p8: vreg_conn_1p8 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_1p8";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pmm8654au_1_gpios 4 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	vreg_conn_pa: vreg_conn_pa {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vreg_conn_pa";
-+		startup-delay-us = <4000>;
-+		enable-active-high;
-+		gpio = <&pmm8654au_1_gpios 6 GPIO_ACTIVE_HIGH>;
-+	};
-+
-+	wcn6855-pmu {
-+		compatible = "qcom,wcn6855-pmu";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en_state>, <&wlan_en_state>;
-+
-+		vddio-supply = <&vreg_conn_pa>;
-+		vddaon-supply = <&vreg_l2c>;
-+		vddpmu-supply = <&vreg_conn_1p8>;
-+		vddrfa0p95-supply = <&vreg_l2c>;
-+		vddrfa1p3-supply = <&vreg_l6e>;
-+		vddrfa1p9-supply = <&vreg_s5a>;
-+		vddpcie1p3-supply = <&vreg_l6e>;
-+		vddpcie1p9-supply = <&vreg_s5a>;
-+
-+		bt-enable-gpios = <&pmm8654au_1_gpios 8 GPIO_ACTIVE_HIGH>;
-+		wlan-enable-gpios = <&pmm8654au_1_gpios 7 GPIO_ACTIVE_HIGH>;
-+
-+		regulators {
-+			vreg_pmu_rfa_cmn: ldo0 {
-+				regulator-name = "vreg_pmu_rfa_cmn";
-+			};
-+
-+			vreg_pmu_aon_0p59: ldo1 {
-+				regulator-name = "vreg_pmu_aon_0p59";
-+			};
-+
-+			vreg_pmu_wlcx_0p8: ldo2 {
-+				regulator-name = "vreg_pmu_wlcx_0p8";
-+			};
-+
-+			vreg_pmu_wlmx_0p85: ldo3 {
-+				regulator-name = "vreg_pmu_wlmx_0p85";
-+			};
-+
-+			vreg_pmu_btcmx_0p85: ldo4 {
-+				regulator-name = "vreg_pmu_btcmx_0p85";
-+			};
-+
-+			vreg_pmu_rfa_0p8: ldo5 {
-+				regulator-name = "vreg_pmu_rfa_0p8";
-+			};
-+
-+			vreg_pmu_rfa_1p2: ldo6 {
-+				regulator-name = "vreg_pmu_rfa_1p2";
-+			};
-+
-+			vreg_pmu_rfa_1p7: ldo7 {
-+				regulator-name = "vreg_pmu_rfa_1p7";
-+			};
-+
-+			vreg_pmu_pcie_0p9: ldo8 {
-+				regulator-name = "vreg_pmu_pcie_0p9";
-+			};
-+
-+			vreg_pmu_pcie_1p8: ldo9 {
-+				regulator-name = "vreg_pmu_pcie_1p8";
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -453,6 +530,20 @@ &pmm8654au_1_gpios {
- 			  "USB2_PWR_EN",
- 			  "USB2_FAULT";
- 
-+	wlan_en_state: wlan-en-state {
-+		pins = "gpio7";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
-+	bt_en_state: bt-en-state {
-+		pins = "gpio8";
-+		function = "normal";
-+		output-low;
-+		bias-pull-down;
-+	};
-+
- 	usb2_en_state: usb2-en-state {
- 		pins = "gpio9";
- 		function = "normal";
-@@ -702,6 +793,25 @@ &pcie1_phy {
- 	status = "okay";
- };
- 
-+&pcieport0 {
-+	wifi@0 {
-+		compatible = "pci17cb,1101";
-+		reg = <0x10000 0x0 0x0 0x0 0x0>;
-+
-+		qcom,ath11k-calibration-variant = "Ride";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-+		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-+		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-+	};
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/sa8775p/adsp.mbn";
- 	status = "okay";
-@@ -744,6 +854,17 @@ &uart17 {
- 	pinctrl-0 = <&qup_uart17_default>;
- 	pinctrl-names = "default";
- 	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn6855-bt";
-+
-+		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-+		vddaon-supply = <&vreg_pmu_aon_0p59>;
-+		vddbtcmx-supply = <&vreg_pmu_btcmx_0p85>;
-+		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-+		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-+		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-+	};
- };
- 
- &ufs_mem_hc {
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index e8dbc8d820a6..8d42b5e9c7d6 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -5570,7 +5570,7 @@ pcie0: pcie@1c00000 {
- 
- 		status = "disabled";
- 
--		pcie@0 {
-+		pcieport0: pcie@0 {
- 			device_type = "pci";
- 			reg = <0x0 0x0 0x0 0x0 0x0>;
- 			bus-range = <0x01 0xff>;
+> Then split the clipped rectangle by half if the rectangle
+> width still exceeds width limit.
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  7 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |  6 ++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 99 ++++++++++++++++++++++---------
+>  3 files changed, 84 insertions(+), 28 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> index 66f745399a602..d2aca0a9493d5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> @@ -1310,6 +1310,13 @@ int dpu_crtc_vblank(struct drm_crtc *crtc, bool en)
+>  	return 0;
+>  }
+>  
+> +unsigned int dpu_crtc_get_lm_num(const struct drm_crtc_state *state)
+
+I think the DPU driver uses num_foo rather than foo_num
+
+> +{
+> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(state);
+> +
+> +	return cstate->num_mixers;
+> +}
+> +
+>  #ifdef CONFIG_DEBUG_FS
+>  static int _dpu_debugfs_status_show(struct seq_file *s, void *data)
+>  {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> index 5260e2440f059..ee7cf71f89fc7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+> @@ -304,4 +304,10 @@ static inline enum dpu_crtc_client_type dpu_crtc_get_client_type(
+>  
+>  void dpu_crtc_frame_event_cb(struct drm_crtc *crtc, u32 event);
+>  
+> +/**
+> + * dpu_crtc_get_lm_num - Get mixer number in this CRTC pipeline
+> + * state: Pointer to drm crtc state object
+> + */
+> +unsigned int dpu_crtc_get_lm_num(const struct drm_crtc_state *state);
+> +
+>  #endif /* _DPU_CRTC_H_ */
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> index 898fc2937954e..480a1b46aba72 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> @@ -837,10 +837,12 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>  	struct dpu_kms *kms = _dpu_plane_get_kms(&pdpu->base);
+>  	u64 max_mdp_clk_rate = kms->perf.max_core_clk_rate;
+>  	struct dpu_plane_state *pstate = to_dpu_plane_state(new_plane_state);
+> -	struct dpu_sw_pipe_cfg *pipe_cfg;
+> -	struct dpu_sw_pipe_cfg *r_pipe_cfg;
+> +	struct dpu_sw_pipe_cfg pipe_cfg;
+>  	struct drm_rect fb_rect = { 0 };
+> +	const struct drm_display_mode *mode = &crtc_state->adjusted_mode;
+>  	uint32_t max_linewidth;
+> +	u32 lm_num;
+> +	int lmcfg_id, lmcfg_num;
+>  
+>  	min_scale = FRAC_16_16(1, MAX_UPSCALE_RATIO);
+>  	max_scale = MAX_DOWNSCALE_RATIO << 16;
+> @@ -863,13 +865,10 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>  		return -EINVAL;
+>  	}
+>  
+> -	/* move the assignment here, to ease handling to another pairs later */
+> -	pipe_cfg = &pstate->pipe_cfg[0];
+> -	r_pipe_cfg = &pstate->pipe_cfg[1];
+> -	/* state->src is 16.16, src_rect is not */
+> -	drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
+> +	lm_num = dpu_crtc_get_lm_num(crtc_state);
+>  
+> -	pipe_cfg->dst_rect = new_plane_state->dst;
+> +	/* state->src is 16.16, src_rect is not */
+> +	drm_rect_fp_to_int(&pipe_cfg.src_rect, &new_plane_state->src);
+>  
+>  	fb_rect.x2 = new_plane_state->fb->width;
+>  	fb_rect.y2 = new_plane_state->fb->height;
+> @@ -884,34 +883,78 @@ static int dpu_plane_atomic_check_nopipe(struct drm_plane *plane,
+>  
+>  	max_linewidth = pdpu->catalog->caps->max_linewidth;
+>  
+> -	drm_rect_rotate(&pipe_cfg->src_rect,
+> +	drm_rect_rotate(&pipe_cfg.src_rect,
+>  			new_plane_state->fb->width, new_plane_state->fb->height,
+>  			new_plane_state->rotation);
+>  
+> -	if ((drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) ||
+> -	     _dpu_plane_calc_clk(&crtc_state->adjusted_mode, pipe_cfg) > max_mdp_clk_rate) {
+> -		if (drm_rect_width(&pipe_cfg->src_rect) > 2 * max_linewidth) {
+> -			DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> -					DRM_RECT_ARG(&pipe_cfg->src_rect), max_linewidth);
+> -			return -E2BIG;
+> +	/*
+> +	 * We have 1 mixer pair cfg for 1:1:1 and 2:2:1 topology, 2 mixer pair
+> +	 * configs for left and right half screen in case of 4:4:2 topology.
+> +	 * But we may have 2 rect to split plane with 1 config for 2:2:1.
+> +	 * So need to handle super wide plane splitting, and plane on right half
+> +	 * for quad-pipe case. Check dest rectangle left/right clipping
+> +	 * first, then check super wide rectangle splitting in every half next.
+> +	 */
+> +	lmcfg_num = (lm_num + 1) / 2;
+
+num_stages?
+
+> +	/* iterate mixer configs for this plane, to separate left/right with the id */
+> +	for (lmcfg_id = 0; lmcfg_id < lmcfg_num; lmcfg_id++) {
+> +		struct drm_rect mixer_rect = {lmcfg_id * mode->hdisplay / lmcfg_num, 0,
+> +					(lmcfg_id + 1) * mode->hdisplay / lmcfg_num, mode->vdisplay};
+> +		int cfg_idx = lmcfg_id * PIPES_PER_LM_PAIR;
+> +		struct dpu_sw_pipe_cfg *cur_pipecfg = &pstate->pipe_cfg[cfg_idx];
+> +
+> +		drm_rect_fp_to_int(&cur_pipecfg->src_rect, &new_plane_state->src);
+> +		cur_pipecfg->dst_rect = new_plane_state->dst;
+> +
+> +		DPU_DEBUG_PLANE(pdpu, "checking src " DRM_RECT_FMT
+> +				" vs clip window " DRM_RECT_FMT "\n",
+> +				DRM_RECT_ARG(&cur_pipecfg->src_rect),
+> +				DRM_RECT_ARG(&mixer_rect));
+> +
+> +		/* If this plane does not fall into mixer rect, check next mixer rect */
+> +		if (!drm_rect_clip_scaled(&cur_pipecfg->src_rect, &cur_pipecfg->dst_rect, &mixer_rect)) {
+> +			memset(&pstate->pipe_cfg[cfg_idx], 0, 2 * sizeof(struct dpu_sw_pipe_cfg));
+> +			memset(&pstate->pipe[cfg_idx], 0, 2 * sizeof(struct dpu_sw_pipe));
+> +			continue;
+>  		}
+>  
+> -		*r_pipe_cfg = *pipe_cfg;
+> -		pipe_cfg->src_rect.x2 = (pipe_cfg->src_rect.x1 + pipe_cfg->src_rect.x2) >> 1;
+> -		pipe_cfg->dst_rect.x2 = (pipe_cfg->dst_rect.x1 + pipe_cfg->dst_rect.x2) >> 1;
+> -		r_pipe_cfg->src_rect.x1 = pipe_cfg->src_rect.x2;
+> -		r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> -	} else {
+> -		memset(r_pipe_cfg, 0, sizeof(*r_pipe_cfg));
+> -	}
+> +		cur_pipecfg->valid = true;
+
+... and checks have been broken up to now. This isn't good.
+
+> +		cur_pipecfg->dst_rect.x1 -= mixer_rect.x1;
+> +		cur_pipecfg->dst_rect.x2 -= mixer_rect.x1;
+> +
+> +		DPU_DEBUG_PLANE(pdpu, "Got clip src:" DRM_RECT_FMT " dst: " DRM_RECT_FMT "\n",
+> +				DRM_RECT_ARG(&cur_pipecfg->src_rect), DRM_RECT_ARG(&cur_pipecfg->dst_rect));
+> +
+> +		/* Split super wide rect into 2 rect */
+> +		if ((drm_rect_width(&cur_pipecfg->src_rect) > max_linewidth) ||
+> +		     _dpu_plane_calc_clk(mode, cur_pipecfg) > max_mdp_clk_rate) {
+> +			struct dpu_sw_pipe_cfg *r_pipe_cfg = &pstate->pipe_cfg[cfg_idx + 1];
+> +
+> +			if (drm_rect_width(&cur_pipecfg->src_rect) > 2 * max_linewidth) {
+> +				DPU_DEBUG_PLANE(pdpu, "invalid src " DRM_RECT_FMT " line:%u\n",
+> +						DRM_RECT_ARG(&cur_pipecfg->src_rect), max_linewidth);
+> +				return -E2BIG;
+> +			}
+> +
+> +			memcpy(r_pipe_cfg, cur_pipecfg, sizeof(struct dpu_sw_pipe_cfg));
+> +			cur_pipecfg->src_rect.x2 = (cur_pipecfg->src_rect.x1 + cur_pipecfg->src_rect.x2) >> 1;
+> +			cur_pipecfg->dst_rect.x2 = (cur_pipecfg->dst_rect.x1 + cur_pipecfg->dst_rect.x2) >> 1;
+
+pipe_cfg. If you need, rename the topmost var name.
+
+> +			r_pipe_cfg->src_rect.x1 = cur_pipecfg->src_rect.x2;
+> +			r_pipe_cfg->dst_rect.x1 = cur_pipecfg->dst_rect.x2;
+> +			r_pipe_cfg->valid = true;
+> +			DPU_DEBUG_PLANE(pdpu, "Split super wide plane into:"
+> +					DRM_RECT_FMT " and " DRM_RECT_FMT "\n",
+> +					DRM_RECT_ARG(&cur_pipecfg->src_rect),
+> +					DRM_RECT_ARG(&r_pipe_cfg->src_rect));
+> +		} else {
+> +			memset(&pstate->pipe_cfg[cfg_idx + 1], 0, sizeof(struct dpu_sw_pipe_cfg));
+> +			memset(&pstate->pipe[cfg_idx + 1], 0, sizeof(struct dpu_sw_pipe));
+
+Please keep using r_pipe_cfg here.
+
+> +		}
+>  
+> -	drm_rect_rotate_inv(&pipe_cfg->src_rect,
+> -			    new_plane_state->fb->width, new_plane_state->fb->height,
+> -			    new_plane_state->rotation);
+> -	if (drm_rect_width(&r_pipe_cfg->src_rect) != 0)
+> -		drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+> +		drm_rect_rotate_inv(&cur_pipecfg->src_rect,
+>  				    new_plane_state->fb->width, new_plane_state->fb->height,
+>  				    new_plane_state->rotation);
+> +	}
+>  
+>  	pstate->needs_qos_remap = drm_atomic_crtc_needs_modeset(crtc_state);
+>  
+> 
+> -- 
+> 2.34.1
+> 
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
 
