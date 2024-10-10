@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-33856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DFD69986A5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 14:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B07F9986AB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 14:53:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 376DD1F2128A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 12:52:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F411F1F21B73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 12:53:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E6E71C689F;
-	Thu, 10 Oct 2024 12:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AD8C1C461F;
+	Thu, 10 Oct 2024 12:53:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dk3NdRHO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n012j9yO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A31B1C232C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 12:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5CB1C232C
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 12:53:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728564732; cv=none; b=eqa1H8qnlMkB+OioS1qpoWY60kJJ0I7pMwBELiI99fkO4WjSzOS7uiieigq8qIE+d7JYh3kYgOrR0pxQxOI8FzV2sxsVhSMwt2JWQI1iKAC9r88aH5aMTPLHAcmFOcBA7+HY2QAmu8Rn1OWOkULXbwF0nIrpAHZjG+2XltjXktg=
+	t=1728564804; cv=none; b=MUC5h7yAzIxvfYtDqMlmBpHyI6aDuUok9yu9xuqoHQ44Ol7m/nkkOjGWnC78vF95QgJhXQq4hLbIaPdSwW4QBW4f6p6RfYQBfJdA8RMISLO+b39wZAj2kWD+EfNibyhaPxqfzouaosWIQnaTqj0LgjdgnPQ6BJdnzKHSaE/mgJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728564732; c=relaxed/simple;
-	bh=EwmZ5/Z+UThPK21bqO00znJM+uCq1XTHwYWQ1A/6uZ8=;
+	s=arc-20240116; t=1728564804; c=relaxed/simple;
+	bh=myeTo/pxwUDIAxSsZ3uQBrvRybPwZVALbNW55OINhLY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j0O2acNuhtT7YeVjsQgjmIisVnVdg/xj29wMyN9aG6J//5s6l9vfNvckMuWKqNuC7+JGWVCkWjp4Y7HZPlEeYdfTztOOV0f0XNPkWhxtZARAKMR0lnpH2ekuYHduHEcyHQKKUHeFVBPXMSU7VXSN/UnS7ysjP3VhJ79E0+1Ef6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dk3NdRHO; arc=none smtp.client-ip=209.85.208.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=iiESBOY4iB1BlLajFYyZJnUtLzdHs8B3POGx6L3O7ajP/5pQF6aSfdXk75LKmYIYfmLX/woHBPWDcq/M390EmKA47BCTdw0ouQumbYj1n78h9JRXY/8kc/gvCZBcozVv1O4Q/VVMojmjkaRFkl0AOb4/aH7S7cXFLmtiOyCPqtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n012j9yO; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2fabfc06c26so7500711fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 05:52:11 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5398e7dda5fso827283e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 05:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728564729; x=1729169529; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728564801; x=1729169601; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gbPdTZYOr9+jukOclQOWDxW0Bv1v/+wCabMme/SKc0A=;
-        b=dk3NdRHO8XtT4a9GWtRoI+c+n8hgrtcQJRVmHzHxZCTAV1zL2ZQ/hsICbK8TP8yaX3
-         lyzNAYBnOolt8DJyiTKnrIFFsD6ERQ+GNleHXy+NWt1McW0ppyKddEBFidR9UQcRA08g
-         aC1TVBxMcosxGqHau8SG0VTLieDbw/iFJovTLnZxdJaUacN2/z9i6v+ZsnBOWSIc31Vt
-         8vbTEY+UOJdn3zj9rhvY2Ava5/WMXZjC/fx2C4/RQS5usex0hu9jFtAU3fB9caN728tU
-         Q6sK843AXSXWyvTe3QqhqE6An8VuIAnqR1DliClAzSdC0/u8ySbJP2w+C/i2ToL83J12
-         Owrw==
+        bh=SOG2cvcIa/f3eZvF9qCqDwajTrBJ79dSHibePI7xfTI=;
+        b=n012j9yOQBtzUXsrry13Xr5oVXAPraA6DqGtM3SKJjfV6rSjZhCta0eR2Oxkyk+UzO
+         b6j5u5+65yrdRMCYEqyK4LzsmuHL0+77AyezUXEGcqehHnW6BNX7uvprnw45ReHLGz3H
+         XjoXmSsmvHrnWG/kD4/hM2qlVufltfn/aKkPzbtecs4aZLSm3Ckzo0Yp9A2V+1CEfrt+
+         EIkWclRy+We6Qz8869QonY1mXyYQYgWD2fm1RuPa4Xmze6u8INKtmtn3enpvfSyHLeDw
+         ZwnlBcXaUN3F+mEfww15aKil+Hiz0nsXtSdJjAJefibIuV7V7297K7PRVPfRsat6a2fX
+         mIPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728564729; x=1729169529;
+        d=1e100.net; s=20230601; t=1728564801; x=1729169601;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gbPdTZYOr9+jukOclQOWDxW0Bv1v/+wCabMme/SKc0A=;
-        b=vjnjv3Vfvek+ksdGgES0gfn8h3I8LpmxyEbFkFo05Y1zI1+Qn3MX8N72vaTnhnzEVE
-         EitwEN3ImM3jmM5SunmowCml1xIw3j69PBIB0RBwS+cQfgSXZTydM6VJVim/+l3qq8ml
-         Fan83CzxDZQyyNhs69uT+GzbpjRypdsvefV8E5yCLrQ7k1yHx19huHjlI3GIAOdcBR9S
-         e89CtktLkRM8IwZ2pJ0yUoN1a20e2SWES0dS6P7Tl4lmmdLB6ZnbnorjcHNfrfZwWD6a
-         Bx57VLuCHE12fGxENljzdZ2Dgq/n/PtZc8WowsHmfI2sZ3rYxm3GENLTkJC5+EjGWQ7J
-         FuLg==
-X-Gm-Message-State: AOJu0Yxpd3+o2DZ4LyiXiNXYXYXFOpHd1LXNnw4tG8vrfZsv3vqt53nr
-	o7BlHRxTzcZfTagbGMie8woGSTnPo099MyghRHAlUHX2YmWs5NlidCDnv4OxIBs=
-X-Google-Smtp-Source: AGHT+IEEUTMX/pk5a4HSxBwIZWeBdAoCHQB/aKBVK7puY4U8VBsgKnZURDJmHJIdHOxBWR82hPQ6ug==
-X-Received: by 2002:a05:651c:2126:b0:2fa:c9ad:3d36 with SMTP id 38308e7fff4ca-2fb1872bd83mr41533031fa.7.1728564729444;
-        Thu, 10 Oct 2024 05:52:09 -0700 (PDT)
+        bh=SOG2cvcIa/f3eZvF9qCqDwajTrBJ79dSHibePI7xfTI=;
+        b=jqz5x3sPEjz/zxJt8MandLehQfoZWtfJ3caB065fqWvAAyAJtcs79S/5DFLH+mI/2B
+         mbY/rYhkCpMg7rBOT96hLhzQ+HY5upKI15jmSIK036YYVlhQCpvwNlxYL/YcpdclKx1u
+         IHmuVZz6IFVJSHlQgKXZbtYVsF0lmRovyWuK4wXdKZWeIdbUQdheDrQP11tZzGi1jhfE
+         qqHmLPH86YGYjK3N2SO03++J+AMWn+iU5PHIaKTdreKfyn7EY6ltIsuCJEAk5c0ZmTxn
+         nQCuie63PCiKH/E7kI6HdXk40M8Urqx2jTx1Jj08tSP39Q5Rp4AYWpxa1BzIfHPb0RGi
+         Eckw==
+X-Forwarded-Encrypted: i=1; AJvYcCVw8Yu8T0uL4u8t1x7gDHtm3Yc3GyXMkbcH1N4r28bHCYkDm48AI6SQvjD+M8jAD1/XnWLmAIS0M2a9O6tN@vger.kernel.org
+X-Gm-Message-State: AOJu0YzGEJkl+rcoHOh4XMGL30JizsFat6m5Xp04jHg8MOPkXkWC6Sxe
+	hBTJo5QcwV3nFimfixyKFd6IkLgEgqVyK/oFo7ohuU5B+32LK73qk4cDgXrSo2s=
+X-Google-Smtp-Source: AGHT+IHwHdR/ayiiZrVWEQZ0jvj6QMy246EDnjvlSR6tXX1mW/aaU5oydDoW2K4KYVylDfBIuIqyDw==
+X-Received: by 2002:a05:6512:3c97:b0:536:a583:2777 with SMTP id 2adb3069b0e04-539c48926aemr3865575e87.9.1728564801442;
+        Thu, 10 Oct 2024 05:53:21 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb24707028sm1944381fa.80.2024.10.10.05.52.06
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539cb8f0f86sm240116e87.190.2024.10.10.05.53.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 05:52:08 -0700 (PDT)
-Date: Thu, 10 Oct 2024 15:52:05 +0300
+        Thu, 10 Oct 2024 05:53:20 -0700 (PDT)
+Date: Thu, 10 Oct 2024 15:53:19 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Miaoqing Pan <quic_miaoqing@quicinc.com>, 
-	Kalle Valo <kvalo@kernel.org>, Jeff Johnson <jjohnson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org, 
-	agross@kernel.org, andersson@kernel.org, linux-kernel@vger.kernel.org, 
-	konrad.dybcio@linaro.org, mchehab@kernel.org, quic_vgarodia@quicinc.com, 
-	stanimir.k.varbanov@gmail.com, ath11k@lists.infradead.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Message-ID: <qf3wwrluqsytrlwclnp6limdnrsqs3odbk3cg67hyk6fad6zcf@yujf46ltsaad>
-References: <20241009012738.2840558-1-quic_miaoqing@quicinc.com>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] drm/msm/dpu: configure DSC per number in use
+Message-ID: <3vrwrw7kia5h3vku2n3c7kwyyokrklqjjl22apzruvh535pnav@2ewlmdjobveh>
+References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-20-v1-0-139511076a9f@linaro.org>
+ <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-20-v1-2-139511076a9f@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,59 +86,43 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241009012738.2840558-1-quic_miaoqing@quicinc.com>
+In-Reply-To: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-20-v1-2-139511076a9f@linaro.org>
 
-On Wed, Oct 09, 2024 at 09:27:38AM GMT, Miaoqing Pan wrote:
-> Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-> board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+On Wed, Oct 09, 2024 at 02:38:43PM GMT, Jun Nie wrote:
+> Only 2 DSC engines are allowed, or no DSC is involved currently.
+> We need 4 DSC in quad-pipe topology in future. So let's only configure
+> DSC engines in use, instread of maximum number of DSC engines.
 > 
-> Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
 > ---
-> v2:
->   - fix wcn6855-pmu compatible to "qcom,wcn6855-pmu".
->   - relocate pcieport0 node in alphabetical order.
-> v3:
->   - add 'qcom,ath11k-calibration-variant = "SA8775P"'.
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 13 ++++++++-----
+>  1 file changed, 8 insertions(+), 5 deletions(-)
 > 
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 121 +++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
->  2 files changed, 122 insertions(+), 1 deletion(-)
-> 
-
-[...]
-
-> @@ -702,6 +793,25 @@ &pcie1_phy {
->  	status = "okay";
->  };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 39700b13e92f3..e8400b494687c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1871,10 +1871,13 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_ctl *ctl,
+>  		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
+>  }
 >  
-> +&pcieport0 {
-> +	wifi@0 {
-> +		compatible = "pci17cb,1101";
-> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
-> +
-> +		qcom,ath11k-calibration-variant = "SA8775P";
+> -static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+> -				 struct drm_dsc_config *dsc)
+> +static void dpu_encoder_prep_dsc(struct drm_encoder *drm_enc)
+>  {
+>  	/* coding only for 2LM, 2enc, 1 dsc config */
+> +	struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> +	struct dpu_crtc_state *cstate = to_dpu_crtc_state(drm_enc->crtc->state);
+> +	struct drm_dsc_config *dsc = dpu_enc->dsc;
+> +	int num_dsc = cstate->num_dscs;
 
-SA8775P what? Is it going to be the only device using SA8775P?  Please
-take a look around how other calibration variants are defined.
+I have been thinking about this part for a while. Please move num_dscs
+to the dpu_encoder_virt structure. The DSC blocks are logically related
+to the encoder, so having this field in dpu_crtc_state seems incorrect.
 
-Also please cc Kalle, Jeff and ath11k ML in future submissions
-
-> +
-> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
-> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
-> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
-> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
-> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
-> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
-> +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
-> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
-> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
-> +	};
-> +};
-> +
->  &remoteproc_adsp {
->  	firmware-name = "qcom/sa8775p/adsp.mbn";
->  	status = "okay";
+>  	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
+>  	struct dpu_hw_ctl *ctl = enc_master->hw_ctl;
+>  	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
 
 -- 
 With best wishes
