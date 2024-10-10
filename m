@@ -1,197 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-33929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33930-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE96F999453
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 23:20:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51474999538
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 00:30:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4EC041F242A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 21:20:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E46612863EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 22:30:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C0C21E2029;
-	Thu, 10 Oct 2024 21:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 647D31A2645;
+	Thu, 10 Oct 2024 22:30:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S+bs9SQ3"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="QfBILxpT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC23319CD1B;
-	Thu, 10 Oct 2024 21:20:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96BF91E6DD5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 22:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728595244; cv=none; b=QiQjKc+KlY+UemOzq4UC71wzldKHy8tpwtSZGcKcH4aD3LC/tJi10zndWjzt699ucemwuDg5GL7TnWm8wytaK1nSWZE9MmIuiczgMeVp9I1uv4t6juZlCfmabL5R2jMWLUZYcYwPag1k4/UW/cTOPZI/Ksc2zLyXRuZI2fEg1SE=
+	t=1728599423; cv=none; b=BrlXpsD/XLtZb9IE0BxM9G18gXz9cw6IjxCHWbfAw/cyHsaDXMxwalER0Mxyh0BcdwBwww3SGHwkgrBWpjxhmqOJeUuZoZe25djtlYr9L0H9h42A4QNJ2mrFX4OoA281AESaDQhXGdlUJlw7M/UoBr8OrojT/ggyYXnh5Gt8QvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728595244; c=relaxed/simple;
-	bh=hHB042UrlNapGxuP9YL5laD53DwKqbtDdjnvLIFvJmg=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ox74yiGtbML4uWXiFOLdao2tHVjx8aExwEQb1MToE881/yqewb+yl6bjUBx8nQC13gJPZeQmG4R6n1+pqQgX3L4Hf1Ui+sQxXkZ/yCxf3lbS2Y9ARKTwxmQLb/b9jP9zrm5EpKvUXi4ZQp7Dl2elp3A2knUyYPNTSzR4RFYSt7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S+bs9SQ3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ADqTgG029122;
-	Thu, 10 Oct 2024 21:20:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=p1du+Ye7BQqMGbCGPm0NLDXB
-	ijQnXr/8gzzZbkjUG5U=; b=S+bs9SQ3mpvE8P9EYeZGATpgGdP1gBb4TSpyqg5p
-	OMk80dp/Oq+gswoYiL8Er4yR7GW99aVZ4+sKfu+o2fyFMKQ20soZI7/o/+8RI1f6
-	/6CfZIerkLPqvU5GM/5cQPEGyDXFIjLcVgh5Rlzi33ZoYHdtye50Uk89wR8qpc4z
-	4KK2nlFTjQzlmFlN3V4NMnWW7L8tbicoMimbeRE8ClOIM8N9/dz4kzqZYDlbrzm9
-	95ubm2aqo42yh42WcPFxnj2s6ZoiMLE8AL8Zp6ScCLQWwYcYs216Iho8R22FNaVb
-	adAAA1LhSZqtFqVDbH8BKB23a/fJ03ckTwVdToVf25d3Bg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 426g6n9221-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 21:20:04 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49ALK3nt004421
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 10 Oct 2024 21:20:03 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 10 Oct 2024 14:20:02 -0700
-Date: Thu, 10 Oct 2024 14:20:02 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-CC: Andrew Morton <akpm@linux-foundation.org>,
-        Sean Christopherson
-	<seanjc@google.com>,
-        Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar
-	<mingo@redhat.com>,
-        Borislav Petkov <bp@alien8.de>,
-        Dave Hansen
-	<dave.hansen@linux.intel.com>,
-        Fuad Tabba <tabba@google.com>, David
- Hildenbrand <david@redhat.com>,
-        Patrick Roy <roypat@amazon.co.uk>, <qperret@google.com>,
-        Ackerley Tng <ackerleytng@google.com>,
-        Mike Rapoport
-	<rppt@kernel.org>, <x86@kernel.org>,
-        "H. Peter Anvin" <hpa@zytor.com>, <linux-kernel@vger.kernel.org>,
-        <linux-mm@kvack.org>, <kvm@vger.kernel.org>,
-        <linux-coco@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH RFC v2 0/5] mm: Introduce guest_memfd library
-Message-ID: <20241010141522228-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20240829-guest-memfd-lib-v2-0-b9afc1ff3656@quicinc.com>
- <9fd97046-b7b1-49d6-8fc5-2104814152d6@redhat.com>
+	s=arc-20240116; t=1728599423; c=relaxed/simple;
+	bh=CdmSXbDHAWq8dgUJmRamn05jbHQQT0TVNYOiCJ/xXdY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ilm7XUZvKdNzqDA2RA3T5rkRT2siJJsXBoRzl0QypXYK7kYtJ88b2pQ1JyPCqm1/htTUpdXt1tpMUzF61kobgxXB5uTdzkVjt5/+GW5JQFjcjLM2gHJeoecp0/GlESX4HXeUlTcgkFuDWMhFCnXJxyDdLnHWSS03QyilEe2+ZcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=QfBILxpT; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a99388e3009so198473666b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:30:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1728599419; x=1729204219; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1tjzEcZp4sdEI4rizDgYHU+pcwb4fTKSCVr7AMb0oZQ=;
+        b=QfBILxpTEdAJ/ORX2na6SpwxJ01PydvGCHe7pP6zcj00q2Wj4IgUMoaxdJ4uXhlyMm
+         KD4UJSgZY8l94R88BNaiOkiQxWg41lQSpxle3rE1+MBZJiD/5MfBKkE7y/lW36y2UTSj
+         +7bMO9EyBeT3viDyKrfRV6aFuoYlWXgR5pHJA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728599419; x=1729204219;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1tjzEcZp4sdEI4rizDgYHU+pcwb4fTKSCVr7AMb0oZQ=;
+        b=Q6VjFGCoMyOgpp+tcsaXndvhnJzqtf+jEj4GQHuspNPyaCjRYZglzgZ6nSkUzpZgZo
+         UOiL90RKDtoPuGCSlQTFvfQeNJZBW8MAErb2US2rucuA0yxR9UIktgRrXr7JkMEfPiMc
+         IZX/0ycyPs035PKPhvhzy+fsUydgAnlSYaNXF6g/ijmJL6GAcyV1ObN9fzg0+AVOql94
+         vxxOYeSlAQQW/1OG75T9s3dJWcHF/0bLWFRKw7G8BgYTvluiyghvnlwvbD7bsYWw4PSd
+         EeCOUOzV7xOPznpNqLq53ByeKWdfn6a/ZxQRRvwBX6UJjn5n8AKJKLyz236WQmkHA7kK
+         PmZA==
+X-Forwarded-Encrypted: i=1; AJvYcCUprDQRF6FrRow2xxYL/rM3gi/veGXeaI7R8Xfp6rHZj0ICY/tu2rISHNZw0c2SDZe4Fj+XBR/3BNpjG0WY@vger.kernel.org
+X-Gm-Message-State: AOJu0YzEeaVMJfFZiSt5hwolMdbbCOiENcQN4vH3bg+tvuMOoyU3G05l
+	kqkcwECwpjfRg1wfECr/+YWMzeYV/ZY+AnWNyLb+2w1jZgk7cxwHwpT2KQXS095b6f5ynrxzeOJ
+	uPw==
+X-Google-Smtp-Source: AGHT+IG9ALCMLECBbPkuLoRzCc6xIyT8qHxdD4o9yYt0qtawn7QlFAnz80AgIHnQvpB8J8o0rUVp7g==
+X-Received: by 2002:a17:907:d5aa:b0:a99:4156:997d with SMTP id a640c23a62f3a-a99b95a14f6mr37103466b.19.1728599419531;
+        Thu, 10 Oct 2024 15:30:19 -0700 (PDT)
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com. [209.85.221.52])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a7f06af5sm143854166b.26.2024.10.10.15.30.18
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Oct 2024 15:30:18 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-37d4ec26709so620850f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 15:30:18 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWWES3rMlpRSr7hfDnlX0UZRnVXMsCBTwNJXiqApr3AZ6d11h2d60l8cprWKvWbJmZe8/qU9r8iNL8+5z8x@vger.kernel.org
+X-Received: by 2002:a05:6000:181a:b0:37c:cd1d:b87e with SMTP id
+ ffacd0b85a97d-37d551d50a7mr437367f8f.18.1728599418059; Thu, 10 Oct 2024
+ 15:30:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <9fd97046-b7b1-49d6-8fc5-2104814152d6@redhat.com>
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: TbXGm-yolUCjzTTItCKQ163W7jB4XeIs
-X-Proofpoint-GUID: TbXGm-yolUCjzTTItCKQ163W7jB4XeIs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 bulkscore=0 adultscore=0 impostorscore=0
- mlxlogscore=999 mlxscore=0 spamscore=0 phishscore=0 malwarescore=0
- clxscore=1011 priorityscore=1501 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410100140
+References: <20241001125033.10625-1-johan+linaro@kernel.org>
+ <20241001125033.10625-3-johan+linaro@kernel.org> <CAD=FV=UoU5Nd7sW66cjQzor+BP+W_f7uw0MGRaF6y7PH7KRN_g@mail.gmail.com>
+ <ZwaO0hCKdPpojvnn@hovoldconsulting.com>
+In-Reply-To: <ZwaO0hCKdPpojvnn@hovoldconsulting.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 10 Oct 2024 15:30:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UZtZ1-0SkN2sOMp6YdU02em_RnK85Heg5z0jkH4U30eQ@mail.gmail.com>
+Message-ID: <CAD=FV=UZtZ1-0SkN2sOMp6YdU02em_RnK85Heg5z0jkH4U30eQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/7] serial: qcom-geni: fix shutdown race
+To: Johan Hovold <johan@kernel.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Jiri Slaby <jirislaby@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-serial@vger.kernel.org, stable@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 10, 2024 at 03:04:16PM +0200, Paolo Bonzini wrote:
-> On 8/30/24 00:24, Elliot Berman wrote:
-> > In preparation for adding more features to KVM's guest_memfd, refactor
-> > and introduce a library which abstracts some of the core-mm decisions
-> > about managing folios associated with the file. The goal of the refactor
-> > serves two purposes:
-> > 
-> > 1. Provide an easier way to reason about memory in guest_memfd. With KVM
-> > supporting multiple confidentiality models (TDX, SEV-SNP, pKVM, ARM
-> > CCA), and coming support for allowing kernel and userspace to access
-> > this memory, it seems necessary to create a stronger abstraction between
-> > core-mm concerns and hypervisor concerns.
-> > 
-> > 2. Provide a common implementation for other hypervisors (Gunyah) to use.
-> > 
-> > To create a guest_memfd, the owner provides operations to attempt to
-> > unmap the folio and check whether a folio is accessible to the host. The
-> > owner can call guest_memfd_make_inaccessible() to ensure Linux doesn't
-> > have the folio mapped.
-> > 
-> > The series first introduces a guest_memfd library based on the current
-> > KVM (next) implementation, then adds few features needed for Gunyah and
-> > arm64 pKVM. The Gunyah usage of the series will be posted separately
-> > shortly after sending this series. I'll work with Fuad on using the
-> > guest_memfd library for arm64 pKVM based on the feedback received.
-> > 
-> > There are a few TODOs still pending.
-> > - The KVM patch isn't tested. I don't have access a SEV-SNP setup to be
-> >    able to test.
-> > - I've not yet investigated deeply whether having the guest_memfd
-> >    library helps live migration. I'd appreciate any input on that part.
-> > - We should consider consolidating the adjust_direct_map() in
-> >    arch/x86/virt/svm/sev.c so guest_memfd can take care of it.
-> > - There's a race possibility where the folio ref count is incremented
-> >    and about to also increment the safe counter, but waiting for the
-> >    folio lock to be released. The owner of folio_lock will see mismatched
-> >    counter values and not be able to convert to (in)accessible, even
-> >    though it should be okay to do so.
-> > I'd appreciate any feedback, especially on the direction I'm taking for
-> > tracking the (in)accessible state.
-> > 
-> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> > 
-> > Changes in v2:
-> > - Significantly reworked to introduce "accessible" and "safe" reference
-> >    counters
-> 
-> Was there any discussion on this change?  If not, can you explain it a bit
-> more since it's the biggest change compared to the KVM design?  I suppose
+Hi,
 
-The accessible and safe refcount was discussed in the PUCK and over the
-mailing lists in the previous version of this patchset.
+On Wed, Oct 9, 2024 at 7:10=E2=80=AFAM Johan Hovold <johan@kernel.org> wrot=
+e:
+>
+> On Thu, Oct 03, 2024 at 11:30:08AM -0700, Doug Anderson wrote:
+> > On Tue, Oct 1, 2024 at 5:51=E2=80=AFAM Johan Hovold <johan+linaro@kerne=
+l.org> wrote:
+> > >
+> > > A commit adding back the stopping of tx on port shutdown failed to ad=
+d
+> > > back the locking which had also been removed by commit e83766334f96
+> > > ("tty: serial: qcom_geni_serial: No need to stop tx/rx on UART
+> > > shutdown").
+> >
+> > Hmmm, when I look at that commit it makes me think that the problem
+> > that commit e83766334f96 ("tty: serial: qcom_geni_serial: No need to
+> > stop tx/rx on UART shutdown") was fixing was re-introduced by commit
+> > d8aca2f96813 ("tty: serial: qcom-geni-serial: stop operations in
+> > progress at shutdown"). ...and indeed, it was. :(
+> >
+> > I can't interact with kgdb if I do this:
+> >
+> > 1. ssh over to DUT
+> > 2. Kill the console process (on ChromeOS stop console-ttyMSM0)
+> > 3. Drop in the debugger (echo g > /proc/sysrq-trigger)
+>
+> Yeah, don't do that then. ;)
 
-That being said though, after discussions at LPC, I'm now behind the
-design Fuad has recently posted [1]. I was on vacation last week and I
-still need to go through his series, but we had discussed the key parts
-of the design offline.
+The problem is, I don't always have a choice. As talked about in the
+message of commit e83766334f96 ("tty: serial: qcom_geni_serial: No
+need to stop tx/rx on UART shutdown"), the above steps attempt to
+simulate what happened organically: a crash in late shutdown. During
+shutdown the agetty has been killed by the init system and I don't
+have a choice about it. If I get a kernel crash then (which isn't
+uncommon since shutdown code tends to trigger seldom-used code paths)
+then I can't debug it. :(
 
-[1]: https://lore.kernel.org/all/20241010085930.1546800-1-tabba@google.com/
+We need to fix this.
 
-> the reference counting is used in relation to mmap, but it would be nice to
-> have a few more words on how the counts are used and an explanation of when
-> (especially) the accessible atomic_t can take any value other than 0/1.
-> 
-> As an aside, allocating 8 bytes of per-folio private memory (and
-> dereferencing the pointer, too) is a bit of a waste considering that the
-> private pointer itself is 64 bits on all platforms of interest.
-> 
-> Paolo
-> 
-> > - Link to v1:
-> >    https://lore.kernel.org/r/20240805-guest-memfd-lib-v1-0-e5a29a4ff5d7@quicinc.com
-> > 
-> > ---
-> > Elliot Berman (5):
-> >        mm: Introduce guest_memfd
-> >        mm: guest_memfd: Allow folios to be accessible to host
-> >        kvm: Convert to use guest_memfd library
-> >        mm: guest_memfd: Add ability for userspace to mmap pages
-> >        mm: guest_memfd: Add option to remove inaccessible memory from direct map
-> > 
-> >   arch/x86/kvm/svm/sev.c      |   3 +-
-> >   include/linux/guest_memfd.h |  49 ++++
-> >   mm/Kconfig                  |   3 +
-> >   mm/Makefile                 |   1 +
-> >   mm/guest_memfd.c            | 667 ++++++++++++++++++++++++++++++++++++++++++++
-> 
-> I think I'd rather have this in virt/lib.
-> 
-> Paolo
-> 
+
+> Not sure how your "console process" works, but this should only happen
+> if you do not enable the serial console (console=3DttyMSM0) and then try
+> to use a polled console (as enabling the console will prevent port
+> shutdown from being called).
+
+That simply doesn't seem to be the case for me. The port shutdown
+seems to be called. To confirm, I put a printout at the start of
+qcom_geni_serial_shutdown(). I see in my /proc/cmdline:
+
+console=3DttyMSM0,115200n8
+
+...and I indeed verify that I see console messages on my UART. I then run:
+
+stop console-ttyMSM0
+
+...and I see on the UART:
+
+[   92.916964] DOUG: qcom_geni_serial_shutdown
+[   92.922703] init: console-ttyMSM0 main process (611) killed by TERM sign=
+al
+
+Console messages keep coming out the UART even though the agetty isn't
+there. Now I (via ssh) drop into the debugger:
+
+echo g > /proc/sysrq-trigger
+
+I see the "kgdb" prompt but I can't interact with it because
+qcom_geni_serial_shutdown() stopped RX.
+
+
+-Doug
 
