@@ -1,160 +1,280 @@
-Return-Path: <linux-arm-msm+bounces-33917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-33918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 267FA998F61
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 20:08:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EF61998F73
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 20:10:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDD391F25B08
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 18:08:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D7A31C23EF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 10 Oct 2024 18:10:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 17F2C1E1A04;
-	Thu, 10 Oct 2024 18:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1251CCEC7;
+	Thu, 10 Oct 2024 18:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tEX/jNJh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ImVHqF34"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421E81D014B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 18:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C264619D07B;
+	Thu, 10 Oct 2024 18:08:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728583614; cv=none; b=bZP4yfTOk3uwRGBPU9mBWutp38rX2DX0j7/O0K0Ng2H0kiQgT8f2u21GQCEYR61sXT5GiNi+iHf5PwMu8q1W/HepguEedLafB9V2A6wAP0NqyVUQLZVKrqGUT2X+4varU9V5E3+w7XYkAGVPAVFQ435XLiMLYOzlZqPYcBh7UZA=
+	t=1728583732; cv=none; b=u5DfrM4sJiPRitVW01qvVrnlYoKzSiPXSPYnKVeHYlt/swwnxIp6Sxs3IBSW29XGXFKJ2RkncRmC5uk+Qpc0nF6KYNTsE8CbcVba4Qpx2XBvtbU/mbi1joyRI1zhIgH4HtcUdyWnSN3Hxni76WokqDKx8SGC2q38NuEu9zJhU08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728583614; c=relaxed/simple;
-	bh=h8BjPOZv9B+DRVbjP5a4tgXLmIQbttswYogT1kWyKhA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C8+fqtETlDnvWJZpP2SUd/pcx4hYvo9RNUDVuDqh0lcd7IaulP0/0jH6Zb+tog0T8kANDoZ3sSWMD/MnkYCUwx39YweXqW/62N58WDJrhTLFj86FfdL5DQWSsJarzHrXuVI5tXG1J88GXlPrqITCjWd28k6vJmXci/WviX8AtT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tEX/jNJh; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-6e330a7b120so10389957b3.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 11:06:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728583610; x=1729188410; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TKJGIOYTkNAdci0wFNHO08w6f6IiJsi0Xb5L2McNQqM=;
-        b=tEX/jNJh0GkG1brrAQMCXtCnKqTe/pVG26cr87u6yFyt07eKvXQELnxjgSvtluj6wt
-         /BAa9AZ8vLfjEHdSisKtjsvVmmKKLKGpWT8w00a6tHPR9ikZMdJ9qTxU8ys3tbdG5sRg
-         xoOSm7jb/LhsE5bdPo0pBzoYtj3jv56YaUVKEhoQ9aErSmIstIgx0Pw5/aYEIIlnkPwY
-         g3jkAX7UIfv4yVpoJvpbPmFljVvAmlBz1p1cKDrz1mJnwa5tCKpLL6evHNpQChoL+cmG
-         k8YLb8YafIVw8pHqPQMSDEDkhAt9knfiJQWOC0WKjF8MgO5uGFN/GcA5T4+nz5n5FEBh
-         We3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728583610; x=1729188410;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TKJGIOYTkNAdci0wFNHO08w6f6IiJsi0Xb5L2McNQqM=;
-        b=LbnBOxN9tyYhOiy5JNw7nQJjwRxUEXVP0etIq/JfvqKCJxWG8WXnnXVP112Idhq6Wu
-         whzVmUQNWTu9lKn2AF27x+BsuNYZ4vGyA2I1DQ7kkSJErpkZh/LQmqIzOAfHDJ1U6AGV
-         2sFSFR022F01bvRNbBVEEyYz8p5ePyfguR1ULDTAu9JnoyUGiuDjvRp8mvRRisIwxLQ3
-         5/cceBBTdw7xE4t3FevJrgBGjbKB22VLHktzosYAAz7AoSMmwL/gAVJ2PW+AY34h/+Kp
-         J0oYizcU0Oh083NZz7QDiZgi3FKCpFgd/kWsFBi0Nks+/i9STmkwisyDY9Ymwy30j6a/
-         VRew==
-X-Forwarded-Encrypted: i=1; AJvYcCWx5SeZMGrx7JrKZmAAQSa5iwuwpnaIlE5z2y8SMPe2XKiUSLgC9KySfxjIGaCEv+GuUn1+kNwhK6tTCkf0@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3KG0mCrl0EBmjrQv3igAAdeew6B0F540H5A7Qogx4rjUI2Cuq
-	XVvf6HC63l47L1iY7PiK5lZRkWy0ytyy4+WopPAU7Y740o316k4Cyfv+jK41EhYjVhwq3wLFLPo
-	X40ulhtZin1kB5dAr8jvgb7D+FQxXf3auNw8pSg==
-X-Google-Smtp-Source: AGHT+IFEGkRdIx6wLXAlJbZ04RtX0q1KzGpmDy37x6R1MrTP+tdlouVgHe0CwTggSg5yzslDUzKn8wKSgIAKi/CD2H8=
-X-Received: by 2002:a05:690c:3382:b0:6b0:d9bc:5a29 with SMTP id
- 00721157ae682-6e3224d33dbmr78728787b3.32.1728583610220; Thu, 10 Oct 2024
- 11:06:50 -0700 (PDT)
+	s=arc-20240116; t=1728583732; c=relaxed/simple;
+	bh=kRyuQEirx8OT3QxshSDoNDq0jtdqV++P9IE7Wa7d97Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ehp1ZgOcpf45mmb4wX6UTR4K6VIlmsMUiJp0B4J//WR5bDYryuyOAh2TbBkrNsJp0SIIpezXvsClTBUKTFo2J/b4+KUdwY/gpbj8Ohr2BWdp9+zlqVESMJs431f0/BAMIpOIt0t+e7Zor/4APM6RODpOp/Ifnx6QLYrSmsKZISQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ImVHqF34; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185C8C4CEC5;
+	Thu, 10 Oct 2024 18:08:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728583732;
+	bh=kRyuQEirx8OT3QxshSDoNDq0jtdqV++P9IE7Wa7d97Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ImVHqF34ZN8lV6UT/hSHMhvJ6R6TsRCOwj0xZPU5jUPfDOOi11a+8mbryjMJbw4Qc
+	 KIO/1QcnAGcTU/AY1Cb09cW+lzxuFUhE9CgRoxfrEQB65iREMGsjj7/RcXQpuiZl0a
+	 VdtCbBw34u6eApoKmfZAes1t6CRZeDcO31PasH4wuH6EMvDSWJiEZ6wJ6PPnzU8QIX
+	 U0iCzKpCa+VWoKjqdM3KdI71NFx7iTKXLdwxJ6BS/5PYa4mY+aZKvzCgqn3MFqG+AY
+	 cZzJj8+AAGmBPSxl/o1k+WKd0qUkaMCoBmJcycLyurJ0PsvAdpHQoFVMn4uYnAO3Sz
+	 Hsc+9IxuoIHig==
+Date: Thu, 10 Oct 2024 13:08:48 -0500
+From: Rob Herring <robh@kernel.org>
+To: Songwei Chai <quic_songchai@quicinc.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@arm.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andy Gross <agross@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
+	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/7] dt-bindings: arm: Add support for Coresight TGU
+ trace
+Message-ID: <20241010180848.GA2094931-robh@kernel.org>
+References: <20241010073917.16023-1-quic_songchai@quicinc.com>
+ <20241010073917.16023-2-quic_songchai@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241009195636.2649952-1-quic_kriskura@quicinc.com>
- <20241009195636.2649952-3-quic_kriskura@quicinc.com> <iycqvw5ztqufcu3hgtpvrrir2anurjeckgmj6ll6twwsmotxhf@v72pwnmvq6yx>
- <41f436be-e75b-41aa-ae75-ab6337a6e51a@quicinc.com>
-In-Reply-To: <41f436be-e75b-41aa-ae75-ab6337a6e51a@quicinc.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 10 Oct 2024 21:06:38 +0300
-Message-ID: <CAA8EJppchH52gA6raXK0=+fYz_XwU6oBFAA-nNaTY4E5s_aTkA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Enable USB controllers for QCS8300
-To: Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241010073917.16023-2-quic_songchai@quicinc.com>
 
-On Thu, 10 Oct 2024 at 19:28, Krishna Kurapati
-<quic_kriskura@quicinc.com> wrote:
->
->
->
-> On 10/10/2024 9:34 PM, Dmitry Baryshkov wrote:
-> > On Thu, Oct 10, 2024 at 01:26:36AM GMT, Krishna Kurapati wrote:
-> >> Enable primary USB controller on QCS8300 Ride platform and
-> >> set the dr mode to peripheral mode.
-> >>
-> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> >> ---
-> >>   arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 23 +++++++++++++++++++++++
-> >>   1 file changed, 23 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> >> index 7eed19a694c3..3e925228379c 100644
-> >> --- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> >> +++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-> >> @@ -265,3 +265,26 @@ &ufs_mem_phy {
-> >>      vdda-pll-supply = <&vreg_l5a>;
-> >>      status = "okay";
-> >>   };
-> >> +
-> >> +&usb_1_hsphy {
-> >> +    vdda-pll-supply = <&vreg_l7a>;
-> >> +    vdda18-supply = <&vreg_l7c>;
-> >> +    vdda33-supply = <&vreg_l9a>;
-> >> +
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&usb_qmpphy {
-> >> +    vdda-phy-supply = <&vreg_l7a>;
-> >> +    vdda-pll-supply = <&vreg_l5a>;
-> >> +
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&usb_1 {
-> >> +    status = "okay";
-> >> +};
-> >> +
-> >> +&usb_1_dwc3 {
-> >> +    dr_mode = "peripheral";
-> >
-> > Is it actually USB peripheral only? Or USB-C which isn't handled yet?
-> >
->
-> It is DRD capable. This platform has Type-A ports. I didn't see any way
-> of role switching. So I hardcoded it to peripheral like on SA8775P and
-> SA8540P ride platforms.
+On Thu, Oct 10, 2024 at 03:39:09PM +0800, Songwei Chai wrote:
+> The Trigger Generation Unit (TGU) is designed to detect patterns or
+> sequences within a specific region of the System on Chip (SoC). Once
+> configured and activated, it monitors sense inputs and can detect a
+> pre-programmed state or sequence across clock cycles, subsequently
+> producing a trigger.
+> 
+>    TGU configuration space
+>         offset table
+>  x-------------------------x
+>  |                         |
+>  |                         |
+>  |                         |                           Step configuration
+>  |                         |                             space layout
+>  |   coresight management  |                           x-------------x
+>  |        registers        |                     |---> |             |
+>  |                         |                     |     |  reserve    |
+>  |                         |                     |     |             |
+>  |-------------------------|                     |     |-------------|
+>  |                         |                     |     | priority[3] |
+>  |         step[7]         |<--                  |     |-------------|
+>  |-------------------------|   |                 |     | priority[2] |
+>  |                         |   |                 |     |-------------|
+>  |           ...           |   |Steps region     |     | priority[1] |
+>  |                         |   |                 |     |-------------|
+>  |-------------------------|   |                 |     | priority[0] |
+>  |                         |<--                  |     |-------------|
+>  |         step[0]         |-------------------->      |             |
+>  |-------------------------|                           |  condition  |
+>  |                         |                           |             |
+>  |     control and status  |                           x-------------x
+>  |           space         |                           |             |
+>  x-------------------------x                           |Timer/Counter|
+>                                                        |             |
+> 						       x-------------x
+> TGU Configuration in Hardware
+> 
+> The TGU provides a step region for user configuration, similar
+> to a flow chart. Each step region consists of three register clusters:
+> 
+> 1.Priority Region: Sets the required signals with priority.
+> 2.Condition Region: Defines specific requirements (e.g., signal A
+> reaches three times) and the subsequent action once the requirement is
+> met.
+> 3.Timer/Counter (Optional): Provides timing or counting functionality.
+> 
+> Add a new coresight-tgu.yaml file to describe the bindings required to
+> define the TGU in the device trees.
+> 
+> Signed-off-by: Songwei Chai <quic_songchai@quicinc.com>
+> ---
+>  .../bindings/arm/qcom,coresight-tgu.yaml      | 133 ++++++++++++++++++
+>  1 file changed, 133 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
+> new file mode 100644
+> index 000000000000..25b464486fe2
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/qcom,coresight-tgu.yaml
+> @@ -0,0 +1,133 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/qcom,coresight-tgu.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Trigger Generation Unit - TGU
+> +
+> +description: |
+> +  The Trigger Generation Unit (TGU) is a Data Engine which can be utilized
+> +  to sense a plurality of signals and create a trigger into the CTI or
+> +  generate interrupts to processors. The TGU is like the trigger circuit
+> +  of a Logic Analyzer.The corresponding trigger logic can be realized by
 
-Type-A are usually host rather than peripheral. Please describe your
-decisions in the commit message.
+space                    ^
 
->
-> Regards,
-> Krishna,
->
-> >> +};
-> >> --
-> >> 2.34.1
-> >>
-> >
+> +  configuring the conditions for each step after sensing the signal.
+> +  Once setup and enabled, it will observe sense inputs and based upon
+> +  the activity of those inputs, even over clock cycles, may detect a
+> +  preprogrammed state/sequence and then produce a trigger or interrupt.
+> +
+> +  The primary use case of the TGU is to detect patterns or sequences on a
+> +  given set of signals within some region of the SoC.
+> +
+> +maintainers:
+> +  - Mao Jinlong <quic_jinlmao@quicinc.com>
+> +  - Sam Chai <quic_songchai@quicinc.com>
+> +
+> +# Need a custom select here or 'arm,primecell' will match on lots of nodes
+> +select:
+> +  properties:
+> +    compatible:
+> +      contains:
+> +        enum:
+> +          - qcom,coresight-tgu
+> +  required:
+> +    - compatible
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - const: qcom,coresight-tgu
+> +      - const: arm,primecell
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: apb_pclk
+> +
+> +  qcom,tgu-steps:
+> +    description:
+> +      The trigger logic is realized by configuring each step after sensing
+> +      the signal. The parameter here is used to describe the maximum of steps
+> +      that could be configured in the current TGU.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 8
+> +
+> +  qcom,tgu-regs:
+> +    description:
+> +      There are some "groups" register clusters in each step, which are used to configure the signal
+> +      that we want to detect.Meanwhile, each group has its own priority, and the priority increases
 
+space                           ^
 
+> +      with number of groups.For example, group3 has a higher priority than group2 ,the signal configured
 
--- 
-With best wishes
-Dmitry
+space                          ^
+
+Wrong spacing around the ','.
+
+> +      in group3 will be sensed more preferentially than the signal which is configured in group2.
+> +      The parameter here is used to describe the signal number that each group could be configured.
+
+Wrap lines at 80 unless there's some exception not to.
+
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 18
+> +
+> +  qcom,tgu-conditions:
+> +    description:
+> +      A condition sets a specific requirement for a step and defines the subsequent
+> +      action once the requirement is met. For example, in step two, if signal A is
+> +      detected three times, the process jumps back to step one. The parameter describes
+> +      the register number for each functionality, whether it is setting a specific
+> +      requirement or defining a subsequent action.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 4
+> +
+> +  qcom,tgu-timer-counters:
+> +    description:
+> +      TGU has timer and counter which are used to set some requirement on each step.
+> +      For example, we could use counter to create a trigger into CTI once TGU senses
+> +      the target signal three times.This parameter is used to describe the number of
+> +      Timers/Counters in TGU.
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 2
+> +
+> +  in-ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +    additionalProperties: false
+> +
+> +    properties:
+> +      port:
+> +        description: AXI Slave connected to another Coresight component
+> +        $ref: /schemas/graph.yaml#/properties/port
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    tgu@10b0e000 {
+> +        compatible = "qcom,coresight-tgu", "arm,primecell";
+> +        reg = <0x10b0e000 0x1000>;
+> +
+> +        clocks = <&aoss_qmp>;
+> +        clock-names = "apb_pclk";
+> +
+> +        qcom,tgu-steps = <3>;
+> +        qcom,tgu-regs = <4>;
+> +        qcom,tgu-conditions = <4>;
+> +        qcom,tgu-timer-counters = <1>;
+> +
+> +        in-ports {
+> +            port {
+> +                tgu_in_tpdm_swao: endpoint{
+> +                    remote-endpoint = <&tpdm_swao_out_tgu>;
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
 
