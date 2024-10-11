@@ -1,212 +1,463 @@
-Return-Path: <linux-arm-msm+bounces-34045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CC7F999D9C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 09:13:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0959C999D9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 09:15:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 008701F24C2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:13:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AC831C203E6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:15:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A536209670;
-	Fri, 11 Oct 2024 07:13:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2C4E20899B;
+	Fri, 11 Oct 2024 07:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GrweT7X/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="JwW1ZoVz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46B920899B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 07:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9CC920721D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 07:14:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728630801; cv=none; b=BanfGcLiSAQ8QvYU+YEJ/8LWhksWxzRB2M8cH/3H0Z3YytkBIUb6OyZItk9h+G8LvvCbN5PM44Qydalz2hJVvH4rvgJKmQZSWBmi6uQkBS6+197hfDzo4kYHo41ZxIabcfCP8GzoGVndpeg1+Agtd1FijWYscRR652hveTO5W0Y=
+	t=1728630897; cv=none; b=djrJD53ZtnHyyxOOGVIpX/hd1Cx77W0W8PcDmtvsHtBQkNDvS78dUpVPPTV5p/adFDELACG3sR/7Q6OU6jHxfHQvAh6TvkQ+VxCZWSzw3LiPJXItJ5skhMOmcBWCPwlXgjcGywny53eI7iGMO47bnfSiI63IKIDIOBxdVQYuljA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728630801; c=relaxed/simple;
-	bh=9qXYyL221GKrspzBu5mePpBszokIB5ntvBcKiRaOX/Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mbOkQTZqpFUj70DOvyDweQ/Tl5IKRJ/h5WPq0NTmcoN4026d+431jcznQTgkC5LGe3n50sdfrh8JchYprWJr5liP+J3FujKpyjKbB380SIcA5q6/r7qF2XYFHKNdiC8tgZ+zi7ZsVQADbXL0N8yI+3IpzHdtf5jC0irBZXB1SPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GrweT7X/; arc=none smtp.client-ip=209.85.128.182
+	s=arc-20240116; t=1728630897; c=relaxed/simple;
+	bh=mWkqLAfaF9iejDfisKHhbsIOBq/70ZXRB4fKgfKXN40=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=Cy63ytAnbH5/nMhOnaKdQRts+J0gr+DmJev/7rhSkEUXLMpicBnlmFEpkCfGO3qBgM6LYKa5vF7GrGI190YYmpsf2kCImeEiaDzVImNmNGYNnSZ4TwDA9KIiFFX8saKkZdxX2c4yqjIARYy9SOA0YuFiW96sMAvK2tK1hqP39bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=JwW1ZoVz; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6e2d36343caso14265497b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 00:13:18 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-5398cbab46cso172714e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 00:14:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728630798; x=1729235598; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pVy3cXzl86sH2JLHgiFtJxWYGEOPC7pnAO5jIndLRl4=;
-        b=GrweT7X/sFiizTvThbS5VqX+H3MS3AKtjY7OvRHPUuUKoDbtUN8ONRYrQ2LK/4v+Hu
-         SKYMAg4OC4P3w749VsFI6WIaon45MsuphIuRS25X2GicZf7w9cmMzPbauIvrlAJX2C47
-         q+1vA8tSVo6S4qZuBTtx0DZZLE9vTdwDNdVLu1KI4hNxiW0AFKNRrcohmS2v9RxJqMMt
-         TkXVDzr9+WLhob75WN6VMgSvDqGMDISrtzozelYvwyGL2G9Fbp35NfpD6ktReqUKIfVy
-         EhfPHqLPTTjfMGSoWqqeE3y27PTjqspIo72wARH6nsUoXyPodXtyNqu10A05wbW7tLxQ
-         gqSQ==
+        d=linaro.org; s=google; t=1728630894; x=1729235694; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qZK7ae0vS67lOfg1e9nrTDJlKMyW88XZtxlWgkOFzMI=;
+        b=JwW1ZoVzCRO83S0cXzVLYIxBw2HGo3kcfwaMQI5Xt5yrAAq1NVD/xY6T3XpEFwyTC9
+         EpMVOr5g84KomhyiomC/YPr9PRu9l4zMhMcUU4FllMnavZKK+S4vhRHItMEYntBo3zRI
+         PJwU5RWFDxcFky79oKt9kyYTfW4xj+7XLWh0w+C88erw2dqgV2hjwUAGF7gpGf5S7vXa
+         5+0HXOMOZ48tVHNxCRqBqeUVVtBRDMJpAhWCk2IKb9jVLySFjWq09heHFQudRUOhSmJa
+         DMDeM6eAGknsBhadRQVIpRZln7Vcc0oa+/AhgnW2hnqYG9I6G7NfS3q64muJ82Vv4uPY
+         XOww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728630798; x=1729235598;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pVy3cXzl86sH2JLHgiFtJxWYGEOPC7pnAO5jIndLRl4=;
-        b=OJOpZfeCcK2mhis+FdZpZpsjY4o4e/6kbPFuX2wV+WcsbnhgEH4vErzCL/cT9aYCGx
-         xlFbbhNbuRIVpngKhyGA7mCQq2M8iLuYyaL76GooVUgdc5Kiu7QNqXO3MbplZnhXOjSl
-         s0v4oN+5/HA7tChUxA4hqf4Zdd3L8vIuc7slFBSnTsV3blQQhBRcN0CRvBtFW0phrqB4
-         T5U9x4qhxcRDOrNoWiUxLI/w9N/ubhH9/l+nRzT32Q70JgTNttE8LGDJOEMd+5ld+fnY
-         Pv/YEu9T78l0XtxTxs79Dl/vqYE00sO1IQrDtatNcEzKX2IRUZJh6IsJSyD2ATw0br/r
-         CQ0w==
-X-Forwarded-Encrypted: i=1; AJvYcCUKPc3W8CCVK1JgTaFyIGIZHt5bDtAaAqdAjzN8DpM3hebf+VDwa4nvAGEdf9DLXEIzH9N6hPIsZD/fho/E@vger.kernel.org
-X-Gm-Message-State: AOJu0YxZiy3ylTw9589ppA5/RzZY0PYYWhyzPncVBGxQQiZBv1P9ol94
-	y6tNf/b48dp2EziicMG0qFPVYag/ZW+OmcGbXxDULIZdp8Epldvlgzp7Vi2+fltejgxralDIgiF
-	rLIhno6owyTIYRUFv21Mjs2LZQNm6EXK73o07Vw==
-X-Google-Smtp-Source: AGHT+IGDBtidaBjCA+V6TUtDSxl4XAawtegW2WS9EFKGFvRhSXTvKYz5awzj9XJntrNJqGu2AzyUvSFjTEPgOfOXMps=
-X-Received: by 2002:a05:690c:6085:b0:6e3:15ad:a560 with SMTP id
- 00721157ae682-6e3479b858amr12310937b3.12.1728630797790; Fri, 11 Oct 2024
- 00:13:17 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1728630894; x=1729235694;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qZK7ae0vS67lOfg1e9nrTDJlKMyW88XZtxlWgkOFzMI=;
+        b=RsLs1xdlY17VpyzeF0DDeInPAFn/P+8FWg79rCwPXu5f92h6vCwBOkMbcN5dEQpM99
+         4vjebnTMxF9HxgwjAJtrAW+e+VBhNxwIVPUSBlsO2HxhwPsxAPN5EYRWeoGEU/OznaSO
+         rlKIJl4i+2IgZHiVPAITZcIXy6wZjYh5sjaNOy5/JkW+CDJE2trcca7OTPIpxvzwofYF
+         gXs0jOyzyQcNQx0SePWYUP8AcEgipXQPIcNrI89l3xU2QNckZC5gT3YKha/90NKQTyv6
+         5zpgVCP+1epNf4bAzMv84UmZMxCIphvWysqGHxbrfBzZNUBgbKWKUee3Z3zwYeGPUMz6
+         6Ljg==
+X-Forwarded-Encrypted: i=1; AJvYcCXrQRuj4Lv4CD/bMg02+kfXVf4SykCUk62/KuWHz17RG53Vv1TPx1GUDRxghrTiZ+fgMAGDgzvmzarwwS+5@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5BxWkNbtgQe3JCHob42CNp4H6jeU1CFumsLlYdOgZaW+BRGup
+	kiKD6F9LdJkjmSj169jzty7cLS4aq6Z93phZn/iFHjEe8u2RZQI2DJGqFC3rR7o=
+X-Google-Smtp-Source: AGHT+IF0ESZci0ymYxZ6lnO3rMAGrq8ZlWndKx+H3wJ66Iss30yD1kAsWTnjaq1zn6UJaJ0sNx9CTw==
+X-Received: by 2002:a2e:a595:0:b0:2fa:cf48:14a3 with SMTP id 38308e7fff4ca-2fb329afbe7mr1793981fa.7.1728630893885;
+        Fri, 11 Oct 2024 00:14:53 -0700 (PDT)
+Received: from [192.168.43.55] (85-76-116-253-nat.elisa-mobile.fi. [85.76.116.253])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb245799d5sm4309581fa.18.2024.10.11.00.14.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2024 00:14:52 -0700 (PDT)
+Message-ID: <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
+Date: Fri, 11 Oct 2024 10:14:49 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
- <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
- <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3>
- <CABymUCP7bVBSWXCNp33x_B8KaZSFU-Dx+bU5ctkgDGXrzURrXQ@mail.gmail.com>
- <CAA8EJpovnEq_ciO0YmiREhwvxv6yGKnRMPx5=6G7R+Ob6Hy_hA@mail.gmail.com> <CABymUCPdu5+iz-amwv_O999sLUOmUMczo_v=1aUpJGpHo5f8CA@mail.gmail.com>
-In-Reply-To: <CABymUCPdu5+iz-amwv_O999sLUOmUMczo_v=1aUpJGpHo5f8CA@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 11 Oct 2024 10:13:07 +0300
-Message-ID: <CAA8EJppMu5o7juhKUN2Y_4CRYKtaWN9G01aPU2ZfksE_tzjqCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 09/14] drm/msm/dpu: blend pipes per mixer pairs config
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
+Content-Language: en-US
+To: Richard Acayan <mailingradian@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-media@vger.kernel.org
+References: <20241011023724.614584-7-mailingradian@gmail.com>
+ <20241011023724.614584-9-mailingradian@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20241011023724.614584-9-mailingradian@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, 11 Oct 2024 at 10:11, Jun Nie <jun.nie@linaro.org> wrote:
->
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B410=
-=E6=9C=8811=E6=97=A5=E5=91=A8=E4=BA=94 15:03=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On Fri, 11 Oct 2024 at 09:40, Jun Nie <jun.nie@linaro.org> wrote:
-> > >
-> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B4=
-10=E6=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B 21:15=E5=86=99=E9=81=93=EF=BC=9A
-> > > >
-> > > > On Wed, Oct 09, 2024 at 04:50:22PM GMT, Jun Nie wrote:
-> > > > > Blend pipes by set of mixer pair config. The first 2 pipes are fo=
-r left
-> > > > > half screen with the first set of mixer pair config. And the late=
-r 2 pipes
-> > > > > are for right in quad pipe case.
-> > > > >
-> > > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > > > ---
-> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 38 +++++++++++++++=
-+++-----------
-> > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
-> > > > >  2 files changed, 25 insertions(+), 14 deletions(-)
-> > > > >
-> > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/g=
-pu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > index 43d9817cd858f..66f745399a602 100644
-> > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(struc=
-t drm_crtc *crtc,
-> > > > >       const struct msm_format *format;
-> > > > >       struct dpu_hw_ctl *ctl =3D mixer->lm_ctl;
-> > > > >
-> > > > > -     uint32_t lm_idx, i;
-> > > > > +     uint32_t lm_idx, lm_pair, i, pipe_idx;
-> > > > >       bool bg_alpha_enable =3D false;
-> > > > >       DECLARE_BITMAP(fetch_active, SSPP_MAX);
-> > > > >
-> > > > > @@ -463,15 +463,20 @@ static void _dpu_crtc_blend_setup_mixer(str=
-uct drm_crtc *crtc,
-> > > > >               if (pstate->stage =3D=3D DPU_STAGE_BASE && format->=
-alpha_enable)
-> > > > >                       bg_alpha_enable =3D true;
-> > > > >
-> > > > > -             for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
-> > > > > -                     if (!pstate->pipe[i].sspp)
-> > > > > -                             continue;
-> > > > > -                     set_bit(pstate->pipe[i].sspp->idx, fetch_ac=
-tive);
-> > > > > -                     _dpu_crtc_blend_setup_pipe(crtc, plane,
-> > > > > -                                                mixer, cstate->n=
-um_mixers,
-> > > > > -                                                pstate->stage,
-> > > > > -                                                format, fb ? fb-=
->modifier : 0,
-> > > > > -                                                &pstate->pipe[i]=
-, i, stage_cfg);
-> > > > > +             /* loop pipe per mixer pair */
-> > > > > +             for (lm_pair =3D 0; lm_pair < PIPES_PER_PLANE / 2; =
-lm_pair++) {
-> > > > > +                     for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
-> > > > > +                             pipe_idx =3D i + lm_pair * PIPES_PE=
-R_LM_PAIR;
-> > > > > +                             if (!pstate->pipe[pipe_idx].sspp)
-> > > > > +                                     continue;
-> > > > > +                             set_bit(pstate->pipe[pipe_idx].sspp=
-->idx, fetch_active);
-> > > > > +                             _dpu_crtc_blend_setup_pipe(crtc, pl=
-ane,
-> > > > > +                                                        mixer, c=
-state->num_mixers,
-> > > > > +                                                        pstate->=
-stage,
-> > > > > +                                                        format, =
-fb ? fb->modifier : 0,
-> > > > > +                                                        &pstate-=
->pipe[pipe_idx], i,
-> > > > > +                                                        &stage_c=
-fg[lm_pair]);
-> > > > > +                     }
-> > > > >               }
-> > > > >
-> > > > >               /* blend config update */
-> > > > > @@ -503,7 +508,7 @@ static void _dpu_crtc_blend_setup(struct drm_=
-crtc *crtc)
-> > > > >       struct dpu_crtc_mixer *mixer =3D cstate->mixers;
-> > > > >       struct dpu_hw_ctl *ctl;
-> > > > >       struct dpu_hw_mixer *lm;
-> > > > > -     struct dpu_hw_stage_cfg stage_cfg;
-> > > > > +     struct dpu_hw_stage_cfg stage_cfg[LM_PAIRS_PER_PLANE];
-> > > >
-> > > > After seeing this code, can we define STAGES_PER_PLANE (and
-> > > > also keep PLANES_PER_STAGE defined to 2)?
-> > > >
-> > > Could you elaborate it? Stages describe how many layers to be blended=
-.
-> > > Plane is a DRM concept that describe a buffer to be display in specif=
-ic
-> > > display driver. Plane is already mapped to SSPP/multi-rect in DPU dri=
-ver
-> > >  in blending stage level. So I am confused here.
-> >
-> > We have dpu_hw_stage_cfg, you are adding a second instance of it. So
-> > we now have two stages per plane.
->
-> So you suggest to replace LM_PAIRS_PER_PLANE with STAGES_PER_PLANE,
-> right? I assume a stage is coupled with a LM pair.
->
-> But for PLANES_PER_STAGE, I am still confused. A stage or a LM pair can
-> involve many SSPP layers. How it related to planes? Plane is a concepts f=
-rom
-> higher level.
+Hello Richard,
 
-PIPES_PER_STAGE, excuse me.
+On 10/11/24 05:37, Richard Acayan wrote:
+> As found in the Pixel 3a, the Snapdragon 670 has a camera subsystem with
+> 3 CSIDs and 3 VFEs (including 1 VFE lite). Add this camera subsystem to
+> the bindings.
+> 
+> Adapted from SC8280XP camera subsystem.
+> 
+> Signed-off-by: Richard Acayan <mailingradian@gmail.com>
+> ---
+>   .../bindings/media/qcom,sdm670-camss.yaml     | 318 ++++++++++++++++++
+>   1 file changed, 318 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> new file mode 100644
+> index 000000000000..670502532d28
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
+> @@ -0,0 +1,318 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,sdm670-camss.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SDM670 Camera Subsystem (CAMSS)
+> +
+> +maintainers:
+> +  - Richard Acayan <mailingradian@gmail.com>
+> +
+> +description:
+> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdm670-camss
+> +
+> +  reg:
+> +    maxItems: 9
+> +
+> +  reg-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: vfe0
+> +      - const: vfe1
+> +      - const: vfe_lite
+> +
+> +  clocks:
+> +    maxItems: 22
+> +
+> +  clock-names:
+> +    items:
+> +      - const: gcc_camera_ahb
+> +      - const: gcc_camera_axi
+> +      - const: soc_ahb
+> +      - const: camnoc_axi
+> +      - const: cpas_ahb
+> +      - const: csi0
+> +      - const: csi1
+> +      - const: csi2
+> +      - const: csiphy0
+> +      - const: csiphy0_timer
+> +      - const: csiphy1
+> +      - const: csiphy1_timer
+> +      - const: csiphy2
+> +      - const: csiphy2_timer
+> +      - const: vfe0_axi
+> +      - const: vfe0
+> +      - const: vfe0_cphy_rx
+> +      - const: vfe1_axi
+> +      - const: vfe1
+> +      - const: vfe1_cphy_rx
+> +      - const: vfe_lite
+> +      - const: vfe_lite_cphy_rx
+> +
+> +  interrupts:
+> +    maxItems: 9
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: csid0
+> +      - const: csid1
+> +      - const: csid2
+> +      - const: csiphy0
+> +      - const: csiphy1
+> +      - const: csiphy2
+> +      - const: vfe0
+> +      - const: vfe1
+> +      - const: vfe_lite
+> +
+> +  iommus:
+> +    maxItems: 4
+> +
+> +  power-domains:
+> +    items:
+> +      - description: IFE0 GDSC - Image Front End, Global Distributed Switch Controller.
+> +      - description: IFE1 GDSC - Image Front End, Global Distributed Switch Controller.
+> +      - description: Titan Top GDSC - Titan ISP Block, Global Distributed Switch Controller.
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: ife0
+> +      - const: ife1
+> +      - const: top
+> +
+> +  ports:
+> +    $ref: /schemas/graph.yaml#/properties/ports
+> +
+> +    description:
+> +      CSI input ports.
+> +
+> +    properties:
+> +      port@0:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data from CSIPHY0.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@1:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data from CSIPHY1.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +      port@2:
+> +        $ref: /schemas/graph.yaml#/$defs/port-base
+> +        unevaluatedProperties: false
+> +        description:
+> +          Input port for receiving CSI data from CSIPHY2.
+> +
+> +        properties:
+> +          endpoint:
+> +            $ref: video-interfaces.yaml#
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              clock-lanes:
+> +                maxItems: 1
+> +
+> +              data-lanes:
+> +                minItems: 1
+> +                maxItems: 4
+> +
+> +            required:
+> +              - clock-lanes
+> +              - data-lanes
+> +
+> +  vdda-phy-supply:
+> +    description:
+> +      Phandle to a regulator supply to PHY core block.
+> +
+> +  vdda-pll-supply:
+> +    description:
+> +      Phandle to 1.8V regulator supply to PHY refclk pll block.
+> +
+> +required:
+> +  - reg
+> +  - reg-names
+> +  - clock-names
+> +  - clocks
+> +  - compatible
+> +  - interrupts
+> +  - interrupt-names
+> +  - iommus
+> +  - power-domains
+> +  - power-domain-names
+> +  - vdda-phy-supply
+> +  - vdda-pll-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,camcc-sdm845.h>
+> +    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        camss@ac65000 {
+> +            compatible = "qcom,sdm670-camss";
+> +
+> +            reg = <0 0x0acb3000 0 0x1000>,
 
---=20
-With best wishes
-Dmitry
+This is immediately wrong, unit address shall be the same as the address of the
+first value of reg property.
+
+I still object to the sorting order of reg values dictated by reg-names property.
+
+There are a few recently added CAMSS device tree binding descriptions, where
+reg values are sorted by address values without a connection to another property
+values, and I believe this is the correct way to go.
+
+Two most recently added CAMSS IP descriptions (qcom,sm8250-camss.yaml and
+qcom,sc8280xp-camss.yaml) do implement sorting by reg values, I believe from now on
+it should be assumed that all subsequently added CAMSS IP descriptions to follow
+the same established policy.
+
+I vote for it.
+
+> +                  <0 0x0acba000 0 0x1000>,
+> +                  <0 0x0acc8000 0 0x1000>,
+> +                  <0 0x0ac65000 0 0x1000>,
+> +                  <0 0x0ac66000 0 0x1000>,
+> +                  <0 0x0ac67000 0 0x1000>,
+> +                  <0 0x0acaf000 0 0x4000>,
+> +                  <0 0x0acb6000 0 0x4000>,
+> +                  <0 0x0acc4000 0 0x4000>;
+> +            reg-names = "csid0",
+> +                        "csid1",
+> +                        "csid2",
+> +                        "csiphy0",
+> +                        "csiphy1",
+> +                        "csiphy2",
+> +                        "vfe0",
+> +                        "vfe1",
+> +                        "vfe_lite";
+> +
+> +            interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
+> +                         <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>;
+> +            interrupt-names = "csid0",
+> +                              "csid1",
+> +                              "csid2",
+> +                              "csiphy0",
+> +                              "csiphy1",
+> +                              "csiphy2",
+> +                              "vfe0",
+> +                              "vfe1",
+> +                              "vfe_lite";
+> +
+> +            clocks = <&gcc GCC_CAMERA_AHB_CLK>,
+> +                     <&gcc GCC_CAMERA_AXI_CLK>,
+> +                     <&camcc CAM_CC_SOC_AHB_CLK>,
+> +                     <&camcc CAM_CC_CAMNOC_AXI_CLK>,
+> +                     <&camcc CAM_CC_CPAS_AHB_CLK>,
+> +                     <&camcc CAM_CC_IFE_0_CSID_CLK>,
+> +                     <&camcc CAM_CC_IFE_1_CSID_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_CSID_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY0_CLK>,
+> +                     <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY1_CLK>,
+> +                     <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_CSIPHY2_CLK>,
+> +                     <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
+> +                     <&camcc CAM_CC_IFE_0_AXI_CLK>,
+> +                     <&camcc CAM_CC_IFE_0_CLK>,
+> +                     <&camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
+> +                     <&camcc CAM_CC_IFE_1_AXI_CLK>,
+> +                     <&camcc CAM_CC_IFE_1_CLK>,
+> +                     <&camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_CLK>,
+> +                     <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>;
+> +            clock-names = "gcc_camera_ahb",
+> +                          "gcc_camera_axi",
+> +                          "soc_ahb",
+> +                          "camnoc_axi",
+> +                          "cpas_ahb",
+> +                          "csi0",
+> +                          "csi1",
+> +                          "csi2",
+> +                          "csiphy0",
+> +                          "csiphy0_timer",
+> +                          "csiphy1",
+> +                          "csiphy1_timer",
+> +                          "csiphy2",
+> +                          "csiphy2_timer",
+> +                          "vfe0_axi",
+> +                          "vfe0",
+> +                          "vfe0_cphy_rx",
+> +                          "vfe1_axi",
+> +                          "vfe1",
+> +                          "vfe1_cphy_rx",
+> +                          "vfe_lite",
+> +                          "vfe_lite_cphy_rx";
+> +
+> +            iommus = <&apps_smmu 0x808 0x0>,
+> +                     <&apps_smmu 0x810 0x8>,
+> +                     <&apps_smmu 0xc08 0x0>,
+> +                     <&apps_smmu 0xc10 0x8>;
+> +
+> +            power-domains = <&camcc IFE_0_GDSC>,
+> +                            <&camcc IFE_1_GDSC>,
+> +                            <&camcc TITAN_TOP_GDSC>;
+> +            power-domain-names = "ife0",
+> +                                 "ife1",
+> +                                 "top";
+> +
+> +            vdda-phy-supply = <&vreg_l1a_1p225>;
+> +            vdda-pll-supply = <&vreg_l8a_1p8>;
+> +
+> +            ports {
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +
+> +                port@0 {
+> +                    reg = <0>;
+> +
+> +                    csiphy_ep0: endpoint {
+> +                        clock-lanes = <7>;
+
+
+
+> +                        data-lanes = <0 1 2 3>;
+> +                        remote-endpoint = <&front_sensor_ep>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +    };
+
+--
+Best wishes,
+Vladimir
 
