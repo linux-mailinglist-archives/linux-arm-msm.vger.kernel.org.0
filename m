@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-34009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 034DD999AE4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 05:08:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FD0C999B95
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 06:20:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D41E1F24B0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 03:08:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 174DB283787
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 04:20:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECDD71F4FBC;
-	Fri, 11 Oct 2024 03:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3C501CB506;
+	Fri, 11 Oct 2024 04:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LzmBBDBd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FIytLTbR"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DDA1F4706;
-	Fri, 11 Oct 2024 03:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64271922C4;
+	Fri, 11 Oct 2024 04:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728616089; cv=none; b=qNcAleIiOhtPpvDi5XyftDodK89HhkP09ATRsjYftPx0TtsU/zWehaawUJ3Kb6+1QvTH3QvnBXRKAywRD2pcNENV/FDjq1PojZGyklCc8cp53FsUS8bpyQYcaZmTrPTVg0r98tjVEGrqgeHx75yMYd43sb0OAc/TFmK8k8n3cQ4=
+	t=1728620407; cv=none; b=ZPO95QIY07vN9bJMPPqUALuVPIV1CgVyCj0PGlCKqIQskoTGKB360BPP1qwWWwylzsxDRrJByBCxofwhmoHlZIy2MECOSTnOmbu7EE5/DYRf0UddshvWUgVEBUzAoFtUk/9apyYL366f/o1G+s5fhHNNJdDCQBW8g2bMpBDcP+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728616089; c=relaxed/simple;
-	bh=ep44fxEvvsd26YIiQtzYV+4X9mE5DwAn+rEAQ9V2Mh4=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=W5OAG20qRu/cyCeZWA5cOan1oxQGyR3bzf1wt9OUUaq3Kz6Ar8N95cU0H5qJlOQJztsF4EbpfZ2Wh7TMGoSrFPNRFCtdrAoV5CNzNIjw9Ale6gYGzr8tu0BT9a2tNqgzNEcbVtSfcWFLNhLymrQFWPU+gUwgg9juXGBf9Eylcnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LzmBBDBd; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1728620407; c=relaxed/simple;
+	bh=etMo2Djl1Gqh4dXuGFLnlVjhLIuJZslB1buBgnKsCKU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=O2FFNIVngbnedWqrc/pT8hR5aQ7kwiTRMWnp6V9xxnGZt+G7cPLU9PCdM06IBSOcYPvtEibQlfRTwNeZgS7smYR29qFyM2JeHYQ85rhajtuW8rkZIm0E+KorICuNQrXDJWLHAUWIj9WjYnTtw/zB04D62nxmfgnw/8ykQd68ruY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FIytLTbR; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49B2eeUU028022;
-	Fri, 11 Oct 2024 03:07:58 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49AD8kST027038;
+	Fri, 11 Oct 2024 04:19:57 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=dRboePwXKGLUTBGbWr5cuf
-	VJ4O8k6LsI8p1I57NNJyw=; b=LzmBBDBdcg+/Qvmk4Ni/ruTxnG28pHWh+WY9hf
-	M9A5O2mZaeVtwWYyoQYoUPB7GwX8e30qROR78j/HSXHPGxFVUvr7/A3A++E3TjvZ
-	+Cc9+t5jdduyEdmHsxXJ8WfdY7MN+Z5XMKJilEWOYXCICtAb8lyW0SJFI686+g1S
-	d/r45YAkmSGQrgQd6OZD9iRSNSTqyrWkds7UMUxd74l0PCvalRzYKw/Fb9SmXS8y
-	d0v1fNb4tzeC0S3WqraFzXiUbVBFf+cIVsgGIf5IODPPt6hQMv0/4v28td6sHdeZ
-	D8k2rrQgZwbc32u9jibwGM1ArhaZXHwnT8fVmvdIi1TR5usA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425c8qyrk3-1
+	:mime-version:subject:to; s=qcppdkim1; bh=lzQ0ZGJzWIBkUvd+V01ET8
+	BEJiVcXr067zuonqJreI4=; b=FIytLTbRTW3pkqGSBXpT+SBC2/8uEDCgALe8He
+	ZXxrv5ais0lUmsqA+FpcidlNhsy7QnCmry1U/pmD6WF7COxbr7s9LZhsetkjLZvm
+	GlLrXl3pda2WCEZ5VXy8GjZ1TSi/hM1cWnAI5E7lllHWm3FXY8XmeUGXl1CyuJeV
+	FAdKHJ/D1fdedQMl4EjSfTdKAaJXL9JKN95hQwip2/y9vdeqqu8jK7vwJJkPmBnW
+	oWIUdfG0SFIh1SaiRcew5Io38eYaOb5RzWOXwZrsmcK/qKsmyQPLXe7IUxxzlr0E
+	P1UtqhWQXaFNBiUc6pBg3yGHMgdV0L3BBOd+WjDpEBWkSqVQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 426fj6sysv-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Oct 2024 03:07:58 +0000 (GMT)
+	Fri, 11 Oct 2024 04:19:57 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49B37vaG021192
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49B4JuCD015893
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Oct 2024 03:07:57 GMT
+	Fri, 11 Oct 2024 04:19:56 GMT
 Received: from Z2-SFF-G9-MQ.ap.qualcomm.com (10.80.80.8) by
  nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 10 Oct 2024 20:07:53 -0700
+ 15.2.1544.9; Thu, 10 Oct 2024 21:19:52 -0700
 From: Miaoqing Pan <quic_miaoqing@quicinc.com>
 To: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
         <agross@kernel.org>, <andersson@kernel.org>
@@ -63,9 +63,9 @@ CC: <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
         <quic_jjohnson@quicinc.com>, <ath11k@lists.infradead.org>,
         <dmitry.baryshkov@linaro.org>,
         Miaoqing Pan <quic_miaoqing@quicinc.com>
-Subject: [PATCH v6] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Date: Fri, 11 Oct 2024 11:07:33 +0800
-Message-ID: <20241011030733.2915321-1-quic_miaoqing@quicinc.com>
+Subject: [PATCH v7] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
+Date: Fri, 11 Oct 2024 12:19:39 +0800
+Message-ID: <20241011041939.2916179-1-quic_miaoqing@quicinc.com>
 X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -75,20 +75,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: s_NgsNilO_Mgr8-wi4w8wJ4Fa2TZb-Kx
-X-Proofpoint-ORIG-GUID: s_NgsNilO_Mgr8-wi4w8wJ4Fa2TZb-Kx
+X-Proofpoint-GUID: _ViuUgzEGnVsU-SbQ4xJ4yildsZawutT
+X-Proofpoint-ORIG-GUID: _ViuUgzEGnVsU-SbQ4xJ4yildsZawutT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 spamscore=0 phishscore=0 clxscore=1015
- bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410110017
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
+ lowpriorityscore=0 spamscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ clxscore=1015 mlxscore=0 impostorscore=0 priorityscore=1501 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410110025
 
 Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
 board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
@@ -106,13 +106,15 @@ v5:
   - update 'Ride' to 'QC_SA8775P_Ride'.
 v6:
   - no code change, fix patch version.
+v7:
+  - update 'Ride' to 'QC_SA8775P_Ride'.
 ---
  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 121 +++++++++++++++++++++
  arch/arm64/boot/dts/qcom/sa8775p.dtsi      |   2 +-
  2 files changed, 122 insertions(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 0c1b21def4b6..c41fac1eb6c2 100644
+index 0c1b21def4b6..3fc62e123689 100644
 --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
 @@ -27,6 +27,83 @@ aliases {
@@ -229,7 +231,7 @@ index 0c1b21def4b6..c41fac1eb6c2 100644
 +		compatible = "pci17cb,1101";
 +		reg = <0x10000 0x0 0x0 0x0 0x0>;
 +
-+		qcom,ath11k-calibration-variant = "Ride";
++		qcom,ath11k-calibration-variant = "QC_SA8775P_Ride";
 +
 +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
 +		vddaon-supply = <&vreg_pmu_aon_0p59>;
