@@ -1,63 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-34083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CBC4999A275
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 13:08:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 574FB99A28B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 13:15:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A11F1F28163
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 11:08:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 788901C22E16
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 11:15:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A621F216A2D;
-	Fri, 11 Oct 2024 11:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B05B21263A;
+	Fri, 11 Oct 2024 11:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rPgcR1fk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lzmS/NPE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685FE216A1F;
-	Fri, 11 Oct 2024 11:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A2320ADCD;
+	Fri, 11 Oct 2024 11:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728644904; cv=none; b=eV3Pf6Izr3Sq9lASY+MkkqfYlBlrkBXlEUF8q5zKDNnvSupFboM/+ZU6U4gGlBfE+EasuIWmkFABPiD2klcQ/iFgXBRiyzro51Ze4w94UZAqNaapizqg760rR6MQWHY3g7QnHBjvECW+4HuGdgU97Gk7Wegm4omeCdhsxIgsv5o=
+	t=1728645319; cv=none; b=d/FfnSgXkCaVB/HFylc/u2FN+eU33W3rpnk1PSh7COgWD370W0Tom5kTtqASECF5FefZmuK32CxWOMYUNV3bOzG+vDA9QF8SLsCw5m2Tq/vq4YL48RW2TBylSgN9HzTltJDYWdai+OT8ll0SPqqA99gHTTOJVGPsHaR2GayApX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728644904; c=relaxed/simple;
-	bh=tItc0jJqioiJKJBYJHlOGatN0iSrXx49oxnZO+FaE5w=;
+	s=arc-20240116; t=1728645319; c=relaxed/simple;
+	bh=/wxFnjdd8oLQxNU2I2l9u/U9YVjipKQwmvkmr0gU8+0=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=NDgj4eyYkleZ1vLcjsW2irozgikuB5dIGTS81JCa+9hpKidbjn3ZqeSqfSTvrdGKIOxWP+EnfiAEaocGryII1bRiNVO+f6nqlQ4+WKfzCcTekyF7ybWUqQu5IKiK9H1H4BEDjzgzMO32MeccZlRcijFTo5+TJ65+GESach56BcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rPgcR1fk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C52C4CEC3;
-	Fri, 11 Oct 2024 11:08:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=LB1ZaKdkoo7YhZRzcasiHndh+EDaBh/MyCzEPEe121VA5UzEvGuxTg9zHja0Hdhf3nP88SWDc7w8CzOXy38QkP6LYQWMGT81qPv138pYmK45nAcJk5K49OHmq97KUSEtu0RJIe9/79eiJsAelB0ZBKPxDyEOd7VyhyAST8rW5no=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lzmS/NPE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7779FC4CEC3;
+	Fri, 11 Oct 2024 11:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728644903;
-	bh=tItc0jJqioiJKJBYJHlOGatN0iSrXx49oxnZO+FaE5w=;
+	s=k20201202; t=1728645318;
+	bh=/wxFnjdd8oLQxNU2I2l9u/U9YVjipKQwmvkmr0gU8+0=;
 	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=rPgcR1fkqJXIbp90DIP1kI86Ic7xUtxihl4nQwXx4jkzcxbPfDhx05dkOfu8y9aZY
-	 GvLpqa7ybnU9lCnoOFnMeQakOHbno8MPRafGPxjYbNcc/xXaXMi7tSfphp6uCSsDjY
-	 Sz70ReKMrmipk+yhLvgVqkcB+iIQanNg1Qx1Dr6PrEq4PuiZjF/C4S5+z5Ok4ilzu7
-	 o6nHyFafswmHP1BcTRugvXMbmuFV4bCTS2aVhmkRseOPSB1sAHS7/61jGzN6quKDnS
-	 d0K5TjQYelyCUSvnIDOilK6eHDpkqE67RUucX6egiLk6YW4xsFymKVwz6P0oSDPthu
-	 AzMVr8qW2w4vw==
+	b=lzmS/NPECTpCG/XMh0pRfsGFUffBTP/KfNudbr9CYgTkNCKSxRyJtqHO+Ey5tHFgq
+	 DUBblhya6G1id79W7EgVEF2ekJcWgLS96x5qY5lco7//y/Y5TYjItDmXkiw2R3QygH
+	 vCxgWKWJ9DnRkD2zMJMCwpBaLYge4BoJlGX1qe0SkzGW1uCRsy2IFrHI8cIDaExuDy
+	 YZAl1fDfzF/pTfk0sB+0nC41aF9WXemr4Ivv1JqxFWhuJXcl4aR8uLpLNo6BjIo8FJ
+	 e4jJn69cB2zvGgFyC5yG8Us/Oz9Ipu/VIvR/w3Y+WJDMhhA5tBodcgQgPdaUO24KTY
+	 3RpoAUoO0aFJg==
 From: Kalle Valo <kvalo@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jianhua Lu <lujianhua000@gmail.com>,  Bjorn Andersson
- <andersson@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>,  Rob
- Herring <robh@kernel.org>,  Krzysztof Kozlowski <krzk+dt@kernel.org>,
-  Conor Dooley <conor+dt@kernel.org>,  Jeff Johnson <jjohnson@kernel.org>,
-  linux-arm-msm@vger.kernel.org,  devicetree@vger.kernel.org,
-  linux-kernel@vger.kernel.org,  ath11k@lists.infradead.org
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi
- node
-References: <20241010072243.10227-1-lujianhua000@gmail.com>
-	<20241010072243.10227-2-lujianhua000@gmail.com>
-	<pbsooimr6l65hgyxezyp6ha3zqibgdlphmeb7vtghgy2wti66b@fsmptbss2zvi>
-Date: Fri, 11 Oct 2024 14:08:19 +0300
-In-Reply-To: <pbsooimr6l65hgyxezyp6ha3zqibgdlphmeb7vtghgy2wti66b@fsmptbss2zvi>
-	(Dmitry Baryshkov's message of "Thu, 10 Oct 2024 18:23:13 +0300")
-Message-ID: <87h69i7v8c.fsf@kernel.org>
+To: Miaoqing Pan <quic_miaoqing@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+  <linux-arm-msm@vger.kernel.org>,  <linux-media@vger.kernel.org>,
+  <agross@kernel.org>,  <andersson@kernel.org>,
+  <linux-kernel@vger.kernel.org>,  <konrad.dybcio@linaro.org>,
+  <mchehab@kernel.org>,  <quic_vgarodia@quicinc.com>,
+  <stanimir.k.varbanov@gmail.com>,  <quic_jjohnson@quicinc.com>,
+  <ath11k@lists.infradead.org>
+Subject: Re: [PATCH v4] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
+References: <20241010132902.2882939-1-quic_miaoqing@quicinc.com>
+	<asvhh4kzq6s6yz3wrqfmuolcnlonoobogoh45pnq4zdr44lpxs@zgarzpduk2sk>
+	<cc8358b1-2442-4a40-8eb3-0912423db554@quicinc.com>
+	<3giotvkrwailt75gndhup7xhqvlc3vdowdoypi5vaeebuojp45@vkqxbtjsbksf>
+	<c6c5068d-ed05-4b49-97e1-f4962839cf44@quicinc.com>
+Date: Fri, 11 Oct 2024 14:15:14 +0300
+In-Reply-To: <c6c5068d-ed05-4b49-97e1-f4962839cf44@quicinc.com> (Miaoqing
+	Pan's message of "Fri, 11 Oct 2024 10:57:22 +0800")
+Message-ID: <87cyk67uwt.fsf@kernel.org>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -67,35 +69,55 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+Miaoqing Pan <quic_miaoqing@quicinc.com> writes:
 
->> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
->> @@ -680,6 +680,25 @@ &pcie0_phy {
->>  	status = "okay";
->>  };
->>  
->> +&pcieport0 {
->> +	wifi@0 {
->> +		compatible = "pci17cb,1101";
->> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
->> +
->> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
->> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
->> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
->> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
->> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
->> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
->> +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
->> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
->> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
->> +
->> +		qcom,ath11k-calibration-variant = "Xiaomi_Pad_5Pro";
+> On 10/10/2024 10:40 PM, Dmitry Baryshkov wrote:
+>> On Thu, Oct 10, 2024 at 09:59:11PM GMT, Miaoqing Pan wrote:
+>>>
+>>>
+>>> On 10/10/2024 9:47 PM, Dmitry Baryshkov wrote:
+>>>> On Thu, Oct 10, 2024 at 09:29:02PM GMT, Miaoqing Pan wrote:
+>>>>> Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
+>>>>> board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+>>>>>
+>>>>> Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+>>>>> ---
+>>>>> v2:
+>>>>>     - fix wcn6855-pmu compatible to "qcom,wcn6855-pmu".
+>>>>>     - relocate pcieport0 node in alphabetical order.
+>>>>> v3:
+>>>>>     - add 'qcom,ath11k-calibration-variant = "SA8775P"'.
+>>>>> v4:
+>>>>>     - update 'ath11k-calibration-variant' to "Ride".
+>>>>
+>>>> What exactly is Ride? Is there just one Ride board? I thought it's a
+>>>> board family name.
+>>>
+>>> I just follow the existing boards, 'Ride' is a board name. Both 'Ride' and
+>>> 'Ride r3' boards are attached with WCN6855 WLAN chip.
+>>>
+>>> arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts:1112:
+>>> qcom,ath11k-calibration-variant = "Fairphone_5";
+>>> arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts:958:
+>>> qcom,ath11k-calibration-variant = "SHIFTphone_8";
+>>> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts:879:	
+>>> qcom,ath11k-calibration-variant = "LE_X13S";
+>> There definitely are other Ride boards. I see patches related to
+>> qcs8300-ride. Does that board use the same BDF file?  If not,
+>> Qualcomm_SA8775P_Ride or QC_SA8775P_Ride sounds like a better approach.
+>> 
 >
-> Let's wait for Kalle's response.
+> QCS8300 and SA8775P both use the same WiFi card, so the same BDF file
+> will be used. The extra variant will increase the size of board-2.bin.
 
-Sorry, I don't know what you refer to here. I have been extremly busy
-with MLO patches so drowning with mail right now :/
+In board-2.bin one board file can have multiple names, that was designed
+exactly for cases like this. So the memory inrease is just the size of
+string (plus few bytes for the TLV headers).
+
+Dmitry is correct here. It's much better to have unique names instead
+trying reuse the same names for different hardware. For example, if
+later we actually need different board files then that's simple to do
+just in board-2.bin.
 
 -- 
 https://patchwork.kernel.org/project/linux-wireless/list/
