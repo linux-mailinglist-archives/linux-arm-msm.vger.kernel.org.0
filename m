@@ -1,113 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-34121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34122-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1E5399A67A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:39:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D227599A69C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:41:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BC37281671
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:39:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 05D9E1C2298E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:41:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26EBC81AD7;
-	Fri, 11 Oct 2024 14:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3EF9C3A27E;
+	Fri, 11 Oct 2024 14:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TVqKtJyi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cqh9cYii"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF63B80603;
-	Fri, 11 Oct 2024 14:38:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10168405FB;
+	Fri, 11 Oct 2024 14:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728657531; cv=none; b=p3BXkE869de3FcYApBAkK2BVzxOIqZmu8rn0SiEJAdcP7mSzO/3qxzNJxXQyvpuG9ALZ5p0kTMvheREP24ltTa3cbY/afVAfKmMcsAcs0hGXMjY2o/Salh8PKphdCUSX7XI2Yr+2tlqeCYnyZBfZJgDKcVE3O1TIt08zsP8Fo4A=
+	t=1728657691; cv=none; b=lMZ4yBdePkEBUr4RguirOIn9l9uqIIsVRzxHdgb1p7XZouNvFAcLdyBqexxRid5dCq8SwfWlTSCVnu70KLlnTY7zodhpISPCCoKmg3znWuWJQ3pUlLmD/lW/NPT0KYBI+2Z9Vcgbl7qAzCEBf4Ul8GXVTzsXMHEBtDBmrin2iS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728657531; c=relaxed/simple;
-	bh=LzEU21kvQ/WYUwcS587liGJ+TJpJqMynD+RPNGMcEyQ=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=kB3vS7dFtlq2gDyjxEBTQMmhYJhN9M+6HZ9WQoAThMyI1+bKSbPDHeG0MgRTQsEBS1qkk1ZknhLoX/pO5gT37UcPpR6aiqUma6gOQKm2Etac2iPTfVXwCISO+lXmc0l59KG1HUpKtDTmrdt2x8SoHBVgJdr+0CngX8NdnZDmA0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TVqKtJyi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323BFC4CECE;
-	Fri, 11 Oct 2024 14:38:48 +0000 (UTC)
+	s=arc-20240116; t=1728657691; c=relaxed/simple;
+	bh=Y0MK6Ir1naH6KdRmkyIQkGi5RdptzjZfItnSwsoMv00=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qUC7z8P4VX/vFi3rYM7wfXTw0cktt0cfSvuKjnoXl+z0vLm5cmRDGs6hPMeBcae6Jeo7oyTmagpQrd+RhSBGBoLTtUEDNIHhqXPzY4fBKTq3/ELurqFK5OrXtZCAO3nASsFE72fK8xr1UzNjVaEviiaUzITVF34vxxjwF1IGfvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cqh9cYii; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC59AC4CEC3;
+	Fri, 11 Oct 2024 14:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728657530;
-	bh=LzEU21kvQ/WYUwcS587liGJ+TJpJqMynD+RPNGMcEyQ=;
-	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
-	b=TVqKtJyimpsTwPQWNy0t/CPaza1/QLu78d8KOIzDaeSkWrw1bjEx3023I5JFFVRN7
-	 7Q/5yCwLLvi+9sXOKQPl7sEHsweToIi8I8rZLXsNIUwvS2VcassIOsaR3FfdMUaa+w
-	 XPbfdnaGG7Jdt20eSR/vgVZMlbWU2eOooUQNnnlznRUFeRlClzVrz0iAidkdO/ZEAB
-	 rgm84ADLE5RuoRaZJ1/58BG885nLiNCH4kmNOsE9szmlfRe5biY/UBi9SQb1oV07rf
-	 8NGY4be/C4kx5El1+EhIrzVEbo0M4AcNU5RH59eKi3CkIYeUuXISOXeUXXwR59/GNg
-	 QVfB8GVhEmArw==
-From: Kalle Valo <kvalo@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Jianhua Lu <lujianhua000@gmail.com>,  Bjorn Andersson
- <andersson@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>,  Rob
- Herring <robh@kernel.org>,  Krzysztof Kozlowski <krzk+dt@kernel.org>,
-  Conor Dooley <conor+dt@kernel.org>,  Jeff Johnson <jjohnson@kernel.org>,
-  linux-arm-msm@vger.kernel.org,  devicetree@vger.kernel.org,
-  linux-kernel@vger.kernel.org,  ath11k@lists.infradead.org
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi
- node
-References: <20241010072243.10227-1-lujianhua000@gmail.com>
-	<20241010072243.10227-2-lujianhua000@gmail.com>
-	<pbsooimr6l65hgyxezyp6ha3zqibgdlphmeb7vtghgy2wti66b@fsmptbss2zvi>
-	<87h69i7v8c.fsf@kernel.org>
-	<p4j7i6fbr7htsh44vumlsziuhbl4phqok4zxnubdvyrjo2cllt@cez4iynfjayt>
-Date: Fri, 11 Oct 2024 17:38:46 +0300
-In-Reply-To: <p4j7i6fbr7htsh44vumlsziuhbl4phqok4zxnubdvyrjo2cllt@cez4iynfjayt>
-	(Dmitry Baryshkov's message of "Fri, 11 Oct 2024 16:46:14 +0300")
-Message-ID: <87ttdi66x5.fsf@kernel.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+	s=k20201202; t=1728657690;
+	bh=Y0MK6Ir1naH6KdRmkyIQkGi5RdptzjZfItnSwsoMv00=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Cqh9cYii9B4DdEJVX9zLDAdWcG/3VUNSV92Z8y2h+dbshUodjcbwa3d6Q8EXKbLf/
+	 xy/oxBQz+dGGfq5YldPJ6H9X94o2sSmVvMPmv180t1A6jfarVwdsDM8jSY7+2sgF37
+	 h8wTe4tw+oTMFdRalSTxe9gKcrN7zi3xHQkSKD7yWofbStn4JuCNXQgcuZLYvIhKG+
+	 grhTFMMyNQWPKhLM/ZiiamT/j2utVRg1oB1xhuguPsp+V0mk7uuf9kOWvDNRRh2jLH
+	 ufSAxTXZhBD4c39cHqtOBjX2/1tE6e/jU2w/GiUkeg+pv727iITE8/i35yOZ2cL8mR
+	 /216e8mi8SdmQ==
+Date: Fri, 11 Oct 2024 09:41:29 -0500
+From: Rob Herring <robh@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-media@vger.kernel.org
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
+Message-ID: <20241011144129.GA2295617-robh@kernel.org>
+References: <20241011023724.614584-7-mailingradian@gmail.com>
+ <20241011023724.614584-9-mailingradian@gmail.com>
+ <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
+ <a230de8f-a11d-41c1-9bc6-7e06e850b51d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a230de8f-a11d-41c1-9bc6-7e06e850b51d@linaro.org>
 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On Fri, Oct 11, 2024 at 09:31:06AM +0100, Bryan O'Donoghue wrote:
+> On 11/10/2024 08:14, Vladimir Zapolskiy wrote:
+> > 
+> > Two most recently added CAMSS IP descriptions (qcom,sm8250-camss.yaml and
+> > qcom,sc8280xp-camss.yaml) do implement sorting by reg values, I believe
+> > from now on
+> > it should be assumed that all subsequently added CAMSS IP descriptions
+> > to follow
+> > the same established policy.
+> 
+> My preference is sort by address not sort by name => we sort the device
+> nodes themselves by address so it seems more consistent to sort by address
+> inside of the devices too.
 
-> On Fri, Oct 11, 2024 at 02:08:19PM +0300, Kalle Valo wrote:
->> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
->> 
->> >> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
->> >> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
->> >> @@ -680,6 +680,25 @@ &pcie0_phy {
->> >>  	status = "okay";
->> >>  };
->> >>  
->> >> +&pcieport0 {
->> >> +	wifi@0 {
->> >> +		compatible = "pci17cb,1101";
->> >> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
->> >> +
->> >> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
->> >> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
->> >> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
->> >> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
->> >> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
->> >> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
->> >> +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
->> >> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
->> >> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
->> >> +
->> >> +		qcom,ath11k-calibration-variant = "Xiaomi_Pad_5Pro";
->> >
->> > Let's wait for Kalle's response.
->> 
->> Sorry, I don't know what you refer to here. I have been extremly busy
->> with MLO patches so drowning with mail right now :/
->
-> Just an ack for the calibration variant name.
+Strictly speaking, the values of addresses are unknown to the binding, 
+so you can't sort by address. However, if something is truly a single 
+block, then the offsets are probably fixed in order by offset makes 
+sense. But when a block is changed, any rule on sorting may go out 
+the window since we add new regions on the end.
 
-Ah, then ack from me for the name. Thanks for following these.
+This one in particular I have to wonder why csiphy is not a separate 
+node.
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+> 
+> Which means sorting reg by address and irq too.
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+IRQs make little sense to sort IMO.
+
+Rob
 
