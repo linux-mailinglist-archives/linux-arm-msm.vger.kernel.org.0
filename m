@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-34142-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44AF799A874
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:56:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 26AC499A897
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 18:06:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C08AA1F248DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 15:56:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93B601F22888
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:06:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A746A197A8B;
-	Fri, 11 Oct 2024 15:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8B4B1198832;
+	Fri, 11 Oct 2024 16:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dvIJ+h4k"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m+ltvnx0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E9E196C7B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 15:56:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536CB5381E;
+	Fri, 11 Oct 2024 16:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728662166; cv=none; b=YR7aIexPysueJm0dAfNZFy7cJ+cP8Eg4dB3jFJyIV+9T3tVwNRh8c7Av4nv0sdYGvmzeLTdlY/TZqoWU/UjnbgUhm26ly9M5z5ihH3EsMLFAx+ZiOUa6ppdd4o3NCKv+OcEQpMuoMTlxSmnXEnHiDQiuObf1uR2nPnD3D690HyY=
+	t=1728662775; cv=none; b=QR992sTG9XCr6T3h6RYxvvYJqjp56UYdBrqwsL/dBPOB3IjvbYK/JB4/8OGCc1p55fiAjRaCKJsCDQzD0xEcCoR93pD6P8dslpEbm5cNkrVACj3Y9BuOcVAOKBOxGSioYJBNT4LK/IMauJc4I/XKxOkRzJWFA7I9/7sPVB5y/KY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728662166; c=relaxed/simple;
-	bh=LsUiDqE70yqk0wdXE9vzO9KMm+m+jk5+g+imG3e20Tw=;
+	s=arc-20240116; t=1728662775; c=relaxed/simple;
+	bh=iXP9jbL2CA2gwdWaf/4lNfMMPm5b1SYlw++ZXuEjyTw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nu53tSb0+bkeJz2Es8p0oKAjwQ8vEDAaQCFk/MR29qWjBeA68ZeYgbNw9kOefHUSy9zHxDiJ7B6S7c5BKAuzwEynwBvP5pTw6BE4GNmlQz6NCY5ctzMfuOEbluNzwJiGsYF17Tnn4lvlfiUbqNQpEObtBoPoHZiW4DET5+6QsvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dvIJ+h4k; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a9952ea05c5so339974866b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:56:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728662163; x=1729266963; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5PfW3zLsODNqT+ZCd7YOmFJrDpIjLjC2uBGbBXhUbVQ=;
-        b=dvIJ+h4kdtOecCVkAY+GosDDnCU4bYWL2vSj6C5Q5W+STl+plaQSW0LRqP3OvH5Qiy
-         Sv4ylTftMivKObqpvMebxFvCr5AyKu4Y0+nTw67H8g2ttb1ikpJZf/gOMc67D3fU5Ete
-         bwHN13PMTDksIac9QSqAHJ40KYsMB72/DYEOdpD/EPl1J6VCF6bJa4lXxGHoAXI8evhJ
-         rZ8vuU+d1MhcSy4SBTnivSFZl50u4uVWpp240GUilmA66hMYp3hDZ9bMNBM565qvvhTT
-         et1Lrs1gf0kUqSam2mXCJpzBTrpQQwgLHscLhpU75eOJtNs6r7Wuc5CG6JQRfqyGoE2S
-         ewcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728662163; x=1729266963;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5PfW3zLsODNqT+ZCd7YOmFJrDpIjLjC2uBGbBXhUbVQ=;
-        b=I0IF3eVKkKMrRpYsSKDLyZIwC6OYaLPP6WkBgoYnoj/3JkBz2NsqDXET9NtgbqvrvH
-         fuQ1iQRpB26iWaDKHrDZWaVXmOP4w92Ad8wOtCf+JoTvMzEbHhgT9ApZynPkfqKdnW/8
-         o2vr1moezJWv/sAa4LQCJuGFqntKI+E0dKDcXjEG5YIijU6Wny701NfYPC4N/aveHDh8
-         KKvZ2Qpkbz7OdyN8gRw8wk2UtJka6BSWms8t+1EnCK+XoFw7nZjQekdEQqZQ2c0JtYZk
-         l49EQJxR89bgBi+1/kdWK6YJI4rZ9VM/7mxAkJQXCxNqh8TV0/kqfuV2URFrjQdU5fxH
-         /JQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW8Bd+Pgz2Wj+g811xzZV6ySx7KLOq6/76a/ywJLlSUVbXPo2IYjnaHVUDbCH0PYWUFMoDrSOOeacBcxsR6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4+9Amm8WnVsngQTfCdz/DDoFbADx4fJaCHaL+RTjMX/8vBg8x
-	t8XGmNEuXMBC8QqGl4tpfFVsEo2x1U0r1buqLzbpAtMZjvhH4vwMiK0uEgwrZ1g=
-X-Google-Smtp-Source: AGHT+IFQS1m801d5g03nI5rdOrNbnaMx/maIW2bSzuFKOe+q9KSROKeUZyTkJ940EzDY635ITI12nw==
-X-Received: by 2002:a17:907:c7e1:b0:a99:5a40:e6b3 with SMTP id a640c23a62f3a-a99b9416b43mr268365666b.10.1728662163310;
-        Fri, 11 Oct 2024 08:56:03 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a80f2726sm222412566b.200.2024.10.11.08.56.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2024 08:56:02 -0700 (PDT)
-Message-ID: <a796e8ac-4a58-4b14-94ef-cb1d5a8775b0@linaro.org>
-Date: Fri, 11 Oct 2024 16:56:01 +0100
+	 In-Reply-To:Content-Type; b=TRvnO8wbnLIkFGShRFmbQ342DBUmwo/+rnZANcJj0DQtEE3d2nqVCB1ERCthgzzyNtUcdNly2KR+Rywzi6IciFVYKAdgB/NaeDRCy4AykxKW1UIqDMghorsesz68nnLcfw/GWjLT5UWooAiYF5d8MIrlt2BMP/cM8Z6u3haePoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m+ltvnx0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218D0C4CEC3;
+	Fri, 11 Oct 2024 16:06:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728662774;
+	bh=iXP9jbL2CA2gwdWaf/4lNfMMPm5b1SYlw++ZXuEjyTw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=m+ltvnx0PRtGDbI3dMbNn4Int8i+PMNx8D666zQLbPdi9HH1UQ/3THq820+3kpONJ
+	 JoQIcuwo/gRKF4CeEVjaDOK8xqJZZppAI2+ixaqvGy9pOGKl0+i0TLJjklgoo8V+gG
+	 G0KXjyxAi4Os+ZJw1E6dIWjRjmKByuc2vtGLHIeUXct3Ivj9LraBfNnJcg9Z4/p8rl
+	 QfNQIFkFx5PRWlzn029K/2jLsa/CR5+L9fxImJNwcZhfQjUYIKrTlSDlQy+Bi3Pue4
+	 RdK20UXGyUumS+Qcgdeuhl1wNcuOGa/gTNxgY0ze0jzvxrhuztiO/QzuaY0K4/pNXd
+	 ixZPqXkKV3ahg==
+Message-ID: <df6379c6-662a-4b35-a919-13c695a869c7@kernel.org>
+Date: Fri, 11 Oct 2024 18:06:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,62 +50,124 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
-To: Rob Herring <robh@kernel.org>
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Richard Acayan <mailingradian@gmail.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
- Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
- linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-media@vger.kernel.org
-References: <20241011023724.614584-7-mailingradian@gmail.com>
- <20241011023724.614584-9-mailingradian@gmail.com>
- <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
- <a230de8f-a11d-41c1-9bc6-7e06e850b51d@linaro.org>
- <20241011144129.GA2295617-robh@kernel.org>
+Subject: Re: [PATCH v6 3/8] dt-bindings: PCI: qcom,pcie-x1e80100: Add 'global'
+ interrupt
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+ Qiang Yu <quic_qianyu@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+ abel.vesa@linaro.org, quic_msarkar@quicinc.com, quic_devipriy@quicinc.com,
+ dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+ neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org
+References: <20241011104142.1181773-1-quic_qianyu@quicinc.com>
+ <20241011104142.1181773-4-quic_qianyu@quicinc.com>
+ <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
+ <4802B12B-BAC1-4E99-BDFE-A2340F4A8F24@linaro.org>
+ <3d1d0822-da66-44c8-a328-69804210123c@kernel.org>
+ <65B34B14-76C3-491D-8A58-6D0887889018@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241011144129.GA2295617-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <65B34B14-76C3-491D-8A58-6D0887889018@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 11/10/2024 15:41, Rob Herring wrote:
-> But when a block is changed, any rule on sorting may go out
-> the window since we add new regions on the end.
+On 11/10/2024 17:51, Manivannan Sadhasivam wrote:
+> 
+> 
+> On October 11, 2024 9:14:31 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>> On 11/10/2024 17:42, Manivannan Sadhasivam wrote:
+>>>
+>>>
+>>> On October 11, 2024 8:03:58 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>> On Fri, Oct 11, 2024 at 03:41:37AM -0700, Qiang Yu wrote:
+>>>>> Document 'global' SPI interrupt along with the existing MSI interrupts so
+>>>>> that QCOM PCIe RC driver can make use of it to get events such as PCIe
+>>>>> link specific events, safety events, etc.
+>>>>
+>>>> Describe the hardware, not what the driver will do.
+>>>>
+>>>>>
+>>>>> Though adding a new interrupt will break the ABI, it is required to
+>>>>> accurately describe the hardware.
+>>>>
+>>>> That's poor reason. Hardware was described and missing optional piece
+>>>> (because according to your description above everything was working
+>>>> fine) is not needed to break ABI.
+>>>>
+>>>
+>>> Hardware was described but not completely. 'global' IRQ let's the controller driver to handle PCIe link specific events like Link up, Link down etc... They improve user experience like the driver can use those interrupts to start bus enumeration on its own. So breaking the ABI for good in this case.
+>>>
+>>>> Sorry, if your driver changes the ABI for this poor reason.
+>>>>
+>>>
+>>> Is the above reasoning sufficient? 
+>>
+>> I tried to look for corresponding driver change, but could not, so maybe
+>> there is no ABI break in the first place.
+> 
+> Here it is:
+> 
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4581403f67929d02c197cb187c4e1e811c9e762a
+> 
+>  Above explanation is good, but
+>> still feels like improvement and device could work without global clock.
 
-Ah I see, I didn't TBH know that.
+So there is no ABI break in the first place... Commit is misleading.
 
-> This one in particular I have to wonder why csiphy is not a separate
-> node.
+>>
+> 
+> It is certainly an improvement but provides a nice user experience as the devices will be enumerated when they get plugged into the slot (like hotplug). Otherwise, users have to rescan the bus every time they plug a device. Also when the device gets removed, driver could retrain the link if link went to a bad state. Otherwise, link will remain in the broken state requiring users to unload/load the driver again.
 
-Hmm, to be honest with you Rob, even though I realise I'm digging myself 
-into a hole of yet more work, yes - we should probably structure camss 
-along the lines of mdss which has separate nodes for DSI phys.
+OK
 
--> mdss: display-subsystem@ae00000{}
-
-We have 4 SoCs "in flight" at the moment.
-
-sdm670 and sc7280 don't require any real driver update to facilitate.
-
-sm8550 and x1e80100 do require new VFE, CSID etc.
-
-We've been debating how to model the regulators for the CSIPHYs too 
-which are on rails supplied by PMICs external to the SoC.
-
-I'm congniscient of the fact 670, 7280 and to an extent sm8550 have been 
-on the list for quite some time, so I'd rather not push 670 and 7280 to 
-have to wait for a whole new way of doing CSIPHYs - especially because 
-these are old hardware with little to no driver change required to support.
-
-OTOH x1e80100 and sm8550 already need development work so we can do the 
-CSIPHY transition there.
-
----
-bod
+Best regards,
+Krzysztof
 
 
