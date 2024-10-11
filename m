@@ -1,112 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-34136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D1AE99A7D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:33:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A418C99A7F2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:38:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6DFD61C2175B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 15:33:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 28C7D283AE4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 15:38:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1EFD8198846;
-	Fri, 11 Oct 2024 15:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CBFF195808;
+	Fri, 11 Oct 2024 15:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G7vfvnhP"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Jh5BPLOP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [217.70.183.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43CDB195FE8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 15:32:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F3B7DA82;
+	Fri, 11 Oct 2024 15:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.197
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728660768; cv=none; b=pbeu6ZB1aQPTs0i5q0wWHFht4RL9y7hZzP27tFXNrh2OLEdW66CyGLVHKYksUPu1VtuhPrlvyZzcrwEZ9INKcEhrq5KqFxkIlCFaG1pd+C84au6oYDUBwzXLXnrErW/i6CCbKkxmcRWQccNi9fGMA/BWFuQlB+h0Q1xhI2aefzc=
+	t=1728661090; cv=none; b=kz179c2rNqe2Zq1RVaQD0lqLdry1DfRIgTiMRv9pXnIKLs6ec0LjRWeE32fP0ObUCTm9sizrvZvsnr81lqAzyHfaS4DZytEj0hphZWBWHTkXWb0ewKbp4jNev1+5UvoN9oqsU0Ev1hlTSLKlMK25fLKT56P7GMg9jeN05lDCy+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728660768; c=relaxed/simple;
-	bh=bRJ4Y1/jdFojuUij4IeYNNekIWbJ2nzLiEuafUuGJn8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=cKp7VIMfbtOW7+2LsPwJB/xwIIf/nlt8AGGmECXa4zKe1kBYWxagVxRpOehZ9FjaKo7gnYlqeUpDS8Vtr720VQsYy5iIE4LSUBgceWTQBXQcLNSPiNFndOumQeVbMZz1QUqTWanpBvIp5CgmfPlJch/gD6qhZPm4Z+UrBaXXKH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G7vfvnhP; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c928611371so3009182a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728660765; x=1729265565; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Rat4MPBAsLDnNiR+W9/KxSukyb9q48U+Dl9neWjYf0=;
-        b=G7vfvnhPR+1WBPKyio3JrSyJ52wjfu/6z3FP2FHzp2HY+d5NdOIHgU6LhY+pFCMIM2
-         jnrCRYSSolupvAOFRuULP5hp0SJt039ORqaiUloFg6wTRlUIIrr56cQ3DzkW6k/yYkT7
-         NjnNalltEPMuonFbSm6+QXI0qofrBrfSQUhIn3+CmSZMwJG7QpK6yl56sTaJhoJaRaPz
-         piy051V0uMa5MpYPD6r0oJ/pAUwOPcj5BXUpOvcrJjTg/dZiiOpiu4gYZGpwsKq3pcHE
-         FuQ7kI9/DLbPPJ+Gdgvcu/k8OdDAILuADbVhd/zRqyDb+DuPmmZOuV0KbRTnrDn8H3Ux
-         03Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728660765; x=1729265565;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=1Rat4MPBAsLDnNiR+W9/KxSukyb9q48U+Dl9neWjYf0=;
-        b=MyRw48/T93wOsgPFWm28/mI2OitgRWDIQYBGleCBuXCzYbhEbZJLPZC4Q0RdEpoQXc
-         IFfCBhSpgjRfrxdQMKTaW1O8dTvBqbyksOuzpTVnOdlpKw9JmdOZtxymm36LgWLaefRK
-         889Ay1BEM96UJsxPpJvSKGZBzxTedvsCYmDtScA303N7AwYDFcK6cZ+7d2WSmE6BkrlP
-         k8jkqoGD8qLU7SgFGFf8ixIZ1aDM48rA5A95O1HBidATtbdoB7BV8dmIHe6+nd3OXqI+
-         0rshaT0SVTFKuTV12al3ce6DITsy59DGl2C31Es7Ds7w2KH+uKkdDv3vqs2I05yjJNcP
-         PV2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWfwmKoUI088A2ex9kSdeBs6Xf6k/oXGDRkYhiQyEdfOLDAyl8jSJd+9Ib3al+FoitclQiClITEa0DBfrlD@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRjwyGuAUbIyYXiOnRL2nGjQcembC2nTai14PwJ5rXY6lXpbwi
-	O+i6S7NCVLVRIU0TIFAyVJTq7IcolLx67MjdJfAvwTJxdCJh8nfZqWy9TBRtuVI=
-X-Google-Smtp-Source: AGHT+IG2RSuYoUetJ32zLi/kp0cBZ33Kg6Bh/AWm4gP1CZLAPGxS//Bmvvsy9YjdHMWJKgnFnWy8sw==
-X-Received: by 2002:a05:6402:348e:b0:5c8:8381:c308 with SMTP id 4fb4d7f45d1cf-5c948c8831fmr2027670a12.5.1728660764556;
-        Fri, 11 Oct 2024 08:32:44 -0700 (PDT)
-Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5c93711adacsm2049796a12.37.2024.10.11.08.32.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2024 08:32:43 -0700 (PDT)
+	s=arc-20240116; t=1728661090; c=relaxed/simple;
+	bh=yGHTcCatpZSTCpG+wm3+0VIinh0Bye4B+8DChRfwgz0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=imfuSGOkF2WuQFMdyyCngLTlyS6RcuZh/XZgzLtxUrw+G3R02n4sZSssMGxDBlFJ0Nvz5KdO3TIJLhkbUXVBrz8rkSxp9wBw18MfN6x0K5GIR//nKAbvBpGgUldxtRFOa35He7dNfOXvDPf5196NK4iWwhxYI4CBl2gbOFmjUck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Jh5BPLOP; arc=none smtp.client-ip=217.70.183.197
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 133D11C0002;
+	Fri, 11 Oct 2024 15:37:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1728661079;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=xxi7xc/L/MvU8Pm+2deYhSx0dINp1uz5C974UZOhQPI=;
+	b=Jh5BPLOPmHev3TjwpuItRN8dxBdAjQGFpBfHtdK+QkYH6Dwlbk1BllD5lT4/d9mfERz+nm
+	rpdP47fAOVEM2VbJkKT+BnegjFID+Dr4Qu8bF2Yp7Si40a9uBq+1Sj7xiTNKFxqaZcRrXt
+	fgogCfK1Asus4vGnkuJKbPEE0/RGV50oKOYzkwY6fI4MnFbAU3DP0zTDCC08xN2p939lBj
+	b7FQdLN5ywMrOn1K/6HT7JPJLo+qxKzlTA6LCGpqxnwf3Xk3kTXfR9vio9Ip64E3ROEG6C
+	uhbhPt8KdGPh0cK2oCroa9Nu/5RQ4n5GR5uw2WD0NwsE9K9w+qR6gxSATEaZ4g==
+Date: Fri, 11 Oct 2024 17:37:58 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Jonathan Marek <jonathan@marek.ca>
+Cc: linux-arm-msm@vger.kernel.org,
+	"open list:REAL TIME CLOCK (RTC) SUBSYSTEM" <linux-rtc@vger.kernel.org>,
+	open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/5] rtc: pm8xxx: implement no-alarm flag for non-HLOS
+ owned alarm
+Message-ID: <20241011153758fd3f559d@mail.local>
+References: <20241011152244.31267-1-jonathan@marek.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 11 Oct 2024 16:32:42 +0100
-Message-Id: <D4T33J6B5SPK.25S50D16VMDRI@linaro.org>
-Cc: <linux-sound@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <stable@vger.kernel.org>,
- <broonie@kernel.org>, <dmitry.baryshkov@linaro.org>,
- <krzysztof.kozlowski@linaro.org>, <pierre-louis.bossart@linux.intel.com>,
- <vkoul@kernel.org>, <lgirdwood@gmail.com>, <perex@perex.cz>,
- <tiwai@suse.com>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] ASoC: qcom: sdm845: add missing soundwire runtime
- stream alloc
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Steev Klimaszewski" <steev@kali.org>
-X-Mailer: aerc 0.18.2
-References: <20241009213922.999355-1-alexey.klimov@linaro.org>
- <CAKXuJqiK3BHT-=3zyT1tbunpNF1b_gyZUAd4EE2FY2r7TbaXug@mail.gmail.com>
-In-Reply-To: <CAKXuJqiK3BHT-=3zyT1tbunpNF1b_gyZUAd4EE2FY2r7TbaXug@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241011152244.31267-1-jonathan@marek.ca>
+X-GND-Sasl: alexandre.belloni@bootlin.com
 
-Hi Steev,
+On 11/10/2024 11:22:39-0400, Jonathan Marek wrote:
+> Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
+> Thus writing to RTC alarm registers and receiving alarm interrupts is not
+> possible.
+> 
+> Add a no-alarm flag to support RTC on this platform.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  drivers/rtc/rtc-pm8xxx.c | 48 ++++++++++++++++++++++++++++------------
+>  1 file changed, 34 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+> index c32fba550c8e0..9240844022092 100644
+> --- a/drivers/rtc/rtc-pm8xxx.c
+> +++ b/drivers/rtc/rtc-pm8xxx.c
+> @@ -61,6 +61,7 @@ struct pm8xxx_rtc {
+>  	struct rtc_device *rtc;
+>  	struct regmap *regmap;
+>  	bool allow_set_time;
+> +	bool no_alarm;
+>  	int alarm_irq;
+>  	const struct pm8xxx_rtc_regs *regs;
+>  	struct device *dev;
+> @@ -375,6 +376,11 @@ static const struct rtc_class_ops pm8xxx_rtc_ops = {
+>  	.alarm_irq_enable = pm8xxx_rtc_alarm_irq_enable,
+>  };
+>  
+> +static const struct rtc_class_ops pm8xxx_rtc_no_alarm_ops = {
+> +	.read_time	= pm8xxx_rtc_read_time,
+> +	.set_time	= pm8xxx_rtc_set_time,
+> +};
+> +
 
-On Thu Oct 10, 2024 at 1:33 AM BST, Steev Klimaszewski wrote:
-> Hi Alexey,
->
-> >
-> Thank you so much for tracking this down!  Was experiencing the same
-> thing on my Lenovo Yoga C630, and testing with this patch, I no longer
-> see the null pointer and also have working audio.
->
-> Tested-by: Steev Klimaszewski <steev@kali.org> # Lenovo Yoga C630
+Please clear the alarm feature flag instead of duplicating the ops
 
-Thank you for testing! I didn't know that this affected more than one
-board but I was told that it was long-standing bug.
+>  static irqreturn_t pm8xxx_alarm_trigger(int irq, void *dev_id)
+>  {
+>  	struct pm8xxx_rtc *rtc_dd = dev_id;
+> @@ -473,9 +479,13 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+>  	if (!rtc_dd->regmap)
+>  		return -ENXIO;
+>  
+> -	rtc_dd->alarm_irq = platform_get_irq(pdev, 0);
+> -	if (rtc_dd->alarm_irq < 0)
+> -		return -ENXIO;
+> +	rtc_dd->no_alarm = of_property_read_bool(pdev->dev.of_node, "no-alarm");
+> +
+> +	if (!rtc_dd->no_alarm) {
+> +		rtc_dd->alarm_irq = platform_get_irq(pdev, 0);
+> +		if (rtc_dd->alarm_irq < 0)
+> +			return -ENXIO;
+> +	}
+>  
+>  	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
+>  						      "allow-set-time");
+> @@ -503,7 +513,8 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+>  
+>  	platform_set_drvdata(pdev, rtc_dd);
+>  
+> -	device_init_wakeup(&pdev->dev, 1);
+> +	if (!rtc_dd->no_alarm)
+> +		device_init_wakeup(&pdev->dev, 1);
+>  
+>  	rtc_dd->rtc = devm_rtc_allocate_device(&pdev->dev);
+>  	if (IS_ERR(rtc_dd->rtc))
+> @@ -512,27 +523,36 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+>  	rtc_dd->rtc->ops = &pm8xxx_rtc_ops;
+>  	rtc_dd->rtc->range_max = U32_MAX;
+>  
+> -	rc = devm_request_any_context_irq(&pdev->dev, rtc_dd->alarm_irq,
+> -					  pm8xxx_alarm_trigger,
+> -					  IRQF_TRIGGER_RISING,
+> -					  "pm8xxx_rtc_alarm", rtc_dd);
+> -	if (rc < 0)
+> -		return rc;
+> +	if (!rtc_dd->no_alarm) {
+> +		rc = devm_request_any_context_irq(&pdev->dev, rtc_dd->alarm_irq,
+> +						  pm8xxx_alarm_trigger,
+> +						  IRQF_TRIGGER_RISING,
+> +						  "pm8xxx_rtc_alarm", rtc_dd);
+> +		if (rc < 0)
+> +			return rc;
+> +	} else {
+> +		rtc_dd->rtc->ops = &pm8xxx_rtc_no_alarm_ops;
+> +	}
+>  
+>  	rc = devm_rtc_register_device(rtc_dd->rtc);
+>  	if (rc)
+>  		return rc;
+>  
+> -	rc = dev_pm_set_wake_irq(&pdev->dev, rtc_dd->alarm_irq);
+> -	if (rc)
+> -		return rc;
+> +	if (!rtc_dd->no_alarm) {
+> +		rc = dev_pm_set_wake_irq(&pdev->dev, rtc_dd->alarm_irq);
+> +		if (rc)
+> +			return rc;
+> +	}
+>  
+>  	return 0;
+>  }
+>  
+>  static void pm8xxx_remove(struct platform_device *pdev)
+>  {
+> -	dev_pm_clear_wake_irq(&pdev->dev);
+> +	struct pm8xxx_rtc *rtc_dd = platform_get_drvdata(pdev);
+> +
+> +	if (!rtc_dd->no_alarm)
+> +		dev_pm_clear_wake_irq(&pdev->dev);
+>  }
+>  
+>  static struct platform_driver pm8xxx_rtc_driver = {
+> -- 
+> 2.45.1
+> 
 
-Best regards,
-Alexey
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
 
