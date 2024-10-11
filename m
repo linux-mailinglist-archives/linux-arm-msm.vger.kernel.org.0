@@ -1,121 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-34061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CB5599A028
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 11:29:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B7AC99A02B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 11:33:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AE83FB2183D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 09:29:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EC0EF1F23EAB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 09:33:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7382D20CCC8;
-	Fri, 11 Oct 2024 09:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 597F120B20B;
+	Fri, 11 Oct 2024 09:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="G0JYwjVO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXh/ESJ+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1CC20ADF8
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 09:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B7126AFC;
+	Fri, 11 Oct 2024 09:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728638940; cv=none; b=AcN79q9nJDyJvKIIappJNmU3u7OlGret3een05MTgy/8h0yU/LdmgxWy5M3g53QNekbsGeo1lxZTQNSW/XJOFuHHYsx81HoTMjiltmsK8pCSlznTuOmAlE0vqs3iSd+6+/tgH0OxyUC+UWMudJlxU4gafwRfSVPionOqIaR9hD0=
+	t=1728639205; cv=none; b=kSPerC0rZaCVrtv3P6nmi/iUhXXkqQL08BZ4c+WvGmAhX1yRZ3ch9TzuNKeWwQvB9Ek9kYycrOaqBaFYWwgGWSFCMw/QEtkXA/5/9qFVvH9T2EswdHJhmuBiQLlo8rO7uDNDrgj45eTz/f180xbnGQre5UGcazti4zd9dvsF5U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728638940; c=relaxed/simple;
-	bh=DltDeVYJEIb6wjca1o7bFaNWh22hJNIaTsco4M0fMzU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z4OpMdiLskbQdoxKsiWKZwL++0eNwEERJ6CyAcp4BH/ALb3IUsqq81zuKS3KQrNghohy0Y4emfQ3qN3pV0UODyeKcLbJyNzRHLrRdNk3vT1/wdhBT4EjQja0wa7zSPHVhWA2YW5lS6x4ow7JA88rAbOvvcTIQo+8E9hjkeNo9rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=G0JYwjVO; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-37d495d217bso1445883f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 02:28:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728638936; x=1729243736; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3TCoDAR3p+NDgfps8OlJnbGKnp0R3MeEWSzHOxiQY0I=;
-        b=G0JYwjVOmsppUfkGh2OByNk70IarIL6uyAStv2jEJCq8DSCJpanb7SMvPcYJ2/xyQ0
-         JRkGBm9ZAhnVkqdjtlRFW65Ue4D54da5VSVwkHWjM9ueHeaZzBGKw5MvWGrPv5jvqxZE
-         dmPfbKGu3x7r5btEbBttkfSncW6G27rdP7tvLJyRck0jT0yhO14Bya1azt4I/+AM4Tuf
-         NfTHcdMeaWBZBgKeLiY5aPRORKuZ6Euu8oTOPRyvqQt0A6YOlYyW8Io47v7LKFi7OFBV
-         gEpLGJQVY+kH6ce75Lx9tTsFe4NxwDU81okz+USANS2sEsTcAMWAD2Z7Vf9WxPczMSaG
-         d8jg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728638936; x=1729243736;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3TCoDAR3p+NDgfps8OlJnbGKnp0R3MeEWSzHOxiQY0I=;
-        b=M5taIH6r0GeI/20s6UDUh7WvT+1549XCYEcrMqnyRqaNe0EZvKnU9gpUd0uZQY/O4h
-         wmds3NHUq9lD46E6BgGE+TZhkhzoo9WLQ6wNfTEv1EEikLFJWFLIP6DVwk4SDkWj/Vmy
-         1MQYIeXvcjQ4MR5+rtOnY2DBkUQkCJfpfYYkwtvkz0T7z2qX9bI/Ct2o1bobDbUpZvR7
-         jwn6oVJu1KcbljKNvVbJMKSoXmGZJEtepEgVetgsjTimaL6WVmzCVcsqCt3sUoHjztjh
-         AytdEQDPcrUjrHUhp//MK+ldC8YsysgeALBAJVcj/siPnrbutFqolRKH19QI3/FGd+q6
-         Gxdg==
-X-Forwarded-Encrypted: i=1; AJvYcCWkrh0L9IUnvi2+kYi5QUziRlrcALXLf2lYRWg/9+CXnVKAZkTx5g5XvD7ecXCnnUkT/KaBP+Igi00RK6TR@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxq6t9A0NPSYk/jUzJ4c3uLachRSEeSo7Oxzsus3EBcKxDF6Q9V
-	JCN+Oaet3j++UGAozGt8+7r47QDgCMILwbcO7UMaU29/9ouEzJ8wnhd6CSx1o1VtyfxoFVKOc4h
-	8RA7lW2vBQw9Ni03HIHfYVT/tZMeF0mxK56YyqA==
-X-Google-Smtp-Source: AGHT+IG8wW1q8UJWHHq4y9KQZM4c6D7AmGKumiUzVkMrFvBY3yCJMkHghO6Wg3mIMaH1uDi6/A1L+L4KOCuGGEPI4z4=
-X-Received: by 2002:a5d:5270:0:b0:374:c3e4:d6b1 with SMTP id
- ffacd0b85a97d-37d552ade68mr1496679f8f.44.1728638936030; Fri, 11 Oct 2024
- 02:28:56 -0700 (PDT)
+	s=arc-20240116; t=1728639205; c=relaxed/simple;
+	bh=jS7r5CiTra2sA9uavhdyfqEtuGIud+x9Fzob3lNKlUE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=kHcS2Wa6xDI+/jdkwAT3FI+w2r9dDwYV+d/HE1dbsNu/K+mnMeVseqjFN3Lcjb95qnCPcmDxT0fH0bGBNzfU5K40UUjtMm1JJMq0bQsC+pPsYiv4oq7D7nABRaSKHaAsd3DZ1WYLkpjDqXbZ0YDKCRLYu2d4LhzFqqdVEimqMT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXh/ESJ+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A880DC4CEC3;
+	Fri, 11 Oct 2024 09:33:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728639204;
+	bh=jS7r5CiTra2sA9uavhdyfqEtuGIud+x9Fzob3lNKlUE=;
+	h=Date:From:To:Cc:Subject:From;
+	b=dXh/ESJ+M6gJHsdh5J2NwQIbFLh1i0WnLafQDRP07VfHBNxyLxK6HY1+EHYfQ4pf8
+	 /pMNcxGZ8P8bQpsncHGb96mIz523tLxRVq63u/MHlKlgvhpHlfATv+JHdnF8sCYIPx
+	 KCHkKrUzLqVpayy1AERw9gIOPxkzh2Tde8sXm7TZkGnOCC13sKedL5FdDYgwoelaQF
+	 5b4LynVlMCqoIQq/2mHCVE8gUQNKTqEjLiB6AKyP/c9CDL3hbhNUo3uHboTv7Es0Zg
+	 zig3cX0sKtH3fAPGYIOdI4iccv0pumBfaHrL6d5HHRm1Kf6RNgBKzCTky5KjRgIwKH
+	 D0rpmWPFVXUzQ==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1szC1Z-0000000051q-3zXV;
+	Fri, 11 Oct 2024 11:33:30 +0200
+Date: Fri, 11 Oct 2024 11:33:29 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: camss NULL-deref on power on with 6.12-rc2
+Message-ID: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241006-fix-postdiv-mask-v3-1-160354980433@mainlining.org>
-In-Reply-To: <20241006-fix-postdiv-mask-v3-1-160354980433@mainlining.org>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Fri, 11 Oct 2024 10:28:45 +0100
-Message-ID: <CACr-zFAT9tbmH+YUBLazUjzH+uyjeKSewpd=XFr3HBd7=jaMwA@mail.gmail.com>
-Subject: Re: [PATCH v3] clk: qcom: clk-alpha-pll: Fix pll post div mask when
- width is not set
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Satya Priya Kakitapalli <quic_skakitap@quicinc.com>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Stephen Boyd <sboyd@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, 6 Oct 2024 at 21:52, Barnab=C3=A1s Cz=C3=A9m=C3=A1n
-<barnabas.czeman@mainlining.org> wrote:
-> Many qcom clock drivers do not have .width set. In that case value of
-> (p)->width - 1 will be negative which breaks clock tree. Fix this
-> by checking if width is zero, and pass 3 to GENMASK if that's the case.
->
-> Fixes: 1c3541145cbf ("clk: qcom: support for 2 bit PLL post divider")
-> Signed-off-by: Barnab=C3=A1s Cz=C3=A9m=C3=A1n <barnabas.czeman@mainlining=
-.org>
-> ---
-> Changes in v3:
-> - Remove one of the fixes tag.
-> - Link to v2: https://lore.kernel.org/r/20240925-fix-postdiv-mask-v2-1-b8=
-25048b828b@mainlining.org
->
-> Changes in v2:
-> - Pass 3 to GENMASK instead of 0.
-> - Add more Fixes tag for reference root cause.
-> - Link to v1: https://lore.kernel.org/r/20240925-fix-postdiv-mask-v1-1-f7=
-0ba55f415e@mainlining.org
-> ---
->  drivers/clk/qcom/clk-alpha-pll.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Hi,
 
-Hi Barnab=C3=A1s,
+This morning I hit the below NULL-deref in camss when booting a 6.12-rc2
+kernel on the Lenovo ThinkPad X13s.
 
-This patch fixes a regression with UFS devfreq on msm8996 (introduced
-with the linked commit in your patch) so:
+I booted the same kernel another 50 times without hitting it again it so
+it may not be a regression, but simply an older, hard to hit bug.
 
-Reviewed-by: Christopher Obbard <christopher.obbard@linaro.org>
-Tested-by: Christopher Obbard <christopher.obbard@linaro.org>
+Hopefully you can figure out what went wrong from just staring at the
+oops and code.
+
+Johan
+
+
+[    5.657860] ov5675 24-0010: failed to get HW configuration: -517
+[    5.676183] vreg_l6q: Bringing 2800000uV into 1800000-1800000uV
+
+[    6.517689] qcom-camss ac5a000.camss: Adding to iommu group 22
+
+[    6.589201] Unable to handle kernel NULL pointer dereference at virtual =
+address 0000000000000030
+[    6.589625] Mem abort info:
+[    6.589960]   ESR =3D 0x0000000096000004
+[    6.590293]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+[    6.590630]   SET =3D 0, FnV =3D 0
+[    6.591619]   EA =3D 0, S1PTW =3D 0
+[    6.591968]   FSC =3D 0x04: level 0 translation fault
+[    6.592298] Data abort info:
+[    6.592621]   ISV =3D 0, ISS =3D 0x00000004, ISS2 =3D 0x00000000
+[    6.593112]   CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =3D 0
+[    6.593450]   GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =3D 0
+[    6.593783] user pgtable: 4k pages, 48-bit VAs, pgdp=3D000000010daef000
+[    6.594139] [0000000000000030] pgd=3D0000000000000000, p4d=3D00000000000=
+00000
+[    6.594214] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    6.594753] Modules linked in: qrtr_mhi cbc des_generic libdes algif_skc=
+ipher md5 algif_hash af_alg ip6_tables xt_LOG nf_log_syslog r8152 ipt_REJEC=
+T mii nf_reject_ipv4 libphy xt_tcpudp xt_conntrack nf_conntrack libcrc32c n=
+f_defrag_ipv6 nf_defrag_ipv4 iptable_filter qcom_pm8008_regulator ov5675 sn=
+d_q6apm(+) hci_uart btqca venus_enc venus_dec bluetooth videobuf2_dma_conti=
+g qcom_pm8008 pmic_glink_altmode qcom_spmi_adc5 leds_qcom_lpg qcom_spmi_adc=
+_tm5 mfd_core snd_soc_sc8280xp qcom_spmi_temp_alarm qcom_pon rpmsg_ctrl ecd=
+h_generic fastrpc apr rpmsg_char qrtr_smd qcom_pd_mapper rtc_pm8xxx qcom_ba=
+ttmgr ecc aux_hpd_bridge reboot_mode qcom_vadc_common industrialio nvmem_qc=
+om_spmi_sdam led_class_multicolor regmap_i2c i2c_hid_of_elan snd_soc_qcom_c=
+ommon snd_soc_qcom_sdw pwrseq_qcom_wcn ath11k_pci qcom_camss venus_core vid=
+eobuf2_dma_sg videobuf2_memops v4l2_mem2mem v4l2_fwnode videobuf2_v4l2 msm =
+v4l2_async videobuf2_common qcom_stats gpio_sbu_mux ath11k videodev drm_exe=
+c dispcc_sc8280xp snd_soc_wcd938x phy_qcom_edp gpu_sched
+[    6.594814]  snd_soc_wcd_classh snd_soc_wcd938x_sdw mac80211 drm_display=
+_helper mc snd_soc_lpass_rx_macro snd_soc_lpass_wsa_macro drm_dp_aux_bus sn=
+d_soc_lpass_tx_macro snd_soc_lpass_va_macro camcc_sc8280xp regmap_sdw video=
+cc_sm8350 i2c_qcom_cci soundwire_qcom snd_soc_wcd_mbhc libarc4 snd_soc_lpas=
+s_macro_common phy_qcom_qmp_combo cfg80211 qcom_q6v5_pas llcc_qcom aux_brid=
+ge snd_soc_core snd_compress qcom_pil_info rfkill qcom_common snd_pcm qcom_=
+glink_smem pci_pwrctl_pwrseq drm_kms_helper pci_pwrctl_core mhi typec qcom_=
+glink pwrseq_core icc_bwmon snd_timer phy_qcom_qmp_usb qrtr phy_qcom_snps_f=
+emto_v2 qcom_q6v5 gpucc_sc8280xp pinctrl_sc8280xp_lpass_lpi snd qcom_sysmon=
+ pinctrl_lpass_lpi lpasscc_sc8280xp pmic_glink soundcore mdt_loader pdr_int=
+erface soundwire_bus qcom_rng rpmsg_core leds_gpio input_leds qcom_pdr_msg =
+socinfo qmi_helpers rng_core qcom_wdt pwm_bl icc_osm_l3 led_class fuse dm_m=
+od ip_tables x_tables ipv6 autofs4 pcie_qcom crc8 phy_qcom_qmp_pcie nvme nv=
+me_core hid_multitouch i2c_qcom_geni i2c_hid_of i2c_hid drm
+[    6.594866]  i2c_core
+[    6.594868] CPU: 0 UID: 0 PID: 557 Comm: v4l_id Not tainted 6.12.0-rc2 #=
+165
+[    6.594871] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET87W (=
+1.59 ) 12/05/2023
+[    6.594872] pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
+=3D--)
+[    6.594874] pc : camss_find_sensor+0x20/0x74 [qcom_camss]
+[    6.594885] lr : camss_get_pixel_clock+0x18/0x60 [qcom_camss]
+[    6.594889] sp : ffff800082d538f0
+[    6.594890] x29: ffff800082d538f0 x28: ffff800082d53c70 x27: ffff670cc04=
+04618
+[    6.594893] x26: 0000000000000000 x25: 0000000000000000 x24: ffff670cd33=
+173d0
+[    6.594895] x23: ffff800082d539a8 x22: ffff670cd33192c8 x21: ffff800082d=
+539b8
+[    6.594898] x20: 0000000000000002 x19: 0000000000020001 x18: 00000000000=
+00000
+[    6.594900] x17: 0000000000000000 x16: ffffbf0bffbecdd0 x15: 00000000000=
+00001
+[    6.594902] x14: ffff670cc5c95300 x13: ffff670cc0b38980 x12: ffff670cc5c=
+95ba8
+[    6.594905] x11: ffffbf0c00f73000 x10: 0000000000000000 x9 : 00000000000=
+00000
+[    6.594907] x8 : ffffbf0c0085d000 x7 : 0000000000000000 x6 : 00000000000=
+00078
+[    6.594910] x5 : 0000000000000000 x4 : ffff670cd3318598 x3 : ffff670cd33=
+18468
+[    6.594912] x2 : ffff670cd3317728 x1 : ffff800082d539b8 x0 : 00000000000=
+00000
+[    6.594915] Call trace:
+[    6.594915]  camss_find_sensor+0x20/0x74 [qcom_camss]
+[    6.594920]  camss_get_pixel_clock+0x18/0x60 [qcom_camss]
+[    6.594924]  vfe_get+0xb8/0x504 [qcom_camss]
+[    6.594931]  vfe_set_power+0x30/0x58 [qcom_camss]
+[    6.594936]  pipeline_pm_power_one+0x13c/0x150 [videodev]
+[    6.594951]  pipeline_pm_power.part.0+0x58/0xf4 [videodev]
+[    6.594960]  v4l2_pipeline_pm_use+0x58/0x94 [videodev]
+[    6.594969]  v4l2_pipeline_pm_get+0x14/0x20 [videodev]
+[    6.594978]  video_open+0x78/0xf4 [qcom_camss]
+[    6.594982]  v4l2_open+0x80/0x120 [videodev]
+[    6.594991]  chrdev_open+0xb4/0x204
+[    6.594996]  do_dentry_open+0x138/0x4d0
+[    6.595000]  vfs_open+0x2c/0xe4
+[    6.595003]  path_openat+0x2b4/0x9fc
+[    6.595005]  do_filp_open+0x80/0x130
+[    6.595007]  do_sys_openat2+0xb4/0xe8
+[    6.595010]  __arm64_sys_openat+0x64/0xac
+[    6.595012]  invoke_syscall+0x48/0x110
+[    6.595016]  el0_svc_common.constprop.0+0xc0/0xe0
+[    6.595018]  do_el0_svc+0x1c/0x28
+[    6.595021]  el0_svc+0x48/0x114
+[    6.595023]  el0t_64_sync_handler+0xc0/0xc4
+[    6.595025]  el0t_64_sync+0x190/0x194
+[    6.595028] Code: 52800033 72a00053 d503201f f9402400 (f9401801)
+[    6.595029] ---[ end trace 0000000000000000 ]---
 
