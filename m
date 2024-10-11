@@ -1,272 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-34145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9798C99AAC5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 19:59:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3E6799ABA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 20:56:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26BD01F22B07
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:59:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 071501C206A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 18:56:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAA8619F12A;
-	Fri, 11 Oct 2024 17:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53BB11D0429;
+	Fri, 11 Oct 2024 18:54:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kmS3c8vA"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="WlQavfb2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997281BE854
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 17:58:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2DD1D0177
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 18:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728669537; cv=none; b=n8kjx6iRp1/D8pdJdh578qA7j9ru3bNl+YY53G00ecWfwo+G2u6dOXq3qUY4j4BXr5aFQMoAwoKOAaovMnmewBVc2t21HTHFDC84i4fNafbzIEyFHUoPkv4rMH++9naxAZ5qYDMSqf1sNBQ8uZ46fSv9qB5a9A7vjxrIlganUrA=
+	t=1728672871; cv=none; b=RStlPLXHsy+wjGcAs7YI4zTmWZ5a3b+QqAjT+8WYPO3x76aYAWzAGkSK/m1E98j1OXE4rk0DzoeYt16HvygGPvXQmqbzlBd4DRFgtKlcS1mwi2IJjNa/7qVNkpft2n5bi+QFsMd9CYvkvvqnl9tOQA5Bqq9riGoj6a7b3qvtJlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728669537; c=relaxed/simple;
-	bh=MTP9v94kHA+EdXU2Uoykt2WGBeHhp0M9n/TQa9HNqbM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GSe6Fbrw5FO0iYOpwyD+4XewX+h+fx4smGQcNOmOi9q9de8cAmJMuCJhVyAP+qYGHEyRwAch+cVuDxLLTlnQVnnxz/vhEPhoN27QesBCujUZi+qAeEsQyl96qfKl3EMGuHGQEr3pX60LMPEMj8SQx2kSRr/2/ITC111hq1GTPsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kmS3c8vA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BAALR1021181
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 17:58:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=AS1rxy8qMQglCbFoeSipseWM
-	7ev0lwhscuoExty4uFg=; b=kmS3c8vAjBNrpWF44ABBl+WXgJPO3MZUpKlANOrd
-	XdTmipfvHSHGHb8fRhB3qdk3LGFvEqMdcjJBxw6EimxARGXd45eOV1MKEiDGwEo8
-	UfaaXzwy56eCISgNV2Pa7b5beHZw5SLdIlqt1Ie+aaVbVgrAc80F6ELHOOEZQHxt
-	Rao2rO+gkAsTCJSNNiXO2jAZH+2rF5C5TirDAQKKkpz25Sp3bNHMA1sKpsEj/N6L
-	zrsiDaz3o3bLbY7JEcDRRTL1qimsX3OEA/0AJuLFSUdDakiB4YHOZf7u0n5r5EY4
-	RBbu1U9dhhiWCyK0hfM+ea0JHMscDYqdm9eTXOV5CvKM3Q==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42721c977u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 17:58:53 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-20ca1692cb7so10977805ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 10:58:53 -0700 (PDT)
+	s=arc-20240116; t=1728672871; c=relaxed/simple;
+	bh=V+W549yZR4YXE4o9ySJ5Sa4Yc/1frqei+R9VTkOnjww=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ZoGUUOe+EGcGuJJteOLgfpDIzHMeiQVLQGS7BcWTHzKu+BgXFV4c5eT4Gdiag0kiCXvHB5Bw46kDnukrLjUsALgSPbr4FQAIa+E8eFrgnzKRNJiinMQlJDR09k0vCr7s47NfDW6oZJpDkEcXz0HJJG6rAiHYnw5wmyzdDehdIHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=WlQavfb2; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-37d3ecad390so2073007f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 11:54:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1728672868; x=1729277668; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=CMw51FgUh2hUVjZgjRJM4Ju1tWp7eQweTumzW/cQKyE=;
+        b=WlQavfb2Sv0zMF4RRsI23bY6LL8JpqJxdS6hIswSj0jf02fWUK9CwsjJqNzW2sTnrp
+         Tfhq08jxZVrtF6asdgJ20XE+hygjiTV/JOJUqclfjC6oulx3+T+l7v7RPSVmgvilO7lo
+         ZMseE2zdc+RMkAMjK+KTL79TE4ZHX1Lh3bP/ZjLM6w37KyojtdSvjuOYmy1Ry2at4xKH
+         Frf3xCDRrzdXyeliuKJsokcpLU/EgzoD1oqJJsi3L5ZEMZliLzDshVpnlGTv9zt29Vf4
+         ZAccbhaZAkvyOJCxP25XxS6UUbnnzEWroZgE8hCrnTJwtTfpYtwTAaV4Xvl5cjEtr54Z
+         RVGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728669532; x=1729274332;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AS1rxy8qMQglCbFoeSipseWM7ev0lwhscuoExty4uFg=;
-        b=jBDJCKbyj9jKfvtj46YG+LSRkHay1s+cxIqBArw8P3YGcOwiLYjtU1JEZJeQ3gSKfK
-         /DmjGdz9wJSfxaEU5784hTj361qh0+ddAkg6SsAOP1T48jttWAAJJ9eicISLtiDF3dOG
-         zIChFPyDWm+9j6d7CoIhRQR9hk3b/c0xsnQ3Er9yX5kLaj4AcM2qfm6uL1nNOjHRpgKP
-         HUHZ60eBLpS0U6b4eR207DDzt9lPDHPU5Zn0Sh2OPRKkVfUp0jHNQwIjBUOIJHojfqLR
-         06YtCzK+ujEgdXhXBmwLSri8QTiPO3ccmccggMIg45vx2T7GfVS03boQxjdyLwB0p1Em
-         9Ofw==
-X-Forwarded-Encrypted: i=1; AJvYcCXjJhigjNbu91i43pGDsMm0+/4X9TkTQU5o6QOO6KkZDcz4HWjADyQYHjILeL6FOiGz3BUc8xDKg99mQq57@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYsGdLMWYhtNf4EFUM7RCe34oEg3VfmMNXVsD9NxICvrmD4m4t
-	O295x/kTu4ihmU9/0nxl8ckL3Z/oMuN/ZIlRe68ANZyF8rFKOOUFAX+MxpH/ul387MDvXKHIRHy
-	dfNFQ1rgAiON7TqUWXR4JbtmNYt+HelNlvUfSVdqcDdkpsIeahgFfbmC35ufRJDkr
-X-Received: by 2002:a17:903:2285:b0:20b:80e6:bcdf with SMTP id d9443c01a7336-20cbb1a9314mr6647475ad.23.1728669531959;
-        Fri, 11 Oct 2024 10:58:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFESTnYEwGemJ5Xft5cNtABvqj2e5cIVHpOKMOt3qbTDrZt0qv/vOWjSGlEPCys96ek2YjhYw==
-X-Received: by 2002:a17:903:2285:b0:20b:80e6:bcdf with SMTP id d9443c01a7336-20cbb1a9314mr6647185ad.23.1728669531614;
-        Fri, 11 Oct 2024 10:58:51 -0700 (PDT)
-Received: from hu-bjorande-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c8bc0c9f5sm26009615ad.82.2024.10.11.10.58.49
+        d=1e100.net; s=20230601; t=1728672868; x=1729277668;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CMw51FgUh2hUVjZgjRJM4Ju1tWp7eQweTumzW/cQKyE=;
+        b=W1hJ/6QT8xI+J/hZacyfzgvONDDVHZbMOuKAC1A42XWtn4p2hQBT1wxms4x/yJi0M7
+         PLlDDz82aioJWH8LPejorBxAhpF2OgpQKDafuevsG0Opw1sp/DzCMQOn7xhB9ZlM0w4F
+         wndsxMwFZy7uuPnlGf454JSwWEK8Tt9v+xZUaS88RnMYckUycjuYgIphKKzst/FBSfh9
+         17Fq5LGKAeTUG6q3anHSlEGafBeyNNkUD7ThJRdYsqoDKBU4H/o3JBcNL/49iPNtF0UB
+         YP3Fd+jTDGsxgFwrFwhhlmzhoReZfRBY4wJv3ylEjrNIXTTAs+6qhnAzhShINy5q4Qci
+         FjgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVjsZfXnKejCPyIi9nPj6OwPp6whCVSomDu9IPCLaafXIl4aTmJ/5fnE6EeRgckvFwhxFesVrD8Mr2+DhIU@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywe/xUR5ZMN/rgaebraZwoMegkzl5HyCKJOE6aLAXpNcj/9TiUJ
+	MeRz+qT7pYzjNDoSvboEC6WvDiNqVUfCqHRzQFronJlIocdzK46y5uBf3BIO8b0=
+X-Google-Smtp-Source: AGHT+IHlglhANRvpdTESP3LsM2lgJBYup01gWvrpmxLiylK//L7bzFq3mNfdN8XOV1pwMyWsj+dc6w==
+X-Received: by 2002:a5d:44c5:0:b0:37d:3141:5b6 with SMTP id ffacd0b85a97d-37d551d6533mr3343204f8f.12.1728672867357;
+        Fri, 11 Oct 2024 11:54:27 -0700 (PDT)
+Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:68b8:bef:b7eb:538f])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b79fe7csm4559161f8f.70.2024.10.11.11.54.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2024 10:58:50 -0700 (PDT)
-Date: Fri, 11 Oct 2024 10:58:48 -0700
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-To: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-Cc: andi.shyti@kernel.org, quic_bjorande@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@linaro.org,
-        quic_vdadhani@quicinc.com, vkoul@kernel.org
-Subject: Re: [PATCH v2] i2c: i2c-qcom-geni: Serve transfer during early
- resume stage
-Message-ID: <ZwlnWIWkS1pwQ/xK@hu-bjorande-lv.qualcomm.com>
-References: <20241011121757.2267336-1-quic_msavaliy@quicinc.com>
+        Fri, 11 Oct 2024 11:54:27 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Subject: [PATCH v7 00/17] Hardware wrapped key support for QCom ICE and UFS
+ core
+Date: Fri, 11 Oct 2024 20:53:59 +0200
+Message-Id: <20241011-wrapped-keys-v7-0-e3f7a752059b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241011121757.2267336-1-quic_msavaliy@quicinc.com>
-X-Proofpoint-ORIG-GUID: _JdoVRethWHvhiJybQPzxm10OqSnIFkY
-X-Proofpoint-GUID: _JdoVRethWHvhiJybQPzxm10OqSnIFkY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 mlxlogscore=999 priorityscore=1501 adultscore=0
- phishscore=0 malwarescore=0 mlxscore=0 bulkscore=0 suspectscore=0
- spamscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410110125
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEd0CWcC/1XMQQ6CMBCF4auQWVszVqzCynsYFi0dYKKhZGqqh
+ HB3K65c/i953wKRhClCXSwglDhyGHOcdwW0gx17Uuxzg0Zd4gW1eomdJvLqTnNURBbxqDvXkYd
+ 8mYQ6fm/crck9cHwGmTc9me/6gyo0/1AyCpU/VWQOrsXWldcHj1bCPkgPzbquH6oQeNSpAAAA
+To: Jens Axboe <axboe@kernel.dk>, Jonathan Corbet <corbet@lwn.net>, 
+ Alasdair Kergon <agk@redhat.com>, Mike Snitzer <snitzer@kernel.org>, 
+ Mikulas Patocka <mpatocka@redhat.com>, 
+ Adrian Hunter <adrian.hunter@intel.com>, 
+ Asutosh Das <quic_asutoshd@quicinc.com>, 
+ Ritesh Harjani <ritesh.list@gmail.com>, 
+ Ulf Hansson <ulf.hansson@linaro.org>, Alim Akhtar <alim.akhtar@samsung.com>, 
+ Avri Altman <avri.altman@wdc.com>, Bart Van Assche <bvanassche@acm.org>, 
+ "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>, 
+ "Martin K. Petersen" <martin.petersen@oracle.com>, 
+ Eric Biggers <ebiggers@kernel.org>, "Theodore Y. Ts'o" <tytso@mit.edu>, 
+ Jaegeuk Kim <jaegeuk@kernel.org>, Alexander Viro <viro@zeniv.linux.org.uk>, 
+ Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Gaurav Kashyap <quic_gaurkash@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-block@vger.kernel.org, linux-doc@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, dm-devel@lists.linux.dev, 
+ linux-mmc@vger.kernel.org, linux-scsi@vger.kernel.org, 
+ linux-fscrypt@vger.kernel.org, linux-fsdevel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Eric Biggers <ebiggers@google.com>, 
+ Om Prakash Singh <quic_omprsing@quicinc.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6675;
+ i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
+ bh=V+W549yZR4YXE4o9ySJ5Sa4Yc/1frqei+R9VTkOnjww=;
+ b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBnCXRXheFkvmAfCwx0Kc8rJKoU5BpA3kyWjxAV/
+ 35LTWYZNfmJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCZwl0VwAKCRARpy6gFHHX
+ cgA0D/4p3Bi0fXlOemSeU2xvKKK25ZEN3/EmT9KnIyEvzW9pkACbc3kmA+hczDu+fEwMdi4SpF5
+ wHgSASml14w4srJR/lEyN8QjLuq4WJB5aMwzRR/uLmxIkqI5oONlowHYqbrYs3fL2pUaiEmc9Xf
+ z2jBXeZl7d1yLJMHyDke9WIB1jsEVzqsKBYbLnK1APKctF9NBkIOpsEmMEA1TKwlh8W9W9QJ1UM
+ JwnX7CINZdXBI4gA2W3uUcF6lcovxO2QZRkViLGcgMQZfJlsFWP0sI0bOuPXejQMp3T71S2/Arm
+ SlCRJ2mrhY6Gj0ycUjt8bH57j14pS8Q05CvGuwFDfcCZl+uF1GAjhw21G/dxCOaS7WglRuOq55x
+ ZTQT1UsptQVVfQTCvY2OKUWPSrdBKCw60tXAYC1KDkbRWkTDurZnoLbls3SoS2c6IBJsMKeDa40
+ GdDpfPRU8AWr3oXYwo34OoYMI1aR7zKd6dCxJwuYX2EqT5fTDhgGm61Fz3OqxMPYkIU6wxbZopK
+ sBpaN3p5QYVq+HcVlblb1TJE2rnT/J3nekeHAO1Nd3G0y6VFoE3P8Z7Wet05HOSJzH8hKjDHIgX
+ ekggBI63eC4hPHcK9Ayb21XHlt2yzjO0Hd/6aeS7v8sLL960tlGQ0ElhucsvwZiyE2IFqQD1MaD
+ ph2BvhVDuk9LM6A==
+X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
+ fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-On Fri, Oct 11, 2024 at 05:47:57PM +0530, Mukesh Kumar Savaliya wrote:
+The preferred solution to the HWKM configuration issue seems to be
+using a module param so this is what I did in this iteration.
 
-Your recipients list is broken. Please check go/upstream and adopt b4 to
-help avoid such mistakes.
+Hardware-wrapped keys are encrypted keys that can only be unwrapped
+(decrypted) and used by hardware - either by the inline encryption
+hardware itself, or by a dedicated hardware block that can directly
+provision keys to the inline encryption hardware. For more details,
+please see patches 1-3 in this series which extend the inline encryption
+docs with more information.
 
-> pm_runtime_get_sync() function fails during PM early resume and returning
-> -EACCES because runtime PM for the device is disabled at the early stage
-> causing i2c transfer to fail. Make changes to serve transfer with forced
-> resume.
-> 
-> Few i2c clients like PCI OR touch may request i2c transfers during early
-> resume stage. In order to serve transfer request do :
-> 
+This series adds support for wrapped keys to the block layer, fscrypt
+and then build upwards from there by implementing relevant callbacks in
+QCom SCM driver, then the ICE driver and finally in UFS core and QCom
+layer.
 
-This problem description is too generic. I am not aware of any use case
-upstream where PCI or touch might need to perform i2c transfers during
-early resume; your commit message should educate me.
+Tested on sm8650-qrd.
 
-> 1. Register interrupt with IRQF_EARLY_RESUME and IRQF_NO_SUSPEND flags
->    to avoid timeout of transfer when IRQ is not enabled during early stage.
-> 2. Do force resume if pm_runtime_get_sync() is failing after system
->    suspend when runtime PM is not enabled.
-> 3. Increment power usage count after forced resume to balance
->    it against regular runtime suspend.
-> 
+How to test:
 
-Please avoid the bullet list form technical description of your patch.
+Use the wip-wrapped-keys branch from https://github.com/ebiggers/fscryptctl
+to build a custom fscryptctl that supports generating wrapped keys.
 
-> Co-developed-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-> Signed-off-by: Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>
-> ---
-> v1 -> v2:
-> 
-> - Changed gi2c->se.dev to dev during dev_dbg() calls.
-> - Addressed review comments from Andi and Bjorn.
+Enable the following config options:
+CONFIG_BLK_INLINE_ENCRYPTION=y
+CONFIG_QCOM_INLINE_CRYPTO_ENGINE=m
+CONFIG_FS_ENCRYPTION_INLINE_CRYPT=y
+CONFIG_SCSI_UFS_CRYPTO=y
 
-That's nice, but spell out the changes you're doing so that reviewers
-now what you did.
+$ mkfs.ext4 -F -O encrypt,stable_inodes /dev/disk/by-partlabel/userdata
+$ mount /dev/disk/by-partlabel/userdata -o inlinecrypt /mnt
+$ fscryptctl generate_hw_wrapped_key /dev/disk/by-partlabel/userdata > /mnt/key.longterm
+$ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/userdata < /mnt/key.longterm > /tmp/key.ephemeral
+$ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
+$ rm -rf /mnt/dir
+$ mkdir /mnt/dir
+$ fscryptctl set_policy --hw-wrapped-key --iv-ino-lblk-64 "$KEYID" /mnt/dir
+$ dmesg > /mnt/dir/test.txt
+$ sync
 
-> - Returned 0 instead garbage inside geni_i2c_force_resume().
-> - Added comments explaining forced resume transfer when runtime PM
->   remains disabled.
-> 
-> V1 link: https://patches.linaro.org/project/linux-i2c/patch/20240328123743.1713696-1-quic_msavaliy@quicinc.com/
-> ---
-> ---
->  drivers/i2c/busses/i2c-qcom-geni.c | 61 +++++++++++++++++++++++++-----
->  1 file changed, 51 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-> index 212336f724a6..e1207f1a3de3 100644
-> --- a/drivers/i2c/busses/i2c-qcom-geni.c
-> +++ b/drivers/i2c/busses/i2c-qcom-geni.c
-> @@ -134,6 +134,8 @@ struct geni_i2c_clk_fld {
->  	u8	t_cycle_cnt;
->  };
->  
-> +static int geni_i2c_runtime_resume(struct device *dev);
-> +
->  /*
->   * Hardware uses the underlying formula to calculate time periods of
->   * SCL clock cycle. Firmware uses some additional cycles excluded from the
-> @@ -675,22 +677,49 @@ static int geni_i2c_fifo_xfer(struct geni_i2c_dev *gi2c,
->  	return num;
->  }
->  
-> +static int geni_i2c_force_resume(struct geni_i2c_dev *gi2c)
-> +{
-> +	struct device *dev = gi2c->se.dev;
-> +	int ret;
-> +
-> +	ret = geni_i2c_runtime_resume(dev);
+Reboot the board
 
-Wouldn't pm_runtime_force_resume() help you do what you're looking for?
+$ mount /dev/disk/by-partlabel/userdata -o inlinecrypt /mnt
+$ ls /mnt/dir
+$ fscryptctl prepare_hw_wrapped_key /dev/disk/by-partlabel/userdata < /mnt/key.longterm > /tmp/key.ephemeral
+$ KEYID=$(fscryptctl add_key --hw-wrapped-key < /tmp/key.ephemeral /mnt)
+$ fscryptctl set_policy --hw-wrapped-key --iv-ino-lblk-64 "$KEYID" /mnt/dir
+$ cat /mnt/dir/test.txt # File should now be decrypted
 
-> +	if (ret) {
-> +		dev_err(gi2c->se.dev, "Failed to enable SE resources: %d\n", ret);
-> +		pm_runtime_put_noidle(dev);
-> +		pm_runtime_set_suspended(dev);
-> +		return ret;
-> +	}
-> +	pm_runtime_get_noresume(dev);
-> +	pm_runtime_set_active(dev);
-> +	return 0;
-> +}
-> +
->  static int geni_i2c_xfer(struct i2c_adapter *adap,
->  			 struct i2c_msg msgs[],
->  			 int num)
->  {
->  	struct geni_i2c_dev *gi2c = i2c_get_adapdata(adap);
-> +	struct device *dev = gi2c->se.dev;
->  	int ret;
->  
->  	gi2c->err = 0;
->  	reinit_completion(&gi2c->done);
-> -	ret = pm_runtime_get_sync(gi2c->se.dev);
-> -	if (ret < 0) {
-> -		dev_err(gi2c->se.dev, "error turning SE resources:%d\n", ret);
-> -		pm_runtime_put_noidle(gi2c->se.dev);
-> -		/* Set device in suspended since resume failed */
-> -		pm_runtime_set_suspended(gi2c->se.dev);
-> -		return ret;
-> +
-> +	/* Serve I2C transfer by forced resume whether Runtime PM is enbled or not */
-> +	if (!pm_runtime_enabled(dev) && gi2c->suspended) {
-> +		dev_dbg(dev, "Runtime PM is disabled hence force resume, pm_usage_count: %d\n",
-> +			atomic_read(&dev->power.usage_count));
-> +		ret = geni_i2c_force_resume(gi2c);
-> +		if (ret)
-> +			return ret;
-> +	} else {
-> +		ret = pm_runtime_get_sync(dev);
-> +		if (ret == -EACCES && gi2c->suspended) {
-> +			dev_dbg(dev, "pm_runtime_get_sync() failed-%d, force resume\n", ret);
-> +			ret = geni_i2c_force_resume(gi2c);
-> +			if (ret)
-> +				return ret;
-> +		}
->  	}
->  
->  	qcom_geni_i2c_conf(gi2c);
-> @@ -700,8 +729,19 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
->  	else
->  		ret = geni_i2c_fifo_xfer(gi2c, msgs, num);
->  
-> -	pm_runtime_mark_last_busy(gi2c->se.dev);
-> -	pm_runtime_put_autosuspend(gi2c->se.dev);
-> +	/* Does Opposite to Forced Resume when runtime PM was not enabled and served
-> +	 * Transfer via forced resume.
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+Changes in v7:
+- use a module param in conjunction with checking the platform support
+  at run-time to determine whether to use wrapped keys in the ICE driver
+- various minor refactorings, replacing magic numbers with defines etc.
+- fix kernel doc issues raised by autobuilders
+- Link to v6: https://lore.kernel.org/r/20240906-wrapped-keys-v6-0-d59e61bc0cb4@linaro.org
 
-Please polish this comment.
+Changes in v6:
+- add the wrapped key support from Eric Biggers to the series
+- remove the new DT property from the series and instead query the
+  at run-time rustZone to find out if wrapped keys are supported
+- make the wrapped key support into a UFS capability, not a quirk
+- improve kerneldocs
+- improve and rework coding style in most patches
+- improve and reformat commit messages
+- simplify the offset calculation for CRYPTOCFG
+- split out the DTS changes into a separate series
 
-Regards,
-Bjorn
+---
+Bartosz Golaszewski (1):
+      firmware: qcom: scm: add a call for checking wrapped key support
 
-> +	 */
-> +	if (!pm_runtime_enabled(dev) && !gi2c->suspended) {
-> +		pm_runtime_put_noidle(dev);
-> +		pm_runtime_set_suspended(dev);
-> +		/* Reset flag same as runtime suspend, next xfer PM can be enabled */
-> +		gi2c->suspended = 0;
-> +	} else {
-> +		pm_runtime_mark_last_busy(gi2c->se.dev);
-> +		pm_runtime_put_autosuspend(gi2c->se.dev);
-> +	}
-> +
->  	gi2c->cur = NULL;
->  	gi2c->err = 0;
->  	return ret;
-> @@ -818,7 +858,8 @@ static int geni_i2c_probe(struct platform_device *pdev)
->  	init_completion(&gi2c->done);
->  	spin_lock_init(&gi2c->lock);
->  	platform_set_drvdata(pdev, gi2c);
-> -	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq, IRQF_NO_AUTOEN,
-> +	ret = devm_request_irq(dev, gi2c->irq, geni_i2c_irq,
-> +			       IRQF_NO_AUTOEN | IRQF_EARLY_RESUME | IRQF_NO_SUSPEND,
->  			       dev_name(dev), gi2c);
->  	if (ret) {
->  		dev_err(dev, "Request_irq failed:%d: err:%d\n",
-> -- 
-> 2.25.1
-> 
+Eric Biggers (4):
+      blk-crypto: add basic hardware-wrapped key support
+      blk-crypto: show supported key types in sysfs
+      blk-crypto: add ioctls to create and prepare hardware-wrapped keys
+      fscrypt: add support for hardware-wrapped keys
+
+Gaurav Kashyap (12):
+      ice, ufs, mmc: use the blk_crypto_key struct when programming the key
+      firmware: qcom: scm: add a call for deriving the software secret
+      firmware: qcom: scm: add calls for creating, preparing and importing keys
+      soc: qcom: ice: add HWKM support to the ICE driver
+      soc: qcom: ice: add support for hardware wrapped keys
+      soc: qcom: ice: add support for generating, importing and preparing keys
+      ufs: core: add support for wrapped keys to UFS core
+      ufs: core: add support for deriving the software secret
+      ufs: core: add support for generating, importing and preparing keys
+      ufs: host: add support for wrapped keys in QCom UFS
+      ufs: host: add a callback for deriving software secrets and use it
+      ufs: host: add support for generating, importing and preparing wrapped keys
+
+ Documentation/ABI/stable/sysfs-block               |  18 +
+ Documentation/block/inline-encryption.rst          | 245 +++++++++++++-
+ Documentation/filesystems/fscrypt.rst              | 154 ++++++++-
+ Documentation/userspace-api/ioctl/ioctl-number.rst |   2 +
+ block/blk-crypto-fallback.c                        |   5 +-
+ block/blk-crypto-internal.h                        |  10 +
+ block/blk-crypto-profile.c                         | 103 ++++++
+ block/blk-crypto-sysfs.c                           |  35 ++
+ block/blk-crypto.c                                 | 194 ++++++++++-
+ block/ioctl.c                                      |   5 +
+ drivers/firmware/qcom/qcom_scm.c                   | 233 +++++++++++++
+ drivers/firmware/qcom/qcom_scm.h                   |   4 +
+ drivers/md/dm-table.c                              |   1 +
+ drivers/mmc/host/cqhci-crypto.c                    |   9 +-
+ drivers/mmc/host/cqhci.h                           |   2 +
+ drivers/mmc/host/sdhci-msm.c                       |   6 +-
+ drivers/soc/qcom/ice.c                             | 365 ++++++++++++++++++++-
+ drivers/ufs/core/ufshcd-crypto.c                   |  86 ++++-
+ drivers/ufs/host/ufs-qcom.c                        |  61 +++-
+ fs/crypto/fscrypt_private.h                        |  71 +++-
+ fs/crypto/hkdf.c                                   |   4 +-
+ fs/crypto/inline_crypt.c                           |  44 ++-
+ fs/crypto/keyring.c                                | 124 +++++--
+ fs/crypto/keysetup.c                               |  54 ++-
+ fs/crypto/keysetup_v1.c                            |   5 +-
+ fs/crypto/policy.c                                 |  11 +-
+ include/linux/blk-crypto-profile.h                 |  73 +++++
+ include/linux/blk-crypto.h                         |  75 ++++-
+ include/linux/firmware/qcom/qcom_scm.h             |   8 +
+ include/soc/qcom/ice.h                             |  18 +-
+ include/uapi/linux/blk-crypto.h                    |  44 +++
+ include/uapi/linux/fs.h                            |   6 +-
+ include/uapi/linux/fscrypt.h                       |   7 +-
+ include/ufs/ufshcd.h                               |  21 ++
+ 34 files changed, 1968 insertions(+), 135 deletions(-)
+---
+base-commit: eae80d86fb04e37032e5bdaec64e0b70316d11ae
+change-id: 20240802-wrapped-keys-eea0032fbfed
+
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+
 
