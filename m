@@ -1,70 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-34037-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD12A999D5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 09:03:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BF87999D71
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 09:07:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9FBFE1F22369
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:03:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7E5481C21E7B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:07:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 931ED19CD08;
-	Fri, 11 Oct 2024 07:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6DC6520967E;
+	Fri, 11 Oct 2024 07:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j2g7gj2u"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iEhpSdm5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07AEBA2D
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 07:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D938635
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 07:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728630185; cv=none; b=mOVFrKc1T+y8RSjsAjAoi/5PbL46lwDHVTPDTEA3LCfMn7i8KlambfJJG8KKM7p8uWqxYSGtg2224skORcV/SS9G7AbBxe9NsopwSdZ4tPJwVuwbQXJ659voFFrP+BaG9uQy7RhTqH9yZDPSimOKAaAuWItfw+9bKO4bXkrZ1Ng=
+	t=1728630416; cv=none; b=fLvE+UTH7pOKnWQ8GINceXauhmCYqNqmJQBX9WTFIOrrib/DVOESwE4O2W0gvbZiwaEyO5kKWg4ihXJgRF83weWOq5zIz5aqQQlTr9sL0P+xX1tI8CqIlz4iE7sJvWty2Xn7ETkeytUPH4UEBTOJVdQ3Obx6ZS3KKXC2oK0kaqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728630185; c=relaxed/simple;
-	bh=o4MJNbvGM+bJwqv08q8gLQ2VClYFU3eXABrw4caFEMQ=;
+	s=arc-20240116; t=1728630416; c=relaxed/simple;
+	bh=OUEq0owwHAkCt3sxN/Mq8rka0fcPjesIj/2Td3oVAH0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ABwx96zOrQ3MjFzUJZaCCXELKk9sWbisLKdtiOQHJP8XU+G0g+RPhWr+bpE+uUJrvAl781dqKE6VleO0gDSG1WlI/L7+avCHk0hrfDLbowk0HTP+Em/J2SX3Rv8F5b7bMzy1vIRx1hr0YQOdxSy1XGIS+CH15iuWEGpomg9aJ5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j2g7gj2u; arc=none smtp.client-ip=209.85.128.179
+	 To:Cc:Content-Type; b=iHmJVkyu34pboArfZsoBHRlUgZNYzTa56IEUzbi43gM4xEppAjf3bPQM9G2BCqLQZwu+nU8UbNOansi8xyyOhZGZGNzM24qsNw5FsCBFjFK5X1kW+4KXg03+bNaOYefTIaWnxfxJXizWi44BfnxBj/lsxwr0CRoxgThYQdsxuqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iEhpSdm5; arc=none smtp.client-ip=209.85.128.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6e2e4237da4so16219457b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 00:03:03 -0700 (PDT)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6dbb24ee2ebso20636927b3.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 00:06:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728630183; x=1729234983; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728630412; x=1729235212; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=e/WrAkYmWTzQpnkkGqkA3T9eZ4D5Jk8JiEoDs0ZQrAM=;
-        b=j2g7gj2uSZhA9vlxgsNLQ/4yqN/O0m0FG6y8PhFCYTkF4xz8VQTUDT1pdvrqZtnWG7
-         XRmDOS59wLqRBIkOEbD27Um9cNUzFrXuLTeMRmFED8pLF4oB7g2vVN+lYvXz8y4pmtax
-         JaIxHCUtxWyfXDx6oNkKZx3ibdlfHrossjvPD2kgKrzLP/whMqrfZ48OOKpSvJx95RdU
-         OwQYYXOLv/Jut5CEOka2u3lFZV2/c0XWxDxZun7+IUB10rnkTqoXZ0lyjHJS8LvUUgjO
-         2ejjYLuATYBc+ds4wGrWraJw2tESczln1TCjsYOp6JffNwtHMp97EybhDMNedJBKZ41Q
-         yiUg==
+        bh=KbDvhzRE0GcC1Dd4Kqw9/lX4StqtF0AG6/j/dYmGN1o=;
+        b=iEhpSdm53iy/7JIxasQ7kLL4P2inSpX9JSGpxEF9oPcwJiiw1u5jk1GdWIvQKGHH1Q
+         h42hzWALmMGeE/Wi3u69kPa/D4VvK9aG1imEoRRCz48y7FMd19gvLCokxPeHL/wtNTGw
+         Kz8t7DRAkTSLrT+KZOowbnPMPPta/S4mZ0fp7ZQ6jIcy9Nx0gu604F1gzqDx/+O+7Q2N
+         7mLGQhTR7fNbCdgLVnZLN5D84QFSQNWM9bn0B8JUJpJKAm6qlC1s0JUUMlui9SChdAzO
+         pRhcNvX/jNhkj2imx1hTVphZCl2DvOh6FrFJHzP9pdcUTytZm7JqqE27JKANCDkgPnrk
+         i/Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728630183; x=1729234983;
+        d=1e100.net; s=20230601; t=1728630412; x=1729235212;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=e/WrAkYmWTzQpnkkGqkA3T9eZ4D5Jk8JiEoDs0ZQrAM=;
-        b=r7sbBzBHP+dSv7gURorFsc1mHjsCRyicIDP2kQd1Rx0KBWMxIDDN12ZhuWeiyK9CHX
-         heN0Fwv4XiFYpIgGwQrt0UBJxl8OtLy78R7dIR3iiZM+J9eBAoYLCLJxXuVmrkg7pG1r
-         ZcugVVE13csnl93LX5To0LYMjFNbLgNiIccYWTUhv5nAQlat2//3jB4nnxZaQcdhV6z0
-         Dfi0VIA3GDChZh5N1xwYYQgVaOuVrUX7ABzUGLS5k5VApIt4rvAa6BSlbYMHY5casiWu
-         8+FVerNEjPkEytvyD+q8VLOHQjx0rcGYDssQoiqnxcFsMGvJV57CrvF5S1Pb4fcc3mdE
-         8taw==
-X-Forwarded-Encrypted: i=1; AJvYcCV322jNoQejeu+PM5fwQIRrSUQln16Ic1YYbWLpkOnaRyjlGQBi9kTphgtCG+vfb+QycvqSXhE2fMToVLXu@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1XLMQQNEgKLyOBksjhbIiGv7XivhvDHjf2OH5ofoNV9gxQH5f
-	Ch5BXSTxfdO1Oqzlbb7f9yDLj2WVg21YBoGMv87nwXq9zHhcPP6S76NQq2Q59YtwQFvsYpO/Atv
-	B+f0SX+m2tUMWHWhW0r2J6H0CRoYTI7J8qzqQjA==
-X-Google-Smtp-Source: AGHT+IExrPlFUulHFd/PrfCfhS/4BHjHsolgjvVdCJaeB+YAMnpZ8ogCYZHPoFPVad1Xx04WRVGP4lRAtqTIlIKyqzc=
-X-Received: by 2002:a05:690c:4e09:b0:6dd:bbb4:bcc7 with SMTP id
- 00721157ae682-6e347c4de20mr8741367b3.44.1728630182736; Fri, 11 Oct 2024
- 00:03:02 -0700 (PDT)
+        bh=KbDvhzRE0GcC1Dd4Kqw9/lX4StqtF0AG6/j/dYmGN1o=;
+        b=gh22Jl2KQrfhjGpryBSuyUttjRrRmD9Ul0ti3ypiKBzByk4z/xX3wMQUICPWI0qoLb
+         JeiK1SM8DY6KBLcb9bqG+pTf7kBnwy2eW2+VZHq40WIA/rtwhv8RXFYXqCPYlcIH5lNz
+         TUlL5Yk0aHSIAgaiggJslPJktT+hmgzzxZZZnRxPgi4DBj7epesND1wjbelezXn9mqR0
+         D8BBuela0SigKuPk6KoAx2ZBse7Z2IDV4U+A1xyxhSiG9SC4bZ53UMOpmpNkcl9JGT4P
+         3mSSrQMs5dTAqYCKIH78hyKtcmeEtUJHb8Huemgj3jgwYIl/PiIw9KtLmqaf9PPMxqtL
+         Qtug==
+X-Forwarded-Encrypted: i=1; AJvYcCVPUui6NCgBdiLe++deYtkZMYsAtrL6VenRPmcsLVNh6nExg2Zj4d5tswElQnnbwFAKgkmUCAVzUyGYobHf@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywlpzz8NGwKVaWmLQqVLI3VUFxqZM1c0yroGfP7uNa1ww5U2yoD
+	tBYOyfgCnI6axhG0J7uDVPytIzHU2rCzfkJdYotO+YH9C7sxkF+hZD/dpu1EcDGrrzkvltSDNex
+	fiWP/JLWLF7N3lzjYL4TDpYOMFinxnl25eJPxGA==
+X-Google-Smtp-Source: AGHT+IGAqFf1aCWRylzQD2egBbLwi3qRNqcNEIYZaTvmCmq4ukOzJTKIvCqu2AgBinqdnGTEhCOpEXxLoURFTP8BrkA=
+X-Received: by 2002:a05:690c:fc7:b0:6e2:b263:1045 with SMTP id
+ 00721157ae682-6e3477befe2mr12970867b3.6.1728630412570; Fri, 11 Oct 2024
+ 00:06:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,13 +72,13 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
- <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
- <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3> <CABymUCP7bVBSWXCNp33x_B8KaZSFU-Dx+bU5ctkgDGXrzURrXQ@mail.gmail.com>
-In-Reply-To: <CABymUCP7bVBSWXCNp33x_B8KaZSFU-Dx+bU5ctkgDGXrzURrXQ@mail.gmail.com>
+ <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-8-76d4f5d413bf@linaro.org>
+ <n7bkvvxph2wxaxf2s7vonj273ouonlb2nisl7n7ora6j5stnlv@tt3v3uawwh2q> <CABymUCPV+bu-MNGCRp_0A+jC9Z6hY3XRm4vZ5Ju2XxT5YuRzPA@mail.gmail.com>
+In-Reply-To: <CABymUCPV+bu-MNGCRp_0A+jC9Z6hY3XRm4vZ5Ju2XxT5YuRzPA@mail.gmail.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 11 Oct 2024 10:02:52 +0300
-Message-ID: <CAA8EJpovnEq_ciO0YmiREhwvxv6yGKnRMPx5=6G7R+Ob6Hy_hA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/14] drm/msm/dpu: blend pipes per mixer pairs config
+Date: Fri, 11 Oct 2024 10:06:41 +0300
+Message-ID: <CAA8EJpprO9pZ7bRf5HDA7-8UYKn5RiK2Yg9eW1NTYSEAE8ZDFw@mail.gmail.com>
+Subject: Re: [PATCH v2 08/14] drm/msm/dpu: update mixer number info earlier
 To: Jun Nie <jun.nie@linaro.org>
 Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
 	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
@@ -88,107 +88,67 @@ Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 11 Oct 2024 at 09:40, Jun Nie <jun.nie@linaro.org> wrote:
+On Fri, 11 Oct 2024 at 09:30, Jun Nie <jun.nie@linaro.org> wrote:
 >
 > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B410=
-=E6=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B 21:15=E5=86=99=E9=81=93=EF=BC=9A
+=E6=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B 21:12=E5=86=99=E9=81=93=EF=BC=9A
 > >
-> > On Wed, Oct 09, 2024 at 04:50:22PM GMT, Jun Nie wrote:
-> > > Blend pipes by set of mixer pair config. The first 2 pipes are for le=
-ft
-> > > half screen with the first set of mixer pair config. And the later 2 =
-pipes
-> > > are for right in quad pipe case.
+> > On Wed, Oct 09, 2024 at 04:50:21PM GMT, Jun Nie wrote:
+> > > Update mixer number info earlier so that the plane nopipe check
+> > > can have the info to clip the plane. Otherwise, the first nonpipe
+> > > check will have mixer number as 0 and plane is not checked.
 > > >
 > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
 > > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 38 ++++++++++++++++++-=
-----------
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
-> > >  2 files changed, 25 insertions(+), 14 deletions(-)
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 11 ++++++++++-
+> > >  1 file changed, 10 insertions(+), 1 deletion(-)
 > > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/d=
-rm/msm/disp/dpu1/dpu_crtc.c
-> > > index 43d9817cd858f..66f745399a602 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(struct dr=
-m_crtc *crtc,
-> > >       const struct msm_format *format;
-> > >       struct dpu_hw_ctl *ctl =3D mixer->lm_ctl;
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gp=
+u/drm/msm/disp/dpu1/dpu_encoder.c
+> > > index dfe282c607933..68655c8817bf8 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > @@ -638,6 +638,7 @@ static int dpu_encoder_virt_atomic_check(
+> > >       struct dpu_global_state *global_state;
+> > >       struct drm_framebuffer *fb;
+> > >       struct drm_dsc_config *dsc;
+> > > +     struct dpu_crtc_state *cstate;
+> > >       int ret =3D 0;
 > > >
-> > > -     uint32_t lm_idx, i;
-> > > +     uint32_t lm_idx, lm_pair, i, pipe_idx;
-> > >       bool bg_alpha_enable =3D false;
-> > >       DECLARE_BITMAP(fetch_active, SSPP_MAX);
+> > >       if (!drm_enc || !crtc_state || !conn_state) {
+> > > @@ -662,6 +663,8 @@ static int dpu_encoder_virt_atomic_check(
+> > >       dsc =3D dpu_encoder_get_dsc_config(drm_enc);
 > > >
-> > > @@ -463,15 +463,20 @@ static void _dpu_crtc_blend_setup_mixer(struct =
-drm_crtc *crtc,
-> > >               if (pstate->stage =3D=3D DPU_STAGE_BASE && format->alph=
-a_enable)
-> > >                       bg_alpha_enable =3D true;
+> > >       topology =3D dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mod=
+e, crtc_state, dsc);
+> > > +     cstate =3D to_dpu_crtc_state(crtc_state);
+> > > +     cstate->num_mixers =3D topology.num_lm;
 > > >
-> > > -             for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
-> > > -                     if (!pstate->pipe[i].sspp)
-> > > -                             continue;
-> > > -                     set_bit(pstate->pipe[i].sspp->idx, fetch_active=
-);
-> > > -                     _dpu_crtc_blend_setup_pipe(crtc, plane,
-> > > -                                                mixer, cstate->num_m=
-ixers,
-> > > -                                                pstate->stage,
-> > > -                                                format, fb ? fb->mod=
-ifier : 0,
-> > > -                                                &pstate->pipe[i], i,=
- stage_cfg);
-> > > +             /* loop pipe per mixer pair */
-> > > +             for (lm_pair =3D 0; lm_pair < PIPES_PER_PLANE / 2; lm_p=
-air++) {
-> > > +                     for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
-> > > +                             pipe_idx =3D i + lm_pair * PIPES_PER_LM=
-_PAIR;
-> > > +                             if (!pstate->pipe[pipe_idx].sspp)
-> > > +                                     continue;
-> > > +                             set_bit(pstate->pipe[pipe_idx].sspp->id=
-x, fetch_active);
-> > > +                             _dpu_crtc_blend_setup_pipe(crtc, plane,
-> > > +                                                        mixer, cstat=
-e->num_mixers,
-> > > +                                                        pstate->stag=
-e,
-> > > +                                                        format, fb ?=
- fb->modifier : 0,
-> > > +                                                        &pstate->pip=
-e[pipe_idx], i,
-> > > +                                                        &stage_cfg[l=
-m_pair]);
-> > > +                     }
-> > >               }
+> > >       /*
+> > >        * Use CDM only for writeback or DP at the moment as other inte=
+rfaces cannot handle it.
+> > > @@ -1170,7 +1173,13 @@ static void dpu_encoder_virt_atomic_mode_set(s=
+truct drm_encoder *drm_enc,
+> > >       }
 > > >
-> > >               /* blend config update */
-> > > @@ -503,7 +508,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc=
- *crtc)
-> > >       struct dpu_crtc_mixer *mixer =3D cstate->mixers;
-> > >       struct dpu_hw_ctl *ctl;
-> > >       struct dpu_hw_mixer *lm;
-> > > -     struct dpu_hw_stage_cfg stage_cfg;
-> > > +     struct dpu_hw_stage_cfg stage_cfg[LM_PAIRS_PER_PLANE];
+> > >       cstate->num_dscs =3D num_dsc;
+> > > -     cstate->num_mixers =3D num_lm;
+> > > +     if (cstate->num_mixers !=3D num_lm) {
+> > > +             if (!cstate->num_mixers)
+> > > +                     DPU_ERROR_ENC(dpu_enc,
+> > > +                                   "mixer number %d is not as expect=
+ed %d\n",
+> > > +                                   num_lm, cstate->num_mixers);
+> > > +             cstate->num_mixers =3D num_lm;
+> > > +     }
 > >
-> > After seeing this code, can we define STAGES_PER_PLANE (and
-> > also keep PLANES_PER_STAGE defined to 2)?
-> >
-> Could you elaborate it? Stages describe how many layers to be blended.
-> Plane is a DRM concept that describe a buffer to be display in specific
-> display driver. Plane is already mapped to SSPP/multi-rect in DPU driver
->  in blending stage level. So I am confused here.
-
-We have dpu_hw_stage_cfg, you are adding a second instance of it. So
-we now have two stages per plane.
-
+> > Is it a possible case or just defensive coding?
 >
-> -  Jun
+> The value is initialized beforehand only in virtual plane case. So we
+> still need this
+> for non virtual plane case.
 
-
+It looks better if it's handled in the non-virtual code instead.
 
 --=20
 With best wishes
