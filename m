@@ -1,114 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-34175-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D83099AEAF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 00:32:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20BBD99AF3E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 01:20:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91C771F23870
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 22:32:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 22EE01C21933
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 23:20:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67C001D1728;
-	Fri, 11 Oct 2024 22:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B8451D278A;
+	Fri, 11 Oct 2024 23:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FEZugFtv"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="YVZQ8UqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBFC1D0782
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 22:32:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB4A1D130E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 23:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728685924; cv=none; b=uB+Nm3WnMl05y83ujQURAvOcHlzEgL7fs9fifrQ0/mvqQouTYISFgDbHHS5aSBbMYCvOSgPtGDs/Pwxzi/4RU3h1Ad7HXP9FgSXmRv7ahnzYGEA9cyajfqNMj4IGSJEyI5mxO1e1NPj90XCTuxJTXpb1ZqQolINU4aA6akM9zdc=
+	t=1728688824; cv=none; b=fxNQGbZTvbs2tiFBdtwLFCgERH3DMPXHD6RRpvKz27yFfFmCmg9JDEXn/B3p0DYHqD+ryP9QDl1XxTQBgHu2FZjD1erSCpoqMVOHF+cSvK7wih10FLvAbPIcPv4MT+sPu4SJ2JHSpMq8YOoVYEi9wrdNAZSDo5mkFepyl1FqHFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728685924; c=relaxed/simple;
-	bh=h8jDK5yst+t6SVTBbM8byilTslHC1KtG4mgA8TITvUA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TQyJ3QQZXs6W8vjVm8sPtKrypNr1r5epVPo39DElvhFM0a9nDw80DtpilXKdUMQsRR6uALurw6o+rtWc3JeAjHO1X1DHFJMU2phuYJes70w3Ik1Uig5883nfRKgAxaBzXooH2FHHF2bQm5sEikyA/59iBtbbW6OcmtIsV42N+NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FEZugFtv; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-a9943897c07so341463166b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 15:32:02 -0700 (PDT)
+	s=arc-20240116; t=1728688824; c=relaxed/simple;
+	bh=N9nDXoTGhNDbp9x4MKIIxmkPH7u9rknjdJ489yrHSSI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DAPz4G8ZRTZztZ+UpJ6EkcQ79Oy1qNGOhp5L+YD1AQvp3gI9gsTUfTZKoDJHDKhUPTKqidGhmoK/9WIsAPsvX+CJR1Xo5kcgC6CcTEPCGE7hpkwogyzJUzSNfIZrDnOPTkxvcvb2rPMttomR4GUBzz300ToMECqmpN7AK1qioZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=YVZQ8UqY; arc=none smtp.client-ip=209.85.160.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-460489eec46so18750961cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 16:20:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728685921; x=1729290721; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7dYEjVJeWeKBsQqV478t9ZT5xyiJzppDYZSrZjIOGlE=;
-        b=FEZugFtvl0J1+0FMamlhH9q/biPNHWhAriA4XtjU9eE2TrkZmD2AsgGyd/5b4Dwfqd
-         M8C/3n+++QiIdVNSqZ9qoR5J25Spd71NWkKV9HSeMBynuIEii1+CVgOGX4Qdx6IUcoW/
-         G9LNt9b370zP6bA4lo+DrpRGs1ymkKE70mcK32s0B5jrdnWrvySKiEe+wDrNTgNBLH86
-         uq3E+yTkJVv74UQwELT9ryfIIvf9CoLUxXHWOI/YMoRll/xjYhnlOwYKN+d+WYfBVFCM
-         /kHIXasjVWUzDXkFbOnPLdN1yWGZZyPod6gij9OkPVa07YOi4oFZrIniNrZcKwJ1C9aj
-         n3Fg==
+        d=marek.ca; s=google; t=1728688821; x=1729293621; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mAh+zbWt6KyD1XQvhob2WxW+jNwJ1pd4ci6zFtaf4q8=;
+        b=YVZQ8UqY29WM06EwSMe2DKIsy1dCsUFwf/+/wBWUj5x7sylXbYtkFuAI23Okr4JrI3
+         3Ffff92C0R5HNV7eupf33SovFEa9WOqUA8svB/i82a13lCo/Jy8mu5FIfak8lDEp13cA
+         mEWbw/UrDNm30+xXx5b4Km9eEaTAbu1701Bn3hDZIrIagUThg//gGle9lwe5CrOXV13o
+         r1BA6sGGep5ftp18hsr9sW+7eyQC+ED2rWrVX649E++5tCoHlSDp0U6GT4UhW+6/OF0F
+         ryKeI6prqsKZJdEuz+OkPFkd8x8SB7MTbi5ot3CykUwqnY4W1z6jXzd6EmHn7EJdPGKd
+         jfzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728685921; x=1729290721;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7dYEjVJeWeKBsQqV478t9ZT5xyiJzppDYZSrZjIOGlE=;
-        b=aZh+cB4Pt8Dx/kjNhTR4XyOr8mQy0m58MkXtIwythoXt6UT/yp6bzkl3ft2SmEJwXA
-         WjhEIn9Stx5jKAVBBiSpp3ktubEiVtkw6/2uWkdAEpMFlpiKUEFEtpJRKw5E1soR4xiO
-         24To2N0Ap6O3d64oaAripVBlp1SlI21cgbqtnu0jtkrwLZmFxJsH0tP/a/aNwYMq/rfe
-         7JZLuqPZaU8UI8h62usM9jjejEXxcehy2aCIcPRAueyv3m81a1jHer4p/Ud/PQsfnwqE
-         1q2hPc9vA/54xPfrzi1joyLxOJYtjWuOrqRoHDIIzab9DnctXOM4jb+NrVmE7oSb4Cst
-         zPbw==
-X-Forwarded-Encrypted: i=1; AJvYcCVYyXqgMAawepMK39fXWfJuLiBfK38Wqq7LPbSr5PBu5rSaivBOAXv3uP8IkPIv97tqN9LgKkoXomcGgMEg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJFx6wo78EN85KyUnnv95SqV9FT5vmiN4qsYhNL3yHDR2cDvm0
-	VORyMxvnHCHgW21sSVuPgwN6K6DXT+OxT1txiAPW4TP/4wFXztcG3zgXiLU7s8E=
-X-Google-Smtp-Source: AGHT+IEbKbpnTVUS0yOgo8MSx+Fpz0QB/QAoFKFpoEv8h9F3HBQ1+TmCxeZNTaHD83KXx3oJN9KijA==
-X-Received: by 2002:a17:907:1c05:b0:a86:82e2:8c64 with SMTP id a640c23a62f3a-a99e3c9d614mr104196466b.35.1728685921048;
-        Fri, 11 Oct 2024 15:32:01 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a80c03b3sm256498866b.127.2024.10.11.15.31.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2024 15:32:00 -0700 (PDT)
-Message-ID: <20603976-907a-4254-a79e-23c1f0e06286@linaro.org>
-Date: Fri, 11 Oct 2024 23:31:58 +0100
+        d=1e100.net; s=20230601; t=1728688821; x=1729293621;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mAh+zbWt6KyD1XQvhob2WxW+jNwJ1pd4ci6zFtaf4q8=;
+        b=it4kPsUv5OFDEyQP6kKc3RJXp/DblHaIQIObLhqtsEnK92Fl5ny6GAbWzVOpI++ijS
+         pee+OCB8p5mwc11hLhDitg+keDUTX2/8K7JXA1hnYMuuFfx5xin7XeydxnWRIUFsdEQE
+         PtXgSWIgQ17PK8AwImh5BMgeIlcd0MlQkXxMttUM10cRt5kEotxnDjQfTthQZ1EU+21y
+         XoI0qWv/S/WAgGChWHNwVowgTPNQNtdg3x8UKhe6FOUPyYZtSs0twz46ruWsI8YbV5q8
+         ZYDSUAOW9yX1ROJU0z1LvS19kcTn4dfNgIT0b9MYWZr9IRXptrTId99NP80GmViiGlHM
+         Io4A==
+X-Gm-Message-State: AOJu0Ywchi9VxkE7qyeNzidDf/BUu59hj387lkx/6KbPMaxfnzDX9i4e
+	SeGWqZaOsKqtoMx6SG4NDsi9NTF/CfCwMYETZ+d8FWvN7f/Hrw8Z9YhX+g/9U461GbcFtI9yH4l
+	FzDE=
+X-Google-Smtp-Source: AGHT+IEtCnEYlF69zuVjVFKwIZFEx8PnBR19MdQGWN4MFFkom5KeV6aUsF+uwV1sjfm7ynb6WreqRA==
+X-Received: by 2002:a05:622a:53c4:b0:45c:a9fa:cbfe with SMTP id d75a77b69052e-46058444fb1mr23670861cf.27.1728688821143;
+        Fri, 11 Oct 2024 16:20:21 -0700 (PDT)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7b11c0a8902sm89949785a.31.2024.10.11.16.20.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2024 16:20:20 -0700 (PDT)
+From: Jonathan Marek <jonathan@marek.ca>
+To: linux-arm-msm@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 1/3] arm64: dts: qcom: x1e80100: enable OTG on USB-C controllers
+Date: Fri, 11 Oct 2024 19:16:21 -0400
+Message-ID: <20241011231624.30628-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/8] media: dt-bindings: Add
- qcs6490-rb3gen2-vision-mezzanine
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Krzysztof Kozlowski <krzk@kernel.org>,
- Vikram Sharma <quic_vikramsa@quicinc.com>, rfoss@kernel.org,
- todor.too@gmail.com, mchehab@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, akapatra@quicinc.com,
- hariramp@quicinc.com, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, kernel@quicinc.com
-References: <20241011140932.1744124-1-quic_vikramsa@quicinc.com>
- <20241011140932.1744124-3-quic_vikramsa@quicinc.com>
- <nsylilmzl6zzukpgih65kmeibbllek6dpgryzkso2ttpuztk2x@3q5xiujcdujo>
- <b3c1431e-9a5d-4c38-ae7d-605d4a2cf3ac@linaro.org>
- <bzszh7m52o3xzeybp4odwki6bz53aqctolrbvvbqizvk4bkj2h@k7r2i2rhgyqs>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <bzszh7m52o3xzeybp4odwki6bz53aqctolrbvvbqizvk4bkj2h@k7r2i2rhgyqs>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 11/10/2024 22:33, Dmitry Baryshkov wrote:
-> See arch/arm64/boot/dts/qcom/Makefile:
-> 
-> sm8650-hdk-display-card-dtbs    := sm8650-hdk.dtb sm8650-hdk-display-card.dtbo
-> 
-> dtb-$(CONFIG_ARCH_QCOM) += sm8650-hdk-display-card.dtb
+These 3 controllers support OTG and the driver requires the usb-role-switch
+property to enable OTG. Add the property to enable OTG by default.
 
-Aha, yes ok _that_ makes sense to me.
-
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
-bod
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 7778e17fb2610..fb16047d803c9 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -4199,6 +4199,8 @@ usb_1_ss2_dwc3: usb@a000000 {
+ 
+ 				dma-coherent;
+ 
++				usb-role-switch;
++
+ 				ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+@@ -4452,6 +4454,8 @@ usb_1_ss0_dwc3: usb@a600000 {
+ 
+ 				dma-coherent;
+ 
++				usb-role-switch;
++
+ 				ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+@@ -4550,6 +4554,8 @@ usb_1_ss1_dwc3: usb@a800000 {
+ 
+ 				dma-coherent;
+ 
++				usb-role-switch;
++
+ 				ports {
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+-- 
+2.45.1
+
 
