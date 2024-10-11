@@ -1,324 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-34006-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34007-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC658999A9E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 04:38:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3604F999AD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 04:57:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A3AB1C20D16
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 02:38:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC25F1F24B7F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 02:57:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 588031F4720;
-	Fri, 11 Oct 2024 02:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A32F81F471B;
+	Fri, 11 Oct 2024 02:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MzaBRCfX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H1Ua1Ae0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926D21EF940;
-	Fri, 11 Oct 2024 02:37:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEFF1F4721;
+	Fri, 11 Oct 2024 02:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728614274; cv=none; b=gn4qC4cXwRnU49Qbp95C7O6igcp8vK+SsFAFbU6soRCCpNXrsKASfXH41M53tpNjhseNgRdHzBYuDSaqVRkBay+Q9j4mM/G60eiOH7dhP2SGzX91f6HtG3J5G6zlgIicbyZbR3h6dmOJrB6AkeR9HmCqNNevANqjnV8bgK5gHdQ=
+	t=1728615466; cv=none; b=TWviOoOYNtPl2mTVJE7o8tyZo2yWIN1ZxyCpcfWM34zAoNfikiWzUQAwM1pmKki09Jtut3jlv4I00ryXUK+N7C6U0Adsp2pCKC9UYMCKmQCvW7XkWMG4/b0OLtpIIKAe1L6Z2lepGxQ3MDfxIQrd7GX18nacp76XN9/zB8ezn6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728614274; c=relaxed/simple;
-	bh=FjTX3XDsZpHBupi3816W2od1/AGtgYSbkC2JLrZVGvU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TXnEG+szLNW1PtOQfnVlJq/w6WHHK2PJs3wmCFO9ylUk88LWJp6GbovvYbrY+/wxddI5wneZJHoQiCpgRNSOx02xkWRQWWg6+uA5SM2+Om55026L6lmeATt4S5N+u3ZedeGLlkl4JWM5qDxemUaSpnpTrnHQML++Q6iugfe514o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MzaBRCfX; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-46041d86566so8348861cf.3;
-        Thu, 10 Oct 2024 19:37:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1728614271; x=1729219071; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DRPUb8dk8eranWDUoNRWB5sVzMnuxcxe71W05Xb2xMM=;
-        b=MzaBRCfXKtOTcM7dZHQJKuoPvOd2e6LFjNiMBkLdESjjl+9HWigc25iaa36LaibU8x
-         7ITXJ37fXeHmRtfttopJEZ1M/rBt9pPXiZHFl6TwwNbheI7S+b8FcszUXS6VvACQZ/XV
-         xU5Ju7Au5ID2k5JIKxhvZm24nt6NHxWM5d+o5uTjGl3vHqLgzZbCiZc0TMCaePFgwdSN
-         Fi1U99w/+ZmBRRHZ81c0OCa8xTKjSwvxo37AoZKx2eEiC55wBZbcC36AmsJpZ4Xbmow3
-         6uR7AtfLKdnL60I08p5Kkgf1YVXUlh+kTigts33jATbcQSyjWoOYaeWX+raPbSAeKdyJ
-         5u8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728614271; x=1729219071;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DRPUb8dk8eranWDUoNRWB5sVzMnuxcxe71W05Xb2xMM=;
-        b=oX+uD0kCxJ/VUhO1IVS6H9SMuRad69338gSOJTUMDMtfuM0OgMkW8/djnFvYwWzpBI
-         1IsxLjCVRvHVCdZxoG/+ZCrQPtY7nHaAzByVkyz+MWK+YXrwr93iT1Sh2jlcTat+Rn3j
-         UIWwaZRACrchhygL3e0z4ODEdiI70RMcs+oCVxXphFgVTAvPcSFikrXMt3qq0J9zEnOQ
-         XR9dzAvKAwPANJrUZXX72nG+roIpvnRR0ej6IYpnaj5JhfGfunHRbiPRspvnf3PWTXiN
-         SHPYyA8+KdyzeZuyQLl0SIYoCCnLjkmPtPfEwK2cinl03Fxu1FN3QIfiepcnojApr/C9
-         3KSw==
-X-Forwarded-Encrypted: i=1; AJvYcCVAE3oF5Bu6+WCBk3ax6jCUbLGEQTecdIaODcpeOA1aq3UrLMVXVxs3Ke4h87F3aWR1JxRKIqwOu04V@vger.kernel.org, AJvYcCVw4qWMH8rz/2KMwwm44u4A8N88iGnfb/YgnZ1sTwJFj01bm+YtsttOSQLj6SgjR1f6O0cVRq2bMExPqqnUaA==@vger.kernel.org, AJvYcCWT4kbI0jqmu0VbmdSN07ud3laerBCSAbdM+NiTabKwnCgedjTsiJFqxjMUBeSAQGZq1Lolz4L7+C1Mm8c=@vger.kernel.org, AJvYcCWWM59hD2nemvqEDi6E3/HZ86xJ0DJywvDQjTBNk68WG0XUJXm7kfKFhIumrEgNgPNEef69eq8oIVHZ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXzIFDxZSqHu3UQctImbvcVzBlQeQY6RpLXofzrxAhD3MmFEtR
-	QpFMp7ANcBASAuc1cpAxsCvpNEwioQTogjgYO1QQSFVIXXzf8gty
-X-Google-Smtp-Source: AGHT+IFy+didwRP6RtchQAcwd71MpnhBpwSrQI/VBkjSGGGu+1tFA4FD0vLaNQRaNUqfDR1xDDqFBQ==
-X-Received: by 2002:ac8:7c48:0:b0:458:4224:c367 with SMTP id d75a77b69052e-4604bc53c68mr16821501cf.49.1728614271312;
-        Thu, 10 Oct 2024 19:37:51 -0700 (PDT)
-Received: from localhost ([2607:fea8:52a3:d200::786d])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-460427d53bfsm11258731cf.29.2024.10.10.19.37.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 19:37:50 -0700 (PDT)
-From: Richard Acayan <mailingradian@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Robert Foss <rfoss@kernel.org>,
-	Todor Tomov <todor.too@gmail.com>,
-	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-media@vger.kernel.org
-Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Richard Acayan <mailingradian@gmail.com>
-Subject: [PATCH v6 5/5] arm64: dts: qcom: sdm670: add camss and cci
-Date: Thu, 10 Oct 2024 22:37:30 -0400
-Message-ID: <20241011023724.614584-12-mailingradian@gmail.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241011023724.614584-7-mailingradian@gmail.com>
-References: <20241011023724.614584-7-mailingradian@gmail.com>
+	s=arc-20240116; t=1728615466; c=relaxed/simple;
+	bh=i/j8QwwufsvmoQqSrcoj05rqp6XNTeAR1RYfp5/3Ryk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=P1ZI4TGLIPZoS14SUPZbnVpe1UKR6X0wYUDRdr+QCdiuLM3pNio+7E+20P0lzavA9TTH0MhaXVfjpqcl4wNzbBa++WCXWrepJkhG5EsQJ0lrK0dYxAx3uvAwlzvvdy/TPz3pb+Q5LSFPyfz7lOB3koSlu9wR7KEzSywHlE8bMO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H1Ua1Ae0; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49B1Hf0K005437;
+	Fri, 11 Oct 2024 02:57:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+updjsBw4m+RSE17kOknAf4fPZ4jAdTCy2FSnqjk5lU=; b=H1Ua1Ae09jvgnZid
+	5ZeRl5fkXPs9MYKr/h6ZG+6d/eFP60l6CDUFw9hSefRJxZfp2jxX301d6y0/lep5
+	Lwl0dxiH8gRgqVIQ9bVRUw9eNgMvtG6KYSnv4JOClEctQbkoZZadzE+JJuxPmEWI
+	VAH1TBB2sWCHJSBjKeXe8uxSFmG1sP3w3Lo/AAzpfReYax9TcXqKvNc5SIrWA+N/
+	zNMVfWBQOwy5xypgK5aCyAHNpTLkIPT52KDENwB/UFsv85NGUpzd9nI7Od9PgWqo
+	bamrHBsBhtEggTBZlfSjMdi218nQ0wjKPe3AW4egQ0bma+YhThpPEqd1z+qwlHbT
+	UfCttg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 426t7sr602-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Oct 2024 02:57:30 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49B2vTj6006525
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Oct 2024 02:57:29 GMT
+Received: from [10.253.78.250] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Oct
+ 2024 19:57:25 -0700
+Message-ID: <c6c5068d-ed05-4b49-97e1-f4962839cf44@quicinc.com>
+Date: Fri, 11 Oct 2024 10:57:22 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
+        <mchehab@kernel.org>, <quic_vgarodia@quicinc.com>,
+        <stanimir.k.varbanov@gmail.com>, <kvalo@kernel.org>,
+        <quic_jjohnson@quicinc.com>, <ath11k@lists.infradead.org>
+References: <20241010132902.2882939-1-quic_miaoqing@quicinc.com>
+ <asvhh4kzq6s6yz3wrqfmuolcnlonoobogoh45pnq4zdr44lpxs@zgarzpduk2sk>
+ <cc8358b1-2442-4a40-8eb3-0912423db554@quicinc.com>
+ <3giotvkrwailt75gndhup7xhqvlc3vdowdoypi5vaeebuojp45@vkqxbtjsbksf>
+Content-Language: en-US
+From: Miaoqing Pan <quic_miaoqing@quicinc.com>
+In-Reply-To: <3giotvkrwailt75gndhup7xhqvlc3vdowdoypi5vaeebuojp45@vkqxbtjsbksf>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3ny5XeZeQSbTwTeYGSh1bxG09vMA8IPf
+X-Proofpoint-ORIG-GUID: 3ny5XeZeQSbTwTeYGSh1bxG09vMA8IPf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ suspectscore=0 impostorscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410110016
 
-Add the camera subsystem and CCI used to interface with cameras on the
-Snapdragon 670.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm670.dtsi | 185 +++++++++++++++++++++++++++
- 1 file changed, 185 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm670.dtsi b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-index 02f87200690a..229d1c4eb246 100644
---- a/arch/arm64/boot/dts/qcom/sdm670.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm670.dtsi
-@@ -6,6 +6,7 @@
-  * Copyright (c) 2022, Richard Acayan. All rights reserved.
-  */
- 
-+#include <dt-bindings/clock/qcom,camcc-sdm845.h>
- #include <dt-bindings/clock/qcom,dispcc-sdm845.h>
- #include <dt-bindings/clock/qcom,gcc-sdm845.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
-@@ -1168,6 +1169,34 @@ tlmm: pinctrl@3400000 {
- 			gpio-ranges = <&tlmm 0 0 151>;
- 			wakeup-parent = <&pdc>;
- 
-+			cci0_default: cci0-default-state {
-+				pins = "gpio17", "gpio18";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			cci0_sleep: cci0-sleep-state {
-+				pins = "gpio17", "gpio18";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
-+			cci1_default: cci1-default-state {
-+				pins = "gpio19", "gpio20";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-up;
-+			};
-+
-+			cci1_sleep: cci1-sleep-state {
-+				pins = "gpio19", "gpio20";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-pull-down;
-+			};
-+
- 			qup_i2c0_default: qup-i2c0-default-state {
- 				pins = "gpio0", "gpio1";
- 				function = "qup0";
-@@ -1400,6 +1429,162 @@ spmi_bus: spmi@c440000 {
- 			#interrupt-cells = <4>;
- 		};
- 
-+		cci: cci@ac4a000 {
-+			compatible = "qcom,sdm670-cci", "qcom,msm8996-cci";
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			reg = <0 0x0ac4a000 0 0x4000>;
-+			interrupts = <GIC_SPI 460 IRQ_TYPE_EDGE_RISING>;
-+			power-domains = <&camcc TITAN_TOP_GDSC>;
-+
-+			clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAM_CC_SOC_AHB_CLK>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_CCI_CLK>;
-+			clock-names = "camnoc_axi",
-+				      "soc_ahb",
-+				      "cpas_ahb",
-+				      "cci";
-+
-+			pinctrl-names = "default", "sleep";
-+			pinctrl-0 = <&cci0_default &cci1_default>;
-+			pinctrl-1 = <&cci0_sleep &cci1_sleep>;
-+
-+			status = "disabled";
-+
-+			cci_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			cci_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <1000000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
-+		camss: camera-controller@ac65000 {
-+			compatible = "qcom,sdm670-camss";
-+			reg = <0 0x0acb3000 0 0x1000>,
-+			      <0 0x0acba000 0 0x1000>,
-+			      <0 0x0acc8000 0 0x1000>,
-+			      <0 0x0ac65000 0 0x1000>,
-+			      <0 0x0ac66000 0 0x1000>,
-+			      <0 0x0ac67000 0 0x1000>,
-+			      <0 0x0acaf000 0 0x4000>,
-+			      <0 0x0acb6000 0 0x4000>,
-+			      <0 0x0acc4000 0 0x4000>;
-+			reg-names = "csid0",
-+				    "csid1",
-+				    "csid2",
-+				    "csiphy0",
-+				    "csiphy1",
-+				    "csiphy2",
-+				    "vfe0",
-+				    "vfe1",
-+				    "vfe_lite";
-+
-+			interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "csid0",
-+					  "csid1",
-+					  "csid2",
-+					  "csiphy0",
-+					  "csiphy1",
-+					  "csiphy2",
-+					  "vfe0",
-+					  "vfe1",
-+					  "vfe_lite";
-+
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&gcc GCC_CAMERA_AXI_CLK>,
-+				 <&camcc CAM_CC_SOC_AHB_CLK>,
-+				 <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-+				 <&camcc CAM_CC_CPAS_AHB_CLK>,
-+				 <&camcc CAM_CC_IFE_0_CSID_CLK>,
-+				 <&camcc CAM_CC_IFE_1_CSID_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CSID_CLK>,
-+				 <&camcc CAM_CC_CSIPHY0_CLK>,
-+				 <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY1_CLK>,
-+				 <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_CSIPHY2_CLK>,
-+				 <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-+				 <&camcc CAM_CC_IFE_0_AXI_CLK>,
-+				 <&camcc CAM_CC_IFE_0_CLK>,
-+				 <&camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
-+				 <&camcc CAM_CC_IFE_1_AXI_CLK>,
-+				 <&camcc CAM_CC_IFE_1_CLK>,
-+				 <&camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CLK>,
-+				 <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>;
-+			clock-names = "gcc_camera_ahb",
-+				      "gcc_camera_axi",
-+				      "soc_ahb",
-+				      "camnoc_axi",
-+				      "cpas_ahb",
-+				      "csi0",
-+				      "csi1",
-+				      "csi2",
-+				      "csiphy0",
-+				      "csiphy0_timer",
-+				      "csiphy1",
-+				      "csiphy1_timer",
-+				      "csiphy2",
-+				      "csiphy2_timer",
-+				      "vfe0_axi",
-+				      "vfe0",
-+				      "vfe0_cphy_rx",
-+				      "vfe1_axi",
-+				      "vfe1",
-+				      "vfe1_cphy_rx",
-+				      "vfe_lite",
-+				      "vfe_lite_cphy_rx";
-+
-+			iommus = <&apps_smmu 0x808 0x0>,
-+				 <&apps_smmu 0x810 0x8>,
-+				 <&apps_smmu 0xc08 0x0>,
-+				 <&apps_smmu 0xc10 0x8>;
-+
-+			power-domains = <&camcc IFE_0_GDSC>,
-+					<&camcc IFE_1_GDSC>,
-+					<&camcc TITAN_TOP_GDSC>;
-+			power-domain-names = "ife0",
-+					     "ife1",
-+					     "top";
-+
-+			status = "disabled";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				camss_port0: port@0 {
-+					reg = <0>;
-+				};
-+
-+				camss_port1: port@1 {
-+					reg = <1>;
-+				};
-+
-+				camss_port2: port@2 {
-+					reg = <2>;
-+				};
-+			};
-+		};
-+
- 		camcc: clock-controller@ad00000 {
- 			compatible = "qcom,sdm670-camcc", "qcom,sdm845-camcc";
- 			reg = <0 0x0ad00000 0 0x10000>;
--- 
-2.47.0
+On 10/10/2024 10:40 PM, Dmitry Baryshkov wrote:
+> On Thu, Oct 10, 2024 at 09:59:11PM GMT, Miaoqing Pan wrote:
+>>
+>>
+>> On 10/10/2024 9:47 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Oct 10, 2024 at 09:29:02PM GMT, Miaoqing Pan wrote:
+>>>> Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
+>>>> board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+>>>>
+>>>> Signed-off-by: Miaoqing Pan <quic_miaoqing@quicinc.com>
+>>>> ---
+>>>> v2:
+>>>>     - fix wcn6855-pmu compatible to "qcom,wcn6855-pmu".
+>>>>     - relocate pcieport0 node in alphabetical order.
+>>>> v3:
+>>>>     - add 'qcom,ath11k-calibration-variant = "SA8775P"'.
+>>>> v4:
+>>>>     - update 'ath11k-calibration-variant' to "Ride".
+>>>
+>>> What exactly is Ride? Is there just one Ride board? I thought it's a
+>>> board family name.
+>>
+>> I just follow the existing boards, 'Ride' is a board name. Both 'Ride' and
+>> 'Ride r3' boards are attached with WCN6855 WLAN chip.
+>>
+>> arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts:1112:
+>> qcom,ath11k-calibration-variant = "Fairphone_5";
+>> arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts:958:
+>> qcom,ath11k-calibration-variant = "SHIFTphone_8";
+>> arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts:879:	
+>> qcom,ath11k-calibration-variant = "LE_X13S";
+> 
+> There definitely are other Ride boards. I see patches related to
+> qcs8300-ride. Does that board use the same BDF file?  If not,
+> Qualcomm_SA8775P_Ride or QC_SA8775P_Ride sounds like a better approach.
+> 
+
+QCS8300 and SA8775P both use the same WiFi card, so the same BDF file 
+will be used. The extra variant will increase the size of board-2.bin.
+
+Anyway, the calibration variant is no other side effects.
+
+>>>
+>>> Also, could you please extend the commit message with messages from the
+>>> ath11k driver, showing the chip_id / board_id ?
+>>
+>> The board-id is non 0xff, do you still think we need to add
+>> 'qcom,ath11k-calibration-variant', following is the WLAN chip board data
+>> info,
+>>
+>> bus=pci,vendor=17cb,device=1103,subsystem-vendor=17cb,subsystem-device=0108,qmi-chip-id=2,qmi-board-id=519.bin
+> 
+> I'd ask Kalle / Jeff to answer this question. Are we sure that this
+> board-id won't be reused by any else device?
+> 
 
 
