@@ -1,116 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-34024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 505C0999CC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 08:36:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0754B999CD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 08:40:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CCDAAB20F24
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 06:36:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42F141F2147E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 06:40:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7B461F1309;
-	Fri, 11 Oct 2024 06:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DACED1FCC75;
+	Fri, 11 Oct 2024 06:40:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H1l68gF8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="g5vw7eGW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9D3199FB9;
-	Fri, 11 Oct 2024 06:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22167199FB9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 06:40:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728628589; cv=none; b=TuGUr4Bx61AAc6AUU3OBgKSqTr3lNdjWpz9iUFTebXjNkO1WBk7U2WuqF3M7ZV6SSrCfTc7RD2mtQ0kWtXsLxQzEnJ0iyTFAWNAP4QJl7inG8fM3uDNzerkGxslKKEZxrA7Y+L4k82dSPATTOdE2R2TokqWe9zN+sNkDJQSqoNY=
+	t=1728628814; cv=none; b=OorWOi9ZL2EN4KjDDQGdsWvS+9eAOsImvndpu6Xz28r1Dr7nkRMRODrpo4R3EoCoTeluqCDhbfuLWzGZ4fwhwF/imkZHm4wWkoRzHOkvMQGssiSNmj/ug60xjsGl51IRycnjg7rZmEMDuv5x1bnUhNb052RPtjgD0LFFMNvZqS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728628589; c=relaxed/simple;
-	bh=CrQYK7ks5t8HLoC1QvVn/wgqIQOWlmWPGK+YGoKdXoI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YX0LZheEpdy3ooRTMAkB/GzS0R2ePeKgghRHDdOlm6IQOKbgG9hXVQ1b8C+0PV3YhmyU8Qmhk8dE34h1rcJ1oacE42WH74JfqmHGfkhvPzo5LRVBOIKnxiqCA0Fktb8gqrT061u2OBE+RJq51tD7yzh4OHtELV1DFL3M7cj6Ppw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H1l68gF8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B641C4CEC3;
-	Fri, 11 Oct 2024 06:36:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728628589;
-	bh=CrQYK7ks5t8HLoC1QvVn/wgqIQOWlmWPGK+YGoKdXoI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=H1l68gF8uaLCkomQMUYCPsFACWAvaFjI1KuhNMvNuVeRMlMAgkaldfZMZ2qY4kCjL
-	 O5k+WKJMlogN63gf2bxt6kveSUlAqQSamVVR3+QzuZVC131RY1ClI6h7Wn2PRc5lNI
-	 MOgtk4p35pS8+AdUqEraWOLaWoj2Kr1YJzvLDH1MPzEEXVP5YGsMbuh82ouUYKsREH
-	 HMnS4cemDROKnXbklRd+fPP+GrTKUkcXnjPqu0sJOMwPhLYcPmHk6AkK8jUq1R9wYQ
-	 kdBI4OY4QMMExtWfDz1mQeA37w16MR67OD4rOY+fOit4inBg3mm9KoHJq87Y/dUDJ0
-	 mkCZ2qk77hThg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1sz9GM-000000002Vt-47wt;
-	Fri, 11 Oct 2024 08:36:35 +0200
-Date: Fri, 11 Oct 2024 08:36:34 +0200
-From: Johan Hovold <johan@kernel.org>
-To: =?utf-8?B?SsOpcsO0bWU=?= de Bretagne <jerome.debretagne@gmail.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 5/5] arm64: dts: qcom: sc8280xp: Add Microsoft Surface
- Pro 9 5G
-Message-ID: <ZwjHcj9Wapb9fBVp@hovoldconsulting.com>
-References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
- <20240908223505.21011-6-jerome.debretagne@gmail.com>
- <ZweV5mcEWHofpF4J@hovoldconsulting.com>
- <CA+kEDGE9fVWNK+3Y8JtM8jG9ki+QCoPAM=8AGC+HARL2CwyJYg@mail.gmail.com>
+	s=arc-20240116; t=1728628814; c=relaxed/simple;
+	bh=hYksWLHXILV+Jh4QWVWtjIqUuNtdq6Nw7BA7xixW0zI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bf9qvblfkIRgRJSwqQ6o8t1PDTk9N5xZlyz/2c1SxkRzW1WKAxQVRu7ClSjv87siGK8xkhtQ3QMepwlCC0SALMBi7gEqF4psYzgHWdbXr7DCbrxiB7UPf0zHboksYj/ZSXm8WBVlA/AR4D/hp/g9zRKINrh/qgIyKnC+EiLn55A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=g5vw7eGW; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e2923d5b87aso161704276.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 23:40:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728628812; x=1729233612; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qfSM9AJ7ULCOORqVQMeKLRHN4Z/ZES4kfQKS10nrPyo=;
+        b=g5vw7eGW+BSFapUHdA8nk5SBRdkE1RvAVfoI2FDBqHzZ38sYTPme0Ls73h7YPuRUQe
+         FTpl9Zg8m21gyecpwzhKwu5zyZwGH08PghatpXcfX3i0P0JGijWn7RCr/AARL7yGGk3P
+         uhHe6m8slACfJSJ2g4e8yBoALWrdGJ8V6bkAAut+F4HnEWVlOm0xxyyGd7E3Zz2JhC9m
+         IyIs73syySHRKlACMlzyW5qWKk3grvYLhONdyyScjrTFryoSgoGAYj8h3GdhOp3dKznx
+         4WsvJhYHhmxf8iF5wMFc1kSggZWnL/0E2aL/7AHfu1hnuTY6wL/Ux4UC6Fh5K2SAgXdG
+         SjOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728628812; x=1729233612;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qfSM9AJ7ULCOORqVQMeKLRHN4Z/ZES4kfQKS10nrPyo=;
+        b=kLjPK8rqOLzEelZTHOZ5Ejza7XD1NYr3Ddi5LTAf37hsXM8rB0NEeSw6DuHSSsaaPd
+         W1DFVC6wrOQVsYo2s7IE5ZfgBXwtpFF3wDg6XdSKbUTTar0CATomT6fkigvBdjU07vz2
+         M7seqWRlQyteSaSWpnKox+0OChGvRlcXmrjzQ1FH/Hye/DWFmis0EeD8f/yn7zJN2Htl
+         EikdbbtNlgIRUcom31uAJTZjw6bh7rpRubfTS5PD8qDX7TE79iI4RoWhITm6VrE5S9H1
+         E/f8zoMN7goDh18hYKXXBVzVpxM8TbV+NFtfHnz6iTiUbAuNgzAgQbQRqW0Y0jHOz28y
+         aebA==
+X-Forwarded-Encrypted: i=1; AJvYcCVuSy/l7NffSM5hsO0JvNB8RTA9TwEZ9Mh47fyIcDxGbFbNYXj3/grKVwJeOYf+ZZIxnmiThAMEHXSE2gaG@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/TxaG1k8zY2FXV65CTwLt9TEr+U7UR9b/Vbk8y9nFRPfKPE8J
+	y8eVfTd4r+VVa0WpFioDUHyu/rF6tY/INE9/fgsKNQSQZHu4y2pd2THoQtjtKkS0B82cOg3bmU6
+	eZiPODYaW+B+c/pNMJqvcBosbOvEx7RZDXdwaRw==
+X-Google-Smtp-Source: AGHT+IEp7H558OS0vMf/lCfx7nv2J5NRDmMZ5UvSeTPYRs3ovFyldfgKvbQdJiW43i1yheMmuw+j0rRtlg+9hMGjFZg=
+X-Received: by 2002:a05:6902:1003:b0:e28:ead2:2270 with SMTP id
+ 3f1490d57ef6-e2919def5dbmr941314276.41.1728628812086; Thu, 10 Oct 2024
+ 23:40:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+kEDGE9fVWNK+3Y8JtM8jG9ki+QCoPAM=8AGC+HARL2CwyJYg@mail.gmail.com>
+References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
+ <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
+ <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3>
+In-Reply-To: <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Fri, 11 Oct 2024 14:40:00 +0800
+Message-ID: <CABymUCP7bVBSWXCNp33x_B8KaZSFU-Dx+bU5ctkgDGXrzURrXQ@mail.gmail.com>
+Subject: Re: [PATCH v2 09/14] drm/msm/dpu: blend pipes per mixer pairs config
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 10, 2024 at 11:17:35PM +0200, Jérôme de Bretagne wrote:
-> Le jeu. 10 oct. 2024 à 10:52, Johan Hovold <johan@kernel.org> a écrit :
-> > On Mon, Sep 09, 2024 at 12:35:05AM +0200, Jérôme de Bretagne wrote:
-
-> > You mention it in the commit message, but since a lot of this is copied
-> > from the X13s (and CRD) devicetrees you should probably make that clear
-> > here as well and include the relevant copyright notices. For example by
-> > adding:
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B410=E6=
+=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B 21:15=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Wed, Oct 09, 2024 at 04:50:22PM GMT, Jun Nie wrote:
+> > Blend pipes by set of mixer pair config. The first 2 pipes are for left
+> > half screen with the first set of mixer pair config. And the later 2 pi=
+pes
+> > are for right in quad pipe case.
 > >
-> >         Based on ...
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 38 ++++++++++++++++++---=
+--------
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
+> >  2 files changed, 25 insertions(+), 14 deletions(-)
 > >
-> >         Copyright ...
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm=
+/msm/disp/dpu1/dpu_crtc.c
+> > index 43d9817cd858f..66f745399a602 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(struct drm_=
+crtc *crtc,
+> >       const struct msm_format *format;
+> >       struct dpu_hw_ctl *ctl =3D mixer->lm_ctl;
+> >
+> > -     uint32_t lm_idx, i;
+> > +     uint32_t lm_idx, lm_pair, i, pipe_idx;
+> >       bool bg_alpha_enable =3D false;
+> >       DECLARE_BITMAP(fetch_active, SSPP_MAX);
+> >
+> > @@ -463,15 +463,20 @@ static void _dpu_crtc_blend_setup_mixer(struct dr=
+m_crtc *crtc,
+> >               if (pstate->stage =3D=3D DPU_STAGE_BASE && format->alpha_=
+enable)
+> >                       bg_alpha_enable =3D true;
+> >
+> > -             for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
+> > -                     if (!pstate->pipe[i].sspp)
+> > -                             continue;
+> > -                     set_bit(pstate->pipe[i].sspp->idx, fetch_active);
+> > -                     _dpu_crtc_blend_setup_pipe(crtc, plane,
+> > -                                                mixer, cstate->num_mix=
+ers,
+> > -                                                pstate->stage,
+> > -                                                format, fb ? fb->modif=
+ier : 0,
+> > -                                                &pstate->pipe[i], i, s=
+tage_cfg);
+> > +             /* loop pipe per mixer pair */
+> > +             for (lm_pair =3D 0; lm_pair < PIPES_PER_PLANE / 2; lm_pai=
+r++) {
+> > +                     for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
+> > +                             pipe_idx =3D i + lm_pair * PIPES_PER_LM_P=
+AIR;
+> > +                             if (!pstate->pipe[pipe_idx].sspp)
+> > +                                     continue;
+> > +                             set_bit(pstate->pipe[pipe_idx].sspp->idx,=
+ fetch_active);
+> > +                             _dpu_crtc_blend_setup_pipe(crtc, plane,
+> > +                                                        mixer, cstate-=
+>num_mixers,
+> > +                                                        pstate->stage,
+> > +                                                        format, fb ? f=
+b->modifier : 0,
+> > +                                                        &pstate->pipe[=
+pipe_idx], i,
+> > +                                                        &stage_cfg[lm_=
+pair]);
+> > +                     }
+> >               }
+> >
+> >               /* blend config update */
+> > @@ -503,7 +508,7 @@ static void _dpu_crtc_blend_setup(struct drm_crtc *=
+crtc)
+> >       struct dpu_crtc_mixer *mixer =3D cstate->mixers;
+> >       struct dpu_hw_ctl *ctl;
+> >       struct dpu_hw_mixer *lm;
+> > -     struct dpu_hw_stage_cfg stage_cfg;
+> > +     struct dpu_hw_stage_cfg stage_cfg[LM_PAIRS_PER_PLANE];
+>
+> After seeing this code, can we define STAGES_PER_PLANE (and
+> also keep PLANES_PER_STAGE defined to 2)?
+>
+Could you elaborate it? Stages describe how many layers to be blended.
+Plane is a DRM concept that describe a buffer to be display in specific
+display driver. Plane is already mapped to SSPP/multi-rect in DPU driver
+ in blending stage level. So I am confused here.
 
-> Thank you for the suggestion, so it would look like this?
-
-You can still keep your copyright notice first, and I meant something
-like:
-
-	/*
-	 * Microsoft Surface Pro 9 5G devicetree
-	 *
-	 * Copyright (c) 2024, Jérôme de Bretagne <...>
-	 *
-	 * Based on sc8280xp-crd.dts and sc8280xp-lenovo-thinkpad-x13s.dts:
-	 *
-	 * Copyright (c) 2021, The Linux Foundation. All rights reserved.
-	 * Copyright (c) 2022, Linaro Limited
-	 */
-
-> How do you want me to add this to the patchset?
-> Should I send a separate fix-up patch?
-> Or should I create a newer v3 patchset?
-
-Ah, sorry, I missed that Bjorn had already picked this one up. Either
-leave it as is, or send an incremental (fix-up) patch.
-
-Johan
+-  Jun
 
