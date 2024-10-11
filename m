@@ -1,130 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-34127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C97399A6F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:53:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C557C99A796
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00C4B1F23809
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:53:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5530428316C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 15:27:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CD39D194A59;
-	Fri, 11 Oct 2024 14:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FFEB195B1A;
+	Fri, 11 Oct 2024 15:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GmB6MEQF"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="LDgX+4bX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6C417BA2;
-	Fri, 11 Oct 2024 14:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0382B194C78
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 15:27:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728658346; cv=none; b=WRy6Qe6w4bNCrY/2lmxHIXS3JLHqtaJ34VHJRhA0nl8t/tFbnIMuqrhUz5w1yzdSIX0MjhrLtZFvJCiCgXvb1j/nn8cY7KSZrGerDqgszWCQzb+UQuzYftcTzH/E7fjG3DQ+/N83MVMuQLBu/Mfw5I8TzzmDeKKpbCwH9bEcpBU=
+	t=1728660454; cv=none; b=d0Dl6wvUHqlTHIYvJoYAVlqqVk25t5yf0EhhsULsB7nrh6B0OuCyWT6UGhFE4oh2E/9H9CjK+RZlRKD1FlpMu3abdt4yop8Rbz1EV6rOatFopItMK8VGha/MDI1Vk679NqShplLrkKC2k2hnx3pU6Art4tGFra8mYq9X/LyzQ2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728658346; c=relaxed/simple;
-	bh=CDaJplkccu4hEDe3esLpGxaZAoaNxHaVgBwOAdLBLkM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qw6N4WxEPQssIGZZNE4He2PBgHF0OS79jxoQZuIUzqiOnmxX8b3iQ2p01/zaN/qTFwhUnAdykw3nMXPOQuG37FvCiFkghYw2/CtkfGc3TBFwy19byVc0DptFtecgLRf0W+8n9nPNYI/E8kunIGbr/PFHfvIB+kSRJIr7dfd7UXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GmB6MEQF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF7EC4CEC3;
-	Fri, 11 Oct 2024 14:52:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728658346;
-	bh=CDaJplkccu4hEDe3esLpGxaZAoaNxHaVgBwOAdLBLkM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GmB6MEQFTZN0mnJPXnbRyDd4PsSmZbUDjXWG6fWxbzZaHgqvah9biGC84g5FZDSGL
-	 YUWwv0tzLHCoK6FdGEFZ8MX0R1TNQg4ZZOeUkmefF5kyukZ3UhrwhS6wpFJS4Fsu6N
-	 RlYUMa/L0GLnRhz4+xkF0s8Bb/e2Xx4PEZIwAsAZZKyW7YMRPdbIC552r4YPYrU0BW
-	 nz79brr+Ye0ZdrydtZRoHkhqQdEECvPRhDnECGySdRWY/wS438sOjRkTKaQ4HGDs9G
-	 7eY55AWMO6X81ivQq8yo58OBv+0ZyJ6GkgQIMiQ+KYJuwJp8kUHeBfK3w8oyd95ZAb
-	 qJoiXDLIEghBQ==
-Date: Fri, 11 Oct 2024 16:52:22 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Vikram Sharma <quic_vikramsa@quicinc.com>
-Cc: rfoss@kernel.org, todor.too@gmail.com, bryan.odonoghue@linaro.org, 
-	mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	akapatra@quicinc.com, hariramp@quicinc.com, andersson@kernel.org, 
-	konradybcio@kernel.org, hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org, 
-	catalin.marinas@arm.com, will@kernel.org, linux-arm-kernel@lists.infradead.org, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH v3 8/8] arm64: dts: qcom:
- qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-Message-ID: <bv7cd7wxukon2ipnqjjzhdsz33cgny6yqwcswdc2xld6xt5pmu@gxxniotohuzm>
-References: <20241011140932.1744124-1-quic_vikramsa@quicinc.com>
- <20241011140932.1744124-9-quic_vikramsa@quicinc.com>
+	s=arc-20240116; t=1728660454; c=relaxed/simple;
+	bh=m279UNxDg86MeiepLCsRcDWK8TQ3a2VS5ATEvwMBUgM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=LW9vcMccbwWYpHH3Ka1vvIbqpnz4V3QvDeILQExv5DOow8LHyC29DF5X0loY6ixi10HcBj3bA7Ttcvcwuay0hx/59tCrcA6Zz165W61PlKGyaiuhJ7YYblkw7jC3hG5Uc48pZHnRLoM9EPU4rY8CZQUAi5xe4u0NOQUCz4y79vg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=LDgX+4bX; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-45f07eb6f5fso20059981cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:27:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek.ca; s=google; t=1728660451; x=1729265251; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ENjo8WaNMM2SxgI285IjIz9pg6uqFRWPMbu3WxVYb8I=;
+        b=LDgX+4bXqQ5v/UyT/v1RwVyRnbGeiiY6nnjGiKrlQTlg+MedbMX8cw083PAjEejltd
+         gMZs8HphK9HP9U3a9hADp4FvQ8SCwgJjrbI/J2VI3jrxJ8Q4b7B+bSsT5t+iERzJYtdh
+         xatTW4X0Xvd8h4NBGA1vhDJtxRExMMts/uwXYYNgducWOKibNKFoeL+4CwdjVbRYsySA
+         85EM/e4PVhBvLGNldYidKu09zxMCkDd4CTzxQ0LDN0mT8X+oYgZSB4Y/To7gqTThZYnh
+         6IdylrTnLhoLzr4OPZ2CsV2Y5liVi+ueEtgVnGYVnizTyiZ/Y7FDg/yrrXFaomt23OB9
+         bjDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728660451; x=1729265251;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ENjo8WaNMM2SxgI285IjIz9pg6uqFRWPMbu3WxVYb8I=;
+        b=FeVKp8jMrPp1Buw4BLvQg/KSmortVeW4RlAsFnhocymPjl++LRrak8UGVQr7kLsfk5
+         lVka+gQzVrnEYg2BWcWP/tiIb593WPo7o0gD+cFNEdKG1/b3q95qKMSL6Po+2VQ2IHUI
+         TDhP1qbB/W3Jq8Cgv6DoNn/4Q440CA6n45OcUPd/rD/H2tXWXtDhSA19k+fhest1EBBq
+         yvb3YtHmyG2dEWfn0IeHkxwtLOTGfwOE4MjMGW8+oA7kF3tKdTBlXeGe3R8PVBsAha6B
+         xZxDs37dLaM/qtxCIzM1u0RKIQhkc+7qExcGYaetz9k+aOnZ9laSy1IdIMce+nlj/FFo
+         zUlQ==
+X-Gm-Message-State: AOJu0Yylpji3P6kG89ZGj1DEOOh0GtnZfvSSJUIdfOxTuY1EQX+xbPMp
+	1XKoyjjpl/6bl71gItgJZeChLx7ZRMDWGD1XPm2f9XvFAZFCx0Ghv+RjFM/iIdmoXDwznq5ZGpb
+	PggU=
+X-Google-Smtp-Source: AGHT+IHYNJkgaLLv/w799rZpdoAMPPyoB55wmJ3IpkehRsO0xuYABXaHyGFaAam7/8aabgIuvV/wDQ==
+X-Received: by 2002:a05:622a:15cf:b0:45f:3d1:24ad with SMTP id d75a77b69052e-4604b273053mr50520501cf.13.1728660450735;
+        Fri, 11 Oct 2024 08:27:30 -0700 (PDT)
+Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-460427d5220sm16344131cf.32.2024.10.11.08.27.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2024 08:27:30 -0700 (PDT)
+From: Jonathan Marek <jonathan@marek.ca>
+To: linux-arm-msm@vger.kernel.org
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	linux-rtc@vger.kernel.org (open list:REAL TIME CLOCK (RTC) SUBSYSTEM),
+	linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/5] rtc: pm8xxx: implement no-alarm flag for non-HLOS owned alarm
+Date: Fri, 11 Oct 2024 11:22:39 -0400
+Message-ID: <20241011152244.31267-1-jonathan@marek.ca>
+X-Mailer: git-send-email 2.45.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241011140932.1744124-9-quic_vikramsa@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 11, 2024 at 07:39:32PM +0530, Vikram Sharma wrote:
-> The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
-> Enable the IMX577 on the vision mezzanine.
-> 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl --reset
-> media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-> media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
-> 
-> yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
-> 
-> Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-> Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile             |  1 +
->  .../qcom/qcs6490-rb3gen2-vision-mezzanine.dts | 61 +++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi          | 33 ++++++++++
->  3 files changed, 95 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index aea1d69db541..7208da1d3697 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -111,6 +111,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts
-> new file mode 100644
-> index 000000000000..04b5fe80d38d
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts
-> @@ -0,0 +1,61 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "qcs6490-rb3gen2.dts"
+Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
+Thus writing to RTC alarm registers and receiving alarm interrupts is not
+possible.
 
-DTS does not include DTS, but DTSI.
+Add a no-alarm flag to support RTC on this platform.
 
-And where is the compatible you wanted to use? This looks sketchy...
-mezzanines are supposed to be overlays, I think.
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+---
+ drivers/rtc/rtc-pm8xxx.c | 48 ++++++++++++++++++++++++++++------------
+ 1 file changed, 34 insertions(+), 14 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
+index c32fba550c8e0..9240844022092 100644
+--- a/drivers/rtc/rtc-pm8xxx.c
++++ b/drivers/rtc/rtc-pm8xxx.c
+@@ -61,6 +61,7 @@ struct pm8xxx_rtc {
+ 	struct rtc_device *rtc;
+ 	struct regmap *regmap;
+ 	bool allow_set_time;
++	bool no_alarm;
+ 	int alarm_irq;
+ 	const struct pm8xxx_rtc_regs *regs;
+ 	struct device *dev;
+@@ -375,6 +376,11 @@ static const struct rtc_class_ops pm8xxx_rtc_ops = {
+ 	.alarm_irq_enable = pm8xxx_rtc_alarm_irq_enable,
+ };
+ 
++static const struct rtc_class_ops pm8xxx_rtc_no_alarm_ops = {
++	.read_time	= pm8xxx_rtc_read_time,
++	.set_time	= pm8xxx_rtc_set_time,
++};
++
+ static irqreturn_t pm8xxx_alarm_trigger(int irq, void *dev_id)
+ {
+ 	struct pm8xxx_rtc *rtc_dd = dev_id;
+@@ -473,9 +479,13 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+ 	if (!rtc_dd->regmap)
+ 		return -ENXIO;
+ 
+-	rtc_dd->alarm_irq = platform_get_irq(pdev, 0);
+-	if (rtc_dd->alarm_irq < 0)
+-		return -ENXIO;
++	rtc_dd->no_alarm = of_property_read_bool(pdev->dev.of_node, "no-alarm");
++
++	if (!rtc_dd->no_alarm) {
++		rtc_dd->alarm_irq = platform_get_irq(pdev, 0);
++		if (rtc_dd->alarm_irq < 0)
++			return -ENXIO;
++	}
+ 
+ 	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
+ 						      "allow-set-time");
+@@ -503,7 +513,8 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, rtc_dd);
+ 
+-	device_init_wakeup(&pdev->dev, 1);
++	if (!rtc_dd->no_alarm)
++		device_init_wakeup(&pdev->dev, 1);
+ 
+ 	rtc_dd->rtc = devm_rtc_allocate_device(&pdev->dev);
+ 	if (IS_ERR(rtc_dd->rtc))
+@@ -512,27 +523,36 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
+ 	rtc_dd->rtc->ops = &pm8xxx_rtc_ops;
+ 	rtc_dd->rtc->range_max = U32_MAX;
+ 
+-	rc = devm_request_any_context_irq(&pdev->dev, rtc_dd->alarm_irq,
+-					  pm8xxx_alarm_trigger,
+-					  IRQF_TRIGGER_RISING,
+-					  "pm8xxx_rtc_alarm", rtc_dd);
+-	if (rc < 0)
+-		return rc;
++	if (!rtc_dd->no_alarm) {
++		rc = devm_request_any_context_irq(&pdev->dev, rtc_dd->alarm_irq,
++						  pm8xxx_alarm_trigger,
++						  IRQF_TRIGGER_RISING,
++						  "pm8xxx_rtc_alarm", rtc_dd);
++		if (rc < 0)
++			return rc;
++	} else {
++		rtc_dd->rtc->ops = &pm8xxx_rtc_no_alarm_ops;
++	}
+ 
+ 	rc = devm_rtc_register_device(rtc_dd->rtc);
+ 	if (rc)
+ 		return rc;
+ 
+-	rc = dev_pm_set_wake_irq(&pdev->dev, rtc_dd->alarm_irq);
+-	if (rc)
+-		return rc;
++	if (!rtc_dd->no_alarm) {
++		rc = dev_pm_set_wake_irq(&pdev->dev, rtc_dd->alarm_irq);
++		if (rc)
++			return rc;
++	}
+ 
+ 	return 0;
+ }
+ 
+ static void pm8xxx_remove(struct platform_device *pdev)
+ {
+-	dev_pm_clear_wake_irq(&pdev->dev);
++	struct pm8xxx_rtc *rtc_dd = platform_get_drvdata(pdev);
++
++	if (!rtc_dd->no_alarm)
++		dev_pm_clear_wake_irq(&pdev->dev);
+ }
+ 
+ static struct platform_driver pm8xxx_rtc_driver = {
+-- 
+2.45.1
 
 
