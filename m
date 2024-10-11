@@ -1,146 +1,113 @@
-Return-Path: <linux-arm-msm+bounces-34120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 670E699A670
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:36:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1E5399A67A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:39:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 124EA2859A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:36:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2BC37281671
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:39:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED328839E4;
-	Fri, 11 Oct 2024 14:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26EBC81AD7;
+	Fri, 11 Oct 2024 14:38:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sF4QHqW9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TVqKtJyi"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6800184;
-	Fri, 11 Oct 2024 14:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF63B80603;
+	Fri, 11 Oct 2024 14:38:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728657394; cv=none; b=MslBGkDv0wftK0pqUrYrVo7baGq3YoZKgWxBWKCjc5ItDPqaIuBSzjVBoQIiXB2rPjOqlFNIM000eaU2PD937UXElH49jlWwcDiyDoVyePUOtoeCz4ARJ2cFcclENuORXupM5fn9czIIQdTc74sHFl4nT4gzANg0IbFAU79ssS0=
+	t=1728657531; cv=none; b=p3BXkE869de3FcYApBAkK2BVzxOIqZmu8rn0SiEJAdcP7mSzO/3qxzNJxXQyvpuG9ALZ5p0kTMvheREP24ltTa3cbY/afVAfKmMcsAcs0hGXMjY2o/Salh8PKphdCUSX7XI2Yr+2tlqeCYnyZBfZJgDKcVE3O1TIt08zsP8Fo4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728657394; c=relaxed/simple;
-	bh=elTTuQlhe68qlI7O7q5tMA03WudpGcGqjtAOdfqvfuA=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tSZtFwyda1E9Wq+AqosXhqAFBuW/GRdy9oRI3S3FFWIKSYB/gb0rjkyMQWjAgZGNnIFHYfrnpdcFXdZ97BX7YialJkAfVLUmUgxgAZnGTTbs1JLYZIhkZCP+qFxWXGf2yr0aEP6eARw1TOkCcRL+EUcTGJpIkK8yz/2I2t3BPrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sF4QHqW9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF95CC4CEC7;
-	Fri, 11 Oct 2024 14:36:25 +0000 (UTC)
+	s=arc-20240116; t=1728657531; c=relaxed/simple;
+	bh=LzEU21kvQ/WYUwcS587liGJ+TJpJqMynD+RPNGMcEyQ=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=kB3vS7dFtlq2gDyjxEBTQMmhYJhN9M+6HZ9WQoAThMyI1+bKSbPDHeG0MgRTQsEBS1qkk1ZknhLoX/pO5gT37UcPpR6aiqUma6gOQKm2Etac2iPTfVXwCISO+lXmc0l59KG1HUpKtDTmrdt2x8SoHBVgJdr+0CngX8NdnZDmA0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TVqKtJyi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323BFC4CECE;
+	Fri, 11 Oct 2024 14:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728657394;
-	bh=elTTuQlhe68qlI7O7q5tMA03WudpGcGqjtAOdfqvfuA=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=sF4QHqW9rn0Q59fdNsnpCmNanVUU2iXqmZSnV0CgncA2F1ARM2OUZVpqgD2L3CEye
-	 jFnBiBX4SG5yxNlwDYR43PCmLkCcmGMsfeQM744V5BEt97bQ38/0VJE5jsBoHDphg4
-	 7uCuL8GP3lUbVXcOgpjQl410CkV+l6nddbhGTJd5L+78HkU9Z0jWgdBUU1OhCRrlCI
-	 Pni0UIT36/oseekkB3W2T7dLs1lwWnXxKvp+nji4aB3/x7msrmZAJjBl9Uf4rAZ4to
-	 aA6BJntRAP5vu7+AjdUXohpjbg3091gMQUonHRc5Sy4UeC0QRCWga8w8Oj82LKVMEt
-	 mDUo6hTBRGLjQ==
-Message-ID: <937d3d61-482a-4a14-a594-615f10baf5f0@kernel.org>
-Date: Fri, 11 Oct 2024 16:36:22 +0200
+	s=k20201202; t=1728657530;
+	bh=LzEU21kvQ/WYUwcS587liGJ+TJpJqMynD+RPNGMcEyQ=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+	b=TVqKtJyimpsTwPQWNy0t/CPaza1/QLu78d8KOIzDaeSkWrw1bjEx3023I5JFFVRN7
+	 7Q/5yCwLLvi+9sXOKQPl7sEHsweToIi8I8rZLXsNIUwvS2VcassIOsaR3FfdMUaa+w
+	 XPbfdnaGG7Jdt20eSR/vgVZMlbWU2eOooUQNnnlznRUFeRlClzVrz0iAidkdO/ZEAB
+	 rgm84ADLE5RuoRaZJ1/58BG885nLiNCH4kmNOsE9szmlfRe5biY/UBi9SQb1oV07rf
+	 8NGY4be/C4kx5El1+EhIrzVEbo0M4AcNU5RH59eKi3CkIYeUuXISOXeUXXwR59/GNg
+	 QVfB8GVhEmArw==
+From: Kalle Valo <kvalo@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Jianhua Lu <lujianhua000@gmail.com>,  Bjorn Andersson
+ <andersson@kernel.org>,  Konrad Dybcio <konradybcio@kernel.org>,  Rob
+ Herring <robh@kernel.org>,  Krzysztof Kozlowski <krzk+dt@kernel.org>,
+  Conor Dooley <conor+dt@kernel.org>,  Jeff Johnson <jjohnson@kernel.org>,
+  linux-arm-msm@vger.kernel.org,  devicetree@vger.kernel.org,
+  linux-kernel@vger.kernel.org,  ath11k@lists.infradead.org
+Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8250-xiaomi-elish: Add wifi
+ node
+References: <20241010072243.10227-1-lujianhua000@gmail.com>
+	<20241010072243.10227-2-lujianhua000@gmail.com>
+	<pbsooimr6l65hgyxezyp6ha3zqibgdlphmeb7vtghgy2wti66b@fsmptbss2zvi>
+	<87h69i7v8c.fsf@kernel.org>
+	<p4j7i6fbr7htsh44vumlsziuhbl4phqok4zxnubdvyrjo2cllt@cez4iynfjayt>
+Date: Fri, 11 Oct 2024 17:38:46 +0300
+In-Reply-To: <p4j7i6fbr7htsh44vumlsziuhbl4phqok4zxnubdvyrjo2cllt@cez4iynfjayt>
+	(Dmitry Baryshkov's message of "Fri, 11 Oct 2024 16:46:14 +0300")
+Message-ID: <87ttdi66x5.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 3/8] dt-bindings: PCI: qcom,pcie-x1e80100: Add 'global'
- interrupt
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
- robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
- sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
- quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org, kw@linux.com,
- lpieralisi@kernel.org, neil.armstrong@linaro.org,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
- devicetree@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20241011104142.1181773-1-quic_qianyu@quicinc.com>
- <20241011104142.1181773-4-quic_qianyu@quicinc.com>
- <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 11/10/2024 16:33, Krzysztof Kozlowski wrote:
-> On Fri, Oct 11, 2024 at 03:41:37AM -0700, Qiang Yu wrote:
->> Document 'global' SPI interrupt along with the existing MSI interrupts so
->> that QCOM PCIe RC driver can make use of it to get events such as PCIe
->> link specific events, safety events, etc.
-> 
-> Describe the hardware, not what the driver will do.
-> 
->>
->> Though adding a new interrupt will break the ABI, it is required to
->> accurately describe the hardware.
-> 
-> That's poor reason. Hardware was described and missing optional piece
-> (because according to your description above everything was working
-> fine) is not needed to break ABI.
-> 
-> Sorry, if your driver changes the ABI for this poor reason.
-> 
-> NAK.
-> 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
 
-Plus you did not test DTS, not fixed existing users.
+> On Fri, Oct 11, 2024 at 02:08:19PM +0300, Kalle Valo wrote:
+>> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+>> 
+>> >> --- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+>> >> +++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+>> >> @@ -680,6 +680,25 @@ &pcie0_phy {
+>> >>  	status = "okay";
+>> >>  };
+>> >>  
+>> >> +&pcieport0 {
+>> >> +	wifi@0 {
+>> >> +		compatible = "pci17cb,1101";
+>> >> +		reg = <0x10000 0x0 0x0 0x0 0x0>;
+>> >> +
+>> >> +		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
+>> >> +		vddaon-supply = <&vreg_pmu_aon_0p59>;
+>> >> +		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
+>> >> +		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
+>> >> +		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
+>> >> +		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
+>> >> +		vddrfa1p7-supply = <&vreg_pmu_rfa_1p7>;
+>> >> +		vddpcie0p9-supply = <&vreg_pmu_pcie_0p9>;
+>> >> +		vddpcie1p8-supply = <&vreg_pmu_pcie_1p8>;
+>> >> +
+>> >> +		qcom,ath11k-calibration-variant = "Xiaomi_Pad_5Pro";
+>> >
+>> > Let's wait for Kalle's response.
+>> 
+>> Sorry, I don't know what you refer to here. I have been extremly busy
+>> with MLO patches so drowning with mail right now :/
+>
+> Just an ack for the calibration variant name.
 
-That's v6, so we assume you already know how to test it and do the
-testing before posting new versions.
+Ah, then ack from me for the name. Thanks for following these.
 
-Best regards,
-Krzysztof
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
