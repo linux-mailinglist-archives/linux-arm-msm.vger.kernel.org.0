@@ -1,188 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-34014-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A769A999C3C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:48:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B5AB999C7A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 08:16:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 181AA1F21A60
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 05:48:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DA9891F22D06
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 06:16:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 884DC1EB9F0;
-	Fri, 11 Oct 2024 05:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DC191CCB4E;
+	Fri, 11 Oct 2024 06:16:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K5xphyqG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ea0IsOX4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06EB19CC0A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 05:48:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6EBC328B6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 06:16:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728625730; cv=none; b=mVDN2Cn5rIKhoKPGZTTGtSKpdiKLUAnwDKLASa5Sn1ZKCRPEsfIy584gCQzXen/8ddYuQ06Ky0ZMNeCWp8RWIyDIcH3hB5i6XyDi2rX5uMyspaRTZSwiolceoFyCgYQAU8XRdlTcet/UdQ13i9NYB4gq+w1s8/qrXr8RCGBP7iE=
+	t=1728627373; cv=none; b=f9tN/ItaSrfIl7TIsa6VPp5rW7lk2NIKXW9JhbQyHqnMgUthONgWlITkGPXON7XlUN6u63Cwq6Q7DwlgvhJaMtCPR+YrGNftJ9ETKcIHn2j+kfn2ti6bycci+gNV3e6RbZyBuJ6EHZHDp0rDsKnmV5Epui3JYnn3uBxMQ0JX504=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728625730; c=relaxed/simple;
-	bh=gSDr2qXiWunqD83kcCcfkWzmofL1UeyjfIsv5gb6YVw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=HmdKNgxB/JPvGXmBwRK40Rh3ZIjcduRZhgODh3LEWLtL/tTlPZeVyHG32NhaHdn4mVic7GoDTPx46M6N3OOUkQcV260NOYZy1fDymLoGCRMsjxU8cLspYc++Vbsyq90Qmi7+jdFjpCptfLz46/GpsxCm3JtCYgarlktZd3q2Js8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K5xphyqG; arc=none smtp.client-ip=209.85.208.169
+	s=arc-20240116; t=1728627373; c=relaxed/simple;
+	bh=IleL7FQhMUGmuKRpzA5K47kGlw8Ud8u4RSrGewh4+Do=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NrLwyPz6niBx2/9uaN3d+9X2RhuQj76z21yerhQhO11qn0QSyim4G1sGzv/0uPlScJlGfSSh6UiU58D61kVwmDdReDYs3aoUzCnngiE2GF2xiG1Gb9zni/wSrKJWHxRGvnDWrSD0TZ4fvZU6a00R9z2SZBguhbepZOsMBBtrN0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ea0IsOX4; arc=none smtp.client-ip=209.85.167.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fad0f66d49so24639831fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 22:48:48 -0700 (PDT)
+Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539d0929f20so856510e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 23:16:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728625727; x=1729230527; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kAUIBKUFiqHBE7OX0O7eWG2UC2nEpnjuYCzeR97fn5c=;
-        b=K5xphyqGvesNOdZhdTEFto1ShyNHS1P1jN2zpQl4Ps5Dg2JOv+Qhg0fZB/UJmrHbcQ
-         ZqqQcOsBVBGrbRPRzY5fNdWjsa2A+j6rlWD5dQzvX1KWIjJ4hoJA3F9+jry+pZyyuApe
-         rXxLTYRDaIoaBeEbVlPHd90yly5NvTRjOF8wYaR9uxHM+7Qm2YbBvttCu9qTIdbqFS72
-         WBOQYNjzwz9k9w/ZVe3fsqdsW0wPNqvQbI9wp9E8HZdi3QQlVmKihUCfSu0UBHmKxv91
-         /LfD/BPrwd2kXofVW+k+hohhEH1pQbKYiqHYj5Fov2r0zX1I3V/WdNvhtbhESLwcyJN6
-         jXIw==
+        d=linaro.org; s=google; t=1728627370; x=1729232170; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+zztn8OGm5T9Dev73bEcKrvo8yczZXjOdvebFEeUvOQ=;
+        b=ea0IsOX4AUWdQE4X/OfCaCoSA2wCm/kK3nlus47BKPwDblYEWnPnVMKE93S0JB6u8c
+         2sGey0Y2kDDWtIfNAza4g6pok0D7+lGavbcbNcywAnDqPOqUuMoBLHGu7D0GIi4nXnU4
+         6IeOx2c0Lnt4nTmo77dwsqOJI3GrGOjpAoqKxKJrRWQnfrs25vaEm9w5ZzVJcELuMMRH
+         zoQNszKJOZ8whGnXRxy8RUZjyWd4rFjEC9S75yHw+RqZ4AOCOw4doEpAxQd4OA86orTD
+         ++uPDf+lVhLPuxUo8TtDwqz9xvHG9Ri+Euz8cNDe09aK+tQpW+zvSi11Ge4A+3aGideL
+         x+cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728625727; x=1729230527;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1728627370; x=1729232170;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kAUIBKUFiqHBE7OX0O7eWG2UC2nEpnjuYCzeR97fn5c=;
-        b=Q7lEp4EtlhztnUqHj9SzxAs2i9fic1VqhvB51oHuWt/ZsgZsDzx22rmUl6bjuMLc/7
-         K84/wYnHK3zoTiGG/FhZKuNMlxVDhhipF5r/yiPD8/IRWYJiDcZp95XZmCy/whDv7n89
-         hK8p1g4XzEuF8wqMk7a3REUIehQMAaZVxkumttP4n1lB1JEvG2wwyD9kD38OvigAuenM
-         Da3gAcRk+lbr8E9cEHY/SVltFzF204mtPLe0nFVZkIqSkAfXJj0kj2A00+1EGTsohibf
-         CHOLyixy+YLHjZ/5Kwoe1TUpCOS4RWSUAMp4dZWgoBfRi7kXKkWNfn5f25aOlrNS0pQf
-         QZog==
-X-Forwarded-Encrypted: i=1; AJvYcCVBRvI7lpQ7pHOwJ1mcwZ6qYfCXmJ2xxGKO7iMiwXGtjpJZMf13RvdNhxM3jMgdH8F15mUWV4zQDokCEZ5W@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2FjVR6M5bD8MgS5GGHocKXxjbooMl6kBV2SfpMkrqxLFkJaY0
-	v8LwcKHBY4WpKtce+FWpTf4I+ohjPNy0G81XAzEYNwc2wnWSXG94KYV4Ux/T6CI=
-X-Google-Smtp-Source: AGHT+IElgnZzJUF2VeU6qLAFyoymFdQaxiQWEzvuNGs2dbyEg43CbtOA9CKVQOGhLlMEcGoNVmZPew==
-X-Received: by 2002:a2e:be13:0:b0:2fa:c46a:eb4e with SMTP id 38308e7fff4ca-2fb326fe462mr3847561fa.3.1728625726600;
-        Thu, 10 Oct 2024 22:48:46 -0700 (PDT)
-Received: from umbar.lan ([192.130.178.90])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb24770a41sm4186111fa.129.2024.10.10.22.48.44
+        bh=+zztn8OGm5T9Dev73bEcKrvo8yczZXjOdvebFEeUvOQ=;
+        b=JuwvnQAI2X+bfZWdF6n7c/OMXSkkp2oJdmqrPS4tGruYObnnwhJRkfqzkWzUTRXx4b
+         zxQMfLxYlMgipFvsojPgur3gojPh77SAad2cVbPqnPB/b236dbmpPAdAGMnfsjxka1dd
+         3fCbSBgEsbRGvBd1ef0AYrIhk11NMk5sE22bZsGx+tB1PTlqw3fOiwdwH3MgzYyGdPKu
+         Z6UqyKU34IUv8dkxfbAR6FXnR2Q1eZVDrZJtKxTzJ5+2U83lU/A7FiEchhfXCS+XbaSK
+         ZGuLaTtIOCDeiXsgYDH1+gfFC0QP2dGp00I7GWOVwfOUqEeAyABoDg6gzOEbzJM5EUqV
+         Yb2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVxJEKyBpmPjqq6qOcCwwXRX/aLErV6+PqGyaADxgOe3PBEFVKqjB6L3IqXPPX2CLXSGTJm0MHOMlzN1318@vger.kernel.org
+X-Gm-Message-State: AOJu0YyT5ZfFAy5Eqh7RBbcpO7zBmlnr3sWsJdmxFs/qb9Btw7Z5ABId
+	tgpg2F9WEKNOKsx9jGSqT4vbQkrwNPRxYoDndR1QNPR4qI5ZfnsRo2mLuL6UEXs=
+X-Google-Smtp-Source: AGHT+IGc7gwTinuZHuGbc8LwJ5A7daFk3nc9VI9bk/hUTAkqi5rsZF98BxeF52XkN+XPoNa2N5quuA==
+X-Received: by 2002:a05:6512:3a96:b0:536:7ba7:496d with SMTP id 2adb3069b0e04-539d6e555efmr477576e87.11.1728627369655;
+        Thu, 10 Oct 2024 23:16:09 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.90])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539cb6c8613sm496309e87.74.2024.10.10.23.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 22:48:45 -0700 (PDT)
+        Thu, 10 Oct 2024 23:16:07 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 11 Oct 2024 08:48:39 +0300
-Subject: [PATCH RESEND] thermal/drivers/qcom/lmh: remove false lockdep
- backtrace
+To: Kalle Valo <kvalo@kernel.org>,
+	Jeff Johnson <jjohnson@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-firmware@kernel.org
+Cc: ath11k@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [RFC PULL] ath11k: move WCN6750 firmware to the device-specific subdir
+Date: Fri, 11 Oct 2024 09:16:06 +0300
+Message-Id: <20241011061606.1612918-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241011-lmh-lockdep-v1-1-495cbbe6fef1@linaro.org>
-To: Amit Kucheria <amitk@kernel.org>, 
- Thara Gopinath <thara.gopinath@gmail.com>, 
- "Rafael J. Wysocki" <rafael@kernel.org>, 
- Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
- Lukasz Luba <lukasz.luba@arm.com>
-Cc: Thara Gopinath <thara.gopinath@linaro.org>, linux-pm@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- stable@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2582;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=gSDr2qXiWunqD83kcCcfkWzmofL1UeyjfIsv5gb6YVw=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBnCLw70Pj12BWKspOc3Iexi6FaN+ED1D3pwfnZc
- rZjUEBmHieJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCZwi8OwAKCRCLPIo+Aiko
- 1ZIXB/9KZut2clhqKYo18Rw7gj6QdBb3gWOHFkHnZwIf4UKQIRvHY36O3T/LEj/iqLn6LnMhO/G
- oMx2OjPb+s6le34h63v+PU0Zj6RUbR6lJyZhBpb3PIUhh/Xb7ncNroEgagZXa101Wx9RO4CsTls
- Z9bELVN7jxZ5zni4l08TXgV6Rscm9Vz21wyTpAjytzy8zgjl38QVXbPVAxcZO76N1OOw3ZF3uoz
- ny+8AZBw8zZDCmtq+Dxoi7ZA7JtXbPMHcjEqEnx491tIFMA7Sn2xliuZbpYj7WEtd9osPi0SBit
- VqJfFGBlEVV4lDOCl0RBgJzUo7zRdNfg86xrvOnpfE+MH1KD
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+Content-Transfer-Encoding: 8bit
 
-Annotate LMH IRQs with lockdep classes so that the lockdep doesn't
-report possible recursive locking issue between LMH and GIC interrupts.
+The firmware under ath11k/WCN6750 can not be utilized on other devices using
+WCN6750 to provide WiFi (e.g. on the Qualcomm RB3 gen2 board).  This is an
+attempt to propose a solution by moving the file into device-specifig subdir.
+Other platforms can place firmware files in other subdirs, depending on the
+SoC.
 
-For the reference:
+Note, while performing the move I also propose squashing the firmware file.
+This is the practice recommended by the msm platform maintainers for the DSP
+firmware (not to mention that it also saves us from the extra symlinks). If
+Kalle, ath11k maintainer, objects, I will keep the firmware in the split form.
 
-       CPU0
-       ----
-  lock(&irq_desc_lock_class);
-  lock(&irq_desc_lock_class);
+For now this is an RFC in order to gather opinion form respective platform and
+driver maintainers.
 
- *** DEADLOCK ***
+----------------------------------------------------------------
 
-Call trace:
- dump_backtrace+0x98/0xf0
- show_stack+0x18/0x24
- dump_stack_lvl+0x90/0xd0
- dump_stack+0x18/0x24
- print_deadlock_bug+0x258/0x348
- __lock_acquire+0x1078/0x1f44
- lock_acquire+0x1fc/0x32c
- _raw_spin_lock_irqsave+0x60/0x88
- __irq_get_desc_lock+0x58/0x98
- enable_irq+0x38/0xa0
- lmh_enable_interrupt+0x2c/0x38
- irq_enable+0x40/0x8c
- __irq_startup+0x78/0xa4
- irq_startup+0x78/0x168
- __enable_irq+0x70/0x7c
- enable_irq+0x4c/0xa0
- qcom_cpufreq_ready+0x20/0x2c
- cpufreq_online+0x2a8/0x988
- cpufreq_add_dev+0x80/0x98
- subsys_interface_register+0x104/0x134
- cpufreq_register_driver+0x150/0x234
- qcom_cpufreq_hw_driver_probe+0x2a8/0x388
- platform_probe+0x68/0xc0
- really_probe+0xbc/0x298
- __driver_probe_device+0x78/0x12c
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- deferred_probe_work_func+0x8c/0xc8
- process_one_work+0x20c/0x62c
- worker_thread+0x1bc/0x36c
- kthread+0x120/0x124
- ret_from_fork+0x10/0x20
+The following changes since commit d55315295cccf8ce5dc288a74d75cf09b8063cfc:
 
-Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/thermal/qcom/lmh.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+  Merge branch 'superm1/qci-patches' into 'main' (2024-10-10 19:11:13 +0000)
 
-diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
-index 5225b3621a56..d2d49264cf83 100644
---- a/drivers/thermal/qcom/lmh.c
-+++ b/drivers/thermal/qcom/lmh.c
-@@ -73,7 +73,14 @@ static struct irq_chip lmh_irq_chip = {
- static int lmh_irq_map(struct irq_domain *d, unsigned int irq, irq_hw_number_t hw)
- {
- 	struct lmh_hw_data *lmh_data = d->host_data;
-+	static struct lock_class_key lmh_lock_key;
-+	static struct lock_class_key lmh_request_key;
- 
-+	/*
-+	 * This lock class tells lockdep that GPIO irqs are in a different
-+	 * category than their parents, so it won't report false recursion.
-+	 */
-+	irq_set_lockdep_class(irq, &lmh_lock_key, &lmh_request_key);
- 	irq_set_chip_and_handler(irq, &lmh_irq_chip, handle_simple_irq);
- 	irq_set_chip_data(irq, lmh_data);
- 
+are available in the Git repository at:
 
----
-base-commit: 797012914d2d031430268fe512af0ccd7d8e46ef
-change-id: 20240721-lmh-lockdep-88de09e77089
+  https://gitlab.com/lumag/linux-firmware wcn6750-device-specific
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+for you to fetch changes up to abe8c109a2b4c422b627335d124473734c8790d8:
 
+  ath11k: move WCN6750 firmware to the device-specific subdir (2024-10-10 22:26:20 +0300)
+
+----------------------------------------------------------------
+Dmitry Baryshkov (1):
+      ath11k: move WCN6750 firmware to the device-specific subdir
+
+ WHENCE                                             |  12 ++----------
+ ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} | Bin 5819999 -> 7463728 bytes
+ ath11k/WCN6750/hw1.0/wpss.b00                      | Bin 340 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b01                      | Bin 6848 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b02                      | Bin 10300 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b03                      | Bin 4096 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b05                      | Bin 164332 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b06                      | Bin 266684 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b07                      | Bin 1176368 -> 0 bytes
+ ath11k/WCN6750/hw1.0/wpss.b08                      |   0
+ ath11k/WCN6750/hw1.0/wpss.mdt                      | Bin 7188 -> 0 bytes
+ 11 files changed, 2 insertions(+), 10 deletions(-)
+ rename ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} (77%)
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b00
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b01
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b02
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b03
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b05
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b06
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b07
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b08
+ delete mode 100644 ath11k/WCN6750/hw1.0/wpss.mdt
 
