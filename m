@@ -1,81 +1,92 @@
-Return-Path: <linux-arm-msm+bounces-33989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2266B99975D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 02:21:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CF28B999A8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 04:37:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B5821B21201
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 00:21:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 47343B219A7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 02:37:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 596BA1F4FBD;
-	Fri, 11 Oct 2024 00:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE16C1F470B;
+	Fri, 11 Oct 2024 02:37:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G69tp7ac"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTOXjKp8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1961EBA0D;
-	Fri, 11 Oct 2024 00:07:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E31A17BA9;
+	Fri, 11 Oct 2024 02:37:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728605271; cv=none; b=ZPF0yJyP5aBXRXkYyZDhzdeVxh5yZLc4fpFjSVqUgRcsOv/rFMTJuAVCiMuXMJ9+5wxkY88QktOI5VXPAIzci/IlqOkOn3c9rMLM34JrkVfmQnzzFi2ZJjYJWmemubvkhqRk60Mfp9npRnCwK7OnoEa7f4cG8CKyumG2o6/RnD0=
+	t=1728614254; cv=none; b=IxjIt86hDIK1+HHb14kSisuG2JXANYmHnCN9ewzzZg6mE2lO0IRQ9423atq6brC+9RwbHrlRC1vO7y35v8lxefLkHnzsNGSKG+G8QnrRBbCQa4iwvWAfTPyB2CD0ENVI6aWJzJOsLRAyqejzcz+Aasz9h+qldc1GjoX+E2MGno8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728605271; c=relaxed/simple;
-	bh=qU0dUNxFUuN/ND2hfWc0/b53f/OYr4+0HIcF9EoyLxI=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gy9NRoz+tp9t6ZdyCvIw2Vcvp/esew+cHVVmAalXaa7KJ+ZXK5ki7q89CY670Utf5NJLjEoMPlvyKiHbWXSs16wyNJ+kSAACIuudf5xnR1+6NlxUIcPeYoPiHUr8S+BFlVPl2uDAxwXtAhJYK8E8ByU5IASUF0gKI4TYu3DZi8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G69tp7ac; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49ACiZVu009190;
-	Fri, 11 Oct 2024 00:07:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	M4IGsOidRHFIubeJL9OdlEYfFZx1GNBQBMy1HdndUaw=; b=G69tp7ac8hXPF2wN
-	i+BWaqvrNw6N4F0Zwb4rH2jbMvCpl1i9qB45EJTaL87S5cNWvWHElVwbnKcGPHUA
-	TGI6ixYDvtwevNEHjYN8zZNeMDedFjJXZnIBRj8Ur7NGp03JDTuV4hJxjXKU6d7h
-	3AM1Ah+6fcGyGZLG0EM7QM5vvAFTEnFFOyuoMwv/W0zgRGThkElMrwhRE284M9yM
-	6eDIsUrmMU2g3O+MK2SjfEiVW2eqvbOS/PsSI+IJrmG2GvQebvzp72CDnUznseyK
-	9OxK2Tyw8YbEyKYsrDfDatNn3NTtApm8frQZhLkirENKuf6sKCxbhmdKEaCPcQha
-	y7VPBw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 425tn150wm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Oct 2024 00:07:21 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49B07LuM016447
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Oct 2024 00:07:21 GMT
-Received: from hu-wcheng-lv.qualcomm.com (10.49.16.6) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 10 Oct 2024 17:07:20 -0700
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-To: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <broonie@kernel.org>, <lgirdwood@gmail.com>,
-        <tiwai@suse.com>, <krzk+dt@kernel.org>,
-        <pierre-louis.bossart@linux.intel.com>, <Thinh.Nguyen@synopsys.com>,
-        <bgoswami@quicinc.com>, <robh@kernel.org>,
-        <gregkh@linuxfoundation.org>
-CC: <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>
-Subject: [PATCH v28 33/33] ASoC: usb: Rediscover USB SND devices on USB port add
-Date: Thu, 10 Oct 2024 17:06:50 -0700
-Message-ID: <20241011000650.2585600-66-quic_wcheng@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241011000650.2585600-1-quic_wcheng@quicinc.com>
-References: <20241011000650.2585600-1-quic_wcheng@quicinc.com>
+	s=arc-20240116; t=1728614254; c=relaxed/simple;
+	bh=m82pVi9rWdwhXvyMfOET2iSm8JiYFqQ9X4DgC2M12BY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fQbR2VTRv4DRQ4eVqS9jZxtIA15pSwNV7iFt77yAVrm2+A7XQb02otea7d6A/4fbZZf6XDaHxUfEfaeYuM2F67ISD0SpKrkTVAqkQTZEiDcP4K/c+r2i1EBJCO+niBuT20V3H781ZMqD3Dp6u19/FiJv0bTECs8JZMmBSkh9/UA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTOXjKp8; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6cbf347dc66so311506d6.3;
+        Thu, 10 Oct 2024 19:37:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1728614252; x=1729219052; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RdCBEChnt7QpN4qu96zBgY3lUHISCcLaZiizJdxiJx0=;
+        b=YTOXjKp8ZmM5wbq7nqpj8ZOgYVIV//L6GxGPVkpc4GwlgEEt8gWSRXf3dOqh9U1tHk
+         rhCA+9ANo7eg56iHK48CPMfJVqMl1iVoK1LW4oOupA72KFba+Z9+14+t4M5mgVq4Eg4F
+         kVHqreEHGr4OzS/+ZmxIw3XefbHz5zlzarM6+utI9HrSOG+AsnCeMM6v/x352pVvF3dV
+         +EfaW65MF2oPRWEWH+GSB6NZDjCMdaV8cR2WZA5c/Bzau+quaw6Uy6kszv1DkBZPHkRz
+         YvZ4AYL7ebMRgvX07IIz06G5VgEhW1HgDzkcz1RIdThKKdHnelVSQa+tCuydTJAi0v86
+         q9fQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728614252; x=1729219052;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RdCBEChnt7QpN4qu96zBgY3lUHISCcLaZiizJdxiJx0=;
+        b=UXSlEHowlpIJCi/+DoeDz5XUyg/qB5dj4/xP1Ps9oNjLz2VytxcGh2PeO0xM8mTEmh
+         s1BtSnd9ZII4hpHh2yihxjdtllNTbpkqzNED+ifcaqibf4gQC0/gaO/qLtcMzmzKCAqY
+         K/MrAH4xiQvL1aY5B+SbAXAbz1AfjFM8Bsov3ub4LvV0t6APfVsVTKe7Vp9btGBAEjkr
+         Ist3PUNHQ6Kw5sBPME/r3IMCvLXRJ3XZ84UTIcmvHf/giYheMwiY3P801tQ8KQ+t9kqP
+         AewZTOYITAMCZmIdnGqQTxk0wrFAN5T7keSN7Lfyi/E0R0JClz8qVLX/0FfYUTQ0+GoI
+         DQSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUZ4d5sxaFVcrxNZJPmmZ5pvNO3dob/Z8ZjcZnGgj+D/4O2l+sC8TYdHs0OZ+S6+DykYgneEw93btGA@vger.kernel.org, AJvYcCVCfcLylzEdln8uE0bOP/6kw51pKl7gpnH0S5BNEj7om7qUEUFBL+Wvw4/haARDgvJ/idNaGIu9sg+w@vger.kernel.org, AJvYcCWCWclMDVHSpRap8xHi8e77cAStWcobLUdr69Mp82L+Ak9cVwDMdfSRE1xitEgEuyJV5ZhuccOGH96RJjPd4Q==@vger.kernel.org, AJvYcCXhqxHTMoEw5zmu4JHYP5xb6Y4CvvQRtDB4Ql5fjiVndMHQBWUje05gS226zh5MGJMrQEltq+I/CHVBBJ8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuhQcBmXBG6kb6TNg3DSMkZDDG3Xg/koIAFZ2wlgt58e6NJgC5
+	JlAAdTec9jxI5TRQuPoN+btRlhOyo37Osxo2ZZcYBa8J9w9fqc3w
+X-Google-Smtp-Source: AGHT+IE7okBuB2dYuVMBP+g1EflF8G4KDK9sSZM5v9JU6mq+ZUuqRxkD9YO+UuG7rQpYqqZ7tSRGgg==
+X-Received: by 2002:a05:6214:3986:b0:6cb:c161:d26e with SMTP id 6a1803df08f44-6cbf00f00e2mr19226966d6.34.1728614252092;
+        Thu, 10 Oct 2024 19:37:32 -0700 (PDT)
+Received: from localhost ([2607:fea8:52a3:d200::786d])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cbe8679de8sm11344976d6.136.2024.10.10.19.37.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Oct 2024 19:37:30 -0700 (PDT)
+From: Richard Acayan <mailingradian@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Robert Foss <rfoss@kernel.org>,
+	Todor Tomov <todor.too@gmail.com>,
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-media@vger.kernel.org
+Cc: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: [PATCH v6 0/5] Add SDM670 camera subsystem
+Date: Thu, 10 Oct 2024 22:37:25 -0400
+Message-ID: <20241011023724.614584-7-mailingradian@gmail.com>
+X-Mailer: git-send-email 2.47.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,69 +94,71 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: jJig91f6tQbqCiu6QF3XWFmGK0ex3QE0
-X-Proofpoint-GUID: jJig91f6tQbqCiu6QF3XWFmGK0ex3QE0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 mlxlogscore=999 impostorscore=0
- spamscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015 malwarescore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410100159
 
-In case the USB backend device has not been initialized/probed, USB SND
-device connections can still occur.  When the USB backend is eventually
-made available, previous USB SND device connections are not communicated to
-the USB backend.  Call snd_usb_rediscover_devices() to generate the connect
-callbacks for all USB SND devices connected.  This will allow for the USB
-backend to be updated with the current set of devices available.
+This adds support for the camera subsystem on the Snapdragon 670.
 
-The chip array entries are all populated and removed while under the
-register_mutex, so going over potential race conditions:
+Changes since v5 (20241001023520.547271-9-mailingradian@gmail.com):
+- sort reg and reg-names alphabetically (2/5, 5/5)
+- drop CCI I2C patches since they are applied (formerly 2/7, 3/7)
 
-Thread#1:
-  q6usb_component_probe()
-    --> snd_soc_usb_add_port()
-      --> snd_usb_rediscover_devices()
-        --> mutex_lock(register_mutex)
+Changes since v4 (20240904020448.52035-9-mailingradian@gmail.com):
+- change camss interrupts to rising edge in dts (7/7)
+- change IRQs to rising edge in camss dt-bindings example (4/7)
+- move gcc and ahb clocks in camss dt-bindings example (4/7)
+- add reviewed-by for camcc dt-bindings patch (1/7)
 
-Thread#2
-  --> usb_audio_disconnect()
-    --> mutex_lock(register_mutex)
+Changes since v3 (20240819221051.31489-7-mailingradian@gmail.com):
+- add specific sdm670 compatible for camcc to dt schema and dts (1/7, 6/7)
+- pick up patch from Bryan for CCI driver (3/7)
+- stop assigning CCI frequency in dts (7/7)
+- add maxItems for sdm670 cci clocks (2/7)
+- remove empty line at top of camss dt schema (4/7)
+- move regs and reg-names up in camss dt schema (4/7)
+- move gcc and ahb clocks up in dts and dt schema (4/7, 7/7)
+- add reviewed-by from Vladimir for CCI dt-bindings patch (2/7)
+- add reviewed-by from Bryan for dts patch (7/7)
+- add reviewed-by from Krzysztof for camss dt-bindings patch (4/7)
+- add rewiew tags for camss driver patch (5/7)
 
-So either thread#1 or thread#2 will complete first.  If
+Changes since v2 (20240813230037.84004-8-mailingradian@gmail.com):
+- drop unnecessary assigned AXI clock frequency (5/5)
+- drop src clocks from cci (5/5)
+- add unit name, remove mmio properties from port in example dts (2/5)
+- correct the reg-names order (2/5)
+- add parent_dev_ops to csid (3/5)
+- remove CSID clocks from VFE (3/5)
+- remove AXI clock from CSIPHY (3/5)
+- change subsystem part of the commit message summary (3/5)
+- add reviewed-by (4/5)
 
-Thread#1 completes before thread#2:
-  SOC USB will notify DPCM backend of the device connection.  Shortly
-  after, once thread#2 runs, we will get a disconnect event for the
-  connected device.
+Changes since v1 (20240806224219.71623-7-mailingradian@gmail.com):
+- define dedicated resource structs/arrays for sdm670 (3/5)
+- separate camcc device tree node into its own patch (4/5)
+- specify correct dual license (2/5)
+- add include directives in dt-bindings camss example (2/5)
+- remove src clocks from dt-bindings (2/5)
+- remove src clocks from dtsi (5/5)
+- add power-domain-names to camss (5/5)
+- specify power domain names (3/5)
+- restrict cci-i2c clocks (1/5)
+- populate a commit message with hw info (2/5)
+- reword commit message (3/5)
 
-Thread#2 completes before thread#1:
-  Then during snd_usb_rediscover_devices() it won't notify of any
-  connection for that particular chip index.
+Richard Acayan (5):
+  dt-bindings: clock: qcom,sdm845-camcc: add sdm670 compatible
+  dt-bindings: media: camss: Add qcom,sdm670-camss
+  media: qcom: camss: add support for SDM670 camss
+  arm64: dts: qcom: sdm670: add camcc
+  arm64: dts: qcom: sdm670: add camss and cci
 
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
----
- sound/soc/soc-usb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../bindings/clock/qcom,sdm845-camcc.yaml     |   6 +-
+ .../bindings/media/qcom,sdm670-camss.yaml     | 318 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm670.dtsi          | 195 +++++++++++
+ drivers/media/platform/qcom/camss/camss.c     | 191 +++++++++++
+ 4 files changed, 709 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sdm670-camss.yaml
 
-diff --git a/sound/soc/soc-usb.c b/sound/soc/soc-usb.c
-index e56826f1df71..ee566ca7c675 100644
---- a/sound/soc/soc-usb.c
-+++ b/sound/soc/soc-usb.c
-@@ -279,6 +279,8 @@ void snd_soc_usb_add_port(struct snd_soc_usb *usb)
- 	mutex_lock(&ctx_mutex);
- 	list_add_tail(&usb->list, &usb_ctx_list);
- 	mutex_unlock(&ctx_mutex);
-+
-+	snd_usb_rediscover_devices();
- }
- EXPORT_SYMBOL_GPL(snd_soc_usb_add_port);
- 
+-- 
+2.47.0
+
 
