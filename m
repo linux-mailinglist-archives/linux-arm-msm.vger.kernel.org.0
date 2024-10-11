@@ -1,110 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-34057-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34058-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 823AD999ED4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 10:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A094999F09
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 10:31:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3499C2837A5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 08:19:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55BD1282142
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 08:31:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C63720ADD2;
-	Fri, 11 Oct 2024 08:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AECBD209F3B;
+	Fri, 11 Oct 2024 08:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bQ3oX4xd"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="c2MMUnMv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621D8209F32
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:19:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFF64A07
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:31:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728634767; cv=none; b=alIUKSXE9/nNI5toNhkeQu9/vjpQPEUywY0irovF5Kd2u14uq18uYChwQ0oVM1Ib6Sn5Prgmi5iicGI/sf+NNAJvFSWU80aejNC1+yxlDGMOAeQltNRTZ1fcD1ldFiD2iUm3IEjHO6XCwiaaSfR1hu4XCFJPuu29pTcuEw7Ql6E=
+	t=1728635471; cv=none; b=lzcPA/zSc0SR20RmngXw/qRIVaQibBQ01/J9R3LMRcwx1ao4t6UZXaozqWRwPQiClIA3PJ/daDVcmCixErvg347XVLVuBWg0RKQZn2I6OQqYCb//pia1FgH4iKAm+ZbpY4YS06E70d+NGEb9620eVUv4GsQgCGVQBgVS2up9RZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728634767; c=relaxed/simple;
-	bh=gvAocyFZCxC9vLyotH/Jkh4qPbPfSwGxlwgXJFGlyuU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mdzgtSuBymysGvKZQhjU1DxT1YKAKWxhXTy3gVZpb7/yHJDUCXSyAqAiufwc6IV4zDgQBrprfQSrEq3JNrvOTWhhqHqtcFvI3qWdEbHRROppE+dj5vB1mh1YF/gWfJ8mfaypp3MQWF8STZrkfMhxULgtJK5AL+Mn3Gm4y5NLURE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bQ3oX4xd; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1728635471; c=relaxed/simple;
+	bh=SEJdlxQ23Wh1PJutMKkwgNXKdM73Ivu4Y76y3S/iMcU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=okRP8/RohONBTPU5ZmMDQbFm/49SRC3u6MUUMkukbStNZknfm4TjSWzi+bG86SywNi82Slihwxn//txd1LP9mkYX+OkcP5MYKbD+HYs8IjzhG0au5H1dMWHccnkC1kDwN5WTQRklQP1ewI51xf1yZVsTbfMp2dbpBVKOwHfOiQw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=c2MMUnMv; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-42cb806623eso14867145e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 01:19:25 -0700 (PDT)
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5c42f406e29so2094305a12.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 01:31:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728634764; x=1729239564; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6J+uE5iMA3/H+CWTUJR3uTJQSjnSupLoaiF+Mj5l3T0=;
-        b=bQ3oX4xdcmeyiJJvMK+PEwfg0DSOGRqDvO8YbwH9yO2LDWLss8O7hVcfDMSiNgjrdE
-         PVm3qfDrTR4pLAv7jQkfF2MXBEghc+HYicj9Nas6rlJ28BC/KCuiYcP3ix9tLv4BIre8
-         unHjodLWCfPu8F5AZO693l7JUQrUojpFD9MoatsxwcmyQQLoyZr19wKNEhE+DJ+Ff7SW
-         FmLu9ISiFrRqkHWnAS2fZoimGrj0zWU8kFtML0g4RSMCBUdTrYd/5bI0qcGZZsfJcHdp
-         gpk8kwqbcCSA4he0NTF6ZmInjnxuYaYV67mXaMXi5gIIyzIr4c+I9QyTlndZ1GYeQXz+
-         gdIQ==
+        d=linaro.org; s=google; t=1728635468; x=1729240268; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=nAD5v+org+QPFKjhH7xH1l9zocUcHG+37XArsBcPgZg=;
+        b=c2MMUnMv7t50613fX3tILGU74tI24Vqck5uE9B2W4RMWrFfSH9D1Ur9+J3dkKOt94/
+         TniI3UuP2PWvW7sVNAGEziDxeqgapzUDFmEqb4mrATi9nQK8xG5WxtFqTOqNSow1bHX9
+         87x8ljpQXz5iCXB6I7jZ8Qr7kaR4FsQjTJSyrGN+rzcD6meaMiRNWpil5KCiKuctkiNj
+         zQG0XatjPuURd8J4g8s1t3PbeALQZzbMd0WkJ8h0RDYyElU46T39y52n0aDL5uMIjDUT
+         mPyAAfLwH52VX/b6GuCH61f48xLIGpJK87IE+42gyM420VHocDQrBIe7eTYhEqrA4mmv
+         9dBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728634764; x=1729239564;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6J+uE5iMA3/H+CWTUJR3uTJQSjnSupLoaiF+Mj5l3T0=;
-        b=angnqmfW19mvqGshp/o1VeAOOMCZ0SM1xAWBjsFoEZ8XY5DNdqgCIa7KwajwWMA0nE
-         FsgqX5jutB8URdH9Ly5ORA6GAiAEJ9xGDSeh8JdFU1k81zH9F1jkYY1LhZ4zl80l3Jzt
-         Xz2MCBGRj/x1ZDCskmU3sYzvPYRdxIwa3E0oIISDcQ3DhwaFEmtSSPERik8uRYs5X3Ru
-         jv0YN0lDSW8clKZ/caZV0i63TLT6GaPNis3Pl5Tqx6Fka33mMlIdFLSIZQdicyGN+Cdv
-         iGERSucvGzSbgH52iJrr/FMR7SN09kFPQB1oTNKF15AF+O2EfL2QVbU5tLeT74+wg8mK
-         4Xjw==
-X-Forwarded-Encrypted: i=1; AJvYcCXm4CQA7v5Y1S4ZjLfLi2ZIGHIh7fM8y2aAxfRAk58cjwmmaUbj4EXzjWAOm6O4bmr6FLje61L7w2CdS5Q0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfHn6PFfj/pR67TWfFTVYvsDdosw0qt6M4FH/47JDssCrPW4z8
-	v0RUQAwkmEZh6NMj33yvg2zcXXPoledQ2So5P1+g4ARUwCoFUqRIQPUurMxOoN8=
-X-Google-Smtp-Source: AGHT+IEh1qHegvlY8LqZOcJFQcPmv4Q5bDdymgLxEN3Xxvmlyb6iR2FO3wDaCT1RCr7OgyZ3OSgJ4Q==
-X-Received: by 2002:adf:e908:0:b0:37c:cd0d:3437 with SMTP id ffacd0b85a97d-37d5530438bmr1300655f8f.58.1728634763634;
-        Fri, 11 Oct 2024 01:19:23 -0700 (PDT)
-Received: from localhost ([196.207.164.177])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b6a87d3sm3346373f8f.11.2024.10.11.01.19.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2024 01:19:22 -0700 (PDT)
-Date: Fri, 11 Oct 2024 11:19:18 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: "Everest K.C." <everestkc@everestkc.com.np>
-Cc: robdclark@gmail.com, sean@poorly.run, konradybcio@kernel.org,
-	quic_abhinavk@quicinc.com, dmitry.baryshkov@linaro.org,
-	marijn.suijten@somainline.org, airlied@gmail.com, simona@ffwll.ch,
-	skhan@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH][next] drm/msm/a6xx: Remove logically deadcode in
- a6xx_preempt.c
-Message-ID: <ef752080-130f-463e-bcd4-e1a33fc962bd@stanley.mountain>
-References: <20241011052315.4713-1-everestkc@everestkc.com.np>
+        d=1e100.net; s=20230601; t=1728635468; x=1729240268;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nAD5v+org+QPFKjhH7xH1l9zocUcHG+37XArsBcPgZg=;
+        b=wK4Wzxpwog+GUPC2eDeneods2Io5K/tOiOj6untDjuhLF9XhBrWuAg2Gx+Ui+bC2Wz
+         /lmrNP55+jtn164U9wBfwQbhVyH8UG62w4ix6Ix4rL/BrYlGSws2u/iQKyM1djJqogpo
+         CyvubTfUebzuGOq0CBWJKw0XcPEYioknL9LWQJ0aXidWHGaeUiux7gQbcKr6GreedzDs
+         7tnqwjzdInEBrN47ZYqe5Om8hraOhDzJpfirz5Tp0bWUWiftHOuEVwiiOddiLneIRDuL
+         mQsLqrN7KKsU9o8/9isGK5VBTmHWKhnFFND5UuNwbInzzl0GNoAba70k2RI4su/M1lCh
+         JBCg==
+X-Forwarded-Encrypted: i=1; AJvYcCXd8kgRLbwm0C2OiQ6nzJAvxxPN7V1+VbM+phBAUICUb5Vpm9ee5mioGRUmMntUhenspbNFHLB6969ZPHHB@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzXzywqVRJ8pds45kLE/WR8/xkYKlLEoeh6nzrYEVeMWKFV/PF
+	2cJyxlZWXMher6AtOaS+T9P0zcLmrzTydGjx5nzN56HU6DfvV951JyaC9oaYxX4=
+X-Google-Smtp-Source: AGHT+IGwUhHDGXHO6KgriwcoHKU56ZhIDBRkdsGJETJImu6rNJO+hbQAho6na7sM96Ccnl3slVQy9A==
+X-Received: by 2002:a17:907:7409:b0:a99:c85c:6646 with SMTP id a640c23a62f3a-a99c85c67a8mr12978766b.30.1728635468259;
+        Fri, 11 Oct 2024 01:31:08 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99a7f5cebdsm188524266b.93.2024.10.11.01.31.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Oct 2024 01:31:07 -0700 (PDT)
+Message-ID: <a230de8f-a11d-41c1-9bc6-7e06e850b51d@linaro.org>
+Date: Fri, 11 Oct 2024 09:31:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241011052315.4713-1-everestkc@everestkc.com.np>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 2/5] dt-bindings: media: camss: Add qcom,sdm670-camss
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+ Richard Acayan <mailingradian@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Robert Foss <rfoss@kernel.org>,
+ Todor Tomov <todor.too@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-media@vger.kernel.org
+References: <20241011023724.614584-7-mailingradian@gmail.com>
+ <20241011023724.614584-9-mailingradian@gmail.com>
+ <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <785c82d5-549d-454b-86bf-a00a39e6f521@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Oct 10, 2024 at 11:23:14PM -0600, Everest K.C. wrote:
-> The ternary operator never returns -1 as `ring` will never be NULL.
-> Thus, the ternary operator is not needed.
-> Fix this by removing the ternary operation and only including the
-> value it will return when the `ring` is not NULL.
+On 11/10/2024 08:14, Vladimir Zapolskiy wrote:
 > 
-> This was reported by Coverity Scan.
-> https://scan7.scan.coverity.com/#/project-view/51525/11354?selectedIssue=1600286
-> 
-> Fixes: 35d36dc1692f ("drm/msm/a6xx: Add traces for preemption")
-> Signed-off-by: Everest K.C. <everestkc@everestkc.com.np>
-> ---
+> Two most recently added CAMSS IP descriptions (qcom,sm8250-camss.yaml and
+> qcom,sc8280xp-camss.yaml) do implement sorting by reg values, I believe 
+> from now on
+> it should be assumed that all subsequently added CAMSS IP descriptions 
+> to follow
+> the same established policy.
 
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+My preference is sort by address not sort by name => we sort the device 
+nodes themselves by address so it seems more consistent to sort by 
+address inside of the devices too.
 
-regards,
-dan carpenter
+Which means sorting reg by address and irq too.
 
+---
+bod
 
