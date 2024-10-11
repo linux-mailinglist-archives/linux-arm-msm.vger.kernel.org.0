@@ -1,250 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-34115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D77B99A604
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:13:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90CA299A64A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 16:28:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8FA6D1C23602
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:13:38 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 178971F216F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 14:28:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9971421D2AA;
-	Fri, 11 Oct 2024 14:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98EFA2194A6;
+	Fri, 11 Oct 2024 14:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="T8IKJxF0"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WHVjerdU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED94221A6FE;
-	Fri, 11 Oct 2024 14:11:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B56212F13;
+	Fri, 11 Oct 2024 14:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728655864; cv=none; b=gHkGaNWZPQD34GTa3h8PqdmVwToxh38LuElRK/CkknsBK3DumBmeZ6e+f6+mAMMJz6Bnce2EziiUaBnOfQSXVRwlcvQ8m9leg5Lu5RQHZzJXSzfHVrLN4mosNOGc9oGCuylOR0nx4rFFKeqc5gvQ8k2W6becgVhxn/HrP7FamaQ=
+	t=1728656886; cv=none; b=j3O2lT2nzFLOII7VR5CU5gBZq8yq6qdZcScyTQFp7NAApCxRFsd83Ljy0IFxcpYicv5vGeVj2+fr3TIifh1eda/6XDlgWerYzrG0fOu/z1jGUn4cc90M8/0NeLSmZocsG60sL+p5xr5ZB+DKkD8q5r/+CRIBQ/RUSGQjzgWPp5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728655864; c=relaxed/simple;
-	bh=qhRRa+1gCVFxS2URaNDFg5S6iBEmjXRytWLg5woUsrs=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Phfz3Rta+pBqcEQgt2Yc2XUtcRJ62P8m+9kXt6dilOa9m+Vra3+QPyyP4xwxfvZ1gxfYCUlVE7Ec5lrHxpyTk5UB7WIJclGnkWcVaVVv/WaFQW3lu3AbVZ9nqVEGBZUvj4jIHn+AunUz4gVn/+M9/fMoP4DrimTBzTPAkIU/w1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=T8IKJxF0; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1728656886; c=relaxed/simple;
+	bh=L+gXCKny+WaarEbGPHZM3dwhDvC1Mp2ZZsPvrE1lgBo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=kYWm8kp1d7IEX/rqAx+LhWYz/hW05nIsy4BwCeNP92KNzIIkRCo7IzDGG/4zlr+GwA3p2EwqT8YTa9bDzpJCJMjjgoy1f2uZxQLUx3m2PZXgCyKpL0Mvofvm21KhDx1DMoxDcp80PWJvZsNAZ/3qpYqS9bPGl3YV+ypidbypuC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WHVjerdU; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BCCuXu032566;
-	Fri, 11 Oct 2024 14:10:50 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49BAw7hA006577;
+	Fri, 11 Oct 2024 14:27:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ztomLQVgs+j0jsrvBYpYTGoNgMdBJzql6rt62p4C3rQ=; b=T8IKJxF0G1kUOn8i
-	KoR/taRehQU2jKuTRSxlvQsjiuygd9X1s1EBOWrpGGVljLgzHK3w1KcATsnLu847
-	sMVAGIEMAvxCnJ7vkRAjV4djI8YXkkoXLE7/DJYDsGc1nuzphFCTR4R1kaP2zt20
-	HDxBbBaguGbcuQmxHMgdZwXMIKlc/i82sOL0St+TZUS1hop9VSz5ETml2awEGgdC
-	zwOBJ1qM4xAswzYB5ByCS7jpwNNy1UQ6I/KanptYIDVeKYQKM+jlGJuWRMQskRwv
-	SPZ10ELZ+JzRVQGktrGmp88/N/WueurZZwIkagfjV9b2ELr63nq6LuVQ4r0tSzoI
-	nSc85Q==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 424cy7pp75-1
+	zLNY1QKiA67jtVorzKmEfKmwe+WAqPbBGq8S+bpyAzo=; b=WHVjerdUlVtW0KCl
+	4Mmxrn7fqWOKdGLTvuSQ7eOjr1shNhGb3FwZ3egWxs/g6Qlv+CKrtIvps+CbGtq3
+	+BR/EvjprAGPDGkz7KJSqEJ67eI/2NAnvcYeai6duKssWbkx0cDiQwhz7mdblEc1
+	AFZvnoHgBBwUw5qOZO2q5e+w5hVUy8v+G7FHAG5SMFHyVZRPHi3wTs6K7YvNotwZ
+	faoXMu9wKCNQKjm0O9Ngk37uP0XA52Beojq2Hxn6M/Z1OFRIsJWbozEkBCbUhkSj
+	8/0BnYOcfOy86+1sVonlUI5IfkvFEyR46B9iQQU1LBEkVIlZCwTNXbQ2/vPFltBA
+	NnsPMw==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 426t7st170-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Oct 2024 14:10:49 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49BEAmdP023564
+	Fri, 11 Oct 2024 14:27:46 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49BERjhn002310
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 11 Oct 2024 14:10:48 GMT
-Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 11 Oct 2024 07:10:38 -0700
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-To: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>
-CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <kernel@quicinc.com>
-Subject: [PATCH v3 8/8] arm64: dts: qcom: qcs6490-rb3gen2-vision-mezzanine: Add vision mezzanine
-Date: Fri, 11 Oct 2024 19:39:32 +0530
-Message-ID: <20241011140932.1744124-9-quic_vikramsa@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241011140932.1744124-1-quic_vikramsa@quicinc.com>
-References: <20241011140932.1744124-1-quic_vikramsa@quicinc.com>
+	Fri, 11 Oct 2024 14:27:45 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 11 Oct
+ 2024 07:27:44 -0700
+Message-ID: <468f05e2-1717-3bd1-2ccb-280865180b0c@quicinc.com>
+Date: Fri, 11 Oct 2024 08:27:43 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH net-next 3/3] accel/qaic: Pass string literal as format
+ argument of alloc_workqueue()
+Content-Language: en-US
+To: Simon Horman <horms@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        "Paolo
+ Abeni" <pabeni@redhat.com>
+CC: Woojung Huh <woojung.huh@microchip.com>, Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Jiawen Wu
+	<jiawenwu@trustnetic.com>,
+        Mengyuan Lou <mengyuanlou@net-swift.com>,
+        "Nathan
+ Chancellor" <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Bill Wendling <morbo@google.com>,
+        Justin Stitt <justinstitt@google.com>,
+        "Carl Vanderlip" <quic_carlv@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>, <UNGLinuxDriver@microchip.com>,
+        <netdev@vger.kernel.org>, <llvm@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <20241011-string-thing-v1-0-acc506568033@kernel.org>
+ <20241011-string-thing-v1-3-acc506568033@kernel.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20241011-string-thing-v1-3-acc506568033@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wlYPjgfPZvThRb51eocBvDgmxaUQAl9k
-X-Proofpoint-GUID: wlYPjgfPZvThRb51eocBvDgmxaUQAl9k
+X-Proofpoint-GUID: PSMKLJF5TTSph64DwS_tuqCkpSa_1WXE
+X-Proofpoint-ORIG-GUID: PSMKLJF5TTSph64DwS_tuqCkpSa_1WXE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- adultscore=0 mlxscore=0 lowpriorityscore=0 suspectscore=0 spamscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410110097
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ suspectscore=0 impostorscore=0 clxscore=1011 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410110100
 
-The Vision Mezzanine for the RB3 ships with an imx577 camera sensor.
-Enable the IMX577 on the vision mezzanine.
+On 10/11/2024 3:57 AM, Simon Horman wrote:
+> Recently I noticed that both gcc-14 and clang-18 report that passing
+> a non-string literal as the format argument of alloc_workqueue()
+> is potentially insecure.
+> 
+> E.g. clang-18 says:
+> 
+> .../qaic_drv.c:61:23: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+>     61 |         wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
+>        |                              ^~~
+> .../qaic_drv.c:61:23: note: treat the string as an argument to avoid this
+>     61 |         wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
+>        |                              ^
+>        |                              "%s",
+> 
+> It is always the case where the contents of fmt is safe to pass as the
+> format argument. That is, in my understanding, it never contains any
+> format escape sequences.
+> 
+> But, it seems better to be safe than sorry. And, as a bonus, compiler
+> output becomes less verbose by addressing this issue as suggested by
+> clang-18.
+> 
+> Also, change the name of the parameter of qaicm_wq_init from
+> fmt to name to better reflect it's purpose.
+> 
+> Compile tested only.
 
-An example media-ctl pipeline for the imx577 is:
+I'm not sure why this looks like it is targeted for net-next.  I'm not 
+seeing any dependencies on net code, nor is this a net driver.  My 
+confusion makes me think I might be missing something.
 
-media-ctl --reset
-media-ctl -v -V '"imx577 '19-001a'":0[fmt:SRGGB10/4056x3040 field:none]'
-media-ctl -V '"msm_csiphy3":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-media-ctl -l '"msm_csiphy3":1->"msm_csid0":0[1]'
-media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+I'll plan on independently taking this through DRM, unless something is 
+brought to my attention.
 
-yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video0
+Regarding the patch itself, looks sane to me.  I'll give it run through 
+on hardware soon.
 
-Signed-off-by: Hariram Purushothaman <quic_hariramp@quicinc.com>
-Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
-Signed-off-by: Trishansh Bhardwaj <quic_tbhardwa@quicinc.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |  1 +
- .../qcom/qcs6490-rb3gen2-vision-mezzanine.dts | 61 +++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi          | 33 ++++++++++
- 3 files changed, 95 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index aea1d69db541..7208da1d3697 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -111,6 +111,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts
-new file mode 100644
-index 000000000000..04b5fe80d38d
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2-vision-mezzanine.dts
-@@ -0,0 +1,61 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "qcs6490-rb3gen2.dts"
-+
-+&camcc {
-+	status = "okay";
-+};
-+
-+&camss {
-+	vdda-phy-supply = <&vreg_l10c_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
-+	status = "okay";
-+
-+	ports {
-+		/* The port index denotes CSIPHY id i.e. csiphy3 */
-+		port@3 {
-+			reg = <3>;
-+			csiphy3_ep: endpoint {
-+				clock-lanes = <7>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&imx577_ep>;
-+			};
-+		};
-+	};
-+};
-+
-+&cci1 {
-+	status = "okay";
-+};
-+
-+&cci1_i2c1 {
-+	camera@1a {
-+		compatible = "sony,imx577";
-+		reg = <0x1a>;
-+
-+		reset-gpios = <&tlmm 78 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default", "suspend";
-+		pinctrl-0 = <&cam2_default>;
-+		pinctrl-1 = <&cam2_suspend>;
-+
-+		clocks = <&camcc CAM_CC_MCLK3_CLK>;
-+		assigned-clocks = <&camcc CAM_CC_MCLK3_CLK>;
-+		assigned-clock-rates = <24000000>;
-+
-+		dovdd-supply  = <&vreg_l18b_1p8>;
-+
-+		port {
-+			imx577_ep: endpoint {
-+				clock-lanes = <7>;
-+				link-frequencies = /bits/ 64 <600000000>;
-+				data-lanes = <0 1 2 3>;
-+				remote-endpoint = <&csiphy3_ep>;
-+			};
-+		};
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 9bab2d8dc1b4..74f65129e653 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -5115,6 +5115,39 @@ tlmm: pinctrl@f100000 {
- 			gpio-ranges = <&tlmm 0 0 175>;
- 			wakeup-parent = <&pdc>;
- 
-+			cam2_default: cam2-default-state {
-+				rst-pins {
-+					pins = "gpio78";
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
-+
-+				mclk-pins {
-+					pins = "gpio67";
-+					function = "cam_mclk";
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
-+			};
-+
-+			cam2_suspend: cam2-suspend-state {
-+				rst-pins {
-+					pins = "gpio78";
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+					output-low;
-+				};
-+
-+				mclk-pins {
-+					pins = "gpio67";
-+					function = "cam_mclk";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
-+			};
-+
- 			cci0_default: cci0-default-state {
- 				pins = "gpio69", "gpio70";
- 				function = "cci_i2c";
--- 
-2.25.1
-
+-Jeff
 
