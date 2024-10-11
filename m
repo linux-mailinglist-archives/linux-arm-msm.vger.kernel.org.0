@@ -1,127 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-34012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34013-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FF9D999C13
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:24:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC622999C37
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 07:47:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A00B6B22128
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 05:24:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB59C1C22012
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 05:47:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5842C1F7062;
-	Fri, 11 Oct 2024 05:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 715D019CC01;
+	Fri, 11 Oct 2024 05:47:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=everestkc-com-np.20230601.gappssmtp.com header.i=@everestkc-com-np.20230601.gappssmtp.com header.b="HAGQ+XYF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="giP3xilH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f65.google.com (mail-pj1-f65.google.com [209.85.216.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE6D8F58
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 05:24:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.65
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E8F1946C8;
+	Fri, 11 Oct 2024 05:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728624268; cv=none; b=Cdvi05JR4Z/bQKJhCNNQKMPXo4nOSws4LL3alXZCYH/L8jsY57q9PGqK6HkX8BE2A7yd1q3vmuY+4O3SHNXewU8A7BAwP7vnleRMxeL1ff48KaFlGMiS4h5i5zQRwggBPGvkQs8C08QrU594nZ+LROK9ka5BL4b7WaeCbzM7mAY=
+	t=1728625624; cv=none; b=slPILBnZ+MDqsrh4AnuQixOUhgnCFmNLFRXGhn6xjaH4D2Y73yz+8ypevmkpTX995MkoG5IpsSlKCP5bNZ3ETXHAbrFsaZKJG+F3v81W1VJkEQyiJbnDPo/mzBwl4XEJFgpepfCZB67CxYba+ZwUgZKXGyPpGU+ey0PNx7MJe3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728624268; c=relaxed/simple;
-	bh=Eu5/Sx/8t4BbSYZ/Y0H81EOkKHldJwz4fE4MOrm/MkY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hq7IH0azi0anjB9mgkUeNa/4jhhju0pcbKv0YzhUXHau36P86jH42B1nz/IK5uFd2YXKfLe5tzt8bhrVJO1ZDfBMihAKJUmIT1D6e+tNhiJslX7LT8ocvj+3Xvrr/tWhGzAwn5+Wzsz43jJvg5ZQzFOyY/KTXq3KGR/6tpxllNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=everestkc.com.np; spf=pass smtp.mailfrom=everestkc.com.np; dkim=pass (2048-bit key) header.d=everestkc-com-np.20230601.gappssmtp.com header.i=@everestkc-com-np.20230601.gappssmtp.com header.b=HAGQ+XYF; arc=none smtp.client-ip=209.85.216.65
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=everestkc.com.np
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=everestkc.com.np
-Received: by mail-pj1-f65.google.com with SMTP id 98e67ed59e1d1-2e18856feb4so1575408a91.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 10 Oct 2024 22:24:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=everestkc-com-np.20230601.gappssmtp.com; s=20230601; t=1728624265; x=1729229065; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2BGOKIsMg4QP3m6tKk3FDK1aa5VlkpqPKb0X90CWsAo=;
-        b=HAGQ+XYFbq7tdQ3f25KCFGUKTML1YKfvlNBrxAbzIzN0eSPhMj6bPHzuOgRlkLTl0s
-         smTxTYskW6Bc+jaOq3xjXhrm+g7ZftDTYV44sbA48NYU5Xwd2PTw+7QLIm1ch8yrqt0W
-         OQE6FWSTxj+HDgx+QQ0oi/z03yzy2WGDZvJU+TrwdmfPt3CJQ7V1WncYYGHfojc8YvPF
-         KzISOqvQ6601/hhLS1rO9DfvDBJyWOUiOI798vKGPMu5xJo6ljPyW705qZo+KomK5eIq
-         5ATbBdVHc0mNUtDqZ7dc4PSL1hCGaZpgGenUovu12+h/ZYdI18PfNFT7ipjqwD+u+XIU
-         0y1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728624265; x=1729229065;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2BGOKIsMg4QP3m6tKk3FDK1aa5VlkpqPKb0X90CWsAo=;
-        b=I19rHghBry1zY02RLk/+TvEvQfKZyADrkxCqyIdyFkI1GgaFqNm3oSYoiMTEYxlmyQ
-         UGy0myM9B8DStqeThcXOT+6kAm+XyCPowHU+dapj4z7AzGEaAVkoMivPshOnybwarcYm
-         o3tKdYMEN+Du6tV6m7BiW5jn/CSHjAIVqAsdXO5+ZbWRFl/M0FF9cr+eX5trAerO8Yoq
-         +OeL0LcTJFdQ2EmYRQRLyUz7jZm3ukwnVMhQNuXn7zs8MR2qxc7dMi9CP2ql3Kzko4/Y
-         8Nh9K0g4arOQh/SoaArgw6NER/TgITtpTod30EC9OwV+RDN9onsfem9d0dUJU6N1pjAA
-         VrvA==
-X-Forwarded-Encrypted: i=1; AJvYcCWUdx6MgJX8G0qiSKeULZ6vzavGRtRo6XBcEB0o/b/YZ63Ulc0vlx5gtXIadsrCeulsrxUG7tDl5MWu5DwG@vger.kernel.org
-X-Gm-Message-State: AOJu0YwR7b/C33/0ZfXUTAk3+DMy7hB1FtwZbpZiodM3ZJ2r1wq5dFLv
-	AC4AT2jTcKN0uomvZlOU7uUgezosODGCBV59jJ9YfKfkTs2Hbq6c12dniswZZYM=
-X-Google-Smtp-Source: AGHT+IH//kLRhYfrjYGsfIlcKbHS3xoQNKhRAMnMq31mnsU+jdE6aFHUT5rih9UTGv4Vs6virTNbVA==
-X-Received: by 2002:a17:90b:3844:b0:2e2:8472:c350 with SMTP id 98e67ed59e1d1-2e2f0ad156dmr2213900a91.17.1728624265466;
-        Thu, 10 Oct 2024 22:24:25 -0700 (PDT)
-Received: from localhost.localdomain ([91.196.220.222])
-        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2e2d5df1133sm2380070a91.15.2024.10.10.22.24.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Oct 2024 22:24:24 -0700 (PDT)
-From: "Everest K.C." <everestkc@everestkc.com.np>
-To: robdclark@gmail.com,
-	sean@poorly.run,
-	konradybcio@kernel.org,
-	quic_abhinavk@quicinc.com,
-	dmitry.baryshkov@linaro.org,
-	marijn.suijten@somainline.org,
-	airlied@gmail.com,
-	simona@ffwll.ch
-Cc: "Everest K.C." <everestkc@everestkc.com.np>,
-	skhan@linuxfoundation.org,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	kernel-janitors@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH][next] drm/msm/a6xx: Remove logically deadcode in a6xx_preempt.c
-Date: Thu, 10 Oct 2024 23:23:14 -0600
-Message-ID: <20241011052315.4713-1-everestkc@everestkc.com.np>
-X-Mailer: git-send-email 2.43.0
+	s=arc-20240116; t=1728625624; c=relaxed/simple;
+	bh=sKRsXEyxaeRla+k2w1rKXz1PU3G9sKxCHTHbocZ7Nns=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=azD9d2k4BmcB3R4Jn5OhcB9AkBvwIOcKaAqQQ3nxqDklrgotDs72SxtehsE9KzAIhaVL7NEzHqFbjTY+dg1bwrAX+H5aW9gtIh+Q6nf+u7MeTnKFsBZrEG2ULj8G4aq41/T4q9X2sj1Oe3Cpcg5QB4+6eW8OAh/vcG3E0JRFzAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=giP3xilH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49B1HfBX005437;
+	Fri, 11 Oct 2024 05:46:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	l9fDGbw6pgOmDAjZ0nxSCghmAFvcpRpZ5c10egbYI1U=; b=giP3xilHNe8A/9r1
+	aXUrUIhsX0oIohd35KFh7lgTpo0VMZ/QPqE1zKqgI6WazrblKtC/dtM6ZR9F8+ti
+	JggNy5/NNdPMqa/AdYngu5eU/HMpkklR0ccgzaxn4rER9JqCT87qiWozO1wO3Rk6
+	ezpeSCmzgiPqkfWgxTEnQ5Z5LICxJcBwX9BgNhxBCrdWCXP1dMHFSCHT6zAA2VAZ
+	bnhF1W9MIcXvzosnh+FsCcWyUmemCtjNOkv8lVGYch3jI/66BlHpCLrPNX7v+7xV
+	7Bq3MposIuNmvXQWrL+5RA1HN9LAplh1iWM25nAM9YbylpS5vaINtiWaz3ohsQSl
+	FRFIWg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 426t7srfqh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Oct 2024 05:46:56 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49B5kjxx010041
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 11 Oct 2024 05:46:45 GMT
+Received: from [10.233.21.53] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 10 Oct
+ 2024 22:46:41 -0700
+Message-ID: <abc3516e-2c12-4612-9035-146b280b36df@quicinc.com>
+Date: Fri, 11 Oct 2024 13:46:38 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] pinctrl: qcom: add the tlmm driver for QCS8300
+ platforms
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Richard
+ Cochran" <richardcochran@gmail.com>,
+        <quic_tengfan@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>
+References: <20241009-qcs8300_tlmm-v2-0-9e40dee5e4f1@quicinc.com>
+ <20241009-qcs8300_tlmm-v2-2-9e40dee5e4f1@quicinc.com>
+ <yh5qzohy42r226a4e7yupimfdl6xccpntuffot7dnhrftagtae@4ruw5vmcknfq>
+Content-Language: en-US
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+In-Reply-To: <yh5qzohy42r226a4e7yupimfdl6xccpntuffot7dnhrftagtae@4ruw5vmcknfq>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: h73tjxlGhzXyl6k7L_50HFMFUVaBB5rs
+X-Proofpoint-ORIG-GUID: h73tjxlGhzXyl6k7L_50HFMFUVaBB5rs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=999 malwarescore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ suspectscore=0 impostorscore=0 clxscore=1015 adultscore=0 bulkscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410110036
 
-The ternary operator never returns -1 as `ring` will never be NULL.
-Thus, the ternary operator is not needed.
-Fix this by removing the ternary operation and only including the
-value it will return when the `ring` is not NULL.
 
-This was reported by Coverity Scan.
-https://scan7.scan.coverity.com/#/project-view/51525/11354?selectedIssue=1600286
 
-Fixes: 35d36dc1692f ("drm/msm/a6xx: Add traces for preemption")
-Signed-off-by: Everest K.C. <everestkc@everestkc.com.np>
----
- drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-index 6803d5af60cc..2fd4e39f618f 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
-@@ -297,8 +297,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
- 	 */
- 	ring->restore_wptr = false;
- 
--	trace_msm_gpu_preemption_trigger(a6xx_gpu->cur_ring->id,
--		ring ? ring->id : -1);
-+	trace_msm_gpu_preemption_trigger(a6xx_gpu->cur_ring->id, ring->id);
- 
- 	spin_unlock_irqrestore(&ring->preempt_lock, flags);
- 
--- 
-2.43.0
+On 10/10/2024 8:56 PM, Dmitry Baryshkov wrote:
+> On Wed, Oct 09, 2024 at 03:13:34PM GMT, Jingyi Wang wrote:
+>> Add support for QCS8300 TLMM configuration and control via the
+>> pinctrl framework.
+>>
+>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+>> ---
+>>  drivers/pinctrl/qcom/Kconfig.msm       |    7 +
+>>  drivers/pinctrl/qcom/Makefile          |    1 +
+>>  drivers/pinctrl/qcom/pinctrl-qcs8300.c | 1246 ++++++++++++++++++++++++++++++++
+>>  3 files changed, 1254 insertions(+)
+>>
+> 
+> [...]
+> 
+>> +	[125] = PINGROUP(125, phase_flag, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[126] = PINGROUP(126, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[127] = PINGROUP(127, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[128] = PINGROUP(128, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[129] = PINGROUP(129, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[130] = PINGROUP(130, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[131] = PINGROUP(131, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[132] = PINGROUP(132, _, _, _, _, _, _, _, _, _, _, egpio),
+>> +	[133] = UFS_RESET(ufs_reset, 0x92000),
+>> +	[134] = SDC_QDSD_PINGROUP(sdc1_rclk, 0x89000, 15, 0),
+>> +	[135] = SDC_QDSD_PINGROUP(sdc1_clk, 0x89000, 13, 6),
+>> +	[136] = SDC_QDSD_PINGROUP(sdc1_cmd, 0x89000, 11, 3),
+>> +	[137] = SDC_QDSD_PINGROUP(sdc1_data, 0x89000, 9, 0),
+>> +};
+>> +
+> 
+> [...]
+> 
+>> +
+>> +static const struct msm_pinctrl_soc_data qcs8300_pinctrl = {
+>> +	.pins = qcs8300_pins,
+>> +	.npins = ARRAY_SIZE(qcs8300_pins),
+>> +	.functions = qcs8300_functions,
+>> +	.nfunctions = ARRAY_SIZE(qcs8300_functions),
+>> +	.groups = qcs8300_groups,
+>> +	.ngroups = ARRAY_SIZE(qcs8300_groups),
+>> +	.ngpios = 134,
+> 
+> I believe this should be 133.
+> 
+133 should be right, thanks for review, will fix that.
+>> +	.wakeirq_map = qcs8300_pdc_map,
+>> +	.nwakeirq_map = ARRAY_SIZE(qcs8300_pdc_map),
+>> +	.egpio_func = 11,
+>> +};
+>> +
+> 
+Thanks,
+Jingyi
 
 
