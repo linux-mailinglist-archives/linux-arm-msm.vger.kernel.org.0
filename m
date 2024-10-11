@@ -1,133 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-34138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34139-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6693599A7FE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:39:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A007B99A810
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 17:42:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 960511C237B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 15:39:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A6A1280618
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 11 Oct 2024 15:42:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0ACA519ABC5;
-	Fri, 11 Oct 2024 15:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C632196D9D;
+	Fri, 11 Oct 2024 15:42:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NlXuI00z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="sKp+XNi0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7961991BD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 15:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D199194AF3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 15:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728661105; cv=none; b=i8gmkkuxPZ0IFulREhX3xGN1tCSJqC8g9lsBCru8lqtStkYLa5FlEFx7RvuKANRSKBhvLcVMjoZ7Auq6LzEpdMb/8SYSpRYpUbGmnfpZIO22882wYcoqtPSE6Zmbfj2KX8feMJ9GAs2pN72KKLgc1HOkjbaHME+dbcSiHk8rO28=
+	t=1728661338; cv=none; b=h1fC6U+f9Vdt1M5kpNgVG2JLDc4Ytsu+DM+38uoLpKY1F1bf+m83gT/ORfVNydT5zz30UWf7T9r0NSjztcVqtefGTMtwPX1pfZXLYjc8zGtRpTg+/1ZiO87DMaJaB2j43b7tr9GFeNkiksAnwYyvFxpgECqWS9XgSDVCGhLcs00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728661105; c=relaxed/simple;
-	bh=VGmlgzoYuoeXjf4/N4b7/dVovXvGFizGCIMQ61YHm/s=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=aoD8KRo3y3tF65r8q2g4Y69C2XmHdMsC115d7FGti1AoweZh3sCVUKnvEkls8JRjsTUo2YG6COutDreBRBKCpIWi4DJ8jDk54LoVvzR3eptscf0uMkcKXTJLy56X7mF0OPSDSQy0WseDEGtHFitPM7wi6p6abmu0eSj3ozEn0Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NlXuI00z; arc=none smtp.client-ip=209.85.218.53
+	s=arc-20240116; t=1728661338; c=relaxed/simple;
+	bh=FTB9gGHrl3Jgo0ca2thxV5WEisBt66Y4CiZP+f9CMcA=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=pJsJ+sEflSFr+m5itBzxMl2cAdjD3iB/8IKbxEdmI2g4oMLjWuwOS22H3E6XT+Lkw9P7b3kUQdmBn8fsdZB3vtIjOl/MJJZKLVWmGjEW9OTaRtTMuY3F938AHFamkjueOUdaRBqpy+bdSqXahW3Z6401g142HMzqagmvSE0Y7kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=sKp+XNi0; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-a99650da839so363794266b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:38:23 -0700 (PDT)
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-20c71603217so20288295ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 08:42:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728661102; x=1729265902; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VGmlgzoYuoeXjf4/N4b7/dVovXvGFizGCIMQ61YHm/s=;
-        b=NlXuI00zVFBTe5bu2ArvLqRNAxiB6Ss8qz+1O8pin7rOljK3WW0QLSBwiDspTz80rp
-         +PJaQCyY/+wrPgYV2to4jwR1N8C91Gvij0N0K1onkIGjACivnNDTzsahW/G+bw9cPGnN
-         H+0ZalScydRWsPif5dNeUQKT3owdNsa2lFFDo8OeSIAInGjyee9ZXfyLsQo8Voujhr6Z
-         mhSe+d/t3ETRtDkr6zGRz69/OUS8+oitB19WJ5dixcqg+Jhh8y5MsZ/MVXpqtzgVPG/U
-         dfVTIUhcCooUqhYrwgkZ8EbK+lvsAhwK9H8YuDp5nQcFCarY6Kd2nQDt7+BEuTAyXWKs
-         c1qA==
+        d=linaro.org; s=google; t=1728661336; x=1729266136; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FTB9gGHrl3Jgo0ca2thxV5WEisBt66Y4CiZP+f9CMcA=;
+        b=sKp+XNi0BNljQwl4hJt1qpUhGymq25wIhI21H5QnPkIY8EgwgY7RFKJZ03WHCeNlaN
+         t51Z2r3pK/ESS8vavXHHz4BkSXpViHKcFJDMPtEHCFhtqZHkgxxkshzwrra+wx6YID41
+         6GMXqNgE1BLTxcm7KTS4yV60G3TgqkCQde0Oqciiw7Ne/UVGeFJr26cbDLItFB1qxdSq
+         gvNZMSLYhuXFjQRiLr8rTZpoNuuh2UO3KUd1fR/Q1opQtNmh7jcBxvXQtohc9Gg3QZ/8
+         IyhF9MDtOCEbaxPAOg2/bsj+4COOXFqiatd4yrAoMrpFdFQosVHSPqYZdRRxObFe1C0m
+         KPHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728661102; x=1729265902;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=VGmlgzoYuoeXjf4/N4b7/dVovXvGFizGCIMQ61YHm/s=;
-        b=nV6AGK0WWPKj8fMiybXNv40pW3CVrcoTNQzISWEDx8NFzHdi1HYDqJYG3oZ3+/b2AD
-         AOj6UeHSrK+ePeviXzAvV00944aNIHx0UxIy93XcyjgtYI1ItHSSrznucLnNe2JJnKpo
-         XwdSQtIHpggUBOPkc4idmeovvEB68GfWNy0Ju77NTKOWbbHeCnorCblZBoKKsHXzpe+2
-         zM9Q1WtiIO8AZtyznrk4Y51LpwMniXupRhWYAIri1uQvVaCvYvRgOQ9mhYyncgEz2AMX
-         W7W8FNuQOHAvcF19Qwb7A7k918hCOeFizn2VOB/5eZA4d9AlnFdIUNPEidXxMlGeEzoN
-         QMLg==
-X-Forwarded-Encrypted: i=1; AJvYcCWvoN6cflcqKnVJYs7RL0rTylvNdATFhuxp8SCZKyAN+gF/IcyN3doEO4bPqfpF5SzhRyWZ/wrneUmIBSgW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYaODHEtImiqxqAx7lx5F23CqpWYlb+I9dwBNsnOHrmYme1TBL
-	e+geBYU4VBwVTZZPHfmEaL6zEITtylIWfUusPA9tgGfCeVeE0XV9w6dOx/CtpFg=
-X-Google-Smtp-Source: AGHT+IE4s8Q2Ca1GkHgtWLtOqANaHvXZHFNkqtGmRZ1SRo3AcPnPAE5BoCN9RPb+yOZ2GxGrHrFi8Q==
-X-Received: by 2002:a17:907:31c8:b0:a8d:2b7a:ff44 with SMTP id a640c23a62f3a-a99e3c97e69mr8078366b.32.1728661102107;
-        Fri, 11 Oct 2024 08:38:22 -0700 (PDT)
-Received: from localhost ([2a00:2381:fd67:101:6c39:59e6:b76d:825])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a99d3cc2c99sm20436166b.158.2024.10.11.08.38.21
+        d=1e100.net; s=20230601; t=1728661336; x=1729266136;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FTB9gGHrl3Jgo0ca2thxV5WEisBt66Y4CiZP+f9CMcA=;
+        b=HPDBb/8BkNP1B+omABja6DKoliJ9PEQxoST6AOwKrGE+TVp9p0uQVYSaA4j8SmfLVD
+         Fs4AdPYpBsm9IImwnILc+A36WD1AV+Wd5DX+nwArTiXIkUTfQbmDbOVrdnw7zdT3LfWZ
+         98oRtvu91+aAxeJEXPTRElo/baN1OJbBfoVhcos1uVSrd+p040zbktv18VIzzxuY9a1z
+         uA1Syi8y5j21WarMh5OR37jpOCfizY6+z+YHkSLhQxxVRiKgHJgGznVKtSww91R1qb7w
+         2khQJmo1F4vc+cp9iBbZLIcYx13XMmFOHUrYQPx+h4Fhb6DVbq9piDtYhkXys4Or68k/
+         gtQw==
+X-Forwarded-Encrypted: i=1; AJvYcCXsY6rrYtR1rMA1DZeUyZzAkNE6Uvc2kpFOe1FW9BW5C+yex8TWyB47GHfF92i2HngDKqtf64Mq/a7e4U3o@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrtlI9qBd9EPqTDyS2vHPAViONOPIU8rsa1nnjJfPIX83YAUjc
+	W9DFnjXo4UMz+p7q4buqYGzTi7Y4DvgE8w470b8TdgAjcyFESO7V8j7lshw8GQ==
+X-Google-Smtp-Source: AGHT+IHp+vfQ0g8KOlGcVVFt/8dwQEWB4fGW+orH2uW909xVMHZ0L705DG0vqVSgL8WCAKaDo4xSUw==
+X-Received: by 2002:a17:903:1c7:b0:20b:5046:354 with SMTP id d9443c01a7336-20ca16c2c0amr34930705ad.55.1728661335888;
+        Fri, 11 Oct 2024 08:42:15 -0700 (PDT)
+Received: from [127.0.0.1] ([36.255.17.48])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c8bada634sm24786675ad.5.2024.10.11.08.42.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 11 Oct 2024 08:38:21 -0700 (PDT)
+        Fri, 11 Oct 2024 08:42:15 -0700 (PDT)
+Date: Fri, 11 Oct 2024 21:12:11 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>, Qiang Yu <quic_qianyu@quicinc.com>
+CC: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org, andersson@kernel.org,
+ konradybcio@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ mturquette@baylibre.com, sboyd@kernel.org, abel.vesa@linaro.org,
+ quic_msarkar@quicinc.com, quic_devipriy@quicinc.com,
+ dmitry.baryshkov@linaro.org, kw@linux.com, lpieralisi@kernel.org,
+ neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-clk@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v6_3/8=5D_dt-bindings=3A_PCI=3A_qc?=
+ =?US-ASCII?Q?om=2Cpcie-x1e80100=3A_Add_=27global=27_interrupt?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
+References: <20241011104142.1181773-1-quic_qianyu@quicinc.com> <20241011104142.1181773-4-quic_qianyu@quicinc.com> <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
+Message-ID: <4802B12B-BAC1-4E99-BDFE-A2340F4A8F24@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Fri, 11 Oct 2024 16:38:21 +0100
-Message-Id: <D4T37UMU6SH0.1IFHCFVO3UJ7L@linaro.org>
-Cc: <stable@vger.kernel.org>, <broonie@kernel.org>,
- <dmitry.baryshkov@linaro.org>, <pierre-louis.bossart@linux.intel.com>,
- <vkoul@kernel.org>, <lgirdwood@gmail.com>, <perex@perex.cz>,
- <tiwai@suse.com>, <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] ASoC: qcom: sdm845: add missing soundwire runtime
- stream alloc
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
- <linux-sound@vger.kernel.org>, <srinivas.kandagatla@linaro.org>,
- <linux-arm-msm@vger.kernel.org>
-X-Mailer: aerc 0.18.2
-References: <20241009213922.999355-1-alexey.klimov@linaro.org>
- <f46623f3-b915-42db-a1e5-0427df310b8b@linaro.org>
-In-Reply-To: <f46623f3-b915-42db-a1e5-0427df310b8b@linaro.org>
 
-On Thu Oct 10, 2024 at 6:18 AM BST, Krzysztof Kozlowski wrote:
-> On 09/10/2024 23:39, Alexey Klimov wrote:
-> > During the migration of Soundwire runtime stream allocation from
-> > the Qualcomm Soundwire controller to SoC's soundcard drivers the sdm845
-> > soundcard was forgotten.
-> >=20
-> > At this point any playback attempt or audio daemon startup, for instanc=
-e
-> > on sdm845-db845c (Qualcomm RB3 board), will result in stream pointer
-> > NULL dereference:
+
+
+On October 11, 2024 8:03:58 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel=
+=2Eorg> wrote:
+>On Fri, Oct 11, 2024 at 03:41:37AM -0700, Qiang Yu wrote:
+>> Document 'global' SPI interrupt along with the existing MSI interrupts =
+so
+>> that QCOM PCIe RC driver can make use of it to get events such as PCIe
+>> link specific events, safety events, etc=2E
 >
-> ...
+>Describe the hardware, not what the driver will do=2E
 >
-> >=20
-> > Reproduced and then fix was tested on db845c RB3 board.
-> >=20
-> > Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: stable@vger.kernel.org
-> > Fixes: 15c7fab0e047 ("ASoC: qcom: Move Soundwire runtime stream alloc t=
-o soundcards")
-> > Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-> > Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-> > ---
+>>=20
+>> Though adding a new interrupt will break the ABI, it is required to
+>> accurately describe the hardware=2E
 >
-> We should fix this everywhere, not only sdm845. I'll look at remaining
-> sc7280.
+>That's poor reason=2E Hardware was described and missing optional piece
+>(because according to your description above everything was working
+>fine) is not needed to break ABI=2E
+>
 
-What about sc7180? Or is sc7180 one the platforms where soundwire is not us=
-ed
-and DSP is not involved?
-Anyway, I don't have hw to test sc7180 or sc7280.
+Hardware was described but not completely=2E 'global' IRQ let's the contro=
+ller driver to handle PCIe link specific events like Link up, Link down etc=
+=2E=2E=2E They improve user experience like the driver can use those interr=
+upts to start bus enumeration on its own=2E So breaking the ABI for good in=
+ this case=2E
 
-Thank you,
-Alexey
+>Sorry, if your driver changes the ABI for this poor reason=2E
+>
 
+Is the above reasoning sufficient?=20
+
+- Mani
+
+>NAK=2E
+>
+>Best regards,
+>Krzysztof
+>
+
+=E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
 
