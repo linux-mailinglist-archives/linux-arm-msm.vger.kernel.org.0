@@ -1,141 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-34192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACB7199B4E8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 14:43:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id CE17D99B4FB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 14:51:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F1CD1F210FC
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 12:43:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DFC541C21874
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 12:51:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD01D1714A1;
-	Sat, 12 Oct 2024 12:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 880FA186E40;
+	Sat, 12 Oct 2024 12:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ju3ooua8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eoHQMVTk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6420A1779A5
-	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 12:43:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9F9183CAA;
+	Sat, 12 Oct 2024 12:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728737021; cv=none; b=d86MA5L+5zYTOFpgOOQRMcZi5QaSGoFjplMVwOdAvAOiz/BI3THopKf8GDhuQv988fEsGemqxyQrqAWZ4HE6LGKo0QuFxHoPrLhzaUtGAiBIS3OQDOHSQaELGDVolpUDejIHuI7IGxBQjoHJpsR/pAAp8fw4PZyRnMzXpDsjIpc=
+	t=1728737452; cv=none; b=M0u6SUGelw8To+Nr0MQsvpjtJaZslO1emW+6/3uanO+ogp1VGkgn4GvkNhTk2EUDiMoA2PYClHCJQwcXedQgRtc6HuoGkXECVCs7bkGoDfKkbwp+xxvV9PLE/iuBuZgI5QZE++H2Ta82j0wniuaqvK7hwLdztR3Nkcn6cRrI2Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728737021; c=relaxed/simple;
-	bh=es/QDSH6gtqwI9WYHWPuuyFtbw4W22RmNGY6UTveNds=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u8JgGATxgx0HygSd+qD/7b5aI59H49Dq4uICAbiBTnLTbX3iOgkLW4E1AwlYQNZcJY8d8Pq09rqWutFuUInp1aivnNlud9vbLzqMUXgIgGz1p9Xbd+i3B9Dc3KSIO+3+vKIA9p/4BmNCenAxklIZ4Y/k/hAjzFOKq+VIYP/0qQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ju3ooua8; arc=none smtp.client-ip=209.85.210.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71e053cf1f3so2616068b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 05:43:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728737020; x=1729341820; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3gnFz7tseuF56igh+0oKa/uNHY8qwCdbzKzI1HJPT6k=;
-        b=Ju3ooua8pjwklh7kMNCXda/6NOr7oBVYfE4Hla0Uo0pSR7JfkP8Z247S7J92+18R+z
-         IjEP6clJPlkFystIGy2x9ji5XG/KuCkVbQfPLmY5woue0IX/iv17paWPxlIInH1VZ3Az
-         CqACw0ZyNG028lZcqy1NArysTuBJOHWPiJvuwOwODXYedFrBJ4fjDkqdWJApgWrM8BGX
-         MCyaQD1nWDHX9LWQi+BtDu4pi87qS+FfZVhHyIkom2t0mhRJeuvHGLpV5iFMtWdMRxmo
-         LxUfbm90FE9r46mfWyVDRacKDiwrp7IBv9mPYpieItE2LMOiyQaEOIJCnhe1xHmNcu5T
-         w/sA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728737020; x=1729341820;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3gnFz7tseuF56igh+0oKa/uNHY8qwCdbzKzI1HJPT6k=;
-        b=pOpyydDY9rYU+5TIGorlA0Pgq7f22e3gX+eMp2m3Vv5xFMrLSLb7729TGokiYVxqww
-         x8siSihwRe9oj69QuVD+9IleKLTvsC7Kpcr/hCyUmfwH3g0TC39y6EVyqp8pnEUkpSvp
-         JJQLA6rA5OkdA2atxDvBRppfB4NrRiCPeDuXgMAw5pnPgLunVix4O9WYmjbM07AXEvuH
-         PCC5Bql/m28QdrVlwkTvbjslshYROALcuO2Ziw3gkP+Ay69OQwxM9wyvnRtJI8XrXsTl
-         zXBggzxpni6Do+mYAunR5V5c7J7NKVcV888GOGi8SpXQBtTuD7HMwd+H89OlSZ265v4v
-         bRWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXZpL8VAYtXwmVq3lcXaz+LVcsk4eFiMuVI/L5OJY+iPjT6OUngmBf1uMLMuW+K+UNsaHsXbHWODVeVWKj+@vger.kernel.org
-X-Gm-Message-State: AOJu0YwU4o5a4kOQY4nsbDtrEpnfU37kJjB1UoF/mVne8c65qYKAyaEr
-	5kgV/dYri1PfFisV3b/9hgJt3tv/hqOWETuJBKD/bAviuviaOJOWQPSOImgKlA==
-X-Google-Smtp-Source: AGHT+IHLgJ+J4/xYmAuVt6xf/48DhnrDOA6kF300Q35rWhaYIUQJ8Mj05bGdegc05yUcWl1WTe6foA==
-X-Received: by 2002:a05:6a00:10c5:b0:71e:4bfb:a1f9 with SMTP id d2e1a72fcca58-71e4bfba31bmr4826246b3a.22.1728737019808;
-        Sat, 12 Oct 2024 05:43:39 -0700 (PDT)
-Received: from thinkpad ([220.158.156.122])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71e2aaba36bsm4075600b3a.167.2024.10.12.05.43.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Oct 2024 05:43:39 -0700 (PDT)
-Date: Sat, 12 Oct 2024 18:13:34 +0530
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
-	quic_parass@quicinc.com
-Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
-Message-ID: <20241012124334.4gsspgtuud4uudop@thinkpad>
-References: <3ad77846-b4a8-80ee-e9e1-d5cbf4add6d8@quicinc.com>
- <CAA8EJprRF0tVFZK9c=MT8bSRcBdRvcugBaeEzpX5-wfRyNgc3Q@mail.gmail.com>
- <c8be2bbf-a51c-a38f-6e6f-a88801f953d5@quicinc.com>
- <20240209075716.GA12035@thinkpad>
- <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
- <20241001101622.ys36slymgjbaz26q@thinkpad>
- <8459161B-87B8-481F-AE71-3D5156B1CA56@linaro.org>
- <20241001141948.g74rn6777ywvtcmx@thinkpad>
- <CFF89D4D-8131-47C2-95B8-A0E130A16E46@linaro.org>
- <9c24ba5d-431a-c45e-ce1c-3541eac7d017@quicinc.com>
+	s=arc-20240116; t=1728737452; c=relaxed/simple;
+	bh=7oQXNtNUYL0OjUtuqZC5xP1WxqiwNA7nZryyNsHdPSM=;
+	h=From:To:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=mPi52k2eKC5Z6PEcogsWB0PZK25jvkPRPJXtb4fP21e1OEyQb0jcXXwZoroQxzpRS9Pnc8TreXU1mFidQu24c94qBB6xXvLmg77Aj/J8hSJVQeIKLZJm6Hf2HTEgYe1v4t8ZMXsr1qJuM8y4huhHSomW2UoWfeSRT79DySfHEgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eoHQMVTk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E68C4CED4;
+	Sat, 12 Oct 2024 12:50:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728737451;
+	bh=7oQXNtNUYL0OjUtuqZC5xP1WxqiwNA7nZryyNsHdPSM=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=eoHQMVTkXjMmrmjEkpNb3grnuq/CZrUEfg1dgSX3bokX3TBhLAT2kH52o+9fu1wbv
+	 QpotIZj26pXAvjtEsaJ3IdyOC1qndkgQBia23u2bkNgLlkqPxEZWrGuMDkyUjR+CnH
+	 oQuTwEENJjOoRzzHdYomhJ8Q4y96m8RfTMuvciZ6s5peX7qA9dgUT2Mqiki/hExP2J
+	 CIEbhna9um1ZPPFAKcw/T4pzN33H+m2Fb532GmEclfBb959SgqjK2z+2perkOJdLib
+	 CIyba/V9UmkoC9ZiZuPKbirksvLxZ+5L8Trp+UVIWo3KlUDR5t81XCnSmk7CY7PA0h
+	 N3mwI3tXpQYhQ==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Alexey Klimov <alexey.klimov@linaro.org>, 
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20241012100957.129103-1-krzysztof.kozlowski@linaro.org>
+References: <20241012100957.129103-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: qcom: Select missing common Soundwire module
+ code on SDM845
+Message-Id: <172873744990.3950734.14854047170413382738.b4-ty@kernel.org>
+Date: Sat, 12 Oct 2024 13:50:49 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <9c24ba5d-431a-c45e-ce1c-3541eac7d017@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.15-dev-99b12
 
-On Fri, Oct 11, 2024 at 05:24:29PM +0530, Krishna Chaitanya Chundru wrote:
-
-[...]
-
-> > > The logic here is that the fixed endpoints in the switch will get an unique SID
-> > > and the devices getting attached to slots will share the same SID of the bus
-> > > (this is the usual case with all Qcom SoCs).
-> > > 
-> > > But I guess we would need 'iommu-map-mask' as well. Hope this addresses your
-> > > concern.
-> > 
-> > Yes, thank you!
-> > 
-> Hi dimitry & mani,
+On Sat, 12 Oct 2024 12:09:57 +0200, Krzysztof Kozlowski wrote:
+> SDM845 sound card driver uses qcom_snd_sdw_startup() from the common
+> Soundwire module, so select it to fix build failures:
 > 
-> This particular board variant doesn't expose any open slots to connect
-> a different endpoints like another switch(which might have BDF unknown
-> to us) so static table should be fine for this board variant.
+>   ERROR: modpost: "qcom_snd_sdw_startup" [sound/soc/qcom/snd-soc-sdm845.ko] undefined!
 > 
-> I tries to add iommu-map-mask property, the issue with that property is
-> that the driver is applying the mask to the bdf before searching for the
-> entry in the table. If I use a mask value which satisfies all the
-> entries in the table ( mask as 0x718) and if a new bdf is enumerated
-> lets say 0x600 due to mask 0x718 its value is again 0x600 only.
-> 
-> Can we skip iommu-map-mask property and use only static table for this
-> board as we know this board doesn't expose any open slots.
 > 
 
-Hmm, I was not aware that it doesn't have open slots. Fine with me then.
+Applied to
 
-- Mani
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks!
+
+[1/1] ASoC: qcom: Select missing common Soundwire module code on SDM845
+      commit: b930d8647869802a0d430aae6b1b05c3acb24a41
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
 
