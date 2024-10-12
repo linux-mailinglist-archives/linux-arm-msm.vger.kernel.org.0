@@ -1,124 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-34179-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 471BE99B07A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 05:38:00 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F04099B0C4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 06:14:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 705901C210BE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 03:37:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8885FB21D25
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 04:14:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0E8FB84FAD;
-	Sat, 12 Oct 2024 03:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B07912C52E;
+	Sat, 12 Oct 2024 04:14:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Onmg9MY+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eRWsNrf1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E2B41C6E;
-	Sat, 12 Oct 2024 03:37:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5A512C460
+	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 04:14:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728704275; cv=none; b=BoIzl74tesKgSRk/JXYmLQ/lYLNuHAcronOj1C9bly3TudMpH+pXNMh+bU8HQeFVdLOlUGV47wi/93wXtfrHx8zWO7nQovnBBpnrjyInoISln3+Mwxlf2GjywCLlu+UwzMFBe3RSHRuLl/wc2myNvbLaaheuAPBHns+XlLAP+UU=
+	t=1728706469; cv=none; b=rJ4iKMJICp6CSaCPRbXsta9EKrWzxW20ssmGI1kGo4LciNR6cj/O9kAZbe13fOcnxcl7T+At3k4MdChZzYW/e/fyqi2/bmU/XlV1kJivyYoeq7RP9k3wjSd+Iy2hLOFwKkh3Uy/NefMny3j3pRFsTaf8XpxyJ5w8bOqtoQayMc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728704275; c=relaxed/simple;
-	bh=nDTLNW21/SY6L/1mKys6bWAEfSqQxK7ebVskE/LZEU4=;
+	s=arc-20240116; t=1728706469; c=relaxed/simple;
+	bh=SuTMPHuKCPfjSdaSBGFmOzbjda4a5abih9KxQ1+GEnc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g0Y0JraxDTBDDW+CMULE8SaIr1uBl1tRpFlWxVEOJeg2g9Ox6oh20+VmKdrjHIZ60spufHSdqjYBlNtkrMrBy7eoKGM8cXKkx0hv39G4tmZR8JkvmwoMjpC6h1TG4ivQyGYyyA9mCU4ptfAqHJazd7w7u12bsnA5omw1KzwWkv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Onmg9MY+; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1728704274; x=1760240274;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=nDTLNW21/SY6L/1mKys6bWAEfSqQxK7ebVskE/LZEU4=;
-  b=Onmg9MY+R2xtj3pq1bd4j6xv8QMaln1iK+m/yIU+eBW3PAio8VfWhwcw
-   I1fTPbOuh1GkS46L7TyEg3oRlD7vwpT63EuytEXlofpbdWW/jmDNRKxcS
-   Vt9O2TfhYMQkkI+LbKX/eu9cUOrLw1sTFxuvVCHNiMLs3zzDNvMq/YZnd
-   3FWqd1QbhGexjE65qTXgRSvPKSdvsRM6fhJYLB+uJlhSTD7Uybdgd1iiK
-   vPmSU+dv7iQI3HCWbNS1D0agydoBcsx+WlkmbMlNbv0CqwvPwDI3Z7Zi0
-   nlqKavuxp1vwe2gr5QXf9sY/+FKhGNhP4NZs+TKayi0u+cbKrtBhe9sQt
-   Q==;
-X-CSE-ConnectionGUID: SEAZWXkIQgq07nDam9VJQA==
-X-CSE-MsgGUID: kAMzX8qcQEGcwjzdtUlPKA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="45589902"
-X-IronPort-AV: E=Sophos;i="6.11,197,1725346800"; 
-   d="scan'208";a="45589902"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2024 20:37:54 -0700
-X-CSE-ConnectionGUID: UWAFK5xlQImDOpIn5TSDug==
-X-CSE-MsgGUID: /sCsxcU+TXWuOY4tkY0i7A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,197,1725346800"; 
-   d="scan'208";a="77557665"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by orviesa007.jf.intel.com with ESMTP; 11 Oct 2024 20:37:51 -0700
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1szSwu-000D0l-1M;
-	Sat, 12 Oct 2024 03:37:48 +0000
-Date: Sat, 12 Oct 2024 11:37:24 +0800
-From: kernel test robot <lkp@intel.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: oe-kbuild-all@lists.linux.dev, stable@vger.kernel.org,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Steev Klimaszewski <steev@kali.org>
-Subject: Re: [PATCH] ASoC: qcom: sc7280: Fix missing Soundwire runtime stream
- alloc
-Message-ID: <202410121144.H6lBicv6-lkp@intel.com>
-References: <20241010054109.16938-1-krzysztof.kozlowski@linaro.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=PTJU6Uko6Bc/vLM1JT1u1e+cTJGG+7dtzAjrnWXVyKNXvXQ/JWIcn62ohxsn416In6wxS1q1NHwB8mNiXdsGMybT68kChr98mFLng/OliVaTSbdsz+5y4eFBJeSn2mIkn/ygZGBsMoQ14OSTe3zPpng1WyqjNzTrbOkI/ueBP8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eRWsNrf1; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-20c71603217so25312165ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 21:14:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728706467; x=1729311267; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RJqJylDUeKhlaDFX6bqWWTyQxNxM099zR8Q/xSAgz7I=;
+        b=eRWsNrf1emWuZQoNuj4A8ALElGTFmiBk3FPBwfxicVn364myMvC3qXOYTdQDlp34Vq
+         o77BfUbxTQCqjjJpvp+RfL/Zpbxfgq0442uE5PEdTMH+CXeBVWMeu5TKcvtj1Z2RPk9R
+         JbaW9fraV96i8KzvfA9Wlt/T8oi8KZKaMqLfJhFwBPN5qNjzqHRMN2rGyPg+eBauHQEh
+         mDNwpdYPtwqtEh40YE68WgSoK1I8a61aPzCcjGTAIfWecXkj7Y6ee0tH1ZQmUfsNKVjE
+         wovUQD2GpQYmCKIoj7wBxqGErRke+VoIYXCgYeyANe9gpzxSatVL+WBuOaZKgNlL13vT
+         rIGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728706467; x=1729311267;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RJqJylDUeKhlaDFX6bqWWTyQxNxM099zR8Q/xSAgz7I=;
+        b=OElH7j6/yg5DKd5ude5mPqVfbA9dLBE9FUAsZJTcunaN1q5Ga9hhQ8ybGQa8ReLNzV
+         dQs8/o83XdDF6l24wqGn207WrNXUjmIMy9MLinDMNfdSrlvJuZddtfJVcAB8PsxeC/3+
+         +vnzpleoEl/Gndhz/WPtqJBdw8mzTSeP7N6v9Ttio6iZR68ohMXS7H53mrl5+fXm/PWH
+         SVDyGz2hdo2LQFqo68sgGb0VW8X71KX7A6QXj+jk/fZEsdRt8hZ/qjZTZDbBZqOoF1LR
+         Jg3NRj15NnmNtbAOyLChs/4+QjWYmXojEE5WppFDB3kptdQ6UyLpiyhs/+Tv1EhiMNUo
+         a2/w==
+X-Forwarded-Encrypted: i=1; AJvYcCW6BnruNZs8x+MIzefuCDRmD1sRoM4KTSR6vfPDh2FWfC2c/wtqX4MDU1+ayDmu6mtShRkff01+9Ip/mFqb@vger.kernel.org
+X-Gm-Message-State: AOJu0YywD8yQOj2u6fEsf2/YRw7fkxyDuxWrH7/uBKNiWqC+UZF3I3kw
+	4a28tFDLuMW39SQW84RABiH/QLobYzS6oVN56LYo3jZfn7dsT2vpFJZHjT0Apg==
+X-Google-Smtp-Source: AGHT+IG+BMnbXVlgycfAEQ8uJvs3Se6DUQ9wtZpS90iXCykE8vg47B3NvxzG9M8NmLIkK1/Q56WHaA==
+X-Received: by 2002:a17:902:e5ca:b0:20c:8839:c515 with SMTP id d9443c01a7336-20ca16c5a89mr72940785ad.56.1728706467277;
+        Fri, 11 Oct 2024 21:14:27 -0700 (PDT)
+Received: from thinkpad ([36.255.17.101])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20c8bad991csm30855765ad.55.2024.10.11.21.14.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2024 21:14:26 -0700 (PDT)
+Date: Sat, 12 Oct 2024 09:44:20 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Qiang Yu <quic_qianyu@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, robh@kernel.org,
+	andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org,
+	conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+	abel.vesa@linaro.org, quic_msarkar@quicinc.com,
+	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
+	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+	Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v6 1/8] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy:
+ Document the X1E80100 QMP PCIe PHY Gen4 x8
+Message-ID: <20241012041420.uwcnzmdcm6kcjho5@thinkpad>
+References: <20241011104142.1181773-1-quic_qianyu@quicinc.com>
+ <20241011104142.1181773-2-quic_qianyu@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241010054109.16938-1-krzysztof.kozlowski@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241011104142.1181773-2-quic_qianyu@quicinc.com>
 
-Hi Krzysztof,
+On Fri, Oct 11, 2024 at 03:41:35AM -0700, Qiang Yu wrote:
+> PCIe 3rd instance of X1E80100 supports Gen 4 x8 which needs different
+> 8 lane capable QMP PCIe PHY with hardware revision v6.30. Document Gen
+> 4 x8 PHY as separate module.
+> 
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
 
-kernel test robot noticed the following build errors:
+Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[auto build test ERROR on broonie-sound/for-next]
-[also build test ERROR on linus/master v6.12-rc2 next-20241011]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+- Mani
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krzysztof-Kozlowski/ASoC-qcom-sc7280-Fix-missing-Soundwire-runtime-stream-alloc/20241010-134305
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-patch link:    https://lore.kernel.org/r/20241010054109.16938-1-krzysztof.kozlowski%40linaro.org
-patch subject: [PATCH] ASoC: qcom: sc7280: Fix missing Soundwire runtime stream alloc
-config: powerpc64-randconfig-r052-20241011 (https://download.01.org/0day-ci/archive/20241012/202410121144.H6lBicv6-lkp@intel.com/config)
-compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 70e0a7e7e6a8541bcc46908c592eed561850e416)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241012/202410121144.H6lBicv6-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202410121144.H6lBicv6-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
-WARNING: modpost: missing MODULE_DESCRIPTION() in mm/kasan/kasan_test.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in mm/kasan/kasan_test_module.o
->> ERROR: modpost: "qcom_snd_sdw_startup" [sound/soc/qcom/snd-soc-sc7280.ko] undefined!
+> Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org>
+> ---
+>  .../devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml    | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> index dcf4fa55fbba..680ec3113c2b 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+> @@ -41,6 +41,7 @@ properties:
+>        - qcom,x1e80100-qmp-gen3x2-pcie-phy
+>        - qcom,x1e80100-qmp-gen4x2-pcie-phy
+>        - qcom,x1e80100-qmp-gen4x4-pcie-phy
+> +      - qcom,x1e80100-qmp-gen4x8-pcie-phy
+>  
+>    reg:
+>      minItems: 1
+> @@ -172,6 +173,7 @@ allOf:
+>                - qcom,sc8280xp-qmp-gen3x2-pcie-phy
+>                - qcom,sc8280xp-qmp-gen3x4-pcie-phy
+>                - qcom,x1e80100-qmp-gen4x4-pcie-phy
+> +              - qcom,x1e80100-qmp-gen4x8-pcie-phy
+>      then:
+>        properties:
+>          clocks:
+> @@ -201,6 +203,7 @@ allOf:
+>                - qcom,sm8550-qmp-gen4x2-pcie-phy
+>                - qcom,sm8650-qmp-gen4x2-pcie-phy
+>                - qcom,x1e80100-qmp-gen4x2-pcie-phy
+> +              - qcom,x1e80100-qmp-gen4x8-pcie-phy
+>      then:
+>        properties:
+>          resets:
+> -- 
+> 2.34.1
+> 
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+மணிவண்ணன் சதாசிவம்
 
