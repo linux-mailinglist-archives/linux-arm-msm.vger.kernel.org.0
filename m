@@ -1,86 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-34183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F31AE99B135
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 08:13:09 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0A0E99B13F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 08:18:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A51221F23110
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 06:13:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FCDB283ED0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 06:18:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0A9B126BF7;
-	Sat, 12 Oct 2024 06:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 482A413A899;
+	Sat, 12 Oct 2024 06:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Tjmwf6fO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ijQlXKcL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B6883CDB;
-	Sat, 12 Oct 2024 06:13:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D79413A25F
+	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 06:17:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728713584; cv=none; b=R5xde2AiKsm190MnPRL4Kwp0UGR0iKicRZIrQTbrDoHh2bobuIlwEYsdH2CucR4HKPlMJSA9Z8PJVVCYI/uzX6x8Z+RdshEo8Hn4ai10GAzuRCN9Ja/IdEAt3ocONsa3obcEk8qJa+7NtXE6PR2DWDuZvdKfeduVjzjO25sLnH8=
+	t=1728713879; cv=none; b=vAmpkH0BwDfU8UrzaT0lxvmTwj5o5BDgeBbdHtRAqEckyt5vs8sTrxqfOG62EG0Z7XjWivNorK6YstQqLX3SXee6i7b36ixbojgJErEhU+Gd3RtB0n0o9a1I0StgvS7fHO6RViHPYIDoIl1rRqltvxE3y6jbWO+MiY75qwX4zqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728713584; c=relaxed/simple;
-	bh=m42CQk4y980tF4qvboDX1NWtreWtA3r69nSD6YFedPk=;
+	s=arc-20240116; t=1728713879; c=relaxed/simple;
+	bh=35uxd4xytmpWtfl0pjeAVBocR5PQ845hs9VhCdoA424=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p6Ee+seyCBwU1iIcXfw7LtNqaBi/0CK7ZWgFiv8R+rXhgMKxPHoIuQa48ZSq2jkn7x11vJk5altd0Z8tEaPmPAgDNdUO+czOVqQ1p8HiCGJkUzcIz1qATOTLOV5q6P0jlZsR/66e8U5W9el4MftNHo/o/UXpqir1UCT2CVWzntM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Tjmwf6fO; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1728713583; x=1760249583;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=m42CQk4y980tF4qvboDX1NWtreWtA3r69nSD6YFedPk=;
-  b=Tjmwf6fOn9NYHRDRKiC7OWieSgWUwjg+UtwmYm1egS1YYLZVsozW83Yo
-   e8jwfJxhXRdVtaHtO1JHaCECjjkEVVrgEiHXXI8e1Xf3+98Tob7Oq1Qw0
-   gjvKMv+vAoq/NOqyE0pSv6pM5o8AnBIHSilvylRTlnNnu6dcUcOJ7js8R
-   Xf5g6mKKM5Zzf0KcPJT3wOIkWUvOme8WnMoOS1kme9qyGqCxamFFTHNwS
-   ZLEnxDWTqSqU6y3OTDeNXpwGURzrUSxLaystbJXpPX32e42XP2bcUmxRF
-   OyWjhTDNfcmw5WEr/1zCRt5S19BDMmTZXpYh+f12g7BUfE2e7EdDd9fAc
-   g==;
-X-CSE-ConnectionGUID: pXrpc4jSS1O6zTAKJOch+g==
-X-CSE-MsgGUID: o/Rlx5auQemFUeNSY91DHQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="38684798"
-X-IronPort-AV: E=Sophos;i="6.11,197,1725346800"; 
-   d="scan'208";a="38684798"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2024 23:13:02 -0700
-X-CSE-ConnectionGUID: oyxCgg7mQ/qA1YxHM2sphQ==
-X-CSE-MsgGUID: m1D1bpIJQ0mWI69VJg+KRQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,197,1725346800"; 
-   d="scan'208";a="77202878"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by fmviesa008.fm.intel.com with ESMTP; 11 Oct 2024 23:12:54 -0700
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1szVMy-000D6d-0H;
-	Sat, 12 Oct 2024 06:12:52 +0000
-Date: Sat, 12 Oct 2024 14:12:36 +0800
-From: kernel test robot <lkp@intel.com>
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
-	xiaoyao.li@intel.com, yilun.xu@intel.com,
-	chao.p.peng@linux.intel.com, jarkko@kernel.org, amoorthy@google.com,
-	dmatlack@google.com, yu.c.zhang@linux.intel.com,
-	isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
-	vannapurve@google.com, ackerleytng@google.com,
-	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com
-Subject: Re: [PATCH v3 01/11] KVM: guest_memfd: Make guest mem use guest mem
- inodes instead of anonymous inodes
-Message-ID: <202410121337.0ETimfvJ-lkp@intel.com>
-References: <20241010085930.1546800-2-tabba@google.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=rt92faoJYJJaJEWPpwC9+H/gCV0EChYGitw/tkkdtOhBhHvSJOW/w1miFYrHVG+lQWR2qwKPug1CmUktPw/YecI+qZn6gMSfyba5fAyz+yct33CKZvUzrTW0BzzBFfaw68ppKjSHkStjug/RWfplJF5VG0J2ckeXW7x5IBoIulc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ijQlXKcL; arc=none smtp.client-ip=209.85.208.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2fad100dd9eso27127451fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 23:17:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728713876; x=1729318676; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Q7VycGiDmbT8NDIEv3VX1atPVNk5kqPI5PABIHipxI=;
+        b=ijQlXKcLu//gjp3TlT6408r88GZ0nEd84k16poYjrTfUuAvA5dP7UPinXDsBY7dzpx
+         ffHQR8NVvW++Xi4Vf+K/R5YobAZhVPSkiRmXzes4LfTGzrNzRQ4hd7cZLaVpXlUpkZqr
+         NVsFb7xm2Cz5ostAr1Ipj5Ilpj/UuzTkW1slopps+cK4zUtVvI9wwvFehNorkC1rsXOc
+         ENb1W77E78fAEmnzgBm7vaIVpKOPRKkKLn4xEF0Udfx1AwUwv7feUJnNrx44ijJyUEQk
+         eeiB8cu1k8m6nruxsfvindoQOuJk0+qCqndd0K9aMjFUUDTP2Bm9OzRkD4xIkNSD53YD
+         GFIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728713876; x=1729318676;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Q7VycGiDmbT8NDIEv3VX1atPVNk5kqPI5PABIHipxI=;
+        b=ZbKmRKgCYprLKT9/fnOgfjE89d2THlzR//lLBoZnw3ofTH9E/H/sAqSoFq94iozj2i
+         4PbzMUWxXgOZrV8PzjHOOPc4cDA0WVm/Swy+/w31/FlDVr2i8QF1RFBbSHkWx0sRQefL
+         WO2P13URRqQouC+DzduZwOj0ptCaKNSwB4mlprQr7XICdxuz8KijdWpcg5wZeKi3qZ7K
+         8OI00puTgU7p2wFlQL/4UDW2K6n26ZmyAorygqzN+BSoQ4XX//GCTmqouvewNWH1tJjd
+         PtyGSdZjB96TWGsK3mAMuKY4jAvEjL+7BIngoPhTq0zbm0AD04xSZLytGW24RLihfS46
+         T2EQ==
+X-Gm-Message-State: AOJu0YyrslmC7nLwCPTsMMaKufpmCSXjGNj+GfZAUVHNM+m6gvbVvjH5
+	yUTjB+a5N+H+UMVAiHWD5ebHlgu6CMQFt6aQv2SbSWgN9ErkjBTu5iBAN7i3fVo=
+X-Google-Smtp-Source: AGHT+IE+lAgJkNquMREXe1TmPbV+3JD5TMKDHxMdgEkU0ZUlRFxtWBhCUVpjtMxSfHO5beBR9qTnQw==
+X-Received: by 2002:a2e:a549:0:b0:2fa:e4ae:3388 with SMTP id 38308e7fff4ca-2fb32728039mr22489201fa.15.1728713875647;
+        Fri, 11 Oct 2024 23:17:55 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb2474c5b4sm7187341fa.117.2024.10.11.23.17.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Oct 2024 23:17:54 -0700 (PDT)
+Date: Sat, 12 Oct 2024 09:17:51 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Jonathan Marek <jonathan@marek.ca>
+Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: x1e80100: enable OTG on USB-C
+ controllers
+Message-ID: <f3xyjvxnuonzk6adxbbbrhg77bjnvl6xnvddfm2b3dselynwbj@zjtldmkwha3s>
+References: <20241011231624.30628-1-jonathan@marek.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,32 +84,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241010085930.1546800-2-tabba@google.com>
+In-Reply-To: <20241011231624.30628-1-jonathan@marek.ca>
 
-Hi Fuad,
+On Fri, Oct 11, 2024 at 07:16:21PM -0400, Jonathan Marek wrote:
+> These 3 controllers support OTG and the driver requires the usb-role-switch
+> property to enable OTG. Add the property to enable OTG by default.
+> 
+> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
+> 
 
-kernel test robot noticed the following build errors:
-
-[auto build test ERROR on 8cf0b93919e13d1e8d4466eb4080a4c4d9d66d7b]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Fuad-Tabba/KVM-guest_memfd-Make-guest-mem-use-guest-mem-inodes-instead-of-anonymous-inodes/20241010-170821
-base:   8cf0b93919e13d1e8d4466eb4080a4c4d9d66d7b
-patch link:    https://lore.kernel.org/r/20241010085930.1546800-2-tabba%40google.com
-patch subject: [PATCH v3 01/11] KVM: guest_memfd: Make guest mem use guest mem inodes instead of anonymous inodes
-config: x86_64-rhel-8.3-rust (https://download.01.org/0day-ci/archive/20241012/202410121337.0ETimfvJ-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241012/202410121337.0ETimfvJ-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202410121337.0ETimfvJ-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "security_inode_init_security_anon" [arch/x86/kvm/kvm.ko] undefined!
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
