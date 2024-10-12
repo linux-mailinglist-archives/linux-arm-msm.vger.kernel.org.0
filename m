@@ -1,104 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-34191-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8F2C99B387
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 13:28:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id ACB7199B4E8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 14:43:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D92D91C2180F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 11:28:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F1CD1F210FC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 12:43:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B99FC19CCF3;
-	Sat, 12 Oct 2024 11:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD01D1714A1;
+	Sat, 12 Oct 2024 12:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lmOPj5zV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ju3ooua8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0EC19CC27;
-	Sat, 12 Oct 2024 11:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6420A1779A5
+	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 12:43:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728732404; cv=none; b=WwoiQaW0/fFPl7FKs4eqBbIw+jGfq/rOEIT6YQJBPF+VwD6g1GGseNmZ4CLel9b5jwtRwBX4zMOuBt5D0WUDPmq2/EBe7t0X0agy8WMctXzfkuCR69p7tNDi8CeDNEBefo1KnPCGNVSiin7gvJEtvEErWThKN0+J/X37uI9a6ik=
+	t=1728737021; cv=none; b=d86MA5L+5zYTOFpgOOQRMcZi5QaSGoFjplMVwOdAvAOiz/BI3THopKf8GDhuQv988fEsGemqxyQrqAWZ4HE6LGKo0QuFxHoPrLhzaUtGAiBIS3OQDOHSQaELGDVolpUDejIHuI7IGxBQjoHJpsR/pAAp8fw4PZyRnMzXpDsjIpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728732404; c=relaxed/simple;
-	bh=ozWgqL4UktxLyLZYhW3nptSMtJ/SZyukKb1lUVsTyb8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nf+nV2bJnSmOEK57xPVPvC5h7ARjIAoHnWPXhP//XBkGcq3gF5L/M93N7uc0TkJIt/lOjF06IfpNSRm8hXTw7niO3FnBYHd7dDFIKbo4njmRIj928D9h7XtZ/d34vRDuvPsecF46HtCR+EXDTTqGk0xNvagZAyeoGP6CB/mwikU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lmOPj5zV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14ADFC4CEC6;
-	Sat, 12 Oct 2024 11:26:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728732404;
-	bh=ozWgqL4UktxLyLZYhW3nptSMtJ/SZyukKb1lUVsTyb8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmOPj5zVFGU35vsUa9CRKLcTpx5Q7WQj+0L+u7tnIXM4zmtrQMhMSVHc3IIQtdgEs
-	 SEa4PAb13MUP9uujGHPrxLG1T3brFWXjl/v9UPEnQOleNqYSIbOmhdQLp8+xfCwpRx
-	 34Bbtr5sWvLM/XnuiBemC6dRDehWTHB4o/LBt4xi3EQZLPPRLj/fjJFQomsAVhKWzG
-	 Mav4Z+/sSLSaexV/Q1w4uAZiwCUUfDqF2H6C/YuJ9ZC6dwDeKzyYd4HmkFIpsTOc11
-	 kYZJ8xFfqb2UwuIkMHt6rRv7p6RhzqE2NTxbMv8/swZSN0Ky1f82gPlgyScAPQR+sH
-	 TSqnoia0RdfQQ==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Cc: Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	srinivas.kandagatla@linaro.org,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	alsa-devel@alsa-project.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-sound@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.11 12/16] ASoC: qcom: sm8250: add qrb4210-rb2-sndcard compatible string
-Date: Sat, 12 Oct 2024 07:26:08 -0400
-Message-ID: <20241012112619.1762860-12-sashal@kernel.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241012112619.1762860-1-sashal@kernel.org>
-References: <20241012112619.1762860-1-sashal@kernel.org>
+	s=arc-20240116; t=1728737021; c=relaxed/simple;
+	bh=es/QDSH6gtqwI9WYHWPuuyFtbw4W22RmNGY6UTveNds=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u8JgGATxgx0HygSd+qD/7b5aI59H49Dq4uICAbiBTnLTbX3iOgkLW4E1AwlYQNZcJY8d8Pq09rqWutFuUInp1aivnNlud9vbLzqMUXgIgGz1p9Xbd+i3B9Dc3KSIO+3+vKIA9p/4BmNCenAxklIZ4Y/k/hAjzFOKq+VIYP/0qQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ju3ooua8; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-71e053cf1f3so2616068b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 05:43:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728737020; x=1729341820; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3gnFz7tseuF56igh+0oKa/uNHY8qwCdbzKzI1HJPT6k=;
+        b=Ju3ooua8pjwklh7kMNCXda/6NOr7oBVYfE4Hla0Uo0pSR7JfkP8Z247S7J92+18R+z
+         IjEP6clJPlkFystIGy2x9ji5XG/KuCkVbQfPLmY5woue0IX/iv17paWPxlIInH1VZ3Az
+         CqACw0ZyNG028lZcqy1NArysTuBJOHWPiJvuwOwODXYedFrBJ4fjDkqdWJApgWrM8BGX
+         MCyaQD1nWDHX9LWQi+BtDu4pi87qS+FfZVhHyIkom2t0mhRJeuvHGLpV5iFMtWdMRxmo
+         LxUfbm90FE9r46mfWyVDRacKDiwrp7IBv9mPYpieItE2LMOiyQaEOIJCnhe1xHmNcu5T
+         w/sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728737020; x=1729341820;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3gnFz7tseuF56igh+0oKa/uNHY8qwCdbzKzI1HJPT6k=;
+        b=pOpyydDY9rYU+5TIGorlA0Pgq7f22e3gX+eMp2m3Vv5xFMrLSLb7729TGokiYVxqww
+         x8siSihwRe9oj69QuVD+9IleKLTvsC7Kpcr/hCyUmfwH3g0TC39y6EVyqp8pnEUkpSvp
+         JJQLA6rA5OkdA2atxDvBRppfB4NrRiCPeDuXgMAw5pnPgLunVix4O9WYmjbM07AXEvuH
+         PCC5Bql/m28QdrVlwkTvbjslshYROALcuO2Ziw3gkP+Ay69OQwxM9wyvnRtJI8XrXsTl
+         zXBggzxpni6Do+mYAunR5V5c7J7NKVcV888GOGi8SpXQBtTuD7HMwd+H89OlSZ265v4v
+         bRWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXZpL8VAYtXwmVq3lcXaz+LVcsk4eFiMuVI/L5OJY+iPjT6OUngmBf1uMLMuW+K+UNsaHsXbHWODVeVWKj+@vger.kernel.org
+X-Gm-Message-State: AOJu0YwU4o5a4kOQY4nsbDtrEpnfU37kJjB1UoF/mVne8c65qYKAyaEr
+	5kgV/dYri1PfFisV3b/9hgJt3tv/hqOWETuJBKD/bAviuviaOJOWQPSOImgKlA==
+X-Google-Smtp-Source: AGHT+IHLgJ+J4/xYmAuVt6xf/48DhnrDOA6kF300Q35rWhaYIUQJ8Mj05bGdegc05yUcWl1WTe6foA==
+X-Received: by 2002:a05:6a00:10c5:b0:71e:4bfb:a1f9 with SMTP id d2e1a72fcca58-71e4bfba31bmr4826246b3a.22.1728737019808;
+        Sat, 12 Oct 2024 05:43:39 -0700 (PDT)
+Received: from thinkpad ([220.158.156.122])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71e2aaba36bsm4075600b3a.167.2024.10.12.05.43.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Oct 2024 05:43:39 -0700 (PDT)
+Date: Sat, 12 Oct 2024 18:13:34 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
+Message-ID: <20241012124334.4gsspgtuud4uudop@thinkpad>
+References: <3ad77846-b4a8-80ee-e9e1-d5cbf4add6d8@quicinc.com>
+ <CAA8EJprRF0tVFZK9c=MT8bSRcBdRvcugBaeEzpX5-wfRyNgc3Q@mail.gmail.com>
+ <c8be2bbf-a51c-a38f-6e6f-a88801f953d5@quicinc.com>
+ <20240209075716.GA12035@thinkpad>
+ <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
+ <20241001101622.ys36slymgjbaz26q@thinkpad>
+ <8459161B-87B8-481F-AE71-3D5156B1CA56@linaro.org>
+ <20241001141948.g74rn6777ywvtcmx@thinkpad>
+ <CFF89D4D-8131-47C2-95B8-A0E130A16E46@linaro.org>
+ <9c24ba5d-431a-c45e-ce1c-3541eac7d017@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.11.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <9c24ba5d-431a-c45e-ce1c-3541eac7d017@quicinc.com>
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+On Fri, Oct 11, 2024 at 05:24:29PM +0530, Krishna Chaitanya Chundru wrote:
 
-[ Upstream commit b97bc0656a66f89f78098d4d72dc04fa9518ab11 ]
+[...]
 
-Add "qcom,qrb4210-rb2-sndcard" to the list of recognizable
-devices.
+> > > The logic here is that the fixed endpoints in the switch will get an unique SID
+> > > and the devices getting attached to slots will share the same SID of the bus
+> > > (this is the usual case with all Qcom SoCs).
+> > > 
+> > > But I guess we would need 'iommu-map-mask' as well. Hope this addresses your
+> > > concern.
+> > 
+> > Yes, thank you!
+> > 
+> Hi dimitry & mani,
+> 
+> This particular board variant doesn't expose any open slots to connect
+> a different endpoints like another switch(which might have BDF unknown
+> to us) so static table should be fine for this board variant.
+> 
+> I tries to add iommu-map-mask property, the issue with that property is
+> that the driver is applying the mask to the bdf before searching for the
+> entry in the table. If I use a mask value which satisfies all the
+> entries in the table ( mask as 0x718) and if a new bdf is enumerated
+> lets say 0x600 due to mask 0x718 its value is again 0x600 only.
+> 
+> Can we skip iommu-map-mask property and use only static table for this
+> board as we know this board doesn't expose any open slots.
+> 
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Link: https://patch.msgid.link/20241002022015.867031-3-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- sound/soc/qcom/sm8250.c | 1 +
- 1 file changed, 1 insertion(+)
+Hmm, I was not aware that it doesn't have open slots. Fine with me then.
 
-diff --git a/sound/soc/qcom/sm8250.c b/sound/soc/qcom/sm8250.c
-index a15dafb99b337..50e175fd521ce 100644
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -166,6 +166,7 @@ static int sm8250_platform_probe(struct platform_device *pdev)
- 
- static const struct of_device_id snd_sm8250_dt_match[] = {
- 	{.compatible = "qcom,sm8250-sndcard"},
-+	{.compatible = "qcom,qrb4210-rb2-sndcard"},
- 	{.compatible = "qcom,qrb5165-rb5-sndcard"},
- 	{}
- };
+- Mani
+
 -- 
-2.43.0
-
+மணிவண்ணன் சதாசிவம்
 
