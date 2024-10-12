@@ -1,107 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-34186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFE4199B195
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 09:34:29 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 451F399B2BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 11:56:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6C36028186D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 07:34:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B9E19B23A24
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 09:56:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DD1B13D600;
-	Sat, 12 Oct 2024 07:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806341552FA;
+	Sat, 12 Oct 2024 09:55:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QapHBhsQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikFdJkMz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5E5A13A899
-	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 07:34:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B1914EC73;
+	Sat, 12 Oct 2024 09:55:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728718461; cv=none; b=cR0MJhSMuiBkECZsGUTf/VCDT02xIXnccIf+mu9ORB82FU8dN7hFI7hgSVlDYSNRWmCXiLt/vCQlWIWdiGvaXHM/Rx42A1IeY8m9zgUTJXGneQdA0JZ7NjVoiSsZhtrY8MPnROOK6GbkJPOoRlume+QrDkNVOofDt+n9akMW79A=
+	t=1728726942; cv=none; b=X+wGS2aEldJoUC85AI1giok4sdtrn+Q91/ZSzEigr/85iQuywnjq3BquAZ2qVYkNtR7HdNuOB3/pR+J10lXrGT3BoQPK9f0O8x4UOCaSjXKpCwxYnBHv3TqfdNmx5SD57FtvoeSox+/6iIPplRRGzZ8vYxtwW9qXn8v20YT/5Wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728718461; c=relaxed/simple;
-	bh=6sriM8ddV0xlSeGd/m417jYDh9+a3WpfG4nkK1Z8JgQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uG4htqP/M9sCJzTM+UYrB+rIkWE+h3SS27c2YRYdhattwRbmiBG9yF5xF9EcHsIHzhUrnFGp4D3Ng5KKckqcdr3w9kSdr1plDhJs7QrOb/hewkj5INHqY+ixoeesuXRaTP+HkqqMHL53ub7IBv0hH4R6wJHtDEwUBE6qHRgpQCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QapHBhsQ; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5398e4ae9efso3534523e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 00:34:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728718457; x=1729323257; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fhVJE2nKaPLrTxSXxo0fB/smrix5pHzfd/rNW6TY5pY=;
-        b=QapHBhsQ7BdKaJ0RE1nImZcaQB+8Iu9ac93Dl+K2SDeCwGB1HGd13Jhfbu7WcQhTBS
-         HZvg51Nv9bS8kXe+jRz81wpd72yoj5wsNCCFE72ayqpbkMNd7Aur/roArHrdUkL+QYAm
-         R471oZZi7rkaZ+pe/ssgpsn8TjTqW3gEZaSyqFoHdlM8hAM9m9imxV1hnyI7hIc1d4e/
-         zcCPGedhBNDOhMD1ujaoieHYU3D8WinZ70wIT+rPFoHaT1g+kvYpHC/SLLbna4idReYh
-         0W1W5bVWLxW5S10pqZr7wzuXSa3jED2QP9w+VxQmcM98GGCeXJxvR4E00vksxYQFhsdp
-         Ag2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728718457; x=1729323257;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fhVJE2nKaPLrTxSXxo0fB/smrix5pHzfd/rNW6TY5pY=;
-        b=RLGvMoW/O6YNaEwdwx5/hQmV/uQUotVjIWjJUus6lPQO7EKlV+5MEoTzITmXmVEDY9
-         YvP20FRMPmBQCPV8xEuLNnDnkCjwtS9VCZUcRFIXp/f+uNt2/zbxnTSWsF75oSB/JhRn
-         s3XMhLMY86ikAGL2dAz7DHyaGvoVylr5i1vEvWOCb4OMmpDCAN7TOjrKTtVnYoXKOJ01
-         /yQNyK3vBYrJb78bcTgz9mEX14TdXcfpfmc1thJ0szLoT6LOvZ4WfgsYxzVupUM8V2BA
-         U1Zb9ngqxOz9/r3dppx86IdBkHkLV6n631UwkZLZSmPLMgnOkA1WIHKSz4G82+dS1nxR
-         Xu1A==
-X-Gm-Message-State: AOJu0YzDPnXUCo3uFTF+00lxYyqd8NyR6ZEIsp9cHt3cFPczQy9igLKZ
-	UTpKWvkrOe5u7ZuTYd4Gk3MrGLp759P/6NEfKlHVir9EQ1Rr5cUY4k9JvYOk9bI=
-X-Google-Smtp-Source: AGHT+IH5l03WLyhJsAWdlXxU5xngKHzOe3+d8yWUeEvry+VLeVCaBEL7Mc17G2/Gd5bX2cQ/7hL20w==
-X-Received: by 2002:a05:6512:ea9:b0:539:9225:43a6 with SMTP id 2adb3069b0e04-539da4f865amr2556480e87.35.1728718456937;
-        Sat, 12 Oct 2024 00:34:16 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539cb6c8c0fsm840420e87.112.2024.10.12.00.34.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 12 Oct 2024 00:34:16 -0700 (PDT)
-Date: Sat, 12 Oct 2024 10:34:14 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: x1e78100-t14s: enable otg on
- usb-c ports
-Message-ID: <ozpi5m4fagpc6o3t34ngsmwtdrie2m5cjgtem6ocisz525udta@ya5dtg3q7hy3>
-References: <20241011231624.30628-1-jonathan@marek.ca>
- <20241011231624.30628-3-jonathan@marek.ca>
+	s=arc-20240116; t=1728726942; c=relaxed/simple;
+	bh=OHBEqpSE2yLuJGFPNyn+i72FET0rIUgTS5kPDw/JRqc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SNIE73s4w+4yoSoHJeJ0lBuVMFyyJiS9tjSalYDDhkvGy4LtG6j6dxs/Gj2aOahAJvi9VWLw0VLZGwsxNtW24x8NDefOw6wGu31kmzDsc3xeFVZJn6F2znliXvJUmrGYG8fX3W0fGh1or+p0SnOTgIFHo0shZQS29kNndYUYKdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikFdJkMz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E80C4CEC6;
+	Sat, 12 Oct 2024 09:55:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728726941;
+	bh=OHBEqpSE2yLuJGFPNyn+i72FET0rIUgTS5kPDw/JRqc=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=ikFdJkMzaYH1B3l0E8/1JuEfI0oVf2wXryW7quGhPQpdipXLpMbJLwCY6/SOpxlJ5
+	 1RPeZjIqjoEOtqejed5hUsMmgFi99lCO79zH/U3Fp+RZGgBZ/bixCm2MRBMhKoEDdf
+	 gmPjLq3iOExf1J729di01MUItIDB+WKuhFBJhIJ9MwRkM6FOv6VKOaeAdneCTSfNv7
+	 m3EFE7JDqSXkxvC1YAANwW1vWiQU15R20iF0n+9brEpkTwMS5fsi08RjTaAHcIKOMP
+	 bMtZLTtEPA6EH8WKimEyqZ0PzuXsuge7IVq3+gloqLvTDYreC5NV68/vq9eYTGG8WN
+	 WfJDIqvX9QzqQ==
+Message-ID: <ff48995d-99b5-4563-b548-ebc58fd7ed45@kernel.org>
+Date: Sat, 12 Oct 2024 11:55:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241011231624.30628-3-jonathan@marek.ca>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ASoC: qcom: sc7280: Fix missing Soundwire runtime stream
+ alloc
+To: kernel test robot <lkp@intel.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, stable@vger.kernel.org,
+ Alexey Klimov <alexey.klimov@linaro.org>, Steev Klimaszewski <steev@kali.org>
+References: <20241010054109.16938-1-krzysztof.kozlowski@linaro.org>
+ <202410121144.H6lBicv6-lkp@intel.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <202410121144.H6lBicv6-lkp@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Fri, Oct 11, 2024 at 07:16:23PM -0400, Jonathan Marek wrote:
-> The 2 USB-C ports on x1e78100-t14s are OTG-capable, remove the dr_mode
-> override to enable OTG.
+On 12/10/2024 05:37, kernel test robot wrote:
+> Hi Krzysztof,
 > 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  .../arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts | 8 --------
->  1 file changed, 8 deletions(-)
+> kernel test robot noticed the following build errors:
+> 
+> [auto build test ERROR on broonie-sound/for-next]
+> [also build test ERROR on linus/master v6.12-rc2 next-20241011]
+> [If your patch is applied to the wrong git tree, kindly drop us a note.
+> And when submitting patch, we suggest to use '--base' as documented in
+> https://git-scm.com/docs/git-format-patch#_base_tree_information]
+> 
+> url:    https://github.com/intel-lab-lkp/linux/commits/Krzysztof-Kozlowski/ASoC-qcom-sc7280-Fix-missing-Soundwire-runtime-stream-alloc/20241010-134305
+> base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+> patch link:    https://lore.kernel.org/r/20241010054109.16938-1-krzysztof.kozlowski%40linaro.org
+> patch subject: [PATCH] ASoC: qcom: sc7280: Fix missing Soundwire runtime stream alloc
+> config: powerpc64-randconfig-r052-20241011 (https://download.01.org/0day-ci/archive/20241012/202410121144.H6lBicv6-lkp@intel.com/config)
+> compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project 70e0a7e7e6a8541bcc46908c592eed561850e416)
+> reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241012/202410121144.H6lBicv6-lkp@intel.com/reproduce)
+> 
+> If you fix the issue in a separate patch/commit (i.e. not just a new version of
+> the same patch/commit), kindly add following tags
+> | Reported-by: kernel test robot <lkp@intel.com>
+> | Closes: https://lore.kernel.org/oe-kbuild-all/202410121144.H6lBicv6-lkp@intel.com/
+> 
+> All errors (new ones prefixed by >>, old ones prefixed by <<):
+> 
+> WARNING: modpost: missing MODULE_DESCRIPTION() in mm/kasan/kasan_test.o
+> WARNING: modpost: missing MODULE_DESCRIPTION() in mm/kasan/kasan_test_module.o
+>>> ERROR: modpost: "qcom_snd_sdw_startup" [sound/soc/qcom/snd-soc-sc7280.ko] undefined!
 > 
 
-Same comment,
+I'll fix it up. Already applied sdm845 also has this issue, I think, so
+I will send a follow up.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Best regards,
+Krzysztof
 
--- 
-With best wishes
-Dmitry
 
