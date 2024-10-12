@@ -1,81 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-34184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0A0E99B13F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 08:18:05 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 49C0C99B191
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 09:33:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FCDB283ED0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 06:18:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 022EE2832E0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 12 Oct 2024 07:33:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 482A413A899;
-	Sat, 12 Oct 2024 06:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 932D213DBB6;
+	Sat, 12 Oct 2024 07:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ijQlXKcL"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CdFhtjPC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D79413A25F
-	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 06:17:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650FF2581
+	for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 07:33:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728713879; cv=none; b=vAmpkH0BwDfU8UrzaT0lxvmTwj5o5BDgeBbdHtRAqEckyt5vs8sTrxqfOG62EG0Z7XjWivNorK6YstQqLX3SXee6i7b36ixbojgJErEhU+Gd3RtB0n0o9a1I0StgvS7fHO6RViHPYIDoIl1rRqltvxE3y6jbWO+MiY75qwX4zqE=
+	t=1728718419; cv=none; b=qJZfPWc1AR9OL9fgIJUX4GloMpk810zdJ8NJcUfiOMa/mNs6AZW0NeCNS4H0V5XGeI5ZIuIuRKajGyJfEEkFIhLKNoF786/NteLZEnPKn/oEwpX6hiWeJaJDwRuSwMpei2UKAVJI8jbxJvE7TjExOgPCl79el10pZGFqW2ktGCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728713879; c=relaxed/simple;
-	bh=35uxd4xytmpWtfl0pjeAVBocR5PQ845hs9VhCdoA424=;
+	s=arc-20240116; t=1728718419; c=relaxed/simple;
+	bh=XpkD6PjpGuMLKRRIelZOF4WU1zEBhCUk3dVVAmMMKN8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rt92faoJYJJaJEWPpwC9+H/gCV0EChYGitw/tkkdtOhBhHvSJOW/w1miFYrHVG+lQWR2qwKPug1CmUktPw/YecI+qZn6gMSfyba5fAyz+yct33CKZvUzrTW0BzzBFfaw68ppKjSHkStjug/RWfplJF5VG0J2ckeXW7x5IBoIulc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ijQlXKcL; arc=none smtp.client-ip=209.85.208.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q6/Lp2zTRIPQDM+5Spop6IR5V5c4giWc5FBwIyz/Nj2rSGgrFGuv9dbFq9bqRDDAsJ+7LbCRbngecQhHFuUHuCJOEHp+M0t7vJv+HCUO1g0TThLNrF6iofz7HU9hMFMeuV09BoZ+xAQ5nH7YBQcmqREmGfwoGC1aY+LnVMLZRqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CdFhtjPC; arc=none smtp.client-ip=209.85.208.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2fad100dd9eso27127451fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 11 Oct 2024 23:17:57 -0700 (PDT)
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2f7657f9f62so26318821fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 12 Oct 2024 00:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728713876; x=1729318676; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728718414; x=1729323214; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Q7VycGiDmbT8NDIEv3VX1atPVNk5kqPI5PABIHipxI=;
-        b=ijQlXKcLu//gjp3TlT6408r88GZ0nEd84k16poYjrTfUuAvA5dP7UPinXDsBY7dzpx
-         ffHQR8NVvW++Xi4Vf+K/R5YobAZhVPSkiRmXzes4LfTGzrNzRQ4hd7cZLaVpXlUpkZqr
-         NVsFb7xm2Cz5ostAr1Ipj5Ilpj/UuzTkW1slopps+cK4zUtVvI9wwvFehNorkC1rsXOc
-         ENb1W77E78fAEmnzgBm7vaIVpKOPRKkKLn4xEF0Udfx1AwUwv7feUJnNrx44ijJyUEQk
-         eeiB8cu1k8m6nruxsfvindoQOuJk0+qCqndd0K9aMjFUUDTP2Bm9OzRkD4xIkNSD53YD
-         GFIg==
+        bh=/HxH5wdzzYhATwK4YbdIT0t+B3UnxhMUOLH9SZSIajk=;
+        b=CdFhtjPCbfGBw6G0IN8HA72ttLh3xu3eXD78VaffOjYpcJSKtWiwKwKJvFRhGx5Keh
+         yJyoon0mmWO8xXQcVF08ThhAVA1qYdqJp0INDOjJfHES2l6vokETSbT4OE0pbCvvKawR
+         7tmJNTEOJrZf1wm2eGLjkbcz8oFYDX90UDGWFbgqKbpTz5PWI4EHovpWehtWJDmIL84S
+         uwcWzEThwE57CcG3x2VHWL3IwrCYEPgjT1CXWGTFjTyx0qgTbryCXIMn7Nrq0y20/qee
+         Z1xKSMLOYuX/0QdillkvLdRJJhxL0cxnC4st9EWs+mNEdosqmoKxRzLtXp2uUDx0qiwE
+         1nTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728713876; x=1729318676;
+        d=1e100.net; s=20230601; t=1728718414; x=1729323214;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3Q7VycGiDmbT8NDIEv3VX1atPVNk5kqPI5PABIHipxI=;
-        b=ZbKmRKgCYprLKT9/fnOgfjE89d2THlzR//lLBoZnw3ofTH9E/H/sAqSoFq94iozj2i
-         4PbzMUWxXgOZrV8PzjHOOPc4cDA0WVm/Swy+/w31/FlDVr2i8QF1RFBbSHkWx0sRQefL
-         WO2P13URRqQouC+DzduZwOj0ptCaKNSwB4mlprQr7XICdxuz8KijdWpcg5wZeKi3qZ7K
-         8OI00puTgU7p2wFlQL/4UDW2K6n26ZmyAorygqzN+BSoQ4XX//GCTmqouvewNWH1tJjd
-         PtyGSdZjB96TWGsK3mAMuKY4jAvEjL+7BIngoPhTq0zbm0AD04xSZLytGW24RLihfS46
-         T2EQ==
-X-Gm-Message-State: AOJu0YyrslmC7nLwCPTsMMaKufpmCSXjGNj+GfZAUVHNM+m6gvbVvjH5
-	yUTjB+a5N+H+UMVAiHWD5ebHlgu6CMQFt6aQv2SbSWgN9ErkjBTu5iBAN7i3fVo=
-X-Google-Smtp-Source: AGHT+IE+lAgJkNquMREXe1TmPbV+3JD5TMKDHxMdgEkU0ZUlRFxtWBhCUVpjtMxSfHO5beBR9qTnQw==
-X-Received: by 2002:a2e:a549:0:b0:2fa:e4ae:3388 with SMTP id 38308e7fff4ca-2fb32728039mr22489201fa.15.1728713875647;
-        Fri, 11 Oct 2024 23:17:55 -0700 (PDT)
+        bh=/HxH5wdzzYhATwK4YbdIT0t+B3UnxhMUOLH9SZSIajk=;
+        b=spTH0t+a2v81c+B5aAVe+urYGhd2nPx73ECzs3kdKrR5AV9GDqlOY4fByo4huJ5YSh
+         FrRBQUsvpx8DvjcXPyaLQ9YNvlNeLpgrv7ae8e0au8Wb29hIenjQyNlDOkgfwQnOT0Ru
+         1+XXpSEZekonwf0W/1QGhWVsXabtG12Vt1/qQWgRR+T9StFyURpfhC3g9sN+aLemtVU+
+         gQiXl2LZH+vdjKDo9dyQrtK75wCVTdjDyzPw0GaV2BSBDwDIshWoch0QEQbcvrXZf9eW
+         DRYaHQZmjW3DZD8aE/xaDRs7O74jUOMbtYHPK6dlIUxVy6b/mN00Sysc4Gp/izRtE9nf
+         /C+A==
+X-Gm-Message-State: AOJu0YwXWoGWwqzwYO6mtaLKCf4rPPsCFIf44UE85K4VGOnHrSWhgc/r
+	Yi5XPTFE0VSnCHOyg0lojGmU6L5EEs+cc1WFM52AOdtI9JAaAFqLjXOiI7a1RQI=
+X-Google-Smtp-Source: AGHT+IHy04luOQ5N31Y8h7T44ACeH2SV/eM1h6QEEfVLa/G/QNFeE1H9wyjUiEaXrCKjKx7jotKsmA==
+X-Received: by 2002:a2e:b889:0:b0:2f7:51e3:fe2f with SMTP id 38308e7fff4ca-2fb3270b0aemr21112811fa.13.1728718414445;
+        Sat, 12 Oct 2024 00:33:34 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb2474c5b4sm7187341fa.117.2024.10.11.23.17.52
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb24590c17sm7156081fa.39.2024.10.12.00.33.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Oct 2024 23:17:54 -0700 (PDT)
-Date: Sat, 12 Oct 2024 09:17:51 +0300
+        Sat, 12 Oct 2024 00:33:32 -0700 (PDT)
+Date: Sat, 12 Oct 2024 10:33:30 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Jonathan Marek <jonathan@marek.ca>
 Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 1/3] arm64: dts: qcom: x1e80100: enable OTG on USB-C
- controllers
-Message-ID: <f3xyjvxnuonzk6adxbbbrhg77bjnvl6xnvddfm2b3dselynwbj@zjtldmkwha3s>
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: x1e80100-crd: enable otg on usb
+ ports
+Message-ID: <vln325xaz2sgshikl4lytdqjlra56khz5q4jp3vzmk3xojrdu4@w3thwqwpgqqh>
 References: <20241011231624.30628-1-jonathan@marek.ca>
+ <20241011231624.30628-2-jonathan@marek.ca>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,17 +85,19 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241011231624.30628-1-jonathan@marek.ca>
+In-Reply-To: <20241011231624.30628-2-jonathan@marek.ca>
 
-On Fri, Oct 11, 2024 at 07:16:21PM -0400, Jonathan Marek wrote:
-> These 3 controllers support OTG and the driver requires the usb-role-switch
-> property to enable OTG. Add the property to enable OTG by default.
+On Fri, Oct 11, 2024 at 07:16:22PM -0400, Jonathan Marek wrote:
+> The 3 USB ports on x1e80100-crd are OTG-capable, remove the dr_mode
+> override to enable OTG.
 > 
 > Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
+>  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 12 ------------
+>  1 file changed, 12 deletions(-)
+
+I can not verify this on the CRD, but at least it matches the
+data-role="dual".
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
