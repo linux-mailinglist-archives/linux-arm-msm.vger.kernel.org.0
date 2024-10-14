@@ -1,58 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-34354-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34355-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77A1699D482
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 18:20:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5C6299D4CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 18:37:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F0B1AB23C75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 16:20:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F29251C22C8C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 16:37:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD97C1AC8A2;
-	Mon, 14 Oct 2024 16:20:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35C5C1AB525;
+	Mon, 14 Oct 2024 16:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DzF7WqaL"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="cVhrqnpb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACD941AB6E6;
-	Mon, 14 Oct 2024 16:20:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D2A175B1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 16:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728922830; cv=none; b=bFPGyoeDySlV7Ay1WVw29OQk5krAsk+fCgDZOwOPVQY7hQXLhoPGsvu0AOJ/1HEVlYQTKMbtHhZAa/gUA8XrBrGhhHUY+9hf1N6nycNnZzmQciJP68CMY7cscbp05GOfwzeko7D19BUSD89Ro9zlg/HC5+ZUHG/w/mQ9BklfX2w=
+	t=1728923856; cv=none; b=XHdeVBMbpolrKhyGvJONb8280qTds2Sa96AZcYzE9evSkdNjF1nLucR6sY7ehhsbGM/Saft6zP8gbvs2sioZMQL0e78LFwt34nxqLymAEb/PZYbpHMbR33mXPcnRVZQ1lXp6tBAQOlmyWnTHKdjVkZqnANIeWLibnUYR09kH3B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728922830; c=relaxed/simple;
-	bh=/CARQhPqBaW4+V9x4ApINwn61E3dQZeQA7x8Xarx6Kg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=C4E2VX6Qjnb0nhVEDTtx0TW6Vnt9GG0QE8HCR883sKuCXj6LFHKwJw//UyVaDKhkpHm/5wPSOYBIQXiBp5bPyZ0mXmcTA1yPuv3OUPiFoE1ZVrEdIM6DqRkh1f6ddMNDPAeBrp0g6ffDyMIf6QwoPmN+AqHRQq6H+h0QNehi54U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DzF7WqaL; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093C5C4CEC3;
-	Mon, 14 Oct 2024 16:20:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728922830;
-	bh=/CARQhPqBaW4+V9x4ApINwn61E3dQZeQA7x8Xarx6Kg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=DzF7WqaLR2VUgTvY5eKGGRxAkVsiZKOTrWQhfIK/HdIimOGOZeT9wrY4QdWKG42AW
-	 T3/AcWgTgAhsbMtyQyX4iLdMM0137DZP4H36c0a6Nf1wG+1pxhwFcNKsDBXDMIb/uG
-	 dtkZZuRW4XoEYVrC0G76Laf9iWw5LTyLDVMMIF/Bcf93aRAUt2t7+UVioMT9XPEmcB
-	 AflYU0IQKhaFMS7Q7BbknRkrH3LmG3Yojy7uYJbcxvYCPhVjj2WI51LgjASarNhldd
-	 PE4S2R4lYd6ZnjrUuz3DNvdFPYfSmPfogIm/tKA0MdrEABnsGRAsjyxt1Fr7WXMDpQ
-	 /arce2KKDfm+A==
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: cros-qcom-dts-watchers@chromium.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
+	s=arc-20240116; t=1728923856; c=relaxed/simple;
+	bh=bTtG4MB3yjrdSPMsQ2e3jywBt+U40h9Vr1j3XOPrBNE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UXQmhIU+2gFwESxgOkgXbS1hrL37peKEUAFvazjFzdX8HsIgS8qZx3FOMDb/M2c5kOkVilQXO+bikMX+Wohjb96RGfcDr3TjICKQC7YxJgWRGp9HdaTsrPaRwKfZZ/SfDrwLIqJiN54hz8tZ15Rmd97vR7BNqZZySKMO/+zcW/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=cVhrqnpb; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-71e6f1a5a19so470792b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 09:37:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1728923854; x=1729528654; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Eq6RmtQgXylpaIuQSD/eFivfyV/YbUHAedXEkzzSSXc=;
+        b=cVhrqnpbKclAuARyWtF73cvf6JxI6cb5Oal04gv5+1y3HofmxXUZ66xOdXJFwoaaL2
+         LurlygUEHq922C31Mw36x8UxXZShejvxwOFvD8F3MxMcrQTRhyaAcZYPHaZKsbtZ3DSc
+         W/hsR8r/ElkhXQvAYnLSEE/MuPpaGpjarGESc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728923854; x=1729528654;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Eq6RmtQgXylpaIuQSD/eFivfyV/YbUHAedXEkzzSSXc=;
+        b=bJG0if06zL4PF0Vq158yMQq6KbnNvbDEeq0zip5dhUjN2Y3bsCjd6PiUaUwCvdNBmO
+         qf4lLRvoGqssRo1GM5CaUTFZuHBtQzLXBkWx2K8kooe8EI7ufX64o6CoSaSEnHzTs7GN
+         9xDm6PTMQqZ4EHSzXty55qz0wykkbm/BNxCePTiYHnJp4LO7mCmAxSIKDQpxujhwYEyQ
+         NvViWhFggbSOIjAkzGIrlDzJ3Qi+2369eriE4gc+mpKwQtTQk41+ndfBHyGbFjAt/67x
+         Ra/rTOrH9Pb8L+DGbgJj39cZmuk/YOaoF1UHsPkKRMhtKNfAmbNZEc2/m5ZqKTTvGxEG
+         BdYA==
+X-Forwarded-Encrypted: i=1; AJvYcCVoCvWOuKpYmiqICxiy3/dsV1k8itvq1M7/n2yPz55ixMfnkU7/mY7Ruwkriwn3cByK0TMUYs8w0mqklsRt@vger.kernel.org
+X-Gm-Message-State: AOJu0YzbozjJFRutddM7FoGNZ03pr4LQ+u/JHukT2rTsB+/vtQwOXgr6
+	K8rtyaHjNGc31NeDaXU7Y+psJpXKPeYiGBLxCpRGxHVhTCyWH1J1gtvV3LsH2A==
+X-Google-Smtp-Source: AGHT+IFrI6AyFlAD+rPt6sq8RJjzjcPvxnHIHU5bh4fmZllt0MuEFWzqp3sZJTWGMBx/myacl4Lxew==
+X-Received: by 2002:a05:6a00:9282:b0:717:9154:b5d6 with SMTP id d2e1a72fcca58-71e37f4ed89mr19746704b3a.22.1728923853741;
+        Mon, 14 Oct 2024 09:37:33 -0700 (PDT)
+Received: from dianders.sjc.corp.google.com ([2620:15c:9d:2:1e71:8a09:a3b:1e00])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-71e51dc0617sm4383693b3a.165.2024.10.14.09.37.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2024 09:37:32 -0700 (PDT)
+From: Douglas Anderson <dianders@chromium.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	David Airlie <airlied@gmail.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Sean Paul <sean@poorly.run>,
+	Simona Vetter <simona@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: Drop undocumented domain "idle-state-name"
-Date: Mon, 14 Oct 2024 11:16:32 -0500
-Message-ID: <20241014161631.1527918-2-robh@kernel.org>
-X-Mailer: git-send-email 2.45.2
+Subject: [PATCH 1/3] drm/msm: Avoid NULL dereference in msm_disp_state_print_regs()
+Date: Mon, 14 Oct 2024 09:36:08 -0700
+Message-ID: <20241014093605.1.Ia1217cecec9ef09eb3c6d125360cc6c8574b0e73@changeid>
+X-Mailer: git-send-email 2.47.0.rc1.288.g06298d1525-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,70 +88,70 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-"idle-state-name" is not a valid property for "domain-idle-state"
-binding, so drop it.
+If the allocation in msm_disp_state_dump_regs() failed then
+`block->state` can be NULL. The msm_disp_state_print_regs() function
+_does_ have code to try to handle it with:
 
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+  if (*reg)
+    dump_addr = *reg;
+
+...but since "dump_addr" is initialized to NULL the above is actually
+a noop. The code then goes on to dereference `dump_addr`.
+
+Make the function print "Registers not stored" when it sees a NULL to
+solve this. Since we're touching the code, fix
+msm_disp_state_print_regs() not to pointlessly take a double-pointer
+and properly mark the pointer as `const`.
+
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
 ---
-Alternatively, the property could be added to the binding. In that case, 
-the 2 idle state bindings should be refactored with the common 
-properties factored out. Since no one seems to have cared despite 
-reported warnings on every new board of these platforms, I don't either 
-and went with the simple change.
 
- arch/arm64/boot/dts/qcom/sc7180.dtsi   | 3 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 2 --
- 2 files changed, 5 deletions(-)
+ drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index b5ebf8980325..dec25a0d9057 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -357,7 +357,6 @@ BIG_CPU_SLEEP_1: cpu-sleep-1-1 {
- 		domain_idle_states: domain-idle-states {
- 			CLUSTER_SLEEP_PC: cluster-sleep-0 {
- 				compatible = "domain-idle-state";
--				idle-state-name = "cluster-l3-power-collapse";
- 				arm,psci-suspend-param = <0x41000044>;
- 				entry-latency-us = <2752>;
- 				exit-latency-us = <3048>;
-@@ -366,7 +365,6 @@ CLUSTER_SLEEP_PC: cluster-sleep-0 {
+diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+index add72bbc28b1..bb149281d31f 100644
+--- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
++++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+@@ -48,20 +48,21 @@ static void msm_disp_state_dump_regs(u32 **reg, u32 aligned_len, void __iomem *b
+ 	}
+ }
  
- 			CLUSTER_SLEEP_CX_RET: cluster-sleep-1 {
- 				compatible = "domain-idle-state";
--				idle-state-name = "cluster-cx-retention";
- 				arm,psci-suspend-param = <0x41001244>;
- 				entry-latency-us = <3638>;
- 				exit-latency-us = <4562>;
-@@ -375,7 +373,6 @@ CLUSTER_SLEEP_CX_RET: cluster-sleep-1 {
+-static void msm_disp_state_print_regs(u32 **reg, u32 len, void __iomem *base_addr,
+-		struct drm_printer *p)
++static void msm_disp_state_print_regs(const u32 *dump_addr, u32 len,
++		void __iomem *base_addr, struct drm_printer *p)
+ {
+ 	int i;
+-	u32 *dump_addr = NULL;
+ 	void __iomem *addr;
+ 	u32 num_rows;
  
- 			CLUSTER_AOSS_SLEEP: cluster-sleep-2 {
- 				compatible = "domain-idle-state";
--				idle-state-name = "cluster-power-down";
- 				arm,psci-suspend-param = <0x4100b244>;
- 				entry-latency-us = <3263>;
- 				exit-latency-us = <6562>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index a36076e3c56b..847d6bc39edd 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -287,7 +287,6 @@ CLUSTER_C4: cpu-sleep-0 {
- 		domain-idle-states {
- 			CLUSTER_CL4: cluster-sleep-0 {
- 				compatible = "domain-idle-state";
--				idle-state-name = "l2-ret";
- 				arm,psci-suspend-param = <0x01000044>;
- 				entry-latency-us = <350>;
- 				exit-latency-us = <500>;
-@@ -296,7 +295,6 @@ CLUSTER_CL4: cluster-sleep-0 {
++	if (!dump_addr) {
++		drm_printf(p, "Registers not stored\n");
++		return;
++	}
++
+ 	addr = base_addr;
+ 	num_rows = len / REG_DUMP_ALIGN;
  
- 			CLUSTER_CL5: cluster-sleep-1 {
- 				compatible = "domain-idle-state";
--				idle-state-name = "ret-pll-off";
- 				arm,psci-suspend-param = <0x01000054>;
- 				entry-latency-us = <2200>;
- 				exit-latency-us = <2500>;
+-	if (*reg)
+-		dump_addr = *reg;
+-
+ 	for (i = 0; i < num_rows; i++) {
+ 		drm_printf(p, "0x%lx : %08x %08x %08x %08x\n",
+ 				(unsigned long)(addr - base_addr),
+@@ -89,7 +90,7 @@ void msm_disp_state_print(struct msm_disp_state *state, struct drm_printer *p)
+ 
+ 	list_for_each_entry_safe(block, tmp, &state->blocks, node) {
+ 		drm_printf(p, "====================%s================\n", block->name);
+-		msm_disp_state_print_regs(&block->state, block->size, block->base_addr, p);
++		msm_disp_state_print_regs(block->state, block->size, block->base_addr, p);
+ 	}
+ 
+ 	drm_printf(p, "===================dpu drm state================\n");
 -- 
-2.45.2
+2.47.0.rc1.288.g06298d1525-goog
 
 
