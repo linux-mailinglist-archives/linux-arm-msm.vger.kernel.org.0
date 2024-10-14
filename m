@@ -1,166 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-34245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C25499C1EC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 09:49:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C19D99C1FE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 09:51:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A20A1C2313F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 07:49:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 70316B22FFF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 07:51:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47F4214A629;
-	Mon, 14 Oct 2024 07:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D315D14B94C;
+	Mon, 14 Oct 2024 07:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="V1doFuVT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from inva021.nxp.com (inva021.nxp.com [92.121.34.21])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BF3146D6F;
-	Mon, 14 Oct 2024 07:48:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263FC14A092;
+	Mon, 14 Oct 2024 07:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728892140; cv=none; b=hDeI2tLq8L9w3OSX3+zS64uoszoouJeYQhZZSB9ykQxSLG18I9RA/RgFdDzsoBssdJfbK3XE8sOxB2bbEdA6Z1Yj/a1xaasSZ6oscM3fz3dX/PysxZlOdNQFcB2BeC6FEJD/igor4dAIqqijVDAMjOSqz399zKhvRMzx0CIrYPA=
+	t=1728892281; cv=none; b=Feo3admLUwRk1ZWjrxjL6Emi1TQz4L5TjcRCILGA6tc640Kdteb/8wH2GNEaKSW0Be4LC6OcpIcAgsixPrFHjchfg8Ul9lPuHRonfA2Ph0n427IOZrXTiW6IYMaimPb9GYWck4cPX41JjvKwP5W9KjPAnPWhVzoF6eZYiwHmrlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728892140; c=relaxed/simple;
-	bh=3rkZwtyh6Rfwszh3yxvTLn4jOr2u46BL520LAHsC2bE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VnXTTWSE8gvMB4lR/KfgjFRYqfPKDdHmNPPohEwdGLUABUJM7HA9pWK7Uz38k2UodGksp4nnaVlYS3D1qLC1st271PWHfnDpov+Fr12w/QXJPZTo9IwmilVcqt5R/KZAXuqEJeEfwHDJPjM9L3mI/kt+xdnxT44BBkni44dYxvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
-Received: from inva021.nxp.com (localhost [127.0.0.1])
-	by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 9A57920083D;
-	Mon, 14 Oct 2024 09:48:50 +0200 (CEST)
-Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
-	by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 892942021D8;
-	Mon, 14 Oct 2024 09:48:50 +0200 (CEST)
-Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
-	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 3319B20327;
-	Mon, 14 Oct 2024 09:48:51 +0200 (CEST)
-Date: Mon, 14 Oct 2024 09:48:50 +0200
-From: Jan Petrous <jan.petrous@oss.nxp.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Jose Abreu <joabreu@synopsys.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Russell King <linux@armlinux.org.uk>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Emil Renner Berthing <kernel@esmil.dk>,
-	Minda Chen <minda.chen@starfivetech.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
-	Keyur Chudgar <keyur@os.amperecomputing.com>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	imx@lists.linux.dev, devicetree@vger.kernel.org,
-	NXP S32 Linux Team <s32@nxp.com>
-Subject: Re: [PATCH v3 13/16] dt-bindings: net: Add DT bindings for DWMAC on
- NXP S32G/R SoCs
-Message-ID: <ZwzM4tx3zj8+M/Om@lsv051416.swis.nl-cdc01.nxp.com>
-References: <20241013-upstream_s32cc_gmac-v3-0-d84b5a67b930@oss.nxp.com>
- <20241013-upstream_s32cc_gmac-v3-13-d84b5a67b930@oss.nxp.com>
- <44745af3-1644-4a71-82b6-a33fb7dc1ff4@kernel.org>
+	s=arc-20240116; t=1728892281; c=relaxed/simple;
+	bh=a2HMJn4Hv9unmOCAOZxrCsje+PKdd6KLUJK7SCRo6no=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Qq3DvZNhRKku9l+E7JrgdyOqn8E0FywY84voBwmukH+K9Btf7avu0BlKL2yFiT2TXHmRZlCsJEe7W+x0GB7v9Xo+AYcol37RpFXKjSFwSCntM+X0CJpEXOjPbqet224uU87xU1so/D6eAkRgQxANNMmiZWTKB+Y1cb9oZdRGPyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=V1doFuVT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49DNdoLP005267;
+	Mon, 14 Oct 2024 07:51:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	bZoC//fj3Iku0eMTHN9r0vcUQXgeGd56zY8cVePVZFY=; b=V1doFuVT4jA3fceZ
+	H4a5h9sEpaXuKE53ZJsgTh2+OpIxGgZlzNUS6DKinVEiVT5hGs7FftlMyCJdhqeI
+	ReDn/ytBRUZgiqV/cenqapQ9zhhYaEzf+p44qSwOs0y8ql4xC9sGkXl39ZXshHNF
+	FVjEBvRBK/XNGRcxbiZ6+kJgwrHULmxdwMFSZzB9IaeblfRpDEY4PGOwCNKpTctr
+	D6AQ9NLTlI7VNz2J4cicLkqlWv/+7c630AM81K4I1O7uAYkY3LPz4EzlFBbQnPQy
+	cwPAiQjeZZCauMsup8PawKdw47rQu6DKJlUmKDGFQ86UT2R2XfqCeOum+MthQCsl
+	Asdeeg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 427hg73med-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Oct 2024 07:51:06 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49E7p5Zq020221
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Oct 2024 07:51:05 GMT
+Received: from [10.239.29.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Oct
+ 2024 00:51:00 -0700
+Message-ID: <96816abb-4e0d-4c60-8ae6-b5a5cd796e99@quicinc.com>
+Date: Mon, 14 Oct 2024 15:50:53 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <44745af3-1644-4a71-82b6-a33fb7dc1ff4@kernel.org>
-X-Virus-Scanned: ClamAV using ClamSMTP
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/8] dt-bindings: PCI: qcom,pcie-x1e80100: Add 'global'
+ interrupt
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <abel.vesa@linaro.org>, <quic_msarkar@quicinc.com>,
+        <quic_devipriy@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <kw@linux.com>, <lpieralisi@kernel.org>, <neil.armstrong@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-clk@vger.kernel.org>
+References: <20241011104142.1181773-1-quic_qianyu@quicinc.com>
+ <20241011104142.1181773-4-quic_qianyu@quicinc.com>
+ <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
+ <4802B12B-BAC1-4E99-BDFE-A2340F4A8F24@linaro.org>
+ <3d1d0822-da66-44c8-a328-69804210123c@kernel.org>
+ <65B34B14-76C3-491D-8A58-6D0887889018@linaro.org>
+ <df6379c6-662a-4b35-a919-13c695a869c7@kernel.org>
+Content-Language: en-US
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <df6379c6-662a-4b35-a919-13c695a869c7@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: c8DC4QGZl6mybIcNqaHlS2FPJub-re1X
+X-Proofpoint-GUID: c8DC4QGZl6mybIcNqaHlS2FPJub-re1X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=909
+ lowpriorityscore=0 spamscore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 bulkscore=0 phishscore=0 malwarescore=0 impostorscore=0
+ mlxscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410140056
 
-On Mon, Oct 14, 2024 at 08:56:58AM +0200, Krzysztof Kozlowski wrote:
-> On 13/10/2024 23:27, Jan Petrous via B4 Relay wrote:
-> > From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
-> > 
-> > Add basic description for DWMAC ethernet IP on NXP S32G2xx, S32G3xx
-> > and S32R45 automotive series SoCs.
-> > 
-> > Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
-> > ---
-> >  .../devicetree/bindings/net/nxp,s32-dwmac.yaml     | 97 ++++++++++++++++++++++
-> >  .../devicetree/bindings/net/snps,dwmac.yaml        |  1 +
-> >  2 files changed, 98 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
-> > new file mode 100644
-> > index 000000000000..4c65994cbe8b
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
-> > @@ -0,0 +1,97 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +# Copyright 2021-2024 NXP
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/net/nxp,s32-dwmac.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: NXP S32G2xx/S32G3xx/S32R45 GMAC ethernet controller
-> > +
-> > +maintainers:
-> > +  - Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
-> > +
-> > +description:
-> > +  This device is a Synopsys DWC IP, integrated on NXP S32G/R SoCs.
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - nxp,s32g2-dwmac
-> 
-> Where are the other compatibles? Commit msg mentions several devices.
 
-Well, I removed other compatibles thinking we can re-use this only one
-also for other SoCs as, on currect stage, we don't need to do any
-SoC specific setup.
+On 10/12/2024 12:06 AM, Krzysztof Kozlowski wrote:
+> On 11/10/2024 17:51, Manivannan Sadhasivam wrote:
+>>
+>> On October 11, 2024 9:14:31 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>> On 11/10/2024 17:42, Manivannan Sadhasivam wrote:
+>>>>
+>>>> On October 11, 2024 8:03:58 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>> On Fri, Oct 11, 2024 at 03:41:37AM -0700, Qiang Yu wrote:
+>>>>>> Document 'global' SPI interrupt along with the existing MSI interrupts so
+>>>>>> that QCOM PCIe RC driver can make use of it to get events such as PCIe
+>>>>>> link specific events, safety events, etc.
+>>>>> Describe the hardware, not what the driver will do.
+>>>>>
+>>>>>> Though adding a new interrupt will break the ABI, it is required to
+>>>>>> accurately describe the hardware.
+>>>>> That's poor reason. Hardware was described and missing optional piece
+>>>>> (because according to your description above everything was working
+>>>>> fine) is not needed to break ABI.
+>>>>>
+>>>> Hardware was described but not completely. 'global' IRQ let's the controller driver to handle PCIe link specific events like Link up, Link down etc... They improve user experience like the driver can use those interrupts to start bus enumeration on its own. So breaking the ABI for good in this case.
+>>>>
+>>>>> Sorry, if your driver changes the ABI for this poor reason.
+>>>>>
+>>>> Is the above reasoning sufficient?
+>>> I tried to look for corresponding driver change, but could not, so maybe
+>>> there is no ABI break in the first place.
+>> Here it is:
+>>
+>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4581403f67929d02c197cb187c4e1e811c9e762a
+>>
+>>   Above explanation is good, but
+>>> still feels like improvement and device could work without global clock.
+> So there is no ABI break in the first place... Commit is misleading.
+OK, will remove the description about ABI break in commit message. But may
+I know in which case ABI will be broken by adding an interrupt in bingdings
+and what ABI will be broken?
+>
+>> It is certainly an improvement but provides a nice user experience as the devices will be enumerated when they get plugged into the slot (like hotplug). Otherwise, users have to rescan the bus every time they plug a device. Also when the device gets removed, driver could retrain the link if link went to a bad state. Otherwise, link will remain in the broken state requiring users to unload/load the driver again.
+> OK
 
-Is it ok or shall I reinsert them?
+Thanks Mani for your detailed explaination. Can I reword commit message
+like this:
 
-> 
-> > +
-> > +  reg:
-> > +    items:
-> > +      - description: Main GMAC registers
-> > +      - description: GMAC PHY mode control register
-> > +
-> 
-> ...
-> 
-> > +
-> > +        mdio {
-> > +          #address-cells = <1>;
-> > +          #size-cells = <0>;
-> > +          compatible = "snps,dwmac-mdio";
-> > +
-> > +          phy0: ethernet-phy@0 {
-> > +              reg = <0>;
-> > +          };
-> > +
-> 
-> Stray blank line.
-> 
+Qcom PCIe RC controllers are capable of generating 'global' SPI interrupt
+to the host CPU. This interrupt can be used by the device driver to handle
+PCIe link specific events such as Link up and Link down, which give the
+driver a chance to start bus enumeration on its own when link is up and
+initiate link training if link went to a bad state. This provides a nice
+user experience.
 
-Ah, missed it. Thanks. Will fix it in v4.
+Hence, document it in the binding along with the existing MSI interrupts.
 
-/Jan
+Thanks,
+Qiang
+>
+> Best regards,
+> Krzysztof
+>
 
