@@ -1,203 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-34362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD09B99D5F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 19:57:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6DFB99D63B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 20:16:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 305241F22DE2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 17:57:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B9A6283764
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 18:16:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 161281C75FA;
-	Mon, 14 Oct 2024 17:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45B601C0DE2;
+	Mon, 14 Oct 2024 18:16:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rsNnrEK8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iq/e39Ho"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A1B1C728E;
-	Mon, 14 Oct 2024 17:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDF1AA79A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 18:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728928561; cv=none; b=SsRk2AuYK5t0+LB8mKk+p8EPfwGna0bNZP3GbivlZjiXnV11DHJ/OTuQ5cUD5E6okn3PNUfzBgO0Az5cHLhSKSt3w9keiLTh9tYhkYX24plyzU0pT/mJSM+GrBcbTcJPMNlab3iBWoglFkPpgXmeXf2gdPgJmjXD545U/dmVpn0=
+	t=1728929774; cv=none; b=BwwfFw1INzkF+ObiLmMGGbHDZdZw94nJhBy5x+A9CtwaaaVMFz3Ilw0/W/W1iGbRV5nXxu9BuCXF5oEjLmlRmQiXzmDHzmwaBqgk2wjAiu1TUDvVQ+U1bmO7iXJmc1lw1JzsEmQrQjhtLpgKd5kfd0osLgUJT6dfwFjp9+0aY4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728928561; c=relaxed/simple;
-	bh=mcGr/Qk55+ehm1NdNnm15cxWTIYN+dqT7soiOu6JPbQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gDwtxxF/9ZhS2EaJAp1bRwm4X416fPcHDNQC29rAYpwwcdO0Qgdh5iKBgxcstRHeKV9Ads83MNt90srmtLuZU0UFhvE/DCflo+GKamA/m0Uq5rWQ0xTGgzZI6PMs48Mmjawc5zMTAewa0vGfD7mBAXwE5VZOGbZf1//X8dCe7ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rsNnrEK8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5686BC4CEC3;
-	Mon, 14 Oct 2024 17:55:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728928560;
-	bh=mcGr/Qk55+ehm1NdNnm15cxWTIYN+dqT7soiOu6JPbQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rsNnrEK8291R6w+A7tVgCxswKoBjvbCNOquXVBYYb2+9hzdgfGKph/nsPnnSru8+z
-	 ts2LX4DKHiWTu6gInh20kGIYFdO4lIrbPiLq8bvly0uBDIXh2m/5ACHswELcRdG/m9
-	 HH3mEp3702oW5hW96PUEVUYN41gUAX7ufBRfW2/FDAhsxROHminrzRJhywzf3uLiVj
-	 3z+cH3h5cPQZvIljRMkjqTqD/tkpF1clKVEfFaSnV44epQvXi1AajaqVBRW2OR/nQx
-	 Gbxnb5xPQNbg8Xfc+6PzAMIOIWY/+TvTfanduW4uuSVMMtMG3v86Z/1Jx+iIt1koag
-	 o5VuEeRjAR3Lw==
-Message-ID: <06784780-641b-459f-b0d6-a6d81029e6d3@kernel.org>
-Date: Mon, 14 Oct 2024 19:55:53 +0200
+	s=arc-20240116; t=1728929774; c=relaxed/simple;
+	bh=LNSqYzxmmz9OD/0UUcyOFn6AeN1Z072goWVOC0q2yrU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sjmEWE7MPG0fgTCApvVTvk2Q9b86o8+m0qkMZ82T9sX+oUt87CLKp7wgE1X5jplX/oaWr56cQqVxD/51FqbgP6Zw3eZHmllqZqUtk/CPBHy9f4yDJ1nPPacERbow6EUb8yWgjMVA6JfXy3aJR1XhSqktqej8zObPfoT+Jzva2KQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iq/e39Ho; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-37d462c91a9so2904201f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 11:16:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728929771; x=1729534571; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UtdPkrYN7fe8w5mEL3LeVayblW7M45DrbmZRpipI97s=;
+        b=iq/e39Ho83LrRJLweE7RmoiKxCReXY6UGTvGrYtrofUdDQoUHE2k87bTo/K11qN6rN
+         QHS3lNmmOLU8cRSkovgIjMcq0fccawkIyu1ZjtmBKd2SK6Ar3/l4j0JB3ruCTyJNuMKg
+         GdNFjTih7u6y5wWQ7JCiANNECKZ5y6hHBLORgSnfvr3h1YM2/KLAHQzqgvGpvetdeySg
+         DQ/e0VAm/uk3pGbb8lbgpoQC9/eg5RPcXPiYhM2nCJgQf7z6dRNJGV5XwDqO2i2EmWIv
+         YahG0RMxnK1NDCbQCtixyS5k2KdA6ardCV/9Fopma4f4wRGaT18U3awUXRjPB+l2L5yr
+         rcMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728929771; x=1729534571;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UtdPkrYN7fe8w5mEL3LeVayblW7M45DrbmZRpipI97s=;
+        b=Ish6erq2qJy/O0td+8uwBVt1InKMJXU4cw93TDjGqU5GJ12Tu/kQLUpSShtXpJ2oiv
+         0czaJCEDr1aBsHA+Mg4tYdmqrW0fi4j9GLXSWY1y0tqWU3y661DuoTIxAdwAkl+Ili4g
+         y3F29CCMG8/V1/TXvqfw7ndzh3E/Egf0kxcfTzlmohErxsNWLIcS5xpJ3O0VpNR28+Ln
+         TT49gqFSfkF60T/Crp9HtqnfZEAZ9N4depjy2BVqYTA3PvI/DIODS9vAzYRCaBv5DcRk
+         cdt8e+en6BTY5V7jyrkWHC8zG3+idFgmFMwxgdaQwlOKjhohW35I/MrLnvh0qTdeEass
+         LeMA==
+X-Forwarded-Encrypted: i=1; AJvYcCXiP7YG0RPtDK/arjbBCy+uj7bDjlXJnuFDbrHEqhXjnzV+KZ6I8uGCjHourUBLuRf1no/G+PAUyKUhyE9O@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx+PPoNrc4eLQRqXxxv5dGEOxQhk98yMiJ7sgRZnuFp+vFQsKjU
+	hoHp69qrwPGzUwCDHd3xOm44psXRrko3ht0CuuXiLwfLiNiebbPP7m2fYGwy+Gs=
+X-Google-Smtp-Source: AGHT+IHIQJqhAsmdVgPSCMWemS66sPfa9EYola/ZvTPYafkvTQqqNnZqlNbzsw8xXyLnNoUxhgl25w==
+X-Received: by 2002:a5d:4dc6:0:b0:37d:4657:ea78 with SMTP id ffacd0b85a97d-37d5529f8d6mr8858619f8f.54.1728929770899;
+        Mon, 14 Oct 2024 11:16:10 -0700 (PDT)
+Received: from linaro.org ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37d4b7f05bfsm12010610f8f.108.2024.10.14.11.16.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2024 11:16:10 -0700 (PDT)
+Date: Mon, 14 Oct 2024 21:16:09 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: neil.armstrong@linaro.org
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: Force host dr_mode for usb_2
+ controller
+Message-ID: <Zw1f6S9d1JygJ6VU@linaro.org>
+References: <20241014-x1e80100-usb2-dwc3-set-dr-mode-host-v1-1-3baab3ad17d8@linaro.org>
+ <c1cd82c2-5af7-44ec-ac18-996dbc212ce0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] dt-bindings: rtc: qcom-pm8xxx: document no-alarm
- flag
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Satya Priya <quic_c_skakit@quicinc.com>,
- "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" <linux-rtc@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-References: <20241013051859.22800-1-jonathan@marek.ca>
- <20241013051859.22800-3-jonathan@marek.ca>
- <gpika7a5ho36gx3pz7k5t4rz5spvpnmnvzs277r64z2npdmfmg@4vcmw6x5zvwn>
- <f3b4bb12-d025-1cc9-6dbd-04913b951425@marek.ca>
- <322c44e7-897a-43fb-b617-f4d73c9384a9@kernel.org>
- <a91e4a52-c427-bfdb-0675-f8417dc24006@marek.ca>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <a91e4a52-c427-bfdb-0675-f8417dc24006@marek.ca>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c1cd82c2-5af7-44ec-ac18-996dbc212ce0@linaro.org>
 
-On 14/10/2024 16:09, Jonathan Marek wrote:
-> On 10/14/24 9:38 AM, Krzysztof Kozlowski wrote:
->> On 14/10/2024 14:58, Jonathan Marek wrote:
->>> On 10/14/24 3:34 AM, Krzysztof Kozlowski wrote:
->>>> On Sun, Oct 13, 2024 at 01:15:27AM -0400, Jonathan Marek wrote:
->>>>> Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
->>>>> Thus writing to RTC alarm registers and receiving alarm interrupts is not
->>>>> possible.
->>>>>
->>>>> Add a no-alarm flag to support RTC on this platform.
->>>>>
->>>>> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
->>>>> ---
->>>>>    Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml | 5 +++++
->>>>>    1 file changed, 5 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
->>>>> index d274bb7a534b5..210f76a819e90 100644
->>>>> --- a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
->>>>> +++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
->>>>> @@ -40,6 +40,11 @@ properties:
->>>>>        description:
->>>>>          Indicates that the setting of RTC time is allowed by the host CPU.
->>>>>    
->>>>> +  no-alarm:
->>>>> +    $ref: /schemas/types.yaml#/definitions/flag
->>>>> +    description:
->>>>> +      Indicates that RTC alarm is not owned by HLOS (Linux).
->>>>
->>>> This is not even properly used/tested, because you disable the RTC
->>>> entirely in your DTS.
->>>>
->>>
->>> What? The next patch in this series is enabling RTC on x1e using this flag
->>
->> D'oh, right, I must have looked at wrong diff hunks. I had somehow
->> impression you add status=reserved, but you just dropped it.
->>
->>>
->>>> I expect here unified property for all Qualcomm devices for this case.
->>>> We already have "remotely-controlled" and other flavors. I don't want
->>>> each device to express the same with different name...
->>>>
->>>> Also: missing vendor prefix.
->>>>
->>>
->>> I don't care what the property is named (as long as its a bool
->>> property), if you have a name you prefer I will use it.
->>>
->>> The existing 'allow-set-time' property (also related to HLOS permissions
->>> to the RTC) is also specific to this driver doesn't have a vendor prefix.
->>
->> Yeah, that one sneaked in some years ago.
->>
->> So you can set time, but not alarm? Some previous platforms could not
->> set time, but could set alarm?
->>
->> I wonder whether we actually describe the real issue here. It looks like
->> group of band-aids.
->>
->> Best regards,
->> Krzysztof
->>
+On 24-10-14 17:48:37, neil.armstrong@linaro.org wrote:
+> On 14/10/2024 16:14, Abel Vesa wrote:
+> > The usb_2 controller has only a USB 2.0 PHY connected to it. There is no
+> > USB 3.x PHY fot it. So since dual-role is not an option, explicitly set
+> > the dr_mode to host to match the hardware.
 > 
-> Firmware can set different permissions for the RTC time (0x61xx) and RTC 
-> alarm (0x62xx) regions. So it makes sense to have one flag for each region.
-> 
-> RTC time is almost always read-only (not owned by HLOS/Linux), so the 
-> 'allow-set-time' property is almost never used (the driver supports 
-> using nvmem to store an offset for setting time as a workaround).
-> 
-> The "can set time, but not alarm" combination will probably never be 
-> used, but the 3 other combinations are possible (the common one is 
-> "can't set time, but can set alarm").
-> 
-> (in the next patch I deleted the "alarm" region/interrupt from the dts 
-> but that's wrong, the HW still exists, the patch should be only 
-> replacing the reserved status with the new flag)
+> I don't follow, dual role is perfectly possible with USB2 only, where is the limitation ?
 
-OK, let's just add vendor prefix and describe actual hardware property,
-e.g. qcom,no-alarm or qcom,alarm-restricted
+You're right. USB2 could be OTG.
 
-Best regards,
-Krzysztof
+Consider this patch dropped.
 
+> 
+> Neil
+> 
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >   arch/arm64/boot/dts/qcom/x1e80100.dtsi | 1 +
+> >   1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index 0e6802c1d2d8375987c614ec69c440e2f38d25c6..4da13c8472392d842442193dc740027fa011ee1f 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -4143,6 +4143,7 @@ usb_2_dwc3: usb@a200000 {
+> >   				iommus = <&apps_smmu 0x14e0 0x0>;
+> >   				phys = <&usb_2_hsphy>;
+> >   				phy-names = "usb2-phy";
+> > +				dr_mode = "host";
+> >   				maximum-speed = "high-speed";
+> >   				ports {
+> > 
+> > ---
+> > base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
+> > change-id: 20241014-x1e80100-usb2-dwc3-set-dr-mode-host-35312d1d25b2
+> > 
+> > Best regards,
+> 
+
+Thanks for reviewing.
+
+Abel
 
