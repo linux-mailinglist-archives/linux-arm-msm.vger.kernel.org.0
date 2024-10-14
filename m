@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-34322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 706F299C97C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 13:54:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C0A099C95F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 13:50:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 363F9B21F44
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 11:49:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8DDA11C20365
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 11:50:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC3A819E7D1;
-	Mon, 14 Oct 2024 11:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 470CC19E98B;
+	Mon, 14 Oct 2024 11:50:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAUjXlwl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SeHcutp0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D1819D8B5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 11:49:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2053719E97E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 11:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728906586; cv=none; b=n2UAyzHUYOmVfU4Zb9exycOqiSx1DwMLxGCIPAz9B9sgvcdN6Wpx917eyWxuRkzg71/QOGukMgMkzWj+vlymXc1jtb0A9plu2o0VN+S79rZlkaFmMkWDZut+6oN/949gLr2djQaLlplA8369lFuUO0hUjFRPpxQS4vK+H5IVsq0=
+	t=1728906647; cv=none; b=E4cvqpb37TrJtNpo16+ko+64pDEgjfkOXL3EVcmVf452WG2DrRydM1cNhlb0xcyL3VeNYAyZGk7oW5wLvzGWmstB4t3DB/QE2gV9uJm2M4xdRvo7TPyDL35/+0JCfzydap/vsnKKoU0twSgBI93mAF+TWfd6c7NeAYvarcq5OXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728906586; c=relaxed/simple;
-	bh=vp1a1EJbj016h6heQZLXngVTRB/nNnOFqHzrPcn7+M4=;
+	s=arc-20240116; t=1728906647; c=relaxed/simple;
+	bh=+cMyaICM2qkAywZ9eJFCaONEf+6StQnPotXZiKbNnrg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TEzlUR2HuRt2MJl9zbMFARVu731HHxd3ZxNlNkgaDfbaj7AfsigJxOoljEAiQ6eGASTf0iu0q0ZKbdDsjNLepw19PUIwk8ZzhJNGCjrphtV2TQ/YKy1A3WbwVWn2aqCilT4Bb01r1uHer2IaM/zSLDF2eUASwxCQY0KzcgDVfDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAUjXlwl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 728AAC4CEC7;
-	Mon, 14 Oct 2024 11:49:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=U97HWkVqBiUo4WawkCa74Fi8ugevMsXjADyBWerImHWI3kQRbc2TUlXW5iPVz4VhGVFyZr2lMNBRmVNAuOM8ilMWveptGKleTRHWSb3kqhlpADFiKDo5KLy99FtweCNW7xlGtigT6d2IFxTFN3da+CBu/tfiv2DQQkK/Agu6nEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SeHcutp0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6005C4CEC3;
+	Mon, 14 Oct 2024 11:50:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728906586;
-	bh=vp1a1EJbj016h6heQZLXngVTRB/nNnOFqHzrPcn7+M4=;
+	s=k20201202; t=1728906646;
+	bh=+cMyaICM2qkAywZ9eJFCaONEf+6StQnPotXZiKbNnrg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=iAUjXlwlw/KGvDWZKhb4MBBS1t4X6rLtprRa8Pkf3lYpHFHigz6XjxACiFisEHB8H
-	 mtvZQ8MVQtAwHMb8e419m92YPFynfw+1Uc5XyywdTHBVdDcm4vH2CY+MAFDPJyCh4i
-	 KOYCUFIAmN05SMasBU3hUJaO5TkOHP11M8vB7IcHA/Y3R+gTYmYmVE8BMrJeTiRcoW
-	 /UWSiqd5cyptooUNyu4UrAaD+eLzqS55fL4UvEGjNVL00Ecz8nxAqNUJBxofUpbMyP
-	 VrEipEKdPNnlujj240idp3TBjQASZUtLFbrkqyyhAr5iJi9K8Zdzm2R30Y+2xi6vdQ
-	 FEqqFDSqmmqzw==
-Message-ID: <f750afed-f7cd-43b9-a611-47641edd2464@kernel.org>
-Date: Mon, 14 Oct 2024 13:49:36 +0200
+	b=SeHcutp0uVZs/aGJn6dNd+SrSUOFd8plMDIA84OPfPyTbGtAPKqIOl8agFYjAyl4c
+	 ZaJS0Kxq1aYKJEuaIAXi3Sx5qN8TF7hZJ+35szS8MEL/EozizOQaPqSlykN2RWNxwx
+	 WuUCsQYQTfeN9FR2+fdTCKmoBBS/NAjDoTwzwyoeUWtfawP3KZo/LVy6HCNn8KppVa
+	 OTr/i8AZK7+pZiLRESMkwOOHGFou4kMIE/SgE5n1Y3Gd9CGKuY90fLcPjLbn7kG7bY
+	 6/EgyuiIB0biNWoYOonDwZ9T+SlcVAtlBZEoEKGMzD+igiqJqseZLlmPtLTQRUWZ5+
+	 u3I5dDvolW2RQ==
+Message-ID: <41e6462f-ebf5-4439-9bea-b5d7da88115f@kernel.org>
+Date: Mon, 14 Oct 2024 13:50:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,12 +50,12 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] dt-bindings: display/msm: Add QCS615 DSI phy
+Subject: Re: [PATCH 5/6] dt-bindings: display/msm: Add QCS615 MDSS & DPU
 To: quic_fangez@quicinc.com, kernel@quicinc.com, quic_lliu6@quicinc.com,
  quic_xiangxuy@quicinc.com
 Cc: linux-arm-msm@vger.kernel.org
 References: <20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com>
- <20241014-add_display_support_for_qcs615-v1-4-4efa191dbdd4@quicinc.com>
+ <20241014-add_display_support_for_qcs615-v1-5-4efa191dbdd4@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -101,61 +101,21 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241014-add_display_support_for_qcs615-v1-4-4efa191dbdd4@quicinc.com>
+In-Reply-To: <20241014-add_display_support_for_qcs615-v1-5-4efa191dbdd4@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14/10/2024 11:47, fangez via B4 Relay wrote:
 > From: lliu6 <quic_lliu6@quicinc.com>
 > 
-> QCS615 platform uses the 14nm DSI PHY driver.
-
-This patchset is not ready for submission. Please perform first internal
-review.
-
-Please run scripts/checkpatch.pl and fix reported warnings. Then please
-run `scripts/checkpatch.pl --strict` and (probably) fix more warnings.
-Some warnings can be ignored, especially from --strict run, but the code
-here looks like it needs a fix. Feel free to get in touch if the warning
-is not clear.
-
-<form letter>
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
-
-Tools like b4 or scripts/get_maintainer.pl provide you proper list of
-people, so fix your workflow. Tools might also fail if you work on some
-ancient tree (don't, instead use mainline) or work on fork of kernel
-(don't, instead use mainline). Just use b4 and everything should be
-fine, although remember about `b4 prep --auto-to-cc` if you added new
-patches to the patchset.
-
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time.
-
-Please kindly resend and include all necessary To/Cc entries.
-</form letter>
-
+> Add bindings for the display hardware on QCS615.
 > 
 > Signed-off-by: lliu6 <quic_lliu6@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> index 52bbe132e6dae57246200757767edcd1c8ec2d77..029606d9e87e3b184bd10bd4a5076d6923d60e9e 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-> @@ -20,6 +20,7 @@ properties:
->        - qcom,dsi-phy-14nm-660
->        - qcom,dsi-phy-14nm-8953
->        - qcom,sm6125-dsi-phy-14nm
-> +      - qcom,qcs615-dsi-phy-14nm
 
-Keep the order.
+I have no clue what this patchset is supposed to be. It seems you sent
+something internally. At least it would explain some issues here.
+
+Please drop public mailing lists when sending internal stuff.
 
 Best regards,
 Krzysztof
