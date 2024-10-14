@@ -1,196 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-34237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44D2D99C078
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 08:57:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3657299C0DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 09:13:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E4FDF1F21EB4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 06:57:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AE74B1F236F4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 07:13:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F2761459F6;
-	Mon, 14 Oct 2024 06:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A03433C9;
+	Mon, 14 Oct 2024 07:13:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ez/K+hcV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z0TF3mS/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F96136B;
-	Mon, 14 Oct 2024 06:57:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B765145B3F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 07:13:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728889032; cv=none; b=llD5GQmIKOjYr7IwW6gIb3ZEvTGfJlQMUtpFpg8Sc08Wv6PmEBSwV+mWBk2ZumLl730CUQQIEn12JZyE0iWAPvArPne/UReA/rstXniZjO3rNIcfMLYMshjDjTQQMEEfV6ikak2MrHMOeZ2Y6EH+jj5PCfCsYBbtOgZlcgP3ATI=
+	t=1728890006; cv=none; b=SNiyTxqpYeciuZdtmGXN/ZJ9Orc4EfExqKFc8jg+0yS07/hOVKX1ddN8GxcAFsifYJ5KdUL4wyFnibKXPFjB10HDKLE7XedoUjyt1K0U7LboivQPrrT5aKjwAKeuOAjO8AnyunTDcEXr20vLn7YYgthtxa747HZfjsqJubJp444=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728889032; c=relaxed/simple;
-	bh=l1IR20OYZSHD0YXSTjh4eX1/mfiIwLUa2p0IsEGKYfM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=In5SnRIZ2ZWe3YtLuZBK9XdIGmnY3ElShrdGIY4KRnr923FAiTFWHLpHUaOeF7eYHr7PQCM1D+2HJmJt4qP6cr096RuQBWVuH71sUbns+OxSyptJoWVkpKVLQYCLzejI2n2DfoP8IkVdClK75XNdmpFSp7LZIiTpMVq72YNF6xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ez/K+hcV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD51C4CEC3;
-	Mon, 14 Oct 2024 06:57:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728889031;
-	bh=l1IR20OYZSHD0YXSTjh4eX1/mfiIwLUa2p0IsEGKYfM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ez/K+hcVDZcjSWlKJHLVK2TePJty62/ep+zkAfZv+r0IdnFd3eMNrs7IJ+d1KgJ8o
-	 S+OhZ/esGs6OdC+yKmagtR17/I6m9kyfsmHDdZj34LRX4Uwvb95XIdsEe9dOYMQh+T
-	 Ez+8gvszMQ2/XGVlEQsPTpH4G8YC59D87ZUEuibtRWlZX69MNLq4KxJAMfI1wat4Qs
-	 B57CO7GRlC3oXtNheZ6mi3PrNFFjxPtwTMx7UJT/93qi6Lz3YCaFzAH3V+3IN21cDx
-	 oj5NF3CJaTZP5cbMTw+shT8ek6/WRd/DyT1whJu9/YqZPMootwyvY8Cf2w6POYBf6L
-	 wmRpUj1DEqLMw==
-Message-ID: <44745af3-1644-4a71-82b6-a33fb7dc1ff4@kernel.org>
-Date: Mon, 14 Oct 2024 08:56:58 +0200
+	s=arc-20240116; t=1728890006; c=relaxed/simple;
+	bh=soZUGN/CewBFVNfdz3KR1OQHSXx2AxZY9PlPrmTUB3Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JGieLuj68m7uGbg/hK7ySIjTAXxazPo5zaovM37hnuZRaYEU5mmciln6mic3jmJa7xuOUG9viVXkZLEe1NWUpBhM759gezjjiQDaSRNGk+io5j3I/v8d36QjnEwMP48KWKtv5BRgyQ/GQ+XIFTau66d4WBgKWvjsWO1iTs3sUdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z0TF3mS/; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539e6c754bdso1100391e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 00:13:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728890002; x=1729494802; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0cthvJbNHIUuZVAOfCaJNB5q9EvmZX6lNdstcrG6zo4=;
+        b=Z0TF3mS/KRDkX2o+DMktKlS0MlrXrbbV3PtR5XQmp+LiHKlkPfPZ0QNMBmYpjY7obu
+         KtSYnHm/WcfRVnHoyKhvuceQ/wMIubgXTkfaVUDWiVJR3fP8BxdGtEUeJG6ZDG0NJF0Z
+         I/v58gBBYt31/z5K2OCw2nTkXngpwEfb4dmTA3gaFGI07fN1VLp+xzbTUgsLQJxNkrXV
+         xFZJL1tMzvLsyubGCQSXWF7bLgA/9SfwfVWAoJAKeDaJ7gWLpuNoBfCPybyQ+GO72ZYW
+         YikR7YvV12IoGm7MFn5yil0WpzrSx6P9Y18hcXXJ8bhxymbsz3RP98UVyYmpu1z1mw9A
+         JJUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728890002; x=1729494802;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0cthvJbNHIUuZVAOfCaJNB5q9EvmZX6lNdstcrG6zo4=;
+        b=HLti6RyIjMVhfJ1Yrk2ygqx3d/gwMMN8NlIMaMppb0VGLI5od4AO9TyFu0qhTj2Pyg
+         KgGrElsMwdLe1hSIwcqOeh+ILHZvwPsjgSgRg/v+x9Gg24rzQ6Otr4MK6UJuemHhPvci
+         fCiaCmbqYw3NhqPid/C9BDckrNty5Y5Fr5zcMNBMKMZj0YAxF576DNCAZ3k1GqKnsgFv
+         2L/MMGClRbSL8keNAkh501jXE2SE8PnqHiyTtqYAABlUZCJcfHN1qkWgvSyjZf0V29hY
+         17nUrLWS2EG6HMccutaLuZxIKeMmObihF9A91GEmkkolZ0un9nJMWkXy6xoiQV7w0b9j
+         UcLw==
+X-Forwarded-Encrypted: i=1; AJvYcCX02BHCy2fRknK57rrJgR72w2XXEVOYHyhQteFoNLrRP99zUn03Mpu9ufTwl2/hPU2bixzzxubpIvO5r0W3@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy3wXbHI+4ohI+tbY/4eVs0ZvjPJI05Xy4wBjI/PpstW1BT1vYY
+	OCOURLCGwjZ/bEtPcNsbmhYlj2/gyxAiENAZXhQh6vHQoVOGpFPKognrdLyQpLk=
+X-Google-Smtp-Source: AGHT+IEBN6UgXvC/JiYyQZMKU0lBe2gQnD6YwBDWWDisNaW1eInShMqX2HIrW1+nlG/NKSGaVJphGw==
+X-Received: by 2002:ac2:4c4e:0:b0:535:d4e6:14e2 with SMTP id 2adb3069b0e04-539da4fb618mr4542670e87.36.1728890002303;
+        Mon, 14 Oct 2024 00:13:22 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539d69405e9sm1224978e87.280.2024.10.14.00.13.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Oct 2024 00:13:20 -0700 (PDT)
+Date: Mon, 14 Oct 2024 10:13:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Rob Clark <robdclark@chromium.org>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dpu: don't always activate merge_3d block
+Message-ID: <pahfbstxa6snym7bem456npsp6bdekjqhnjcsrlpbfn77hkrut@uviaesubwz2a>
+References: <20241011-merge3d-fix-v2-1-2082470f573c@quicinc.com>
+ <kah73euzauizsxvcrgmfsatshfe4pytgb7xe5iprtajg7abhsv@l7jdcxza5gd2>
+ <0ca707a4-bd5f-4a31-a424-f466afa08e0d@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/16] dt-bindings: net: Add DT bindings for DWMAC on
- NXP S32G/R SoCs
-To: jan.petrous@oss.nxp.com, Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Jose Abreu <joabreu@synopsys.com>, "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, Vinod Koul <vkoul@kernel.org>,
- Richard Cochran <richardcochran@gmail.com>, Andrew Lunn <andrew@lunn.ch>,
- Heiner Kallweit <hkallweit1@gmail.com>, Russell King
- <linux@armlinux.org.uk>, Shawn Guo <shawnguo@kernel.org>,
- Sascha Hauer <s.hauer@pengutronix.de>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- Fabio Estevam <festevam@gmail.com>, Emil Renner Berthing <kernel@esmil.dk>,
- Minda Chen <minda.chen@starfivetech.com>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Claudiu Beznea <claudiu.beznea@tuxon.dev>,
- Iyappan Subramanian <iyappan@os.amperecomputing.com>,
- Keyur Chudgar <keyur@os.amperecomputing.com>,
- Quan Nguyen <quan@os.amperecomputing.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>
-Cc: linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
- netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org, imx@lists.linux.dev,
- devicetree@vger.kernel.org, NXP S32 Linux Team <s32@nxp.com>
-References: <20241013-upstream_s32cc_gmac-v3-0-d84b5a67b930@oss.nxp.com>
- <20241013-upstream_s32cc_gmac-v3-13-d84b5a67b930@oss.nxp.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241013-upstream_s32cc_gmac-v3-13-d84b5a67b930@oss.nxp.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0ca707a4-bd5f-4a31-a424-f466afa08e0d@quicinc.com>
 
-On 13/10/2024 23:27, Jan Petrous via B4 Relay wrote:
-> From: "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>
+On Sun, Oct 13, 2024 at 07:37:20PM -0700, Abhinav Kumar wrote:
+> Hi Dmitry
 > 
-> Add basic description for DWMAC ethernet IP on NXP S32G2xx, S32G3xx
-> and S32R45 automotive series SoCs.
+> On 10/13/2024 5:20 PM, Dmitry Baryshkov wrote:
+> > On Fri, Oct 11, 2024 at 10:25:13AM -0700, Jessica Zhang wrote:
+> > > Only enable the merge_3d block for the video phys encoder when the 3d
+> > > blend mode is not *_NONE since there is no need to activate the merge_3d
+> > > block for cases where merge_3d is not needed.
+> > > 
+> > > Fixes: 3e79527a33a8 ("drm/msm/dpu: enable merge_3d support on sm8150/sm8250")
+> > > Suggested-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> > > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > > ---
+> > > Changes in v2:
+> > > - Added more detailed commit message
+> > > - Link to v1: https://lore.kernel.org/r/20241009-merge3d-fix-v1-1-0d0b6f5c244e@quicinc.com
+> > > ---
+> > >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 2 +-
+> > >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > LGTM now. Please clarify, is there any dependency between this patch and
+> > [1]
+> > 
 > 
-> Signed-off-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
-> ---
->  .../devicetree/bindings/net/nxp,s32-dwmac.yaml     | 97 ++++++++++++++++++++++
->  .../devicetree/bindings/net/snps,dwmac.yaml        |  1 +
->  2 files changed, 98 insertions(+)
+> No dependency as such. Both are tackling similar issues though. One for
+> video mode and the other for writeback thats all. Namely:
 > 
-> diff --git a/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
-> new file mode 100644
-> index 000000000000..4c65994cbe8b
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/nxp,s32-dwmac.yaml
-> @@ -0,0 +1,97 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# Copyright 2021-2024 NXP
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/nxp,s32-dwmac.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: NXP S32G2xx/S32G3xx/S32R45 GMAC ethernet controller
-> +
-> +maintainers:
-> +  - Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
-> +
-> +description:
-> +  This device is a Synopsys DWC IP, integrated on NXP S32G/R SoCs.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - nxp,s32g2-dwmac
+> 1) We should not be enabling merge_3d block if two LMs are not being used as
+> that block needs to be enabled only to merge two streams. If its always
+> enabled, its incorrect programming because as per the docs its mentioned "if
+> required". Even if thats not causing issues, I would prefer not to enable it
+> always due to the "if required" clause and also we dont need to enable a
+> hardware sub-block unnecessarily.
+> 
+> 2) We should be flushing the merge_3d only if its active like Jessica wrote
+> in the commit message of [1]. Otherwise, the flush bit will never be taken
+> by hardware leading to the false timeout errors.
+> 
+> It has been sent as two patches as one is for video mode and the other for
+> writeback and for writeback it includes both (1) and (2) together in the
+> same patch.
 
-Where are the other compatibles? Commit msg mentions several devices.
+I think it's better to handle (1) in a single patch (both for video and
+WB) and (2) in another patch. This way it becomes more obvious that WB
+had two different independent issues issues.
 
-> +
-> +  reg:
-> +    items:
-> +      - description: Main GMAC registers
-> +      - description: GMAC PHY mode control register
-> +
+> 
+> I thought this separation is fine, if we need to squash it, let me know.
+> 
+> Thanks
+> 
+> Abhinav
+> 
+> > [1] https://lore.kernel.org/dri-devel/20241009-mode3d-fix-v1-1-c0258354fadc@quicinc.com/
+> > 
+> > > 
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > > index ba8878d21cf0e1945a393cca806cb64f03b16640..c5e27eeaff0423a69fad98122ffef7e041fbc68e 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > > @@ -302,7 +302,7 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+> > >   	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
+> > >   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+> > >   	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
+> > > -	if (phys_enc->hw_pp->merge_3d)
+> > > +	if (intf_cfg.mode_3d && phys_enc->hw_pp->merge_3d)
+> > >   		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
+> > >   	spin_lock_irqsave(phys_enc->enc_spinlock, lock_flags);
+> > > 
+> > > ---
+> > > base-commit: a20a91fb1bfac5d05ec5bcf9afe0c9363f6c8c93
+> > > change-id: 20240828-merge3d-fix-1a8d005e3277
+> > > 
+> > > Best regards,
+> > > -- 
+> > > Jessica Zhang <quic_jesszhan@quicinc.com>
+> > > 
+> > 
 
-...
-
-> +
-> +        mdio {
-> +          #address-cells = <1>;
-> +          #size-cells = <0>;
-> +          compatible = "snps,dwmac-mdio";
-> +
-> +          phy0: ethernet-phy@0 {
-> +              reg = <0>;
-> +          };
-> +
-
-Stray blank line.
-
-
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
