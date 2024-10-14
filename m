@@ -1,145 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-34335-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34336-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 264D399CB25
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 15:11:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 517DC99CB50
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 15:15:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C54321F2104F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 13:11:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 746BA1C227FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 13:15:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02DC1A4F20;
-	Mon, 14 Oct 2024 13:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A89431C174E;
+	Mon, 14 Oct 2024 13:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="yZMqifFi"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aLkNruy3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E511A7AF7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 13:09:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90F91BE86E;
+	Mon, 14 Oct 2024 13:13:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728911347; cv=none; b=kHPzPUlVEs9TcbQe5yezvykloKmh29NyQfSeOCHH+uAaA4i4eMgnsZt6m88SZcTS/y4GJ90tlJSe9KqNvprsyrKw5TWna6h2mIlxJoN82rSugYH+vXIfXbgiqamrV4mJ0FVPNc7O833BAZrBmWu/vdup0fgItEJuXGFeRgOuKXw=
+	t=1728911591; cv=none; b=apVAjZ/1+5yjmVdLjBg2wi9rztFKz9CTvPLVimpWWbsCZTo5IBDl2s7YX9GQ8NCLwjtyOt1bL60yKJLOHbtutsRE5D2GoaRYTDjCAtYU8JPn7n9MtiAcTz0HFJzInc+e0+UAfsxVonCwXlO0XHUB0akwaIwLdW+9HX9u+s10hXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728911347; c=relaxed/simple;
-	bh=KrIsq2TplMAcC3vZ7KzTAGaB9LDDCrPy5Hjd3Pz11r0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a50LaHLnURWJ/A5YDfgtvvyal3zRahG9MbFQHsuGoeK7ida+J+TqfeawjL5ij6keCoKEk1Jumy7xYXyr0MY/0gxyLWqhvr6CehfaNor0Ogv0g9l+hQtEJIxaKXLoFvS1vHp1zTbW2HF6uBAUQQ8NuIgW05g8rMdC+mS1eQ2hk08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=yZMqifFi; arc=none smtp.client-ip=209.85.167.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539f72c913aso997232e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 06:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1728911344; x=1729516144; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e5L05MlQtWawdX8p0wuqt/baMtRhM5OYK1N4bwWDl5s=;
-        b=yZMqifFijxQFDP66rh2JbZMVTwlU2rCuEzvadonb1SCkohpIy69rQrv2wmnF/0C6SR
-         MNSt4zmiwDIO2F0YGDgGS5srRZViobUVvxChkIvM7zWbW2L9iD9mtRdr4vBLlApU6vCA
-         J866MzhByUToMSRs1eka1llwUFExZ1XBbLROQ5VcOoWEu3VubXpYNX3+vRXeOLrDqM4w
-         I5FHCdkf1/UMny0Nv84+IOCMx2BaAz9YZn9pQ/xVRb1cO+tIm7/ZcliuDAo8gESrGBj/
-         JbtCl01D2bkxvddX/HGqYtTxTkwbBpUZjccePTdY5uLlSCORL20ziM3hWX6N5ecL72iz
-         WhuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728911344; x=1729516144;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e5L05MlQtWawdX8p0wuqt/baMtRhM5OYK1N4bwWDl5s=;
-        b=UmQSYxssGwvv2jeirkxmtm7GmFrmwiVoJqhGgu87x8jGiulvEbIfWXrtZiqfoNA3vU
-         V8GvDX1HZ+HY4bBw41jRRwLaLoVXHLX+FpRbzB8ZkjJUtSq8VZf0lKzsS04BLxLdeJwe
-         GNkEwmoK+nExBYUmdcKioWyeLLDnxF7OgUGuZVBjtpNbHFfeQOeO+NoLd2NLlxQHjqbO
-         UYr5DgCnS/HXQ4hqLfkqpfZ6/sgjdUJQ9EecMxmOx2THphsQz0ohEeAX9131F870igTP
-         q2Y4uZGpHt99DWbfZPxf5mNY33HOU0x2yPLHYXNKP+Bm7VlPxquUdGbkEUeYNOH7SI9b
-         5m4g==
-X-Forwarded-Encrypted: i=1; AJvYcCX22TM/IEkwPzWHB35RQsZ1OjUCEs/TkOIvD4aGiHc0YHraXNzGrqE9iFp1U5m7Vbi8oFZcBaRdi/Z6qVKU@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKCBUsNSsgnnPWXzuUzbWRcqpSdmdFD7vQZiL1JACl7wE1kIn8
-	Q4atSP167IIFDgVb249nTDxgsSFkOjWl/qVxxrtaI/79+nT3LnQhzsulNmZnNNRT7UdAX0DPknn
-	Jzgb5UrW/Kt1Y1jv6w6K+fw8PE3khXX9OjDeEIg==
-X-Google-Smtp-Source: AGHT+IE01F/CRk63gLh6wyNUgkx2X9t+nVpaABxUkKcustXwQv1CEDsdg/mGhJHXQ/JNUYjs2Ro8jQ0+C6HhhsODR2s=
-X-Received: by 2002:a05:6512:1114:b0:539:f7a2:65ac with SMTP id
- 2adb3069b0e04-539f7a2661bmr1505166e87.35.1728911344139; Mon, 14 Oct 2024
- 06:09:04 -0700 (PDT)
+	s=arc-20240116; t=1728911591; c=relaxed/simple;
+	bh=ndee/AFgnLGg95ixYYKZU3dpuR3s81+9MlGalzVSh2Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ern4kqmXUKPLVIT7egBdwUsd8fVz7bsrHzCXbgyWj42PAprFM9FgrCECwFBNWGeT6IY9tryBovSozxZjqOYxj1ACoHQdCXM3p8VQtaWF0qIq4LfhXNVn1CVQ43cF5Rq+0n2MB//zqvgNRRU0GtnOgpMiIsbRwP9EJcY9MWeYaJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aLkNruy3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49EBNHqF013174;
+	Mon, 14 Oct 2024 13:09:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	e3SuHs/ftC65uHNR5RtQxXpgy6EP0Kdb+DVlw9heaHw=; b=aLkNruy32o9al6hE
+	DqbGEVYCJzkp37+vUikjWfQbj7t1dQdy719I/LLEXEdDkOyr5WPwXuNT+bkeKW91
+	ZxA1/xjs3ZFDPZeYq2Jgn1cpfT7RS2lHCEylEQPtTfEs8U9BqkDntLpn1VDW9fXL
+	40p4egZENfl6Gy7CMwpDz8iBDGQCzlhJWa0fi1GrE92makb4zyd8anSqITUoB0tO
+	EbZmuDqJ7ZdOSoYzN7ZaoVJiwxkyBGY97cocWcoLjXnCCLK9/953tDIqFWTsnOwV
+	6dimCu2Blvs1UJ1b4/PHtTH2siyyCxIjzMhEMXC/0Y2BvR1nHGXqxjvysgksR3aO
+	irKFfw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 427hvfvbet-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Oct 2024 13:09:28 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49ED9RDx032375
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 14 Oct 2024 13:09:27 GMT
+Received: from [10.253.10.174] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Oct
+ 2024 06:09:21 -0700
+Message-ID: <75b22700-e4de-43fd-8e16-1961703bb708@quicinc.com>
+Date: Mon, 14 Oct 2024 21:09:18 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241014111527.2272428-1-quic_kuldsing@quicinc.com> <20241014111527.2272428-3-quic_kuldsing@quicinc.com>
-In-Reply-To: <20241014111527.2272428-3-quic_kuldsing@quicinc.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 14 Oct 2024 15:08:53 +0200
-Message-ID: <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] firmware: qcom: qcom_tzmem: Implement sanity checks
-To: Kuldeep Singh <quic_kuldsing@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 3/8] dt-bindings: PCI: qcom,pcie-x1e80100: Add 'global'
+ interrupt
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "Krzysztof
+ Kozlowski" <krzk@kernel.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <robh@kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <abel.vesa@linaro.org>, <quic_msarkar@quicinc.com>,
+        <quic_devipriy@quicinc.com>, <dmitry.baryshkov@linaro.org>,
+        <kw@linux.com>, <lpieralisi@kernel.org>, <neil.armstrong@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-clk@vger.kernel.org>
+References: <20241011104142.1181773-1-quic_qianyu@quicinc.com>
+ <20241011104142.1181773-4-quic_qianyu@quicinc.com>
+ <eyxkgcmgv5mejjifzsevkzm2yqdknilizrvhwryd745pkfalgk@kau4lq4cd7g3>
+ <4802B12B-BAC1-4E99-BDFE-A2340F4A8F24@linaro.org>
+ <3d1d0822-da66-44c8-a328-69804210123c@kernel.org>
+ <65B34B14-76C3-491D-8A58-6D0887889018@linaro.org>
+ <df6379c6-662a-4b35-a919-13c695a869c7@kernel.org>
+ <20241014090251.r4sfaaxtasokv4oi@thinkpad>
+ <ea7c1390-7ead-4c17-9ae3-cdcc9866332a@kernel.org>
+ <B716D0B8-2B9C-4FA2-94F3-038F1C634244@linaro.org>
+Content-Language: en-US
+From: Qiang Yu <quic_qianyu@quicinc.com>
+In-Reply-To: <B716D0B8-2B9C-4FA2-94F3-038F1C634244@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LfnxdWDOyju9HWf5eiUdlaFtkSZPqfEW
+X-Proofpoint-ORIG-GUID: LfnxdWDOyju9HWf5eiUdlaFtkSZPqfEW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 bulkscore=0 mlxlogscore=832 malwarescore=0 mlxscore=0
+ clxscore=1015 adultscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410140095
 
-On Mon, Oct 14, 2024 at 1:19=E2=80=AFPM Kuldeep Singh <quic_kuldsing@quicin=
-c.com> wrote:
->
-> The qcom_tzmem driver currently has exposed APIs that lack validations
-> on required input parameters. This oversight can lead to unexpected null
-> pointer dereference crashes.
->
 
-The commit message is not true. None of the things you changed below
-can lead to a NULL-pointer dereference.
+On 10/14/2024 5:41 PM, Manivannan Sadhasivam wrote:
+>
+> On October 14, 2024 2:56:58 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>> On 14/10/2024 11:02, Manivannan Sadhasivam wrote:
+>>> On Fri, Oct 11, 2024 at 06:06:02PM +0200, Krzysztof Kozlowski wrote:
+>>>> On 11/10/2024 17:51, Manivannan Sadhasivam wrote:
+>>>>>
+>>>>> On October 11, 2024 9:14:31 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>>> On 11/10/2024 17:42, Manivannan Sadhasivam wrote:
+>>>>>>>
+>>>>>>> On October 11, 2024 8:03:58 PM GMT+05:30, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>>>>>>>> On Fri, Oct 11, 2024 at 03:41:37AM -0700, Qiang Yu wrote:
+>>>>>>>>> Document 'global' SPI interrupt along with the existing MSI interrupts so
+>>>>>>>>> that QCOM PCIe RC driver can make use of it to get events such as PCIe
+>>>>>>>>> link specific events, safety events, etc.
+>>>>>>>> Describe the hardware, not what the driver will do.
+>>>>>>>>
+>>>>>>>>> Though adding a new interrupt will break the ABI, it is required to
+>>>>>>>>> accurately describe the hardware.
+>>>>>>>> That's poor reason. Hardware was described and missing optional piece
+>>>>>>>> (because according to your description above everything was working
+>>>>>>>> fine) is not needed to break ABI.
+>>>>>>>>
+>>>>>>> Hardware was described but not completely. 'global' IRQ let's the controller driver to handle PCIe link specific events like Link up, Link down etc... They improve user experience like the driver can use those interrupts to start bus enumeration on its own. So breaking the ABI for good in this case.
+>>>>>>>
+>>>>>>>> Sorry, if your driver changes the ABI for this poor reason.
+>>>>>>>>
+>>>>>>> Is the above reasoning sufficient?
+>>>>>> I tried to look for corresponding driver change, but could not, so maybe
+>>>>>> there is no ABI break in the first place.
+>>>>> Here it is:
+>>>>>
+>>>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=4581403f67929d02c197cb187c4e1e811c9e762a
+>>>>>
+>>>>>   Above explanation is good, but
+>>>>>> still feels like improvement and device could work without global clock.
+>>>> So there is no ABI break in the first place... Commit is misleading.
+>>>>
+>>> It increases the 'minItems' to 9 from 8, how come it is not an ABI break?
+>> Interface changed but all known users are still working, right? "Break"
+>> means something does not work, something is affected.
+> Hmm. I thought you were referring to the DTS warnings (for old DTS) that come out of these changes. But for kernel ABI, yes there is no breakage.
+I really see dts warning after dtbs checking and since global irq is to
+improve user experience and device could still work without it, will
+keep the 'minItems' as 8 and set 'maxItems' as 9.
 
-> To address this issue, add sanity for required input parameters.
+Thanks
+Qiang
 >
-> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-> ---
->  drivers/firmware/qcom/qcom_tzmem.c | 6 ++++++
->  1 file changed, 6 insertions(+)
+> Sorry for the confusion.
 >
-> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/q=
-com_tzmem.c
-> index 92b365178235..977e48fec32f 100644
-> --- a/drivers/firmware/qcom/qcom_tzmem.c
-> +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_pool_conf=
-ig *config)
+> - Mani
 >
->         might_sleep();
->
-> +       if (!config->policy)
-> +               return ERR_PTR(-EINVAL);
-
-This is already handled by the default case of the switch.
-
-> +
->         switch (config->policy) {
->         case QCOM_TZMEM_POLICY_STATIC:
->                 if (!config->initial_size)
-> @@ -412,6 +415,9 @@ void qcom_tzmem_free(void *vaddr)
->  {
->         struct qcom_tzmem_chunk *chunk;
->
-> +       if (!vaddr)
-> +               return;
-> +
->         scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock)
->                 chunk =3D radix_tree_delete_item(&qcom_tzmem_chunks,
->                                                (unsigned long)vaddr, NULL=
-);
-
-This would lead to a WARN() as the lookup would inevitably fail. We
-can possibly keep this bit but please change the commit message.
-
-Bart
-
-> --
-> 2.34.1
->
->
+>> I might be missing
+>> here something, of course, but I simply do not see any affected user here.
+>>
+>> Best regards,
+>> Krzysztof
+>>
+>>
+> மணிவண்ணன் சதாசிவம்
 
