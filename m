@@ -1,151 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-34325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34326-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9653F99C990
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 13:57:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64DB699C99D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 13:59:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59A8D283F00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 11:57:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE5551F25528
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 14 Oct 2024 11:59:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACFF319E96E;
-	Mon, 14 Oct 2024 11:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BEEDA19F419;
+	Mon, 14 Oct 2024 11:59:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vo/X2Rli"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BJqWdptK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D57313C67C;
-	Mon, 14 Oct 2024 11:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 104D119F13F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 11:59:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728907043; cv=none; b=qXk6rWsJAJvcNvnypb/WVpZTc/APjSm628DYfDFl6x01Ni84Qvhq3IQ9oJb19kP/8Wo+2pk3UaiuQytpUrHLbDd9xfqVEtHAxeS0TTGngPJl8xBSqvezihdkM2+lqmGXpgXootuBW9//2hFYDyyzToT5/f35k8OmzlLvs6uxqvU=
+	t=1728907175; cv=none; b=kFNqKooSTcpmWoF70Jzanmx/CuVa6GIQpeymj5nyRcAJD8vjn/UijY8EBUJgAPoqH9F4h+jDJTZOR2eegfN609Za65H446AKheyodMVaduk6Hc5QTWqDLrbv6s0RucRUAtUgnYzHA7bJmk+ecgoK5ff7cKjd+TFqjSKtss32Vl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728907043; c=relaxed/simple;
-	bh=v4o35weX78c4/KH4VRpqRNZ2ilJKUTY41ENoYVMZJuU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Wf7yQRIOh3x5MlB7zaVLvU/coHjs6CVIM8FAgeyGSHeN919+8KEAGTaltJ1X6rfjkUeqC/kScrBYb9fPOhd2e61SSXDZXntg0B2KhWN0uaNuZ+KWpBJRq5SVQn4Gg+I5BA4Xo2LbLRXPYv95Sc7qfdPHVHQNg65MfxweFQW/JkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vo/X2Rli; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01DAC4CEC3;
-	Mon, 14 Oct 2024 11:57:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728907043;
-	bh=v4o35weX78c4/KH4VRpqRNZ2ilJKUTY41ENoYVMZJuU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Vo/X2Rli/jOr3XdnZ0mRdm3gGaHzIPnLq/7jlVusw210/GMO9vRHUm/pIOQfk53kN
-	 xOvt43RxiXkBHb+OirrCHvMGeQ1iB/p/nFRhS0CjVEGVq46H4cMgWNB6k2ofwNe3fk
-	 Ay3OAJT4lV982T1yrM7cWomdGmbR0R6lyw8S2z/Q8OLBPX97/4iBe9YD9aToyAdVH9
-	 IayFCHFRmLdXt47NqS8MfxVl3WyzOe6jPwimvkmChEWxETK2eJyucujlZ9uV2ltu4t
-	 A4gWlphg4ja+IFNvWiaTKApLpVnjkKNn2caQVCXTes11y1tUVO7Ylq9KiE3MlBEQC/
-	 6zdOzpuMr4JxQ==
-Message-ID: <8fa9f6d3-bd1f-4242-a4c0-7b7022576f73@kernel.org>
-Date: Mon, 14 Oct 2024 13:57:14 +0200
+	s=arc-20240116; t=1728907175; c=relaxed/simple;
+	bh=5FoqIwssrvjp97KnL3zQZ6UIwNDocSkh3saIm6sEff0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LKnW2+6FhrkiR20GTe5t6h/MrVGpf0/S8jyCiUOA2l6tDzDATFD/hbM2+vfdyfa7G2HSYKHFdLyUoyHxCHGwkA4rTcbBn32mm0iNKzn2d42NbQrrHaOhf0kbC5XEah1yzp7nyrPjwNE+pFUyG5rJJgDpM/oEkcmkUOejESorSpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BJqWdptK; arc=none smtp.client-ip=209.85.128.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6e35f08e23eso17320427b3.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 04:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728907173; x=1729511973; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gy9SGG1Fw6l8b5zitIWLhCDUHisMjzfbWHJaJ4akvjk=;
+        b=BJqWdptKjm51tX1gQfo3OdY/us6TODM4X4JKUitTHelQzFyHKR+H9+WPH7OCspGlIP
+         GECCIOp5JaBRZ7arDlqNDA136AKK+P4NL78/eEexBaU6lItlaAl8ljT0Rt6Abnnql2kj
+         prrsquxTGvGQa9pi4pPuY5KCtuWf5DANCs/1k7VhKMB1zRBoWjtCLaMjB071pdkj+Ue0
+         Fdx10JSj1hm3Eqw/TInCAgbUhH7zh1/gOXScAQpGFrl5NpZiOBEu8RKLUJjjiKJW9oGT
+         i0x4ExNvRrKxNldEvB9FhPcYju8Q4CWHzSgNysK+jM4rjtn+OFBM2cZ4vMIu1w/+wJxj
+         dFJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728907173; x=1729511973;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gy9SGG1Fw6l8b5zitIWLhCDUHisMjzfbWHJaJ4akvjk=;
+        b=ujM6SVZ+p3/3ocsW+VOmVxdKR+Ht8VSYrfZPqt/tUSp79/EI7gbAqz/ju8Xlplr0Lf
+         Ap1ptlM+uE52oFnxLzdNO0Y/rTwVjgWeEdLzc4Fjmb4kg2Lczs7qBflIodGCdiy0Jl+3
+         j5fq3YJQQCp0qG1ddxJm/R2gOGs2SGl0NU3cY6wQia19nHYXcH0OyWMdcZEpsygWEPHm
+         +yrjvvX2O3ZUHOSZRs5pUg6z437y/l4qP5QAtPGUQ6ha1HCZ0PJ8n3u3A6qrprwoqDN5
+         dpx5klJmdM0+h89UkWx8ytlTLPx6BiScl4rMnVvvDIoY+RkPwgggdxLi/kLGhpqsbpbV
+         rhog==
+X-Forwarded-Encrypted: i=1; AJvYcCWB8x4TaUXqAJYtJU45bVDrX0WryZvlELwc89qY3hGRy0ovaRQ1uAVJsaIT2MEMIk7ae1dVH3QCldGdv0An@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxxyto56ADOC4xRfAb8QeQ06Vydkuc76ZeHvqN4jWnNm8r+8WKv
+	awr8Ad5cpoLxmPNZwC8ENAWf3Ct7MhR37L7fZ5qfvnqg6eT0XDBeKMclFkbEFEP8Rbc2vGs02Ow
+	BF8M0Ho3b2swPTmMwR7dTsY/CP0xZcnUwTfrkWA==
+X-Google-Smtp-Source: AGHT+IGGM4cy7hM75k1QKPoH1rMcKk933eWjr/PIbCrRLb2ILmm5S11lu7uUn3qOXDK0lbV0wQqiRjEi+nfT/OqcN3U=
+X-Received: by 2002:a05:690c:6210:b0:6b0:d9bc:5a29 with SMTP id
+ 00721157ae682-6e347c68d27mr93871247b3.32.1728907173067; Mon, 14 Oct 2024
+ 04:59:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/28] dt-bindings: media: Add video support for QCOM
- SM8550 SoC
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
- Sebastian Fricke <sebastian.fricke@collabora.com>,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
- <20241014-qcom-video-iris-v4-v4-1-c5eaa4e9ab9e@quicinc.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241014-qcom-video-iris-v4-v4-1-c5eaa4e9ab9e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20241014-add_display_support_for_qcs615-v1-0-4efa191dbdd4@quicinc.com>
+ <rodjkasqm3orhszu7pp5eimhwgoyda76c6k3a25xkq6vtnkxag@v7dhv6ghhbqg>
+ <c56kabp3xe5gcvmz23xqvd66dsfgo3gkm3xrideq4mhutm55rt@tqqv4gbzuwet> <SJ0PR02MB8750D786748D105839EE905BE3442@SJ0PR02MB8750.namprd02.prod.outlook.com>
+In-Reply-To: <SJ0PR02MB8750D786748D105839EE905BE3442@SJ0PR02MB8750.namprd02.prod.outlook.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Mon, 14 Oct 2024 14:59:22 +0300
+Message-ID: <CAA8EJprw-rjZEX6A0uZpOwMRO+HuC4gzjuBrLadun1ZpJmrjWw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] add_display_support_for_QCS615
+To: "fange zhang (QUIC)" <quic_fangez@quicinc.com>
+Cc: "Li Liu (QUIC)" <quic_lliu6@quicinc.com>, 
+	"Xiangxu Yin (QUIC)" <quic_xiangxuy@quicinc.com>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 14/10/2024 11:07, Dikshita Agarwal wrote:
-> Introduce support for Qualcomm new video acceleration
-> hardware i.e. iris, used for video stream decoding and
-> encoding on QCOM SM8550 SoC.
+On Mon, 14 Oct 2024 at 14:50, fange zhang (QUIC)
+<quic_fangez@quicinc.com> wrote:
+>
+> Dear maintainers,
+>
+> Sorry, Please ignore this email thread. We will review it again and initiate a new one after internal review.
 
-Please wrap commit message according to Linux coding style / submission
-process (neither too early nor over the limit):
-https://elixir.bootlin.com/linux/v6.4-rc1/source/Documentation/process/submitting-patches.rst#L597
+Dear fange. Please don't top-post and don't send HDMI emails. Looking
+forward to reviewing v2 of these patches.
 
-No need to resend just for this.
+>
+> Thanks for your comments.
+>
+> Best regards,
+> fange
+>
+> ________________________________
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Sent: Monday, October 14, 2024 18:48
+> To: fange zhang (QUIC) <quic_fangez@quicinc.com>
+> Cc: kernel <kernel@quicinc.com>; Li Liu (QUIC) <quic_lliu6@quicinc.com>; Xiangxu Yin (QUIC) <quic_xiangxuy@quicinc.com>; linux-arm-msm@vger.kernel.org <linux-arm-msm@vger.kernel.org>
+> Subject: Re: [PATCH 0/6] add_display_support_for_QCS615
+>
+> WARNING: This email originated from outside of Qualcomm. Please be wary of any links or attachments, and do not enable macros.
+>
+> On Mon, Oct 14, 2024 at 01:36:52PM +0300, Dmitry Baryshkov wrote:
+> > On Mon, Oct 14, 2024 at 05:47:26PM +0800, fangez via B4 Relay wrote:
+> > > Signed-off-by: fangez <quic_fangez@quicinc.com>
+> >
+> > You didn't copy any of corresponding maintainers or mailing lists, so
+> > most likely your patches will be ignored. Please use b4 tool for
+> > preparing and sending patches.
+> >
+>
+> Ok, you are using b4, excuse me. Then it makes me wonder, how and why
+> you ignored all B4 recommendations and pleads to get required To/Cc
+> lists.
+>
+> > > ---
+> > > lliu6 (6):
+> > >       arm64: defconfig: Enable SX150X
+> > >       arm64: dts: qcom: qcs615: Add display mdss and dsi configuration
+> > >       drm/msm/dpu: Add QCS615 support
+> > >       dt-bindings: display/msm: Add QCS615 DSI phy
+> > >       dt-bindings: display/msm: Add QCS615 MDSS & DPU
+> > >       dt-bindings: display/msm: dsi-controller-main: Document QCS615
+> > >
+> > >  .../bindings/display/msm/dsi-controller-main.yaml  |   1 +
+> > >  .../bindings/display/msm/dsi-phy-14nm.yaml         |   1 +
+> > >  .../bindings/display/msm/qcom,qcs615-dpu.yaml      | 117 +++++++++
+> > >  .../bindings/display/msm/qcom,qcs615-mdss.yaml     | 278 +++++++++++++++++++++
+> > >  arch/arm64/boot/dts/qcom/qcs615-ride.dts           | 101 ++++++++
+> > >  arch/arm64/boot/dts/qcom/qcs615.dtsi               | 195 +++++++++++++++
+> > >  arch/arm64/configs/defconfig                       |   1 +
+> > >  .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_3_qcs615.h | 268 ++++++++++++++++++++
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+> > >  drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |  17 ++
+> > >  drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+> > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+> > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   1 +
+> > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c         |  21 ++
+> > >  drivers/gpu/drm/msm/msm_mdss.c                     |   7 +
+> > >  17 files changed, 1014 insertions(+)
+> > > ---
+> > > base-commit: 77dca4e0530173cb10896cc113f14e6403f0a31a
+> > > change-id: 20241014-add_display_support_for_qcs615-b17bc0d4118e
+> > >
+> > > Best regards,
+> > > --
+> > > fangez <quic_fangez@quicinc.com>
+> > >
+> > >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+>
+> --
+> With best wishes
+> Dmitry
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
----
-
-<form letter>
-This is an automated instruction, just in case, because many review tags
-are being ignored. If you know the process, you can skip it (please do
-not feel offended by me posting it here - no bad intentions intended).
-If you do not know the process, here is a short explanation:
-
-Please add Acked-by/Reviewed-by/Tested-by tags when posting new
-versions, under or above your Signed-off-by tag. Tag is "received", when
-provided in a message replied to you on the mailing list. Tools like b4
-can help here. However, there's no need to repost patches *only* to add
-the tags. The upstream maintainer will do that for tags received on the
-version they apply.
-
-https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577
-</form letter>
-
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
