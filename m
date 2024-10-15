@@ -1,110 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-34449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34450-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D41399EE25
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 15:50:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D863299EE28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 15:51:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3CE631C21021
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:50:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5869E1F23BFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:51:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 196D91AF0BE;
-	Tue, 15 Oct 2024 13:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 239F01AF0D9;
+	Tue, 15 Oct 2024 13:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="W/+dY4uM"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mjF6cR7W"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9E320311
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 13:50:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817841AF0CD
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 13:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729000208; cv=none; b=Vma4cODydf4Jv46OpvN/H0GAZ20nwLz6COrGZGI/8BS3SMoXgHi1DJnkAyg12vaNj7v3eITSHxF15MQtHiigvl7iS3PlZwqfgJRL9PaGZncW9pOq23l2exZlDmsfmk2hFw2VP8RQVbtLXtuwqum0mCXeqDryQTW9M8tc3FNysxc=
+	t=1729000283; cv=none; b=Pjssm2eh5MgTwOd7NMaX1yrWhSQWUnZ8v1DepBLzzf5egmbKuJwFsE5UyR/93fLUKBPHoj3vhXRXVV0vt1azpjxRh+C3F0HP0bkg7RR0UZiix4/5KCBSg1eiWA9IXnl1+ZKN/txF+c+kc4JsWwE+lWoNOuw0ouqN+kHKA7UCZfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729000208; c=relaxed/simple;
-	bh=H4nUnTC/mdAHJ8whTn4/NoSOHF5aQx8EjvAPFGyij9w=;
+	s=arc-20240116; t=1729000283; c=relaxed/simple;
+	bh=1z5v2g/M8TGfXA6gWIica8246cfTbPJR6x/M/MJlmF0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GY0QDmK4nOmL+uBvLhP7+H2arHsiEwODMEcfsVLJXMj277joEEt6I1QhYiTmalAY2MYNYnYqjCF4x2IpIYALyzHNQW3mEQQtqgq1XEIchO4E6U7Vh6j/5edhrshfuLoWo2HnT0cKQe/efLzil+URa4JMDBEq7+31A/yKKRgSUO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=W/+dY4uM; arc=none smtp.client-ip=209.85.167.51
+	 Content-Type:Content-Disposition:In-Reply-To; b=AvmLPPgSSVGKusf9dywZwh+zSZDMV7S70t4u3lQ2+PjhzZgFVuwO6W6D3SZNvWHL19gAsg+YNw/wPLAMM3xBO8DGUf0mO7JPjRUHRQ1QWYcBajcB6H0nwd2gbKPGjAieAjcjoOK9Xx3hBaDbr6y0lRjhP4W+8FK3MgL8aX9M3LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mjF6cR7W; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539f53973fdso1782962e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 06:50:05 -0700 (PDT)
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-20caccadbeeso40192075ad.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 06:51:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729000204; x=1729605004; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FD0iGhVyvSNI4hIlLRLN+1/oqBE9b4I//1UiQGbWTqc=;
-        b=W/+dY4uMj7JDg+lelWE516EqBEXuPjblu+Q9KXcqETw3Hu9alLTK6H5lOrYqhRcfuG
-         +cZ/ViL4/2P9f80SOQZVWdooIVfU+MyWv+OJvxD/AD2CrznziPymoEO8Zn/cAQaikRFS
-         9SdmGVe7uOOqKTrZh+x0JKlBP7dvbFQXB/I7QynbYkhEHXc6rB8zssYWLmphZiqCfLUO
-         UHXjfg0szYfhToIG0XX+oj9qNTCMta+k/jAXvtuxdZK0OGWR0H3wPoCxq1DrSZA+IA+b
-         ASLcHFJYL9en8s/ZLaXMNjzGHpB6FxLptG8P6OI8NYYHNeeNFF5gtyPV9uQvCKhr776v
-         NIxQ==
+        d=linaro.org; s=google; t=1729000281; x=1729605081; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FQbfyi27tzCxQ9WkWmXe1wWLf7FoB61MNcmlSkHbiww=;
+        b=mjF6cR7WsjkzLW6LOvb99VRyd0IXEnxV98OEJOgTjXIJHqgUpAJzH+1dGlAFGxKu/j
+         d3TvYNIU17uDReZy90uSfi1UdtC3jqv5zXx+Iybu55LJSW2YrUJf1yaNnFj1U5s5mkTT
+         9i8WeHbOibvnvH96IAuVy2BW9F5YgeDXeEU62j9oq2ekouZwhL47CCsczvU2VqAUJb8e
+         DQNu98pVbzwOafTUayO0Lb1WvKuD5NZ1h93YRtM7SSM0f7PG5PicDscg0eTI1h242wB4
+         V4OLmancX2L109s8XN9U1vgp3WDs+xx5iryqlYqsllaefBXFBw/IxGdgZYcRCRjK+PNe
+         WQrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729000204; x=1729605004;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FD0iGhVyvSNI4hIlLRLN+1/oqBE9b4I//1UiQGbWTqc=;
-        b=B5CA9f78MeYvRAzvcQGEXDWJVNoPYzSjI9nPJPplbjnUFaQhgKhphlb/8m8LlAQeb8
-         rLVMGdVKMY4Q5zh/7qTIwm53Y8DO0YWNA03psop6QhKaM/PtKMGHb8j2NaGpo8vz6x8r
-         Bj/K/5YadSfIOlmy+8s3d303/hUGb32qFJ/GE8jGnKfyqggNXO88xNTifMzWTIGZl7IL
-         EIZljems3ZYvusZ1joKIIwOCvlqcCXmXNbOrB0OVyFWlGSOLLHVpQi/+u8nQCZNo//3J
-         0LgUgpjbXWf2k+dv2zMNUsTu5eykL7O/5+5v1ugiLnav5qn9VSi6Klrb5gFpKoc0iRH1
-         eNPw==
-X-Forwarded-Encrypted: i=1; AJvYcCVfFrLnMkEAlTu7TEGsYMmwBOnmIucN/omgoGq9Zl+NfELakaMFYqrkY0ZOEa07jNhlVTiD5O+BRHlZCuoW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQ1oZBO1m8ota6357xAOiv83Wk8hr0Uo3KVtBNwzvzEgsdtm/Q
-	4tQZHE2WWKDlUO4SQ/HM/SYc5FS5+JhsPCRDAJTGj+cqeLeB6woC+4iKBVO13dM=
-X-Google-Smtp-Source: AGHT+IHoxE97W7pq98kCNKGan3wyUPPB4piqn0nLwlER2aqV9877/qmvV1C9BfrTXGFUKRAZTXASDQ==
-X-Received: by 2002:a05:6512:2311:b0:539:f51d:8273 with SMTP id 2adb3069b0e04-53a03c8fd6emr210613e87.1.1729000203622;
-        Tue, 15 Oct 2024 06:50:03 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539fffa896bsm174209e87.30.2024.10.15.06.50.00
+        d=1e100.net; s=20230601; t=1729000281; x=1729605081;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FQbfyi27tzCxQ9WkWmXe1wWLf7FoB61MNcmlSkHbiww=;
+        b=NJdImL2B5MIXE4gZVUX7IMjqu6QllLHBuzLzHBJoow0LU8GXedw/KycLblpp+IE/f9
+         aH8buNZSi3d/uVSxqlb4kfVrOmZhwAfwesSFT8ivChjL9xtEjvp+8Un7XUQ1ExIYitK9
+         F3GEIGASj0N5/0m6fWzIiBAh7zlchBeDUb1/Ghx9ra3s/6ygWGwbisXc0+moYjln3uXO
+         vEp7PS9pHbgmB7Au0xjGC4x7p1PYKfyFdMlNRDR8t5k1cIfKR0BgEVr0VTqpM1Z2yYtW
+         X961wVZoibDCluGlvLQJtmSYL3dXhsPajqh5SHO8CWhhAPBzn3M3DFg+k5wNh1SdX9bf
+         5rTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXPF45Kh4OFPxkgL+9wFv0VHtqdnB3oe+HBzWc8uGTfEKCfOTflou1kCxMdEqkOWZg5uv8kbWZsECZaFiw5@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHrNKiQVzA91F9av787sOOtM7HfThwF+4eug4Fgu/EEgCplomH
+	Wdm6t31z6V7qjexWNHymWYylNdOcKkC2J19JfZk2Qy48q+cUzPuMd8NGAVGkSQ==
+X-Google-Smtp-Source: AGHT+IHb8DRdX7nVZkVKvSzh4aB00ZRPlP2F8yO4iHAIQ/4bBM9EAsjLt6eSWDKJ/Teh6L8UAt2OKA==
+X-Received: by 2002:a17:902:e541:b0:20c:d469:ba95 with SMTP id d9443c01a7336-20cd469bdaemr105114035ad.16.1729000280754;
+        Tue, 15 Oct 2024 06:51:20 -0700 (PDT)
+Received: from thinkpad ([220.158.156.88])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20d17f84f66sm12129015ad.28.2024.10.15.06.51.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 06:50:02 -0700 (PDT)
-Date: Tue, 15 Oct 2024 16:49:59 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Danila Tikhonov <danila@jiaxyga.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
-	krzk+dt@kernel.org, conor+dt@kernel.org, fekz115@gmail.com, 
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [RESEND PATCH v2 1/1] arm64: dts: qcom: sc7280: Add 0x81 Adreno
- speed bin
-Message-ID: <jg6fkul5qxq4vcsxk4fky5h2s5mn5lpbf7sgm74ga4sbsibcrl@2evll6msgvkg>
-References: <20241014194825.44406-1-danila@jiaxyga.com>
- <20241014194825.44406-2-danila@jiaxyga.com>
+        Tue, 15 Oct 2024 06:51:20 -0700 (PDT)
+Date: Tue, 15 Oct 2024 19:21:14 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>, konradybcio@kernel.org,
+	krzk+dt@kernel.org, robh+dt@kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, conor+dt@kernel.org,
+	abel.vesa@linaro.org, srinivas.kandagatla@linaro.org
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for
+ Windows
+Message-ID: <20241015135114.kbiyvymng4e6dmvb@thinkpad>
+References: <20240911073337.90577-1-quic_sibis@quicinc.com>
+ <20240911073337.90577-3-quic_sibis@quicinc.com>
+ <pt4wtycddqhcvw2iblaojmzsdggmlafft4vu6lg5j2vstbhbqj@acenyi5k3yeq>
+ <eqy4yicgeqlgaytgzybnitvbrdr7jmjjk5k2swmadad6scwk77@ubaf7a2kgmdm>
+ <1BBC34CC-92D9-4F6E-8DFA-1F2DA36D545A@linaro.org>
+ <20241001085105.iglzp3art5ysli2d@thinkpad>
+ <b1d982c1-f800-97eb-1be3-e77e04a8e81d@quicinc.com>
+ <20241006180146.m6xvpwbvkiy7obpx@thinkpad>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241014194825.44406-2-danila@jiaxyga.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241006180146.m6xvpwbvkiy7obpx@thinkpad>
 
-On Mon, Oct 14, 2024 at 10:48:25PM +0300, Danila Tikhonov wrote:
-> From: Eugene Lepshy <fekz115@gmail.com>
+On Sun, Oct 06, 2024 at 11:31:52PM +0530, Manivannan Sadhasivam wrote:
+> On Sun, Oct 06, 2024 at 12:33:21AM +0530, Sibi Sankar wrote:
+> > 
+> > 
+> > On 10/1/24 14:21, Manivannan Sadhasivam wrote:
+> > > On Tue, Oct 01, 2024 at 09:56:30AM +0300, Dmitry Baryshkov wrote:
+> > > > On October 1, 2024 5:42:35 AM GMT+03:00, Bjorn Andersson <andersson@kernel.org> wrote:
+> > > > > On Wed, Sep 11, 2024 at 10:55:05AM GMT, Dmitry Baryshkov wrote:
+> > > > > > On Wed, Sep 11, 2024 at 01:03:37PM GMT, Sibi Sankar wrote:
+> > > > > [..]
+> > > > > > > diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> > > > > [..]
+> > > > > > > +
+> > > > > > > +&pcie5 {
+> > > > > > > +	perst-gpios = <&tlmm 149 GPIO_ACTIVE_LOW>;
+> > > > > > > +	wake-gpios = <&tlmm 151 GPIO_ACTIVE_LOW>;
+> > > > > > > +
+> > > > > > > +	vddpe-3v3-supply = <&vreg_wwan>;
+> > > > > > 
+> > > > > > Please use pwrseq instead.
+> > > > > > 
+> > > > > 
+> > > > > What benefit is there to wrap a single 3.3V regulator in pwrseq driver?
+> > > > 
+> > > > First of all, is it really just a 3.3V? Second, is it actually powering up the host controller (as expressed in the device tree? Is it a power supply to the slot (in this case, I think, it should be expressed differently)? Or is it a power supply to the card itself?
+> > > > 
+> > > 
+> > > Yeah, we should get into the details here. We were not paying attention till
+> > > now, but with the advent of pwrseq, we should describe the power supply properly
+> > > in DT.
+> > > 
+> > > Here I believe the supply is to the PCIe Mini Card connector where a modem is
+> > > connected. In that case, 3.3v supply should be connected to 3.3Vaux of the
+> > > connector and we should have a generic pwrseq driver for the mini cards.
+> > > 
+> > 
+> > Hey Mani, Dmitry,
+> > 
+> > The schematics are identical to that of the X1E CRD with
+> > the exception of the pcie daughter card having the rtl8125g
+> > on it. Yes, the 3.3V supply is connected to the card as well.
+> > 
 > 
-> A642L (speedbin 0x81) uses index 4, so this commit sets the fourth bit
-> for A642L supported opps.
+> Is this connected to the 3.3vaux of the card? Please specify the actual rail
+> name as the 'PCI Express Mini Card Electromechanical Specification' specifies
+> only 3.3Vaux and 1.5v supplies.
 > 
-> Signed-off-by: Eugene Lepshy <fekz115@gmail.com>
-> Signed-off-by: Danila Tikhonov <danila@jiaxyga.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+> > Doesn't this mean all other x1e boards out there needs to be
+> > updated with pwrseq as well? Anway will get that addressed in
+> > v3.
+> > 
+> 
+> pwrseq is the kernel driver abstraction, nothing to do with DT. But for making
+> use of pwrseq, the supplies need to be described in the proper place. In this
+> case most likely under a separate node of PCIe bridge. Then you'd need a
+> separate pwrseq driver in kernel to parse the supply and take care of it.
+> 
+> I'm currently writing a pwrseq driver for standard slots (x8 for X1E) and should
+> be able to post it early next week. So you or someone could use it as a
+> reference to add a new driver for m-pcie cards.
+> 
+> If no one picks it up, I may just do it.
 > 
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi,
+
+The slot driver is taking more time than anticipated due to the pwrctl rework.
+So please go ahead with the current binding and we would switch to pwrseq
+later once the driver is available.
+
+- Mani
 
 -- 
-With best wishes
-Dmitry
+மணிவண்ணன் சதாசிவம்
 
