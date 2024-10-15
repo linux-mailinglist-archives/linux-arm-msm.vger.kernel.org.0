@@ -1,82 +1,70 @@
-Return-Path: <linux-arm-msm+bounces-34436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id A457899EA33
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:45:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E29899EA42
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:48:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0DE09B24345
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:45:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07A97289157
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:48:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82A0C227BAF;
-	Tue, 15 Oct 2024 12:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C64C1C07F0;
+	Tue, 15 Oct 2024 12:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="n9vLNF7D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VWVUQEiv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C82820822B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 12:44:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587831C07E0;
+	Tue, 15 Oct 2024 12:48:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728996244; cv=none; b=nY8+9y85l3hhjTc1w2Ex7BCcX2bYXlr+C04Dbf9VD3mO0oxQi5LQndyk7dnp9+Jglv2XwNuBcAadEZnnjBYBvWQnU/XyrunuchMmAKoK4DRLK0ZkkJBdxYqzhf8NK+60LErAf+h/ygI5U8BC31TVB38lAY/UyQKJ9LBT17k10dM=
+	t=1728996495; cv=none; b=mpD90ZA/UDGkpMxIszY8OyLIYaYpfZgceekzLtla+V+/LA2pquaJULFroilZkKoL3uRHt9WRiOT+4Wkbi1vtVpolxDMVLASj5CZxrQ3VUhKJr+yi9bhtg/20Poy58Dw+l5L3wIv5q+gCMd2ztWZ2A+jlrdDlt68wA1KXl9q9l04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728996244; c=relaxed/simple;
-	bh=hNnxWKLlMPPZitvua3vagkjJNmVRjjlktvOTOWrbJLI=;
+	s=arc-20240116; t=1728996495; c=relaxed/simple;
+	bh=wsTS2WCqFOpO0DvNwr7sz9CyhmcJQl/xQAKXdzpLRqI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VIGfEeMXN8QjVF+/ftYw24E6upGS3Dr+7JIb8n9vSgeSNRB7JCil/7HRey3yxf/5iRy6ovwmhjqJQz1MbDYvGGLJoFO6X87jmM0NxlYZ1s+dd+dvSgc1iVKAOnYNkPtSOlp8uTIps0LpumUCg9AEu73XAMqd2cIoyJfdsj171xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=n9vLNF7D; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2fb498a92f6so25275181fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 05:44:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728996241; x=1729601041; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3SQaNBGN1mxZVAMjEtaA/BhZGMt2iLPd/VivsuWhVfA=;
-        b=n9vLNF7DQDJ3QrproxZbCKNR/KzQEYHyND9ofV74ejfvePx8vsZS9YG4Z+NjWvRStI
-         NBTqjbiTN4YQxN9xRKTICn4//BTopxz+ZHJzypFtXzNKiLmPyRhcxdlyiTwF+Lkv14HY
-         xTOZQPMukn+s2Q84OJZY5kuvG+2lxo5MQy7ekEmKk/Y5YfWiuo6hlUZIhe4oT+x6/ypq
-         w6uTJtTP0IHGQlVpfuRShyoKWJiqMWifPsxSUrUH1944+CMkhBWnZrOYOHmKwPCT3J4u
-         ym9RrsqoA7Dsnmccbia7ZIsDxoaXXwotEC1IYtrUgzMpy4ZfSbtQ47Q6K2cjpsO4Y5IM
-         6HBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728996241; x=1729601041;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3SQaNBGN1mxZVAMjEtaA/BhZGMt2iLPd/VivsuWhVfA=;
-        b=FzrK0R8oegQCVw3RTiLRZmobKvDPJbrLEomHqeVEWGyaS+4vYSpRfKoDtxtOiHDNFi
-         uKrjnToCedVGZ+B6nzbMwpTco7KNPBLD34WbgnNfwrE6WqR2QSy/PGzPBYLw3XC5ckym
-         y+C8T2Ggi4m46fGdnHEOW0HQGoKDt8KjiLommivi4PZLRFe9Sdj1rruoYyHB4OYk/GNg
-         mj/y6WZMvn8yTLEod1BQNjrlSkhSF6pQaTtBQi2RxbPOayAC8rCamzzL2jtfsv19PGG9
-         y2yWlZCHw+TqBt0VcABmsEIiHLrge516wLoy0v3bzWmH0bqdxHPtq4SSgYfsYgTv7GwR
-         4zCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVTbrp4Js5NiJbNqbnoTZSLu0Vv0lkz2tCLuWtzeNZpijvq+tSN+4Dpe174KIiUzKy94cnWscQFtcMRVXeo@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5spYMXGZJ80rPmNjL1H83oaf+rRHLcNKRby/HraIjXDQySIlL
-	puRYJcvfaEOyNVoaGd4utAm5Enae0+/2HAF72cVvQB2onsB94ftTw3mcJ14Wn4E=
-X-Google-Smtp-Source: AGHT+IEtf1bxgczpfiNA8NzJb5A9RmLJNMO353LaV7Pw7z3bEbJ44JZ2pT+RaReMTzzfnefZ/EOInA==
-X-Received: by 2002:a2e:b164:0:b0:2fb:5504:7966 with SMTP id 38308e7fff4ca-2fb61bacc4fmr1979851fa.30.1728996240652;
-        Tue, 15 Oct 2024 05:44:00 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb5d126dd6sm1575741fa.52.2024.10.15.05.43.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 05:44:00 -0700 (PDT)
-Date: Tue, 15 Oct 2024 15:43:58 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH] drm/msm/dpu: Don't always set merge_3d pending flush
-Message-ID: <mkuayois4t463oqpxi47tl5npjdsafovivmx3pscnmxy3i4v3w@xt4omvobamim>
-References: <20241009-mode3d-fix-v1-1-c0258354fadc@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=N4/yH3cy+cXr/jcaa34QUF9F0lErl20gB/T6bndtPmxKfSS+Kb0uFkAgMmIo+Azv1aRSXWTCmbp7bHy9m5UTujZrJIKNdZkFjeTaP+sUEbxmfjMFzba48USKw+vxSauYiJHDgKDqamPU3mxANWPzv/pB9QvXxXi7l5ly/V/5pDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VWVUQEiv; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD2C9C4CED1;
+	Tue, 15 Oct 2024 12:48:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728996494;
+	bh=wsTS2WCqFOpO0DvNwr7sz9CyhmcJQl/xQAKXdzpLRqI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=VWVUQEiv5lwhjRg9Kk6XU34TBrmeKBVaNSD9I/VAYSlKhXhMavscUFgFmaNQT31RD
+	 TPSMxgDSxUqbRgHs1tjTfKUCDHLySZa9m4qQoWmkSNClgIeS5yVG/wMcq/f79d5k1E
+	 R2m87bIysPWEC5VyFZI2NK3UIjWPBuC2Ze88U49PbDYMp3N6+SZhm00E5A4QmxA9a/
+	 OxHXiztUx0hb0FHg34uI4V16GRdlDzVqkgPRnqTgd3GOV//IIPeyuoF5sf0DQA6RTK
+	 NvZdqXff5PSaFgKj2OV77MCC3cIXufZJ+SQL9a1q1nklY8XOgjm6H6wjC5b2EGDP8b
+	 Z0rx+NO1xBz9Q==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t0gyI-000000004da-3YUb;
+	Tue, 15 Oct 2024 14:48:19 +0200
+Date: Tue, 15 Oct 2024 14:48:18 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add Parade PS8830 Type-C
+ retimer bindings
+Message-ID: <Zw5kkhkT62pDoW8I@hovoldconsulting.com>
+References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
+ <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,38 +73,114 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241009-mode3d-fix-v1-1-c0258354fadc@quicinc.com>
+In-Reply-To: <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
 
-On Wed, Oct 09, 2024 at 08:41:13PM -0700, Jessica Zhang wrote:
-> Don't set the merge_3d pending flush bits if the mode_3d is
-> BLEND_3D_NONE.
+On Fri, Oct 04, 2024 at 04:57:37PM +0300, Abel Vesa wrote:
+> Document bindings for the Parade PS8830 Type-C retimer. This retimer is
+> currently found on all boards featuring Qualcomm Snapdragon X Elite SoCs
+> and it is needed to provide altmode muxing between DP and USB, but also
+> connector orientation handling between.
 > 
-> Always flushing merge_3d can cause timeout issues when there are
-> multiple commits with concurrent writeback enabled.
-> 
-> This is because the video phys enc waits for the hw_ctl flush register
-> to be completely cleared [1] in its wait_for_commit_done(), but the WB
-> encoder always sets the merge_3d pending flush during each commit
-> regardless of if the merge_3d is actually active.
-> 
-> This means that the hw_ctl flush register will never be 0 when there are
-> multiple CWB commits and the video phys enc will hit vblank timeout
-> errors after the first CWB commit.
-> 
-> [1] commit fe9df3f50c39 ("drm/msm/dpu: add real wait_for_commit_done()")
-> 
-> Fixes: 3e79527a33a8 ("drm/msm/dpu: enable merge_3d support on sm8150/sm8250")
-> Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 5 ++++-
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c  | 5 ++++-
->  2 files changed, 8 insertions(+), 2 deletions(-)
-> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> +  clocks:
+> +    items:
+> +      - description: XO Clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
 
--- 
-With best wishes
-Dmitry
+> +  vdd-supply:
+> +    description: power supply (1.07V)
+> +
+> +  vdd33-supply:
+> +    description: power supply (3.3V)
+> +
+> +  vdd33-cap-supply:
+> +    description: power supply (3.3V)
+> +
+> +  vddar-supply:
+> +    description: power supply (1.07V)
+> +
+> +  vddat-supply:
+> +    description: power supply (1.07V)
+> +
+> +  vddio-supply:
+> +    description: power supply (1.2V or 1.8V)
+
+> +required:
+> +  - compatible
+> +  - reg
+
+Presumably all of the supplies are also required.
+
+Similar for clocks, etc.
+
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        typec-mux@8 {
+> +            compatible = "parade,ps8830";
+> +            reg = <0x8>;
+> +
+> +            vdd-supply = <&vreg_rtmr_1p15>;
+> +            vdd33-supply = <&vreg_rtmr_3p3>;
+> +            vdd33-cap-supply = <&vreg_rtmr_3p3>;
+> +            vddar-supply = <&vreg_rtmr_1p15>;
+> +            vddat-supply = <&vreg_rtmr_1p15>;
+> +            vddio-supply = <&vreg_rtmr_1p8>;
+> +
+> +            reset-gpios = <&pm8550_gpios 10 GPIO_ACTIVE_HIGH>;
+
+The reset line is active low.
+
+> +
+> +            retimer-switch;
+> +            orientation-switch;
+> +
+> +            ports {
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +
+> +                port@0 {
+> +                    reg = <0>;
+
+Please add a newline before each child node for readability.
+
+> +                    usb_con_ss: endpoint {
+
+We typically avoid adding unused labels to the examples, but perhaps
+here it serves as documentation?
+
+> +                        remote-endpoint = <&typec_con_ss>;
+> +                    };
+> +                };
+
+Add newline here too, and similar below.
+
+> +                port@1 {
+> +                    reg = <1>;
+> +                    phy_con_ss: endpoint {
+> +                        remote-endpoint = <&usb_phy_ss>;
+> +                        data-lanes = <3 2 1 0>;
+> +                    };
+> +                };
+> +                port@2 {
+> +                    reg = <2>;
+> +                    usb_con_sbu: endpoint {
+> +                        remote-endpoint = <&typec_dp_aux>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+
+Johan
 
