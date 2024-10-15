@@ -1,220 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-34497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2844C99F739
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 21:25:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DAF4899F75E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 21:36:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 599541C23818
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 19:25:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 160BB1C233A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 19:36:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E770315C145;
-	Tue, 15 Oct 2024 19:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2CFA1B6CF7;
+	Tue, 15 Oct 2024 19:36:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ONNs1iqr"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eWpDT7c/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AA11F80A9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 19:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5AE1F80C3;
+	Tue, 15 Oct 2024 19:36:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729020299; cv=none; b=QaRoakGu/6n8JaXD1TC6hIICmWn1rt7LjFIdPKG3dZrnK2Mh0W30erB6V37tGnBQ6FNDWhTh230Ado2xeOx320AEwlwbqPJ02OtxiJ867GFR+wGKdzE4dLUeRAhzl/hJmu4grLHtbVAcHpVengM1XwaNrzpGPaXQZ0pUu82npT8=
+	t=1729020967; cv=none; b=eCrmNsUb/Jv6QHTItQQcwLbaqnlzAm/VhSK+7BwSCmQ3wxz7SPdHvbC4kCn1nLwkE8XZBojAmoLZw2Jf7PyrB5+Xo7oRT9VXXwABXDI41Rzx3zKx8urtEF/ZSZfcFvJA1cpD2AUHXpTTfhMPU4ntz5E3cZylritpkucqwOxz1yE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729020299; c=relaxed/simple;
-	bh=qxWjP90KBqcpKbXX3WzcD4c1gVccESLcieurOcjqZGI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FVWaNM9zCZXNBUS//5KhU44PX3pJwtBOyvo7jOiObr8MyApYAtvNnYhvkWaJ9RFKxPl1rNJsyvDaKInMojHrYgkI5lYnTkB2Bk23TWbVq6RXTSgr5D45ItmZC/FkYfPGIJbCG8ePoK6In4ntxOm5YThQc116JozFFtIRWMM4tP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ONNs1iqr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FCQad4028136
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 19:24:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1729020967; c=relaxed/simple;
+	bh=g2H/HLLJvLijRrTMMo32aQjvkBfXGOWW35faWTSXGQo=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mjdd8QW5bGXjgcwQh9NdAXhOyc6+9NL3xGH33Czpf41mmm/myflEQoJ1o5vhF93d5G/iQuIVAY+9FKX54G7LBH76UF0aZBs+0Qan8fZPD1JVq5EeGR1+y0+po5QThodE4Ws6uw47ww2MaFnP4RC9rjI3sJRTUFPnGrNy8y9vpGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eWpDT7c/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FJG98i003922;
+	Tue, 15 Oct 2024 19:35:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=DD5m6rCmDQIjqQ7c9/0l259A
-	AQiV4k+olGsaoDERcrw=; b=ONNs1iqrmt/rOJkzHYLy0+8epzoW4tWZvkrPRbiQ
-	8q2kOm0EzRnNi66Og1KUWIWSNl7MPdmAHR97uCAn3qWQRCqO6y6x3vtttMkppVxY
-	AUCPD4f7wScOb7f/cSWF7qqaMzGGFVLyUEXo/0vgBUu+T0GrHNREEppICc33drtm
-	5w6kfFBiKvy/glC9SC0BvzyFFREAuipNckj0oW6Bh/XmfMhzKtNvPV0kwIi2Jvgl
-	XNOtIgbY2+YP7pxwUA10J+33ILFfnhoWwcOQ6s64NiWciA+9aSOf3Usk+0bB7AUE
-	FlsQ9aIiPE0qd2tCmmfG9sAxwJHFeh04UVYAbZKNTkLs4g==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429exw2ptq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 19:24:56 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-7db8197d431so7471896a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 12:24:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729020295; x=1729625095;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DD5m6rCmDQIjqQ7c9/0l259AAQiV4k+olGsaoDERcrw=;
-        b=T819PYWR+T3/MqtQkwQDa/X4DEqO5/yI4/fQ3Ofx9FDS6e7wG8+AHdissU94Bx0OSr
-         OCis3ulc4I/i6ir4WdjqANHzpDUf+xXi8ktDnikUnuZjIUNhpuU310bUzt10HqyA/r0b
-         8VHqklWAaPFhBTqa6tggvwO8RGeOxKpgyecY7uKws6nFmKjP7WsEli0weENB41kK2dlD
-         PgjVL7sh/Zv2QELiujMkfea5W5MHEd+3TWCIEAjvpjsxWO+RsaimJ3EmGnbfOvUs4Dy1
-         fz4LBQ2O38mVFfYbutUhfjAflVFwBXWW+ACZQVidu0uVtgHLaxCnjKkHpAptV854szrf
-         WEHQ==
-X-Gm-Message-State: AOJu0YzTIb9qjkii2tiV2hF6Up1rfob4NfZXUDfg4GtZvJ+Kdo7/Jh3M
-	J6Hc5NsKml9v+hSoJCB6/j+yUqdZKJaQNB2oMCLmRLxVf5V8wKc9gMl5EbXgHBlEd4updowH53e
-	d5Zovfi6Tu3mq7iMub3/5vZrPRrqAodGZePzNl2hJMJmEhImfc7UUkFuRNHBTeDJm
-X-Received: by 2002:a17:902:cecc:b0:20c:ab2d:a664 with SMTP id d9443c01a7336-20cbb2afd98mr195550065ad.59.1729020294868;
-        Tue, 15 Oct 2024 12:24:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDQimAGIcRpo8mgZ/NINwY9nxQmHiP2DCXBYGK+itSsfqXP5xaNhSzQBPhpOhpHsyZMSymag==
-X-Received: by 2002:a17:902:cecc:b0:20c:ab2d:a664 with SMTP id d9443c01a7336-20cbb2afd98mr195549845ad.59.1729020294515;
-        Tue, 15 Oct 2024 12:24:54 -0700 (PDT)
-Received: from hu-bjorande-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20d1805afecsm15440265ad.249.2024.10.15.12.24.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 12:24:53 -0700 (PDT)
-Date: Tue, 15 Oct 2024 12:24:51 -0700
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" <linux-rtc@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v3 1/5] rtc: pm8xxx: implement qcom,no-alarm flag for
- non-HLOS owned alarm
-Message-ID: <Zw7Bg2ojkvNY1M+1@hu-bjorande-lv.qualcomm.com>
-References: <20241015004945.3676-1-jonathan@marek.ca>
- <20241015004945.3676-2-jonathan@marek.ca>
+	:references:subject:to; s=qcppdkim1; bh=BzxR5MapksOFSxWMTr/4z/kV
+	829dI/XWKgMoMwEKyjY=; b=eWpDT7c/SlyPwJHOAqJcDfikZCzoh5F5d+Xb1pv5
+	szDZhmyXcp8VpsqnBz2yxCtjP/5MHTb8JUnXXZvFDpMu+NH0VATxNvk/xwqa/qCE
+	G9YC4dptQ1FU8Vf+k+NP3knmiy36nLWJ33DJkDLdUG2RGwZSbqXtePKQRG+hBrpL
+	yi69GbQA2VqhffTwsCibJu2EY8tH4BhmXNo0zD1T7CUzy9TEGbVv17f+rLhmAi1A
+	1iPB/gzzLaQkSVUE38yZOE7nTjJiDVG0EoaAmA7zSzfzYlIWJMNfWs7SjmBlto20
+	xkZ7vmTcFRGBnahQFixTTROVEDYucemVFRCz5sULuDfWHg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429xdb81gn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Oct 2024 19:35:51 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49FJZo9b012051
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Oct 2024 19:35:50 GMT
+Received: from hu-akhilpo-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 15 Oct 2024 12:35:44 -0700
+Date: Wed, 16 Oct 2024 01:05:40 +0530
+From: Akhil P Oommen <quic_akhilpo@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, "Simona
+ Vetter" <simona@ffwll.ch>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon
+	<nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH RFC 3/3] arm64: dts: qcom: x1e80100: Add ACD levels for
+ GPU
+Message-ID: <20241015193540.mcpp2dvkmikruncj@hu-akhilpo-hyd.qualcomm.com>
+References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
+ <20241012-gpu-acd-v1-3-1e5e91aa95b6@quicinc.com>
+ <5axuqj4hetfkgg2f53ph4um24b7xfyumktreglxqyzfsdhy25e@deucq7vqxq5l>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20241015004945.3676-2-jonathan@marek.ca>
-X-Proofpoint-ORIG-GUID: sn25EjxLeRt23lgZl3eD8a_GjZTNuXOZ
-X-Proofpoint-GUID: sn25EjxLeRt23lgZl3eD8a_GjZTNuXOZ
+In-Reply-To: <5axuqj4hetfkgg2f53ph4um24b7xfyumktreglxqyzfsdhy25e@deucq7vqxq5l>
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Aa7T5W5Dx2WnVo5UT2UtkY0dOfJqeYDz
+X-Proofpoint-GUID: Aa7T5W5Dx2WnVo5UT2UtkY0dOfJqeYDz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- bulkscore=0 malwarescore=0 spamscore=0 impostorscore=0 mlxscore=0
- clxscore=1015 adultscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410150130
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=932 impostorscore=0
+ phishscore=0 clxscore=1015 adultscore=0 mlxscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410150131
 
-On Mon, Oct 14, 2024 at 08:47:26PM -0400, Jonathan Marek wrote:
-> Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
-> Thus writing to RTC alarm registers and receiving alarm interrupts is not
-> possible.
+On Mon, Oct 14, 2024 at 09:40:13AM +0200, Krzysztof Kozlowski wrote:
+> On Sat, Oct 12, 2024 at 01:59:30AM +0530, Akhil P Oommen wrote:
+> > Update GPU node to include acd level values.
+> > 
+> > Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 ++++++++++-
+> >  1 file changed, 10 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > index a36076e3c56b..e6c500480eb1 100644
+> > --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+> > @@ -3323,60 +3323,69 @@ zap-shader {
+> >  			};
+> >  
+> >  			gpu_opp_table: opp-table {
+> > -				compatible = "operating-points-v2";
+> > +				compatible = "operating-points-v2-adreno";
 > 
-> Add a qcom,no-alarm flag to support RTC on this platform.
+> This nicely breaks all existing users of this DTS. Sorry, no. We are way
+> past initial bringup/development. One year past.
+
+It is not obvious to me how it breaks backward compatibility. Could you
+please elaborate a bit? I am aware that drivers should be backward
+compatible with DT, but not the other way. Are we talking about kernels other
+than Linux?
+
+Also, does including "operating-points-v2" too here help?
+
+-Akhil.
+
 > 
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-
-Alexandre, please pick up the driver and dt-binding patch (i.e. patch 1
-& 2) through your tree, and I can pick the dts patches through the qcom
-tree.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
->  drivers/rtc/rtc-pm8xxx.c | 44 +++++++++++++++++++++++++++-------------
->  1 file changed, 30 insertions(+), 14 deletions(-)
-> 
-> diff --git a/drivers/rtc/rtc-pm8xxx.c b/drivers/rtc/rtc-pm8xxx.c
-> index c32fba550c8e0..1e78939625622 100644
-> --- a/drivers/rtc/rtc-pm8xxx.c
-> +++ b/drivers/rtc/rtc-pm8xxx.c
-> @@ -61,6 +61,7 @@ struct pm8xxx_rtc {
->  	struct rtc_device *rtc;
->  	struct regmap *regmap;
->  	bool allow_set_time;
-> +	bool no_alarm;
->  	int alarm_irq;
->  	const struct pm8xxx_rtc_regs *regs;
->  	struct device *dev;
-> @@ -473,9 +474,14 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
->  	if (!rtc_dd->regmap)
->  		return -ENXIO;
->  
-> -	rtc_dd->alarm_irq = platform_get_irq(pdev, 0);
-> -	if (rtc_dd->alarm_irq < 0)
-> -		return -ENXIO;
-> +	rtc_dd->no_alarm = of_property_read_bool(pdev->dev.of_node,
-> +						 "qcom,no-alarm");
-> +
-> +	if (!rtc_dd->no_alarm) {
-> +		rtc_dd->alarm_irq = platform_get_irq(pdev, 0);
-> +		if (rtc_dd->alarm_irq < 0)
-> +			return -ENXIO;
-> +	}
->  
->  	rtc_dd->allow_set_time = of_property_read_bool(pdev->dev.of_node,
->  						      "allow-set-time");
-> @@ -503,7 +509,8 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
->  
->  	platform_set_drvdata(pdev, rtc_dd);
->  
-> -	device_init_wakeup(&pdev->dev, 1);
-> +	if (!rtc_dd->no_alarm)
-> +		device_init_wakeup(&pdev->dev, 1);
->  
->  	rtc_dd->rtc = devm_rtc_allocate_device(&pdev->dev);
->  	if (IS_ERR(rtc_dd->rtc))
-> @@ -512,27 +519,36 @@ static int pm8xxx_rtc_probe(struct platform_device *pdev)
->  	rtc_dd->rtc->ops = &pm8xxx_rtc_ops;
->  	rtc_dd->rtc->range_max = U32_MAX;
->  
-> -	rc = devm_request_any_context_irq(&pdev->dev, rtc_dd->alarm_irq,
-> -					  pm8xxx_alarm_trigger,
-> -					  IRQF_TRIGGER_RISING,
-> -					  "pm8xxx_rtc_alarm", rtc_dd);
-> -	if (rc < 0)
-> -		return rc;
-> +	if (!rtc_dd->no_alarm) {
-> +		rc = devm_request_any_context_irq(&pdev->dev, rtc_dd->alarm_irq,
-> +						  pm8xxx_alarm_trigger,
-> +						  IRQF_TRIGGER_RISING,
-> +						  "pm8xxx_rtc_alarm", rtc_dd);
-> +		if (rc < 0)
-> +			return rc;
-> +	}
->  
->  	rc = devm_rtc_register_device(rtc_dd->rtc);
->  	if (rc)
->  		return rc;
->  
-> -	rc = dev_pm_set_wake_irq(&pdev->dev, rtc_dd->alarm_irq);
-> -	if (rc)
-> -		return rc;
-> +	if (!rtc_dd->no_alarm) {
-> +		rc = dev_pm_set_wake_irq(&pdev->dev, rtc_dd->alarm_irq);
-> +		if (rc)
-> +			return rc;
-> +	} else {
-> +		clear_bit(RTC_FEATURE_ALARM, rtc_dd->rtc->features);
-> +	}
->  
->  	return 0;
->  }
->  
->  static void pm8xxx_remove(struct platform_device *pdev)
->  {
-> -	dev_pm_clear_wake_irq(&pdev->dev);
-> +	struct pm8xxx_rtc *rtc_dd = platform_get_drvdata(pdev);
-> +
-> +	if (!rtc_dd->no_alarm)
-> +		dev_pm_clear_wake_irq(&pdev->dev);
->  }
->  
->  static struct platform_driver pm8xxx_rtc_driver = {
-> -- 
-> 2.45.1
+> Best regards,
+> Krzysztof
 > 
 
