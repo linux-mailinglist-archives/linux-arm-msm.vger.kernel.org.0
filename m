@@ -1,85 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-34381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDFC099DAEC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 02:53:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD75299DAF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 02:54:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B3201C21438
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 00:53:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 50614B221FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 00:54:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D6DA4D8DA;
-	Tue, 15 Oct 2024 00:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9104A156C74;
+	Tue, 15 Oct 2024 00:53:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="dWGElcM0"
+	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="gorHUc3z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12E24B5C1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 00:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E765E14F9FB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 00:53:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728953607; cv=none; b=aG/zsKjPi+fHcyAbbKkiNkSVFHDTEdHvjk85gGQ021A1AZgb3ujNU1xvHjsqKk5brV090h81e5768gzUhMQPWETevs7Sq8LiY6o82l9xvST+0rRkh14fXHljt9AI6PY19cBpvLHs9+NKHEUtZwzunO1rMuBAR/4PhdEO8jEtg1E=
+	t=1728953610; cv=none; b=ROcZ3vr516b+4yI+uQWIzgPfKliPo7VvSsNOVKUJJ3ObxarFi9M+rez2L9DYdrqO5zPV/LHrX2JpxRc3H1YneUlcjuMM8LlSYCLJqQxTHyY6Hu51bsqFRlAiiZKhBy8vN/WL4YdoQvMInnex//fPW5xk67w6cMnH9ypURDAdYDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728953607; c=relaxed/simple;
-	bh=dvNjYFdkB9YBWF1uKqg2XE7SQj8DOkKacGpixglHlcQ=;
+	s=arc-20240116; t=1728953610; c=relaxed/simple;
+	bh=D/197BE/sOYqXX2tpg+U+8HUYL3PdYWLDigStzikrII=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kb4R6KuAQkF4prWxuJcBUVDbfcujExclP35SDmxaSczCeLyb6l8p3qjoUG2UJYEchLQcL7VriHlZy0CuoXB5vERMdHA+I737hBxoBSj0PShMkrTS2L2q8sYwiOooQn5C0p9vzsJSjH25KO+u+r+AkED7QklyrC/DXVhfuX//Vho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=dWGElcM0; arc=none smtp.client-ip=209.85.219.41
+	 MIME-Version; b=TO1n83k+WUwvaoYC3xK5YaKNTb7hoWU0l0zytFbyaqDz02vPMMdK9jQjsKzMZf9rsT7YHTZwzaWaknKKjc34Eo0imHqqGYvd6qmhVZfnskIDE5ScsQMvUJ8gg6jES9owXO7mYzuquqB4jN52BsflG01l0x2KFNhpdjdVztKPRnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=gorHUc3z; arc=none smtp.client-ip=209.85.219.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6cbe53a68b5so31606116d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 17:53:25 -0700 (PDT)
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6c5acb785f2so25375806d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 14 Oct 2024 17:53:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1728953604; x=1729558404; darn=vger.kernel.org;
+        d=marek.ca; s=google; t=1728953606; x=1729558406; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uda+QHOh70dpYmmcKG6PZmo8FX69gZoytF2iY+WgOps=;
-        b=dWGElcM0hTAPHWsUseKmLqyWJSaJS3/A9VnvaLekSMmhCpLwZ/fEfIABHws2+mhBu5
-         JOvml0jg4Se0MGB/L8JTFiQHBCVjzXNJOq68M3XFudx/eQ3DSqJ7jXC/x61wbYf5caAc
-         dO+HLaQKQH6d+vqym6KMVBHEngAmvt9ZDc0R4xaojbvcxQJZfel0WVF4O8pZfkCWcT9Z
-         5ZOkkS8oLr0cKlsZZZrjDlT0q/6G2mdQ2vyXACgLrnmNs4TEchBj1+K2DS4ovWBs1dUb
-         ty2Rd/ktQ/P0CBLLbccSHCOZcwYPjJZmRsKr6Dl7GEGSvHddnAShe4jqeUh4kR/1ARqP
-         Ceew==
+        bh=G5sMuvbvS93s8VBrWna8b+u0k8/Hrp83bAMUi4V/Ays=;
+        b=gorHUc3zWdnogJpmKPsaTFysElvz4KTihj2uvNlOLTgFiYTpMyLVyYI7i7AoVl1FmE
+         gMFYJZZAxBLFKIqq6XP8jubxYveXYJk+zdNQw96jey9Mu8X3tKkhRa/aR/xkgGtAJJ8g
+         6LmPnHiNw5lIwhDAUnWbGlAgonmNHlu69q5oDHVeCC5JAjW1k9oCsQL9IXEiaok5d82U
+         UPq18iCtoGbvsA84rT4hZBpFFEfL6JcYifuAlIcUxJjetGCjzBnQBDHTmSdcoi8z7s0F
+         oyycz4IcrsK3X5PkK07RMCIcfeTS5b2uSpoU+G74lMXIGp2HPQJcr0uup7hwK3mKWawD
+         3WmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728953604; x=1729558404;
+        d=1e100.net; s=20230601; t=1728953606; x=1729558406;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uda+QHOh70dpYmmcKG6PZmo8FX69gZoytF2iY+WgOps=;
-        b=JQqtNQTjMeQ7+HMKiIG+jHoce2r+kne8aHwdzWPAr+TZXrjMv5TeARSc81jdyJ8uyV
-         TLLZfiYw00mjLWLHsl8yFRWr4K0nqVsgvCxg/TfyiupfRK65A4IJHWtkRQQJYUwNJpE1
-         CAaI8BHXS/HzaTpqZXr/6NpQSlt0i+WMe5mHciuNQdS1kQPhD4FVRbxlW6G1aZyu+fyt
-         VqF6FwSVRtcgfIQIQFGCG2v0NGzm0/2e/6t400hegnCHEcovRSyKJ8g8WkVBsFngXxrm
-         3gNRkOKkuBKA6C0NGot5WDb+KhzCGc77SXwUADGapnF1JeXiB0V7XqHrhJgs9JCnsRvR
-         mceA==
-X-Gm-Message-State: AOJu0YybpvfkKf3ZrNzWjPg1zG/f2e8PGstQJXs6hrPyDnGNqrJKTmuk
-	7nK8g4KtUhmhtzGkssw8WadvtPCJ8f3ZHTP+ikqjKN+6rj3V+CodEZ3/jy9vpYr9oa96kSnVQPP
-	/o/4=
-X-Google-Smtp-Source: AGHT+IGujS0YltsUyvVwBJrnueAylsfkK9nEY0qY3I5hzXRc4d5fo+ZlRzW83dHau6iTWTFjwpcg7A==
-X-Received: by 2002:a05:6214:46a0:b0:6cb:e452:2cee with SMTP id 6a1803df08f44-6cbf0074708mr283404276d6.23.1728953604437;
-        Mon, 14 Oct 2024 17:53:24 -0700 (PDT)
+        bh=G5sMuvbvS93s8VBrWna8b+u0k8/Hrp83bAMUi4V/Ays=;
+        b=WOHR0WpkjSAR34GQ/Je/bHxRsbpnFCMTuTB36UKcFS7P9FZXfIYeWtcuO/t2Kjgs2u
+         z7NVbtBIIFVHbxzv4bNiyxVV+e2HuS1BVaEeekx8wEWak+qZjFooHwSPJu3923mTQwss
+         IH3Bv5PEDJHNS4pCuVyTQShzCe2XS9gotpoakSRdswJa9MDTaYbDaHTe30N6us8+PoeT
+         Htc24mqmH0chTgHuqbz0hMseeIudYAjCR71hdb5UNv0SnBdHL+iNHiqV+G1EbxOma24L
+         3rDQWJcnED2KyglqoRbxym3Ok3STMluNVAHOFrSJt4+TclEIZEPn+7/BMu157h83yx1c
+         Zq5Q==
+X-Gm-Message-State: AOJu0YyBy+nQJYa+yNrcHIoe7RCj/+hTZbZox9g2MMHwH7tgM0KBsiG3
+	cQj9D6lK1IFM6k/UkcjHyfoamcQwMYaahxS+Cc5yyxqNaZ6V4oFfiSfLCocPdqK0t1smvfk/67Z
+	uvRo=
+X-Google-Smtp-Source: AGHT+IGXvonG83/eQIbYXj3ksxCLZFkMceOKEHMdRUwHpyHjjqjMQeiXX3BEFIWdL8gQbPL+A0apfw==
+X-Received: by 2002:a05:6214:3387:b0:6cb:ecb3:4d3b with SMTP id 6a1803df08f44-6cbf00ab35amr199972566d6.42.1728953605683;
+        Mon, 14 Oct 2024 17:53:25 -0700 (PDT)
 Received: from localhost.localdomain (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cc22910f0bsm1213956d6.16.2024.10.14.17.53.23
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cc22910f0bsm1213956d6.16.2024.10.14.17.53.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Oct 2024 17:53:24 -0700 (PDT)
+        Mon, 14 Oct 2024 17:53:25 -0700 (PDT)
 From: Jonathan Marek <jonathan@marek.ca>
 To: linux-arm-msm@vger.kernel.org
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	linux-rtc@vger.kernel.org (open list:REAL TIME CLOCK (RTC) SUBSYSTEM),
 	devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS),
 	linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 2/5] dt-bindings: rtc: qcom-pm8xxx: document qcom,no-alarm flag
-Date: Mon, 14 Oct 2024 20:47:27 -0400
-Message-ID: <20241015004945.3676-3-jonathan@marek.ca>
+Subject: [PATCH v3 3/5] arm64: dts: qcom: x1e80100-pmics: enable RTC
+Date: Mon, 14 Oct 2024 20:47:28 -0400
+Message-ID: <20241015004945.3676-4-jonathan@marek.ca>
 X-Mailer: git-send-email 2.45.1
 In-Reply-To: <20241015004945.3676-1-jonathan@marek.ca>
 References: <20241015004945.3676-1-jonathan@marek.ca>
@@ -91,33 +90,29 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
-Thus writing to RTC alarm registers and receiving alarm interrupts is not
-possible.
+Only access to RTC alarm is blocked.
 
-Add a qcom,no-alarm flag to support RTC on this platform.
+Enable RTC access by setting the qcom,no-alarm flag.
 
 Signed-off-by: Jonathan Marek <jonathan@marek.ca>
 ---
- Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-index d274bb7a534b5..23a5316efadba 100644
---- a/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/qcom-pm8xxx-rtc.yaml
-@@ -40,6 +40,11 @@ properties:
-     description:
-       Indicates that the setting of RTC time is allowed by the host CPU.
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+index 5b54ee79f048e..b665cb75c2b75 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100-pmics.dtsi
+@@ -223,8 +223,7 @@ pmk8550_rtc: rtc@6100 {
+ 			reg = <0x6100>, <0x6200>;
+ 			reg-names = "rtc", "alarm";
+ 			interrupts = <0x0 0x62 0x1 IRQ_TYPE_EDGE_RISING>;
+-			/* Not yet sure what blocks access */
+-			status = "reserved";
++			qcom,no-alarm; /* alarm owned by ADSP */
+ 		};
  
-+  qcom,no-alarm:
-+    $ref: /schemas/types.yaml#/definitions/flag
-+    description:
-+      Indicates that RTC alarm is not owned by HLOS (Linux).
-+
-   nvmem-cells:
-     items:
-       - description:
+ 		pmk8550_sdam_2: nvram@7100 {
 -- 
 2.45.1
 
