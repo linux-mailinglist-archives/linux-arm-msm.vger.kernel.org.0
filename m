@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-34387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F24BB99DD85
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 07:34:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6522599DE20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 08:22:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AD3FB2836E9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 05:34:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27E672849DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 06:22:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 674A217554A;
-	Tue, 15 Oct 2024 05:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98E23189BB0;
+	Tue, 15 Oct 2024 06:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZSfT8FMd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jsXb/0aB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268893C3C;
-	Tue, 15 Oct 2024 05:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC56B189B85;
+	Tue, 15 Oct 2024 06:22:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728970438; cv=none; b=Cuv7qbMxkwaAn80BRHKbdEv/uL/jKQ9wljgFxRMjTYSxsob/oh+Bo3nVvMaI7y+//qfkVnR1Y4tkQPJSayicx7479yail64Mlmp2bCFYL0R9J7NzKdoAKPbSzLXH4USkP2uLmMALnfZNJ05XYRsBzK6wTm178lUEUUQJQhQPzIM=
+	t=1728973341; cv=none; b=si3J2L6TD4fFTNPcksKjMot/19X/9DjA1PcIDFxBOqxpQ6G36esQehTZFkQfeeNtAK+LhxiL5PfIBQQj6hWpCv5eLRhloOhlRS94Y6ecyEKIxPbHHsbMp0+t9BCV8PYmcHVbidJ/CKIhrdQi8QTovQuVIionO1YtolQbtpXYZug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728970438; c=relaxed/simple;
-	bh=lVkzCwpPPzfQ/BJvc5k6fW9QSs78IwHbRAO9HHb9aII=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RYNeFDaTzp3P0pxN2uFRq9jGztbRymluTY9fYRHGifVQGti966LSZ6B5WRdBsEHKzvHu9rCcKn0scUXFS6XO57cdAxjr1aMGZYMQgmTYgSdV0uvndFtZlA8guKnlH/BnlwtRenfnGHDdVHt7Qf4i16Y97Ka0vwbBGq6f2NwjkuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZSfT8FMd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7BCC4CEC7;
-	Tue, 15 Oct 2024 05:33:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728970437;
-	bh=lVkzCwpPPzfQ/BJvc5k6fW9QSs78IwHbRAO9HHb9aII=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ZSfT8FMdFkBR9EH2Kg7wOQBVDNWqw+M6Fp/9lJzHRlnyFyZMeEyuCHn3kVhvUOKVP
-	 6KSgFO5gqywmsX8H/Nz/sJqblm0TdqWQI+WDNq8bMwgyojjUtk/i7lMOeY7QFJ84f5
-	 JLhjnAOHmKMeqWyavzqBhNBwfi0wLYC+pgbA3KizVj9T8/S3k5/dgua1dg4dJ8YFan
-	 5rT4up/aBpKV7D2cWzSH1dpbnot2+XoPOysvxaz1IfF9NNu5637wxbDcajU4lTUmL9
-	 h4RsgaHuayj+BN5lNVMqnnLcqVpJoypjw12O5G5fRa4SMiqCMyYF6LKf4IBlU7KP6f
-	 LI3jkE8q3pwhQ==
-Message-ID: <a79274b9-d8f2-484e-9455-01834f7ff2c6@kernel.org>
-Date: Tue, 15 Oct 2024 07:33:53 +0200
+	s=arc-20240116; t=1728973341; c=relaxed/simple;
+	bh=GzwAch/zlTRYOnBiTi/vJ6rawKsWFke2WDsqdkoAmcA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=gCePDa4l7xGJepfuT+EXkVVRMRIejv+IrtYrSlv+sZT8jwEw+S3VH//R4H87uSJt8iJ68Mc/CYRfmuWonaZq8ScMCFL4onM9bhPjop4OhSL2X0EYtNye+U1AisJmHrC1xpBKzWTCGEpD1jVgbj/GVsCKf++aNFrjsGRwN1RxN8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jsXb/0aB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49F60ccs022241;
+	Tue, 15 Oct 2024 06:21:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	g8emflX/OpMc2gjb7urs+l6mNv4BW0vVjUVUTl7rJLI=; b=jsXb/0aBv/Aesf0/
+	tq39kVisjauBOVeQz4Uw7BBcETyXIxNMpWP50RicMzOEbxTMr2vVK/egypv6qVil
+	+916QPutprqAzJTOgVKXvRitRJJRONQ+1WAd+o3D3SrUnfP8bfM0QAbJ3RQ3IuYw
+	hI9mezoqqqe+53zdW7sc1KF7w7ym4Et5tbIMYzrUyZf7whoLmqTf87L4eBMRZg9k
+	8xToJmaY7TfRuIyA0kWRUH+ueZvuvSwr6/aJjHNcGDVZa0pwmo2a49jQN89rRXf5
+	dCHtbq/URLolg2hwlMpEX65CxinA/KKZVGNzZe8grKpgs2EOvlxY2048w/o5Yk1a
+	d8kYUA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429jrf81m9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Oct 2024 06:21:54 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49F6LrW4006749
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Oct 2024 06:21:53 GMT
+Received: from [10.64.70.122] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 14 Oct
+ 2024 23:21:47 -0700
+Message-ID: <b2f027d1-5b4a-4b73-aa26-a332df2a561b@quicinc.com>
+Date: Tue, 15 Oct 2024 14:21:44 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,79 +65,84 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/5] dt-bindings: rtc: qcom-pm8xxx: document
- qcom,no-alarm flag
-To: Jonathan Marek <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Satya Priya <quic_c_skakit@quicinc.com>,
- "open list:REAL TIME CLOCK (RTC) SUBSYSTEM" <linux-rtc@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-References: <20241015004945.3676-1-jonathan@marek.ca>
- <20241015004945.3676-3-jonathan@marek.ca>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 3/3] dt-bindings: net: qcom,ethqos: add description for
+ qcs8300
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: Vinod Koul <vkoul@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        "Paolo
+ Abeni" <pabeni@redhat.com>, Rob Herring <robh@kernel.org>,
+        Krzysztof
+ Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bhupesh
+ Sharma <bhupesh.sharma@linaro.org>,
+        Kishon Vijay Abraham I
+	<kishon@kernel.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        <netdev@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>
+References: <20241010-schema-v1-0-98b2d0a2f7a2@quicinc.com>
+ <20241010-schema-v1-3-98b2d0a2f7a2@quicinc.com>
+ <da45vocnwnnnlo6nrxh6x4xwmnsgdp5axfvomzniw5vxlmerer@6ntl3ae4q2ci>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241015004945.3676-3-jonathan@marek.ca>
-Content-Type: text/plain; charset=UTF-8
+From: Yijie Yang <quic_yijiyang@quicinc.com>
+In-Reply-To: <da45vocnwnnnlo6nrxh6x4xwmnsgdp5axfvomzniw5vxlmerer@6ntl3ae4q2ci>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5LP9lC2ukrn9cy7hIl7Qu-Uv4jFT_NPG
+X-Proofpoint-ORIG-GUID: 5LP9lC2ukrn9cy7hIl7Qu-Uv4jFT_NPG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ spamscore=0 malwarescore=0 suspectscore=0 phishscore=0 impostorscore=0
+ clxscore=1015 mlxlogscore=890 priorityscore=1501 adultscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410150043
 
-On 15/10/2024 02:47, Jonathan Marek wrote:
-> Qualcomm x1e80100 firmware sets the ownership of the RTC alarm to ADSP.
-> Thus writing to RTC alarm registers and receiving alarm interrupts is not
-> possible.
+
+
+On 2024-10-10 14:15, Krzysztof Kozlowski wrote:
+> On Thu, Oct 10, 2024 at 10:03:45AM +0800, Yijie Yang wrote:
+>> Add compatible for the MAC controller on qcs8300 platforms.
+>> Since qcs8300 shares the same EMAC as sa8775p, so it fallback to the
+>> compatible.
+>>
+>> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/net/qcom,ethqos.yaml | 4 ++++
+>>   1 file changed, 4 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> index 8cf29493b822..3ee5367bdde1 100644
+>> --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
+>> @@ -23,6 +23,10 @@ properties:
+>>             - enum:
+>>                 - qcom,qcs615-ethqos
+>>             - const: qcom,sm8150-ethqos
+>> +      - items:
+>> +          - enum:
+>> +              - qcom,qcs8300-ethqos
+>> +          - const: qcom,sa8775p-ethqos
 > 
-> Add a qcom,no-alarm flag to support RTC on this platform.
+> This block should go before earlier qcs615, to keep order by fallback.
+
+Why this block should positioned before qcs615, given that it comes 
+later in alphabetical order?
+
 > 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-> ---
-
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> Best regards,
+> Krzysztof
+> 
 
 
