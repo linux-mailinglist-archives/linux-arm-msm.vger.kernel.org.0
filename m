@@ -1,243 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-34427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B644599E9C6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:27:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA3B399E9CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:27:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A69C1F24179
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:27:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A97192838A6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:27:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D04171EF957;
-	Tue, 15 Oct 2024 12:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69772206E90;
+	Tue, 15 Oct 2024 12:26:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r2P5rcKI"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EwggUooR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498071EF0B9
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 12:26:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974B4206975;
+	Tue, 15 Oct 2024 12:26:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728995190; cv=none; b=reT9clX0nyb3CLj8g/qJD2A1ojq9KJSpX6gf84cBt/j5XkueiG8jdV9uzqWZr8l8/yp4Z6fpdVFD5H8WXp+qehxw/TiGEyYSj4w83fFLZf9ZebizM+ydZhkxn/K4RTvGTyBNsYsqomRMqPxrfD/sRoiQbGps9tlz7EqtHaYCgWc=
+	t=1728995205; cv=none; b=UCz94UtV/zZAAFD0073iAN12/rbnuIBj0poOMaON/yQQs4kt3sZY2Z0487LRiYCQqGMbVwsLxk/6Qk3KVmZv/4c/PHcV45JSkVlGBg4TZiEFrqe+h5fEraFbqHgE+c8GgYI46q5/+oYQmY99/zj61IFQ7jO8uMiOEaGKEoWp4u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728995190; c=relaxed/simple;
-	bh=ddawXaGf78fQTmQWAQP1TJ1/3cTPR6k88VBZaAncCts=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rKio/FwUKk9H/898iMh3KV8tCTLfIcKTD0hLthSJcNaz4MRYMn8O7fFGjntIAiF49FSpUQlhstmkyg+kUCr4hFcfvqpAV2xx5mjyFwAHBw3sZVscZa1K3OWrxRW7obpGb27sKVK8bfVQT1E6dyVxlMIywQVZFkm9J2nHW3M391w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r2P5rcKI; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e3cdbc25a0so3246007b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 05:26:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728995187; x=1729599987; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ug4CIhvI9c7efoiVjwADMKle6ML6zboAC9qottYj1qg=;
-        b=r2P5rcKI7eKiDASo3xbB4nS298MlQZH7iMGSoEwXdCLxcRdfSNQpYWijvy0Eu2kII0
-         8gzonLzsHaG6OwhXGWGvYG5pITq2BGZUpt/imh3VIzi/3OmJ4KIEz03UcAfdsWlLJNTN
-         StXPK/L1ZpZFVqlAyy77QMsrexoZx1LrRGaa1O1Qjim96I0mnW+Jq3nt1QvaDA1Uqg4i
-         em5sRf2q86mM00VFtqV8WHPRrjgtMxotCrapz94I2f1A2O6NINqiHT+aFJ+XwEop1zKS
-         qzgcs57cOWogqVopWcrUGXunOkTvreDwqIEneoZB68vjAXeN7MEU8QU6CWN+nF2Clvzf
-         2D3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728995187; x=1729599987;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ug4CIhvI9c7efoiVjwADMKle6ML6zboAC9qottYj1qg=;
-        b=mIZO0330fCaw3THoMo/COG/FRO8MC17/uTrf2V1j++Q7ENk68XxK6CaH8LLXsBqvz7
-         OD00zt5RclFpN+LWVBsMQRNilLMYcbR0jatJA/vqvzaRpfX6ceV/EZfj9fZTmDGJGrKg
-         BZtWIGiEJyH4vEj3p9dKJXAspC/0Hy8iqb3po2ZOActKLu4Vt4rmyk3HA/JVMrAYTPZl
-         pOt+4UZs3bPQtHPREItTGzqy1bLLUcdlD/aQwe7rZnfZpkukm1twYJnotUY6BnVlfM8p
-         As58eXKm6U76/xEb8DJE2dts5LpW4lUgc63HMh4EFxzDiZuU6hfXVShhbZbeO53hoYzW
-         5J1A==
-X-Forwarded-Encrypted: i=1; AJvYcCUPLTf2LhZ0+LMRKTjPw4WjiZKL+CQufDrZZ8OCRsE57mswZRv9vhjLQVIvZw0PzcUMhkXDgPfHQ121K6w2@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvmOZZgB62uBbNhf2u1NmUDqCyxRIX2/ySCupIAbsAbL3n1vcS
-	GqIiqf/RuZqOGIyOnp+9cNiC475BxC1319h0sdGvVYg7SPr+agijnhQLDt0F3aRnKul3l7c0uB9
-	Fm6nK7ZIyhiFyFVGHYCtMTYeqZwMt1HUZrH+Q4iF3RhwnYv6PIpE=
-X-Google-Smtp-Source: AGHT+IE2uEu5425yw6JXhtzkTXiIwiLHa2uxraMUMytCqyA0U+XKYqEdiFVahWOa8TyQsjCe2gI8WVQTReMheBwdMyM=
-X-Received: by 2002:a05:690c:dc7:b0:6dd:d2c5:b2c with SMTP id
- 00721157ae682-6e364107ef0mr79205637b3.4.1728995187172; Tue, 15 Oct 2024
- 05:26:27 -0700 (PDT)
+	s=arc-20240116; t=1728995205; c=relaxed/simple;
+	bh=NYbHOMwMrdG/wiT8RCznhicJLT/5UcM5sidpVpTNIvw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K7aGNfXqwWSThW4M20knv2XDTk9M6HqgL5oFK3XAoVI2XFAuaISllxHPZ4X2qxm/C5qMsjippv6loThxd8hAOeNI3xp+RhRQiUAzerb/T+uotJc9Asr2wI+YJOsjthGb6OYXzBGQJ0pRCUzrmFVqHTcV43MHuLMmuIPh3WgApig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EwggUooR; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3D8C4CEC6;
+	Tue, 15 Oct 2024 12:26:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1728995205;
+	bh=NYbHOMwMrdG/wiT8RCznhicJLT/5UcM5sidpVpTNIvw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EwggUooRAbrIXkMRbaDLuwY6cbRSNxUb+yU2CwJ8fCkc/gqjuOIZLjldGepu1+/SE
+	 iQ9eC7BABbaFAqW41FBAwXx8xUaoYChyUjU5yEEYWLnI6S6eH2654d7JDoOp9oUAHZ
+	 J5vIVUt5tzvwtaBYO3Gadc0irVHL2LT8BK4gV9gAiiXE9ED7LV4KAHDgp2L0T44+3V
+	 q327O+flBAflHrT2wqg3/lq/fWKx+PyGbs1+ZQ09IpqNfsbcnsuE74maVopIa2X2uK
+	 pOSRS8G4kWcWoAQPdKhm8yuKOQ+kcRSzClntfW6W716yrOjj81aHuXUcb30OS8WKQQ
+	 hiiwZXIvaAgeg==
+Date: Tue, 15 Oct 2024 14:26:37 +0200
+From: Lorenzo Pieralisi <lpieralisi@kernel.org>
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Shivendra Pratap <quic_spratap@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	quic_spratap@qucinc.com
+Subject: Re: [PATCH v5 3/4] firmware: psci: Read and use vendor reset types
+Message-ID: <Zw5ffeYW5uRpsaG3@lpieralisi>
+References: <20240617-arm-psci-system_reset2-vendor-reboots-v5-0-086950f650c8@quicinc.com>
+ <20240617-arm-psci-system_reset2-vendor-reboots-v5-3-086950f650c8@quicinc.com>
+ <ZrOMjomTTWZ91Uzf@lpieralisi>
+ <20240807103245593-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <ZrYZ/i1QFhfmv0zi@lpieralisi>
+ <20240809090339647-0700.eberman@hu-eberman-lv.qualcomm.com>
+ <28c8bc92-4a55-8a07-1ece-333316d78410@quicinc.com>
+ <Zr4Td7PiKhKl3Et3@lpieralisi>
+ <20240815100749641-0700.eberman@hu-eberman-lv.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
- <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
- <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3>
- <CABymUCP7bVBSWXCNp33x_B8KaZSFU-Dx+bU5ctkgDGXrzURrXQ@mail.gmail.com>
- <CAA8EJpovnEq_ciO0YmiREhwvxv6yGKnRMPx5=6G7R+Ob6Hy_hA@mail.gmail.com>
- <CABymUCPdu5+iz-amwv_O999sLUOmUMczo_v=1aUpJGpHo5f8CA@mail.gmail.com>
- <CAA8EJppMu5o7juhKUN2Y_4CRYKtaWN9G01aPU2ZfksE_tzjqCQ@mail.gmail.com> <CABymUCNbwY5hoaOxydPccFAdbnCQgUMspJLHkNziQyf=NxOj2A@mail.gmail.com>
-In-Reply-To: <CABymUCNbwY5hoaOxydPccFAdbnCQgUMspJLHkNziQyf=NxOj2A@mail.gmail.com>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Tue, 15 Oct 2024 15:26:22 +0300
-Message-ID: <CAA8EJpo9XMo9EGKMzVaDrS7tPZ6CHw6RkqROF4-k94KpFXVjfw@mail.gmail.com>
-Subject: Re: [PATCH v2 09/14] drm/msm/dpu: blend pipes per mixer pairs config
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20240815100749641-0700.eberman@hu-eberman-lv.qualcomm.com>
 
-On Tue, 15 Oct 2024 at 11:27, Jun Nie <jun.nie@linaro.org> wrote:
->
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B410=
-=E6=9C=8811=E6=97=A5=E5=91=A8=E4=BA=94 15:13=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On Fri, 11 Oct 2024 at 10:11, Jun Nie <jun.nie@linaro.org> wrote:
+On Thu, Aug 15, 2024 at 11:05:09AM -0700, Elliot Berman wrote:
+> On Thu, Aug 15, 2024 at 04:40:55PM +0200, Lorenzo Pieralisi wrote:
+> > On Mon, Aug 12, 2024 at 11:46:08PM +0530, Shivendra Pratap wrote:
+> > > 
+> > > 
+> > > On 8/9/2024 10:28 PM, Elliot Berman wrote:
+> > > > On Fri, Aug 09, 2024 at 03:30:38PM +0200, Lorenzo Pieralisi wrote:
+> > > >> On Wed, Aug 07, 2024 at 11:10:50AM -0700, Elliot Berman wrote:
+> > > >>
+> > > >> [...]
+> > > >>
+> > > >>>>> +static void psci_vendor_sys_reset2(unsigned long action, void *data)
+> > > >>>>
+> > > >>>> 'action' is unused and therefore it is not really needed.
+> > > >>>>
+> > > >>>>> +{
+> > > >>>>> +	const char *cmd = data;
+> > > >>>>> +	unsigned long ret;
+> > > >>>>> +	size_t i;
+> > > >>>>> +
+> > > >>>>> +	for (i = 0; i < num_psci_reset_params; i++) {
+> > > >>>>> +		if (!strcmp(psci_reset_params[i].mode, cmd)) {
+> > > >>>>> +			ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
+> > > >>>>> +					     psci_reset_params[i].reset_type,
+> > > >>>>> +					     psci_reset_params[i].cookie, 0);
+> > > >>>>> +			pr_err("failed to perform reset \"%s\": %ld\n",
+> > > >>>>> +				cmd, (long)ret);
+> > > >>>>> +		}
+> > > >>>>> +	}
+> > > >>>>> +}
+> > > >>>>> +
+> > > >>>>>  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
+> > > >>>>>  			  void *data)
+> > > >>>>>  {
+> > > >>>>> +	if (data && num_psci_reset_params)
+> > > >>>>
+> > > >>>> So, reboot_mode here is basically ignored; if there is a vendor defined
+> > > >>>> reset, we fire it off.
+> > > >>>>
+> > > >>>> I think Mark mentioned his concerns earlier related to REBOOT_* mode and
+> > > >>>> reset type (granted, the context was different):
+> > > >>>>
+> > > >>>> https://lore.kernel.org/all/20200320120105.GA36658@C02TD0UTHF1T.local/
+> > > >>>>
+> > > >>>> I would like to understand if this is the right thing to do before
+> > > >>>> accepting this patchset.
+> > > >>>>
+> > > >>>
+> > > >>> I don't have any concerns to move this part below checking reboot_mode.
+> > > >>> Or, I could add reboot_mode == REBOOT_COLD check.
+> > > >>
+> > > >> The question is how can we map vendor specific reboot magic to Linux
+> > > >> reboot modes sensibly in generic PSCI code - that's by definition
+> > > >> vendor specific.
+> > > >>
+> > > > 
+> > > > I don't think it's a reasonable thing to do. "reboot bootloader" or
+> > > > "reboot edl" don't make sense to the Linux reboot modes.
+> > > > 
+> > > > I believe the Linux reboot modes enum is oriented to perspective of
+> > > > Linux itself and the vendor resets are oriented towards behavior of the
+> > > > SoC.
+> > > > 
+> > > > Thanks,
+> > > > Elliot
+> > > > 
+> > > 
+> > > Agree.
+> > > 
+> > > from perspective of linux reboot modes, kernel's current
+> > > implementation in reset path is like:
 > > >
-> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B4=
-10=E6=9C=8811=E6=97=A5=E5=91=A8=E4=BA=94 15:03=E5=86=99=E9=81=93=EF=BC=9A
-> > > >
-> > > > On Fri, 11 Oct 2024 at 09:40, Jun Nie <jun.nie@linaro.org> wrote:
-> > > > >
-> > > > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=
-=B9=B410=E6=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B 21:15=E5=86=99=E9=81=93=EF=
-=BC=9A
-> > > > > >
-> > > > > > On Wed, Oct 09, 2024 at 04:50:22PM GMT, Jun Nie wrote:
-> > > > > > > Blend pipes by set of mixer pair config. The first 2 pipes ar=
-e for left
-> > > > > > > half screen with the first set of mixer pair config. And the =
-later 2 pipes
-> > > > > > > are for right in quad pipe case.
-> > > > > > >
-> > > > > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> > > > > > > ---
-> > > > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 38 +++++++++++=
-+++++++-----------
-> > > > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
-> > > > > > >  2 files changed, 25 insertions(+), 14 deletions(-)
-> > > > > > >
-> > > > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drive=
-rs/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > > > index 43d9817cd858f..66f745399a602 100644
-> > > > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-> > > > > > > @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(s=
-truct drm_crtc *crtc,
-> > > > > > >       const struct msm_format *format;
-> > > > > > >       struct dpu_hw_ctl *ctl =3D mixer->lm_ctl;
-> > > > > > >
-> > > > > > > -     uint32_t lm_idx, i;
-> > > > > > > +     uint32_t lm_idx, lm_pair, i, pipe_idx;
-> > > > > > >       bool bg_alpha_enable =3D false;
-> > > > > > >       DECLARE_BITMAP(fetch_active, SSPP_MAX);
-> > > > > > >
-> > > > > > > @@ -463,15 +463,20 @@ static void _dpu_crtc_blend_setup_mixer=
-(struct drm_crtc *crtc,
-> > > > > > >               if (pstate->stage =3D=3D DPU_STAGE_BASE && form=
-at->alpha_enable)
-> > > > > > >                       bg_alpha_enable =3D true;
-> > > > > > >
-> > > > > > > -             for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
-> > > > > > > -                     if (!pstate->pipe[i].sspp)
-> > > > > > > -                             continue;
-> > > > > > > -                     set_bit(pstate->pipe[i].sspp->idx, fetc=
-h_active);
-> > > > > > > -                     _dpu_crtc_blend_setup_pipe(crtc, plane,
-> > > > > > > -                                                mixer, cstat=
-e->num_mixers,
-> > > > > > > -                                                pstate->stag=
-e,
-> > > > > > > -                                                format, fb ?=
- fb->modifier : 0,
-> > > > > > > -                                                &pstate->pip=
-e[i], i, stage_cfg);
-> > > > > > > +             /* loop pipe per mixer pair */
-> > > > > > > +             for (lm_pair =3D 0; lm_pair < PIPES_PER_PLANE /=
- 2; lm_pair++) {
-> > > > > > > +                     for (i =3D 0; i < PIPES_PER_LM_PAIR; i+=
-+) {
-> > > > > > > +                             pipe_idx =3D i + lm_pair * PIPE=
-S_PER_LM_PAIR;
-> > > > > > > +                             if (!pstate->pipe[pipe_idx].ssp=
-p)
-> > > > > > > +                                     continue;
-> > > > > > > +                             set_bit(pstate->pipe[pipe_idx].=
-sspp->idx, fetch_active);
-> > > > > > > +                             _dpu_crtc_blend_setup_pipe(crtc=
-, plane,
-> > > > > > > +                                                        mixe=
-r, cstate->num_mixers,
-> > > > > > > +                                                        psta=
-te->stage,
-> > > > > > > +                                                        form=
-at, fb ? fb->modifier : 0,
-> > > > > > > +                                                        &pst=
-ate->pipe[pipe_idx], i,
-> > > > > > > +                                                        &sta=
-ge_cfg[lm_pair]);
-> > > > > > > +                     }
-> > > > > > >               }
-> > > > > > >
-> > > > > > >               /* blend config update */
-> > > > > > > @@ -503,7 +508,7 @@ static void _dpu_crtc_blend_setup(struct =
-drm_crtc *crtc)
-> > > > > > >       struct dpu_crtc_mixer *mixer =3D cstate->mixers;
-> > > > > > >       struct dpu_hw_ctl *ctl;
-> > > > > > >       struct dpu_hw_mixer *lm;
-> > > > > > > -     struct dpu_hw_stage_cfg stage_cfg;
-> > > > > > > +     struct dpu_hw_stage_cfg stage_cfg[LM_PAIRS_PER_PLANE];
-> > > > > >
-> > > > > > After seeing this code, can we define STAGES_PER_PLANE (and
-> > > > > > also keep PLANES_PER_STAGE defined to 2)?
-> > > > > >
-> > > > > Could you elaborate it? Stages describe how many layers to be ble=
-nded.
-> > > > > Plane is a DRM concept that describe a buffer to be display in sp=
-ecific
-> > > > > display driver. Plane is already mapped to SSPP/multi-rect in DPU=
- driver
-> > > > >  in blending stage level. So I am confused here.
-> > > >
-> > > > We have dpu_hw_stage_cfg, you are adding a second instance of it. S=
-o
-> > > > we now have two stages per plane.
-> > >
-> > > So you suggest to replace LM_PAIRS_PER_PLANE with STAGES_PER_PLANE,
-> > > right? I assume a stage is coupled with a LM pair.
-> > >
-> > > But for PLANES_PER_STAGE, I am still confused. A stage or a LM pair c=
-an
-> > > involve many SSPP layers. How it related to planes? Plane is a concep=
-ts from
-> > > higher level.
-> >
-> > PIPES_PER_STAGE, excuse me.
->
-> Do you mean to keep PIPES_PER_STAGE and do not introduce PIPES_PER_LM_PAI=
-R,
-> or use both? Looks like they are equal in hardware nature. A stage
-> structure serves
-> a mixer pair with 2 pipes. We can use PIPES_PER_LM_PAIR and add comment t=
-o
->  indicate it, thus avoid defining too many macro.
+> > > __
+> > > #1 If reboot_mode is WARM/SOFT and PSCI_SYSRESET2 is supported 
+> > >     Call PSCI - SYSTEM_RESET2 - ARCH RESET
+> > > #2 ELSE
+> > >     Call PSCI - SYSTEM_RESET COLD RESET
+> > > ___
+> > > 
+> > > ARM SPECS for PSCI SYSTEM_RESET2
+> > > This function extends SYSTEM_RESET. It provides:
+> > > • ARCH RESET: set Bit[31] to 0               = > This is already in place in condition #1.
+> > > • vendor-specific resets: set Bit[31] to 1.  = > current patchset adds this part before kernel's reboot_mode reset at #0.
+> > > 
+> > > 
+> > > In current patchset, we see a condition added at
+> > > #0-psci_vendor_reset2 being called before kernel’s current
+> > > reboot_mode condition and it can take any action only if all below
+> > > conditions are satisfied.
+> > > - PSCI SYSTEM_RESET2 is supported.
+> > > - psci dt node defines an entry "bootloader" as a reboot-modes.
+> > > - User issues reboot with a command say - (reboot bootloader).
+> > > - If vendor reset fails, default reboot mode will execute as is.
+> > > 
+> > > Don't see if we will skip or break the kernel reboot_mode flow with
+> > > this patch.  Also if user issues reboot <cmd> and <cmd> is supported
+> > > on SOC vendor reset psci node, should cmd take precedence over
+> > > kernel reboot mode enum? may be yes? 
+> > > 
+> > 
+> > Please wrap lines when replying.
+> > 
+> > I don't think it is a matter of precedence. reboot_mode and the reboot
+> > command passed to the reboot() syscall are there for different (?)
+> > reasons.
+> > 
+> > What I am asking is whether it is always safe to execute a PSCI vendor
+> > reset irrispective of the reboot_mode value.
+> 
+> The only way I see it to be unsafe is we need some other driver using
+> the reboot_mode to configure something and then the PSCI vendor reset
+> being incompatible with whatever that other driver did. I don't see that
+> happens today, so it is up to us to decide what the policy ought to be.
+> The PSCI spec doesn't help us here because the reboot_mode enum is
+> totally a Linux construct. In my opinion, firmware should be able to
+> deal with whatever the driver did or (less ideal) the driver need to be
+> aware of the PSCI vendor resets. Thus, it would be always safe to
+> execute a PSCI vendor reset regardless of the reboot_mode value.
 
-Yes, don't introduce PIPES_PER_LM_PAIR and just add STAGES_PER_PLANE.
+It is hard to understand history behind reboot_mode and
+the LINUX_REBOOT_CMD_RESTART2 cmd, at least *I* don't
+understand it fully.
 
->
-> >
-> > --
-> > With best wishes
-> > Dmitry
+What I do understand is:
 
+- reboot_mode can be set from userspace and kernel params
+- It affects some drivers restart handler behaviours
+- Incidentally, I noticed that reboot_mode affects the EFI reset
+  being issued (and EFI ignores the cmd and platform specific
+  resets AFAICS). This is not related to this thread but may provide
+  some guidance
+- if reboot_mode is set to REBOOT_GPIO - it is impossible to understand
+  what PSCI code should do other than ignoring it ? It is not that
+  REBOOT_WARM/COLD/HARD/SOFT are easier to fathom either to be honest,
+  would be happy if anyone could chime in and shed some light.
 
+My biggest fear here is that after merging this code, various quirks
+based on what SYSTEM_RESET2 platform specific parameters are set-up
+will appear, whereby a driver needs to do this or that in its restart
+handler depending on the specific reset being issued in PSCI
+(an example was provided in this same thread).
 
---=20
-With best wishes
-Dmitry
+Thoughts ? I'd like to see some progress on this but it is proving
+to be ways more complex than I thought initially.
+
+Thanks,
+Lorenzo
 
