@@ -1,160 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-34396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5C6899DF40
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 09:26:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CFBE699E0A1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 10:16:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E7661F21EE7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 07:26:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0C8931C21EA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 08:16:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3656118BBAB;
-	Tue, 15 Oct 2024 07:26:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11E681C9B81;
+	Tue, 15 Oct 2024 08:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GQdc9DVF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U0N60SUt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE719474;
-	Tue, 15 Oct 2024 07:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581011C7617;
+	Tue, 15 Oct 2024 08:16:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728977211; cv=none; b=FXkYfJkdi75rFLdhdXF7RY3bAmnX1ZfyDuDHI7RxY43XvMypbNNTUaud/P0tWhWFDTyIUsbXsW4oItR1mPRgRghLlP7VtlVtWsmiPamXYD4iLxLQWvLhWxDTbL8IDi7u/zInWPo5lmZSmfkhsCqKqoSmgxFfmJajx+bm2XjKulY=
+	t=1728980197; cv=none; b=Ydr8BbM6vlD2o3ybegjpEJDsvvaJHSsZRweEE3CBcNweV56yLuEkdgOLyfwfehhS7xpLFgao60nbaky+9yqYx+41PyFol2fkpGAViz2j4cq5BwtfBfzX5a2uxihug0rjxD11jXcHBWrxTAbO1nKyTkgXRvXGe/kLbHNOTvbXHaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728977211; c=relaxed/simple;
-	bh=AFwOLTJBM7YSONnnjQ8PrBR6mSkmXeYFl9Z1iatT4Vc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=QeEWRUi3NLGuSbCZDbmeDWJAQ2i3/aRHuEKi4UJXAV4Aznfr4ZVesOd+wIAr23omM3x35gtFdKv+kLlUQyavpr7pK/w6OW4Il5Udp0kLH14fCUHLkfI0LWa69WVkqlb4NbD6JFw/+aWoALP9KHl01dC10IYfDnwrSk/ARh+otwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GQdc9DVF; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1728980197; c=relaxed/simple;
+	bh=dTBx89CrN28r6BhWLTutFCsiCaXmzQGGx8LoLYKVUBU=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=B6m985dDhIHmQAV+NzpoilOUH5nHuB6NTg/YBKPgB2Cq1C6jSGcJ9ifkBb/83jh2+wdwS05/RPmLSxI2IMOY3l2rWVJZOb2H4daH/YtIlMml1gC5WBlngN2j2r9IkVPazTJ+hjbyKYAYdQCIK+i32hWVUhJTjE6awLMhB+bG1mE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U0N60SUt; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49F0l0KZ011535;
-	Tue, 15 Oct 2024 07:26:42 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49F1UIMc019156;
+	Tue, 15 Oct 2024 08:16:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Q526+r0Dcxm3qRY0GFP4GetrV21kKQI4ls6mq6CHL6w=; b=GQdc9DVFk8PN8GUS
-	5RHr19x5Ruoc/tMxM9VValt5R8ZURrju0GflIkHimqVS6wCP+cac58UF2AThebGs
-	vARlrt4QRFg6g1Lf+t1RGsnmrWLlEAPuk4YKW8qGzGr4eM08HFXwnBQalUnlYGa/
-	SvYZRtPsxNFAsG1fPQ64ZS5rOW1F/7c7HE9e3X1U9FwDGUzKDS5xv/LBVDvbV49B
-	LY//cyD2snH+mIl5zu19aGhAzBK//JvkBEwAfIb8u6BLsKaZK3pGhxySg3Zd7J2q
-	UaggEYW54SN0UkgfXJPmJ7esldj+eOl0bHYeX83lFG7qOM+jqOhwsCcR5ZbPJpBJ
-	7ugwJQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429e5g0s8a-1
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=ljwquIIH+aARtWboUpPEeCCRYNHZTbnu0I5DzBvD83k=; b=U0
+	N60SUt5u8Ge5v0hTfKbXqsNW1ZFsuAJ052cU1dLgdy7WqvAS4iEKw+uzMsBfjhbU
+	dda7T1fap9c6z/F7Wo7W2aTdGDQtIAWME8iDTZSw2iXAn0xdc2Sm1LujlF83LLnP
+	jqijhc4f892xcD0RSLCrb840jSkFH0rB0VFKqzI1YhpiigtFmfXKa9BNaKt+DG6B
+	skQm4Zn0M5e629kz1zzYXyt4j9dVCQ/wEBKobCDm8HBu5jO1JzNlt7U5TzUVsKRP
+	ej/fVFnXmbmgtACwxKEig2co5SVWD9YuTxsfPD0vSDVj1OAm0a1C5RwoqjIsTnCS
+	n0cx7pSbVDYvfkUZHXHQ==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 427g2rpwcq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 07:26:42 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49F7Qfce007232
+	Tue, 15 Oct 2024 08:16:24 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49F8GNqF005566
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 07:26:41 GMT
-Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 15 Oct
- 2024 00:26:36 -0700
-Message-ID: <ba4620df-7933-3730-eb9a-ffdd5cd98adb@quicinc.com>
-Date: Tue, 15 Oct 2024 12:56:34 +0530
+	Tue, 15 Oct 2024 08:16:23 GMT
+Received: from hu-qqzhou-sha.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 15 Oct 2024 01:16:20 -0700
+From: Qingqing Zhou <quic_qqzhou@quicinc.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <robimarko@gmail.com>,
+        <will@kernel.org>, <robin.murphy@arm.com>, <joro@8bytes.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>,
+        Qingqing Zhou
+	<quic_qqzhou@quicinc.com>
+Subject: [PATCH v2 0/4] Add support for APPS SMMU on QCS615
+Date: Tue, 15 Oct 2024 13:45:59 +0530
+Message-ID: <20241015081603.30643-1-quic_qqzhou@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 00/28] Qualcomm iris video decoder driver
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Hans Verkuil <hverkuil@xs4all.nl>,
-        Sebastian Fricke
-	<sebastian.fricke@collabora.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Vedang Nagar <quic_vnagar@quicinc.com>
-References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
- <e954a3b7-296f-4dbf-8325-b5993d11da92@kernel.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <e954a3b7-296f-4dbf-8325-b5993d11da92@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3FJMYedsetfFeeXfYQEGnrlFEi1Ss1a5
-X-Proofpoint-ORIG-GUID: 3FJMYedsetfFeeXfYQEGnrlFEi1Ss1a5
+X-Proofpoint-ORIG-GUID: RggG4Y5ymahbTU_F1-mYrMIHrOJJO8lL
+X-Proofpoint-GUID: RggG4Y5ymahbTU_F1-mYrMIHrOJJO8lL
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- adultscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 phishscore=0 spamscore=0 mlxlogscore=880 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410150049
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 suspectscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 spamscore=0 adultscore=0 mlxlogscore=999 impostorscore=0
+ mlxscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410150055
+
+Enable APPS SMMU function on QCS615 platform. APPS SMMU is required
+for address translation in devices including Ethernet/UFS/USB and
+so on.
+
+Add the SCM node for SMMU probing normally. SMMU driver probe will
+check qcom_scm ready or not, without SCM node, SMMU driver probe will
+defer.
+The dmesg log without SCM node:
+platform 15000000.iommu: deferred probe pending: arm-smmu: qcom_scm not ready
+
+With the SCM node, SMMU can probe normally, but SCM driver still fails
+to probe because of one SCM bug:
+qcom_scm firmware:scm: error (____ptrval____): Failed to enable the TrustZone memory allocator
+qcom_scm firmware:scm: probe with driver qcom_scm failed with error 4
+The above SCM bug is fixed by:
+https://lore.kernel.org/all/20241005140150.4109700-2-quic_kuldsing@quicinc.com/
+But above patch doesn't impact building of current patch series, this patch
+series can build successfully without above patch.
+
+Dependency:
+https://lore.kernel.org/all/20240926-add_initial_support_for_qcs615-v3-0-e37617e91c62@quicinc.com/
+
+Changes in v2:
+- Address the comments on bindings from Krzysztof.
+- Improve the commit messages and cover letter.
+- Link to v1: https://lore.kernel.org/all/20241011063112.19087-1-quic_qqzhou@quicinc.com/
+
+Qingqing Zhou (4):
+  dt-bindings: firmware: qcom,scm: document QCS615 SCM
+  dt-bindings: arm-smmu: document QCS615 APPS SMMU
+  arm64: dts: qcom: qcs615: add the SCM node
+  arm64: dts: qcom: qcs615: add the APPS SMMU node
+
+ .../bindings/firmware/qcom,scm.yaml           |  1 +
+ .../devicetree/bindings/iommu/arm,smmu.yaml   |  2 +
+ arch/arm64/boot/dts/qcom/qcs615.dtsi          | 81 +++++++++++++++++++
+ 3 files changed, 84 insertions(+)
 
 
+base-commit: 0cca97bf23640ff68a6e8a74e9b6659fdc27f48c
+prerequisite-patch-id: 3a76212d3a3e930d771312ff9349f87aee5c55d5
+prerequisite-patch-id: 8a2454d5e07e56a6dd03f762f498051065635d85
+prerequisite-patch-id: 46cdc5640598b60d2f5449af444d6d4e479c00b8
+prerequisite-patch-id: 050d1dd8cc9397618e570e6de2d81d0c32c10d7a
+prerequisite-patch-id: cd9fc0a399ab430e293764d0911a38109664ca91
+prerequisite-patch-id: 07f2c7378c7bbd560f26b61785b6814270647f1b
+prerequisite-patch-id: f9680e3c90d8f05babbcadd7b7f5174f484a8275
+prerequisite-patch-id: 760a2b8f2acff7a9683bfe8f2d353f7caa6e5580
+prerequisite-patch-id: 54b4dd987711302b083f714c6f230726c7781042
+prerequisite-patch-id: 624720e543d7857e46d3ee49b8cea413772deb4c
+prerequisite-patch-id: 04ca722967256efddc402b7bab94136a5174b0b9
+prerequisite-patch-id: ab88a42ec69ad90e8509c9c5b7c6bdd595a7f783
+prerequisite-patch-id: 918724fafe43acaa4c4b980bfabe36e9c3212cd1
+prerequisite-patch-id: 3bae513ca3da06d6f175502924a1fec6f9424def
+prerequisite-patch-id: 57afeee80c9aa069ee243f5a5b634702867d20f1
+-- 
+2.17.1
 
-On 10/14/2024 5:24 PM, Krzysztof Kozlowski wrote:
-> On 14/10/2024 11:07, Dikshita Agarwal wrote:
->> Introduce support for Qualcomm new video acceleration hardware i.e.
->> iris, used for video stream decoding.
->>
->> Iris is a multi pipe based hardware that offloads video stream decoding
->> from the application processor (AP). It supports H.264 decoding.
->> The AP communicates with hardware through a well defined protocol,
->> called as host firmware interface (HFI), which provides fine-grained
->> and asynchronous control over individual hardware features.
->>
->> This driver implements upgraded HFI gen2 to communicate with firmware.
->> It supports SM8550 which is based out of HFI gen 2. It also supports
->> SM8250 which is based out of HFI gen1.
->>
->> This driver comes with below capabilities:
->> - V4L2 complaint video driver with M2M and STREAMING capability.
->> - Supports H264 decoder.
->>
->> This driver comes with below features:
->> - Centralized resource management.
->> - Centralized management of core and instance states.
->> - Defines platform specific capabilities and features. As a results, it
->>   provides a single point of control to enable/disable a given feature
->>   depending on specific platform capabilities.
->> - Handles various video recommended sequences, like DRC, Drain, Seek,
->>   EOS.
->> - Implements asynchronous communication with hardware to achieve better
->>   experience in low latency usecases.
->> - Output and capture planes are controlled independently. Thereby
->>   providing a way to reconfigure individual plane.
->> - Native hardware support of LAST flag which is mandatory to align with
->>   port reconfiguration and DRAIN sequence as per V4L guidelines.
->>
->> Changes since v3:
-> 
-> You send the patches with b4, so why do you strip the link to previous
-> series? It makes out life just more difficult. Include the link, how the
-> b4 instructs you.
-> 
-Sure, Noted.
-
-Link to v3 -
-https://lore.kernel.org/linux-media/9b116753-9a21-4f9c-b86f-dded20713b53@linaro.org/
-
-Thanks,
-Dikshita
-
-> Best regards,
-> Krzysztof
-> 
 
