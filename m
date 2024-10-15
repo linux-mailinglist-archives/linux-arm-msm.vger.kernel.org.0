@@ -1,162 +1,611 @@
-Return-Path: <linux-arm-msm+bounces-34409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E229E99E3A1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:19:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0558F99E3D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:28:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1A6461C2208B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 10:19:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6C87CB213C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 10:28:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7D191DAC89;
-	Tue, 15 Oct 2024 10:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22B3A1E3DE8;
+	Tue, 15 Oct 2024 10:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iB1Bfr7u"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uPdWe/go"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069DD1CBEB8;
-	Tue, 15 Oct 2024 10:19:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B681E378C
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 10:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728987545; cv=none; b=hfAhz4LAJdpTRAHIOF+b+bzlHDKdArDalIFFkUBe1EYCgOJjfUwwvG/TgebiIck0kOg/Y5wLk5scH4/y8Awxg+4wnQhl0VomlsllZRyc0hzixXxdpZeAFuuqqilqHdND8PxwGNrsG8f4NJXHbN19spCvdETg36znr+Ieh+8msNU=
+	t=1728988111; cv=none; b=eA2JxYmj4q5eG1Ae85K2rj63K0VEMZxaKOI2Jafp0CCSKunmnrq0jpLG1DXSNpXh+Y3Z/a1nMjz1gIaBteRf3KuNsmu5J3CCVIh+b1XvkLNSeUeeDuh+g41mDR0MKMkZyJx2yjhnwkkDn4KzV+GSc0Hg0V7KvUB69ji0K/AzVEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728987545; c=relaxed/simple;
-	bh=VWUNZO+nDheRKZ5nkF50AW67/8AZ063Ip3o0fiXPBio=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VfdoL8HPCCETwF8cZ03tzXiMD1gQHYM4SlvIEfl1Y9s9lK8PJCxo446g8aAVct6OgRI0cJYoOmNaARPWFt5V9LcTOF6qP4uvKidIvbLxKT+0HMEl7o1mIIB+Wes6zjPkOE4PoAtO/iR0HA4WCp+QilVqMVLoJZCbQ307vlSHT0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iB1Bfr7u; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49F0le1p012750;
-	Tue, 15 Oct 2024 10:19:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=AGzN2LeQRNdMVTwurXOEhf/o
-	AIn0zeR7yD9+1e6sqHs=; b=iB1Bfr7uY7GdPS+Ok4AV0tlSd+FsLGHAOZT/Nbwl
-	P8sEm8F0s3iwt0BkZjeO9Kf3f3TdwvXAtTPT8wQs4eWx6QRaeiOTotRrNeb9906Z
-	mYKtmX8U/yeCbNr4UMqO3imYA5s2momnbL/w9sfzsM+iZu0fljcwy08/pNOLXSpt
-	7MXTEq9E7GFmpwpd3ZQYgj8KWG781u8I5iCAqRyve2uCrJLTByBSAhZ79H/IuCI7
-	k1m+Z3B2v/xfu/nI5Kx8dfl0kVCBqETk7cgzXYQxeRlweBoW2mSaiY3UzetTs6Nw
-	6cosByoaLvL/BgaOfdElaXOpt1fn5HFEfeJEFX3ba4/d3A==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429e5g17nq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 10:18:59 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49FAIxXt029902
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 10:18:59 GMT
-Received: from hu-mojha-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 15 Oct 2024 03:18:56 -0700
-Date: Tue, 15 Oct 2024 15:48:47 +0530
-From: Mukesh Ojha <quic_mojha@quicinc.com>
-To: Kuldeep Singh <quic_kuldsing@quicinc.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Qingqing Zhou <quic_qqzhou@quicinc.com>
-Subject: Re: [PATCH v2 1/2] firmware: qcom: scm: Return -EOPNOTSUPP for
- unsupported SHM bridge enabling
-Message-ID: <Zw5BhwpJ8UWm7Fiq@hu-mojha-hyd.qualcomm.com>
-References: <20241014111527.2272428-1-quic_kuldsing@quicinc.com>
- <20241014111527.2272428-2-quic_kuldsing@quicinc.com>
+	s=arc-20240116; t=1728988111; c=relaxed/simple;
+	bh=Aq5ZQpkeR2upvMr9Pupr5X4SUAmz6Izqg0UefCY6s7o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Xx6ZDyDa53J48DUh4T8D8qEf0RIqLu0YpPt3DBhx2dQK3wMUwpSH8SlhOKmFTtReP78gP3vKw/Ag+FLQB+/ofK71nCwVyZbpuPh5jn2DHSA5p1QkR8EKSob/7ChZcC1d/o2eWNgh+HnjeEjE6La8euy5efipJ+tyXbMCasSFJbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uPdWe/go; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5c932b47552so41677a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 03:28:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1728988106; x=1729592906; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RSTtzbmx1EuT92ep7OYTLC8fP/gGDl2rPFFVcdlePDo=;
+        b=uPdWe/goYapXGUaqaIOlX26MuAR6lvVAEsPD+4VI86Uw2S7uKrCCmB4bTW5RgOJ9LY
+         cSUwswKKj2YN2+D498RTi6fNJ+7aM5XIpXBpNbwMcvk12Up2+7IxhDSItgRIirS+nsIR
+         qwuCkFUamUIRYHIykV+ANUBBjYqpmZC19KgaJoSQEzKn1rwWH3FBSAdw3z0NoPYhhOme
+         v1eP/bEfggKjVT2DfBkIA84m7/I4gpeLx3h2tBm9lZUPEv178tSQYtoDHLj10HU1iGTS
+         9RN1nIzFq/K7/eT4vkCLl4cR1aBEGuOXv5rmpfcDTz8XjkvDeN8heOALDCnBqVzVf9Jv
+         r+qQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728988106; x=1729592906;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RSTtzbmx1EuT92ep7OYTLC8fP/gGDl2rPFFVcdlePDo=;
+        b=DZkb8g2T66LweqDXH62sD3dz+2RtFjtiyeE95i/eIOR0bfuHZJKevGSjZ70gFrP2Jx
+         GhPqXGgC4qnpwp9GzHt6LdyTkzKwROTRmD0qUtYF8xukFlF/Pr1IZDw26elDT0lXOSXF
+         dfihW+J02iRAXsNV7L0aDwo5oQ9JLQSAwya71Qf6qVpBHAin3qWJRJu/QEbegq6f5xZx
+         Lqgp1AIUq6aY1Vl67aPz0t8cXvV7hXBYB5lAWEfO2OLljzV/WxdarC+7gIzAu1hpM1DT
+         hirAntLTUKYjlPfkqW5/ZMcdc7bsNTerBlKEiIC+rCiJNIaO0gQvi3CmE5nCGzPoWB/G
+         wmDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUBbyxJE6OI3lszACjy4vBGg0qAWL0WyJr9eVkQComEKjFM4NnzZOD+UKmjFF03nH+2wF5/ror42Zr5I6YH@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKeTwug4+meCjiUQDnuOV9nwCjiw/tK9HgSHaBlNZwJAO91Ba9
+	aFb1ayojjxn9JwbOIvPwzOy7uRdDmdb2HPQL77ixIjdzo8EjBM4vzWef/6rta14SPwN/EXb5Ici
+	xd7KMoiBHNeHpy1Crj21qFtkcWBvcYvHQxbVKxLkd7QrvuMr8iNF2
+X-Google-Smtp-Source: AGHT+IHKqOIJnbk+AfNxn/S0niZ5Lw7/6fa3hE6OhHpYtKLObsvZB+OHC0HlZcl6gO8D+mQTsBl4PFyDsCDec2OIPyk=
+X-Received: by 2002:a05:6402:5251:b0:5c8:aefb:746d with SMTP id
+ 4fb4d7f45d1cf-5c95c5ee259mr591403a12.5.1728988105987; Tue, 15 Oct 2024
+ 03:28:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20241014111527.2272428-2-quic_kuldsing@quicinc.com>
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: NDAUO9GaYUON1msTlhPiUv-0xbOiM1HL
-X-Proofpoint-ORIG-GUID: NDAUO9GaYUON1msTlhPiUv-0xbOiM1HL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- adultscore=0 impostorscore=0 mlxscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 phishscore=0 spamscore=0 mlxlogscore=999 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410150070
+References: <20241010085930.1546800-1-tabba@google.com> <20241010085930.1546800-5-tabba@google.com>
+ <20241011102208348-0700.eberman@hu-eberman-lv.qualcomm.com>
+In-Reply-To: <20241011102208348-0700.eberman@hu-eberman-lv.qualcomm.com>
+From: Fuad Tabba <tabba@google.com>
+Date: Tue, 15 Oct 2024 11:27:48 +0100
+Message-ID: <CA+EHjTw2=A4TCV3x-x3+Kbo9im_DVe5uGSJb6eKBQH0CYbnQcw@mail.gmail.com>
+Subject: Re: [PATCH v3 04/11] KVM: guest_memfd: Allow host to mmap
+ guest_memfd() pages when shared
+To: Elliot Berman <quic_eberman@quicinc.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, ackerleytng@google.com, 
+	mail@maciej.szmigiero.name, david@redhat.com, michael.roth@amd.com, 
+	wei.w.wang@intel.com, liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com, 
+	quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, 
+	catalin.marinas@arm.com, james.morse@arm.com, yuzenghui@huawei.com, 
+	oliver.upton@linux.dev, maz@kernel.org, will@kernel.org, qperret@google.com, 
+	keirf@google.com, roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, 
+	jgg@nvidia.com, rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, 
+	hughd@google.com, jthoughton@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Oct 14, 2024 at 04:45:26PM +0530, Kuldeep Singh wrote:
-> From: Qingqing Zhou <quic_qqzhou@quicinc.com>
-> 
-> When enabling SHM bridge, QTEE returns 0 and sets error 4 in result to
-> qcom_scm for unsupported platforms. Currently, tzmem interprets this as
-> an unknown error rather than recognizing it as an unsupported platform.
-> 
-> Error log:
-> [    0.177224] qcom_scm firmware:scm: error (____ptrval____): Failed to enable the TrustZone memory allocator
-> [    0.177244] qcom_scm firmware:scm: probe with driver qcom_scm failed with error 4
-> 
-> To address this, modify the function call qcom_scm_shm_bridge_enable()
-> to remap result to indicate an unsupported error. This way, tzmem will
-> correctly identify it as an unsupported platform case instead of
-> reporting it as an error.
-> 
-> Fixes: 178e19c0df1b ("firmware: qcom: scm: add support for SHM bridge operations")
-> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
-> Co-developed-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-> ---
->  drivers/firmware/qcom/qcom_scm.c | 13 ++++++++++++-
->  1 file changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 10986cb11ec0..0df81a9ed438 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -112,6 +112,7 @@ enum qcom_scm_qseecom_tz_cmd_info {
->  };
->  
->  #define QSEECOM_MAX_APP_NAME_SIZE		64
-> +#define SHMBRIDGE_RESULT_NOTSUPP		4
->  
->  /* Each bit configures cold/warm boot address for one of the 4 CPUs */
->  static const u8 qcom_scm_cpu_cold_bits[QCOM_SCM_BOOT_MAX_CPUS] = {
-> @@ -1361,6 +1362,8 @@ EXPORT_SYMBOL_GPL(qcom_scm_lmh_dcvsh_available);
->  
->  int qcom_scm_shm_bridge_enable(void)
->  {
-> +	int ret;
-> +
->  	struct qcom_scm_desc desc = {
->  		.svc = QCOM_SCM_SVC_MP,
->  		.cmd = QCOM_SCM_MP_SHM_BRIDGE_ENABLE,
-> @@ -1373,7 +1376,15 @@ int qcom_scm_shm_bridge_enable(void)
->  					  QCOM_SCM_MP_SHM_BRIDGE_ENABLE))
->  		return -EOPNOTSUPP;
->  
-> -	return qcom_scm_call(__scm->dev, &desc, &res) ?: res.result[0];
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (res.result[0] == SHMBRIDGE_RESULT_NOTSUPP)
-> +		return -EOPNOTSUPP;
-> +
-> +	return res.result[0];
->  }
->  EXPORT_SYMBOL_GPL(qcom_scm_shm_bridge_enable);
+Hi Elliot,
 
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+On Mon, 14 Oct 2024 at 17:53, Elliot Berman <quic_eberman@quicinc.com> wrote:
+>
+> On Thu, Oct 10, 2024 at 09:59:23AM +0100, Fuad Tabba wrote:
+> > Add support for mmap() and fault() for guest_memfd in the host.
+> > The ability to fault in a guest page is contingent on that page
+> > being shared with the host.
+> >
+> > The guest_memfd PRIVATE memory attribute is not used for two
+> > reasons. First because it reflects the userspace expectation for
+> > that memory location, and therefore can be toggled by userspace.
+> > The second is, although each guest_memfd file has a 1:1 binding
+> > with a KVM instance, the plan is to allow multiple files per
+> > inode, e.g. to allow intra-host migration to a new KVM instance,
+> > without destroying guest_memfd.
+> >
+> > The mapping is restricted to only memory explicitly shared with
+> > the host. KVM checks that the host doesn't have any mappings for
+> > private memory via the folio's refcount. To avoid races between
+> > paths that check mappability and paths that check whether the
+> > host has any mappings (via the refcount), the folio lock is held
+> > in while either check is being performed.
+> >
+> > This new feature is gated with a new configuration option,
+> > CONFIG_KVM_GMEM_MAPPABLE.
+> >
+> > Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> > Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> > Co-developed-by: Elliot Berman <quic_eberman@quicinc.com>
+> > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> > Signed-off-by: Fuad Tabba <tabba@google.com>
+> >
+> > ---
+> >
+> > Note that the functions kvm_gmem_is_mapped(),
+> > kvm_gmem_set_mappable(), and int kvm_gmem_clear_mappable() are
+> > not used in this patch series. They are intended to be used in
+> > future patches [*], which check and toggle mapability when the
+> > guest shares/unshares pages with the host.
+> >
+> > [*] https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/guestmem-6.12-v3-pkvm
+> >
+> > ---
+> >  include/linux/kvm_host.h |  52 +++++++++++
+> >  virt/kvm/Kconfig         |   4 +
+> >  virt/kvm/guest_memfd.c   | 185 +++++++++++++++++++++++++++++++++++++++
+> >  virt/kvm/kvm_main.c      | 138 +++++++++++++++++++++++++++++
+> >  4 files changed, 379 insertions(+)
+> >
+> > diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> > index acf85995b582..bda7fda9945e 100644
+> > --- a/include/linux/kvm_host.h
+> > +++ b/include/linux/kvm_host.h
+> > @@ -2527,4 +2527,56 @@ long kvm_arch_vcpu_pre_fault_memory(struct kvm_vcpu *vcpu,
+> >                                   struct kvm_pre_fault_memory *range);
+> >  #endif
+> >
+> > +#ifdef CONFIG_KVM_GMEM_MAPPABLE
+> > +bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t gfn, gfn_t end);
+> > +bool kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t end);
+> > +int kvm_gmem_set_mappable(struct kvm *kvm, gfn_t start, gfn_t end);
+> > +int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end);
+> > +int kvm_slot_gmem_set_mappable(struct kvm_memory_slot *slot, gfn_t start,
+> > +                            gfn_t end);
+> > +int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot, gfn_t start,
+> > +                              gfn_t end);
+> > +bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot, gfn_t gfn);
+> > +#else
+> > +static inline bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t gfn, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return false;
+> > +}
+> > +static inline bool kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return false;
+> > +}
+> > +static inline int kvm_gmem_set_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start,
+> > +                                       gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_slot_gmem_set_mappable(struct kvm_memory_slot *slot,
+> > +                                          gfn_t start, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot,
+> > +                                            gfn_t start, gfn_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +static inline bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot,
+> > +                                          gfn_t gfn)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return false;
+> > +}
+> > +#endif /* CONFIG_KVM_GMEM_MAPPABLE */
+> > +
+> >  #endif
+> > diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+> > index fd6a3010afa8..2cfcb0848e37 100644
+> > --- a/virt/kvm/Kconfig
+> > +++ b/virt/kvm/Kconfig
+> > @@ -120,3 +120,7 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
+> >  config HAVE_KVM_ARCH_GMEM_INVALIDATE
+> >         bool
+> >         depends on KVM_PRIVATE_MEM
+> > +
+> > +config KVM_GMEM_MAPPABLE
+> > +       select KVM_PRIVATE_MEM
+> > +       bool
+> > diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> > index f414646c475b..df3a6f05a16e 100644
+> > --- a/virt/kvm/guest_memfd.c
+> > +++ b/virt/kvm/guest_memfd.c
+> > @@ -370,7 +370,184 @@ static void kvm_gmem_init_mount(void)
+> >       kvm_gmem_mnt->mnt_flags |= MNT_NOEXEC;
+> >  }
+> >
+> > +#ifdef CONFIG_KVM_GMEM_MAPPABLE
+> > +static struct folio *
+> > +__kvm_gmem_get_pfn(struct file *file, struct kvm_memory_slot *slot,
+> > +                gfn_t gfn, kvm_pfn_t *pfn, bool *is_prepared,
+> > +                int *max_order);
+> > +
+> > +static int gmem_set_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
+> > +{
+> > +     struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+> > +     void *xval = xa_mk_value(true);
+> > +     pgoff_t i;
+> > +     bool r;
+> > +
+> > +     filemap_invalidate_lock(inode->i_mapping);
+> > +     for (i = start; i < end; i++) {
+> > +             r = xa_err(xa_store(mappable_offsets, i, xval, GFP_KERNEL));
+>
+> I think it might not be strictly necessary,
 
--Mukesh
+Sorry, but I don't quite get what isn't strictly necessary. Is it the
+checking for an error?
+
+> > +             if (r)
+> > +                     break;
+> > +     }
+> > +     filemap_invalidate_unlock(inode->i_mapping);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static int gmem_clear_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
+> > +{
+> > +     struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+> > +     pgoff_t i;
+> > +     int r = 0;
+> > +
+> > +     filemap_invalidate_lock(inode->i_mapping);
+> > +     for (i = start; i < end; i++) {
+> > +             struct folio *folio;
+> > +
+> > +             /*
+> > +              * Holds the folio lock until after checking its refcount,
+> > +              * to avoid races with paths that fault in the folio.
+> > +              */
+> > +             folio = kvm_gmem_get_folio(inode, i);
+>
+> We don't need to allocate the folio here. I think we can use
+>
+>                 folio = filemap_lock_folio(inode, i);
+>                 if (!folio || WARN_ON_ONCE(IS_ERR(folio)))
+>                         continue;
+
+Good point (it takes an inode->i_mapping though).
+
+>                 folio = filemap_lock_folio(inode->i_mapping, i);
+
+
+> > +             if (WARN_ON_ONCE(IS_ERR(folio)))
+> > +                     continue;
+> > +
+> > +             /*
+> > +              * Check that the host doesn't have any mappings on clearing
+> > +              * the mappable flag, because clearing the flag implies that the
+> > +              * memory will be unshared from the host. Therefore, to maintain
+> > +              * the invariant that the host cannot access private memory, we
+> > +              * need to check that it doesn't have any mappings to that
+> > +              * memory before making it private.
+> > +              *
+> > +              * Two references are expected because of kvm_gmem_get_folio().
+> > +              */
+> > +             if (folio_ref_count(folio) > 2)
+>
+> If we'd like to be prepared for large folios, it should be
+> folio_nr_pages(folio) + 1.
+
+Will do that.
+
+Thanks!
+/fuad
+
+
+
+> > +                     r = -EPERM;
+> > +             else
+> > +                     xa_erase(mappable_offsets, i);
+> > +
+> > +             folio_put(folio);
+> > +             folio_unlock(folio);
+> > +
+> > +             if (r)
+> > +                     break;
+> > +     }
+> > +     filemap_invalidate_unlock(inode->i_mapping);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static bool gmem_is_mappable(struct inode *inode, pgoff_t pgoff)
+> > +{
+> > +     struct xarray *mappable_offsets = &kvm_gmem_private(inode)->mappable_offsets;
+> > +     bool r;
+> > +
+> > +     filemap_invalidate_lock_shared(inode->i_mapping);
+> > +     r = xa_find(mappable_offsets, &pgoff, pgoff, XA_PRESENT);
+> > +     filemap_invalidate_unlock_shared(inode->i_mapping);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +int kvm_slot_gmem_set_mappable(struct kvm_memory_slot *slot, gfn_t start, gfn_t end)
+> > +{
+> > +     struct inode *inode = file_inode(slot->gmem.file);
+> > +     pgoff_t start_off = slot->gmem.pgoff + start - slot->base_gfn;
+> > +     pgoff_t end_off = start_off + end - start;
+> > +
+> > +     return gmem_set_mappable(inode, start_off, end_off);
+> > +}
+> > +
+> > +int kvm_slot_gmem_clear_mappable(struct kvm_memory_slot *slot, gfn_t start, gfn_t end)
+> > +{
+> > +     struct inode *inode = file_inode(slot->gmem.file);
+> > +     pgoff_t start_off = slot->gmem.pgoff + start - slot->base_gfn;
+> > +     pgoff_t end_off = start_off + end - start;
+> > +
+> > +     return gmem_clear_mappable(inode, start_off, end_off);
+> > +}
+> > +
+> > +bool kvm_slot_gmem_is_mappable(struct kvm_memory_slot *slot, gfn_t gfn)
+> > +{
+> > +     struct inode *inode = file_inode(slot->gmem.file);
+> > +     unsigned long pgoff = slot->gmem.pgoff + gfn - slot->base_gfn;
+> > +
+> > +     return gmem_is_mappable(inode, pgoff);
+> > +}
+> > +
+> > +static vm_fault_t kvm_gmem_fault(struct vm_fault *vmf)
+> > +{
+> > +     struct inode *inode = file_inode(vmf->vma->vm_file);
+> > +     struct folio *folio;
+> > +     vm_fault_t ret = VM_FAULT_LOCKED;
+> > +
+> > +     /*
+> > +      * Holds the folio lock until after checking whether it can be faulted
+> > +      * in, to avoid races with paths that change a folio's mappability.
+> > +      */
+> > +     folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> > +     if (!folio)
+> > +             return VM_FAULT_SIGBUS;
+> > +
+> > +     if (folio_test_hwpoison(folio)) {
+> > +             ret = VM_FAULT_HWPOISON;
+> > +             goto out;
+> > +     }
+> > +
+> > +     if (!gmem_is_mappable(inode, vmf->pgoff)) {
+> > +             ret = VM_FAULT_SIGBUS;
+> > +             goto out;
+> > +     }
+> > +
+> > +     if (!folio_test_uptodate(folio)) {
+> > +             unsigned long nr_pages = folio_nr_pages(folio);
+> > +             unsigned long i;
+> > +
+> > +             for (i = 0; i < nr_pages; i++)
+> > +                     clear_highpage(folio_page(folio, i));
+> > +
+> > +             folio_mark_uptodate(folio);
+> > +     }
+> > +
+> > +     vmf->page = folio_file_page(folio, vmf->pgoff);
+> > +out:
+> > +     if (ret != VM_FAULT_LOCKED) {
+> > +             folio_put(folio);
+> > +             folio_unlock(folio);
+> > +     }
+> > +
+> > +     return ret;
+> > +}
+> > +
+> > +static const struct vm_operations_struct kvm_gmem_vm_ops = {
+> > +     .fault = kvm_gmem_fault,
+> > +};
+> > +
+> > +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+> > +{
+> > +     if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+> > +         (VM_SHARED | VM_MAYSHARE)) {
+> > +             return -EINVAL;
+> > +     }
+> > +
+> > +     file_accessed(file);
+> > +     vm_flags_set(vma, VM_DONTDUMP);
+> > +     vma->vm_ops = &kvm_gmem_vm_ops;
+> > +
+> > +     return 0;
+> > +}
+> > +#else
+> > +static int gmem_set_mappable(struct inode *inode, pgoff_t start, pgoff_t end)
+> > +{
+> > +     WARN_ON_ONCE(1);
+> > +     return -EINVAL;
+> > +}
+> > +#define kvm_gmem_mmap NULL
+> > +#endif /* CONFIG_KVM_GMEM_MAPPABLE */
+> > +
+> >  static struct file_operations kvm_gmem_fops = {
+> > +     .mmap           = kvm_gmem_mmap,
+> >       .open           = generic_file_open,
+> >       .release        = kvm_gmem_release,
+> >       .fallocate      = kvm_gmem_fallocate,
+> > @@ -557,6 +734,14 @@ static int __kvm_gmem_create(struct kvm *kvm, loff_t size, u64 flags)
+> >               goto err_gmem;
+> >       }
+> >
+> > +     if (IS_ENABLED(CONFIG_KVM_GMEM_MAPPABLE)) {
+> > +             err = gmem_set_mappable(file_inode(file), 0, size >> PAGE_SHIFT);
+> > +             if (err) {
+> > +                     fput(file);
+> > +                     goto err_gmem;
+> > +             }
+> > +     }
+> > +
+> >       kvm_get_kvm(kvm);
+> >       gmem->kvm = kvm;
+> >       xa_init(&gmem->bindings);
+> > diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> > index 05cbb2548d99..aed9cf2f1685 100644
+> > --- a/virt/kvm/kvm_main.c
+> > +++ b/virt/kvm/kvm_main.c
+> > @@ -3263,6 +3263,144 @@ static int next_segment(unsigned long len, int offset)
+> >               return len;
+> >  }
+> >
+> > +#ifdef CONFIG_KVM_GMEM_MAPPABLE
+> > +static bool __kvm_gmem_is_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     struct kvm_memslot_iter iter;
+> > +
+> > +     lockdep_assert_held(&kvm->slots_lock);
+> > +
+> > +     kvm_for_each_memslot_in_gfn_range(&iter, kvm_memslots(kvm), start, end) {
+> > +             struct kvm_memory_slot *memslot = iter.slot;
+> > +             gfn_t gfn_start, gfn_end, i;
+> > +
+> > +             gfn_start = max(start, memslot->base_gfn);
+> > +             gfn_end = min(end, memslot->base_gfn + memslot->npages);
+> > +             if (WARN_ON_ONCE(gfn_start >= gfn_end))
+> > +                     continue;
+> > +
+> > +             for (i = gfn_start; i < gfn_end; i++) {
+> > +                     if (!kvm_slot_gmem_is_mappable(memslot, i))
+> > +                             return false;
+> > +             }
+> > +     }
+> > +
+> > +     return true;
+> > +}
+> > +
+> > +bool kvm_gmem_is_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     bool r;
+> > +
+> > +     mutex_lock(&kvm->slots_lock);
+> > +     r = __kvm_gmem_is_mappable(kvm, start, end);
+> > +     mutex_unlock(&kvm->slots_lock);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static bool kvm_gmem_is_pfn_mapped(struct kvm *kvm, struct kvm_memory_slot *memslot, gfn_t gfn_idx)
+> > +{
+> > +     struct page *page;
+> > +     bool is_mapped;
+> > +     kvm_pfn_t pfn;
+> > +
+> > +     /*
+> > +      * Holds the folio lock until after checking its refcount,
+> > +      * to avoid races with paths that fault in the folio.
+> > +      */
+> > +     if (WARN_ON_ONCE(kvm_gmem_get_pfn_locked(kvm, memslot, gfn_idx, &pfn, NULL)))
+> > +             return false;
+> > +
+> > +     page = pfn_to_page(pfn);
+> > +
+> > +     /* Two references are expected because of kvm_gmem_get_pfn_locked(). */
+> > +     is_mapped = page_ref_count(page) > 2;
+> > +
+> > +     put_page(page);
+> > +     unlock_page(page);
+> > +
+> > +     return is_mapped;
+> > +}
+> > +
+> > +static bool __kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     struct kvm_memslot_iter iter;
+> > +
+> > +     lockdep_assert_held(&kvm->slots_lock);
+> > +
+> > +     kvm_for_each_memslot_in_gfn_range(&iter, kvm_memslots(kvm), start, end) {
+> > +             struct kvm_memory_slot *memslot = iter.slot;
+> > +             gfn_t gfn_start, gfn_end, i;
+> > +
+> > +             gfn_start = max(start, memslot->base_gfn);
+> > +             gfn_end = min(end, memslot->base_gfn + memslot->npages);
+> > +             if (WARN_ON_ONCE(gfn_start >= gfn_end))
+> > +                     continue;
+> > +
+> > +             for (i = gfn_start; i < gfn_end; i++) {
+> > +                     if (kvm_gmem_is_pfn_mapped(kvm, memslot, i))
+> > +                             return true;
+> > +             }
+> > +     }
+> > +
+> > +     return false;
+> > +}
+> > +
+> > +bool kvm_gmem_is_mapped(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     bool r;
+> > +
+> > +     mutex_lock(&kvm->slots_lock);
+> > +     r = __kvm_gmem_is_mapped(kvm, start, end);
+> > +     mutex_unlock(&kvm->slots_lock);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +static int kvm_gmem_toggle_mappable(struct kvm *kvm, gfn_t start, gfn_t end,
+> > +                                 bool is_mappable)
+> > +{
+> > +     struct kvm_memslot_iter iter;
+> > +     int r = 0;
+> > +
+> > +     mutex_lock(&kvm->slots_lock);
+> > +
+> > +     kvm_for_each_memslot_in_gfn_range(&iter, kvm_memslots(kvm), start, end) {
+> > +             struct kvm_memory_slot *memslot = iter.slot;
+> > +             gfn_t gfn_start, gfn_end;
+> > +
+> > +             gfn_start = max(start, memslot->base_gfn);
+> > +             gfn_end = min(end, memslot->base_gfn + memslot->npages);
+> > +             if (WARN_ON_ONCE(start >= end))
+> > +                     continue;
+> > +
+> > +             if (is_mappable)
+> > +                     r = kvm_slot_gmem_set_mappable(memslot, gfn_start, gfn_end);
+> > +             else
+> > +                     r = kvm_slot_gmem_clear_mappable(memslot, gfn_start, gfn_end);
+> > +
+> > +             if (WARN_ON_ONCE(r))
+> > +                     break;
+> > +     }
+> > +
+> > +     mutex_unlock(&kvm->slots_lock);
+> > +
+> > +     return r;
+> > +}
+> > +
+> > +int kvm_gmem_set_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     return kvm_gmem_toggle_mappable(kvm, start, end, true);
+> > +}
+> > +
+> > +int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+> > +{
+> > +     return kvm_gmem_toggle_mappable(kvm, start, end, false);
+> > +}
+> > +
+> > +#endif /* CONFIG_KVM_GMEM_MAPPABLE */
+> > +
+> >  /* Copy @len bytes from guest memory at '(@gfn * PAGE_SIZE) + @offset' to @data */
+> >  static int __kvm_read_guest_page(struct kvm_memory_slot *slot, gfn_t gfn,
+> >                                void *data, int offset, int len)
+> > --
+> > 2.47.0.rc0.187.ge670bccf7e-goog
+> >
 
