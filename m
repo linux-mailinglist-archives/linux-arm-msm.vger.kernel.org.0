@@ -1,168 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-34446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D4C699EDA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 15:33:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42B4D99EDAF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 15:33:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F22CEB20F8D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:33:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73C111C21CEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:33:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C59DB1386D1;
-	Tue, 15 Oct 2024 13:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88DC01B2186;
+	Tue, 15 Oct 2024 13:33:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qY1mh+1L"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XD8NOGWH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E6E112F5B1;
-	Tue, 15 Oct 2024 13:33:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6AC149E16
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 13:33:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728999186; cv=none; b=m7tcyYcw5PwuYDvK9BLxfCKP0KHGzA9XbjMJAe3mEv1bHIFYARhkfjNQ1oatjoJkGd+Qnshzvey3utLrRGnbAY6n5tgCajsbjxx7OBbSjtJvuX/vgyl2iZcnZnyzRhqqONRhJD+lhd9QN1ZS6QTHz9L198QZI/1ycGRVVGhZXeg=
+	t=1728999199; cv=none; b=RSibp3+cqOo0MEF18LzUSvP5braSXrkq0QVL/WhlGXiqKX3ndzEGGkgW27+sO1ZQ00oeju7HOyhLd3IxgzX+gcPHsRgpOAvmQDtW//a216UDonQuu1sXaSa8/VH4UFIT38gh+8wCkxF6gKzP6H9z5S0CisOp76/bogtQt9L/cj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728999186; c=relaxed/simple;
-	bh=GHyPHJVzyZd8ZM4LZypRlrrgBnlS1b8lfXtOUdWOHeA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c46VjWKQhoBLESSz62/majyrfJPxdwt5X0xgoLuzGLrziVb+Fp0CCeo3WxLBisf/SF0Al1vUpg9DsFphH0Gj6/qcjBUCQ3IjNzJ+aW1VWWO9CRaQlt00hRp/f4bA+yISk9//LnRcEI7xmtAXdcBreVayEP6XcbFaVeYG47YnFl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qY1mh+1L; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6B8C4CEC6;
-	Tue, 15 Oct 2024 13:33:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728999186;
-	bh=GHyPHJVzyZd8ZM4LZypRlrrgBnlS1b8lfXtOUdWOHeA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=qY1mh+1L9ZCh74km29cUBEJ231pdgihcWdxTU5NGSvUp0T+6/XxeRnlz223xhAuH2
-	 0vVZsMVhoUu++wVwPVjSd22kCSuzOE/g8Ql0AbMl9tU+ATAr+ykZZ9oR4nN4GFl5ev
-	 fw6HvQesa+fuyRUukrOtD58c2FWU3U7P0X/FRRXPnDBIJEEdnMUWwvoAi6GbDaWwIW
-	 pkCIw2r4aq579Qry7JbiEBXZ+qyg60W2qDvcM3/SQLs8dQ7iQJqxa/cmKKQEhiqy7c
-	 kKDRcWgBgxRii0Mz6gmcftFKjQLAh+5Tfl5+jT4bBJnrdh+yv014QfpMU8qsVx7BNo
-	 sunx9TQjaYRsw==
-Message-ID: <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
-Date: Tue, 15 Oct 2024 15:33:00 +0200
+	s=arc-20240116; t=1728999199; c=relaxed/simple;
+	bh=fqVIDi6e3Pi70KY1AuVHU+nl+Y7/64vheBPcEyNObZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uRxaks5iOvy4OvgC1VAwOAcqLRchEKiMs/Nbk9ABxbOmm66cUVqO09BKpeknVAcFP0b457M4CYobh1Q/1ZZXifvYAqJM4y7/RT882gEHXY+rhuW3OV9TFexp7q6G8HEX89DnIhnV9qTKex09v+8910WVA3VI6+0huBEkya64+L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XD8NOGWH; arc=none smtp.client-ip=209.85.208.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2fb518014b9so15337061fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 06:33:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728999195; x=1729603995; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8dvw0BVQzEB9X8CFHtRp0QZ8vrqFpv2fHeUKrcBo1TY=;
+        b=XD8NOGWHBjy/qQf+WZlvVRCf3a45wfNnoPpMRd5UO1g8d2XTQXD6gpu8evwuUG9cDM
+         O6l1RVL2pARf1Zq4OlG2adJIwwkI9TNqbKNj+DbiqztqaXras/W3MZEPgbyHt87wQcih
+         qwHMNGMpfxeC2aTfpaXkAWzAr/0IP5yCe595m7KD2ZiCpaMeu8ZjKpyFjJvjbG5BC2fy
+         AOLvWgnMSFAHuotYsnFEKSm+igex/4Z2xNPWRS7vdgEhOurkLetgmsGxX7S2Fqdk32cx
+         GGRzwnTICUq7+80QV68q4o/iKQwvCNaj0mXssLZrbpPcDxBPTpXqPYa0GwPv6SKkWx9T
+         JEAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728999195; x=1729603995;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8dvw0BVQzEB9X8CFHtRp0QZ8vrqFpv2fHeUKrcBo1TY=;
+        b=o5KkTYYoIR3eZoAGnOTe8IC/3I+cdIDzPXOQNyRtmNddrKXVGGcdyXySl9IR7vQRTE
+         8joykD91MkP3RDX9cRTDAnh9PAxOKi2XEtdaHyUc8I0gNPq9QYVwFSIFBfjWPkoAv94Z
+         aM2Omwj9LL6pKAtCNmqzT6blcm1t16KyLgC3tgVKa52Ht00jbhuOz/i9SmU5rFzZXOBR
+         8qOgUHnOTEM1Tr3Pv1mO74tv4rw5qQ4hA9uMCVEurUZ8Xw1VmKH+INL1F9RGvysnqUD7
+         MMNj/V1PKmdmaj6uJOJe/x4cNL5focB5vP1PrpZPgiL4fp6w+4jYXA596OtZBU5AChsX
+         mdWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVRDUVfBFDssHIq+SmTlVJSKgoPJ4C/NN2hA+O5m1l45VmDUJPC/Wi0Zk/dzfaIrNe1eIXlBsyEjTB9JY/0@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjL4GU/lAYfJvspNPLw4aUqTLzsYpMqeeJQdbJq10/Y3ZL6Pz8
+	haLXp2JQl639BF0naOE9oKlHsHtn5xyxu7Dh7xFHKVL08uHQ0K25JT38bycJyJY=
+X-Google-Smtp-Source: AGHT+IFK/Bdt+DSfI3J7VfTsOap19LZdteNeX/8IXzgcY2WkwjwnNPkEkYbIBoLD/sv9TK8hsUwKnA==
+X-Received: by 2002:a2e:d01:0:b0:2fb:45cf:5eef with SMTP id 38308e7fff4ca-2fb61bacbf3mr2872721fa.30.1728999194974;
+        Tue, 15 Oct 2024 06:33:14 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb6288f34csm55761fa.126.2024.10.15.06.33.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 06:33:14 -0700 (PDT)
+Date: Tue, 15 Oct 2024 16:33:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Rakesh Kota <quic_kotarake@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, quic_kamalw@quicinc.com, 
+	quic_jprakash@quicinc.com
+Subject: Re: [PATCH V2] arm64: dts: qcom: qcm6490-idp: Allow UFS regulators
+ load/mode setting
+Message-ID: <fqznmc3airujuxyepg6mv3wbwissvd7xdirr3elrhvwis7qnuw@n2m4e4lrnvvi>
+References: <20241015132049.2037500-1-quic_kotarake@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/5] arm64: dts: qcom: Add support for configuring
- channel TRE size
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
- Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc: cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
- dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linaro-mm-sig@lists.linaro.org, quic_msavaliy@quicinc.com,
- quic_vtanuku@quicinc.com
-References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
- <20241015120750.21217-3-quic_jseerapu@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241015120750.21217-3-quic_jseerapu@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241015132049.2037500-1-quic_kotarake@quicinc.com>
 
-On 15/10/2024 14:07, Jyothi Kumar Seerapu wrote:
-> When high performance with multiple i2c messages in a single transfer
-> is required, employ Block Event Interrupt (BEI) to trigger interrupts
-> after specific messages transfer and the last message transfer,
-> thereby reducing interrupts.
-> For each i2c message transfer, a series of Transfer Request Elements(TREs)
-> must be programmed, including config tre for frequency configuration,
-> go tre for holding i2c address and dma tre for holding dma buffer address,
-> length as per the hardware programming guide. For transfer using BEI,
-> multiple I2C messages may necessitate the preparation of config, go,
-> and tx DMA TREs. However, a channel TRE size of 64 is often insufficient,
-> potentially leading to failures due to inadequate memory space.
+On Tue, Oct 15, 2024 at 06:50:49PM +0530, Rakesh Kota wrote:
+> The UFS driver expects to be able to set load (and by extension, mode)
+> on its supply regulators. Add the necessary properties to make that
+> possible.
 > 
-> Adjust the channel TRE size through the device tree.
-> The default size is 64, but clients can modify this value based on
-> their heigher channel TRE size requirements.
-> 
-> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 132 +++++++++++++--------------
->  1 file changed, 66 insertions(+), 66 deletions(-)
+> Changes V2:
+>  - Dropped the removing Min and Max Voltage change as suggusted by the Dmitry
+>  - Link to v1: https://lore.kernel.org/all/20241004080110.4150476-1-quic_kotarake@quicinc.com
+> --- 
+>  arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 3d8410683402..c7c0e15ff9d3 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -1064,7 +1064,7 @@
->  		};
->  
->  		gpi_dma0: dma-controller@900000 {
-> -			#dma-cells = <3>;
-> +			#dma-cells = <4>;
->  			compatible = "qcom,sc7280-gpi-dma", "qcom,sm6350-gpi-dma";
->  			reg = <0 0x00900000 0 0x60000>;
->  			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-> @@ -1114,8 +1114,8 @@
->  							"qup-memory";
->  				power-domains = <&rpmhpd SC7280_CX>;
->  				required-opps = <&rpmhpd_opp_low_svs>;
-> -				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
-> -				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
-> +				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C 64>,
-> +				       <&gpi_dma0 1 0 QCOM_GPI_I2C 64>;
 
-So everywhere is 64, thus this is fixed. Deduce it from the compatible
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Best regards,
-Krzysztof
-
+-- 
+With best wishes
+Dmitry
 
