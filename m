@@ -1,284 +1,727 @@
-Return-Path: <linux-arm-msm+bounces-34490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0462D99F594
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 20:34:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B65D399F5AD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 20:36:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B7A622828D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 18:34:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D5E151C26F55
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 18:36:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A995420263B;
-	Tue, 15 Oct 2024 18:29:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C1D11FBF4B;
+	Tue, 15 Oct 2024 18:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZN93WkGo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="aUIUrsHt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0323C202635;
-	Tue, 15 Oct 2024 18:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192871F81B6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 18:34:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729016944; cv=none; b=LKM5Vqb3LHPQYhiyZhTAOHZLyxRrJARFRXPUiuTwLI9zeaZVEifOGkLSLeg4vp/TaxvlXSGwe0CdtOhE/iM9nptwIdbo/h0z7N9HJUsNd1lsjrbxD63I+RlK1xAXYEkdMQZRq/XoRD+TrYW+iY9XQLH674XWVuzV3BYk6zS/aTo=
+	t=1729017279; cv=none; b=hCFHNfPadUZDNW8JUyL03NnnaPfQXIZ6qp+mK0gwhupSEA2BNsz1HTMDWqYnx62HpLhc6HyPAKzGkvS3RBeoLJmS51yjRxGdUurPQYUC5x72OxY7CjE0mGjKfbDapZ7S1mCpTIR1paA+1SqXYGclyyzuReSwlGtn1z3Kz0Znq6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729016944; c=relaxed/simple;
-	bh=tALa2Xl/6YpNhtreGEaBlCojmfql/HqZC9jEO7NqOmQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bbxJarKdJ/3UY5qP+ke+CK+39qOHfOlFw1VXKlP/XBAx1NEAKrBsCfUTyJaiGvL/Rex3mRzwK7y0L90YDDSDpfPiv8z5uZDc6kxpKh7wzjynf2TQ81Eb+nPGE90Ju2TzrRq15xESNeCqDMuQkxMJbr6sw/1mWhZs6rndYB8hQTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZN93WkGo; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1729017279; c=relaxed/simple;
+	bh=3RkNbGeYPKB/rXYUfGPP0h6owQ10nS4h3LAvRujSLmo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=HuL14Bpgvnt08KX4n1/U3jm0RJlTlvhmNzrM/B14aZF6MjGHdCH+GDzNc8HoAA8lc2TIBElhfrrt+jVGVeGpCzSFoVU1NZbP/I1croN1CVDV6lf/b3k3kLnneM8jEERd08E2pQ51anvM8MnGAACHMetTK1CqHPCAmUEcEz7CEEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=aUIUrsHt; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FB6fTe024391;
-	Tue, 15 Oct 2024 18:28:59 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FC58rC023365;
+	Tue, 15 Oct 2024 18:34:32 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uh7in1cEQi+MiTKT+tIWP9LVgtorvwkBZ+/qPYRB9zQ=; b=ZN93WkGoSiHwIlcT
-	n2S6GbDBeE/hi/9UbVvtNV68j8x2aytnYlrAaWg+tigPo4z7M98FVCDgzkfOMBww
-	ViICAZ9rjEznAMbTMm/JciPVFY6dM8xJVNeR79ApyxlCsDic8cbSYzJ25hkTn2jr
-	vMCmP/TWBfsclkdo1dxZ3zXX5I2q4oTEkLWp5YqsVNSoFzNq4UFoi1AeiJVcVKdO
-	2A0mdgIDWRc1nqXuRXrKg0jyQX8WaK6VKqekGun3nFColRg6rWfsEl2oPHXdUih1
-	RyUP91TBb1SGVmQivyDAvaFbNL6IZuYMsWp4xumpSTULZ8lxq2OWT/zvneXw6bwF
-	n+7KNg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 427jd90k1u-1
+	diZZFMVv3CegU42C/hEzG/dADwVlX5qhBMSPDgpnP04=; b=aUIUrsHtTKqLOUj5
+	pWMgeXR4BnyC/DEMqzEU24qxFehGy+nue3GPsvgOc6LwG4VJOlfIjsD8PE5jKryk
+	Q0bqKyygwy67pGGt9+MyWEpJj/Loe8HmWnCYfvLsJmYv+MRGecb+AlpfuMEJwbdD
+	JYMNQh4MACCmPMjWQ1+5rlI3hcR0U6Bx7P3omu3Vzq/yz0PbxdF6GHJpzYP9fG85
+	0sJbq4clZUGzD21YcBEgd4/uFsf9bi0IyH+mcUSq6V0qfROLog9Deive//kzEbe8
+	OeFGxjvA/o3BOemNu87zzBWyEO96EDc+eiNO8offiRanJckMLHXJxn4gvcKQdTS0
+	Yk2QvQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429r3b96wc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 18:28:59 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49FISwBK009224
+	Tue, 15 Oct 2024 18:34:32 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49FIYVeA026415
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 18:28:58 GMT
-Received: from hu-rajkbhag-blr.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 15 Oct 2024 11:28:53 -0700
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-To: <ath12k@lists.infradead.org>
-CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
-        "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Balamurugan S <quic_bselvara@quicinc.com>,
-        "P Praneesh" <quic_ppranees@quicinc.com>,
-        Raj Kumar Bhagat
-	<quic_rajkbhag@quicinc.com>
-Subject: [PATCH v2 22/22] wifi: ath12k: enable ath12k AHB support
-Date: Tue, 15 Oct 2024 23:56:37 +0530
-Message-ID: <20241015182637.955753-23-quic_rajkbhag@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
+	Tue, 15 Oct 2024 18:34:31 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 15 Oct
+ 2024 11:34:30 -0700
+Message-ID: <6a2fe39b-eb7a-4b6d-9ce3-20685663cffd@quicinc.com>
+Date: Tue, 15 Oct 2024 12:34:29 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: Add crashdump to Sahara
+Content-Language: en-US
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+CC: <andersson@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+        <quic_carlv@quicinc.com>, <ogabbay@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <20240918155254.3186031-1-quic_jhugo@quicinc.com>
+ <Zw2SjWn43zeFjBtR@hu-bjorande-lv.qualcomm.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <Zw2SjWn43zeFjBtR@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: klYlI7e7TqV5yjkepF-awb3UG5Rye5Hi
-X-Proofpoint-ORIG-GUID: klYlI7e7TqV5yjkepF-awb3UG5Rye5Hi
+X-Proofpoint-ORIG-GUID: AGFX36uaJ8pHoMYQLnWiuQzreRipLC7n
+X-Proofpoint-GUID: AGFX36uaJ8pHoMYQLnWiuQzreRipLC7n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0 bulkscore=0
- mlxscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410150125
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
+ priorityscore=1501 clxscore=1015 adultscore=0 lowpriorityscore=0
+ mlxlogscore=999 phishscore=0 malwarescore=0 suspectscore=0 spamscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410150126
 
-From: Balamurugan S <quic_bselvara@quicinc.com>
+On 10/14/2024 3:52 PM, Bjorn Andersson wrote:
+> On Wed, Sep 18, 2024 at 09:52:54AM -0600, Jeffrey Hugo wrote:
+>> The Sahara protocol has a crashdump functionality. In the hello
+>> exchange, the device can advertise it has a memory dump available for
+>> the host to collect. Instead of the device making requests of the host,
+>> the host requests data from the device which can be later analyzed.
+>>
+>> Implement this functionality and utilize the devcoredump framework for
+>> handing the dump over to userspace.
+>>
+>> Similar to how firmware loading in Sahara involves multiple files,
+>> crashdump can consist of multiple files for different parts of the dump.
+>> Structure these into a single buffer that userspace can parse and
+>> extract the original files from.
+>>
+> 
+> Looks good. No technical concerns but a few stylistic comments below.
+> 
+>> Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+>> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>> ---
+>>   drivers/accel/qaic/sahara.c | 394 +++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 387 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
+>> index bf94bbab6be5..ed792b615ea2 100644
+>> --- a/drivers/accel/qaic/sahara.c
+>> +++ b/drivers/accel/qaic/sahara.c
+>> @@ -2,6 +2,7 @@
+>>   
+>>   /* Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved. */
+>>   
+>> +#include <linux/devcoredump.h>
+>>   #include <linux/firmware.h>
+>>   #include <linux/limits.h>
+>>   #include <linux/mhi.h>
+>> @@ -9,6 +10,7 @@
+>>   #include <linux/mod_devicetable.h>
+>>   #include <linux/overflow.h>
+>>   #include <linux/types.h>
+>> +#include <linux/vmalloc.h>
+>>   #include <linux/workqueue.h>
+>>   
+>>   #include "sahara.h"
+>> @@ -36,12 +38,14 @@
+>>   
+>>   #define SAHARA_PACKET_MAX_SIZE		0xffffU /* MHI_MAX_MTU */
+>>   #define SAHARA_TRANSFER_MAX_SIZE	0x80000
+>> +#define SAHARA_READ_MAX_SIZE		0xfff0U /* Avoid unaligned requests */
+>>   #define SAHARA_NUM_TX_BUF		DIV_ROUND_UP(SAHARA_TRANSFER_MAX_SIZE,\
+>>   							SAHARA_PACKET_MAX_SIZE)
+>>   #define SAHARA_IMAGE_ID_NONE		U32_MAX
+>>   
+>>   #define SAHARA_VERSION			2
+>>   #define SAHARA_SUCCESS			0
+>> +#define SAHARA_TABLE_ENTRY_STR_LEN	20
+>>   
+>>   #define SAHARA_MODE_IMAGE_TX_PENDING	0x0
+>>   #define SAHARA_MODE_IMAGE_TX_COMPLETE	0x1
+>> @@ -53,6 +57,8 @@
+>>   #define SAHARA_END_OF_IMAGE_LENGTH	0x10
+>>   #define SAHARA_DONE_LENGTH		0x8
+>>   #define SAHARA_RESET_LENGTH		0x8
+>> +#define SAHARA_MEM_DEBUG64_LENGTH	0x18
+>> +#define SAHARA_MEM_READ64_LENGTH	0x18
+>>   
+>>   struct sahara_packet {
+>>   	__le32 cmd;
+>> @@ -80,18 +86,95 @@ struct sahara_packet {
+>>   			__le32 image;
+>>   			__le32 status;
+>>   		} end_of_image;
+>> +		struct {
+>> +			__le64 table_address;
+>> +			__le64 table_length;
+>> +		} memory_debug64;
+>> +		struct {
+>> +			__le64 memory_address;
+>> +			__le64 memory_length;
+>> +		} memory_read64;
+>>   	};
+>>   };
+>>   
+>> +struct sahara_debug_table_entry64 {
+>> +	__le64	type;
+>> +	__le64	address;
+>> +	__le64	length;
+>> +	char	description[SAHARA_TABLE_ENTRY_STR_LEN];
+>> +	char	filename[SAHARA_TABLE_ENTRY_STR_LEN];
+>> +};
+>> +
+>> +struct sahara_dump_table_entry {
+>> +	u64	type;
+>> +	u64	address;
+>> +	u64	length;
+>> +	char	description[SAHARA_TABLE_ENTRY_STR_LEN];
+>> +	char	filename[SAHARA_TABLE_ENTRY_STR_LEN];
+>> +};
+>> +
+>> +#define SAHARA_DUMP_V1_MAGIC 0x1234567890abcdef
+>> +#define SAHARA_DUMP_V1_VER   1
+>> +struct sahara_memory_dump_meta_v1 {
+>> +	u64	magic;
+>> +	u64	version;
+>> +	u64	dump_size;
+>> +	u64	table_size;
+>> +};
+>> +
+>> +/*
+>> + * Layout of crashdump
+> 
+> Please clarify that this is the structure of the dump you expose to the
+> user, not what comes out of the device.
 
-Currently only PCI devices is supported in Ath12k driver. Refactor
-Ath12k module_init and module_exit to include Ath12k AHB support.
+Will do.
 
-Add Ath12k AHB support in Kconfig with dependency on Remoteproc
-driver. Ath12k AHB support relies on remoteproc driver for firmware
-download, power up/down etc.
+>> + *              +------------------------------------------+
+>> + *              |         Crashdump Meta structure         |
+>> + *              | type: struct sahara_memory_dump_meta_v1  |
+>> + *              +------------------------------------------+
+>> + *              |             Crashdump Table              |
+>> + *              | type: array of struct                    |
+>> + *              |       sahara_dump_table_entry            |
+>> + *              |                                          |
+>> + *              |                                          |
+>> + *              +------------------------------------------+
+>> + *              |                Crashdump                 |
+>> + *              |                                          |
+>> + *              |                                          |
+>> + *              |                                          |
+>> + *              |                                          |
+>> + *              |                                          |
+>> + *              +------------------------------------------+
+>> + *
+>> + * First is the metadata header. Userspace can use the magic number to verify
+>> + * the content type, and then check the version for the rest of the format.
+>> + * New versions should keep the magic number location/value, and version
+>> + * location, but increment the version value.
+>> + *
+>> + * For v1, the metadata lists the size of the entire dump (header + table +
+>> + * dump) and the size of the table. Then the dump image table, which describes
+>> + * the contents of the dump. Finally all the images are listed in order, with
+>> + * no deadspace in between. Userspace can use the sizes listed in the image
+>> + * table to reconstruct the individual images.
+>> + */
+>> +
+>>   struct sahara_context {
+>>   	struct sahara_packet		*tx[SAHARA_NUM_TX_BUF];
+>>   	struct sahara_packet		*rx;
+>> -	struct work_struct		work;
+>> +	struct work_struct		fw_work;
+>> +	struct work_struct		dump_work;
+>>   	struct mhi_device		*mhi_dev;
+>>   	const char			**image_table;
+>>   	u32				table_size;
+>>   	u32				active_image_id;
+>>   	const struct firmware		*firmware;
+>> +	u64				dump_table_address;
+>> +	u64				dump_table_length;
+>> +	size_t				rx_size;
+>> +	size_t				rx_size_requested;
+>> +	void				*mem_dump;
+>> +	size_t				mem_dump_sz;
+>> +	struct sahara_dump_table_entry	*dump_image;
+>> +	u64				dump_image_offset;
+>> +	void				*mem_dump_freespace;
+>> +	u64				dump_images_left;
+> 
+> That's a lot of images; and it's just a natural number. How about
+> "unsigned int" instead to convey that the size "doesn't matter"?
 
-Tested-on: IPQ5332 hw1.0 AHB WLAN.WBE.1.3.1-00130-QCAHKSWPL_SILICONZ-1
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00210-QCAHKSWPL_SILICONZ-1
+Hmm, this is derived from a 64-bit value that comes from the device.  If 
+we downgrade this to uint (32-bit) we'd need to do some overflow 
+checking.  Having a matched type and not worrying about the conversion 
+makes me feel better.
 
-Signed-off-by: Balamurugan S <quic_bselvara@quicinc.com>
-Co-developed-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
-Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
----
- drivers/net/wireless/ath/ath12k/Kconfig  |  6 ++++
- drivers/net/wireless/ath/ath12k/Makefile |  1 +
- drivers/net/wireless/ath/ath12k/ahb.h    | 12 ++++++++
- drivers/net/wireless/ath/ath12k/core.c   | 35 ++++++++++++++++++++++--
- drivers/net/wireless/ath/ath12k/pci.c    | 12 ++------
- drivers/net/wireless/ath/ath12k/pci.h    |  2 ++
- 6 files changed, 56 insertions(+), 12 deletions(-)
+You still prefer uint?
 
-diff --git a/drivers/net/wireless/ath/ath12k/Kconfig b/drivers/net/wireless/ath/ath12k/Kconfig
-index f64e7c322216..58837a6dec9a 100644
---- a/drivers/net/wireless/ath/ath12k/Kconfig
-+++ b/drivers/net/wireless/ath/ath12k/Kconfig
-@@ -15,6 +15,12 @@ config ATH12K
- 
- 	  If you choose to build a module, it'll be called ath12k.
- 
-+config ATH12K_AHB
-+	bool "QTI ath12k AHB support"
-+	depends on ATH12K && REMOTEPROC && QCOM_Q6V5_WCSS_SEC
-+	help
-+	  Enable support for Ath12k AHB bus chipsets, example IPQ5332.
-+
- config ATH12K_DEBUG
- 	bool "ath12k debugging"
- 	depends on ATH12K
-diff --git a/drivers/net/wireless/ath/ath12k/Makefile b/drivers/net/wireless/ath/ath12k/Makefile
-index 5a1ed20d730e..4b7b9404d0c6 100644
---- a/drivers/net/wireless/ath/ath12k/Makefile
-+++ b/drivers/net/wireless/ath/ath12k/Makefile
-@@ -23,6 +23,7 @@ ath12k-y += core.o \
- 	    fw.o \
- 	    p2p.o
- 
-+ath12k-$(CONFIG_ATH12K_AHB) += ahb.o
- ath12k-$(CONFIG_ATH12K_DEBUGFS) += debugfs.o debugfs_htt_stats.o
- ath12k-$(CONFIG_ACPI) += acpi.o
- ath12k-$(CONFIG_ATH12K_TRACING) += trace.o
-diff --git a/drivers/net/wireless/ath/ath12k/ahb.h b/drivers/net/wireless/ath/ath12k/ahb.h
-index 0dbbbfd45eab..fc21211c01dd 100644
---- a/drivers/net/wireless/ath/ath12k/ahb.h
-+++ b/drivers/net/wireless/ath/ath12k/ahb.h
-@@ -65,4 +65,16 @@ static inline struct ath12k_ahb *ath12k_ab_to_ahb(struct ath12k_base *ab)
- 	return (struct ath12k_ahb *)ab->drv_priv;
- }
- 
-+#ifdef CONFIG_ATH12K_AHB
-+int ath12k_ahb_init(void);
-+void ath12k_ahb_exit(void);
-+#else
-+static inline int ath12k_ahb_init(void)
-+{
-+	return 0;
-+}
-+
-+static inline void ath12k_ahb_exit(void) {};
-+#endif
-+
- #endif
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 9cd485ed42ab..97450726b59d 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -9,15 +9,18 @@
- #include <linux/remoteproc.h>
- #include <linux/firmware.h>
- #include <linux/of.h>
-+#include "ahb.h"
- #include "core.h"
- #include "dp_tx.h"
- #include "dp_rx.h"
- #include "debug.h"
--#include "hif.h"
--#include "fw.h"
- #include "debugfs.h"
-+#include "fw.h"
-+#include "hif.h"
-+#include "pci.h"
- #include "wow.h"
- 
-+static int ahb_err, pci_err;
- unsigned int ath12k_debug_mask;
- module_param_named(debug_mask, ath12k_debug_mask, uint, 0644);
- MODULE_PARM_DESC(debug_mask, "Debugging mask");
-@@ -1341,5 +1344,31 @@ struct ath12k_base *ath12k_core_alloc(struct device *dev, size_t priv_size,
- 	return NULL;
- }
- 
--MODULE_DESCRIPTION("Core module for Qualcomm Atheros 802.11be wireless LAN cards.");
-+static int ath12k_init(void)
-+{
-+	ahb_err = ath12k_ahb_init();
-+	if (ahb_err)
-+		pr_warn("Failed to initialize ath12k AHB device: %d\n", ahb_err);
-+
-+	pci_err = ath12k_pci_init();
-+	if (pci_err)
-+		pr_warn("Failed to initialize ath12k PCI device: %d\n", pci_err);
-+
-+	/* If both failed, return one of the failures (arbitrary) */
-+	return ahb_err && pci_err ? ahb_err : 0;
-+}
-+
-+static void ath12k_exit(void)
-+{
-+	if (!pci_err)
-+		ath12k_pci_exit();
-+
-+	if (!ahb_err)
-+		ath12k_ahb_exit();
-+}
-+
-+module_init(ath12k_init)
-+module_exit(ath12k_exit)
-+
-+MODULE_DESCRIPTION("Driver support for Qualcomm Technologies 802.11be WLAN devices");
- MODULE_LICENSE("Dual BSD/GPL");
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index 9a50d813e9b4..f4a868c2275e 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -1627,7 +1627,7 @@ static struct pci_driver ath12k_pci_driver = {
- 	.driver.pm = &ath12k_pci_pm_ops,
- };
- 
--static int ath12k_pci_init(void)
-+int ath12k_pci_init(void)
- {
- 	int ret;
- 
-@@ -1638,16 +1638,10 @@ static int ath12k_pci_init(void)
- 		return ret;
- 	}
- 
--	return 0;
-+	return ret;
- }
--module_init(ath12k_pci_init);
- 
--static void ath12k_pci_exit(void)
-+void ath12k_pci_exit(void)
- {
- 	pci_unregister_driver(&ath12k_pci_driver);
- }
--
--module_exit(ath12k_pci_exit);
--
--MODULE_DESCRIPTION("Driver support for Qualcomm Technologies PCIe 802.11be WLAN devices");
--MODULE_LICENSE("Dual BSD/GPL");
-diff --git a/drivers/net/wireless/ath/ath12k/pci.h b/drivers/net/wireless/ath/ath12k/pci.h
-index 31584a7ad80e..18648ca11dfc 100644
---- a/drivers/net/wireless/ath/ath12k/pci.h
-+++ b/drivers/net/wireless/ath/ath12k/pci.h
-@@ -145,4 +145,6 @@ void ath12k_pci_stop(struct ath12k_base *ab);
- int ath12k_pci_start(struct ath12k_base *ab);
- int ath12k_pci_power_up(struct ath12k_base *ab);
- void ath12k_pci_power_down(struct ath12k_base *ab, bool is_suspend);
-+int ath12k_pci_init(void);
-+void ath12k_pci_exit(void);
- #endif /* ATH12K_PCI_H */
--- 
-2.34.1
+> 
+>> +	bool				is_mem_dump_mode;
+>>   };
+>>   
+>>   static const char *aic100_image_table[] = {
+>> @@ -153,6 +236,8 @@ static void sahara_send_reset(struct sahara_context *context)
+>>   {
+>>   	int ret;
+>>   
+>> +	context->is_mem_dump_mode = false;
+>> +
+>>   	context->tx[0]->cmd = cpu_to_le32(SAHARA_RESET_CMD);
+>>   	context->tx[0]->length = cpu_to_le32(SAHARA_RESET_LENGTH);
+>>   
+>> @@ -186,7 +271,8 @@ static void sahara_hello(struct sahara_context *context)
+>>   	}
+>>   
+>>   	if (le32_to_cpu(context->rx->hello.mode) != SAHARA_MODE_IMAGE_TX_PENDING &&
+>> -	    le32_to_cpu(context->rx->hello.mode) != SAHARA_MODE_IMAGE_TX_COMPLETE) {
+>> +	    le32_to_cpu(context->rx->hello.mode) != SAHARA_MODE_IMAGE_TX_COMPLETE &&
+>> +	    le32_to_cpu(context->rx->hello.mode) != SAHARA_MODE_MEMORY_DEBUG) {
+>>   		dev_err(&context->mhi_dev->dev, "Unsupported hello packet - mode %d\n",
+>>   			le32_to_cpu(context->rx->hello.mode));
+>>   		return;
+>> @@ -320,9 +406,70 @@ static void sahara_end_of_image(struct sahara_context *context)
+>>   		dev_dbg(&context->mhi_dev->dev, "Unable to send done response %d\n", ret);
+>>   }
+>>   
+>> +static void sahara_memory_debug64(struct sahara_context *context)
+>> +{
+>> +	int ret;
+>> +
+>> +	dev_dbg(&context->mhi_dev->dev,
+>> +		"MEMORY DEBUG64 cmd received. length:%d table_address:%#llx table_length:%#llx\n",
+>> +		le32_to_cpu(context->rx->length),
+>> +		le64_to_cpu(context->rx->memory_debug64.table_address),
+>> +		le64_to_cpu(context->rx->memory_debug64.table_length));
+>> +
+>> +	if (le32_to_cpu(context->rx->length) != SAHARA_MEM_DEBUG64_LENGTH) {
+>> +		dev_err(&context->mhi_dev->dev, "Malformed memory debug64 packet - length %d\n",
+>> +			le32_to_cpu(context->rx->length));
+> 
+> Any particular reason why you choose not to attempt a reset in these two
+> error cases?
+
+Undefined behavior.  The spec doesn't address this condition - I guess 
+the assumption is that the device provides valid values.
+
+The spec places limits on reset -
+"The host sends a reset packet to reset the target. The target services 
+a reset request only if it is in a state where reset requests are valid.
+
+If the target receives an invalid reset request, the target sends an 
+error in an end of image transfer packet"
+
+ From there the spec doesn't clarify how to proceed.
+
+So, it seems possible that we send a reset here, the device rejects it, 
+we get an error back, and cannot really proceed, which feels like a 
+"back to square 1" situation.  Less complex to not send a reset and end 
+up in the same place.
+
+> 
+>> +		return;
+>> +	}
+>> +
+>> +	context->dump_table_address = le64_to_cpu(context->rx->memory_debug64.table_address);
+>> +	context->dump_table_length = le64_to_cpu(context->rx->memory_debug64.table_length);
+>> +
+>> +	if (context->dump_table_length % sizeof(struct sahara_debug_table_entry64) != 0 ||
+>> +	    !context->dump_table_length) {
+>> +		dev_err(&context->mhi_dev->dev, "Malformed memory debug64 packet - table length %lld\n",
+>> +			context->dump_table_length);
+>> +		return;
+>> +	}
+>> +
+>> +	/*
+>> +	 * From this point, the protocol flips. We make memory_read requests to
+>> +	 * the device, and the device responds with the raw data. If the device
+>> +	 * has an error, it will send an End of Image command. First we need to
+>> +	 * request the memory dump table so that we know where all the pieces
+>> +	 * of the dump are that we can consume.
+>> +	 */
+>> +
+>> +	context->is_mem_dump_mode = true;
+>> +
+>> +	/*
+>> +	 * Assume that the table is smaller than our MTU so that we can read it
+>> +	 * in one shot. The spec does not put an upper limit on the table, but
+>> +	 * no known device will exceed this.
+>> +	 */
+>> +	if (context->dump_table_length > SAHARA_PACKET_MAX_SIZE) {
+>> +		dev_err(&context->mhi_dev->dev, "Memory dump table length %lld exceeds supported size. Discarding dump\n",
+>> +			context->dump_table_length);
+>> +		sahara_send_reset(context);
+>> +		return;
+>> +	}
+>> +
+>> +	context->tx[0]->cmd = cpu_to_le32(SAHARA_MEM_READ64_CMD);
+>> +	context->tx[0]->length = cpu_to_le32(SAHARA_MEM_READ64_LENGTH);
+>> +	context->tx[0]->memory_read64.memory_address = context->rx->memory_debug64.table_address;
+>> +	context->tx[0]->memory_read64.memory_length = context->rx->memory_debug64.table_length;
+> 
+> I think it would be easier to follow if you passed dump_table_address
+> and dump_table_length in here, rather than their __le64 source version.
+
+Will do.
+
+> 
+>> +
+>> +	context->rx_size_requested = context->dump_table_length;
+>> +
+>> +	ret = mhi_queue_buf(context->mhi_dev, DMA_TO_DEVICE, context->tx[0],
+>> +			    SAHARA_MEM_READ64_LENGTH, MHI_EOT);
+>> +	if (ret)
+>> +		dev_err(&context->mhi_dev->dev, "Unable to send read for dump table %d\n", ret);
+>> +}
+>> +
+>>   static void sahara_processing(struct work_struct *work)
+>>   {
+>> -	struct sahara_context *context = container_of(work, struct sahara_context, work);
+>> +	struct sahara_context *context = container_of(work, struct sahara_context, fw_work);
+>>   	int ret;
+>>   
+>>   	switch (le32_to_cpu(context->rx->cmd)) {
+>> @@ -338,6 +485,12 @@ static void sahara_processing(struct work_struct *work)
+>>   	case SAHARA_DONE_RESP_CMD:
+>>   		/* Intentional do nothing as we don't need to exit an app */
+>>   		break;
+>> +	case SAHARA_RESET_RESP_CMD:
+>> +		/* Intentional do nothing as we don't need to exit an app */
+> 
+> For this patch I don't have any concern, but should we do something to
+> track that we should not handle any further requests?
+
+The spec says that the device will (warm) reset after sending this.  It 
+is actually a bit of a race condition as the AIC100 implementation will 
+send this packet, and then force a watchdog bite to reset.  If that 
+watchdog processing is very quick, we won't even see this.
+
+Another spec ambigiuity on what happens if the device doesn't reset 
+after this command.  Tracking this feels like complexity for little gain.
+
+> 
+>> +		break;
+>> +	case SAHARA_MEM_DEBUG64_CMD:
+>> +		sahara_memory_debug64(context);
+>> +		break;
+>>   	default:
+>>   		dev_err(&context->mhi_dev->dev, "Unknown command %d\n",
+>>   			le32_to_cpu(context->rx->cmd));
+>> @@ -350,6 +503,223 @@ static void sahara_processing(struct work_struct *work)
+>>   		dev_err(&context->mhi_dev->dev, "Unable to requeue rx buf %d\n", ret);
+>>   }
+>>   
+>> +static void sahara_parse_dump_table(struct sahara_context *context)
+>> +{
+>> +	struct sahara_dump_table_entry *image_out_table_entry;
+>> +	struct sahara_debug_table_entry64 *dev_table_entry;
+>> +	struct sahara_memory_dump_meta_v1 *dump_meta;
+>> +	u64 table_nents;
+>> +	u64 dump_length;
+>> +	int ret;
+>> +	u64 i;
+>> +
+>> +	table_nents = context->dump_table_length / sizeof(*dev_table_entry);
+>> +	context->dump_images_left = table_nents;
+>> +	dump_length = 0;
+>> +
+>> +	for (i = 0; i < table_nents; ++i) {
+>> +		dev_table_entry = (struct sahara_debug_table_entry64 *)(context->rx) + i;
+>> +		/* Do not trust the device, ensure the strings are terminated */
+>> +		dev_table_entry->description[SAHARA_TABLE_ENTRY_STR_LEN - 1] = 0;
+>> +		dev_table_entry->filename[SAHARA_TABLE_ENTRY_STR_LEN - 1] = 0;
+>> +
+>> +		dump_length = size_add(dump_length, le64_to_cpu(dev_table_entry->length));
+>> +		if (dump_length == SIZE_MAX) {
+>> +			/* Discard the dump */
+>> +			sahara_send_reset(context);
+>> +			return;
+>> +		}
+>> +
+>> +		dev_dbg(&context->mhi_dev->dev,
+>> +			"Memory dump table entry %lld type: %lld address: %#llx length: %#llx description: \"%s\" filename \"%s\"\n",
+>> +			i,
+>> +			le64_to_cpu(dev_table_entry->type),
+>> +			le64_to_cpu(dev_table_entry->address),
+>> +			le64_to_cpu(dev_table_entry->length),
+>> +			dev_table_entry->description,
+>> +			dev_table_entry->filename);
+>> +	}
+>> +
+>> +	dump_length = size_add(dump_length, sizeof(*dump_meta));
+>> +	if (dump_length == SIZE_MAX) {
+>> +		/* Discard the dump */
+>> +		sahara_send_reset(context);
+>> +		return;
+>> +	}
+>> +	dump_length = size_add(dump_length, size_mul(sizeof(*image_out_table_entry), table_nents));
+>> +	if (dump_length == SIZE_MAX) {
+>> +		/* Discard the dump */
+>> +		sahara_send_reset(context);
+>> +		return;
+>> +	}
+>> +
+>> +	context->mem_dump_sz = dump_length;
+>> +	context->mem_dump = vzalloc(dump_length);
+>> +	if (!context->mem_dump) {
+>> +		/* Discard the dump */
+>> +		sahara_send_reset(context);
+>> +		return;
+>> +	}
+>> +
+>> +	/* Populate the dump metadata and table for userspace */
+>> +	dump_meta = context->mem_dump;
+>> +	dump_meta->magic = SAHARA_DUMP_V1_MAGIC;
+>> +	dump_meta->version = SAHARA_DUMP_V1_VER;
+>> +	dump_meta->dump_size = dump_length;
+>> +	dump_meta->table_size = context->dump_table_length;
+>> +
+>> +	image_out_table_entry = (struct sahara_dump_table_entry *)(context->mem_dump +
+>> +								sizeof(*dump_meta));
+> 
+> Isn't this cast unnecessary?
+
+I thought there was a compiler warning, but I'm not seeing it.  Will fix.
+
+> 
+>> +	dev_table_entry = (struct sahara_debug_table_entry64 *)(context->rx);
+>> +	for (i = 0; i < table_nents; ++i, ++image_out_table_entry, ++dev_table_entry) {
+>> +		image_out_table_entry->type = le64_to_cpu(dev_table_entry->type);
+>> +		image_out_table_entry->address = le64_to_cpu(dev_table_entry->address);
+>> +		image_out_table_entry->length = le64_to_cpu(dev_table_entry->length);
+>> +		strscpy(image_out_table_entry->description, dev_table_entry->description,
+>> +			SAHARA_TABLE_ENTRY_STR_LEN);
+>> +		strscpy(image_out_table_entry->filename,
+>> +			dev_table_entry->filename,
+>> +			SAHARA_TABLE_ENTRY_STR_LEN);
+>> +	}
+>> +
+>> +	context->mem_dump_freespace = image_out_table_entry;
+>> +
+>> +	/* Done parsing the table, switch to image dump mode */
+>> +	context->dump_table_length = 0;
+>> +
+>> +	/* Request the first chunk of the first image */
+>> +	context->dump_image = (struct sahara_dump_table_entry *)(context->mem_dump +
+>> +								sizeof(*dump_meta));
+> 
+> I would have preferred to see this (and above) written such that it's
+> explicitly clear that you're filling out an array of entries and then
+> point this to the first entry in that array.
+
+I'm not sure I understand what you would like to see here.  Can you 
+perhaps give an example?
+
+> 
+>> +	dump_length = context->dump_image->length > SAHARA_READ_MAX_SIZE ?
+>> +				SAHARA_READ_MAX_SIZE : context->dump_image->length;
+>> +	/* Avoid requesting EOI sized data so that we can identify errors */
+>> +	if (dump_length == SAHARA_END_OF_IMAGE_LENGTH)
+>> +		dump_length = SAHARA_END_OF_IMAGE_LENGTH / 2;
+>> +
+>> +	context->dump_image_offset = dump_length;
+>> +
+>> +	context->tx[0]->cmd = cpu_to_le32(SAHARA_MEM_READ64_CMD);
+>> +	context->tx[0]->length = cpu_to_le32(SAHARA_MEM_READ64_LENGTH);
+>> +	context->tx[0]->memory_read64.memory_address = cpu_to_le64(context->dump_image->address);
+>> +	context->tx[0]->memory_read64.memory_length = cpu_to_le64(dump_length);
+>> +
+>> +	context->rx_size_requested = dump_length;
+>> +
+>> +	ret = mhi_queue_buf(context->mhi_dev, DMA_TO_DEVICE, context->tx[0],
+>> +			    SAHARA_MEM_READ64_LENGTH, MHI_EOT);
+>> +	if (ret)
+>> +		dev_err(&context->mhi_dev->dev, "Unable to send read for dump content %d\n", ret);
+>> +}
+>> +
+>> +static void sahara_parse_dump_image(struct sahara_context *context)
+>> +{
+>> +	u64 dump_length;
+>> +	int ret;
+>> +
+>> +	memcpy(context->mem_dump_freespace, context->rx, context->rx_size);
+>> +	context->mem_dump_freespace += context->rx_size;
+>> +
+>> +	if (context->dump_image_offset >= context->dump_image->length) {
+>> +		/* Need to move to next image */
+>> +		context->dump_image++;
+>> +		context->dump_images_left--;
+>> +		context->dump_image_offset = 0;
+>> +
+>> +		if (!context->dump_images_left) {
+>> +			/* Dump done */
+>> +			dev_coredumpv(context->mhi_dev->mhi_cntrl->cntrl_dev,
+>> +				      context->mem_dump,
+>> +				      context->mem_dump_sz,
+>> +				      GFP_KERNEL);
+>> +			context->mem_dump = NULL;
+>> +			sahara_send_reset(context);
+>> +			return;
+>> +		}
+>> +	}
+>> +
+>> +	/* Get next image chunk */
+>> +	dump_length = context->dump_image->length - context->dump_image_offset;
+>> +	dump_length = dump_length > SAHARA_READ_MAX_SIZE ? SAHARA_READ_MAX_SIZE : dump_length;
+> 
+> This would be cleaner to write as:
+> 
+> 	if (dump_length > SAHARA_READ_MAX_SIZE)
+> 		dump_length = SAHARA_READ_MAX_SIZE;
+> 
+> Or make the line above min(..., SAHARA_READ_MAX_SIZE);
+
+Doh, min() would be great here.  Will fix.
+
+> 
+>> +	/* Avoid requesting EOI sized data so that we can identify errors */
+>> +	if (dump_length == SAHARA_END_OF_IMAGE_LENGTH)
+>> +		dump_length = SAHARA_END_OF_IMAGE_LENGTH / 2;
+>> +
+>> +	context->tx[0]->cmd = cpu_to_le32(SAHARA_MEM_READ64_CMD);
+>> +	context->tx[0]->length = cpu_to_le32(SAHARA_MEM_READ64_LENGTH);
+>> +	context->tx[0]->memory_read64.memory_address =
+>> +		cpu_to_le64(context->dump_image->address + context->dump_image_offset);
+>> +	context->tx[0]->memory_read64.memory_length = cpu_to_le64(dump_length);
+>> +
+>> +	context->dump_image_offset += dump_length;
+>> +	context->rx_size_requested = dump_length;
+>> +
+>> +	ret = mhi_queue_buf(context->mhi_dev, DMA_TO_DEVICE, context->tx[0],
+>> +			    SAHARA_MEM_READ64_LENGTH, MHI_EOT);
+>> +	if (ret) {
+>> +		dev_err(&context->mhi_dev->dev,
+>> +			"Unable to send read for dump content %d\n", ret);
+>> +		return;
+> 
+> Unnecessary return statement...
+
+Will fix.
+
+> 
+> Regards,
+> Bjorn
+> 
+>> +	}
+>> +}
+>> +
+>> +static void sahara_dump_processing(struct work_struct *work)
+>> +{
+>> +	struct sahara_context *context = container_of(work, struct sahara_context, dump_work);
+>> +	int ret;
+>> +
+>> +	/*
+>> +	 * We should get the expected raw data, but if the device has an error
+>> +	 * it is supposed to send EOI with an error code.
+>> +	 */
+>> +	if (context->rx_size != context->rx_size_requested &&
+>> +	    context->rx_size != SAHARA_END_OF_IMAGE_LENGTH) {
+>> +		dev_err(&context->mhi_dev->dev,
+>> +			"Unexpected response to read_data. Expected size: %#zx got: %#zx\n",
+>> +			context->rx_size_requested,
+>> +			context->rx_size);
+>> +		goto error;
+>> +	}
+>> +
+>> +	if (context->rx_size == SAHARA_END_OF_IMAGE_LENGTH &&
+>> +	    le32_to_cpu(context->rx->cmd) == SAHARA_END_OF_IMAGE_CMD) {
+>> +		dev_err(&context->mhi_dev->dev,
+>> +			"Unexpected EOI response to read_data. Status: %d\n",
+>> +			le32_to_cpu(context->rx->end_of_image.status));
+>> +		goto error;
+>> +	}
+>> +
+>> +	if (context->rx_size == SAHARA_END_OF_IMAGE_LENGTH &&
+>> +	    le32_to_cpu(context->rx->cmd) != SAHARA_END_OF_IMAGE_CMD) {
+>> +		dev_err(&context->mhi_dev->dev,
+>> +			"Invalid EOI response to read_data. CMD: %d\n",
+>> +			le32_to_cpu(context->rx->cmd));
+>> +		goto error;
+>> +	}
+>> +
+>> +	/*
+>> +	 * Need to know if we received the dump table, or part of a dump image.
+>> +	 * Since we get raw data, we cannot tell from the data itself. Instead,
+>> +	 * we use the stored dump_table_length, which we zero after we read and
+>> +	 * process the entire table.
+>> +	 */
+>> +	if (context->dump_table_length)
+>> +		sahara_parse_dump_table(context);
+>> +	else
+>> +		sahara_parse_dump_image(context);
+>> +
+>> +	ret = mhi_queue_buf(context->mhi_dev, DMA_FROM_DEVICE, context->rx,
+>> +			    SAHARA_PACKET_MAX_SIZE, MHI_EOT);
+>> +	if (ret)
+>> +		dev_err(&context->mhi_dev->dev, "Unable to requeue rx buf %d\n", ret);
+>> +
+>> +	return;
+>> +
+>> +error:
+>> +	vfree(context->mem_dump);
+>> +	context->mem_dump = NULL;
+>> +	sahara_send_reset(context);
+>> +}
+>> +
+>>   static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
+>>   {
+>>   	struct sahara_context *context;
+>> @@ -382,7 +752,8 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
+>>   	}
+>>   
+>>   	context->mhi_dev = mhi_dev;
+>> -	INIT_WORK(&context->work, sahara_processing);
+>> +	INIT_WORK(&context->fw_work, sahara_processing);
+>> +	INIT_WORK(&context->dump_work, sahara_dump_processing);
+>>   	context->image_table = aic100_image_table;
+>>   	context->table_size = ARRAY_SIZE(aic100_image_table);
+>>   	context->active_image_id = SAHARA_IMAGE_ID_NONE;
+>> @@ -405,7 +776,10 @@ static void sahara_mhi_remove(struct mhi_device *mhi_dev)
+>>   {
+>>   	struct sahara_context *context = dev_get_drvdata(&mhi_dev->dev);
+>>   
+>> -	cancel_work_sync(&context->work);
+>> +	cancel_work_sync(&context->fw_work);
+>> +	cancel_work_sync(&context->dump_work);
+>> +	if (context->mem_dump)
+>> +		vfree(context->mem_dump);
+>>   	sahara_release_image(context);
+>>   	mhi_unprepare_from_transfer(mhi_dev);
+>>   }
+>> @@ -418,8 +792,14 @@ static void sahara_mhi_dl_xfer_cb(struct mhi_device *mhi_dev, struct mhi_result
+>>   {
+>>   	struct sahara_context *context = dev_get_drvdata(&mhi_dev->dev);
+>>   
+>> -	if (!mhi_result->transaction_status)
+>> -		schedule_work(&context->work);
+>> +	if (!mhi_result->transaction_status) {
+>> +		context->rx_size = mhi_result->bytes_xferd;
+>> +		if (context->is_mem_dump_mode)
+>> +			schedule_work(&context->dump_work);
+>> +		else
+>> +			schedule_work(&context->fw_work);
+>> +	}
+>> +
+>>   }
+>>   
+>>   static const struct mhi_device_id sahara_mhi_match_table[] = {
+>> -- 
+>> 2.34.1
+>>
 
 
