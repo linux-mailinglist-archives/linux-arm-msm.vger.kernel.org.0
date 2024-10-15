@@ -1,76 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-34430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7DB399E9F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:36:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8652499E9D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:28:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63D182826B5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:36:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17EF51F23DEE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:28:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B8C720697E;
-	Tue, 15 Oct 2024 12:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 250181F9417;
+	Tue, 15 Oct 2024 12:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="avdzBpdt"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mvHFbJS6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40223209694
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 12:27:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B731D210C1B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 12:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728995228; cv=none; b=p59JEPeV2djquzzEVAolx+khn3ntz29NiDhEtC51xM2A+RjbyQdB8G+pwkENKwV8zVpAUO/3MGx47Qodu26hT79e6s4GETYsc+LSBBqzSgf7sYJOx1WmcWTAnuyKS7ctdQiHH6wbE0VeieLis18agRygjoZUm47Bs0wok7IVBhI=
+	t=1728995263; cv=none; b=VKX9fBpc1qcz5kwkECiI9mM5pJcSzXM0Nex/bqmQCBtljr4F7TZcD3mM0VXM4/BWo40pP7nIXk6exDuTah+cT5UGokAWOkW+m0VbMPWRBedAD4a8ZAP4AhrecZ5YN5LjlSK1D6dFO87y09rlursTS1tY1DeudOOuNrzOApprXFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728995228; c=relaxed/simple;
-	bh=MOv5FWpO/CjdyeVYuruElEec1lWVycWSaJ29ldPnHI0=;
+	s=arc-20240116; t=1728995263; c=relaxed/simple;
+	bh=feQDBjUKAiUPRO0p3liJWLuxYKg2KJKcrPn67v5j4ng=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=pitfIMNosk4dJGlTSA9ZHv2VqZeqHMm3YPwZ8Ojm4AeAdlRo4YOLCjV7L+/Sh2nfxIMt45C2E3nGyViWNvzpDR8fUHKTDywkM1k1qVpvP6kmQl7pQe6RwjSFZX6Y+WYShpkZE8vD9QNJjApPJZMCR0fOD7LP/1if29HwF8+2I98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=avdzBpdt; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:Content-Type; b=SiTeibYgcn2TOkl0weSMCFJxB4ZqAlftoB116kLp/X0lQRG9T/HML8pQctIW7oEiGD6pK+L3PptqfffBO/bNvjKvBy1l7l2cDLsDygPL2YGmVHHZsgKbo1xI6xtDU0oD+9Zg6v41FnFD6S4csMatWxeDdoM1rOTlD7io5wnM4G4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mvHFbJS6; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4314b316495so354385e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 05:27:05 -0700 (PDT)
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43117ed8adbso59479885e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 05:27:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728995224; x=1729600024; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1728995258; x=1729600058; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=9njlOBMQc/dhVBHMm2KkKA3jMdO4Wx6jwbEj5y6QnBs=;
-        b=avdzBpdtow1qMktKZhdkGe8Nn0qxfx/hszjhu1h5jynGNXFGm2bT75pSC8tOximer4
-         mvI26FKWk+M9asCO/jipp0a+2lu44G1SzXOePQdraR8uS3rGXkh6XDuefGd+J5s68Oxi
-         R4caNBYp+3sJpmtQqkZkh0uFhqZPOLAwqkBUkdl5v1PnzhL97pol5n4OIWHWgVPfsCkv
-         8nkWXexcQm5zAd641O6Ul5FmtWiAqqDmOwRfiHzQIJuCovae+ZplMc6HpuOnHutoEkLY
-         VGMf1V7QAzuGLDp880l9CkPFROhewUzVw9kLH9BK5pO7r/WjGXT64P3fRnHa3IDp/cIS
-         kXbA==
+        bh=/jp7MnEnWaCupoBR7Ejaobihsf5bkTsK/bDvsZp/OLs=;
+        b=mvHFbJS6pnd99uv2KAVWpwj5h98frz9DFwf+ADO+wdNgr5wBN0IEQWCFjcF2Weu5Ot
+         h7+DtdO23Lig1DkInfMdw4GZImILuQ8WluWcqb4U3uYXChmEkm0rsfxFNX4MfEaxVUYt
+         tO2AL0JOnxLtLd4L6PmPBOqGB4NdBUUhP1ZLtKm2xvE8BmP3xkuKzQpPqcut3gjc4FyF
+         T4kZLE72ROetet9H4MafbreEKUBGpxGcChJrdaP8nGRcESLerEcjz/NoFPJh02izwV7X
+         qGNknFNidxaZdyQHU7aDvCZ96dWjwxyEv4xwoglNtJRJ16M1zMOjYzRlBG7cuEzcVV77
+         moxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728995224; x=1729600024;
+        d=1e100.net; s=20230601; t=1728995258; x=1729600058;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=9njlOBMQc/dhVBHMm2KkKA3jMdO4Wx6jwbEj5y6QnBs=;
-        b=E5GpaTS0bvMVSqqMTEKhxGO/4iIBV/UGksR29df9vNDMImOThpso8dXZ6641b6U+TQ
-         XjXnXsN8H86YTkiXhIDMnVCJ2uKZJzkDpDi2lHzHiVYU1K6VlYEYMhLBHGbu285F4sTK
-         82vwJaspL8TJX8XzpmLyau5tDZG+I5leMWROJBfeUj8+7nvK1tVjfFG8r8/JIAzA+12B
-         1pSiKmvmJ5Ef8RGhwsj3wkSkREvbDo3N/KrIFPjUmsDpSRgRajt9e6peX7Jmg/dRgiMX
-         +OWrL9XA47IvJE92+coxxdamq6msfzRris6rYi/kEQsRKJV0aGjD1TJungzogA/rSMgA
-         Mpsw==
-X-Forwarded-Encrypted: i=1; AJvYcCUlzWnDLWOnt8ZlxVoero6R3O4nzLp5/Lla0XP8ZIQQBgkTL3RfXFr1AXcIR5tf/JNPfPGwKtuFYj+9lTFe@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDmk/N2ta/8kLpTTRsdSB95QfMTuAthCE/PQkoAiPMVP9mPvs+
-	g/gDlUG3Ggkb/qmTEX3C0crdhonjB0aJ1eMbgBxXaSRdQ4xzALkYKweFE6QKSrc=
-X-Google-Smtp-Source: AGHT+IFK8Sxq5O2daKZCX0NG4dA9HLXlgGDGO7JTuKN7++PD8SDAcw/9xgHSlPGmehhf8aWWBmFzYw==
-X-Received: by 2002:a05:600c:1f0e:b0:42f:8515:e47d with SMTP id 5b1f17b1804b1-4311ded2340mr126219565e9.11.1728995222663;
-        Tue, 15 Oct 2024 05:27:02 -0700 (PDT)
+        bh=/jp7MnEnWaCupoBR7Ejaobihsf5bkTsK/bDvsZp/OLs=;
+        b=JuKA18iOx68GvYABrVuNjm96ZIvACcCWGOIsqNKQ7xHKqfgAMphFmSvE6/pw4RO1zJ
+         ar0gohSe6nKWLTGQXgNn0yt9+BjVwpkXzRQqBXMmz1tRC5P38TWjKKZMQfapKC468PiL
+         xgwWd27rhNuknqHro9UMB8eFCRxhghQIhR0wYh2Z9Vyxshrc+ae3E7reNoZ/KIUnhOvb
+         vngInlmk7m0treado9ZAB5FGWVddQrhPqCK9LWs+IblmHReTq5yoDb5vMn5Q9jZFbLhW
+         noIQzXO0VsXGqnSwKMg2zj+kTxYnjd2VQqpYA8QRJSQjcVTPVugoPAi/QuR9IhgpyNmt
+         KqjA==
+X-Forwarded-Encrypted: i=1; AJvYcCWFt4qmBoXZeutNWd2SWWc2UaBgYzk0jjVJM3ss8Ca5L/PWFD5/t+sea6u9Pak0zhTuLTAQOxInSO1rJrmK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQSHFYfxEhd/YAVtF3IvULWLhNmwXtmRRpNs2hD6/klPeAlb3C
+	vmDAg7B9eiTqPK4Q0pfErxjK0gqHNXQyW6FQJxUXjB6BJUymTfxThdwV+dN738o=
+X-Google-Smtp-Source: AGHT+IF5nBLO8Fh0jojEAcLQEJwPyUp6jyRdDuWX0jMQK/+gUYhmGD66OBVnQzWcvbP+N3t1yUIrjw==
+X-Received: by 2002:a05:600c:1c13:b0:426:6e9a:7a1e with SMTP id 5b1f17b1804b1-43125617834mr113128555e9.35.1728995257803;
+        Tue, 15 Oct 2024 05:27:37 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:e686:73e1:36a8:3467? ([2a01:e0a:982:cbb0:e686:73e1:36a8:3467])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4313f6b3266sm16662515e9.37.2024.10.15.05.27.01
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4313f6b323asm16450925e9.36.2024.10.15.05.27.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 15 Oct 2024 05:27:02 -0700 (PDT)
-Message-ID: <2287a783-d00b-4175-8ac0-a6e86dc9245d@linaro.org>
-Date: Tue, 15 Oct 2024 14:27:01 +0200
+        Tue, 15 Oct 2024 05:27:36 -0700 (PDT)
+Message-ID: <0f3d1827-c3b0-4e58-95bf-7ccfb1366928@linaro.org>
+Date: Tue, 15 Oct 2024 14:27:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,18 +78,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
+From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: rename vph-pwr regulator
- nodes
-To: Johan Hovold <johan+linaro@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241015122601.16127-1-johan+linaro@kernel.org>
+Subject: Re: [PATCH] phy: qcom: qmp-pcie: drop bogus x1e80100 qref supplies
+To: Johan Hovold <johan+linaro@kernel.org>, Vinod Koul <vkoul@kernel.org>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20241015121406.15033-1-johan+linaro@kernel.org>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -116,182 +113,50 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <20241015122601.16127-1-johan+linaro@kernel.org>
+In-Reply-To: <20241015121406.15033-1-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15/10/2024 14:26, Johan Hovold wrote:
-> Rename the x1e80100 vph-pwr regulator nodes to use "regulator" as a
-> prefix for consistency with the other fixed regulators.
+On 15/10/2024 14:14, Johan Hovold wrote:
+> The PCIe PHYs on x1e80100 do not a have a qref supply so stop requesting
+> one. This also avoids the follow warning at boot:
 > 
+> 	qcom-qmp-pcie-phy 1bfc000.phy: supply vdda-qref not found, using dummy regulator
+> 
+> Fixes: 9dab00ee9544 ("phy: qcom: qmp-pcie: Add Gen4 4-lanes mode for X1E80100")
+> Fixes: 606060ce8fd0 ("phy: qcom-qmp-pcie: Add support for X1E80100 g3x2 and g4x2 PCIE")
+> Cc: Abel Vesa <abel.vesa@linaro.org>
 > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 > ---
->   .../dts/qcom/x1e80100-asus-vivobook-s15.dts   | 22 +++++++++----------
->   arch/arm64/boot/dts/qcom/x1e80100-crd.dts     | 22 +++++++++----------
->   .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++----------
->   .../dts/qcom/x1e80100-microsoft-romulus.dtsi  | 22 +++++++++----------
->   4 files changed, 44 insertions(+), 44 deletions(-)
+>   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> index 20616bd4aa6c..b1f190a9686f 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-> @@ -94,17 +94,6 @@ linux,cma {
->   		};
->   	};
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> index f71787fb4d7e..36aaac34e6c6 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+> @@ -3661,8 +3661,8 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x2_pciephy_cfg = {
 >   
-> -	vph_pwr: vph-pwr-regulator {
-> -		compatible = "regulator-fixed";
-> -
-> -		regulator-name = "vph_pwr";
-> -		regulator-min-microvolt = <3700000>;
-> -		regulator-max-microvolt = <3700000>;
-> -
-> -		regulator-always-on;
-> -		regulator-boot-on;
-> -	};
-> -
->   	vreg_edp_3p3: regulator-edp-3p3 {
->   		compatible = "regulator-fixed";
+>   	.reset_list		= sdm845_pciephy_reset_l,
+>   	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+> -	.vreg_list		= sm8550_qmp_phy_vreg_l,
+> -	.num_vregs		= ARRAY_SIZE(sm8550_qmp_phy_vreg_l),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+>   	.regs			= pciephy_v6_regs_layout,
 >   
-> @@ -135,6 +124,17 @@ vreg_nvme: regulator-nvme {
->   		pinctrl-0 = <&nvme_reg_en>;
->   		pinctrl-names = "default";
->   	};
-> +
-> +	vph_pwr: regulator-vph-pwr {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
->   };
+>   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
+> @@ -3695,8 +3695,8 @@ static const struct qmp_phy_cfg x1e80100_qmp_gen4x4_pciephy_cfg = {
 >   
->   &apps_rsc {
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> index 4ab7078f76e0..4ab9e0ca4591 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> @@ -261,17 +261,6 @@ platform {
->   		};
->   	};
+>   	.reset_list		= sdm845_pciephy_reset_l,
+>   	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
+> -	.vreg_list		= sm8550_qmp_phy_vreg_l,
+> -	.num_vregs		= ARRAY_SIZE(sm8550_qmp_phy_vreg_l),
+> +	.vreg_list		= qmp_phy_vreg_l,
+> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+>   	.regs			= pciephy_v6_regs_layout,
 >   
-> -	vph_pwr: vph-pwr-regulator {
-> -		compatible = "regulator-fixed";
-> -
-> -		regulator-name = "vph_pwr";
-> -		regulator-min-microvolt = <3700000>;
-> -		regulator-max-microvolt = <3700000>;
-> -
-> -		regulator-always-on;
-> -		regulator-boot-on;
-> -	};
-> -
->   	vreg_edp_3p3: regulator-edp-3p3 {
->   		compatible = "regulator-fixed";
->   
-> @@ -319,6 +308,17 @@ vreg_nvme: regulator-nvme {
->   		pinctrl-0 = <&nvme_reg_en>;
->   	};
->   
-> +	vph_pwr: regulator-vph-pwr {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
-> +
->   	vreg_wwan: regulator-wwan {
->   		compatible = "regulator-fixed";
->   
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> index 3c13331a9ef4..10ba934652c3 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-> @@ -166,17 +166,6 @@ platform {
->   		};
->   	};
->   
-> -	vph_pwr: vph-pwr-regulator {
-> -		compatible = "regulator-fixed";
-> -
-> -		regulator-name = "vph_pwr";
-> -		regulator-min-microvolt = <3700000>;
-> -		regulator-max-microvolt = <3700000>;
-> -
-> -		regulator-always-on;
-> -		regulator-boot-on;
-> -	};
-> -
->   	vreg_edp_3p3: regulator-edp-3p3 {
->   		compatible = "regulator-fixed";
->   
-> @@ -206,6 +195,17 @@ vreg_nvme: regulator-nvme {
->   		pinctrl-0 = <&nvme_reg_en>;
->   		pinctrl-names = "default";
->   	};
-> +
-> +	vph_pwr: regulator-vph-pwr {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
->   };
->   
->   &apps_rsc {
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> index 42e02ad6a9c3..c47a63b5c85b 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-> @@ -125,17 +125,6 @@ linux,cma {
->   		};
->   	};
->   
-> -	vph_pwr: vph-pwr-regulator {
-> -		compatible = "regulator-fixed";
-> -
-> -		regulator-name = "vph_pwr";
-> -		regulator-min-microvolt = <3700000>;
-> -		regulator-max-microvolt = <3700000>;
-> -
-> -		regulator-always-on;
-> -		regulator-boot-on;
-> -	};
-> -
->   	vreg_edp_3p3: regulator-edp-3p3 {
->   		compatible = "regulator-fixed";
->   
-> @@ -165,6 +154,17 @@ vreg_nvme: regulator-nvme {
->   		pinctrl-0 = <&nvme_reg_en>;
->   		pinctrl-names = "default";
->   	};
-> +
-> +	vph_pwr: regulator-vph-pwr {
-> +		compatible = "regulator-fixed";
-> +
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +
-> +		regulator-always-on;
-> +		regulator-boot-on;
-> +	};
->   };
->   
->   &apps_rsc {
+>   	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
 
 Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
