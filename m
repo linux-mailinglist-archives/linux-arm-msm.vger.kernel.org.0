@@ -1,129 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-34414-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34415-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA2EC99E4DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:00:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEADD99E596
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:27:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2CC6BB230F4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 11:00:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A21BF285115
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 11:27:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF00F1EC00D;
-	Tue, 15 Oct 2024 10:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E57321E5022;
+	Tue, 15 Oct 2024 11:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="AIFpXME9"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gF4Jiud4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31A461E8830
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 10:59:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4151D89F8;
+	Tue, 15 Oct 2024 11:26:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728989974; cv=none; b=SLuY80NoeT8/kI+PTD7J+5wfmaf0MSDfyQdEmDqghtCPSbxwXP5MdibKKSpwyA1G0T4h5IKzIEl8fXGDa8vCEyyvzFBQZYBoL79FY/h65BtZKPljCMVWb/S6IhRf32xjuyK9jXkkTVtq8cRMijkM7nA+EOgrMk0G4kd+8qyLSDI=
+	t=1728991623; cv=none; b=cUR6siFRF8TsBT7Op1Resi0VICNxglsZ8xex8knXmIpKBeY3un44Cr9cglpYnLVShYE/mF4pR7u+yUhFeAgbVd+WnSHirvU4bOxIe4cVcc7pzaBpV2gOkTJCG6IOqw7lXV4uAG1hOe6uErgBUzQ84ezc26ILwhyxAPLDzcBCV9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728989974; c=relaxed/simple;
-	bh=ly/NC2kwZ3cRKwWiABDoQjTvFKH0kh1X0ePiMlqGNMA=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Nk4r3PJKleWpUaJc196Jf9jECO1YQBx8Uj/XQ4UlaiysbnCXDhpZvFZR6TGOftRSwFyhbWofQj+4wG9t1oDvoz7nHvFR/MMv5jX5MfAKaZZMHDymOFabXZvuKKvkaKXAJbKHy5GhM7nmkiMCkqTie/feMibnJ+UmWQCge8rFD44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=AIFpXME9; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1728989972;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ybTiS+fP0SSadAHt+F77jSZOWRj/uDfaIQfdA4Tihlk=;
-	b=AIFpXME92W0tsakp05HOWNfyEAuTDyO4Jspk/sTcZxYK+AWrefUIs3KoNOwnCRzKux0c8t
-	YY73tHK+oaMwz3w7u0lgzvyOEjcEqz6l7+NWV7De4KDx+twdBV1pRZ3KSJD/oiVlDTZxcw
-	tnwmIX9dTOWxCuzFOPY7aS3zVQe8E9M=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-614-MzYKfzDZNr6jLeY-LjMoDg-1; Tue,
- 15 Oct 2024 06:59:27 -0400
-X-MC-Unique: MzYKfzDZNr6jLeY-LjMoDg-1
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 3150A1955D59;
-	Tue, 15 Oct 2024 10:59:23 +0000 (UTC)
-Received: from [10.45.226.64] (unknown [10.45.226.64])
-	by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS id 79B2330001A3;
-	Tue, 15 Oct 2024 10:59:16 +0000 (UTC)
-Date: Tue, 15 Oct 2024 12:59:13 +0200 (CEST)
-From: Mikulas Patocka <mpatocka@redhat.com>
-To: Md Sadre Alam <quic_mdalam@quicinc.com>
-cc: axboe@kernel.dk, song@kernel.org, yukuai3@huawei.com, agk@redhat.com, 
-    snitzer@kernel.org, adrian.hunter@intel.com, quic_asutoshd@quicinc.com, 
-    ritesh.list@gmail.com, ulf.hansson@linaro.org, andersson@kernel.org, 
-    konradybcio@kernel.org, kees@kernel.org, gustavoars@kernel.org, 
-    linux-block@vger.kernel.org, linux-kernel@vger.kernel.org, 
-    linux-raid@vger.kernel.org, dm-devel@lists.linux.dev, 
-    linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-    linux-hardening@vger.kernel.org, quic_srichara@quicinc.com, 
-    quic_varada@quicinc.com
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-In-Reply-To: <20240916085741.1636554-2-quic_mdalam@quicinc.com>
-Message-ID: <3161a67d-66f6-775e-c67e-3b5ca1aa2e1b@redhat.com>
-References: <20240916085741.1636554-1-quic_mdalam@quicinc.com> <20240916085741.1636554-2-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1728991623; c=relaxed/simple;
+	bh=CU5Ivy8Z00Cv051dEKbRz2VOtggkLM1An6ezy/8TD6I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KWYFPdnvKGyqlSXjfh5/AT4y9ZVcUi+mx9bCrtkVpnvOvFSn/ScMGw39btM41GOy7nEBfIJdYPbxnJjdR7UXlRV8evcMT4vaaaP9YA9xJZaZjD5H/lBOoZ6dBrnrYbkH51r/gquTiAX1f4Mwp3jzHR3+U72Nhwx19HYndQCiM14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gF4Jiud4; arc=none smtp.client-ip=198.175.65.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1728991620; x=1760527620;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=CU5Ivy8Z00Cv051dEKbRz2VOtggkLM1An6ezy/8TD6I=;
+  b=gF4Jiud4EQ0nGn6RHyKTMukoiLfxymkgNV3AeP0bO0FqMvvRCH8F60V2
+   uUqo/yeAZqsB9FBt+D3EJTfpqq3gOZ6R9hgKahKkgSGk+FU1Hg0tDSIaz
+   bHcO33iBckEfscz1QvGrYOhTI5Q4EE8uywyaPG7q+SYqcEMIaUcE07CnL
+   Pzyd3l3kf2FYC/dJewKgRAe9Afc3xBCfScvUcdeBtI5NzpQXnbVIbm4Dt
+   ufOWpQktQ7d6GfMZhY4OmpHjaC4lA+fERRls0EUqir8cwMi7G58AF2tmn
+   85tMpIUoprxveCgP2VZzyE9jXwfCUReQmJYyxWxgHBW3Dhr3C8w9vQ4tw
+   w==;
+X-CSE-ConnectionGUID: pB1IadCmQimfQZ/ElAHqTQ==
+X-CSE-MsgGUID: CD1fs7D+Ti+wnhZ1yheFJg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11225"; a="39768517"
+X-IronPort-AV: E=Sophos;i="6.11,205,1725346800"; 
+   d="scan'208";a="39768517"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Oct 2024 04:26:54 -0700
+X-CSE-ConnectionGUID: SVYhPXiBT5SLyftBMZcMKA==
+X-CSE-MsgGUID: ncKQkyxCRaeSGbYGnAeclg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,205,1725346800"; 
+   d="scan'208";a="108592278"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by fmviesa001.fm.intel.com with ESMTP; 15 Oct 2024 04:26:49 -0700
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t0fhP-000I2R-08;
+	Tue, 15 Oct 2024 11:26:47 +0000
+Date: Tue, 15 Oct 2024 19:25:56 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>
+Subject: Re: [PATCH v4 08/28] media: iris: implement power management
+Message-ID: <202410151929.iJzD1Wez-lkp@intel.com>
+References: <20241014-qcom-video-iris-v4-v4-8-c5eaa4e9ab9e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241014-qcom-video-iris-v4-v4-8-c5eaa4e9ab9e@quicinc.com>
 
-Hi
+Hi Dikshita,
 
-The patch seems OK. Should it go in via the device mapper tree or the 
-block layer tree?
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on 67cefecf2a039b9ed0030b9213ceafcd45e6f9e3]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal/dt-bindings-media-Add-video-support-for-QCOM-SM8550-SoC/20241014-171950
+base:   67cefecf2a039b9ed0030b9213ceafcd45e6f9e3
+patch link:    https://lore.kernel.org/r/20241014-qcom-video-iris-v4-v4-8-c5eaa4e9ab9e%40quicinc.com
+patch subject: [PATCH v4 08/28] media: iris: implement power management
+config: alpha-allyesconfig (https://download.01.org/0day-ci/archive/20241015/202410151929.iJzD1Wez-lkp@intel.com/config)
+compiler: alpha-linux-gcc (GCC) 13.3.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241015/202410151929.iJzD1Wez-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202410151929.iJzD1Wez-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/media/platform/qcom/iris/iris_probe.c:292:12: warning: 'iris_pm_resume' defined but not used [-Wunused-function]
+     292 | static int iris_pm_resume(struct device *dev)
+         |            ^~~~~~~~~~~~~~
+>> drivers/media/platform/qcom/iris/iris_probe.c:273:12: warning: 'iris_pm_suspend' defined but not used [-Wunused-function]
+     273 | static int iris_pm_suspend(struct device *dev)
+         |            ^~~~~~~~~~~~~~~
 
 
-On Mon, 16 Sep 2024, Md Sadre Alam wrote:
+vim +/iris_pm_resume +292 drivers/media/platform/qcom/iris/iris_probe.c
 
-> +#define DM_CRYPT_DEFAULT_MAX_READ_SIZE		131072
-> +#define DM_CRYPT_DEFAULT_MAX_WRITE_SIZE		131072
-> +
-> +static unsigned int get_max_request_size(struct inlinecrypt_config *cc, bool wrt)
-> +{
-> +	unsigned int val, sector_align;
-> +
-> +	val = !wrt ? DM_CRYPT_DEFAULT_MAX_READ_SIZE : DM_CRYPT_DEFAULT_MAX_WRITE_SIZE;
-> +	if (wrt) {
-> +		if (unlikely(val > BIO_MAX_VECS << PAGE_SHIFT))
-> +			val = BIO_MAX_VECS << PAGE_SHIFT;
-> +	}
-> +	sector_align = max(bdev_logical_block_size(cc->dev->bdev), (unsigned int)cc->sector_size);
-> +	val = round_down(val, sector_align);
-> +	if (unlikely(!val))
-> +		val = sector_align;
-> +	return val >> SECTOR_SHIFT;
-> +}
+   272	
+ > 273	static int iris_pm_suspend(struct device *dev)
+   274	{
+   275		struct iris_core *core;
+   276		int ret;
+   277	
+   278		core = dev_get_drvdata(dev);
+   279	
+   280		mutex_lock(&core->lock);
+   281		if (core->state != IRIS_CORE_INIT)
+   282			goto exit;
+   283	
+   284		ret = iris_hfi_pm_suspend(core);
+   285	
+   286	exit:
+   287		mutex_unlock(&core->lock);
+   288	
+   289		return ret;
+   290	}
+   291	
+ > 292	static int iris_pm_resume(struct device *dev)
+   293	{
+   294		struct iris_core *core;
+   295		int ret = 0;
+   296	
+   297		core = dev_get_drvdata(dev);
+   298	
+   299		mutex_lock(&core->lock);
+   300		if (core->state != IRIS_CORE_INIT)
+   301			goto exit;
+   302	
+   303		ret = iris_hfi_pm_resume(core);
+   304		pm_runtime_mark_last_busy(core->dev);
+   305	
+   306	exit:
+   307		mutex_unlock(&core->lock);
+   308	
+   309		return ret;
+   310	}
+   311	
 
-This piece of code was copied from the dm-crypt target. For dm-crypt, I 
-was actually benchmarking the performance for various 
-DM_CRYPT_DEFAULT_MAX_READ_SIZE and DM_CRYPT_DEFAULT_MAX_WRITE_SIZE values 
-and I selected the values that resulted in the best performance.
-
-You should benchmark it too to find the optimal I/O size. Perhaps you find 
-out that there is no need to split big requests and this piece of code can 
-be dropped.
-
-> +               /* Omit the key for now. */
-> +               DMEMIT("%s - %llu %s %llu", ctx->cipher_string, ctx->iv_offset,
-> +                      ctx->dev->name, (unsigned long long)ctx->start);
-
-What if someone reloads the table? I think you should display the key. 
-dmsetup does not display the key if the "--showkeys" parameter is not 
-specified.
-
-Mikulas
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
