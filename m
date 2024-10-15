@@ -1,123 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-34465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 588C199F28B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 18:19:37 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D77A099F3A4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 19:02:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 885511C21E4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 16:19:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9BE01280EA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 17:02:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A13BC1B2181;
-	Tue, 15 Oct 2024 16:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C0951F76A2;
+	Tue, 15 Oct 2024 17:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="f3hqesS/"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iHa5tApa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25634158DD8;
-	Tue, 15 Oct 2024 16:19:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73DCB1CBA07;
+	Tue, 15 Oct 2024 17:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729009173; cv=none; b=AfyebSCbzLwJ9k7foTVxnL0tFkidtJ93L+GUyO/JO0jQ12NVxzL1AtczIvZY28HNcKDkFkJ7OEae4fiuKP336dJ6MmbnFmcWvu3qn0a+8qnynl3mwHp8WtRtHxNL3fjAzf1XlMVdzx6jLdLRecygj/3KLoPtcA6ohne+Dc4+J2o=
+	t=1729011757; cv=none; b=Pf3fguy6s7w0wEBaF3OdbVfOxSJig6hEQrG8YlaRDVMF+HBzPIg4yH8CMqhBopX0Vl4REQOW/3Ohvvc4tXI8MVN5ld0COwpACZ9TBepiANW37nyblEGeHSyga359TYg/rxkQ2yCcp++4kSBaTA0anf0ziwGhtDHTL6pSNEt3hRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729009173; c=relaxed/simple;
-	bh=zmA/00I/rJT/tqnmzKp6XjapkqZfWbScm/Yeourf5vU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=C6mOgUTgvyvCC5SjvrzSQMg6gzNBPPNF60UNZXOnEkAlukb+kzwy5S+u/gKBhxxWwTnrn5XFI4+sUMYlJrWbb2bdN6ZHkg1MPoeJV37O74zEpPzIkEw3QX1egL9bg2pz2h7FG8uHDL2Lk145N58XsrCLbxLPJ/IU+yk/pl8WOKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=f3hqesS/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49F9qV3l027796;
-	Tue, 15 Oct 2024 16:18:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	r+FlGNemb68zVPoS1oWfgoA7NXvv0pIJi/EsE9mxPOI=; b=f3hqesS/1jiW0k2a
-	MCQ4x0nu7Fx7w15w7SBwqf8PnpvQWIUe+IqSsyTpCwVvyKZS0/nkwCDtJ0LsZz3J
-	KgLDgWP94jSZAqjlqHq30gw49hqhBKlpzvZb7z283emY5rOdZ7nAWVudU2P2h5Qh
-	7N0PP7qpFZ56N+3qwLPBfYamIN/Ru56Q1mg91h9J+RRMN3oNy7kKXk9C/PNKLKki
-	uUwB+VPdttT33x5REQ0Ek4J3Th8Il5aqbIAgZHI2jSH43KDXL1Jm8NU0GPPSTQOs
-	bmgUNB8hS4Gt6NQ2CV37ybqRPILVnbLd+t6+EskiuTtlSt52R0bVD3qZaP616j69
-	Dma9hA==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 427jd904tc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 16:18:47 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49FGIkRa005017
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 15 Oct 2024 16:18:46 GMT
-Received: from [10.216.57.188] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 15 Oct
- 2024 09:18:38 -0700
-Message-ID: <382e2d4d-3bf8-d88b-29c1-37c1446a0843@quicinc.com>
-Date: Tue, 15 Oct 2024 21:48:21 +0530
+	s=arc-20240116; t=1729011757; c=relaxed/simple;
+	bh=mjX969uiuUwFxTha3ATjNRBsXorKp3Xk+b55UuTlw3k=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hIdv6nMIYrYliWUcaNa+/lXbeuS5QYZXqzwTtz1qdFJ1fVeynouQOo5tMXp6Y/LJIak3AtqLUlTuA1RWG3y3UEjRXfuvXL28j3Fc2jv1k7zNSQgdKEdI6vz1acK7WhclGj6P5lWUJWqiueKiTOlZL01yuZxTrXmKKtZvoo2PEkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iHa5tApa; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-539e59dadebso4243557e87.0;
+        Tue, 15 Oct 2024 10:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729011753; x=1729616553; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=krABLQUOhPKpyg/+NTCc6dULQXBvHVAWEp5lKk1wTOE=;
+        b=iHa5tApa0PR4X3vg92G+Q6kSXT0N5JnKecCEaW5+uQVdjnfNaiKcEVaP4WebC+dlIr
+         JK3h+g7+Sz6CiJ+NLa9pli40A9QbfsJr/7zGoQMxewA5H5gIhzPrtMzQ+PMhXaGRXitM
+         tuiQo0TGV/EfbihkhT6Cb2ZnX8ixYy0TRJyK+LA1FMUc9SNmRXuYfUEm9TD1vNF5pI7M
+         U4XBfcsY4MoQV+kblhTtYStdN6ZPUmSIl7fUjOHT4UooB32eAfq96ZWboBNKGdS751Jm
+         eVQVWo0akHIeeNQm9iErR9oegJdea5CNs+EER0XuH5y1jnW7GN3kDuZaeJMG7Oa5LYDa
+         oHxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729011753; x=1729616553;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=krABLQUOhPKpyg/+NTCc6dULQXBvHVAWEp5lKk1wTOE=;
+        b=vW3QPBcdnYgglbehcL8ieXoztZwSVOJV3S2KeiXdQrWN9RZuNcj8v+xiA+91I8+a55
+         PODD6513IgUnIkjlGY/8smQVo6uqbxZta56PHOqHB1xVU9/eASr0RvYpEr/HxWJP+JcA
+         tdTpN0OfQMKBKll3zusUB2HGkFeln6wSZm2NvkG5UbNvRGU/PlQT5R3lU4tGHLpxW+Sn
+         jMzHoHgc2z6mlLgvriDlqrhghFegmzEy75yS80iXbeC/7IoIZJnlSpCzceYZDS4Pctnl
+         irEMYgkKcHr4PfYsJlyzy7Viq9Uj+wcmQJSZcch6cW+3HRcoh3ntvdl8YI3R1a/uN4GB
+         yBgA==
+X-Forwarded-Encrypted: i=1; AJvYcCVyySyxqDWt7acseSfqApUk337bzaAaTyn8DKZEW5G39Tfhf1vElYFsue7pk+FGg0sghv52dBc+subS@vger.kernel.org, AJvYcCWcbYUWisHvD5QqoWNcWMe9K8C+Qwp0kcRl+iF2CZ4VULeqcDB7p0A7sCQcrNoso8mcOSKCBtxaffzJCi5Qpg==@vger.kernel.org, AJvYcCX4Q4nEJrBZ0yKmJVvgGUiSFJV/0DJdzbAqsYtqKjLbyU8FSyIdyuHd2RchwV/Eq6aVizxz2ON3/S2U9rpr@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLBUV3qzx1QuCJUsruufGviB9+b2YBNLd+36HMkqkAA9IWyLnX
+	539b8WXYfPyETfe4zejfz+pMT79VQco2TXpjg+F2rxmN8mYMgA6R
+X-Google-Smtp-Source: AGHT+IE5XwKsd8tVB2eXHpA8pKI6YCSFne2iE1hn7kaytgEM8+CZ3ujUaw+e+N2/5X23OWcCcmu7OA==
+X-Received: by 2002:a05:6512:31cf:b0:539:e97c:cb10 with SMTP id 2adb3069b0e04-53a03f7cefbmr872115e87.40.1729011753113;
+        Tue, 15 Oct 2024 10:02:33 -0700 (PDT)
+Received: from localhost.localdomain ([2a02:a311:80b0:1c80:9433:9060:39fc:2954])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a00013bc5sm211045e87.271.2024.10.15.10.02.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Oct 2024 10:02:32 -0700 (PDT)
+From: Maya Matuszczyk <maccraft123mc@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: Jos Dehaes <jos.dehaes@gmail.com>,
+	Maya Matuszczyk <maccraft123mc@gmail.com>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: Rename "Twitter" to "Tweeter"
+Date: Tue, 15 Oct 2024 19:01:56 +0200
+Message-ID: <20241015170157.2959-1-maccraft123mc@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v11 4/8] mtd: nand: Add qpic_common API file
-To: Miquel Raynal <miquel.raynal@bootlin.com>,
-        kernel test robot
-	<lkp@intel.com>
-CC: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <arnd@arndb.de>,
-        <esben@geanix.com>, <nikita.shubin@maquefel.me>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>, <oe-kbuild-all@lists.linux.dev>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241010070510.1504250-5-quic_mdalam@quicinc.com>
- <202410130129.M8J7VJoG-lkp@intel.com> <20241015172955.7b0b6708@xps-13>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <20241015172955.7b0b6708@xps-13>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8z6kBnp7XghZECOsLn3_bo8kKUAu8CXp
-X-Proofpoint-ORIG-GUID: 8z6kBnp7XghZECOsLn3_bo8kKUAu8CXp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 phishscore=0 suspectscore=0 impostorscore=0 bulkscore=0
- mlxscore=0 mlxlogscore=857 malwarescore=0 priorityscore=1501 adultscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410150111
 
+This makes the name consistent with both other x1e80100 devices and the
+dictionary. A UCM fix was merged already.
 
+Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-On 10/15/2024 8:59 PM, Miquel Raynal wrote:
-> Hi,
-> 
-> lkp@intel.com wrote on Sun, 13 Oct 2024 01:57:12 +0800:
-> 
->> Hi Md,
->>
->> kernel test robot noticed the following build errors:
-> 
-> The below errors seem like basic Kconfig misconfiguration. To be clear,
-> I usually don't review series getting kernel test robot failures and I
-> am expecting that you will fix these errors and post an updated version.
-Sure Will fix this, and post next revision.
-> 
-> Thanks,
-> Miquèl
-> 
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+index 10b28d870f08..004353220dc5 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -177,9 +177,9 @@ sound {
+ 		compatible = "qcom,x1e80100-sndcard";
+ 		model = "X1E80100-CRD";
+ 		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
+-				"TwitterLeft IN", "WSA WSA_SPK2 OUT",
++				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
+ 				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
+-				"TwitterRight IN", "WSA2 WSA_SPK2 OUT",
++				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
+ 				"IN1_HPHL", "HPHL_OUT",
+ 				"IN2_HPHR", "HPHR_OUT",
+ 				"AMIC2", "MIC BIAS2",
+@@ -933,7 +933,7 @@ left_tweeter: speaker@0,1 {
+ 		reg = <0 1>;
+ 		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
+ 		#sound-dai-cells = <0>;
+-		sound-name-prefix = "TwitterLeft";
++		sound-name-prefix = "TweeterLeft";
+ 		vdd-1p8-supply = <&vreg_l15b_1p8>;
+ 		vdd-io-supply = <&vreg_l12b_1p2>;
+ 		qcom,port-mapping = <4 5 6 7 11 13>;
+@@ -986,7 +986,7 @@ right_tweeter: speaker@0,1 {
+ 		reg = <0 1>;
+ 		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
+ 		#sound-dai-cells = <0>;
+-		sound-name-prefix = "TwitterRight";
++		sound-name-prefix = "TweeterRight";
+ 		vdd-1p8-supply = <&vreg_l15b_1p8>;
+ 		vdd-io-supply = <&vreg_l12b_1p2>;
+ 		qcom,port-mapping = <4 5 6 7 11 13>;
+-- 
+2.45.2
+
 
