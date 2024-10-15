@@ -1,244 +1,243 @@
-Return-Path: <linux-arm-msm+bounces-34426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9CF5799E9BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:26:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B644599E9C6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 14:27:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CB59F1C228CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:26:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3A69C1F24179
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 12:27:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CFEB1EF0A8;
-	Tue, 15 Oct 2024 12:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D04171EF957;
+	Tue, 15 Oct 2024 12:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R2ttCNO4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="r2P5rcKI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625C31EC009;
-	Tue, 15 Oct 2024 12:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498071EF0B9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 12:26:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728995158; cv=none; b=FJAyh5mXRXMX+HRCiQsaVg+cxgsZvtzn/qSUNFzsUd1+YZvL9DMsxKkSrU4tqq7JOs4+kHNBEiBYyK4hD2Mbso7QzjvDrhZXq1SeexOSJEROOspC8YScyBBurmhcJ1aru6Ru/qPYktfaDz2cIBOmP6jIrq3vMQhD0PX/gyfvHVA=
+	t=1728995190; cv=none; b=reT9clX0nyb3CLj8g/qJD2A1ojq9KJSpX6gf84cBt/j5XkueiG8jdV9uzqWZr8l8/yp4Z6fpdVFD5H8WXp+qehxw/TiGEyYSj4w83fFLZf9ZebizM+ydZhkxn/K4RTvGTyBNsYsqomRMqPxrfD/sRoiQbGps9tlz7EqtHaYCgWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728995158; c=relaxed/simple;
-	bh=7zldfmMuhDk//2zSd5O20XcO7pAQ8G5PPY70CN0hlIY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s25GnSLmJskOjwXzVIKOkkmsw5ZyJtSeQHDf0iu3mMqJ09rEogDGQ1pDaJyfE8Q/oEqX/lbXgtFo6SiEgBLLwcVymAZR3vAJ59fZvnRuflIfFfuyF2bEF/CgOnvjLw6znLcLXiJ/JMcLioyGrlSB5+pSAaigNw+kD75mCEm4VlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R2ttCNO4; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBD9C4CEC6;
-	Tue, 15 Oct 2024 12:25:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1728995157;
-	bh=7zldfmMuhDk//2zSd5O20XcO7pAQ8G5PPY70CN0hlIY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=R2ttCNO4fiW44N9YTgSROJuqJuJALjyyNgfaRl9hVfVFAAiWxQob+063FPiZZAss9
-	 ZSpjJ1PzRdx8MtbezVbKfiK9a3HbMdmUAPAkax0iVgvYGhzFzX7amVA4Sl29+5y2d9
-	 9zwbkxTQNHUBxw4u2yBJ/TMXAt2QM46FnoL6yyvxij5aUDiaThW7d7QNDNj2xCkv5l
-	 M8Vr89l9LhGM+JopEQMQ5ayIf24mvAm0q3pr8K39j8XXhu1eBKtLVj7UcfW5tVdTOr
-	 rj5qosCzfn5h64Kyyz6ElnZISqOUbKur1N6rVqnkn9gXm1W8piVGb1xVb8JyTYQeBh
-	 oreCQVnDDS2mg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1t0gcl-000000004CI-0rIa;
-	Tue, 15 Oct 2024 14:26:03 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH] arm64: dts: qcom: x1e80100: rename vph-pwr regulator nodes
-Date: Tue, 15 Oct 2024 14:26:00 +0200
-Message-ID: <20241015122601.16127-1-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.45.2
+	s=arc-20240116; t=1728995190; c=relaxed/simple;
+	bh=ddawXaGf78fQTmQWAQP1TJ1/3cTPR6k88VBZaAncCts=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rKio/FwUKk9H/898iMh3KV8tCTLfIcKTD0hLthSJcNaz4MRYMn8O7fFGjntIAiF49FSpUQlhstmkyg+kUCr4hFcfvqpAV2xx5mjyFwAHBw3sZVscZa1K3OWrxRW7obpGb27sKVK8bfVQT1E6dyVxlMIywQVZFkm9J2nHW3M391w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=r2P5rcKI; arc=none smtp.client-ip=209.85.128.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6e3cdbc25a0so3246007b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 05:26:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1728995187; x=1729599987; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ug4CIhvI9c7efoiVjwADMKle6ML6zboAC9qottYj1qg=;
+        b=r2P5rcKI7eKiDASo3xbB4nS298MlQZH7iMGSoEwXdCLxcRdfSNQpYWijvy0Eu2kII0
+         8gzonLzsHaG6OwhXGWGvYG5pITq2BGZUpt/imh3VIzi/3OmJ4KIEz03UcAfdsWlLJNTN
+         StXPK/L1ZpZFVqlAyy77QMsrexoZx1LrRGaa1O1Qjim96I0mnW+Jq3nt1QvaDA1Uqg4i
+         em5sRf2q86mM00VFtqV8WHPRrjgtMxotCrapz94I2f1A2O6NINqiHT+aFJ+XwEop1zKS
+         qzgcs57cOWogqVopWcrUGXunOkTvreDwqIEneoZB68vjAXeN7MEU8QU6CWN+nF2Clvzf
+         2D3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1728995187; x=1729599987;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ug4CIhvI9c7efoiVjwADMKle6ML6zboAC9qottYj1qg=;
+        b=mIZO0330fCaw3THoMo/COG/FRO8MC17/uTrf2V1j++Q7ENk68XxK6CaH8LLXsBqvz7
+         OD00zt5RclFpN+LWVBsMQRNilLMYcbR0jatJA/vqvzaRpfX6ceV/EZfj9fZTmDGJGrKg
+         BZtWIGiEJyH4vEj3p9dKJXAspC/0Hy8iqb3po2ZOActKLu4Vt4rmyk3HA/JVMrAYTPZl
+         pOt+4UZs3bPQtHPREItTGzqy1bLLUcdlD/aQwe7rZnfZpkukm1twYJnotUY6BnVlfM8p
+         As58eXKm6U76/xEb8DJE2dts5LpW4lUgc63HMh4EFxzDiZuU6hfXVShhbZbeO53hoYzW
+         5J1A==
+X-Forwarded-Encrypted: i=1; AJvYcCUPLTf2LhZ0+LMRKTjPw4WjiZKL+CQufDrZZ8OCRsE57mswZRv9vhjLQVIvZw0PzcUMhkXDgPfHQ121K6w2@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvmOZZgB62uBbNhf2u1NmUDqCyxRIX2/ySCupIAbsAbL3n1vcS
+	GqIiqf/RuZqOGIyOnp+9cNiC475BxC1319h0sdGvVYg7SPr+agijnhQLDt0F3aRnKul3l7c0uB9
+	Fm6nK7ZIyhiFyFVGHYCtMTYeqZwMt1HUZrH+Q4iF3RhwnYv6PIpE=
+X-Google-Smtp-Source: AGHT+IE2uEu5425yw6JXhtzkTXiIwiLHa2uxraMUMytCqyA0U+XKYqEdiFVahWOa8TyQsjCe2gI8WVQTReMheBwdMyM=
+X-Received: by 2002:a05:690c:dc7:b0:6dd:d2c5:b2c with SMTP id
+ 00721157ae682-6e364107ef0mr79205637b3.4.1728995187172; Tue, 15 Oct 2024
+ 05:26:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-0-76d4f5d413bf@linaro.org>
+ <20241009-sm8650-v6-11-hmd-pocf-mdss-quad-upstream-21-v2-9-76d4f5d413bf@linaro.org>
+ <zig5zuf6hjcrkwmsdiahtzz3t3mxrmwxj65l43xij3zhfcyidn@fuisasnavvo3>
+ <CABymUCP7bVBSWXCNp33x_B8KaZSFU-Dx+bU5ctkgDGXrzURrXQ@mail.gmail.com>
+ <CAA8EJpovnEq_ciO0YmiREhwvxv6yGKnRMPx5=6G7R+Ob6Hy_hA@mail.gmail.com>
+ <CABymUCPdu5+iz-amwv_O999sLUOmUMczo_v=1aUpJGpHo5f8CA@mail.gmail.com>
+ <CAA8EJppMu5o7juhKUN2Y_4CRYKtaWN9G01aPU2ZfksE_tzjqCQ@mail.gmail.com> <CABymUCNbwY5hoaOxydPccFAdbnCQgUMspJLHkNziQyf=NxOj2A@mail.gmail.com>
+In-Reply-To: <CABymUCNbwY5hoaOxydPccFAdbnCQgUMspJLHkNziQyf=NxOj2A@mail.gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 15 Oct 2024 15:26:22 +0300
+Message-ID: <CAA8EJpo9XMo9EGKMzVaDrS7tPZ6CHw6RkqROF4-k94KpFXVjfw@mail.gmail.com>
+Subject: Re: [PATCH v2 09/14] drm/msm/dpu: blend pipes per mixer pairs config
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
+	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Rename the x1e80100 vph-pwr regulator nodes to use "regulator" as a
-prefix for consistency with the other fixed regulators.
+On Tue, 15 Oct 2024 at 11:27, Jun Nie <jun.nie@linaro.org> wrote:
+>
+> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B410=
+=E6=9C=8811=E6=97=A5=E5=91=A8=E4=BA=94 15:13=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > On Fri, 11 Oct 2024 at 10:11, Jun Nie <jun.nie@linaro.org> wrote:
+> > >
+> > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=B9=B4=
+10=E6=9C=8811=E6=97=A5=E5=91=A8=E4=BA=94 15:03=E5=86=99=E9=81=93=EF=BC=9A
+> > > >
+> > > > On Fri, 11 Oct 2024 at 09:40, Jun Nie <jun.nie@linaro.org> wrote:
+> > > > >
+> > > > > Dmitry Baryshkov <dmitry.baryshkov@linaro.org> =E4=BA=8E2024=E5=
+=B9=B410=E6=9C=8810=E6=97=A5=E5=91=A8=E5=9B=9B 21:15=E5=86=99=E9=81=93=EF=
+=BC=9A
+> > > > > >
+> > > > > > On Wed, Oct 09, 2024 at 04:50:22PM GMT, Jun Nie wrote:
+> > > > > > > Blend pipes by set of mixer pair config. The first 2 pipes ar=
+e for left
+> > > > > > > half screen with the first set of mixer pair config. And the =
+later 2 pipes
+> > > > > > > are for right in quad pipe case.
+> > > > > > >
+> > > > > > > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > > > > > > ---
+> > > > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 38 +++++++++++=
++++++++-----------
+> > > > > > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h |  1 +
+> > > > > > >  2 files changed, 25 insertions(+), 14 deletions(-)
+> > > > > > >
+> > > > > > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drive=
+rs/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > > > index 43d9817cd858f..66f745399a602 100644
+> > > > > > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+> > > > > > > @@ -442,7 +442,7 @@ static void _dpu_crtc_blend_setup_mixer(s=
+truct drm_crtc *crtc,
+> > > > > > >       const struct msm_format *format;
+> > > > > > >       struct dpu_hw_ctl *ctl =3D mixer->lm_ctl;
+> > > > > > >
+> > > > > > > -     uint32_t lm_idx, i;
+> > > > > > > +     uint32_t lm_idx, lm_pair, i, pipe_idx;
+> > > > > > >       bool bg_alpha_enable =3D false;
+> > > > > > >       DECLARE_BITMAP(fetch_active, SSPP_MAX);
+> > > > > > >
+> > > > > > > @@ -463,15 +463,20 @@ static void _dpu_crtc_blend_setup_mixer=
+(struct drm_crtc *crtc,
+> > > > > > >               if (pstate->stage =3D=3D DPU_STAGE_BASE && form=
+at->alpha_enable)
+> > > > > > >                       bg_alpha_enable =3D true;
+> > > > > > >
+> > > > > > > -             for (i =3D 0; i < PIPES_PER_LM_PAIR; i++) {
+> > > > > > > -                     if (!pstate->pipe[i].sspp)
+> > > > > > > -                             continue;
+> > > > > > > -                     set_bit(pstate->pipe[i].sspp->idx, fetc=
+h_active);
+> > > > > > > -                     _dpu_crtc_blend_setup_pipe(crtc, plane,
+> > > > > > > -                                                mixer, cstat=
+e->num_mixers,
+> > > > > > > -                                                pstate->stag=
+e,
+> > > > > > > -                                                format, fb ?=
+ fb->modifier : 0,
+> > > > > > > -                                                &pstate->pip=
+e[i], i, stage_cfg);
+> > > > > > > +             /* loop pipe per mixer pair */
+> > > > > > > +             for (lm_pair =3D 0; lm_pair < PIPES_PER_PLANE /=
+ 2; lm_pair++) {
+> > > > > > > +                     for (i =3D 0; i < PIPES_PER_LM_PAIR; i+=
++) {
+> > > > > > > +                             pipe_idx =3D i + lm_pair * PIPE=
+S_PER_LM_PAIR;
+> > > > > > > +                             if (!pstate->pipe[pipe_idx].ssp=
+p)
+> > > > > > > +                                     continue;
+> > > > > > > +                             set_bit(pstate->pipe[pipe_idx].=
+sspp->idx, fetch_active);
+> > > > > > > +                             _dpu_crtc_blend_setup_pipe(crtc=
+, plane,
+> > > > > > > +                                                        mixe=
+r, cstate->num_mixers,
+> > > > > > > +                                                        psta=
+te->stage,
+> > > > > > > +                                                        form=
+at, fb ? fb->modifier : 0,
+> > > > > > > +                                                        &pst=
+ate->pipe[pipe_idx], i,
+> > > > > > > +                                                        &sta=
+ge_cfg[lm_pair]);
+> > > > > > > +                     }
+> > > > > > >               }
+> > > > > > >
+> > > > > > >               /* blend config update */
+> > > > > > > @@ -503,7 +508,7 @@ static void _dpu_crtc_blend_setup(struct =
+drm_crtc *crtc)
+> > > > > > >       struct dpu_crtc_mixer *mixer =3D cstate->mixers;
+> > > > > > >       struct dpu_hw_ctl *ctl;
+> > > > > > >       struct dpu_hw_mixer *lm;
+> > > > > > > -     struct dpu_hw_stage_cfg stage_cfg;
+> > > > > > > +     struct dpu_hw_stage_cfg stage_cfg[LM_PAIRS_PER_PLANE];
+> > > > > >
+> > > > > > After seeing this code, can we define STAGES_PER_PLANE (and
+> > > > > > also keep PLANES_PER_STAGE defined to 2)?
+> > > > > >
+> > > > > Could you elaborate it? Stages describe how many layers to be ble=
+nded.
+> > > > > Plane is a DRM concept that describe a buffer to be display in sp=
+ecific
+> > > > > display driver. Plane is already mapped to SSPP/multi-rect in DPU=
+ driver
+> > > > >  in blending stage level. So I am confused here.
+> > > >
+> > > > We have dpu_hw_stage_cfg, you are adding a second instance of it. S=
+o
+> > > > we now have two stages per plane.
+> > >
+> > > So you suggest to replace LM_PAIRS_PER_PLANE with STAGES_PER_PLANE,
+> > > right? I assume a stage is coupled with a LM pair.
+> > >
+> > > But for PLANES_PER_STAGE, I am still confused. A stage or a LM pair c=
+an
+> > > involve many SSPP layers. How it related to planes? Plane is a concep=
+ts from
+> > > higher level.
+> >
+> > PIPES_PER_STAGE, excuse me.
+>
+> Do you mean to keep PIPES_PER_STAGE and do not introduce PIPES_PER_LM_PAI=
+R,
+> or use both? Looks like they are equal in hardware nature. A stage
+> structure serves
+> a mixer pair with 2 pipes. We can use PIPES_PER_LM_PAIR and add comment t=
+o
+>  indicate it, thus avoid defining too many macro.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- .../dts/qcom/x1e80100-asus-vivobook-s15.dts   | 22 +++++++++----------
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts     | 22 +++++++++----------
- .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++----------
- .../dts/qcom/x1e80100-microsoft-romulus.dtsi  | 22 +++++++++----------
- 4 files changed, 44 insertions(+), 44 deletions(-)
+Yes, don't introduce PIPES_PER_LM_PAIR and just add STAGES_PER_PLANE.
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-index 20616bd4aa6c..b1f190a9686f 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts
-@@ -94,17 +94,6 @@ linux,cma {
- 		};
- 	};
- 
--	vph_pwr: vph-pwr-regulator {
--		compatible = "regulator-fixed";
--
--		regulator-name = "vph_pwr";
--		regulator-min-microvolt = <3700000>;
--		regulator-max-microvolt = <3700000>;
--
--		regulator-always-on;
--		regulator-boot-on;
--	};
--
- 	vreg_edp_3p3: regulator-edp-3p3 {
- 		compatible = "regulator-fixed";
- 
-@@ -135,6 +124,17 @@ vreg_nvme: regulator-nvme {
- 		pinctrl-0 = <&nvme_reg_en>;
- 		pinctrl-names = "default";
- 	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
- };
- 
- &apps_rsc {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 4ab7078f76e0..4ab9e0ca4591 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -261,17 +261,6 @@ platform {
- 		};
- 	};
- 
--	vph_pwr: vph-pwr-regulator {
--		compatible = "regulator-fixed";
--
--		regulator-name = "vph_pwr";
--		regulator-min-microvolt = <3700000>;
--		regulator-max-microvolt = <3700000>;
--
--		regulator-always-on;
--		regulator-boot-on;
--	};
--
- 	vreg_edp_3p3: regulator-edp-3p3 {
- 		compatible = "regulator-fixed";
- 
-@@ -319,6 +308,17 @@ vreg_nvme: regulator-nvme {
- 		pinctrl-0 = <&nvme_reg_en>;
- 	};
- 
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
- 	vreg_wwan: regulator-wwan {
- 		compatible = "regulator-fixed";
- 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-index 3c13331a9ef4..10ba934652c3 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
-@@ -166,17 +166,6 @@ platform {
- 		};
- 	};
- 
--	vph_pwr: vph-pwr-regulator {
--		compatible = "regulator-fixed";
--
--		regulator-name = "vph_pwr";
--		regulator-min-microvolt = <3700000>;
--		regulator-max-microvolt = <3700000>;
--
--		regulator-always-on;
--		regulator-boot-on;
--	};
--
- 	vreg_edp_3p3: regulator-edp-3p3 {
- 		compatible = "regulator-fixed";
- 
-@@ -206,6 +195,17 @@ vreg_nvme: regulator-nvme {
- 		pinctrl-0 = <&nvme_reg_en>;
- 		pinctrl-names = "default";
- 	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
- };
- 
- &apps_rsc {
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-index 42e02ad6a9c3..c47a63b5c85b 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi
-@@ -125,17 +125,6 @@ linux,cma {
- 		};
- 	};
- 
--	vph_pwr: vph-pwr-regulator {
--		compatible = "regulator-fixed";
--
--		regulator-name = "vph_pwr";
--		regulator-min-microvolt = <3700000>;
--		regulator-max-microvolt = <3700000>;
--
--		regulator-always-on;
--		regulator-boot-on;
--	};
--
- 	vreg_edp_3p3: regulator-edp-3p3 {
- 		compatible = "regulator-fixed";
- 
-@@ -165,6 +154,17 @@ vreg_nvme: regulator-nvme {
- 		pinctrl-0 = <&nvme_reg_en>;
- 		pinctrl-names = "default";
- 	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
- };
- 
- &apps_rsc {
--- 
-2.45.2
+>
+> >
+> > --
+> > With best wishes
+> > Dmitry
 
+
+
+--=20
+With best wishes
+Dmitry
 
