@@ -1,109 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-34441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B0F5299EB8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 15:08:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29CBA99ED2B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 15:25:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5C9221F264DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:08:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E22FD286DA1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 15 Oct 2024 13:25:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CA941AF0B0;
-	Tue, 15 Oct 2024 13:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C35701EB9F1;
+	Tue, 15 Oct 2024 13:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TyiLKfPp"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IpezfYj/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE41D1C07FF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 13:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156AF1FC7EF;
+	Tue, 15 Oct 2024 13:21:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728997701; cv=none; b=nvWngjey6wnuN8RlQ6xb8U5NGcc3YAydTnisWSJahOLyUzwiHDeC/QT0qSxQxTvnzbDLrVyKKdxLwHK5HgAjSCpWCSYylEDRItEO2xgZZfEHZFR+GRSHu/ZLEQyVbs1nWPPHfTHQuitKPJ6hM4KXc6WaDehhHXBYIzkrDAwKZgw=
+	t=1728998473; cv=none; b=Lvp8O4hUugs9QNyK0LvVIRlkapvOHuNaZh9ObiWaw1Wu5pOcoJruVSuMJD1PFrWR07vdkr6yMB2NBP3rzD1uyBby4pYzM5ENcdNhtKpzct2j6ucEZKA1xhRtevsuhC0tFINoa0Gp8+Pu7vzKRpTG/7raPKH+wE0H9MMExWIYH7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728997701; c=relaxed/simple;
-	bh=nGUgaS3xSqIDmh8hU4JivJzlEHXiIXok89af7BxXPcM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t5ZCOMEiNSB82axhOPqNNxJfCdskgNd2KM/j+GOLEFynnDj4WTGaxokRKdUJXufQA6q948fcNF7igIP0I4etkmxuFQOkh+YQv9SynMrdZexRsi1LRaqfVgj/BO6CvXBk3lLY4yn9XN6RHmPvS8pmotHbvi+9iZnTm1jCUokdF44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TyiLKfPp; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-539e13375d3so4158282e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 15 Oct 2024 06:08:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1728997698; x=1729602498; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jrYegS/cg9zWrW4IjkZUnQE9rjlPUwUGC3VKtBGsMag=;
-        b=TyiLKfPp32pz5wSuayFx9M+L732xmvp3i6cdZCgFX4ZOeNf5wXVdxzUWNdIvvGw0Ez
-         Y4EJZMYSPwy8CftpfMwin7FT4huXg6RoLDhhxpcb4t3MN5BjfW8KIQu8uAbMuP1f8Sm2
-         NxcKqTfwYiG9Z8MtKAJyQb4jOIn69Px426lPTiWVgOneUzsky1mvQpMPjmQu28lpXjMV
-         gG3HVClXuXhozIxiwBlR3skVw7o06wu9+5IjXhugl4txC5638hhBIKaH8KPCIykMiC0d
-         W5kAoD422SaOOrIOKTRiPDNVjH+3QgZxgNzeiZd2sA7HjELl09wDn+pClogxrOmhbFUf
-         TlYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1728997698; x=1729602498;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jrYegS/cg9zWrW4IjkZUnQE9rjlPUwUGC3VKtBGsMag=;
-        b=rKiOf22JWueoQPL9IBZDiwpp5bplnAPucP1yTZuD3CNUC0X/sZEtsOhF6/mpfR6LOq
-         v4OB5rmN8Um1OQ4maQ79NoOB36LeBL53QJyeWpnN44E0O0TsH1jFWJDMr5BIZlKm2UxQ
-         zc1zdLR2MqSGN7g1XNliR5nKPTNGCaT5mpa7QYOBbogRfbhznrD6mp85BIWdOronTC16
-         iyfCMAcMW60DnGBi4cMVckfE8Nctmlh7zDT3l4nc23IHldIJL0hWbD+MSysGi+Vjl636
-         QP+w1MOGS5YK+/1/qceuKyo2UqDYThiLoNPB9q9AbCa8y2p07Wuq+HDLFTchSMTKFfgT
-         WF0w==
-X-Forwarded-Encrypted: i=1; AJvYcCXif3AsU6QURaORXgVUmgxm7vYago3fzpyAhpVTMzClYCv7MEcta/IfXLppd4GePclxrEZXDr5Q2C+x0Bm/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6r6O7Nij6oxh0EbOyvTWDTNwooLoe1q54Cc/jsV5WoPIqbMvc
-	SChwBZv9Op1hLpz72vkonrQQzlv3URxBansoKo1XH2ea+ZmdRiCienRH5qgkCFA=
-X-Google-Smtp-Source: AGHT+IEiNt9jcpifpSJ4xTgDlnr3L/ZtDDqDq5h+H8YO2Y8dPiK0O/PL8SlRc64Fnhh2XiyRLqTPfw==
-X-Received: by 2002:a05:6512:2352:b0:539:f7de:df84 with SMTP id 2adb3069b0e04-539f7dee17amr3532200e87.10.1728997697532;
-        Tue, 15 Oct 2024 06:08:17 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539fffa8e92sm168284e87.15.2024.10.15.06.08.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Oct 2024 06:08:16 -0700 (PDT)
-Date: Tue, 15 Oct 2024 16:08:15 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Johan Hovold <johan+linaro@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: x1e80100: rename vph-pwr regulator
- nodes
-Message-ID: <ofrnqmnfy7tj2myngfplhycwmm6kyv4guwjlz2vuzc7gd6retg@mleqzgzft24x>
-References: <20241015122601.16127-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1728998473; c=relaxed/simple;
+	bh=CMw/3KzLHwM0hcPipccWgf3XPBaTYU7bKTrJRV1RlBw=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Tr65T7BeL0E1cCZMn9sCwENHVIYGdDoT5j6BKjbHR/Cfv44QaqeF6wyQyQl5B+p7Fscohz82tepSQQx7TlbYMjMXRj7U7qS4WWwkfa3y23QFU12oXuSqjJUR2OaYQzZU4EXv81KnZYvlHW9fXYQjIeIBtUWEoKYoCblCDdwi0Yc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IpezfYj/; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49FBDQxO028544;
+	Tue, 15 Oct 2024 13:21:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Q0fbcOtY8v19KKgTblM7Yu
+	JbUoVgeLttVGx3W4hCnfs=; b=IpezfYj/MU26BV6/zQq4nXY4KMWm0RNJqUwLaU
+	U6xB9umcrDxgaVEOk9nX0D18DE/6HamDd7w8Ltgr7+OdY3Sso0AgU39mLFxfF8mc
+	OQNFFag2i8QZcIQNxoHyUoBYVOSe9zH0EK0JzrYlUYXyhEMmhQ/Z7x285nGBmVZP
+	cKnpJ4g3JMz6JWMAa1OSTIYEmaiXmDlvYNKnI8PT3+DoFnnh64IoqsNzKVQ5CCQy
+	WPaiURb+wYhvfVODzLj4p3T8kyABTLQ7oW/ksgb2SV0EAkG8+snL1opgWW84pIV6
+	Kv9idopKXfhl5JEuov11DiTDLsTLcQQE4rwGaUCLEO/UzHwQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4292evkcg9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Oct 2024 13:21:07 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49FDL7WR030926
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 15 Oct 2024 13:21:07 GMT
+Received: from hu-kotarake-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 15 Oct 2024 06:21:03 -0700
+From: Rakesh Kota <quic_kotarake@quicinc.com>
+To: <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: <quic_kamalw@quicinc.com>, <quic_jprakash@quicinc.com>,
+        <quic_kotarake@quicinc.com>
+Subject: [PATCH V2] arm64: dts: qcom: qcm6490-idp: Allow UFS regulators load/mode setting
+Date: Tue, 15 Oct 2024 18:50:49 +0530
+Message-ID: <20241015132049.2037500-1-quic_kotarake@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241015122601.16127-1-johan+linaro@kernel.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: N2nbzc-A4sXKmPcvO-KribtwDwvPHdDZ
+X-Proofpoint-ORIG-GUID: N2nbzc-A4sXKmPcvO-KribtwDwvPHdDZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 malwarescore=0 mlxlogscore=609 lowpriorityscore=0
+ phishscore=0 adultscore=0 bulkscore=0 mlxscore=0 impostorscore=0
+ suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410150091
 
-On Tue, Oct 15, 2024 at 02:26:00PM +0200, Johan Hovold wrote:
-> Rename the x1e80100 vph-pwr regulator nodes to use "regulator" as a
-> prefix for consistency with the other fixed regulators.
-> 
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> ---
->  .../dts/qcom/x1e80100-asus-vivobook-s15.dts   | 22 +++++++++----------
->  arch/arm64/boot/dts/qcom/x1e80100-crd.dts     | 22 +++++++++----------
->  .../dts/qcom/x1e80100-lenovo-yoga-slim7x.dts  | 22 +++++++++----------
->  .../dts/qcom/x1e80100-microsoft-romulus.dtsi  | 22 +++++++++----------
->  4 files changed, 44 insertions(+), 44 deletions(-)
-> 
+The UFS driver expects to be able to set load (and by extension, mode)
+on its supply regulators. Add the necessary properties to make that
+possible.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+---
+Changes V2:
+ - Dropped the removing Min and Max Voltage change as suggusted by the Dmitry
+ - Link to v1: https://lore.kernel.org/all/20241004080110.4150476-1-quic_kotarake@quicinc.com
+--- 
+ arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+index 5f3d4807ac43..a000bf9115cc 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+@@ -258,6 +258,8 @@ vreg_l6b_1p2: ldo6 {
+ 			regulator-name = "vreg_l6b_1p2";
+ 			regulator-min-microvolt = <1140000>;
+ 			regulator-max-microvolt = <1260000>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+@@ -265,6 +267,8 @@ vreg_l7b_2p952: ldo7 {
+ 			regulator-name = "vreg_l7b_2p952";
+ 			regulator-min-microvolt = <2400000>;
+ 			regulator-max-microvolt = <3544000>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+@@ -279,6 +283,8 @@ vreg_l9b_1p2: ldo9 {
+ 			regulator-name = "vreg_l9b_1p2";
+ 			regulator-min-microvolt = <1200000>;
+ 			regulator-max-microvolt = <1304000>;
++			regulator-allow-set-load
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
+@@ -467,6 +473,8 @@ vreg_l10c_0p88: ldo10 {
+ 			regulator-name = "vreg_l10c_0p88";
+ 			regulator-min-microvolt = <720000>;
+ 			regulator-max-microvolt = <1050000>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+ 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+ 		};
+ 
 -- 
-With best wishes
-Dmitry
+2.34.1
+
 
