@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-34630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D9129A13B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 22:23:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D0339A13BB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 22:23:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4FE5A1C220DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 20:23:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5A736B20F5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 20:23:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BDB7C216A31;
-	Wed, 16 Oct 2024 20:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 952632170CD;
+	Wed, 16 Oct 2024 20:23:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mq91vJy3"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ni2/0rWM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119DF2141D9;
-	Wed, 16 Oct 2024 20:23:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86A0215F61;
+	Wed, 16 Oct 2024 20:23:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729110182; cv=none; b=T43e/4K/sDflFj6br1nmyKyKOyJgFv4n0GvfcHyYE8TZ4/04QYH5xOUyd+Qb3fPNG38YvNMdWLAYZLwDlwuykFE0oo5MJbYssNwgV0SjE3fBYLAA3O8fEfQR/OyLgCEgO+xyibJ2nw1jXREQAR243BNS7wackbdLaLmIP3AaFfE=
+	t=1729110184; cv=none; b=s4jAQ4FSBzTcWywYRSLLWH4vfo+e9CLgKm5rFnSaVrCXOy6a0WhykX1GzHQZynzFtgfX0TC51YHUNjRza2B/1KUVsfYkkJdVeUK2Sg2hX/aAyCtumdIZhGhfLnC7tfHRJBdPQLRsOixGfYtuWSPNVAlFAdYQOiRIt6/OkyP9YVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729110182; c=relaxed/simple;
-	bh=Tm2Za2GFwBDd/rJwNv+GDFqn9OUyxgGWWmwTErJ/tnA=;
+	s=arc-20240116; t=1729110184; c=relaxed/simple;
+	bh=foLlCdogMUXishAbTLy1bmmp2+0BP4fTTuiVey2y3R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SMNf7ybn6YUTJLUJxsgX6umMNjKT9V773Zh3a9yUJiMrW2Q8SZrXU2nnUHqz87K5LunagH2sCJovzaP0LXI1HMMMdMmBjDwXOKSjWPoVIkAeQFgkFK1xS1XvDdoJKzlT/YcZjeI5lsEYZ6OcXcL/8M/LPv8SMW0X4z4W+B6fjqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mq91vJy3; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version; b=CRnxmC2zsN2JGBuatP4+tTeo3G7Svw8ZG2sCW2W/GU+IhPrKQMk+tTeQW3DGvThRG6xuWrIFPRuj3OcjPPCvIx5TWn/4DN4mQ1k16Q5EUz80pNBFF6S/Nc7DIhbIHremUyvHzJUlsYYT3fEDcfLRd9qRJn8mU+SN2UsDcQfKmnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ni2/0rWM; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-42f6bec84b5so2422395e9.1;
-        Wed, 16 Oct 2024 13:23:00 -0700 (PDT)
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4314f38d274so3087165e9.1;
+        Wed, 16 Oct 2024 13:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729110179; x=1729714979; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729110181; x=1729714981; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y1rJtovV9sSTaUZHyJvF9H/cSrHfxrTlX/G5gzgaREM=;
-        b=Mq91vJy3ixyGg86gJYbe4iPSD/mgSznX49/YQ2cDcwJhfB2ETci8xJLJbnZhdeFfy2
-         qMio1xf3MW6gK0wgU5Y0soYxr8gIl+4Af5YU1EOoyuREjkFQx0XXkB2hAAD+lNma1Sua
-         JHLGAFF3IB+tGADzVx6bj1FKYVdjzNUi9TXDLEpttTSINwiW2/pKvQ0zxS5F/gClpGKC
-         0+9ZlWcDtSOQRuA3Bo36IX0GB+Z5PBeCiEGLznUztjHM/og9shYMU8WVmpi7pJR++3Mu
-         vAYk2pXimslhlE9WFrggm9hYyIV1TnlUh+MXB1Fy+WOMSEqRmoLjgzz9t4VckcZIBuhU
-         Z+lg==
+        bh=ZNeXsonwMiUdiWY17O7CaaVmxJE/5sGFy3QeXQ1t47I=;
+        b=Ni2/0rWM7YEZOoknqz9zv51Obny+Tf8Id2puT2l8IavJpK7XttwKBViASft1hni//b
+         4OijMvfE9tzg0VV+dqcV3jCCy/nIYvIxRdfGRaQUew3aIH7P930YffA1yOI6g/NnuH9j
+         3BrRYOHYXvrWF1ZSTpZTI2ny3O7yrJbpvLPGetFkAAMDlz9sIZl4QIEvXNNKS20czI7a
+         bD4FVazc84U71rZXNF74rBQztGs9Zvnw0nrzu2Iiv7lw2EiZR8Q3nNcNDz5hv7Oo2FhC
+         iX7jdNUP+9YAQa4KefXOPD43WfoCuoq3k2Rct4UMWj5CwuxvsyWqY5P+LEwQXqdoqZ1l
+         vEQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729110179; x=1729714979;
+        d=1e100.net; s=20230601; t=1729110181; x=1729714981;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Y1rJtovV9sSTaUZHyJvF9H/cSrHfxrTlX/G5gzgaREM=;
-        b=CcRDSAa8hAxYOjVwpp6VbonlWz0lt5bCIY4wFyQMuhODPNjTZlOkG35lg6JuVY6hfH
-         d1MR2lmnix06BOEKe0gNA9bK6U/GlkHwU+A7kHySq0g4CJsR5UNoHRTLAvCytcoPlxk+
-         GyHLuy8MZgPb5kGECkppGzAdjxikFYRnLgfc+T4h75+Eey8yqMh9pR0Xnrzp1pv6PtwY
-         FixSgfaTZqaIbsWWvf9eAuZpFsBiig7cQ9hRAgPL++gShV2io4RQzDeFDFnbVroZqExd
-         HIZwXE4It4obv2H/WhF5bcdN29FArUlIBTR0vbFTLThtqGjbcCNv26jib6VKRc++3fSE
-         V7jA==
-X-Forwarded-Encrypted: i=1; AJvYcCVmCWgqtZH6IYu/YnqfwvE/1bmxojc/EI/o/gU240zh5dtb4OZaeyCE4e3mPlqqrjNgg/CS9KI+Va7u@vger.kernel.org, AJvYcCXNSdWRG493SbjkZ87eiMpsjhQE5NMg1Y9N6vQ9RLMMcLuqz/1wv54co/rwBKV6wnJuTWpHwdaHF0Y07AwA@vger.kernel.org, AJvYcCXlgy6jlfjBRxJPky/LYPdzMAztIPFBKvkDp4hSaHX1wLkkWo+1+G3uhB6kN62zkra5txY/I7X+xVOM4RbRWQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlxgHXK1k2XCBUQhZTs0zdfLLiy5SUnpZgK27QU4BMVDqn3Rol
-	kdZJdLVMXTrcN8ahiqUrsz7UtSb0klBQhvGYRv7sVYAkw08mkmo=
-X-Google-Smtp-Source: AGHT+IG+pf5frP8Sl2tjASAeO6ILo4iCE9o/Nf3pK3nMS1Xjc8/C4xAmEgIxXrUfpb21aS6X+blCdg==
-X-Received: by 2002:a05:600c:450c:b0:430:5654:45d0 with SMTP id 5b1f17b1804b1-4314a2cc434mr42695715e9.14.1729110178918;
-        Wed, 16 Oct 2024 13:22:58 -0700 (PDT)
+        bh=ZNeXsonwMiUdiWY17O7CaaVmxJE/5sGFy3QeXQ1t47I=;
+        b=m0QSlmD0VpwY6+G/Uv0YE8aThGnaIyu28awigxHWCA9/EztoH0OwzlllIUkgXgXOdk
+         +Sc8a/F7gunuRipy+a3Upvs/4+uwli70KEILS1KhGmKHDwGuuifyjWgyl4aiiVea/7a+
+         q62i1esFvoWf2TsaTfozVjJ7icJaMuWZLv+VN0KiNeWvicldAyarfifOL1kHvAD/MI1W
+         r1GHROAOOJRk45Xwnn8eKaPilZo08TOYa1TA9sSwQ07kOunZtjYpqBvWXyxbJuT/85cr
+         S+SrPN9OFKZ//SKcmzROamknL7r7ZcZznSmIQA8OfGHwoTo85Cmk0tMr/UWLuund8IX/
+         Zvow==
+X-Forwarded-Encrypted: i=1; AJvYcCUeBv9ffgcY2X1FmEPHA2kxYlFAaUV9v1WD91O02Y5lXS+1ef62PLo81XNoxYq/Pt37C49vJXAy6t07ZiFnHQ==@vger.kernel.org, AJvYcCVLSiQkbWApQ2xtBr5EEa52WwUPuh3LTjFi/Lwog3VyRCA2Zn+eePQSs+UJICmz8kwKuVR7S4lODc3kILB5@vger.kernel.org, AJvYcCX7tK4K+BmYf1Lf4KbpEO8DvQC3Ewuyav5nNw/TTVXtbB1RgSm2QajXgSdAMm+Huz7JypuIQJ8i1+fn@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKykAgwCuYNXnUXMtjFQyTikI3J0BldhSc0g/zkS6UVasTddip
+	U8N2Xt6d/P0sZ1S/in57EofUnh6frCWUXVLXodxay5CDBQ1LnKzlCaP8Xrk=
+X-Google-Smtp-Source: AGHT+IFhswGIf/xP/4ygVD87cFFLmuKxS2SWzfTbW5nTyS+lP0KRoVFqiUKXgCl4DcXTNJT5dFPzlg==
+X-Received: by 2002:a05:600c:1c9c:b0:42c:a8cb:6a5a with SMTP id 5b1f17b1804b1-431255df67amr174443665e9.15.1729110180662;
+        Wed, 16 Oct 2024 13:23:00 -0700 (PDT)
 Received: from localhost.lan (adsl-178-39-53-103.adslplus.ch. [178.39.53.103])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43158c55a87sm3942125e9.35.2024.10.16.13.22.58
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43158c55a87sm3942125e9.35.2024.10.16.13.22.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 13:22:58 -0700 (PDT)
+        Wed, 16 Oct 2024 13:22:59 -0700 (PDT)
 From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	linux-arm-msm@vger.kernel.org,
@@ -81,9 +81,9 @@ Cc: Konrad Dybcio <konradybcio@kernel.org>,
 	tephan.gerhold@linaro.org,
 	johan+linaro@kernel.org,
 	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Subject: [PATCH v1 1/2] arm64: dts: qcom: x1e80100-dell-xps13-9345: route edp-panel enable gpio
-Date: Wed, 16 Oct 2024 22:15:48 +0200
-Message-ID: <20241016202253.9677-2-alex.vinarskis@gmail.com>
+Subject: [PATCH v1 2/2] arm64: dts: qcom: x1e80100-dell-xps13-9345: fix nvme regulator boot glitch
+Date: Wed, 16 Oct 2024 22:15:49 +0200
+Message-ID: <20241016202253.9677-3-alex.vinarskis@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241016202253.9677-1-alex.vinarskis@gmail.com>
 References: <20241016202253.9677-1-alex.vinarskis@gmail.com>
@@ -95,47 +95,30 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-tlmm 74 was experimentally found to be panel enable pin, which shall be
-high for panel (both low-res IPS, OLED) to work. Define it as such.
+The NVMe regulator has been left enabled by the boot firmware. Mark it
+as such to avoid disabling the regulator temporarily during boot.
 
+Based on https://lore.kernel.org/all/20241016145112.24785-1-johan+linaro@kernel.org/
+
+Fixes: f5b788d0e8cd ("arm64: dts: qcom: Add support for X1-based Dell XPS 13 9345")
 Signed-off-by: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
 ---
- .../arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-index 6f78b61f8da3..93d90209060c 100644
+index 93d90209060c..05624226faf9 100644
 --- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
 +++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-@@ -560,10 +560,13 @@ &mdss_dp3 {
+@@ -162,6 +162,8 @@ vreg_nvme: regulator-nvme {
  
- 	aux-bus {
- 		panel {
--			/* 1920x1200 IPS panel is SHP1593, PNP09FF compatible */
- 			compatible = "edp-panel";
-+			enable-gpios = <&tlmm 74 GPIO_ACTIVE_HIGH>;
- 			power-supply = <&vreg_edp_3p3>;
- 
-+			pinctrl-0 = <&edp_bl_en>;
-+			pinctrl-names = "default";
+ 		pinctrl-0 = <&nvme_reg_en>;
+ 		pinctrl-names = "default";
 +
- 			port {
- 				edp_panel_in: endpoint {
- 					remote-endpoint = <&mdss_dp3_out>;
-@@ -677,6 +680,13 @@ cam_indicator_en: cam-indicator-en-state {
- 		bias-disable;
++		regulator-boot-on;
  	};
  
-+	edp_bl_en: edp-bl-en-state {
-+		pins = "gpio74";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	edp_reg_en: edp-reg-en-state {
- 		pins = "gpio70";
- 		function = "gpio";
+ 	vreg_vph_pwr: regulator-vph-pwr {
 -- 
 2.45.2
 
