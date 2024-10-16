@@ -1,133 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-34597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 141D79A0CD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:36:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F54D9A0D3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:49:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 894DFB280FA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:36:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EDB961F222B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:49:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88CCE20C479;
-	Wed, 16 Oct 2024 14:35:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BBCD14A4E2;
+	Wed, 16 Oct 2024 14:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="doT98/NT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gJyhIZpx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F4520C039;
-	Wed, 16 Oct 2024 14:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8520B20ADEA;
+	Wed, 16 Oct 2024 14:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729089355; cv=none; b=HGDwKf507ahMIdCEET55Oo+ofu9rzbrirdfwo1KfBE0zOcMRd98etbhV4QkKzSBFRFq9gTEHqWAPLG+F96YqalJXPQYOOYcI17mIpJJaSix4TR2EhsyL5BRx9DUPxoy8qxgFN8WoBezD8AwVswVbb5dBrmkQOLhTNcJjFpewy3o=
+	t=1729090188; cv=none; b=DleBC8lmod0V+xke1Zy6MhPwOAWmJsiXJZnzc2x93F6JKM1KMY/3MXdlZr9s8uIoJuKeYw4hyX6Tpf4J+Q7Ybm0Vjd/4YZO2rgL2PHHUxooPzddiKZy0J26DcT9AnJrMka3fRBgwVRUSwr1AxcbsIITRRSbU7HMLB6Ou2RTpRPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729089355; c=relaxed/simple;
-	bh=NXK/fPhGl4mqtfjEA+PZpwSNsIwN2iaBtslPz058mG4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jP8Hlr8GdAMTVVSg/C/DhFKM70Yw7zxl6Y9AorDO0E32W/ngGylxiNg6FJdBYVUABW5W1fP8XoJQnVv5yF0geB16nJtuPrSf9LQ45PgP8DRSLOOQGQ4+9ppPsQyWojvafFlqDNp5k1fINqdQX91EcdtNR+6LaU5AzgRddzU9Oas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=doT98/NT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50854C4CEC5;
-	Wed, 16 Oct 2024 14:35:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729089354;
-	bh=NXK/fPhGl4mqtfjEA+PZpwSNsIwN2iaBtslPz058mG4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=doT98/NT4FM40wYqR+SAm4CK3i00eE0ELNQ2AAFfLrDWK15sN8WmePaZVqR1S8G+j
-	 f/wMm2JKvoAX1cNiI0SVJyVRDEw9N7C4ZyZR3sXHYxmFbcZZoZZ4ggESnvaMDP3m+n
-	 aZs3c/6MfoMmv7cY/AhJ6GBa9B7VFynlW2FBe5HdJU2Y509EyQ7TFYzSX1BBiyVDMd
-	 yIPUARKazo11AoVwVfGg5nfeOtRqbU/UM+3t9IoqUcg9J1ywBE7XTXz+/bA5f61Koj
-	 psv6t/QnwXD4pMnPISVPDLyxbHEIaAVEYqLekUPdyyTejmdHulsiUBlHGGI5tskbEs
-	 ddma1Se1F5KQg==
-Date: Wed, 16 Oct 2024 09:35:59 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>, 
-	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
-	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v1 2/5] arm64: dts: qcom: Add support for configuring
- channel TRE size
-Message-ID: <7e7ksit5ptjrcnct66v75mbxuabnzzloungockdal2dl2y6nn5@ge4mrsjmd746>
-References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
- <20241015120750.21217-3-quic_jseerapu@quicinc.com>
- <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
+	s=arc-20240116; t=1729090188; c=relaxed/simple;
+	bh=lJSe30HFEW7s3wD5KSVYwrMaFRwVVwHeZdBtCDnPE4o=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=hGvNQ5X9gAtGP3WDXTnTvkHTJPWQHMr7DaFpLPjkyOCGEiOclEEKh1eY5fxvF79OqrhpnDIsxmH2mw1TdlAAKHwLeOXpv5Af1Nx3RSgX19N3cKNIrEJDdNi/zHQg5XLh1avAzCDDfcu5POMG6krhuGSAfK7ehJ1v518mWeFZYY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gJyhIZpx; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GA0sFA013279;
+	Wed, 16 Oct 2024 14:49:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=KXDcddpvwlveSy8Xs2uvrS
+	kEQq/4/h9QKASZAMIf+Cc=; b=gJyhIZpxA5Ui9vCBx1glHOpwqszH7HWhuZ+iHw
+	h7SG2JFIop/Jh4frn0RNt6o67XUH9V5YZALDdjt7Io7eXmPUVbqrvG4snlDY015k
+	lzvFQaXaIYngrA53lMh6zBjvnXOpp786pvfSlXngn2EVtoWBvkxItKiLo4U0nIdH
+	MMTOqGVzs/Vpw+MIOqxz5wqo/ZE4vYt/SHkq2NmEfe234V46QIjLkeWHpJ6iS4Yk
+	s0H8Q6oOcfZUCnLcrWGum6AudDZcocFfcTsWjeSTIBw0CdmdK+q0oZkk9INwelLk
+	InEi5q9GIwGhEKMHmckj+Fp17k2AhweuQFU8eXrpiLwPM1cg==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42abbxrxk0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 14:49:33 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49GEnWu7013349
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 14:49:32 GMT
+Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Wed, 16 Oct 2024 07:49:30 -0700
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+To: <andersson@kernel.org>, <konradybcio@kernel.org>, <hanchunchao@inspur.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+Subject: [PATCH 1/1] soc: qcom: socinfo: fix revision check in qcom_socinfo_probe()
+Date: Wed, 16 Oct 2024 20:18:52 +0530
+Message-ID: <20241016144852.2888679-1-quic_mmanikan@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8IOmTUeAOCkI2boAgPDBPmVAhUzGAFqS
+X-Proofpoint-GUID: 8IOmTUeAOCkI2boAgPDBPmVAhUzGAFqS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1011
+ priorityscore=1501 impostorscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0
+ spamscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410160092
 
-On Tue, Oct 15, 2024 at 03:33:00PM GMT, Krzysztof Kozlowski wrote:
-> On 15/10/2024 14:07, Jyothi Kumar Seerapu wrote:
-> > When high performance with multiple i2c messages in a single transfer
-> > is required, employ Block Event Interrupt (BEI) to trigger interrupts
-> > after specific messages transfer and the last message transfer,
-> > thereby reducing interrupts.
-> > For each i2c message transfer, a series of Transfer Request Elements(TREs)
-> > must be programmed, including config tre for frequency configuration,
-> > go tre for holding i2c address and dma tre for holding dma buffer address,
-> > length as per the hardware programming guide. For transfer using BEI,
-> > multiple I2C messages may necessitate the preparation of config, go,
-> > and tx DMA TREs. However, a channel TRE size of 64 is often insufficient,
-> > potentially leading to failures due to inadequate memory space.
-> > 
-> > Adjust the channel TRE size through the device tree.
-> > The default size is 64, but clients can modify this value based on
-> > their heigher channel TRE size requirements.
-> > 
-> > Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 132 +++++++++++++--------------
-> >  1 file changed, 66 insertions(+), 66 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > index 3d8410683402..c7c0e15ff9d3 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -1064,7 +1064,7 @@
-> >  		};
-> >  
-> >  		gpi_dma0: dma-controller@900000 {
-> > -			#dma-cells = <3>;
-> > +			#dma-cells = <4>;
-> >  			compatible = "qcom,sc7280-gpi-dma", "qcom,sm6350-gpi-dma";
-> >  			reg = <0 0x00900000 0 0x60000>;
-> >  			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-> > @@ -1114,8 +1114,8 @@
-> >  							"qup-memory";
-> >  				power-domains = <&rpmhpd SC7280_CX>;
-> >  				required-opps = <&rpmhpd_opp_low_svs>;
-> > -				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
-> > -				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
-> > +				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C 64>,
-> > +				       <&gpi_dma0 1 0 QCOM_GPI_I2C 64>;
-> 
-> So everywhere is 64, thus this is fixed. Deduce it from the compatible
-> 
+In success case, the revision holds a non-null pointer. The current
+logic incorrectly returns an error for a non-null pointer, whereas
+it should return an error for a null pointer.
 
-If I understand correctly, it's a software tunable property, used to
-balance how many TRE elements that should be preallocated.
+The socinfo driver for IPQ9574 and IPQ5332 is currently broken,
+resulting in the following error message
+qcom-socinfo qcom-socinfo: probe with driver qcom-socinfo failed with
+error -12
 
-If so, it would not be a property of the hardware/compatible, but rather
-a result of profiling and a balance between memory "waste" and
-performance.
+Add a null check for the revision to ensure it returns an error only in
+failure case (null pointer).
 
-Regards,
-Bjorn
+Fixes: e694d2b5c58b ("soc: qcom: Add check devm_kasprintf() returned value")
+Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+---
+ drivers/soc/qcom/socinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Best regards,
-> Krzysztof
-> 
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 3c14df7a382c..ecfd3da9d5e8 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -786,7 +786,7 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
+ 	qs->attr.revision = devm_kasprintf(&pdev->dev, GFP_KERNEL, "%u.%u",
+ 					   SOCINFO_MAJOR(le32_to_cpu(info->ver)),
+ 					   SOCINFO_MINOR(le32_to_cpu(info->ver)));
+-	if (!qs->attr.soc_id || qs->attr.revision)
++	if (!qs->attr.soc_id || !qs->attr.revision)
+ 		return -ENOMEM;
+ 
+ 	if (offsetof(struct socinfo, serial_num) <= item_size) {
+-- 
+2.34.1
+
 
