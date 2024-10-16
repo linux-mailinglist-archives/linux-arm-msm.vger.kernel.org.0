@@ -1,126 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-34591-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE0319A0B80
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 15:34:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 61EAA9A0BFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 15:55:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 589BB1F21810
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 13:34:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9422D1C22097
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 13:55:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D97192076DA;
-	Wed, 16 Oct 2024 13:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E126E209F29;
+	Wed, 16 Oct 2024 13:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b="aOIvnR6R"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZNz30qwT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492F41D8E1D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 13:34:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A024207206;
+	Wed, 16 Oct 2024 13:54:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729085670; cv=none; b=uEOG7boCe4VpnGslpSN/TDhx2Gzr9xYyXYgjGsoS2jjB/T6Us9/++EJOepsD+ALZxdVY4j2RvSyZP6nR8iTIJD+aONJz/pzqYpPQvgARxxDnlY2KROy9zcj4UhTWNZD1X2TdVUTE9GKqRFC8ckq8ZU/R2ppY/f7VWScae4jRK10=
+	t=1729086899; cv=none; b=rfVKhN20UM0FAA4sG9YKlB3Z+be/B5uDpehT553k1OzeT/qN+Gj+/rnxcB0hPmdDr7+Jp1BKZo65ji0zZvz1lPLGYhGsXXIEA7OH33e75h2hx20elBGCb9hPTW5BMZkE+EXrBdSw7BwSID307yaHzvRax42jGo20ueKc4OoyNsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729085670; c=relaxed/simple;
-	bh=4TDceqBwB5/CSA70st1bX9f2C9Pa3VHqCT+1UuQ4cko=;
-	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
-	 In-Reply-To:Content-Type; b=knZj/FubC3I9L1lg6D1PzRzfDfrYKD0ZmEPhImPD/p/iAAPEnGuJMhnItzpUBwLbounkzUk5lQbli4aGj9G2KEjot4PXFcW62fD6A4QF1JsOWt2Qksxev9MT089jOXSL/qIF/7yyUXKIKFTO+Bi/yqMEeBkPZ7E3sG0ujjXrBkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca; spf=pass smtp.mailfrom=marek.ca; dkim=pass (2048-bit key) header.d=marek.ca header.i=@marek.ca header.b=aOIvnR6R; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=marek.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=marek.ca
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6cbceb321b3so51019256d6.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 06:34:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=marek.ca; s=google; t=1729085668; x=1729690468; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=60BUvf9HqnbeuKt+3QuiFsp8g1MCOzdKxeoyAqr2mHQ=;
-        b=aOIvnR6RnBFlhG54TZOCTmd5zWkDcsruHzmDFHxA/cHayDDY9vjoJ+Ewz0GbdWWCwi
-         81jLcH/yfB1DIYvgiUAfMKEYjC2mfSHI3McJM99AoG0TkKG8b/lM/dhgRyy4+kSSwImD
-         euejiFlFL7apjXevpIw5bta55dtfzb99nu5V9bD+/xTyKAg7vHJieJTzZJzKat82CEE1
-         rfIJuGNInlTq18Cheu3aco4thaN+pZMKd0KQ0LVPpEYBe4cEPDQiL2x6eoWIqn8g0olS
-         yoBImiRP/l/lkhT0h768uMII0Y47JCzM6Ddhpoc4GyenI6Uk7DYQ8psiyknVkxEput/9
-         H3mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729085668; x=1729690468;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=60BUvf9HqnbeuKt+3QuiFsp8g1MCOzdKxeoyAqr2mHQ=;
-        b=YOsgwVWNdSFkK5QdxhBlehbTZg6FOCSUROukPA+XEaWfrQWT+yOhae1fvbIvgvW6fv
-         80rT2DatyyaFwCqRkskSHas1/GJrC2Ed1Owp9YDLerT7XwWENX8Pq2dE8iBtlXXB9lYv
-         E3zOUCU/GZ/h9yTLf8dT7H5uq7mLB/hMDcF9+jNJLddhTqRO0sm2gv8qh1OvvoPHfsSX
-         EmXIP9wlttn7tSuXKkHVf/LSh7zkrnc+eayLs2qEWbegs8e8p8ntDKf20c5Dw/oIbTHv
-         2C4yfa192gsT6Eed33VExPuxFQ4qQvU6C/aWWgAU5tZr0hErOSGOAC6U1+i2bpQlSkAD
-         eO/Q==
-X-Gm-Message-State: AOJu0YxtSdpMPuHukIb8e9bjM4pNmc/KSWtvjij29KTRgkZs5lUPgzI1
-	aSRa21cSMmXqdiP9BmO7AW/gqkbuJJTsq6seqwqFMCF2MSYAzpoOqj+1h07wLmU=
-X-Google-Smtp-Source: AGHT+IGkt9nV2zFDYZc7p68pW9RiNJVGEAerCIXZvjfqozTAP2VCLEad5feNiIsFKsPyFiMd9pqK4g==
-X-Received: by 2002:a05:6214:4987:b0:6cb:e6fa:495d with SMTP id 6a1803df08f44-6cc2b8d371dmr52417516d6.21.1729085668158;
-        Wed, 16 Oct 2024 06:34:28 -0700 (PDT)
-Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cc22961be9sm17901106d6.114.2024.10.16.06.34.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Oct 2024 06:34:27 -0700 (PDT)
-Subject: Re: [PATCH v3 4/5] arm64: dts: qcom: x1e80100-crd: add rtc offset to
- set rtc time
-To: Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-References: <20241015004945.3676-1-jonathan@marek.ca>
- <20241015004945.3676-5-jonathan@marek.ca>
- <Zw9ijUy04cC4Qzio@hovoldconsulting.com>
-From: Jonathan Marek <jonathan@marek.ca>
-Message-ID: <663cf3f6-3254-e490-d557-a12aa41a1628@marek.ca>
-Date: Wed, 16 Oct 2024 09:31:00 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.2.2
+	s=arc-20240116; t=1729086899; c=relaxed/simple;
+	bh=fSUlvJD3BmavIiJtNWJGx1iFShCI1qod/q1MxnZ229o=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UxBQRjVobempn6A0tvVWTmrodEi2ig4rZf+a2wFoH8Hz6+h96NmDvV24DXIs4hEiquAC3yhxh6/2+P/9UJbIc+oat4QQOMiZGrPdsxz9CQncAc4773O0B7inrHdRqXt0p7b9pmKMuE3twv6asi16tfzP+RtnXtZXRaBHciifGF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZNz30qwT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8Q88m026699;
+	Wed, 16 Oct 2024 13:54:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=3PlT2PvVcsTyb0hBqZtBOw6xm3CoyCRYJqy
+	bxaeJp9o=; b=ZNz30qwTMP6iidvOVN/UrCwPaomfV2zNgz4+EZNh2tGuBPmytYE
+	u3eq3ZWIlZT/X/neJDIqcBhxwxD20co8/bRPtDscx43LwE/LznEQmAGuLuSHLuyp
+	8WFa64HgZ67qsbziQWAs6eVqL/Go048ZsxDAYBBhpVGjP3RlrN+43oCd4R9bJ6JD
+	n/UuiPYAeoilZbWrq7IxF3z+iFpuCx+/mWxb9dtFVi63KjxtPGWaTT0639XdMSCc
+	J6IdyJUFV1z8Mu0FZ1NZCh0pYjQ35p7neWvK07amgWRuWtbvGmu7ngjpot0osKUE
+	nuvuuuMRx8IJI6fzyk3G7Ik/8CZmmUIXc4g==
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8w6hb8t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 13:54:50 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GDskmF004651;
+	Wed, 16 Oct 2024 13:54:46 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 427j6m6fag-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 13:54:46 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49GDskcq004645;
+	Wed, 16 Oct 2024 13:54:46 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.97.93])
+	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 49GDsjfN004643
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 13:54:46 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 460767)
+	id EB40D509; Wed, 16 Oct 2024 19:24:44 +0530 (+0530)
+From: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+To: andersson@kernel.org, mathieu.poirier@linaro.org
+Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Balaji Pothunoori <quic_bpothuno@quicinc.com>,
+        ath11k@lists.infradead.org, Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH] remoteproc: qcom_q6v5_pas: disable auto boot for wpss
+Date: Wed, 16 Oct 2024 19:24:09 +0530
+Message-Id: <20241016135409.2494140-1-quic_bpothuno@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <Zw9ijUy04cC4Qzio@hovoldconsulting.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Bit6GI6rfTYYby7TsLjDRI24SYbGOIn-
+X-Proofpoint-ORIG-GUID: Bit6GI6rfTYYby7TsLjDRI24SYbGOIn-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1011 mlxlogscore=999
+ malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410160086
 
-On 10/16/24 2:51 AM, Johan Hovold wrote:
-> On Mon, Oct 14, 2024 at 08:47:29PM -0400, Jonathan Marek wrote:
->> See commit e67b45582c5e for explanation.
-> 
-> It's good that you reference commit e67b45582c5e ("arm64: dts: qcom:
-> sc8280xp-crd: enable rtc") but your commit message still needs to be
-> self-contained and provide the explanation here in some form (e.g.
-> quoted or paraphrased).
-> 
-> Also spell out the commit summary in parenthesis when referring to
-> commits as I did above.
-> 
->> Note: the 0xbc offset is arbitrary, it just needs to not be already in use.
-> 
-> How did you verify that nothing is using this offset on this platform? I
-> assume we need someone with access to the docs to make sure it's not in
-> use as we did for sc8280xp.
-> 
+auto_boot flag ensures to take the firmware and boots it
+up during the wpss remoteproc start.
+wpss host driver would like to control the load and unload
+of the firmware during the load and unload of the driver.
+Hence, disable the "auto boot" for wpss.
 
-AFAIK qcom allocate things from the start of the SDAM, so allocating 
-from the end of the SDAM should be safe. And AFAIK this is supposed to 
-be a general purpose HLOS (linux/windows) SDAM block, so should be 
-mostly free to use.
+Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+---
+Cc: ath11k@lists.infradead.org
+Cc: Kalle Valo <kvalo@kernel.org>
+---
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-(its possible windows uses this offset for something, I don't know about 
-that)
-
-
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index ef82835e98a4..05963d7924df 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -1344,7 +1344,7 @@ static const struct adsp_data sc7280_wpss_resource = {
+ 	.crash_reason_smem = 626,
+ 	.firmware_name = "wpss.mdt",
+ 	.pas_id = 6,
+-	.auto_boot = true,
++	.auto_boot = false,
+ 	.proxy_pd_names = (char*[]){
+ 		"cx",
+ 		"mx",
+-- 
+2.34.1
 
 
