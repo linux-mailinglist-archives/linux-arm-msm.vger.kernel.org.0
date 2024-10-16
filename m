@@ -1,136 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-34623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34624-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4ABA09A0F13
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 17:53:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF2A69A0F39
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 18:02:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D1EE4281F76
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 15:53:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76B1E285E99
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:02:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A09CD20E011;
-	Wed, 16 Oct 2024 15:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65CBA208D7A;
+	Wed, 16 Oct 2024 16:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eo94hqbZ"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lSBC/NJY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6031384B3;
-	Wed, 16 Oct 2024 15:53:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947103FBA5
+	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 16:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729093983; cv=none; b=Z/E6qaxlrNVJ+IHNzlndwV4Sw1yjEukt5ij8+uhvYDzDdR4k3tJiq8Klsn1gTfJ3ENDIwWqDz3CzKTigxMCUbIGfByLCUTfRe2rp9d19widOYSK1Rdjn9tTNgceefG4lW5anxGfGc3ImiZAWTwWbrrr3RsK6PkPhTqDahBDu61M=
+	t=1729094537; cv=none; b=u40JNe/YwKBSXLR/QFg75Z5vxjpmDazUKCqtNA0bZZKtn+SMu+dUCz0CvVllhKmz/WlVWnZ3i0ZmvXV4sW8FIESvZqoT3OFVaXcC2HwsfHClq+fcHZM7E8dsFqm3KcN/H9v68rJ73NYV8m/1PtrrBuOY1tF+UZ+lZB02OYwY3Wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729093983; c=relaxed/simple;
-	bh=FPh6jZxs0IrBbZtVRvslvKBioZsmMoFNj9CMSpT4A60=;
+	s=arc-20240116; t=1729094537; c=relaxed/simple;
+	bh=izfJPuESLdADVyQIKgA65BaWb+dPd/rXtKW7oYvGde0=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YegapKfkaArXykJb5AbHY+z07MvpYm2wNqRlwsrKzbmgqOsv8aTVfv3HFFHhg02hzcvUWJei17JKgooL2WIjPOUsyUgkRTmw8U7+7pvHAjc712pbpgGWlHkbGQLq+E1JPbFlVPaZh6kRfBXOmZmJvaRJft+KEMMsUKkllkny7Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eo94hqbZ; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-37d58377339so5514568f8f.1;
-        Wed, 16 Oct 2024 08:53:01 -0700 (PDT)
+	 To:Cc:Content-Type; b=RLJhDqoEIXr266whIZ1D/R/Liu8Wlj9n2R5G/hdUh1rQhPjY8hIs+J/1JIRhOXHdrjjF2YVsKqzlkeoUHBjIwXBTQ4xUN6IILEbzJLh/rVqLcqPxCkDxOAKSdQoUzer6jd2lyrqQVs2eur++Tt2E8KjGucK68pvW+BNWgMlGKs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lSBC/NJY; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539f76a6f0dso3387017e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 09:02:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729093980; x=1729698780; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=FyCuyE5iZzyPXH4JBMeN3qOWiKSfUYQ0TZFcy+/kyVA=;
-        b=eo94hqbZHGxSt0J22JPKnb2CoW5IQrwVLG6spBa0Qu6Bi03n9TCUE+0Ya98sRNBEkb
-         24thWhS6o7/B+4GLwGts1eaXOxlFkFp+Cvtv1JAcb/o3Fxnwzj08/8T+vOTVGv92P4Ge
-         dcN1hZ4oCy6xJ2e5lmruy0FWsqs/FGb44ACbuNZ6bpc3RZ6765O/2L/FYWl6XxLPRisq
-         9qMTpzEEZO2ApRhpi/Q3FR7Hsgzj8ze99Z4gl2T9lETv2A2bSbyugHTEXQmuD3x8DcpF
-         ejufx/vOTHTWyiDMnOWCjPZvkFNC233Nva8i0nFPoMZjxc5uuaa3aegViwit+IUMpgAv
-         t0bg==
+        d=chromium.org; s=google; t=1729094533; x=1729699333; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cUD59f78GtNOAlqBmjuglWzX0LStg1/+Dw/KZ/SMHA4=;
+        b=lSBC/NJYhu1mXb4EIhJcUgbjb05G4kgqYouNihyL1ERmgjyOYc6woWimGAhi9pbJNt
+         vJL85a2GnlVcLz2Y2hSpwMpjvIkIBkLKtL0LGaB1qzsl47gBNKNnRJfjb2TbubpuxSM+
+         UOAcWXayhK+Pdwtfnpnmh/KRd5Dg2bA+x6i3Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729093980; x=1729698780;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FyCuyE5iZzyPXH4JBMeN3qOWiKSfUYQ0TZFcy+/kyVA=;
-        b=kUvoffgvRe7rdOodKxSmQc2GuRq+jadvV8nKaHyQK2TDc6f6Ld3HEZKyqki+1HPzj3
-         Yh4QkJbRd48IVnqp/f7Cg3wkr6DsQ9DXTZY5BB7nn3duat0OJVTdXpIBk12ug6vv00T4
-         EHR7gY0CuIRCkfJCQckzUhSe708l9oHpwAj+gI6JK7xiUD+kniW+IT/5E75GNV/RmssS
-         qDN4RD/C32GaqKbxQIIzxv/4wRTJqBUzWAbx2tqFEMZGSxffRMEHn1AsMRHk67al7igR
-         z6ah9mkPdzL4/f3A+iZP68w2i4E2olT5KuJMnl3oP+fET07Lr8wCbIJtfD8E1IojqSr8
-         HcKg==
-X-Forwarded-Encrypted: i=1; AJvYcCU95d0nnFavI6qRaaZQIw05FrbqTIm7HkPn4wJSbaKFQA2RwjJiD/ZjfKese18Pj/5Y4xtvnrKRwYQfYzu0@vger.kernel.org, AJvYcCVdgyOMlecfBBHW9sGIDDKiAS3MYzsfhrV4Et5rQlglPcnRmeIfAFgbttPjrJs4p91Z3JReIJ6HWnve@vger.kernel.org, AJvYcCWCLhWXVcqM9UHSH12xSAWcZEi220Qhfwi92FkLGnP0I1FixtdNxHo22Li/IdHReppa8Iq5cbTNx2wLwlXkZA==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6orvN6PGdTh2AyLU19e/FT5jpEuIKiyGySOzPuDfdrAZzEdY7
-	2//9q88fWp2Dd2chiU3WybIkssSqipn9x9qCm9Rc+bRqEHPP114e4NH43DakohoHXzyXbw9Oqiz
-	GbIVNLJQ20bfKBPhrCqKaTPK7YQ==
-X-Google-Smtp-Source: AGHT+IF1Rg6AOnfWRJypfDVK8eVLSHuY0NpfNrk1fT7UfnivSvoafbo1oEnZGTj3z8MNQN3NvBLLMu88FfhdbvLj/t8=
-X-Received: by 2002:a5d:5e0c:0:b0:37d:61aa:67de with SMTP id
- ffacd0b85a97d-37d61aa7145mr12802074f8f.42.1729093979768; Wed, 16 Oct 2024
- 08:52:59 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729094533; x=1729699333;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cUD59f78GtNOAlqBmjuglWzX0LStg1/+Dw/KZ/SMHA4=;
+        b=tCwEs5bCeU7KJzY2Pa6ak2HWxfFcPbYSXg8cqsbYr5K3rIhoAOnQhMxBlLv3/BotqP
+         B2UhoLPWdZBN5MgyG2OvSdncnc7C5k9RK328Qc+3DyOMV0Wgje15Yx0Got/Aa8cA1v9M
+         tJpIND1/s89LGatxAyhiL84eA8Wi+sc1u8aglmLxqunrWgUxz51MMN0rp2/hAAfq9DPt
+         3OFfjRZRGYP3MQRju3TfIw966KM9Q20s5PyJub3sbIcBplYvqUktj6LwGGnxHFzWsdSn
+         BgOPWlYDxz3hMXUBgWlvig+S4xLh8Qk+mqTwCifTA+hZ+70nBRlwCv3YO9jy6wRLFG7W
+         yDiw==
+X-Forwarded-Encrypted: i=1; AJvYcCUgRvQwd7h+4GUI2CDsnZd2UCq3sFQF3R6Gb6uBVhroEV/MSqWg4TIIm3wUFRL/d5yHPjTI7LLarCbx7HZ6@vger.kernel.org
+X-Gm-Message-State: AOJu0YyUKJLLYNSCpIaYcSbQMTS3NY7yxfRSMPz1eRTri/h+v91jKETe
+	w9gQkhs7v7TMwHAKNNYI3ft20bqmKy06AOYRBevt/QRe+rasADmfvLw9LKpXSTfdCqjoCBrNq5l
+	12w6x
+X-Google-Smtp-Source: AGHT+IGWngWHHYwQABMGEFKsDH/JDGoI6knrZ6sTMfoNvmeR/Hc14a4MPhqOf1u2bCGgRnWec3JBlQ==
+X-Received: by 2002:a05:6512:3da0:b0:53a:aea:a9e1 with SMTP id 2adb3069b0e04-53a0aeaabf9mr758444e87.54.1729094532774;
+        Wed, 16 Oct 2024 09:02:12 -0700 (PDT)
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com. [209.85.208.182])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a0000613bsm495887e87.193.2024.10.16.09.02.11
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Oct 2024 09:02:11 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-2fb49510250so68241fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 09:02:11 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUI4Sm/Le0Gr9mrZd0UHBMvXBNkdKcg5HlU3YxpkFFLCYRN1gtpIRcl9i2C28NyGOplps+HC7n5y0HYwcyp@vger.kernel.org
+X-Received: by 2002:a2e:70a:0:b0:2f7:6653:8046 with SMTP id
+ 38308e7fff4ca-2fb329c2176mr77403341fa.25.1729094531214; Wed, 16 Oct 2024
+ 09:02:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241016145112.24785-1-johan+linaro@kernel.org> <Zw_fe1tN_rdRR659@linaro.org>
-In-Reply-To: <Zw_fe1tN_rdRR659@linaro.org>
-From: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>
-Date: Wed, 16 Oct 2024 17:52:46 +0200
-Message-ID: <CAMcHhXpu_dFMvKyKO9m-Ls4nyr3HPQ8+X2HrVH_prc-1ao4NEw@mail.gmail.com>
-Subject: Re: [PATCH 0/6] arm64: dts: qcom: x1e80100: fix nvme regulator boot glitch
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Abel Vesa <abel.vesa@linaro.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20240819073020.3291287-1-quic_sibis@quicinc.com> <CAD=FV=VnQCO+y_wy=KQhK3wGwHGfO0+MQntgoPh78ZygcgNiig@mail.gmail.com>
+In-Reply-To: <CAD=FV=VnQCO+y_wy=KQhK3wGwHGfO0+MQntgoPh78ZygcgNiig@mail.gmail.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Wed, 16 Oct 2024 09:01:57 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UXm59wL3yX5+8-BKt+h+uBqvYKa-+y2kMo7SHdCqnVcg@mail.gmail.com>
+Message-ID: <CAD=FV=UXm59wL3yX5+8-BKt+h+uBqvYKa-+y2kMo7SHdCqnVcg@mail.gmail.com>
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_mss: Re-order writes to the IMEM region
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: andersson@kernel.org, mathieu.poirier@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-
-On Wed, 16 Oct 2024 at 17:45, Stephan Gerhold
-<stephan.gerhold@linaro.org> wrote:
->
-> On Wed, Oct 16, 2024 at 04:51:06PM +0200, Johan Hovold wrote:
-> > The NVMe regulator has been left enabled by the boot firmware. Mark it
-> > as such to avoid disabling the regulator temporarily during boot.
-> >
-> > Johan
->
-> These look good to me, thanks!
->
-> Can you or Aleksandrs send another one for the x1e80100-dell-xps13-9345
-> that was applied by Bjorn yesterday?
+Content-Transfer-Encoding: quoted-printable
 
 Hi,
 
-Sure, will give it a quick test and mail it later tonight (along with
-a few other fixes).
+On Mon, Aug 19, 2024 at 4:40=E2=80=AFPM Doug Anderson <dianders@chromium.or=
+g> wrote:
+>
+> Hi,
+>
+> On Mon, Aug 19, 2024 at 12:30=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.=
+com> wrote:
+> >
+> > Any write access to the IMEM region when the Q6 is setting up XPU
+> > protection on it will result in a XPU violation. Fix this by ensuring
+> > IMEM writes related to the MBA post-mortem logs happen before the Q6
+> > is brought out of reset.
+> >
+> > Fixes: 318130cc9362 ("remoteproc: qcom_q6v5_mss: Add MBA log extraction=
+ support")
+> > Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> > ---
+> >  drivers/remoteproc/qcom_q6v5_mss.c | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> As discussed offlist, this isn't a perfect fix since writes to this
+> IMEM could happen by other drivers and those could still cause things
+> to go boom if they run in parallel with this driver. That being said:
+> * It seems like a more proper fix needs a coordinated effort between a
+> device's built-in firmware and the modem firmware. This is difficult /
+> near impossible to get done properly.
+> * Even if we do a more proper fix, making this change won't hurt.
+> * This change will immediately improve things by avoiding the XPU
+> violation in the most common case.
+>
+> I've confirmed that the test case I had where things were going boom
+> is fixed. Thus:
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+> Tested-by: Douglas Anderson <dianders@chromium.org>
 
-Alex
+Just checking in to see if there's anything else needed for this patch
+to land. Thanks! :-)
 
->
-> FWIW, for these patches:
->
-> Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
->
-> >
-> >
-> > Johan Hovold (6):
-> >   arm64: dts: qcom: x1e78100-t14s: fix nvme regulator boot glitch
-> >   arm64: dts: qcom: x1e80100-crd: fix nvme regulator boot glitch
-> >   arm64: dts: qcom: x1e80100-vivobook-s15: fix nvme regulator boot
-> >     glitch
-> >   arm64: dts: qcom: x1e80100-yoga-slim7x: fix nvme regulator boot glitch
-> >   arm64: dts: qcom: x1e80100-microsoft-romulus: fix nvme regulator boot
-> >     glitch
-> >   arm64: dts: qcom: x1e80100-qcp: fix nvme regulator boot glitch
-> >
-> >  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dts | 2 ++
-> >  arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts    | 2 ++
-> >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts                  | 2 ++
-> >  arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts   | 2 ++
-> >  arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi   | 2 ++
-> >  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                  | 2 ++
-> >  6 files changed, 12 insertions(+)
-> >
-> > --
-> > 2.45.2
-> >
+-Doug
 
