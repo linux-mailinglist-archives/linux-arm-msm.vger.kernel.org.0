@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-34552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E932C9A01DB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 08:57:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F8ED9A01FC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 08:59:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1E43D1C20982
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 06:57:43 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 92BBFB2549F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 06:59:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73F7A1991D9;
-	Wed, 16 Oct 2024 06:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 38ECF1B3926;
+	Wed, 16 Oct 2024 06:58:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fCnTvzid"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AUjsCVTX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4354E170A37;
-	Wed, 16 Oct 2024 06:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C03199956;
+	Wed, 16 Oct 2024 06:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729061851; cv=none; b=KjirwOc4Pysl6fve5awXxbw0KrWRZpxCAEoHiFP3xhB1tOPkRlgZiaeRoK2HAWzRH65M8ruKAl2vNO+R6hWrn3Z6NazXQ2csVkjvwDsPmtL7zgvam6B750JogUgNsEVnDPu1zAy63kZKjiYE5Gof5VE0nefNcW6tmMbaOmps1yU=
+	t=1729061909; cv=none; b=OYIbwyV9UyiHdtZjvXpmFcBpWICphqLAG+iwVuKelw1fJAzlunS3LpmXmEd9YmSiuIhpIhR6T+Oy2g+ppWgs+mr/vV4wGYpm8fl8uBQRCKfSl54cY08a4MpfdOGzExQ/WqP9v8IsgQj7u70bmWUa63BQlhGLsbuthGJWF21Z/MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729061851; c=relaxed/simple;
-	bh=nueV4zW9DYaKNQYqepHGVVpmRCUZwWuMQ6ahTdofusk=;
+	s=arc-20240116; t=1729061909; c=relaxed/simple;
+	bh=WfFXzP8/c3J6x7qT5BMt6TQD7XOC91zd+5me5pZif4U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ezfOWWBooWFJC4pENqlLALda262kd0XKp5UKw/4SnfyPlyIRZbyQhT84x46HdE6TQNsRCUE/ATLkpwVwF5ltxOER6MdrhFkz7d2dTl0BZU0TnxE6QQHXlbGo59EXtDBoJy7oIPK/C7CrXJt1r76SYsFLwzgZy8hDb/YYDQg3hyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fCnTvzid; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5067EC4CEC5;
-	Wed, 16 Oct 2024 06:57:30 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=W6cGeh5xQ7VAJ0v/CxYQSGaMDhnGUBKlKZG0lib6mzNrF1jg5VD6BofzKNOzqxGF9jJHkcBDIDEQC1eIVFxE6cn2TGaafwT4npf8XmrQB8Bul7AlPZntg4Vsk66wftH5ZnDGdfGdcIPNGY39XXWA40TeqVZxF2KJWaMdHn1FZa8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AUjsCVTX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5C93C4CEC5;
+	Wed, 16 Oct 2024 06:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729061851;
-	bh=nueV4zW9DYaKNQYqepHGVVpmRCUZwWuMQ6ahTdofusk=;
+	s=k20201202; t=1729061908;
+	bh=WfFXzP8/c3J6x7qT5BMt6TQD7XOC91zd+5me5pZif4U=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fCnTvzidshFBNh5H2Dwnz5y11dT8NyAFjt5jPCgNdiPfN432LHzDuivAILLKq/LVl
-	 uQIn6u5fQ7SLcYtOIv6XsuIjCymgNBgbDQEStSiDpn1zqVtFqRf4vmFXAZwYMPGzxs
-	 2uaf2M2saJOrZpdXlYl5cFhDoqgPG46UN19TYAXNBB0WHYN7SBk/1PWhATsxOeNFhI
-	 NKSqhXLJPmb8ryrZn1Hmq1vzq+N3eTBlyv2gKau7czgPt9DTbkZGP6e/ycbfxws+MG
-	 0XAqujvHS0UCrU/H58qO/oYZsufioCZlhNnnWERReb3anQuGTAUP4cEISvfylGuGX6
-	 8/ZrhRDDlHyFA==
-Date: Wed, 16 Oct 2024 08:57:27 +0200
+	b=AUjsCVTXoxv908D/ByuH8Dh7gzXSKGadgwOvAqCmNK35myX33J45uDHXIPm7mDJQ1
+	 hKEdofn2ShES8lnHcGoGVGq4mxfQSckwZ85dKYkkz8C5ca3o1hSraRZk69bLELzopE
+	 RI2QpZKhTlk2NzZ7JrHeCr86AI701yCnAEP6hrpR92O0VWqL94ivu9D5b5/SBa74wo
+	 XdvG9vh2ig618pjARQs3qewdQtxdAwIV+KGS1eF9AvXMHHRKK0Fb8GnUvLXyHj6JI0
+	 X1syHiQZIXJdjJwkj0hY3vBy/UudnN2/+Wr9n+IxFyQSg2kYpBtKP1xLABEv0fYpYg
+	 BvZkOPS+mdlDA==
+Date: Wed, 16 Oct 2024 08:58:25 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
 Cc: ath12k@lists.infradead.org, linux-wireless@vger.kernel.org, 
@@ -50,10 +50,11 @@ Cc: ath12k@lists.infradead.org, linux-wireless@vger.kernel.org,
 	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 00/22] wifi: ath12k: add Ath12k AHB driver support for
- IPQ5332
-Message-ID: <ou5kgedz5aga4dtda6k23uhybcjy7mfwie74p6q3qyn5bdajz7@ftejp7lqrise>
+Subject: Re: [PATCH v2 02/22] arm64: dts: qcom: add wifi node for IPQ5332
+ based RDP441
+Message-ID: <ftvwsizfupm7veg662adnzc6jpulk5shga3xmvbtom3saclnf6@bmatmqw5lp72>
 References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
+ <20241015182637.955753-3-quic_rajkbhag@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,32 +63,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
+In-Reply-To: <20241015182637.955753-3-quic_rajkbhag@quicinc.com>
 
-On Tue, Oct 15, 2024 at 11:56:15PM +0530, Raj Kumar Bhagat wrote:
-> Currently, Ath12k driver only supports WiFi devices that are based on
-> PCI bus. New Ath12k device IPQ5332 is based on AHB bus. Hence, add
-> Ath12k AHB support for IPQ5332.
+On Tue, Oct 15, 2024 at 11:56:17PM +0530, Raj Kumar Bhagat wrote:
+> RDP441 is based on IPQ5332. It has inbuilt AHB bus based IPQ5332 WiFi
+> device.
 > 
-> IPQ5332 is IEEE802.11be 2 GHz 2x2 Wifi device. To bring-up IPQ5332
-> device:
-> - Add hardware parameters for IPQ5332.
-> - CE and CMEM register address space in IPQ5332 is separate from WCSS
->   register space. Hence, add logic to remap CE and CMEM register
->   address.
-> - Add support for fixed QMI firmware memory for IPQ5332.
-> - Support userPD handling for WCSS secure PIL driver to enable ath12k
->   AHB support.
+> Describe and add WiFi node for RDP441. Also, reserve the memory
+> required by IPQ5332 firmware.
 > 
-> Depends-On: [PATCH V7 0/5] remove unnecessary q6 clocks
-> Depends-On: [PATCH V2 0/4] Add new driver for WCSS secure PIL loading
-> Link: https://lore.kernel.org/all/20240820055618.267554-1-quic_gokulsri@quicinc.com/
-> Link: https://lore.kernel.org/all/20240829134021.1452711-1-quic_gokulsri@quicinc.com/
+> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
 
-
-These are series targetting other subsystems. I do not understand why
-you created such dependency. It does not look needed and for sure is not
-good: nothing here can be tested, nothing can be applied.
+Don't send one DTS patch in 22 patchset targetting different subsystem.
+Imagine, how wireless maintainers are supposed to apply their bits? 21
+commands instead of one command?
 
 Best regards,
 Krzysztof
