@@ -1,285 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-34554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFD379A020C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:02:45 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E03E29A0241
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:18:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 209391C21178
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 07:02:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0B6B285738
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 07:18:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61D0F18DF69;
-	Wed, 16 Oct 2024 07:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42C1E1B0137;
+	Wed, 16 Oct 2024 07:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uxALo9Co"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CC4k3Ep8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33107171E65;
-	Wed, 16 Oct 2024 07:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10405FC0C;
+	Wed, 16 Oct 2024 07:18:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729062163; cv=none; b=uGA1l9xRoD2kHFQt9szOEkcpzKHOy53otCJGD16SatKzdT1oVl+hFtUAzeT/GJcf3FwdraJba3yDP/LRtLPR6h1XmSlbaZUqd7CBJPqWcWtGHWL5lbbxi5qbPZjzmK0D81OvkVtEn2jHIqQGlIlVmGo0Ki9HddKIPHpzAEZ7nkI=
+	t=1729063089; cv=none; b=qJhxmjLchstaZQt/45Npxucp0Q11tbcwee+KqktrQK/9x9/OJcvtralfdxBDUE4VgeXgEV9+yn0ipN26lhxLNnPsEslI1H+rjlwmQpx9cHWPp+AqYrKJo+tncd/X8+0LMFcaUxC/Bf7Inr4mZBXMZySgPrTCgDIFuvLiTLvXaJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729062163; c=relaxed/simple;
-	bh=FO++GEsxPTwtTYO2+B2x5EpogYd56XYIlW753Uemkjc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dButncanJHL6opDp2leyFjyplAwlSOj8x3Jrpgh9GiV9Gpjs6hReaenjJkFGQ+KLZqCRLWcc7F5NJICFyMYW+xfxWYobHX+rjL4+0AQ+RZSgw/c3sOUbx7ktoICpHvhEs9JAFCBkFY7yaUFc2V7/xgZIjv/jsdgdB0U1SSNjoVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uxALo9Co; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1A5EC4CEC5;
-	Wed, 16 Oct 2024 07:02:41 +0000 (UTC)
+	s=arc-20240116; t=1729063089; c=relaxed/simple;
+	bh=jjcyI2zHqOSIJCRIxskZpI8EN2AeGW+U5vfKONBZTo0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LEQglFDck2roSw9A/ZLYtnldLhGDZgEP1CBS3UwHSpxSCYNiQpcnyI0CfpcAWuN9eb644u+4blXZcZU1LMOVgesTh1jYAMVBp4Xum3cWKh0K8kNSzGrPx+tSjDUu/yjHCiB5nNGaaNbhoHEVgS93CzeBfEkObRvWIPoHJERkW4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CC4k3Ep8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FD9C4CEC5;
+	Wed, 16 Oct 2024 07:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729062162;
-	bh=FO++GEsxPTwtTYO2+B2x5EpogYd56XYIlW753Uemkjc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uxALo9CoTDMhR2C6l/31YgfkBr9tvxnZJOfvbKhBqVWGgc4EZPqGeF0pKjWPPoks7
-	 Ec0kI50lm8RJIQD6TyIDM3GgpB0x9kgXsBSllaCEfiqz7Sn1uoqtjDZj86S3YAnW9q
-	 LaX8X6augSmPhDI8jIs5hUnjgOI3Fu4ItUYVk3EbQST584kvtNjknzr5Q2tcxxmfRo
-	 1Hx+thWG40NyHbB55SQDE4DNGoejXkKx/ZgtQOf745UXDJUWh4YQgwFau6vDl/+u6t
-	 HdgvtTMYRJALi2oWvTibI7mhfMxR1+9Db2U/XbbvHaFdClcmtIWnqfDdU4gZV6hmla
-	 GY8PUOC6nq3Zg==
-Date: Wed, 16 Oct 2024 09:02:38 +0200
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-Cc: ath12k@lists.infradead.org, linux-wireless@vger.kernel.org, 
-	Kalle Valo <kvalo@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 01/22] dt-bindings: net: wireless: describe the ath12k
- AHB module
-Message-ID: <h4xel7xh3vyljxi7jn2afqasfmbsiqjtgpvqthrviovode6cxt@ey5nnzi4dwtv>
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-2-quic_rajkbhag@quicinc.com>
+	s=k20201202; t=1729063088;
+	bh=jjcyI2zHqOSIJCRIxskZpI8EN2AeGW+U5vfKONBZTo0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=CC4k3Ep8D+K+CQS90/i0RdL0wUqIWmOgNFgJ1PI36Ss+iQqZh8Wh6NtlAssFefZ9z
+	 xsu0cNvpE5xkiVvSH0Wn2b/uRE9I0JOiWI76rYnZ5dpyQqprJe79oHYwVLuBJ2MfLr
+	 DDsZJhQsLmhjigS/ZqbRRuxwekINveeyqJa3MLIwcNoHvjVdYa0aIr3MgNL4lMYpr5
+	 mBJXm0SPxxY+gu6tNcKLaXrez5gTj1ZXkgt+LxYk+AKuXFZo9NoZqn/i66taZDd1gb
+	 RDHkdMJiGb5AYvcR/C3SkIoKqetZg5Sw6LRDsDgc5P91XUl4u6zBPoIkikD0pnF+7P
+	 5AWtAOESAevTA==
+Message-ID: <c7391939-8279-4ebd-b6b6-2bc6bc4a1491@kernel.org>
+Date: Wed, 16 Oct 2024 09:18:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241015182637.955753-2-quic_rajkbhag@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: Rename "Twitter" to "Tweeter"
+To: Maya Matuszczyk <maccraft123mc@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Jos Dehaes <jos.dehaes@gmail.com>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241015170157.2959-1-maccraft123mc@gmail.com>
+Content-Language: en-US
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241015170157.2959-1-maccraft123mc@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 15, 2024 at 11:56:16PM +0530, Raj Kumar Bhagat wrote:
-> Add device-tree bindings for the ATH12K module found in the IPQ5332
-> device.
-> 
-> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-> ---
+On 15/10/2024 19:01, Maya Matuszczyk wrote:
+> This makes the name consistent with both other x1e80100 devices and the
+> dictionary. A UCM fix was merged already.
 
-That's a v2, what changed?
+This will break user-space using old UCM and any other user-space
+relying on previous names, which should be mentioned in the commit msg.
 
-Did you ignore entire review? Limited review follows because of that (I
-am not going to do the same work twice).
+That's said, CRD is development platform, not available to any end user,
+thus it's perfectly fine to break it, if explained in commit msg.
 
->  .../net/wireless/qcom,ath12k-ahb.yaml         | 293 ++++++++++++++++++
->  1 file changed, 293 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
-> new file mode 100644
-> index 000000000000..54784e396d7e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
-> @@ -0,0 +1,293 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +# Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/net/wireless/qcom,ath12k-ahb.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies ath12k wireless devices (AHB)
-> +
-> +maintainers:
-> +  - Kalle Valo <kvalo@kernel.org>
-> +  - Jeff Johnson <jjohnson@kernel.org>
-> +
-> +description:
-> +  Qualcomm Technologies IEEE 802.11be AHB devices.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq5332-wifi
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: XO clock used for copy engine
-> +
-> +  clock-names:
-> +    items:
-> +      - const: gcc_xo_clk
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Drop _clk, drop gcc_. Look how this clock is called *everywhere* else.
-
-> +
-> +  interrupts:
-> +    items:
-> +      - description: Ready interrupt
-> +      - description: Spawn acknowledge interrupt
-> +      - description: Stop acknowledge interrupt
-> +      - description: misc-pulse1 interrupt events
-> +      - description: misc-latch interrupt events
-> +      - description: sw exception interrupt events
-> +      - description: interrupt event for ring CE0
-> +      - description: interrupt event for ring CE1
-> +      - description: interrupt event for ring CE2
-> +      - description: interrupt event for ring CE3
-> +      - description: interrupt event for ring CE4
-> +      - description: interrupt event for ring CE5
-> +      - description: interrupt event for ring CE6
-> +      - description: interrupt event for ring CE7
-> +      - description: interrupt event for ring CE8
-> +      - description: interrupt event for ring CE9
-> +      - description: interrupt event for ring CE10
-> +      - description: interrupt event for ring CE11
-> +      - description: interrupt event for ring host2wbm-desc-feed
-> +      - description: interrupt event for ring host2reo-re-injection
-> +      - description: interrupt event for ring host2reo-command
-> +      - description: interrupt event for ring host2rxdma-monitor-ring1
-> +      - description: interrupt event for ring reo2ost-exception
-> +      - description: interrupt event for ring wbm2host-rx-release
-> +      - description: interrupt event for ring reo2host-status
-> +      - description: interrupt event for ring reo2host-destination-ring4
-> +      - description: interrupt event for ring reo2host-destination-ring3
-> +      - description: interrupt event for ring reo2host-destination-ring2
-> +      - description: interrupt event for ring reo2host-destination-ring1
-> +      - description: interrupt event for ring rxdma2host-monitor-destination-mac3
-> +      - description: interrupt event for ring rxdma2host-monitor-destination-mac2
-> +      - description: interrupt event for ring rxdma2host-monitor-destination-mac1
-> +      - description: interrupt event for ring host2rxdma-host-buf-ring-mac3
-> +      - description: interrupt event for ring host2rxdma-host-buf-ring-mac2
-> +      - description: interrupt event for ring host2rxdma-host-buf-ring-mac1
-> +      - description: interrupt event for ring host2tcl-input-ring4
-> +      - description: interrupt event for ring host2tcl-input-ring3
-> +      - description: interrupt event for ring host2tcl-input-ring2
-> +      - description: interrupt event for ring host2tcl-input-ring1
-> +      - description: interrupt event for ring wbm2host-tx-completions-ring4
-> +      - description: interrupt event for ring wbm2host-tx-completions-ring3
-> +      - description: interrupt event for ring wbm2host-tx-completions-ring2
-> +      - description: interrupt event for ring wbm2host-tx-completions-ring1
-> +      - description: interrupt event for ring host2tx-monitor-ring1
-> +      - description: interrupt event for ring txmon2host-monitor-destination-mac3
-> +      - description: interrupt event for ring txmon2host-monitor-destination-mac2
-> +      - description: interrupt event for ring txmon2host-monitor-destination-mac1
-> +      - description: interrupt event for umac_reset
-> +
-> +  interrupt-names:
-> +    items:
-> +      - const: ready
-> +      - const: spawn
-> +      - const: stop-ack
-> +      - const: misc-pulse1
-> +      - const: misc-latch
-> +      - const: sw-exception
-> +      - const: ce0
-> +      - const: ce1
-> +      - const: ce2
-> +      - const: ce3
-> +      - const: ce4
-> +      - const: ce5
-> +      - const: ce6
-> +      - const: ce7
-> +      - const: ce8
-> +      - const: ce9
-> +      - const: ce10
-> +      - const: ce11
-> +      - const: host2wbm-desc-feed
-> +      - const: host2reo-re-injection
-> +      - const: host2reo-command
-> +      - const: host2rxdma-monitor-ring1
-> +      - const: reo2ost-exception
-> +      - const: wbm2host-rx-release
-> +      - const: reo2host-status
-> +      - const: reo2host-destination-ring4
-> +      - const: reo2host-destination-ring3
-> +      - const: reo2host-destination-ring2
-> +      - const: reo2host-destination-ring1
-> +      - const: rxdma2host-monitor-destination-mac3
-> +      - const: rxdma2host-monitor-destination-mac2
-> +      - const: rxdma2host-monitor-destination-mac1
-> +      - const: host2rxdma-host-buf-ring-mac3
-> +      - const: host2rxdma-host-buf-ring-mac2
-> +      - const: host2rxdma-host-buf-ring-mac1
-> +      - const: host2tcl-input-ring4
-> +      - const: host2tcl-input-ring3
-> +      - const: host2tcl-input-ring2
-> +      - const: host2tcl-input-ring1
-> +      - const: wbm2host-tx-completions-ring4
-> +      - const: wbm2host-tx-completions-ring3
-> +      - const: wbm2host-tx-completions-ring2
-> +      - const: wbm2host-tx-completions-ring1
-> +      - const: host2tx-monitor-ring1
-> +      - const: txmon2host-monitor-destination-mac3
-> +      - const: txmon2host-monitor-destination-mac2
-> +      - const: txmon2host-monitor-destination-mac1
-> +      - const: umac_reset
-> +
-> +  memory-region:
-> +    minItems: 1
-
-upper constraint
-
-> +    description:
-> +      phandle to a node describing reserved memory (System RAM memory)
-> +      used by ath12k firmware (see bindings/reserved-memory/reserved-memory.txt)
-> +
-> +  qcom,rproc:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description:
-> +      DT entry of a WCSS node. WCSS node is the child node of q6 remoteproc driver.
-> +      (see bindings/remoteproc/qcom,multipd-pil.yaml)
-
-DT nodes are not children of drivers. But other DT nodes. Explain why
-this phandle is needed, what is it for.
-
-To me it looks like you incorrectly organized your nodes.
-
-> +
-> +  qcom,smem-states:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    description: States used by the AP to signal the remote processor
-> +    items:
-> +      - description: Shutdown WCSS pd
-> +      - description: Stop WCSS pd
-> +      - description: Spawn WCSS pd
-> +
-> +  qcom,smem-state-names:
-> +    description:
-> +      Names of the states used by the AP to signal the remote processor
-> +    items:
-> +      - const: shutdown
-> +      - const: stop
-> +      - const: spawn
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - memory-region
-> +  - qcom,rproc
-> +  - qcom,smem-states
-> +  - qcom,smem-state-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +
-
-Stray blank line
 
 Best regards,
 Krzysztof
