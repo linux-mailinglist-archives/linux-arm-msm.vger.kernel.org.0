@@ -1,92 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-34558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C6339A02F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:47:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BE029A030A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:50:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 952C5B25A84
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 07:47:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 272421F2155A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 07:50:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C71B1AF0C5;
-	Wed, 16 Oct 2024 07:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C2641C7612;
+	Wed, 16 Oct 2024 07:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="USO8bjom"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G5faxUpb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DA2618B478;
-	Wed, 16 Oct 2024 07:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFC218B478;
+	Wed, 16 Oct 2024 07:50:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729064855; cv=none; b=WUOex/zgoY6vZd0oR2kTYMmzPv7jpG6V4gwGxuVX2ubqeSlSP4LGMSCrgr4f6TeJreMnoSXhv97WyWthXRLDfYa41qieAiGgXNHtY4pgKiX9q0Yu17G3/b3oREHxpWa9WBm2hVr0I9MsX8SgMEncZUDNTm6oRxNRsiJjcyH/74o=
+	t=1729065016; cv=none; b=cHmeP+i5D0J97tqD3htGWtNPcbgHRPUBh5cABc41sVbGZtbBWv67FUL8FCgMPvM7ceDVjX1Kb67sfWOWh0TbiO799oqnuhYloXgezkWems7+Dghg0H2I6vHI5ekJzCw/ZcSBDCOzzB+6rgAbu6nFi6KOQzi2OiRfoqkvgjmJ484=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729064855; c=relaxed/simple;
-	bh=jf4OwaxHcdsO0QCgg9KFcZKV0Gr1jLc6IZPiKDRY5gk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fBiBxw9+cmazF21SGTdsTU9h9V4l4VHCF66OksTVO3tnatPX2gkMyhBtx4K73QgVKhO3l5qvUD8n0VcA7vaSZS88PLfzX8XAGo0z7PPEF/BBJCO/Fh2labcH5JjIzfIuGrifrndIRT5wG/iG1kgoP/E1Ixcg+yFDAsUeSk58884=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=USO8bjom; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6DC3C4CEC5;
-	Wed, 16 Oct 2024 07:47:34 +0000 (UTC)
+	s=arc-20240116; t=1729065016; c=relaxed/simple;
+	bh=a5bL9GkgEINnsaPtdhyx300M2FZuDjH58V7+HBKJ0Bw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LF38EOtxX1Ks0sTFu57G69GKlcoR/kK7DHMyEjKpyOzjCGJLQzxC7fVL1aVnn2DspO1GxJEhfn9sfbOhaDl3X/HbmHK8zhNIxnWDLXNgIfMUDAYdMZBCFbO7Fhy2dgdxZf8FGkFNg/V71GN57XSYEuC+AUy19G8ZaMy3G76cnSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G5faxUpb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F307C4CECE;
+	Wed, 16 Oct 2024 07:50:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729064854;
-	bh=jf4OwaxHcdsO0QCgg9KFcZKV0Gr1jLc6IZPiKDRY5gk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=USO8bjomVqGAS1r4X3ZCZqktD74PWGgdFNF2X40IJrMoV5L4zoHmcU3E3sFr0UcIl
-	 Q/j0r7WFdIj0Si350gu4yKbKomyq0dIZvn3k0YrxJ/vVEzMv1brjDfpTrZXyaiSJIw
-	 bCWtbtudVjbcz+27BegwIVEZvY8VExRZDCilpPYPQY3XHUI/GIfaGrQDJ/ac8k6H1B
-	 Cjza1EHwAnZXcKJ/T/UzeX5SKo9Ub/aUNGSwvXV3+naemhNXIGNopyCd54ql1808mn
-	 aVTUbp+9BrHWXOVGkcHQmvOMaI4MdmyEWgISvB0PZ1MGHwH5eiPRMohgPUevOgb6ft
-	 gtmYYOb3RZcSg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t0ykv-000000006Jl-10dx;
-	Wed, 16 Oct 2024 09:47:41 +0200
-Date: Wed, 16 Oct 2024 09:47:41 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: add
- missing x1e80100 pipediv2 clocks
-Message-ID: <Zw9vnXpzyzLmZA4k@hovoldconsulting.com>
-References: <20240916082307.29393-1-johan+linaro@kernel.org>
- <20240916082307.29393-2-johan+linaro@kernel.org>
+	s=k20201202; t=1729065015;
+	bh=a5bL9GkgEINnsaPtdhyx300M2FZuDjH58V7+HBKJ0Bw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=G5faxUpbSfeTtpQGRBahN39kZ4yGcZEvih6Qq8T9Ms1NAB3okRD4SOUWkO4Pcrvdr
+	 sem3LRa1J6cH9C/ROiHNveUSFgXyPBtFl4+PdrkmqEvW9v4t7UgIlQTOUNKorZ+h0G
+	 aIRaoZGhND7fuRi95tYxdN4HGZCUlmHwmkoktYMSQ6D/mzQnH6U5GHeGNhGHP84PLp
+	 Aq1MjWDIBUd/X0W6tLaCvhg2qFrLhJnV91KDAUphOhJ6TXPhqT448BvpDh/W2jTVMW
+	 A/trzBP0nhiSVEeF6I9NyEpT5YrQG0mIvREyAScaBk+W3bcQIU7IjMrfeMbRN+i+EJ
+	 Blc379unz8XzQ==
+Message-ID: <921d3a39-d95c-4156-b376-44e8dc6a6467@kernel.org>
+Date: Wed, 16 Oct 2024 09:50:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240916082307.29393-2-johan+linaro@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 3/3] arm64: dts: qcom: x1e80100: Add ACD levels for
+ GPU
+To: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-pm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
+ <20241012-gpu-acd-v1-3-1e5e91aa95b6@quicinc.com>
+ <5axuqj4hetfkgg2f53ph4um24b7xfyumktreglxqyzfsdhy25e@deucq7vqxq5l>
+ <20241015193540.mcpp2dvkmikruncj@hu-akhilpo-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241015193540.mcpp2dvkmikruncj@hu-akhilpo-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Vinod,
-
-On Mon, Sep 16, 2024 at 10:23:05AM +0200, Johan Hovold wrote:
-> The x1e80100 QMP PCIe PHYs all have a pipediv2 clock that needs to be
-> described.
+On 15/10/2024 21:35, Akhil P Oommen wrote:
+> On Mon, Oct 14, 2024 at 09:40:13AM +0200, Krzysztof Kozlowski wrote:
+>> On Sat, Oct 12, 2024 at 01:59:30AM +0530, Akhil P Oommen wrote:
+>>> Update GPU node to include acd level values.
+>>>
+>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 ++++++++++-
+>>>  1 file changed, 10 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>> index a36076e3c56b..e6c500480eb1 100644
+>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+>>> @@ -3323,60 +3323,69 @@ zap-shader {
+>>>  			};
+>>>  
+>>>  			gpu_opp_table: opp-table {
+>>> -				compatible = "operating-points-v2";
+>>> +				compatible = "operating-points-v2-adreno";
+>>
+>> This nicely breaks all existing users of this DTS. Sorry, no. We are way
+>> past initial bringup/development. One year past.
 > 
-> Fixes: e94b29f2bd73 ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHYs")
-> Cc: Abel Vesa <abel.vesa@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> It is not obvious to me how it breaks backward compatibility. Could you
 
-Bjorn has now picked up the DT fixes for 6.12, but we need this binding
-change too to avoid checker warnings.
+I did not say "backward compatibility". I said existing users.
 
-Could you pick this one up for 6.12-rc?
+> please elaborate a bit? I am aware that drivers should be backward
+> compatible with DT, but not the other way. Are we talking about kernels other
+> than Linux?
+> 
 
-Johan
+Boot OpenBSD with new DTS. Previously: worked fine. Now: works less fine.
+
+We had exact talk about this during LPC.
+
+> Also, does including "operating-points-v2" too here help?
+
+Fallback? Yes, assuming these are compatible. Not much is explained in
+the commit msg, except duplicating diff. That's not what the commit msg
+is for.
+
+
+Best regards,
+Krzysztof
+
 
