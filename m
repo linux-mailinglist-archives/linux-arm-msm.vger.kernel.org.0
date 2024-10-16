@@ -1,137 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-34610-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34611-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 949E99A0DD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 17:16:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E08289A0E3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 17:32:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2352CB22529
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 15:16:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 26C4E1C2085C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 15:32:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 839C720FA9B;
-	Wed, 16 Oct 2024 15:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4723A20E025;
+	Wed, 16 Oct 2024 15:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GlmLUf8W"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNEuKOdp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0136220F5DE;
-	Wed, 16 Oct 2024 15:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7B854720;
+	Wed, 16 Oct 2024 15:32:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729091774; cv=none; b=p5Hb+Ac9gxYSghGfA8wjn62lqrRXx8fha9zWdS3sZqGGwiVM8wEHj7y1IjLBqFbwuKLTfwA0YTuzk2ErgaW3pV8a9kK8mA6kqq4E8Wu1xQfcWLuJ46STQBySprHd+Hlpjcr1RhadZO+epC+zTc0Ibyt9/sQsfGCmZoEJ7+xJf0M=
+	t=1729092735; cv=none; b=liH6QhK6YO8QJ0mBntY0AZSI34vKK1QXD4LPcTiqsiC2hUy+EmvMzJTlQQa3Y1LtAXSj1E3WhGGCM57z8VNfF0M8O8UrI+9LMOCxTTdCrryZ0jYjS4BaXRpq5jVZ0cmzJJR6uFnNcRvyijT0VoAuPm10LgU0IdXrmFmDinC5QaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729091774; c=relaxed/simple;
-	bh=nLfvuGZFjYhAb5C/nrzqK7BuOVhqSe7PZwFp3Z+OcTE=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i4fo43GsF0amzMbjpQ37gY0/U2r6O2jlOj+yQc05p34O5Q/ZqwbaKllaO8q81JGCIq0hs/7vSSGUrw1Ln3WkODD2XgKkqlpnyNt1nO6kdDWrvoSeaSTVRQ9/MFW3IHBU16lcF9t58g9zY++H3VJ+Q100Z3VHW/Am3/Ov6rh1KzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GlmLUf8W; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8Q2UW016929;
-	Wed, 16 Oct 2024 15:16:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hbYqIUOQYZAVq5tYJ4Ufys1oieC5bKHg7OSIcJOvHaU=; b=GlmLUf8W8MSn4sIA
-	dCgqZ4dbyAejbqbuz5oDCk00EscGgON3eXs5rWwSCstLLn02obaKREVnL96W9VUg
-	AgInosurKFBATBVuCBAb7cuIeDuyNdzxhpTZp5DLmLl4U/U8VfKQF6SE/Hi2GW5Y
-	lkbFKHEUp8bZyk4b0cIs3RdY417Yje29WujBa1g9aCakQJBjUCghaDs5l9pstT27
-	fd2CT6/NCGqU+sq8xiXnCsezjXoQBmjd5SNUGV/znygIm4WveyCMq5/tFGdmVH61
-	x6xyXfD6r5Gxacs5IaYKo3ynSHKWtVChWFGtN3zw8rdcfDGFXkLRFBahgPYhtWnO
-	kvNo2A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429mh555hr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 15:16:09 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49GFG8iB004636
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 15:16:08 GMT
-Received: from hu-mmanikan-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 16 Oct 2024 08:16:05 -0700
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-To: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: ipq5424: Add smem and tcsr_mutex nodes
-Date: Wed, 16 Oct 2024 20:45:28 +0530
-Message-ID: <20241016151528.2893599-4-quic_mmanikan@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241016151528.2893599-1-quic_mmanikan@quicinc.com>
-References: <20241016151528.2893599-1-quic_mmanikan@quicinc.com>
+	s=arc-20240116; t=1729092735; c=relaxed/simple;
+	bh=P2bJIamdJcbs7G92FX1fCfvsX7Wy+RgJgtcHLUEx4Ew=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WhbqD8g35RwIX67qC6iUWNRRx8biKBzfMUawuNbyZdE01K2A0dKxi87R2pkdyacjc4dWdR7v7EfWqoVUX2egKAegTDPIRne63WaTvHaWBB93fWN2DPGvUj2JYq19pA3Ckou8Vr+kRFkpdafwNWKx7BlFYPH/sBM5utpklNbMdFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNEuKOdp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3862C4CEC7;
+	Wed, 16 Oct 2024 15:32:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729092734;
+	bh=P2bJIamdJcbs7G92FX1fCfvsX7Wy+RgJgtcHLUEx4Ew=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HNEuKOdp1TM0wRAGEF1959lizN5cVJz40TC86sm30YgSJgPtUKySzSAPyCMZPRUU6
+	 z68pnOukzvCIW0q7g3hcfCBLNeK88lwGRgj/IOVvlU/4pV8ureyWvbbs/jJCGcV0mJ
+	 NxIa67upO8S9i8CEPbhBpsznMBSrL63WYlEFsJDzBSe86870PQAlt4z6CdMfDaIvZb
+	 GMgKkBSKAnAOtHQSfOM6X/DeJyDdFnL+5Q0/lgleEFN5hq5pWkp1VvrLC3C32kthe3
+	 CPzZTEtu5JA0xOpgJLx4EfZfqVFTuAOs3JCX2/l/HahJNyMuaWowm8vhSJqm2AQxR+
+	 E+vDsLA1Rf1rA==
+From: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Abel Vesa <abel.vesa@linaro.org>
+Cc: Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] arm64: dts: qcom: x1e80100: Drop orientation-switch from USB SS[0-1] QMP PHYs
+Date: Wed, 16 Oct 2024 10:32:11 -0500
+Message-ID: <172909273715.703216.4493809252879170474.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241014-x1e80100-dts-drop-orientation-switch-v1-0-26afa6d4afd9@linaro.org>
+References: <20241014-x1e80100-dts-drop-orientation-switch-v1-0-26afa6d4afd9@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SslFdVi_G6zc_fnSMwcQhAHAaKlWFhL0
-X-Proofpoint-ORIG-GUID: SslFdVi_G6zc_fnSMwcQhAHAaKlWFhL0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 adultscore=0 mlxlogscore=771
- lowpriorityscore=0 mlxscore=0 phishscore=0 malwarescore=0 suspectscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410160095
 
-The smem is necessary for the socinfo driver. Additionally
-smem requires the tcsr_mutex node. Therefore add both the nodes.
 
-Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq5424.dtsi | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+On Mon, 14 Oct 2024 14:21:47 +0300, Abel Vesa wrote:
+> The Slim 7X and Vivobook S15 are the only remaining X Elite platforms
+> which still unnecessarily describe the orientation-switch in the USB
+> SS0 and SS1 QMP PHYs. So drop these properties from the board specific
+> dts as the SoC dtsi already describes them.
+> 
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-index 76af0d87e9a8..5e219f900412 100644
---- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-@@ -129,6 +129,14 @@ tz@8a600000 {
- 			reg = <0x0 0x8a600000 0x0 0x200000>;
- 			no-map;
- 		};
-+
-+		smem@8a800000 {
-+			compatible = "qcom,smem";
-+			reg = <0x0 0x8a800000 0x0 0x32000>;
-+			no-map;
-+
-+			hwlocks = <&tcsr_mutex 3>;
-+		};
- 	};
- 
- 	soc@0 {
-@@ -170,6 +178,12 @@ gcc: clock-controller@1800000 {
- 			#interconnect-cells = <1>;
- 		};
- 
-+		tcsr_mutex: hwlock@1905000 {
-+			compatible = "qcom,tcsr-mutex";
-+			reg = <0 0x01905000 0 0x20000>;
-+			#hwlock-cells = <1>;
-+		};
-+
- 		qupv3: geniqup@1ac0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0 0x01ac0000 0 0x2000>;
+Applied, thanks!
+
+[1/2] arm64: dts: qcom: x1e80100-slim7x: Drop orientation-switch from USB SS[0-1] QMP PHYs
+      commit: eb2dd93d03b16ed0e8b09311f8d35cc5a691a9b7
+[2/2] arm64: dts: qcom: x1e80100-vivobook-s15: Drop orientation-switch from USB SS[0-1] QMP PHYs
+      commit: 27344eb70c8fd60fe7c570e2e12f169ff89d2c47
+
+Best regards,
 -- 
-2.34.1
-
+Bjorn Andersson <andersson@kernel.org>
 
