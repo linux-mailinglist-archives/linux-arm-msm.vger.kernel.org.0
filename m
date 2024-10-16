@@ -1,162 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-34567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76B4B9A04F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 11:02:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 422929A056E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 11:26:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 03B0CB24318
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:02:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B8451C24845
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:26:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A5C1D90C8;
-	Wed, 16 Oct 2024 09:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6DFB205E10;
+	Wed, 16 Oct 2024 09:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RMRy5I3+"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="d6+DlMJ5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F41158D9C;
-	Wed, 16 Oct 2024 09:02:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263B31C07E7;
+	Wed, 16 Oct 2024 09:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729069325; cv=none; b=TiJL2/2bGVa0GkCSb1/GLY7ZCd42303R91+jWTa01J6UXx4gp5zTyq1zDfLjHvlm8AnBHuK9NlZCbl2TBB27+504Yo0MbsQtvbfrYLJiQh5hp5qoDN+qVsvIvyjSMd9jSuIBXRewuXP5xGgtTyIMH7tBpI/lqZ1wuxz6rAH8mhg=
+	t=1729070767; cv=none; b=lL377u0jZlRQEewRwhI1emjFHW8nd6L8Qes3y8rrkT3++fk32Mu+XuOTRlSYZfInfmsyHSZQhUCHZn/zF64hYJz+xtBU4Hl7UvgT25H5fluQuT1dHpW3X0WuuxOACejawczAz9owy8/pWwlX3HVZqjczpUYXwsooE+DuFdbVHSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729069325; c=relaxed/simple;
-	bh=9WmOd5cuRPa8MBmjlDk2f0Dy15AkJh/f/HhfJIVXuY4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=WduOCn0JuKSuBZgag8k6SlVZskvcUQ1NZrycR9NHk9JyJsbQ92Qa/xbOoxPg0bUV9iyRaAfBkkSfZd5wBWLprejDSfdGqDlGK8B7Xt3yh9u22zys6OUAG74sn4Ls729Kcn6DJMjb6WbNzCBHYug17sIzmq/SS3wXn5sWy4kJCU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RMRy5I3+; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8PuiF031193;
-	Wed, 16 Oct 2024 09:01:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	P03ly6JJchAmvFrJIVoUSG5+HOwrB2V0T7m+9PqeQKg=; b=RMRy5I3+A8z5zx8n
-	63UBfVh5EZ+4KE5AFbQduXqVkg1TH4a6bUPshgCmIULfxDkjnvWJR3dfEXx1k/XC
-	aEmDGTRi2TP4fjH3Ksdqrs3orI8qsAKpYN4elB69zPcabg1CovC9iAx5wReKbfjP
-	9HiZfEKAjchUXC5A6q1DZBSfO6Bmu0jgJib7lQg+YMiHD5Mt7FhDSTVvVV8lA+2T
-	/o+g8l6eIL4hbMcCQmeKY64X5NE4oKuIQDyyb6ea3qhnkrQF+hxqfEXrRc7RjOIu
-	z4P7pOmKkeoxq0JiovujIR3FQGl/reEu4HYA0tboP9eRkxaiMvuvpS/dNYus4vSO
-	e1QxRw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8nq0cuk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 09:01:58 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49G91vhg025261
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 09:01:57 GMT
-Received: from [10.217.222.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Oct
- 2024 02:01:55 -0700
-Message-ID: <f46a9180-ca71-458e-9693-ed9badc85e72@quicinc.com>
-Date: Wed, 16 Oct 2024 14:31:51 +0530
+	s=arc-20240116; t=1729070767; c=relaxed/simple;
+	bh=28jnTv6h6STCAqyWBuF8qBfgOMArQniaHVUl7pMjaZ0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=W4v5v9YLLHTeE6kLUFN/GpMfpspYoCDVhbxqm3ixEMNgYkFtwG9kn/TOE+xR6RWbl+xGoxGnc8xFtG54DJbLO26tPdr0nk95vEDFYFYMzQbvzYQftWDewqdpuB+ckuUT0QiIb0ubIxNKd1EJM55hrgEkTKWu0wLejLugFJ4Jh0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=d6+DlMJ5; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729070766; x=1760606766;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=28jnTv6h6STCAqyWBuF8qBfgOMArQniaHVUl7pMjaZ0=;
+  b=d6+DlMJ5Q8eRlc+K/FVD3Poz1ySRrBLbcRGLjX40uFqIb+Y1xwuZMaGI
+   dv/9CjGqdQmlTXkRz5mJ29WWZmdpwXb0W5kK3FLBgGvzLH6nHKc3ZEVaD
+   0QhRCmrR/tAK3BBtcxHXAY7Vp2cnQvnj/RWiFC9B7PMqlemwBRG33H2K2
+   yNG8wdhgXdq4cpOWfrVqRS0MnrZ+Y2Qkk073EFh2Ndh6KyZZTF0Grl6id
+   QdO/MBbt9rHxg9W36l86pYp+CXi24VOIOsu1xuF41EUA8HLf6+kdb+6PN
+   vXjvjswKr98CIXRqbYBGW9b/cY/+FIfPXx7QVJkUYCiPZsAfaiDShQqGN
+   A==;
+X-CSE-ConnectionGUID: zdZE+BNqQyuiFaTLdHjTmA==
+X-CSE-MsgGUID: jSICsv0nR0S2Mln5qJggXg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="28604946"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
+   d="scan'208";a="28604946"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Oct 2024 02:26:05 -0700
+X-CSE-ConnectionGUID: bOwObLaaTh2XgLJHc2Rc7w==
+X-CSE-MsgGUID: zhC20fwSRwKp8db5a/W28Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,207,1725346800"; 
+   d="scan'208";a="77790496"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by fmviesa006.fm.intel.com with ESMTP; 16 Oct 2024 02:26:02 -0700
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t10I4-000KgX-0k;
+	Wed, 16 Oct 2024 09:26:00 +0000
+Date: Wed, 16 Oct 2024 17:25:20 +0800
+From: kernel test robot <lkp@intel.com>
+To: Rakesh Kota <quic_kotarake@quicinc.com>, dmitry.baryshkov@linaro.org,
+	andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	quic_kamalw@quicinc.com, quic_jprakash@quicinc.com,
+	quic_kotarake@quicinc.com
+Subject: Re: [PATCH V2] arm64: dts: qcom: qcm6490-idp: Allow UFS regulators
+ load/mode setting
+Message-ID: <202410161736.XEEYKM7A-lkp@intel.com>
+References: <20241015132049.2037500-1-quic_kotarake@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] firmware: qcom: qcom_tzmem: Implement sanity
- checks
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Bartosz Golaszewski
-	<bartosz.golaszewski@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241014111527.2272428-1-quic_kuldsing@quicinc.com>
- <20241014111527.2272428-3-quic_kuldsing@quicinc.com>
- <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
-Content-Language: en-US
-From: Kuldeep Singh <quic_kuldsing@quicinc.com>
-In-Reply-To: <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JrUwdrMhQ4qL68B6d0Dgb7noeN768y8k
-X-Proofpoint-GUID: JrUwdrMhQ4qL68B6d0Dgb7noeN768y8k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501
- suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 clxscore=1015
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410160059
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241015132049.2037500-1-quic_kotarake@quicinc.com>
 
+Hi Rakesh,
 
-On 10/14/2024 6:38 PM, Bartosz Golaszewski wrote:
-> On Mon, Oct 14, 2024 at 1:19 PM Kuldeep Singh <quic_kuldsing@quicinc.com> wrote:
->>
->> The qcom_tzmem driver currently has exposed APIs that lack validations
->> on required input parameters. This oversight can lead to unexpected null
->> pointer dereference crashes.
->>
-> 
-> The commit message is not true. None of the things you changed below
-> can lead to a NULL-pointer dereference.>
->> To address this issue, add sanity for required input parameters.
->>
->> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
->> ---
->>  drivers/firmware/qcom/qcom_tzmem.c | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>
->> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
->> index 92b365178235..977e48fec32f 100644
->> --- a/drivers/firmware/qcom/qcom_tzmem.c
->> +++ b/drivers/firmware/qcom/qcom_tzmem.c
->> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_pool_config *config)
->>
->>         might_sleep();
->>
->> +       if (!config->policy)
->> +               return ERR_PTR(-EINVAL);
-> 
-> This is already handled by the default case of the switch.
+kernel test robot noticed the following build errors:
 
-Ack. Need to drop.
-https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/qcom_tzmem.c#L218
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.12-rc3 next-20241016]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-While examining qcom_tzmem_pool_free under the same principle, it
-appears the following check is unnecessary.
-https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/qcom_tzmem.c#L268
+url:    https://github.com/intel-lab-lkp/linux/commits/Rakesh-Kota/arm64-dts-qcom-qcm6490-idp-Allow-UFS-regulators-load-mode-setting/20241015-212708
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20241015132049.2037500-1-quic_kotarake%40quicinc.com
+patch subject: [PATCH V2] arm64: dts: qcom: qcm6490-idp: Allow UFS regulators load/mode setting
+config: arm64-randconfig-001-20241016 (https://download.01.org/0day-ci/archive/20241016/202410161736.XEEYKM7A-lkp@intel.com/config)
+compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project bfe84f7085d82d06d61c632a7bad1e692fd159e4)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241016/202410161736.XEEYKM7A-lkp@intel.com/reproduce)
 
-> 
->> +
->>         switch (config->policy) {
->>         case QCOM_TZMEM_POLICY_STATIC:
->>                 if (!config->initial_size)
->> @@ -412,6 +415,9 @@ void qcom_tzmem_free(void *vaddr)
->>  {
->>         struct qcom_tzmem_chunk *chunk;
->>
->> +       if (!vaddr)
->> +               return;
->> +
->>         scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock)
->>                 chunk = radix_tree_delete_item(&qcom_tzmem_chunks,
->>                                                (unsigned long)vaddr, NULL);
-> 
-> This would lead to a WARN() as the lookup would inevitably fail. We
-> can possibly keep this bit but please change the commit message.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202410161736.XEEYKM7A-lkp@intel.com/
 
-Sure, will reword commit message.
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm64/boot/dts/qcom/qcm6490-idp.dts:287.4-5 syntax error
+   FATAL ERROR: Unable to parse input tree
 
 -- 
-Regards
-Kuldeep
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
