@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-34566-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34567-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6EEC9A04F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 11:01:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76B4B9A04F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 11:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB7F01C230E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:01:06 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 03B0CB24318
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 09:02:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81188204F88;
-	Wed, 16 Oct 2024 09:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37A5C1D90C8;
+	Wed, 16 Oct 2024 09:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EzlAZV83"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RMRy5I3+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA4417D378;
-	Wed, 16 Oct 2024 09:01:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4F41158D9C;
+	Wed, 16 Oct 2024 09:02:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729069263; cv=none; b=lNlESbNiuIbdY+Het2yoaOgqF39Eyq/fDLII7m5gnszux4Koy5F0MbNSqX+L830yLk+DY8Nl1VGUi4sXdnRaM5Yl9Zy54N7DM3poTbFiboPDlpP6Yp6tDHl2NrdhiYuWs0tvWbLWat89yK7R2dPkfWR2OFafvS9mkuNd0cTXz7I=
+	t=1729069325; cv=none; b=TiJL2/2bGVa0GkCSb1/GLY7ZCd42303R91+jWTa01J6UXx4gp5zTyq1zDfLjHvlm8AnBHuK9NlZCbl2TBB27+504Yo0MbsQtvbfrYLJiQh5hp5qoDN+qVsvIvyjSMd9jSuIBXRewuXP5xGgtTyIMH7tBpI/lqZ1wuxz6rAH8mhg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729069263; c=relaxed/simple;
-	bh=biQEO64j7oV50Bnrtyg65cg1yD57qTZrXWBPJsZN1ag=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ey51ueedYZNPcTsjLTJbWrlIED1UZ2w0i5OgDiEmKjXw8UwKsEIZd7h0Y6NJPmXVDVAQ1MAL4ApiH8lpBW2aO2nP4TEjuVWjS8WOaByE9x4cqMu0B4gLOzuzfWmF4h87V/vREqe/LdYZtzT66EErXcMOXn1vH2bGkBsFT1/gpj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EzlAZV83; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5ACC4CEC5;
-	Wed, 16 Oct 2024 09:00:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729069262;
-	bh=biQEO64j7oV50Bnrtyg65cg1yD57qTZrXWBPJsZN1ag=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=EzlAZV83AMYZdVe+Y5aKVS4H2emCG3ZBzoelrAnfNUZ46H65AFtFktxxtgIV9GMbk
-	 z3J9jFSJSWmBpW9R3BN0qF6iH/jtfN2CsX3HD1KJqqOa7DgCL3+HL0kc4UTYsqcKIc
-	 7WnLOOA/mTkG/ZBWd+3RteDUOrFNjm/5Tsi1qhcq7X8WGlBzdkqRhVwu4T24j3CHIR
-	 FhIJkG5H0ARW783JS4Uyv+K1WtrgRkA+tnjqFk0721zm4VPwfSDWW1fscl+6CBpQTD
-	 Zoeul/g3Rz5fnHn8A6tzxp2ukHsEM7X8v+YK1J3NxaXfufxjHJfIehSkz0NjJssMHG
-	 X5I4IU65oCFHA==
-Message-ID: <b5f352e8-19a5-4c06-b9ba-44af791f6a81@kernel.org>
-Date: Wed, 16 Oct 2024 11:00:58 +0200
+	s=arc-20240116; t=1729069325; c=relaxed/simple;
+	bh=9WmOd5cuRPa8MBmjlDk2f0Dy15AkJh/f/HhfJIVXuY4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=WduOCn0JuKSuBZgag8k6SlVZskvcUQ1NZrycR9NHk9JyJsbQ92Qa/xbOoxPg0bUV9iyRaAfBkkSfZd5wBWLprejDSfdGqDlGK8B7Xt3yh9u22zys6OUAG74sn4Ls729Kcn6DJMjb6WbNzCBHYug17sIzmq/SS3wXn5sWy4kJCU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RMRy5I3+; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8PuiF031193;
+	Wed, 16 Oct 2024 09:01:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	P03ly6JJchAmvFrJIVoUSG5+HOwrB2V0T7m+9PqeQKg=; b=RMRy5I3+A8z5zx8n
+	63UBfVh5EZ+4KE5AFbQduXqVkg1TH4a6bUPshgCmIULfxDkjnvWJR3dfEXx1k/XC
+	aEmDGTRi2TP4fjH3Ksdqrs3orI8qsAKpYN4elB69zPcabg1CovC9iAx5wReKbfjP
+	9HiZfEKAjchUXC5A6q1DZBSfO6Bmu0jgJib7lQg+YMiHD5Mt7FhDSTVvVV8lA+2T
+	/o+g8l6eIL4hbMcCQmeKY64X5NE4oKuIQDyyb6ea3qhnkrQF+hxqfEXrRc7RjOIu
+	z4P7pOmKkeoxq0JiovujIR3FQGl/reEu4HYA0tboP9eRkxaiMvuvpS/dNYus4vSO
+	e1QxRw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8nq0cuk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 09:01:58 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49G91vhg025261
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 09:01:57 GMT
+Received: from [10.217.222.28] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Oct
+ 2024 02:01:55 -0700
+Message-ID: <f46a9180-ca71-458e-9693-ed9badc85e72@quicinc.com>
+Date: Wed, 16 Oct 2024 14:31:51 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,159 +65,98 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/22] dt-bindings: net: wireless: describe the ath12k
- AHB module
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-Cc: ath12k@lists.infradead.org, linux-wireless@vger.kernel.org,
- Kalle Valo <kvalo@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-2-quic_rajkbhag@quicinc.com>
- <h4xel7xh3vyljxi7jn2afqasfmbsiqjtgpvqthrviovode6cxt@ey5nnzi4dwtv>
- <708e9d22-0513-4646-aeac-2187c052e208@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH v2 2/2] firmware: qcom: qcom_tzmem: Implement sanity
+ checks
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio
+	<konradybcio@kernel.org>,
+        Bartosz Golaszewski
+	<bartosz.golaszewski@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241014111527.2272428-1-quic_kuldsing@quicinc.com>
+ <20241014111527.2272428-3-quic_kuldsing@quicinc.com>
+ <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <708e9d22-0513-4646-aeac-2187c052e208@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Kuldeep Singh <quic_kuldsing@quicinc.com>
+In-Reply-To: <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: JrUwdrMhQ4qL68B6d0Dgb7noeN768y8k
+X-Proofpoint-GUID: JrUwdrMhQ4qL68B6d0Dgb7noeN768y8k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410160059
 
-On 16/10/2024 10:37, Raj Kumar Bhagat wrote:
-> On 10/16/2024 12:32 PM, Krzysztof Kozlowski wrote:
->> On Tue, Oct 15, 2024 at 11:56:16PM +0530, Raj Kumar Bhagat wrote:
->>> Add device-tree bindings for the ATH12K module found in the IPQ5332
->>> device.
->>>
->>> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->>> ---
+
+On 10/14/2024 6:38 PM, Bartosz Golaszewski wrote:
+> On Mon, Oct 14, 2024 at 1:19 PM Kuldeep Singh <quic_kuldsing@quicinc.com> wrote:
 >>
->> That's a v2, what changed?
->>
->> Did you ignore entire review? Limited review follows because of that (I
->> am not going to do the same work twice).
+>> The qcom_tzmem driver currently has exposed APIs that lack validations
+>> on required input parameters. This oversight can lead to unexpected null
+>> pointer dereference crashes.
 >>
 > 
-> Review comments in version 1 are addressed.
+> The commit message is not true. None of the things you changed below
+> can lead to a NULL-pointer dereference.>
+>> To address this issue, add sanity for required input parameters.
+>>
+>> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+>> ---
+>>  drivers/firmware/qcom/qcom_tzmem.c | 6 ++++++
+>>  1 file changed, 6 insertions(+)
+>>
+>> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qcom/qcom_tzmem.c
+>> index 92b365178235..977e48fec32f 100644
+>> --- a/drivers/firmware/qcom/qcom_tzmem.c
+>> +++ b/drivers/firmware/qcom/qcom_tzmem.c
+>> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_pool_config *config)
+>>
+>>         might_sleep();
+>>
+>> +       if (!config->policy)
+>> +               return ERR_PTR(-EINVAL);
 > 
-> Per-patch version log is not added here. But we have consolidated version log
-> in the cover-letter. Will include per-patch version log from next version.
+> This is already handled by the default case of the switch.
 
-Hm? There is no such in cover letter. There is description, dependencies
-and list of commits which indicates end (format-patch standard stuff).
-> 
-> Below are the version log for v2:
-> - "qcom,board_id" property is dropped. This is not the direct dependency for Ath12k
->   AHB support, hence it can be taken up separately.
-> - "qcom,bdf-addr" property is dropped in device-tree and moved to ath12k driver.
-> - Currently we have only one compatible enum (qcom,ipq5332-wifi), hence conditional
->   if() check for defining the binding is removed.
-> - "reserved-memory" node is dropped from example DTS.
-> - "status" property is dropped in wifi node of example DTS.
+Ack. Need to drop.
+https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/qcom_tzmem.c#L218
 
-
->>> +
->>> +  clock-names:
->>> +    items:
->>> +      - const: gcc_xo_clk
->>
->> Drop _clk, drop gcc_. Look how this clock is called *everywhere* else.
->>
-> 
-> Thanks, Based on other bindings example, will rename to "xo"
-
-git grep gcc_xo_clk -> nothing like that!
-
-...
-
->>> +
->>> +  memory-region:
->>> +    minItems: 1
->>
->> upper constraint
->>
->>> +    description:
->>> +      phandle to a node describing reserved memory (System RAM memory)
->>> +      used by ath12k firmware (see bindings/reserved-memory/reserved-memory.txt)
->>> +
->>> +  qcom,rproc:
->>> +    $ref: /schemas/types.yaml#/definitions/phandle
->>> +    description:
->>> +      DT entry of a WCSS node. WCSS node is the child node of q6 remoteproc driver.
->>> +      (see bindings/remoteproc/qcom,multipd-pil.yaml)
->>
->> DT nodes are not children of drivers. But other DT nodes. Explain why
->> this phandle is needed, what is it for.
->>
->> To me it looks like you incorrectly organized your nodes.
->>
-> 
-> This phandle is required by wifi driver (ath12k) to retrieve the correct remote processor
-> (rproc_get_by_phandle()). Ath12k driver needs this rproc to interact with the remote
-> processor (example: booting-up remote processor).
-
-That's driver aspect. Why does the hardware needs it?
-
-WiFi is the remote processor, so I would expect this being a child. Or
-just drop entirely.
-
-You keep using here arguments how you designed your drivers, which is
-not valid. Sorry, fix your drivers... or use arguments in terms of hardware.
-
+While examining qcom_tzmem_pool_free under the same principle, it
+appears the following check is unnecessary.
+https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/qcom_tzmem.c#L268
 
 > 
-> In next version, will correct the description based on existing bindings (qcom,ath11k.yaml).
+>> +
+>>         switch (config->policy) {
+>>         case QCOM_TZMEM_POLICY_STATIC:
+>>                 if (!config->initial_size)
+>> @@ -412,6 +415,9 @@ void qcom_tzmem_free(void *vaddr)
+>>  {
+>>         struct qcom_tzmem_chunk *chunk;
+>>
+>> +       if (!vaddr)
+>> +               return;
+>> +
+>>         scoped_guard(spinlock_irqsave, &qcom_tzmem_chunks_lock)
+>>                 chunk = radix_tree_delete_item(&qcom_tzmem_chunks,
+>>                                                (unsigned long)vaddr, NULL);
+> 
+> This would lead to a WARN() as the lookup would inevitably fail. We
+> can possibly keep this bit but please change the commit message.
 
-Sorry, let's don't copy existing solutions just because they exist.
+Sure, will reword commit message.
 
-
-
-Best regards,
-Krzysztof
-
+-- 
+Regards
+Kuldeep
 
