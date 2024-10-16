@@ -1,176 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-34593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B6D69A0C31
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:01:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C8089A0C96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:28:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1C9E1F2800A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:01:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DED751F22EE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:28:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F8B920C029;
-	Wed, 16 Oct 2024 13:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D20918BB84;
+	Wed, 16 Oct 2024 14:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RW157QD9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB88820C009;
-	Wed, 16 Oct 2024 13:58:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A59069D2B;
+	Wed, 16 Oct 2024 14:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729087139; cv=none; b=c+UdFEoQEGP7nSpk/W1kB0dX5sc3Qo8pBk4bofE9lZ5tywDQYW6Q54DuvWrL96vE7Z1p1d2oXcy9cnTAvnIpkqLWi73zztwj8JqCwXROlBl1QpGkMz96w6Szscnvl9JnyaTjF/C2QnPaPesC2XuX54IFWY1Wbw+UWjlP/Y9LcOU=
+	t=1729088930; cv=none; b=m+W6Kf1XtnUAR+8rHLvEaLjPGGmJFUm+/mDB+k8CZypdA2PnzkiQbHdq7GNmgOid6ith88mjziaNJXlL71HsyRoH26p9icGY+MuyTsgHf/VQMceoZTS2GMt+iatGwJXD0kZHpQUbbrmtjXxN9ML2CuWMWa2jAbJJmuZn0jwHXOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729087139; c=relaxed/simple;
-	bh=DCwW1BXaEzYmomHtjqvPhEnDGnecHTjUZgJNEcpFnTA=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oV+a8Ndu+BJiDoBSdy205lZFwASoKPuT/2qnXi7suJfPXiNV8QyBT0PXTd8/RSZv0z7t7ZLeTukmM6avmil9VQ3ODZ2duG7RaLkO+1dEcbTHhMmu7xNqSHmZ/TFGk6tTXgX7aHvIrOVklu6Nn0F1A1rzq5hjM9/f1xMjSYCH1MU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.216])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XTCGw6RFvz6D8Y7;
-	Wed, 16 Oct 2024 21:58:16 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
-	by mail.maildlp.com (Postfix) with ESMTPS id 54E9E140B67;
-	Wed, 16 Oct 2024 21:58:54 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 16 Oct
- 2024 15:58:52 +0200
-Date: Wed, 16 Oct 2024 14:58:51 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-CC: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
-	<daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
-	<lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
-	<thara.gopinath@gmail.com>, Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>, Vasily Khoruzhick
-	<anarsoul@gmail.com>, Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai
-	<wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland
-	<samuel@sholland.org>, <linux-pm@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-tegra@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-	<linux-sunxi@lists.linux.dev>, Chen-Yu Tsai <wenst@chromium.org>
-Subject: Re: [PATCH v4 2/6] thermal: of: Use scoped memory and OF handling
- to simplify thermal_of_trips_init()
-Message-ID: <20241016145851.00004e90@Huawei.com>
-In-Reply-To: <20241010-b4-cleanup-h-of-node-put-thermal-v4-2-bfbe29ad81f4@linaro.org>
-References: <20241010-b4-cleanup-h-of-node-put-thermal-v4-0-bfbe29ad81f4@linaro.org>
-	<20241010-b4-cleanup-h-of-node-put-thermal-v4-2-bfbe29ad81f4@linaro.org>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1729088930; c=relaxed/simple;
+	bh=vjNjPzCeNoqJhqtCDl/b4mBQCaX7+Bu5HjiZkp4Zpso=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qVKPyl+l8NUTAnOgt5BmiudCqldU1N48bSmbLjckqAzav4pZIj58+pBRNal3zEMUmKQR/A5pFabHSy3xMoJqLYAos3sa9Y16LH2e80uD0Ij2yk6Gy67iXm97CXuhqIstanzbHRiO2ssN8O0E9I88ZKgBQLDeWFBRicJWdyLkn3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RW157QD9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA22CC4CEC5;
+	Wed, 16 Oct 2024 14:28:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729088929;
+	bh=vjNjPzCeNoqJhqtCDl/b4mBQCaX7+Bu5HjiZkp4Zpso=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=RW157QD9iX704qiEqy6z6S00l51aPv3qbUNImb5xY07+yeiPGmwWo4KD6UcG8Yxek
+	 IZ8AIgDYNyhArtlvoDKf/IQ5lHhDJabUOhybiGvb/6va4eyz1JYwWHu1bjV85nNCjH
+	 IlfoeBVe8r9I7ySDS9/nZ+X9coUIQHQCxWGkgKr2wl4tf5proqobC+lOFNi1gKZCR2
+	 VqnTyeJJujd3zkPtXqBPA35pLpgjzFn+GP2wSKI9Vtctlpe9QGT/zdA96WVOx8UMiO
+	 3wHNRfblKkqNYK9Nu1ZBrJ5W0Ve+rWZLqmys8puccEkmcBoGdchouHvj5+nFFPo2+X
+	 yQvDuslpTqPGQ==
+Date: Wed, 16 Oct 2024 09:28:55 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Rakesh Kota <quic_kotarake@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, konradybcio@kernel.org, 
+	robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	quic_kamalw@quicinc.com, quic_jprakash@quicinc.com
+Subject: Re: [PATCH V3] arm64: dts: qcom: qcm6490-idp: Allow UFS regulators
+ load/mode setting
+Message-ID: <6wej7mt2z4e4w57niowrjmpuhzfxjxj72cyihmefzr4h6g4qkm@a54gnsfjpxwh>
+References: <20241016100511.2890983-1-quic_kotarake@quicinc.com>
+ <2tunyupop2w7brm6adkdsrytvxbr4g3ixpbmuuqljedeaehze5@se3qsbf6tb6t>
+ <e7443137-925a-4fa9-916a-7481585ad4c6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- frapeml500008.china.huawei.com (7.182.85.71)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <e7443137-925a-4fa9-916a-7481585ad4c6@quicinc.com>
 
-On Thu, 10 Oct 2024 20:06:18 +0200
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
+On Wed, Oct 16, 2024 at 05:00:43PM GMT, Rakesh Kota wrote:
+> 
+> 
+> On 10/16/2024 3:54 PM, Dmitry Baryshkov wrote:
+> > On Wed, Oct 16, 2024 at 03:35:11PM +0530, Rakesh Kota wrote:
+> > > The UFS driver expects to be able to set load (and by extension, mode)
+> > > on its supply regulators. Add the necessary properties to make that
+> > > possible.
+> > > 
+> > > Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
+> > > ---
+> > > Changes V3:
+> > >   - Somehow after fixing the compilation in last patch, i have missed to
+> > >     do git  --amend the change. apology for that, in this change i have
+> > >     fixed that compilation issue.
+> > 
+> > What actually was changed? The --amend doesn't describe changes. Nor
+> > does "fixed that compilation issue".
+> > 
+> Added missing semicolon (;) after regulator-allow-set-load prop for ldo9
+> regulator.
+> > >   - Link V2 : https://lore.kernel.org/all/20241015132049.2037500-1-quic_kotarake@quicinc.com/
+> > 
+> > Where are changes between v1 and v2?
+> > 
+> i will add changes history in V4 patch.
 
-> Obtain the device node reference and allocate memory with
-> scoped/cleanup.h to reduce error handling and make the code a bit
-> simpler.
-> 
-> The code is not equivalent in one minor aspect: outgoing parameter
-> "*ntrips" will not be zeroed on errors of memory allocation.  This
-> difference is not important, because code was already not zeroing it in
-> case of earlier errors and the only caller does not rely on ntrips being
-> 0 in case of errors.
-> 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Trivial unrelated comment inline + maybe return_ptr() is the way to go as
-Chen-Yu mentioned.
+It's perfectly fine (preferred even) to just answer with the requested
+information here, and then if you need to make changes to the patch and
+do send v4 you make sure to include it there.
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> > Where is the tag that was given to you for the v2?
+> > 
+> sorry, i missed adding the Reviewed-by tag and i will add it in V4 patch.
 
-> ---
-> 
-> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Cc: Chen-Yu Tsai <wenst@chromium.org>
-> 
-> Changes in v4:
-> 1. Significant change: kzalloc() also with scoped-handling so the entire
->    error handling could be removed.
-> 2. Due to above, drop review-tags (Chen-Yu, Jonathan).
-> 
-> Changes in v2:
-> 1. Drop left-over of_node_put in regular exit path (Chen-Yu)
-> ---
->  drivers/thermal/thermal_of.c | 31 ++++++++-----------------------
->  1 file changed, 8 insertions(+), 23 deletions(-)
-> 
-> diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
-> index f0ffc0e335ba9406f4fd858d6c561f9d23f4b842..37db435b54b124abf25b1d75d6cc4fb75f1c1e5c 100644
-> --- a/drivers/thermal/thermal_of.c
-> +++ b/drivers/thermal/thermal_of.c
-> @@ -95,11 +95,9 @@ static int thermal_of_populate_trip(struct device_node *np,
->  
->  static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *ntrips)
->  {
-> -	struct thermal_trip *tt;
-> -	struct device_node *trips;
->  	int ret, count;
->  
-> -	trips = of_get_child_by_name(np, "trips");
-> +	struct device_node *trips __free(device_node) = of_get_child_by_name(np, "trips");
->  	if (!trips) {
->  		pr_err("Failed to find 'trips' node\n");
->  		return ERR_PTR(-EINVAL);
-> @@ -108,36 +106,23 @@ static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *n
->  	count = of_get_child_count(trips);
->  	if (!count) {
->  		pr_err("No trip point defined\n");
-> -		ret = -EINVAL;
-> -		goto out_of_node_put;
-> +		return ERR_PTR(-EINVAL);
->  	}
->  
-> -	tt = kzalloc(sizeof(*tt) * count, GFP_KERNEL);
-> -	if (!tt) {
-> -		ret = -ENOMEM;
-> -		goto out_of_node_put;
-> -	}
-> -
-> -	*ntrips = count;
-> +	struct thermal_trip *tt __free(kfree) = kzalloc(sizeof(*tt) * count, GFP_KERNEL);
+Same here, if you just reply with Dmitry's reviewd-by and a comment that
+you missed it, it will help me know that the patch has been reviewed and
+the tools will pick it up.
 
-Trivial and unrelated, but maybe kcalloc(count, sizeof(tt), GFP_KERNEL);
+Regards,
+Bjorn
 
-> +	if (!tt)
-> +		return ERR_PTR(-ENOMEM);
->  
->  	count = 0;
->  	for_each_child_of_node_scoped(trips, trip) {
->  		ret = thermal_of_populate_trip(trip, &tt[count++]);
->  		if (ret)
-> -			goto out_kfree;
-> +			return ERR_PTR(ret);
->  	}
->  
-> -	of_node_put(trips);
-> +	*ntrips = count;
->  
-> -	return tt;
-> -
-> -out_kfree:
-> -	kfree(tt);
-> -	*ntrips = 0;
-> -out_of_node_put:
-> -	of_node_put(trips);
-> -
-> -	return ERR_PTR(ret);
-> +	return no_free_ptr(tt);
->  }
->  
->  static struct device_node *of_thermal_zone_find(struct device_node *sensor, int id)
-> 
-
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 8 ++++++++
+> > >   1 file changed, 8 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> > > index 5f3d4807ac43..bfb1cdc238cc 100644
+> > > --- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> > > +++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
+> > > @@ -258,6 +258,8 @@ vreg_l6b_1p2: ldo6 {
+> > >   			regulator-name = "vreg_l6b_1p2";
+> > >   			regulator-min-microvolt = <1140000>;
+> > >   			regulator-max-microvolt = <1260000>;
+> > > +			regulator-allow-set-load;
+> > > +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+> > >   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > >   		};
+> > > @@ -265,6 +267,8 @@ vreg_l7b_2p952: ldo7 {
+> > >   			regulator-name = "vreg_l7b_2p952";
+> > >   			regulator-min-microvolt = <2400000>;
+> > >   			regulator-max-microvolt = <3544000>;
+> > > +			regulator-allow-set-load;
+> > > +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+> > >   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > >   		};
+> > > @@ -279,6 +283,8 @@ vreg_l9b_1p2: ldo9 {
+> > >   			regulator-name = "vreg_l9b_1p2";
+> > >   			regulator-min-microvolt = <1200000>;
+> > >   			regulator-max-microvolt = <1304000>;
+> > > +			regulator-allow-set-load;
+> > > +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+> > >   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > >   		};
+> > > @@ -467,6 +473,8 @@ vreg_l10c_0p88: ldo10 {
+> > >   			regulator-name = "vreg_l10c_0p88";
+> > >   			regulator-min-microvolt = <720000>;
+> > >   			regulator-max-microvolt = <1050000>;
+> > > +			regulator-allow-set-load;
+> > > +			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
+> > >   			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> > >   		};
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
 
