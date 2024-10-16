@@ -1,109 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-34579-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34580-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A09529A0764
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 12:30:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB6189A076E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 12:31:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4C3B31F272CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 10:30:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D11D91C26089
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 10:31:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 853DD2071FE;
-	Wed, 16 Oct 2024 10:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 425A0205E3F;
+	Wed, 16 Oct 2024 10:30:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GAoTA0G9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XuTX012g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EB62071F1
-	for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 10:28:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D81206E66;
+	Wed, 16 Oct 2024 10:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729074514; cv=none; b=queX9v6SmD3BzDVigescVWg5USwS3OKWdXD/bInp28Ueq/gKlOUwdVjOjYRtp40FoVjLb5TH5lGIAIoxMsYjRJ/7yK0DL04LtnXpk+mjLlz0hyrDs6FnymKbi5UbwqQZwDXg7reJBW0VljmmxucBjzVuunw9srlTiwYomEkbSJU=
+	t=1729074617; cv=none; b=scLSU6kO6tUcodZOP8a/hw53yhG41ipYS3+/dpHTpZjAMo71c6OScENr2tWyYAVXz2j5X+RtOjI34haVaiRAzSSWOINsQHK8brsNEBWCw73Go4iwuxJ65tj/BpFXUrzR7EaYmKTBYQWne6metwqcLQXjX6BMF//Bx/uhcVtGbfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729074514; c=relaxed/simple;
-	bh=cPLPMI+yIzV0Ysp2WcB/FUdAA4R7BLdsnV3NMnx7rBg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P4sPd6ZD48JW4XFAn9GNDU8sWoekLwEKZ0HV4+5RFmfsxWhtNrK6o3HenKcn5QFI1GceY6/r0+p+6BQhNBM8TEBYogadQ79jdG6Nr0p8Grhwj0AJb0HcY7vmoysSYn130eqPOQyUmDJg4w9t0uixZUr/whowWFgbAdwTXQAPCL8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GAoTA0G9; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539e5c15fd3so3967919e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 03:28:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729074510; x=1729679310; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MAXpBaMtfWO8UJVVjb65PyHD/dGQ0kmBoOJFKkFJy0M=;
-        b=GAoTA0G9+N+nJiN1IEcM93LkU/f1vLY3uQlt04OF6pmhzIUseLmg8xCQeMvweBcl5S
-         9VozJBRHF2UGPzbRlGzP6kP1pdX8RhfTDX3xDWma3lWqs8qPJLsZXThx7oD6way2+VYe
-         CUbLMnj8oc0kqhc8l9+A1fLI4Urrx5GgtcSPxoNezqF79kUi2ezZstpQN7sJQtoB9sMn
-         c5neCtFHl/mu2RyfEqCFVxiVQ9gAiGpjy6gjVsWdfGqMB8+emeb+loNR4M1KIbAgVY8U
-         iyea+YZallaOu9SgRvSQf7XYml1LubKe/14VDteIFnvWIhcubZiDm3VZsNV9DmK2KFux
-         BMWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729074510; x=1729679310;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MAXpBaMtfWO8UJVVjb65PyHD/dGQ0kmBoOJFKkFJy0M=;
-        b=iIspuXOowpKsZgrSJ/yaIJR/Y9pR3+UDx0wzaV+9DY9KU4xVouhN0qLDGQ707zcprH
-         2a2IjrrfBEoHx7S5Zm0i2gqualAyhIu12MjonZljg2CAakq6zDzEOthq+lgsCkWheHpT
-         BZs5NNiRJ8thHFerIJ1WfHOXQRMzZmdfECjEWdvaeRJH2H8gOJM7d8O/axNrod9xd45d
-         pvtYAUFnqD4MZ0wB0CM7+BhK/IUuVYOq9TDBlu+ToxCK7MTVkn7el1qNBz5nK7M+iUzw
-         +9c8pkJJ3aafHghHRUTDPPzzEeTAS3NKZNrvTtWDilFLRR/JFW/cE6fv6Fa4Saje4CCZ
-         ZRhQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVxJoI1Zr81A96B26TlwRW8B4MsNclsJY8OSEQlf7fQpt9Gr/pQA+cSilgfIvNUW+DIv7H5EB3AC1TOhMZu@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzrp4kG36xvrAO4YiyXL9SFHa9a+YXir3FuoeVmiVBnxUr4d7I+
-	lku60BDqzEfgyQOHehKQLNsbpYuN+YfaN4JiMJOKz7SHNEaANONTCjHTFgmbjL7yHLbGGmam6Ue
-	veDo=
-X-Google-Smtp-Source: AGHT+IGtiqjFOVGlArjjfVOfTBmXeHODhday3PR0qenIrPwNidjJwD23eHbV+vCHzblqwLmnxlmcVQ==
-X-Received: by 2002:a05:6512:3c91:b0:539:f807:ada1 with SMTP id 2adb3069b0e04-53a03f97686mr2367940e87.58.1729074510575;
-        Wed, 16 Oct 2024 03:28:30 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a0000677fsm402183e87.194.2024.10.16.03.28.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Oct 2024 03:28:30 -0700 (PDT)
-Date: Wed, 16 Oct 2024 13:28:27 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-Cc: ath12k@lists.infradead.org, linux-wireless@vger.kernel.org, 
-	Kalle Valo <kvalo@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 01/22] dt-bindings: net: wireless: describe the ath12k
- AHB module
-Message-ID: <qzjgpwemwaknwbs3dwils6kaa5c3inabfvkaryvc32kblzfhy3@6yduooj4dk63>
-References: <20241015182637.955753-1-quic_rajkbhag@quicinc.com>
- <20241015182637.955753-2-quic_rajkbhag@quicinc.com>
+	s=arc-20240116; t=1729074617; c=relaxed/simple;
+	bh=cRAgtSIsyIr9GAtElLAGSrRFE8VIKMnNg9VaP5MYO2U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=QQT5j52/pl8yUbaMUC58HF0MyCnBNautrDIogK15wcZcWc/hvxVNOSvuaFOr2wH/CpzB1Oyk3UTyR0uw2G/WYvs3zmo7KZLmPsQglIPyUdIUBYkYOPYccfMsXwKJv5gxj16Z9ARb3VHpZ6q8rBV3qz50O4HLuQb5ryQjrwG13YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XuTX012g; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8Q8ck026699;
+	Wed, 16 Oct 2024 10:30:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	F8OUigvW89v160sjD6OuJdUfPjC11GaxwgQ6XpOluJw=; b=XuTX012gytkC8CDK
+	s++23YnplGId90xyQ+hz8EVNjN5xU5F0MymIHMxEIppcGEfQKvscoEWVEfsx1vq1
+	mlOQezC+wyQ97iexRdyhmgedpKAadPwgrb/z7ixABZ6nR4iWYFLMywddEylbaXmG
+	XvWHXH8mztX+8bKGn+HlqXSLa30Ht1+oYBxqYAi0b/68B5zJRlGxgBu9f1NVKTOq
+	C//6MTAyREetIlBHK7ba+LocTw2WzMoRfr146H/p4JLukdwnkLz2WmPOw044L13o
+	hQ9dc+Ty2VACkNAOx0kU71NDhqOfGxoqc6w2sYzM162dxIhyUtHFKeY+BLz82w74
+	Bv+N7w==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8w6gmvw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 10:30:05 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49GAU4Fo009153
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 16 Oct 2024 10:30:04 GMT
+Received: from [10.204.101.50] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Oct
+ 2024 03:30:00 -0700
+Message-ID: <66cf771e-1663-e85c-02e8-524427ab40ec@quicinc.com>
+Date: Wed, 16 Oct 2024 15:59:57 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241015182637.955753-2-quic_rajkbhag@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH v4 02/28] media: iris: add platform driver for iris video
+ device
+To: =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@baylibre.com>
+CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Hans
+ Verkuil" <hverkuil@xs4all.nl>,
+        Sebastian Fricke
+	<sebastian.fricke@collabora.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
+ <20241014-qcom-video-iris-v4-v4-2-c5eaa4e9ab9e@quicinc.com>
+ <r7p4glfxjkcecm7fi4qkl3utn3damrun6lfzkmn5wddcd7pxq7@fpav7mavmckn>
+Content-Language: en-US
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <r7p4glfxjkcecm7fi4qkl3utn3damrun6lfzkmn5wddcd7pxq7@fpav7mavmckn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9Tf6QqAziIYesTm4yMc4U2jZAa81b_Ki
+X-Proofpoint-ORIG-GUID: 9Tf6QqAziIYesTm4yMc4U2jZAa81b_Ki
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1011 mlxlogscore=999
+ malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410160065
 
-On Tue, Oct 15, 2024 at 11:56:16PM +0530, Raj Kumar Bhagat wrote:
-> Add device-tree bindings for the ATH12K module found in the IPQ5332
-> device.
+
+
+On 10/16/2024 3:08 PM, Uwe Kleine-König wrote:
+> Hello,
 > 
-> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-> ---
->  .../net/wireless/qcom,ath12k-ahb.yaml         | 293 ++++++++++++++++++
->  1 file changed, 293 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/net/wireless/qcom,ath12k-ahb.yaml
+> On Mon, Oct 14, 2024 at 02:37:23PM +0530, Dikshita Agarwal wrote:
+>> +static struct platform_driver qcom_iris_driver = {
+>> +	.probe = iris_probe,
+>> +	.remove_new = iris_remove,
+>> +	.driver = {
+>> +		.name = "qcom-iris",
+>> +		.of_match_table = iris_dt_match,
+>> +	},
+>> +};
+> 
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers. Please just drop "_new".
+> 
+Noted, Thanks!
 
-Generic comment, please add qcom,ath12k-calibration-variant
-
--- 
-With best wishes
-Dmitry
+Regards,
+Dikshita
+> Best regards
+> Uwe
 
