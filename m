@@ -1,127 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-34592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61EAA9A0BFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 15:55:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B6D69A0C31
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:01:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9422D1C22097
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 13:55:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1C9E1F2800A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:01:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E126E209F29;
-	Wed, 16 Oct 2024 13:54:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ZNz30qwT"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F8B920C029;
+	Wed, 16 Oct 2024 13:58:59 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A024207206;
-	Wed, 16 Oct 2024 13:54:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB88820C009;
+	Wed, 16 Oct 2024 13:58:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729086899; cv=none; b=rfVKhN20UM0FAA4sG9YKlB3Z+be/B5uDpehT553k1OzeT/qN+Gj+/rnxcB0hPmdDr7+Jp1BKZo65ji0zZvz1lPLGYhGsXXIEA7OH33e75h2hx20elBGCb9hPTW5BMZkE+EXrBdSw7BwSID307yaHzvRax42jGo20ueKc4OoyNsk=
+	t=1729087139; cv=none; b=c+UdFEoQEGP7nSpk/W1kB0dX5sc3Qo8pBk4bofE9lZ5tywDQYW6Q54DuvWrL96vE7Z1p1d2oXcy9cnTAvnIpkqLWi73zztwj8JqCwXROlBl1QpGkMz96w6Szscnvl9JnyaTjF/C2QnPaPesC2XuX54IFWY1Wbw+UWjlP/Y9LcOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729086899; c=relaxed/simple;
-	bh=fSUlvJD3BmavIiJtNWJGx1iFShCI1qod/q1MxnZ229o=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=UxBQRjVobempn6A0tvVWTmrodEi2ig4rZf+a2wFoH8Hz6+h96NmDvV24DXIs4hEiquAC3yhxh6/2+P/9UJbIc+oat4QQOMiZGrPdsxz9CQncAc4773O0B7inrHdRqXt0p7b9pmKMuE3twv6asi16tfzP+RtnXtZXRaBHciifGF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ZNz30qwT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8Q88m026699;
-	Wed, 16 Oct 2024 13:54:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=3PlT2PvVcsTyb0hBqZtBOw6xm3CoyCRYJqy
-	bxaeJp9o=; b=ZNz30qwTMP6iidvOVN/UrCwPaomfV2zNgz4+EZNh2tGuBPmytYE
-	u3eq3ZWIlZT/X/neJDIqcBhxwxD20co8/bRPtDscx43LwE/LznEQmAGuLuSHLuyp
-	8WFa64HgZ67qsbziQWAs6eVqL/Go048ZsxDAYBBhpVGjP3RlrN+43oCd4R9bJ6JD
-	n/UuiPYAeoilZbWrq7IxF3z+iFpuCx+/mWxb9dtFVi63KjxtPGWaTT0639XdMSCc
-	J6IdyJUFV1z8Mu0FZ1NZCh0pYjQ35p7neWvK07amgWRuWtbvGmu7ngjpot0osKUE
-	nuvuuuMRx8IJI6fzyk3G7Ik/8CZmmUIXc4g==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8w6hb8t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 13:54:50 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 49GDskmF004651;
-	Wed, 16 Oct 2024 13:54:46 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 427j6m6fag-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 13:54:46 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49GDskcq004645;
-	Wed, 16 Oct 2024 13:54:46 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com ([10.213.97.93])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTPS id 49GDsjfN004643
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 13:54:46 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 460767)
-	id EB40D509; Wed, 16 Oct 2024 19:24:44 +0530 (+0530)
-From: Balaji Pothunoori <quic_bpothuno@quicinc.com>
-To: andersson@kernel.org, mathieu.poirier@linaro.org
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Balaji Pothunoori <quic_bpothuno@quicinc.com>,
-        ath11k@lists.infradead.org, Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH] remoteproc: qcom_q6v5_pas: disable auto boot for wpss
-Date: Wed, 16 Oct 2024 19:24:09 +0530
-Message-Id: <20241016135409.2494140-1-quic_bpothuno@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1729087139; c=relaxed/simple;
+	bh=DCwW1BXaEzYmomHtjqvPhEnDGnecHTjUZgJNEcpFnTA=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oV+a8Ndu+BJiDoBSdy205lZFwASoKPuT/2qnXi7suJfPXiNV8QyBT0PXTd8/RSZv0z7t7ZLeTukmM6avmil9VQ3ODZ2duG7RaLkO+1dEcbTHhMmu7xNqSHmZ/TFGk6tTXgX7aHvIrOVklu6Nn0F1A1rzq5hjM9/f1xMjSYCH1MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4XTCGw6RFvz6D8Y7;
+	Wed, 16 Oct 2024 21:58:16 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+	by mail.maildlp.com (Postfix) with ESMTPS id 54E9E140B67;
+	Wed, 16 Oct 2024 21:58:54 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 16 Oct
+ 2024 15:58:52 +0200
+Date: Wed, 16 Oct 2024 14:58:51 +0100
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC: "Rafael J. Wysocki" <rafael@kernel.org>, Daniel Lezcano
+	<daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, Lukasz Luba
+	<lukasz.luba@arm.com>, Amit Kucheria <amitk@kernel.org>, Thara Gopinath
+	<thara.gopinath@gmail.com>, Thierry Reding <thierry.reding@gmail.com>,
+	Jonathan Hunter <jonathanh@nvidia.com>, Vasily Khoruzhick
+	<anarsoul@gmail.com>, Yangtao Li <tiny.windzz@gmail.com>, Chen-Yu Tsai
+	<wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland
+	<samuel@sholland.org>, <linux-pm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-tegra@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+	<linux-sunxi@lists.linux.dev>, Chen-Yu Tsai <wenst@chromium.org>
+Subject: Re: [PATCH v4 2/6] thermal: of: Use scoped memory and OF handling
+ to simplify thermal_of_trips_init()
+Message-ID: <20241016145851.00004e90@Huawei.com>
+In-Reply-To: <20241010-b4-cleanup-h-of-node-put-thermal-v4-2-bfbe29ad81f4@linaro.org>
+References: <20241010-b4-cleanup-h-of-node-put-thermal-v4-0-bfbe29ad81f4@linaro.org>
+	<20241010-b4-cleanup-h-of-node-put-thermal-v4-2-bfbe29ad81f4@linaro.org>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Bit6GI6rfTYYby7TsLjDRI24SYbGOIn-
-X-Proofpoint-ORIG-GUID: Bit6GI6rfTYYby7TsLjDRI24SYbGOIn-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- phishscore=0 lowpriorityscore=0 clxscore=1011 mlxlogscore=999
- malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410160086
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
+ frapeml500008.china.huawei.com (7.182.85.71)
 
-auto_boot flag ensures to take the firmware and boots it
-up during the wpss remoteproc start.
-wpss host driver would like to control the load and unload
-of the firmware during the load and unload of the driver.
-Hence, disable the "auto boot" for wpss.
+On Thu, 10 Oct 2024 20:06:18 +0200
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote:
 
-Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
----
-Cc: ath11k@lists.infradead.org
-Cc: Kalle Valo <kvalo@kernel.org>
----
- drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> Obtain the device node reference and allocate memory with
+> scoped/cleanup.h to reduce error handling and make the code a bit
+> simpler.
+> 
+> The code is not equivalent in one minor aspect: outgoing parameter
+> "*ntrips" will not be zeroed on errors of memory allocation.  This
+> difference is not important, because code was already not zeroing it in
+> case of earlier errors and the only caller does not rely on ntrips being
+> 0 in case of errors.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Trivial unrelated comment inline + maybe return_ptr() is the way to go as
+Chen-Yu mentioned.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index ef82835e98a4..05963d7924df 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -1344,7 +1344,7 @@ static const struct adsp_data sc7280_wpss_resource = {
- 	.crash_reason_smem = 626,
- 	.firmware_name = "wpss.mdt",
- 	.pas_id = 6,
--	.auto_boot = true,
-+	.auto_boot = false,
- 	.proxy_pd_names = (char*[]){
- 		"cx",
- 		"mx",
--- 
-2.34.1
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+> ---
+> 
+> Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Cc: Chen-Yu Tsai <wenst@chromium.org>
+> 
+> Changes in v4:
+> 1. Significant change: kzalloc() also with scoped-handling so the entire
+>    error handling could be removed.
+> 2. Due to above, drop review-tags (Chen-Yu, Jonathan).
+> 
+> Changes in v2:
+> 1. Drop left-over of_node_put in regular exit path (Chen-Yu)
+> ---
+>  drivers/thermal/thermal_of.c | 31 ++++++++-----------------------
+>  1 file changed, 8 insertions(+), 23 deletions(-)
+> 
+> diff --git a/drivers/thermal/thermal_of.c b/drivers/thermal/thermal_of.c
+> index f0ffc0e335ba9406f4fd858d6c561f9d23f4b842..37db435b54b124abf25b1d75d6cc4fb75f1c1e5c 100644
+> --- a/drivers/thermal/thermal_of.c
+> +++ b/drivers/thermal/thermal_of.c
+> @@ -95,11 +95,9 @@ static int thermal_of_populate_trip(struct device_node *np,
+>  
+>  static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *ntrips)
+>  {
+> -	struct thermal_trip *tt;
+> -	struct device_node *trips;
+>  	int ret, count;
+>  
+> -	trips = of_get_child_by_name(np, "trips");
+> +	struct device_node *trips __free(device_node) = of_get_child_by_name(np, "trips");
+>  	if (!trips) {
+>  		pr_err("Failed to find 'trips' node\n");
+>  		return ERR_PTR(-EINVAL);
+> @@ -108,36 +106,23 @@ static struct thermal_trip *thermal_of_trips_init(struct device_node *np, int *n
+>  	count = of_get_child_count(trips);
+>  	if (!count) {
+>  		pr_err("No trip point defined\n");
+> -		ret = -EINVAL;
+> -		goto out_of_node_put;
+> +		return ERR_PTR(-EINVAL);
+>  	}
+>  
+> -	tt = kzalloc(sizeof(*tt) * count, GFP_KERNEL);
+> -	if (!tt) {
+> -		ret = -ENOMEM;
+> -		goto out_of_node_put;
+> -	}
+> -
+> -	*ntrips = count;
+> +	struct thermal_trip *tt __free(kfree) = kzalloc(sizeof(*tt) * count, GFP_KERNEL);
+
+Trivial and unrelated, but maybe kcalloc(count, sizeof(tt), GFP_KERNEL);
+
+> +	if (!tt)
+> +		return ERR_PTR(-ENOMEM);
+>  
+>  	count = 0;
+>  	for_each_child_of_node_scoped(trips, trip) {
+>  		ret = thermal_of_populate_trip(trip, &tt[count++]);
+>  		if (ret)
+> -			goto out_kfree;
+> +			return ERR_PTR(ret);
+>  	}
+>  
+> -	of_node_put(trips);
+> +	*ntrips = count;
+>  
+> -	return tt;
+> -
+> -out_kfree:
+> -	kfree(tt);
+> -	*ntrips = 0;
+> -out_of_node_put:
+> -	of_node_put(trips);
+> -
+> -	return ERR_PTR(ret);
+> +	return no_free_ptr(tt);
+>  }
+>  
+>  static struct device_node *of_thermal_zone_find(struct device_node *sensor, int id)
+> 
 
 
