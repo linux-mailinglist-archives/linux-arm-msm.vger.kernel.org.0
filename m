@@ -1,149 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-34572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1EF49A0693
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 12:08:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0C139A06BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 12:12:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9A8BE1F24387
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 10:08:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 97975286129
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 10:12:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D93E12071F9;
-	Wed, 16 Oct 2024 10:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l93f13vT"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D3B3206978;
+	Wed, 16 Oct 2024 10:11:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from inva021.nxp.com (inva021.nxp.com [92.121.34.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0DB206063;
-	Wed, 16 Oct 2024 10:05:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0ABC20694A;
+	Wed, 16 Oct 2024 10:11:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=92.121.34.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729073159; cv=none; b=ltLnM+67BmPdSnfw9J4cT8bwqrSo+btFZ4P+1CGQnybedNq1LwQ8Ksor2nVPVomir5HB9WlCPf7q0iNYVAqgqhWu6nmYbgbql4hZf0ertzoTJ/EHYrnW1AzEMLnvzq6fDih4rK2POb2oZzhlDjwSIsHXDu6DDmSwLJ+7vvhDLpk=
+	t=1729073512; cv=none; b=OwZZjmiN9fWq4AmW34LStBWxTgnyel/iY8jdA9N0eOyM8lUkZ+ccVz7ZKHf+0cCYm6M/4Vyt54EtHWk3tQdO17HAKBrsGEJQoiX5FhdL44Gq+do9kMMhwAjIghcuYRpIxlDA5tf7lhCwY6HtP5bqaiR0nytnnuvR16CdqVQNHPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729073159; c=relaxed/simple;
-	bh=j3pSe7FQjMMrX/McvHfRUETk4GsKHPg0yBTaOgDAK1o=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YCtT0ZtycxLCCmISjAooUPA0OoMPHxnJ2bXJGt0m2NbUgcjQkynhIgpYG9P5L3byZ6TfY45gwyl+oSjTzaUFpS46+rY6ckB/nuvj1ftlG7rnqvlFyzi+WCdw9eJh9WN7bj/lrocBhfptBozt8ZpHDPHxbSRQbdkdaNGf8lfV+Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l93f13vT; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49G8QWYk022182;
-	Wed, 16 Oct 2024 10:05:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Ep6G7+6GjTUTsXDJ8R6LRj
-	6xleyRRN36AMDyNuVEols=; b=l93f13vTnHWYzf5AMkGYem9xB6KbuwqK1nhyFJ
-	oTbH/nbGXdHogIk3P8hmaiDCLi/XWYJxW7ZRDuH7PMotuJLMokSpNjbWj9GLpukP
-	DUJxp3w/UPpD1gSP2eW1Azi/lEgCbjCh1GcTCq4nK/kebY/d/t1VY5whnlZ0PoRJ
-	Xlg+l9xDrD8YizdZ5pmN1FFKJNf+kJJEeXSRoeevB073ISB/+a6dY+5kLBt4NJOc
-	b8lwpaqWb3rAU2wPeGIPqvC0fqJnS+EhWwiKYHt3uQ8hqRsA0M8MJD+k3dEFISxW
-	Wed1ETUWf5bvQ8i+r55FVZ7wUNpnrTIpeEo9lhuwHO8wF/Tg==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429uapavwy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 10:05:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49GA5rqi016979
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Oct 2024 10:05:53 GMT
-Received: from hu-kotarake-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 16 Oct 2024 03:05:49 -0700
-From: Rakesh Kota <quic_kotarake@quicinc.com>
-To: <dmitry.baryshkov@linaro.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC: <quic_kamalw@quicinc.com>, <quic_jprakash@quicinc.com>,
-        <quic_kotarake@quicinc.com>
-Subject: [PATCH V3] arm64: dts: qcom: qcm6490-idp: Allow UFS regulators load/mode setting
-Date: Wed, 16 Oct 2024 15:35:11 +0530
-Message-ID: <20241016100511.2890983-1-quic_kotarake@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1729073512; c=relaxed/simple;
+	bh=XgjoL1JGKiRYyCSWTxkTF2OWBUtB9joLuVL77iOB5jk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZJncaPafDdNlFN205YEqH0uXT7gPyg5vA7nMqaRwG3a2yHxji5xu8srZTs2XUxRPFQaJWVReV2WkIQLFkQU5dRv2SXLlqydnZiXK/lzBOF05jkk3akwRSNCZvBhmsL0gkU2EDAEkKXr3whlo8FyodaZNHd+9k42+019+Udg+8yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com; spf=pass smtp.mailfrom=oss.nxp.com; arc=none smtp.client-ip=92.121.34.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.nxp.com
+Received: from inva021.nxp.com (localhost [127.0.0.1])
+	by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 37C6A201F78;
+	Wed, 16 Oct 2024 12:11:49 +0200 (CEST)
+Received: from inva024.eu-rdc02.nxp.com (inva024.eu-rdc02.nxp.com [134.27.226.22])
+	by inva021.eu-rdc02.nxp.com (Postfix) with ESMTP id 27BD7201F6F;
+	Wed, 16 Oct 2024 12:11:49 +0200 (CEST)
+Received: from lsv051416.swis.nl-cdc01.nxp.com (lsv051416.swis.nl-cdc01.nxp.com [10.168.48.122])
+	by inva024.eu-rdc02.nxp.com (Postfix) with ESMTP id 53259203E0;
+	Wed, 16 Oct 2024 12:11:49 +0200 (CEST)
+Date: Wed, 16 Oct 2024 12:11:49 +0200
+From: Jan Petrous <jan.petrous@oss.nxp.com>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Jose Abreu <joabreu@synopsys.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Russell King <linux@armlinux.org.uk>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Emil Renner Berthing <kernel@esmil.dk>,
+	Minda Chen <minda.chen@starfivetech.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Iyappan Subramanian <iyappan@os.amperecomputing.com>,
+	Keyur Chudgar <keyur@os.amperecomputing.com>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	imx@lists.linux.dev, devicetree@vger.kernel.org,
+	NXP S32 Linux Team <s32@nxp.com>
+Subject: Re: [PATCH v3 14/16] net: stmmac: dwmac-s32: add basic NXP S32G/S32R
+ glue driver
+Message-ID: <Zw+RZQDt4lopPqFW@lsv051416.swis.nl-cdc01.nxp.com>
+References: <20241013-upstream_s32cc_gmac-v3-0-d84b5a67b930@oss.nxp.com>
+ <20241013-upstream_s32cc_gmac-v3-14-d84b5a67b930@oss.nxp.com>
+ <urxfash5qmvahjubhk5knrt53j2tw7hje35qyst3x3ltg4mpgo@dw73m73o36b3>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iGvjMm2C9Z_GehUdIWryTEFRFyGeHNp_
-X-Proofpoint-GUID: iGvjMm2C9Z_GehUdIWryTEFRFyGeHNp_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- spamscore=0 bulkscore=0 clxscore=1015 malwarescore=0 mlxlogscore=599
- phishscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410160063
+In-Reply-To: <urxfash5qmvahjubhk5knrt53j2tw7hje35qyst3x3ltg4mpgo@dw73m73o36b3>
+X-Virus-Scanned: ClamAV using ClamSMTP
 
-The UFS driver expects to be able to set load (and by extension, mode)
-on its supply regulators. Add the necessary properties to make that
-possible.
+On Wed, Oct 16, 2024 at 11:37:27AM +0200, Uwe Kleine-König wrote:
+> Hello,
+> 
+> On Sun, Oct 13, 2024 at 11:27:49PM +0200, Jan Petrous via B4 Relay wrote:
+> > +static struct platform_driver s32_dwmac_driver = {
+> > +	.probe		= s32_dwmac_probe,
+> > +	.remove_new	= stmmac_pltfr_remove,
+> > +	.driver		= {
+> > +			    .name		= "s32-dwmac",
+> > +			    .pm		= &stmmac_pltfr_pm_ops,
+> > +			    .of_match_table = s32_dwmac_match,
+> > +	},
+> > +};
+> > +module_platform_driver(s32_dwmac_driver);
+> 
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers. Please just drop "_new".
+> 
 
-Signed-off-by: Rakesh Kota <quic_kotarake@quicinc.com>
----
-Changes V3:
- - Somehow after fixing the compilation in last patch, i have missed to
-   do git  --amend the change. apology for that, in this change i have
-   fixed that compilation issue.
- - Link V2 : https://lore.kernel.org/all/20241015132049.2037500-1-quic_kotarake@quicinc.com/
----
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Thank you, I was not aware of it. Will be included in v4.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 5f3d4807ac43..bfb1cdc238cc 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -258,6 +258,8 @@ vreg_l6b_1p2: ldo6 {
- 			regulator-name = "vreg_l6b_1p2";
- 			regulator-min-microvolt = <1140000>;
- 			regulator-max-microvolt = <1260000>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-@@ -265,6 +267,8 @@ vreg_l7b_2p952: ldo7 {
- 			regulator-name = "vreg_l7b_2p952";
- 			regulator-min-microvolt = <2400000>;
- 			regulator-max-microvolt = <3544000>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-@@ -279,6 +283,8 @@ vreg_l9b_1p2: ldo9 {
- 			regulator-name = "vreg_l9b_1p2";
- 			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1304000>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-@@ -467,6 +473,8 @@ vreg_l10c_0p88: ldo10 {
- 			regulator-name = "vreg_l10c_0p88";
- 			regulator-min-microvolt = <720000>;
- 			regulator-max-microvolt = <1050000>;
-+			regulator-allow-set-load;
-+			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM RPMH_REGULATOR_MODE_HPM>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
--- 
-2.34.1
+/Jan
 
 
