@@ -1,56 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-34596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E72D29A0CA9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:31:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 141D79A0CD0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 16:36:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 939D61F258BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:31:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 894DFB280FA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 16 Oct 2024 14:36:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61796209F25;
-	Wed, 16 Oct 2024 14:31:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88CCE20C479;
+	Wed, 16 Oct 2024 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rWmZmRtE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="doT98/NT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372891586D3;
-	Wed, 16 Oct 2024 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F4520C039;
+	Wed, 16 Oct 2024 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729089105; cv=none; b=t1SJfUBvQ8pV8QAkTcxLAMf0uWcWE2046QzoZLDyPITh22YZcMP+1vTY1jfDV4+HCs8Aseg82EySjfY5HgQOZGu5C0P1drBCp0glcylAbSKGUxiLDVhCFGyljbOjQ5lhnQoV1ngJDCo8PXLfl+UL7zjke63gljt+PFBtVqTHHC0=
+	t=1729089355; cv=none; b=HGDwKf507ahMIdCEET55Oo+ofu9rzbrirdfwo1KfBE0zOcMRd98etbhV4QkKzSBFRFq9gTEHqWAPLG+F96YqalJXPQYOOYcI17mIpJJaSix4TR2EhsyL5BRx9DUPxoy8qxgFN8WoBezD8AwVswVbb5dBrmkQOLhTNcJjFpewy3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729089105; c=relaxed/simple;
-	bh=0xfOv0zgOtoH74E1+U5BolLrIHlK5WA+900nCd8/6m4=;
+	s=arc-20240116; t=1729089355; c=relaxed/simple;
+	bh=NXK/fPhGl4mqtfjEA+PZpwSNsIwN2iaBtslPz058mG4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eMoHHbF6BN34TPTcCC7Z+NU2LuZmylFLirP5RmGYK2afso2GsVfdGAoqKF6LS/wSw+REjRKIGVzQZGcGs+1wczlrxKiWibQdjVGXW64VM93hidTCVM8huft2L+WkX4KRhuAe9+M//qzFGQvxkMMmyZtAVhOF7jj0QrFLfIzhzaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rWmZmRtE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7F2C4CEC5;
-	Wed, 16 Oct 2024 14:31:43 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=jP8Hlr8GdAMTVVSg/C/DhFKM70Yw7zxl6Y9AorDO0E32W/ngGylxiNg6FJdBYVUABW5W1fP8XoJQnVv5yF0geB16nJtuPrSf9LQ45PgP8DRSLOOQGQ4+9ppPsQyWojvafFlqDNp5k1fINqdQX91EcdtNR+6LaU5AzgRddzU9Oas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=doT98/NT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50854C4CEC5;
+	Wed, 16 Oct 2024 14:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729089104;
-	bh=0xfOv0zgOtoH74E1+U5BolLrIHlK5WA+900nCd8/6m4=;
+	s=k20201202; t=1729089354;
+	bh=NXK/fPhGl4mqtfjEA+PZpwSNsIwN2iaBtslPz058mG4=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rWmZmRtEujt9bn1Vj7YsfEbqJeqaGr714tAtBsxFk787oKc27oN+6ZcdozKJ6ZGkK
-	 +Kjb9oDhnth5XW2Tbs2RVEza0EntRZDOKkBsxmXaKTqo1VF5arrCA1Rymj1a+h7kpb
-	 4NWtM68v3HhsnJwPW+2jSjf8s4MI8PtITJSl3BsStHeAI1wP0WJKfppR37VmRM//Yi
-	 PYcmZnsJgkvt1p0EL/YIQXURNouH/5ebfLGJCZio9cAm/Xo++xnZa4oZ60v0A0TBSh
-	 AgT6SRhvxy/qvlGQ8uTWJR5cqvHUNDJydIU/B+gdS44zmw/Dnmw3jKUeL2zFbzoKHM
-	 YiWvBv/q3eucw==
-Date: Wed, 16 Oct 2024 09:31:50 -0500
+	b=doT98/NT4FM40wYqR+SAm4CK3i00eE0ELNQ2AAFfLrDWK15sN8WmePaZVqR1S8G+j
+	 f/wMm2JKvoAX1cNiI0SVJyVRDEw9N7C4ZyZR3sXHYxmFbcZZoZZ4ggESnvaMDP3m+n
+	 aZs3c/6MfoMmv7cY/AhJ6GBa9B7VFynlW2FBe5HdJU2Y509EyQ7TFYzSX1BBiyVDMd
+	 yIPUARKazo11AoVwVfGg5nfeOtRqbU/UM+3t9IoqUcg9J1ywBE7XTXz+/bA5f61Koj
+	 psv6t/QnwXD4pMnPISVPDLyxbHEIaAVEYqLekUPdyyTejmdHulsiUBlHGGI5tskbEs
+	 ddma1Se1F5KQg==
+Date: Wed, 16 Oct 2024 09:35:59 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Maya Matuszczyk <maccraft123mc@gmail.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>, 
+	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Jos Dehaes <jos.dehaes@gmail.com>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: Rename "Twitter" to "Tweeter"
-Message-ID: <423uciiaksxtyqua6w22wzdms4a53jp7v6rbvhfpfxr2uot7hd@mkb4uqehgz23>
-References: <20241015170157.2959-1-maccraft123mc@gmail.com>
+	Konrad Dybcio <konradybcio@kernel.org>, Andi Shyti <andi.shyti@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, 
+	linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org, 
+	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
+Subject: Re: [PATCH v1 2/5] arm64: dts: qcom: Add support for configuring
+ channel TRE size
+Message-ID: <7e7ksit5ptjrcnct66v75mbxuabnzzloungockdal2dl2y6nn5@ge4mrsjmd746>
+References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
+ <20241015120750.21217-3-quic_jseerapu@quicinc.com>
+ <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,59 +67,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241015170157.2959-1-maccraft123mc@gmail.com>
+In-Reply-To: <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
 
-On Tue, Oct 15, 2024 at 07:01:56PM GMT, Maya Matuszczyk wrote:
-> This makes the name consistent with both other x1e80100 devices and the
-> dictionary. A UCM fix was merged already.
+On Tue, Oct 15, 2024 at 03:33:00PM GMT, Krzysztof Kozlowski wrote:
+> On 15/10/2024 14:07, Jyothi Kumar Seerapu wrote:
+> > When high performance with multiple i2c messages in a single transfer
+> > is required, employ Block Event Interrupt (BEI) to trigger interrupts
+> > after specific messages transfer and the last message transfer,
+> > thereby reducing interrupts.
+> > For each i2c message transfer, a series of Transfer Request Elements(TREs)
+> > must be programmed, including config tre for frequency configuration,
+> > go tre for holding i2c address and dma tre for holding dma buffer address,
+> > length as per the hardware programming guide. For transfer using BEI,
+> > multiple I2C messages may necessitate the preparation of config, go,
+> > and tx DMA TREs. However, a channel TRE size of 64 is often insufficient,
+> > potentially leading to failures due to inadequate memory space.
+> > 
+> > Adjust the channel TRE size through the device tree.
+> > The default size is 64, but clients can modify this value based on
+> > their heigher channel TRE size requirements.
+> > 
+> > Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 132 +++++++++++++--------------
+> >  1 file changed, 66 insertions(+), 66 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > index 3d8410683402..c7c0e15ff9d3 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > @@ -1064,7 +1064,7 @@
+> >  		};
+> >  
+> >  		gpi_dma0: dma-controller@900000 {
+> > -			#dma-cells = <3>;
+> > +			#dma-cells = <4>;
+> >  			compatible = "qcom,sc7280-gpi-dma", "qcom,sm6350-gpi-dma";
+> >  			reg = <0 0x00900000 0 0x60000>;
+> >  			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+> > @@ -1114,8 +1114,8 @@
+> >  							"qup-memory";
+> >  				power-domains = <&rpmhpd SC7280_CX>;
+> >  				required-opps = <&rpmhpd_opp_low_svs>;
+> > -				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
+> > -				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
+> > +				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C 64>,
+> > +				       <&gpi_dma0 1 0 QCOM_GPI_I2C 64>;
+> 
+> So everywhere is 64, thus this is fixed. Deduce it from the compatible
 > 
 
-Please, as you update the commit message, make sure that the subject
-prefix matches other changes in the particular file.
+If I understand correctly, it's a software tunable property, used to
+balance how many TRE elements that should be preallocated.
+
+If so, it would not be a property of the hardware/compatible, but rather
+a result of profiling and a balance between memory "waste" and
+performance.
 
 Regards,
 Bjorn
 
-> Signed-off-by: Maya Matuszczyk <maccraft123mc@gmail.com>
-> ---
->  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> index 10b28d870f08..004353220dc5 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> @@ -177,9 +177,9 @@ sound {
->  		compatible = "qcom,x1e80100-sndcard";
->  		model = "X1E80100-CRD";
->  		audio-routing = "WooferLeft IN", "WSA WSA_SPK1 OUT",
-> -				"TwitterLeft IN", "WSA WSA_SPK2 OUT",
-> +				"TweeterLeft IN", "WSA WSA_SPK2 OUT",
->  				"WooferRight IN", "WSA2 WSA_SPK2 OUT",
-> -				"TwitterRight IN", "WSA2 WSA_SPK2 OUT",
-> +				"TweeterRight IN", "WSA2 WSA_SPK2 OUT",
->  				"IN1_HPHL", "HPHL_OUT",
->  				"IN2_HPHR", "HPHR_OUT",
->  				"AMIC2", "MIC BIAS2",
-> @@ -933,7 +933,7 @@ left_tweeter: speaker@0,1 {
->  		reg = <0 1>;
->  		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
->  		#sound-dai-cells = <0>;
-> -		sound-name-prefix = "TwitterLeft";
-> +		sound-name-prefix = "TweeterLeft";
->  		vdd-1p8-supply = <&vreg_l15b_1p8>;
->  		vdd-io-supply = <&vreg_l12b_1p2>;
->  		qcom,port-mapping = <4 5 6 7 11 13>;
-> @@ -986,7 +986,7 @@ right_tweeter: speaker@0,1 {
->  		reg = <0 1>;
->  		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
->  		#sound-dai-cells = <0>;
-> -		sound-name-prefix = "TwitterRight";
-> +		sound-name-prefix = "TweeterRight";
->  		vdd-1p8-supply = <&vreg_l15b_1p8>;
->  		vdd-io-supply = <&vreg_l12b_1p2>;
->  		qcom,port-mapping = <4 5 6 7 11 13>;
-> -- 
-> 2.45.2
+> Best regards,
+> Krzysztof
 > 
 
