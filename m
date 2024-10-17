@@ -1,67 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-34762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34764-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98F489A26F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 17:38:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E43719A26FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 17:39:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BDB81B23CC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 15:38:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1897C1C21C93
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 15:39:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E6621DFE05;
-	Thu, 17 Oct 2024 15:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BB0C1E0483;
+	Thu, 17 Oct 2024 15:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MNF8iDpY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mcySTMRW"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DC1DEFEB;
-	Thu, 17 Oct 2024 15:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E9A31DDC14;
+	Thu, 17 Oct 2024 15:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729179363; cv=none; b=izyatvCL78Y3LeE24mTb0zUiboWZbAlZT88eqD4QsWHp08tWdVct/0xZrWXd+VPawiNKLh+Jr7oi+zoNArjQYJsTv4BNc2mVBGOWoLrfYZZmivbrxZQK/tL+l8qOukWW2q0ERgXe17iRfQik5/YfGpM8MOVVwwVxGBQL/uMMrsk=
+	t=1729179380; cv=none; b=IDfsKPtQxkic/5JiRcIpJTaNgwc3VRwVNE5u/KbKTsfOHh9hToyyxVl50JLpiA7pm67dtvR3z5zwAF5jsOEeCStMFQQCom3/FqW20QoiumaKrwaFBI/m1X32PFdWbhMLQh72buJ/WYBsbE2aozZEnceQBHdJJi2+R3rfFzbjqBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729179363; c=relaxed/simple;
-	bh=UaHTT/HCPSCBmEoLaaHxWZ8kYjvp79Mh62xxOcsCz3g=;
+	s=arc-20240116; t=1729179380; c=relaxed/simple;
+	bh=NfsiDZCdruACQ2h/ZlKOCEcp2Rm4sKuLxJgt6pCpxC8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=QKlLqePuDbcT+baLQ3s9w7usSKTMuppTO0CFmbY82BtvbmclNsb6nVJHHWHK7Wzzkx0UF0w9MklCqFE2GLBlBnFQ+82+oqoheSQSUZB+5V68dj458oJLitBDvpggHudyvx3GX1wtKshnIWR8NYtFRUpe7o9ABn93Dvv0YgPKRuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MNF8iDpY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A788C4CECD;
-	Thu, 17 Oct 2024 15:35:54 +0000 (UTC)
+	 MIME-Version:Content-Type; b=KKuFn4+W0e16/M4YDkJ9UnYDO6IZmGDyLP6unHJIV5dfTdE3DehqNBbOumCTJgxLhCROJEHX7XJG08FYC3eUb1bLX+veHEMIzGDjQ8eAOlVYz5Es950nPXYflPf6hTLb8CjGoMlzzwK1wwD+H1m5Go1wbc9nTXRhVfPTsOGUHi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mcySTMRW; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC494C4CED0;
+	Thu, 17 Oct 2024 15:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729179362;
-	bh=UaHTT/HCPSCBmEoLaaHxWZ8kYjvp79Mh62xxOcsCz3g=;
+	s=k20201202; t=1729179379;
+	bh=NfsiDZCdruACQ2h/ZlKOCEcp2Rm4sKuLxJgt6pCpxC8=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=MNF8iDpYfzr/MllJDBEf+0OjI4ejKzCH1MnIlFSj3P4DjmRkcLc722QW6DzmCk7tb
-	 1S7ib2J0Xvb1jpNMs8ytpfN5Qi0/0k0pt4cipphk4NUuSUB4jpl+Y1EAWfHf7rWRSa
-	 icZ9z1Sos4ktrwFWtVXMOXGqVnRCJT7cozsoxHWVqQjuFcQCqdVA1QI/844GH/yd+V
-	 8f1YDsifxmjrF6l1etNSasGvuP36bIXEnpVed/mSWTUqgTIctM5YWgegG1aYN1k/zp
-	 NKKkPLdfEjFrblCxAvJk0uBYR/PTRNXWlWhcg//OcuuGVzTLc7rR+XrqyJIu7cjE7z
-	 wdHyVJ1tpTIVg==
+	b=mcySTMRWCCeOzMzewoNtQoIPyP4dBZWRtec/7rLwk3CXE8Z8+OCKjBGL2ZYUWltcU
+	 9V4PFEKWudMrPaMg+zK00b5kMmZ7AsHBWK544Np6K2vqD7GpZeaSOxlhAP6yJ3FAZ7
+	 oggoJhinAFNVoyLzTUpo+v0iCKwJzdesl/6nN/a6p0bHHzT7gb8SSWjYDGgpfuZ3dJ
+	 y9svJdW6u3Ua0O6tplYjsqTgXJQx6gPnHqqYxwUgEzWk5CHAuOVKGoP8RmWu6bCX0m
+	 HsFv4D/CXJzjZ1G9dcF/o1UVarPF1duUjS0au6P94FGyAJAyBgVzGV9U1SQsg475UZ
+	 IVCVUIxqqY2QQ==
 From: Vinod Koul <vkoul@kernel.org>
-To: kishon@kernel.org, konradybcio@kernel.org, andersson@kernel.org, 
- simona@ffwll.ch, dmitry.baryshkov@linaro.org, abel.vesa@linaro.org, 
- robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run, 
- marijn.suijten@somainline.org, airlied@gmail.com, 
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de, 
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
- quic_khsieh@quicinc.com, quic_parellan@quicinc.com, 
- quic_bjorande@quicinc.com, Simona Vetter <simona.vetter@ffwll.ch>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, 
- quic_riteshk@quicinc.com, quic_vproddut@quicinc.com
-In-Reply-To: <20241004103046.22209-1-quic_mukhopad@quicinc.com>
-References: <20241004103046.22209-1-quic_mukhopad@quicinc.com>
-Subject: Re: (subset) [PATCH v4 0/5] Add support for DisplayPort on SA8775P
- platform
-Message-Id: <172917935474.288841.13832533870290794704.b4-ty@kernel.org>
-Date: Thu, 17 Oct 2024 21:05:54 +0530
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+In-Reply-To: <20240830-nxp-ptn3222-v2-0-4c6d8535cf6c@linaro.org>
+References: <20240830-nxp-ptn3222-v2-0-4c6d8535cf6c@linaro.org>
+Subject: Re: [PATCH v2 0/2] phy: add NXP PTN3222 eUSB2 to USB2 redriver
+Message-Id: <172917937640.288841.14254055553308923025.b4-ty@kernel.org>
+Date: Thu, 17 Oct 2024 21:06:16 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,19 +66,19 @@ Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.14.2
 
 
-On Fri, 04 Oct 2024 16:00:41 +0530, Soutrik Mukhopadhyay wrote:
-> This series adds support for the DisplayPort controller
-> and eDP PHY v5 found on the Qualcomm SA8775P platform.
+On Fri, 30 Aug 2024 11:20:44 +0300, Dmitry Baryshkov wrote:
+> The NXP PTN3222 is the single-port eUSB2 to USB2 redriver that performs
+> translation between eUSB2 and USB2 signalling schemes. It supports all
+> three data rates: Low Speed, Full Speed and High Speed.
+> 
 > 
 
 Applied, thanks!
 
-[1/5] dt-bindings: phy: Add eDP PHY compatible for sa8775p
-      commit: 7adb3d221a4d6a4f5e0793c3bd35f1168934035c
-[2/5] phy: qcom: edp: Introduce aux_cfg array for version specific aux settings
-      commit: 913463587d528d766a8e12c7790995e273ec84fb
-[3/5] phy: qcom: edp: Add support for eDP PHY on SA8775P
-      commit: 3f12bf16213c30d8e645027efd94a19c13ee0253
+[1/2] dt-bindings: phy: add NXP PTN3222 eUSB2 to USB2 redriver
+      commit: 2df490e7374de8e940d353cfcafd3c91242841ea
+[2/2] phy: add NXP PTN3222 eUSB2 to USB2 redriver
+      commit: c9be539e11f0bf1665c03108d3b7881a5d67ae48
 
 Best regards,
 -- 
