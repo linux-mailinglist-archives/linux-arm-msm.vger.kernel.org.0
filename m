@@ -1,74 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-34673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BEFD9A17E9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 03:27:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C1A19A1898
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 04:25:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D7A71C21585
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 01:27:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A63891F22D79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 02:25:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 839311E53A;
-	Thu, 17 Oct 2024 01:26:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22B6644C97;
+	Thu, 17 Oct 2024 02:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b="2IVnqOvP"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="o0ez1MOt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683C212E7F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 01:26:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518EE42056;
+	Thu, 17 Oct 2024 02:25:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729128399; cv=none; b=gdB35VevVXBzpZThdQdDj2ZlerCYKfoK4+4sK+7jSRxjHz7caCh26DTXt3Bo+8S+V2/ZQJmCkTGQB1ydTbo0zetNiQ9hkVWRLkcrORrMs5DFdQrjH+BT3nZxL70QO7Sw3prAlqQTr+mYFtF6O42j3n0RN+5iinLpak+HHp5u1us=
+	t=1729131908; cv=none; b=Vv79tuB9ZkIrEyhQlgcBwqKYJZbcN2JoXtFmzRo+h25KrmwOgwkdYaR9AFM4CizmXoaDWVw8EQDShT0BPydOz+hqwiN6edK7cKbkEEPm/f5e7eg5FndaqPZHLcjPLFDNNP8MRPnXmJcS9pmpt+4myeNaHeZTA+SSEcb0x3TYTbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729128399; c=relaxed/simple;
-	bh=syDeYdswZ1nqEcLbBS8Gr/cgwasqBdpO5kvggc+aC24=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JT3ZE+t4LGG1GPDqkOkkR/cwHOM0MsQjw1iotuc6hq2EZhKkkSMXVOF7dUSfIA5wGpB5g7tLXkYmVE4VzLgzdibI94KTjTw5TSxlU2jtXiAst6LeRKJffBBqDh1RqI4NMyHVJjQmfZDnCFLP4Ym31o0n7WXeo/llMSXfkLFSRnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie; spf=none smtp.mailfrom=nexus-software.ie; dkim=pass (2048-bit key) header.d=nexus-software-ie.20230601.gappssmtp.com header.i=@nexus-software-ie.20230601.gappssmtp.com header.b=2IVnqOvP; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexus-software.ie
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=nexus-software.ie
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a99cc265e0aso46283166b.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 16 Oct 2024 18:26:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20230601.gappssmtp.com; s=20230601; t=1729128395; x=1729733195; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=za4Wo2XnfAAnoxtIT6vqzShAynxd89kmxit532DGMfc=;
-        b=2IVnqOvPDnc+eXhMo4pwMyhEkQtuOSoFSkWxd8biuGz0O1SRTz/6Rfox/k4qq1iQz7
-         1AgLUp/s3KHcgqMfZcXfKWVK6cwU+Xolvr0xM33CzjBEner4wikIlZanHNJAIpXqtqqH
-         S+aFKR2mHuAQB8WcF/k+afsU4loXOFmiGRR4TlCftoUM+Z1wMzbnmRtN2Yj4JxzHxEQY
-         cOEivqSZyzouC24xT6mNvElnDLtiuJPnn0CcY8pdXrPAFbxJ1+V+bdCVVQjC5XRI8mE8
-         fwFY5U9ujGBkC+JzjumJmgd0b5aGSB+Bh/JMkApZRKRSQ9J8PfcnjSqAeW2HLmlKvQ/u
-         BVGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729128395; x=1729733195;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=za4Wo2XnfAAnoxtIT6vqzShAynxd89kmxit532DGMfc=;
-        b=QAb4YJfa/JxNz9fO/4MMakWkbVEIkhTIrhYaDlPZ/d8iBXVhTJrA5SuB/Sdzf4gTUY
-         x3CpM4Kdol2/WPYKoewGRXrCaSk/hbjCqSZw+9oPhWS/jA3sZ2uobbd3WN35UhGEIQR8
-         lYH36TJ4e0f9AjvT37DS+hDsOohiWXBCyhZcL+xMSDk+zl5L2usK1YPr1x4fY6qbipFX
-         IMyb6qS0IKZcrveSKppZnKrYZabMylwgEhicQMEwYzQkBcDCANQ5sKtHRs57GcP/rcQ/
-         lk2QOHE3bUK44f+r31rApFTs2rcfbinFNfPxfITq87OjY0fj/M3wAsX020FcfZ6ppQ3j
-         +r3g==
-X-Forwarded-Encrypted: i=1; AJvYcCXwY6c2DbRYZw/kSH4/IFgsrZzPCJ5cQYgWVc0/yszeDDKwnW9rYAu7jQjTmcTgvqaHkrT/KQSK+7RfOj8y@vger.kernel.org
-X-Gm-Message-State: AOJu0YxLAPZmWrXW3j46F3m3l3Xtex8cy3LbAEsVUMd87ZDuB9CDYix5
-	skf9iip2fbslh0e5XKK68GBSfSE9Dm+GdnquNkNDe6mkuNace+9OGtoM+QjYZ8k=
-X-Google-Smtp-Source: AGHT+IEWipWWI+w17zBRsvJ2a1SVUFVwULgiFjGs2lqP9zfHlHZrgmKYspeYgKe8crsh+sSoe9SBJg==
-X-Received: by 2002:a17:907:efd3:b0:a9a:421:720 with SMTP id a640c23a62f3a-a9a34dfb311mr463599066b.46.1729128395453;
-        Wed, 16 Oct 2024 18:26:35 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a298443b9sm233768166b.170.2024.10.16.18.26.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Oct 2024 18:26:34 -0700 (PDT)
-Message-ID: <cde3f0e8-7098-43ee-a0f6-6b7dd9a9abfb@nexus-software.ie>
-Date: Thu, 17 Oct 2024 02:26:32 +0100
+	s=arc-20240116; t=1729131908; c=relaxed/simple;
+	bh=5NMPDhf/E8i+g+gcq6+KuI94K+BxmbwJGEsewTDaCX4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Ca1+sMWS9ah/LVHl23Shk4paq5Vl3kg1XMJd35/Kj0XRNQgGPkvZndHwRKlF37tjE2UbnHZaH0b+q1L6LAOhEmpXl9ycA5SBlwU8uKEGC8Pnzn+ZZkrTL6Bh/SPePNA48wJRtT/Fe/VzWn8zXmUJ89H6qqOyDsiYrHqPnqF00NY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=o0ez1MOt; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GIoW8h011837;
+	Thu, 17 Oct 2024 02:25:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	EZXaIrOtNXKt+a6vGxy0OY8kvivjCsBaCy5jFUoU27Y=; b=o0ez1MOtSLAYysmB
+	TSPiullrJZiNksKT1qDMyuX58DQMWv0z0jq9PDvi507j2Q08NXM0gkcXgvvDY2G8
+	0vr0Qa/CKp8t7TpJNMdyMiM+JuKsV/0yKaoIvSqLV6HTv08tFhURhfrcLNbE2pHR
+	IGRXBn+0lU50RLOCLVbVz60K8s1U8+9pz62GsULP5/q2XlHphuiBFPyDIRwvbjpp
+	SahPU1zbBrAvY2oj5fgfw/AP9Dd5z/XrZW0XthJNIV4DNjzfnIssvK6Gzp8rf+Sd
+	7KiOLOqQFSZTN4dHZrKEvcfyZhbpysfniRgGkBdl8dofmKDL5Fcg1M2AhG19Jmt7
+	y/OlZQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42abm5jeup-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Oct 2024 02:25:00 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49H2OxWD031600
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Oct 2024 02:24:59 GMT
+Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Oct
+ 2024 19:24:56 -0700
+Message-ID: <abbea1df-4aaa-4012-95f9-ea1419a22414@quicinc.com>
+Date: Thu, 17 Oct 2024 10:24:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,35 +65,69 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/28] Qualcomm iris video decoder driver
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: Hans Verkuil <hverkuil@xs4all.nl>,
- Sebastian Fricke <sebastian.fricke@collabora.com>,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Vedang Nagar <quic_vnagar@quicinc.com>
-References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
+Subject: Re: [PATCH v2 2/2] pinctrl: qcom: add the tlmm driver for QCS8300
+ platforms
+To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Linus Walleij
+	<linus.walleij@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "Richard
+ Cochran" <richardcochran@gmail.com>,
+        <quic_tengfan@quicinc.com>, <quic_tingweiz@quicinc.com>,
+        <quic_aiquny@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <netdev@vger.kernel.org>
+References: <20241009-qcs8300_tlmm-v2-0-9e40dee5e4f1@quicinc.com>
+ <20241009-qcs8300_tlmm-v2-2-9e40dee5e4f1@quicinc.com>
+ <c7ahyrbo3bw6vgfwqaubricap52muhxyhsnb5cfhzvo3n67dsr@gp6vehlfwblo>
 Content-Language: en-US
-From: Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Jingyi Wang <quic_jingyw@quicinc.com>
+In-Reply-To: <c7ahyrbo3bw6vgfwqaubricap52muhxyhsnb5cfhzvo3n67dsr@gp6vehlfwblo>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WdVh8HvXjf81gECUHt7qKc0aX9ynZ7nY
+X-Proofpoint-GUID: WdVh8HvXjf81gECUHt7qKc0aX9ynZ7nY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
+ clxscore=1011 impostorscore=0 mlxscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 spamscore=0
+ mlxlogscore=852 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170016
 
-On 14/10/2024 10:07, Dikshita Agarwal wrote:
-> Introduce support for Qualcomm new video acceleration hardware i.e.
-> iris, used for video stream decoding.
 
-Its a nit-pick but I'd suggest good practice is to email everybody 
-directly whom you call out in your log as having given and received 
-action on previous review comments.
 
-i.e. you should email me, Dmitry, Krzysztof, Neil, Nicholas and Hans.
+On 10/16/2024 5:25 PM, Uwe Kleine-König wrote:
+> Hello,
+> 
+> On Wed, Oct 09, 2024 at 03:13:34PM +0800, Jingyi Wang wrote:
+>> +static struct platform_driver qcs8300_pinctrl_driver = {
+>> +	.driver = {
+>> +		.name = "qcs8300-tlmm",
+>> +		.of_match_table = qcs8300_pinctrl_of_match,
+>> +	},
+>> +	.probe = qcs8300_pinctrl_probe,
+>> +	.remove_new = msm_pinctrl_remove,
+>> +};
+> 
+> After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+> return void") .remove() is (again) the right callback to implement for
+> platform drivers. Please just drop "_new".
+> 
+Will update that, thx!
+> Best regards
+> Uwe
 
----
-bod
+Thanks,
+Jingyi
+
 
