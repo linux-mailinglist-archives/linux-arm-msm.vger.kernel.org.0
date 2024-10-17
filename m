@@ -1,317 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-34822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34823-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BCFD9A3015
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 23:53:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CC6B9A303D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:00:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 928B01F21408
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 21:53:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17A81282036
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 22:00:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E0601D618E;
-	Thu, 17 Oct 2024 21:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A79F1D2F6E;
+	Thu, 17 Oct 2024 22:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xrdIsY/D"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NlJS8hRx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9381D040B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 21:53:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D9EB1D7986
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:00:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729202032; cv=none; b=EQh0aEWg6AuLJP8K5Ntki22dN9T+JwdGmNvZk0c1Y2Ia+qExfWTEwi+jxT9w9bZlgXUpBJadDYyC3dsRPBBeffDM1Va7Rv85NzUNH1OQR4QqXPwcXI9F/xLmj5H5HX5sF4kl6xnUERhSCaH5XC8wbNWW6xU4MduIn4/RhilYHBU=
+	t=1729202416; cv=none; b=ooT+VnjVjxGMKRtgEzswDuu4HIr68p/A0seHn7z0oHE4U8/Bu4VLghstbIpXrO3hR6usB69Vw71bfew7zgrDcnBHeaCDxUuLb6jRE5I4ePqQHsAvBOihyfdeGz3wri+sL71pWDRm4RGN4WjR/JJaYMvtFeuqSJy6t/Fv9OdM4ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729202032; c=relaxed/simple;
-	bh=Yr141VTOSlzr9Qf++OVWPOb6T5aSNE/JU+fVDOC/p4U=;
-	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=tbl1zJAjQD3pr5yOTyLcskyuKtJe9anaWJguVTh2F3p7WTbHTYFsYYWamB4/3VBrBtiHOF5+JRy8FcWzmHjtwP7OwbU+Hq0KH6achEiL6pjEYpDpzV2N05zIf3oU3cEHoQ1CSh+pXmeXVCn/a9H9kEiRiyekgOEDz9mG9iF4gBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xrdIsY/D; arc=none smtp.client-ip=209.85.215.202
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
-Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-7ea8c2b257bso1460230a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 14:53:50 -0700 (PDT)
+	s=arc-20240116; t=1729202416; c=relaxed/simple;
+	bh=xFORzQkJL/WcWdKZ3DVfQDkKa0jdZA97QDeet1sttTI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FC1rlXPAQOOWlmgS9GnaAYAlok3KqMP+A2ZlYTlN+whtg/q0q46v5PVqlq6S/Cfbq8/Ki2Kzudi6ZoxB9maOy3Lxm1FRnrqfOd3Jif9++zPV5xSVJq9SF7ZCA5iJvlhxXVbXptNfKgW0jWErA2+CnAxl+EQ2Ym7Oc1WQFo8shzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NlJS8hRx; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2fb5f647538so14963311fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 15:00:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1729202030; x=1729806830; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JH9th1Lqa6pfzHzGWf6LLQmXCVTNne5Va6Ua71kvm+k=;
-        b=xrdIsY/DDTKWvANLjAaSWjYjQMNCh/d2QxC2puhvCbzvBkHs2wupVP6CKzW2Kgv113
-         EIpR/Bcccu0sUBrmp+8fl4onaij8w7VX9uWc0VPGR948edAZgXLB/rSVn1IRvs7QBNqM
-         +5Tb2T4bSrY2GMOszFFIc8DfXOjYl4LLDSyBvwxyDOj1Qu/Qcu2ACd1ke66Z7kEUmdVs
-         SwbJd2/RWlwA6jd1XcLRSQpI/PBkYxlBR2+hPypv9cMMirr8MsT9qLFtcgY/lhPYmrBO
-         psHQCprZplEZRkGrurxNjNXdEVHQ769Q3J/GyIPFxhir5by8sT/jF6E8GIyfY/Pbpon4
-         0F9w==
+        d=linaro.org; s=google; t=1729202409; x=1729807209; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Isw4TLSYBoy+yI8Luh4Hi+u78l3bLfiSrZ6IrpPiuvU=;
+        b=NlJS8hRx9XqJqrvYo51fBH9ruarluzpG69Ly3VxN14Hs9m9bIBsh2pHcAKoyBYkWDz
+         72TuGKefbmw7dPfYXCuyZYkZ2dJDyLnCP8364geY3MlyLNRSeEkk2868gFTq4K20JTBW
+         xtBl8ve9xZxfun5MoHGdXNNsrTwItrdhr+qEjhyb2pXWrNl2xGkP+7+mGc4OW95fjQEO
+         32T+Keol4OoWinF14DEJhkEdsto/3ZtBNo1j0Og0JB7XfBnZrQnlAh5XTa45Gjn2MHog
+         qM5Tmjz8nrfHPhKxdh2WFQTPxiau1rpCze6hBW68p3/8+6wSaJJlkoV6eGSVAIp0XXYI
+         U0Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729202030; x=1729806830;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JH9th1Lqa6pfzHzGWf6LLQmXCVTNne5Va6Ua71kvm+k=;
-        b=PHWt18IAeTOUblCTwv+c/kcwklzYb4QGxa/9f7jdTgr5zJLh6GHYERxumjZ1Jzfq9n
-         e4tIBEsTOcP3kZ5jzdFJmpoCzxEstHSUgGi/SLvdsvDgM8EPgNEH5vd4wplHVow8KHHY
-         7eRfw0IoUPwIcJDgh66/ZLrrpRFI5W1kOpy3/ILZ+fweVkzBxR9N3Mb7hQYl7x+gF+2H
-         5Jo3Z5Tyetg8/oOvQiKWSfn+E0nhd6SLHz9Hjf84na/3p0jvsMUZltfWnVb3fxx1RSx2
-         gWWszI5FOAPmwcwpEoxN8RAzkgAZP7YoSKkV5iBon5OhZnvrU/GZ/SD7MyfvyZbDIK9K
-         xspg==
-X-Forwarded-Encrypted: i=1; AJvYcCWIkl3CgGVtpQ3ZOsQ+T7OZil58AsRCwUw90T/6HWWiSgcJh2MgGZlLRoZqoeSGYeFJpTMQ45BEpHlAorm3@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywk40ZDpL8NbhxTOzIWqCR+8NbpQDNlfG+ZkA/1N8Uu42REL0St
-	Bl4pdbWI+2i3U0ih2cmC0w7RkU7Bra1xBhinpigvV8Gzx2y9rmFRAivBFRzpneKL3VEm1e4g1rB
-	G2CljGvJPMeM8+xZHkMtYuA==
-X-Google-Smtp-Source: AGHT+IEtfvKkZLa8O/1tfb6cckR8JiTF44qMCQGS2HKZ5P3Id/ZV1DoHDT6P9VCmzFNbhYTrSRz253FF15kikQpVTA==
-X-Received: from ackerleytng-ctop-specialist.c.googlers.com
- ([fda3:e722:ac3:cc00:7f:e700:c0a8:1612]) (user=ackerleytng job=sendgmr) by
- 2002:a63:e505:0:b0:7a1:6633:6a07 with SMTP id 41be03b00d2f7-7eacc6db742mr82a12.2.1729202029676;
- Thu, 17 Oct 2024 14:53:49 -0700 (PDT)
-Date: Thu, 17 Oct 2024 21:53:46 +0000
-In-Reply-To: <20241010085930.1546800-6-tabba@google.com> (message from Fuad
- Tabba on Thu, 10 Oct 2024 09:59:24 +0100)
+        d=1e100.net; s=20230601; t=1729202409; x=1729807209;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Isw4TLSYBoy+yI8Luh4Hi+u78l3bLfiSrZ6IrpPiuvU=;
+        b=bv3NhQQ5hP/rWMnRAFrJV3I3j8sXia0DSmd4+wzIYt8qP577uHey8hdcbnQsXHCNkI
+         6SARBRvkqd/iXAk7ZNCEyVKhpKNoHxaaghbMykzZDn2wKgzyxZHZ1SmrsubOfS3SOf0m
+         EW1HW5avk7osxl2V7/dy4qybZhWcbMfTt8M1Nu1Ks1/R+x4ouEQZ0C36iG4voF8P+lT1
+         3TRTd2JZAWKaukT1cNNuqJegKTcsBHTE3GjjvwdIS+25IabAyYQ0BjAJgNNN7GzWqP0F
+         8ki3YUAlT5jhiNe1dBWlu7iyVR4N3B6GSjO3o3hFtSS61yw3pFJgh9afPWVdVgKyikhT
+         iMOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXfPBXerzYN45nEcwKEkYkR4TERDnqNSal36RI7HWh2VL4snTboRnUEWaZwNHL8Mlbc0E7izkAIamMioiN2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjgsUcf3jBgmOswRLA875WGnGifsukRXQ7ZA4IwYhw6K1n89BF
+	wa9NCyuEfb3CCbTshXa87uNi+PAgKNP37q6A0DjI6RfSMZGaE+H6VfUTdIekXeo=
+X-Google-Smtp-Source: AGHT+IGUX5FxPYm63QjEX8QSYjKY0R76CkWqYGuUb5gIaDo5gBTDkoQZABdj7YlxIwd/k53oj6Qswg==
+X-Received: by 2002:a05:651c:b1f:b0:2fb:597e:28f5 with SMTP id 38308e7fff4ca-2fb6d9ad52amr14615841fa.2.1729202409216;
+        Thu, 17 Oct 2024 15:00:09 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb809f9ad0sm426951fa.82.2024.10.17.15.00.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2024 15:00:06 -0700 (PDT)
+Date: Fri, 18 Oct 2024 01:00:03 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Rob Herring <robh@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Kalpak Kawadkar <quic_kkawadka@quicinc.com>
+Subject: Re: [PATCH 07/14] clk: qcom: clk-branch: Add support for SREG branch
+ ops
+Message-ID: <we4stuv7td5jmvicsvsjowqg76merg5lmlgqj6dvqvqecsw7xk@bfz2kdjnt6kb>
+References: <20241017-sar2130p-clocks-v1-0-f75e740f0a8d@linaro.org>
+ <20241017-sar2130p-clocks-v1-7-f75e740f0a8d@linaro.org>
+ <be8639d0add779bcac0314d3c433d01b.sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Message-ID: <diqzttdaxuol.fsf@ackerleytng-ctop-specialist.c.googlers.com>
-Subject: Re: [PATCH v3 05/11] KVM: guest_memfd: Add guest_memfd support to kvm_(read|/write)_guest_page()
-From: Ackerley Tng <ackerleytng@google.com>
-To: Fuad Tabba <tabba@google.com>
-Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
-	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
-	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
-	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
-	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
-	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
-	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
-	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
-	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
-	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
-	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
-	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
-	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
-	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
-	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
-	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
-	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
-	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
-	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
-	jthoughton@google.com, tabba@google.com
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <be8639d0add779bcac0314d3c433d01b.sboyd@kernel.org>
 
-Fuad Tabba <tabba@google.com> writes:
+On Thu, Oct 17, 2024 at 11:10:20AM -0700, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2024-10-17 09:56:57)
+> > From: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
+> > 
+> > Add support for SREG branch ops. This is for the clocks which require
+> 
+> What is SREG? Can you spell it out?
 
-> Make kvm_(read|/write)_guest_page() capable of accessing guest
-> memory for slots that don't have a userspace address, but only if
-> the memory is mappable, which also indicates that it is
-> accessible by the host.
+Unfortunately, no idea. This is the only register name I know.
 
-Fuad explained to me that this patch removes the need for userspace to
-mmap a guest_memfd fd just to provide userspace_addr when only a limited
-range of shared pages are required, e.g. for kvm_clock.
+> 
+> > additional register operations with the SREG register as a part of
+> > enable / disable operations.
+> > 
+> > Signed-off-by: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> [...]
+> > diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
+> > index 47bf59a671c3c8516a57c283fce548a6e5f16619..149d04bae25d1a54999e0f938c4fce175a7c3e42 100644
+> > --- a/drivers/clk/qcom/clk-branch.h
+> > +++ b/drivers/clk/qcom/clk-branch.h
+> > @@ -24,8 +24,11 @@
+> >  struct clk_branch {
+> >         u32     hwcg_reg;
+> >         u32     halt_reg;
+> > +       u32     sreg_enable_reg;
+> >         u8      hwcg_bit;
+> >         u8      halt_bit;
+> > +       u32     sreg_core_ack_bit;
+> > +       u32     sreg_periph_ack_bit;
+> 
+> Are these bits? Should be u8 then. Or are they a mask?
 
-Questions to anyone who might be more familiar:
+masks, will rename.
 
-1. Should we let userspace save the trouble of providing userspace_addr
-   if only KVM (and not userspace) needs to access the shared pages?
-2. Other than kvm_{read,write}_guest_page, are there any other parts of
-   KVM that may require updates so that guest_memfd can be used directly
-   from the kernel?
+> 
+> >         u8      halt_check;
+> 
+> Instead of adding these new members can you wrap the struct in another
+> struct? There are usually a lot of branches in the system and this
+> bloats those structures when the members are never used.
+> 
+> 	struct clk_sreg_branch {
+> 		u32 sreg_enable_reg;
+> 		u32 sreg_core_ack_bit;
+> 		u32 sreg_periph_ack_bit;
+> 		struct clk_branch branch;
+> 	};
+> 
+> But I'm not even sure that is needed vs. just putting a clk_regmap
+> inside because the clk_ops don't seem to use any of these other members?
 
-Patrick, does this help to answer the question of "how does KVM
-internally access guest_memfd for non-CoCo VMs" that you brought up in
-this other thread [*]?
+Yes, nice idea. Is it ok to keep the _branch suffix or we'd better
+rename it dropping the _branch (and move to another source file while we
+are at it)?
 
-[*] https://lore.kernel.org/all/6bca3ad4-3eca-4a75-a775-5f8b0467d7a3@amazon.co.uk/
 
->
-> Signed-off-by: Fuad Tabba <tabba@google.com>
-> ---
->  virt/kvm/kvm_main.c | 137 ++++++++++++++++++++++++++++++++++++++------
->  1 file changed, 118 insertions(+), 19 deletions(-)
->
-> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
-> index aed9cf2f1685..77e6412034b9 100644
-> --- a/virt/kvm/kvm_main.c
-> +++ b/virt/kvm/kvm_main.c
-> @@ -3399,23 +3399,114 @@ int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
->  	return kvm_gmem_toggle_mappable(kvm, start, end, false);
->  }
->  
-> +static int __kvm_read_guest_memfd_page(struct kvm *kvm,
-> +				       struct kvm_memory_slot *slot,
-> +				       gfn_t gfn, void *data, int offset,
-> +				       int len)
-> +{
-> +	struct page *page;
-> +	u64 pfn;
-> +	int r;
-> +
-> +	/*
-> +	 * Holds the folio lock until after checking whether it can be faulted
-> +	 * in, to avoid races with paths that change a folio's mappability.
-> +	 */
-> +	r = kvm_gmem_get_pfn_locked(kvm, slot, gfn, &pfn, NULL);
-> +	if (r)
-> +		return r;
-> +
-> +	page = pfn_to_page(pfn);
-> +
-> +	if (!kvm_gmem_is_mappable(kvm, gfn, gfn + 1)) {
-> +		r = -EPERM;
-> +		goto unlock;
-> +	}
-> +	memcpy(data, page_address(page) + offset, len);
-> +unlock:
-> +	if (r)
-> +		put_page(page);
-> +	else
-> +		kvm_release_pfn_clean(pfn);
-> +	unlock_page(page);
-> +
-> +	return r;
-> +}
-> +
-> +static int __kvm_write_guest_memfd_page(struct kvm *kvm,
-> +					struct kvm_memory_slot *slot,
-> +					gfn_t gfn, const void *data,
-> +					int offset, int len)
-> +{
-> +	struct page *page;
-> +	u64 pfn;
-> +	int r;
-> +
-> +	/*
-> +	 * Holds the folio lock until after checking whether it can be faulted
-> +	 * in, to avoid races with paths that change a folio's mappability.
-> +	 */
-> +	r = kvm_gmem_get_pfn_locked(kvm, slot, gfn, &pfn, NULL);
-> +	if (r)
-> +		return r;
-> +
-> +	page = pfn_to_page(pfn);
-> +
-> +	if (!kvm_gmem_is_mappable(kvm, gfn, gfn + 1)) {
-> +		r = -EPERM;
-> +		goto unlock;
-> +	}
-> +	memcpy(page_address(page) + offset, data, len);
-> +unlock:
-> +	if (r)
-> +		put_page(page);
-> +	else
-> +		kvm_release_pfn_dirty(pfn);
-> +	unlock_page(page);
-> +
-> +	return r;
-> +}
-> +#else
-> +static int __kvm_read_guest_memfd_page(struct kvm *kvm,
-> +				       struct kvm_memory_slot *slot,
-> +				       gfn_t gfn, void *data, int offset,
-> +				       int len)
-> +{
-> +	WARN_ON_ONCE(1);
-> +	return -EIO;
-> +}
-> +
-> +static int __kvm_write_guest_memfd_page(struct kvm *kvm,
-> +					struct kvm_memory_slot *slot,
-> +					gfn_t gfn, const void *data,
-> +					int offset, int len)
-> +{
-> +	WARN_ON_ONCE(1);
-> +	return -EIO;
-> +}
->  #endif /* CONFIG_KVM_GMEM_MAPPABLE */
->  
->  /* Copy @len bytes from guest memory at '(@gfn * PAGE_SIZE) + @offset' to @data */
-> -static int __kvm_read_guest_page(struct kvm_memory_slot *slot, gfn_t gfn,
-> -				 void *data, int offset, int len)
-> +
-> +static int __kvm_read_guest_page(struct kvm *kvm, struct kvm_memory_slot *slot,
-> +				 gfn_t gfn, void *data, int offset, int len)
->  {
-> -	int r;
->  	unsigned long addr;
->  
->  	if (WARN_ON_ONCE(offset + len > PAGE_SIZE))
->  		return -EFAULT;
->  
-> +	if (IS_ENABLED(CONFIG_KVM_GMEM_MAPPABLE) &&
-> +	    kvm_slot_can_be_private(slot) &&
-> +	    !slot->userspace_addr) {
-> +		return __kvm_read_guest_memfd_page(kvm, slot, gfn, data,
-> +						   offset, len);
-> +	}
-> +
->  	addr = gfn_to_hva_memslot_prot(slot, gfn, NULL);
->  	if (kvm_is_error_hva(addr))
->  		return -EFAULT;
-> -	r = __copy_from_user(data, (void __user *)addr + offset, len);
-> -	if (r)
-> +	if (__copy_from_user(data, (void __user *)addr + offset, len))
->  		return -EFAULT;
->  	return 0;
->  }
-> @@ -3425,7 +3516,7 @@ int kvm_read_guest_page(struct kvm *kvm, gfn_t gfn, void *data, int offset,
->  {
->  	struct kvm_memory_slot *slot = gfn_to_memslot(kvm, gfn);
->  
-> -	return __kvm_read_guest_page(slot, gfn, data, offset, len);
-> +	return __kvm_read_guest_page(kvm, slot, gfn, data, offset, len);
->  }
->  EXPORT_SYMBOL_GPL(kvm_read_guest_page);
->  
-> @@ -3434,7 +3525,7 @@ int kvm_vcpu_read_guest_page(struct kvm_vcpu *vcpu, gfn_t gfn, void *data,
->  {
->  	struct kvm_memory_slot *slot = kvm_vcpu_gfn_to_memslot(vcpu, gfn);
->  
-> -	return __kvm_read_guest_page(slot, gfn, data, offset, len);
-> +	return __kvm_read_guest_page(vcpu->kvm, slot, gfn, data, offset, len);
->  }
->  EXPORT_SYMBOL_GPL(kvm_vcpu_read_guest_page);
->  
-> @@ -3511,22 +3602,30 @@ EXPORT_SYMBOL_GPL(kvm_vcpu_read_guest_atomic);
->  
->  /* Copy @len bytes from @data into guest memory at '(@gfn * PAGE_SIZE) + @offset' */
->  static int __kvm_write_guest_page(struct kvm *kvm,
-> -				  struct kvm_memory_slot *memslot, gfn_t gfn,
-> -			          const void *data, int offset, int len)
-> +				  struct kvm_memory_slot *slot, gfn_t gfn,
-> +				  const void *data, int offset, int len)
->  {
-> -	int r;
-> -	unsigned long addr;
-> -
->  	if (WARN_ON_ONCE(offset + len > PAGE_SIZE))
->  		return -EFAULT;
->  
-> -	addr = gfn_to_hva_memslot(memslot, gfn);
-> -	if (kvm_is_error_hva(addr))
-> -		return -EFAULT;
-> -	r = __copy_to_user((void __user *)addr + offset, data, len);
-> -	if (r)
-> -		return -EFAULT;
-> -	mark_page_dirty_in_slot(kvm, memslot, gfn);
-> +	if (IS_ENABLED(CONFIG_KVM_GMEM_MAPPABLE) &&
-> +	    kvm_slot_can_be_private(slot) &&
-> +	    !slot->userspace_addr) {
-> +		int r = __kvm_write_guest_memfd_page(kvm, slot, gfn, data,
-> +						     offset, len);
-> +
-> +		if (r)
-> +			return r;
-> +	} else {
-> +		unsigned long addr = gfn_to_hva_memslot(slot, gfn);
-> +
-> +		if (kvm_is_error_hva(addr))
-> +			return -EFAULT;
-> +		if (__copy_to_user((void __user *)addr + offset, data, len))
-> +			return -EFAULT;
-> +	}
-> +
-> +	mark_page_dirty_in_slot(kvm, slot, gfn);
->  	return 0;
->  }
+-- 
+With best wishes
+Dmitry
 
