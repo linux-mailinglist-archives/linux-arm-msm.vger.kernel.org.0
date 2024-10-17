@@ -1,105 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-34752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDC389A2505
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 16:31:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A8629A2589
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 16:50:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C704B23A09
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 14:31:09 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 454801F24339
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 14:50:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940041D47AC;
-	Thu, 17 Oct 2024 14:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE2041DE4F5;
+	Thu, 17 Oct 2024 14:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G7QqYDS9"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="luD3pylD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1DB10F2;
-	Thu, 17 Oct 2024 14:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0521DE3B8;
+	Thu, 17 Oct 2024 14:50:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729175464; cv=none; b=LGSJoTkGCUfwNotLS6wXSqkiMv4l7VpIVg7HANDDYl/G8FgukE8SL5mv2q6tvIdEj4N0G6derbXazk/tcOCVVBo6xSHYq0wTzXBSHZSvEJCm28/q+yy4CerMHHvgq23iUg1BYITPedMdKdIezW/JEijLnLw0JwHSOyf6WR31gTk=
+	t=1729176629; cv=none; b=cLpAiwVSECRf5ACsSpVXxMqB2SGE0B5owxyk5UCy2Yyn/Fpnj3pz2yJ6MrkiUJdqdG/kpT/WrN2Sw1mlNonIiXTYx4DG3HX6t4+EnkxYU98Lh9VQrUrE5R3yYSBWKeMqoHVZwa98UVMeRQAWlDpMGTRefNQnE4vEqaPJrCPYO2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729175464; c=relaxed/simple;
-	bh=6UufKdmFAaPHOMthzmMqIm4AhJNWurr7EeT+mEyvhbI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d1pP7VCL4i68b5OotAV5gpdjLQVrbTCz6vI8fydzQqUb3IT4d4vQOgWWPbl72CM1/nX5Hn//2qQ7njJOLxyE0zwYx2ce2MP4TXyPvLAlqszZPeTN26SLs6Dc2/UzWRLJ/n2xmLWXXASahsMS2Hw9ej1+i/4jvIXPNO0ASp/5YXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G7QqYDS9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A337BC4CEC3;
-	Thu, 17 Oct 2024 14:31:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729175464;
-	bh=6UufKdmFAaPHOMthzmMqIm4AhJNWurr7EeT+mEyvhbI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=G7QqYDS98+RNBTT8+wxwSLCvqxCPxErdQ9HoJ1W7UJOu9d+FmwiIyPa8dCi91DKnW
-	 pXNHwGaL6xwDUbC1PaZvjSbRmNMDcSF8lzrVMweWoL/NSw5HjcNvk65h+eEnMOz+yE
-	 WldD5wxOo0b+T3bhwT6REndZSUhQXRg2ornLLYp+QtbstWPtW0ru5piedlJkTt1vdU
-	 ynhSup7thSLhuhwd4Bjw7YSIClYfiVIXd3PH7TVtzhyNdITLOq4+ONhrWgyQKJNe0K
-	 29VD2z0tGuH6AUQyze5Gen0s3x4f6wzEKg7ZjW6haVkYOdkgr8mbMhmLnKi22piOld
-	 eSQNCJMepX4jA==
-Date: Thu, 17 Oct 2024 16:31:01 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, quic_abhinavk@quicinc.com, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
-	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
-	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v3 00/23] drm/msm/dpu: Add Concurrent Writeback Support
- for DPU 10.x+
-Message-ID: <20241017-didactic-hornet-of-glory-14fcce@houat>
-References: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
+	s=arc-20240116; t=1729176629; c=relaxed/simple;
+	bh=GHvEzbOWl+PDbhAncKAm/Vp6rg1rgiDvkNIJWZTKT9g=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DGvksP2hGK20Vc4qUglVEN4UjEEvfPb1oMIsuKdg1fYQMsVtz+HzKMwONQNYkXMD8h8vh+p+9fvyyQce6TUFKWlriAYWZNGSP0VL0jJ5IHH+ZN+xXc0MFRCuP0JtpGEehFziLVtfixnPr9+HRST/0zGvKpVss19+quuGlE96cPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=luD3pylD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HB4PYc010253;
+	Thu, 17 Oct 2024 14:45:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=fWOaa4w82UIsMpW3IvqH8q
+	SQhhaD1GpYE+EEn1JPJKw=; b=luD3pylDZNvLcPBbjVAvKAiCzXJ2N1YGL+dQDq
+	E/qAQq/dhyvoGX2LpzBSkuyV/oaROQKO5Jzrp8y6DBeB/44ELem5XfO6eAvzHsJR
+	T6Nto32BSor7nOh2pkVu0sSOIMUpz39ONUxj53zWPd+BpnvG8KrvrXZbxgTY8i7G
+	8AbG6NojAO7zZERyuhvGsrWyTfSR0XPEeyFwsn4s+Hk/daKluoIaBvcs5vDpowuK
+	AgfZIRr1a++2XFdeW0m+UnGmiJ2U10A5aFJnjglFFtLfgvaYKUFLICFO5GV+mRwN
+	KYRWbSImB9D2CcTCHOuHr2xlCfCaPJdw/BcI5Dkkfn/cxSdA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ar052499-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Oct 2024 14:45:19 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49HEjJRJ015965
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Oct 2024 14:45:19 GMT
+Received: from hu-yrangana-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Thu, 17 Oct 2024 07:45:14 -0700
+From: Yuvaraj Ranganathan <quic_yrangana@quicinc.com>
+To: Thara Gopinath <thara.gopinath@gmail.com>,
+        Herbert Xu
+	<herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>,
+        "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konradybcio@kernel.org>,
+        Bhupesh Sharma
+	<bhupesh.sharma@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-crypto@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_yrangana@quicinc.com>, <quic_sravank@quicinc.com>
+Subject: [PATCH V1 0/2] Add QCrypto support for SA8775P
+Date: Thu, 17 Oct 2024 20:14:58 +0530
+Message-ID: <20241017144500.3968797-1-quic_yrangana@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="mna2pfiquhuwbp5i"
-Content-Disposition: inline
-In-Reply-To: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zN6LFvbM2qxryfZc5cXuB3LrNty9PHde
+X-Proofpoint-ORIG-GUID: zN6LFvbM2qxryfZc5cXuB3LrNty9PHde
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=779
+ clxscore=1011 spamscore=0 suspectscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170101
 
+Document SA8775P support for QCrypto driver and add QCE 
+and Crypto BAM DMA nodes.
 
---mna2pfiquhuwbp5i
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Yuvaraj Ranganathan (2):
+  dt-bindings: crypto: qcom-qce: document the SA8775P crypto engine
+  arm64: dts: qcom: sa8775p: add QCrypto nodes
 
-On Wed, Oct 16, 2024 at 06:21:06PM GMT, Jessica Zhang wrote:
-> Changes in v3:
-> - Dropped support for CWB on DP connectors for now
-> - Dropped unnecessary PINGPONG array in *_setup_cwb()
-> - Add a check to make sure CWB and CDM aren't supported simultaneously
->   (Dmitry)
-> - Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
-> - Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
-> - Dropped duplicate error message for reserving CWB resources (Dmitry)
-> - Added notes in framework changes about posting a separate series to
->   add proper KUnit tests (Maxime)
+ .../devicetree/bindings/crypto/qcom-qce.yaml  |  1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         | 22 +++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-I mean, I asked for kunit tests, not for a note that is going to be
-dropped when applying.
+-- 
+2.34.1
 
-Maxime
-
---mna2pfiquhuwbp5i
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZxEfpQAKCRAnX84Zoj2+
-dt09AYCudzOjIU8min87jZcaPuELHHOnPZG6jhTh5dZH5K8Oe9EURIc14NX99aCc
-tpYOeSUBewbLNSeA+CbKa1xstbwsaBZH7imXMUy/5oQkeNNNc0iwd7Uvwsip5rkS
-aQBrPzpRxQ==
-=Yh5a
------END PGP SIGNATURE-----
-
---mna2pfiquhuwbp5i--
 
