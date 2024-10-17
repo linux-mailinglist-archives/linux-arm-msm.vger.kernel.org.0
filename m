@@ -1,131 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-34750-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58A689A231D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 15:09:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 105499A23B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 15:22:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 01B11B22367
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 13:09:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40E201C2569F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 13:22:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 402E81DE89D;
-	Thu, 17 Oct 2024 13:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB6581DDA2E;
+	Thu, 17 Oct 2024 13:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OckzIXay"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhnRMrqy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC7A1DDC3E;
-	Thu, 17 Oct 2024 13:08:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC631D414F;
+	Thu, 17 Oct 2024 13:22:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729170491; cv=none; b=PFQwejXJrYXYkPLcBOktIEKXzYcHyrHLmgaNxLYR/WUlqXprBHaRYCuEWQaZ+ABMUjxUwRKNc+GJ0vfykEaYAUeT5/LQj5qcpFv7pd3Xv/Ym1s3s9po7Aq7NX1q3CFwM9and4HXi8l4FcUgjlpQoy0iR+akTMTpqwLoMMly1Q+k=
+	t=1729171326; cv=none; b=K4nMBfcybI3sZ33yQTtdlP3Iitt2WhWwPBwOOIKpQ5GMVe3yCPFdKdYf+FAF7zRtZl660mP8gYFEUCRFagTZNB+SNuaT3tD99kzRcH0020+APo48N1U4Qx3Uo864qJDrYgS47lVtHs7jnYLM+h0AgRKdGeWiOy6I53XdwQdnqsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729170491; c=relaxed/simple;
-	bh=bVSl6OqyC6bvvHQaA0wesJOPT9Ert1tX8MWXTsMgKvQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Aa1UCLVd57bdhojcxJBnIVx6sfRRu5HC3e8CilZBDVd2vkHq1aRQAAQikdYXj6l37IcJtEyYN+fVHXnaITmY31ytOavjgN9oee2PB+G85OORbs1UvgujFeujAHIL4d0IZMxj8xe5b7bb/gfM7fG7plDCGFos9m69qO/Voeca0SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OckzIXay; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49H6YFGP007366;
-	Thu, 17 Oct 2024 13:07:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oi59k/Am2QH9mckTRcUaJMxF+gr/1Jz2M+U5WLTwC+A=; b=OckzIXaybq37L+cq
-	BrRfr/8NixWl8cBap7KDwb/sLMWAP/El3nPY3JWNB6xqwhltCldqJQ4iabqnPUjp
-	Q9mfVdN580cd4LLUkI2r+51MPH0/D9ag4QOnpaMp8JN7jlWRWeACRDEECWFtc/he
-	PhQ2E2rCF6VQVvLGCXieETehLJY5Ww2rI6ILb0MprMnpRtrufDsV73rV7YYsByMw
-	wyOngsrH8PjaxArXx73h7y/qJIs0PWHgNB+EPbFvkXon1YYKULbd0+nxbqaBlawJ
-	HKz8sESEIvMhCVYVcVHOTyXpv/WAAmnpAB+UaufAVcxVHYDzKB8wNYNt0RkUmUD8
-	mHGcRA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429mjy87ey-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Oct 2024 13:07:54 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49HD7rUv004024
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Oct 2024 13:07:53 GMT
-Received: from hu-kriskura-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Thu, 17 Oct 2024 06:07:47 -0700
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
-To: Vinod Koul <vkoul@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Dmitry
- Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>
-CC: <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>, Krishna Kurapati <quic_kriskura@quicinc.com>
-Subject: [PATCH v2 5/5] phy: qcom: qmp-usbc: Add qmp configuration for QCS615
-Date: Thu, 17 Oct 2024 18:37:01 +0530
-Message-ID: <20241017130701.3301785-6-quic_kriskura@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241017130701.3301785-1-quic_kriskura@quicinc.com>
-References: <20241017130701.3301785-1-quic_kriskura@quicinc.com>
+	s=arc-20240116; t=1729171326; c=relaxed/simple;
+	bh=YEWLovNTfR2Yjoh50Yrs342zOr30abLwFZjLtnK2bjk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OBDe+AhNonAFW/nfTP6+96Dcw+AyLMQa094+EOOYyElOApmmw8jTLC6LhM8qSDiUOOvZPOqbpVqhoecze3YdUu0ov/BmQhm5o5PGoUzWKuojynELzChCQXhm3cmXyX9LDGQUrULxavJWKQhEjroJW+PQXn+JXHF062oA6VwK65g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhnRMrqy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0049CC4CEC5;
+	Thu, 17 Oct 2024 13:22:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729171326;
+	bh=YEWLovNTfR2Yjoh50Yrs342zOr30abLwFZjLtnK2bjk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OhnRMrqyCNyepnmEad2tOlrrc8m37uT50yZBkbP4PLFnrF1zBBfRjbZ+uRhFXvEoi
+	 sVWo1HgM6NQf2uAccCGoB6kx1QecrgChaGlYddNVK4ruXSUGdEewXzUl+kwqfTgIUO
+	 CxVXA2bAMbfnqRzpRlU5keTuL6oD+3f4zybMF2MrD6TP7UsrldQ7XIx5U0eys7IRcx
+	 mPMaTBVOm70NbKmjdCjjhdhnVvt0H7CgzhbBmo1g/hZI87XhIydRevgLpeuuGu50vi
+	 ArYk4ZLR25KHk0DG4lNpHKbka71I3BCxTrgXKHHlc6xQoR/tpt3N8KA0q0YvWVUA8T
+	 v39doHjqxAHww==
+Date: Thu, 17 Oct 2024 14:22:01 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
+Message-ID: <f125c7d5-5f85-4ff6-999b-2098ff3103f9@sirena.org.uk>
+References: <20241007-x1e80100-pwrseq-qcp-v1-3-f7166510ab17@linaro.org>
+ <ZweftESPrJNEsqGE@hovoldconsulting.com>
+ <Zwj539cN2DJ7nd3A@linaro.org>
+ <Zw5fzNZ_xCwPyw4G@hovoldconsulting.com>
+ <Zw_dE1rQ-Ljsh-sY@linaro.org>
+ <CAMRc=MfUEfKHkAVvtGODxvJ-BdL+kX7uDgW+1y4QW3Kc5mpX+w@mail.gmail.com>
+ <cde15d83-6059-47bc-94d6-2a88ba95e5ae@sirena.org.uk>
+ <CAMRc=MddPDFaw6vYo1FzXHbUsLyr2QKT6oy2i68ZCdJdFWCJww@mail.gmail.com>
+ <a14e5488-d0e8-4f04-b419-0b4c566219bf@sirena.org.uk>
+ <CAMRc=MeYDi0_+y7a-KQhh=ft4rstng5H24LJBgsJg1BdXfc-nQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: EeWTeSAuzEm4vOvlpjfEgABAn_HX8sQs
-X-Proofpoint-ORIG-GUID: EeWTeSAuzEm4vOvlpjfEgABAn_HX8sQs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 phishscore=0
- mlxscore=0 lowpriorityscore=0 malwarescore=0 priorityscore=1501
- impostorscore=0 clxscore=1015 spamscore=0 suspectscore=0 adultscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410170090
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="n2gD1yr3HYcMMdzy"
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MeYDi0_+y7a-KQhh=ft4rstng5H24LJBgsJg1BdXfc-nQ@mail.gmail.com>
+X-Cookie: One picture is worth 128K words.
 
-Provide PHY configuration for the USB QMP PHY for QCS615 Platform.
 
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 3 +++
- 1 file changed, 3 insertions(+)
+--n2gD1yr3HYcMMdzy
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-index d4fa1063ea61..c56ba8468538 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-@@ -1123,6 +1123,9 @@ static const struct of_device_id qmp_usbc_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,qcm2290-qmp-usb3-phy",
- 		.data = &qcm2290_usb3phy_cfg,
-+	}, {
-+		.compatible = "qcom,qcs615-qmp-usb3-phy",
-+		.data = &qcm2290_usb3phy_cfg,
- 	}, {
- 		.compatible = "qcom,sdm660-qmp-usb3-phy",
- 		.data = &sdm660_usb3phy_cfg,
--- 
-2.34.1
+On Thu, Oct 17, 2024 at 02:21:08PM +0200, Bartosz Golaszewski wrote:
 
+> A device is wired differently on different platforms. It requests a
+> bunch of supplies using devm_regulator_bulk_get(). One of them is
+> unconnected on one of the platforms resulting in the "using dummy
+> regulator" warning.
+
+> Concrete use-case is: make all but one regulator mandatory when
+> calling regulator_bulk_get(). My proposal is extending struct
+> regulator_bulk_data with a boolean flag called "optional" which would
+> result in the underlying _regulator_get() receiving the OPTIONAL_GET
+> flag only for the regulators that are marked as such.
+
+Sure, but doesn't the device need to know that this supply isn't
+connected - if we can just ignore the result then why bother powering
+the supply on at all?
+
+--n2gD1yr3HYcMMdzy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmcRD3gACgkQJNaLcl1U
+h9DoIgf/Y+0jxK5/t6n/HarefvAOzATQamisrmCyJ/uDRyQhMfatLC1+lTveGobd
+6pBFd1Hg+TcKq4J3Hx7h+PRuZYb+m6SVLjKX5oXMV58OgGuYVWBIMLdcKYs+AxEn
+0ZNOxWqwRv/NKbEfUqMlV0oxn8d5bRLUzlJDZkI4k/m5Z0x6w8B7fKL2/ZCwX7i5
+S4eU21u8YkVTGW0rrApgz9BeufGMWix/tw14FOxFTzufpx6sR+t7urJUtUbf9QF4
+kdieO9o4KXB+2tddld8DNTEvp+srR77yCKvWbZqL67V8tAbRGcOhJBGI7YsRRssL
+v77kDvn8q9lCFPmj6E5lLNg4ob0d4A==
+=wMGr
+-----END PGP SIGNATURE-----
+
+--n2gD1yr3HYcMMdzy--
 
