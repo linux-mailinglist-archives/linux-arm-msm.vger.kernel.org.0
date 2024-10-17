@@ -1,153 +1,317 @@
-Return-Path: <linux-arm-msm+bounces-34821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34822-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76FCF9A2FCE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 23:25:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1BCFD9A3015
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 23:53:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E71EBB26F1A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 21:25:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 928B01F21408
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 21:53:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CFBE1D3621;
-	Thu, 17 Oct 2024 21:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E0601D618E;
+	Thu, 17 Oct 2024 21:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KhRHIMdN"
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="xrdIsY/D"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f202.google.com (mail-pg1-f202.google.com [209.85.215.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DAC1D5AD4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 21:25:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA9381D040B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 21:53:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.202
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729200313; cv=none; b=mdr3/xDFjmCZAZTPyoIKKBm9VGlekUTS0/cq0iaoJL6vE13Pl5t/r6z9jjw8dECe96mWjsdQ8FJv++CNX1hDaxhJ4f8MihqnCCidZ55C2Kxz642B65VJRKxsrlvrotl8qsuehDenjVQJzjvoXinsAAnSfg2ifGyl+r1Y9H7CAS8=
+	t=1729202032; cv=none; b=EQh0aEWg6AuLJP8K5Ntki22dN9T+JwdGmNvZk0c1Y2Ia+qExfWTEwi+jxT9w9bZlgXUpBJadDYyC3dsRPBBeffDM1Va7Rv85NzUNH1OQR4QqXPwcXI9F/xLmj5H5HX5sF4kl6xnUERhSCaH5XC8wbNWW6xU4MduIn4/RhilYHBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729200313; c=relaxed/simple;
-	bh=f3XSZjpMW+4pSNSq+5t+nHginY6jLJSrXAO6nlE9cZs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t4ovgeBZ5bCMl5Cp69vEVrU8eOJ3MEKUvfP2nTcR3S+zojWAJj5O5cGz1nWagiLV2rMr6UJ9ggZ023G7EEb8fLC/glh4rj3KryddlLN23bq9bVz8eCYuiwGDCjLOHo//tn4yuH4K+jtE7GhXtI0wWPEFovxMStNKHtE91XFuNSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KhRHIMdN; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HFkOLj031437
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 21:25:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6V0PA1pbHT6De/zvPtGOGGXjIB2qbOpp2xwkNgIwcO4=; b=KhRHIMdNcsvOhkPe
-	uItromkmi1BWhuNFe7ea7rs0UcJV5hPGHqI45i3gDdwAEuyrdpOANU9Ui4pCxzAw
-	Pzu8DgEYp66uiyGoCEqAGfSmMbwr1FyGFXW2hiSeVjoyVcaC/46c7HvcP1PlalZa
-	XbNr+kvKEpVUXQjx2uSv1EDMkOTmSFLOuAlZD8DZKPkB2n9Fyj7X7IR2OmwEid/7
-	dWLJiuFuMONCZ6boU98S7zGV3OtaU1q9Qy7jUsul4FSmfHHZuMumYkGiw3bYaQCe
-	hradrwluD4PgswzGuBn01zFYHFnX/VKc9D4wFy0h8OGvVpF8FujOHAq7yQc78zhG
-	0trcHw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8nq6420-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 21:25:06 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4609b352aa9so2102451cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 14:25:06 -0700 (PDT)
+	s=arc-20240116; t=1729202032; c=relaxed/simple;
+	bh=Yr141VTOSlzr9Qf++OVWPOb6T5aSNE/JU+fVDOC/p4U=;
+	h=Date:In-Reply-To:Mime-Version:Message-ID:Subject:From:To:Cc:
+	 Content-Type; b=tbl1zJAjQD3pr5yOTyLcskyuKtJe9anaWJguVTh2F3p7WTbHTYFsYYWamB4/3VBrBtiHOF5+JRy8FcWzmHjtwP7OwbU+Hq0KH6achEiL6pjEYpDpzV2N05zIf3oU3cEHoQ1CSh+pXmeXVCn/a9H9kEiRiyekgOEDz9mG9iF4gBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=xrdIsY/D; arc=none smtp.client-ip=209.85.215.202
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--ackerleytng.bounces.google.com
+Received: by mail-pg1-f202.google.com with SMTP id 41be03b00d2f7-7ea8c2b257bso1460230a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 14:53:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1729202030; x=1729806830; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JH9th1Lqa6pfzHzGWf6LLQmXCVTNne5Va6Ua71kvm+k=;
+        b=xrdIsY/DDTKWvANLjAaSWjYjQMNCh/d2QxC2puhvCbzvBkHs2wupVP6CKzW2Kgv113
+         EIpR/Bcccu0sUBrmp+8fl4onaij8w7VX9uWc0VPGR948edAZgXLB/rSVn1IRvs7QBNqM
+         +5Tb2T4bSrY2GMOszFFIc8DfXOjYl4LLDSyBvwxyDOj1Qu/Qcu2ACd1ke66Z7kEUmdVs
+         SwbJd2/RWlwA6jd1XcLRSQpI/PBkYxlBR2+hPypv9cMMirr8MsT9qLFtcgY/lhPYmrBO
+         psHQCprZplEZRkGrurxNjNXdEVHQ769Q3J/GyIPFxhir5by8sT/jF6E8GIyfY/Pbpon4
+         0F9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729200305; x=1729805105;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1729202030; x=1729806830;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6V0PA1pbHT6De/zvPtGOGGXjIB2qbOpp2xwkNgIwcO4=;
-        b=mjWKY0v1K+1Pj6nEGV8i6t7n/PPgLzYlEKol3YdmR0J3YlJfc6Fc9MkyfmMEv6zHJD
-         AS96nP76OKPml36eezOG9US1mmCW3hDewJ4l6+iOu9+UzxOQdltqdkqfnEjJ2YutWahr
-         Nn9SRdCSf7bJ+xkXX1FBix0xZt6HqzWOx1n/Q1slh5ZeUKKMTBhAcqwh6MfjoNrqVe7c
-         FDFXMSX+SLQveVngLd02PYkfoAIb0eBG/8o9F0TtBBFDBH7AuQiKZfjE6c91rSe98ml2
-         05WZPp4KNTJ8Mw69eDzdWa22HtXYgNLHU0WbJkrY5mAkvnjDL9qH+Ch1sUQTCqgvu02l
-         aBjA==
-X-Forwarded-Encrypted: i=1; AJvYcCVBtKo2G8olhRVRckXGvTodol0EK+peHY7fLS2Euxdxkn0Ul7/QTDvVi9ByduusCt98456kBU/v9NYRPkul@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJ9dCvU6ApFnpAQhk7Nd61iH9xQtAJ1s3ezVQnG5uJBo2dNK1K
-	KyEpJtZxjA3vSS1As+mrJpEYLo4uBYZi52z78YQNXQqSxM0sIPDNbOx1qiduHRUH/QTH0Q1DoH7
-	uYPy7oxRc0g/HtvF2nx6g5lxUeo7S2VywObEHLN9A/pywrcIiqiPNTGB64NbmRv8i
-X-Received: by 2002:a05:622a:1790:b0:460:a584:7b14 with SMTP id d75a77b69052e-460aece96b6mr1405911cf.1.1729200305443;
-        Thu, 17 Oct 2024 14:25:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGk/ZQpFtr4eYXVelF1QQ9saPRD8rq5WepP31nYkQliEgOxyubghQM68LJwB+eWOr/Ye4wNA==
-X-Received: by 2002:a05:622a:1790:b0:460:a584:7b14 with SMTP id d75a77b69052e-460aece96b6mr1405691cf.1.1729200305035;
-        Thu, 17 Oct 2024 14:25:05 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ca0b08bc27sm24203a12.45.2024.10.17.14.25.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Oct 2024 14:25:03 -0700 (PDT)
-Message-ID: <6787fffa-642a-4099-ba00-445dd2b865ef@oss.qualcomm.com>
-Date: Thu, 17 Oct 2024 23:25:00 +0200
+        bh=JH9th1Lqa6pfzHzGWf6LLQmXCVTNne5Va6Ua71kvm+k=;
+        b=PHWt18IAeTOUblCTwv+c/kcwklzYb4QGxa/9f7jdTgr5zJLh6GHYERxumjZ1Jzfq9n
+         e4tIBEsTOcP3kZ5jzdFJmpoCzxEstHSUgGi/SLvdsvDgM8EPgNEH5vd4wplHVow8KHHY
+         7eRfw0IoUPwIcJDgh66/ZLrrpRFI5W1kOpy3/ILZ+fweVkzBxR9N3Mb7hQYl7x+gF+2H
+         5Jo3Z5Tyetg8/oOvQiKWSfn+E0nhd6SLHz9Hjf84na/3p0jvsMUZltfWnVb3fxx1RSx2
+         gWWszI5FOAPmwcwpEoxN8RAzkgAZP7YoSKkV5iBon5OhZnvrU/GZ/SD7MyfvyZbDIK9K
+         xspg==
+X-Forwarded-Encrypted: i=1; AJvYcCWIkl3CgGVtpQ3ZOsQ+T7OZil58AsRCwUw90T/6HWWiSgcJh2MgGZlLRoZqoeSGYeFJpTMQ45BEpHlAorm3@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywk40ZDpL8NbhxTOzIWqCR+8NbpQDNlfG+ZkA/1N8Uu42REL0St
+	Bl4pdbWI+2i3U0ih2cmC0w7RkU7Bra1xBhinpigvV8Gzx2y9rmFRAivBFRzpneKL3VEm1e4g1rB
+	G2CljGvJPMeM8+xZHkMtYuA==
+X-Google-Smtp-Source: AGHT+IEtfvKkZLa8O/1tfb6cckR8JiTF44qMCQGS2HKZ5P3Id/ZV1DoHDT6P9VCmzFNbhYTrSRz253FF15kikQpVTA==
+X-Received: from ackerleytng-ctop-specialist.c.googlers.com
+ ([fda3:e722:ac3:cc00:7f:e700:c0a8:1612]) (user=ackerleytng job=sendgmr) by
+ 2002:a63:e505:0:b0:7a1:6633:6a07 with SMTP id 41be03b00d2f7-7eacc6db742mr82a12.2.1729202029676;
+ Thu, 17 Oct 2024 14:53:49 -0700 (PDT)
+Date: Thu, 17 Oct 2024 21:53:46 +0000
+In-Reply-To: <20241010085930.1546800-6-tabba@google.com> (message from Fuad
+ Tabba on Thu, 10 Oct 2024 09:59:24 +0100)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] remoteproc: qcom: Add helper function to support
- IOMMU devmem translation
-To: neil.armstrong@linaro.org, Mukesh Ojha <quic_mojha@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shiraz Hashim <quic_shashim@quicinc.com>
-References: <20241004212359.2263502-1-quic_mojha@quicinc.com>
- <20241004212359.2263502-4-quic_mojha@quicinc.com>
- <83e23090-0390-4c2e-91e3-e222baaa889a@linaro.org>
- <ZwPyE/rQOH181rqz@hu-mojha-hyd.qualcomm.com>
- <5fc9d581-14a6-45e8-8eda-4df49b81f15d@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <5fc9d581-14a6-45e8-8eda-4df49b81f15d@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: R5ptauldMMJwa-nP-TTgwcEippFL6kXd
-X-Proofpoint-GUID: R5ptauldMMJwa-nP-TTgwcEippFL6kXd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=743 priorityscore=1501
- suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 clxscore=1015
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410170144
+Mime-Version: 1.0
+Message-ID: <diqzttdaxuol.fsf@ackerleytng-ctop-specialist.c.googlers.com>
+Subject: Re: [PATCH v3 05/11] KVM: guest_memfd: Add guest_memfd support to kvm_(read|/write)_guest_page()
+From: Ackerley Tng <ackerleytng@google.com>
+To: Fuad Tabba <tabba@google.com>
+Cc: kvm@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-mm@kvack.org, 
+	pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au, 
+	anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com, 
+	aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk, 
+	brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org, 
+	xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com, 
+	jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com, 
+	yu.c.zhang@linux.intel.com, isaku.yamahata@intel.com, mic@digikod.net, 
+	vbabka@suse.cz, vannapurve@google.com, mail@maciej.szmigiero.name, 
+	david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com, 
+	liam.merwick@oracle.com, isaku.yamahata@gmail.com, 
+	kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com, steven.price@arm.com, 
+	quic_eberman@quicinc.com, quic_mnalajal@quicinc.com, quic_tsoni@quicinc.com, 
+	quic_svaddagi@quicinc.com, quic_cvanscha@quicinc.com, 
+	quic_pderrin@quicinc.com, quic_pheragu@quicinc.com, catalin.marinas@arm.com, 
+	james.morse@arm.com, yuzenghui@huawei.com, oliver.upton@linux.dev, 
+	maz@kernel.org, will@kernel.org, qperret@google.com, keirf@google.com, 
+	roypat@amazon.co.uk, shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, 
+	rientjes@google.com, jhubbard@nvidia.com, fvdl@google.com, hughd@google.com, 
+	jthoughton@google.com, tabba@google.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 10.10.2024 8:59 AM, neil.armstrong@linaro.org wrote:
-> Hi,
-> 
-> On 07/10/2024 16:37, Mukesh Ojha wrote:
->> On Mon, Oct 07, 2024 at 10:08:16AM +0200, neil.armstrong@linaro.org wrote:
->>> On 04/10/2024 23:23, Mukesh Ojha wrote:
->>>> From: Shiraz Hashim <quic_shashim@quicinc.com>
->>>>
->>>> Qualcomm SoCs runnning with Qualcomm EL2 hypervisor(QHEE), IOMMU
->>>> translation set up for remote processors is managed by QHEE itself
->>>> however, for a case when these remote processors has to run under KVM
->>>
->>> This is not true, KVM is a Linux hypervisor, remote processors have
->>> nothing to do with KVM, please rephrase.
->>
->> Thanks, perhaps something like this,
->>
->> "However, when same SoC runs with KVM configuration, remoteproc IOMMU
->> translation needs to be set from Linux host running remoteproc PAS
->> driver"
-> 
-> Thanks but I still don't see what KVM has to do here, KVM is an an optional
-> Linux kernel feature, Linux can be configured without KVM and still perfectly
-> startup those remoteprocs.
+Fuad Tabba <tabba@google.com> writes:
 
-Mukesh, KVM is a very specific use case. What you're referring to is
-really "no QHEE / Gunyah". We can do s/KVM/Hyper-V (or almost any
-other software running at EL2) and your claims still hold.
+> Make kvm_(read|/write)_guest_page() capable of accessing guest
+> memory for slots that don't have a userspace address, but only if
+> the memory is mappable, which also indicates that it is
+> accessible by the host.
 
-Konrad
+Fuad explained to me that this patch removes the need for userspace to
+mmap a guest_memfd fd just to provide userspace_addr when only a limited
+range of shared pages are required, e.g. for kvm_clock.
+
+Questions to anyone who might be more familiar:
+
+1. Should we let userspace save the trouble of providing userspace_addr
+   if only KVM (and not userspace) needs to access the shared pages?
+2. Other than kvm_{read,write}_guest_page, are there any other parts of
+   KVM that may require updates so that guest_memfd can be used directly
+   from the kernel?
+
+Patrick, does this help to answer the question of "how does KVM
+internally access guest_memfd for non-CoCo VMs" that you brought up in
+this other thread [*]?
+
+[*] https://lore.kernel.org/all/6bca3ad4-3eca-4a75-a775-5f8b0467d7a3@amazon.co.uk/
+
+>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
+> ---
+>  virt/kvm/kvm_main.c | 137 ++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 118 insertions(+), 19 deletions(-)
+>
+> diff --git a/virt/kvm/kvm_main.c b/virt/kvm/kvm_main.c
+> index aed9cf2f1685..77e6412034b9 100644
+> --- a/virt/kvm/kvm_main.c
+> +++ b/virt/kvm/kvm_main.c
+> @@ -3399,23 +3399,114 @@ int kvm_gmem_clear_mappable(struct kvm *kvm, gfn_t start, gfn_t end)
+>  	return kvm_gmem_toggle_mappable(kvm, start, end, false);
+>  }
+>  
+> +static int __kvm_read_guest_memfd_page(struct kvm *kvm,
+> +				       struct kvm_memory_slot *slot,
+> +				       gfn_t gfn, void *data, int offset,
+> +				       int len)
+> +{
+> +	struct page *page;
+> +	u64 pfn;
+> +	int r;
+> +
+> +	/*
+> +	 * Holds the folio lock until after checking whether it can be faulted
+> +	 * in, to avoid races with paths that change a folio's mappability.
+> +	 */
+> +	r = kvm_gmem_get_pfn_locked(kvm, slot, gfn, &pfn, NULL);
+> +	if (r)
+> +		return r;
+> +
+> +	page = pfn_to_page(pfn);
+> +
+> +	if (!kvm_gmem_is_mappable(kvm, gfn, gfn + 1)) {
+> +		r = -EPERM;
+> +		goto unlock;
+> +	}
+> +	memcpy(data, page_address(page) + offset, len);
+> +unlock:
+> +	if (r)
+> +		put_page(page);
+> +	else
+> +		kvm_release_pfn_clean(pfn);
+> +	unlock_page(page);
+> +
+> +	return r;
+> +}
+> +
+> +static int __kvm_write_guest_memfd_page(struct kvm *kvm,
+> +					struct kvm_memory_slot *slot,
+> +					gfn_t gfn, const void *data,
+> +					int offset, int len)
+> +{
+> +	struct page *page;
+> +	u64 pfn;
+> +	int r;
+> +
+> +	/*
+> +	 * Holds the folio lock until after checking whether it can be faulted
+> +	 * in, to avoid races with paths that change a folio's mappability.
+> +	 */
+> +	r = kvm_gmem_get_pfn_locked(kvm, slot, gfn, &pfn, NULL);
+> +	if (r)
+> +		return r;
+> +
+> +	page = pfn_to_page(pfn);
+> +
+> +	if (!kvm_gmem_is_mappable(kvm, gfn, gfn + 1)) {
+> +		r = -EPERM;
+> +		goto unlock;
+> +	}
+> +	memcpy(page_address(page) + offset, data, len);
+> +unlock:
+> +	if (r)
+> +		put_page(page);
+> +	else
+> +		kvm_release_pfn_dirty(pfn);
+> +	unlock_page(page);
+> +
+> +	return r;
+> +}
+> +#else
+> +static int __kvm_read_guest_memfd_page(struct kvm *kvm,
+> +				       struct kvm_memory_slot *slot,
+> +				       gfn_t gfn, void *data, int offset,
+> +				       int len)
+> +{
+> +	WARN_ON_ONCE(1);
+> +	return -EIO;
+> +}
+> +
+> +static int __kvm_write_guest_memfd_page(struct kvm *kvm,
+> +					struct kvm_memory_slot *slot,
+> +					gfn_t gfn, const void *data,
+> +					int offset, int len)
+> +{
+> +	WARN_ON_ONCE(1);
+> +	return -EIO;
+> +}
+>  #endif /* CONFIG_KVM_GMEM_MAPPABLE */
+>  
+>  /* Copy @len bytes from guest memory at '(@gfn * PAGE_SIZE) + @offset' to @data */
+> -static int __kvm_read_guest_page(struct kvm_memory_slot *slot, gfn_t gfn,
+> -				 void *data, int offset, int len)
+> +
+> +static int __kvm_read_guest_page(struct kvm *kvm, struct kvm_memory_slot *slot,
+> +				 gfn_t gfn, void *data, int offset, int len)
+>  {
+> -	int r;
+>  	unsigned long addr;
+>  
+>  	if (WARN_ON_ONCE(offset + len > PAGE_SIZE))
+>  		return -EFAULT;
+>  
+> +	if (IS_ENABLED(CONFIG_KVM_GMEM_MAPPABLE) &&
+> +	    kvm_slot_can_be_private(slot) &&
+> +	    !slot->userspace_addr) {
+> +		return __kvm_read_guest_memfd_page(kvm, slot, gfn, data,
+> +						   offset, len);
+> +	}
+> +
+>  	addr = gfn_to_hva_memslot_prot(slot, gfn, NULL);
+>  	if (kvm_is_error_hva(addr))
+>  		return -EFAULT;
+> -	r = __copy_from_user(data, (void __user *)addr + offset, len);
+> -	if (r)
+> +	if (__copy_from_user(data, (void __user *)addr + offset, len))
+>  		return -EFAULT;
+>  	return 0;
+>  }
+> @@ -3425,7 +3516,7 @@ int kvm_read_guest_page(struct kvm *kvm, gfn_t gfn, void *data, int offset,
+>  {
+>  	struct kvm_memory_slot *slot = gfn_to_memslot(kvm, gfn);
+>  
+> -	return __kvm_read_guest_page(slot, gfn, data, offset, len);
+> +	return __kvm_read_guest_page(kvm, slot, gfn, data, offset, len);
+>  }
+>  EXPORT_SYMBOL_GPL(kvm_read_guest_page);
+>  
+> @@ -3434,7 +3525,7 @@ int kvm_vcpu_read_guest_page(struct kvm_vcpu *vcpu, gfn_t gfn, void *data,
+>  {
+>  	struct kvm_memory_slot *slot = kvm_vcpu_gfn_to_memslot(vcpu, gfn);
+>  
+> -	return __kvm_read_guest_page(slot, gfn, data, offset, len);
+> +	return __kvm_read_guest_page(vcpu->kvm, slot, gfn, data, offset, len);
+>  }
+>  EXPORT_SYMBOL_GPL(kvm_vcpu_read_guest_page);
+>  
+> @@ -3511,22 +3602,30 @@ EXPORT_SYMBOL_GPL(kvm_vcpu_read_guest_atomic);
+>  
+>  /* Copy @len bytes from @data into guest memory at '(@gfn * PAGE_SIZE) + @offset' */
+>  static int __kvm_write_guest_page(struct kvm *kvm,
+> -				  struct kvm_memory_slot *memslot, gfn_t gfn,
+> -			          const void *data, int offset, int len)
+> +				  struct kvm_memory_slot *slot, gfn_t gfn,
+> +				  const void *data, int offset, int len)
+>  {
+> -	int r;
+> -	unsigned long addr;
+> -
+>  	if (WARN_ON_ONCE(offset + len > PAGE_SIZE))
+>  		return -EFAULT;
+>  
+> -	addr = gfn_to_hva_memslot(memslot, gfn);
+> -	if (kvm_is_error_hva(addr))
+> -		return -EFAULT;
+> -	r = __copy_to_user((void __user *)addr + offset, data, len);
+> -	if (r)
+> -		return -EFAULT;
+> -	mark_page_dirty_in_slot(kvm, memslot, gfn);
+> +	if (IS_ENABLED(CONFIG_KVM_GMEM_MAPPABLE) &&
+> +	    kvm_slot_can_be_private(slot) &&
+> +	    !slot->userspace_addr) {
+> +		int r = __kvm_write_guest_memfd_page(kvm, slot, gfn, data,
+> +						     offset, len);
+> +
+> +		if (r)
+> +			return r;
+> +	} else {
+> +		unsigned long addr = gfn_to_hva_memslot(slot, gfn);
+> +
+> +		if (kvm_is_error_hva(addr))
+> +			return -EFAULT;
+> +		if (__copy_to_user((void __user *)addr + offset, data, len))
+> +			return -EFAULT;
+> +	}
+> +
+> +	mark_page_dirty_in_slot(kvm, slot, gfn);
+>  	return 0;
+>  }
 
