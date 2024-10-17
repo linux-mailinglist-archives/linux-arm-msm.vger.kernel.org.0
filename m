@@ -1,119 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-34751-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34752-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 105499A23B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 15:22:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDC389A2505
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 16:31:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 40E201C2569F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 13:22:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C704B23A09
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 14:31:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB6581DDA2E;
-	Thu, 17 Oct 2024 13:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 940041D47AC;
+	Thu, 17 Oct 2024 14:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OhnRMrqy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G7QqYDS9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC631D414F;
-	Thu, 17 Oct 2024 13:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1DB10F2;
+	Thu, 17 Oct 2024 14:31:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729171326; cv=none; b=K4nMBfcybI3sZ33yQTtdlP3Iitt2WhWwPBwOOIKpQ5GMVe3yCPFdKdYf+FAF7zRtZl660mP8gYFEUCRFagTZNB+SNuaT3tD99kzRcH0020+APo48N1U4Qx3Uo864qJDrYgS47lVtHs7jnYLM+h0AgRKdGeWiOy6I53XdwQdnqsQ=
+	t=1729175464; cv=none; b=LGSJoTkGCUfwNotLS6wXSqkiMv4l7VpIVg7HANDDYl/G8FgukE8SL5mv2q6tvIdEj4N0G6derbXazk/tcOCVVBo6xSHYq0wTzXBSHZSvEJCm28/q+yy4CerMHHvgq23iUg1BYITPedMdKdIezW/JEijLnLw0JwHSOyf6WR31gTk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729171326; c=relaxed/simple;
-	bh=YEWLovNTfR2Yjoh50Yrs342zOr30abLwFZjLtnK2bjk=;
+	s=arc-20240116; t=1729175464; c=relaxed/simple;
+	bh=6UufKdmFAaPHOMthzmMqIm4AhJNWurr7EeT+mEyvhbI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OBDe+AhNonAFW/nfTP6+96Dcw+AyLMQa094+EOOYyElOApmmw8jTLC6LhM8qSDiUOOvZPOqbpVqhoecze3YdUu0ov/BmQhm5o5PGoUzWKuojynELzChCQXhm3cmXyX9LDGQUrULxavJWKQhEjroJW+PQXn+JXHF062oA6VwK65g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OhnRMrqy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0049CC4CEC5;
-	Thu, 17 Oct 2024 13:22:03 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=d1pP7VCL4i68b5OotAV5gpdjLQVrbTCz6vI8fydzQqUb3IT4d4vQOgWWPbl72CM1/nX5Hn//2qQ7njJOLxyE0zwYx2ce2MP4TXyPvLAlqszZPeTN26SLs6Dc2/UzWRLJ/n2xmLWXXASahsMS2Hw9ej1+i/4jvIXPNO0ASp/5YXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G7QqYDS9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A337BC4CEC3;
+	Thu, 17 Oct 2024 14:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729171326;
-	bh=YEWLovNTfR2Yjoh50Yrs342zOr30abLwFZjLtnK2bjk=;
+	s=k20201202; t=1729175464;
+	bh=6UufKdmFAaPHOMthzmMqIm4AhJNWurr7EeT+mEyvhbI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OhnRMrqyCNyepnmEad2tOlrrc8m37uT50yZBkbP4PLFnrF1zBBfRjbZ+uRhFXvEoi
-	 sVWo1HgM6NQf2uAccCGoB6kx1QecrgChaGlYddNVK4ruXSUGdEewXzUl+kwqfTgIUO
-	 CxVXA2bAMbfnqRzpRlU5keTuL6oD+3f4zybMF2MrD6TP7UsrldQ7XIx5U0eys7IRcx
-	 mPMaTBVOm70NbKmjdCjjhdhnVvt0H7CgzhbBmo1g/hZI87XhIydRevgLpeuuGu50vi
-	 ArYk4ZLR25KHk0DG4lNpHKbka71I3BCxTrgXKHHlc6xQoR/tpt3N8KA0q0YvWVUA8T
-	 v39doHjqxAHww==
-Date: Thu, 17 Oct 2024 14:22:01 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Stephan Gerhold <stephan.gerhold@linaro.org>,
-	Johan Hovold <johan@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: x1e80100-qcp: Add WiFi/BT pwrseq
-Message-ID: <f125c7d5-5f85-4ff6-999b-2098ff3103f9@sirena.org.uk>
-References: <20241007-x1e80100-pwrseq-qcp-v1-3-f7166510ab17@linaro.org>
- <ZweftESPrJNEsqGE@hovoldconsulting.com>
- <Zwj539cN2DJ7nd3A@linaro.org>
- <Zw5fzNZ_xCwPyw4G@hovoldconsulting.com>
- <Zw_dE1rQ-Ljsh-sY@linaro.org>
- <CAMRc=MfUEfKHkAVvtGODxvJ-BdL+kX7uDgW+1y4QW3Kc5mpX+w@mail.gmail.com>
- <cde15d83-6059-47bc-94d6-2a88ba95e5ae@sirena.org.uk>
- <CAMRc=MddPDFaw6vYo1FzXHbUsLyr2QKT6oy2i68ZCdJdFWCJww@mail.gmail.com>
- <a14e5488-d0e8-4f04-b419-0b4c566219bf@sirena.org.uk>
- <CAMRc=MeYDi0_+y7a-KQhh=ft4rstng5H24LJBgsJg1BdXfc-nQ@mail.gmail.com>
+	b=G7QqYDS98+RNBTT8+wxwSLCvqxCPxErdQ9HoJ1W7UJOu9d+FmwiIyPa8dCi91DKnW
+	 pXNHwGaL6xwDUbC1PaZvjSbRmNMDcSF8lzrVMweWoL/NSw5HjcNvk65h+eEnMOz+yE
+	 WldD5wxOo0b+T3bhwT6REndZSUhQXRg2ornLLYp+QtbstWPtW0ru5piedlJkTt1vdU
+	 ynhSup7thSLhuhwd4Bjw7YSIClYfiVIXd3PH7TVtzhyNdITLOq4+ONhrWgyQKJNe0K
+	 29VD2z0tGuH6AUQyze5Gen0s3x4f6wzEKg7ZjW6haVkYOdkgr8mbMhmLnKi22piOld
+	 eSQNCJMepX4jA==
+Date: Thu, 17 Oct 2024 16:31:01 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc: Rob Clark <robdclark@gmail.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, quic_abhinavk@quicinc.com, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	Simona Vetter <simona@ffwll.ch>, Simona Vetter <simona.vetter@ffwll.ch>, 
+	quic_ebharadw@quicinc.com, linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>, 
+	Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Subject: Re: [PATCH v3 00/23] drm/msm/dpu: Add Concurrent Writeback Support
+ for DPU 10.x+
+Message-ID: <20241017-didactic-hornet-of-glory-14fcce@houat>
+References: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="n2gD1yr3HYcMMdzy"
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="mna2pfiquhuwbp5i"
 Content-Disposition: inline
-In-Reply-To: <CAMRc=MeYDi0_+y7a-KQhh=ft4rstng5H24LJBgsJg1BdXfc-nQ@mail.gmail.com>
-X-Cookie: One picture is worth 128K words.
+In-Reply-To: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
 
 
---n2gD1yr3HYcMMdzy
+--mna2pfiquhuwbp5i
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Thu, Oct 17, 2024 at 02:21:08PM +0200, Bartosz Golaszewski wrote:
+On Wed, Oct 16, 2024 at 06:21:06PM GMT, Jessica Zhang wrote:
+> Changes in v3:
+> - Dropped support for CWB on DP connectors for now
+> - Dropped unnecessary PINGPONG array in *_setup_cwb()
+> - Add a check to make sure CWB and CDM aren't supported simultaneously
+>   (Dmitry)
+> - Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
+> - Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
+> - Dropped duplicate error message for reserving CWB resources (Dmitry)
+> - Added notes in framework changes about posting a separate series to
+>   add proper KUnit tests (Maxime)
 
-> A device is wired differently on different platforms. It requests a
-> bunch of supplies using devm_regulator_bulk_get(). One of them is
-> unconnected on one of the platforms resulting in the "using dummy
-> regulator" warning.
+I mean, I asked for kunit tests, not for a note that is going to be
+dropped when applying.
 
-> Concrete use-case is: make all but one regulator mandatory when
-> calling regulator_bulk_get(). My proposal is extending struct
-> regulator_bulk_data with a boolean flag called "optional" which would
-> result in the underlying _regulator_get() receiving the OPTIONAL_GET
-> flag only for the regulators that are marked as such.
+Maxime
 
-Sure, but doesn't the device need to know that this supply isn't
-connected - if we can just ignore the result then why bother powering
-the supply on at all?
-
---n2gD1yr3HYcMMdzy
+--mna2pfiquhuwbp5i
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmcRD3gACgkQJNaLcl1U
-h9DoIgf/Y+0jxK5/t6n/HarefvAOzATQamisrmCyJ/uDRyQhMfatLC1+lTveGobd
-6pBFd1Hg+TcKq4J3Hx7h+PRuZYb+m6SVLjKX5oXMV58OgGuYVWBIMLdcKYs+AxEn
-0ZNOxWqwRv/NKbEfUqMlV0oxn8d5bRLUzlJDZkI4k/m5Z0x6w8B7fKL2/ZCwX7i5
-S4eU21u8YkVTGW0rrApgz9BeufGMWix/tw14FOxFTzufpx6sR+t7urJUtUbf9QF4
-kdieO9o4KXB+2tddld8DNTEvp+srR77yCKvWbZqL67V8tAbRGcOhJBGI7YsRRssL
-v77kDvn8q9lCFPmj6E5lLNg4ob0d4A==
-=wMGr
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCZxEfpQAKCRAnX84Zoj2+
+dt09AYCudzOjIU8min87jZcaPuELHHOnPZG6jhTh5dZH5K8Oe9EURIc14NX99aCc
+tpYOeSUBewbLNSeA+CbKa1xstbwsaBZH7imXMUy/5oQkeNNNc0iwd7Uvwsip5rkS
+aQBrPzpRxQ==
+=Yh5a
 -----END PGP SIGNATURE-----
 
---n2gD1yr3HYcMMdzy--
+--mna2pfiquhuwbp5i--
 
