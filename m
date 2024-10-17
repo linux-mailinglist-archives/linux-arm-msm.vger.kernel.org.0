@@ -1,170 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-34829-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 903929A30D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:36:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30A829A310E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:52:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0976AB22809
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 22:36:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4A3B28696D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 22:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA58B1D7E50;
-	Thu, 17 Oct 2024 22:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999791D86C9;
+	Thu, 17 Oct 2024 22:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VNTPLqhS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OZcUhq/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E741D5CF9
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:36:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CAA1D798B
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:52:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729204601; cv=none; b=Qk0c3TC/h1/OvMMFdVLnH0yhDpujtMbeYdayqK5nyljN4rNpBpXD+1OBvobCoZuTshuEEWLjQ+00Ro3T/MP3nRU5T3QSKvJtINuBiFlKnNd0Z9UbA2jBL7h9Ofys9oqfQXrEQTcc3VZbAqL+84Lwz+XAQR120266GwiaB9yuz7A=
+	t=1729205559; cv=none; b=Qu87Q8tC8wGD5Bcn49pSh8f1qyiA4oVeO7/PbWLEUg6L1FOSqBAe1APjy3SZqJCgVU5IpCOpAHIiy8YhnG2hFRY7hVSs2PFXumBrhMckWsWDvvonlxrsarHmNwS/Jhq0Mq22UjkHDEQuZMV+mm1F6RZ05k+pWW/Yk4ODQoPJbNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729204601; c=relaxed/simple;
-	bh=yTXBQ6hL1r8sU3dGmA4317fmoXD5lE7vEB14SeWW6hw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WMU3c+oWJWha/VTyvq8EaVe7hj8rtmFKloTZArxdecWsu9urPohH5GGTkBKky7f56dHibYe5HgsAud5ebzCywLOvACIBuNotspEgmA8+svXHECTxkccFCA2caQzOyvAN+j9XkkJIwJCrW+l1EsCj4ta4Dqu+fu8H6wSXC2dRkU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VNTPLqhS; arc=none smtp.client-ip=209.85.167.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539f72c8fc1so1718833e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 15:36:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729204595; x=1729809395; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=cwAXFmWCXX0r1pv8K+QO23GJE7b+Aos8jpne2JMdjEc=;
-        b=VNTPLqhSMjz64DrR2VtCDU5WzoFZPzpeQYCuWxPKj08Teb013YpksA8gf3GsOswK0c
-         wy7KukBDve7PKRKUyw1ufS8YkswFKtolJqCI7Dv7eDSaz12gFf8vVu82V0Y3wSfkTa2W
-         jI5Pu+DJFWxRoU44XQog5RZPHuP5QkrMHuIC1++MRbaVmhabbTZ7gjLCrlZ5yrpgl++P
-         86P4MYznAxnjUIhcEQLfXe8f9L0DNFNBmJBW+Wne/C91Yjn8TXvS/AJAiZHSb4Tj8V+R
-         dFYI29lvJKRMLxr2n/p6aH4a8TzVeT6CbPOmtF5VAvHQZQW6twk/30iqRcNe8kK17eUi
-         dtbw==
+	s=arc-20240116; t=1729205559; c=relaxed/simple;
+	bh=veoPP5dnbAv8MxONszvuvZHFUMkbHElyR/BNXSyEu8o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m2IJzmGZgPtCO5Pu3fYhDjJPWL5u2Z9fmtY9g3CLTO7G0H6nkXTI/4P5E0bGJQW34NKgbHmfcuTSbHonjvvYeY6Z+3iTcUzKqo2TBePhrmsrtnh0AXlpAzx/sxMCON3GEtyYnDwB20ne3P/fW80HrkKjorEHJIb4JE2hOKGqgtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OZcUhq/2; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HG4xr6002600
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:52:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	4IbT5DS26BtuSkJfII8scnwrgyRvqZSh5tNO3g4y6GQ=; b=OZcUhq/2zjmSV0Aq
+	zFJdyJ+qQ/9OZvBcJkQ3RYUVunX0DRmOt64Isav4NshxlDJxCclUY1qVkMULr8sa
+	vwSm7DgOaXLxBn6tY++hVoQjhajzXL60dKXM9rvr3gVvGkoR7zjO5U3zapWnQ22x
+	pljHegLHXvIDnn/pwVG19MKXGGiJMRA8JT5QM93FjN7cLyNve7ntSSEgDqpah1Vl
+	NEgY88slXfIDzVovLeiCwrpDGE3F4DHpXSW8HBlGQEAI2ypUMlKqEgBaJwkE5tVP
+	49K/+wdmC/NH52NRLxCtVFFoJS/RE/xi1FGALftt0xXGjZtcbuAEriEGTu1IMgqo
+	OF+McA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a5xypnrf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:52:32 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4609b352aa9so2234291cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 15:52:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729204595; x=1729809395;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1729205551; x=1729810351;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cwAXFmWCXX0r1pv8K+QO23GJE7b+Aos8jpne2JMdjEc=;
-        b=EV59XpVgBv71clrfEih+JFuYYg520PzD+EzsCGA2dY4Jyj1ILnuzaRYpcUJPY+JmEq
-         P7GUkEECyKeJQ/QtGVYoz5iiiLk7ZNeD4hea9Iw7UcK5in4iYQexTVZ4wiJJrwQnDf9c
-         VPi7a0et3hKkG3e5ZizNkcifB6AVuEEbt0TXtimWk2bOhZk7DVT+P8wp9h9kESJ3SS+z
-         NxL4fOlYVne7T6FFwzWJ85l4pAxbQW+BUp7CGKCqujCq8ursjjxELP9H7/DjlBbYSDRo
-         9Jd8bHA8oPe4m6Qm06E8C5ReUlJBrIKzwB9aW5t9tFN7Q7aONFGzTkg4xA+n2FqSl+3h
-         8rOg==
-X-Forwarded-Encrypted: i=1; AJvYcCUB8EpP48IzsVeuPi4xV2z/r8FN9StDA1zlRYDCW428jm0VQnWWvR6BPNvCpam27xhcQOPrvZa7RungZLL5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/7u9lBzKtWfKz48Tm9m+GtF2gV1TACZosCuxvrVVwO+D9i221
-	ing+p7tirmw8yAObL0rma4/nQZXpzloAmFk7cVOA6OFpe4Ya54vlDRrSI3FCK5I=
-X-Google-Smtp-Source: AGHT+IF1I4kSsNnrKhsbvznyz4HHMXNbr14OcwbceyeuR4/kwFXejHD9xQxDdafw6ngrjvMnsFbQAQ==
-X-Received: by 2002:a05:6512:3b2a:b0:539:da76:4832 with SMTP id 2adb3069b0e04-53a15443901mr211178e87.37.1729204594652;
-        Thu, 17 Oct 2024 15:36:34 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a15211c32sm46086e87.273.2024.10.17.15.36.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2024 15:36:32 -0700 (PDT)
-Date: Fri, 18 Oct 2024 01:36:31 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Doug Anderson <dianders@chromium.org>
-Cc: Jean Delvare <jdelvare@suse.de>, dri-devel@lists.freedesktop.org, 
-	LKML <linux-kernel@vger.kernel.org>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>, 
-	YueHaibing <yuehaibing@huawei.com>, Rob Clark <robdclark@gmail.com>, 
-	Abhinav Kumar <quic_abhinavk@quicinc.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
-	freedreno <freedreno@lists.freedesktop.org>
-Subject: Re: [PATCH v3] drm/display: Drop obsolete dependency on COMPILE_TEST
-Message-ID: <zcwax3drscm2btazw3xc3i2lck62vzolg47cmsggkv4da23itw@w527axovqksz>
-References: <20241015134606.5b87093e@endymion.delvare>
- <CAD=FV=WhVWswn28hbxNDLDhMeiZOpsWzsx8OkORniOxWVx_4Gg@mail.gmail.com>
+        bh=4IbT5DS26BtuSkJfII8scnwrgyRvqZSh5tNO3g4y6GQ=;
+        b=eLhq1upkk1FtzkkhW7wgCv46VWQ9fY7HiOPSmAkTBwE5aaHlqQyUmdyvgplbXDT2ov
+         tNjGsfI3z8zaeKHcQhduFuElDl3ERNxtwSed8mCxLXZznquwqOx/A/+HksUemEn/R49h
+         jd2PlDjb4FJQgt+U5QaFMABRF2QW4okRZPbDL4Hl0dG5NlOAsdUTJjXdLLASQevIbMTh
+         1JO4iQ7H11xky2lQWMZwGYxtvAkfC4Goa+2QjEWyKddqmKjuYGPu8wE/3urkoFc8fYTh
+         8Rv334467trf0ML15pgH5iWQckILMaa6AASFTJjveGb2t7hpHsoC8aXdYkkbX758lZLE
+         HinA==
+X-Gm-Message-State: AOJu0YwrWndjs8SzmWwUBez0fp38kGFL1oajP/n2v38rJTE6QDY52lb+
+	0gBn7VU9eCICAnVFy5EqP+AlSSErEtalNF0r4AhTi4H8V5KgmTVwONxv0x/sbJMcPFgPNErFEvx
+	OMObUNsVZFhZnjClKPJYwc/1jVEwDwveiXGgzwFCsisrx4WHSZj3mm9jXsdJnhHXW
+X-Received: by 2002:a05:622a:1aa5:b0:460:3ff6:a0c7 with SMTP id d75a77b69052e-460aedef718mr2353161cf.14.1729205551196;
+        Thu, 17 Oct 2024 15:52:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmMsSKLph0w6Z2CuxpVGUO5OV6eMEH2AOQuSkJYuGrScz4s8n3lw5vOvk48WKsAeN9J3f1ZQ==
+X-Received: by 2002:a05:622a:1aa5:b0:460:3ff6:a0c7 with SMTP id d75a77b69052e-460aedef718mr2352981cf.14.1729205550697;
+        Thu, 17 Oct 2024 15:52:30 -0700 (PDT)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68ae9b5esm20276966b.88.2024.10.17.15.52.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Oct 2024 15:52:28 -0700 (PDT)
+Message-ID: <f9191c4d-a41b-463b-959d-14152cce080e@oss.qualcomm.com>
+Date: Fri, 18 Oct 2024 00:52:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=WhVWswn28hbxNDLDhMeiZOpsWzsx8OkORniOxWVx_4Gg@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: sa8775p: Add support to scale
+ DDR/L3
+To: Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+References: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-0-074e0fb80b33@quicinc.com>
+ <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-1-074e0fb80b33@quicinc.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-1-074e0fb80b33@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: A_mGFcK-HSlI87Ro4HJHOh_ujJpPI-S6
+X-Proofpoint-ORIG-GUID: A_mGFcK-HSlI87Ro4HJHOh_ujJpPI-S6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 lowpriorityscore=0 mlxscore=0 bulkscore=0 malwarescore=0
+ suspectscore=0 priorityscore=1501 phishscore=0 clxscore=1015 adultscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170153
 
-On Tue, Oct 15, 2024 at 09:06:04AM -0700, Doug Anderson wrote:
-> Hi,
+On 17.10.2024 11:28 AM, Jagadeesh Kona wrote:
+> Add support to scale DDR and L3 based on CPU frequencies
+> on SA8775P platform.
 > 
-> On Tue, Oct 15, 2024 at 4:46 AM Jean Delvare <jdelvare@suse.de> wrote:
-> >
-> > Since commit 0166dc11be91 ("of: make CONFIG_OF user selectable"), it
-> > is possible to test-build any driver which depends on OF on any
-> > architecture by explicitly selecting OF. Therefore depending on
-> > COMPILE_TEST as an alternative is no longer needed.
-> >
-> > To avoid reintroducing the randconfig bug originally fixed by commit
-> > 876271118aa4 ("drm/display: Fix build error without CONFIG_OF"),
-> > DRM_MSM which selects DRM_DISPLAY_DP_HELPER must explicitly depend
-> > on OF. This is consistent with what all other DRM drivers are doing.
-> >
-> > Signed-off-by: Jean Delvare <jdelvare@suse.de>
-> > Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-> > Cc: David Airlie <airlied@gmail.com>
-> > Cc: Daniel Vetter <daniel@ffwll.ch>
-> > ---
-> > For regular builds, this is a no-op, as OF is always enabled on
-> > ARCH_QCOM and SOC_IMX5. So this change only affects test builds. As
-> > explained before, allowing test builds only when OF is enabled
-> > improves the quality of these test builds, as the result is then
-> > closer to how the code is built on its intended targets.
-> >
-> > Changes in v3:
-> > * Rebase on top of kernel v6.11.
-> > Changes in v2:
-> > * Let DRM_MSM depend on OF so that random test builds won't break.
-> >
-> >  drivers/gpu/drm/display/Kconfig |    2 +-
-> >  drivers/gpu/drm/msm/Kconfig     |    1 +
-> >  2 files changed, 2 insertions(+), 1 deletion(-)
-> >
-> > --- linux-6.11.orig/drivers/gpu/drm/display/Kconfig
-> > +++ linux-6.11/drivers/gpu/drm/display/Kconfig
-> > @@ -3,7 +3,7 @@
-> >  config DRM_DISPLAY_DP_AUX_BUS
-> >         tristate
-> >         depends on DRM
-> > -       depends on OF || COMPILE_TEST
-> > +       depends on OF
-> >
-> >  config DRM_DISPLAY_HELPER
-> >         tristate
-> > --- linux-6.11.orig/drivers/gpu/drm/msm/Kconfig
-> > +++ linux-6.11/drivers/gpu/drm/msm/Kconfig
-> > @@ -6,6 +6,7 @@ config DRM_MSM
-> >         depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
-> >         depends on COMMON_CLK
-> >         depends on IOMMU_SUPPORT
-> > +       depends on OF
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 33 +++++++++++++++++++++++++++++++++
+>  1 file changed, 33 insertions(+)
 > 
-> Perhaps nobody landed this because you're missing the msm maintainers
-> as specified by `./scripts/get_maintainer.pl -f
-> drivers/gpu/drm/msm/Kconfig` ? I've added them here. It seems like
-> we'd at least need an Ack by those guys since this modified the
-> msm/Kconfig...
-> 
-> FWIW I haven't spent massive time studying this, but what you have
-> here looks reasonable. I'm happy at least with this from a DP AUX bus
-> perspective:
-> 
-> Acked-by: Douglas Anderson <dianders@chromium.org>
-> 
-> Presumably landing this via drm-misc makes the most sense after MSM
-> guys give it an Ack.
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> index 06bf2ba556b89b643da901857a9aa7cdc7ba90cc..d8b90bd4b1f05604185f015929a1f296799ad6a4 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
+> @@ -4,6 +4,7 @@
+>   */
+>  
+>  #include <dt-bindings/interconnect/qcom,icc.h>
+> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+>  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
+> @@ -47,6 +48,10 @@ CPU0: cpu@0 {
+>  			next-level-cache = <&L2_0>;
+>  			capacity-dmips-mhz = <1024>;
+>  			dynamic-power-coefficient = <100>;
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+> +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
 
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Please align the '&'s and squash with patch 2. This one doesn't cause
+much difference on its own, which makes the commit message misleading
 
--- 
-With best wishes
-Dmitry
+Konrad
 
