@@ -1,55 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-34671-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D94B39A17D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 03:23:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 015F29A17C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 03:22:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98E5128781F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 01:23:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C52E1F267D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 01:22:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3419417BEAE;
-	Thu, 17 Oct 2024 01:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7401913A40D;
+	Thu, 17 Oct 2024 01:21:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="en4zAF7Z"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A+FiuZ/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084C72D057;
-	Thu, 17 Oct 2024 01:21:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE2039FE5;
+	Thu, 17 Oct 2024 01:21:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729128103; cv=none; b=bmpbjGd1Kq2tGY/Ir9Untd7DlKtunKqgd3vkA+85qbW6F3VTIggkzyGjeg532hBW7aAOkJZShXm7DJiBd+DSyaO/JqIIfVoDRAPbNbSo7JC16B2Qvhh0ZgJpUffoERXZ3/AnlaIWMbKbDFTgqTBMYf37P8KFXQTlO1Qy3f7++iU=
+	t=1729128100; cv=none; b=iFV3zOvhN70cnOcDgg9iPgEsoJge398Xc/MlukaMkOVWfCo3wy9DO859OoRoyen5WnueL5F49BjfFnTHScmG18mf/XrnKDdqDp5mKfYBVFnsziI3Oy+sjtRsVAxZXE67iSDus6xmOhOrwMP48v6b6s/6vzvcXfJGCTPybf41JYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729128103; c=relaxed/simple;
-	bh=zAT/1RZLakARtRskNvuwDKkLFwptSbuWfYGGQwQuqyA=;
+	s=arc-20240116; t=1729128100; c=relaxed/simple;
+	bh=9g6Kv3rWpGwczbe2qiT2dz+8nUwdhuec/I9AcQyp83o=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=UerDT9ORW80sGOr1vHDcwm1y3ToMteSZRau9MBQU9tEO79FhDbow7gRUOJo6WFDEm/L8BRwR2bNUhec5DVeD2GymeJIAu5qDmThghL5bpjyo9MTrpePnc3JqbrG36ud2NIYIDyQ2EETKG99ygWW/8V8WNOb0XJKeyDrmtAf8HTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=en4zAF7Z; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:CC; b=VRpIGaf2p+RvMDtT8e4LTjf0tTJlQPZpqbOY+zRI5mB4OGdabJAxOzKBelLOVu2X1y6AC9n1usFF+iT5ulMt+djWdFi+OR+9dJgPqM9aTxTNTXBdxVAHBEPr3FLK7BnMVl7HYkGDq9/guz8U198mYsUFxC86NFKRcCq8qi2JMO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A+FiuZ/q; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GF46si031206;
-	Thu, 17 Oct 2024 01:21:22 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GH5pHD020125;
+	Thu, 17 Oct 2024 01:21:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1l4YKxihYjcgP2zuhNHbdWANBSrv9bRzVOhCeLdNKU8=; b=en4zAF7Z2yiThizx
-	Yy7gEg1A9bFIGdKwpzNOYsad44HpilWyYWzekBlkYeniUmma65O9YH6Mr3/z3BEu
-	5HbcF3JE5u/X9nqmiuO44Rjg3vBVV/+3AJDeT0O8iry7+3tU3PRnvetottcrqQFl
-	QhX2pX0OG4Ebl1K45FODhw666Ji93iReLC6cbmZxL8U7IE2GvaUny3xjgDNuVte7
-	n8u34URj1QhC1/0x9FyeJIC+sBTGk0BINoH9l8//Hduk+GUNEZmcRq28S4KW30qu
-	cjjPl5DGR/Gg/G6MOKoBWmzTZJ4rJKLNUMu9KgTVcyfaftIKBlJ20bAwAvV1vbi0
-	BRssxg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8nq2x89-1
+	xW9rgZl1Nd5DMYm6zJybcagWuSozmWV8oX2+9GhDWQk=; b=A+FiuZ/q1I4C5j7K
+	WXpdbpdiga9R/yfu1clGlQfnlVtVi1d3iFqoY5wZnwguDOtjXTuMWqlDDtq7ipkO
+	f6y9hC0hdUZdzFuF87u4TM02WUgXzPSzypICawyGWPJOUFyQPebebv3+au3gWAra
+	t9ik68DeHsRPYMsTbL8ENk7vIQ42JAhVC+fuQbF4HT0WjDw7YNKN7yFDCB38PGBm
+	y1lZqOGvf0EoXe4sRmCO5mW6sTzTg1V7aDF6gUuVbbFYhn4iF/kP6TXUw5XfmM3A
+	8YrOg7SG85qJGlgDRnrv3IH5a/Ilhz3t32X7/e4k1u/5CAiZLbZLT3W3xYXlagbe
+	AsETNw==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 429m0feht0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Oct 2024 01:21:21 +0000 (GMT)
+	Thu, 17 Oct 2024 01:21:22 +0000 (GMT)
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49H1LLKJ030738
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49H1LLOv001473
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
 	Thu, 17 Oct 2024 01:21:21 GMT
 Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
@@ -57,9 +57,9 @@ Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.2.1544.9; Wed, 16 Oct 2024 18:21:21 -0700
 From: Jessica Zhang <quic_jesszhan@quicinc.com>
-Date: Wed, 16 Oct 2024 18:21:25 -0700
-Subject: [PATCH v3 19/23] drm/msm/dpu: Adjust writeback phys encoder setup
- for CWB
+Date: Wed, 16 Oct 2024 18:21:26 -0700
+Subject: [PATCH v3 20/23] drm/msm/dpu: Start frame done timer after encoder
+ kickoff
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,7 +68,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241016-concurrent-wb-v3-19-a33cf9b93835@quicinc.com>
+Message-ID: <20241016-concurrent-wb-v3-20-a33cf9b93835@quicinc.com>
 References: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
 In-Reply-To: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
 To: Rob Clark <robdclark@gmail.com>,
@@ -92,87 +92,126 @@ CC: <quic_ebharadw@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
         "Jessica
  Zhang" <quic_jesszhan@quicinc.com>
 X-Mailer: b4 0.15-dev-2a633
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1729128076; l=2614;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1729128076; l=3987;
  i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=zAT/1RZLakARtRskNvuwDKkLFwptSbuWfYGGQwQuqyA=;
- b=cT4gqkiTaWeh+qDk0zWGklnQ8H/GczRUrQU/nhw5BkXpdB9l7I07bBa1hco37bK0S7qYh0RnJ
- V+mdXZH3t05AsQfbLiLKtKgNPNHfRC5SEDV3/2iOVIUdqQLvkuCzb5R
+ bh=9g6Kv3rWpGwczbe2qiT2dz+8nUwdhuec/I9AcQyp83o=;
+ b=ID7SKfc+CiSeT7XJj202fRV8bBDoJJH+WdvIxHFEO5y5m36MUbo/Tm3Y2OYadl11hr57c1wwk
+ sFr5p4rhXJ6Dq2mgglV9mGtDJfiyRWiibXInC0WxeNixNCgT7pa7XIE
 X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
  pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: kEJjTFyFvw7Knxn73Gm2SBEBu8XU66E3
-X-Proofpoint-GUID: kEJjTFyFvw7Knxn73Gm2SBEBu8XU66E3
+X-Proofpoint-GUID: yz1YUOtec0mZ9lMEhYsxhopZBPsAVpan
+X-Proofpoint-ORIG-GUID: yz1YUOtec0mZ9lMEhYsxhopZBPsAVpan
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 impostorscore=0 mlxlogscore=999 priorityscore=1501
- suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 clxscore=1015
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 adultscore=0 clxscore=1015 phishscore=0
+ spamscore=0 impostorscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2409260000 definitions=main-2410170008
 
-Adjust QoS remapper, OT limit, and CDP parameters to account for
-concurrent writeback
+Starting the frame done timer before the encoder is finished kicking off
+can lead to unnecessary frame done timeouts when the device is
+experiencing heavy load (ex. when debug logs are enabled).
+
+Thus, create a separate API for starting the encoder frame done timer and
+call it after the encoder kickoff is finished
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    |  4 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 25 ++++++++++++++++++-------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  4 +++-
+ 3 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index f8eca47432962d5916737fa1f0f4ea39970a9c4a..ec69005195f97359fe56678c59adbe25a5c6b787 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -68,7 +68,7 @@ static void dpu_encoder_phys_wb_set_ot_limit(
- 	ot_params.num = hw_wb->idx - WB_0;
- 	ot_params.width = phys_enc->cached_mode.hdisplay;
- 	ot_params.height = phys_enc->cached_mode.vdisplay;
--	ot_params.is_wfd = true;
-+	ot_params.is_wfd = !dpu_encoder_helper_get_cwb_mask(phys_enc);
- 	ot_params.frame_rate = drm_mode_vrefresh(&phys_enc->cached_mode);
- 	ot_params.vbif_idx = hw_wb->caps->vbif_idx;
- 	ot_params.rd = false;
-@@ -111,7 +111,7 @@ static void dpu_encoder_phys_wb_set_qos_remap(
- 	qos_params.vbif_idx = hw_wb->caps->vbif_idx;
- 	qos_params.xin_id = hw_wb->caps->xin_id;
- 	qos_params.num = hw_wb->idx - WB_0;
--	qos_params.is_rt = false;
-+	qos_params.is_rt = dpu_encoder_helper_get_cwb_mask(phys_enc);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index b156175c81898d5c0b5dc4692bf44fa74dffa574..22d135c8c8be498533b6730fbd0077628b846989 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -970,8 +970,10 @@ void dpu_crtc_commit_kickoff(struct drm_crtc *crtc)
  
- 	DPU_DEBUG("[qos_remap] wb:%d vbif:%d xin:%d is_rt:%d\n",
- 			qos_params.num,
-@@ -174,6 +174,7 @@ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
- 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
- 	struct dpu_hw_wb *hw_wb;
- 	struct dpu_hw_wb_cfg *wb_cfg;
-+	u32 cdp_usage;
+ 	dpu_vbif_clear_errors(dpu_kms);
  
- 	if (!phys_enc || !phys_enc->dpu_kms || !phys_enc->dpu_kms->catalog) {
- 		DPU_ERROR("invalid encoder\n");
-@@ -182,6 +183,10 @@ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
+-	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask)
++	drm_for_each_encoder_mask(encoder, crtc->dev, crtc->state->encoder_mask) {
+ 		dpu_encoder_kickoff(encoder);
++		dpu_encoder_start_frame_done_timer(encoder);
++	}
  
- 	hw_wb = phys_enc->hw_wb;
- 	wb_cfg = &wb_enc->wb_cfg;
-+	if (dpu_encoder_helper_get_cwb_mask(phys_enc))
-+		cdp_usage = DPU_PERF_CDP_USAGE_RT;
-+	else
-+		cdp_usage = DPU_PERF_CDP_USAGE_NRT;
+ 	reinit_completion(&dpu_crtc->frame_done_comp);
  
- 	wb_cfg->intf_mode = phys_enc->intf_mode;
- 	wb_cfg->roi.x1 = 0;
-@@ -199,7 +204,7 @@ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
- 		const struct dpu_perf_cfg *perf = phys_enc->dpu_kms->catalog->perf;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 7d2ebbb4f20d3c4ca588ff227e398387887b22f8..7e00fabe1327d753c00327870dfdbab4eb587754 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -1941,18 +1941,16 @@ bool dpu_encoder_is_valid_for_commit(struct drm_encoder *drm_enc)
+ 	return true;
+ }
  
- 		hw_wb->ops.setup_cdp(hw_wb, wb_cfg->dest.format,
--				     perf->cdp_cfg[DPU_PERF_CDP_USAGE_NRT].wr_enable);
-+				     perf->cdp_cfg[cdp_usage].wr_enable);
- 	}
+-void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
++/**
++ * dpu_encoder_start_frame_done_timer - Start the encoder frame done timer
++ * @drm_enc: Pointer to drm encoder structure
++ */
++void dpu_encoder_start_frame_done_timer(struct drm_encoder *drm_enc)
+ {
+ 	struct dpu_encoder_virt *dpu_enc;
+-	struct dpu_encoder_phys *phys;
+ 	unsigned long timeout_ms;
+-	unsigned int i;
  
- 	if (hw_wb->ops.setup_outaddress)
+-	DPU_ATRACE_BEGIN("encoder_kickoff");
+ 	dpu_enc = to_dpu_encoder_virt(drm_enc);
+-
+-	trace_dpu_enc_kickoff(DRMID(drm_enc));
+-
+ 	timeout_ms = DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES * 1000 /
+ 			drm_mode_vrefresh(&drm_enc->crtc->state->adjusted_mode);
+ 
+@@ -1960,6 +1958,19 @@ void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
+ 	mod_timer(&dpu_enc->frame_done_timer,
+ 			jiffies + msecs_to_jiffies(timeout_ms));
+ 
++}
++
++void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
++{
++	struct dpu_encoder_virt *dpu_enc;
++	struct dpu_encoder_phys *phys;
++	unsigned int i;
++
++	DPU_ATRACE_BEGIN("encoder_kickoff");
++	dpu_enc = to_dpu_encoder_virt(drm_enc);
++
++	trace_dpu_enc_kickoff(DRMID(drm_enc));
++
+ 	/* All phys encs are ready to go, trigger the kickoff */
+ 	_dpu_encoder_kickoff_phys(dpu_enc);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+index 0d27e50384f049e21d4b5b5258d77d3ec7976c13..deaa0463b289fd12eaa0bb4179c58d04425007a6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  * Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+  * Copyright (C) 2013 Red Hat
+  * Author: Rob Clark <robdclark@gmail.com>
+@@ -210,4 +210,6 @@ void dpu_encoder_cleanup_wb_job(struct drm_encoder *drm_enc,
+  */
+ bool dpu_encoder_is_valid_for_commit(struct drm_encoder *drm_enc);
+ 
++void dpu_encoder_start_frame_done_timer(struct drm_encoder *drm_enc);
++
+ #endif /* __DPU_ENCODER_H__ */
 
 -- 
 2.34.1
