@@ -1,160 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-34693-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34694-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66A2C9A1A16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 07:19:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48AA49A1A51
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 08:00:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 155BC1F26CD0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 05:19:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7A5341C22C95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 06:00:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F8507580C;
-	Thu, 17 Oct 2024 05:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0F8B1422A8;
+	Thu, 17 Oct 2024 06:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="fsGcO1wy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hL74wgQT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6E421E3C1;
-	Thu, 17 Oct 2024 05:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD23417580;
+	Thu, 17 Oct 2024 06:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729142341; cv=none; b=BRLE3TdlzK8H/GOQso02rfh0lgDzZOjGkpLco3vyezx2WTVnf4cMnEfm9Fz2lwMFztJbtwfGDB8Br426ku4W4yyj+ZjkEmOLSJ5X4v0l0QgW3jckQ7XxPT8UiZQOrDnylbjtIUcVBxF88/NqBn9wcGLQI7BkcuVcc4rjEOVrfVE=
+	t=1729144838; cv=none; b=Rel9g0zgrkAxkCZFkToaY0QgXPf4dmrUM1RpW6MeACnmQoaEPuU4l9vfDxp+LR0TzTLpC9jf49oj26lsp+SSl1lYm0J05HnoOVK7IMiQrXKlGUD8aJVgozBT8Ra0AaEk5xeTOKkHOJkg82W2BflWIyhd84zb2VeBBNYvHcJMIwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729142341; c=relaxed/simple;
-	bh=TuQRiqF9k/AH7Q8hFTYN4orBdMYxKFCqWIPeB9w8pSs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=E5SKMbQGaDtQWOkvMYpfyiMhQNDqbY4FRBpjSAHYvg+b6GQFerYTChQ4h1tYRAI4aj4ehE14ty8e7WE15nkQAEQD2PROnUlvWBGV0IvHBOZa7eIPeXIw7zgrfmbXI/IpW2bCCsLBbrQ7soj+LAvs23Ar0OIz10JVd+r7pBqbxuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=fsGcO1wy; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49GGhivx002349;
-	Thu, 17 Oct 2024 05:18:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3UU2Q8AxXEd/LLE/ZWfsYFcgd4DEBPjdeTHrnLciEY4=; b=fsGcO1wyaLUr0rcA
-	n3qL15vfocS7sec2iU2EwbX0T9BPLC2yvJnbZeN7XIdQpPGjSci3CClhhuKlbDIx
-	dNn9w1/WMclmU6GB2dDTIi7CcCJ8ECIloIgCXndScbIVxy9SEQN8byCWjcx826f6
-	Qu7iIfoANFuP1yJDsTnbZziwI40+M4xDEXzWfAyoR+ZHU3qAx3YxLwjyn3k2xVPa
-	vvtgdWCOqPtnEopbrIkdDzJgHCZQOvCj77g/U6prQdf/J3bi3E7CnNQ07rlwWVve
-	uEprZtWPNiOWOC6SPHFo/ozmxwTFbBrIUYOE9VuXQDxSJNr64gUfy/N9Seb/6mbx
-	9btGdA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a5xykux4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Oct 2024 05:18:50 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49H5Ink5030081
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 17 Oct 2024 05:18:49 GMT
-Received: from [10.214.67.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 16 Oct
- 2024 22:18:46 -0700
-Message-ID: <7bf56716-886d-4e2c-9a90-e31b0bfa4a89@quicinc.com>
-Date: Thu, 17 Oct 2024 10:48:32 +0530
+	s=arc-20240116; t=1729144838; c=relaxed/simple;
+	bh=eH0roS1khsA70ziZR99hznP8FF+8FEjV5oNAOCAzT38=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GEwEiXgwgj+Px3cIVgOhkq9UztswIuVWEJtbH+vNFgZVVfmNwjDxGp7np6166XATUTsrvFOze6f4hZf5n5bKgO/r1wvedHqHH0lO687vUrKTcshwZr3PoYr16CSE0sSKYfqaU/iengjKDXaijztjyDpg9vpbxM1iujikxM0BxJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hL74wgQT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B2DC4CEC3;
+	Thu, 17 Oct 2024 06:00:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729144838;
+	bh=eH0roS1khsA70ziZR99hznP8FF+8FEjV5oNAOCAzT38=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hL74wgQTkQges5hIhvMoqJ4Qe3rtwJUNZ38d2EkO4dIZxeJpAmNH9C/gaQU4Uek7h
+	 kRxStacZuRKMSOTpND4iA4d7Lp3e7MNrgTi7kuJCyL+plSgt9P1d+grDkDXReRxjjA
+	 7kR9W1YgQQUwsfrFTV4c0NqK32p0WTgaeTm7IZxNgPT2dbm2Oe+o9LyELU+iUABQ7E
+	 9G7MBarw/OKmWLMyFe01YlDr915H1b4D6vCDyE8X0jQxCMQGmUB+Bdlc8VKYZ/3NM7
+	 GqmExqgcgNyuXclNSIgVRFC4hw7D9yrZ2fPxjmgagXK9INs+AJ0lzvLgZz8ULQZaC7
+	 jlcSjbxdsfBRg==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t1JYy-000000002SE-2l3r;
+	Thu, 17 Oct 2024 08:00:45 +0200
+Date: Thu, 17 Oct 2024 08:00:44 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] usb: typec: Add new driver for Parade PS8830
+ Type-C Retimer
+Message-ID: <ZxCoDHq871x_0Nbm@hovoldconsulting.com>
+References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
+ <Zw5i9dcSMOG4n3PW@hovoldconsulting.com>
+ <Zw5oOUeN/v+tz+SY@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: mailbox: qcom,cpucp-mbox: Add sc7280
- cpucp mailbox instance
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Rob Herring <robh@kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        "Jassi Brar" <jassisinghbrar@gmail.com>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>,
-        "Ramakrishna Gottimukkula"
-	<quic_rgottimu@quicinc.com>
-References: <20240924050941.1251485-1-quic_kshivnan@quicinc.com>
- <20240924050941.1251485-2-quic_kshivnan@quicinc.com>
- <20240924232526.GA563039-robh@kernel.org>
- <2d4e47fd-0aaf-4533-a96f-95ada853d9a0@quicinc.com>
- <kzlhhovfffvg227oxbpl3nv6q2lyn53pz2fyqis22brkd4bkkz@vqprudcdfunb>
-Content-Language: en-US
-From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-In-Reply-To: <kzlhhovfffvg227oxbpl3nv6q2lyn53pz2fyqis22brkd4bkkz@vqprudcdfunb>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AjP0Rs-BfMjWDqorJ5-ssnVIzvAZl_NY
-X-Proofpoint-ORIG-GUID: AjP0Rs-BfMjWDqorJ5-ssnVIzvAZl_NY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 mlxscore=0 bulkscore=0 malwarescore=0
- suspectscore=0 priorityscore=1501 phishscore=0 clxscore=1011 adultscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410170033
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Zw5oOUeN/v+tz+SY@linaro.org>
 
-Thanks Dmitry for reviewing the patch
+On Tue, Oct 15, 2024 at 04:03:53PM +0300, Abel Vesa wrote:
+> On 24-10-15 14:41:25, Johan Hovold wrote:
+> > On Fri, Oct 04, 2024 at 04:57:36PM +0300, Abel Vesa wrote:
+> > > The Parade PS8830 is a Type-C multi-protocol retimer that is controlled
+> > > via I2C. It provides altmode and orientation handling and usually sits
+> > > between the Type-C port and the PHY.
 
-On 10/6/2024 10:41 PM, Dmitry Baryshkov wrote:
-> On Thu, Oct 03, 2024 at 11:13:02AM GMT, Shivnandan Kumar wrote:
->> thanks Rob for reviewing this patch.
->>
->>
->> On 9/25/2024 4:55 AM, Rob Herring wrote:
->>> On Tue, Sep 24, 2024 at 10:39:39AM +0530, Shivnandan Kumar wrote:
->>>> sc7280 has a cpucp mailbox. Document them.
->>>
->>> And is different from the existing device how?
->>
->> It is different with respect to the register placement.
+> > > This retimer is a LTTPR (Link-Training Tunable PHY Repeater) which means
+> > > it can support link training from source to itself. This means that the
+> > > DP driver needs to be aware of the repeater presence and to handle
+> > > the link training accordingly. This is currently missing from msm dp
+> > > driver, but there is already effort going on to add it. Once done,
+> > > full external DP will be working on all X1E laptops that make use of
+> > > this retimer.
+> > 
+> > I was gonna ask you to include the devicetree changes that enables the
+> > retimers as part of this series (to facilitate review and testing), but
+> > perhaps you should indeed not post them again until LTTPR support is in
+> > place.
 > 
-> Register placement in the global map or the internal register structure?
+> I was thinking maybe we should not wait for LTTPR support as this series
+> brings orientation support as is. I still need to figure out how to
+> strip out the DP parts of it in such a way that orientation should still
+> be working but DP should not (until LTTPR is in).
 
-the register placement varies both internally and globally as well.
+Yeah, possible, or you can at least include the DT patches here but mark
+them as do-not-merge-yet or similar.
 
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > > Changes in v2:
+
+> > > - Fixed coldplug (on boot) orientation detection.
+> > 
+> > Coldplug orientation detection still does not work here with this series
+> > applied.
+> > 
+> > I'm not entirely sure this whether worked better with v1, but with v2
+> > my SuperSpeed ethernet device shows up as a HighSpeed device in one
+> > orientation. It is also not disconnected an re-enumerated as SS as is
+> > the case on the X13s (and possibly with v1):
+> > 
+> > 	usb 1-1: new high-speed USB device number 2 using xhci-hcd
 > 
->>
->> Thanks,
->> Shivnandan
->>
->>>
->>>>
->>>> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
->>>> ---
->>>>    .../devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml         | 5 +++--
->>>>    1 file changed, 3 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
->>>> index f7342d04beec..4a7ea072a3c1 100644
->>>> --- a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
->>>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
->>>> @@ -15,8 +15,9 @@ description:
->>>>
->>>>    properties:
->>>>      compatible:
->>>> -    items:
->>>> -      - const: qcom,x1e80100-cpucp-mbox
->>>> +    enum:
->>>> +      - qcom,x1e80100-cpucp-mbox
->>>> +      - qcom,sc7280-cpucp-mbox
->>>>
->>>>      reg:
->>>>        items:
->>>> --
->>>> 2.25.1
->>>>
-> 
+> For coldplug, this series does the right thing as it leaves the retimer
+> initialized if it was left enabled at boot. There is a second part
+> needed for the coldplug to work. That is the regulator-boot-on property
+> in retimer's vregs nodes. That will ensure that the regulator is not
+> disabled until retimer driver probes and will keep the retimer initialized
+> until USB device is enumerated.
+
+I can confirm that marking the regulators as having been left on by the
+bootloader so that they are not disabled temporarily during boot indeed
+fixes the coldplug issue here.
+
+That however makes me wonder whether something is missing in the driver
+so that it still relies on setup having been done by the boot firmware.
+
+Have you tried actually asserting reset during probe to verify that
+driver can configure the retimers itself without relying on the boot
+firmware?
+
+Johan
 
