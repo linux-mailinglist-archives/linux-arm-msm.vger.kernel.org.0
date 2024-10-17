@@ -1,107 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-34800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42B349A2BBD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 20:10:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07EB39A2BDB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 20:14:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E2C551F24A5A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 18:10:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 95E03B24155
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 18:12:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AEBA1E0082;
-	Thu, 17 Oct 2024 18:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E0271E008E;
+	Thu, 17 Oct 2024 18:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qQsMu+KV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o1CDtvXJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AE81DFE2A;
-	Thu, 17 Oct 2024 18:10:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CB4E1DF246
+	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 18:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729188623; cv=none; b=Bipa/q/IlLxy3Beg65MZpPsiV1jH1xT8mA0xEgd8CKy9E2NSnBNHtjHpmX5fLkSnMKE8kJ/aOjY2TPQXhsCs/KdIBgq7ytTF4rX9b1Iyntk0sZqvDYTTq2DlDn+PzRJmVpr7e6aj6Ky11djQhHHQlz1/krxblYAliudOgUo3QpY=
+	t=1729188722; cv=none; b=mIROp1CTLzNwUhnPknzdXkPr2FyQmE6Pph/y0+3PPYdhN84ZiUKIvM7ms9SF9YDdeBZcrQLFqyKN4hAjjw46e9SlnyXeqamJQioe+hF/e5nrjAwtI6W2hSDxyERB01JxWF40bYdKi0jjgYSu2G2S2Nw0eSECUldz/mpVoaEt+Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729188623; c=relaxed/simple;
-	bh=iLqK3c/ijAq+sASVCtVxwl8SDiJsJ2cV1PTrcAEshD8=;
-	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=rxWS3uXHhhVoo9r3/R6Q83qVn9hO+2qy9eJKNVC0aQydTC6xvS0q6vvbQ4cfp0YewNh/5ljcvBmTc2WDgX8MnKy0WOEWquIs0+vjJxCglPccQwsrqrB0yPewmYAaeQwL5xqnAfgy+FSMb8PFBxyClnSshYdt/YVKBgva9HoAo14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qQsMu+KV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0810C4CEC3;
-	Thu, 17 Oct 2024 18:10:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729188622;
-	bh=iLqK3c/ijAq+sASVCtVxwl8SDiJsJ2cV1PTrcAEshD8=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=qQsMu+KVXe5d7rUVJnyoSiv+Dvkn3CoGpAH/kCBSGjb2tHT702PgwbCvVa80LlkF3
-	 /RUGWgnECZmNUoHhmU5bsWNMVW/tjyxYdwgzJ+a1gPRuLDboTXFQV2MdXO4WWOcRZ6
-	 NlFST8OBk6SufociimAXG32PQv6T4aPDW/fr47bikUYiJ5UYJ4ovHM7jhbfp99yVCI
-	 7UW9UpjmJ7ftdhlyc1CVeOhSj0SH7UqY3BhCOMMzJNcJ30CBtAcv6OOBZhMxv0+U8G
-	 p/FUe9DIAXCgIGPClLqVS/DsKTESnSWlFSHjH1KHlescc3NfURqaF124TGRqu+ybXw
-	 V2Dl6SMnabA+w==
-Message-ID: <be8639d0add779bcac0314d3c433d01b.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	s=arc-20240116; t=1729188722; c=relaxed/simple;
+	bh=z9gullE2/djCQd7k5PGKfGuUrtvUKf8lsI3Xgek9AFs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=VuEzrQYY73zYSQGpnxv9QIbGM8H4z87NA+p5fWEZqhlCsAOvzWnzvHk8YhzmQkIZYhNDsKS8Ldn+c6ZyZtXpJC5/9ynUnTte1wftEXnKhxF7nDUXnnp4CBFP8r0HD3FPCOQcv1ixicfBswuG0Qwo6zbihl4YYl0IzCpWfnNuTSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o1CDtvXJ; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539fe02c386so2395515e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 11:11:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729188714; x=1729793514; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TZxiQQYnnLiYe1NRYLfa18e4fbcMTEYgNWx6js0FYHU=;
+        b=o1CDtvXJGzTGMDnruAs+abheYhVExHZd+snyzA8Owl3nsSaWVMAl0zSEu/wau6V4Y3
+         qkSAX7BSL9gHjcQSZb9r+SI+DOKtWjgEnXWRFW7CgcDOuv2F8oE7dUMIzKgqHtdNmKC+
+         I5j1o9jAsHxnwN1XkQsxZmLIc/FSXsqKejNZQlCQliKB4CG8M0GPRSbzMmTik64vnoOg
+         ldRr919Ume2g3y1V4IEM35SoFiKvuP6XvVZnsQmHPgnuhKvuPBgeWTMj2xF82TXzcvD8
+         nPUVdy70tQlAq8uvvEdWY/h1XtURKr6jkA4J74Hk+WBFYrCRmFKZBEQ5T/ly8X8eA8Dw
+         43Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729188714; x=1729793514;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TZxiQQYnnLiYe1NRYLfa18e4fbcMTEYgNWx6js0FYHU=;
+        b=Hew4oopf6BxH/pbZHQtYllJTcx4MSOYjqHFa3slu6nruZiUVDXWY0EnT+XyS07aZ+S
+         b3z7F1epL/h6Pm6SoFqiD0xCj6/Dctb8OPPzrFCYILGFqfgyCrWHoIxXZ864UML/6bTI
+         Fp0YnkTf6zbDlv7ir4UGdac4R4Z6f5sgHTYMPGnrPTwgTVi/Xg0HOUDHq+RhJVQZP9o6
+         8/3cAY0kH4LM3Jwrb4ZRhaxoCtia3YjGmOz8VL0avfru/7/bMMK7Q+rplYDE2GAJ/oBC
+         Nnecyw4dYMyujgGjptO00gxADCBHFsUJmYJRFwT4BmgFRWZeck2XRMF+uyG1eqvuua3M
+         gjzQ==
+X-Gm-Message-State: AOJu0YxyQV/O9tAOCXjaCWBlzYEcthfICDegCEB/3DRQ7EKnx1fswEyT
+	PyOHD8mhjp46cv4qDC4GNDNtoSOujjkbTNmt17mbfg5Hrm8adGgk4s2/4/W7yVWigRxbgCg5bvT
+	b0vA=
+X-Google-Smtp-Source: AGHT+IE5cnTqQ5nNqL9y5fKWUoLBqqEK62VLizium6/dxI7EPCeyNqDLop8VMZBt9ejWsGJejoilFA==
+X-Received: by 2002:a05:6512:2c0f:b0:539:e2cc:d37c with SMTP id 2adb3069b0e04-53a14ff6cddmr12725e87.3.1729188714046;
+        Thu, 17 Oct 2024 11:11:54 -0700 (PDT)
+Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-539fffb232fsm841113e87.109.2024.10.17.11.11.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2024 11:11:51 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Thu, 17 Oct 2024 21:11:49 +0300
+Subject: [PATCH] dt-bindings: dma: qcom,gpi: Add SAR2130P compatible
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20241017-sar2130p-clocks-v1-7-f75e740f0a8d@linaro.org>
-References: <20241017-sar2130p-clocks-v1-0-f75e740f0a8d@linaro.org> <20241017-sar2130p-clocks-v1-7-f75e740f0a8d@linaro.org>
-Subject: Re: [PATCH 07/14] clk: qcom: clk-branch: Add support for SREG branch ops
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Konrad Dybcio <konradybcio@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, Neil Armstrong <neil.armstrong@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>, Rob Herring <robh@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
-Date: Thu, 17 Oct 2024 11:10:20 -0700
-User-Agent: alot/0.10
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20241017-sar2130p-dma-v1-1-e6aa6789f116@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAGRTEWcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIxNDA0Nz3eLEIiNDY4MC3ZTcRN0kY0vDFENjIDawUAJqKShKTcusABsXHVt
+ bCwDDVe4EXgAAAA==
+X-Change-ID: 20241017-sar2130p-dma-b391d131d108
+To: Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1027;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=z9gullE2/djCQd7k5PGKfGuUrtvUKf8lsI3Xgek9AFs=;
+ b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnEVNlS6PCgdeyOaFQx3n6iIhMvdxOmsyJUyi/Q
+ UzIwVb++ZSJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxFTZQAKCRAU23LtvoBl
+ uGpWD/4k1swyZNeHRK7hgB70TpyATfXe1b/wlp8gNQ2MFbcIrH6+/IPk8cWQdMpqaHrr6mB+Jry
+ BwKAqikkOmKT8rvkl0xWEFyD8HI7vrbouF7hXcFCHxi+w2dqOCls6jdQqm0j+XhNIObhaxVg46g
+ JeBMVdMtya9WhCtLOapsfupqLB0PXcWijqiPX2dKtJlbDRSY2RMZD+wlgwxA/zuDS57amFVzY44
+ eATUu6FxPADBt3efcBvsqWJquia8ayWxETC0ybG4rjEI1p5S1Bu4JbehMDFhMzTZx71UOMEmK0u
+ SiWyW6CQt/p4w8F1TGIafHCXpkYlcvj7etxMslgewL3fBnEItXsiSfhaqcqZDpuybP5N/Vw6L0z
+ 5zV+e90q9OeNPtIk+wD2JbAYzRfwOX3KJ02Gnd01vStMlnEmoIXAe3HlXznqUSYoJuZFZkd5doC
+ xvtH1+Mpps/blQOyoBkNAR61wRw6azLYxSpY0cS0vZCFg/Ig7IBzFdLrm26vpMZ9xXW48PtcRBp
+ HvMI/gx0AMXsO51vE8dttlDkKwXCuQhKiI9BHKkdOifcTMoJ2kpvWKU/WDgkMUHtu7RqEdxKheP
+ aJNa/4IUo5SkPbG7vjCdY+Bbm5U93oVLoUsxUOsJfjWGp0riSm/MaYWwgTbTTIE4UvNNaOOcsMX
+ MS66c/OucR0fBVQ==
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-Quoting Dmitry Baryshkov (2024-10-17 09:56:57)
-> From: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
->=20
-> Add support for SREG branch ops. This is for the clocks which require
+Document compatible for GPI DMA controller on SAR2130P platform.
 
-What is SREG? Can you spell it out?
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-> additional register operations with the SREG register as a part of
-> enable / disable operations.
->=20
-> Signed-off-by: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-[...]
-> diff --git a/drivers/clk/qcom/clk-branch.h b/drivers/clk/qcom/clk-branch.h
-> index 47bf59a671c3c8516a57c283fce548a6e5f16619..149d04bae25d1a54999e0f938=
-c4fce175a7c3e42 100644
-> --- a/drivers/clk/qcom/clk-branch.h
-> +++ b/drivers/clk/qcom/clk-branch.h
-> @@ -24,8 +24,11 @@
->  struct clk_branch {
->         u32     hwcg_reg;
->         u32     halt_reg;
-> +       u32     sreg_enable_reg;
->         u8      hwcg_bit;
->         u8      halt_bit;
-> +       u32     sreg_core_ack_bit;
-> +       u32     sreg_periph_ack_bit;
+diff --git a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+index 4df4e61895d2129caf7f2ad9b426d78b60f9c32b..4ad56a409b9cace94a3a4c4ec94d3ad16232f5a1 100644
+--- a/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
++++ b/Documentation/devicetree/bindings/dma/qcom,gpi.yaml
+@@ -26,6 +26,7 @@ properties:
+           - enum:
+               - qcom,qcm2290-gpi-dma
+               - qcom,qdu1000-gpi-dma
++              - qcom,sar2130p-gpi-dma
+               - qcom,sc7280-gpi-dma
+               - qcom,sdx75-gpi-dma
+               - qcom,sm6115-gpi-dma
 
-Are these bits? Should be u8 then. Or are they a mask?
+---
+base-commit: 7df1e7189cecb6965ce672e820a5ec6cf499b65b
+change-id: 20241017-sar2130p-dma-b391d131d108
 
->         u8      halt_check;
+Best regards,
+-- 
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Instead of adding these new members can you wrap the struct in another
-struct? There are usually a lot of branches in the system and this
-bloats those structures when the members are never used.
-
-	struct clk_sreg_branch {
-		u32 sreg_enable_reg;
-		u32 sreg_core_ack_bit;
-		u32 sreg_periph_ack_bit;
-		struct clk_branch branch;
-	};
-
-But I'm not even sure that is needed vs. just putting a clk_regmap
-inside because the clk_ops don't seem to use any of these other members?
 
