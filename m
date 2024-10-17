@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-34699-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34700-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 901A39A1B4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 09:06:02 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66AB59A1B66
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 09:10:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B7DE1F23DB1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 07:06:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B67D1B23363
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 07:10:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 433911C1AB1;
-	Thu, 17 Oct 2024 07:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4E0E1C230E;
+	Thu, 17 Oct 2024 07:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SBiq9cTZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qqUZj5+2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1532D194A4B;
-	Thu, 17 Oct 2024 07:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8E4155A24;
+	Thu, 17 Oct 2024 07:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729148759; cv=none; b=oXC1yFLf31qyT+j4g2qVx2siHT86uifVpjMmq0BDR714u6ASeAQ4caURGwOxZIED4Mz/MsPSjiMC3eF5GNq+evA0OIDoNq+yTpKdAT7q/kzpiEg6d+hCopDmA0+ip1ov0n6I+uQQBrvc8kEFRcbjwcy82IofJtzc7MdLpsRMN0w=
+	t=1729149047; cv=none; b=nG+OxUrbhaj/F2VwcnuXnAVEpakeFs7bXLte3cdjLM/gzhObxHE1+6LRDFeuwVM9ceLXEssoZSXEWZQzpsxe4xDX9JJtolNipfBfHbej2CPXICpydUxCpvggh5VTFg3S4bI0UuvFaFVUCdkAea+4966llvAvCpc1yuOBkAaaj74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729148759; c=relaxed/simple;
-	bh=SgFpsbC6Tqy3VGi3P39l2FUvNyodARhjLejF5vHrNI8=;
+	s=arc-20240116; t=1729149047; c=relaxed/simple;
+	bh=szqZuOUBSNoFodxJ4PIlXC02tAIat2KqHOjusZ/IS1U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Te00oM8ytD+xntoTAoqKyDJGjD2dm64rhypmz3zhMokKSoeFkFc5aBroRs9fZxtkFcg+NUi1HntPGY2/QP2YrqWxX0aTOBJMConoKHlk5TBgVzxh7/gxHcgTnovofojGJOvT2fpvgU2K8ozClsR9QXjR6w6jceq77+6ozFaLpOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SBiq9cTZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DA9C4CEC3;
-	Thu, 17 Oct 2024 07:05:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=SM8sNn+ruj0VB4yu7Zw+Gp4j9ZG3iHratYBJUGtrkp3N/N3gctVdObSgE52kvLsblyivc3+q/GdgN4I7o87Pu5TYOQpY4Zya592Y/P9oPZ7YtPccQ3+gojwosKJ/6+kC3dRjbd/pYvmjpbpEYhF41PQ2e6vAT0WrCLwVv19k8Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qqUZj5+2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A09DDC4CEC5;
+	Thu, 17 Oct 2024 07:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729148758;
-	bh=SgFpsbC6Tqy3VGi3P39l2FUvNyodARhjLejF5vHrNI8=;
+	s=k20201202; t=1729149047;
+	bh=szqZuOUBSNoFodxJ4PIlXC02tAIat2KqHOjusZ/IS1U=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=SBiq9cTZ1A8xPrct3fK/+oI4NN2GEibr/B8kJCEZNOsPE8mD/1zlVSlShLx+DVEIw
-	 GYbNxYrE9eU/T2LkyLm0SkCQQQqA94df3vBxdCjmME5ZtHnaBqpnZcdNoSzVSF9qhk
-	 aQA2ouVIwt3URWtJxgM0kKAtNwRKPgfT7fz2AHGzh39E9h4AJObAc1z5Xl3uUgEOHl
-	 BQUOenlS/1/t77+I0Z92LxsCQKQUEqn/d9v1CRf6Lq9HE7tsvpQKAFvshMZXMra+iw
-	 mm7mZFzxC0Cw+TxHG3l/F7BB0DLG2JTx3YfcYBDgr9T8IaVUyBY9GMa1wqyXMQvKoG
-	 4D6/2m7xmGVRw==
-Message-ID: <9ac861ae-b0b1-4f7a-a002-7d2048132ef3@kernel.org>
-Date: Thu, 17 Oct 2024 09:05:50 +0200
+	b=qqUZj5+2IgXcByOugwIFfstUYe58eZNDbIdMvl4t0W8Wa49IYPVCrRimCEmlv0oyJ
+	 R7nM/+U5UYbej8nkoJl/9jQ+d3kPAHN/K/CMkqWHzAffcrExJfihXUasomOMmYGs4d
+	 vLpEMD3doesEG8LbEFxjfo1vs+tQH3lkgvDLoiwgcLdULb40xj1l0rZkTfoCzyfqFq
+	 ALTssMMxbRhqe3DjXClgPQ90q0kpQAEVdLrIRTqHGTgqJMHI2jW5XgqTCZwfmxabEP
+	 LOekFXQX2ii94stBnl/1apNHxgPf19oKx+CKTjewyD+PWThsHbzQVeRpdVajbHmyCN
+	 Mv/wIzit91xKQ==
+Message-ID: <658c19c7-9eeb-4329-aa96-a4a9b09d7117@kernel.org>
+Date: Thu, 17 Oct 2024 09:10:39 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,28 +50,25 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 3/3] arm64: dts: qcom: x1e80100: Add ACD levels for
- GPU
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v1 2/5] arm64: dts: qcom: Add support for configuring
+ channel TRE size
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
+ Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20241012-gpu-acd-v1-0-1e5e91aa95b6@quicinc.com>
- <20241012-gpu-acd-v1-3-1e5e91aa95b6@quicinc.com>
- <5axuqj4hetfkgg2f53ph4um24b7xfyumktreglxqyzfsdhy25e@deucq7vqxq5l>
- <20241015193540.mcpp2dvkmikruncj@hu-akhilpo-hyd.qualcomm.com>
- <921d3a39-d95c-4156-b376-44e8dc6a6467@kernel.org>
- <20241017061217.mmq27egyg5cdlubb@hu-akhilpo-hyd.qualcomm.com>
+ <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
+ Andi Shyti <andi.shyti@kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>,
+ =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+ cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+ dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linaro-mm-sig@lists.linaro.org, quic_msavaliy@quicinc.com,
+ quic_vtanuku@quicinc.com
+References: <20241015120750.21217-1-quic_jseerapu@quicinc.com>
+ <20241015120750.21217-3-quic_jseerapu@quicinc.com>
+ <78a1c5c8-53c8-4144-b311-c34b155ca27c@kernel.org>
+ <7e7ksit5ptjrcnct66v75mbxuabnzzloungockdal2dl2y6nn5@ge4mrsjmd746>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -117,52 +114,45 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
  7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
  5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
-In-Reply-To: <20241017061217.mmq27egyg5cdlubb@hu-akhilpo-hyd.qualcomm.com>
+In-Reply-To: <7e7ksit5ptjrcnct66v75mbxuabnzzloungockdal2dl2y6nn5@ge4mrsjmd746>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 17/10/2024 08:12, Akhil P Oommen wrote:
-> On Wed, Oct 16, 2024 at 09:50:04AM +0200, Krzysztof Kozlowski wrote:
->> On 15/10/2024 21:35, Akhil P Oommen wrote:
->>> On Mon, Oct 14, 2024 at 09:40:13AM +0200, Krzysztof Kozlowski wrote:
->>>> On Sat, Oct 12, 2024 at 01:59:30AM +0530, Akhil P Oommen wrote:
->>>>> Update GPU node to include acd level values.
->>>>>
->>>>> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
->>>>> ---
->>>>>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 ++++++++++-
->>>>>  1 file changed, 10 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>>>> index a36076e3c56b..e6c500480eb1 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
->>>>> @@ -3323,60 +3323,69 @@ zap-shader {
->>>>>  			};
->>>>>  
->>>>>  			gpu_opp_table: opp-table {
->>>>> -				compatible = "operating-points-v2";
->>>>> +				compatible = "operating-points-v2-adreno";
->>>>
->>>> This nicely breaks all existing users of this DTS. Sorry, no. We are way
->>>> past initial bringup/development. One year past.
+On 16/10/2024 16:35, Bjorn Andersson wrote:
+>>> @@ -1064,7 +1064,7 @@
+>>>  		};
+>>>  
+>>>  		gpi_dma0: dma-controller@900000 {
+>>> -			#dma-cells = <3>;
+>>> +			#dma-cells = <4>;
+>>>  			compatible = "qcom,sc7280-gpi-dma", "qcom,sm6350-gpi-dma";
+>>>  			reg = <0 0x00900000 0 0x60000>;
+>>>  			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
+>>> @@ -1114,8 +1114,8 @@
+>>>  							"qup-memory";
+>>>  				power-domains = <&rpmhpd SC7280_CX>;
+>>>  				required-opps = <&rpmhpd_opp_low_svs>;
+>>> -				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
+>>> -				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
+>>> +				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C 64>,
+>>> +				       <&gpi_dma0 1 0 QCOM_GPI_I2C 64>;
+>>
+>> So everywhere is 64, thus this is fixed. Deduce it from the compatible
+>>
 > 
-> How do I identify when devicetree is considered stable? An arbitrary
-> time period doesn't sound like a good idea. Is there a general consensus
-> on this?
+> If I understand correctly, it's a software tunable property, used to
+> balance how many TRE elements that should be preallocated.
 > 
-> X1E chipset is still considered under development at least till the end of this
-> year, right?
+> If so, it would not be a property of the hardware/compatible, but rather
+> a result of profiling and a balance between memory "waste" and
+> performance.
 
-Stable could be when people already get their consumer/final product
-with it. I got some weeks ago Lenovo T14s laptop and since yesterday
-working fine with Ubuntu:
-https://discourse.ubuntu.com/t/ubuntu-24-10-concept-snapdragon-x-elite/48800
+In such case I would prefer it being runtime-calculated by the driver,
+based on frequency or expected bandwidth.
 
-All chipsets are under development, even old SM8450, but we avoid
-breaking it while doing that.
-
-
+And in any case if this is about to stay, having here default values
+means all upstream users don't need it. What's not upstream, does not
+exist in such context. We don't add features which are not used by upstream.
 
 Best regards,
 Krzysztof
