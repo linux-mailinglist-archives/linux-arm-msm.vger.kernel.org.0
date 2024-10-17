@@ -1,143 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-34803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34804-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A4479A2BDC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 20:15:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A0A59A2BF7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 20:18:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC3701C21EF3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 18:15:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2A4282861CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 18:18:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 349C01E00B3;
-	Thu, 17 Oct 2024 18:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50FD61E04AD;
+	Thu, 17 Oct 2024 18:16:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bLaqBY24"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="IOhVHhZ4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BC91DFE31
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 18:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB6138DDB;
+	Thu, 17 Oct 2024 18:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729188856; cv=none; b=DzXAVHGzRjVz43Spb9PZcQH/d+tg3oUfQ3UhQvGQ5COgMkr3zfVhD3GHkTCypsW4ChuB3BJzkYrGnwhTdtMROxK2YABIwVfR4Gwku41G391EOKBS+SMSJSaq5uM24y6FeMwKnLobETTNZhY4JpgUCw92ykgAt2fWVlWxpLyoC9U=
+	t=1729188983; cv=none; b=YjJ5eBE4kt7qE7Gn9LbRLwKrLVHRHORDv6ZJDRLbeCHcB+dRVXc1fVL5hShRcndGY+m8/RJu3UJy8WaQ5AXp5B4paYx+MCpsRx42FkjGP1psO6RKkNw42dz9AqnmVwbgA/kF+gEH7tEhVXsJFynVNRVZgIESqRBKHMl1r5j9r5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729188856; c=relaxed/simple;
-	bh=Lgjp5XVgoGmDiK8kT6aQvjeU/v0P5XtPbWZlzVPG8zM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rdrHvHzvxRVf47XT/y+fPPrmOPCwfk4BfUl+igkKXunAkkma8e5YBGdElv4zru88D6GeQI/DuYD90n+CTc2+6XsnHV59spdwsXr5HZ2KoTReqJ+xZZiIqj1wNtcYZm3hzEMe6aykIDhNcO3hPRAMUTlnzVt6vat3UC5hZens/dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bLaqBY24; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-539ee1acb86so1680475e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 11:14:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729188848; x=1729793648; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rdNFD2cphGzL2BomZa1IYH9iZ0GkCDn9MRpnCMuLN6s=;
-        b=bLaqBY240zKYy9ylMQ8r1wtoBy9KFRSEc16MPCYYRWr038gZ6n3/xbyosYRKRlSgi1
-         9na5xiNCTn8hJvUfscIx03iv90dpJix/PMFJ52Yjk31288tRZTRFmFHqby/Lo1sELxnA
-         zlSHw/oETvzltOUfzIZHB9AZVsQJQAaPFbuy9x6lqAheC62lC/RsReGrF23Rr04ivuBJ
-         PGUcTXZ9PIDpFXgGFJtQuK1O89DR7tgdQ/g2qKAwism0bsmm7Qsk9dYeBEdKRDyu9OO3
-         rWw6t3zbfc4HmLz1/1rgFCfRNYSgd4IvUIrQD+8guyuZSUNXrKa7WtGfsMHAlcCI2wol
-         SMlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729188848; x=1729793648;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rdNFD2cphGzL2BomZa1IYH9iZ0GkCDn9MRpnCMuLN6s=;
-        b=rfSsX0EtQLlLOBapKS9Qd6iDDrdK8CeJg2UZzSbY5y7LqJ7ZwvWvNShfEVAoe9UeeJ
-         izXyRTIlKcUn+XKMIj6/EsY8x6WW+2u4dnll8/XCV3d8R8Hvu2orHKnGGDK4S0UoLQcZ
-         bGmYh0mbYpo5WUnH0mT6lbxEqoZsobKoRTpDmY02Vwzlqx10wvcUZpPd6yWWZYtbIp+f
-         18FYPWVpDmi8EUTujGPnPxP6831ywuQb5Vfi7f3Wb/obJhuy+J4z15OT9PXvLnL1tbE6
-         b5R5cOn1Fm8QsToYmJBtBtJfk55R8w4oQfBK8fyQYP0yaVwd5vt5tfbOpXUkHcUUICSD
-         P66Q==
-X-Gm-Message-State: AOJu0Ywo5DXfLPW86CAYiV9wtRFyzEJVV8akcOPUJrPeuldDhkp41pFx
-	4hfl4xrpOa4MxmMqE485UtJ4i3F4PG7jZZg/qxJf15CeRfKahboFQaa4e7AJWoe0vLigjESCgzU
-	P5Ng=
-X-Google-Smtp-Source: AGHT+IGYlENtSdHVIknFWn3bTCeEZD1pDwTA8bOtxifsLfCGtoTomI2bqJvmi1dBUbkAoMM0KWAUnA==
-X-Received: by 2002:a05:6512:3d23:b0:536:a6c6:33f with SMTP id 2adb3069b0e04-539e54e82f9mr11694378e87.13.1729188848182;
-        Thu, 17 Oct 2024 11:14:08 -0700 (PDT)
-Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a00013a8bsm831733e87.258.2024.10.17.11.14.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Oct 2024 11:14:06 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 17 Oct 2024 21:14:03 +0300
-Subject: [PATCH] dt-bindings: spmi: qcom,x1e80100-spmi-pmic-arb: Add
- SAR2130P compatible
+	s=arc-20240116; t=1729188983; c=relaxed/simple;
+	bh=FGOGeKbhvA8/HTyvQrhvcBGk4hF8UoeLGIR/+MPfqzs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=qXChIIA8BAbKDR8J2kOr6DO0Hr9wli2QJ5tLmC1h3dSt+wCJoyzZUX2Zmx2BP1IXnUGttxqpOFlaTXSM82YyiKQtiBj94eGW6ma//dO8Xm8Txh7MX5bNZWRrE988YtOq7J51cVTXFcAvw+0mEAnWbCe/HOeRPDdNoTZbrOO1P5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=IOhVHhZ4; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HHEWHP000489;
+	Thu, 17 Oct 2024 18:16:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QeJRH/YAIkVBraIlzYlHPzq4ydysGr0w+AAJtV0hV1A=; b=IOhVHhZ4/NF4IlIB
+	63uqgnn46WPV2e++gO0jjl3mEohk20KBPIb64qLOyfR25DljsYVEzFtDOvdBnG65
+	syzudRQf4fOycHAozU3mxCy+hI5I1JoWuufGPqfSWgUPPy9QkmpRVjvDqF39uyym
+	kWVKcLzM0CyjBFoPIpEsIYWsoo8hdG8+6txk6vnHO29yaoZ/3e1CftaRFCYMkQUx
+	3/DURPhDJjrcy8RRAxfTMW+M2jo0YHboAtDfalUsBTKIZvjAXtOFAXacIcNY7N55
+	GjIy0h3dp3JixKHfVbA7Q/MNCVbLfCsb1LaMCqg4LJuPhNDGIW6SnmbTmqzSDHNm
+	Clh/gg==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8nq5n6j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Oct 2024 18:16:01 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49HIG0G9016271
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 17 Oct 2024 18:16:00 GMT
+Received: from [10.134.71.247] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Oct
+ 2024 11:15:59 -0700
+Message-ID: <5bdafadb-aeb6-432a-8269-a45dc3e1ec66@quicinc.com>
+Date: Thu, 17 Oct 2024 11:15:49 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/23] drm/msm/dpu: Add Concurrent Writeback Support
+ for DPU 10.x+
+To: Maxime Ripard <mripard@kernel.org>,
+        Jessica Zhang
+	<quic_jesszhan@quicinc.com>
+CC: Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten
+	<marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann
+	<tzimmermann@suse.de>,
+        Simona Vetter <simona@ffwll.ch>,
+        Simona Vetter
+	<simona.vetter@ffwll.ch>, <quic_ebharadw@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Rob Clark
+	<robdclark@chromium.org>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?=
+	<ville.syrjala@linux.intel.com>
+References: <20241016-concurrent-wb-v3-0-a33cf9b93835@quicinc.com>
+ <20241017-didactic-hornet-of-glory-14fcce@houat>
+Content-Language: en-US
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20241017-didactic-hornet-of-glory-14fcce@houat>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241017-sar2130p-spmi-v1-1-43ac741ee071@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAOpTEWcC/x3MMQqAMAxA0auUzAbaqCheRRyKTTWDWhoQQXp3i
- +Mb/n9BOQsrTOaFzLeoXGeFawysuz83RgnVQJY6Z92A6jO51ibUdAgGomGMfbQhtlCblDnK8//
- mpZQPhjamJV8AAAA=
-X-Change-ID: 20241017-sar2130p-spmi-d2278f5f0df3
-To: Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1224;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=Lgjp5XVgoGmDiK8kT6aQvjeU/v0P5XtPbWZlzVPG8zM=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnEVPs/kGw4xf876K46k103X3WCo5k3dW2/gjGc
- T1twNvwIUqJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxFT7AAKCRAU23LtvoBl
- uL83D/9BEgpzq3RGhDVMJ234o8gk1mfK593gaybjFkNHpNa2ypUpImgWY0NxtXySQfk26VVZS/O
- lhKvuxJ4UiAXBnyXP1u/Y/76gfTq4jXt4yVMNLBrGbe/LNBLkBvLXBuyNdTlYMcLvPXA4JYBpTv
- pxvwZrIXVdlOlHQpz6bcn7o7q4CvhT17CILoeeHu2ia1RLWpgXINQFnwcLU7XLqO37fnyt9JtWU
- RzXzECtBITz57S/PjB1VgswOHluaMciywdaoau9x6fM0vWOxZ7Us2t4GlmyRyMXLJHqbVwJacCE
- oLbnMvS5MJraKnj0yRTksa8kw+Chnq8dh/OJV23o9Fpdqx4n1FnXjYTEm+C4pwd7mdr35FHtUqN
- NpMojiMotcWJ0Nw84kxxmoR+q5BlvALDOZF4dNGIZO1QqSLraA9l0n7tYzz7OKgF4Aj3LnH3R6X
- XP3ltuUoAgCZ6Iw4m/VbnhY35RPRCxw6F9axxlGkFGsiEnxcHCXCe4X5qUgudB1QOuwkmitAr02
- 0u3uttF+Jo2uY4CiPhKH49tiMMjrkANw1PNk8zpLIzFh9MXVQgUU5Bq3OsymYAc9FDcvcov//ae
- i0W5k8zo0SxdaRGVAoZi7EuKc929GiqNALw95hPUvxXRluHWuqCddyFAoiHc7Z+G4Zh51MmmvKf
- fSTftX5n0l74Asg==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jZeQjWMgWm9VhWRINs84pGPOUsVJbByY
+X-Proofpoint-GUID: jZeQjWMgWm9VhWRINs84pGPOUsVJbByY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 impostorscore=0 mlxlogscore=962 priorityscore=1501
+ suspectscore=0 adultscore=0 spamscore=0 bulkscore=0 clxscore=1011
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170124
 
-SAR2130P has SPMI v7 arbiter. Although it has only a single bus
-configuration, use the new bindings for v7 platforms.
+Hi Maxime
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml       | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+On 10/17/2024 7:31 AM, Maxime Ripard wrote:
+> On Wed, Oct 16, 2024 at 06:21:06PM GMT, Jessica Zhang wrote:
+>> Changes in v3:
+>> - Dropped support for CWB on DP connectors for now
+>> - Dropped unnecessary PINGPONG array in *_setup_cwb()
+>> - Add a check to make sure CWB and CDM aren't supported simultaneously
+>>    (Dmitry)
+>> - Document cwb_enabled checks in dpu_crtc_get_topology() (Dmitry)
+>> - Moved implementation of drm_crtc_in_clone_mode() to drm_crtc.c (Jani)
+>> - Dropped duplicate error message for reserving CWB resources (Dmitry)
+>> - Added notes in framework changes about posting a separate series to
+>>    add proper KUnit tests (Maxime)
+> 
+> I mean, I asked for kunit tests, not for a note that is going to be
+> dropped when applying.
+> 
+> Maxime
 
-diff --git a/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml
-index a28b70fb330a3a9831a24c0c5f5ab3251c184df2..7c3cc20a80d6cf8fe7c4614032cc4df6d8b54973 100644
---- a/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml
-+++ b/Documentation/devicetree/bindings/spmi/qcom,x1e80100-spmi-pmic-arb.yaml
-@@ -19,7 +19,11 @@ description: |
- 
- properties:
-   compatible:
--    const: qcom,x1e80100-spmi-pmic-arb
-+    oneOf:
-+      - items:
-+          - const: qcom,sar2130p-spmi-pmic-arb
-+          - const: qcom,x1e80100-spmi-pmic-arb
-+      - const: qcom,x1e80100-spmi-pmic-arb
- 
-   reg:
-     items:
+The framework changes wont be applied without an ack from you or in 
+other words till we add the KUnit tests :)
 
----
-base-commit: 7df1e7189cecb6965ce672e820a5ec6cf499b65b
-change-id: 20241017-sar2130p-spmi-d2278f5f0df3
+The series was re-pushed to get acks on all other MSM changes and keep 
+this series ready for validation by other developers and interested 
+parties. That way only KUnit will be the pending item.
 
-Best regards,
--- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Based on cycles, one of us will add the KUnit and we can either link it 
+to this series or absorb it in this itself when its ready.
 
+Thanks
+
+Abhinav
 
