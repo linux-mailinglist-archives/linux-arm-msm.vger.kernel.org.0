@@ -1,87 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-34970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06E049A40BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 16:08:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90C239A40F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 16:19:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B2BDB1F24D11
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 14:08:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2E19C1F2463A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 14:19:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32C0E1DB352;
-	Fri, 18 Oct 2024 14:07:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ld7pIYdK"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE4A813C8F9;
+	Fri, 18 Oct 2024 14:19:00 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E293955887;
-	Fri, 18 Oct 2024 14:07:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C08A824A08;
+	Fri, 18 Oct 2024 14:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729260475; cv=none; b=lKaN+HgzLykv1uHzWjs9phLMtr4FjIKRKi0V9U8aiidp9hsaceWmbKTiiehvGdYa9KI/vuJt7zsOorbjS/VntNkpY8Cft5vWi9Ye5UlpvBywMNZG6z5msmlOqXbQCOy+akkvNmhypgxSB7qW8/HbDMeQYLQiq6Gc0klpWr/axPc=
+	t=1729261140; cv=none; b=c6IlQQOjLVMGUw+qQoUqCucUOejvEwf7lzLhtTwLpB93eznjgIA/3Lri709dcnlfeyLg6zh/50EaulzeYvDt26ace9sAhkOSwjEA3ueL11iF1GrMCdtxgRsKeBgJuaLVuUYQ1NZzunAbUgzPAZnO4inbZCnSCsSznA1LVY49DBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729260475; c=relaxed/simple;
-	bh=KoTOyaOYxqjWuJ0H2HvnvhPl7uAzpooAhPcSM0whM7o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nJ41bbXmjZdhTfbc3iNjSHqgGa4/qWSrbP8auKf67FPNMliaUiPajR3OcJeMqatUAiCQvgS1Kc102g72UuUzKFVXXja5jTzpJ0KkLiE5tVIeGLBotpH38AJnfbhzEn4ozwa8VW+TMkXjiivQUUWaufkyCynRTrcxcIHag+S4ImA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ld7pIYdK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7781FC4CEC3;
-	Fri, 18 Oct 2024 14:07:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729260474;
-	bh=KoTOyaOYxqjWuJ0H2HvnvhPl7uAzpooAhPcSM0whM7o=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ld7pIYdKMKPRjWV5dCBpYxSV70GUzeXMnVBpFMgbmX1x70ojqIf+w3zO3mTZvkTq2
-	 7M1vJPWC/ab+LLM7v9U4rQ+nhagTCQpyJLi6nnuZaUDgvZbP7sAfxq6bvPxM6yn2mg
-	 +PXzxI931GOA9aNmjYd+WZPNk19vwmQ9S4Eooa/E6HnvDB9/lGPVoOu5p2GDBE2Cg/
-	 ZPFVArGMGHKlq/n55XlN3UIYuo301Itzi9Qknbh1WTMw4etkv/O+XZZzBz1IlHWIfO
-	 1jTt8viuZ6lPPlHRCu6nhOwfEQBbWgBeOp9Ba65aqriGCnDc/j4iLMYXV2WGO2+bwH
-	 v/M6MRvqQWsKg==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t1ne8-000000007K1-2QbU;
-	Fri, 18 Oct 2024 16:08:04 +0200
-Date: Fri, 18 Oct 2024 16:08:04 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Qiang Yu <quic_qianyu@quicinc.com>
-Cc: manivannan.sadhasivam@linaro.org, vkoul@kernel.org, kishon@kernel.org,
-	robh@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com,
-	sboyd@kernel.org, abel.vesa@linaro.org, quic_msarkar@quicinc.com,
-	quic_devipriy@quicinc.com, dmitry.baryshkov@linaro.org,
-	kw@linux.com, lpieralisi@kernel.org, neil.armstrong@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
-	johan+linaro@kernel.org
-Subject: Re: [PATCH v7 7/7] arm64: dts: qcom: x1e80100: Add support for PCIe3
- on x1e80100
-Message-ID: <ZxJrxDLSoQpYNtYC@hovoldconsulting.com>
-References: <20241017030412.265000-1-quic_qianyu@quicinc.com>
- <20241017030412.265000-8-quic_qianyu@quicinc.com>
+	s=arc-20240116; t=1729261140; c=relaxed/simple;
+	bh=yn35QLjFcNR3g0fNUv67vzQph/HVlIz1lIwzFeQlswg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ChRff3BF6icZ2AUta6LP5YWHgIYB3ax/uGP8E2OSN36n5Ip0Subfhe7DTFmqe2+H7urFPY4IURVeFiIKC4x0cgacoKcb3x+j6Nqq7KW8SfXhi+tQYsQackWIbS/5DavfndBBtLUPLHgLG3WeRuqTMfF74LyD10QPs99AdZK9bBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id AEF09497;
+	Fri, 18 Oct 2024 07:19:27 -0700 (PDT)
+Received: from [10.57.78.54] (unknown [10.57.78.54])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4E86E3F58B;
+	Fri, 18 Oct 2024 07:18:56 -0700 (PDT)
+Message-ID: <545e23ed-85fb-48f1-8d34-58c5f0b6506e@arm.com>
+Date: Fri, 18 Oct 2024 15:20:04 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241017030412.265000-8-quic_qianyu@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] drm/msm/gpu: Check the status of registration to PM QoS
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ robdclark@gmail.com, sean@poorly.run, konradybcio@kernel.org,
+ quic_abhinavk@quicinc.com, marijn.suijten@somainline.org, airlied@gmail.com
+References: <20241018111811.3534385-1-lukasz.luba@arm.com>
+ <dpwmookr5owd43efowmnoxbtbzstvezgczpbzwxb5rwu3h3zaf@luim5srcbo6f>
+Content-Language: en-US
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <dpwmookr5owd43efowmnoxbtbzstvezgczpbzwxb5rwu3h3zaf@luim5srcbo6f>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Oct 16, 2024 at 08:04:12PM -0700, Qiang Yu wrote:
-> Describe PCIe3 controller and PHY. Also add required system resources like
-> regulators, clocks, interrupts and registers configuration for PCIe3.
+
+
+On 10/18/24 13:02, Dmitry Baryshkov wrote:
+> On Fri, Oct 18, 2024 at 12:18:11PM +0100, Lukasz Luba wrote:
+>> There is a need to check the returned value of the registration function.
 > 
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Why?
 
-Looks good to me now:
+The question can be:
+why this driver doesn't check errors from frameworks during the
+registration?
 
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Is it a generic practice in that code (I hope not)?
+
+When you check the API doc you will see that this fwk can fail and
+return some error and the other functions in driver shouldn't
+assume blindly that it was OK.
+
+All other places in the kernel check that return value from
+the PM QoS framework.
+
+> 
+>> In case of returned error, print that and stop the init process.
+>>
+>> Fixes: 7c0ffcd40b16 ("drm/msm/gpu: Respect PM QoS constraints")
+>> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+>> ---
+>>   drivers/gpu/drm/msm/msm_gpu_devfreq.c | 9 +++++++--
+>>   1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+> 
 
