@@ -1,164 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-34976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 869CE9A417A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 16:45:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AEADB9A41E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 17:04:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 416C5285305
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 14:45:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16A30B210F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 15:04:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAE8F1FCF46;
-	Fri, 18 Oct 2024 14:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28F381E0DF2;
+	Fri, 18 Oct 2024 15:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="obvNDPgR"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ez7yx+zR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2014B1F4278
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 14:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286C67BAEC;
+	Fri, 18 Oct 2024 15:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729262701; cv=none; b=mtnbKrt9E4NgSbT1mVz18mP6Cg4WryY57ADeei4J5lZPV7Ri9735KUJaRmByYOY5XhsZjUvEDMY91GN15RxgAbhvddVXTp3aijr7QGHOB4pt/OuLIgFxpp3wAPhFbyonMknQUbMY9HbEVy9cV/oJyocdR452BJfn7g2VL5vbC0I=
+	t=1729263837; cv=none; b=mFjxJc/MjcBx1SCh09RJLACPmKoTZy+WBX8hbShK5VpME0yOTUYYtK6OEHUW9npMcTfFpMp+zONnWU49jkpTb0KD1DswXHmuWSurstPOsk3XCL+P3WSo9Xlo5SBwMEBHDf1SEWNr71e90uMRCV5swCdKdR9sebqfVOldAD5+I6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729262701; c=relaxed/simple;
-	bh=dRI9Q9m5oWKpNhGc09GjrbC6mEoqOVD77CFKX8Irh1k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AY8wmrfbqz0FgizI/CqUWZDbQAIbfzbuwmNLym2br7y2nZefJl/ZTAwO7EeiqWSAHkj4BHHbQVLKFPhSJK4ISmotqBH3MCxWBp+50XCKsTc71TrmYuTTvGwj2eAVfyq9E+g/gn2D5dflAkksbsJ86adN/y/BjKOvLdEWMRYvnJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=obvNDPgR; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I666xa007766
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 14:44:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=DnboCb+0FVHSU48yVj9gIhEb
-	DOa0xi1JSucjdeRI/+w=; b=obvNDPgRO6z4q8lvWR3cd2mJCy0TuO5YM3RAbutq
-	Uc9rshzRyOhnOOTpIZybav9xzOEQ4hj8rBmXyfc/MlTyBj55fyTk+bzqliCSCQyn
-	W7cxokqNzj/tnM07kIm1sFF5SnPXNUQ5UoF/h2azvZMM9trkgk7eYf7mHMXKDBkq
-	mAUvHiKzx+TF7kym1Od0WvngCDsjdpUyNnF80yeibI1lj0puGy6hMQBGqcqaxvLf
-	+FyrYcC5YNwXzYXGsA6BunhhhP657RDHq97QQC7CWPXDUIjpVRQlwBNaKb784TCT
-	T6OdnbjFooxIyobBEDvOI22JVno1uF3tkXKM4WFveM7/5Q==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42b5hsuh89-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 14:44:58 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-20c98aa6b4bso21168945ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 07:44:58 -0700 (PDT)
+	s=arc-20240116; t=1729263837; c=relaxed/simple;
+	bh=2bfs2UEwo6ToOh8FqCQeqUWi9lfpjMNVBp5cRaIPVyM=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=qOHg6NFxP9+OqpHXFgoEyImxuhHbj5Ye81pQi3wk9wtzNpg/BWtL7XmsG7HA1Vcvp9xFzG2Y5HXRl34Hsjjbs0JWRfVgzlXlSKM8yBxk3CdkoBjDwek1MK7q/RT+nRV7xSPaJ5/RE0oc59iJUkxsCU4D5tdI/wHhphv8ZcTwgHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ez7yx+zR; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4603aced3a5so16855491cf.1;
+        Fri, 18 Oct 2024 08:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729263834; x=1729868634; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2bfs2UEwo6ToOh8FqCQeqUWi9lfpjMNVBp5cRaIPVyM=;
+        b=ez7yx+zR0cD5xTGSdsBViwj41n6ij5LFvlr809gs3Pqj5jiaQONjZ0TvKI14NOv2rD
+         fbtDc7PYJcNmtgIdFXl5MO8Xnj/mL++/TjLIolhw4e1/C2r+I5y7b3juoFrOVY+esD8U
+         L0/xTM76u8/BQxoHahMieWnTYcsh7gElxoDV9K1NnT/cmvXsIUeA4IRmN0/Gh++D6Nan
+         yqWaDwdAYDwv+2jPtFMKb6uJgFl+fw/9I5qYhlXoXJan20DZrE9HU51IRxbwPq/uT0aM
+         kGGG+MQzd3kpgomxbEUG0+HzyVf+h2+dCSks34G2k8/+4ajUM+BIeJd8xgcEy2NjMCS3
+         6Rgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729262698; x=1729867498;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DnboCb+0FVHSU48yVj9gIhEbDOa0xi1JSucjdeRI/+w=;
-        b=gmCs+QR1OADmR32+yHOm6LzfkEcT90T5enyO6a+EPLI9hZynG/B0sfqmZHipaQ2lUv
-         rqt9P2KwDQuS0xzE646iDxysZnz2qaHBBY0OlT599t9SAqlZvKvnIb/hJfdqSFFdvJlr
-         vJoGH9sfLkWfTjxUsttlGgF2Wgh7+JIRVi5CskoscBwBB6kjTuFgPXg1LWr870yfXkaB
-         QZ6zh15Hgzf/dnqwcYn4XDUR0D5rkh2qt6GTxCzyZ0WD2NJUhV4tR1GaX2DOX/JPpWRt
-         ERJKLsuGF4SjtQNsbVWGJKi3cPtr+WksQhYv0mWNUhYdkjZAiNbp3pojxQ8ayeEaRwuR
-         L2ug==
-X-Forwarded-Encrypted: i=1; AJvYcCVQoNsQkHs/pRZPZJxUElReG0iU0VYBZXjtHp+t1VAGdAQLtDWHRJkVBksiMv2EGRcvYI1BRtTAegciwsK5@vger.kernel.org
-X-Gm-Message-State: AOJu0YytjylvtRcgBTWOrjAQFvtXTbC+6AKv66VwoqPSaSVOsWRcLcc4
-	vbo51ZDbhIxxHpYAqN9Pjyd/FB2dyq2/m2buq+K34V0ZnN+SIab9Vj+dtMJAb/jqzXMeybI9wWq
-	VgfY5MqWeo9TjVR9Q2YYDujQC9/Mrk0U2bwbEIZg9R8nPGWNsfcansR1I5MxMVhc1
-X-Received: by 2002:a17:902:ec83:b0:20b:9f8c:e9de with SMTP id d9443c01a7336-20e5a7529f1mr36683795ad.13.1729262697692;
-        Fri, 18 Oct 2024 07:44:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9uOBMK8wEYvEFNWhu7UwL8EMNZRI/GIuPJl7POb9ZfQQu3LYyDDG0m1qPae3L0eArzT7raw==
-X-Received: by 2002:a17:902:ec83:b0:20b:9f8c:e9de with SMTP id d9443c01a7336-20e5a7529f1mr36683485ad.13.1729262697360;
-        Fri, 18 Oct 2024 07:44:57 -0700 (PDT)
-Received: from hu-bjorande-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20e5a71ee12sm13335395ad.61.2024.10.18.07.44.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 07:44:57 -0700 (PDT)
-Date: Fri, 18 Oct 2024 07:44:54 -0700
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-To: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Ramakrishna Gottimukkula <quic_rgottimu@quicinc.com>
-Subject: Re: [PATCH 2/3] mailbox: qcom-cpucp-mbox: Add support for SC7280
- CPUCP mailbox controller
-Message-ID: <ZxJ0Zl4iv+SZNUli@hu-bjorande-lv.qualcomm.com>
-References: <20240924050941.1251485-1-quic_kshivnan@quicinc.com>
- <20240924050941.1251485-3-quic_kshivnan@quicinc.com>
- <daorjvhony2y2ye2b3tus37bzux4hqqmhftyjsem7fz5cp2z42@a7ftfpnuvbja>
- <037f6cea-28c7-4114-b542-7f12aa1bcb1f@quicinc.com>
+        d=1e100.net; s=20230601; t=1729263834; x=1729868634;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2bfs2UEwo6ToOh8FqCQeqUWi9lfpjMNVBp5cRaIPVyM=;
+        b=DgztNlIFSGvleZu1xB7H3zbHm1rTfc/h0QfwPn1WZiF50qRUh+acI1T5k3hrdnE3lS
+         NBCrRIm1t4cKqkFHX9ZpjgrGqSZCJGY1w5Sz0zvMcfuXj2wcvSuqSEI3D/KPgxq/9sNF
+         ByIhKxvfl9khDm+ZWp1+ZOqvOlhDAMXWq1XFlgnUwPVXAhpR9rcAXIQeEsGQXQTU0Apv
+         Fcxp0QCwdrgG9JUZSTH3t23Hk8Bc/KZYAwdlWaGNA5LTds+i2UtOO178qUerDA/TR+jH
+         xxnx3qhBVLCJ2LRkUlIy0pFK71BktMdbqsRUccMTMGKp0HqMIjvzn9GyG0UmbtvDITaY
+         cZeg==
+X-Forwarded-Encrypted: i=1; AJvYcCVHKZgzzZ/bAvoZCa/nenuBBBR9x7xvs1llYlqiCv7jtFbKeprhkgjE1m8f4t+9opxJc+o8WeaFIcEBBOd33y4o@vger.kernel.org, AJvYcCVLvOfMK+8FhI2E4iQ17WaQQEKe9KgaoIOcPE9acHCkwlL2LcEiNdVooYXyGrxTb3DyIEprBJR0H6CEJ2iz@vger.kernel.org, AJvYcCVlZ7oRwOQgSFgZDM986eLXjBQPVvVAuWK15pnav+RQLKeAB4FxiX0jPn/bIoq2+abMft/MBoezeUnOAQ==@vger.kernel.org, AJvYcCWCLZJJ2L3WHhpAK9wKyn7d1LiZE6Yz/eA7XvWz0O/MSSmlsMaUIUeuTrrsGgEKpRalfNOaosxdU9KR@vger.kernel.org, AJvYcCXVFpBHAtHErX2nf5opVVo1T0Imku4li7Y1Ril94azImZeS7TO4C8V5KR8gQjsCLP6bhqepnHMmIxYx/qfR@vger.kernel.org, AJvYcCXa+yIxV6JqKMN9qXSvJmkhPC0Z7W/O5Xty+eTUUNlxlLl2hjKlXXzJGOuOOxz5mL5gOn9NpQyvAfPvRiE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzggh6hO9be8tUQP1pVY5lRQhOffZKIM8RbgOS1dU63A9t261Gq
+	UkWoQS/PsFT9ECs4AqKAF65OHQpghR/VYZDx/c5QZBG775CryzQ2
+X-Google-Smtp-Source: AGHT+IFtSxqYQ+Uh1KxSL4gmbFP2b5u4RAOEyxYYnsypWhrbsVj/jXKkNnFmi1COXRELCZUTv+Zc5A==
+X-Received: by 2002:a05:622a:2309:b0:460:8be6:9b00 with SMTP id d75a77b69052e-460aede585bmr37176911cf.50.1729263833772;
+        Fri, 18 Oct 2024 08:03:53 -0700 (PDT)
+Received: from [127.0.0.1] (syn-076-188-177-122.res.spectrum.com. [76.188.177.122])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-460b818e356sm2189391cf.69.2024.10.18.08.03.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Oct 2024 08:03:53 -0700 (PDT)
+Date: Fri, 18 Oct 2024 11:03:50 -0400
+From: Adrian Vovk <adrianvovk@gmail.com>
+To: Christoph Hellwig <hch@infradead.org>
+CC: Eric Biggers <ebiggers@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
+ axboe@kernel.dk, song@kernel.org, yukuai3@huawei.com, agk@redhat.com,
+ snitzer@kernel.org, Mikulas Patocka <mpatocka@redhat.com>,
+ adrian.hunter@intel.com, quic_asutoshd@quicinc.com, ritesh.list@gmail.com,
+ ulf.hansson@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
+ kees@kernel.org, gustavoars@kernel.org, linux-block@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-raid@vger.kernel.org,
+ dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
+ quic_srichara@quicinc.com, quic_varada@quicinc.com
+Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
+User-Agent: Thunderbird for Android
+In-Reply-To: <ZxH4lnkQNhTP5fe6@infradead.org>
+References: <20240916085741.1636554-1-quic_mdalam@quicinc.com> <20240916085741.1636554-2-quic_mdalam@quicinc.com> <20240921185519.GA2187@quark.localdomain> <ZvJt9ceeL18XKrTc@infradead.org> <ef3c9a17-79f3-4937-965e-52e2b9e66ac2@gmail.com> <ZxHwgsm2iP2Z_3at@infradead.org> <CAAdYy_mVy3uXPqWbjPzK_i8w7Okq73wKBQyc95TbnonE36rPgQ@mail.gmail.com> <ZxH4lnkQNhTP5fe6@infradead.org>
+Message-ID: <D96294E2-F17A-4E58-90FB-1D17747048E5@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <037f6cea-28c7-4114-b542-7f12aa1bcb1f@quicinc.com>
-X-Proofpoint-GUID: RNpMB-iKA2t9iDYpmScfUJQ2YG-oabZC
-X-Proofpoint-ORIG-GUID: RNpMB-iKA2t9iDYpmScfUJQ2YG-oabZC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=990 spamscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180093
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Oct 17, 2024 at 05:22:36PM +0530, Shivnandan Kumar wrote:
-> On 10/6/2024 8:03 AM, Bjorn Andersson wrote:
-> > On Tue, Sep 24, 2024 at 10:39:40AM GMT, Shivnandan Kumar wrote:
-[..]
-> > >   static int qcom_cpucp_mbox_probe(struct platform_device *pdev)
-> > >   {
-> > > +	const struct qcom_cpucp_mbox_desc *desc;
-> > >   	struct device *dev = &pdev->dev;
-> > >   	struct qcom_cpucp_mbox *cpucp;
-> > >   	struct mbox_controller *mbox;
-> > > +	struct resource *res;
-> > >   	int irq, ret;
-> > > 
-> > > +	desc = device_get_match_data(&pdev->dev);
-> > > +	if (!desc)
-> > > +		return -EINVAL;
-> > > +
-> > >   	cpucp = devm_kzalloc(dev, sizeof(*cpucp), GFP_KERNEL);
-> > >   	if (!cpucp)
-> > >   		return -ENOMEM;
-> > > 
-> > > -	cpucp->rx_base = devm_of_iomap(dev, dev->of_node, 0, NULL);
-> > > -	if (IS_ERR(cpucp->rx_base))
-> > > -		return PTR_ERR(cpucp->rx_base);
-> > > +	cpucp->desc = desc;
-> > > +
-> > > +	if (desc->v2_mbox) {
-> > > +		cpucp->rx_base = devm_of_iomap(dev, dev->of_node, 0, NULL);
-> > > +		if (IS_ERR(cpucp->rx_base))
-> > > +			return PTR_ERR(cpucp->rx_base);
-> > > +	/* Legacy mailbox quirks due to shared region with EPSS register space */
-> > 
-> > Why can't we have the same code in both cases?
-> > 
-> 
-> 
-> RX address space share region with EPSS. Due to which devm_of_iomap returns
-> -EBUSY.
-> 
 
-I assumed that was the case, and that explains why the legacy system
-needs a different code path.
 
-But, couldn't you use the same for the v2 solution, so we avoid having
-two different code paths?
+On October 18, 2024 1:56:38 AM EDT, Christoph Hellwig <hch@infradead=2Eorg=
+> wrote:
+>On Fri, Oct 18, 2024 at 01:44:19AM -0400, Adrian Vovk wrote:
+>> > So just run a target on each partition=2E
+>>=20
+>>=20
+>> That has different semantics=2E If I encrypt each virtual partition the=
+re's
+>> nothing encrypting the metadata around the virtual partitions=2E Of cou=
+rse,
+>> this is a rather contrived example but point stands, the semantics are
+>> different=2E
+>
+>Then you set up an dm-crype device mapper table for the partition table a=
+s
+>well=2E
 
-Regards,
-Bjorn
+Sure, but then this way you're encrypting each partition twice=2E Once by =
+the dm-crypt inside of the partition, and again by the dm-crypt that's unde=
+r the partition table=2E This double encryption is ruinous for performance,=
+ so it's just not a feasible solution and thus people don't do this=2E Woul=
+d be nice if we had the flexibility though=2E
+
+Plus, I'm not sure that such a double encryption approach is even feasible=
+ with blk-crypto=2E Is the blk-crypto engine capable of receiving two keys =
+and encrypting twice with them?
+
+>
+>> > This is the prime example of why allowing higher layers to skip
+>> > encryption is a no-go=2E
+>> >
+>>=20
+>> In what way does that break the file system's security model? Could you
+>> elaborate on what's objectionable about the behavior here?
+>
+>Because you are now bypassing encryption for certainl LBA ranges in
+>the file system based on hints/flags for something sitting way above
+>in the stack=2E
+>
+
+Well the data is still encrypted=2E It's just encrypted with a different k=
+ey=2E If the attacker has a FDE dump of the disk, the data is still just as=
+ inaccessible to them=2E
+
+In fact, allowing for this will let us tighten up security instead of punc=
+hing holes=2E It would let us put encrypted home directories on top of full=
+-disk encryption=2E So if an attacker has a disk image and the FDE key, the=
+y still wouldn't be able to decrypt the user's home directory because they'=
+d need more keys=2E We also want to put fscrypt on top of the encrypted hom=
+e directories to encrypt each app data directory, so if you have a banking =
+app the attacker wouldn't be able to get that app's data even if they manag=
+e to get your home directory key=2E Right now, doing something like this re=
+quires stacking encryption and is thus unfeasible and we can't do it, so we=
+'re stuck with one layer of full disk encryption and no isolation between u=
+sers and apps=2E
+
+Thanks,
+Adrian
 
