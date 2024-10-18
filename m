@@ -1,186 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-35025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE8B29A4725
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 21:40:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC09A9A473B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 21:42:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 99DF42842B1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 19:40:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 920211F23048
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 19:42:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA481205ABA;
-	Fri, 18 Oct 2024 19:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C217205AB7;
+	Fri, 18 Oct 2024 19:41:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Wjq4YwcN"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RovpV3QQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21828201271;
-	Fri, 18 Oct 2024 19:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9810A205AB5;
+	Fri, 18 Oct 2024 19:41:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729280425; cv=none; b=AKQkRS4RcZhC3SLrECrAmNfyD+sxDUAv0voNSunebOsdRS0uHdeThczJhVXk997WxdzsEgiCz+zg6SJBA/X/O+A7h+sLBOrzYrA4ua1Umo0x1eJnVRq5D8pQH0V/um0bSZUTBQk9bEhgl5xreOD13DC+hy8a76/k9TrC6HeSg2g=
+	t=1729280507; cv=none; b=pLUjJsB1/D5RIFVDZBnUY5lqUjO1j+wYH5Kc4XuxTOSYAmmYC3LX5GFamcKCF/pIndsYJ2if7CNcMiSYwG6ertwr1CEbynMUTU/mzpFSw4uyTin29zqx0OaUlfFqMQm1mZr5kEqzu0Hl1stqCiQ/Zv6agfXfcwnEqEfQ+MEnKR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729280425; c=relaxed/simple;
-	bh=MO0fv4mtrX/pzLQIoqwS16TkZ8X79o/gZ+UkFl1bPnI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=YLeHEXSuxDiZRR42oyzSe5JaPkLKbCJL8aeOkhDeIQEMrOzKqp0epETEcU9h3mtXqQNUuz6GnVzOwTRbCaSMfBj0Wbqg50wrsV1jjwYHLd+ELpyBUjtGZkwOYt2JHpYBn72hRwQu1LTp9s9tQ1lWxWBJwkYIxPOvbY+XGTSlySM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Wjq4YwcN; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1729280507; c=relaxed/simple;
+	bh=F/JtaEEVdC/F/NroJYqYLyX8iXArt+1Ut6xhbumr9E8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=S+GsVFvrR+G6xQBS5MgjhhY61046gp0xxrAW/LFYiLnHZRiQqS9n3Lq/v4Iwie1/ODlej2v8LPaL3KlT9Xh3gFux67vQuwhegVHR4XQh2YKNUMbw3qqCQYmOp2IizMTKU43gZ8YXwnOMTIx5S5SzqJmPKRydWyESIlWJ4ONNedI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RovpV3QQ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I9M7bl006477;
-	Fri, 18 Oct 2024 19:40:08 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49IExEW2006854;
+	Fri, 18 Oct 2024 19:41:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	D/dRlK3Pg82JhhBtRaYyK5T6rOnGYokRPWVBf+xmN28=; b=Wjq4YwcN03jFflLV
-	1nVCHv4R9RxuBGTk0zaChCl55R7mg95SpVf56W43L833F8U11nEtKbHeH1J7lBUE
-	mHTQeoiOazlYTTkmkwlm6IFlFF6E0/tsl3ezw68AHBnT6aqzn+v5/2d9rQFGX2cv
-	tMjfYOQJ2PG2f5yMe4G3uphewjgYUGbsL7hAdhk5buxkRd2TzzfMr+ZPMP9XHSY/
-	ifqLPrGttHDrL/zBSR0hp+gGz33IDaWuLU/PXpi/wt7q9ErJd3+DgsZUE1W7RBot
-	pi68LqiCiuhPaXo3GljbZduyFhkxsPsaJQJipWZWGSbisRWPmrJYBPQRD53gas2a
-	8dzIsQ==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42bmys9scn-1
+	rKJiqFun/k8Ka7jbC/YfTlCs0RA8jmsEnP0viN4Wx0s=; b=RovpV3QQvcBcsxoo
+	UxRWHGW6nKbUyawkYZotb5flQG8eKHyDXJPdaAV4eZiw6egkQw5qIj+qNUwub3On
+	S3nliyHKSZ3TRtoGfFbxRqD8bB4crSvCOZvf2iUuW4VW3AIrgFNnffVRNGBlTFud
+	IQQoqtH1UaBjoY10cUnVs/2Xw5hANYIfKhA2MRpz2/u+V/v01eqZunwihvzSrx0u
+	sH7LrHoSaDqbQh/KBvFpEDI+QI0NzIUbEco8LwkZjfnt0iOqlx4WZUKf31XWGQVV
+	sSwdK60JdLqKniqVmR0RLmjA0ZGO8bqX4RB1sNKmGEPpn7qvDhYXRJT2C5OQc4ga
+	bNTP0A==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42b5hsvbcj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 19:40:08 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49IJe7pP005781
+	Fri, 18 Oct 2024 19:41:25 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49IJfOdn007992
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 19:40:07 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 18 Oct 2024 12:40:06 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-Date: Fri, 18 Oct 2024 12:39:50 -0700
-Subject: [PATCH v6 5/5] arm64: dts: qcom: Add PSCI SYSTEM_RESET2 types for
- sa8775p-ride
+	Fri, 18 Oct 2024 19:41:24 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 18 Oct
+ 2024 12:41:22 -0700
+Message-ID: <aa5078d8-ac2f-1124-03f8-0d37d4c15005@quicinc.com>
+Date: Fri, 18 Oct 2024 13:41:22 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH net-next 3/3] accel/qaic: Pass string literal as format
+ argument of alloc_workqueue()
+Content-Language: en-US
+To: Simon Horman <horms@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        "Paolo
+ Abeni" <pabeni@redhat.com>
+CC: Woojung Huh <woojung.huh@microchip.com>, Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Jiawen Wu
+	<jiawenwu@trustnetic.com>,
+        Mengyuan Lou <mengyuanlou@net-swift.com>,
+        "Nathan
+ Chancellor" <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Bill Wendling <morbo@google.com>,
+        Justin Stitt <justinstitt@google.com>,
+        "Carl Vanderlip" <quic_carlv@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>, <UNGLinuxDriver@microchip.com>,
+        <netdev@vger.kernel.org>, <llvm@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <20241011-string-thing-v1-0-acc506568033@kernel.org>
+ <20241011-string-thing-v1-3-acc506568033@kernel.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20241011-string-thing-v1-3-acc506568033@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241018-arm-psci-system_reset2-vendor-reboots-v6-5-50cbe88b0a24@quicinc.com>
-References: <20241018-arm-psci-system_reset2-vendor-reboots-v6-0-50cbe88b0a24@quicinc.com>
-In-Reply-To: <20241018-arm-psci-system_reset2-vendor-reboots-v6-0-50cbe88b0a24@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel
-	<sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        "Lorenzo
- Pieralisi" <lpieralisi@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Arnd Bergmann
-	<arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <cros-qcom-dts-watchers@chromium.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>
-CC: Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Florian Fainelli
-	<florian.fainelli@broadcom.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Elliot Berman <quic_eberman@quicinc.com>
-X-Mailer: b4 0.14.1
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: X_uUDRjxrHmKPXEC6nz2Bj6V15fTm7Qv
-X-Proofpoint-ORIG-GUID: X_uUDRjxrHmKPXEC6nz2Bj6V15fTm7Qv
+X-Proofpoint-GUID: WjxzQ8x_dk83izjS8xoIbU8AG9AJDY9c
+X-Proofpoint-ORIG-GUID: WjxzQ8x_dk83izjS8xoIbU8AG9AJDY9c
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- impostorscore=0 mlxscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=803 malwarescore=0 adultscore=0 priorityscore=1501 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410180124
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410180125
 
-Add nodes for the vendor-defined system resets. "bootloader" will cause
-device to reboot and stop in the bootloader's fastboot mode. "edl" will
-cause device to reboot into "emergency download mode", which permits
-loading images via the Firehose protocol.
+On 10/11/2024 3:57 AM, Simon Horman wrote:
+> Recently I noticed that both gcc-14 and clang-18 report that passing
+> a non-string literal as the format argument of alloc_workqueue()
+> is potentially insecure.
+> 
+> E.g. clang-18 says:
+> 
+> .../qaic_drv.c:61:23: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+>     61 |         wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
+>        |                              ^~~
+> .../qaic_drv.c:61:23: note: treat the string as an argument to avoid this
+>     61 |         wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
+>        |                              ^
+>        |                              "%s",
+> 
+> It is always the case where the contents of fmt is safe to pass as the
+> format argument. That is, in my understanding, it never contains any
+> format escape sequences.
+> 
+> But, it seems better to be safe than sorry. And, as a bonus, compiler
+> output becomes less verbose by addressing this issue as suggested by
+> clang-18.
+> 
+> Also, change the name of the parameter of qaicm_wq_init from
+> fmt to name to better reflect it's purpose.
+> 
+> Compile tested only.
+> 
+> Signed-off-by: Simon Horman <horms@kernel.org>
 
-Co-developed-by: Shivendra Pratap <quic_spratap@quicinc.com>
-Signed-off-by: Shivendra Pratap <quic_spratap@quicinc.com>
-Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 7 +++++++
- arch/arm64/boot/dts/qcom/sa8775p.dtsi      | 2 +-
- include/linux/arm-smccc.h                  | 5 +++++
- 3 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-index 2a6170623ea9..b0eb779b3ec5 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-@@ -498,6 +498,13 @@ &pmm8654au_3_gpios {
- 			  "GNSS_BOOT_MODE";
- };
- 
-+&psci {
-+	reset-types {
-+		mode-bootloader = <0x10001 0x2>;
-+		mode-edl <0 0x1>;
-+	};
-+};
-+
- &qupv3_id_1 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 23f1b2e5e624..dd36eea80f7c 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -329,7 +329,7 @@ pmu {
- 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
- 	};
- 
--	psci {
-+	psci: psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
- 	};
-diff --git a/include/linux/arm-smccc.h b/include/linux/arm-smccc.h
-index 083f85653716..bdc974b76df8 100644
---- a/include/linux/arm-smccc.h
-+++ b/include/linux/arm-smccc.h
-@@ -85,6 +85,11 @@
- 			   ARM_SMCCC_SMC_32,				\
- 			   0, 2)
- 
-+#define ARM_SMCCC_ARCH_FEATURE_AVAILABILITY_ID				\
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
-+			   ARM_SMCCC_SMC_32,				\
-+			   0, 3)
-+
- #define ARM_SMCCC_ARCH_WORKAROUND_1					\
- 	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL,				\
- 			   ARM_SMCCC_SMC_32,				\
-
--- 
-2.34.1
-
+Applied to drm-misc-next
 
