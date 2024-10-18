@@ -1,72 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-35042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37ECA9A47E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 22:26:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C073A9A47EE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 22:28:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9C471F21CCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 20:26:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7BA5828061A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 20:28:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EA9E205AB6;
-	Fri, 18 Oct 2024 20:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DEEC202F91;
+	Fri, 18 Oct 2024 20:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IoW8156Z"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HFnb/xc/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD83E1DA0EB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 20:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC18204083
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 20:28:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729283139; cv=none; b=NFZ+tI+0tSnubsCKZ6xoAKBJutqeR1eSV7ZtjmOrM0MbicEmQ792iR7gGPJSoGzL+6nuQ9jP5+O3wqo88N+LLGg+5kkuzQE4Tern2Hra3FtUpmKGNYkm9LkoS3V3yG56YhkgG3REc+8PaLbcvX4SDSb29GKW6OZccDyWd9Flsl0=
+	t=1729283310; cv=none; b=NcREITs9bKMQCF727HNOqbwpVXpBMZhm5UJTHmaDT6axUSYKhnKYLBEY1GqMmv33Q2WmPXx4IIoyWF7pu/oIXW4LKdwdQrth3efAcf14w8xk9mLii1UIrvdG0EyuA9SSY5pNWEXlw+3mMjXbl4Rgx4za9PaU2hKfFsUWLe8l8IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729283139; c=relaxed/simple;
-	bh=e9nuRSeQ1q6xv+eJrem9Vo+jNIm6tW5/uoKUlHGWxGY=;
+	s=arc-20240116; t=1729283310; c=relaxed/simple;
+	bh=pSYu2V9vE1v40JDClAYzaO8gHTegAGCsdToFUQ8aORw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iw7KQt4fu1n8ZToizITNeSQQha7YcpzJlIqr3xFX7Yx5hfPqaXORTY7ufR7IqQkXKSULUfJ7EAt3fvMFOLpvvsiqYHYJyTtMJHdqVodiKIYoe/RwMosNzqGfLcPrmGPNQOGDj6u1WDzHbHIl234xZvCfwExBQ1U4Fwb+zC2zzyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IoW8156Z; arc=none smtp.client-ip=209.85.167.47
+	 Content-Type:Content-Disposition:In-Reply-To; b=a7R2i6oGTTnC/ocPB20O5OhYc34WGqW8tesbv+6KwOS8k0Mm9+R3pPhM1gcaL+o/+DBYX0CPzM04+Ffp1j0Kjr/P5LkCme0yojXEYmv8w7L1vyBcnRLsn4rdyuO5MHx5GM3hckd/gkMrjeBHLESw315nZMi6EBmcsqcGiwsDKlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HFnb/xc/; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-539e8586b53so2983796e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 13:25:36 -0700 (PDT)
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539e1543ab8so4514453e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 13:28:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729283135; x=1729887935; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729283306; x=1729888106; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AK9GjlpOWcciFUtS8LZdCQZ8A93JMW9M4qtDPBrqppA=;
-        b=IoW8156ZTL0lt4JqTBCzhbkbVyrnaRgLy4kYwP+z8ECxyKoDM64eW/qiyCvj4uMUVC
-         8RZT5HqoEKHiFVmddMDFSH0Wv1UCsm+iH6YOh9VcOf58y+z4CP9S71jUZyu7u8iTdLCi
-         fqMOO35+3ol/9B3KcZtS4ODxQY7aRMw3NlUxxyP7SNuuLPpllQlD2rrYAk44k1bBtg6Z
-         MJucVjAJcLUg7S7dLtgQ2yVHIPPWb1lBaXzu77oU2rf7+1KpSvj7IdWMgoG7rMoiQAPV
-         Ubr2dr5L0Psl9G8yerhw1Fo03OlyMmukqFGYw9sTdV4F8mU6ZafcaTzt68eMe0sq1uEg
-         DFEg==
+        bh=LY5/vQ48pBwfRlm9zQiPTqoKwm7/lyhKv/uaIUZfZmE=;
+        b=HFnb/xc/JqzvvsNyLoOjSvgo8CjeVhJRUCToW62GXcKMyKFBjWM58ebalrK/WP6Z1x
+         cSfetzYQEricsEoFByEYW+WA4UzlZ9cgT+es453gZvqmII48P8hlbtLTyPk09gCwt4Eu
+         r/6V15H5VkHptSScGhTUU9QBLZY0RRMxiq7OqHkvWb816G/QYLMXq+n2s++TCbr420kz
+         1FalBSWgMjOOQn9jWFJiJzbcJcbu7zRkW750VUKF9pBVEvLGz0J2XnC4H4FX2r+jvW7C
+         sSn3KRs1r76pEI16zYUZIBlY65Sxrzr34prSHtsYGzKpNJQlutYTxJYTeVtWMsJViYu1
+         P7sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729283135; x=1729887935;
+        d=1e100.net; s=20230601; t=1729283306; x=1729888106;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AK9GjlpOWcciFUtS8LZdCQZ8A93JMW9M4qtDPBrqppA=;
-        b=qsTNf4bonmphQsFci+93w+SoM9TuF6mPY3GmhDNMXzlIXmmcIeXDJ3r3yoilfbWmtg
-         KkKs5NAd+wSQ4t6xDdWo+RpfLo1m4hPwXXKlGBvFGG4X8kJ62aqZLjNBbdQ09fPP2QUm
-         v4AhJ/rrKeN1a9fMXfVXaR/IQXfoXhRJYEX5/NV1+mA+Cx1U56edOyx6oK/t+tt3tXmp
-         oNqlyKETaKOM6t8qdpTnMG6xeddAsSOjm5dfrVq3Kjdk4Awsvi7lbMI2tGFQPdovxl6q
-         n/WlLLgwqP0yX3RbAhthWz5nsufTJrQW0zgC2nZ7cuz218UD4zA1HkXMNHI4NS7WQNjR
-         AC2w==
-X-Forwarded-Encrypted: i=1; AJvYcCV7nsvWv7l4J09GOhyJAN45v9Pkxw9PgWmPI5U/tzC6g42kcWAjaaQFMQFACrr4hPQ3688UyOHtjieLQhIQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJ3byiS//E9Tpu3kivU3IbbLYDLUA8tKDooZOX1KfX09H1xVpd
-	s4zDVl+utEOQeSra4+VO8toXmajZHbVFr/0J6yZ72wpP7ZyiWq9VAp11VAvD78Q=
-X-Google-Smtp-Source: AGHT+IFMTlzv5g4qUtfX1TintmsLBocdxD75zUVXsk0YyPr6fsy8Fi5Lmut+T+XNEtKsz3N5oaywyA==
-X-Received: by 2002:a05:6512:ac2:b0:539:fc9a:12e1 with SMTP id 2adb3069b0e04-53a0c7532c5mr2465574e87.27.1729283134900;
-        Fri, 18 Oct 2024 13:25:34 -0700 (PDT)
+        bh=LY5/vQ48pBwfRlm9zQiPTqoKwm7/lyhKv/uaIUZfZmE=;
+        b=oc6K/EUmAqAh9846zCGBXWnl//RCmNhiqaPHVWxSIAbR5MSTX9JtIdYoTBn4zcuGqG
+         MMiI0thbz9qK+rA7N+zyDQG+7+oWhsV7/WDzffEYeg6LjjfCZeROu3nQdVRs+QURBcrl
+         In8oi2oGe3O/s1sK2yb4ie8ZgOq0oU6vBXMBlfyxsb5EEuPf3+bg9J1XzKNUEef4vS7i
+         QTWMYq5wvcQLHyKHEfz1YOUnq4Wz7Zp2HkRlpSWCO8keBFZVMHWXKHj4oIu/nFpGXYGk
+         1PR1H2UDgOtUfAK2CdDPxMNeTk3fMOe7Z8rxAiyF7G3Pvk3LUouhvFxW1Ouawftiq4c8
+         IrKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWKoYa+suG87D5Baq5E67VfydT613xc2CdKtpdeQZTVDMrmPfDXhdr0dWrd1KHvpLy1xj3Syne9XUveyP3u@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVl+RkDIqVHof8/YQUr1eJmn8orzVh2WHdmm/ARSCdD6KYF5Wa
+	xPb3+UAJ2TPGU8IsdsE9Ldu5Zm0ff6o8VioR57R2Vn7swrgtYN8pCdjWQLLrKYQ=
+X-Google-Smtp-Source: AGHT+IH+qsY9mBs2ZcmLMm8XT80WfJ9RLA+9rQXt0fzC+YdixxfVTgvbIo9i3IbVyuwdmP1jz0Yxpw==
+X-Received: by 2002:a05:6512:6d2:b0:539:9510:2b8a with SMTP id 2adb3069b0e04-53a154d9606mr3301778e87.53.1729283306107;
+        Fri, 18 Oct 2024 13:28:26 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a1520480asm319613e87.211.2024.10.18.13.25.34
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151b00aesm314818e87.38.2024.10.18.13.28.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 13:25:34 -0700 (PDT)
-Date: Fri, 18 Oct 2024 23:25:33 +0300
+        Fri, 18 Oct 2024 13:28:25 -0700 (PDT)
+Date: Fri, 18 Oct 2024 23:28:24 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: Taniya Das <quic_tdas@quicinc.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -78,11 +78,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Jagadeesh Kona <quic_jkona@quicinc.com>, Stephen Boyd <sboyd@codeaurora.org>, 
 	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH 06/11] clk: qcom: dispcc-qcs615: Add QCS615 display clock
+Subject: Re: [PATCH 08/11] clk: qcom: gpucc-qcs615: Add QCS615 graphics clock
  controller driver
-Message-ID: <zsgdwc6klccdbytdysgl342zllgmb7ttatjh4tnug3unyl7vl3@tlptei23yozn>
+Message-ID: <omn34rwurlxrjckb5d6xb2brg6zwcizonmqyfckvngk5msrfav@b3i2bdjk5vw7>
 References: <20241019-qcs615-mm-clockcontroller-v1-0-4cfb96d779ae@quicinc.com>
- <20241019-qcs615-mm-clockcontroller-v1-6-4cfb96d779ae@quicinc.com>
+ <20241019-qcs615-mm-clockcontroller-v1-8-4cfb96d779ae@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,104 +91,47 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241019-qcs615-mm-clockcontroller-v1-6-4cfb96d779ae@quicinc.com>
+In-Reply-To: <20241019-qcs615-mm-clockcontroller-v1-8-4cfb96d779ae@quicinc.com>
 
-On Sat, Oct 19, 2024 at 12:45:42AM +0530, Taniya Das wrote:
-> Add support for the display clock controller for display clients to
+On Sat, Oct 19, 2024 at 12:45:44AM +0530, Taniya Das wrote:
+> Add support for the graphics clock controller for graphics clients to
 > be able to request for the clocks on QCS615 platform.
 > 
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  drivers/clk/qcom/Kconfig         |   9 +
->  drivers/clk/qcom/Makefile        |   1 +
->  drivers/clk/qcom/dispcc-qcs615.c | 786 +++++++++++++++++++++++++++++++++++++++
->  3 files changed, 796 insertions(+)
+>  drivers/clk/qcom/Kconfig        |   8 +
+>  drivers/clk/qcom/Makefile       |   1 +
+>  drivers/clk/qcom/gpucc-qcs615.c | 525 ++++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 534 insertions(+)
 > 
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index bdb1c672dd90d96814b214afd234341e37e3c470..d0c815e8e4789958151742a8269d7d6f2245b26c 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -460,6 +460,15 @@ config QCM_DISPCC_2290
->  	  Say Y if you want to support display devices and functionality such as
->  	  splash screen.
->  
-> +config QCS_DISPCC_615
-> +	tristate "QCS615 Display Clock Controller"
-> +	select QCM_GCC_615
-> +	help
-> +	  Support for the display clock controller on Qualcomm Technologies, Inc
-> +	  QCS615 devices.
-> +	  Say Y if you want to support display devices and functionality such as
-> +	  splash screen.
 > +
->  config QCS_CAMCC_615
->  	tristate "QCS615 Camera Clock Controller"
->  	depends on ARM64 || COMPILE_TEST
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index f69c1bc13d3eca1859d9e849399e55175df869c3..f2be0c678127c8f78c5ee708993ebef273d02f19 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -69,6 +69,7 @@ obj-$(CONFIG_QCOM_CLK_RPMH) += clk-rpmh.o
->  obj-$(CONFIG_QCOM_CLK_SMD_RPM) += clk-smd-rpm.o
->  obj-$(CONFIG_QCM_GCC_2290) += gcc-qcm2290.o
->  obj-$(CONFIG_QCM_DISPCC_2290) += dispcc-qcm2290.o
-> +obj-$(CONFIG_QCS_DISPCC_615) += dispcc-qcs615.o
->  obj-$(CONFIG_QCS_CAMCC_615) += camcc-qcs615.o
->  obj-$(CONFIG_QCS_GCC_404) += gcc-qcs404.o
->  obj-$(CONFIG_QCS_Q6SSTOP_404) += q6sstop-qcs404.o
-> diff --git a/drivers/clk/qcom/dispcc-qcs615.c b/drivers/clk/qcom/dispcc-qcs615.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..cc40a9a8a682ba58d9fa9db21e89a05cc75be8a5
-> --- /dev/null
-> +++ b/drivers/clk/qcom/dispcc-qcs615.c
-> @@ -0,0 +1,786 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/module.h>
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/of.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +
-> +#include <dt-bindings/clock/qcom,qcs615-dispcc.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-pll.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "clk-regmap-divider.h"
-> +#include "clk-regmap-mux.h"
-> +#include "common.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
-> +
-> +enum {
-> +	DT_BI_TCXO,
-> +	DT_GPLL0,
-> +	DT_DSI0_PHY_PLL_OUT_BYTECLK,
-> +	DT_DSI0_PHY_PLL_OUT_DSICLK,
-> +	DT_DSI1_PHY_PLL_OUT_DSICLK,
-
-Is there a DSI 1 PLL on this platform?
-
-> +	DT_DP_PHY_PLL_LINK_CLK,
-> +	DT_DP_PHY_PLL_VCO_DIV_CLK,
+> +static struct gdsc cx_gdsc = {
+> +	.gdscr = 0x106c,
+> +	.gds_hw_ctrl = 0x1540,
+> +	.en_rest_wait_val = 0x2,
+> +	.en_few_wait_val = 0x2,
+> +	.clk_dis_wait_val = 0x8,
+> +	.pd = {
+> +		.name = "cx_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = POLL_CFG_GDSCR,
 > +};
 > +
-> +enum {
-> +	P_BI_TCXO,
-> +	P_DISP_CC_PLL0_OUT_MAIN,
-> +	P_DP_PHY_PLL_LINK_CLK,
-> +	P_DP_PHY_PLL_VCO_DIV_CLK,
-> +	P_DSI0_PHY_PLL_OUT_BYTECLK,
-> +	P_DSI0_PHY_PLL_OUT_DSICLK,
-> +	P_DSI1_PHY_PLL_OUT_DSICLK,
-> +	P_GPLL0_OUT_MAIN,
+> +static struct gdsc gx_gdsc = {
+> +	.gdscr = 0x100c,
+> +	.en_rest_wait_val = 0x2,
+> +	.en_few_wait_val = 0x2,
+> +	.clk_dis_wait_val = 0x2,
+> +	.pd = {
+> +		.name = "gx_gdsc",
+
+.power_on = gdsc_gx_do_nothing_enable ? Or is it controlled directly on
+this platform?
+
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = POLL_CFG_GDSCR,
 > +};
 > +
 
