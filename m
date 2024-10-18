@@ -1,206 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-34980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BDB09A42A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 17:39:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BEC059A43E3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 18:32:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0FF101F233D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 15:39:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 65C6C1F2463C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 16:32:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EB952022EC;
-	Fri, 18 Oct 2024 15:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C234202F9C;
+	Fri, 18 Oct 2024 16:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UkMjGaYO"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fodc9oqE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF242010F9
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 15:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7617E1D1E64
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 16:32:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729265936; cv=none; b=BL/KXIBenvq5vI7B0f2VXuZ0MhmEtX7egAYawkjeST4QsfPjI+UVF3OKHS2JTrjkveXtcjrWlxiwQyD7mE7c81fhiqBTBtlZRGl98GyQiIQFdEBZei7bOlB/mJe45oamYRmzAXzQ9sar7P6SEr8EAgqSMTs485dXK3DNGRLgCys=
+	t=1729269169; cv=none; b=VxqJCriUp8PYR5LqQxvNz4ahKU7UTMR+npzyg0ubxO7LU8K+0ByogbIH1fACpcwZTdauQI/P81cOqhp3RHkj0wfaDnX8l+/2geAN7yFZIV63PIg5+4y9q6uYe7Y+sYXwviGLmwGdLQnvuFMgnUy+Nw7SnmCwgB36UNrUoCPmiy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729265936; c=relaxed/simple;
-	bh=uxi1OQOzkpqjBsttpbYxBDUhlZCDok1vzymmwSbNxGk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pQxelXaqs9smFoOgpM2b59lsdEPOrfbIPOFciEIbhwssm7RJqSeBsBkYl/zhMq3AOcs7HFjCRv+IIG2dIHKlxx4yyuXgu2a6d4OytjuJphYC20gWSjB3CvALQ+M1hd6vxR5UX3vC4H5pINqz/POJzpmTMWYZ7OxbrpdUg4j6Fvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UkMjGaYO; arc=none smtp.client-ip=209.85.167.53
+	s=arc-20240116; t=1729269169; c=relaxed/simple;
+	bh=3o4QDFKrPDpNAhxheUzF5R/l9bf3AcQKebu9incovWg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=IDZwRamvbOhkfKahmwXVUqrymW67Q5zjSK0UigGDdUcq9HYaHXmKnTB5h3ZClX476eIxdxbn0d4ba8MHY2yl37v1/COqipTqeoM/lJfV0hFdk5MTmOJv4HVN+vgNLx1Y7g6PVmtDLvLxOlg745puLreJtUQ47yo6EZYpW1uiMX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fodc9oqE; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-53a0c160b94so167683e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 08:38:53 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-539fe02c386so3439189e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 09:32:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729265931; x=1729870731; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZGZilrMaCPY/RlLKnQENee50lNaEUfTtoARSumrgroE=;
-        b=UkMjGaYOcJDy3MHJ3as4LBCmJXHLrdJrI/GjwV1GA5e+SmfGgNogVH4PcarvJ2dAjT
-         OIy7VXmFzzOV2VF8nIqhZuYVcKC9k8rC3bj9h7JLmIjctnoJw5RSBcqkGab4SUP/MbKh
-         pFarrj8EOdW8bF/8ObSDWdj/CQmulb7mEpqLyjimvyRqC76W0tmlviW2Ear1D+NcmBjr
-         4T8HirismmD1k80KEOr4a35qFK2KF2mfDMZVdGDVQqQLTf140JP7WXgzyUgsvsWvFnZK
-         2LSAzll7MywWGxlZtsba7RPo7N4FWV7Tou73rQ9ktY/hY20kKb2daG95CdkWc20EqcHJ
-         Z9rg==
+        d=linaro.org; s=google; t=1729269165; x=1729873965; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1BmTGXnzY5jB8k4DGJSiq353v0bV1bo9V9udHrhCqnA=;
+        b=Fodc9oqEkVg4r20yhX3oDoIOic2eNde5DaK/3U/JjYx4Fme1Q/1sARmax+s1piBtbz
+         hbQNaJDYm4NHkCG3F+6VUXHBjsKB8CwlMtFXh/MHz10/KkDepkczbFlPyUXd8ak14np0
+         FkkiTobPE20PHBi3GAe6nG5egVyYEX3hawzguUru3f3uohgyULt4XfVKh/GUOqhSfnkq
+         iYGBYFu/O2hAasGxbL18tCOVAztdwkRlcFUGTvhp/9ghHmaxwc9+7N9eHzFBw4ynctwD
+         JOrHxrB8VejUszoDN5Dj4qjLR8p8nwF6yki7nG/eA0K5G15J8tIFyW+8kJPmTOVjBkn2
+         PKvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729265931; x=1729870731;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZGZilrMaCPY/RlLKnQENee50lNaEUfTtoARSumrgroE=;
-        b=Ebh/Tuj8wbgxl1gefrcgiL2Bi/8smID0AGCE36TC5pcECSU3q+VgLHekIqU4Afe7td
-         +ny1F9aBQ5ft5v3bcGA9nbaqSPqTzdLRROpYhRfjbGDlVi4M5SZrToLhlBcaU2aiZpDX
-         U4hTU202HvnzCaKZFRo1aIIMmy+DMvTNej/+7LZr9lr/IhNLSg2EIJ9nTTOU2W2QOmFs
-         32mtF1O9J6HRAOvrLY9hOvEIZr1adXOz+VVMkljWvZhrwzTPVIKYbYaxHlSjZWqPtAOp
-         EecxOPsW6YYiNq6ZOc643K+MQ6rk0tvkdkIsI0ta0fUiyBTW9W4PAeiTq4pfr5RED+ca
-         xFPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXNpnvPDQJv3SlVpuP0IPchhEutcMZPsnNxggRVbQsdWN/DnHC+Qi3kG8y0i9i4RFD5Bab8vc0UONCRksjh@vger.kernel.org
-X-Gm-Message-State: AOJu0YzaAl1UfJz60GwayGy3xxIV15OtdKetDI6Hi2NxWKRGHEVMfCR5
-	nsav+3DeeK+8DYH5upPU6D6NSkrN6PXtgH9dLZ77MEBGYazw9pkMFIDx2eb43HY=
-X-Google-Smtp-Source: AGHT+IGPxdR5IjipXz8Z5jLLpSRS/Ug36kYGe2HYxW1QPJYSzrMZ+7vrq7n1t4UL0NTRyaJjVPQBCQ==
-X-Received: by 2002:a05:6512:33d3:b0:536:9f02:17b4 with SMTP id 2adb3069b0e04-53a1544961amr1854340e87.40.1729265931172;
-        Fri, 18 Oct 2024 08:38:51 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151f0bdbsm245785e87.175.2024.10.18.08.38.49
+        d=1e100.net; s=20230601; t=1729269165; x=1729873965;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1BmTGXnzY5jB8k4DGJSiq353v0bV1bo9V9udHrhCqnA=;
+        b=F0IF7XOCiy1aNslZxIzRY148amq0kobpr2JhjneNmLYDGoVReN2mR3SogocJEWfcJP
+         UHZ0VypKOu4zMFtWgZv0bXrbaD2CyinTZjATauHR7DKuIobic0au6nWt/yslZ29+6iW9
+         kHq5EfMIfEX9vj19O47moPQT3JJKuTdK1AnbBruxBZkR8oiSdZH4KZbi7HIvOUZWkMXF
+         0gLHGUo4H93bFSGydV8Qw2deGNYPEqp2gL9D0vFisjNPngfjyh8RTDiseI4JXv/ASahJ
+         9BmXn61/l2iiyadpsF9YOWE0EAJ32ZUXpTRoDl+WiA5Mo3sYEVVuVMITVFC+ynb7CoK0
+         xN0g==
+X-Gm-Message-State: AOJu0YzKX9yNBLzhrJ9o4fg1dSpcRevGDsYqFcc1Z4HpEqj6R1ytpwCN
+	tIXrlT8nNWJPZpNQiktscBROCw2FeIofOIMTnD+ZsfuKaMo66TsPbP91wNwY7b8=
+X-Google-Smtp-Source: AGHT+IG7PC32SVvGbLEi3pCb8TZVgwOscj2vz5d7Y8QvfioUU0UKKtplt9qULl6dz8ljd7Z4Y/7vqQ==
+X-Received: by 2002:a05:6512:1292:b0:539:fbba:db71 with SMTP id 2adb3069b0e04-53a15b976a7mr1045248e87.26.1729269165450;
+        Fri, 18 Oct 2024 09:32:45 -0700 (PDT)
+Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151f0b67sm259486e87.126.2024.10.18.09.32.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 08:38:49 -0700 (PDT)
-Date: Fri, 18 Oct 2024 18:38:48 +0300
+        Fri, 18 Oct 2024 09:32:44 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Jie Luo <quic_luoj@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, 
-	quic_pavir@quicinc.com, quic_linchen@quicinc.com, quic_leiwei@quicinc.com, 
-	bartosz.golaszewski@linaro.org, srinivas.kandagatla@linaro.org
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
-Message-ID: <cqgkc3qpupbv47rqxiyhe2m466zxcxepyfcgyaieo2sggffprx@mstqi4pqoiqc>
-References: <20241015-qcom_ipq_cmnpll-v4-0-27817fbe3505@quicinc.com>
- <20241015-qcom_ipq_cmnpll-v4-4-27817fbe3505@quicinc.com>
- <abro3enahzbugcwokcyyhwybbokestbigvzhywxhnfrdjihni3@7ej2hkgbgtf6>
- <b336724c-1fea-4e1e-9477-66f53d746f09@quicinc.com>
- <CAA8EJprVNOLO-CoorNhvKrrSD1bNKdFrzth5BL0GHXffPv62jw@mail.gmail.com>
- <32dbf7ee-1190-401c-b6b1-bc8c70a5158c@quicinc.com>
+Subject: [PATCH 0/2] soc: qcom: socinfo: add SoC IDs for SAR1130P and
+ SAR2130P
+Date: Fri, 18 Oct 2024 19:32:35 +0300
+Message-Id: <20241018-sar2130p-socinfo-v1-0-b1e97ea963fe@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <32dbf7ee-1190-401c-b6b1-bc8c70a5158c@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKONEmcC/x3MTQqAIBBA4avErBNG+yG7SrQQG2s2Kg5EIN09a
+ fkt3qsgVJgE1q5CoZuFU2zQfQf+cvEkxUczGDSjRr0occXoAbOS5DmGpKZlQmcxWD8P0LJcKPD
+ zL7f9fT8JbA5IYgAAAA==
+X-Change-ID: 20241018-sar2130p-socinfo-5850a90f9c63
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=599;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=3o4QDFKrPDpNAhxheUzF5R/l9bf3AcQKebu9incovWg=;
+ b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnEo2qZBxFX0F9ziFam8gm6weyQwfyVm0KlyLex
+ MtzfpAvbUeJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxKNqgAKCRAU23LtvoBl
+ uLwmEACkvC8+Q4gZ1o6sU6XngzOVSwGaZ/dvTO5YbIH1A0HcDUuXknedUffc8Vl9pONZ9xt3bSL
+ nzq4kMEF4HlLKdF7scOckN8BNX1nv+0otkmNW4TNV2ls3FHjyzxC4qKG9Da5CTW7NTHp737w6dB
+ kuOwep14XCS2M79xQsSKIeVBBHAp2D/zb3TPUt3hJmMN5v55sGyr1zTwz+K/6mMFWdsjjO2FAjF
+ +f6iAjTvujKB46yPC+GJz8dqfqzfBXY9vScwIOyYaX/+oH9BX68RuV5a2nMngl3NZvnVu7NtAaU
+ oX3X56uMF47SF8vC52fhuuPzDBo1sSpOKKlU9rwd4JmLZ4HPqggeJH54qcNZd15/WUEGmo+MA67
+ +LfZqc1BgOu2fiWqXvwDUj1Q4ZSGFD0MtSzRnrbDk4zczntiZ4OFG13I26iTTMVnrtqSYau5rHf
+ RMSydP41hFGeMOPorieJ5FRi23to3VJQOo7UhZ/HazJEDPJTwZ1jRhqVEJpqqs2j52BuI8vKS8X
+ rmmkJ3BtHBsed6BOwN4VCOZGRgus/cb6mnNxKp65jmMMkajpWMrlivJzDtv7VF4wszTgPwjsJ8B
+ UPArfQW+HCAW5Xnf+m8TsT3iugdBEer5SWRiPB5djGMT16jeDGqdJrj80nP1qdit378kuI7nUDk
+ t3SLmtBBRGXE49Q==
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-On Fri, Oct 18, 2024 at 10:03:08PM +0800, Jie Luo wrote:
-> 
-> 
-> On 10/18/2024 4:11 PM, Dmitry Baryshkov wrote:
-> > On Fri, 18 Oct 2024 at 09:55, Jie Luo <quic_luoj@quicinc.com> wrote:
-> > > 
-> > > 
-> > > 
-> > > On 10/18/2024 6:32 AM, Dmitry Baryshkov wrote:
-> > > > On Tue, Oct 15, 2024 at 10:16:54PM +0800, Luo Jie wrote:
-> > > > > The CMN PLL clock controller allows selection of an input
-> > > > > clock rate from a defined set of input clock rates. It in-turn
-> > > > > supplies fixed rate output clocks to the hardware blocks that
-> > > > > provide ethernet functions such as PPE (Packet Process Engine)
-> > > > > and connected switch or PHY, and to GCC.
-> > > > > 
-> > > > > Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
-> > > > > ---
-> > > > >    arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi |  6 +++++-
-> > > > >    arch/arm64/boot/dts/qcom/ipq9574.dtsi            | 20 +++++++++++++++++++-
-> > > > >    2 files changed, 24 insertions(+), 2 deletions(-)
-> > > > > 
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> > > > > index 91e104b0f865..77e1e42083f3 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
-> > > > > @@ -3,7 +3,7 @@
-> > > > >     * IPQ9574 RDP board common device tree source
-> > > > >     *
-> > > > >     * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-> > > > > - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > > + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > >     */
-> > > > > 
-> > > > >    /dts-v1/;
-> > > > > @@ -164,6 +164,10 @@ &usb3 {
-> > > > >       status = "okay";
-> > > > >    };
-> > > > > 
-> > > > > +&cmn_pll_ref_clk {
-> > > > > +    clock-frequency = <48000000>;
-> > > > > +};
-> > > > > +
-> > > > >    &xo_board_clk {
-> > > > >       clock-frequency = <24000000>;
-> > > > >    };
-> > > > > diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > > > > index 14c7b3a78442..93f66bb83c5a 100644
-> > > > > --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > > > > +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> > > > > @@ -3,10 +3,11 @@
-> > > > >     * IPQ9574 SoC device tree source
-> > > > >     *
-> > > > >     * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-> > > > > - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > > + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-> > > > >     */
-> > > > > 
-> > > > >    #include <dt-bindings/clock/qcom,apss-ipq.h>
-> > > > > +#include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
-> > > > >    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-> > > > >    #include <dt-bindings/interconnect/qcom,ipq9574.h>
-> > > > >    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> > > > > @@ -19,6 +20,11 @@ / {
-> > > > >       #size-cells = <2>;
-> > > > > 
-> > > > >       clocks {
-> > > > > +            cmn_pll_ref_clk: cmn-pll-ref-clk {
-> > > > > +                    compatible = "fixed-clock";
-> > > > > +                    #clock-cells = <0>;
-> > > > > +            };
-> > > > 
-> > > > Which block provides this clock? If it is provided by the external XO
-> > > > then it should not be a part of the SoC dtsi.
-> > > 
-> > > The on-chip WiFi block supplies this reference clock. So keeping it in
-> > > the SoC DTSI is perhaps appropriate.
-> > 
-> > Then maybe it should be provided by the WiFi device node? At least you
-> > should document your design decisions in the commit message.
-> 
-> This CMN PLL reference clock is fixed rate and is automatically
-> generated by the SoC's internal Wi-Fi hardware block with no software
-> configuration required from the Wi-Fi side.
-> 
-> Sure, I will enhance the commit message to add the information on the
-> fixed reference clock from Wi-Fi block. Hope this is ok.
+Add add SoC IDs for Qualcomm SAR1130P and SAR2130P platforms.
 
-We have other fixed clocks which are provided by hardware blocks.
-Without additional details it is impossible to answer whether it is fine
-or not.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+Dmitry Baryshkov (2):
+      dt-bindings: arm: qcom,ids: add SoC ID for SAR2130P and SAR1130P
+      soc: qcom: socinfo: add SoC IDs for SAR1130P and SAR2130P
 
-> 
-> > 
-> > Also, I don't think this node passes DT schema validation. Did you check it?
-> 
-> Yes, the DT is validated against the schema, I have shared the logs
-> below. Could you please let me know If anything needs rectification?
+ drivers/soc/qcom/socinfo.c         | 2 ++
+ include/dt-bindings/arm/qcom,ids.h | 2 ++
+ 2 files changed, 4 insertions(+)
+---
+base-commit: 7df1e7189cecb6965ce672e820a5ec6cf499b65b
+change-id: 20241018-sar2130p-socinfo-5850a90f9c63
 
-I see, you are setting the cmn_pll_ref_clk frequency in the
-ipq9574-rdp-common.dtsi file. If the PLL is internal to the SoC, why is
-the frequency set outside of it? Is it generated by multiplying the XO
-clk? Should you be using fixed-factor clock instead?
-
+Best regards,
 -- 
-With best wishes
-Dmitry
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 
