@@ -1,48 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-34910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 426909A38F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:45:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CFE09A3951
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 11:02:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF7FC281164
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 08:45:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EE1D1C239CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 09:02:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C12318EFD4;
-	Fri, 18 Oct 2024 08:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EBC618E76B;
+	Fri, 18 Oct 2024 09:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="COp3fktg"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G3Yj21Bk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570FA18E76D;
-	Fri, 18 Oct 2024 08:45:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E26617DE36;
+	Fri, 18 Oct 2024 09:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729241102; cv=none; b=VPgKLTLXNgLudEXRvEeloPXBdg4yKbReSFUmNd0uiZYPWs0yD5QS/7Bi7LBELu+GFFgcZBMwjiEoJSpbHekCUWPBVhdCxruKZaVLYxfvgGOU9mirDDslBgHbSEO4tA+f/3NGWfyQ5i1MgzqajXoCkXpzVl/0G7+zq6jwiJBVvNo=
+	t=1729242127; cv=none; b=WbEiuvpy5oCjDZ0zRcOx3GQzUQdkpUZP3RJKgRJ6kGop1czIeAgHZnHvqjLSdS/RQK4aTzXL8DVydOCmNEEi2/GnmV0JREdeHLCh+PnB1iEGX3L/Aq8JFR1cNV84cOCzsN8UjdC97EMf5rHAJBAbtRu6Ktf4fCba7ICHSeY6xmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729241102; c=relaxed/simple;
-	bh=DusfJOzlMc3GN+GZcsnL/9YSPBYHTp/JWphBOHWwn1g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TlJ8+Xx5nVSEufWfP3E0QWvwrYgLZ/K0VwBjun0DQ1Xx6LHWHzqiO9b/QAobvm0UO4l0SvN/ZsMMRBTHbdl4UGUm3OcZkBg1piQTYRr4DT8KO2T3MyR1JqwgwC2lgvihJFaXD0TMmrehibgGDA5ErTZ1GVpE5KNn55MlRvOcWQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=COp3fktg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D744BC4CEC3;
-	Fri, 18 Oct 2024 08:44:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729241102;
-	bh=DusfJOzlMc3GN+GZcsnL/9YSPBYHTp/JWphBOHWwn1g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=COp3fktg1ZqyNqkmn4XH7/AA+vSRiRTwBspSgGQiOcObzN/kUF/rOD/AfZtJf8Ool
-	 cduSB6QBYbZ0+sZqnDMCE/83GYW1Uw1+Cxj3faTZmm2WTduop0I98QzQxMgLXF1xYS
-	 SlEY3EQPL9WIC1mmywzOgJQgb6kQa5/HUZBg+ERWO4gGLpJRzyxpwXwhv9WZLqQ7+L
-	 xPWFgQfarGBiFt+3wgxQJ23mV3lPL9lkUMSDIApC/3ZOoXqWJAralJ8M8gUWNAiVfk
-	 ND+q2pxaQ6iAckIueDYxeK28NXVg89wHTZv4d58d8DFHXyLTtkS4bEbMPx6TNwYWeJ
-	 cpKwJdmyAT6Sg==
-Message-ID: <d561b52e-b01f-4a70-9be2-81bb6b00943d@kernel.org>
-Date: Fri, 18 Oct 2024 10:44:55 +0200
+	s=arc-20240116; t=1729242127; c=relaxed/simple;
+	bh=5zevuy9/0H8ybeszjdKv6ORtzNZwJb6hVxMXGIrm4Po=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=IfhkmqschnYtr5uqUAyujuTeLf+sCmso3Scw5FohnwIc9F2yq5EYyYuhhlm62FbqloyjdLcN0NRTADHNBX1iMYcJI0wGgV8FP0Zi4yjpCY99Qje8f1qyQhqbFewOqCpb12+z8BzVijYhj36VcUWLPfUtlxEC8K3PuR0J5f1WVMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G3Yj21Bk; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I6KYoF006874;
+	Fri, 18 Oct 2024 09:01:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	/xq50zskWssdL5cb4gep6QWqjz2fidOOlyXs84vf6mI=; b=G3Yj21BkASf/WL0Q
+	uEMw/fAvBiQCuFSFAI+BmeiQ7dFCC8RBQCdnGWDYY+YkM6+Go+rfg/annN2edvpY
+	S2fRg+3k/XfxGrMEbvxgBfHJkC81O/be+kH6Otuc4xxMbKbETYSk6ayeR+dudTcH
+	yH4fIYubJQqsY2ni4JcfwVTnDoqy7rRZV9QDniIF8Qody6vjB8TnR39mCVohN6Yv
+	6+iBY9mBeM11loxeR7Pp24XosRaRoZSq+/Zg64UP0oMrKro+tF6kZaV3woUIMNzJ
+	8o6ZRQ8vjwgc8yd1ctehJlHocVVKUG2ktI/rvDoZa5s4VScc8+BtxjuSmODi3ORA
+	Sri4Ag==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42b5hstfgb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Oct 2024 09:01:57 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49I91uuj025280
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Oct 2024 09:01:56 GMT
+Received: from [10.233.17.145] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 18 Oct
+ 2024 02:01:51 -0700
+Message-ID: <684582c3-3559-4c54-8257-cb952bbfe2ec@quicinc.com>
+Date: Fri, 18 Oct 2024 17:01:48 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,76 +65,134 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] dt-bindings: pinctrl : qcom: document SAR2130P
- TLMM
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20241018-sar2130p-tlmm-v2-0-11a1d09a6e5f@linaro.org>
- <20241018-sar2130p-tlmm-v2-1-11a1d09a6e5f@linaro.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20241018-sar2130p-tlmm-v2-1-11a1d09a6e5f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH v2 5/5] phy: qcom: qmp-usbc: Add qmp configuration for
+ QCS615
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC: Krishna Kurapati <quic_kriskura@quicinc.com>,
+        Vinod Koul
+	<vkoul@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Rob Herring
+	<robh@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        "Bjorn
+ Andersson" <quic_bjorande@quicinc.com>,
+        Wesley Cheng
+	<quic_wcheng@quicinc.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>,
+        Manivannan Sadhasivam
+	<manivannan.sadhasivam@linaro.org>,
+        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
+        <quic_jackp@quicinc.com>
+References: <20241017130701.3301785-1-quic_kriskura@quicinc.com>
+ <20241017130701.3301785-6-quic_kriskura@quicinc.com>
+ <CAA8EJprcOU6qeJvHH+MVoPnQ+mGcos=pDOVBSeSUfBGw-KR6tA@mail.gmail.com>
+ <aa68e5ab-86a6-430e-92d8-ed89b4eb37f7@quicinc.com>
+ <CAA8EJprkq-Cct9Uk1Jwqc5Rn8mx8THTRgwCzDx=8ZgbCpwD7qw@mail.gmail.com>
+From: Tingwei Zhang <quic_tingweiz@quicinc.com>
+In-Reply-To: <CAA8EJprkq-Cct9Uk1Jwqc5Rn8mx8THTRgwCzDx=8ZgbCpwD7qw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GypxlSRqaNk_gTLWXB9lyjej6lAJ0ETH
+X-Proofpoint-ORIG-GUID: GypxlSRqaNk_gTLWXB9lyjej6lAJ0ETH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410180057
 
-On 18/10/2024 10:42, Dmitry Baryshkov wrote:
-> Add bindings for the pin controller (TLMM) present on the
-> Qualcomm SAR2130P platform.
+On 10/18/2024 4:06 PM, Dmitry Baryshkov wrote:
+> On Fri, 18 Oct 2024 at 10:48, Tingwei Zhang <quic_tingweiz@quicinc.com> wrote:
+>>
+>> On 10/18/2024 2:27 AM, Dmitry Baryshkov wrote:
+>>> On Thu, 17 Oct 2024 at 16:07, Krishna Kurapati
+>>> <quic_kriskura@quicinc.com> wrote:
+>>>>
+>>>> Provide PHY configuration for the USB QMP PHY for QCS615 Platform.
+>>>>
+>>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>
+>>> After checking platform details,
+>>>
+>>> Unreviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>
+>>> Please perform global s/QCS615/SM6150/ and s/qcs615/sm6150/
+>>
+>> QCS615 and SM6150 are different variants of the same SoC. QCS615 is an
+>> IoT variant, while SM6150 is a mobile variant. We are currently adding
+>> QCS615 SoC support to the upstream Kernel, as it is in an active
+>> development stage and we anticipate many products based on this SoC. On
+>> the other hand, the SM6150 is an older mobile platform that is unlikely
+>> to be used in new designs. For a product introduction of the QCS615,
+>> please refer to
+>> https://docs.qualcomm.com/bundle/publicresource/87-83838-1_REV_A_Qualcomm_IQ6_Series_Product_Brief.pdf
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+> Yes, I guessed so. It would have been nice if it was documented this
+> way from the beginning.
+> 
+> Please note that we usually get support for the mobile SoC first. So
+> in most of the cases devices use mobile compatible even for IoT
+> platforms, see qrb5165, qrb4210, qcm6490 and other similar platforms.
+> I simply asked to follow the established pattern.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Yes, we start from mobile variant for most of the platforms. There are 
+some exceptions like sc7180 and sc7280 which we started from compute 
+variant since they are widely used by compute platform on upstream 
+Kernel. I think we have similar case here. QCS615 will be widely used by 
+IOT products on upstream Kernel. We should have clarified this from 
+beginning so there's no ambiguity.
 
-Best regards,
-Krzysztof
+> 
+>>
+>>>
+>>>> ---
+>>>>    drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 3 +++
+>>>>    1 file changed, 3 insertions(+)
+>>>>
+>>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+>>>> index d4fa1063ea61..c56ba8468538 100644
+>>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+>>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+>>>> @@ -1123,6 +1123,9 @@ static const struct of_device_id qmp_usbc_of_match_table[] = {
+>>>>           }, {
+>>>>                   .compatible = "qcom,qcm2290-qmp-usb3-phy",
+>>>>                   .data = &qcm2290_usb3phy_cfg,
+>>>> +       }, {
+>>>> +               .compatible = "qcom,qcs615-qmp-usb3-phy",
+>>>> +               .data = &qcm2290_usb3phy_cfg,
+>>>>           }, {
+>>>>                   .compatible = "qcom,sdm660-qmp-usb3-phy",
+>>>>                   .data = &sdm660_usb3phy_cfg,
+>>>> --
+>>>> 2.34.1
+>>>>
+>>>
+>>>
+>>
+>>
+>> --
+>> Thanks,
+>> Tingwei
+> 
+> 
+> 
 
+
+-- 
+Thanks,
+Tingwei
 
