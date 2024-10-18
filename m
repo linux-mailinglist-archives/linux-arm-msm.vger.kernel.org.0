@@ -1,141 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-34983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 101949A43E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 18:33:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 216B39A4414
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 18:46:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A67DF280D77
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 16:33:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4ADD1F243A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 16:46:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70C622038D6;
-	Fri, 18 Oct 2024 16:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1A02036F6;
+	Fri, 18 Oct 2024 16:46:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u0DJGgcU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ePM3feaM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695AB203705
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 16:32:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE1E202651;
+	Fri, 18 Oct 2024 16:46:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729269172; cv=none; b=tB7zCyY2fBVAH46EfFQNHjISDifVj/rp6ucJ1gWHxF0HrPn1Ww4kqj4njQCQmUUCr0PDE8hX4DjbVeG8lFEGv9A1JzwRA1oMZ/8z1V3owDMOLH2j9EQGLuvIvkEmXp0rbCcMyuNFB/opNO2vJh1QhV3il+nbjXfQC5fUj2bnmqg=
+	t=1729269992; cv=none; b=CpVGEfrPhrTA+bP6Bt8BWIOQL+90W39U6muyQJw7lB0iG0VdLfiWf866t20S9D0Uof+Wt6q1ImVBnVzq6auTlT9JzGcv1ffdop+ivIJNTxYLhI04/rh2Zma9epiQDgDxCJXHWkhsEvMCyoxuyd4ttlwaXppRxITOQ9JBH1WIYZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729269172; c=relaxed/simple;
-	bh=PM71LwpkitHpyjAVpmoIp4LheC4HG7kkWYdqCdHMd4U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=OWxrsHPxywBHA9f0tNBmGTFO4C/Ew4ga+f7mYOeYPWy8c/Qqv3lE6muXqlUJYjkGD+LyPpmKkNuPIdv4AxlWFf4GUDLApSNZBMHtnj8DiSgy5bTHJP1NcFXb+urTzLNhDM9EiaNrI23+jjQjgdGn2sjtM5QNNgOBOY+NNt5gDhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u0DJGgcU; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539f4d8ef84so2656372e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 09:32:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729269168; x=1729873968; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RfzKhuTiKp9pZjSgZdxNSFehbqgfWGOXbTqsUd0B2/8=;
-        b=u0DJGgcUnEZE28jukfqlySZhUJaw1pu7v4a9MmUS0c5JoA21ERVa8+WmlBxNuE7091
-         jufBQZnfAUCJapM+5sB6jJiE6Ml2H7mlZH22tszsj848Kxu5zlYi3UyGhCy2bYmy+m2M
-         sLe+pQ4OdVcZfe7bSb5B5XUGibsbUWsTXFch1thN8QOHVbKlLvIXMaE9pYfeBoPZa+fe
-         3ZRFnzq1uLTUQNa8uw8/zsdpy2aufA9D3+cDaTfjnv/m3AqWIPlIZDYc5hoowNLwm0GH
-         fzg6GQuqF6rlMMsWUXfWvDR6Fk35xk8YsBKneOPzm/SB6hK0Y2Oh3ARAh84E6/U9rh7f
-         xhxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729269168; x=1729873968;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RfzKhuTiKp9pZjSgZdxNSFehbqgfWGOXbTqsUd0B2/8=;
-        b=RFLGuNQZqo5FG0MhjjCZMbniAxlZVhxZ5S8shJ54f2pwj2LdMEkmzqqviQ9L+VWFR0
-         w+cIBHVKCptU15PZqd0ZjHb/1NSy6ml4XZEYe/F6LNbuXfrlAtClRiN79A7in2ecB0B4
-         /HQ6AOz5sQPDZpNp5MUWkSmkLsd55F0Nr6c9MVa65LlJleoF/Ub1rs61rxyXVJCaP7Yy
-         N3/DUlmc1UqVayjZ5dJJfxflO6bT9UKlK01mmkE4/FllZdIbB978zLIQFnrCkFI23rv6
-         uoIjJLm+Drc8JiPsVgL2p+GbOqLlgn4eBBX1kTxcp7o5RxdgkfSMkxHxLqxxwiAmDFiO
-         oZaw==
-X-Gm-Message-State: AOJu0YztMmWi8A/YFYZrZNxTK7QVS5GyRx7+6V/BpS2rILtgh4ASBq25
-	SYjpewW0fdWLB+Abni2itXDnvAXt8ezk7HUny1Slo1/wGQl8xswQrCuRZsElV8o=
-X-Google-Smtp-Source: AGHT+IFi8QRylLpnzrJYHT3b0IDEkd/M7Jz6Pssf1yCivyQDMb9wu7GkC2wGtwbLT1IS3qXwHGBopw==
-X-Received: by 2002:a05:6512:4017:b0:539:f6c4:c29d with SMTP id 2adb3069b0e04-53a1550bbc1mr1982662e87.54.1729269168504;
-        Fri, 18 Oct 2024 09:32:48 -0700 (PDT)
-Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151f0b67sm259486e87.126.2024.10.18.09.32.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 09:32:48 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 18 Oct 2024 19:32:37 +0300
-Subject: [PATCH 2/2] soc: qcom: socinfo: add SoC IDs for SAR1130P and
- SAR2130P
+	s=arc-20240116; t=1729269992; c=relaxed/simple;
+	bh=HvetEVA4zCK8RL7HD2ZOs/3kgdfuNgxZCJtcWYYCeBI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Wp2e872br0WOo57ghex0Ragd5s+KDimCu0ifaqIPtyZ/6lxKWZlt3H3+D+/4L2C4vrU9y+5hXyCBI3P3EUdp9nEyohp5x7QnxfyCF1IdMPp58SG241jGHhq4BRqcIr9IIs6OU6RYA8/haaetyoeD6+1lYWGITYlKDHoGrUlY4Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ePM3feaM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3354CC4CECF;
+	Fri, 18 Oct 2024 16:46:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729269991;
+	bh=HvetEVA4zCK8RL7HD2ZOs/3kgdfuNgxZCJtcWYYCeBI=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ePM3feaML+QDjb7Hk9W3VtQNSvOD/e6yi0wwNvPZHnc9nBxfQXvqjbmHLxiBE08m5
+	 H1jfEEsUwMrnlATY3BdP/4Sid8rJzkxv/oFuj61BOUHaSgfPZf7p7eNQ9+U9KI4Pku
+	 NNF6x8xNfg69pvky/iOo46zaBE9EDisG9rrAREk4DbVH5sE4gdzLVY+a8D+Z3/TU39
+	 hP5C8bVPDekko9rI4jF4Ik8C6Hj6+RRz80g0xk3XJR5VwIkJqO+o8fEb14e1KdhB9/
+	 zcgZbFtwaxaflJQx8kxyaEeDk+uQpgMkIGirIZ92f6lQtXvgtbI/8V91fpulyyflRR
+	 Erxp6aDKzs3VQ==
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5eb8099f2e2so761071eaf.3;
+        Fri, 18 Oct 2024 09:46:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUiX60UwZcWHdqL0k7SvQcGamsAeGyxA8arpFfm07FtWS3zJeElH2DGAYnEeACSYcH860r6GBB0/s+nrASU@vger.kernel.org, AJvYcCV5cmGKyqt56DjJ9wbtTKeEzSBcL2fkgex2tD76bGhXvGcw1soJImPs/PHwrgkVH5tZgXkZb6PTFxnb2DKH@vger.kernel.org, AJvYcCVQ0KBUBoiH+pZj4LV/l0rNtUqge1wMnC0vv5ZD+CVALcVphB0ODHZLsW4E1EU/Bv0JHx+eUF/EpgQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsWnd6GEujfQV70mpTGXkeJR3/uQcv85kLGKFbs27gT3QAHV3z
+	7lISdri0xeYd1TCrUEM4bZjPRxdi8gj1PfqTSMlQwFet7P7mvG5ai6xmljJ1pFjeuruZWhcPbtY
+	dEofBBYxXlkW4hvTNwcpxB/vaygU=
+X-Google-Smtp-Source: AGHT+IGXyq0dmldYiwmz+afHivTsSjfiM4J/KBaxukLyYzlQwRaqDq01j8jkT5ZetrgHgl22GBLb8mkwRLI2wrLMxa0=
+X-Received: by 2002:a05:6870:ac22:b0:287:b133:8aca with SMTP id
+ 586e51a60fabf-2892c3425demr3187518fac.25.1729269990416; Fri, 18 Oct 2024
+ 09:46:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241018-sar2130p-socinfo-v1-2-b1e97ea963fe@linaro.org>
-References: <20241018-sar2130p-socinfo-v1-0-b1e97ea963fe@linaro.org>
-In-Reply-To: <20241018-sar2130p-socinfo-v1-0-b1e97ea963fe@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1007;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=PM71LwpkitHpyjAVpmoIp4LheC4HG7kkWYdqCdHMd4U=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnEo2rk8zifH/0OLbmAWpSbnpZZgz3CDk++F9xX
- ems0gpMHhWJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxKNqwAKCRAU23LtvoBl
- uJBPD/kB4Qzmnm34PYL+oWVfmkbNMYukDEKSx/8ITdvomK+vOiJ98qOsZn7ii1aSF5yQKYEIV9j
- upeFaws0F7JuL9MCO8vwl8dt5UMM6M1bmYnBxPKlNnFfjWWk9eOyl7jXiwbqSCC3Cvrfjkb4qCj
- x+CT+cpb+idA2nI1MITaJCTj9W1mtIeKUf5KmDePH8ah3OVt2wtV+IP9gCeIWjVOl7W/xUpnprp
- 2ZuH0H44fK7uyiIMAxukh7sj8XYUUrXg2s96nhBbP17H160OWyCbRBjJGhHerZrcYEt3eCvsFrj
- 57C9RbOWhMh2o0qBeUhdW3zNxhSvV1FUqr0QapvNiNZys2rStf60prf50wrws/UI5d/te/jnISY
- sPe1odGFSxnh2TUhpkjzTw4+FYDvZekaQ7u9iHSig1QF9HkwgEsyujnOXi2VNZUmTnJ32NnAYqa
- kHL9z1FaO6gvGgrMF71DROaBrVlL5iyU4T7zRwA5EipER9fWhLTzLiHgMasIWGMjiSvIFgIX0mf
- MuH7PxhltohC2JjxW76FnX9wzTL/2Us9qpUnpjb32SgO88KeYjVGk0quxDx1ZxIL3M5o1OZJ6iR
- B897FM7iRpc9Bm1vknHql/w0wrfFche5y7TYLrUFTAdhXsihxw9gZNbmX8fPycnvJmzNTCiKCq1
- 0lJYPUiJpXlkM1Q==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+References: <20240927081018.8608-1-shenlichuan@vivo.com>
+In-Reply-To: <20240927081018.8608-1-shenlichuan@vivo.com>
+From: "Rafael J. Wysocki" <rafael@kernel.org>
+Date: Fri, 18 Oct 2024 18:46:19 +0200
+X-Gmail-Original-Message-ID: <CAJZ5v0h3ZfsjOn05xBzpmFVi2Cm5Coa7006YRSGfoCe+HBv1ww@mail.gmail.com>
+Message-ID: <CAJZ5v0h3ZfsjOn05xBzpmFVi2Cm5Coa7006YRSGfoCe+HBv1ww@mail.gmail.com>
+Subject: Re: [PATCH v1] cpuidle: Correct some typos in comments
+To: Shen Lichuan <shenlichuan@vivo.com>
+Cc: rafael@kernel.org, daniel.lezcano@linaro.org, linux-pm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	opensource.kernel@vivo.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add SoC IDs for Qualcomm SAR1130P and SAR2130P platforms.
+On Fri, Sep 27, 2024 at 10:10=E2=80=AFAM Shen Lichuan <shenlichuan@vivo.com=
+> wrote:
+>
+> Fixed some confusing typos that were currently identified with codespell,
+> the details are as follows:
+>
+> -in the code comments:
+> drivers/cpuidle/cpuidle-arm.c:142: registeration =3D=3D> registration
+> drivers/cpuidle/cpuidle-qcom-spm.c:51: accidently =3D=3D> accidentally
+> drivers/cpuidle/cpuidle.c:409: dependant =3D=3D> dependent
+> drivers/cpuidle/driver.c:264: occuring =3D=3D> occurring
+> drivers/cpuidle/driver.c:299: occuring =3D=3D> occurring
+>
+> Signed-off-by: Shen Lichuan <shenlichuan@vivo.com>
+> ---
+>  drivers/cpuidle/cpuidle-arm.c      | 2 +-
+>  drivers/cpuidle/cpuidle-qcom-spm.c | 2 +-
+>  drivers/cpuidle/cpuidle.c          | 2 +-
+>  drivers/cpuidle/driver.c           | 4 ++--
+>  4 files changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/cpuidle/cpuidle-arm.c b/drivers/cpuidle/cpuidle-arm.=
+c
+> index 7cfb980a357d..caba6f4bb1b7 100644
+> --- a/drivers/cpuidle/cpuidle-arm.c
+> +++ b/drivers/cpuidle/cpuidle-arm.c
+> @@ -139,7 +139,7 @@ static int __init arm_idle_init_cpu(int cpu)
+>   *
+>   * Initializes arm cpuidle driver for all CPUs, if any CPU fails
+>   * to register cpuidle driver then rollback to cancel all CPUs
+> - * registeration.
+> + * registration.
+>   */
+>  static int __init arm_idle_init(void)
+>  {
+> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidle=
+-qcom-spm.c
+> index 1fc9968eae19..3ab240e0e122 100644
+> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
+> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+> @@ -48,7 +48,7 @@ static int qcom_cpu_spc(struct spm_driver_data *drv)
+>         ret =3D cpu_suspend(0, qcom_pm_collapse);
+>         /*
+>          * ARM common code executes WFI without calling into our driver a=
+nd
+> -        * if the SPM mode is not reset, then we may accidently power dow=
+n the
+> +        * if the SPM mode is not reset, then we may accidentally power d=
+own the
+>          * cpu when we intended only to gate the cpu clock.
+>          * Ensure the state is set to standby before returning.
+>          */
+> diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+> index 9e418aec1755..06ace16f9e71 100644
+> --- a/drivers/cpuidle/cpuidle.c
+> +++ b/drivers/cpuidle/cpuidle.c
+> @@ -406,7 +406,7 @@ void cpuidle_reflect(struct cpuidle_device *dev, int =
+index)
+>   * Min polling interval of 10usec is a guess. It is assuming that
+>   * for most users, the time for a single ping-pong workload like
+>   * perf bench pipe would generally complete within 10usec but
+> - * this is hardware dependant. Actual time can be estimated with
+> + * this is hardware dependent. Actual time can be estimated with
+>   *
+>   * perf bench sched pipe -l 10000
+>   *
+> diff --git a/drivers/cpuidle/driver.c b/drivers/cpuidle/driver.c
+> index cf5873cc45dc..9bbfa594c442 100644
+> --- a/drivers/cpuidle/driver.c
+> +++ b/drivers/cpuidle/driver.c
+> @@ -261,7 +261,7 @@ static void __cpuidle_unregister_driver(struct cpuidl=
+e_driver *drv)
+>   * @drv: a pointer to a valid struct cpuidle_driver
+>   *
+>   * Register the driver under a lock to prevent concurrent attempts to
+> - * [un]register the driver from occuring at the same time.
+> + * [un]register the driver from occurring at the same time.
+>   *
+>   * Returns 0 on success, a negative error code (returned by
+>   * __cpuidle_register_driver()) otherwise.
+> @@ -296,7 +296,7 @@ EXPORT_SYMBOL_GPL(cpuidle_register_driver);
+>   * @drv: a pointer to a valid struct cpuidle_driver
+>   *
+>   * Unregisters the cpuidle driver under a lock to prevent concurrent att=
+empts
+> - * to [un]register the driver from occuring at the same time.  @drv has =
+to
+> + * to [un]register the driver from occurring at the same time.  @drv has=
+ to
+>   * match the currently registered driver.
+>   */
+>  void cpuidle_unregister_driver(struct cpuidle_driver *drv)
+> --
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/soc/qcom/socinfo.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 3c14df7a382cfc67d43c8f096ecf7416de129e4f..396511a13deda80701c95ed43770bfc1273673fc 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -422,6 +422,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(IPQ9510) },
- 	{ qcom_board_id(QRB4210) },
- 	{ qcom_board_id(QRB2210) },
-+	{ qcom_board_id(SAR2130P) },
- 	{ qcom_board_id(SM8475) },
- 	{ qcom_board_id(SM8475P) },
- 	{ qcom_board_id(SA8775P) },
-@@ -431,6 +432,7 @@ static const struct soc_id soc_id[] = {
- 	{ qcom_board_id(X1E80100) },
- 	{ qcom_board_id(SM8650) },
- 	{ qcom_board_id(SM4450) },
-+	{ qcom_board_id(SAR1130P) },
- 	{ qcom_board_id(QDU1010) },
- 	{ qcom_board_id(QRU1032) },
- 	{ qcom_board_id(QRU1052) },
-
--- 
-2.39.5
-
+Applied as 6.13 material, thanks!
 
