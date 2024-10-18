@@ -1,161 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-34923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34924-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 400479A3AFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:11:06 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 915DD9A3B05
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:12:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D5EA4281586
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:11:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 25C14B20FF4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:12:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F083201033;
-	Fri, 18 Oct 2024 10:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDFED2010E1;
+	Fri, 18 Oct 2024 10:11:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="o5E0K5oF"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lY7c+Abl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DEB188A18
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 10:10:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11224200CB1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 10:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729246260; cv=none; b=RHwzsEoY57M36YTiA5SrecEzPTksXDya5AKJnlPivca1owXj36HJPb8vuX/jEJ53lV/lEjl7jzfGSJme6HhbJF+srbKYxJ7A16j9sB4uiSxrj/PyqlxXyFYDC0Su2UdHskR9xhYvQA/B45bMr4hVbhcaiG8+zhPAgZAdDLSjL8U=
+	t=1729246318; cv=none; b=nhPLhrLmQjtOkNAvye/E0lEDvqy3tsM52k7Xt6DqcCoR+TRyI61iI61KgLOMaRbe4C2yBstJRx99F+i6Ls7JTPnDDaQUrdTA22kIVjYsaNf3Yy/t6gf9WWdw/PfGI4BM1e6YF2+A39R9v60BpQipmx+IvVePy6V5ItDKXa7o+Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729246260; c=relaxed/simple;
-	bh=ocsqfXChWEgBHZDxan7oYRTvYYt8oUieGxp7eYZQ634=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mjhgFXb64hahy9+YEkOZWtPr3qPh+2PCvoV5ckVEoczTcdWgSFPxwtbfotRnrixYBhb2ITBKb/prenognkC3FLeprLPXNNTJ1DxJTmvSISSRaxSUaRudYRCS679jt8JcaJtqFQGca37OYlAzVUtUFHhX4Vc7eiuYDkShBRhXBHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=o5E0K5oF; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I3Ojxs004689
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 10:10:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OXPIMmd9oqpiU+5EJi5igCXiHCqmSyos23ulQ9gEwq4=; b=o5E0K5oFjiSKTcOX
-	9gdp3dfxDqExP6bQ31GIjBJ8hCnA1VujrvA1bwGWq90IWTWFjz8Lpmh5RxQP7rTZ
-	LA5PNTE9Tae7W5tRErXWvDh+LeBRx0pnckBWd6cXDv49yzM3Zd0q7EQQRP+Fl/XM
-	ah1JBG8TSD9ko1gU+yKXyijL0avJBrH5rZURXjOSBNdOYA+G+A+cbMPsKSM76MMr
-	3JnWYcvm4QC6g7dvUV1JZE2wclwo5UI6ZSJyoD9wPM+e8rJ7a08sLkgbKYoWhtvS
-	Cypv1KrNbkOi3dKoQCiC2ouTONSxjLoANyEuOs3C+2oaLKlotSDHf+CWQ6kBRavj
-	XLBU5Q==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42athc4raq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 10:10:57 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-6cbe944435fso3557376d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 03:10:57 -0700 (PDT)
+	s=arc-20240116; t=1729246318; c=relaxed/simple;
+	bh=kRK4/BKBi0JXML0QAlq/7TuHFKd7W2th9qWUj6ShHEY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bolSWWx/CuVfxTYxpD3MbPeTrTwoxaCyw/wYc4sU/KHHJ4oiwfCkbinMSn8FT4GAezQckqFkKaJ5lEjoI7p2alyfGyAkwa6o1j2blR5jYEJLBTeC6q3bK6QvGi4oMT2xcArv2fJm8dJgmLKXUxDV3OzHz3syYBneRKeky5JXv8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lY7c+Abl; arc=none smtp.client-ip=209.85.208.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso20058501fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 03:11:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729246315; x=1729851115; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jvY8KYiHaZqzdfBn2meM7L0X9I9zbwo+MC/72l11qcc=;
+        b=lY7c+AblIJR5m6SRvIf1y47AIC0qHNJtNGeWTodpotUKSlDk3u2n+RNrBKK5RcZ3uD
+         DYAPqkGN+9pQeeaYb77no7B1oEfhX8lHLgEBWzfrbItq6VCfCDwyfb/AkbIS2Aihr47e
+         yfLV+8AfXPUN6TKCy2slTuzgS6EtB64gzP6UU6Iksk6ELiUR6K2F4lYRO7a0j1zFbFTn
+         lSYC+CaFYYim2W9HPAX8iWrwN/fXS96PCnIrw9OjLDrbINl2OGm03pJsIpiCY02WTZUA
+         pYezMiuKoN7ejzcGXZsPDjweDeYk7njapikDBzZUBtPyB705UOiWY8VEd5DDg78p13o5
+         8fow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729246257; x=1729851057;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OXPIMmd9oqpiU+5EJi5igCXiHCqmSyos23ulQ9gEwq4=;
-        b=h4HZcLEQD/m3GFCh3cJfa3CSu4V4Cw4dnnYlL1lUag1m85LbOHBBobfnUjP3lmn4m6
-         UNZk+mCxWpoGWzXTyihBa/eXZN+B/WqlhPtF3v8PU6Zf7fiQ4zReK6THmuycd07H/KGo
-         xnMno593/bBcrvU12KtdIee6KFRDzou5wC9R5wlyVnnxd2Kx82M8Urxya10rbttCviR1
-         NUEn28nEaOScVkFmIkgyufiEyxU1BwDM1Of/kqmeUWkd26qkIgyLT/BZta2pleWoFr3S
-         /9w0J2Kt3boJghL8AUeTAS7mddSsYNp4xvHvzNiJql5zrXymk5LOiekp2NndeSxZ1X+Y
-         oVHg==
-X-Forwarded-Encrypted: i=1; AJvYcCWYFhBxyiZOW/CtIqr1oJxNjD/VidZom+pB7ScOjKbce4NHCIPGwt7pG9GD4lTXZW3k+erbOi6xhV6VWjHp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz+wPkGooshsqoGjJap0hNxyGt2frlR4KEfLMVpoyCLqB/Qg+Ca
-	46N5n9MTBCkjN3iYh/vjPP20PUrQ3uGPfuCjREF8brs9sYcsqrDzPtMkc9yQrEiwJlIaxJOfbBf
-	RbOS3+HcpbB1JiCBWm8gocDmx7Up2GrvOkujuHoazJ55/xwSc95Gl18T/eMCr7W1s
-X-Received: by 2002:a05:6214:20e2:b0:6cb:c67a:efe8 with SMTP id 6a1803df08f44-6cde1669439mr9594856d6.12.1729246256673;
-        Fri, 18 Oct 2024 03:10:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8jTJw5JnqOjmxBso/awk/XKCbh2dxRKjYIFmIjcpQmKruPvbZM706UA18QnHB/2tWFCQ8IA==
-X-Received: by 2002:a05:6214:20e2:b0:6cb:c67a:efe8 with SMTP id 6a1803df08f44-6cde1669439mr9594456d6.12.1729246256249;
-        Fri, 18 Oct 2024 03:10:56 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68bf7173sm72992066b.167.2024.10.18.03.10.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Oct 2024 03:10:55 -0700 (PDT)
-Message-ID: <bb73e6ce-537a-413e-87ea-ac8256313c46@oss.qualcomm.com>
-Date: Fri, 18 Oct 2024 12:10:52 +0200
+        d=1e100.net; s=20230601; t=1729246315; x=1729851115;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jvY8KYiHaZqzdfBn2meM7L0X9I9zbwo+MC/72l11qcc=;
+        b=Ty4coX7n1ZZ95ItgoTq8o/m/6foqR0b6PbcJoFSbQ1QcLifMpU5auCLkUtueR86JAn
+         TtTrIxutSRAOkayZlKzuBj/kdffq1yvbYTIzRwtHHrjk5aVFFWPBdQZkPdINeVuFbGnb
+         wXNnUF7/U1lLQgmt251Aj3javnxjlk2CBVgTJFcgFWrdL/YeA8Nbr2Av/K+TN/c3WOdg
+         gXE0pw75NVKZjnE0Xm74wrvHQv0Vx1eYK1aFW+Q9lkvWdtXrbTWJ7b+7FROLMcDoJ35T
+         K1urjpuKieIkrSc5AbU5aIPsv4gd470WeksOpRtWGHZKCA+f5eo/kPDR5DCPwo7SiE42
+         +jvw==
+X-Forwarded-Encrypted: i=1; AJvYcCXwpXbhuVjT0GGRqzu4KU19+wFfl44sEhREAdxKpncFLIhhg1BrE9wgfMX2XntZm66vB1Y19O1NSFLWfAWY@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0pT9SmlUfAXv6M1OMHveUDAZ9K5Bhvlymsg3VPOEff4DrE/qV
+	Kf4Aqa45OyT5dS9CjbVFnsMWu87Nif7wkVW+laijZPv08T1InOH+vurivetgk34=
+X-Google-Smtp-Source: AGHT+IG3sYPji9qicEvtFNlcAs92ChQJkMrU6bQriug80NS0HFO4UZ/qbgCf38X9ZiV302DAIpmCeg==
+X-Received: by 2002:a05:651c:542:b0:2fb:2e27:5334 with SMTP id 38308e7fff4ca-2fb82e98f77mr7417511fa.15.1729246315128;
+        Fri, 18 Oct 2024 03:11:55 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb809b2ab8sm1878671fa.48.2024.10.18.03.11.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2024 03:11:53 -0700 (PDT)
+Date: Fri, 18 Oct 2024 13:11:51 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Tingwei Zhang <quic_tingweiz@quicinc.com>
+Cc: Krishna Kurapati <quic_kriskura@quicinc.com>, 
+	Vinod Koul <vkoul@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>, 
+	Bjorn Andersson <quic_bjorande@quicinc.com>, Wesley Cheng <quic_wcheng@quicinc.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, 
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-phy@lists.infradead.org, quic_ppratap@quicinc.com, 
+	quic_jackp@quicinc.com
+Subject: Re: [PATCH v2 5/5] phy: qcom: qmp-usbc: Add qmp configuration for
+ QCS615
+Message-ID: <l4wpt5qin3ezkowf3puvodrm5wjsptd4a32f4qrzcuuquo6kq6@j2orv5z5quln>
+References: <20241017130701.3301785-1-quic_kriskura@quicinc.com>
+ <20241017130701.3301785-6-quic_kriskura@quicinc.com>
+ <CAA8EJprcOU6qeJvHH+MVoPnQ+mGcos=pDOVBSeSUfBGw-KR6tA@mail.gmail.com>
+ <aa68e5ab-86a6-430e-92d8-ed89b4eb37f7@quicinc.com>
+ <CAA8EJprkq-Cct9Uk1Jwqc5Rn8mx8THTRgwCzDx=8ZgbCpwD7qw@mail.gmail.com>
+ <684582c3-3559-4c54-8257-cb952bbfe2ec@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/5] Add support for DisplayPort on SA8775P platform
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org,
-        andersson@kernel.org, simona@ffwll.ch, abel.vesa@linaro.org,
-        robdclark@gmail.com, quic_abhinavk@quicinc.com, sean@poorly.run,
-        marijn.suijten@somainline.org, airlied@gmail.com, daniel@ffwll.ch,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, quic_khsieh@quicinc.com, konrad.dybcio@linaro.org,
-        quic_parellan@quicinc.com, quic_bjorande@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        quic_riteshk@quicinc.com, quic_vproddut@quicinc.com
-References: <20241018070706.28980-1-quic_mukhopad@quicinc.com>
- <vtfz5vteaedwrqw5cpggmd3esi2rky3f2axubxukh74wdux4uy@zdac7miws5lu>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <vtfz5vteaedwrqw5cpggmd3esi2rky3f2axubxukh74wdux4uy@zdac7miws5lu>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 4giGTCXfBjaZ4OUCCGrj1gp9vbqpMpsl
-X-Proofpoint-ORIG-GUID: 4giGTCXfBjaZ4OUCCGrj1gp9vbqpMpsl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
- mlxscore=0 clxscore=1015 malwarescore=0 mlxlogscore=847 impostorscore=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 adultscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180065
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <684582c3-3559-4c54-8257-cb952bbfe2ec@quicinc.com>
 
-On 18.10.2024 12:08 PM, Dmitry Baryshkov wrote:
-> On Fri, Oct 18, 2024 at 12:37:01PM +0530, Soutrik Mukhopadhyay wrote:
->> This series adds support for the DisplayPort controller
->> and eDP PHY v5 found on the Qualcomm SA8775P platform.
->>
->> ---
->> v2: Fixed review comments from Dmitry and Bjorn
->> 	- Made aux_cfg array as const.
->> 	- Reused edp_swing_hbr_rbr and edp_swing_hbr2_hbr3 for v5.
->>
->> v3: Fixed review comments from Dmitry, Konrad and Bjorn
->> 	- Used a for loop to write the dp_phy_aux_cfg registers.
->> 	- Pre-defined the aux_cfg size to prevent any magic numbers.
->> 	- Added all the necessary DPTX controllers for this platform.
->>
->> v4: Fixed review comments from Dmitry and Krzysztof
->> 	- Removed the "reviewed by" and kept only the "acked by" for 
->> 	  patch 1.
->> 	- Updated the commit message of patch 5 to mention specifically
->> 	  about the validation of "only" MDSS0 DPTX0 and DPTX1.
->>
->> v5: Fixed review comment from Dmitry in patch 5
->> 	- Aligned the register starting address for display port as part 
->> 	  of device description with respect to other targets.
->>
->> Below patches are applied:
->>
->> [1/5] dt-bindings: phy: Add eDP PHY compatible for sa8775p
->>       commit: 7adb3d221a4d6a4f5e0793c3bd35f1168934035c
->> [2/5] phy: qcom: edp: Introduce aux_cfg array for version specific aux settings
->>       commit: 913463587d528d766a8e12c7790995e273ec84fb
->> [3/5] phy: qcom: edp: Add support for eDP PHY on SA8775P
->>       commit: 3f12bf16213c30d8e645027efd94a19c13ee0253
+On Fri, Oct 18, 2024 at 05:01:48PM +0800, Tingwei Zhang wrote:
+> On 10/18/2024 4:06 PM, Dmitry Baryshkov wrote:
+> > On Fri, 18 Oct 2024 at 10:48, Tingwei Zhang <quic_tingweiz@quicinc.com> wrote:
+> > > 
+> > > On 10/18/2024 2:27 AM, Dmitry Baryshkov wrote:
+> > > > On Thu, 17 Oct 2024 at 16:07, Krishna Kurapati
+> > > > <quic_kriskura@quicinc.com> wrote:
+> > > > > 
+> > > > > Provide PHY configuration for the USB QMP PHY for QCS615 Platform.
+> > > > > 
+> > > > > Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> > > > > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > 
+> > > > After checking platform details,
+> > > > 
+> > > > Unreviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > > 
+> > > > Please perform global s/QCS615/SM6150/ and s/qcs615/sm6150/
+> > > 
+> > > QCS615 and SM6150 are different variants of the same SoC. QCS615 is an
+> > > IoT variant, while SM6150 is a mobile variant. We are currently adding
+> > > QCS615 SoC support to the upstream Kernel, as it is in an active
+> > > development stage and we anticipate many products based on this SoC. On
+> > > the other hand, the SM6150 is an older mobile platform that is unlikely
+> > > to be used in new designs. For a product introduction of the QCS615,
+> > > please refer to
+> > > https://docs.qualcomm.com/bundle/publicresource/87-83838-1_REV_A_Qualcomm_IQ6_Series_Product_Brief.pdf
+> > 
+> > Yes, I guessed so. It would have been nice if it was documented this
+> > way from the beginning.
+> > 
+> > Please note that we usually get support for the mobile SoC first. So
+> > in most of the cases devices use mobile compatible even for IoT
+> > platforms, see qrb5165, qrb4210, qcm6490 and other similar platforms.
+> > I simply asked to follow the established pattern.
 > 
-> Please in future skip applied patches instead of including them into the
-> series.  No need to resend the series just for this issue though.
+> Yes, we start from mobile variant for most of the platforms. There are some
+> exceptions like sc7180 and sc7280 which we started from compute variant
+> since they are widely used by compute platform on upstream Kernel. I think
+> we have similar case here. QCS615 will be widely used by IOT products on
+> upstream Kernel. We should have clarified this from beginning so there's no
+> ambiguity.
 
-(you would normally do this by rebasing your tree against -next
-and having git rebase-skip the ones already present)
+After offline discussion with Krzysztof, I'll lift my objection, so
+still Reviewed-by.
 
-Konrad
+-- 
+With best wishes
+Dmitry
 
