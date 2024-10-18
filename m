@@ -1,81 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-34830-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30A829A310E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:52:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0082A9A3191
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 02:07:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4A3B28696D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 17 Oct 2024 22:52:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFE9F1F23380
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:07:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999791D86C9;
-	Thu, 17 Oct 2024 22:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDCED2CA5;
+	Fri, 18 Oct 2024 00:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OZcUhq/2"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RX9Ouqrq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CAA1D798B
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FC72F29;
+	Fri, 18 Oct 2024 00:07:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729205559; cv=none; b=Qu87Q8tC8wGD5Bcn49pSh8f1qyiA4oVeO7/PbWLEUg6L1FOSqBAe1APjy3SZqJCgVU5IpCOpAHIiy8YhnG2hFRY7hVSs2PFXumBrhMckWsWDvvonlxrsarHmNwS/Jhq0Mq22UjkHDEQuZMV+mm1F6RZ05k+pWW/Yk4ODQoPJbNo=
+	t=1729210062; cv=none; b=p+/22HvTwi3Hx0KLc+zs8ht6bcT86kE7MVQMYX800nvkfIXh7yBgJdSaimAi0NoGznWDIMkOGGF8Ar4yIS8yTfQtHY5Cu3Hb3ewfn81TPiK96FuGUz+XDOfhDaNj9siM4CJ4y1JvQaT5WkoD+1kaoinXl/SpMs7i+mBHTUEWEBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729205559; c=relaxed/simple;
-	bh=veoPP5dnbAv8MxONszvuvZHFUMkbHElyR/BNXSyEu8o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m2IJzmGZgPtCO5Pu3fYhDjJPWL5u2Z9fmtY9g3CLTO7G0H6nkXTI/4P5E0bGJQW34NKgbHmfcuTSbHonjvvYeY6Z+3iTcUzKqo2TBePhrmsrtnh0AXlpAzx/sxMCON3GEtyYnDwB20ne3P/fW80HrkKjorEHJIb4JE2hOKGqgtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OZcUhq/2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HG4xr6002600
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:52:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1729210062; c=relaxed/simple;
+	bh=D9ULUqk+TbUqMTKGR0bFo25YiiZ2cs6nBE1a1b8WqFQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YdYec5faevHtXowN9MxcrRc4Umqg616XfKG4Vn9DjkHEh6oqBy2/8tdvgMT73kUkTs8UPK/WwVCUYdy6f73qp3dmhtOkyXVney8BgyovzFS6dzxQdhkPU2f6UrMPKt+FPtCBg6gyluFW55Ae07dhSDFA51EZIXCu0zFLH7+Ekfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RX9Ouqrq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HDcuMX016699;
+	Fri, 18 Oct 2024 00:07:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4IbT5DS26BtuSkJfII8scnwrgyRvqZSh5tNO3g4y6GQ=; b=OZcUhq/2zjmSV0Aq
-	zFJdyJ+qQ/9OZvBcJkQ3RYUVunX0DRmOt64Isav4NshxlDJxCclUY1qVkMULr8sa
-	vwSm7DgOaXLxBn6tY++hVoQjhajzXL60dKXM9rvr3gVvGkoR7zjO5U3zapWnQ22x
-	pljHegLHXvIDnn/pwVG19MKXGGiJMRA8JT5QM93FjN7cLyNve7ntSSEgDqpah1Vl
-	NEgY88slXfIDzVovLeiCwrpDGE3F4DHpXSW8HBlGQEAI2ypUMlKqEgBaJwkE5tVP
-	49K/+wdmC/NH52NRLxCtVFFoJS/RE/xi1FGALftt0xXGjZtcbuAEriEGTu1IMgqo
-	OF+McA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a5xypnrf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 22:52:32 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4609b352aa9so2234291cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 15:52:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729205551; x=1729810351;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4IbT5DS26BtuSkJfII8scnwrgyRvqZSh5tNO3g4y6GQ=;
-        b=eLhq1upkk1FtzkkhW7wgCv46VWQ9fY7HiOPSmAkTBwE5aaHlqQyUmdyvgplbXDT2ov
-         tNjGsfI3z8zaeKHcQhduFuElDl3ERNxtwSed8mCxLXZznquwqOx/A/+HksUemEn/R49h
-         jd2PlDjb4FJQgt+U5QaFMABRF2QW4okRZPbDL4Hl0dG5NlOAsdUTJjXdLLASQevIbMTh
-         1JO4iQ7H11xky2lQWMZwGYxtvAkfC4Goa+2QjEWyKddqmKjuYGPu8wE/3urkoFc8fYTh
-         8Rv334467trf0ML15pgH5iWQckILMaa6AASFTJjveGb2t7hpHsoC8aXdYkkbX758lZLE
-         HinA==
-X-Gm-Message-State: AOJu0YwrWndjs8SzmWwUBez0fp38kGFL1oajP/n2v38rJTE6QDY52lb+
-	0gBn7VU9eCICAnVFy5EqP+AlSSErEtalNF0r4AhTi4H8V5KgmTVwONxv0x/sbJMcPFgPNErFEvx
-	OMObUNsVZFhZnjClKPJYwc/1jVEwDwveiXGgzwFCsisrx4WHSZj3mm9jXsdJnhHXW
-X-Received: by 2002:a05:622a:1aa5:b0:460:3ff6:a0c7 with SMTP id d75a77b69052e-460aedef718mr2353161cf.14.1729205551196;
-        Thu, 17 Oct 2024 15:52:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmMsSKLph0w6Z2CuxpVGUO5OV6eMEH2AOQuSkJYuGrScz4s8n3lw5vOvk48WKsAeN9J3f1ZQ==
-X-Received: by 2002:a05:622a:1aa5:b0:460:3ff6:a0c7 with SMTP id d75a77b69052e-460aedef718mr2352981cf.14.1729205550697;
-        Thu, 17 Oct 2024 15:52:30 -0700 (PDT)
-Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68ae9b5esm20276966b.88.2024.10.17.15.52.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Oct 2024 15:52:28 -0700 (PDT)
-Message-ID: <f9191c4d-a41b-463b-959d-14152cce080e@oss.qualcomm.com>
-Date: Fri, 18 Oct 2024 00:52:26 +0200
+	uxBavpTgL71vWYYy2sA8sf5j3chQYVV9GD147SGaeIE=; b=RX9Ouqrq4NFVay6j
+	q4ttG0ZDVQRxiFHqWMz1ETLYdt9a14mSskOsu4TE50T7xoN7Yz1fi1sDfPZMXDCw
+	Nid3g40KR97d0eIZ6brHzq3xJa0t7AKSCcSoS1FsTDUta85y2SVt5RKKQm0XC+UZ
+	ftQLUofQozfcyUcqlpajRTWKzTMpeConXTyXCrqh/KO8LjdXl+5S0psOcWaD3SwG
+	eOo+yjKkMRzwm4hTVhc4CuOPc0GaEqSVtAgn1QRp3uyc4I+1HGARPsbBQgpR7NKS
+	e8ZqYMKHlVOTbVP2mGtD6UeD4JYw2esaE4AGL3vN9Ffk9mC3fy0oma7dgzZ3FTyN
+	IRBG3A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8w6pdcw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Oct 2024 00:07:15 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49I07EUv021198
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 18 Oct 2024 00:07:14 GMT
+Received: from [10.71.112.85] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Oct
+ 2024 17:07:13 -0700
+Message-ID: <5847c380-75ce-492a-9a30-0899b7ebe98c@quicinc.com>
+Date: Thu, 17 Oct 2024 17:07:12 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,66 +65,74 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: sa8775p: Add support to scale
- DDR/L3
-To: Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-References: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-0-074e0fb80b33@quicinc.com>
- <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-1-074e0fb80b33@quicinc.com>
+Subject: Re: [PATCH v29 01/33] xhci: support setting interrupt moderation IMOD
+ for secondary interrupters
+To: Greg KH <gregkh@linuxfoundation.org>
+CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
+        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
+        <corbet@lwn.net>, <lgirdwood@gmail.com>, <tiwai@suse.com>,
+        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
+        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
+        <bgoswami@quicinc.com>, <robh@kernel.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
+        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
+        Mathias Nyman <mathias.nyman@linux.intel.com>
+References: <20241015212915.1206789-1-quic_wcheng@quicinc.com>
+ <20241015212915.1206789-2-quic_wcheng@quicinc.com>
+ <2024101747-defog-squiggly-ef54@gregkh>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20241017-sa8775p-cpufreq-l3-ddr-scaling-v1-1-074e0fb80b33@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: A_mGFcK-HSlI87Ro4HJHOh_ujJpPI-S6
-X-Proofpoint-ORIG-GUID: A_mGFcK-HSlI87Ro4HJHOh_ujJpPI-S6
+From: Wesley Cheng <quic_wcheng@quicinc.com>
+In-Reply-To: <2024101747-defog-squiggly-ef54@gregkh>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IbNrRGE8x9UV4v1k3a1frmTMQ3tDVf0N
+X-Proofpoint-ORIG-GUID: IbNrRGE8x9UV4v1k3a1frmTMQ3tDVf0N
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 mlxscore=0 bulkscore=0 malwarescore=0
- suspectscore=0 priorityscore=1501 phishscore=0 clxscore=1015 adultscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410170153
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=607
+ malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
+ bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410170163
 
-On 17.10.2024 11:28 AM, Jagadeesh Kona wrote:
-> Add support to scale DDR and L3 based on CPU frequencies
-> on SA8775P platform.
-> 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index 06bf2ba556b89b643da901857a9aa7cdc7ba90cc..d8b90bd4b1f05604185f015929a1f296799ad6a4 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -4,6 +4,7 @@
->   */
->  
->  #include <dt-bindings/interconnect/qcom,icc.h>
-> +#include <dt-bindings/interconnect/qcom,osm-l3.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
-> @@ -47,6 +48,10 @@ CPU0: cpu@0 {
->  			next-level-cache = <&L2_0>;
->  			capacity-dmips-mhz = <1024>;
->  			dynamic-power-coefficient = <100>;
-> +			interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +					&mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ACTIVE_ONLY>,
+Hi Greg,
 
-Please align the '&'s and squash with patch 2. This one doesn't cause
-much difference on its own, which makes the commit message misleading
+On 10/16/2024 11:40 PM, Greg KH wrote:
+> On Tue, Oct 15, 2024 at 02:28:43PM -0700, Wesley Cheng wrote:
+>> From: Mathias Nyman <mathias.nyman@linux.intel.com>
+>>
+>> Allow creators of xHCI secondary interrupters to specify the interrupt
+>> moderation interval value in nanoseconds when creating the interrupter.
+>>
+>> If not sure what value to use then use the xhci driver default
+>> xhci->imod_interval
+>>
+>> Suggested-by: Wesley Cheng <quic_wcheng@quicinc.com>
+>> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+>> Link: https://lore.kernel.org/r/20240905143300.1959279-13-mathias.nyman@linux.intel.com
+>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>> ---
+>>  drivers/usb/host/xhci-mem.c | 8 +++++++-
+>>  drivers/usb/host/xhci.c     | 4 ++--
+>>  drivers/usb/host/xhci.h     | 5 ++++-
+>>  3 files changed, 13 insertions(+), 4 deletions(-)
+> This is already in 6.12-rc1, which makes me confused as to what tree you
+> made this series against.
 
-Konrad
+Sorry, I didn't fetch the latest changes from usb-next.  In this case, should I rebase and resbumit?
+
+Thanks
+
+Wesley Cheng
+
+> thanks,
+>
+> greg k-h
 
