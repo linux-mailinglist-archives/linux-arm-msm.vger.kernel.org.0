@@ -1,198 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-34911-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CFE09A3951
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 11:02:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36D1D9A395D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 11:03:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7EE1D1C239CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 09:02:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8F3801F229FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 09:03:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EBC618E76B;
-	Fri, 18 Oct 2024 09:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 343AC185B5D;
+	Fri, 18 Oct 2024 09:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G3Yj21Bk"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="j0RsXq22"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E26617DE36;
-	Fri, 18 Oct 2024 09:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C6818EFF1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 09:03:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729242127; cv=none; b=WbEiuvpy5oCjDZ0zRcOx3GQzUQdkpUZP3RJKgRJ6kGop1czIeAgHZnHvqjLSdS/RQK4aTzXL8DVydOCmNEEi2/GnmV0JREdeHLCh+PnB1iEGX3L/Aq8JFR1cNV84cOCzsN8UjdC97EMf5rHAJBAbtRu6Ktf4fCba7ICHSeY6xmc=
+	t=1729242218; cv=none; b=lZMFp++W2tSId8pc3oeBV8jo9GiuQ8o/4N2G/TSHWdKHyPb3t55Rk6kbnGsQeSpofyQ132JiFtgn1ijU3lo9AB2F0WJFYd6nG/FeKhr4N3oPA5QnCkkYdNb9rj6wHwfGIOfEeXLVeIlSFQGDAXBPZukXuLpg9SmDFdqAzAW+Moc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729242127; c=relaxed/simple;
-	bh=5zevuy9/0H8ybeszjdKv6ORtzNZwJb6hVxMXGIrm4Po=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=IfhkmqschnYtr5uqUAyujuTeLf+sCmso3Scw5FohnwIc9F2yq5EYyYuhhlm62FbqloyjdLcN0NRTADHNBX1iMYcJI0wGgV8FP0Zi4yjpCY99Qje8f1qyQhqbFewOqCpb12+z8BzVijYhj36VcUWLPfUtlxEC8K3PuR0J5f1WVMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G3Yj21Bk; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I6KYoF006874;
-	Fri, 18 Oct 2024 09:01:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/xq50zskWssdL5cb4gep6QWqjz2fidOOlyXs84vf6mI=; b=G3Yj21BkASf/WL0Q
-	uEMw/fAvBiQCuFSFAI+BmeiQ7dFCC8RBQCdnGWDYY+YkM6+Go+rfg/annN2edvpY
-	S2fRg+3k/XfxGrMEbvxgBfHJkC81O/be+kH6Otuc4xxMbKbETYSk6ayeR+dudTcH
-	yH4fIYubJQqsY2ni4JcfwVTnDoqy7rRZV9QDniIF8Qody6vjB8TnR39mCVohN6Yv
-	6+iBY9mBeM11loxeR7Pp24XosRaRoZSq+/Zg64UP0oMrKro+tF6kZaV3woUIMNzJ
-	8o6ZRQ8vjwgc8yd1ctehJlHocVVKUG2ktI/rvDoZa5s4VScc8+BtxjuSmODi3ORA
-	Sri4Ag==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42b5hstfgb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 09:01:57 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49I91uuj025280
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 09:01:56 GMT
-Received: from [10.233.17.145] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 18 Oct
- 2024 02:01:51 -0700
-Message-ID: <684582c3-3559-4c54-8257-cb952bbfe2ec@quicinc.com>
-Date: Fri, 18 Oct 2024 17:01:48 +0800
+	s=arc-20240116; t=1729242218; c=relaxed/simple;
+	bh=MAuK9ZpjaW//o3+/lqn2ofD4D+7bWlq6mbU3DdRjkEI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jbfK6meIV19j+05cY04w/67V9j9WKBWLBkdGPO/qDtNe73jCf+d7uF0GD3mWdnHA0W7A1+of+ibIsOgJtAi+ay4QjbT9mFmxv9itYCEE52lXh+/0lTL0uYEsqA5U5jktWrDnRSHmpnPJ0kxLiJRaxRC4wPigrohq+tu3t6UIRS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=j0RsXq22; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e28fe07e97dso1832319276.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 02:03:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729242215; x=1729847015; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y9pfIMsORbWEsl/vnzFg7G1qoNU1sMiSopJc4WsDjiQ=;
+        b=j0RsXq222A7yum92BGgzlKcK5m5nNJKzoGCAr0MsCjn92PwYGV5XDyPyB8U5lvxj0J
+         AXaPA7HAmof/33PqmSboRUyCJAAT3ocDUImuEhjjEg8Pd3m5w0/p8gVxMPvV7LbPCzVf
+         Jja5fuuTEKPCTkSZDmbFZcrusxKHe+GpSC4H9gaU9jJmneDVreYiurGGralnzlq9xdgo
+         tisgsiq7UBVMTL304T7cNnZMIfvuUuOjsG/78rNv2Bnz0JE9CXFY6PRkZ01PigMN+F3Z
+         5hOfTs3H75dnbGVZgQv8fFoUf3seL71t8KeB5b+wQQKYRJt3pv6gFPQ+cGTdbu985wWl
+         kg4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729242215; x=1729847015;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y9pfIMsORbWEsl/vnzFg7G1qoNU1sMiSopJc4WsDjiQ=;
+        b=UVsrU1g1TfJnGlhEnpGp5QqYp8dyNcomhJzPpqGKnp4GZUjsjxUZCpKBK+zBl6Hve5
+         xPYp8Uzt+KHdd9v4tRV1fSnpzkpELFTVC7ByNG7ifXAZca8eHpP1pBJ9JfU1Tvg+cV18
+         UKcaL0yJgALuD8zG9wV5lqTbhTduJ1stU3uanfQVqxEeOoYRqaRo6nA0bV7B/cD9S8Gv
+         5SBXpNP6/t5/85oqUCcLDToaYz5DjknqhJ2lNhRVmWE1nT/6gPP6X0eqMjPW0uvpqhmZ
+         MAAMtbdlO1pCp/pXXOmngi54+VoGeGz2soVIfckwN4KmzRu7wjPGLVk/v/mjIxLUfHhm
+         acwA==
+X-Forwarded-Encrypted: i=1; AJvYcCUQHahSSJ6/Q1QZBGymBQdlYhtFE2WgytLt6qMTcQOLPQkmD+fyamb7Zv9Fonv2URubePc5hHsY8x5dTo99@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9tKmttzAex2SEP6trSr2TXDDDDhI+OrTKhq/zBfEvEtw+SV7i
+	IHMIsbmS7WLlGRHMR56+ldeLaWpMrfARQm0hDv13kpEgBlv0N10y8LfygJ9vdS3Ty/4jQ1PqJfZ
+	w3gZpfwGpx/jKn/6rXv3f59E72vbZvE9tA5Tw8w==
+X-Google-Smtp-Source: AGHT+IEIdqLJnXhR9eBPZC+aIkQ6YsTEogGzB+/bb0aWbntjO40LQ3cW1sY0LwG4AT1TVSM2B1Norwd2BmiIa/TTqSI=
+X-Received: by 2002:a05:690c:9a0d:b0:6e3:28af:730d with SMTP id
+ 00721157ae682-6e5bfc611efmr17451427b3.43.1729242213908; Fri, 18 Oct 2024
+ 02:03:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] phy: qcom: qmp-usbc: Add qmp configuration for
- QCS615
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Vinod Koul
-	<vkoul@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        "Bjorn
- Andersson" <quic_bjorande@quicinc.com>,
-        Wesley Cheng
-	<quic_wcheng@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        Manivannan Sadhasivam
-	<manivannan.sadhasivam@linaro.org>,
-        <linux-usb@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <quic_ppratap@quicinc.com>,
-        <quic_jackp@quicinc.com>
-References: <20241017130701.3301785-1-quic_kriskura@quicinc.com>
- <20241017130701.3301785-6-quic_kriskura@quicinc.com>
- <CAA8EJprcOU6qeJvHH+MVoPnQ+mGcos=pDOVBSeSUfBGw-KR6tA@mail.gmail.com>
- <aa68e5ab-86a6-430e-92d8-ed89b4eb37f7@quicinc.com>
- <CAA8EJprkq-Cct9Uk1Jwqc5Rn8mx8THTRgwCzDx=8ZgbCpwD7qw@mail.gmail.com>
-From: Tingwei Zhang <quic_tingweiz@quicinc.com>
-In-Reply-To: <CAA8EJprkq-Cct9Uk1Jwqc5Rn8mx8THTRgwCzDx=8ZgbCpwD7qw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: GypxlSRqaNk_gTLWXB9lyjej6lAJ0ETH
-X-Proofpoint-ORIG-GUID: GypxlSRqaNk_gTLWXB9lyjej6lAJ0ETH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180057
+References: <20241016135409.2494140-1-quic_bpothuno@quicinc.com>
+ <mvzwlbeopenn5hpll3rmkdwcc7r7ir263nwvlh2hiy73qeipl6@nh4angyrt5p2> <LV8PR02MB102398337D13C6E0160E0FD14E7402@LV8PR02MB10239.namprd02.prod.outlook.com>
+In-Reply-To: <LV8PR02MB102398337D13C6E0160E0FD14E7402@LV8PR02MB10239.namprd02.prod.outlook.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Fri, 18 Oct 2024 12:03:22 +0300
+Message-ID: <CAA8EJpqJgxPErHkce8avfZUkU1D9rEiWTDQqJhUe_nm6n_PODg@mail.gmail.com>
+Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: disable auto boot for wpss
+To: "Balaji Pothunoori (QUIC)" <quic_bpothuno@quicinc.com>
+Cc: "andersson@kernel.org" <andersson@kernel.org>, 
+	"mathieu.poirier@linaro.org" <mathieu.poirier@linaro.org>, 
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
+	"linux-remoteproc@vger.kernel.org" <linux-remoteproc@vger.kernel.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"ath11k@lists.infradead.org" <ath11k@lists.infradead.org>, Kalle Valo <kvalo@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 10/18/2024 4:06 PM, Dmitry Baryshkov wrote:
-> On Fri, 18 Oct 2024 at 10:48, Tingwei Zhang <quic_tingweiz@quicinc.com> wrote:
->>
->> On 10/18/2024 2:27 AM, Dmitry Baryshkov wrote:
->>> On Thu, 17 Oct 2024 at 16:07, Krishna Kurapati
->>> <quic_kriskura@quicinc.com> wrote:
->>>>
->>>> Provide PHY configuration for the USB QMP PHY for QCS615 Platform.
->>>>
->>>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>
->>> After checking platform details,
->>>
->>> Unreviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>
->>> Please perform global s/QCS615/SM6150/ and s/qcs615/sm6150/
->>
->> QCS615 and SM6150 are different variants of the same SoC. QCS615 is an
->> IoT variant, while SM6150 is a mobile variant. We are currently adding
->> QCS615 SoC support to the upstream Kernel, as it is in an active
->> development stage and we anticipate many products based on this SoC. On
->> the other hand, the SM6150 is an older mobile platform that is unlikely
->> to be used in new designs. For a product introduction of the QCS615,
->> please refer to
->> https://docs.qualcomm.com/bundle/publicresource/87-83838-1_REV_A_Qualcomm_IQ6_Series_Product_Brief.pdf
-> 
-> Yes, I guessed so. It would have been nice if it was documented this
-> way from the beginning.
-> 
-> Please note that we usually get support for the mobile SoC first. So
-> in most of the cases devices use mobile compatible even for IoT
-> platforms, see qrb5165, qrb4210, qcm6490 and other similar platforms.
-> I simply asked to follow the established pattern.
+On Fri, 18 Oct 2024 at 11:42, Balaji Pothunoori (QUIC)
+<quic_bpothuno@quicinc.com> wrote:
+>
+> > -----Original Message-----
+> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Sent: Friday, October 18, 2024 3:59 AM
+> > To: Balaji Pothunoori (QUIC) <quic_bpothuno@quicinc.com>
+> > Cc: andersson@kernel.org; mathieu.poirier@linaro.org; linux-arm-
+> > msm@vger.kernel.org; linux-remoteproc@vger.kernel.org; linux-
+> > kernel@vger.kernel.org; ath11k@lists.infradead.org; Kalle Valo
+> > <kvalo@kernel.org>
+> > Subject: Re: [PATCH] remoteproc: qcom_q6v5_pas: disable auto boot for wpss
+> >
+> > On Wed, Oct 16, 2024 at 07:24:09PM +0530, Balaji Pothunoori wrote:
+> > > auto_boot flag ensures to take the firmware and boots it up during the
+> > > wpss remoteproc start.
+> > > wpss host driver would like to control the load and unload of the
+> > > firmware during the load and unload of the driver.
+> > > Hence, disable the "auto boot" for wpss.
+> >
+> > Which driver?
+> ath11k_ahb.ko
+>
+> What is the reason for manual control?
+> > The board seems to function properly with the ath11k driver, which doesn't
+> > seem to require manual control.
+> >
+> The rproc "atomic_t power" variable is incremented during:
+> a. WPSS rproc auto boot.
+> b. AHB power on for ath11k.
+>
+> During AHB power off (rmmod ath11k_ahb.ko), rproc_shutdown fails to unload the WPSS firmware because the rproc->power value is '2', causing the atomic_dec_and_test(&rproc->power) condition to fail.
+> Consequently, during AHB power on (insmod ath11k_ahb.ko), QMI_WLANFW_HOST_CAP_REQ_V01 fails due to the host and firmware QMI states being out of sync.
 
-Yes, we start from mobile variant for most of the platforms. There are 
-some exceptions like sc7180 and sc7280 which we started from compute 
-variant since they are widely used by compute platform on upstream 
-Kernel. I think we have similar case here. QCS615 will be widely used by 
-IOT products on upstream Kernel. We should have clarified this from 
-beginning so there's no ambiguity.
+Please move these details to the commit message and add Fixes/cc:stable tags.
 
-> 
->>
->>>
->>>> ---
->>>>    drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 3 +++
->>>>    1 file changed, 3 insertions(+)
->>>>
->>>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->>>> index d4fa1063ea61..c56ba8468538 100644
->>>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->>>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->>>> @@ -1123,6 +1123,9 @@ static const struct of_device_id qmp_usbc_of_match_table[] = {
->>>>           }, {
->>>>                   .compatible = "qcom,qcm2290-qmp-usb3-phy",
->>>>                   .data = &qcm2290_usb3phy_cfg,
->>>> +       }, {
->>>> +               .compatible = "qcom,qcs615-qmp-usb3-phy",
->>>> +               .data = &qcm2290_usb3phy_cfg,
->>>>           }, {
->>>>                   .compatible = "qcom,sdm660-qmp-usb3-phy",
->>>>                   .data = &sdm660_usb3phy_cfg,
->>>> --
->>>> 2.34.1
->>>>
->>>
->>>
->>
->>
->> --
->> Thanks,
->> Tingwei
-> 
-> 
-> 
+>
+> Therefore, this change disables rproc auto boot for WPSS.
+> > >
+> > > Signed-off-by: Balaji Pothunoori <quic_bpothuno@quicinc.com>
+> > > ---
+> > > Cc: ath11k@lists.infradead.org
+> > > Cc: Kalle Valo <kvalo@kernel.org>
+> > > ---
+> > >  drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+> > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > >
+> > > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c
+> > > b/drivers/remoteproc/qcom_q6v5_pas.c
+> > > index ef82835e98a4..05963d7924df 100644
+> > > --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> > > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> > > @@ -1344,7 +1344,7 @@ static const struct adsp_data
+> > sc7280_wpss_resource = {
+> > >     .crash_reason_smem = 626,
+> > >     .firmware_name = "wpss.mdt",
+> > >     .pas_id = 6,
+> > > -   .auto_boot = true,
+> > > +   .auto_boot = false,
+> > >     .proxy_pd_names = (char*[]){
+> > >             "cx",
+> > >             "mx",
+> > > --
+> > > 2.34.1
+> > >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+>
+> Regards,
+> Balaji.
+
 
 
 -- 
-Thanks,
-Tingwei
+With best wishes
+Dmitry
 
