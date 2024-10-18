@@ -1,160 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-34897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34898-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 74ABD9A37F7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:06:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4519F9A3828
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:12:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F29A91F22554
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 08:06:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8D991F268AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 08:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76BD118C902;
-	Fri, 18 Oct 2024 08:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B30518DF8B;
+	Fri, 18 Oct 2024 08:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="pzcJQHYR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="k+zWHGC7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFCAC18C335
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 08:06:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8362A18D65E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 08:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729238786; cv=none; b=a9OIvxMG5/yYGT9Y8XbGcxBZ4fiE3o/DElhz6FByS3gHYAoca/SR8jiOydXxLs0Xtdkn2bG5H+qHQX66FfvQBFudryM09LUG1eyJEGXaxfs7nd5056xTOqZxFQC7wQhjRzYK7aaSxpA6V2LZTP8P6Q7pbIyKT+iiII1o0ylzBn0=
+	t=1729239103; cv=none; b=IC+7HTy7iz3RcsiJ2/ijsU11OY4WNPQVpYWFGwhTlCxSfefUGs0U1SqSWzcQaJtmp0cbwV1aFdiIkfiBUvSpFM2UdkboTWck9RJbw+nTIeljhU3U2dgduWJ5AEwnEgBbHF0277Qy0+iqfWq7m7dL+9UJgunmedkmkhMohISlkro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729238786; c=relaxed/simple;
-	bh=HZ6YXgVkHMC+W12bcHr8/VXyz5WVWmo/IJL16rs+v9I=;
+	s=arc-20240116; t=1729239103; c=relaxed/simple;
+	bh=THf4KpV76/OhTc22GttJi0bmW4uwbaHKlkUjG8Ztius=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g90dQnvsfaI2omX0l3XIjCMPkogP7rx8MEdbcCa8C1I46Yobm9FzVnuxfV56qslBeoV1xH9B1Vdu7k0gGDJvbApay1d44BzIPJL+nqe6ziXBfDwg7KdNbm7qkhOR4TRG1EokmB132zAQLaO5CqBg3pxvGzNAkqXxMnMevQB4Dcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=pzcJQHYR; arc=none smtp.client-ip=209.85.219.180
+	 To:Cc:Content-Type; b=OWptmUUdis7mrQOLW0LY+MwJetGt6NLEvJIYZ45VQPLaS6OTaiTq0Z5UQQ8IdffhvtoUwvooYMCZY8w2jAuipTUFvV7XgsNZaRUD/2NWls5Qo0wTJ2aXAlLJV/NSHw3BxF1STX3FDrfcVn/1gP9r+MKlK5j0w9BnsRC4isuwQjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=k+zWHGC7; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e28fea0f5b8so1682127276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 01:06:24 -0700 (PDT)
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e35f08e23eso17510277b3.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 01:11:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729238784; x=1729843584; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729239099; x=1729843899; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UJxs3TzRvpvh37ncfDE5O/qusWTGJaGSYhsl43ibuBM=;
-        b=pzcJQHYRoqv8djQOPQ9b0wm56BqP4HuDDduSr7ZAhGzz1H/et/qDnbpRQfabXGJV2y
-         lCjb2aeVRqfh39GoVc/nBNtnUoBcRrCwC0bBzgFCrkYrdjGpOMCArHmk+I+3AH8FB50z
-         c3FpD6/PCv5hiXGmV0OC5B1tRbZg/lQwGMiGExvF/NxCCpSIPScwllQITYmvy8UVocoJ
-         A4g5xVE5sZrQj7OP43vMnUaZp1uZKwwg/IlUheNUqCiRVsL1bQ+fEyfZf/8Zot6QY6DV
-         LykYQ43ccTLSSvAvnXRAx26SGWtqFnJXJkfYNJZF9nka9VHr8msyzHPEh5d011Xauu76
-         6xJw==
+        bh=UwG3rDefpa7BtqQZIIQ/EL3ucM2UZ1ZTkh5NrgP84oQ=;
+        b=k+zWHGC7MioLS+/zwjw5f5lY3312oOq2+taXNNIHBMVJ27UjTtXiUcehfyyCnTiyEi
+         0msFoxGHxHg60kHW4mEji0T1qMSwPRyCVa0zXXpupnDd6jkCjXZ/t0L4Z4sk4eFhYISW
+         haKC1yzrmPQlf3e6qj3XWjHoOKbFgMi/DsaSKK5pxWzus+GAYsLTbLlFr8OMBxED5uhM
+         pw5L7oPADdCJPqSeEZunzZ7uko3EnGvNZzit+NqbfCjYjs3uN/SlLQjo061CDogAceTD
+         xHX3rVs0xLYTWT/0JVTiB0AGFBUOxv+6DGrNtlCANMxQ8HnL9vPzS1DgNY8UHv3D6hK1
+         Eh2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729238784; x=1729843584;
+        d=1e100.net; s=20230601; t=1729239099; x=1729843899;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UJxs3TzRvpvh37ncfDE5O/qusWTGJaGSYhsl43ibuBM=;
-        b=nmiCUBZGWVyHBIRb04XJvnUn1Z2vXriOInH7ANwXDdeZvljs1wqxNDFLzl+wLFOZjk
-         bD8D131M2UGNXgHVbjwsz8jWF1gHlTTHGiH6qU+0JGLkr1FI16NG/Zjb4BvaNlHjr0xH
-         vqa17QBaB1LEXzY76Xo7Ri+AXE5q29N9r2uQtcnuadJ7408vjtfIlpatpJ4NNssvnu05
-         KBufGNa17h86e27g8TqW3MMIdlxyS6z7w8jd1JOKdxMkOXc2z6EWvPF6VkjDz4s0dpKJ
-         rDkTwBN8FLd9g0gt+O0xIEWNjWjGDHyBjfyJ4WzERLYBphUV3b/DTqDT7ulF5CmBny+3
-         e+Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCU9UVtfNjGqGSq6NmqsMo+frhnLDGQlqjZjVjmg8g1+qrvwLPBCa6BbBfXHifJqo0K1770LN+hZ21XR7FoZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyh94HmYZe7A+/Jk6ENED9+dW722TylcbZukb1vvTYfKlRVOz8J
-	zZ1Xje56WW2lhJmnhe259T05XGUnZlHlLznG7X4ERzBOpi3ei1/mAykqb1e92UmfLZMLGxwUPcV
-	r0Ibwb0y3JLLpblgICoYxroVYL2KInjCCC1zWIA==
-X-Google-Smtp-Source: AGHT+IG67iA513l+vzvhN59OEZIDnlrhUn8zZVdV7zNIa0MSXy/0JidUuX5/ugr31L6WEem4xZ1pwi6Fky5+yvRHgik=
-X-Received: by 2002:a05:690c:690a:b0:6e3:195a:7247 with SMTP id
- 00721157ae682-6e5bfc9c423mr11743617b3.46.1729238783780; Fri, 18 Oct 2024
- 01:06:23 -0700 (PDT)
+        bh=UwG3rDefpa7BtqQZIIQ/EL3ucM2UZ1ZTkh5NrgP84oQ=;
+        b=pycra/p/v52YpSiqhQFZMImsRqMRFBsqA1Vf93g8YchhOnrdaxGSw9XdwrIzWIRdOF
+         d2ttSpXwnR6snCPVDljPHEsz6bLM5XrjgPvYkr9aT9M0TZo2LtYLUsbay6ZDfp2D/JY7
+         tZDwrNaoJG1lyECeTBVeo2Ar1I+QwhlKa0lHTZpav/FcHeilc/l0vNnMXG0BoysfnDmH
+         Rirhmv1d3nA944By0GrCjUdnKJVpR6qTlYTjo5cNOBkAtH1R5YJ3cjL9nNdO0HyIt1uh
+         r/MmKUkC+m69qj3Bw1FlTeUx2P2m3AaAuT3k6rpJQPvx70Bc2Cu+0k9FrZA2wQJBIDeb
+         zHKw==
+X-Forwarded-Encrypted: i=1; AJvYcCVHqrZNvrXwpEG+9j47ccZLKDoTZP5MhpN6q+UMpYLO3W7ZzcPEMDrSQSoMZUGKipo0VKSR2YpA9ZK1uLfX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpeyprVSs3l3HIPvFVdvRDxlTtt8mlFxK/mwnBrBjECBBfjipj
+	PAtzhc0e2HDZn7tj6m5jlghE9Q8lZslr58rCzMW9rkoq5U4AFXUmM39l1pS1EkgUEzrlh2dYvcS
+	3zi8lZ2hyvU0w/kobqS2erl1AMIznlv7S+sbzTw==
+X-Google-Smtp-Source: AGHT+IERPg6UNxdVW0V80x9bHiyvgx2Bw2B9lVFXGaP686cuW8Kv+mqAKZtXcsHxfWStzu6OGYokH34VuZ2WHvyeszE=
+X-Received: by 2002:a05:690c:46c7:b0:6e3:2c80:5413 with SMTP id
+ 00721157ae682-6e5bfc8e733mr17629497b3.23.1729239099463; Fri, 18 Oct 2024
+ 01:11:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241017130701.3301785-1-quic_kriskura@quicinc.com>
- <20241017130701.3301785-6-quic_kriskura@quicinc.com> <CAA8EJprcOU6qeJvHH+MVoPnQ+mGcos=pDOVBSeSUfBGw-KR6tA@mail.gmail.com>
- <aa68e5ab-86a6-430e-92d8-ed89b4eb37f7@quicinc.com>
-In-Reply-To: <aa68e5ab-86a6-430e-92d8-ed89b4eb37f7@quicinc.com>
+References: <20241015-qcom_ipq_cmnpll-v4-0-27817fbe3505@quicinc.com>
+ <20241015-qcom_ipq_cmnpll-v4-4-27817fbe3505@quicinc.com> <abro3enahzbugcwokcyyhwybbokestbigvzhywxhnfrdjihni3@7ej2hkgbgtf6>
+ <b336724c-1fea-4e1e-9477-66f53d746f09@quicinc.com>
+In-Reply-To: <b336724c-1fea-4e1e-9477-66f53d746f09@quicinc.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Fri, 18 Oct 2024 11:06:14 +0300
-Message-ID: <CAA8EJprkq-Cct9Uk1Jwqc5Rn8mx8THTRgwCzDx=8ZgbCpwD7qw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] phy: qcom: qmp-usbc: Add qmp configuration for QCS615
-To: Tingwei Zhang <quic_tingweiz@quicinc.com>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>, Vinod Koul <vkoul@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Bjorn Andersson <quic_bjorande@quicinc.com>, 
-	Wesley Cheng <quic_wcheng@quicinc.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, linux-usb@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-phy@lists.infradead.org, 
-	quic_ppratap@quicinc.com, quic_jackp@quicinc.com
+Date: Fri, 18 Oct 2024 11:11:30 +0300
+Message-ID: <CAA8EJprVNOLO-CoorNhvKrrSD1bNKdFrzth5BL0GHXffPv62jw@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
+To: Jie Luo <quic_luoj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	quic_kkumarcs@quicinc.com, quic_suruchia@quicinc.com, quic_pavir@quicinc.com, 
+	quic_linchen@quicinc.com, quic_leiwei@quicinc.com, 
+	bartosz.golaszewski@linaro.org, srinivas.kandagatla@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 18 Oct 2024 at 10:48, Tingwei Zhang <quic_tingweiz@quicinc.com> wrote:
+On Fri, 18 Oct 2024 at 09:55, Jie Luo <quic_luoj@quicinc.com> wrote:
 >
-> On 10/18/2024 2:27 AM, Dmitry Baryshkov wrote:
-> > On Thu, 17 Oct 2024 at 16:07, Krishna Kurapati
-> > <quic_kriskura@quicinc.com> wrote:
+>
+>
+> On 10/18/2024 6:32 AM, Dmitry Baryshkov wrote:
+> > On Tue, Oct 15, 2024 at 10:16:54PM +0800, Luo Jie wrote:
+> >> The CMN PLL clock controller allows selection of an input
+> >> clock rate from a defined set of input clock rates. It in-turn
+> >> supplies fixed rate output clocks to the hardware blocks that
+> >> provide ethernet functions such as PPE (Packet Process Engine)
+> >> and connected switch or PHY, and to GCC.
 > >>
-> >> Provide PHY configuration for the USB QMP PHY for QCS615 Platform.
-> >>
-> >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > After checking platform details,
-> >
-> > Unreviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > Please perform global s/QCS615/SM6150/ and s/qcs615/sm6150/
->
-> QCS615 and SM6150 are different variants of the same SoC. QCS615 is an
-> IoT variant, while SM6150 is a mobile variant. We are currently adding
-> QCS615 SoC support to the upstream Kernel, as it is in an active
-> development stage and we anticipate many products based on this SoC. On
-> the other hand, the SM6150 is an older mobile platform that is unlikely
-> to be used in new designs. For a product introduction of the QCS615,
-> please refer to
-> https://docs.qualcomm.com/bundle/publicresource/87-83838-1_REV_A_Qualcomm_IQ6_Series_Product_Brief.pdf
-
-Yes, I guessed so. It would have been nice if it was documented this
-way from the beginning.
-
-Please note that we usually get support for the mobile SoC first. So
-in most of the cases devices use mobile compatible even for IoT
-platforms, see qrb5165, qrb4210, qcm6490 and other similar platforms.
-I simply asked to follow the established pattern.
-
->
-> >
+> >> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > >> ---
-> >>   drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 3 +++
-> >>   1 file changed, 3 insertions(+)
+> >>   arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi |  6 +++++-
+> >>   arch/arm64/boot/dts/qcom/ipq9574.dtsi            | 20 +++++++++++++++++++-
+> >>   2 files changed, 24 insertions(+), 2 deletions(-)
 > >>
-> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-> >> index d4fa1063ea61..c56ba8468538 100644
-> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-> >> @@ -1123,6 +1123,9 @@ static const struct of_device_id qmp_usbc_of_match_table[] = {
-> >>          }, {
-> >>                  .compatible = "qcom,qcm2290-qmp-usb3-phy",
-> >>                  .data = &qcm2290_usb3phy_cfg,
-> >> +       }, {
-> >> +               .compatible = "qcom,qcs615-qmp-usb3-phy",
-> >> +               .data = &qcm2290_usb3phy_cfg,
-> >>          }, {
-> >>                  .compatible = "qcom,sdm660-qmp-usb3-phy",
-> >>                  .data = &sdm660_usb3phy_cfg,
+> >> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> >> index 91e104b0f865..77e1e42083f3 100644
+> >> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
+> >> @@ -3,7 +3,7 @@
+> >>    * IPQ9574 RDP board common device tree source
+> >>    *
+> >>    * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+> >> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> >> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> >>    */
+> >>
+> >>   /dts-v1/;
+> >> @@ -164,6 +164,10 @@ &usb3 {
+> >>      status = "okay";
+> >>   };
+> >>
+> >> +&cmn_pll_ref_clk {
+> >> +    clock-frequency = <48000000>;
+> >> +};
+> >> +
+> >>   &xo_board_clk {
+> >>      clock-frequency = <24000000>;
+> >>   };
+> >> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >> index 14c7b3a78442..93f66bb83c5a 100644
+> >> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >> @@ -3,10 +3,11 @@
+> >>    * IPQ9574 SoC device tree source
+> >>    *
+> >>    * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+> >> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> >> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> >>    */
+> >>
+> >>   #include <dt-bindings/clock/qcom,apss-ipq.h>
+> >> +#include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
+> >>   #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
+> >>   #include <dt-bindings/interconnect/qcom,ipq9574.h>
+> >>   #include <dt-bindings/interrupt-controller/arm-gic.h>
+> >> @@ -19,6 +20,11 @@ / {
+> >>      #size-cells = <2>;
+> >>
+> >>      clocks {
+> >> +            cmn_pll_ref_clk: cmn-pll-ref-clk {
+> >> +                    compatible = "fixed-clock";
+> >> +                    #clock-cells = <0>;
+> >> +            };
+> >
+> > Which block provides this clock? If it is provided by the external XO
+> > then it should not be a part of the SoC dtsi.
+>
+> The on-chip WiFi block supplies this reference clock. So keeping it in
+> the SoC DTSI is perhaps appropriate.
+
+Then maybe it should be provided by the WiFi device node? At least you
+should document your design decisions in the commit message.
+
+Also, I don't think this node passes DT schema validation. Did you check it?
+
+>
+> >
+> >> +
+> >>              sleep_clk: sleep-clk {
+> >>                      compatible = "fixed-clock";
+> >>                      #clock-cells = <0>;
+> >> @@ -243,6 +249,18 @@ mdio: mdio@90000 {
+> >>                      status = "disabled";
+> >>              };
+> >>
+> >> +            cmn_pll: clock-controller@9b000 {
+> >> +                    compatible = "qcom,ipq9574-cmn-pll";
+> >> +                    reg = <0x0009b000 0x800>;
+> >> +                    clocks = <&cmn_pll_ref_clk>,
+> >> +                             <&gcc GCC_CMN_12GPLL_AHB_CLK>,
+> >> +                             <&gcc GCC_CMN_12GPLL_SYS_CLK>;
+> >> +                    clock-names = "ref", "ahb", "sys";
+> >> +                    #clock-cells = <1>;
+> >> +                    assigned-clocks = <&cmn_pll CMN_PLL_CLK>;
+> >> +                    assigned-clock-rates-u64 = /bits/ 64 <12000000000>;
+> >> +            };
+> >> +
+> >>              qfprom: efuse@a4000 {
+> >>                      compatible = "qcom,ipq9574-qfprom", "qcom,qfprom";
+> >>                      reg = <0x000a4000 0x5a1>;
+> >>
 > >> --
 > >> 2.34.1
 > >>
 > >
-> >
 >
->
-> --
-> Thanks,
-> Tingwei
-
 
 
 -- 
