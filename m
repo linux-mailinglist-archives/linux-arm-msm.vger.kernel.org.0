@@ -1,148 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-34846-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AC149A335D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 05:26:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C45A9A33DE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 06:34:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 91D5F1F23FFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 03:26:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BBD302853C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 04:34:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80FAE157E9F;
-	Fri, 18 Oct 2024 03:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C6D4171658;
+	Fri, 18 Oct 2024 04:34:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cuP83qmv"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="fuH4GOcd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A42155744;
-	Fri, 18 Oct 2024 03:26:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D25160884
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 04:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729222015; cv=none; b=BEhgOG0cI2oJ43w0RGBDtSuqjWYmUlX1jA7SF1/rol+bPa59lNtvtcmG6FTMSZHhyBlj/h82c6VZgqSjSA9QDnTLXoM5Q4wG+FeZXJ7ol1PPijjqRiUKt5Ybe78FxxtvNiJdMpXIfjruRxhh8sveZr4/zhkEB2wwNveIAeab6a4=
+	t=1729226079; cv=none; b=D8fyzkN9BklztNyDHt5tCI5thk0f4nsnfygjy/sjfx+8VzrF8Zdu4zRxIL7sc67qezMx+RETfBl08bbzkJQUeNxog5O4qWbgTd4RAZiEPVEImCsR+5j70ZfrzPegt25KpiDaVByAySbf95iQdaMMVCb+O7jFd0e6zPymV33HeRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729222015; c=relaxed/simple;
-	bh=pp0xdFEq2xvTLyyQpNjgiFlzJ7fppjTZ/wj9ohuCh4Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fprPOHt9MAlw7JkgQIVCfMMGo/aySpqrc/WoXQP2GoJfInEfg6W8DfkejSjfXgURxrb2rB3zBRIllJd4OR3B5M0yDN4oaelstaauDrIS5Fzb48lGa4BL4vvWT8DAjFQVs2MCEMClACuCi3vtenQ0DMTYxkjwZ7KCo/jVMiArRHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cuP83qmv; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6cbf0e6414aso7856726d6.1;
-        Thu, 17 Oct 2024 20:26:53 -0700 (PDT)
+	s=arc-20240116; t=1729226079; c=relaxed/simple;
+	bh=NS1Sz0LKTyjYliuiu+0xBv5Zm35cbmqxiZ7Ygf1MonQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u37zXhabAmfcDfA43cjzGSY9yQodC4PsogqlJbl83qkcYy+c/UuX3p38WbqLqjvNOeyanAHUE8Z6MBKwovFfFybQi7MrtP7aW3ehRO5imAcEpDSNiZHTjuUYPn/tANpDv3t6EcDz4tb79jyfm2CDFhP5Lh6bkg/JT0FANKeOne4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=fuH4GOcd; arc=none smtp.client-ip=209.85.208.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5c960af31daso1917501a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 21:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729222013; x=1729826813; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RRFYsm7JQn6FoiV+R8mnl3y+fSii5MhmQCkaq6Im0Kk=;
-        b=cuP83qmv3CZVrBrhP0f2Ec/2c/nqcuo/tyOmYDsOD6TAyeEmejjZr7ZUf4eld80coB
-         Tf6cyqKwJdKAWXeBc8QRPlu5MiSGb2yy/X8cPf/G2/R/Yk65xWKCQ+KeV1vJdsU2T+zz
-         qaRLxhTnSTfwps2Y+ym9Hq9kFkM0qZHkIzfaaY+IvgqtnEjzX7eHA0es+TFM1+rW4SlY
-         z4RTMYX4EUHxam/P6vqvH+bIp/olGWiQCj6GNE/2PqjVPAaw7LdcYAU828KLnJcSLPOP
-         alctmxaY3Efz2GZ8m9ENqzCtZu2Ag9jExCTSx2EpqMDaATchRlkdNHJbh1FpWRyDIzDn
-         34Lw==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1729226075; x=1729830875; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PS/ACDurPb5nBFPu0Cxs3/OwSWilo1gi2atw+wbDQts=;
+        b=fuH4GOcdT5qDJjr8//o4Ua7mEg5zi1ZED4AMuiTtu6W+dxNH3tJotCtDCvIx05pDtz
+         trlSvBbs1LGMJCjnhuG6069k0pO4+g8Gg8qdkgWjXyP5RD2xAzix8mMzx58b1jfjQGx7
+         J7ufrrPelCeMFxuqTBr1tKdDreNZl7lNZEVkpQ1ohCGGEwTzYW1hs6csA1MRRf5+zFWi
+         r7+ZWLFQATSAXAbfUMnANoOgGSyMiPTNWsdEi+tgQm/nMXqEFzrP3PA+Dssg9SnGTkPK
+         62X46Vt5DqPUd53Nj0XeoP8MZdbEFQaQf4Yl4sf4S/LTXcwOS1lLXpbAURUlDv2vR6ju
+         dNoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729222013; x=1729826813;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RRFYsm7JQn6FoiV+R8mnl3y+fSii5MhmQCkaq6Im0Kk=;
-        b=Na1PuXzzg1jKCSnjyaPtsDudrzETDuOYcmzuGUX6VDN02ToZayitpwTa2ClioQQZ5c
-         N+pJu4FLupmhj189slDBrV1tAdYqfyvOyjI9H6VBOh5XRE62kIqwphB/g28/fQq6K6PH
-         /Mej1FWBGA4v1coKHBHeaifAcwyNIMez1CaNgiMGyFpXU++1wJatsp3y1URxOMnbNxj8
-         4WvpHNQz5K5ZzAiCeM/rgUb6f8fQ3q/4JTT45plPANlgBFOtN34srx9bq7yBRVD8xx1Q
-         pt0zxHYQ1gcxYIQWOcfzyADt12QnsUdCzZ9usAVG/Dk21MvsqYPIo23GHcdVS35IPmDd
-         o9Ag==
-X-Forwarded-Encrypted: i=1; AJvYcCUvDGLxWlbLlOM6suztB92GIvVNs2SCCsc07HwMPWOhtn8S3o21FPNaEvXbzZKfQPiWZQEN24W3+mQCAdHvJ09j@vger.kernel.org, AJvYcCV07kidwxbGopKwO6CIX95P7s64aJrqMt87jfhdFDyJX4+pt3Nhfz3MB46HdEXI6pH4WSoSOZf4wOWhbHzs@vger.kernel.org, AJvYcCVDwZUNYZ6cROdty/BFrNwFckcNB5pHaZ06JLXgJPX9dKqNPpootMhFDyLhj2rZqz00K1RQfNPM3iIG@vger.kernel.org, AJvYcCVOicuADKNTElrLokmUd76/qM1b7vQqAv5k0/+GRvXplT/jiDCNZ4BfHjjn9PMeH2RZztE8LGhAf89Dpaue@vger.kernel.org, AJvYcCWRrOpoCi86lkWsWukupqn8PqrUycrbDSphRYd6EBVDr2XYKyPDeJws4naGIgX2OFzqYxyi5DVL9HUya+A=@vger.kernel.org, AJvYcCWomsp4f0K61hGmT+G35HyOulJP5uLY04+kHTOxEgccoUU3aohjwZW8+ZCFNRtZQy4FuEQdb9aRYjuEvQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFISAIFPyoclc3bN3gs6gDzzfVKYQzgBL0bHvEXSPcrq10vjYC
-	3b61rKeUrpQ0DhyG4ivG8umCmWJhynyI4fHNU7apJ82+KxXLapE6
-X-Google-Smtp-Source: AGHT+IGbNm4J7504L9d7tSHokebTr/bSREZo9pNVg4bVFxle2lyocyWjoZsfEt0kWM+ekwkhqpJNeg==
-X-Received: by 2002:a05:6214:3d13:b0:6cd:4972:59af with SMTP id 6a1803df08f44-6cde150b8famr20524116d6.14.1729222012692;
-        Thu, 17 Oct 2024 20:26:52 -0700 (PDT)
-Received: from [10.56.180.205] (syn-076-188-177-122.res.spectrum.com. [76.188.177.122])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6cde1366d72sm2925836d6.116.2024.10.17.20.26.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Oct 2024 20:26:52 -0700 (PDT)
-Message-ID: <ef3c9a17-79f3-4937-965e-52e2b9e66ac2@gmail.com>
-Date: Thu, 17 Oct 2024 23:26:49 -0400
+        d=1e100.net; s=20230601; t=1729226075; x=1729830875;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PS/ACDurPb5nBFPu0Cxs3/OwSWilo1gi2atw+wbDQts=;
+        b=rvgyjSLl1fYWxJp1Q2fhQizH7urrrOsBzmtJvSBgmfS6dDEF/Q7XYEDdJHdiSgxXEq
+         wnVVxposQj3kRN+1YtDdKviBytIuJau6RNgrRFFvwf06xiUEQqidniGgM4Ax1od4O/Eb
+         FaOaqlGIluTBkpOw7cCFB/KMQVnnbPXVBHS+91KZivejlhAOnOn8ZuDh4+Qp1siGtpKb
+         Y7LCQyIfAKwwuAd/6hdEYQ+jLzMnn/Y6zS8iieadmMDucYWUQjYdQP8icDXNN/IV5PdK
+         fJeQKvhIHKuePYmauzQeyUhKjsNF08NAWjc4T+863b+xaMXANRNKOijtsvyKwuSYKYef
+         OZ8A==
+X-Forwarded-Encrypted: i=1; AJvYcCWvslFtHCidZHLpTrdvwZoNdEGZW+KpnGIgLQvBIKt2r2oCBVyvTI/S0GaSMKn0TKnr9DCYA2bqWAVmnSCR@vger.kernel.org
+X-Gm-Message-State: AOJu0YybZKvMBwTs8RKLZaLOxd5LgJwcPH9CWKFiO/oVwo/fpeai7Jij
+	WM0yVDygAb4mfxWDAlSTt7384jS6mNh903Q/Yp465pq9Yo9nnAqmd1mdlmuP5wj5HKiVC5nZFYx
+	l
+X-Google-Smtp-Source: AGHT+IGV/Z8Bp7RztnJ7HB2MP1CdFHDEON9SMuUS/lFIUwfh1mG6rxGz6XUEs5/I1mUZYyC0WuNPbA==
+X-Received: by 2002:a05:6402:4343:b0:5c8:8cf5:e979 with SMTP id 4fb4d7f45d1cf-5ca0ac627efmr662722a12.19.1729226074948;
+        Thu, 17 Oct 2024 21:34:34 -0700 (PDT)
+Received: from localhost ([2a02:8071:b783:6940:7ac4:30cf:c3f3:f544])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ca0b0809acsm236785a12.25.2024.10.17.21.34.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Oct 2024 21:34:33 -0700 (PDT)
+Date: Fri, 18 Oct 2024 06:34:30 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Mayank Grover <groverm@codeaurora.org>
+Subject: Re: [PATCH 2/2] pinctrl: qcom: add support for TLMM on SAR2130P
+Message-ID: <s7tc7cq42qeuj3d63is2dmq2szzq3ezlvv7zpd26qc7boyldnk@yvofxbx3kfbr>
+References: <20241017-sar2130p-tlmm-v1-0-8d8f0bd6f19a@linaro.org>
+ <20241017-sar2130p-tlmm-v1-2-8d8f0bd6f19a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-To: Christoph Hellwig <hch@infradead.org>, Eric Biggers <ebiggers@kernel.org>
-Cc: Md Sadre Alam <quic_mdalam@quicinc.com>, axboe@kernel.dk,
- song@kernel.org, yukuai3@huawei.com, agk@redhat.com, snitzer@kernel.org,
- mpatocka@redhat.com, adrian.hunter@intel.com, quic_asutoshd@quicinc.com,
- ritesh.list@gmail.com, ulf.hansson@linaro.org, andersson@kernel.org,
- konradybcio@kernel.org, kees@kernel.org, gustavoars@kernel.org,
- linux-block@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-raid@vger.kernel.org, dm-devel@lists.linux.dev,
- linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-hardening@vger.kernel.org, quic_srichara@quicinc.com,
- quic_varada@quicinc.com
-References: <20240916085741.1636554-1-quic_mdalam@quicinc.com>
- <20240916085741.1636554-2-quic_mdalam@quicinc.com>
- <20240921185519.GA2187@quark.localdomain> <ZvJt9ceeL18XKrTc@infradead.org>
-Content-Language: en-US
-From: Adrian Vovk <adrianvovk@gmail.com>
-In-Reply-To: <ZvJt9ceeL18XKrTc@infradead.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="2upy5tozsq3jeqzu"
+Content-Disposition: inline
+In-Reply-To: <20241017-sar2130p-tlmm-v1-2-8d8f0bd6f19a@linaro.org>
 
-On 9/24/24 03:44, Christoph Hellwig wrote:
-> On Sat, Sep 21, 2024 at 11:55:19AM -0700, Eric Biggers wrote:
->> (https://android.googlesource.com/kernel/common/+/refs/heads/android-mainline/drivers/md/dm-default-key.c),
->> and I've been looking for the best way to get the functionality upstream.  The
->> main challenge is that dm-default-key is integrated with fscrypt, such that if
->> fscrypt encrypts the data, then the data isn't also encrypted with the block
->> device key.  There are also cases such as f2fs garbage collection in which
->> filesystems read/write raw data without en/decryption by any key.  So
->> essentially a passthrough mode is supported on individual I/O requests.
-> Adding a default key is not the job of a block remapping driver.  You'll
-> need to fit that into the file system and/or file system level helpers.
 
-fscrypt isn't the only thing that would use such functionality. If you 
-put it in the filesystem layer then you're only serving fscrypt when 
-there are other usecases that don't involve filesystems at all.
+--2upy5tozsq3jeqzu
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Subject: Re: [PATCH 2/2] pinctrl: qcom: add support for TLMM on SAR2130P
+MIME-Version: 1.0
 
-Let's say I'm using LVM, so I've got a physical partition that stores a 
-couple different virtual partitions. I can use dm-default-key both 
-underneath the physical partition, and on top of some of the virtual 
-partitions. In such a configuration, the virtual partitions with their 
-own dm-default-key instance get encrypted with their own key and passed 
-through the lower dm-default-key instance onto the hardware. Virtual 
-partitions that lack their own dm-default-key are encrypted once by the 
-lower dm-default-key instance. There's no filesystem involved here, and 
-yet to avoid the cost of double-encryption we need the passthrough 
-functionality of dm-default-key. This scenario is constrained entirely 
-to the block layer.
+Hello Dmitry,
 
-Other usecases involve loopback devices. This is a real scenario of 
-something we do in userspace. I have a loopback file, with a partition 
-table inside where some partitions are encrypted and others are not. I 
-would like to store this loopback file in a filesystem that sits on top 
-of a dm-crypt protected partition. With the current capabilities of the 
-kernel, I'd have to double-encrypt. But with dm-default-key, I could 
-encrypt just once. Unlike the previous case, this time there's a layer 
-of filesystem between the block devices, but it still can't do anything: 
-the filesystem that stores the loopback device can't do anything because 
-it has no idea that any encryption is happening. fscrypt isn't being 
-used, nor can it be used since the file is only partially encrypted, so 
-the filesystem is unaware that the contents of the loopback file are 
-encrypted. And the filesystem doesn't know that it's encrypted from 
-below by its block device. So what can the filesystem do if, as far as 
-it can tell, nothing is being encrypted?
+On Thu, Oct 17, 2024 at 07:15:46PM +0300, Dmitry Baryshkov wrote:
+> +static struct platform_driver sar2130p_tlmm_driver = {
+> +	.driver = {
+> +		.name = "sar2130p-tlmm",
+> +		.of_match_table = sar2130p_tlmm_of_match,
+> +	},
+> +	.probe = sar2130p_tlmm_probe,
+> +	.remove_new = msm_pinctrl_remove,
+> +};
 
-Best,
+After commit 0edb555a65d1 ("platform: Make platform_driver::remove()
+return void") .remove() is (again) the right callback to implement for
+platform drivers. Please just drop "_new".
 
-Adrian
+Best regards
+Uwe
 
+--2upy5tozsq3jeqzu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmcR5VMACgkQj4D7WH0S
+/k7rkAf/WOmVvrbdnIv2b6TVVs1F57W1EtfcUsTwbm/S4/JtEMmsrDgBAeoTR9M9
+OSdnfeODfzj86xVRLAm4QidGl6oFxgu0+Xhedl8xBL26B93N7tXOAsnDKbF2PmOW
+KOLZ6VSWdcch9Ap9I1ayB9GhUZPBLy7tasy44QAlb353SHQmWrRrAgNxrYcRZTvA
+UpNojlhqK+5MbZkhjDQJgq+m0J7i5lY3z2UVk6fR9MWUXSOhfTe3YOdoSC2ugyQK
+zCFIicgUAdkoJZQoVMMRUrbK4AvBrTW1tj1310wQmQziBgi3Qw9xt9fdFdHgLiXT
+ClEZiztG2vQdNTQjFJg8gScTPSYofQ==
+=fMIF
+-----END PGP SIGNATURE-----
+
+--2upy5tozsq3jeqzu--
 
