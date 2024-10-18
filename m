@@ -1,158 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-34977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEADB9A41E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 17:04:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1B099A4202
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 17:11:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 16A30B210F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 15:04:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1D57288BA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 15:11:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28F381E0DF2;
-	Fri, 18 Oct 2024 15:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06E9920010F;
+	Fri, 18 Oct 2024 15:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ez7yx+zR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o3xQvM09"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286C67BAEC;
-	Fri, 18 Oct 2024 15:03:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C156E16BE3A;
+	Fri, 18 Oct 2024 15:11:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729263837; cv=none; b=mFjxJc/MjcBx1SCh09RJLACPmKoTZy+WBX8hbShK5VpME0yOTUYYtK6OEHUW9npMcTfFpMp+zONnWU49jkpTb0KD1DswXHmuWSurstPOsk3XCL+P3WSo9Xlo5SBwMEBHDf1SEWNr71e90uMRCV5swCdKdR9sebqfVOldAD5+I6Q=
+	t=1729264310; cv=none; b=WiAWTXlmEr0rEqFb7aQ8jMhErc23yiX5Y+Myk+10vfai22Pb/t9UlYppwwfKn8AgREPl/pe9Uo7OaQtbNq1KX98M0SC66zPDDtG6jcpoNopDN/q0RIsH6wC3EjTET2ye5kpFck+TIl7/cDTF5RvkuRzjHTAy1VV/locwnAPGFaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729263837; c=relaxed/simple;
-	bh=2bfs2UEwo6ToOh8FqCQeqUWi9lfpjMNVBp5cRaIPVyM=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=qOHg6NFxP9+OqpHXFgoEyImxuhHbj5Ye81pQi3wk9wtzNpg/BWtL7XmsG7HA1Vcvp9xFzG2Y5HXRl34Hsjjbs0JWRfVgzlXlSKM8yBxk3CdkoBjDwek1MK7q/RT+nRV7xSPaJ5/RE0oc59iJUkxsCU4D5tdI/wHhphv8ZcTwgHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ez7yx+zR; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4603aced3a5so16855491cf.1;
-        Fri, 18 Oct 2024 08:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729263834; x=1729868634; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2bfs2UEwo6ToOh8FqCQeqUWi9lfpjMNVBp5cRaIPVyM=;
-        b=ez7yx+zR0cD5xTGSdsBViwj41n6ij5LFvlr809gs3Pqj5jiaQONjZ0TvKI14NOv2rD
-         fbtDc7PYJcNmtgIdFXl5MO8Xnj/mL++/TjLIolhw4e1/C2r+I5y7b3juoFrOVY+esD8U
-         L0/xTM76u8/BQxoHahMieWnTYcsh7gElxoDV9K1NnT/cmvXsIUeA4IRmN0/Gh++D6Nan
-         yqWaDwdAYDwv+2jPtFMKb6uJgFl+fw/9I5qYhlXoXJan20DZrE9HU51IRxbwPq/uT0aM
-         kGGG+MQzd3kpgomxbEUG0+HzyVf+h2+dCSks34G2k8/+4ajUM+BIeJd8xgcEy2NjMCS3
-         6Rgw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729263834; x=1729868634;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2bfs2UEwo6ToOh8FqCQeqUWi9lfpjMNVBp5cRaIPVyM=;
-        b=DgztNlIFSGvleZu1xB7H3zbHm1rTfc/h0QfwPn1WZiF50qRUh+acI1T5k3hrdnE3lS
-         NBCrRIm1t4cKqkFHX9ZpjgrGqSZCJGY1w5Sz0zvMcfuXj2wcvSuqSEI3D/KPgxq/9sNF
-         ByIhKxvfl9khDm+ZWp1+ZOqvOlhDAMXWq1XFlgnUwPVXAhpR9rcAXIQeEsGQXQTU0Apv
-         Fcxp0QCwdrgG9JUZSTH3t23Hk8Bc/KZYAwdlWaGNA5LTds+i2UtOO178qUerDA/TR+jH
-         xxnx3qhBVLCJ2LRkUlIy0pFK71BktMdbqsRUccMTMGKp0HqMIjvzn9GyG0UmbtvDITaY
-         cZeg==
-X-Forwarded-Encrypted: i=1; AJvYcCVHKZgzzZ/bAvoZCa/nenuBBBR9x7xvs1llYlqiCv7jtFbKeprhkgjE1m8f4t+9opxJc+o8WeaFIcEBBOd33y4o@vger.kernel.org, AJvYcCVLvOfMK+8FhI2E4iQ17WaQQEKe9KgaoIOcPE9acHCkwlL2LcEiNdVooYXyGrxTb3DyIEprBJR0H6CEJ2iz@vger.kernel.org, AJvYcCVlZ7oRwOQgSFgZDM986eLXjBQPVvVAuWK15pnav+RQLKeAB4FxiX0jPn/bIoq2+abMft/MBoezeUnOAQ==@vger.kernel.org, AJvYcCWCLZJJ2L3WHhpAK9wKyn7d1LiZE6Yz/eA7XvWz0O/MSSmlsMaUIUeuTrrsGgEKpRalfNOaosxdU9KR@vger.kernel.org, AJvYcCXVFpBHAtHErX2nf5opVVo1T0Imku4li7Y1Ril94azImZeS7TO4C8V5KR8gQjsCLP6bhqepnHMmIxYx/qfR@vger.kernel.org, AJvYcCXa+yIxV6JqKMN9qXSvJmkhPC0Z7W/O5Xty+eTUUNlxlLl2hjKlXXzJGOuOOxz5mL5gOn9NpQyvAfPvRiE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzggh6hO9be8tUQP1pVY5lRQhOffZKIM8RbgOS1dU63A9t261Gq
-	UkWoQS/PsFT9ECs4AqKAF65OHQpghR/VYZDx/c5QZBG775CryzQ2
-X-Google-Smtp-Source: AGHT+IFtSxqYQ+Uh1KxSL4gmbFP2b5u4RAOEyxYYnsypWhrbsVj/jXKkNnFmi1COXRELCZUTv+Zc5A==
-X-Received: by 2002:a05:622a:2309:b0:460:8be6:9b00 with SMTP id d75a77b69052e-460aede585bmr37176911cf.50.1729263833772;
-        Fri, 18 Oct 2024 08:03:53 -0700 (PDT)
-Received: from [127.0.0.1] (syn-076-188-177-122.res.spectrum.com. [76.188.177.122])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-460b818e356sm2189391cf.69.2024.10.18.08.03.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 18 Oct 2024 08:03:53 -0700 (PDT)
-Date: Fri, 18 Oct 2024 11:03:50 -0400
-From: Adrian Vovk <adrianvovk@gmail.com>
-To: Christoph Hellwig <hch@infradead.org>
-CC: Eric Biggers <ebiggers@kernel.org>, Md Sadre Alam <quic_mdalam@quicinc.com>,
- axboe@kernel.dk, song@kernel.org, yukuai3@huawei.com, agk@redhat.com,
- snitzer@kernel.org, Mikulas Patocka <mpatocka@redhat.com>,
- adrian.hunter@intel.com, quic_asutoshd@quicinc.com, ritesh.list@gmail.com,
- ulf.hansson@linaro.org, andersson@kernel.org, konradybcio@kernel.org,
- kees@kernel.org, gustavoars@kernel.org, linux-block@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-raid@vger.kernel.org,
- dm-devel@lists.linux.dev, linux-mmc@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-hardening@vger.kernel.org,
- quic_srichara@quicinc.com, quic_varada@quicinc.com
-Subject: Re: [PATCH v2 1/3] dm-inlinecrypt: Add inline encryption support
-User-Agent: Thunderbird for Android
-In-Reply-To: <ZxH4lnkQNhTP5fe6@infradead.org>
-References: <20240916085741.1636554-1-quic_mdalam@quicinc.com> <20240916085741.1636554-2-quic_mdalam@quicinc.com> <20240921185519.GA2187@quark.localdomain> <ZvJt9ceeL18XKrTc@infradead.org> <ef3c9a17-79f3-4937-965e-52e2b9e66ac2@gmail.com> <ZxHwgsm2iP2Z_3at@infradead.org> <CAAdYy_mVy3uXPqWbjPzK_i8w7Okq73wKBQyc95TbnonE36rPgQ@mail.gmail.com> <ZxH4lnkQNhTP5fe6@infradead.org>
-Message-ID: <D96294E2-F17A-4E58-90FB-1D17747048E5@gmail.com>
+	s=arc-20240116; t=1729264310; c=relaxed/simple;
+	bh=ozQGRjTiJsgBjbD1hrI8hLdNjmZDLyuYj4VRqdkZMfs=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XDmFEZbFQVchunDBJ2IJcoWee3etD5ZDUufeQjho7OMmZvNj7JocahjEFOMztbTuS8Xef+/1SEfJSIs2tHfTv9olkGsuXL4Jr2xiaYYiiSqBHuWOLbBb81ncR3XVdGZcCBC6xlJXxAXc960OQK8EVsP4wxiZG/jv25Pds/cc3bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o3xQvM09; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6BAEC4CEC3;
+	Fri, 18 Oct 2024 15:11:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729264310;
+	bh=ozQGRjTiJsgBjbD1hrI8hLdNjmZDLyuYj4VRqdkZMfs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=o3xQvM092JnNMfXjoiZXQ3+03M4ehf+23ubfGB63ZUkeZcA6TcPHiiEj1O/FkZ1ty
+	 F4e+jaMZ/V7rVsM5dqLbmJUsa88Ud2R3o97PZqdQ+y099WhpGIDaWtzJwkJq65ojPr
+	 jcgntWoGHOLS5LrcXLFq55jYN/8EdpChcmHgRWPQS5LHahiHkt4t42Hu53K3dzEPGx
+	 qEjhzWmr3Sm3uNSuxdyeeP0r4J8jrr5K94+1lGA3Pa8qt+pEiIuisx3JXasvn+Bces
+	 jnZNab9TtabZfeuFYQd5JKb8O7SYEO9Rm5nm5PtOlPFil/jGA8O0S9//dxmEbkb5Sy
+	 XdxW58/uAiOUg==
+From: Arnd Bergmann <arnd@kernel.org>
+To: Rob Clark <robdclark@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Nathan Chancellor <nathan@kernel.org>
+Cc: Arnd Bergmann <arnd@arndb.de>,
+	Sean Paul <sean@poorly.run>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Bill Wendling <morbo@google.com>,
+	Justin Stitt <justinstitt@google.com>,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev
+Subject: [PATCH] drm: a6xx: avoid excessive stack usage
+Date: Fri, 18 Oct 2024 15:11:38 +0000
+Message-Id: <20241018151143.3543939-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.39.5
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
+From: Arnd Bergmann <arnd@arndb.de>
 
+Clang-19 and above sometimes end up with multiple copies of the large
+a6xx_hfi_msg_bw_table structure on the stack. The problem is that
+a6xx_hfi_send_bw_table() calls a number of device specific functions to
+fill the structure, but these create another copy of the structure on
+the stack which gets copied to the first.
 
-On October 18, 2024 1:56:38 AM EDT, Christoph Hellwig <hch@infradead=2Eorg=
-> wrote:
->On Fri, Oct 18, 2024 at 01:44:19AM -0400, Adrian Vovk wrote:
->> > So just run a target on each partition=2E
->>=20
->>=20
->> That has different semantics=2E If I encrypt each virtual partition the=
-re's
->> nothing encrypting the metadata around the virtual partitions=2E Of cou=
-rse,
->> this is a rather contrived example but point stands, the semantics are
->> different=2E
->
->Then you set up an dm-crype device mapper table for the partition table a=
-s
->well=2E
+If the functions get inlined, that busts the warning limit:
 
-Sure, but then this way you're encrypting each partition twice=2E Once by =
-the dm-crypt inside of the partition, and again by the dm-crypt that's unde=
-r the partition table=2E This double encryption is ruinous for performance,=
- so it's just not a feasible solution and thus people don't do this=2E Woul=
-d be nice if we had the flexibility though=2E
+drivers/gpu/drm/msm/adreno/a6xx_hfi.c:631:12: error: stack frame size (1032) exceeds limit (1024) in 'a6xx_hfi_send_bw_table' [-Werror,-Wframe-larger-than]
 
-Plus, I'm not sure that such a double encryption approach is even feasible=
- with blk-crypto=2E Is the blk-crypto engine capable of receiving two keys =
-and encrypting twice with them?
+Mark all of them as 'noinline_for_stack' ensure we only have one copy
+of the structure per function.
 
->
->> > This is the prime example of why allowing higher layers to skip
->> > encryption is a no-go=2E
->> >
->>=20
->> In what way does that break the file system's security model? Could you
->> elaborate on what's objectionable about the behavior here?
->
->Because you are now bypassing encryption for certainl LBA ranges in
->the file system based on hints/flags for something sitting way above
->in the stack=2E
->
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
-Well the data is still encrypted=2E It's just encrypted with a different k=
-ey=2E If the attacker has a FDE dump of the disk, the data is still just as=
- inaccessible to them=2E
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index cdb3f6e74d3e..5699e0420eb8 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -259,7 +259,8 @@ static int a6xx_hfi_send_perf_table(struct a6xx_gmu *gmu)
+ 		NULL, 0);
+ }
+ 
+-static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++/* noinline to avoid having multiple copies of 'msg' on stack */
++static noinline_for_stack void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/* Send a single "off" entry since the 618 GMU doesn't do bus scaling */
+ 	msg->bw_level_num = 1;
+@@ -287,7 +288,7 @@ static void a618_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] =  0x60000001;
+ }
+ 
+-static void a619_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a619_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	msg->bw_level_num = 13;
+ 
+@@ -346,7 +347,7 @@ static void a619_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[0][0] = 0x40000000;
+ }
+ 
+-static void a640_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a640_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/*
+ 	 * Send a single "off" entry just to get things running
+@@ -385,7 +386,7 @@ static void a640_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][2] =  0x60000001;
+ }
+ 
+-static void a650_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a650_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/*
+ 	 * Send a single "off" entry just to get things running
+@@ -416,7 +417,7 @@ static void a650_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] =  0x60000001;
+ }
+ 
+-static void a690_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a690_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/*
+ 	 * Send a single "off" entry just to get things running
+@@ -447,7 +448,7 @@ static void a690_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] =  0x60000001;
+ }
+ 
+-static void a660_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a660_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/*
+ 	 * Send a single "off" entry just to get things running
+@@ -478,7 +479,7 @@ static void a660_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] =  0x60000001;
+ }
+ 
+-static void adreno_7c3_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void adreno_7c3_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/*
+ 	 * Send a single "off" entry just to get things running
+@@ -509,7 +510,7 @@ static void adreno_7c3_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] =  0x60000001;
+ }
+ 
+-static void a730_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a730_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	msg->bw_level_num = 12;
+ 
+@@ -565,7 +566,7 @@ static void a730_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] = 0x60000001;
+ }
+ 
+-static void a740_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a740_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	msg->bw_level_num = 1;
+ 
+@@ -590,7 +591,7 @@ static void a740_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ 	msg->cnoc_cmds_data[1][0] = 0x60000001;
+ }
+ 
+-static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
++static noinline_for_stack void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+ {
+ 	/* Send a single "off" entry since the 630 GMU doesn't do bus scaling */
+ 	msg->bw_level_num = 1;
+-- 
+2.39.5
 
-In fact, allowing for this will let us tighten up security instead of punc=
-hing holes=2E It would let us put encrypted home directories on top of full=
--disk encryption=2E So if an attacker has a disk image and the FDE key, the=
-y still wouldn't be able to decrypt the user's home directory because they'=
-d need more keys=2E We also want to put fscrypt on top of the encrypted hom=
-e directories to encrypt each app data directory, so if you have a banking =
-app the attacker wouldn't be able to get that app's data even if they manag=
-e to get your home directory key=2E Right now, doing something like this re=
-quires stacking encryption and is thus unfeasible and we can't do it, so we=
-'re stuck with one layer of full disk encryption and no isolation between u=
-sers and apps=2E
-
-Thanks,
-Adrian
 
