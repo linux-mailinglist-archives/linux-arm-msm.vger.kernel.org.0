@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-34965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F376C9A3F49
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 15:15:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 38E3E9A401F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 15:42:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7336E1F24366
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 13:15:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8E931F2998D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 13:42:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB0511FCF56;
-	Fri, 18 Oct 2024 13:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A341B1FCF5C;
+	Fri, 18 Oct 2024 13:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LYZ3jHr8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Cb5t+LQZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D151EE03F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 13:13:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BF81D88DC
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 13:37:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729257242; cv=none; b=LGeVvcfhvME2Y1KxjQfDdOS4bDptJ+SO9HiB3mE7/lYg/cqKiQd+VXBS45XWX4aVLFSB5uAENiAe2tKcoos29ghXC9m4qe5eD73cX9zHnAygzc+DaH/EZgmhykX6owU6WzZhfSBnoQvHqTTYpgeGZeOy4B3toEgWUDtZLvhODFo=
+	t=1729258668; cv=none; b=S8WRsrc+1tak+1pYaQE44nifg7Nluc2XJ0W+z6vw2eG+xVoSbScnHDTX7dfnzkkyvOG7VFegTW6YH6ZNgSgtd7E9epZs/Ck1CAMx/e/RaxGXb9YJ8IidFrrrWNaUQBCCXxM1bJelbDR/IBL7JoeI4ZK6Q3E9H4Gf2vWctFVXmqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729257242; c=relaxed/simple;
-	bh=ug5jCdtMI0+B4bUF/QGKMlM43w7o11eBByOdR2+MeSY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ULOzWaC/gs86DZqEiTxpD4VkLrc/KJ+BFGOZoXucrd31nyQY0tctfjcI86D+jwOIufyBNXRulSIPScqmxBhEej3m/exuikaaVRabbhm5JJ31QZ4MKBptK/cmU+4RouEgiyxe/KK6571BkbC1M7NmvQhjyQnJqx8DHYLliC6GAqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LYZ3jHr8; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1729258668; c=relaxed/simple;
+	bh=NrBqsWCuaAQ/Cuj024knkF2DII41vrMEDac5L3LP/gg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=qsSEnxYuFArwjCh8Vnlq5oz2S5Lvu45ECENllSgPClxFGUoGHDEOoR+EE4hWrFnrM9qwhzRQCf+9sW+sVZFPNd/z14DcVJmPP5OR6VXN9vUzsoI3e3omSsDuMz0gBP6G9M29t5KvbPk02NZPDVdcxZH6eih8j24hlYGQNC0y0p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Cb5t+LQZ; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4314c452180so21768375e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 06:13:59 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43155abaf0bso20204735e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 06:37:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729257238; x=1729862038; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729258665; x=1729863465; darn=vger.kernel.org;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=slJkaosW6XMQOpTqyPk6rQj2FnZm8OhDSZzBFstpf7g=;
-        b=LYZ3jHr8LovtvZ8sFTVTrvoRaXWKgbHN2vTGep4ej8Fs+eQ4Z1Fa/mK3ix/h+o9Aa5
-         6xhGMyaNrH2dL3sxJHKqI8B7lg31N9Z0BtGXIaNBg5/IWMVim8awKJBUc3biwuDerCFt
-         GHCbIfC3CV0tb/cJXOmZadPaJsotYhkA3zPedoEhrGgDzroqoLBtpLeR5C3TK2519KyM
-         6fvF7PgJVOO5T3hdZLhVLkBzz1OPt35NJn8mlZNFkNC0p8tnsOjUrbTkXPjNfJHzm+uE
-         Luhlgdiy2H3JbFZJQ2NDNriP026DDsVjw3CZmY0GT17mbThUgfu5xtCBHwc5ig7B04PF
-         Zqvg==
+        bh=9g6X28B6QyIz5mltae5jx7UaHpkhC0PDITotQrVOf14=;
+        b=Cb5t+LQZriSO3fUsdErO70XMmSdFHBGHAnnFt2A6AeOvQZEAEafV1xfMYgPSgGVM79
+         9MKfha31UWDIcivykJF+W+SSsWKJfMDADQ7fkrPW/5M8t/F+rdRaUZmbm6hpVQNwrqkX
+         fI+OiWoyhldgLwqCe9Vrl0PjmpqHD4OGO43qafV7I2svPSnXxqD3bC2ExA1pcFwmtGls
+         gE6ndyRn4RPh2peEa5nzZf18e8xfoObmvkgfkydmc/aIE7RVhiabbzWDQIGNHlpYpvTP
+         5bxy4K1L4HSJ2foic8cM5sFOXumN2qmdJK9vIVHFNrcBKBnSJfkrje504Ix0sPBnyHEV
+         sbsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729257238; x=1729862038;
+        d=1e100.net; s=20230601; t=1729258665; x=1729863465;
         h=cc:to:message-id:content-transfer-encoding:mime-version:subject
          :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=slJkaosW6XMQOpTqyPk6rQj2FnZm8OhDSZzBFstpf7g=;
-        b=U1T/YdpDeqPEs8A+IdcWJ8zOJ3kryxrYW3CRLQNiuZsAp9Dw28MIwRtul/Kd7l9Ugz
-         F/3yUgXWvZfxkSugigeu20DTBt37zqMXeGE4AW8NJtw8WYlC4LJ1wqLly/SlfWe7JiZR
-         jaqLV68K2F6tjFSx2slf9GvE/zgYaehOYkTCq8Jy8etcs6Ipcdn/VyRGuN+8yFFR60QH
-         99yNrwNrtmBq1nNCotv4UMT1tngVgQchES1oP3dZERK5jl8ivPS+wZJKu5M+SRSdo/te
-         mdQtqPUs86mk1zZuMXa1H5bWFoifxLOGC3/W5fWz4rVSsNQmQrvdiv8HAL0s0FXqeUra
-         Aqxg==
-X-Forwarded-Encrypted: i=1; AJvYcCWGgmtz7+AtwYpiE82nXC3L2pDJm0uYytQwpFqHRH1O//qaKyPJFM7x0PTNrpEyWcA4B32VB3LK23fk8iLw@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjRCav/q0Z07HU6cTqoPzdrjoFjtR/hqHA8vvcAdOoO7pLGInQ
-	R4ddXP8kcy3x4w1GznBzGgtQwQhauDGUq4Iabxbn26SDzEfOECozpPtwAzGjvUrrllMY8xDU7Mm
-	w
-X-Google-Smtp-Source: AGHT+IHTaWCjtMZo2yvANXCpoAT6BwaQPtKmWGyPC3YgUVT4hU9B4bthUkDj2W6aDK83oYueMqn31Q==
-X-Received: by 2002:a05:600c:5489:b0:42c:b8c9:16c8 with SMTP id 5b1f17b1804b1-431616415f4mr15802505e9.10.1729257236139;
-        Fri, 18 Oct 2024 06:13:56 -0700 (PDT)
+        bh=9g6X28B6QyIz5mltae5jx7UaHpkhC0PDITotQrVOf14=;
+        b=r8lZ1vD/OfbcP/BgW3IgkDBIZ3gg5CpJtK/chEnydeo+jvFgVbvHzacDWdrzEOyg5J
+         n+h9Xk9MlDIzyyBaBE7wDYCLIH5am4ZrP+pcCVikpkCWdakyaFo6xA+mX0B6LQ5gp3ph
+         RpRAQKxDyzZq5nT0RQPs3bLjtqylNSRuP3YrioCqFRyABTzw2EM5lXP7amEKEuGAqpHY
+         OII5tyvrgSYWaMoK/GNMabvuJJ3tpOxTJOf8e2tKUvvv5l47K61r57H6Oyp1J2LrKiGJ
+         NVHYi23c5BynR4VdoBPc5fEsRCRt7xrp2DG2gjO6TWgcopvcipSD98gCUsMi21QuW+b+
+         U6yA==
+X-Forwarded-Encrypted: i=1; AJvYcCVOH4eyIZQYXm+Xdjo/jesxD4bwtxUWkWLsb0mNsvprR9y8Z5tXZiZTgcgqk1u22dqIog03ELGKgopq/g5H@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqI5br0sG7fzAfURJ97ga6CWmoMOQPofQFCqITFXCdnJOA1o6D
+	xAckXjee6QpEwt91s33kJbv9Pt8AxJ87VmrDLZhduwS06IBa35hyFPBFVWTiPb0=
+X-Google-Smtp-Source: AGHT+IFCUgN7OzzYT+R+UjYNcvyXfv69g2h0+VHrvjEge4+4nbLU62Z2mcykFjWYCuiCipDnNr9mRg==
+X-Received: by 2002:a05:600c:4f09:b0:431:542d:2592 with SMTP id 5b1f17b1804b1-431616a3aaemr15875525e9.27.1729258664468;
+        Fri, 18 Oct 2024 06:37:44 -0700 (PDT)
 Received: from [127.0.1.1] ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ecf027e3csm1948418f8f.4.2024.10.18.06.13.54
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43160e4437dsm24305925e9.30.2024.10.18.06.37.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 06:13:55 -0700 (PDT)
+        Fri, 18 Oct 2024 06:37:44 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Fri, 18 Oct 2024 16:13:47 +0300
-Subject: [PATCH] dt-bindings: cache: qcom,llcc: Fix X1E80100 reg entries
+Date: Fri, 18 Oct 2024 16:37:36 +0300
+Subject: [PATCH] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Fix X1E80100
+ resets entries
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,123 +77,65 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241018-qcom-llcc-bindings-reg-ranges-fix-v1-1-88693cb7723b@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAApfEmcC/x2NywqDQAxFf0WybsDRoT5+pXShMTMGdNQEiiD+e
- 6ddnsvhnguMVdigLy5Q/ojJljK4RwE0DykyypQZqrLyrnQtHrStuCxEOEqaJEVD5Yj6cw2DnNg
- 8fd2E4KnrAuSfXTnP/8brfd9fNsYd03MAAAA=
-X-Change-ID: 20241018-qcom-llcc-bindings-reg-ranges-fix-76437ff4c99f
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>, 
- Rajendra Nayak <quic_rjendra@quicinc.com>
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+Message-Id: <20241018-phy-qcom-qmp-pcie-fix-x1e80100-gen4x4-resets-v1-1-f543267a2dd8@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAJ9kEmcC/x2NwQ6CMBAFf4Xs2ZfsYonorxgPUhfYA6W0xtQQ/
+ t3G4ySTmZ2yJtNMt2anpB/LtoYKcmrIz88wKexVmVpunbD0iPMXm18XbEtE9KYYraCI9izMmDS
+ 44pA06ztjlMHJcD13l46pJmPSav9398dx/ABPU/mXfgAAAA==
+X-Change-ID: 20241018-phy-qcom-qmp-pcie-fix-x1e80100-gen4x4-resets-f1b41b935750
+To: Vinod Koul <vkoul@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>, 
  Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3002; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=ug5jCdtMI0+B4bUF/QGKMlM43w7o11eBByOdR2+MeSY=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnEl8OTxusoEVgjXaF4HSD/+24Ni900zRicjnpp
- 9BaNgYZg7qJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZxJfDgAKCRAbX0TJAJUV
- VpG/D/9f1kLhKvYULAvtFAeBM0q3KXExs1O3l5xUFcS7l+r8LEhtC0hxzlIKicZjSErMUO9QQUI
- fmuOQJS9k2dEux0opox0LujHxyxEVyYjyH+JGI0UsQg+r8d9gN1Pl0zqMbusY/Cpbgv6dhTJTYU
- ZbOGFyK1QyRt6WjgUhShsNxi3OUmKefMir5uMo69+1Q+Ac7BXfhXQoGwQy0uMtgQzBk74EQvmcH
- gYZp10I/wpWdTfjfKCLpW4rDVzym0czeyXASkK+4nnkRKSZphdZgL0XpM0TryyALg/mDHDs8GYt
- 3Xl8GO3izqo1sKvz4E/KgPjXeJVxlGpCedNHGZ9+cljKpBY/2dfAwrzx6fhCHRhjPwt1VfPBMca
- d7/Rs9UCC+m4oC5oxcd3rnKIft8Yb5BJQe04WkXu5xyATg80j8zjJQjY9ozkP9LdDsS3Cp5dNyL
- 9GUz01O0ust3L+C5K/xKar54khJVM3sV3NSYj/dlXjIbpPo/SB89v64tHVa5REHP68A1uGxqdfU
- 3814dohqLlGXy5YVN8uU+wu3ws1I8JcAKCCu86sjYVjey008jYWPg6szNVrWyKTJYPu8X+zbn+/
- u3puwoPS90tZRYtwnTbAXdZbZuOt3Bz+S/+wzwYMJD/7xMRrMrfrHGup85szuQlcLnhC7FSKesb
- hiDJSQd7PTzIRow==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1472; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=NrBqsWCuaAQ/Cuj024knkF2DII41vrMEDac5L3LP/gg=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnEmSiuAUWzOzRknYiBKK4XsGyfZq0uJbv4jtkv
+ /gpfSjkVb2JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZxJkogAKCRAbX0TJAJUV
+ VpEyEADNVS0D7L+QFC6C01wOBEDU/N/MpIsJDVUJsA2T0SZFxAX0vfVa43uZaHeuq5QKFeLgdD1
+ PWAnNBY+2PINh18jAUjHB58us46ZFK7BscC563BCTxioIDySUOGG6aWcBMLtzslRk6u30A1J4tz
+ hlCZQOFlQp4NoKR5JHquZXErtF01oCycx4d/qxNwVEIcI9ozWeDRC0W1cN8L6/YU/0alhQIUKdk
+ TXoQesmcFrs6roJBsq51OH4fhwYOUPa9A8qxcdrfYaOaqOEpowu8QbsPt8zB07vZbLVPrmbOPqT
+ KoLO4cZw52O8ejRcqMF6g/NUdMqNGPaAjL7mbJpCmjlm+ZiNwGR/IQOK2sR7mOc3sDV98N9Clca
+ ErFVzBXM977a2hRl91IqCMmMtBYZ1GPcw2oa+w2rq1JlXUvGPkmB7rWVOi3fw3bi8ssbHlbDSH2
+ 9p3Pa7Bky7la9Ye/l0z3zAskfHdiJw9a5vYX/9cqc+s2QUZO+/MNL1/miONnweHMfmASwE+mpIU
+ hhGJe91Leb+I7HMgzx7uexHRk2y+JlgZ5hnuUKuhhVPX5VZtd5JEJu5f9SJbhLrDrB2Av8OFL2v
+ R1SZFzXPY0r0bBvaOLdjQ7wtvBDDtll7mX9ttNUvUMMbQpKshiPwJpM/EIvbP17MJOzNiddQiTQ
+ 08kpXaTs4loiHAQ==
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Document the missing Broadcast_AND region for x1e80100.
+The PCIe 6a PHY on X1E80100 uses both resets in 4-lanes mode as well.
+So fix the resets entries for it by adding the Gen4 4-lanes compatible
+alongside the 2-lanes one.
 
-Fixes: e9ceb595c2d3 ("dt-bindings: cache: qcom,llcc: Add X1E80100 compatible")
+Fixes: 0c5f4d23f776 ("dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the X1E80100 QMP PCIe PHY Gen4 x4")
 Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202410181235.L7MF7z48-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202410182029.n2zPkuGx-lkp@intel.com/
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- .../devicetree/bindings/cache/qcom,llcc.yaml       | 36 ++++++++++++++++++++--
- 1 file changed, 34 insertions(+), 2 deletions(-)
+ Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-index 68ea5f70b75f031cd8b23cf48d566c3a760dab77..ee7edc6f60e2b4bf39ddc7c7ba8a8447c990c7bb 100644
---- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-+++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-@@ -39,11 +39,11 @@ properties:
- 
-   reg:
-     minItems: 2
--    maxItems: 9
-+    maxItems: 10
- 
-   reg-names:
-     minItems: 2
--    maxItems: 9
-+    maxItems: 10
- 
-   interrupts:
-     maxItems: 1
-@@ -134,6 +134,36 @@ allOf:
-               - qcom,qdu1000-llcc
-               - qcom,sc8180x-llcc
-               - qcom,sc8280xp-llcc
-+    then:
-+      properties:
-+        reg:
-+          items:
-+            - description: LLCC0 base register region
-+            - description: LLCC1 base register region
-+            - description: LLCC2 base register region
-+            - description: LLCC3 base register region
-+            - description: LLCC4 base register region
-+            - description: LLCC5 base register region
-+            - description: LLCC6 base register region
-+            - description: LLCC7 base register region
-+            - description: LLCC broadcast base register region
-+        reg-names:
-+          items:
-+            - const: llcc0_base
-+            - const: llcc1_base
-+            - const: llcc2_base
-+            - const: llcc3_base
-+            - const: llcc4_base
-+            - const: llcc5_base
-+            - const: llcc6_base
-+            - const: llcc7_base
-+            - const: llcc_broadcast_base
-+
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            enum:
-               - qcom,x1e80100-llcc
+diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+index dcf4fa55fbba58e162e5c7bebd40170342039172..b5bb665503c86c79940031bcb58a36a833918a4e 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml
+@@ -201,6 +201,7 @@ allOf:
+               - qcom,sm8550-qmp-gen4x2-pcie-phy
+               - qcom,sm8650-qmp-gen4x2-pcie-phy
+               - qcom,x1e80100-qmp-gen4x2-pcie-phy
++              - qcom,x1e80100-qmp-gen4x4-pcie-phy
      then:
        properties:
-@@ -148,6 +178,7 @@ allOf:
-             - description: LLCC6 base register region
-             - description: LLCC7 base register region
-             - description: LLCC broadcast base register region
-+            - description: LLCC broadcast AND register region
-         reg-names:
-           items:
-             - const: llcc0_base
-@@ -159,6 +190,7 @@ allOf:
-             - const: llcc6_base
-             - const: llcc7_base
-             - const: llcc_broadcast_base
-+            - const: llcc_broadcast_and_base
- 
-   - if:
-       properties:
+         resets:
 
 ---
 base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
-change-id: 20241018-qcom-llcc-bindings-reg-ranges-fix-76437ff4c99f
+change-id: 20241018-phy-qcom-qmp-pcie-fix-x1e80100-gen4x4-resets-f1b41b935750
 
 Best regards,
 -- 
