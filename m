@@ -1,155 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-34921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42C049A3AE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:08:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F3029A3AEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:08:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE9251F23E82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:08:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8E9301C21DE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:08:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16CB0201022;
-	Fri, 18 Oct 2024 10:08:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b8HItveP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 445A9201038;
+	Fri, 18 Oct 2024 10:08:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F418188A18
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 10:08:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 72E0C188A18;
+	Fri, 18 Oct 2024 10:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729246095; cv=none; b=iCwFyBwY4Hs/tFNCROe/+vk1mrKCD8CQwK7GLGSVMxwOIluS56m5fDopE3709Wt/MUU1sCf0vT0LyTqx4q+4XnPUqRshyQMRrkVYdUYUXGKJFrz4XT9wUsNgCwDwt4BNV55s2A1bL1QdeuRuqxwVCI/O0+plItNRnmruvvw/Ie0=
+	t=1729246115; cv=none; b=k0VlfuwZl7Og8Q256J4ry7zgAY0UBYWuJFM6M4k/xAGmoWvcV5n5pZg9lX8FnNAkqsyjuLCsyqyKHm719Fd6mylCv9CnjJR86f7l+4KyaX+PTs/pyijNZtUsTldWn1lkt6ZaFAjZCrnOaJWFdsHXJWreQM18YKtapoPWGBdzBPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729246095; c=relaxed/simple;
-	bh=4uBJVji3ycVqZ6CU17CaXtEQ1m7RmscWbQxhamYSdRM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qXfroTyX7VvUIweXWapl6+dNXVkvlTyD3kGGU3kpGxduDuvMM3tT7PoSI5WS0EBwQV8SfQBGFFQC7lYGA1QaNNXN/yiVMNcq+YBewMnuoOOUvT6BqHPAKg5f5eExBIMYAmy02V2MJok+ayT9WMb8rP/IelbTpYCzxDlNdHEf6wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b8HItveP; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539f53973fdso1488335e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 03:08:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729246091; x=1729850891; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWO5SIPIA+/rWAYr4Euwe43sU4NAtmP9U+0QgyOHFx8=;
-        b=b8HItvePFF/K+CgAdGRNwTO3JBZZfTp+ZzLWlAJq8udeLkOeiPwvoUd9G4acAStLw1
-         6kZSmb7HvPVAfE8ecCFk/9fTtNhiaG0rOhWk11cVFN0F2kT1KgvdNJ8/O8J1xmS8oQtd
-         hInaE2gssEht4hf1iNwyW4cKp8j6SXwv8y5fdTiyskOZJ/FKKVkfVx9pQeVt+lEHLrIE
-         DFMGpzEOaGl0QD64BlzCetCjx9XuJfXmAPc3IoGSP/5TelPE8kIRKBxj22pem2SKNrtL
-         pttbDsSio0kFbB6etdU7IUc4abRGWG1ajPqK0Van+A1lbJp9DjqTiCnRA5Y3PUT5HbjL
-         6Rjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729246091; x=1729850891;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EWO5SIPIA+/rWAYr4Euwe43sU4NAtmP9U+0QgyOHFx8=;
-        b=nQT09dHS6vPy+yCBM6JeKnv9qReyC7gKbjVi+JAsKnlvqFGWE82MzT323i93hBr0TR
-         sS30ztsVsejW4dpihKv0QtaBWljzGg8t+S/OpDgX5EORLwC1mcdAujdVXl0wvB76f83g
-         Ifmo1qMYi9zkFckevaBlI2gIBlIpnCDHhhFUF30x4Wg/ZPS/YPynsJT1P6xZ5y2DL/XG
-         C5fNdO/pYERxhaYacRiq4vOaYsg0M8FSl9hdNy2Low2PObpS+KQpBijqANghavNvnzVf
-         +KB0gwpmtZBb18BmjFNIwvxwDBTYyd/Onqkuyrc/n7JdhVkxzf6QJTDGNJaHFhj8G6Ai
-         WaDA==
-X-Forwarded-Encrypted: i=1; AJvYcCUufg0igcZB+sA3A1XGtUT2tjS979WWynXRmu5EU+vBetzocmflDRjLB0RMPFfXWY3Bi/PU44Mi24AKTmyS@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0grkqaft3mHUsYTvu+ei1+kb1egYeYMD/0MvBTHTOT40LyFv0
-	UOnU38BAZymX1KEuuf+BqjoCTewyiJF+dI0EUlpjoz5wegJocr0sP9DoY3jZJsc=
-X-Google-Smtp-Source: AGHT+IG2fzF1NEqkVxyx3ltslEHQ5ZS8VwVmoBLD0KSZElJbLsKJHZFOX9qwuUQyNzdp9PiQBHBbNw==
-X-Received: by 2002:a05:6512:e9b:b0:539:ebc7:97a2 with SMTP id 2adb3069b0e04-53a0c73434dmr2093811e87.19.1729246091341;
-        Fri, 18 Oct 2024 03:08:11 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151f0db9sm175433e87.151.2024.10.18.03.08.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 03:08:10 -0700 (PDT)
-Date: Fri, 18 Oct 2024 13:08:08 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org, 
-	andersson@kernel.org, simona@ffwll.ch, abel.vesa@linaro.org, robdclark@gmail.com, 
-	quic_abhinavk@quicinc.com, sean@poorly.run, marijn.suijten@somainline.org, 
-	airlied@gmail.com, daniel@ffwll.ch, maarten.lankhorst@linux.intel.com, 
-	mripard@kernel.org, tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org, 
-	conor+dt@kernel.org, quic_khsieh@quicinc.com, konrad.dybcio@linaro.org, 
-	quic_parellan@quicinc.com, quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, quic_riteshk@quicinc.com, 
-	quic_vproddut@quicinc.com
-Subject: Re: [PATCH v5 0/5] Add support for DisplayPort on SA8775P platform
-Message-ID: <vtfz5vteaedwrqw5cpggmd3esi2rky3f2axubxukh74wdux4uy@zdac7miws5lu>
-References: <20241018070706.28980-1-quic_mukhopad@quicinc.com>
+	s=arc-20240116; t=1729246115; c=relaxed/simple;
+	bh=1tR5le7ZPEXw3HfoYYAVRTrdF3Gn2AvQdMNGwVbWWoU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oBfq9RgWEi3eyBmVSmwGb4VSkUgduDAI6JUv9MgmpyJbV+Ebbq00WENFv7UrqbkuI8eh6cL9tNaGKvXDz32cEOjfPZbZYrnWd9rI14O77XvI70LcA32li/9317ygThMOL8AQymtylKK2a2bdy/u/R1iViCgsGHjkURSn6HBI11Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 762E6FEC;
+	Fri, 18 Oct 2024 03:09:02 -0700 (PDT)
+Received: from [10.57.22.188] (unknown [10.57.22.188])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 865423F58B;
+	Fri, 18 Oct 2024 03:08:30 -0700 (PDT)
+Message-ID: <b62435d7-8f25-4555-9e50-3e03e249e0b7@arm.com>
+Date: Fri, 18 Oct 2024 11:08:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241018070706.28980-1-quic_mukhopad@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm:
+ qcom,coresight-static-replicator: Add property for source filtering
+Content-Language: en-GB
+To: Krzysztof Kozlowski <krzk@kernel.org>, Tao Zhang <quic_taozha@quicinc.com>
+Cc: Mike Leach <mike.leach@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Leo Yan <leo.yan@linux.dev>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240821031348.6837-1-quic_taozha@quicinc.com>
+ <20240821031348.6837-2-quic_taozha@quicinc.com>
+ <a01d2f2f-d963-4eb1-98ee-3dc6f86c9397@arm.com>
+ <xmijaayxveghxx76nnudo5mlpxv6tpxvooiox7wj2jyojf3xpe@ntm67lxikfop>
+ <44e2617c-62b0-436f-ac6a-0bd3e3855473@arm.com>
+ <53ec46af-3438-44e0-82b2-9432fc7f0fcb@arm.com>
+ <4a6066ed-ead4-4387-8c66-b3e7631c5e90@arm.com>
+ <6e408062-9a74-4a2a-8b67-b83244c4ca95@quicinc.com>
+ <ce439616-072b-463f-b293-8a186f8282bd@kernel.org>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <ce439616-072b-463f-b293-8a186f8282bd@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, Oct 18, 2024 at 12:37:01PM +0530, Soutrik Mukhopadhyay wrote:
-> This series adds support for the DisplayPort controller
-> and eDP PHY v5 found on the Qualcomm SA8775P platform.
+On 18/10/2024 11:05, Krzysztof Kozlowski wrote:
+> On 17/10/2024 09:23, Tao Zhang wrote:
+>>
+>> On 10/9/2024 6:52 PM, Suzuki K Poulose wrote:
+>>> Krzysztof
+>>>
+>>> On 22/08/2024 12:50, Suzuki K Poulose wrote:
+>>>> On 22/08/2024 11:34, Suzuki K Poulose wrote:
+>>>>> On 22/08/2024 08:08, Krzysztof Kozlowski wrote:
+>>>>>> On Wed, Aug 21, 2024 at 11:38:55AM +0100, Suzuki K Poulose wrote:
+>>>>>>> On 21/08/2024 04:13, Tao Zhang wrote:
+>>>>>>>> The is some "magic" hard coded filtering in the replicators,
+>>>>>>>> which only passes through trace from a particular "source". Add
+>>>>>>>> a new property "filter-src" to label a phandle to the coresight
+>>>>>>>> trace source device matching the hard coded filtering for the port.
+>>>>>>>
+>>>>>>> Minor nit: Please do not use abbreviate "source" in the bindings.
+>>>>>>> I am not an expert on other changes below and will leave it to
+>>>>>>> Rob/Krzysztof to comment.
+>>>>>>>
+>>>>>>> Rob, Krzysztof,
+>>>>>>>
+>>>>>>> We need someway to "link" (add a phandle) from a "port". The patch
+>>>>>>> below
+>>>>>>> is extending "standard" port to add a phandle. Please let us know if
+>>>>>>> there is a better way.
+>>>>>>>
+>>>>>>> e.g.:
+>>>>>>>
+>>>>>>> filters = list of tuples of port, phandle. ?
+>>>>>>>
+>>>>>>> e.g.:
+>>>>>>>
+>>>>>>> filters = < 0, <&tpdm_video>,
+>>>>>>>               1, <&tpdm_mdss>
+>>>>>>>         >
+>>>>>>>
+>>>>>>
+>>>>>> Current solution feels like band-aid - what if next time you need some
+>>>>>> second filter? Or "wall"? Or whatever? Next property?
+>>>>>
+>>>>>
+>>>>>
+>>>>>>
+>>>>>> Isn't filter just one endpoint in the graph?
+>>>>>>
+>>>>>> A <--> filter <--> B
+>>>>>
+>>>>> To be more precise, "Filter" is a "port (p0, p1, p2 below)" (among a
+>>>>> multi output ports).
+>>>>>
+>>>>> For clearer example:
+>>>>>
+>>>>> A0 <--> .. <--> ..\                  p0  / --> Filtered for (A1)
+>>>>> <--> B1
+>>>>> A1 <--> .. <--> .. - < L(filters>    p1  - --> Filtered for (A2)
+>>>>> <--> B2
+>>>>> A2 <--> .. <--> ../                  p2  \ --> Unfiltered
+>>>>> <--> B0
+>>>>>
+>>>>>
+>>>>>
+>>>>>> Instead of
+>>>>>>
+>>>>>> A <----through-filter----> B?
+>>>>>
+>>>>> The problem is we need to know the components in the path from A0 to X
+>>>>> through, (Not just A0 and L). And also we need to know "which port
+>>>>> (p0 vs p1 vs p2)" does the traffic take from a source (A0/A1/A2) out
+>>>>> of the
+>>>>> link "L".
+>>>>>
+>>>>> So ideally, we need a way to tie p0 -> A1, p1 -> A2.
+>>>>>
+>>>>> would we need something else in the future ? I don't know for sure.
+>>>>> People could design their own things ;-). But this was the first time
+>>>>> ever in the last 12yrs since we supported coresight in the kernel.
+>>>>> (there is always a first time).
+>>>>>
+>>>>> Fundamentally, the "ports" cannot have additional properties today.
+>>>>> Not sure if there are other usecases (I don't see why). So, we have
+>>>>> to manually extend like above, which I think is not nice.
+>>>>
+>>>> Replying to the other thread [0], made me realize that the above is not
+>>>> true. Indeed it is possible to add properties for endpoints, e.g:
+>>>>
+>>>> e.g.: media/video-interfaces.yaml
+>>>>
+>>>> So extending the endpoint node is indeed acceptable (unlike I thought).
+>>>> May be the we it is achieved in this patch is making it look otherwise.
+>>>>
+>>>> Suzuki
+>>>> [0]
+>>>> https://lkml.kernel.org/r/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com
+>>>
+>>> Please could you let us know if it is acceptable to extend "endpoint"
+>>> node to have an optional property ?
+>>
+>> Hi Krzysztof,
+>>
+>>
+>> Kindly reminder, could you help comment on this?
 > 
-> ---
-> v2: Fixed review comments from Dmitry and Bjorn
-> 	- Made aux_cfg array as const.
-> 	- Reused edp_swing_hbr_rbr and edp_swing_hbr2_hbr3 for v5.
-> 
-> v3: Fixed review comments from Dmitry, Konrad and Bjorn
-> 	- Used a for loop to write the dp_phy_aux_cfg registers.
-> 	- Pre-defined the aux_cfg size to prevent any magic numbers.
-> 	- Added all the necessary DPTX controllers for this platform.
-> 
-> v4: Fixed review comments from Dmitry and Krzysztof
-> 	- Removed the "reviewed by" and kept only the "acked by" for 
-> 	  patch 1.
-> 	- Updated the commit message of patch 5 to mention specifically
-> 	  about the validation of "only" MDSS0 DPTX0 and DPTX1.
-> 
-> v5: Fixed review comment from Dmitry in patch 5
-> 	- Aligned the register starting address for display port as part 
-> 	  of device description with respect to other targets.
-> 
-> Below patches are applied:
-> 
-> [1/5] dt-bindings: phy: Add eDP PHY compatible for sa8775p
->       commit: 7adb3d221a4d6a4f5e0793c3bd35f1168934035c
-> [2/5] phy: qcom: edp: Introduce aux_cfg array for version specific aux settings
->       commit: 913463587d528d766a8e12c7790995e273ec84fb
-> [3/5] phy: qcom: edp: Add support for eDP PHY on SA8775P
->       commit: 3f12bf16213c30d8e645027efd94a19c13ee0253
+> I don't have any smart ideas and with earlier explanation sounds ok.
 
-Please in future skip applied patches instead of including them into the
-series.  No need to resend the series just for this issue though.
+Just to confirm, are you OK with adding a property to the "endpoint"
+node that will indicate a phandle that the device allows on this
+endpoint ?
+
+Kind regards
+Suzuki
+
 
 > 
-> ---
-> 
-> Soutrik Mukhopadhyay (5):
->   dt-bindings: phy: Add eDP PHY compatible for sa8775p
->   phy: qcom: edp: Introduce aux_cfg array for version specific aux
->     settings
->   phy: qcom: edp: Add support for eDP PHY on SA8775P
->   dt-bindings: display: msm: dp-controller: document SA8775P compatible
->   drm/msm/dp: Add DisplayPort controller for SA8775P
-> 
->  .../bindings/display/msm/dp-controller.yaml   |  1 +
->  .../devicetree/bindings/phy/qcom,edp-phy.yaml |  1 +
->  drivers/gpu/drm/msm/dp/dp_display.c           |  9 +++
->  drivers/phy/qualcomm/phy-qcom-edp.c           | 74 +++++++++++++------
->  4 files changed, 61 insertions(+), 24 deletions(-)
-> 
-> -- 
-> 2.17.1
+> Best regards,
+> Krzysztof
 > 
 
--- 
-With best wishes
-Dmitry
 
