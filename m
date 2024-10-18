@@ -1,229 +1,155 @@
-Return-Path: <linux-arm-msm+bounces-34920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A94409A3AD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:05:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42C049A3AE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:08:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45671283A25
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:05:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE9251F23E82
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:08:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31E831F12EB;
-	Fri, 18 Oct 2024 10:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16CB0201022;
+	Fri, 18 Oct 2024 10:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="az2zBBGE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="b8HItveP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053F017D378;
-	Fri, 18 Oct 2024 10:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F418188A18
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 10:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729245929; cv=none; b=Oe5qoSpi/NKt0FX14iBTsS/2ysggFrYkSJjtsWWZYIqLuEgqWsn/DUxJUm1ayyTNoWFXI1YtreULoP//DaR8EXOM/TR6dGcpdfHy30jqrj8WfIGQ1mTbXoCXZXdv9nvennlGflUJus8VKhaNP7CzeXKs2Pw2V+J+G8WV4rzPXPM=
+	t=1729246095; cv=none; b=iCwFyBwY4Hs/tFNCROe/+vk1mrKCD8CQwK7GLGSVMxwOIluS56m5fDopE3709Wt/MUU1sCf0vT0LyTqx4q+4XnPUqRshyQMRrkVYdUYUXGKJFrz4XT9wUsNgCwDwt4BNV55s2A1bL1QdeuRuqxwVCI/O0+plItNRnmruvvw/Ie0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729245929; c=relaxed/simple;
-	bh=KEGDJMN6eddDhPQD2ltJfuTnJIsAoHWrXDgEUWs0Ewk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=upQ7zM+zM4BJkosl0b/QJhrUyySqmGoQNi50YVTOk5B/+tVx1ITZKFtEby0OdLivC6ePdwOft8KveoF1HNQ1u2grRg8ZYvq/C8+Yl0rktnMNORRK4Evm9vljT3VEAQMhCnfZs6cceDD8jNlqz908vIRrd+gJATqD7jxtMd3IGKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=az2zBBGE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CFDC4CEC3;
-	Fri, 18 Oct 2024 10:05:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729245928;
-	bh=KEGDJMN6eddDhPQD2ltJfuTnJIsAoHWrXDgEUWs0Ewk=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=az2zBBGEMLy8XxYkz+tBw2ZrQxov9h3SOrgKdd1loU4Csrdj+aGrSczC3V6+8psF9
-	 I0xMB9qXhz8RyrPxEd5BVgYK2CChL19uoQzmIQkJIO8fqff5n5lF7Ulb6nJDE656uP
-	 B2kn60tQV8bjclG9vm/MFH+2wVowE60ekuhumx89PzFuh4IUoB+TyT4nzCfZXshsTD
-	 I2ke6Wtffqm/RPxp5vSub0gn8WxsQI49ENeEV+VbzmRvf4uY27y9NvuF3je2MCYmlt
-	 3pJnnyK/hrJUbIHcBkJ9nMOYewUEdXmuV1Zrj+YS29oqV2bCPsuyJWl+rb9L6Ik7eg
-	 JhjEW1qordlOA==
-Message-ID: <ce439616-072b-463f-b293-8a186f8282bd@kernel.org>
-Date: Fri, 18 Oct 2024 12:05:20 +0200
+	s=arc-20240116; t=1729246095; c=relaxed/simple;
+	bh=4uBJVji3ycVqZ6CU17CaXtEQ1m7RmscWbQxhamYSdRM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qXfroTyX7VvUIweXWapl6+dNXVkvlTyD3kGGU3kpGxduDuvMM3tT7PoSI5WS0EBwQV8SfQBGFFQC7lYGA1QaNNXN/yiVMNcq+YBewMnuoOOUvT6BqHPAKg5f5eExBIMYAmy02V2MJok+ayT9WMb8rP/IelbTpYCzxDlNdHEf6wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=b8HItveP; arc=none smtp.client-ip=209.85.167.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539f53973fdso1488335e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 03:08:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729246091; x=1729850891; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EWO5SIPIA+/rWAYr4Euwe43sU4NAtmP9U+0QgyOHFx8=;
+        b=b8HItvePFF/K+CgAdGRNwTO3JBZZfTp+ZzLWlAJq8udeLkOeiPwvoUd9G4acAStLw1
+         6kZSmb7HvPVAfE8ecCFk/9fTtNhiaG0rOhWk11cVFN0F2kT1KgvdNJ8/O8J1xmS8oQtd
+         hInaE2gssEht4hf1iNwyW4cKp8j6SXwv8y5fdTiyskOZJ/FKKVkfVx9pQeVt+lEHLrIE
+         DFMGpzEOaGl0QD64BlzCetCjx9XuJfXmAPc3IoGSP/5TelPE8kIRKBxj22pem2SKNrtL
+         pttbDsSio0kFbB6etdU7IUc4abRGWG1ajPqK0Van+A1lbJp9DjqTiCnRA5Y3PUT5HbjL
+         6Rjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729246091; x=1729850891;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EWO5SIPIA+/rWAYr4Euwe43sU4NAtmP9U+0QgyOHFx8=;
+        b=nQT09dHS6vPy+yCBM6JeKnv9qReyC7gKbjVi+JAsKnlvqFGWE82MzT323i93hBr0TR
+         sS30ztsVsejW4dpihKv0QtaBWljzGg8t+S/OpDgX5EORLwC1mcdAujdVXl0wvB76f83g
+         Ifmo1qMYi9zkFckevaBlI2gIBlIpnCDHhhFUF30x4Wg/ZPS/YPynsJT1P6xZ5y2DL/XG
+         C5fNdO/pYERxhaYacRiq4vOaYsg0M8FSl9hdNy2Low2PObpS+KQpBijqANghavNvnzVf
+         +KB0gwpmtZBb18BmjFNIwvxwDBTYyd/Onqkuyrc/n7JdhVkxzf6QJTDGNJaHFhj8G6Ai
+         WaDA==
+X-Forwarded-Encrypted: i=1; AJvYcCUufg0igcZB+sA3A1XGtUT2tjS979WWynXRmu5EU+vBetzocmflDRjLB0RMPFfXWY3Bi/PU44Mi24AKTmyS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0grkqaft3mHUsYTvu+ei1+kb1egYeYMD/0MvBTHTOT40LyFv0
+	UOnU38BAZymX1KEuuf+BqjoCTewyiJF+dI0EUlpjoz5wegJocr0sP9DoY3jZJsc=
+X-Google-Smtp-Source: AGHT+IG2fzF1NEqkVxyx3ltslEHQ5ZS8VwVmoBLD0KSZElJbLsKJHZFOX9qwuUQyNzdp9PiQBHBbNw==
+X-Received: by 2002:a05:6512:e9b:b0:539:ebc7:97a2 with SMTP id 2adb3069b0e04-53a0c73434dmr2093811e87.19.1729246091341;
+        Fri, 18 Oct 2024 03:08:11 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151f0db9sm175433e87.151.2024.10.18.03.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Oct 2024 03:08:10 -0700 (PDT)
+Date: Fri, 18 Oct 2024 13:08:08 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Soutrik Mukhopadhyay <quic_mukhopad@quicinc.com>
+Cc: vkoul@kernel.org, kishon@kernel.org, konradybcio@kernel.org, 
+	andersson@kernel.org, simona@ffwll.ch, abel.vesa@linaro.org, robdclark@gmail.com, 
+	quic_abhinavk@quicinc.com, sean@poorly.run, marijn.suijten@somainline.org, 
+	airlied@gmail.com, daniel@ffwll.ch, maarten.lankhorst@linux.intel.com, 
+	mripard@kernel.org, tzimmermann@suse.de, robh@kernel.org, krzk+dt@kernel.org, 
+	conor+dt@kernel.org, quic_khsieh@quicinc.com, konrad.dybcio@linaro.org, 
+	quic_parellan@quicinc.com, quic_bjorande@quicinc.com, linux-arm-msm@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org, quic_riteshk@quicinc.com, 
+	quic_vproddut@quicinc.com
+Subject: Re: [PATCH v5 0/5] Add support for DisplayPort on SA8775P platform
+Message-ID: <vtfz5vteaedwrqw5cpggmd3esi2rky3f2axubxukh74wdux4uy@zdac7miws5lu>
+References: <20241018070706.28980-1-quic_mukhopad@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] dt-bindings: arm:
- qcom,coresight-static-replicator: Add property for source filtering
-To: Tao Zhang <quic_taozha@quicinc.com>,
- Suzuki K Poulose <suzuki.poulose@arm.com>
-Cc: Mike Leach <mike.leach@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Leo Yan <leo.yan@linux.dev>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20240821031348.6837-1-quic_taozha@quicinc.com>
- <20240821031348.6837-2-quic_taozha@quicinc.com>
- <a01d2f2f-d963-4eb1-98ee-3dc6f86c9397@arm.com>
- <xmijaayxveghxx76nnudo5mlpxv6tpxvooiox7wj2jyojf3xpe@ntm67lxikfop>
- <44e2617c-62b0-436f-ac6a-0bd3e3855473@arm.com>
- <53ec46af-3438-44e0-82b2-9432fc7f0fcb@arm.com>
- <4a6066ed-ead4-4387-8c66-b3e7631c5e90@arm.com>
- <6e408062-9a74-4a2a-8b67-b83244c4ca95@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <6e408062-9a74-4a2a-8b67-b83244c4ca95@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241018070706.28980-1-quic_mukhopad@quicinc.com>
 
-On 17/10/2024 09:23, Tao Zhang wrote:
+On Fri, Oct 18, 2024 at 12:37:01PM +0530, Soutrik Mukhopadhyay wrote:
+> This series adds support for the DisplayPort controller
+> and eDP PHY v5 found on the Qualcomm SA8775P platform.
 > 
-> On 10/9/2024 6:52 PM, Suzuki K Poulose wrote:
->> Krzysztof
->>
->> On 22/08/2024 12:50, Suzuki K Poulose wrote:
->>> On 22/08/2024 11:34, Suzuki K Poulose wrote:
->>>> On 22/08/2024 08:08, Krzysztof Kozlowski wrote:
->>>>> On Wed, Aug 21, 2024 at 11:38:55AM +0100, Suzuki K Poulose wrote:
->>>>>> On 21/08/2024 04:13, Tao Zhang wrote:
->>>>>>> The is some "magic" hard coded filtering in the replicators,
->>>>>>> which only passes through trace from a particular "source". Add
->>>>>>> a new property "filter-src" to label a phandle to the coresight
->>>>>>> trace source device matching the hard coded filtering for the port.
->>>>>>
->>>>>> Minor nit: Please do not use abbreviate "source" in the bindings.
->>>>>> I am not an expert on other changes below and will leave it to
->>>>>> Rob/Krzysztof to comment.
->>>>>>
->>>>>> Rob, Krzysztof,
->>>>>>
->>>>>> We need someway to "link" (add a phandle) from a "port". The patch 
->>>>>> below
->>>>>> is extending "standard" port to add a phandle. Please let us know if
->>>>>> there is a better way.
->>>>>>
->>>>>> e.g.:
->>>>>>
->>>>>> filters = list of tuples of port, phandle. ?
->>>>>>
->>>>>> e.g.:
->>>>>>
->>>>>> filters = < 0, <&tpdm_video>,
->>>>>>              1, <&tpdm_mdss>
->>>>>>        >
->>>>>>
->>>>>
->>>>> Current solution feels like band-aid - what if next time you need some
->>>>> second filter? Or "wall"? Or whatever? Next property?
->>>>
->>>>
->>>>
->>>>>
->>>>> Isn't filter just one endpoint in the graph?
->>>>>
->>>>> A <--> filter <--> B
->>>>
->>>> To be more precise, "Filter" is a "port (p0, p1, p2 below)" (among a
->>>> multi output ports).
->>>>
->>>> For clearer example:
->>>>
->>>> A0 <--> .. <--> ..\                  p0  / --> Filtered for (A1) 
->>>> <--> B1
->>>> A1 <--> .. <--> .. - < L(filters>    p1  - --> Filtered for (A2) 
->>>> <--> B2
->>>> A2 <--> .. <--> ../                  p2  \ --> Unfiltered        
->>>> <--> B0
->>>>
->>>>
->>>>
->>>>> Instead of
->>>>>
->>>>> A <----through-filter----> B?
->>>>
->>>> The problem is we need to know the components in the path from A0 to X
->>>> through, (Not just A0 and L). And also we need to know "which port 
->>>> (p0 vs p1 vs p2)" does the traffic take from a source (A0/A1/A2) out 
->>>> of the
->>>> link "L".
->>>>
->>>> So ideally, we need a way to tie p0 -> A1, p1 -> A2.
->>>>
->>>> would we need something else in the future ? I don't know for sure.
->>>> People could design their own things ;-). But this was the first time
->>>> ever in the last 12yrs since we supported coresight in the kernel.
->>>> (there is always a first time).
->>>>
->>>> Fundamentally, the "ports" cannot have additional properties today.
->>>> Not sure if there are other usecases (I don't see why). So, we have
->>>> to manually extend like above, which I think is not nice.
->>>
->>> Replying to the other thread [0], made me realize that the above is not
->>> true. Indeed it is possible to add properties for endpoints, e.g:
->>>
->>> e.g.: media/video-interfaces.yaml
->>>
->>> So extending the endpoint node is indeed acceptable (unlike I thought).
->>> May be the we it is achieved in this patch is making it look otherwise.
->>>
->>> Suzuki
->>> [0] 
->>> https://lkml.kernel.org/r/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com
->>
->> Please could you let us know if it is acceptable to extend "endpoint"
->> node to have an optional property ?
+> ---
+> v2: Fixed review comments from Dmitry and Bjorn
+> 	- Made aux_cfg array as const.
+> 	- Reused edp_swing_hbr_rbr and edp_swing_hbr2_hbr3 for v5.
 > 
-> Hi Krzysztof,
+> v3: Fixed review comments from Dmitry, Konrad and Bjorn
+> 	- Used a for loop to write the dp_phy_aux_cfg registers.
+> 	- Pre-defined the aux_cfg size to prevent any magic numbers.
+> 	- Added all the necessary DPTX controllers for this platform.
 > 
+> v4: Fixed review comments from Dmitry and Krzysztof
+> 	- Removed the "reviewed by" and kept only the "acked by" for 
+> 	  patch 1.
+> 	- Updated the commit message of patch 5 to mention specifically
+> 	  about the validation of "only" MDSS0 DPTX0 and DPTX1.
 > 
-> Kindly reminder, could you help comment on this?
+> v5: Fixed review comment from Dmitry in patch 5
+> 	- Aligned the register starting address for display port as part 
+> 	  of device description with respect to other targets.
+> 
+> Below patches are applied:
+> 
+> [1/5] dt-bindings: phy: Add eDP PHY compatible for sa8775p
+>       commit: 7adb3d221a4d6a4f5e0793c3bd35f1168934035c
+> [2/5] phy: qcom: edp: Introduce aux_cfg array for version specific aux settings
+>       commit: 913463587d528d766a8e12c7790995e273ec84fb
+> [3/5] phy: qcom: edp: Add support for eDP PHY on SA8775P
+>       commit: 3f12bf16213c30d8e645027efd94a19c13ee0253
 
-I don't have any smart ideas and with earlier explanation sounds ok.
+Please in future skip applied patches instead of including them into the
+series.  No need to resend the series just for this issue though.
 
-Best regards,
-Krzysztof
+> 
+> ---
+> 
+> Soutrik Mukhopadhyay (5):
+>   dt-bindings: phy: Add eDP PHY compatible for sa8775p
+>   phy: qcom: edp: Introduce aux_cfg array for version specific aux
+>     settings
+>   phy: qcom: edp: Add support for eDP PHY on SA8775P
+>   dt-bindings: display: msm: dp-controller: document SA8775P compatible
+>   drm/msm/dp: Add DisplayPort controller for SA8775P
+> 
+>  .../bindings/display/msm/dp-controller.yaml   |  1 +
+>  .../devicetree/bindings/phy/qcom,edp-phy.yaml |  1 +
+>  drivers/gpu/drm/msm/dp/dp_display.c           |  9 +++
+>  drivers/phy/qualcomm/phy-qcom-edp.c           | 74 +++++++++++++------
+>  4 files changed, 61 insertions(+), 24 deletions(-)
+> 
+> -- 
+> 2.17.1
+> 
 
+-- 
+With best wishes
+Dmitry
 
