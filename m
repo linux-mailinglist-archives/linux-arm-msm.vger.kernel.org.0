@@ -1,138 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-35022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE68E9A46E2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 21:19:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A70A9A471C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 21:39:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29B061C23BA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 19:19:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BC2DC1C21B2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 19:39:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 559EA210C2F;
-	Fri, 18 Oct 2024 19:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C6BB205E17;
+	Fri, 18 Oct 2024 19:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FafvJAkT"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="iFOjLaHx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A505E210C1C;
-	Fri, 18 Oct 2024 19:17:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC88205AD1;
+	Fri, 18 Oct 2024 19:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729279045; cv=none; b=a7W+u0LfkdCN2VjhaiEhWsMxOitriEzyQ4Sw6IryPzBiTxl4/YdmHX/GYmw0hi1tb1qFm54Z8pwAVX492cFOfQHHP4O9GqSjHaRF1n57waxsVTcstg0SOrXvbVoqvdoGginXEs2ZfFcJ5IFAY34yQqFrQNE+arLIY3rID/AbS+4=
+	t=1729280350; cv=none; b=lMEUd7dL68Ig6c6HeXOy55bRTZhH2HrM6HW3J3wh272n3T7D/KcE2hEEc6o8M5K0TQhOIqPIr8t8tHBV//KqlvB7Ndykk8XzFifqcv0rNrZJgFxOijHFHkpmMp322b7vdbVp0sOSfce6ddF6BiXx+QXiLLC6qEbqCaN97ga0VBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729279045; c=relaxed/simple;
-	bh=MpiCw0/jvMUoJ8LD9yTVl5Hp8qYftQGS75uTGKu4TkQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=EexZpuIq6HKLImoebYdYgmdAt9UFnPwvDHpQws/jrmaOQlmoqwbDjgw6cxsuJpucKDTzd0e6N8eze6XXCu9eLbFGlcJ7vEBf7FsR7uja3QvUnlm0XP993r8LERZrOdUOv39k35CvNmkGeHC/oicSw7tSD1C7TnaYSzqOsOr/uEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FafvJAkT; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1729280350; c=relaxed/simple;
+	bh=Iwyg+25TIYtgfAEaV6q2T6HEhw+qHxjWTb1ZRIVlhOA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YXR/F8cey2U4txq5xplw1BRe2uDXOgHiwzC+2bMoiZrimYmWdG/wy5+SocXJuwVVnIw8RQ2DsrzGFRMY0nQ9v3bc+au2eMQ1aeh/ZxbwI5nTElRgpOfJGVjbwfKmNHuwU63EuJ1tQh/dGmRQ4ip5xBGYAruBF27AELmdic9DzdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=iFOjLaHx; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49IEXx7t029273;
-	Fri, 18 Oct 2024 19:16:51 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49IExEVk006854;
+	Fri, 18 Oct 2024 19:38:45 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SV6FW2QlAdSrJig6Hqm+GbTm8KyG8syat6oY3nfYD1k=; b=FafvJAkThFmCtRY4
-	P/MQruo3SF77VEVHCFPYe3hWr1uCxTwILJusCVTlkh0+qsbLzrvP5SrFhokrUBEI
-	38jKY4xw5Npd2DbsnUoq4GTe/hLW52iHdgfMPX2Ie1AQoEUjaOjYKPEDRgt8pmdg
-	/now5zR5BLwWcW9L5oRDwiOA1vtHpSssUnTLA+goZkFBr5Q2b8f3Y8H27TI5er23
-	8bXvHw9Hq+V9SjczdGIEQeSM5wPcc8BK2KQIej0Uk26f7yGtwfTn+EYrOqr+itcM
-	bB8eYYyNsi3Hpg8Lw9Vr4rZrXWcToPpLuHL9v44eJ5ccNAaV/tl1oaz7/h13gQ5V
-	CgeZzw==
+	FuVO4fMb5MpofPajt/wbYGl7xsfzqelPI7oc0YLKb0g=; b=iFOjLaHxy1+GgJzM
+	L5SnqAq1G9C2YFL9cZMePU5/d4Z7xA+CS7OHA39mGv9XGMTwbnrwqJhqzgF/0UbU
+	DXMwZcYBvIQiQvp8mkw7RO3sX+o0cT6q/ENWov9XHznSheAomaVAINFIjff+1t5n
+	KkmEJiQP5l/gCv2sdrUSPg6CKBLfbw7AOsyYccvzL4nH56/WAUCwQl23Rj5GWCBA
+	kNELMuepvYIr6UFtpm/QwgCmSEXIlvnzZ+PdWnb/tbYupRgHFLyaTtEYh513vtzA
+	d2CoUzVc3uEEyXZ6UA8nQcimS2mOaX0TkwmUtT+LICJEbIUjf9GQ0nIAGpubyiO4
+	TtxM7A==
 Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42bhbqab0f-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42b5hsvb4w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 19:16:50 +0000 (GMT)
+	Fri, 18 Oct 2024 19:38:44 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49IJGoQ9029976
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49IJchRS025521
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 19:16:50 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Fri, 18 Oct 2024 12:16:45 -0700
-From: Taniya Das <quic_tdas@quicinc.com>
-Date: Sat, 19 Oct 2024 00:45:47 +0530
-Subject: [PATCH 11/11] arm64: defconfig: Enable QCS615 clock controllers
+	Fri, 18 Oct 2024 19:38:43 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 18 Oct
+ 2024 12:38:41 -0700
+Message-ID: <b1b4f049-66e8-5077-c40d-e76a9a73944f@quicinc.com>
+Date: Fri, 18 Oct 2024 13:38:41 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH net-next 3/3] accel/qaic: Pass string literal as format
+ argument of alloc_workqueue()
+Content-Language: en-US
+To: Simon Horman <horms@kernel.org>, "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        "Paolo
+ Abeni" <pabeni@redhat.com>
+CC: Woojung Huh <woojung.huh@microchip.com>, Andrew Lunn <andrew@lunn.ch>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Vladimir Oltean <olteanv@gmail.com>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Jiawen Wu
+	<jiawenwu@trustnetic.com>,
+        Mengyuan Lou <mengyuanlou@net-swift.com>,
+        "Nathan
+ Chancellor" <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Bill Wendling <morbo@google.com>,
+        Justin Stitt <justinstitt@google.com>,
+        "Carl Vanderlip" <quic_carlv@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>, <UNGLinuxDriver@microchip.com>,
+        <netdev@vger.kernel.org>, <llvm@lists.linux.dev>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <20241011-string-thing-v1-0-acc506568033@kernel.org>
+ <20241011-string-thing-v1-3-acc506568033@kernel.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20241011-string-thing-v1-3-acc506568033@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241019-qcs615-mm-clockcontroller-v1-11-4cfb96d779ae@quicinc.com>
-References: <20241019-qcs615-mm-clockcontroller-v1-0-4cfb96d779ae@quicinc.com>
-In-Reply-To: <20241019-qcs615-mm-clockcontroller-v1-0-4cfb96d779ae@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Abhishek Sahu
-	<absahu@codeaurora.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Catalin Marinas
-	<catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-CC: Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik
-	<quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Stephen Boyd" <sboyd@codeaurora.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        "Taniya
- Das" <quic_tdas@quicinc.com>
-X-Mailer: b4 0.15-dev-aa3f6
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yXp7Ef-1RrjQZK9xGXV7l_rGh9dWuM-x
-X-Proofpoint-GUID: yXp7Ef-1RrjQZK9xGXV7l_rGh9dWuM-x
+X-Proofpoint-GUID: kB3xAD1z7POfq5DS0_Xvxp7aKJljz9Rv
+X-Proofpoint-ORIG-GUID: kB3xAD1z7POfq5DS0_Xvxp7aKJljz9Rv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 bulkscore=0
- clxscore=1015 suspectscore=0 mlxlogscore=628 priorityscore=1501
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180123
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
+ mlxscore=0 malwarescore=0 mlxlogscore=999 spamscore=0 adultscore=0
+ lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410180125
 
-Enable the QCS615 display, video, camera and graphics clock
-controller for their respective functionalities on Qualcomm QCS615.
+On 10/11/2024 3:57 AM, Simon Horman wrote:
+> Recently I noticed that both gcc-14 and clang-18 report that passing
+> a non-string literal as the format argument of alloc_workqueue()
+> is potentially insecure.
+> 
+> E.g. clang-18 says:
+> 
+> .../qaic_drv.c:61:23: warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+>     61 |         wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
+>        |                              ^~~
+> .../qaic_drv.c:61:23: note: treat the string as an argument to avoid this
+>     61 |         wq = alloc_workqueue(fmt, WQ_UNBOUND, 0);
+>        |                              ^
+>        |                              "%s",
+> 
+> It is always the case where the contents of fmt is safe to pass as the
+> format argument. That is, in my understanding, it never contains any
+> format escape sequences.
+> 
+> But, it seems better to be safe than sorry. And, as a bonus, compiler
+> output becomes less verbose by addressing this issue as suggested by
+> clang-18.
+> 
+> Also, change the name of the parameter of qaicm_wq_init from
+> fmt to name to better reflect it's purpose.
+> 
+> Compile tested only.
+> 
+> Signed-off-by: Simon Horman <horms@kernel.org>
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
- arch/arm64/configs/defconfig | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 730f303350c36a75661dc267fdd0f8f3088153fc..2fa666156b88b44a8298651e276c196cded9a7f8 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -1322,7 +1322,11 @@ CONFIG_MSM_GCC_8998=y
- CONFIG_MSM_MMCC_8998=m
- CONFIG_QCM_GCC_2290=y
- CONFIG_QCM_DISPCC_2290=m
-+CONFIG_QCS_DISPCC_615=m
-+CONFIG_QCS_CAMCC_615=m
- CONFIG_QCS_GCC_404=y
-+CONFIG_QCS_GPUCC_615=m
-+CONFIG_QCS_VIDEOCC_615=m
- CONFIG_QDU_GCC_1000=y
- CONFIG_SC_CAMCC_8280XP=m
- CONFIG_SC_DISPCC_7280=m
-
--- 
-2.45.2
-
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Tested-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
