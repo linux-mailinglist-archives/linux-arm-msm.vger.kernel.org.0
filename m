@@ -1,151 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-34919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 182B79A3A9B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 11:57:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A94409A3AD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 12:05:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 46F591C2227E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 09:57:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 45671283A25
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 10:05:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF61F18EFCD;
-	Fri, 18 Oct 2024 09:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 31E831F12EB;
+	Fri, 18 Oct 2024 10:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BIM3AfgM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="az2zBBGE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE379200CBE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 09:56:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053F017D378;
+	Fri, 18 Oct 2024 10:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729245415; cv=none; b=fsFSJ/fiXgO2TqMmWSHpeEqXRuEk3/AQI9Yl36NhSwrDW5ZKuGGgPFIRALVptWNTJsebVya7CXkdKqghQJI190mQ4mGe1QZewq8UxTO+934tg2JvYIallOpuV1Qu6UGGss8mvBr7d6xf8CX2enfjf87vVo0/Jfc90FEqH3lNBLw=
+	t=1729245929; cv=none; b=Oe5qoSpi/NKt0FX14iBTsS/2ysggFrYkSJjtsWWZYIqLuEgqWsn/DUxJUm1ayyTNoWFXI1YtreULoP//DaR8EXOM/TR6dGcpdfHy30jqrj8WfIGQ1mTbXoCXZXdv9nvennlGflUJus8VKhaNP7CzeXKs2Pw2V+J+G8WV4rzPXPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729245415; c=relaxed/simple;
-	bh=7F02LSuaYG6QJFBmCRDKkgg4PK0fEcpJQMSscDg7UlE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ft9gZ/zYkqPfWvqv88dzzIgJDwjgCamVngaaGTvoofJ3ynbog7Oa7vmVKQ19dq0RNreom7uk81koV7w9/yJQY7o2rE9dxAbwzD6q93NXSmWQDT/Y+RYCDxhowuJaN9yRZ8VTtc9bNtlo2fiVH040x7r/qXHVsLq4Trcv83jtA98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BIM3AfgM; arc=none smtp.client-ip=209.85.208.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-2fb5a9c7420so20183631fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 02:56:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729245412; x=1729850212; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7LNTOM/u0GLXGMOI0m9ADZhvsMR3Q86VPixhtk5oFIY=;
-        b=BIM3AfgMvpJS9rTaYmiGjRV26sQbxtxXSenjIjGpWs9EsiCbI64jdLUP3cuNkjK+Ag
-         6kuEi3GZg8X87YyOGjBwJkUSP4ISP4nye58NfH8GU0Kmg9T1BsRJqG87qwg5Rx8EP9c2
-         qkLOQvVdopL+v4k7lvXnuu3D+AdZN8YpHv818PYI+yqw5r/UUe+bSmNldKvqFOiPkUS7
-         7yEKf8MLDn+yG6mp9bQmpH9e8waoXstOUK6EnAT18eUAiFxpqORiEuRq4zYgTDSu952B
-         DW2AWmlJLL5pCzeUiaxgncBGZ9iQH6sQ1kbVZcK1AcnpzuMjXCoiHV3Wv7ZUL/tMKCX3
-         oEtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729245412; x=1729850212;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7LNTOM/u0GLXGMOI0m9ADZhvsMR3Q86VPixhtk5oFIY=;
-        b=T/J7aU+wUdPlrLUgXGaP3c5SgoHR8m2bzoB8PGPA+L5JA67va6h/mLoZm5qnmH2YkP
-         jBc0Hh3CJhbhpX25BRpooM2jEY2uuWVF9NlLWVmiL+gzKyZaRxVyS9qvcYHF3FyCfeh8
-         BotF7MpMRfz+c8WAI2anAH8Hx9YFdUd2u0Wbe3/EoWCV2DOGx2wYn6wQRK8Gchl8UlJ8
-         DeiPV6sO5eD/xIzjI5+lqM8aKYC2eLM3lCk826aYwQz0uZlnPaiE/xYwAzYsPCbiTwNZ
-         vE08drq+JOnOIpBUbyhLr0NjABfSv9Q9/0OUyKl8SlFmULGTfz5t9r03kftbKPqOqnWN
-         5xxA==
-X-Forwarded-Encrypted: i=1; AJvYcCVbZvYsiB09afdbfF7pAvvckNtb4XMyAImSL94DjWOIsTrjtws4xsHW72Y6fyWjSF5uzYodWwzbNd54M3XD@vger.kernel.org
-X-Gm-Message-State: AOJu0YxFzaawTIkPgaE7qQVJgDsMPhEue11i5EYMIf3qWkw8aQrHSJNH
-	mZkxqmGvxjwGAEHDKgY/uOOvo6MRVrNOpwUA2DJSzsg8qX0UEdwOzcEzQXRRkgw=
-X-Google-Smtp-Source: AGHT+IGeK8KzMr9lXPmuFDOy4a4IgVl3STdpDnUlPNvFi3vc36Dx0SsuLqG1dmfqX8sdyi9pbmxBAg==
-X-Received: by 2002:a05:651c:211d:b0:2fa:cc12:67de with SMTP id 38308e7fff4ca-2fb83208e04mr9201491fa.32.1729245411950;
-        Fri, 18 Oct 2024 02:56:51 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb809a6a7dsm1776881fa.10.2024.10.18.02.56.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Oct 2024 02:56:50 -0700 (PDT)
-Date: Fri, 18 Oct 2024 12:56:48 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Rob Herring <robh@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-Subject: Re: [PATCH 07/14] clk: qcom: clk-branch: Add support for SREG branch
- ops
-Message-ID: <scwpcovoazmd4yrwtczghx4e5eopqoknknqzcr23wjve65bmxh@ih5efkh53g3h>
-References: <20241017-sar2130p-clocks-v1-0-f75e740f0a8d@linaro.org>
- <20241017-sar2130p-clocks-v1-7-f75e740f0a8d@linaro.org>
- <be8639d0add779bcac0314d3c433d01b.sboyd@kernel.org>
- <we4stuv7td5jmvicsvsjowqg76merg5lmlgqj6dvqvqecsw7xk@bfz2kdjnt6kb>
- <5904599efffa7ce747772c0dcc1c897b.sboyd@kernel.org>
+	s=arc-20240116; t=1729245929; c=relaxed/simple;
+	bh=KEGDJMN6eddDhPQD2ltJfuTnJIsAoHWrXDgEUWs0Ewk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=upQ7zM+zM4BJkosl0b/QJhrUyySqmGoQNi50YVTOk5B/+tVx1ITZKFtEby0OdLivC6ePdwOft8KveoF1HNQ1u2grRg8ZYvq/C8+Yl0rktnMNORRK4Evm9vljT3VEAQMhCnfZs6cceDD8jNlqz908vIRrd+gJATqD7jxtMd3IGKw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=az2zBBGE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5CFDC4CEC3;
+	Fri, 18 Oct 2024 10:05:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729245928;
+	bh=KEGDJMN6eddDhPQD2ltJfuTnJIsAoHWrXDgEUWs0Ewk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=az2zBBGEMLy8XxYkz+tBw2ZrQxov9h3SOrgKdd1loU4Csrdj+aGrSczC3V6+8psF9
+	 I0xMB9qXhz8RyrPxEd5BVgYK2CChL19uoQzmIQkJIO8fqff5n5lF7Ulb6nJDE656uP
+	 B2kn60tQV8bjclG9vm/MFH+2wVowE60ekuhumx89PzFuh4IUoB+TyT4nzCfZXshsTD
+	 I2ke6Wtffqm/RPxp5vSub0gn8WxsQI49ENeEV+VbzmRvf4uY27y9NvuF3je2MCYmlt
+	 3pJnnyK/hrJUbIHcBkJ9nMOYewUEdXmuV1Zrj+YS29oqV2bCPsuyJWl+rb9L6Ik7eg
+	 JhjEW1qordlOA==
+Message-ID: <ce439616-072b-463f-b293-8a186f8282bd@kernel.org>
+Date: Fri, 18 Oct 2024 12:05:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5904599efffa7ce747772c0dcc1c897b.sboyd@kernel.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] dt-bindings: arm:
+ qcom,coresight-static-replicator: Add property for source filtering
+To: Tao Zhang <quic_taozha@quicinc.com>,
+ Suzuki K Poulose <suzuki.poulose@arm.com>
+Cc: Mike Leach <mike.leach@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Leo Yan <leo.yan@linux.dev>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+ coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20240821031348.6837-1-quic_taozha@quicinc.com>
+ <20240821031348.6837-2-quic_taozha@quicinc.com>
+ <a01d2f2f-d963-4eb1-98ee-3dc6f86c9397@arm.com>
+ <xmijaayxveghxx76nnudo5mlpxv6tpxvooiox7wj2jyojf3xpe@ntm67lxikfop>
+ <44e2617c-62b0-436f-ac6a-0bd3e3855473@arm.com>
+ <53ec46af-3438-44e0-82b2-9432fc7f0fcb@arm.com>
+ <4a6066ed-ead4-4387-8c66-b3e7631c5e90@arm.com>
+ <6e408062-9a74-4a2a-8b67-b83244c4ca95@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <6e408062-9a74-4a2a-8b67-b83244c4ca95@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Oct 17, 2024 at 03:28:13PM -0700, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2024-10-17 15:00:03)
-> > On Thu, Oct 17, 2024 at 11:10:20AM -0700, Stephen Boyd wrote:
-> > > Quoting Dmitry Baryshkov (2024-10-17 09:56:57)
-> > > > From: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
-> > > > 
-> > > > Add support for SREG branch ops. This is for the clocks which require
-> > > 
-> > > What is SREG? Can you spell it out?
-> > 
-> > Unfortunately, no idea. This is the only register name I know.
-> > 
+On 17/10/2024 09:23, Tao Zhang wrote:
 > 
-> Can someone inside qcom tell us?
-
-Taniya, could you possibly help us? This is for gcc_video_axi0_sreg /
-gcc_video_axi1_sreg / gcc_iris_ss_hf_axi1_sreg /
-gcc_iris_ss_spd_axi1_sreg clocks on the SAR2130P platform.
-
+> On 10/9/2024 6:52 PM, Suzuki K Poulose wrote:
+>> Krzysztof
+>>
+>> On 22/08/2024 12:50, Suzuki K Poulose wrote:
+>>> On 22/08/2024 11:34, Suzuki K Poulose wrote:
+>>>> On 22/08/2024 08:08, Krzysztof Kozlowski wrote:
+>>>>> On Wed, Aug 21, 2024 at 11:38:55AM +0100, Suzuki K Poulose wrote:
+>>>>>> On 21/08/2024 04:13, Tao Zhang wrote:
+>>>>>>> The is some "magic" hard coded filtering in the replicators,
+>>>>>>> which only passes through trace from a particular "source". Add
+>>>>>>> a new property "filter-src" to label a phandle to the coresight
+>>>>>>> trace source device matching the hard coded filtering for the port.
+>>>>>>
+>>>>>> Minor nit: Please do not use abbreviate "source" in the bindings.
+>>>>>> I am not an expert on other changes below and will leave it to
+>>>>>> Rob/Krzysztof to comment.
+>>>>>>
+>>>>>> Rob, Krzysztof,
+>>>>>>
+>>>>>> We need someway to "link" (add a phandle) from a "port". The patch 
+>>>>>> below
+>>>>>> is extending "standard" port to add a phandle. Please let us know if
+>>>>>> there is a better way.
+>>>>>>
+>>>>>> e.g.:
+>>>>>>
+>>>>>> filters = list of tuples of port, phandle. ?
+>>>>>>
+>>>>>> e.g.:
+>>>>>>
+>>>>>> filters = < 0, <&tpdm_video>,
+>>>>>>              1, <&tpdm_mdss>
+>>>>>>        >
+>>>>>>
+>>>>>
+>>>>> Current solution feels like band-aid - what if next time you need some
+>>>>> second filter? Or "wall"? Or whatever? Next property?
+>>>>
+>>>>
+>>>>
+>>>>>
+>>>>> Isn't filter just one endpoint in the graph?
+>>>>>
+>>>>> A <--> filter <--> B
+>>>>
+>>>> To be more precise, "Filter" is a "port (p0, p1, p2 below)" (among a
+>>>> multi output ports).
+>>>>
+>>>> For clearer example:
+>>>>
+>>>> A0 <--> .. <--> ..\                  p0  / --> Filtered for (A1) 
+>>>> <--> B1
+>>>> A1 <--> .. <--> .. - < L(filters>    p1  - --> Filtered for (A2) 
+>>>> <--> B2
+>>>> A2 <--> .. <--> ../                  p2  \ --> Unfiltered        
+>>>> <--> B0
+>>>>
+>>>>
+>>>>
+>>>>> Instead of
+>>>>>
+>>>>> A <----through-filter----> B?
+>>>>
+>>>> The problem is we need to know the components in the path from A0 to X
+>>>> through, (Not just A0 and L). And also we need to know "which port 
+>>>> (p0 vs p1 vs p2)" does the traffic take from a source (A0/A1/A2) out 
+>>>> of the
+>>>> link "L".
+>>>>
+>>>> So ideally, we need a way to tie p0 -> A1, p1 -> A2.
+>>>>
+>>>> would we need something else in the future ? I don't know for sure.
+>>>> People could design their own things ;-). But this was the first time
+>>>> ever in the last 12yrs since we supported coresight in the kernel.
+>>>> (there is always a first time).
+>>>>
+>>>> Fundamentally, the "ports" cannot have additional properties today.
+>>>> Not sure if there are other usecases (I don't see why). So, we have
+>>>> to manually extend like above, which I think is not nice.
+>>>
+>>> Replying to the other thread [0], made me realize that the above is not
+>>> true. Indeed it is possible to add properties for endpoints, e.g:
+>>>
+>>> e.g.: media/video-interfaces.yaml
+>>>
+>>> So extending the endpoint node is indeed acceptable (unlike I thought).
+>>> May be the we it is achieved in this patch is making it look otherwise.
+>>>
+>>> Suzuki
+>>> [0] 
+>>> https://lkml.kernel.org/r/4b51d5a9-3706-4630-83c1-01b01354d9a4@arm.com
+>>
+>> Please could you let us know if it is acceptable to extend "endpoint"
+>> node to have an optional property ?
 > 
-> > 
-> > > 
-> > > >         u8      halt_check;
-> > > 
-> > > Instead of adding these new members can you wrap the struct in another
-> > > struct? There are usually a lot of branches in the system and this
-> > > bloats those structures when the members are never used.
-> > > 
-> > >       struct clk_sreg_branch {
-> > >               u32 sreg_enable_reg;
-> > >               u32 sreg_core_ack_bit;
-> > >               u32 sreg_periph_ack_bit;
-> > >               struct clk_branch branch;
-> > >       };
-> > > 
-> > > But I'm not even sure that is needed vs. just putting a clk_regmap
-> > > inside because the clk_ops don't seem to use any of these other members?
-> > 
-> > Yes, nice idea. Is it ok to keep the _branch suffix or we'd better
-> > rename it dropping the _branch (and move to another source file while we
-> > are at it)?
-> > 
+> Hi Krzysztof,
 > 
-> I don't really care. Inside qcom they called things branches in the
-> hardware and that name was carried into the code. If sreg is a branch
-> then that would make sense. From the 'core_ack' and 'periph_ack' it
-> actually looks like some sort of power switch masquerading as a clk.
+> 
+> Kindly reminder, could you help comment on this?
 
-Ack.
+I don't have any smart ideas and with earlier explanation sounds ok.
 
+Best regards,
+Krzysztof
 
--- 
-With best wishes
-Dmitry
 
