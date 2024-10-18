@@ -1,117 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-34854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29FA29A350F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 08:03:44 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFB6D9A3522
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 08:13:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D1EAD1F25CD4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 06:03:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 19C221C23A6D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 06:13:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4221F17B439;
-	Fri, 18 Oct 2024 06:03:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4597D185B48;
+	Fri, 18 Oct 2024 06:13:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hR3YEgz9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PgD3ztGf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCBB820E30C;
-	Fri, 18 Oct 2024 06:03:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09B2184539;
+	Fri, 18 Oct 2024 06:13:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729231419; cv=none; b=YjQr8Fwro8s62kqqNxlk/HW3hB1eoKswlqJPDCxqG+9M4/P4lcTuEvrX+MaXscbm82gS1L7ZFwY3D3ozdp3pja4FXfz8Es+TgFlSuE5IPIzbuDxU2P0KzL2Ayd/yk+24VAw175NqYgEzdQQjhF44GmP8cSzXGFTw29MCk5Qc7po=
+	t=1729231988; cv=none; b=myAAXMOd6Bfz8TKUPGgwZD5VZ/mRjb6xsNejKnOBDHD4ZlAjc7SZPn7vBPfLwzg6deqfM+pbTKqyfh4GpWOEe3Ns+HuKUZ4y4Nlmx13S52zXDO8g1lkE5t+tWGtT0BxRRM3LaaiJKRwobuUg9f5NI18vmvtTBEYh/rCJ5v08zyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729231419; c=relaxed/simple;
-	bh=jPLG1CftNpWUhv7jxaOGebVKJzL1HmSh7n8XXQVUHjE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JRbSlF/4pGd9JggAq4btGO6Bw/Z48uFavaTaha6mF4vACJjEmHY22WfPOcINFqcWTABRlZb7UUvg1c9JlrcNk8fP2vVotB1exA25XI7bn2466DwZn9VtsOQXkpoHMI4h62yMUjIU3OI4dhZOjD9l3cLyugtwT4ZInaJ8pc2Yiik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hR3YEgz9; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49I5VHB5008326;
-	Fri, 18 Oct 2024 06:03:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	KXLpKYN49y4rKL7G0LbS+Vl1+kkbYLJz03m+GIhkGZA=; b=hR3YEgz9Sw7yBxt8
-	V6SBWIJCPVneiLo7ZrHj8si8jwE7idiuLHCUX2162ce4+hukEbKodPOOgRV4DgZ0
-	v2F1lAzlNkIxaOnve1eE3rqxkzicvqP03broGhaP3D522My0cejJNtGpIT6Ngw5p
-	xgUwMSKstIRnfP2XIemBL9vRPSBrryH/gVUG4vjndEjrTA0rPhShCJLgEqKNbuUf
-	GX+korqXURFQVl4xxXACHmyE/m04wmrvRXicWo0YJFd/tXJAXoiBI7dqLqcA8Mwo
-	LXZYsTyRgk3t5WgJZWu0MrmQTdvhisD/b4Z6CU8egDLRmVmMZX6BPcdX5VIh/+qv
-	ckFdmA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42b5hssxrg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 06:03:18 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49I63H0Y009481
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 06:03:17 GMT
-Received: from [10.233.21.53] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Oct
- 2024 23:03:14 -0700
-Message-ID: <c57c31bd-401b-4d98-a514-df53fd1775c1@quicinc.com>
-Date: Fri, 18 Oct 2024 14:03:12 +0800
+	s=arc-20240116; t=1729231988; c=relaxed/simple;
+	bh=f/5yZzyoQwcXgVSm7jfxqmgjDko+M5Tsgn35ebfSdh4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UHZtOqG42I/GXfTpncNkqzQnhYH/XC+6xWBVK24yjjUQe56SSaHS67eOx+3aKaRfktNdmq3WcJ7HsBCouGHPtr9uNRA/hpaxdDfosIvibW288VuOs5DnPHF8LSWcXgpaX6pGvFmz/H54qjfvcjA/IDLFr4r36GDuofsyRLMkA7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PgD3ztGf; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1977C4CEC3;
+	Fri, 18 Oct 2024 06:13:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729231987;
+	bh=f/5yZzyoQwcXgVSm7jfxqmgjDko+M5Tsgn35ebfSdh4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PgD3ztGfIGwfMqkBDBwYC3jy3OY5KeqWLnH2DU9dfF9d1yDCQA9SJ3ZSwK8aZ6s7X
+	 +mIOl/53ycEQ8Kzy8hGOiO9rsfgOdg3kDmgi93f7wQ9jupAu5LyghEU+bor7cI6JPw
+	 wo8PHmoa7boLcDA+kekKemlcyS5i2Da3gupL/CIkg5tN8cJlN3IAn1t0MNApxPlvUl
+	 w6kT0fOk6Wh8DBWzC0d6/cvW+j5HCz69+GCgJUrMsszUSKGNLqqlXN2aRJPWUPXeUq
+	 BD9pN7OtgqHJtX8qmsEauO+X9wk26DiWpC4xMWP2ENkUOLpyfIZ3FC32WKilYOl+7K
+	 P23vMu2+iDHwQ==
+Date: Fri, 18 Oct 2024 08:13:03 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Sricharan R <quic_srichara@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, 
+	krzk+dt@kernel.org, conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org, 
+	ulf.hansson@linaro.org, linus.walleij@linaro.org, catalin.marinas@arm.com, 
+	p.zabel@pengutronix.de, geert+renesas@glider.be, dmitry.baryshkov@linaro.org, 
+	neil.armstrong@linaro.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, linux-mmc@vger.kernel.org, 
+	linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, quic_varada@quicinc.com
+Subject: Re: [PATCH V4 2/6] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
+ binding
+Message-ID: <nznisr4aqpe65fovvk3q3r6capmqj4jm4xsqufjib2b7vax4xx@6r3tzaar2w3p>
+References: <20241017123626.204421-1-quic_srichara@quicinc.com>
+ <20241017123626.204421-3-quic_srichara@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] dt-bindings: phy: Add QMP UFS PHY compatible for
- QCS8300
-To: Vinod Koul <vkoul@kernel.org>
-CC: Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <quic_tengfan@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Xin Liu <quic_liuxin@quicinc.com>
-References: <20240925-qcs8300_ufs_phy_binding-v3-1-c1eb5c393b09@quicinc.com>
- <ZxEp2Aca037br2yt@vaman>
-Content-Language: en-US
-From: Jingyi Wang <quic_jingyw@quicinc.com>
-In-Reply-To: <ZxEp2Aca037br2yt@vaman>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: PR67CZ2qxF5FRD1eZQSP6ZeiUL4Pmojb
-X-Proofpoint-ORIG-GUID: PR67CZ2qxF5FRD1eZQSP6ZeiUL4Pmojb
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- mlxscore=0 malwarescore=0 mlxlogscore=349 spamscore=0 adultscore=0
- lowpriorityscore=0 suspectscore=0 bulkscore=0 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410180036
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241017123626.204421-3-quic_srichara@quicinc.com>
 
-
-
-On 10/17/2024 11:14 PM, Vinod Koul wrote:
-> On 25-09-24, 15:34, Jingyi Wang wrote:
->> From: Xin Liu <quic_liuxin@quicinc.com>
->>
->> Document the QMP UFS PHY compatible for Qualcomm QCS8300 to support
->> physical layer functionality for UFS found on the SoC. Use fallback to
->> indicate the compatibility of the QMP UFS PHY on the QCS8300 with that
->> on the SA8775P.
+On Thu, Oct 17, 2024 at 06:06:22PM +0530, Sricharan R wrote:
+> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > 
-> This does not apply on phy/next, can you please rebase
+> Add binding for the Qualcomm IPQ5424 Global Clock Controller
 > 
-patch rebased, link: https://lore.kernel.org/all/20241018-qcs8300_ufs_phy_binding-v4-1-261c7c5fb8ff@quicinc.com/
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
+>  [V4] Added 2 new PCIE clks to end of the list, preserving default order
+> 
+>  .../bindings/clock/qcom,ipq5332-gcc.yaml      |  40 ++-
+>  include/dt-bindings/clock/qcom,ipq5424-gcc.h  | 156 +++++++++
+>  include/dt-bindings/reset/qcom,ipq5424-gcc.h  | 310 ++++++++++++++++++
+>  3 files changed, 499 insertions(+), 7 deletions(-)
+>  create mode 100644 include/dt-bindings/clock/qcom,ipq5424-gcc.h
+>  create mode 100644 include/dt-bindings/reset/qcom,ipq5424-gcc.h
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+> index 9193de681de2..ef1fd9d9f8da 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
+> @@ -4,31 +4,35 @@
+>  $id: http://devicetree.org/schemas/clock/qcom,ipq5332-gcc.yaml#
+>  $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  
+> -title: Qualcomm Global Clock & Reset Controller on IPQ5332
+> +title: Qualcomm Global Clock & Reset Controller on IPQ5332 and IPQ5424
+>  
+>  maintainers:
+>    - Bjorn Andersson <andersson@kernel.org>
+>  
+>  description: |
+>    Qualcomm global clock control module provides the clocks, resets and power
+> -  domains on IPQ5332.
+> +  domains on IPQ5332 and IPQ5424.
+>  
+> -  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
+> -
+> -allOf:
+> -  - $ref: qcom,gcc.yaml#
+> +  See also:
+> +    include/dt-bindings/clock/qcom,gcc-ipq5332.h
+> +    include/dt-bindings/clock/qcom,gcc-ipq5424.h
+>  
+>  properties:
+>    compatible:
+> -    const: qcom,ipq5332-gcc
+> +    enum:
+> +      - qcom,ipq5332-gcc
+> +      - qcom,ipq5424-gcc
+>  
+>    clocks:
+> +    minItems: 5
+>      items:
+>        - description: Board XO clock source
+>        - description: Sleep clock source
+>        - description: PCIE 2lane PHY pipe clock source
+>        - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
+>        - description: USB PCIE wrapper pipe clock source
+> +      - description: PCIE 2-lane PHY2 pipe clock source
+> +      - description: PCIE 2-lane PHY3 pipe clock source
+>  
+>    '#power-domain-cells': false
+>    '#interconnect-cells':
+> @@ -38,6 +42,28 @@ required:
+>    - compatible
+>    - clocks
+>  
+> +allOf:
+> +  - $ref: qcom,gcc.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,ipq5332-gcc
+> +    then:
+> +      properties:
+> +        clocks:
+> +          maxItems: 5
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const: qcom,ipq5424-gcc
+> +    then:
+> +      properties:
+> +        clocks:
 
-Thanks,
-Jingyi
+This needs minItems: 7, unless clocks are really optional (but they
+shouldn't be optional). I think I missed this part last time.
+
+Best regards,
+Krzysztof
 
 
