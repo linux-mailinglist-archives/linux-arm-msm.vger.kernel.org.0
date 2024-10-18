@@ -1,63 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-34831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-34832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0082A9A3191
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 02:07:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C6369A31AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 02:33:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFE9F1F23380
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:07:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9ED411C219D2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 18 Oct 2024 00:33:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDCED2CA5;
-	Fri, 18 Oct 2024 00:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D37C047A5C;
+	Fri, 18 Oct 2024 00:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RX9Ouqrq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KhWo4RH7"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17FC72F29;
-	Fri, 18 Oct 2024 00:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6532C3FBB3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 00:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729210062; cv=none; b=p+/22HvTwi3Hx0KLc+zs8ht6bcT86kE7MVQMYX800nvkfIXh7yBgJdSaimAi0NoGznWDIMkOGGF8Ar4yIS8yTfQtHY5Cu3Hb3ewfn81TPiK96FuGUz+XDOfhDaNj9siM4CJ4y1JvQaT5WkoD+1kaoinXl/SpMs7i+mBHTUEWEBk=
+	t=1729211589; cv=none; b=HxGK0I8aGNktWUcnmLwqs2QNA88yG74MGcEmWO0T55E8lxRGkoFoCkTuhrRlji0QHqs8pB09KD8hDIWOx+yGQkQvzLqdyX2iEKZ0wlY2+g3Nb1cmutSy0NlitzrY49Ke2Pif4GybqmiUlenJJyYjmcAuyIhR22ZBEUcDXpR3TF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729210062; c=relaxed/simple;
-	bh=D9ULUqk+TbUqMTKGR0bFo25YiiZ2cs6nBE1a1b8WqFQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=YdYec5faevHtXowN9MxcrRc4Umqg616XfKG4Vn9DjkHEh6oqBy2/8tdvgMT73kUkTs8UPK/WwVCUYdy6f73qp3dmhtOkyXVney8BgyovzFS6dzxQdhkPU2f6UrMPKt+FPtCBg6gyluFW55Ae07dhSDFA51EZIXCu0zFLH7+Ekfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RX9Ouqrq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HDcuMX016699;
-	Fri, 18 Oct 2024 00:07:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1729211589; c=relaxed/simple;
+	bh=cE3xjhiiZaeaV7oJafobR9KWApU8cMk2n2Fjoanwaag=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jxDn3S8EeitfgDpRQlZxEUJ8oCBcKvOQKMOJT9TKfaMpeHf6trTaZ5j6ul5TDRQLnMf2Y8D0cpO1dzO0ge2VC8hpe7VaoVKT0SAjME8J8aeTw/81Jb8DTCFqLljBmVFJndi35oRUt5pPmjs6WHFsxYgOmvFMOjGD5FZ6MCZ4bC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KhWo4RH7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49HHj6ro004780
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 00:33:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uxBavpTgL71vWYYy2sA8sf5j3chQYVV9GD147SGaeIE=; b=RX9Ouqrq4NFVay6j
-	q4ttG0ZDVQRxiFHqWMz1ETLYdt9a14mSskOsu4TE50T7xoN7Yz1fi1sDfPZMXDCw
-	Nid3g40KR97d0eIZ6brHzq3xJa0t7AKSCcSoS1FsTDUta85y2SVt5RKKQm0XC+UZ
-	ftQLUofQozfcyUcqlpajRTWKzTMpeConXTyXCrqh/KO8LjdXl+5S0psOcWaD3SwG
-	eOo+yjKkMRzwm4hTVhc4CuOPc0GaEqSVtAgn1QRp3uyc4I+1HGARPsbBQgpR7NKS
-	e8ZqYMKHlVOTbVP2mGtD6UeD4JYw2esaE4AGL3vN9Ffk9mC3fy0oma7dgzZ3FTyN
-	IRBG3A==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42a8w6pdcw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 00:07:15 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49I07EUv021198
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 18 Oct 2024 00:07:14 GMT
-Received: from [10.71.112.85] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Thu, 17 Oct
- 2024 17:07:13 -0700
-Message-ID: <5847c380-75ce-492a-9a30-0899b7ebe98c@quicinc.com>
-Date: Thu, 17 Oct 2024 17:07:12 -0700
+	lhWA5ZBIRh/44GpNuOcCNtLkp+17J7refo/uW82cU2M=; b=KhWo4RH7Ff/ZKJM4
+	hbiU4a89jLwyn4ZxRDGBjdwN057mzmWZxeQHWzgmWOunFDOQFnam5RSXgxMYG5IT
+	xVr8SO/tGLtBAP2r2XZjT4bsAHmL6mBYDGi+s13CBZ0smZkg0MUqBpoWVbbjj12s
+	ZIWgloRNoZYJtksZgZlbRzvi64JPMFLMiTaae/fGENRlQ9n8JyyzmT+yE+l3y6+3
+	Dch9HhUCTWz2I8W6izSpi+YbfmiuM/d2H+GrTObn5Od3ExgC72tairAvPduONjhD
+	wFXTfO1/6IeqLkEuTXkWFaNkDxABBFVRHjro+p1210Adjp42i8fZpEWfoKL30nJd
+	Kv5cxg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ajm5cbu5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 00:33:07 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-6cbf3f7273cso3090756d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 17 Oct 2024 17:33:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729211586; x=1729816386;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lhWA5ZBIRh/44GpNuOcCNtLkp+17J7refo/uW82cU2M=;
+        b=sreia0M4yvb29so7c331r4m3fVFuQAqBLKaaqxGYkwadfdqsbQ/a277whNYKoSg9Hg
+         1aaCEVxGEQ6jBHnmFcC3+dhdcPabrVQnJA2SR8jS2JmO5TO9uvgqiwTMJgrlMPn8BRbE
+         Z+FRUH3wS7cqAhpQDXSWln+HhGWODbCWv0hxE4HfedNNsxKThFdtufj38EQV59PY5xPH
+         BH08xXmElFed30jGvJ7Rw51+e+JN9phyoCYYJAO3FFJMstHz9FaRHOK0seZakqfxGwhS
+         VWeBBJhdARGnaqMnmbqX+lF6HcH4LouNqiXumiKriJIpK0x84Ew9OgfNT7+XivK1jWsJ
+         krlA==
+X-Forwarded-Encrypted: i=1; AJvYcCXC7foCQjiA0HDSNPaNYQ+2Bq/n6j6MZwQmczl4s4vc/tYLI3uQIQtYO6Huq8v0Pd/X3XMBNvbrhgc8euDy@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRdxtruoWqBuMsAC4nBMy3Ka+mh4EEVQPNh7rozPo7UstdHjS1
+	U4hDnOD2YSemUcr6jJxbNuOK1iXQrAKrJG0XTthIrbywdo888MDRdgjC3fbgS/VJ8ew1Gzo3hIn
+	i4tHCE892InZLTFifx2Ob/Te9VKM9JcypeR8hMESQQzloIHXDpJLFYXJvRAmil+rvrIBjExkb
+X-Received: by 2002:ad4:5bcc:0:b0:6c3:662f:8e09 with SMTP id 6a1803df08f44-6cde1601fd3mr4324976d6.9.1729211586017;
+        Thu, 17 Oct 2024 17:33:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuIivDn0b6wSNMmBKFBt1Bi69aZZBQA9CrJqqcY0tWSd6fueoLaV368qiR1qoOK9Kt5ZiLOg==
+X-Received: by 2002:ad4:5bcc:0:b0:6c3:662f:8e09 with SMTP id 6a1803df08f44-6cde1601fd3mr4324756d6.9.1729211585676;
+        Thu, 17 Oct 2024 17:33:05 -0700 (PDT)
+Received: from [192.168.212.120] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a68bf6ef0sm25901166b.179.2024.10.17.17.33.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Oct 2024 17:33:05 -0700 (PDT)
+Message-ID: <0db45f6e-54c0-49f4-a9bb-51f703084a3d@oss.qualcomm.com>
+Date: Fri, 18 Oct 2024 02:33:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,74 +84,39 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v29 01/33] xhci: support setting interrupt moderation IMOD
- for secondary interrupters
-To: Greg KH <gregkh@linuxfoundation.org>
-CC: <srinivas.kandagatla@linaro.org>, <mathias.nyman@intel.com>,
-        <perex@perex.cz>, <conor+dt@kernel.org>, <dmitry.torokhov@gmail.com>,
-        <corbet@lwn.net>, <lgirdwood@gmail.com>, <tiwai@suse.com>,
-        <krzk+dt@kernel.org>, <pierre-louis.bossart@linux.intel.com>,
-        <Thinh.Nguyen@synopsys.com>, <broonie@kernel.org>,
-        <bgoswami@quicinc.com>, <robh@kernel.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-sound@vger.kernel.org>, <linux-input@vger.kernel.org>,
-        <linux-usb@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-doc@vger.kernel.org>, <alsa-devel@alsa-project.org>,
-        Mathias Nyman <mathias.nyman@linux.intel.com>
-References: <20241015212915.1206789-1-quic_wcheng@quicinc.com>
- <20241015212915.1206789-2-quic_wcheng@quicinc.com>
- <2024101747-defog-squiggly-ef54@gregkh>
+Subject: Re: [PATCH 0/6] arm64: dts: qcom: x1e80100: fix nvme regulator boot
+ glitch
+To: Johan Hovold <johan+linaro@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20241016145112.24785-1-johan+linaro@kernel.org>
 Content-Language: en-US
-From: Wesley Cheng <quic_wcheng@quicinc.com>
-In-Reply-To: <2024101747-defog-squiggly-ef54@gregkh>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IbNrRGE8x9UV4v1k3a1frmTMQ3tDVf0N
-X-Proofpoint-ORIG-GUID: IbNrRGE8x9UV4v1k3a1frmTMQ3tDVf0N
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20241016145112.24785-1-johan+linaro@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: TbceBLN6knv740tSG8UgzTVY4rb-fI7Y
+X-Proofpoint-ORIG-GUID: TbceBLN6knv740tSG8UgzTVY4rb-fI7Y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- phishscore=0 lowpriorityscore=0 clxscore=1015 mlxlogscore=607
- malwarescore=0 impostorscore=0 priorityscore=1501 suspectscore=0
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410170163
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=829
+ mlxscore=0 impostorscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 spamscore=0 suspectscore=0 clxscore=1015 phishscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410180002
 
-Hi Greg,
+On 16.10.2024 4:51 PM, Johan Hovold wrote:
+> The NVMe regulator has been left enabled by the boot firmware. Mark it
+> as such to avoid disabling the regulator temporarily during boot.
+> 
+> Johan
 
-On 10/16/2024 11:40 PM, Greg KH wrote:
-> On Tue, Oct 15, 2024 at 02:28:43PM -0700, Wesley Cheng wrote:
->> From: Mathias Nyman <mathias.nyman@linux.intel.com>
->>
->> Allow creators of xHCI secondary interrupters to specify the interrupt
->> moderation interval value in nanoseconds when creating the interrupter.
->>
->> If not sure what value to use then use the xhci driver default
->> xhci->imod_interval
->>
->> Suggested-by: Wesley Cheng <quic_wcheng@quicinc.com>
->> Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
->> Link: https://lore.kernel.org/r/20240905143300.1959279-13-mathias.nyman@linux.intel.com
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> ---
->>  drivers/usb/host/xhci-mem.c | 8 +++++++-
->>  drivers/usb/host/xhci.c     | 4 ++--
->>  drivers/usb/host/xhci.h     | 5 ++++-
->>  3 files changed, 13 insertions(+), 4 deletions(-)
-> This is already in 6.12-rc1, which makes me confused as to what tree you
-> made this series against.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Sorry, I didn't fetch the latest changes from usb-next.  In this case, should I rebase and resbumit?
-
-Thanks
-
-Wesley Cheng
-
-> thanks,
->
-> greg k-h
+Konrad
 
