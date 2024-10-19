@@ -1,73 +1,73 @@
-Return-Path: <linux-arm-msm+bounces-35092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97D439A4E1D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 15:16:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B0029A4E23
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 15:20:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6CFF1C22D46
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 13:15:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE1BF1F21434
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 13:20:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 129D12263A;
-	Sat, 19 Oct 2024 13:15:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40B5A27448;
+	Sat, 19 Oct 2024 13:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TgNZPk/A"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DXyudrIV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48C8179BC
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 13:15:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3CE324A08
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 13:20:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729343758; cv=none; b=dC2YetUYCtrvjccDXTTeeOSCwm0fTtvwsVl0FSKTvGnc69GQ3H7jzr8h/Ur5LpYGZa4aiYhKR0sAYjXAD73Ct7D1wdVLZg/cshCiCNvv826oWCUgPp5Ph3O79Ggm05b+eQ+DVOuQIssHF+XOOQTmQzGNXvVHCFsOLU7h/8P1CYM=
+	t=1729344025; cv=none; b=dmEPWSXMM/Fl8NULuQrUBbovVoGVPCQzLyyVvbncmtFGPMZNHhIeuT8leljsoFug4coKKg5X40j/eGFBvyGMzqG86yAjek+ATreZpJMp+2qYjssycf/dyluCufBU7jtjkWYzj+a8gaoPrpc5vQF4qGgEsi7r2LKhEssIdPdjyuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729343758; c=relaxed/simple;
-	bh=wISQD/DiPmIf9nJtmm3pdMffWiKrAmYAz8lDC5keNaY=;
+	s=arc-20240116; t=1729344025; c=relaxed/simple;
+	bh=8rm4ZeIbPgbNYXkqov8UUlGm7z4mHkaAs50PDrckST0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lrV5pGXbvy/0OmbiOEFiv6pNP2bWuJCcLfjJD58QpZdK6YE7Zl5zOrzHGMpNsg7nhrtz5IN1wnfJZAeo49ggnwWn0ejAvx1FNT1J/3bOflpI5FrEXBt777h1gzwEVC96Frez0mYtRqxP92JtQbmF0RXXv+jWz3Z7USPRL4lxDc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TgNZPk/A; arc=none smtp.client-ip=209.85.167.52
+	 Content-Type:Content-Disposition:In-Reply-To; b=rqGA0+yiXMgQJrADUDTx06px3XY0qlUjxBk7Tfui29O7q5K9Gn6Un964LYjZoBEAlFNxttfwyhqNU40tAEpE2GGLQomrDqeKmpXr16vWCA8VBOuXymGIkd79Zw4oiP9JPus1QbgrW9q/XZl2z5MChMKFdpvUyGiA2c3YqlGec/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DXyudrIV; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539f7606199so3451761e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 06:15:55 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2fb4af0b6beso49137731fa.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 06:20:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729343754; x=1729948554; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729344021; x=1729948821; darn=vger.kernel.org;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=nLoh5AgznUgCvu6vNVjF8MRQRk0OBbGWJlXddyz8ddc=;
-        b=TgNZPk/AFrSxalV3Pmt+6FoQ4aaYZEQYLxPxIPZevJUopeuazvj1mucDc/NtRItd+t
-         kWGLgKGyb8eXtrd6fk4Dha+BROIFnR2FVMABf6RS6ksn88d2YjO9es+lZpOOb+7htBRX
-         WbVXK3grEMqm4WDl6y2ndz0tRnMDuF6NcdVjrq+g7no/KbD+FV3Bn1eOr0aPuJmVqLbe
-         6Pivxj5JfRdzIlaLV9z+GgKN3DDiRXxvgHZ7/+3L+7XsjdtoKmcaS5xPqoQt3NDrW8gC
-         TUHC+qmOTtML2l31RiBTbBNnYV3LlOrX1XeP7pWZOiVzuIOqzYva1n8vC8G7gh7phuSu
-         JevA==
+        bh=KJq3e6SEnuwEws2RPKu3t7mY9g3i4I3ApacQ1ZwzcMo=;
+        b=DXyudrIVMRcPpe+NFaDXQ61hDKtTayoOXjQgcrktS7OK6drkIAvPVcf5wvf9BSbNrf
+         W6hssX1yMFH2Kgxnw95bHFzVgiW9WZuoQo6H6OJUNZXRTpg5ZpHZANtcAPLVtZAenRfl
+         iDKel92Fl2BJVaIDnUTHUNpZTQT7epjg2Bi3y5L+rr6Gt57+/lWkysxW2zxkrQoiH356
+         DRiQQ1zlLpR1vNhIgYHvycD+ItfH84caUrTFUli/HnQ3LEe0RNgmWJX1vAuZvuGygbf2
+         2P15npFg1ZWkhxqlMjdhi7pd7QgI+VbcKbfkkfanQBh5ho9EMK9edFLmoYWKp6kddVHA
+         0IYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729343754; x=1729948554;
+        d=1e100.net; s=20230601; t=1729344021; x=1729948821;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nLoh5AgznUgCvu6vNVjF8MRQRk0OBbGWJlXddyz8ddc=;
-        b=FrKqgd8Zk8lcepo0RMjT2609tFqw0YPYFff8y5kvE8oq1pUyxMOZTEEN555DMbO1Et
-         UoDMq2cRijKITmnG9PaJJmjl03bEIbrmeGjtLkB7rCNn8kI5Kb7M7Yip0hiY/U28N1c4
-         GwS0hYgKlNPwg0UJdqBOV3L5pSTAo7FBzYFGaTOD6lOTw9AAkz48vqALfT7oIRWk0dNX
-         A/LMlEA2WwzYnPEPcYkssBGBO8rviC++l4k2qRTt2SnJWWUhVm37h5mnY/g/rEvvmsJU
-         uitPJ0BOUfgt3xy4Xoa46aZ/GiT2cltkZ1pWiPtZxm7VZ5oIjzNJPZZ+7UpCE3spY7fL
-         jJFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV6/pkCo3yQkZv2mPyxJG+yqS3B3vCbvgHIJZnCoF9IDZIhRPYNjB5t8ipraHAmU8BG+EUG3xJeH0TDut2F@vger.kernel.org
-X-Gm-Message-State: AOJu0Yze5jmDT0I3WotPEO2ACoJQyqztRH0U+UCRMEpowF3gjwEhUz5n
-	OOcxM9h12dqfl8QTnJGG9ZnkU8g6gB3johWrGqsUW+E1GLfVHu0qifk16tBPcVk=
-X-Google-Smtp-Source: AGHT+IEFu0zK/9TF3cCcvEBZ0sen2jyT+GhSIm6vpUBEVskQof02UdUG/LGmK+X/rDmb1iKrzkMzDg==
-X-Received: by 2002:a05:6512:b92:b0:539:f922:bd4e with SMTP id 2adb3069b0e04-53a15219231mr3301905e87.23.1729343753896;
-        Sat, 19 Oct 2024 06:15:53 -0700 (PDT)
+        bh=KJq3e6SEnuwEws2RPKu3t7mY9g3i4I3ApacQ1ZwzcMo=;
+        b=C+SKbMwf1XOcptajxX53uont8CBojjuDYhYCoETkGGpIRiNRPlbH8Cw/akghovkN8x
+         RRelPzxZxjCopiSnK83DsmDJjGXj1krjmH4UrY06k7mmx/PHZSBJceneiJXeAnycoko9
+         a+8GOfVVEAiUnsN7WvqgJ0EU37FWZZ8SzxSw8JsGCccPghVWN0yIufR06aZflHggXe1V
+         w9VisBSEPSS7AmV/5b8uJraa2lbGVU+SD8hVpW6ywywbwGsQTrRQ/UsxR5oIuLHQ3Tpj
+         zwSR6ljIISHNapLt1w3V69YN9tQqhCGBP0TUjhvvQcrLid1p7ndTy5oOSd0mED/TfAxF
+         Kqhw==
+X-Forwarded-Encrypted: i=1; AJvYcCW9G0uozcUEXA2HXONbrpoRN3P06zDfys9kYXQ6sFHAU/lIuE9lkZe2xIoudZDuUmRQ3DcFbRXUmOSNfKtZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwyPaNBa3FpoXa1C+m0pzJjGxLvvS048gYkj4MJJ0bnnVsAY04d
+	bDAEmKeDaAKt+50x7nVnyPPScW9KgR1nioycC+mDgxMXjz8NO8bg+E+lJCEK6S8=
+X-Google-Smtp-Source: AGHT+IHRmKbzGGO7zEz9E8HtiiVQyP+3SNa2w9u82oD2SVqaE1yRmHTI0gyDCHmKG3J8y1ZHoPFzIw==
+X-Received: by 2002:a05:651c:1502:b0:2fb:3960:9667 with SMTP id 38308e7fff4ca-2fb83b44fd7mr38402211fa.14.1729344020749;
+        Sat, 19 Oct 2024 06:20:20 -0700 (PDT)
 Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a151b90b5sm533532e87.88.2024.10.19.06.15.52
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb809f995fsm5062171fa.85.2024.10.19.06.20.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Oct 2024 06:15:52 -0700 (PDT)
-Date: Sat, 19 Oct 2024 16:15:51 +0300
+        Sat, 19 Oct 2024 06:20:19 -0700 (PDT)
+Date: Sat, 19 Oct 2024 16:20:16 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -79,11 +79,12 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
 	Robin Murphy <robin.murphy@arm.com>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
 	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev
-Subject: Re: [PATCH RFC 04/14] pinctrl: qcom: spmi-mpp: Add PM8937 compatible
-Message-ID: <bg66uzc7i7bsounvl3vrhweiwbtvsomrt4tfkpojd63zd2ynrn@2pk4pypken5g>
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
+	Otto =?utf-8?Q?Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Subject: Re: [PATCH RFC 07/14] pinctrl: qcom: Add MSM8917 tlmm pinctrl driver
+Message-ID: <xznkzggkyygdcoezs3vv5zearurh6hlto4554ijakch375solh@kc2jiiynzbfk>
 References: <20241019-msm8917-v1-0-f1f3ca1d88e5@mainlining.org>
- <20241019-msm8917-v1-4-f1f3ca1d88e5@mainlining.org>
+ <20241019-msm8917-v1-7-f1f3ca1d88e5@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,19 +94,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241019-msm8917-v1-4-f1f3ca1d88e5@mainlining.org>
+In-Reply-To: <20241019-msm8917-v1-7-f1f3ca1d88e5@mainlining.org>
 
-On Sat, Oct 19, 2024 at 01:50:41PM +0200, Barnabás Czémán wrote:
-> The PM8937 provides 4 MPPs.
-> Add a compatible to support them.
+On Sat, Oct 19, 2024 at 01:50:44PM +0200, Barnabás Czémán wrote:
+> From: Otto Pflüger <otto.pflueger@abscue.de>
 > 
+> It is based on MSM8916 driver with the pinctrl definitions from
+> Qualcomm's downstream MSM8917 driver.
+> 
+> Signed-off-by: Otto Pflüger <otto.pflueger@abscue.de>
 > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
 > ---
->  drivers/pinctrl/qcom/pinctrl-spmi-mpp.c | 1 +
->  1 file changed, 1 insertion(+)
+>  drivers/pinctrl/qcom/Kconfig.msm       |    6 +
+>  drivers/pinctrl/qcom/Makefile          |    1 +
+>  drivers/pinctrl/qcom/pinctrl-msm8917.c | 1622 ++++++++++++++++++++++++++++++++
+>  3 files changed, 1629 insertions(+)
 > 
+> diff --git a/drivers/pinctrl/qcom/Kconfig.msm b/drivers/pinctrl/qcom/Kconfig.msm
+> index c79f0c3c873da56e8c0e1de9f91bce4b552221d2..f53043ea213012447aaaf07e9f339a16493a1b95 100644
+> --- a/drivers/pinctrl/qcom/Kconfig.msm
+> +++ b/drivers/pinctrl/qcom/Kconfig.msm
+> @@ -137,6 +137,12 @@ config PINCTRL_MSM8916
+>  	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+>  	  Qualcomm TLMM block found on the Qualcomm 8916 platform.
+>  
+> +config PINCTRL_MSM8917
+> +	tristate "Qualcomm 8917 pin controller driver"
+> +	help
+> +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
+> +	  Qualcomm TLMM block found on the Qualcomm 8917 platform.
+> +
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+MSM8917, not just 8917.
+
+[...]
+
+> +	msm_mux_wcss_wlan2,
+> +	msm_mux_webcam_rst,
+> +	msm_mux_webcam_standby,
+> +	msm_mux_wsa_io,
+> +	msm_mux_wsa_irq,
+> +	msm_mux_NA,
+
+s/NA/_/ through the file, see recent tlmm drivers. This generally
+improves readability.
+
+> +};
+> +
+
+[...]
+
+> +
+> +static const struct msm_pingroup msm8917_groups[] = {
+> +	PINGROUP(0, blsp_spi1, blsp_uart1, qdss_tracedata_b, NA, NA, NA, NA,
+> +		 NA, NA),
+
+And here too. Compare the string above with 
+
+	PINGROUP(0, blsp_spi1, blsp_uart1, qdss_tracedata_b, _, _, _, _, _, _),
+
+> +};
+> +
+> +#define NUM_GPIO_PINGROUPS	134
+
+inline
+
+> +
+> +static const struct msm_pinctrl_soc_data msm8917_pinctrl = {
+> +	.pins = msm8917_pins,
+> +	.npins = ARRAY_SIZE(msm8917_pins),
+> +	.functions = msm8917_functions,
+> +	.nfunctions = ARRAY_SIZE(msm8917_functions),
+> +	.groups = msm8917_groups,
+> +	.ngroups = ARRAY_SIZE(msm8917_groups),
+> +	.ngpios = NUM_GPIO_PINGROUPS,
+> +};
+> +
+> +static int msm8917_pinctrl_probe(struct platform_device *pdev)
+> +{
+> +	return msm_pinctrl_probe(pdev, &msm8917_pinctrl);
+> +}
+> +
+> +static const struct of_device_id msm8917_pinctrl_of_match[] = {
+> +	{ .compatible = "qcom,msm8917-pinctrl", },
+> +	{ },
+> +};
+> +
+> +static struct platform_driver msm8917_pinctrl_driver = {
+> +	.driver = {
+> +		.name = "msm8917-pinctrl",
+> +		.of_match_table = msm8917_pinctrl_of_match,
+> +	},
+> +	.probe = msm8917_pinctrl_probe,
+> +	.remove_new = msm_pinctrl_remove,
+
+Just .remove
+
+> +};
+> +
+> +static int __init msm8917_pinctrl_init(void)
+> +{
+> +	return platform_driver_register(&msm8917_pinctrl_driver);
+> +}
+> +arch_initcall(msm8917_pinctrl_init);
+> +
+> +static void __exit msm8917_pinctrl_exit(void)
+> +{
+> +	platform_driver_unregister(&msm8917_pinctrl_driver);
+> +}
+> +module_exit(msm8917_pinctrl_exit);
+> +
+> +MODULE_DESCRIPTION("Qualcomm msm8917 pinctrl driver");
+> +MODULE_LICENSE("GPL");
+> +MODULE_DEVICE_TABLE(of, msm8917_pinctrl_of_match);
+
+Please move this after the match table.
+
+> 
+> -- 
+> 2.47.0
+> 
 
 -- 
 With best wishes
