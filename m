@@ -1,137 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-35074-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35075-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AE88F9A4CD1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 12:17:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ED4E9A4D26
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 13:38:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A77CB2853FF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 10:17:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BF33F281F1A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 11:38:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC2F219007E;
-	Sat, 19 Oct 2024 10:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F41741E0081;
+	Sat, 19 Oct 2024 11:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="NhMFqeM1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GY9QP4Y5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B5A318C34B;
-	Sat, 19 Oct 2024 10:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A0B1DFDB6;
+	Sat, 19 Oct 2024 11:38:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729333037; cv=none; b=CuV7K1TUWyur2L41jc3Az5yDOcwRtRpDvYMAlWBvZn41fga/gi/4pJt4WW6hGcEXPrypS1rODffux21FKIukfoynWyL3gLtQb9N+L6X2NsRXG1hXfGcPu/dsDJZs+WMLV8GpbQyQWwXSktEzQGP8dS3sz+gjDwKPU/ifTvZIOdg=
+	t=1729337917; cv=none; b=Z2mYt+InSHZ/WSALTwuY18OpyphdIwURd1NFvPVerVv/0m2SbzgJKMU6FlmqF8iMpn+IEZRdfkmoYNU8maOtKPc/r/AWmJipSSFbNOvPemcNtUAX3o2iWpTZlf/58/uQVPWNfVZN2BLd+GLab/KcjLwzfZfQ/53wI5gMuIv4TPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729333037; c=relaxed/simple;
-	bh=EEoegO5HOQfYcl3gGqouvUqNUEa6zCKW1b8JWwcSwno=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=qNcmXbi3/0/Rg2EEZePBaxZXciCqvflpkAXIUR63ZxyGJ9LcLERYIEenbrsC0h2uJcb3gvxrKY2h+2FNrH6tNVbzujL1QbFZ3SOxyjDsFri9E5IdxB+TpaqvjKiGc5XPO7lYklkSWmpW/u0Eg3lTUK0mvCXwaIiYcF4+lbY8HQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=NhMFqeM1; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1729332413; bh=EEoegO5HOQfYcl3gGqouvUqNUEa6zCKW1b8JWwcSwno=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=NhMFqeM1xVfZLawOWT92RfW8LTIOJfidwNp7MHnmkEBLJateXf6PVaPck2LUqDeS9
-	 L+wZ2/Vm2kGurlrUdKzeMsmY/dNoppxdhMlYDKiOqgn87zlRQTmxGHO5UHZFJDo3FR
-	 xYuxtG/a5fdw0XwYNfGVAIa2TMrrJSVpLYx0808o=
-From: Luca Weiss <luca@lucaweiss.eu>
-To: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
- Bjorn Andersson <andersson@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Konrad Dybcio <konrad.dybcio@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-Subject:
- Re: [PATCH v2] rpmsg: qcom_smd: Improve error handling for
- qcom_smd_parse_edge
-Date: Sat, 19 Oct 2024 12:06:50 +0200
-Message-ID: <2827287.mvXUDI8C0e@g550jk>
-In-Reply-To: <20240606-apcs-mboxes-v2-1-41b9e91effb6@z3ntu.xyz>
-References: <20240606-apcs-mboxes-v2-1-41b9e91effb6@z3ntu.xyz>
+	s=arc-20240116; t=1729337917; c=relaxed/simple;
+	bh=marhkCyYZCh3NCtWnDi9k3n1MPLfEDhO9JL7aJPEMs8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oWM76UhvieZ0QjK7tbG0mFZfMsstb3I2pKV+Yu1WOTrEt5siL33+6EAt5ltctQZ2Ayb4mhy4GU6RYYAAYJWW+cnUWPGBOpyw97Ym4IwLy+Eivd8N/5pN7+rnzdUiwrgxbjHmF8/CcnTMdG6qQy+VXgqBmneqfVU1bTUsvRB4hVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GY9QP4Y5; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729337914; x=1760873914;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=marhkCyYZCh3NCtWnDi9k3n1MPLfEDhO9JL7aJPEMs8=;
+  b=GY9QP4Y5Em1tMCniss+5kCeBuCOonwc7nJTc2FD84q6YgujiDiwUUbxp
+   iUDbVgbyF7LbdkCLYD5I5qBSEPfy/Ds5b8NdYTS/XxkzMxDDu4m/wS4eW
+   +YYpV01ppFM7LNVEGqrbICjlsBf5xez9MkxHfE4pRlFWx3m2RSeyzaCM+
+   jyRK0C+OQ5hTzdDLYD+J/ctJWTurIFrrR/tk5eYYANkP3ckgNDLZqwcyx
+   KTnaz6Q5Se0MjT7zViKNA4Dki7KSiitOtnZQl7vSuG/sL/nXQu7A4SIE7
+   ty6IznXxmNxhec1s1TFCL+Z31Ij82vyYs8vqJiXUz4fRujtTjl6th7khf
+   g==;
+X-CSE-ConnectionGUID: 2S8yN2zwQ8aRhTZOKZdIeA==
+X-CSE-MsgGUID: Av5koOjxT5qmlreOVZoGNw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="46328538"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
+   d="scan'208";a="46328538"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2024 04:38:34 -0700
+X-CSE-ConnectionGUID: jknId/GiSzil637xYRnm0A==
+X-CSE-MsgGUID: IKV8DZGdRXu0KWTBqrP/2w==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,216,1725346800"; 
+   d="scan'208";a="79067264"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by orviesa010.jf.intel.com with ESMTP; 19 Oct 2024 04:38:31 -0700
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t27mu-000OwT-0m;
+	Sat, 19 Oct 2024 11:38:28 +0000
+Date: Sat, 19 Oct 2024 19:38:02 +0800
+From: kernel test robot <lkp@intel.com>
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Cc: oe-kbuild-all@lists.linux.dev, linux-media@vger.kernel.org,
+	Hans Verkuil <hverkuil@xs4all.nl>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Vedang Nagar <quic_vnagar@quicinc.com>
+Subject: Re: [PATCH v4 25/28] media: iris: implement power scaling for vpu2
+ and vpu3
+Message-ID: <202410191943.XTP992Za-lkp@intel.com>
+References: <20241014-qcom-video-iris-v4-v4-25-c5eaa4e9ab9e@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241014-qcom-video-iris-v4-v4-25-c5eaa4e9ab9e@quicinc.com>
 
-On Donnerstag, 6. Juni 2024 21:01:36 MESZ Luca Weiss wrote:
-> When the mailbox driver has not probed yet, the error message "failed to
-> parse smd edge" is just going to confuse users, so improve the error
-> prints a bit.
-> 
-> Cover the last remaining exits from qcom_smd_parse_edge with proper
-> error prints, especially the one for the mbox_chan deserved
-> dev_err_probe to handle EPROBE_DEFER nicely. And add one for ipc_regmap
-> also to be complete.
-> 
-> With this done, we can remove the outer print completely.
+Hi Dikshita,
 
-Ping, looks like this is still pending.
+kernel test robot noticed the following build errors:
 
-Regards
-Luca
+[auto build test ERROR on 67cefecf2a039b9ed0030b9213ceafcd45e6f9e3]
 
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> Changes in v2:
-> - Rebase on qcom for-next, drop dts patches which have been applied
-> - Improve error printing situation (Bjorn)
-> - Link to v1: https://lore.kernel.org/r/20240424-apcs-mboxes-v1-0-6556c47cb501@z3ntu.xyz
-> ---
->  drivers/rpmsg/qcom_smd.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> index 43f601c84b4f..06e6ba653ea1 100644
-> --- a/drivers/rpmsg/qcom_smd.c
-> +++ b/drivers/rpmsg/qcom_smd.c
-> @@ -1369,7 +1369,8 @@ static int qcom_smd_parse_edge(struct device *dev,
->  	edge->mbox_chan = mbox_request_channel(&edge->mbox_client, 0);
->  	if (IS_ERR(edge->mbox_chan)) {
->  		if (PTR_ERR(edge->mbox_chan) != -ENODEV) {
-> -			ret = PTR_ERR(edge->mbox_chan);
-> +			ret = dev_err_probe(dev, PTR_ERR(edge->mbox_chan),
-> +					    "failed to acquire IPC mailbox\n");
->  			goto put_node;
->  		}
->  
-> @@ -1386,6 +1387,7 @@ static int qcom_smd_parse_edge(struct device *dev,
->  		of_node_put(syscon_np);
->  		if (IS_ERR(edge->ipc_regmap)) {
->  			ret = PTR_ERR(edge->ipc_regmap);
-> +			dev_err(dev, "failed to get regmap from syscon: %d\n", ret);
->  			goto put_node;
->  		}
->  
-> @@ -1501,10 +1503,8 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
->  	}
->  
->  	ret = qcom_smd_parse_edge(&edge->dev, node, edge);
-> -	if (ret) {
-> -		dev_err(&edge->dev, "failed to parse smd edge\n");
-> +	if (ret)
->  		goto unregister_dev;
-> -	}
->  
->  	ret = qcom_smd_create_chrdev(edge);
->  	if (ret) {
-> 
-> ---
-> base-commit: 2c79712cc83b172ce26c3086ced1c1fae087d8fb
-> change-id: 20240423-apcs-mboxes-12ee6c01a5b3
-> 
-> Best regards,
-> 
+url:    https://github.com/intel-lab-lkp/linux/commits/Dikshita-Agarwal/dt-bindings-media-Add-video-support-for-QCOM-SM8550-SoC/20241014-171950
+base:   67cefecf2a039b9ed0030b9213ceafcd45e6f9e3
+patch link:    https://lore.kernel.org/r/20241014-qcom-video-iris-v4-v4-25-c5eaa4e9ab9e%40quicinc.com
+patch subject: [PATCH v4 25/28] media: iris: implement power scaling for vpu2 and vpu3
+config: microblaze-allyesconfig (https://download.01.org/0day-ci/archive/20241019/202410191943.XTP992Za-lkp@intel.com/config)
+compiler: microblaze-linux-gcc (GCC) 14.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241019/202410191943.XTP992Za-lkp@intel.com/reproduce)
 
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202410191943.XTP992Za-lkp@intel.com/
 
+All errors (new ones prefixed by >>):
 
+   microblaze-linux-ld: drivers/media/platform/qcom/iris/iris_vpu3.o: in function `iris_vpu3_calculate_frequency':
+>> .tmp_gl_iris_vpu3.o:(.text+0x52c): undefined reference to `__divdi3'
+>> microblaze-linux-ld: .tmp_gl_iris_vpu3.o:(.text+0x568): undefined reference to `__udivdi3'
 
+Kconfig warnings: (for reference only)
+   WARNING: unmet direct dependencies detected for GET_FREE_REGION
+   Depends on [n]: SPARSEMEM [=n]
+   Selected by [y]:
+   - RESOURCE_KUNIT_TEST [=y] && RUNTIME_TESTING_MENU [=y] && KUNIT [=y]
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
