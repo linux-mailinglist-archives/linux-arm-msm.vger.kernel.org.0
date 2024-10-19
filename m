@@ -1,132 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-35065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35066-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4331B9A4B0F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 05:13:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2FFB9A4B35
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 06:55:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 950E62841B3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 03:13:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A126C1F22E52
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 04:55:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8844D1D27BE;
-	Sat, 19 Oct 2024 03:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5A991CF2AB;
+	Sat, 19 Oct 2024 04:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="F+9WOhEF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ir2+Ne7S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC041D0E34;
-	Sat, 19 Oct 2024 03:13:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1C9193091;
+	Sat, 19 Oct 2024 04:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729307607; cv=none; b=VyWKeJT1UPirMnzEPP6ytvOjSWgZl7blCo2ZL9AfJ7PtvzlDA03DisunEp00CV2c8PFgHhYazsYkWrcJ8LtEC991rpnc7xfxZ8ONzPwMhny2NT0dHhr+fkgRhUligAqgyh4BamLDlcvPnHULqbT6LzTtDYqlntM8J0CIfyQtf38=
+	t=1729313723; cv=none; b=ScoIa4vvUoXWeMxuFJa7qPChCnTHjem8p209yaYx/B1O4JKATde/DlrqkLZHsZGJNzhjn9Fujhuu446c/louNARJWbZyT1JKIn59/SNbqSNBVW73KbR4XPOmpMzULdVhhC1p6TlvOnEIFv8Xg2IlE8oqC8TmrBkDtQuYq2P6kLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729307607; c=relaxed/simple;
-	bh=Nw3ZARuhUlLWhZ7CyTkiVyEjbUt6Fu7cg8I9r+R5VI0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YjZvrRXt2n2csO6AxOesSQafKhNhah8KizF9R3nYXq0qynt6pC3AtnlU1H7DDc/xiYmmXWlX8O11WqyVtoArskonC9HG3qPds2BF0OfD2/gkfqBmMCTi+JZFX2HoKiv5xsbD4KUUtC3Z40GTVHeO5slHGNW8LW5H7AEwrpqZ6mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=F+9WOhEF; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729307605; x=1760843605;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=Nw3ZARuhUlLWhZ7CyTkiVyEjbUt6Fu7cg8I9r+R5VI0=;
-  b=F+9WOhEF7JE9AptVUqGeoy2WJoM9Q/E2EhdyalWYxePsRv7dNNPolg9M
-   1U/PwD0i1pJJnei2+xUkEw1r9xZYU3BC5UgCe+/f9KKhuH8VqmdhakC2q
-   d/xLxhUgNcGecKdQh0nrocodg3MV7jLiv6dkThj4aokvfefAKwpu/vcVe
-   xi64ciM0DwckAeBFqjjjuIsJH5WUjmm0Mqik76xHqp+r0hdIdB7y24gsK
-   3kxFpJOH/ZyMwhUsJe/pzvQqTIbVWd5gUlbisPVG4ZmJCszwSVLIEXc37
-   aQZDiPBL7lr4q8hJo0IpT8m+Xzx2uxmq0Fvg/YS9trGRlHPsY552XYVev
-   g==;
-X-CSE-ConnectionGUID: 9/gI0+d8QACzS423nS358Q==
-X-CSE-MsgGUID: 491QVfXdSIuklZhhNPT6iw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="39407541"
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
-   d="scan'208";a="39407541"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Oct 2024 20:13:25 -0700
-X-CSE-ConnectionGUID: zU/2lXNsSzONR+XlL9WhmA==
-X-CSE-MsgGUID: Qo61ij+pQxybXMvAQ6hbMA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,215,1725346800"; 
-   d="scan'208";a="83827604"
-Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
-  by orviesa005.jf.intel.com with ESMTP; 18 Oct 2024 20:13:20 -0700
-Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1t1zu1-000Ode-1s;
-	Sat, 19 Oct 2024 03:13:17 +0000
-Date: Sat, 19 Oct 2024 11:12:19 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
-	Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc: oe-kbuild-all@lists.linux.dev, cros-qcom-dts-watchers@chromium.org,
-	linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org, linux-media@vger.kernel.org,
-	dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org,
-	quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v1 5/5] i2c: i2c-qcom-geni: Add Block event interrupt
- support
-Message-ID: <202410191055.bi1pWTAY-lkp@intel.com>
-References: <20241015120750.21217-6-quic_jseerapu@quicinc.com>
+	s=arc-20240116; t=1729313723; c=relaxed/simple;
+	bh=RDMR0lJtyBq9BCxNPH6hzVIueELKzEY5stDYPEXKhnY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=pzV7pqkZ0grKkbHgFJy2dpNONYq6btTnLifCZqZzEUXVnCCSGbhrHf9B50y0wNYOfEuZIFfGLDU/4r3IPB6kmgwcrLOFpInAmOSl6UQfnaRNu8qyjapt7UQCnNiAGTptr/aYMAHEWXwZi1BglCUkCGiqtU0eEzNOcf2bOKREj5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ir2+Ne7S; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49J4etnu010139;
+	Sat, 19 Oct 2024 04:55:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lW8M9/25VIAT9fH9MllFB+d2AV+SuXHF6lcua4GWprw=; b=ir2+Ne7SX+Vq357o
+	K6Kbym/No0KYdk3GKBWuPMSRaq3XokAdcZJPC5E1jkTFYXHpXQw0vi/TmtlmFOzc
+	1wziPV+2phdsQ+oEcMKrVz9v9vaCY9yteVDP6f09Ic/4fP+sEDQ7ucJ0Yg+70fYm
+	tZY4QCGr3yqrI1HXfK3A+FI7WRZOqchJ+QEbSDmDhvR4SHD9TkSVcqg/KVuZMfKg
+	ytZgL8JQsycQFLA/KG6JTzbjJVqdWP6Pev+WYfBKHyZKkdeJ5d1eFJt6+QpYe/5C
+	YNOfWA03wAXSJ8iO7n8dqrcVofIvNmKZkRLVZuvcyYCWzNVW42hySctWaGDcG+aF
+	FCKrpg==
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c5hf01ct-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 19 Oct 2024 04:55:17 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49J4tGFA010751
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 19 Oct 2024 04:55:16 GMT
+Received: from [10.216.13.72] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Fri, 18 Oct
+ 2024 21:55:13 -0700
+Message-ID: <e63f8862-5e1b-45c4-9815-95deb70f72b4@quicinc.com>
+Date: Sat, 19 Oct 2024 10:25:02 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241015120750.21217-6-quic_jseerapu@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC v3 1/2] mmc: core: Add vendor hook to control
+ reprogram keys to Crypto Engine
+To: Ulf Hansson <ulf.hansson@linaro.org>
+CC: Adrian Hunter <adrian.hunter@intel.com>, <linux-mmc@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <quic_rampraka@quicinc.com>, <quic_nitirawa@quicinc.com>,
+        <quic_sachgupt@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_neersoni@quicinc.com>, <quic_gaurkash@quicinc.com>
+References: <20241006135530.17363-1-quic_spuppala@quicinc.com>
+ <20241006135530.17363-2-quic_spuppala@quicinc.com>
+ <CAPDyKFpXh0vZrK6PU2V+y92Q_+y6Q2+VUEONXiBrqAp_qqp_jA@mail.gmail.com>
+Content-Language: en-US
+From: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
+In-Reply-To: <CAPDyKFpXh0vZrK6PU2V+y92Q_+y6Q2+VUEONXiBrqAp_qqp_jA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dm0ca1HSC-q54R_lW9z1CI9ytrVWmJgw
+X-Proofpoint-GUID: dm0ca1HSC-q54R_lW9z1CI9ytrVWmJgw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
+ clxscore=1011 impostorscore=0 bulkscore=0 mlxlogscore=999
+ priorityscore=1501 mlxscore=0 suspectscore=0 lowpriorityscore=0
+ adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410190032
 
-Hi Jyothi,
 
-kernel test robot noticed the following build errors:
 
-[auto build test ERROR on 55bcd2e0d04c1171d382badef1def1fd04ef66c5]
+On 10/8/2024 7:30 PM, Ulf Hansson wrote:
+> On Sun, 6 Oct 2024 at 15:55, Seshu Madhavi Puppala
+> <quic_spuppala@quicinc.com> wrote:
+>>
+>> Add mmc_host_ops hook avoid_reprogram_allkeys to control
+>> reprogramming keys to Inline Crypto Engine by vendor as some
+>> vendors might not require this feature.
+>>
+>> Signed-off-by: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
+>> Co-developed-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+>> ---
+>>   drivers/mmc/core/crypto.c | 8 +++++---
+>>   drivers/mmc/host/sdhci.c  | 6 ++++++
+>>   include/linux/mmc/host.h  | 7 +++++++
+>>   3 files changed, 18 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
+>> index fec4fbf16a5b..4168f7d135ff 100644
+>> --- a/drivers/mmc/core/crypto.c
+>> +++ b/drivers/mmc/core/crypto.c
+>> @@ -14,9 +14,11 @@
+>>
+>>   void mmc_crypto_set_initial_state(struct mmc_host *host)
+>>   {
+>> -       /* Reset might clear all keys, so reprogram all the keys. */
+>> -       if (host->caps2 & MMC_CAP2_CRYPTO)
+>> -               blk_crypto_reprogram_all_keys(&host->crypto_profile);
+>> +       if (host->ops->avoid_reprogram_allkeys && !host->ops->avoid_reprogram_allkeys()) {
+>> +               /* Reset might clear all keys, so reprogram all the keys. */
+>> +               if (host->caps2 & MMC_CAP2_CRYPTO)
+>> +                       blk_crypto_reprogram_all_keys(&host->crypto_profile);
+> 
+> Don't you even need to call this once, during the first initialization
+> of the card?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jyothi-Kumar-Seerapu/dt-bindings-dmaengine-qcom-gpi-Add-additional-arg-to-dma-cell-property/20241015-202637
-base:   55bcd2e0d04c1171d382badef1def1fd04ef66c5
-patch link:    https://lore.kernel.org/r/20241015120750.21217-6-quic_jseerapu%40quicinc.com
-patch subject: [PATCH v1 5/5] i2c: i2c-qcom-geni: Add Block event interrupt support
-config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20241019/202410191055.bi1pWTAY-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241019/202410191055.bi1pWTAY-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202410191055.bi1pWTAY-lkp@intel.com/
-
-All errors (new ones prefixed by >>, old ones prefixed by <<):
-
->> ERROR: modpost: "gpi_multi_desc_process" [drivers/i2c/busses/i2c-qcom-geni.ko] undefined!
-
-Kconfig warnings: (for reference only)
-   WARNING: unmet direct dependencies detected for GET_FREE_REGION
-   Depends on [n]: SPARSEMEM [=n]
-   Selected by [m]:
-   - RESOURCE_KUNIT_TEST [=m] && RUNTIME_TESTING_MENU [=y] && KUNIT [=m]
-   WARNING: unmet direct dependencies detected for OMAP2PLUS_MBOX
-   Depends on [n]: MAILBOX [=y] && (ARCH_OMAP2PLUS || ARCH_K3)
-   Selected by [m]:
-   - TI_K3_M4_REMOTEPROC [=m] && REMOTEPROC [=y] && (ARCH_K3 || COMPILE_TEST [=y])
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+The first card initialization is done during the boot up for qcom socs 
+and the kernel keyring contains no keys immediately after bootup.After 
+the initialization of the card, the block i/o operations to encrypted 
+folders will automatically trigger the corresponding program key calls 
+to the crypto engine since the kernel keyring does not contain the 
+required encryption key. So, it is not necessary to explicitly reprogram 
+all keys for qcom socs.
+> 
+>> +       }
+>>   }
+>>
+> 
+> [...]
+> 
+> Kind regards
+> Uffe
 
