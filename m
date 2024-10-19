@@ -1,150 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-35107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF96D9A4EBD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 16:40:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7097D9A4F2A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 17:38:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E1211F25A5A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 14:40:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 91CB71C215AC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 15:38:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A84E0149E00;
-	Sat, 19 Oct 2024 14:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AED95149C61;
+	Sat, 19 Oct 2024 15:38:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="T2bU+FCR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CtnDC+a4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7037C2E3;
-	Sat, 19 Oct 2024 14:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A4412B94;
+	Sat, 19 Oct 2024 15:38:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729348838; cv=none; b=Op6wvePMvclMbRYHmRnpPh5unfCiP+PLBTzRD7KVw43gtlq6BJyvhU4dMo7MdPPpoyz+zz2zr4WrxGb2ewNqW/PlsQ+PQYln+hsJJJbEtagLo41h3H9yZNb9MJu4bilVWAA0MWS1/WgCz//g3EyYHtbH7Cmc+HbLkNyiJluazXc=
+	t=1729352301; cv=none; b=lAaWCPUElFjqNB4JhVF2IZpHIfSxA3+6YtRpuyrNI4ayUSnm8BZyvA6ApNLMfFZdRtMSPoCbpJ0oktZ8Ql6Cpgoy9IqmAAKbNYrhyDC6FEWIoN6SBUkBp3Nl5xwTiydPbdZUU4hlV69Ak8cSi156f0hupDgiAipeV/nImL2fexI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729348838; c=relaxed/simple;
-	bh=pkgwufm+bq8k6WekP/FLv0/EPjklZE3HX5XQ5xReyWg=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=Xdi+CqauHG2okYmbRhANy/OGtyww4p2ghi1Fb50syPXg8BaZntklLV1s/zxbp4akUbg2LOnDFrF/nRja70bOd3lHJMjG0P0q7D9icV8QIl3hkx9AAa6hX8BOiQPviAZ+xboOi2PlgsqaqzUnNLpdaygRDNlx4aFAAQI+yzFJ1M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=T2bU+FCR; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-Received: from localhost (docker-mailserver-web-1.docker-mailserver_default [172.22.0.5])
-	by mail.mainlining.org (Postfix) with ESMTPSA id 79FECE459F;
-	Sat, 19 Oct 2024 14:40:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mainlining.org;
-	s=psm; t=1729348834;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1EZ0o3avbZ9UgAo2nPmXkLtdwekuw0WM/Mf7T+3Ys1k=;
-	b=T2bU+FCRFyKGaxMlZXvxwhZf/FHRJPk9dBBdMB1UrkI8g1aPy3YwXm11G1FcATi5m77a4+
-	GcjqkQ0wMy4MaMSfZ9lMXNH+mANNM5Xv4oK8m3bodjnVMWoxdueKjLJYsypPJgWW5ZxEmg
-	jfHWSOqCiVzoxsNp5n/cqXW8ZrlDp5KAyIZeFaWgOZDukNuqqGkH1RPstqr4iWzja4BIlu
-	U5+TGygcbaJ82mwMP2oG7jrIccZpHtca3ZD9jYRuOcjG8VPRiwF8fGBR6U/RYyfyPuy7Gd
-	ZceC7KQxoybbNKIUSdZatvPlLGg2HJogceaiYb/R8HJCG0SjQvszDjxJ1g65uQ==
+	s=arc-20240116; t=1729352301; c=relaxed/simple;
+	bh=Cu7yHmohtP/E8jkXxeHzgFg4vscebnXSd6FQEfOAmN0=;
+	h=From:Subject:Date:Message-ID:MIME-Version:Content-Type:To:CC; b=WwqxvWMletfl5LLtH66q7nosjHOYDflyfYi/zLdGPtTpVzqu4tbQ2LPQi0QYRcVMCctK48g1z/NFabaytNkTx214/bblRfzI7lxT0LhBpp55yYef/CL8wYLVhNnx+OmH5SbvwN/ue645KLUI8xvZOhmeTbc8UlA6OKtETBJ+YSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CtnDC+a4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JDB847023912;
+	Sat, 19 Oct 2024 15:38:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=qs8Q+il509YMyUfeoH1F98
+	25BtzaHdk2l9pbd9/cZeY=; b=CtnDC+a4y2JhHzi8WIzPbvfnTnIfF6IQmjsqkV
+	R5qgbFOoXew3q12t3dHQjQjAkjunSeKisehEbQCnJJA22TkLZCEUdwvPvbgbrblv
+	46ZA8A2PdbTwPBr2kbKSwd+vQZ4YaxkNP3+2e7yA3jhv4PYhc80mmD2BXZ+WIHn9
+	VDIPyRxTNSn0Pn6erf/IdT7gvitVPP/EgyHN44kdJFOGbmEeQ6cJKg4dyYLVtgnV
+	6sAVSBXmpIkrkknOK0nFRJ1c00bb9QQpos+GwDqC1XYNQ2BNbZSujbA4R+6pN2hK
+	i/t2omeGuNaIUEOwy6ch+oUG3/45eC5KrjGi5PhYLSLbJhWQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6sj8sxe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 19 Oct 2024 15:38:03 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49JFc1tA024767
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 19 Oct 2024 15:38:01 GMT
+Received: from hu-mahap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 19 Oct 2024 08:37:54 -0700
+From: Mahadevan <quic_mahap@quicinc.com>
+Subject: [PATCH v4 0/5] Display enablement changes for Qualcomm SA8775P
+ platform
+Date: Sat, 19 Oct 2024 20:46:34 +0530
+Message-ID: <20241019-patchv3_1-v4-0-a95d8f0eae37@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sat, 19 Oct 2024 16:40:34 +0200
-From: barnabas.czeman@mainlining.org
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Linus Walleij
- <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, Krzysztof
- Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Konrad
- Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>, Amit Kucheria
- <amitk@kernel.org>, Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J.
- Wysocki" <rafael@kernel.org>, Daniel Lezcano <daniel.lezcano@linaro.org>,
- Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>, Joerg
- Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, Robin Murphy
- <robin.murphy@arm.com>, Srinivas Kandagatla
- <srinivas.kandagatla@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
- iommu@lists.linux.dev
-Subject: Re: [PATCH RFC 14/14] arm64: dts: qcom: Add Xiaomi Redmi 5A
-In-Reply-To: <jj4ky6uuidv3rdjl7q4ehe7cdgcjxtnmtcufmy462gznkjiex2@pptv6aufsudj>
-References: <20241019-msm8917-v1-0-f1f3ca1d88e5@mainlining.org>
- <20241019-msm8917-v1-14-f1f3ca1d88e5@mainlining.org>
- <pyr3t3kcpjj5zor226fwembjsbpp5zh7mpe2a3bqmwnbqccj7h@a55efscym3s7>
- <46f7b167220a7d54242e9457d00d67e2@mainlining.org>
- <jj4ky6uuidv3rdjl7q4ehe7cdgcjxtnmtcufmy462gznkjiex2@pptv6aufsudj>
-Message-ID: <d55a8f5d7f9b371fd2b51ec079adbf8d@mainlining.org>
-X-Sender: barnabas.czeman@mainlining.org
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFLNE2cC/03Myw6CMBCF4Vchs7ZkplwEV76HMaSOg50FFAsSE
+ 8K7W125O19y8m8wS1SZ4ZRtEGXVWcOYUB4yYO/Ghxi9J4NFW2JboJncwn4tOjI1It+YqrKVBtJ
+ /itLr+9e6XJP7GAaz+Cjur2BrIqTimFuLSFVjyDxfyt3gvJvO36kj5xwG2PcPpH4Cz50AAAA=
+X-Change-ID: 20240930-patchv3_1-600cbc1549e8
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Mahadevan <quic_mahap@quicinc.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jayaprakash Madisetty <quic_jmadiset@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1729352274; l=3206;
+ i=quic_mahap@quicinc.com; s=20241001; h=from:subject:message-id;
+ bh=Cu7yHmohtP/E8jkXxeHzgFg4vscebnXSd6FQEfOAmN0=;
+ b=pO+Vfk6/rP8Oh8sBi03D1cgOAqn1zafX5LdB3b32mzL7xaACVpDU0620Kc89mD3rAzLMmBoU4
+ b9lW5wIyvrhADy4YwZ6IgS3slpc2/+Wdhja/Zj3l/aDDB/KsNklx+Cg
+X-Developer-Key: i=quic_mahap@quicinc.com; a=ed25519;
+ pk=Xc9CA438o9mZKp4uZ8vZMclALnJ8XtlKn/n3Y42mMBI=
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: goaCu0HOL00icKSPx1FxtaqXuDba6h7N
+X-Proofpoint-ORIG-GUID: goaCu0HOL00icKSPx1FxtaqXuDba6h7N
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ bulkscore=0 phishscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410190113
 
-On 2024-10-19 16:38, Dmitry Baryshkov wrote:
-> On Sat, Oct 19, 2024 at 03:57:54PM +0200, 
-> barnabas.czeman@mainlining.org wrote:
->> On 2024-10-19 15:48, Dmitry Baryshkov wrote:
->> > On Sat, Oct 19, 2024 at 01:50:51PM +0200, Barnabás Czémán wrote:
->> > > Add initial support for Xiaomi Redmi 5A (riva).
->> > >
->> > > Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
->> > > ---
->> > >  arch/arm64/boot/dts/qcom/Makefile                |   1 +
->> > >  arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts | 295
->> > > +++++++++++++++++++++++
->> > >  2 files changed, 296 insertions(+)
->> > >
->> > > diff --git a/arch/arm64/boot/dts/qcom/Makefile
->> > > b/arch/arm64/boot/dts/qcom/Makefile
->> > > index 065bb19481c16db2affd291826d420c83a89c52a..79add0e07d8a5f3362d70b0aaaaa9b8c48e31239
->> > > 100644
->> > > --- a/arch/arm64/boot/dts/qcom/Makefile
->> > > +++ b/arch/arm64/boot/dts/qcom/Makefile
->> > > @@ -59,6 +59,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+=
->> > > msm8916-wingtech-wt86518.dtb
->> > >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt86528.dtb
->> > >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
->> > >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
->> > > +dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
->> > >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
->> > >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
->> > >  dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
->> > > diff --git a/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
->> > > b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
->> > > new file mode 100644
->> > > index 0000000000000000000000000000000000000000..7553f73603fc87797b0d424a2af6f2da65c90f5f
->> > > --- /dev/null
->> > > +++ b/arch/arm64/boot/dts/qcom/msm8917-xiaomi-riva.dts
->> > > @@ -0,0 +1,295 @@
->> > > +// SPDX-License-Identifier: BSD-3-Clause
->> > > +/*
->> > > + * Copyright (c) 2023, Barnabas Czeman
->> > > + */
->> > > +
->> > > +/dts-v1/;
->> > > +
->> > > +#include <dt-bindings/arm/qcom,ids.h>
->> > > +#include <dt-bindings/gpio/gpio.h>
->> > > +#include <dt-bindings/input/linux-event-codes.h>
->> > > +#include <dt-bindings/leds/common.h>
->> > > +#include "msm8917.dtsi"
->> > > +#include "pm8937.dtsi"
->> > > +
->> > > +/ {
->> > > +	model = "Xiaomi Redmi 5A (riva)";
->> > > +	compatible = "xiaomi,riva", "qcom,msm8917";
->> > > +	chassis-type = "handset";
->> > > +
->> > > +	qcom,msm-id = <QCOM_ID_MSM8917 0>;
->> > > +	qcom,board-id = <0x1000b 2>, <0x2000b 2>;
->> >
->> > Is this required to boot?
->> Yes
-> 
-> Hmm, did you verify the dts against DT bindings? I think you need to 
-> fix
-> them.
-I have checked with this `make CHECK_DTBS=1 
-qcom/msm8917-xiaomi-riva.dtb`
+This series introduces support to enable the Mobile Display Subsystem (MDSS)
+and Display Processing Unit (DPU) for the Qualcomm SA8775P target. It
+includes the addition of the hardware catalog, compatible string,
+relevant device tree changes, and their YAML bindings.
+
+---
+In this series
+- PATCH 1: "dt-bindings: display/msm: Document MDSS on SA8775P" depends on dp
+  binding documetion in this change:
+  https://lore.kernel.org/all/20240923113150.24711-5-quic_mukhopad@quicinc.com/
+- PATCH 5: "arm64: dts: qcom: sa8775p: add display dt nodes for MDSS0 and DPU"
+  depends on the clock enablement change:
+  https://lore.kernel.org/all/20240816-sa8775p-mm-v3-v1-0-77d53c3c0cef@quicinc.com/
+
+---
+[v5]
+- Update clock-name of display-controller in MDSS documentation to align with
+  qcom,sm8650-dpu.yaml. [Rob]
+- Update power-domains of display-controller in DT to do proper voting on MMCX
+  rail. [Internal Review]
+
+[v4]
+- Removed new YAML added for sa8775p dpu dt-binding documention as it is similar
+  to qcom,sm8650-dpu.yaml and added the compatible in same. [Krzysztof]
+
+[v3]
+-Edited copyright for catalog changes. [Dmitry]
+-Fix dt_binding_check tool errors(update reg address as address-cells and
+ size-cells of root node one and maintain the same for child nodes of mdss,
+ added additionalProperties in schema).
+ [Rob, Bjorn, Krzysztof]
+-Add QCOM_ICC_TAG_ACTIVE_ONLY interconnect path tag to mdp0-mem and mdp1-mem
+ path in devicetree. [Dmitry]
+-Update commit subject and message for DT change. [Dmitry]
+-Remove interconnect path tags from dt bindings. (ref sm8450-mdss yaml)
+
+[v2]
+- Updated cover letter subject and message. [Dmitry]
+- Use fake DISPCC nodes to avoid clock dependencies in dt-bindings. [Dmitry]
+- Update bindings by fixing dt_binding_check tool errors (update includes in example),
+  adding proper spacing and indentation in the binding example, droping unused labels,
+  droping status disable, adding reset node. [Dmitry, Rob, Krzysztof]
+- Reorder compatible string of MDSS and DPU based on alphabetical order.[Dmitry]
+- add reg_bus_bw in msm_mdss_data. [Dmitry]
+- Fix indentation in the devicetree. [Dmitry]
+
+--
+2.34.1
+
+---
+Mahadevan (5):
+      dt-bindings: display/msm: Document MDSS on SA8775P
+      dt-bindings: display/msm: Document the DPU for SA8775P
+      drm/msm: mdss: Add SA8775P support
+      drm/msm/dpu: Add SA8775P support
+      arm64: dts: qcom: sa8775p: add display dt nodes for MDSS0 and DPU
+
+ .../bindings/display/msm/qcom,sa8775p-mdss.yaml    | 241 ++++++++++
+ .../bindings/display/msm/qcom,sm8650-dpu.yaml      |   1 +
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi              |  89 ++++
+ .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    | 485 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+ drivers/gpu/drm/msm/msm_mdss.c                     |  11 +
+ 8 files changed, 830 insertions(+)
+---
+base-commit: e390603cfa79c860ed35e073f5fe77805b067a8e
+change-id: 20240930-patchv3_1-600cbc1549e8
+
+Best regards,
+-- 
+Mahadevan <quic_mahap@quicinc.com>
+
 
