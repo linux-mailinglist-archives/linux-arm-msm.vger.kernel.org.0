@@ -1,75 +1,64 @@
-Return-Path: <linux-arm-msm+bounces-35120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 64E049A4F62
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 17:45:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 541159A4F77
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 17:47:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 20FA1283CD6
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 15:45:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11BF2283CD6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 15:47:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E79F31917C7;
-	Sat, 19 Oct 2024 15:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 004C118E049;
+	Sat, 19 Oct 2024 15:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HMAvKJPX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CPL8xKv9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6BF18D625
-	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 15:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0624618DF78;
+	Sat, 19 Oct 2024 15:46:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729352708; cv=none; b=s6bXEJu/V6GGP6lT0Iw3yPflo1fytERaGdxgCnU3GwBeZ/9nugHFAOqtf2Za+JVMgn6wtzLtvlGyXGKDwwjFlVxaY/0OWawxH1rNdGm6Jv3hIxyu2LglsfGi4Hi+V3xEU+bCpboQwrvUGziz0OZc8xI7809Lz0HS9GJuA+0Wpvc=
+	t=1729352766; cv=none; b=dOJS++tFFcU+DEX/C1qHAkFRk9bSm5nYXJPYXJhhs5fOgjsMDB5xCegqaF72PTbN3j/V2cf3HR74I4T7B9x31+8f0mnEG6Qo94kn/SnoKCH8ekshyNFKi2pEI3sJkzFz31gXSFXjCyqC/0IYMACeZk+nOlHRsqcEkXhT/vwc72k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729352708; c=relaxed/simple;
-	bh=UXDmPJ/23z2ls62ryM86x4tjZRAeCfpbFyCc69y6OPU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hIEWuBSxPIaVSqEdOtz36zPpcQEX3Gb0gr2boQgfFARzbyxHgET0DRIA8dzoFerERgxGV8U1PCV+VH6t1Jxht7tOYZO6ErO6Qp7U5BxVJ87OSrRvpFuZHq858xkvyV7o21FFUHvAASNXkDVLJucC8w77fs+XAUgLEUwshhBrzFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HMAvKJPX; arc=none smtp.client-ip=209.85.167.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-539f0f9ee49so3409887e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 08:45:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729352704; x=1729957504; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LdncSAoP0KhDyf2xplN8lueVHyRZUHitLAgflAowdNI=;
-        b=HMAvKJPXnjOqzw2fYEJ5MYqJxA/ZNTp2QmV4aNXRaK0GBiIjNFz3yISzQaIaXNFSds
-         k0Vyw26YMg9cOeJVhBORMm+/Oto8hjD2mwiIeTSAFvuFjKf6C+joC+J1KvdHNCRyKrCk
-         tP/g6hJUXUZgQ8iDjRAzKYES0v1kcjfgYb5JdbZM7dAhQC4o5IINku71OTy5YCdjCBm1
-         H2YtNVnpIqZA6UniSHctRBcfLy3i+5kRvI/inKwPZm553HM5i1BxNRk/EYM/7UWliYkt
-         meyh95KVLJQzZG9SOhneDkZ64xZApxd8TReurW8+U3XJayyTHR/Bu3qeTmd5MUhhYn+F
-         uMNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729352704; x=1729957504;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LdncSAoP0KhDyf2xplN8lueVHyRZUHitLAgflAowdNI=;
-        b=guHqofsADgbS52xnSpQgjwRsyy93twBdDvcSg3+oYUp5jsFOy7ovAK1/k9cmYZEhoB
-         hu1TGxQLa1mdHf6Tmyfhjr3jq16+SSlH9QNNpKwPUjoj9co6Qr4k2eyxIwDhMfaTtX4g
-         HPVrPaFPDS8QWRUejV4XWee9jUbVUBhp4CtyIIuiPRU2K7CVvNNES/SqFqPhjuQvxoOy
-         /2/d0XwqqNLwr9hNtwrfRVW04wrZFQak7N7GPlkzD61GJaSDPCcv0l1ROtXJVVK+AbaI
-         W/kylhN+I99DW734UAT67JTIR/E125IVRv/C3b/nE0mPX+CNn2vxlYwMQzxHP9ObAEUv
-         xxlA==
-X-Gm-Message-State: AOJu0Yxr0ii3LP3xQbvpEy+F8ZmV80TB886Zeo9dqIjOjAvfNHp88wt2
-	aoUlgoD7N2eqqerPa0P+RI95IKnth92kLyZLzxLxI9fzvB7q9mNxaUQVAHMr6qcdrLMalFPTY76
-	zxr8=
-X-Google-Smtp-Source: AGHT+IFDuzM/ITc9x3ovHNfzWJuYKY8GTb8AGalLQx5ZBp9XUv98xwhqTD/8UUandbEIa8oszVrgKQ==
-X-Received: by 2002:a05:6512:3ca4:b0:52f:d0f0:e37e with SMTP id 2adb3069b0e04-53a154b2c8amr3526130e87.42.1729352704272;
-        Sat, 19 Oct 2024 08:45:04 -0700 (PDT)
-Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a15211401sm562854e87.249.2024.10.19.08.45.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Oct 2024 08:45:03 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Sat, 19 Oct 2024 18:44:53 +0300
-Subject: [PATCH 4/6] phy: qualcomm: qmp-pcie: split PCS_LANE1 region
+	s=arc-20240116; t=1729352766; c=relaxed/simple;
+	bh=WkQLvzZ5ClIipJgcB53xFdQntcaZuU/gHrvG5bMZCgE=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
+	 In-Reply-To:To:CC; b=nymPWdoLeh/8w7McQir+4U+eZRQo/MOAY0eOt3/4wb5fpg3BlbK8FjzOGWZ3Q6Q4O5hR42in7khktBmpRtzbIDGMH4K9DFolhNLPAxfbMXEncIOZBKUo/rZAF0gudogJ6SoHfW6n0uSAVKpgJPdWlKZHgnLMcqW8o3LjHNYjXXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CPL8xKv9; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49JAK0k2001016;
+	Sat, 19 Oct 2024 15:45:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	BfB7NXGxDG/6DTJ9CaNup4fV3ssbj7m1xcbZ1s8bOmE=; b=CPL8xKv9tL9mUbeU
+	qzX775ADTdegrRhLql1AD5+anhlVIFg7boAOOwePkiwS/gv2694BNXO2u/VHQGff
+	pLXXwDLoZT6obGylilznSKJtwmjvD5ujTIl1s5E5Yz8OfcOiVPkgLjzTmoJ5PDnH
+	vlm+0bCEXVdMwz/1hy3JLa41wV67K9SdqbDfqtCeS6CYUhaVepNnRo+408DX5RKp
+	dskstEsTzo+ihWrAB+f+Pe08uQiqVUWquyCwuoRG5p47od6/LrVnTiW6rcQE6gCK
+	18WOgqU28KPUVPYB7MYuCr3weH72AG+dKh3LZDlI2dIYAHHmiUVToaJo6zUEKNC8
+	kkj4Tw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6sj8ta0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 19 Oct 2024 15:45:52 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49JFjp1J001913
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 19 Oct 2024 15:45:51 GMT
+Received: from hu-mahap-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Sat, 19 Oct 2024 08:45:44 -0700
+From: Mahadevan <quic_mahap@quicinc.com>
+Date: Sat, 19 Oct 2024 21:14:53 +0530
+Subject: [PATCH v5 1/5] dt-bindings: display/msm: Document MDSS on SA8775P
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,220 +67,319 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241019-sar2130p-phys-v1-4-bf06fcea2421@linaro.org>
-References: <20241019-sar2130p-phys-v1-0-bf06fcea2421@linaro.org>
-In-Reply-To: <20241019-sar2130p-phys-v1-0-bf06fcea2421@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Message-ID: <20241019-patchv3_1-v5-1-d2fb72c9a845@quicinc.com>
+References: <20241019-patchv3_1-v5-0-d2fb72c9a845@quicinc.com>
+In-Reply-To: <20241019-patchv3_1-v5-0-d2fb72c9a845@quicinc.com>
+To: Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar
+	<quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
+        "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard
+	<mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>,
+        Mahadevan <quic_mahap@quicinc.com>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konrad.dybcio@linaro.org>
+CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>,
+        Jayaprakash Madisetty <quic_jmadiset@quicinc.com>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7955;
- i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=UXDmPJ/23z2ls62ryM86x4tjZRAeCfpbFyCc69y6OPU=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnE9P1qY1h1AOxKKBEm0O74ADM+dBq1qmX6rzRp
- np5nfdjlS2JAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxPT9QAKCRAU23LtvoBl
- uNe7D/49mcsIppX3ofS6BCffYDKaPjm6GlPF+t3IzWGGSpsEugPUAkdRUySh7kOLSH/viWaCBuR
- wiiKg0EQc18fgXHj+ZiMQlBHq67wRvjbPiTK/KRdLJPjSmyRzdaO4D1+GThr8UcBDcmeB3e91hG
- MLLZ0EZ1+AJebvijywzvNYHBPbZ47qwa0ehVrvmBf+mRkOfzBQYa8ZsoViA/QLZoowy4g8W1RP1
- gTcpuxfcgyFLLVRRuGu53e52InObpAdipHxPdQ+n1CxhOgv5nPksMGms2gT31lLyEUHQqi3tK+w
- 4GO2ZlGzagpdaMItnZsCm1kiaA+z+v3r83C4fV/XqSuj6NqKDOVBjpY7qUlTxepxQO/difIMv01
- 0sbUKK1K1jAyPXT1t7QqWhxfS+MXy/ZTyGB4laRpEBMIwVOLtXV/FX0r+2l3uUN3/04z0FJmei8
- MztM1dSJVf5W1JAAeAHO3Zanvz5oMTU4AoPjtyrONucPz5XiO8FCOpqx3aeMvVwgJynBR6q+lTU
- +bGP3HZKPEbcgQPj70KtojbymF0KvqKjzhIUA5h+sE9hmi4E++OwiLs0sYm0CnpwU2GF6W7DuKW
- 1l+JVbuTDIrFD9CqH1KWBxhyMRcfD7r2iFg25gYFaEcfxLrakuAfnqXUrCB0ctx8j4KhzNcONbu
- +ONEftQvj1Gklsw==
-X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1729352737; l=8041;
+ i=quic_mahap@quicinc.com; s=20241001; h=from:subject:message-id;
+ bh=WkQLvzZ5ClIipJgcB53xFdQntcaZuU/gHrvG5bMZCgE=;
+ b=EqUpFGhkin07dg48DYyYudktz4EAU/5Hs4mCY5oute/YRiWq1OvPCUwla+rmo++WL1XgFKuet
+ ArfL1pyz6I0AS1Fe5VUjqamTFVhTuxEbKTg6o9ksBKpOiWu316XMqvz
+X-Developer-Key: i=quic_mahap@quicinc.com; a=ed25519;
+ pk=Xc9CA438o9mZKp4uZ8vZMclALnJ8XtlKn/n3Y42mMBI=
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9_6jQ66rRmciM5FEOXvD2GxuDCmQDOy1
+X-Proofpoint-ORIG-GUID: 9_6jQ66rRmciM5FEOXvD2GxuDCmQDOy1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ bulkscore=0 phishscore=0 mlxlogscore=999 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410190114
 
-The PCS_LANE1 region isn't a part of the PCS_PCIE region. It was handled
-this way as it simplified handled of devices with the old bindings.
-Nowadays it can be handled as is, without hacks.
+Document the MDSS hardware found on the Qualcomm SA8775P platform.
 
-Split the PCS_LANE1 region from the PCS_PCIE / PCS_MISC region space.
-
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Mahadevan <quic_mahap@quicinc.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 32 ++++++++++++++++++----
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4_20.h |  5 ++--
- drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h |  5 ++--
- 3 files changed, 33 insertions(+), 9 deletions(-)
+ .../bindings/display/msm/qcom,sa8775p-mdss.yaml    | 241 +++++++++++++++++++++
+ 1 file changed, 241 insertions(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 873f2f9844c66d7bd0b3bb3ab4bbd8be9a37cebd..1ca1f21b1cc225f435da9c775c97dfa142117f95 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1773,7 +1773,7 @@ static const struct qmp_phy_init_tbl sdx55_qmp_pcie_rc_pcs_misc_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V4_20_PCS_PCIE_OSC_DTCT_ACTIONS, 0x00),
- };
- 
--static const struct qmp_phy_init_tbl sdx55_qmp_pcie_ep_pcs_misc_tbl[] = {
-+static const struct qmp_phy_init_tbl sdx55_qmp_pcie_ep_pcs_lane1_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V4_20_PCS_LANE1_INSIG_SW_CTRL2, 0x00),
- 	QMP_PHY_INIT_CFG(QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
- };
-@@ -1907,6 +1907,9 @@ static const struct qmp_phy_init_tbl sdx65_qmp_pcie_pcs_misc_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG2, 0x0d),
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG5, 0x02),
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN, 0x2e),
-+};
+diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..58f8a01f29c7aaa9dc943c232363075686c06a7c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/msm/qcom,sa8775p-mdss.yaml
+@@ -0,0 +1,241 @@
++# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/msm/qcom,sa8775p-mdss.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+static const struct qmp_phy_init_tbl sdx65_qmp_pcie_pcs_lane1_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_LANE1_INSIG_SW_CTRL2, 0x00),
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
- };
-@@ -2582,8 +2585,6 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4_pcie_rc_pcs_misc_tbl[] = {
- static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_pcs_alt_tbl[] = {
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG4, 0x16),
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_EQ_CONFIG5, 0x22),
--	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_LANE1_INSIG_SW_CTRL2, 0x00),
--	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_LANE1_INSIG_MX_CTRL2, 0x00),
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_G3S2_PRE_GAIN, 0x2e),
- 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_RX_SIGDET_LVL, 0x66),
- };
-@@ -2728,6 +2729,7 @@ struct qmp_pcie_offsets {
- 	u16 serdes;
- 	u16 pcs;
- 	u16 pcs_misc;
-+	u16 pcs_lane1;
- 	u16 tx;
- 	u16 rx;
- 	u16 tx2;
-@@ -2752,6 +2754,8 @@ struct qmp_phy_cfg_tbls {
- 	int pcs_num;
- 	const struct qmp_phy_init_tbl *pcs_misc;
- 	int pcs_misc_num;
-+	const struct qmp_phy_init_tbl *pcs_lane1;
-+	int pcs_lane1_num;
- 	const struct qmp_phy_init_tbl *ln_shrd;
- 	int ln_shrd_num;
- };
-@@ -2811,6 +2815,7 @@ struct qmp_pcie {
- 	void __iomem *serdes;
- 	void __iomem *pcs;
- 	void __iomem *pcs_misc;
-+	void __iomem *pcs_lane1;
- 	void __iomem *tx;
- 	void __iomem *rx;
- 	void __iomem *tx2;
-@@ -2927,6 +2932,7 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v4_20 = {
- 	.serdes		= 0x1000,
- 	.pcs		= 0x1200,
- 	.pcs_misc	= 0x1600,
-+	.pcs_lane1	= 0x1e00,
- 	.tx		= 0x0000,
- 	.rx		= 0x0200,
- 	.tx2		= 0x0800,
-@@ -2957,6 +2963,7 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v5_20 = {
- 	.serdes		= 0x1000,
- 	.pcs		= 0x1200,
- 	.pcs_misc	= 0x1400,
-+	.pcs_lane1	= 0x1e00,
- 	.tx		= 0x0000,
- 	.rx		= 0x0200,
- 	.tx2		= 0x0800,
-@@ -3440,8 +3447,8 @@ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
- 	.tbls_ep = &(const struct qmp_phy_cfg_tbls) {
- 		.serdes		= sdx55_qmp_pcie_ep_serdes_tbl,
- 		.serdes_num	= ARRAY_SIZE(sdx55_qmp_pcie_ep_serdes_tbl),
--		.pcs_misc	= sdx55_qmp_pcie_ep_pcs_misc_tbl,
--		.pcs_misc_num	= ARRAY_SIZE(sdx55_qmp_pcie_ep_pcs_misc_tbl),
-+		.pcs_lane1	= sdx55_qmp_pcie_ep_pcs_lane1_tbl,
-+		.pcs_lane1_num	= ARRAY_SIZE(sdx55_qmp_pcie_ep_pcs_lane1_tbl),
- 	},
- 
- 	.reset_list		= sdm845_pciephy_reset_l,
-@@ -3540,6 +3547,8 @@ static const struct qmp_phy_cfg sdx65_qmp_pciephy_cfg = {
- 			.pcs_num        = ARRAY_SIZE(sdx65_qmp_pcie_pcs_tbl),
- 			.pcs_misc       = sdx65_qmp_pcie_pcs_misc_tbl,
- 			.pcs_misc_num   = ARRAY_SIZE(sdx65_qmp_pcie_pcs_misc_tbl),
-+			.pcs_lane1       = sdx65_qmp_pcie_pcs_lane1_tbl,
-+			.pcs_lane1_num   = ARRAY_SIZE(sdx65_qmp_pcie_pcs_lane1_tbl),
- 		},
- 	.reset_list             = sdm845_pciephy_reset_l,
- 	.num_resets             = ARRAY_SIZE(sdm845_pciephy_reset_l),
-@@ -3739,6 +3748,8 @@ static const struct qmp_phy_cfg sa8775p_qmp_gen4x2_pciephy_cfg = {
- 		.pcs_num		= ARRAY_SIZE(sa8775p_qmp_gen4x2_pcie_pcs_alt_tbl),
- 		.pcs_misc		= sa8775p_qmp_gen4_pcie_pcs_misc_tbl,
- 		.pcs_misc_num	= ARRAY_SIZE(sa8775p_qmp_gen4_pcie_pcs_misc_tbl),
-+		.pcs_lane1	= sdx65_qmp_pcie_pcs_lane1_tbl,
-+		.pcs_lane1_num	= ARRAY_SIZE(sdx65_qmp_pcie_pcs_lane1_tbl),
- 	},
- 
- 	.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
-@@ -3945,6 +3956,7 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
- 	void __iomem *rx2 = qmp->rx2;
- 	void __iomem *pcs = qmp->pcs;
- 	void __iomem *pcs_misc = qmp->pcs_misc;
-+	void __iomem *pcs_lane1 = qmp->pcs_lane1;
- 	void __iomem *ln_shrd = qmp->ln_shrd;
- 
- 	if (!tbls)
-@@ -3969,6 +3981,7 @@ static void qmp_pcie_init_registers(struct qmp_pcie *qmp, const struct qmp_phy_c
- 
- 	qmp_configure(qmp->dev, pcs, tbls->pcs, tbls->pcs_num);
- 	qmp_configure(qmp->dev, pcs_misc, tbls->pcs_misc, tbls->pcs_misc_num);
-+	qmp_configure(qmp->dev, pcs_lane1, tbls->pcs_lane1, tbls->pcs_lane1_num);
- 
- 	if (cfg->lanes >= 4 && qmp->tcsr_4ln_config) {
- 		qmp_configure(qmp->dev, serdes, cfg->serdes_4ln_tbl,
-@@ -4420,6 +4433,14 @@ static int qmp_pcie_parse_dt_legacy(struct qmp_pcie *qmp, struct device_node *np
- 		}
- 	}
- 
-+	/*
-+	 * For all platforms where legacy bindings existed, PCS_LANE1 was
-+	 * mapped as a part of the PCS_MISC region.
-+	 */
-+	if (!IS_ERR(qmp->pcs_misc) && cfg->offsets->pcs_lane1 != 0)
-+		qmp->pcs_lane1 = qmp->pcs_misc +
-+			(cfg->offsets->pcs_lane1 - cfg->offsets->pcs_misc);
++title: Qualcomm Technologies, Inc. SA87755P Display MDSS
 +
- 	clk = devm_get_clk_from_child(dev, np, NULL);
- 	if (IS_ERR(clk)) {
- 		return dev_err_probe(dev, PTR_ERR(clk),
-@@ -4487,6 +4508,7 @@ static int qmp_pcie_parse_dt(struct qmp_pcie *qmp)
- 	qmp->serdes = base + offs->serdes;
- 	qmp->pcs = base + offs->pcs;
- 	qmp->pcs_misc = base + offs->pcs_misc;
-+	qmp->pcs_lane1 = base + offs->pcs_lane1;
- 	qmp->tx = base + offs->tx;
- 	qmp->rx = base + offs->rx;
- 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4_20.h
-index ac872a9eff9a8fe7fc3307759288aee15d17bd24..ab892d1067c219e8db0ba0591921b38a9cebebe7 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4_20.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v4_20.h
-@@ -13,7 +13,8 @@
- #define QPHY_V4_20_PCS_PCIE_G4_RXEQEVAL_TIME		0x0f4
- #define QPHY_V4_20_PCS_PCIE_G4_EQ_CONFIG2		0x0fc
- #define QPHY_V4_20_PCS_PCIE_G4_EQ_CONFIG5		0x108
--#define QPHY_V4_20_PCS_LANE1_INSIG_SW_CTRL2		0x824
--#define QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2		0x828
++maintainers:
++  - Mahadevan <quic_mahap@quicinc.com>
 +
-+#define QPHY_V4_20_PCS_LANE1_INSIG_SW_CTRL2		0x024
-+#define QPHY_V4_20_PCS_LANE1_INSIG_MX_CTRL2		0x028
- 
- #endif
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
-index cdf8c04ea078a985be82d561ad0918dfdece9987..283d63c8159338b57a5026b6c2a86e3cce21097c 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
-@@ -17,7 +17,8 @@
- #define QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG5		0x108
- #define QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN			0x15c
- #define QPHY_V5_20_PCS_PCIE_RX_MARGINING_CONFIG3	0x184
--#define QPHY_V5_20_PCS_LANE1_INSIG_SW_CTRL2		0xa24
--#define QPHY_V5_20_PCS_LANE1_INSIG_MX_CTRL2		0xa28
++description:
++  SA8775P MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
++  DPU display controller, DP interfaces and EDP etc.
 +
-+#define QPHY_V5_20_PCS_LANE1_INSIG_SW_CTRL2		0x024
-+#define QPHY_V5_20_PCS_LANE1_INSIG_MX_CTRL2		0x028
- 
- #endif
++$ref: /schemas/display/msm/mdss-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sa8775p-mdss
++
++  clocks:
++    items:
++      - description: Display AHB
++      - description: Display hf AXI
++      - description: Display core
++
++  iommus:
++    maxItems: 1
++
++  interconnects:
++    maxItems: 3
++
++  interconnect-names:
++    maxItems: 3
++
++patternProperties:
++  "^display-controller@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++
++    properties:
++      compatible:
++        const: qcom,sa8775p-dpu
++
++  "^displayport-controller@[0-9a-f]+$":
++    type: object
++    additionalProperties: true
++
++    properties:
++      compatible:
++        items:
++          - const: qcom,sa8775p-dp
++
++required:
++  - compatible
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interconnect/qcom,icc.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
++    #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
++    #include <dt-bindings/power/qcom,rpmhpd.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++
++    display-subsystem@ae00000 {
++        compatible = "qcom,sa8775p-mdss";
++        reg = <0x0ae00000 0x1000>;
++        reg-names = "mdss";
++
++        interconnects = <&mmss_noc MASTER_MDP0 &mc_virt SLAVE_EBI1>,
++                        <&mmss_noc MASTER_MDP1 &mc_virt SLAVE_EBI1>,
++                        <&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_DISPLAY_CFG>;
++        interconnect-names = "mdp0-mem",
++                             "mdp1-mem",
++                             "cpu-cfg";
++
++
++        resets = <&dispcc_core_bcr>;
++        power-domains = <&dispcc_gdsc>;
++
++        clocks = <&dispcc_ahb_clk>,
++                 <&gcc GCC_DISP_HF_AXI_CLK>,
++                 <&dispcc_mdp_clk>;
++
++        interrupts = <GIC_SPI 92 IRQ_TYPE_LEVEL_HIGH>;
++        interrupt-controller;
++        #interrupt-cells = <1>;
++
++        iommus = <&apps_smmu 0x1000 0x402>;
++
++        #address-cells = <1>;
++        #size-cells = <1>;
++        ranges;
++
++        display-controller@ae01000 {
++            compatible = "qcom,sa8775p-dpu";
++            reg = <0x0ae01000 0x8f000>,
++                  <0x0aeb0000 0x2008>;
++            reg-names = "mdp", "vbif";
++
++            clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
++                     <&dispcc_ahb_clk>,
++                     <&dispcc_mdp_lut_clk>,
++                     <&dispcc_mdp_clk>,
++                     <&dispcc_mdp_vsync_clk>;
++            clock-names = "nrt_bus",
++                          "iface",
++                          "lut",
++                          "core",
++                          "vsync";
++
++            assigned-clocks = <&dispcc_mdp_vsync_clk>;
++            assigned-clock-rates = <19200000>;
++
++            operating-points-v2 = <&mdss0_mdp_opp_table>;
++            power-domains = <&rpmhpd RPMHPD_MMCX>;
++
++            interrupt-parent = <&mdss0>;
++            interrupts = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++                    dpu_intf0_out: endpoint {
++                         remote-endpoint = <&mdss0_dp0_in>;
++                    };
++                };
++            };
++
++            mdss0_mdp_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-375000000 {
++                    opp-hz = /bits/ 64 <375000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++
++                opp-500000000 {
++                    opp-hz = /bits/ 64 <500000000>;
++                    required-opps = <&rpmhpd_opp_nom>;
++                };
++
++                opp-575000000 {
++                    opp-hz = /bits/ 64 <575000000>;
++                    required-opps = <&rpmhpd_opp_turbo>;
++                };
++
++                opp-650000000 {
++                    opp-hz = /bits/ 64 <650000000>;
++                    required-opps = <&rpmhpd_opp_turbo_l1>;
++                };
++            };
++        };
++
++        displayport-controller@af54000 {
++            compatible = "qcom,sa8775p-dp";
++
++            pinctrl-0 = <&dp_hot_plug_det>;
++            pinctrl-names = "default";
++
++            reg = <0xaf54000 0x104>,
++                  <0xaf54200 0x0c0>,
++                  <0xaf55000 0x770>,
++                  <0xaf56000 0x09c>;
++
++            interrupt-parent = <&mdss0>;
++            interrupts = <12>;
++
++            clocks = <&dispcc_mdss_ahb_clk>,
++                     <&dispcc_dptx0_aux_clk>,
++                     <&dispcc_dptx0_link_clk>,
++                     <&dispcc_dptx0_link_intf_clk>,
++                     <&dispcc_dptx0_pixel0_clk>;
++            clock-names = "core_iface",
++                          "core_aux",
++                          "ctrl_link",
++                          "ctrl_link_iface",
++                          "stream_pixel";
++
++            assigned-clocks = <&dispcc_mdss_dptx0_link_clk_src>,
++                              <&dispcc_mdss_dptx0_pixel0_clk_src>;
++            assigned-clock-parents = <&mdss0_edp_phy 0>, <&mdss0_edp_phy 1>;
++
++            phys = <&mdss0_edp_phy>;
++            phy-names = "dp";
++
++            operating-points-v2 = <&dp_opp_table>;
++            power-domains = <&rpmhpd SA8775P_MMCX>;
++
++            #sound-dai-cells = <0>;
++
++            ports {
++                #address-cells = <1>;
++                #size-cells = <0>;
++
++                port@0 {
++                    reg = <0>;
++                    mdss0_dp0_in: endpoint {
++                        remote-endpoint = <&dpu_intf0_out>;
++                    };
++                };
++
++                port@1 {
++                   reg = <1>;
++                   mdss0_dp_out: endpoint { };
++                };
++            };
++
++            dp_opp_table: opp-table {
++                compatible = "operating-points-v2";
++
++                opp-160000000 {
++                    opp-hz = /bits/ 64 <160000000>;
++                    required-opps = <&rpmhpd_opp_low_svs>;
++                };
++
++                opp-270000000 {
++                    opp-hz = /bits/ 64 <270000000>;
++                    required-opps = <&rpmhpd_opp_svs>;
++                };
++
++                opp-540000000 {
++                    opp-hz = /bits/ 64 <540000000>;
++                    required-opps = <&rpmhpd_opp_svs_l1>;
++                };
++
++                opp-810000000 {
++                    opp-hz = /bits/ 64 <810000000>;
++                    required-opps = <&rpmhpd_opp_nom>;
++                };
++            };
++        };
++    };
++...
 
 -- 
-2.39.5
+2.34.1
 
 
