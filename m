@@ -1,181 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-35062-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF9379A4A77
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 02:22:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42E779A4AB3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 02:39:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49CE0B21AE7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 00:22:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1D961F22F72
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 19 Oct 2024 00:39:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C73429CEC;
-	Sat, 19 Oct 2024 00:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8DA71192593;
+	Sat, 19 Oct 2024 00:38:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="MV1ZB5l/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u2Se86gg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-fw-52004.amazon.com (smtp-fw-52004.amazon.com [52.119.213.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F237BEED6;
-	Sat, 19 Oct 2024 00:22:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.119.213.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ED029CF6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 19 Oct 2024 00:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729297366; cv=none; b=F1i/HTG93QXAs0+VhS8mhZItTjj+zFYLZKyqsRBwU9SGoxJ46nVoVePFZYFlyXHG6njauoxY9mcLYFW4nED1i6TuAz5SxHlMM/LHlNnWqXaibzRhw8QzM+4vjY68ICEzivh6rc91287dKXC9kbnHVPGcd2wh6usue3H4KKx3wOo=
+	t=1729298337; cv=none; b=QN6/jlyOygC18J+5CkCIG/T0eVGafg/Vt/9oSAWx9/dD+QBFirpkCpgz3BTGSMo1RmFermx85UT4PEuxQX9r+XI41MTH9HtUCpNUgm6/FPTN9Xn7dfKOlcCRWv3vW0uZzotJ5CpqeAPfFwMJrKrb+A50Mi1doceSSbfPaMj54n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729297366; c=relaxed/simple;
-	bh=OjwqcLjusCuMEujKAIY1zbhzHKZz5/39jsD/YDCvrOw=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kk6E3GAo8syZJjuwcr0FCWmbIyFNE7h6LPu200ev6c6cQDegwG5rXTehn0QcbUv63YZUFqNYKUJkJhSoFq9kNbgnKjbfv+O/dDnLG0RgTtATzXr+EjTIlp4h/aZtSfi1duOnvDdBNtzJeHIXw8KhnufW+PpcrZnbIZsO1jnyv1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.co.jp; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=MV1ZB5l/; arc=none smtp.client-ip=52.119.213.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.co.jp
+	s=arc-20240116; t=1729298337; c=relaxed/simple;
+	bh=Mewcl59dRlGPPCpRuSRwPywr6ycIDIWaUH/SfdWIQ8Y=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=omID6e3kTkr+bblO+UgKsTNORUg0/vVl8Ssnl/CLC+lP+056xBHkNOc9fZ+eh3k37EEQIUKo6bAoXeMRwpMClIaOSKczho5AyatQ23BNVrSzSzTYsxDHMkWn408Icz1Y/iRXUqBNKUBF4wuVPISjB9Svyb/zGbfT962dpiZPG48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u2Se86gg; arc=none smtp.client-ip=209.85.167.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-539f1292a9bso3456611e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 18 Oct 2024 17:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1729297364; x=1760833364;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=YkFWxEAH8ig0VPlLUWEewmJ7RrvUMzN5ZoJU/RdWdBU=;
-  b=MV1ZB5l/pcvNHUsSj2IPRHhN9t1rIocw0FxbzBPE9SDPHbtrzsXe4INY
-   0MNwq+tsAHFz1E+2Bfe8Rdh313Cm7bay4Nxw3fntasmlnBegLEhTfHR2k
-   A4YMTsTRviW2V6N+Hg9EAjXxBYlqi6/J5mBq4NFDM6qghV3LkJrIh/dIi
-   E=;
-X-IronPort-AV: E=Sophos;i="6.11,214,1725321600"; 
-   d="scan'208";a="240571657"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.2])
-  by smtp-border-fw-52004.iad7.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Oct 2024 00:22:40 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.21.151:49767]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.59.23:2525] with esmtp (Farcaster)
- id 8dcfac51-37b9-4a09-8c82-c69ae0a4798c; Sat, 19 Oct 2024 00:22:39 +0000 (UTC)
-X-Farcaster-Flow-ID: 8dcfac51-37b9-4a09-8c82-c69ae0a4798c
-Received: from EX19D004ANA001.ant.amazon.com (10.37.240.138) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.34;
- Sat, 19 Oct 2024 00:22:39 +0000
-Received: from 6c7e67c6786f.amazon.com (10.187.170.44) by
- EX19D004ANA001.ant.amazon.com (10.37.240.138) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.35;
- Sat, 19 Oct 2024 00:22:35 +0000
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
-To: <denkenz@gmail.com>
-CC: <agross@kernel.org>, <almasrymina@google.com>, <asml.silence@gmail.com>,
-	<axboe@kernel.dk>, <davem@davemloft.net>, <edumazet@google.com>,
-	<krisman@suse.de>, <kuba@kernel.org>, <kuniyu@amazon.com>,
-	<linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<manivannan.sadhasivam@linaro.org>, <marcel@holtmann.org>,
-	<netdev@vger.kernel.org>, <pabeni@redhat.com>
-Subject: Re: [RFC PATCH v1 04/10] net: qrtr: Report sender endpoint in aux data
-Date: Fri, 18 Oct 2024 17:22:32 -0700
-Message-ID: <20241019002232.43313-1-kuniyu@amazon.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20241018181842.1368394-5-denkenz@gmail.com>
-References: <20241018181842.1368394-5-denkenz@gmail.com>
+        d=linaro.org; s=google; t=1729298333; x=1729903133; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0M41lobMzDtVDXSER1bmN9AsQKoidShYGX+Z+FE6IRg=;
+        b=u2Se86ggxXhSy3+mSEOGZxWNPamUQzT3i6si7Xi+iBE6XsK1OlkAoS8qvkiBybH5fg
+         rB/wEn+Q1KalHsEHGQPAJX+LcR38Wqcp8jor1kRV4/8ZhzIa7n5Bdae6mKFeVblPD7zL
+         6fs2jb98Rcjnyxmgwz4eMK0I4gPvILYgD9U0eW81HDkVzIB7P9PHAAWX7l6adRATkaOf
+         c/cjJ2VCZlU2VYEAKiunx/Taf8g62Kgod9fME1P92PuyTiCmh2Ftk3Y0iKrV/6DKsn9U
+         OCM4Q2Qgw/gVkIwwyqQXi0NEmpW9zSLgAMuL7qH39bWwCjHNjvrSjYxPKetTd2TLh7Iy
+         VHpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729298333; x=1729903133;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0M41lobMzDtVDXSER1bmN9AsQKoidShYGX+Z+FE6IRg=;
+        b=HRtDpNGxvlnKk4mjnU4q6OPn2yzvrxxmcuWn2xTxtih6wWyI9/hPZRekJYmHl9h5ea
+         RJQksDNWHeQVBLBKcT5XYcQE7HyCBOUqXUPCLUfakPzSYsvfOdiS88Iz1Tq2p+TgJXeK
+         YRtF4SgGq6L5VYlD2aPjpl4RwTq6JvZsBiliQzze2JbMjhNddcPel2tIAqnz1Cryeo6b
+         /G+U8HcMj8wBSWlOPq6+q2DRHzCLkBwLMAKp/0XzpVvzaGVak4hIU0H6qDTphXzleUKC
+         33us6BS7YmjaTBB57AZdFLKTWUpq2mpfC3rKeJ+CFTeKM/YUVNeJXKkS8wBTXAWqD6ES
+         SXYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXJ/K5m3UtkkRQLoEKbzenI8un7x8UnJvXlUNTGjZ8PovZOTw8uQZVieiPMZmnMc7RETq4wRFLZn6IssGCB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yze4ei1ziXsK0shcHti9YbuIodvYZxhL/TPwTfD7O+ZG5g7ySMt
+	unNfLcbvEigGnvUyWHh4vURGMPg2fraPRbmn9lLLNLhMI0vCzFQC1om5G/UqPJQ=
+X-Google-Smtp-Source: AGHT+IF7fBEeWmNkccNzd31LUcjDvOyf3yMzraYUGO6AugKRPwkcFosfUe4YdEuEFjihSL5BW7Y+2g==
+X-Received: by 2002:a05:6512:4009:b0:52c:fd46:bf07 with SMTP id 2adb3069b0e04-53a154ce86amr3097967e87.49.1729298333228;
+        Fri, 18 Oct 2024 17:38:53 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ca0b076d0asm1272577a12.16.2024.10.18.17.38.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 18 Oct 2024 17:38:52 -0700 (PDT)
+Message-ID: <d3658f34-c24a-47c4-a8fc-989de009b4fb@linaro.org>
+Date: Sat, 19 Oct 2024 01:38:50 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: EX19D043UWC001.ant.amazon.com (10.13.139.202) To
- EX19D004ANA001.ant.amazon.com (10.37.240.138)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/11] clk: qcom: camcc-qcs615: Add QCS615 camera clock
+ controller driver
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Taniya Das <quic_tdas@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, Stephen Boyd
+ <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20241019-qcs615-mm-clockcontroller-v1-0-4cfb96d779ae@quicinc.com>
+ <20241019-qcs615-mm-clockcontroller-v1-4-4cfb96d779ae@quicinc.com>
+ <f5exjvacw4gz7s7byxz6aux7jt3kczn5waio3f3dukpdvzmkvi@c65xjssv4aqy>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <f5exjvacw4gz7s7byxz6aux7jt3kczn5waio3f3dukpdvzmkvi@c65xjssv4aqy>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Denis Kenzior <denkenz@gmail.com>
-Date: Fri, 18 Oct 2024 13:18:22 -0500
-> @@ -1234,6 +1247,78 @@ static int qrtr_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
->  	return rc;
->  }
->  
-> +static int qrtr_setsockopt(struct socket *sock, int level, int optname,
-> +			   sockptr_t optval, unsigned int optlen)
-> +{
-> +	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
-> +	struct sock *sk = sock->sk;
-> +	unsigned int val = 0;
-> +	int rc = 0;
-> +
-> +	if (level != SOL_QRTR)
-> +		return -ENOPROTOOPT;
-> +
-> +	if (optlen >= sizeof(val) &&
-> +	    copy_from_sockptr(&val, optval, sizeof(val)))
-> +		return -EFAULT;
-> +
-> +	lock_sock(sk);
+On 18/10/2024 21:22, Dmitry Baryshkov wrote:
+>> +static struct gdsc ife_1_gdsc = {
+>> +	.gdscr = 0xa004,
+>> +	.en_rest_wait_val = 0x2,
+>> +	.en_few_wait_val = 0x2,
+>> +	.clk_dis_wait_val = 0xf,
+>> +	.pd = {
+>> +		.name = "ife_1_gdsc",
+>> +	},
+>> +	.pwrsts = PWRSTS_OFF_ON,
+>> +	.flags = POLL_CFG_GDSCR,
+>> +};
+> Shouldn't IFE GDSCs have titan_top as a parent?
 
-This seems unnecessary to me.
+Ack, usually, this looks wrong.
 
-sk_setsockopt(), do_ip_setsockopt(), and do_ipv6_setsockopt() do not
-hold lock_sock() for assign_bit().
-
-Also, QRTR_BIND_ENDPOINT in a later patch will not need lock_sock()
-neither.  The value is u32, so you can use WRITE_ONCE() here and
-READ_ONCE() in getsockopt().
-
-
-> +
-> +	switch (optname) {
-> +	case QRTR_REPORT_ENDPOINT:
-> +		assign_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags, val);
-> +		break;
-> +	default:
-> +		rc = -ENOPROTOOPT;
-> +	}
-> +
-> +	release_sock(sk);
-> +
-> +	return rc;
-> +}
-> +
-> +static int qrtr_getsockopt(struct socket *sock, int level, int optname,
-> +			   char __user *optval, int __user *optlen)
-> +{
-> +	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
-> +	struct sock *sk = sock->sk;
-> +	unsigned int val;
-> +	int len;
-> +	int rc = 0;
-> +
-> +	if (level != SOL_QRTR)
-> +		return -ENOPROTOOPT;
-> +
-> +	if (get_user(len, optlen))
-> +		return -EFAULT;
-> +
-> +	if (len < sizeof(val))
-> +		return -EINVAL;
-> +
-> +	lock_sock(sk);
-
-Same remark.
-
-
-> +
-> +	switch (optname) {
-> +	case QRTR_REPORT_ENDPOINT:
-> +		val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
-> +		break;
-> +	default:
-> +		rc = -ENOPROTOOPT;
-> +	}
-> +
-> +	release_sock(sk);
-> +
-> +	if (rc)
-> +		return rc;
-> +
-> +	len = sizeof(int);
-> +
-> +	if (put_user(len, optlen) ||
-> +	    copy_to_user(optval, &val, len))
-> +		rc = -EFAULT;
-> +
-> +	return rc;
-> +}
-> +
->  static int qrtr_release(struct socket *sock)
->  {
->  	struct sock *sk = sock->sk;
+---
+bod
 
