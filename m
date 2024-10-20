@@ -1,143 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-35137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF0E09A537F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 12:40:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD8759A5408
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 14:41:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FF001F2263C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 10:40:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F3BC1F2220B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 12:41:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D19B618E35D;
-	Sun, 20 Oct 2024 10:40:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 42EFD1917E6;
+	Sun, 20 Oct 2024 12:41:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HZIS2PZh"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rskqu2BG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A2012F38B
-	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 10:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A32C82866;
+	Sun, 20 Oct 2024 12:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729420840; cv=none; b=eWGN0TnFvmmfM08oLq+wOgdDeLRzT3zJ1fKn91pM9yJ6YeI9g7fv6JbgpkoM+Jn9ziUCMHkwFDrfHgpxaqyfhpAXWXHXYARKHcT116WeBKIWgbMoyh7t+shbhtHERpgIDeFMwhoOEJVBWm9nN7VYCRRJe457PQnRZYo59n4pesE=
+	t=1729428069; cv=none; b=f5iMalkB8NYBmWspoPC7GzgvAsPPBCNktSpO/dOkgn4CUWdghsr34oWchCA56TVN47jgaqcIhU5MN6547nAJXNX0uINMz8c86yytSUsr4Lu3BJrpm7xFFt+uSXXqpyo1VpBB4cDuTwMn+8aurq7aHXH1pDcQcXa952IqdeV2fUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729420840; c=relaxed/simple;
-	bh=e6Zx+YooRSyCvyeXZGGGQhAAfGoOuT2cf3p2UYYwbfE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ug72X+dvv/i820PSRaGGSlWTlxTnM/tqLmHejX/qXA3ZqYC9Mtppi5dJ5vHvMflUyxmPaHwirAm6j6x994yn5iA6qnsbbqtyMLhvZq5FEIXO7+UDUFDfIjojP2yCLGg2Sy4/SUELiO46n8339ET0gPOK2jWdL28v1emBZ7GE11g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HZIS2PZh; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2fb58980711so36498891fa.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 03:40:37 -0700 (PDT)
+	s=arc-20240116; t=1729428069; c=relaxed/simple;
+	bh=Baade9IKPollAouHiEUvWPoWWKIQzZxCSNVwIWgogSg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t/g+CIw44FQ+yQinWVmxRqsKh0SaQiktKi80EhslNPJTAlAM2P3DGO8g1wiR89VpXWpVIwMsDFU+rX9aucli504Dt/iaLTnxYYjuPpv4CEw8BygGt9KDbfFY59XqToQa5LinrzdNcryUjqBoMzH0KAS7rAc6OUlPvDW78/gzMFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rskqu2BG; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4315e9e9642so27304975e9.0;
+        Sun, 20 Oct 2024 05:41:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729420836; x=1730025636; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Big7GRyU+UAfruB67dvDyIF5xLwYENedGA5XWw38ccM=;
-        b=HZIS2PZhnWzv4IJs7BMXfbMz0ge8OFJmcUmGx+y3mme3E0yxQt4v4tFNl65ypfnKzA
-         0iIqzZ/U3ioS4KHo6/iwfuW30Uum13VCOC9JJismiU0h56/B67PKHBy1VzzzRRWy7YUD
-         ZpfuccJ9nMzIUWf+OOmlEf6gw5omZKZzAOJGyw8g0HavQs8sY3CF3LglMa+uaNN3nVKo
-         7M1UO4vZp/7OufcCYdTHZYCffcbmdmTMn/6oUW9FD45RThOUInALO66x8EdUdE/twcHT
-         Dkk2fB3bDJNA3GOMPZwiAkkjrP8gn/SMethvC/MlQDIOns2R1ZcEl5N10hRTZwXSV+l5
-         qKhQ==
+        d=gmail.com; s=20230601; t=1729428065; x=1730032865; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TOiYzcydyONfO3p9U5vZxO4Orz89dL+ERRC773edJCg=;
+        b=Rskqu2BGcLEv+9Iri4d0ajEQzm3NvsZQLbkU3x673uWlc+5nqcGxrDX6ilxYx2WRCD
+         duz1dP+jPvp7cqhMBepz88buBgPIM///C64GPw/TnAlC+HtLERcqn9ZPSvc2azz95lPG
+         4fpTwA66zRnw0IYsApq9cpZCi55VSFxWtbpPVpc1bd8lShfPc8uRske+EyEpHg0CsPZY
+         xtZJDP1r2RpVxTx5X+3ebnzR5aOOKfcYfEL6FELsYkw0JQtCLCChJGEs2ea8w1UtKNJV
+         B6SbxlUINozMtHAWlJsp292p28KG0INgepd+Wa2BZJXWsNBihqP0D//GyhhWdWf8ZsLM
+         H06g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729420836; x=1730025636;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Big7GRyU+UAfruB67dvDyIF5xLwYENedGA5XWw38ccM=;
-        b=DSfCLolzMcA5u022XKbVf5SbZG1I0UuM6yl9f8E3nBGWTKHSz8a6jlbZo9cmurdH4o
-         0SMUBHOufl+96TfnMhzYz7joeWgQvMV3UazkK+BmmrF36YLoHjtWeNT25muCL8HQDXaa
-         DE7Ni0wGzSMl0BdASsonIDhXbge/Z6hdNEUuO8dRbVBXplMkfjQrbRmKCgqoCsQGs4hg
-         FwbBFuW+io4U3hyfWAbvzrQdfRohfPOi/4GpXSXi0R9e1RhG9z7LNlcl/M/hLN0rSnAc
-         IGwbatfSXA2sL3V8DDP3NkfvtlACgk4U+BF6xpYAj3KV+ra5yckpH3PBqNdxfhhRuVuq
-         xsXA==
-X-Forwarded-Encrypted: i=1; AJvYcCWb9UOVCWt7uKwFzxMaMEafmRKFkAkwqhp1NHyOtVkAKxh9jF6i4gM7Za10f2LL8tJ83EXlQOGjDcoOi8CD@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWt4lqkn6CrDBO6uR+yAr03NMOyzSumvwWw09AKSZvDeDdJ5/X
-	BqMSWyp1Lun+v3YpsRcfIgP7uHKMtRzlUl2WecaKZ6Zp08EnuldlfYjdvx0SqFA=
-X-Google-Smtp-Source: AGHT+IF7RhC0ss4D/GUbjaVcpKS0Kwjy6EO8ydxnPbYU8S1RzlzA0UxTIbmGS1nJrZQfTQTYhR/O+Q==
-X-Received: by 2002:a05:651c:1986:b0:2fa:bb5d:db67 with SMTP id 38308e7fff4ca-2fb83260f85mr36077151fa.32.1729420834784;
-        Sun, 20 Oct 2024 03:40:34 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ad91535sm1978321fa.72.2024.10.20.03.40.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2024 03:40:33 -0700 (PDT)
-Date: Sun, 20 Oct 2024 13:40:30 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH] usb: typec: qcom-pmic-typec: fix missing fwnode removal
- in error path
-Message-ID: <nsmpyy736kfdn5h727bfgfd6lufecyi5kz6kfiyzndgz3xiei5@7uzrrve4q3fb>
-References: <20241019-qcom_pmic_typec-fwnode_remove-v1-1-884968902979@gmail.com>
+        d=1e100.net; s=20230601; t=1729428065; x=1730032865;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TOiYzcydyONfO3p9U5vZxO4Orz89dL+ERRC773edJCg=;
+        b=nMLMEV+D24pE9ixLPds+vjeUm0B7A1we2O/x0ems9wBvnEuY9+ZPIqIB1GoWUeF3rW
+         ufVdtVM7S4Dq5hCEEWMfqZ46329ICZN8HnLvlxW3gVGhjy3YhBKISyXL+jZX0YTmy+DS
+         qHr5mIyt1a4iNLL2+7xtuiIvRlExQ6Jes3Ra+i6muv6R/eyvpXcFCsxAcBjRzVQlGMbz
+         DgUbpdsE/iINq0FVSuqBHzR6wwqBaARg6FqXnIL3XL+Z0oFf/aOTf5rN95p/kPID3oEA
+         M2APby63BEAEIsnAj6rGl9RpCs2wbAR9qE9UTfGOB7AaJibvyWIMmNlW2ipGlx5dzBg8
+         fD1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVhkkufeyL1sCv34A197trN9u4HMHasi4J3nLl8F9IKuI9bd6FEJz+iF/sq/MXxWMM3m7i5pe57BwVB3cmQ@vger.kernel.org, AJvYcCWEr69P0XFRC884KvuYiNlYlq/scGUpcdDRKkWurUHWJTK5QJFYk+tNFEp5s7Ge/TKW1J0ZIUDKcQZB@vger.kernel.org, AJvYcCWawxZwcXwkRvZgqFfJkQbWNTK6knFQucndk4OYiGddPYhTYr6Tp8AzevWuK4zeeEEbinlvMgwb66mjrF6L@vger.kernel.org, AJvYcCXsZDYr0Jp4V5u84tSKILt8pVOAWjd1P82ah1OHKKckKHHfPM0Z4ExlrXn/0EP5A2lXZjMIDL3D@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfrrBTv7ixNhTf4f8R5/EQ3kW7h6nCsJmmYhai8wNyVdCQmjcW
+	S7pqJ+Gr4DLud7rQ/qrKM5mcBfuAYg7eMjVMvXMuakGZjWPSjCgw
+X-Google-Smtp-Source: AGHT+IEB2QSrzuka0jaj1gBdAqECmptGTd+307mQ5Q9pRfa1hiWkZsRT7Z1FpumQNgTVmo2czr5AHA==
+X-Received: by 2002:adf:f092:0:b0:37d:395a:bb7 with SMTP id ffacd0b85a97d-37ea21c75d8mr5397334f8f.31.1729428065071;
+        Sun, 20 Oct 2024 05:41:05 -0700 (PDT)
+Received: from ?IPV6:2a02:8389:41cf:e200:5fe4:91f7:fa4f:9c21? (2a02-8389-41cf-e200-5fe4-91f7-fa4f-9c21.cable.dynamic.v6.surfer.at. [2a02:8389:41cf:e200:5fe4:91f7:fa4f:9c21])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4316f57fbb5sm22505435e9.17.2024.10.20.05.41.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 20 Oct 2024 05:41:04 -0700 (PDT)
+Message-ID: <5355d837-4777-40cf-8a9a-08c9509d3fc5@gmail.com>
+Date: Sun, 20 Oct 2024 14:41:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241019-qcom_pmic_typec-fwnode_remove-v1-1-884968902979@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] usb: typec: qcom-pmic-typec: fix missing fwnode removal
+ in error path
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20241019-qcom_pmic_typec-fwnode_remove-v1-1-884968902979@gmail.com>
+ <nsmpyy736kfdn5h727bfgfd6lufecyi5kz6kfiyzndgz3xiei5@7uzrrve4q3fb>
+Content-Language: en-US, de-AT
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+In-Reply-To: <nsmpyy736kfdn5h727bfgfd6lufecyi5kz6kfiyzndgz3xiei5@7uzrrve4q3fb>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sat, Oct 19, 2024 at 11:10:51PM +0200, Javier Carrasco wrote:
-> If drm_dp_hpd_bridge_register() fails, the probe function returns
-> without removing the fwnode via fwnode_remove_software_node(), leaking
-> the resource.
+On 20/10/2024 12:40, Dmitry Baryshkov wrote:
+> On Sat, Oct 19, 2024 at 11:10:51PM +0200, Javier Carrasco wrote:
+>> If drm_dp_hpd_bridge_register() fails, the probe function returns
+>> without removing the fwnode via fwnode_remove_software_node(), leaking
+>> the resource.
+>>
+>> Jump to fwnode_remove if drm_dp_hpd_bridge_register() fails to remove
+>> the software node acquired with device_get_named_child_node().
 > 
-> Jump to fwnode_remove if drm_dp_hpd_bridge_register() fails to remove
-> the software node acquired with device_get_named_child_node().
-
-I think the fwnode_remove_software_node() is not a proper cleanup
-function here (and was most likely c&p from some other driver). See the
-comment in front of device_get_named_child_node().
-
-Please add another patch before this one, replacing
-fwnode_remove_software_node() with fwnode_handle_put().
-
+> I think the fwnode_remove_software_node() is not a proper cleanup
+> function here (and was most likely c&p from some other driver). See the
+> comment in front of device_get_named_child_node().
 > 
-> Cc: stable@vger.kernel.org
-> Fixes: 7d9f1b72b296 ("usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE")
-> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-> ---
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> index 2201eeae5a99..776fc7f93f37 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> @@ -93,8 +93,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->  		return -EINVAL;
->  
->  	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
-> -	if (IS_ERR(bridge_dev))
-> -		return PTR_ERR(bridge_dev);
-> +	if (IS_ERR(bridge_dev)) {
-> +		ret = PTR_ERR(bridge_dev);
-> +		goto fwnode_remove;
-> +	}
->  
->  	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
->  	if (IS_ERR(tcpm->tcpm_port)) {
-> 
-> ---
-> base-commit: f2493655d2d3d5c6958ed996b043c821c23ae8d3
-> change-id: 20241019-qcom_pmic_typec-fwnode_remove-00dc49054cf7
-> 
-> Best regards,
-> -- 
-> Javier Carrasco <javier.carrasco.cruz@gmail.com>
+> Please add another patch before this one, replacing
+> fwnode_remove_software_node() with fwnode_handle_put().
 > 
 
--- 
-With best wishes
-Dmitry
+That is right, it was probably copied from a driver that called
+fwnode_create_software_node() to initialize the fwnode. I will replace
+it in the probe function as well as in qcom_pmic_typec_remove(), where
+the fwnode is again released via fwnode_remove_software_node().
+
+Thanks and best regards,
+Javier Carrasco
 
