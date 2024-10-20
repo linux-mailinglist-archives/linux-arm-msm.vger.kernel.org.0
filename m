@@ -1,138 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-35145-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A8B19A55E0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 20:33:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7D1E9A568D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 21:53:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1ACB4281A01
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 18:33:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E7C6D1C250B4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 19:53:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35FE1194A54;
-	Sun, 20 Oct 2024 18:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84650195980;
+	Sun, 20 Oct 2024 19:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VMKnxGO8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Zb50/3Q+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99FA1946B8
-	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 18:33:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC82D194C92;
+	Sun, 20 Oct 2024 19:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729449226; cv=none; b=nZlGSjvEWbdXlNm5SIPHQNHxE1Hy9hzenGivTuHX90DkaYS4n6TyiTH1kDltYw3Zy2oxkytDKWmN5zNppjniLMvab62NToUHgMCb/YjbdNvBedzRLbmMO23I1hp5t6e3sNWGaDkV81jRaTBQ8F+tWzvSY3/7I3zTWY1IK95SxoA=
+	t=1729454001; cv=none; b=RS0uq1UC+c1WcysKI5iT3nf4/m7y4NBND/3AfhgeTiqhprRzjeFTNe481ZyL+i7pLji1aa0KxL+JIQfCfErdNoFCq0Sz+kdUDB01rkF5JYlkozfByv4/ueec5NabVH7mNdWxKAPQIzAXY5jRhinPDvpVt7hGfCvyIVjN05pgwPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729449226; c=relaxed/simple;
-	bh=Nqe7c3elxaoL3Ducy+32RHiGEnA48JgHc3EXv6VkdpE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mCQCc57OshNWFYgDdaQYM3FC1T0pnPai1EpHdCZHbWXAEErXIZqdVEsZ7w51+lrQGz95jXPbWLAKd28EHqknbqZ3S9g4T7k1c3VSX4NmtyyDblJzD/BzE7EiX8tDzTjPpt0eaAVAw7dv9mQ+mo315jg5HGs+tsiP7XJ8zcEHJQw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VMKnxGO8; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a9a2209bd7fso505164266b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 11:33:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729449222; x=1730054022; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=T994nC3yKb+Vde4eYi7s6bjrifvvScOE1gioC/lb0eI=;
-        b=VMKnxGO8fsq1xBCrQ+0wasvHT5H7XG6pve9Xc0r/krEb5vlzjesm5dEBF1JHcLKHWd
-         3TB+abDS/tQLH5K1jMQjJm08Eyu4io8vZWFqutuH/S3RzHL7HJnW3EbgY+pFvz+0gpMZ
-         crkdqFwaymXwD2R5cS03j6VR72NZl18wyS+7cB/A2ZxTI5GrvvmSPukWUraPRrDh5fkN
-         WeqjZmxwbqq+5stne/iAZ1RVTR3N/fEb9+CmhGKXqvBKZ+cQuyw9FtsFzF0LxZNZQgXV
-         URhpMkVWFElQPkNgo8vDlQ4f1tKgXarwo3w4mSCkyC+9n+TQzuSivA2BFpD6zV65Gxlc
-         UQQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729449222; x=1730054022;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T994nC3yKb+Vde4eYi7s6bjrifvvScOE1gioC/lb0eI=;
-        b=LmziTuaQcFo+5k1hCnA4EtYUh+sq2GFUqGYSz0fo6BBHsNIp8/BgIUapt+uxnKZwiO
-         LvGbev2Aq5W/jLylsAGNmr8a689F2FhNUSoNsJNrsXIxh+3DpwcY4AW/cm3/WgE0F8Vj
-         jmdwWVFWh+A0SScrrEV1jBHf03psFNWXZ7LKKyByD9QRgnTaqk6gXWNmZ/jNmfxKL+2c
-         pCdsEDUQMbj6+J2Vr/ycQ6hbszbARhA6KRhlML688bD5qGbRvaMWij8M/UVDiF/v0ax9
-         i+sSS+MGfoaSYpYjiyZIEFzTn40iKdh3WZrTE1tUHnNWwKiDTmqJQGXTubR9XgJgdZmB
-         kr9g==
-X-Gm-Message-State: AOJu0YzSCzFPBQB0sWgq24NaaJNQesi76zYkub5+z1tU+s452RyH5CEr
-	ZXpDDyeEcnAlpK1mIQooAWWS8ESrQJi8pjnkrzkaZewe4mXpzk0B8UA880LJw93xh4xWUTgEq1J
-	aD6E=
-X-Google-Smtp-Source: AGHT+IEW/bkiKIeYv00wJX7unb93upEKkXSwIi/EpqTz5JnI6FiznuZjmlrieCUDHdOFpHaIdx5xRw==
-X-Received: by 2002:a17:907:3dac:b0:a9a:bed:e564 with SMTP id a640c23a62f3a-a9a69c9ea18mr1000571966b.48.1729449222014;
-        Sun, 20 Oct 2024 11:33:42 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a9159a208sm113360266b.206.2024.10.20.11.33.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Oct 2024 11:33:41 -0700 (PDT)
-Message-ID: <2c5d3bc2-b2b2-430f-8387-70be8a53c14b@linaro.org>
-Date: Sun, 20 Oct 2024 19:33:40 +0100
+	s=arc-20240116; t=1729454001; c=relaxed/simple;
+	bh=NUl5wLKfXrlmAITdUKRsm1jobjctTNRygTvb2ezjcr4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=umqnRuk+g6svxKdzF907CTfc87ZnLqHukci6+A0sN0y7k+fr5/iRDHNXPoDFUBkD8Rrs8LS0v3HGW9Z/82U5WVCfKhrLJACaSTi8VPxqeyLjZ8nisVLO2wQhlGhpcnGPY/+riNshPeV7wvWUWOVQ+HXJLs6tv0UfXSqGZcgyoGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Zb50/3Q+; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729453999; x=1760989999;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=NUl5wLKfXrlmAITdUKRsm1jobjctTNRygTvb2ezjcr4=;
+  b=Zb50/3Q+xQ9dioyQnBdpdIQDVXy6kPlFfDtVSgGaFbFB+rLgPGskZEnP
+   ODhCFAN6pg6LTofokMnjMPeVKEREWn5gLnmhuhCjhqeuaSc/Jp6yp3LKY
+   IJ1D+SJmqeNGN/KPyNcg4evsFV2BRkky8glCBLY6j8bc6Q7ZzgVVGcCP9
+   vftvLrBEQLThqgIjFHa7u1yctKVmntZfBPNZSO+TxGswtvOMM7gv3t5/+
+   SypeR3UmHr+uQBfyNPA0v66MIdvNuUqL5EVSFZ+yAbrJtDmRcFx9NadXi
+   BbFFHKCGHr5+NNd+zFtsdC2sj9QGrPEgQpNvwwa/pp+6IrX5ZTu2Om3vp
+   w==;
+X-CSE-ConnectionGUID: /4bZzvmVS52N8GCtJzwwvA==
+X-CSE-MsgGUID: JDa8pBFhS/qRfxwvOy5L5Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11231"; a="16557546"
+X-IronPort-AV: E=Sophos;i="6.11,219,1725346800"; 
+   d="scan'208";a="16557546"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Oct 2024 12:53:18 -0700
+X-CSE-ConnectionGUID: Tc2MKGXrSiunSGsS93Nz/w==
+X-CSE-MsgGUID: uK0e0n9VTDK3tsFpNpMgHg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,219,1725346800"; 
+   d="scan'208";a="78989802"
+Received: from lkp-server01.sh.intel.com (HELO a48cf1aa22e8) ([10.239.97.150])
+  by fmviesa007.fm.intel.com with ESMTP; 20 Oct 2024 12:53:12 -0700
+Received: from kbuild by a48cf1aa22e8 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1t2bzC-000Qkv-01;
+	Sun, 20 Oct 2024 19:53:10 +0000
+Date: Mon, 21 Oct 2024 03:52:23 +0800
+From: kernel test robot <lkp@intel.com>
+To: Elliot Berman <quic_eberman@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+	Konrad Dybcio <konradybcio@kernel.org>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Melody Olvera <quic_molvera@quicinc.com>,
+	Shivendra Pratap <quic_spratap@quicinc.com>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: [PATCH v6 5/5] arm64: dts: qcom: Add PSCI SYSTEM_RESET2 types
+ for sa8775p-ride
+Message-ID: <202410210333.KGHmzwGN-lkp@intel.com>
+References: <20241018-arm-psci-system_reset2-vendor-reboots-v6-5-50cbe88b0a24@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] usb: typec: qcom-pmic-typec: use
- fwnode_handle_put() to release fwnodes
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Caleb Connolly <caleb.connolly@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>
-Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20241020-qcom_pmic_typec-fwnode_remove-v2-0-7054f3d2e215@gmail.com>
- <20241020-qcom_pmic_typec-fwnode_remove-v2-1-7054f3d2e215@gmail.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241020-qcom_pmic_typec-fwnode_remove-v2-1-7054f3d2e215@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241018-arm-psci-system_reset2-vendor-reboots-v6-5-50cbe88b0a24@quicinc.com>
 
-On 20/10/2024 13:56, Javier Carrasco wrote:
-> The right function to release a fwnode acquired via
-> device_get_named_child_node() is fwnode_handle_put(), and not
-> fwnode_remove_software_node(), as no software node is being handled.
-> 
-> Replace the calls to fwnode_remove_software_node() with
-> fwnode_handle_put() in qcom_pmic_typec_probe() and
-> qcom_pmic_typec_remove().
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
-> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-> ---
->   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> index 2201eeae5a99..73a159e67ec2 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> @@ -123,7 +123,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
->   port_unregister:
->   	tcpm_unregister_port(tcpm->tcpm_port);
->   fwnode_remove:
-> -	fwnode_remove_software_node(tcpm->tcpc.fwnode);
-> +	fwnode_handle_put(tcpm->tcpc.fwnode);
->   
->   	return ret;
->   }
-> @@ -135,7 +135,7 @@ static void qcom_pmic_typec_remove(struct platform_device *pdev)
->   	tcpm->pdphy_stop(tcpm);
->   	tcpm->port_stop(tcpm);
->   	tcpm_unregister_port(tcpm->tcpm_port);
-> -	fwnode_remove_software_node(tcpm->tcpc.fwnode);
-> +	fwnode_handle_put(tcpm->tcpc.fwnode);
->   }
->   
->   static const struct pmic_typec_resources pm8150b_typec_res = {
-> 
-Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Hi Elliot,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on 98f7e32f20d28ec452afb208f9cffc08448a2652]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Elliot-Berman/dt-bindings-power-reset-Convert-mode-properties-to-array/20241019-034308
+base:   98f7e32f20d28ec452afb208f9cffc08448a2652
+patch link:    https://lore.kernel.org/r/20241018-arm-psci-system_reset2-vendor-reboots-v6-5-50cbe88b0a24%40quicinc.com
+patch subject: [PATCH v6 5/5] arm64: dts: qcom: Add PSCI SYSTEM_RESET2 types for sa8775p-ride
+config: arm64-allmodconfig (https://download.01.org/0day-ci/archive/20241021/202410210333.KGHmzwGN-lkp@intel.com/config)
+compiler: clang version 20.0.0git (https://github.com/llvm/llvm-project bfe84f7085d82d06d61c632a7bad1e692fd159e4)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20241021/202410210333.KGHmzwGN-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202410210333.KGHmzwGN-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi:504.12-13 syntax error
+   FATAL ERROR: Unable to parse input tree
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
