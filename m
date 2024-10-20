@@ -1,95 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-35143-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35144-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47BE89A5444
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 15:16:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 555779A55D7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 20:31:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A7590281C8A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 13:16:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7176D1C20DEA
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 20 Oct 2024 18:31:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25E2A19259F;
-	Sun, 20 Oct 2024 13:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE84719538D;
+	Sun, 20 Oct 2024 18:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SRZyw5aJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mY+Kty5/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6582183CA6
-	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 13:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076B419415D
+	for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 18:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729430160; cv=none; b=tqjRbsKPAUE9G32y504tIqBgumCmfX6nUoS9ZXQwwB4H6m4RXoD9f1c94VwCfrhjoruWbicJm/fku2g2m7hw439uhzeg69oI2H7dsp5OaC4krqunSPU/kNBte6ncgoLVyMA9Qd6ZtljcjxUByl1haRvkTYqjw/3SNcThQo8ToSs=
+	t=1729449058; cv=none; b=OYwvSwi6Vjftu9qxOJdTi9/5TSGXaUFjJwDibSUaaYoutX3+CZpskKGxJbB2GBxaAzL6vhzVyaTJ3D94dNOxKyynZ20aJiuRN2qUs+4weLhbBBU6iPtuDOAqZfFlj1Go1GOefkq5tPiH2xaENfAotBAoUqPVGw0IAIlsAbGG5LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729430160; c=relaxed/simple;
-	bh=uKgjva+0ctCwkivt4M+aYeVvXG0QvbFTOwa82+8Ezoc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YwIpF3XFBr1Va5N3nPjrI7fqZJJsDFcMi5m0xywTOF3IaaQC8r3LQqjs4GE50mlWetGgo0u/gy1ir2RnIoZTO3zzqjC2vPlroI3uH/TIr5WmWe/5FODC5vYS3pGvY2rb5KGHP1E9bNl6bwZrPPh9ylFYuLk2pmpelxNg7PWF5Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SRZyw5aJ; arc=none smtp.client-ip=209.85.167.51
+	s=arc-20240116; t=1729449058; c=relaxed/simple;
+	bh=64HPjqZKC/4B2OBJyRzQPoNGhFwzV2vT+MOg0udOYmU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=cOyDQFaKyuht9pIF76Ewre5KKrwDAZvRUuvUylLqCyuauk69UCUT9DOhPToRuQE8eYu1gDIsrEC5uhxJdhZjKU2810MsrZ0dIL8JdqpRXRxkU9l8UDUP6C4CICzt2qRog10gmZ2YIPBK6yPXlSsC6yCJp0eshgl0WU4c8hNCr7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mY+Kty5/; arc=none smtp.client-ip=209.85.218.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-539f72c8fc1so4013230e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 06:15:57 -0700 (PDT)
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a9a0ef5179dso548238966b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 20 Oct 2024 11:30:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729430156; x=1730034956; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=SYwZIeGEIc7VnkIRXpz4d+bHytScBmaxexHgM4ooyL4=;
-        b=SRZyw5aJZwxgCJteX331J+Ygei7AymiR84aR8o5Q7YN5BGBacHK88kqyr5ieXzFx+s
-         GKb5nMNlUYnw+nNs4GgIkY1mp52Zt+J3HhYPDvjB3+NKW4VBg9GTeLDl2p7j+xTxuN+c
-         5LvREnzVK8DDp5X3biwTPEs45WqYUpRoglTr/z3OPyZw4v0L3t4OxypzvIKQjMJC2VmS
-         7InkRCQ7CLwckxh1xlQJJbKoNL0mhdlwblfhXe6RxkKU/4A0IuDQDaOrdYWfqr7PxK/z
-         EdUB2kEHtB0JVJCsMk4LCwNuhF9hEZDPRpuH1PiWwR+ZXq92v3mjtckhGFwwM8PFNOKv
-         P1Nw==
+        d=linaro.org; s=google; t=1729449054; x=1730053854; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ycrwr9FEnksI3zMaAOZn7S7AXHWQh2BKeqpuuGUtii8=;
+        b=mY+Kty5/+fKhKbbCDrV+dBoVrK5NTc3eMd6VIgGvNzyzK02QZFeK7U/F48BXgCWJ6a
+         utxC4DTVmZ/kq9cQdFdBzfjv3HvWN9gk/E9vND6I98hp1q361uJcyfO96+WuXdI+yit3
+         o6H1s89S+1VpyiVe1HKQxdZ97ycDbvOG53lButFjoa1TXPXaeHVsEOg+QjcBXOCuKhHM
+         u3B6HWOZgPtrg0ocagEe9AwCRafV+GFBCzmFuTO9dUoB0h9uh4nQJ/IcFCE15uQVbAoY
+         /uR42f3YCGhPNlxN1Iz2kH5slqycF7AtIo1DVKpJjH24t6XVp1nRz+40gEsYi7W8u8TH
+         c+nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729430156; x=1730034956;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SYwZIeGEIc7VnkIRXpz4d+bHytScBmaxexHgM4ooyL4=;
-        b=cvDtJekLr9DKTzjJ7hdj32+1cSVdNMpMzsBbKCHPROMtBo9SmFnWMLl90ZysVJ3YWD
-         +QMrrViCuhntX7u9fJcOhktxVeQ8Gqol0Ms6WHy+YD2a07CNKCEM7BaaKHFrETKV/4sE
-         Q3xlD2PuAm7TaOk5WWJgT7KljlSTbI3alt4/11Qy0XOEkO/NUHAoc9yWIGmVK10isPtu
-         kjaF549s3JXcGiY9iptRrSkIyDZ6h5cDhoEgxDzTcTkEzYaHfOXFpCZSQD+affSPUPAO
-         KyF+1DtE+vagvIF5DlEZGbamX9EzUfFG05bwgRcpnQxPsFmWpVSHSiGk955077NGgBs4
-         akOQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVrE+f5hL9amDYlD+EstjB5+6bQ750nYpIysM4Nj5Pa1lK7Q8L7Tly/S3GjJGqTCKxOR5IWSOQ6fSxRQ8cj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyX1eheZnpVX3x4kSaBK2VA/sTpuPsPhoyad4yBH+XNSN8rT5Wb
-	JT5iFUe3c6K9f3nIQXsFSMOxsgLF5Ef3LgpoojTsvI1ySGN2wRHmM0qRzczrUBo=
-X-Google-Smtp-Source: AGHT+IELxOsBj0URcEerkg6VeNl2eSHEE8fsdZdOVwEJm1At+CtbZCT/15/LMiNV6gF6vzcZLfV0qA==
-X-Received: by 2002:a05:6512:2399:b0:539:f7de:df6a with SMTP id 2adb3069b0e04-53a15459fc3mr4475921e87.52.1729430155912;
-        Sun, 20 Oct 2024 06:15:55 -0700 (PDT)
-Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--b8c.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::b8c])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a223e55f5sm220175e87.34.2024.10.20.06.15.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Oct 2024 06:15:54 -0700 (PDT)
-Date: Sun, 20 Oct 2024 16:15:53 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Caleb Connolly <caleb.connolly@linaro.org>, Guenter Roeck <linux@roeck-us.net>, 
-	linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] usb: typec: qcom-pmic-typec: fix missing fwnode
- removal in error path
-Message-ID: <hw2m5c5wakwm4jcihammegpuydm3cbhxyzaln4p57w6ybkaaea@fx6thktwjuty>
-References: <20241020-qcom_pmic_typec-fwnode_remove-v2-0-7054f3d2e215@gmail.com>
- <20241020-qcom_pmic_typec-fwnode_remove-v2-2-7054f3d2e215@gmail.com>
+        d=1e100.net; s=20230601; t=1729449054; x=1730053854;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ycrwr9FEnksI3zMaAOZn7S7AXHWQh2BKeqpuuGUtii8=;
+        b=czxAQyahz8cJG/1RyieJMwePfD2vG2dP3VAm4XNtSyw8FLIBVI0pGOaWkeQh26l4Wy
+         Ix3jSy4q1tucqC6cKJ1WY/sdPbusmZLGPWDUaM6jA874XepH3i8zpLFLqCiWm9dY/YWG
+         ufzk2qsXZjGCta2z1dWyiPeGbEWx4c8dlnwhd2K9ro7ths9OEcUsq1V4sGXlVX8Hkw2U
+         0PwuVAKCCt4HP06i6A9s4yBukaDetk/2OHd6MYtH4EXhPwDsaU15h1xdffQG2dfH9CBO
+         f4+iT1rpmt8sR7p3Ap3rSL3p4NNrq9AdqrZMgGHgCc3HtKrYtsObj5V6Al+3ECBqaRdK
+         oxlg==
+X-Gm-Message-State: AOJu0Yx4CCFJlNPfHn1fKXkF/AxbmaLCshzYBpyYBPG8U/+6iPBXnhZV
+	U7Mimn6I1Pz9CLDrAlFPa5d67gRJCt417jIv4MMbV+imvT0pmzNjuHOdSxXRFoQ=
+X-Google-Smtp-Source: AGHT+IEeZYETzTHYFSe/ch8+Hmv6kdhp1/PipGST6DmWGt8Be+OA6K7Lvq/jEMzNmd+G6ckMTQ/1eQ==
+X-Received: by 2002:a17:907:9623:b0:a9a:230b:fb5e with SMTP id a640c23a62f3a-a9a69868cb2mr978299866b.4.1729449054068;
+        Sun, 20 Oct 2024 11:30:54 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a913706b2sm113778566b.121.2024.10.20.11.30.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 20 Oct 2024 11:30:53 -0700 (PDT)
+Message-ID: <abe44e99-7f99-4912-b94a-7856b3104627@linaro.org>
+Date: Sun, 20 Oct 2024 19:30:52 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/2] usb: typec: qcom-pmic-typec: fix missing fwnode
+ removal in error path
+To: Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Caleb Connolly <caleb.connolly@linaro.org>,
+ Guenter Roeck <linux@roeck-us.net>
+Cc: linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org
+References: <20241020-qcom_pmic_typec-fwnode_remove-v2-0-7054f3d2e215@gmail.com>
+ <20241020-qcom_pmic_typec-fwnode_remove-v2-2-7054f3d2e215@gmail.com>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 In-Reply-To: <20241020-qcom_pmic_typec-fwnode_remove-v2-2-7054f3d2e215@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, Oct 20, 2024 at 02:56:35PM +0200, Javier Carrasco wrote:
+On 20/10/2024 13:56, Javier Carrasco wrote:
 > If drm_dp_hpd_bridge_register() fails, the probe function returns
 > without removing the fwnode via fwnode_handle_put(), leaking the
 > resource.
@@ -101,13 +105,26 @@ On Sun, Oct 20, 2024 at 02:56:35PM +0200, Javier Carrasco wrote:
 > Fixes: 7d9f1b72b296 ("usb: typec: qcom-pmic-typec: switch to DRM_AUX_HPD_BRIDGE")
 > Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 > ---
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
+>   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 > 
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> index 73a159e67ec2..3766790c1548 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> @@ -93,8 +93,10 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>   		return -EINVAL;
+>   
+>   	bridge_dev = devm_drm_dp_hpd_bridge_alloc(tcpm->dev, to_of_node(tcpm->tcpc.fwnode));
+> -	if (IS_ERR(bridge_dev))
+> -		return PTR_ERR(bridge_dev);
+> +	if (IS_ERR(bridge_dev)) {
+> +		ret = PTR_ERR(bridge_dev);
+> +		goto fwnode_remove;
+> +	}
+>   
+>   	tcpm->tcpm_port = tcpm_register_port(tcpm->dev, &tcpm->tcpc);
+>   	if (IS_ERR(tcpm->tcpm_port)) {
+> 
+Acked-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
