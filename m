@@ -1,205 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-35158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C0C69A59CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 07:41:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50AF29A5BBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 08:55:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59F61B22749
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 05:41:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 118912825B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 06:55:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B7A2193428;
-	Mon, 21 Oct 2024 05:41:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A06D01D0DFC;
+	Mon, 21 Oct 2024 06:55:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b7Ovei4D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dAq8B577"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED65634;
-	Mon, 21 Oct 2024 05:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F471D0B98;
+	Mon, 21 Oct 2024 06:55:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729489302; cv=none; b=tv92V0n5sbe0h30GXeR1jpnfvJVpCzuY8SAsD6DQD3X/yYE8w5cYaqxLhJYD8H1HV3l+JPxmHQG9IkBIoqf4/wH56sSQm5QgP1O/vgVWvEBJreK+LKDtP0BZpozEV6UdWH/0l++0CAjIEwaCVO4jNQDSm2n5/ngOMgxKdB1x3pM=
+	t=1729493713; cv=none; b=ujQJKAV6CoBlGyI/Q5Ftz5zrgS+lGdnYAtLzpPo7s78UdcTlvgEeI21Ve/K/ESwCkxbEHVxxo060auEexcEo87bmLo0it3TCTU+iewI50nMoe5xMD5QjIv7ZeD7m+U/hfd2GfxpAe8ViiiI20wm79QRgtgAykRp9H3/dQjhDWJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729489302; c=relaxed/simple;
-	bh=x15yRLhgy42+yizJ86mU28DoOslmxHJB5vdr0m9Jm+w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=CdicnGy1g3R3rY/OdSzLqCR4nvGIUsVoq7KbICP+rc/xh1+v9bI858hVUXrj8RLwb9htfRirzlH+5R3WAAn8QpdBEWjlYm+TdVMasKyDa33AQXpOjnGOhKpsQlw5xUXvqq74Kd7DIeZufAMYYVqtmWxGv/Vy6+w9vOq5DIvlJ6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b7Ovei4D; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49KNHeBB014302;
-	Mon, 21 Oct 2024 05:41:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OI+g/PDRqVZ95UWxsvAz05m79blc6jc1PXoXbNyQswA=; b=b7Ovei4DFeFWBJ0Z
-	wC+yHk5XzuTgof4wrQkk7Mwnyh3mc0DLyZEDo0rvIex9U90w7eqSyqbCpf0VVhF9
-	O+UaWCU17fV8k69zKZhE3eSo/cu3+dszW1lHxqJu1/jCZo9fv4L/PeWJcyJFTwn4
-	zxWw2wrKLHAaRxkxsknJUHOAUSIOdLhxiCKOpzGjC5eBRLE2UaQwBcEBu4GSJ1Vr
-	Rv7bJhKcbho2QrvIgZez5UYNnz93WZ6vW1WE0aGOObN3MzhDYN4DbD79SmwVRWBD
-	nsvp2+BYnQX4H6vUDH3A39g/zf8NA2bjUdjGAVf11xiOEjXAZxqrdQMbD8W7cG4l
-	m3p0lQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6vuua0v-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 05:41:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49L5fLt2005526
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 05:41:21 GMT
-Received: from [10.151.37.100] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Sun, 20 Oct
- 2024 22:41:14 -0700
-Message-ID: <01cbb389-1966-4501-a22d-7227765d1eb9@quicinc.com>
-Date: Mon, 21 Oct 2024 11:11:13 +0530
+	s=arc-20240116; t=1729493713; c=relaxed/simple;
+	bh=8PCol88A2ncEPIJmEoeILZX16B39Y6hAq9nQ5qaD65Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GKUWSWNzdM1JCMtKKoOAeyMF6v5qC5M8erivHAzzq/h1EPc6cKS3WwOc+ZH/UGjBtMZBjWBRnLJpmSJBf9xlod4GW/XAY6nCQoG/SgVu4MJrWZnytz7X00ARP/+gRALLb+qKR0Vm3eXD3R0sFldyW+Htdv6VO6Fxw7g3rLcouWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dAq8B577; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155EBC4CEC3;
+	Mon, 21 Oct 2024 06:55:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729493712;
+	bh=8PCol88A2ncEPIJmEoeILZX16B39Y6hAq9nQ5qaD65Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dAq8B577+0ECrnl1hxg57JvaIAERfsMygM1RTe73txDgtUVOofRuD9unBnx4hmSeZ
+	 EIQ5qQQPxBsulq9iTwBntYRm/SUYdCu6/HxYgi+lK9WjTb7A+Ls0aRl5aSPmMotDwt
+	 N3T/9ZHy09RxzzPqnDa95Hr/vjirO4UDi0ghvjFN8diNiDnFtTcLhqgkCCl0rX6x93
+	 wdBRWkuYTfAr3C81FnS3swCEYFUtATB4ivCt6mYDhSSl8TSAI0ZdFS8O1xFMZmAxY8
+	 KrIi4Edm8wGXgrUXAP/ZgLI5X6A/bHmLP9XCRQnDOerrdfgsZC2W/acdwYH+nvrpU6
+	 rn7KqZeh9D7Eg==
+Date: Mon, 21 Oct 2024 08:55:09 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Lee Jones <lee@kernel.org>, Amit Kucheria <amitk@kernel.org>, 
+	Thara Gopinath <thara.gopinath@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Daniel Lezcano <daniel.lezcano@linaro.org>, Zhang Rui <rui.zhang@intel.com>, 
+	Lukasz Luba <lukasz.luba@arm.com>, Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>, 
+	Robin Murphy <robin.murphy@arm.com>, Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
+	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, iommu@lists.linux.dev, 
+	Dang Huynh <danct12@riseup.net>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Otto =?utf-8?Q?Pfl=C3=BCger?= <otto.pflueger@abscue.de>
+Subject: Re: [PATCH RFC 00/14] Add MSM8917/PM8937/Redmi 5A
+Message-ID: <gh55k7a3b6rmkloq45mkfcms5g3x6stelzoikag3uo7idvkb7g@ncslfa5tzsnf>
+References: <20241019-msm8917-v1-0-f1f3ca1d88e5@mainlining.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 2/6] dt-bindings: clock: Add Qualcomm IPQ5424 GCC
- binding
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <p.zabel@pengutronix.de>, <geert+renesas@glider.be>,
-        <dmitry.baryshkov@linaro.org>, <neil.armstrong@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <linux-mmc@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_varada@quicinc.com>
-References: <20241017123626.204421-1-quic_srichara@quicinc.com>
- <20241017123626.204421-3-quic_srichara@quicinc.com>
- <nznisr4aqpe65fovvk3q3r6capmqj4jm4xsqufjib2b7vax4xx@6r3tzaar2w3p>
-Content-Language: en-US
-From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <nznisr4aqpe65fovvk3q3r6capmqj4jm4xsqufjib2b7vax4xx@6r3tzaar2w3p>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: BvccQ3eEA3DBohRrCELpz3wod20lmi_E
-X-Proofpoint-GUID: BvccQ3eEA3DBohRrCELpz3wod20lmi_E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 mlxscore=0 clxscore=1015
- suspectscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410210038
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20241019-msm8917-v1-0-f1f3ca1d88e5@mainlining.org>
 
+On Sat, Oct 19, 2024 at 01:50:37PM +0200, Barnab=C3=A1s Cz=C3=A9m=C3=A1n wr=
+ote:
+> This patch series add support for MSM8917 soc with PM8937 and
+> Xiaomi Redmi 5A (riva).
 
+Please always give some hint why this is not suitable for merging (you
+tagged this as RFC). Every patch is for "comments", so if you mark it as
+RFC means it is not ready.
 
-On 10/18/2024 11:43 AM, Krzysztof Kozlowski wrote:
-> On Thu, Oct 17, 2024 at 06:06:22PM +0530, Sricharan R wrote:
->> From: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>
->> Add binding for the Qualcomm IPQ5424 Global Clock Controller
->>
->> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->> ---
->>   [V4] Added 2 new PCIE clks to end of the list, preserving default order
->>
->>   .../bindings/clock/qcom,ipq5332-gcc.yaml      |  40 ++-
->>   include/dt-bindings/clock/qcom,ipq5424-gcc.h  | 156 +++++++++
->>   include/dt-bindings/reset/qcom,ipq5424-gcc.h  | 310 ++++++++++++++++++
->>   3 files changed, 499 insertions(+), 7 deletions(-)
->>   create mode 100644 include/dt-bindings/clock/qcom,ipq5424-gcc.h
->>   create mode 100644 include/dt-bindings/reset/qcom,ipq5424-gcc.h
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
->> index 9193de681de2..ef1fd9d9f8da 100644
->> --- a/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
->> +++ b/Documentation/devicetree/bindings/clock/qcom,ipq5332-gcc.yaml
->> @@ -4,31 +4,35 @@
->>   $id: http://devicetree.org/schemas/clock/qcom,ipq5332-gcc.yaml#
->>   $schema: http://devicetree.org/meta-schemas/core.yaml#
->>   
->> -title: Qualcomm Global Clock & Reset Controller on IPQ5332
->> +title: Qualcomm Global Clock & Reset Controller on IPQ5332 and IPQ5424
->>   
->>   maintainers:
->>     - Bjorn Andersson <andersson@kernel.org>
->>   
->>   description: |
->>     Qualcomm global clock control module provides the clocks, resets and power
->> -  domains on IPQ5332.
->> +  domains on IPQ5332 and IPQ5424.
->>   
->> -  See also:: include/dt-bindings/clock/qcom,gcc-ipq5332.h
->> -
->> -allOf:
->> -  - $ref: qcom,gcc.yaml#
->> +  See also:
->> +    include/dt-bindings/clock/qcom,gcc-ipq5332.h
->> +    include/dt-bindings/clock/qcom,gcc-ipq5424.h
->>   
->>   properties:
->>     compatible:
->> -    const: qcom,ipq5332-gcc
->> +    enum:
->> +      - qcom,ipq5332-gcc
->> +      - qcom,ipq5424-gcc
->>   
->>     clocks:
->> +    minItems: 5
->>       items:
->>         - description: Board XO clock source
->>         - description: Sleep clock source
->>         - description: PCIE 2lane PHY pipe clock source
->>         - description: PCIE 2lane x1 PHY pipe clock source (For second lane)
->>         - description: USB PCIE wrapper pipe clock source
->> +      - description: PCIE 2-lane PHY2 pipe clock source
->> +      - description: PCIE 2-lane PHY3 pipe clock source
->>   
->>     '#power-domain-cells': false
->>     '#interconnect-cells':
->> @@ -38,6 +42,28 @@ required:
->>     - compatible
->>     - clocks
->>   
->> +allOf:
->> +  - $ref: qcom,gcc.yaml#
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,ipq5332-gcc
->> +    then:
->> +      properties:
->> +        clocks:
->> +          maxItems: 5
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            const: qcom,ipq5424-gcc
->> +    then:
->> +      properties:
->> +        clocks:
-> 
-> This needs minItems: 7, unless clocks are really optional (but they
-> shouldn't be optional). I think I missed this part last time.
+Some maintainers ignore RFC patches because of that. There is a lot of
+stuff here, so it's also easier for me to skip it, if this is not ready.
 
-ok, got it, will update and send V5.
-
-Regards,
-  Sricharan
-
-
+Best regards,
+Krzysztof
 
 
