@@ -1,75 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-35245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 205769A6835
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:25:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BD9F49A6845
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:26:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3CA281C22526
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:25:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCA861C22687
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:26:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 968DF1FAC2D;
-	Mon, 21 Oct 2024 12:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C51C1E8851;
+	Mon, 21 Oct 2024 12:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="H/nnmgpF"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YcnYyxUl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0A21FA25C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 12:22:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554741F4714;
+	Mon, 21 Oct 2024 12:22:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729513329; cv=none; b=KD1eDzHMmA+LJ+mkhxiDCLDO5ec+32gYyb3RygVdfnYkWpPHicBibPTRsbuK8CwcyCVYanEIbpgRNXf6GYVuDiOLy2fe0qEaWKWmHyZAfN96YaXMxRvzIRFx8qDAE55Uhjhkh4/kdAbwpEE/BTlPviM2u16HT5NlixoZYYKjMKY=
+	t=1729513361; cv=none; b=DnAkOc8UbCP5K6fWouhUeHrIBxhSR8FMui/6c1GXDmJAebF9966gajIZxNniTQ+g08gHbpXxCCszXzoWFnu3foKWdrBkV96gDRF3BCK2uXuvxaRtiGeYsZMzW2/yT9+gIs3yWT1GGsNXAg9SFMZuOa1/GaQzTkp+n8gNkWIRR3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729513329; c=relaxed/simple;
-	bh=VNm+Z+GuNY45MeBsi9JopYeSlLAi+VCxGcvvs7IZJZo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=k38ROA1b3zij74cgjCcaSvByubRWmlaLmcu+mbs1C6M4m3BxVaRZx3JdFtOi/VokgxyMUFPL1ALwYQLemrXFrYSKFyYi356bUAnLAlfIQIUl8Go5N/qcixAruHce53/EOLhn4Dsxvf+x0itnxmrx+vyn3OIS4YN20CgPZD+F344=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=H/nnmgpF; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43169902057so19526205e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 05:22:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729513325; x=1730118125; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zVxPf0R6OmO+zjigETxEhoMwIqTaXzt8Q91vN2UcpAg=;
-        b=H/nnmgpFnIPv8DZl3uEFppUK5KAVi8cYuCRDj8LsrtIXK9sIB5TOLxyvn2xxp5R2dV
-         1K1Y04Ic+1YBS2YxZGL3AfUSe+NGVzn+RYks0B7Na9lGy5mk9QCg31suH1VNPWMNH56s
-         nXYeVWqZPkRA4IcvYhYO1b4sfJ4zG27BmQzEvKhjncpLoynmK2LBVt69oWuWm9oRXuYV
-         PynZRgK2K9EIwKvxO6RsPKW4IiPtpbNKgedj0L4oI68sjN3XfXUDo9XBPyOimHJT76kN
-         qc57REgrDGKDYrk5ulyOu4kv6icbAkS5T9VBIx5QRZ5JiwzV5aydTGDsoovlEjnCF1qQ
-         QbIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729513325; x=1730118125;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :references:cc:to:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zVxPf0R6OmO+zjigETxEhoMwIqTaXzt8Q91vN2UcpAg=;
-        b=Yp9Ba6MoqS5xBPu7a00H1gSQalZ/6lkecE/qSTOJ2OsFkcDmgCypr8cW2ywV11sa4T
-         Ihyl3FltKjsdsGD46pUDs/8scnVP7bPrZSpijqnIaY0T7pVIgjLJbr2K0SzP3cUyZbph
-         HeYZCzsbfXSw3YSIHtNBoh3tu9uEOB3S0IR4cUFLukM4FCVrTkt+8Vlk4m+CZ8jIXcXe
-         yw6VH/f6KRbyyYHmjKuPalMSv0tKWINrlpPeBx5vDqx4rsr0YhIe3nm49pVczZQQdIO8
-         pi4zjfD3zdGz6A3d3ymsbJOxPcRYXy9y3Ca2uW+hPHHLRIRsmt4y/JFccuUGoVHstM/y
-         knZg==
-X-Forwarded-Encrypted: i=1; AJvYcCUb4FyT3l+q4ktGkFmsnx6PS/9TIqdYlcWr07tQ565DAWfaveVE0om1bLn2MZXshJqOrT//ml3NpuOVXAql@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+MzFASg/rgVhCek2Mdh8SCXwqsQdScxZvL28xThR0at+P7lTi
-	PofO3a9cA66CmwBbdZtApJ/7f9vrd13b8i+MBqQ3FmXPGSHkJu244NgCTs0gGVg=
-X-Google-Smtp-Source: AGHT+IHyQh/KMBpfMGndxtXbnNWnzzSYlm90QV2Xju1MFqQdskUrpq1ciVZg0HQrZ+6Ir3Ko1FLMYQ==
-X-Received: by 2002:a05:600c:1c0a:b0:431:55c1:f440 with SMTP id 5b1f17b1804b1-43161697388mr95910385e9.30.1729513325019;
-        Mon, 21 Oct 2024 05:22:05 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3908:dea6:2ddd:be97? ([2a01:e0a:982:cbb0:3908:dea6:2ddd:be97])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4316f5c3173sm55892195e9.33.2024.10.21.05.22.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Oct 2024 05:22:04 -0700 (PDT)
-Message-ID: <d38c09eb-145f-4859-a681-74124fe4ab7c@linaro.org>
-Date: Mon, 21 Oct 2024 14:22:03 +0200
+	s=arc-20240116; t=1729513361; c=relaxed/simple;
+	bh=LknK+bmwz1HcsCHFGbTuacYGi4dNazdLQR43QwJVFHM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=fJLQnEgLG/URZPR990t/k2U0qJOE2a15o13KZrlrh5J4btKa8rrda+ybitrWQRVdRrEuelq7GUc5XeTFMO/IL9NpGi+Rp3sjCe6zW9359+Xtiv8BlNU/gEX55YShiJnqsTrIwjDhbAZ0h9xHfm2sYy5Ujn4zS3IBv9jvadxQ3t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YcnYyxUl; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LA97ZH012545;
+	Mon, 21 Oct 2024 12:22:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YGbUV117vz4ntpz8yuZW40y8LXipHeKy2mpnqNfZXQU=; b=YcnYyxUlmzb6auXI
+	BBHfeF3ekkVIaQiACdD7yVHuymE0HapdRVEtE1LIokt8ieGO+HisGA/YSj9K9xEA
+	6WVDBwVk6R5pt9dsLzDjZnicGbf0HyvyiPtd8d2xTAbEdgq24lQDTftv8HKyI5PW
+	o8j7rFJhh7jbHjHgdTca3ZZp7tDKD2L7Uo2xnmuy3Wie/SSWa0uWRZQ5eDoD1HJU
+	snTrRdXUC7zoy/m0MNMgAn34wKJvwzvVFEjkZSg5AW5HfpUWtYIhX//aCrHYo+QN
+	QHf3T1riGocog/q3FQmw/1SCNpbbwTIGW3RUp24R0Myw8N99E8vINd7FaoaFn/qj
+	7FCOGQ==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6rj4nhx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Oct 2024 12:22:27 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49LCMPlS016807
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Oct 2024 12:22:25 GMT
+Received: from [10.206.106.133] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
+ 2024 05:22:17 -0700
+Message-ID: <e2531d90-dbcb-4ba5-b153-fb8ca2ba7734@quicinc.com>
+Date: Mon, 21 Oct 2024 17:52:14 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,222 +65,218 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: neil.armstrong@linaro.org
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 6/6] phy: qualcomm: qmp-pcie: add support for SAR2130P
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>
-Cc: Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20241021-sar2130p-phys-v2-0-d883acf170f7@linaro.org>
- <20241021-sar2130p-phys-v2-6-d883acf170f7@linaro.org>
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20241021-sar2130p-phys-v2-6-d883acf170f7@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v3 1/8] media: dt-bindings: media: camss: Add
+ qcom,sc7280-camss binding
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
+        <catalin.marinas@arm.com>, <will@kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
+References: <20241011140932.1744124-1-quic_vikramsa@quicinc.com>
+ <20241011140932.1744124-2-quic_vikramsa@quicinc.com>
+ <q63w23zeoteagtw3px4sk3il4567plydgdhckmvpiksm6qc5i2@3rcdrr5uribq>
+Content-Language: en-US
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+In-Reply-To: <q63w23zeoteagtw3px4sk3il4567plydgdhckmvpiksm6qc5i2@3rcdrr5uribq>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qWAEw5uzhWxzsU_YX5UU8K6UwinM0zt6
+X-Proofpoint-ORIG-GUID: qWAEw5uzhWxzsU_YX5UU8K6UwinM0zt6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1011
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410210088
 
-On 21/10/2024 12:33, Dmitry Baryshkov wrote:
-> Add PCIe QMP PHY configuration for the Qualcomm SAR2130P platform.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 141 +++++++++++++++++++++++++++++++
->   1 file changed, 141 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> index 1ca1f21b1cc225f435da9c775c97dfa142117f95..c2ba411c6c90fbbc1b3e96b02e8e63c565f254f9 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-> @@ -2725,6 +2725,101 @@ static const struct qmp_phy_init_tbl sa8775p_qmp_gen4x2_pcie_ep_pcs_alt_tbl[] =
->   	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_INSIG_SW_CTRL7, 0x00),
->   };
->   
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_rc_serdes_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_EN_CENTER, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_PER1, 0x31),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_PER2, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE1_MODE0, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE2_MODE0, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE1_MODE1, 0x4c),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SSC_STEP_SIZE2_MODE1, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CLK_ENABLE1, 0x90),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYS_CLK_CTRL, 0x82),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x07),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x36),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0x08),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BG_TIMER, 0x0e),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x42),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0x08),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x1a),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x34),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x82),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x68),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START1_MODE0, 0xab),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START2_MODE0, 0xea),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START3_MODE0, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START1_MODE1, 0xab),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START2_MODE1, 0xaa),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DIV_FRAC_START3_MODE1, 0x02),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CLK_SELECT, 0x34),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORECLK_DIV_MODE1, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_ADDITIONAL_MISC_3, 0x0f),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORE_CLK_EN, 0xa0),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_pcs_lane1_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_LANE1_INSIG_SW_CTRL2, 0x01),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_LANE1_INSIG_MX_CTRL2, 0x01),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_rc_tx_tbl[] = {
-> +	QMP_PHY_INIT_CFG_LANE(QSERDES_V6_TX_BIST_MODE_LANENO, 0x00, 2),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_rc_pcs_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_G12S1_TXDEEMPH_M6DB, 0x17),
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_G3S2_PRE_GAIN, 0x2e),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_ep_serdes_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYSCLK_EN_SEL, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_BG_TIMER, 0x06),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_SYS_CLK_CTRL, 0x07),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_IVCO, 0x07),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE0, 0x28),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CP_CTRL_MODE1, 0x28),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE0, 0x0d),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_RCTRL_MODE1, 0x0d),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE0, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_PLL_CCTRL_MODE1, 0x00),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP_EN, 0x42),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE0, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE0, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP1_MODE1, 0xff),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_LOCK_CMP2_MODE1, 0x09),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE0, 0x19),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_DEC_START_MODE1, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_INTEGLOOP_GAIN0_MODE0, 0xfb),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_INTEGLOOP_GAIN1_MODE0, 0x03),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_INTEGLOOP_GAIN0_MODE1, 0xfb),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_INTEGLOOP_GAIN1_MODE1, 0x03),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_VCO_TUNE_MAP, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_HSCLK_SEL_1, 0x01),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORECLK_DIV_MODE1, 0x04),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_CONFIG_1, 0x16),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CMN_MODE, 0x14),
-> +	QMP_PHY_INIT_CFG(QSERDES_V6_COM_CORE_CLK_EN, 0xa0),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_ep_pcs_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_V6_PCS_G12S1_TXDEEMPH_M6DB, 0x17),
-> +};
-> +
-> +static const struct qmp_phy_init_tbl sar2130p_qmp_gen3x2_pcie_ep_pcs_misc_tbl[] = {
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_EQ_CONFIG1, 0x1e),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG2, 0x14),
-> +	QMP_PHY_INIT_CFG(QPHY_PCIE_V6_PCS_PCIE_POWER_STATE_CONFIG4, 0x07),
-> +};
-> +
->   struct qmp_pcie_offsets {
->   	u16 serdes;
->   	u16 pcs;
-> @@ -3290,6 +3385,49 @@ static const struct qmp_phy_cfg msm8998_pciephy_cfg = {
->   	.skip_start_delay	= true,
->   };
->   
-> +static const struct qmp_phy_cfg sar2130p_qmp_gen3x2_pciephy_cfg = {
-> +	.lanes = 2,
-> +
-> +	.offsets		= &qmp_pcie_offsets_v5,
-> +
-> +	.tbls = {
-> +		.tx		= sm8550_qmp_gen3x2_pcie_tx_tbl,
-> +		.tx_num		= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_tx_tbl),
-> +		.rx		= sm8550_qmp_gen3x2_pcie_rx_tbl,
-> +		.rx_num		= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_rx_tbl),
-> +		.pcs		= sm8550_qmp_gen3x2_pcie_pcs_tbl,
-> +		.pcs_num	= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_pcs_tbl),
-> +		.pcs_lane1	= sar2130p_qmp_gen3x2_pcie_pcs_lane1_tbl,
-> +		.pcs_lane1_num	= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_pcs_lane1_tbl),
-> +	},
-> +	.tbls_rc = &(const struct qmp_phy_cfg_tbls) {
-> +		.serdes		= sar2130p_qmp_gen3x2_pcie_rc_serdes_tbl,
-> +		.serdes_num	= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_rc_serdes_tbl),
-> +		.tx		= sar2130p_qmp_gen3x2_pcie_rc_tx_tbl,
-> +		.tx_num		= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_rc_tx_tbl),
-> +		.pcs		= sar2130p_qmp_gen3x2_pcie_rc_pcs_tbl,
-> +		.pcs_num	= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_rc_pcs_tbl),
-> +		.pcs_misc	= sm8550_qmp_gen3x2_pcie_pcs_misc_tbl,
-> +		.pcs_misc_num	= ARRAY_SIZE(sm8550_qmp_gen3x2_pcie_pcs_misc_tbl),
-> +	},
-> +	.tbls_ep = &(const struct qmp_phy_cfg_tbls) {
-> +		.serdes		= sar2130p_qmp_gen3x2_pcie_ep_serdes_tbl,
-> +		.serdes_num	= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_ep_serdes_tbl),
-> +		.pcs		= sar2130p_qmp_gen3x2_pcie_ep_pcs_tbl,
-> +		.pcs_num	= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_ep_pcs_tbl),
-> +		.pcs_misc	= sar2130p_qmp_gen3x2_pcie_ep_pcs_misc_tbl,
-> +		.pcs_misc_num	= ARRAY_SIZE(sar2130p_qmp_gen3x2_pcie_ep_pcs_misc_tbl),
-> +	},
-> +	.reset_list		= sdm845_pciephy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(sdm845_pciephy_reset_l),
-> +	.vreg_list		= qmp_phy_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.regs			= pciephy_v5_regs_layout,
-> +
-> +	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
-> +	.phy_status		= PHYSTATUS,
-> +};
-> +
->   static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
->   	.lanes			= 2,
->   
-> @@ -4639,6 +4777,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
->   	}, {
->   		.compatible = "qcom,sa8775p-qmp-gen4x4-pcie-phy",
->   		.data = &sa8775p_qmp_gen4x4_pciephy_cfg,
-> +	}, {
-> +		.compatible = "qcom,sar2130p-qmp-gen3x2-pcie-phy",
-> +		.data = &sar2130p_qmp_gen3x2_pciephy_cfg,
->   	}, {
->   		.compatible = "qcom,sc8180x-qmp-pcie-phy",
->   		.data = &sc8180x_pciephy_cfg,
-> 
+Hi Krzysztof,
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Thanks for your review. I will address the alignment issue as per DTS 
+coding style and will submit v4 for review.
+
+Thanks,
+Vikram
+
+On 10/11/2024 8:19 PM, Krzysztof Kozlowski wrote:
+> On Fri, Oct 11, 2024 at 07:39:25PM +0530, Vikram Sharma wrote:
+>> @@ -0,0 +1,440 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +
+> Drop blank line (that's a new finding, I would not complain except that
+> I expect new version, see further).
+>
+>> +    soc {
+>> +        #address-cells = <2>;
+>> +        #size-cells = <2>;
+>> +
+>> +        camss: camss@acaf000 {
+>> +            compatible = "qcom,sc7280-camss";
+>> +
+>> +            clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_0_CSID_CLK>,
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                <&clock_camcc CAM_CC_IFE_1_CSID_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_2_CSID_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_LITE_0_CSID_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_LITE_1_CSID_CLK>,
+>> +                <&clock_camcc CAM_CC_CSIPHY0_CLK>,
+>> +                <&clock_camcc CAM_CC_CSI0PHYTIMER_CLK>,
+>> +                <&clock_camcc CAM_CC_CSIPHY1_CLK>,
+>> +                <&clock_camcc CAM_CC_CSI1PHYTIMER_CLK>,
+>> +                <&clock_camcc CAM_CC_CSIPHY2_CLK>,
+>> +                <&clock_camcc CAM_CC_CSI2PHYTIMER_CLK>,
+>> +                <&clock_camcc CAM_CC_CSIPHY3_CLK>,
+>> +                <&clock_camcc CAM_CC_CSI3PHYTIMER_CLK>,
+>> +                <&clock_camcc CAM_CC_CSIPHY4_CLK>,
+>> +                <&clock_camcc CAM_CC_CSI4PHYTIMER_CLK>,
+>> +                <&gcc GCC_CAMERA_AHB_CLK>,
+>> +                <&gcc GCC_CAMERA_HF_AXI_CLK>,
+>> +                <&clock_camcc CAM_CC_CPAS_AHB_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_0_AXI_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_0_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_1_AXI_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_1_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_2_AXI_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_2_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_2_CPHY_RX_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_LITE_0_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_LITE_0_CPHY_RX_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_LITE_1_CLK>,
+>> +                <&clock_camcc CAM_CC_IFE_LITE_1_CPHY_RX_CLK>;
+>> +
+>> +            clock-names = "camnoc_axi",
+>> +                "csi0",
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                "csi1",
+>> +                "csi2",
+>> +                "csi3",
+>> +                "csi4",
+>> +                "csiphy0",
+>> +                "csiphy0_timer",
+>> +                "csiphy1",
+>> +                "csiphy1_timer",
+>> +                "csiphy2",
+>> +                "csiphy2_timer",
+>> +                "csiphy3",
+>> +                "csiphy3_timer",
+>> +                "csiphy4",
+>> +                "csiphy4_timer",
+>> +                "gcc_camera_ahb",
+>> +                "gcc_camera_axi",
+>> +                "soc_ahb",
+>> +                "vfe0_axi",
+>> +                "vfe0",
+>> +                "vfe0_cphy_rx",
+>> +                "vfe1_axi",
+>> +                "vfe1",
+>> +                "vfe1_cphy_rx",
+>> +                "vfe2_axi",
+>> +                "vfe2",
+>> +                "vfe2_cphy_rx",
+>> +                "vfe0_lite",
+>> +                "vfe0_lite_cphy_rx",
+>> +                "vfe1_lite",
+>> +                "vfe1_lite_cphy_rx";
+>> +
+>> +            interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_CAMERA_CFG 0>,
+>> +                <&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>;
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +
+>> +            interconnect-names = "ahb", "hf_0";
+>> +
+>> +            interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
+>> +                <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
+>> +
+>> +            interrupt-names = "csid0",
+>> +                "csid1",
+>> +                "csid2",
+>> +                "csid_lite0",
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                "csid_lite1",
+>> +                "csiphy0",
+>> +                "csiphy1",
+>> +                "csiphy2",
+>> +                "csiphy3",
+>> +                "csiphy4",
+>> +                "vfe0",
+>> +                "vfe1",
+>> +                "vfe2",
+>> +                "vfe_lite0",
+>> +                "vfe_lite1";
+>> +
+>> +            iommus = <&apps_smmu 0x800 0x4e0>;
+>> +
+>> +            power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
+>> +                <&camcc CAM_CC_IFE_1_GDSC>,
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                <&camcc CAM_CC_IFE_2_GDSC>,
+>> +                <&camcc CAM_CC_TITAN_TOP_GDSC>;
+>> +
+>> +            power-domains-names = "ife0", "ife1", "ife2", "top";
+>> +
+>> +            reg = <0x0 0x0acb3000 0x0 0x1000>,
+>> +                <0x0 0x0acba000 0x0 0x1000>,
+>> +                <0x0 0x0acc1000 0x0 0x1000>,
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                <0x0 0x0acc8000 0x0 0x1000>,
+>> +                <0x0 0x0accf000 0x0 0x1000>,
+>> +                <0x0 0x0ace0000 0x0 0x2000>,
+>> +                <0x0 0x0ace2000 0x0 0x2000>,
+>> +                <0x0 0x0ace4000 0x0 0x2000>,
+>> +                <0x0 0x0ace6000 0x0 0x2000>,
+>> +                <0x0 0x0ace8000 0x0 0x2000>,
+>> +                <0x0 0x0acaf000 0x0 0x4000>,
+>> +                <0x0 0x0acb6000 0x0 0x4000>,
+>> +                <0x0 0x0acbd000 0x0 0x4000>,
+>> +                <0x0 0x0acc4000 0x0 0x4000>,
+>> +                <0x0 0x0accb000 0x0 0x4000>;
+>> +
+>> +            reg-names = "csid0",
+>> +                "csid1",
+>> +                "csid2",
+>> +                "csid_lite0",
+> Alignment did not improve. Please carefully read DTS coding style.
+>
+>> +                "csid_lite1",
+>> +                "csiphy0",
+>> +                "csiphy1",
+>> +                "csiphy2",
+> Best regards,
+> Krzysztof
+>
 
