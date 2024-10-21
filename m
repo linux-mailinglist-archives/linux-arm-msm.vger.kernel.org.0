@@ -1,102 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-35269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4D949A721E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 20:16:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 553249A722D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 20:20:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5EBCBB20DC5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 18:16:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D4F781F25D7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 18:20:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFEA91CFEAD;
-	Mon, 21 Oct 2024 18:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448971F6674;
+	Mon, 21 Oct 2024 18:20:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HdEuE9l7"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hRo1sqyS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C3F79CF;
-	Mon, 21 Oct 2024 18:16:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230781C3F04;
+	Mon, 21 Oct 2024 18:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729534602; cv=none; b=emOqsCmWJJXC1XzIlUXz3KW1HYR/Q1MJzGPw8nVa31hef/PVY/r3ZD+vfsS1KN11Oz+fsOfccMebCtY9ayeNG2klnvwMLF3FQtf4Ry6BIkjNDrS0bFZzngMQjYhHVKN3VFXQsDfTicLTtxo614BRZEfLP5mRGFOOKnbjaEIJwXo=
+	t=1729534812; cv=none; b=cNZ4yqnOfpUD3Z59zCJ97J5yPPhBOc6HnQGKVEWK9TqXtiqrA91o5U+tAKRsnzdksAZo/6DdaqCVF3vKFenQ7m5gASjxUeeReX7RQAAQ2P2sSdfLsuIXgszoKj+X/IlTJWXNhBxthLEWzjwr8igi6K95irocYXwZGImnkW5+8DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729534602; c=relaxed/simple;
-	bh=535weqGthcOSSyLKIbRyjS0M8aM1BuA4DQbzV12il9I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IZoEJpFsqtSys1SIUChxzfAtfPcWiPndrdRYSMpC1oIDmdEQFTGKaGL5qp9X5Y3PRr48Lgj2peqJzZhz4rnShNs4IUWcuUncoC0JXSQa44Q3kiR5NwAxpVnSaaA5SldP7U2WN3K9qntEpC5SrDsq8X9OHDiN/oOI7oTkKzGeghI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HdEuE9l7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59079C4CEC7;
-	Mon, 21 Oct 2024 18:16:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729534602;
-	bh=535weqGthcOSSyLKIbRyjS0M8aM1BuA4DQbzV12il9I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HdEuE9l7w4kvRQh74utaeulNFvw7nn+FImK0ByIqLqsnkIrC+XOTNUsBjFkqpGhE6
-	 HZJBPw8orsxmPx4hE7MXM5zBaUsRcb6R6Hqmj2/tki0dDi6ILPyLC6d0+0RzxXektw
-	 hYk7bY5rCTtA7rNUjJ1FZ4VzURgQ1LetB6Msn9yVJBiQWzmeEY5suWCCndt49FLpz/
-	 2feM0JT1aweEHZbFqk4tFZ7UEJwyhw+zlxEY3A84t1+nNMRagAqap82nIpZfL57JBB
-	 0hOr7w2/eqosTr4XTxAgaTEgQMiAhBjUTGSFcRNrRhigotTilgHvp9pJT+Y1n2HC9L
-	 FZOE9P2nwF4wA==
-Date: Mon, 21 Oct 2024 13:16:41 -0500
-From: Rob Herring <robh@kernel.org>
-To: Imran Shaik <quic_imrashai@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/6] dt-bindings: clock: qcom: Add QCS8300 video clock
- controller
-Message-ID: <20241021181641.GA874673-robh@kernel.org>
-References: <20241018-qcs8300-mm-patches-v1-0-859095e0776c@quicinc.com>
- <20241018-qcs8300-mm-patches-v1-5-859095e0776c@quicinc.com>
+	s=arc-20240116; t=1729534812; c=relaxed/simple;
+	bh=GlPX+KtWJH8I2hdfrLtHvDpj0eL7bZVupSjgXXp60UQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=tN60JtpKZjMyAyWN/F0Z8zlSytPZJjv806mapNRj87Myqm4mC5lJO0I9cjJTAjRByC/phswIOSPeV1xoqRj7rsWf4Kwa+S1BaQBP3Mu0Qfy4uvXm6NzbFPUz2PP5Miwc856ptS+ukNBrl8qFiSyoeyWDJDxZl7vD9oWt9D/+lD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hRo1sqyS; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LAlHxI012350;
+	Mon, 21 Oct 2024 18:19:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	SBA+LZg+3ZcEFM0R25WL7du5150FkxKzdf/CXN7CqTw=; b=hRo1sqySidl/ke6w
+	iyVKvIz0X/kv2WlSF6PhnbYa6s3PzZZp0iLrwpvN5JmcUuaMQjAxD9hA8X7IW9n8
+	NVUuTENN4q5t+TeyhR8CDazj4q6txde2xen6+IJivYPIhHbtWPgOKq6l0WvlpuMN
+	vqq7Ro5egzaUyyHIJMUUh82HdwwHPDgKhd9ji5VivL3vJbYGK9Ma5QHDb/hMCCD6
+	O7IeBGdCCeePxxQr4Wg3i2Mc0N0gVjpWWhBZbBnYHmGZcp3xJausw734lWL4+ZVa
+	SZRYyy491JDshNmnP+SKHj5ac7Hni0xG6s/OQn6DUQcjLXzSF/AuhpQ3rpjvA8ts
+	jfNXlA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6tsnm7j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Oct 2024 18:19:37 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49LIJZxQ012413
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Oct 2024 18:19:35 GMT
+Received: from [10.81.24.74] (10.49.16.6) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
+ 2024 11:19:35 -0700
+Message-ID: <41db541a-4de1-409b-bfec-7b9456fc200f@quicinc.com>
+Date: Mon, 21 Oct 2024 11:19:34 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241018-qcs8300-mm-patches-v1-5-859095e0776c@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 4/8] mtd: nand: Add qpic_common API file
+To: Md Sadre Alam <quic_mdalam@quicinc.com>, <broonie@kernel.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <andersson@kernel.org>, <konradybcio@kernel.org>,
+        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
+        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
+CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
+References: <20241021115620.1616617-1-quic_mdalam@quicinc.com>
+ <20241021115620.1616617-5-quic_mdalam@quicinc.com>
+From: Jeff Johnson <quic_jjohnson@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <20241021115620.1616617-5-quic_mdalam@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: SD8HV_K6uhAb3197RF7-KumeTaXLtH8X
+X-Proofpoint-ORIG-GUID: SD8HV_K6uhAb3197RF7-KumeTaXLtH8X
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 spamscore=0 mlxlogscore=977 phishscore=0 adultscore=0
+ mlxscore=0 clxscore=1011 bulkscore=0 malwarescore=0 impostorscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410210132
 
-On Fri, Oct 18, 2024 at 04:42:33PM +0530, Imran Shaik wrote:
-> Add device tree bindings for the video clock controller on Qualcomm
-> QCS8300 platform.
+On 10/21/24 04:56, Md Sadre Alam wrote:
+...
+> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
+> new file mode 100644
+> index 000000000000..570ab59ca12b
+> --- /dev/null
+> +++ b/drivers/mtd/nand/qpic_common.c
+> @@ -0,0 +1,757 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
 
-That's obvious reading the diff. How is it different from the sa8775p 
-version? It must be different or you should have a fallback compatible.
+I'm surprised you aren't adding a 2024 Qualcomm Innovation Center copyright 
+...
+> +MODULE_LICENSE("GPL");
 
-> 
-> Signed-off-by: Imran Shaik <quic_imrashai@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml b/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
-> index 928131bff4c1..07e5d811d816 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sa8775p-videocc.yaml
-> @@ -18,6 +18,7 @@ description: |
->  properties:
->    compatible:
->      enum:
-> +      - qcom,qcs8300-videocc
->        - qcom,sa8775p-videocc
->  
->    clocks:
-> 
-> -- 
-> 2.25.1
-> 
+Since commit 1fffe7a34c89 ("script: modpost: emit a warning when the
+description is missing"), a module without a MODULE_DESCRIPTION() will
+result in a warning when built with make W=1. Recently, multiple
+developers have been eradicating these warnings treewide, and very few
+(if any) are left, so please don't introduce a new one :)
+
+Please add the missing MODULE_DESCRIPTION()
+
 
