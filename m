@@ -1,73 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-35266-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35267-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55BBD9A7118
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 19:33:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D9159A712E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 19:40:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 73A821C228D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 17:33:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC4071C223A7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 17:40:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 214911EABC4;
-	Mon, 21 Oct 2024 17:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E39D01EF0AA;
+	Mon, 21 Oct 2024 17:40:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F+fx71Ln"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p23295ak"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0869B191F8A;
-	Mon, 21 Oct 2024 17:33:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6095199239;
+	Mon, 21 Oct 2024 17:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729532002; cv=none; b=o1EksC/btnpHOlNhmWKw8pIgTjFwWP3iGNlIs8IDuYo+yLzQGj2wAWieqBU1vFgxacP5OZefS7a93q04OJJ4id89DeUqhRmnDTjh9+aBrdADrm8poa2kiaHB1DnhXqRdx/YkeKM0+aGifkdMuBdEBYha1rXmpfApjidVaBnLdLE=
+	t=1729532438; cv=none; b=UvCZemTUlaNwqmoixwYDSCPbFV6lifKwrGClutK9iPRyfKxmpL0ZHar26XUhlpVTZ/f0XpPdH06nHdTdBDTI55Q22u7k15uwp4F275+ixJS+olU8v0f+whyf/goOnw/0zAZd3dSbn6/VcLt0k8In2Q/UtEYbCG3qhs+kffNXnAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729532002; c=relaxed/simple;
-	bh=OfO5TkIeLtro3wIfUq87IH8nuVAYq2iLa58LnRZAI7w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=iWktF4lk4LS6jjtnmZT2K85/orfd8n59FJa9q7hO5UMv25Rh3QpN0rqb/hPzJ3hmIzD7WElvB0kug+eE5O6bjA94UjbnZ4gsVroBS8sYOmYdJZFa0DueyU+/Fzhjs9mN5cEQ454clDAueP4DJwvT0NDNJiEmet+vgBxbVaCmqSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F+fx71Ln; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-a9a850270e2so383919166b.0;
-        Mon, 21 Oct 2024 10:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729531998; x=1730136798; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8Uchf4DfqOWZdv07WmnBWftx6/6zS08AXtERn4+sfpY=;
-        b=F+fx71LndRbu3FzRTq328t3D7kuXxvWswDDWCo4ZG5QcYFImeEYTMknoe/92dVeIU0
-         IQb/XLDKHYc6Dk0p2M5kR/Y06Nswst2bnD93XRgKVFe88KGcDUdg1A5wGIJkCIkM66Tg
-         +dbcBtb58f1ex5PF0KO1rdncBGNEylrNQIjRm2j9v0mP51Xs3SHpUM/6JSaV3+wFImdi
-         j2u7bCRoGgLiS7HFp49vE7ZCDW10CyVrpVhI+qZf7PDUVbHb/9LqMFl6ccEMqBdh3bMa
-         p1vedIDytPHws4Mxnz5+nBgUJHmg5FWMmywEunTNsO45R2xy6f2Ix8vVwRpbqKgmTxnz
-         jpLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729531998; x=1730136798;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8Uchf4DfqOWZdv07WmnBWftx6/6zS08AXtERn4+sfpY=;
-        b=JzNI9gpQFdOFeH/FzXUqCRtrneYlZuMwrfNwo0PAkRsjIRo9MuX8GbPyVvU+VycGFX
-         xNYeYLpmpqgUQSFQ81JUwKlwfL45zUCehc9Z3ShB+K9HwHx40QC2FPbtk8BPn4QxTmZ8
-         j+NeRrvQKJij4qML8ZG9JPyRL8odBKJgf0WuNfH4TqJWysOtzbI3AOczwKCixBoPirPi
-         2PFc6/QIrmEdxUmNBm+Dx4YTQlhijCbExHlUfJh6Zz9x89XTia7X/toB2GBXd+9fwzEE
-         GfwMe85h87CFmFHJqQjwFqjdY81UMCwRjUrv76NLi7USq01gixSa5J+tAb4azQ4KCITN
-         9V7w==
-X-Forwarded-Encrypted: i=1; AJvYcCUDGavvLk8FR+b9PcguO3Ry9ifgRPKFbnV9oncjK+c097haam30f5TK/peBPhgo38xxnqq/EKSua2A=@vger.kernel.org, AJvYcCUMxeTEQWwxyidf7uKnb1rKvnamEQD/3XKalgmMi4qrdHG2bjSu5/5vzX91gvL6OYksOqe9Qh7D@vger.kernel.org, AJvYcCW2Bao+i4WXVnct+U3MwC7Kfp1yhQy0P3mQ9TVZ6wuJfXPuoNg+r4OE9e+mH3ILCA5ORnkwnqGL0h3aoZGo@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPzUuiEU6g7fdHuqhz3EwGzogUHwu0Qfa2Ov974WegqnVZdJ/2
-	A+Ma3EMfhf0sJxZ8vZccQeMblindvh6rAyViBnfk6FHbrZCMveuM
-X-Google-Smtp-Source: AGHT+IFQ1IzKK6SAnz3zq0W+v5pEYQErKRtAU0i5dQMvUcq6gcCgEUhTxp+dH7LG0yZFb7r9vJpjLg==
-X-Received: by 2002:a17:907:940b:b0:a90:df6f:f086 with SMTP id a640c23a62f3a-a9a69a64d51mr1264849566b.11.1729531997886;
-        Mon, 21 Oct 2024 10:33:17 -0700 (PDT)
-Received: from redchief.lan (5D59A6C7.catv.pool.telekom.hu. [93.89.166.199])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-a9a913706d3sm232561166b.134.2024.10.21.10.33.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 10:33:17 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Mon, 21 Oct 2024 19:32:48 +0200
-Subject: [PATCH] clk: qcom: clk-alpha-pll: fix alpha mode configuration
+	s=arc-20240116; t=1729532438; c=relaxed/simple;
+	bh=cU4S2vgY8V4H/hAbxrRrdltdTUrfj1DXIv+Wv1wqwVc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=qqdyYQpLwzkplTotjw2GFBSHag71xez3+cPNV3STLZz0XY6dHBBAMop9/YWsXsQzZM8fjT0qBLHrjWOCoLvC0Wvu0C+B9thsCi8lRa0QvZZd68A2ZyPuh5jOWTju21tmRAILnhzGxhfVWcXt3oWqN0qE39J8eosxmOYlY2Oltu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p23295ak; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A02C4CEC3;
+	Mon, 21 Oct 2024 17:40:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729532438;
+	bh=cU4S2vgY8V4H/hAbxrRrdltdTUrfj1DXIv+Wv1wqwVc=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=p23295akyNfV5lLGJWo0hopyJjJRmx4FuYtM1MhRlgevKN/nhPcw8mPs7eWAnCZWG
+	 1CCanpoL3l7p0BuCtUulGmFDU3QiohS1rRx672W7JYWoFSFLwevI6i2JfE6P1NvAcO
+	 RzYSqSLD2Ue9kzXskUgSYYT62rZfjmkpBXxbUO59CGswd4ljOEVT37Bn5p+N8aD/0s
+	 EYZnMon7a3hMv3H9hNUDI/WR2ZmSfgQ7x1tj14IhzyxDGnL0aHFzOtUas9ZwkXsZae
+	 IBuiT+eazY9ejjZOGmNp2vWyIZsS9U4q3hmuj8CfMw0yaZcwo0X1qTqa/id3TLXTFP
+	 Jni3ErmYVoenQ==
+From: Mark Brown <broonie@kernel.org>
+To: Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Johan Hovold <johan+linaro@kernel.org>, Kalle Valo <kvalo@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Abel Vesa <abel.vesa@linaro.org>, Manivannan Sadhasivam <mani@kernel.org>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-pm@vger.kernel.org, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Steev Klimaszewski <steev@kali.org>
+In-Reply-To: <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
+References: <20241018-sc8280xp-pwrseq-v6-0-8da8310d9564@linaro.org>
+Subject: Re: (subset) [PATCH v6 0/6] arm64: dts: qcom: enable Bluetooth and
+ WLAN on sc8280xp and sm8450 boards
+Message-Id: <172953243459.72126.14502831968644809309.b4-ty@kernel.org>
+Date: Mon, 21 Oct 2024 18:40:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,95 +68,44 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAD+QFmcC/x2MWwqAIBAArxL73UI+Aukq0YfoWgulohBBePekz
- 4GZeaFSYaqwDC8Uurlyih3EOIA7bNwJ2XcGOUktJikw8IP2zIfFK3lCl2LgHY0ySipjtZk19DY
- X6uL/XbfWPsumAQ5nAAAA
-X-Change-ID: 20241021-fix-alpha-mode-config-8383238a4854
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
- linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+X-Mailer: b4 0.15-dev-9b746
 
-Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-added support for configuring alpha mode, but it seems that the feature
-was never working in practice.
+On Fri, 18 Oct 2024 14:49:10 +0200, Bartosz Golaszewski wrote:
+> This series previously only concerned sc8280xp but while enabling
+> WLAN/BT on sm8450 I noticed some more changes will be required so I
+> folded the latter into this series and updated the sc8280xp CRD and X13
+> patches.
+> 
+> ==
+> 
+> [...]
 
-The value of the alpha_{en,mode}_mask members of the configuration gets
-added to the value parameter passed to the regmap_update_bits() function,
-however the same values are not getting applied to the bitmask. As the
-result, the respective bits in the USER_CTL register are never modifed
-which leads to improper configuration of several PLLs.
+Applied to
 
-The following table shows the PLL configurations where the 'alpha_en_mask'
-member is set and which are passed as a parameter for the
-clk_alpha_pll_configure() function. In the table the 'expected rate' column
-shows the rate the PLL should run at with the given configuration, and
-the 'real rate' column shows the rate the PLL runs at actually. The real
-rates has been verified on hardwareOn IPQ* platforms, on other platforms,
-those are computed values only.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-      file                 pll         expected rate   real rate
-  dispcc-qcm2290.c     disp_cc_pll0      768.0 MHz     768.0 MHz
-  dispcc-sm6115.c      disp_cc_pll0      768.0 MHz     768.0 MHz
-  gcc-ipq5018.c        ubi32_pll        1000.0 MHz !=  984.0 MHz
-  gcc-ipq6018.c        nss_crypto_pll   1200.0 MHz    1200.0 MHz
-  gcc-ipq6018.c        ubi32_pll        1497.6 MHz != 1488.0 MHz
-  gcc-ipq8074.c        nss_crypto_pll   1200.0 MHz != 1190.4 MHz
-  gcc-qcm2290.c        gpll11            532.0 MHz !=  518.4 MHz
-  gcc-qcm2290.c        gpll8             533.2 MHz !=  518.4 MHz
-  gcc-qcs404.c         gpll3             921.6 MHz     921.6 MHz
-  gcc-sm6115.c         gpll11            600.0 MHz !=  595.2 MHz
-  gcc-sm6115.c         gpll8             800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll0       800.0 MHz !=  787.2 MHz
-  gpucc-sdm660.c       gpu_cc_pll1       740.0 MHz !=  729.6 MHz
-  gpucc-sm6115.c       gpu_cc_pll0      1200.0 MHz != 1190.4 MHz
-  gpucc-sm6115.c       gpu_cc_pll1       640.0 MHz !=  633.6 MHz
-  gpucc-sm6125.c       gpu_pll0         1020.0 MHz != 1017.6 MHz
-  gpucc-sm6125.c       gpu_pll1          930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll8            930.0 MHz !=  921.6 MHz
-  mmcc-sdm660.c        mmpll5            825.0 MHz !=  806.4 MHz
+Thanks!
 
-As it can be seen from the above, there are several PLLs which are
-configured incorrectly.
+[1/6] regulator: dt-bindings: qcom,qca6390-pmu: add more properties for wcn6855
+      commit: 15767191c26d74f7cc2d03fa2ede0d6d0051218e
 
-Change the code to apply both 'alpha_en_mask' and 'alpha_mode_mask'
-values to the bitmask in order to configure the alpha mode correctly.
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-Applying the 'alpha_en_mask' fixes the initial rate of the PLLs showed
-in the table above. Since the 'alpha_mode_mask' is not used by any driver
-currently, that part of the change causes no functional changes.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-Cc: stable@vger.kernel.org
-Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
----
- drivers/clk/qcom/clk-alpha-pll.c | 2 ++
- 1 file changed, 2 insertions(+)
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index f9105443d7dbb104e3cb091e59f43df25999f8b3..03cc7aa092480bfdd9eaa986d44f0545944b3b89 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -421,6 +421,8 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
- 	mask |= config->pre_div_mask;
- 	mask |= config->post_div_mask;
- 	mask |= config->vco_mask;
-+	mask |= config->alpha_en_mask;
-+	mask |= config->alpha_mode_mask;
- 
- 	regmap_update_bits(regmap, PLL_USER_CTL(pll), mask, val);
- 
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
----
-base-commit: 9852d85ec9d492ebef56dc5f229416c925758edc
-change-id: 20241021-fix-alpha-mode-config-8383238a4854
-
-Best regards,
--- 
-Gabor Juhos <j4g8y7@gmail.com>
+Thanks,
+Mark
 
 
