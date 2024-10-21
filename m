@@ -1,76 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-35204-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35205-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 815699A6334
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:32:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47E6B9A6338
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:32:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A207A1C21FAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 10:32:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0464F2836DD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 10:32:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB7411E8838;
-	Mon, 21 Oct 2024 10:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6263F1E9064;
+	Mon, 21 Oct 2024 10:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="h1/RFOCz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bwOCtnw1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8735D1E6DFF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 10:30:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1467B1E8848
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 10:30:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506656; cv=none; b=YzcfCgJ+Vz8lM7nin399md1gjfPqMSvyoumbHrDxIoonbo3/r8PDko6eUKOyV9S60qdCa30O1H1q7bMWDMUiOcUfB5XMcMXuW2J41HtGQRxqA94+Uj80dmEDJEW5SkHjbu9dLZa0cUTZKxuUgJyvTJKWmdHtHuEi9JVkWvKeYyw=
+	t=1729506659; cv=none; b=KaXatbt3GAChxrYf2pZnOYcuL5dhHyknGoo+AY0QAKXY9fi1EBNn8ab8Q1N0u8QAJEvMGERaZBmNMeXRQEW8VvaKdmGnlVpKYLgj4b8z5qADGVZhMsl5r/Tcusoad+Uj2uwQD8UTEvGNxgCJQ9/fY0toQO5gHx8LgtU2i7BHw2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506656; c=relaxed/simple;
-	bh=doO/a916moGA8DWgcEw9MEXPijwB7ll6ZA8YQOQZTOA=;
+	s=arc-20240116; t=1729506659; c=relaxed/simple;
+	bh=DWgkCUleQv61cF52XKRC6NW3EAFyFKJ2O9J1+CznBwg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oB5vyXNi1GqezPGEREZxUwg3dt/CF7zTOEwqxZz1pxMgqN54p+ff+Y3rVlRv+gDFecq6PJGsrT8EVtfmDEB7c4PI9zNnYBNsy6gqI+El4WNVERkfMYaxiMlXdTEYZu2LEewpsmjGAt0QCPXKbUBUwnjY6whlOFONI0xomqfZmNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=h1/RFOCz; arc=none smtp.client-ip=209.85.208.175
+	 In-Reply-To:To:Cc; b=iqyVnWjFlOYDGWnyjiQTKFYMD7Wz3M43upQjg+B+k7LINTzbLgTxg+VxCTlJTFLpAVYHEGa5zYM0KhZm6scGHqoPPbGm8TPta2Y7aHyju2cUBAFwm50XVm/K3QbiMeHE8pi9eYtiD+tWmkrl4zOuedmvq2qS/TXcdEKJ4pxNjGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bwOCtnw1; arc=none smtp.client-ip=209.85.208.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2fb6110c8faso42406551fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 03:30:54 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2fb51e00c05so58706141fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 03:30:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729506652; x=1730111452; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729506655; x=1730111455; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Et/ChhQ8OUXatHb7KnUo7g0jzZYAGHhogo25hpK7iKY=;
-        b=h1/RFOCzbxynFRqfP5K+3z7c3B1YMoPStuInpTzE9lq1jAr9IDV9kOqVo48KNkYXSM
-         yRNBq6BbPunQBKwBjyyaxHCnFRY+2ZQ7rOO5GRXjg9UdfPjgAxN7sESXvkU5U5bQGW5K
-         jelSMWCfRx+0cou3/TvcfJN4uiHqzrXUg2nnPPOMfJAGJurlPjv172idU3B4oYkEavYn
-         TDTYVG0jzZynYkhgoXUyZDyusMnOyvmTr5efuXUWp7hnYSjH/QVHoLm4HMJ1PgXiM5JQ
-         DnuzTnaGueNS8WWn9uu5y52a/iW9ubdKqY7M4viVDrXlvYsRapDWIr0nrDLqsZUXWKyn
-         oP2A==
+        bh=gWbqeFeatJwTSwfIbMsvs+JYctmC6KE3I7fU3fJLjdw=;
+        b=bwOCtnw1HJhLX/pNtHGb1vlT7npnbaaRMvg8MoxUjMNMg6BUJLA/t35bQooOUq21iX
+         xOCfYiQ4lSm6/U5hJ4BBzKhN1bTYqvNmr7/93RfXk7As5wy7rQM1uHaBgzjIH4Ar9SbL
+         dlvueIXfGz0u2VAGT6jc6LZIQ+5Yds9SHgmJSHdNzIU4CULFWQHz5YKPGui7nHn2yCPK
+         mrmsuFmwPveQT38OmWDK61M8qMKIUdxisPThCF1x8J16FtxxJJCz8vTQgmXeZ9AB4+Rn
+         TJsSGszovo1sz7o+4Un8oZA4IjjOFOiUxeYicT1yiwQztir2gHt/JPxIdx69p3kC8arA
+         RurA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729506652; x=1730111452;
+        d=1e100.net; s=20230601; t=1729506655; x=1730111455;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Et/ChhQ8OUXatHb7KnUo7g0jzZYAGHhogo25hpK7iKY=;
-        b=LL/q6WAZH6yuGN+9t17HESFJZqVx+K0x4eGuobcKsfpW6sG0zM8HA0oZVZSkIS+vRX
-         cLEeJL3GmYv82mSubnowi7pN99A6Y10LFOSW1dRDPd1JP7AZwjN9noQdUy0y68Zfk6xZ
-         wZ6heSwmyC4ceO1lA0v9W5pRCd6em5cIlfSSdRU3IHX3iLpxEEPxAPBIC/TLdLcUZ6MY
-         gyA+fWld3I6YeNWqIjKNISU8eq26tjZ0XL2XjQyJtojNS8CGKafnKMRE/U++Xo5g60Cx
-         WzSc7Y8ZhhmH5FTje3sVYpA4lp1ko1OaJxPLFj7LZhFFgHBOfEUead+2/NDsxKlQRiPf
-         jujQ==
-X-Gm-Message-State: AOJu0YwhEiDj1GN9JMlHYVw8h6QVIfSNH/eWKtbFkC7S8K8Cm+x1bOr6
-	/rMjHqRKYqzOBIdZZONkWdUyke6jTH/2d6njyDl7/JhI9S9LLzROsv6uekbabId7TanPf4qngf4
-	jO90=
-X-Google-Smtp-Source: AGHT+IFnXVc3zww/9Bwgx01ER/80V7b+Hc49LFcqeghffWPhxleFU/Gsp8YDNT3SBRkWm4gbuB4jDQ==
-X-Received: by 2002:a2e:a58a:0:b0:2fb:8774:4412 with SMTP id 38308e7fff4ca-2fb87744ebamr37617711fa.24.1729506652515;
-        Mon, 21 Oct 2024 03:30:52 -0700 (PDT)
+        bh=gWbqeFeatJwTSwfIbMsvs+JYctmC6KE3I7fU3fJLjdw=;
+        b=Xz0Y0SAVdu1bIZAAnJIwnpZx3fOobKwKiIj49gVCkuqO0oYTQhE5c+VVgasEF1v8dz
+         kMjjrT1GyxecR3Wh+h0yLozVyleWOLjFzd46GMPLf2SGrH1azPfAG9r3tkaI3falvWsK
+         z+qBagmbtRosXDrsolyyu/ZDTtjxf/FFrXKDJ1zuzuZ9P8600r7WincY3MeXqWiW2Z/M
+         w5nHHh2ulBRhZgoWOeNTxcYVHKDFezdRASyTf4h1ER7BeEqPiHp2yobXM+nFcH2+8fsh
+         lMKNUKO2DEi92gNvyE7+0p0FMDrxRWsvUN6WGAKYwEedgr8Mu/tjzraqpdcTrQI4a/AE
+         ndJg==
+X-Gm-Message-State: AOJu0YxqpWo0jQiBFJSjG4ZxtBNIIfCPHfMFM5ekaq+B6zO2rq8slDgV
+	SStPNAJcq9ga3jnjgb0iLTYZ4+DRYHbQDEtg7SqFnOE1+TTQuYA4gFdUpTBKDRk=
+X-Google-Smtp-Source: AGHT+IEGVYV0CpGXX3NDt4/VAtk8qqXvItVMr2DCv1PebDcuKb6dxvFu/JDxXiHjHkTrvs0EBi9Z2Q==
+X-Received: by 2002:a2e:f1a:0:b0:2fb:3960:9671 with SMTP id 38308e7fff4ca-2fb82ea2802mr59499631fa.15.1729506655002;
+        Mon, 21 Oct 2024 03:30:55 -0700 (PDT)
 Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae1217bsm4522711fa.112.2024.10.21.03.30.50
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae1217bsm4522711fa.112.2024.10.21.03.30.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 03:30:51 -0700 (PDT)
+        Mon, 21 Oct 2024 03:30:53 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 21 Oct 2024 13:30:33 +0300
-Subject: [PATCH v2 05/11] dt-bindings: clk: qcom,sm8450-gpucc: add SAR2130P
- compatibles
+Date: Mon, 21 Oct 2024 13:30:34 +0300
+Subject: [PATCH v2 06/11] clk: qcom: rcg2: add clk_rcg2_shared_floor_ops
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,7 +77,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241021-sar2130p-clocks-v2-5-383e5eb123a2@linaro.org>
+Message-Id: <20241021-sar2130p-clocks-v2-6-383e5eb123a2@linaro.org>
 References: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
 In-Reply-To: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -92,120 +90,130 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3379;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3985;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=U8SwElc6O/aMG3Pi0A0hWuxY5S0AlYAxeI/Vjj5b5Qw=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnFi1L/h8pidXOrdbdTp2rabjVoe4fKBc4k0O+V
- HCNo87DkbuJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxYtSwAKCRAU23LtvoBl
- uCOtD/9ZpX5OqfpNXWnpqzt7yAhpvutOp5A4EKNXyBT63syo3Ua0OhWmoTQBqdN9LoUwK7ABmSl
- /USS1alZlabbl0Er6KXv14lApaopc8rZWZ+6vnT+onBtWvClqWdvIXWxTS0r3aq2UBR8ALSbrx2
- FrAfOXLyyrIhyRgwK2dnJF030Xt29A6KgdeKG4AWVfJoO+zZEr7WXbnf+43UoFz9wK3PGZPovpr
- Xu5ZrUoPcARN+47obtgC86EWzSSYeFE8lftyPHlLQvzdG8N5u0S3sU4NPT/KqbsNIxamYEGm+Ic
- LdRV1Q8rVXh1INKaGcuI3JI49Y5yem165E0KYu/Hm0B1EvYuCyEjqlrFQcKOJge5Qzbp9pEPFAx
- 8ZW8xpitkxrusgmJl0AZwvZpIKZgova8rz86GTaw3705quDcE/qJU2RfHISBes3d8XQQLCYIcbC
- d/dskYsuPk9hiReK3Zodb1yatArWROdgp1hRLbYQni+SCbEZ9eeYYgzpuNhYjEsMbCobHscC0al
- hFuploI1r6nRJA3gfNeOUdp3BMGg2iDQZ6GBHWoyDWrzbDqNqQugbefGYH6UU9Jsqh6p36MGgSJ
- ZHCR17SBenMqbhB7w9mhAKtuB0xzU3aUrYKDKRjfzeWKJUla+lzvQf0hzVLT26Hnps1+ejF+ei/
- ZHpj+jnGNSyVZRw==
+ bh=DWgkCUleQv61cF52XKRC6NW3EAFyFKJ2O9J1+CznBwg=;
+ b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnFi1MQ2Ipd+tTV9WDyl9EtJM2+i1I22xIpjYrU
+ KlZXCxuxcWJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxYtTAAKCRAU23LtvoBl
+ uPXlEACa+0RhJT0HNTAxSjY3RM0BSTLqmhbWmmkugaWFt212lagXY0jQX3Zg5uxUJM9KBhVCHsR
+ APcIaftyxAin3X7MK0fNAVqyDsPPfnHFgTQQPV/qFgBiftAt3AphqUvhg+UWrkP86GLICTifb22
+ TyGhRSI55ImdO8gZqjSQklxIjqBOlFKG7uGJMaQcA79RQ9FPnIUBBhOyfbuoZQIi7DZzvslvt03
+ 0FdssfQy/uNSAPG3wnqpCzOxHNQtLIpcMLVbcHxdgenUE6tqTO22Y7TUx229obtz2HxeOYv+ApT
+ wj+zkxKqW4umgmHT12TQR/FfAesymX1wq1+5BdmTjGPc03SiR4jdf7KW1zRfPrEZFCneqrb6eHK
+ zq6e+DxWbAK0cwCZu/0sgXWosJclqb4PzjtODPFJ2IV2rCdMFbpe8I4+V0npbmPvRcj+J438cCS
+ kc/+GgkzKwuZr+xAvjYYXzjYd5sAIfch3T0fSXa3etWKnCtxltLLxvqO5jxHNOgDll4EGFJLRA2
+ infgMFKLIQtiWAUtrMAj+AO6XW1wU9qHLdIT2qoYTu6xCUdvwtCHin0MTCqeqiTAzlC0P6Yzikk
+ 5V/Yq5u17TzCV1POe0x0pkfRZYzWQB4V2ScFJ62VuDXQoRN+U9PcrGXO8DZFl03+RLSK7ZXfiUO
+ ntGEHPIO0q7KXIQ==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+Generally SDCC clocks use clk_rcg2_floor_ops, however on SAR2130P
+platform it's recommended to use rcg2_shared_ops for all Root Clock
+Generators to park them instead of disabling. Implement a mix of those,
+clk_rcg2_shared_floor_ops.
 
-Expand qcom,sm8450-gpucc bindings to include SAR2130P.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../bindings/clock/qcom,sm8450-gpucc.yaml          |  2 ++
- include/dt-bindings/clock/qcom,sar2130p-gpucc.h    | 33 ++++++++++++++++++++++
- include/dt-bindings/reset/qcom,sar2130p-gpucc.h    | 14 +++++++++
- 3 files changed, 49 insertions(+)
+ drivers/clk/qcom/clk-rcg.h  |  1 +
+ drivers/clk/qcom/clk-rcg2.c | 48 ++++++++++++++++++++++++++++++++++++++++-----
+ 2 files changed, 44 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-index b9d29e4f65ded538c0ac8caae5acb541c9f01f41..5c65f5ecf0f387f30ae70a8f2b25d292f6092133 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-@@ -14,6 +14,7 @@ description: |
-   domains on Qualcomm SoCs.
+diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+index 8e0f3372dc7a8373d405ef38e3d5c747a6d51383..80f1f4fcd52a68d8da15e3e1405703b6ddc23421 100644
+--- a/drivers/clk/qcom/clk-rcg.h
++++ b/drivers/clk/qcom/clk-rcg.h
+@@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
+ extern const struct clk_ops clk_pixel_ops;
+ extern const struct clk_ops clk_gfx3d_ops;
+ extern const struct clk_ops clk_rcg2_shared_ops;
++extern const struct clk_ops clk_rcg2_shared_floor_ops;
+ extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
+ extern const struct clk_ops clk_dp_ops;
  
-   See also::
-+    include/dt-bindings/clock/qcom,sar2130p-gpucc.h
-     include/dt-bindings/clock/qcom,sm4450-gpucc.h
-     include/dt-bindings/clock/qcom,sm8450-gpucc.h
-     include/dt-bindings/clock/qcom,sm8550-gpucc.h
-@@ -24,6 +25,7 @@ description: |
- properties:
-   compatible:
-     enum:
-+      - qcom,sar2130p-gpucc
-       - qcom,sm4450-gpucc
-       - qcom,sm8450-gpucc
-       - qcom,sm8475-gpucc
-diff --git a/include/dt-bindings/clock/qcom,sar2130p-gpucc.h b/include/dt-bindings/clock/qcom,sar2130p-gpucc.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..a2204369110a585394d175193dce8bf9f63439d2
---- /dev/null
-+++ b/include/dt-bindings/clock/qcom,sar2130p-gpucc.h
-@@ -0,0 +1,33 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2022, Qualcomm Innovation Center, Inc. All rights reserved
-+ * Copyright (c) 2024, Linaro Limited
-+ */
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index bf26c5448f006724b447bb0d9b11889d316cb6d0..bf6406f5279a4c75c0a42534c15e9884e4965c00 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1186,15 +1186,23 @@ clk_rcg2_shared_force_enable_clear(struct clk_hw *hw, const struct freq_tbl *f)
+ 	return clk_rcg2_clear_force_enable(hw);
+ }
+ 
+-static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
+-				    unsigned long parent_rate)
++static int __clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
++				      unsigned long parent_rate,
++				      enum freq_policy policy)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
+ 	const struct freq_tbl *f;
+ 
+-	f = qcom_find_freq(rcg->freq_tbl, rate);
+-	if (!f)
++	switch (policy) {
++	case FLOOR:
++		f = qcom_find_freq_floor(rcg->freq_tbl, rate);
++		break;
++	case CEIL:
++		f = qcom_find_freq(rcg->freq_tbl, rate);
++		break;
++	default:
+ 		return -EINVAL;
++	}
+ 
+ 	/*
+ 	 * In case clock is disabled, update the M, N and D registers, cache
+@@ -1207,10 +1215,28 @@ static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	return clk_rcg2_shared_force_enable_clear(hw, f);
+ }
+ 
++static int clk_rcg2_shared_set_rate(struct clk_hw *hw, unsigned long rate,
++				    unsigned long parent_rate)
++{
++	return __clk_rcg2_shared_set_rate(hw, rate, parent_rate, CEIL);
++}
 +
-+#ifndef _DT_BINDINGS_CLK_QCOM_GPU_CC_SAR2130P_H
-+#define _DT_BINDINGS_CLK_QCOM_GPU_CC_SAR2130P_H
+ static int clk_rcg2_shared_set_rate_and_parent(struct clk_hw *hw,
+ 		unsigned long rate, unsigned long parent_rate, u8 index)
+ {
+-	return clk_rcg2_shared_set_rate(hw, rate, parent_rate);
++	return __clk_rcg2_shared_set_rate(hw, rate, parent_rate, CEIL);
++}
 +
-+/* GPU_CC clocks */
-+#define GPU_CC_AHB_CLK				0
-+#define GPU_CC_CRC_AHB_CLK			1
-+#define GPU_CC_CX_FF_CLK			2
-+#define GPU_CC_CX_GMU_CLK			3
-+#define GPU_CC_CXO_AON_CLK			4
-+#define GPU_CC_CXO_CLK				5
-+#define GPU_CC_FF_CLK_SRC			6
-+#define GPU_CC_GMU_CLK_SRC			7
-+#define GPU_CC_GX_GMU_CLK			8
-+#define GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK		9
-+#define GPU_CC_HUB_AON_CLK			10
-+#define GPU_CC_HUB_CLK_SRC			11
-+#define GPU_CC_HUB_CX_INT_CLK			12
-+#define GPU_CC_MEMNOC_GFX_CLK			13
-+#define GPU_CC_PLL0				14
-+#define GPU_CC_PLL1				15
-+#define GPU_CC_SLEEP_CLK			16
++static int clk_rcg2_shared_set_floor_rate(struct clk_hw *hw, unsigned long rate,
++					  unsigned long parent_rate)
++{
++	return __clk_rcg2_shared_set_rate(hw, rate, parent_rate, FLOOR);
++}
 +
-+/* GDSCs */
-+#define GPU_GX_GDSC				0
-+#define GPU_CX_GDSC				1
++static int clk_rcg2_shared_set_floor_rate_and_parent(struct clk_hw *hw,
++		unsigned long rate, unsigned long parent_rate, u8 index)
++{
++	return __clk_rcg2_shared_set_rate(hw, rate, parent_rate, FLOOR);
+ }
+ 
+ static int clk_rcg2_shared_enable(struct clk_hw *hw)
+@@ -1348,6 +1374,18 @@ const struct clk_ops clk_rcg2_shared_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
+ 
++const struct clk_ops clk_rcg2_shared_floor_ops = {
++	.enable = clk_rcg2_shared_enable,
++	.disable = clk_rcg2_shared_disable,
++	.get_parent = clk_rcg2_shared_get_parent,
++	.set_parent = clk_rcg2_shared_set_parent,
++	.recalc_rate = clk_rcg2_shared_recalc_rate,
++	.determine_rate = clk_rcg2_determine_floor_rate,
++	.set_rate = clk_rcg2_shared_set_floor_rate,
++	.set_rate_and_parent = clk_rcg2_shared_set_floor_rate_and_parent,
++};
++EXPORT_SYMBOL_GPL(clk_rcg2_shared_floor_ops);
 +
-+#endif
-diff --git a/include/dt-bindings/reset/qcom,sar2130p-gpucc.h b/include/dt-bindings/reset/qcom,sar2130p-gpucc.h
-new file mode 100644
-index 0000000000000000000000000000000000000000..99ba5f092e2a43fb7b7b2a9f78d9ac4ae0bfea18
---- /dev/null
-+++ b/include/dt-bindings/reset/qcom,sar2130p-gpucc.h
-@@ -0,0 +1,14 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+/*
-+ * Copyright (c) 2019, The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024, Linaro Limited
-+ */
-+
-+#ifndef _DT_BINDINGS_RESET_QCOM_GPU_CC_SAR2130P_H
-+#define _DT_BINDINGS_RESET_QCOM_GPU_CC_SAR2130P_H
-+
-+#define GPUCC_GPU_CC_GX_BCR			0
-+#define GPUCC_GPU_CC_ACD_BCR			1
-+#define GPUCC_GPU_CC_GX_ACD_IROOT_BCR		2
-+
-+#endif
+ static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
+ {
+ 	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
 
 -- 
 2.39.5
