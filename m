@@ -1,677 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-35198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 518319A62EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:29:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F04A9A631F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:30:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0DE98281E95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 10:29:10 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC8081F21EE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 10:30:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7C2131E630C;
-	Mon, 21 Oct 2024 10:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 298F51E3784;
+	Mon, 21 Oct 2024 10:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mokl9gNU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="M/KfdiH3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2864C1E47DD;
-	Mon, 21 Oct 2024 10:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E933D39FD6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 10:30:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506509; cv=none; b=rgk0A2ap/pWp8nk4yCaaS8bVTbbxX1TlO7Bnxjtz7rrlIVALx/MI/k6bL99NEbWOx5mx4MUXkGJ+LFKAtFkbHZXDKN9SndAz6jST19d44huZfPjuits03h2fSBbahGYPdM2VGFzSGp/b2cn0bxwhs35zutw+4mUHL82cAtO+byQ=
+	t=1729506646; cv=none; b=H3PXNXjHt15g2siVLT9FzdEg5mEUAG39fnSFbHHDKKxLuh0n0C5HNEzi6XAqMUqVgjhDHsoO+2NoXmNWdywug1FVzn2omCo2oy+xhwN+CtymLSmHVH6PQhj3Cfb4TrK8QCIpgylRbDmy4gqKw3ySl1NBnjxK38bAkJsAwE8iTd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506509; c=relaxed/simple;
-	bh=E9t0rHw4ovdpue02x1aiNVZryWoj5dt86N2ebwbgM94=;
-	h=From:To:Cc:Subject:Date:Message-Id; b=JIHX/lKRaXC1ODX8qmQaT7PloraIKd/BTkSybe438iwCsvnA+CpkaQxPYrqh/WSmxe93DR0BekzvyWpM35v9ZKIUcDst+Z8DSwhRo/yrT9/OdKhDKbEB5GMalVGfRU7URgPLgbO1mFb9PaQrt73QCNwvy8eMhxXSt54PrckSvkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mokl9gNU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LAArdd014572;
-	Mon, 21 Oct 2024 10:28:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:date:from:message-id:subject:to; s=qcppdkim1; bh=4Z7KAcG3gPWc
-	BkUNYJEZ+Eb8thYY5hXY3vWyxGYZpLY=; b=Mokl9gNUqvo8a9Av2bvH7wRpdvzg
-	SAfn8JQqFVyfSlDPel7NEX02AKQ6I7kskEurhPp+yfRnUlKmY2kVeVGwkA/cCSg1
-	CeczMz5m6PBMYPHCyofYfptlnOvjUriq/lj0Kj0xSAvKpq4Rm3xCmiKcdPs98f8A
-	ZahTllt8RwLeIMwwTOr1iuf87mqSYKZ1jG228JGWBH9IGcGh8veIbU0+wEHqUvg5
-	N/zCnuZ5Z7MPiDGf15QhuNYW7nRfkUwl7z3zjDRjGX1f1DSChuaNO9HdAnA2rN73
-	GdGgxBdhiPakuA3AceNdiHEhZg32Ao+En93oR07l4poGrf/w0kweHOcNMA==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6vxv7wx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 10:28:22 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 49LASI4m005408;
-	Mon, 21 Oct 2024 10:28:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 42cq69sdjy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-	Mon, 21 Oct 2024 10:28:18 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49LASI1d005402;
-	Mon, 21 Oct 2024 10:28:18 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-vdadhani-hyd.qualcomm.com [10.213.106.28])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 49LASIg5005401;
-	Mon, 21 Oct 2024 10:28:18 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4047106)
-	id 525CB5001C2; Mon, 21 Oct 2024 15:58:17 +0530 (+0530)
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: quic_msavaliy@quicinc.com, quic_anupkulk@quicinc.com,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Subject: [PATCH v1] arm64: dts: qcom: sa8775p: Add GPI configuration
-Date: Mon, 21 Oct 2024 15:58:15 +0530
-Message-Id: <20241021102815.12079-1-quic_vdadhani@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: LI713WrTTTa16X5yCyxTOOYys8sK6rbK
-X-Proofpoint-GUID: LI713WrTTTa16X5yCyxTOOYys8sK6rbK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 suspectscore=0
- clxscore=1015 malwarescore=0 mlxlogscore=999 bulkscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 phishscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410210075
+	s=arc-20240116; t=1729506646; c=relaxed/simple;
+	bh=+FD8i4VW6GLQ+8kCcEhzI155Je7Z5QpsCm7eSObmh04=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ii3hLENitMjgfCUp+DjJjl3qk8ryO4rP+ptYMNOQgIqga8TsKDvp8tnkqjfdJQYi3nUKLTFrsbLE2/BDgz4IIC6txpqKA3nRjTtQX5lctecHSWxz9/cxB5KTdeG8HAkXyehzW3hRtXB1wH/2xMXZGOVBpFygzUYHjY98BHKI3lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=M/KfdiH3; arc=none smtp.client-ip=209.85.208.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-2fb56cb61baso33266101fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 03:30:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729506641; x=1730111441; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6U/cj5+Bf3pC9ihPSOxe6Ah/nkqDR4wfALNHrVs82Ms=;
+        b=M/KfdiH3ceFvgMHaSMOvZGzI62cxNA+hLE4ZRrHg65R7lVMM4Gy3GZ3F3/+F9NHp+g
+         zKZen61tCgVsq1WfZZAULHtUqyHp3F0RuKvlC431Hrpuki3oiO/IEobzxyYiitBL49o7
+         IDJXOVulZ4MdoKaWEDGca1MAqZH5w06tlScP32pMOGdUW2OinkxxsMTYc7Tc67wtf3eB
+         HbqcVsXS4c+cHt69JIenpPKNZbm0S7HnpxFFmu3BbYEfjXDDOD8zhuzLatPf0hyoUsrt
+         oUZpmKREyVBRoC8RA9KbpyCvWNtgGH7biqPGqsKhOfMUzOzj2HPr17YoiEWii/OsLVNM
+         MvWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729506641; x=1730111441;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6U/cj5+Bf3pC9ihPSOxe6Ah/nkqDR4wfALNHrVs82Ms=;
+        b=R4OpaweHjINDtuLa1ESYGak2ixm6r36xkyC441rHCx97BRWE3FCMZjx8uujVLZ/Oow
+         vWvcN5EhUIMcn7YYkymswqYlJI9cuaLg2dqH4vdAJw/+Mzx+ja+yfb1hilNVojrLHCVy
+         1quSksllx81GrKZBIQER8OYW7ITsDnzUKW7l3u4JxGwgb5A30iJL8PNCbkWccg6i295H
+         faWmFB+GTPVzJPZ7rkZhYZvAKidEQs4AekYbCtSF4hW2XvnO0ezKT7kogQMFCV0ohSOG
+         pFyNKubFCNVJrE/IVLSZYSUog79ujtNVtaM+zYji9mcR6ozvEznmV+hBjx8K9Ci/W0xX
+         bbWg==
+X-Gm-Message-State: AOJu0YxkNb9/qP9d7ecT8DJq/Gs9195yyCPcSG1nG9gvw18tqUG93aWp
+	QdlKr9AaH2aiHxfL567+jnSf6wpuCahpOuJZQ/0/bgOPJmSRvHm0lbUqPT8Ac44=
+X-Google-Smtp-Source: AGHT+IEOUI6TyliDkZqKChjvPQgoy+tW/qcExcRxKb7OqhjZs2iXvFBlW4eOBmOYvUo9Fk+bjSCzog==
+X-Received: by 2002:a05:651c:547:b0:2fa:cd7e:3b40 with SMTP id 38308e7fff4ca-2fb82ea19damr39216021fa.11.1729506640878;
+        Mon, 21 Oct 2024 03:30:40 -0700 (PDT)
+Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae1217bsm4522711fa.112.2024.10.21.03.30.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Oct 2024 03:30:39 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 00/11] clk: qcom: add support for clock controllers on
+ the SAR2130P platform
+Date: Mon, 21 Oct 2024 13:30:28 +0300
+Message-Id: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEQtFmcC/3WNQQ6CMBBFr0Jmbc20lqCuuIdhUegUJhJKpoZoS
+ O9uZe/yveS/v0MiYUpwr3YQ2jhxXAqYUwXD5JaRFPvCYNBYjbpRyYnRF1zVMMfhmVQdeu9vfUB
+ LBGW1CgV+H8VHV3ji9IryOQ42/bP/W5tWqEJTU2MxoLv6dubFSTxHGaHLOX8B7Z0lC68AAAA=
+X-Change-ID: 20241017-sar2130p-clocks-5fbdd9bf04ee
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Michael Turquette <mturquette@baylibre.com>, 
+ Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@linaro.org>, 
+ Kalpak Kawadkar <quic_kkawadka@quicinc.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2872;
+ i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
+ bh=+FD8i4VW6GLQ+8kCcEhzI155Je7Z5QpsCm7eSObmh04=;
+ b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnFi1J3sbNoJuEo0OyMEAqxEbEG6iENQLiJFesL
+ D4hZ4Y0AkGJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxYtSQAKCRAU23LtvoBl
+ uGqDD/9N1rXjF5247C2hgwlQi0Ed8/wDtJ9N8HygswjvjGX2Dpw7g4NR9OAVySkJ6HqGuqyiEWu
+ j0n9T/IQ4fDvTyhK7jD4pwTti/B/QoT79NvTWFAMbO5GaP4oeOFLcL5HU7PkqePvQ08E8XhyZua
+ WSDN+e/zj0md3AIcfYenaM6/buq9rqM1jst+cv3rNVQAl2yhCmNqBq9C+deqIEBTqq5mz0eSky6
+ nOuBUI/IivMRyJtFOtm60U3NXS/x1L21SAMGh3TpaJYy2gte+Z/OEWEDF71weJWJUhebuQ0uhqg
+ 2MSyF0RlFDT/9YH4cbOyGih1Ycht9RJL7yYwV+CDYOPlKYGzrupxRFMLXB/iM33ELLMYBB+bbfI
+ PgoayuHMi6ScIi37JpJvBpg0MWUnCu/mW2npl59UlkraQX1KqFyxiyFhQJ9X97zawpex1nx/Ibw
+ vW+Pi5WER4GlTvWIZIFY3DrJ8zqMujyGE67vJUncuQpoELAQZ7M17kPri+0gw0tkNLxMS0fFIaY
+ k3GutUIdJfxdNHn69jE2lcOk0N1Xma6+Bc12Bc+czRYeWzapRvhf6aHrtVORaQnyaoLYnpkCLN0
+ cLA3N8m7rRwRgza0Wn5Co75ksAhKqIfDw3Vj3a+UinqccDqJbPjVYfkxNKx97ND397gxrXWikVO
+ q2c6YT+Cvw5+xJA==
+X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-I2C and SPI geni driver also supports the GSI node based
-on client requirements. Currently, in the DTSI, the GSI mode
-configuration is not added.
+Add support for the RPMh, TCSR, Global, Display and GPU clock
+controllers as present on the Qualcomm SAR2130P platform.
 
-Therefore, add GPI DT nodes for QUPV_0/1/2/3 for I2C and SPI
-for the SA8775.
-
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 246 ++++++++++++++++++++++++++
- 1 file changed, 246 insertions(+)
+Changes in v2:
+- Dropped gcc_camera_hf_axi_clk, gcc_camera_sf_axi_clk,
+  gcc_qmip_camera_nrt_ahb_clk, gcc_qmip_camera_rt_ahb_clk,
+  gcc_iris_ss_hf_axi1_sreg, gcc_iris_ss_spd_axi1_sreg,
+  gcc_video_axi0_sreg and gcc_video_axi1_sreg clocks until corresponding
+  subsytems bringup (Taniya)
+- Program GDSC_SLEEP_ENA_VOTE directly from the probe function (Taniya)
+- Dropped sreg, BRANCH_HALT_POLL and collapse_sleep_mask patches
+  (Taniya)
+- Dropped gcc_parent_data_4, gcc_parent_map_4, gcc_parent_data_5,
+  gcc_parent_map_5 (LKP)
+- Link to v1: https://lore.kernel.org/r/20241017-sar2130p-clocks-v1-0-f75e740f0a8d@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 07b3d9f65684..47b5fb4d83a9 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
- #include <dt-bindings/clock/qcom,sa8775p-gpucc.h>
-+#include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
- #include <dt-bindings/firmware/qcom,scm.h>
-@@ -852,6 +853,28 @@
- 			#mbox-cells = <2>;
- 		};
- 
-+		gpi_dma2: qcom,gpi-dma@800000  {
-+			compatible = "qcom,sm6350-gpi-dma";
-+			reg = <0x0 0x00800000 0x0 0x60000>;
-+			#dma-cells = <3>;
-+			interrupts = <GIC_SPI 588 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 589 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 590 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 591 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 592 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 593 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 594 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 595 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 596 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 597 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 598 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 599 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <12>;
-+			dma-channel-mask = <0xfff>;
-+			iommus = <&apps_smmu 0x5b6 0x0>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_2: geniqup@8c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x008c0000 0x0 0x6000>;
-@@ -882,6 +905,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 0 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 0 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -903,6 +930,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 0 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 0 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -939,6 +970,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 1 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 1 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -960,6 +995,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 1 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 1 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -996,6 +1035,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 2 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 2 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1015,6 +1058,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 2 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 2 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				status = "disabled";
-@@ -1053,6 +1100,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 3 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 3 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1074,6 +1125,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 3 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 3 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1108,6 +1163,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 4 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 4 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				#address-cells = <1>;
- 				#size-cells = <0>;
- 				status = "disabled";
-@@ -1131,6 +1190,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 4 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 4 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1167,6 +1230,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 5 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 5 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1188,6 +1255,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 5 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 5 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1224,6 +1295,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 6 QCOM_GPI_I2C>,
-+				       <&gpi_dma2 1 6 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1245,6 +1320,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma2 0 6 QCOM_GPI_SPI>,
-+				       <&gpi_dma2 1 6 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1265,6 +1344,28 @@
- 
- 		};
- 
-+		gpi_dma0: qcom,gpi-dma@900000  {
-+			compatible = "qcom,sm6350-gpi-dma";
-+			reg = <0x0 0x00900000 0x0 0x60000>;
-+			#dma-cells = <3>;
-+			interrupts = <GIC_SPI 244 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 251 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
-+			dma-channels = <12>;
-+			dma-channel-mask = <0xfff>;
-+			iommus = <&apps_smmu 0x416 0x0>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_0: geniqup@9c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x9c0000 0x0 0x6000>;
-@@ -1295,6 +1396,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1316,6 +1421,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 0 QCOM_GPI_SPI>,
-+				     <&gpi_dma0 1 0 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1352,6 +1461,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1373,6 +1486,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 1 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1409,6 +1526,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1430,6 +1551,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 2 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 2 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1466,6 +1591,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1487,6 +1616,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 3 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 3 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1523,6 +1656,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1544,6 +1681,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 4 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 4 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1580,6 +1721,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
-+				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1601,6 +1746,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma0 0 5 QCOM_GPI_SPI>,
-+				       <&gpi_dma0 1 5 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1620,6 +1769,28 @@
- 			};
- 		};
- 
-+		gpi_dma1: qcom,gpi-dma@a00000  {
-+			compatible = "qcom,sm6350-gpi-dma";
-+			reg = <0x0 0x00a00000 0x0 0x60000>;
-+			#dma-cells = <3>;
-+			interrupts = <GIC_SPI 279 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 280 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 281 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 282 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 283 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 284 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 293 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 294 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 295 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 296 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 297 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 298 IRQ_TYPE_LEVEL_HIGH>;
-+			iommus = <&apps_smmu 0x456 0x0>;
-+			dma-channels = <12>;
-+			dma-channel-mask = <0xfff>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_1: geniqup@ac0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0x00ac0000 0x0 0x6000>;
-@@ -1650,6 +1821,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1671,6 +1846,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 0 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 0 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1708,6 +1887,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1729,6 +1912,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 1 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 1 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1766,6 +1953,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1787,6 +1978,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 2 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 2 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1823,6 +2018,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1844,6 +2043,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 3 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 3 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1881,6 +2084,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1902,6 +2109,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 4 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 4 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1939,6 +2150,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1960,6 +2175,10 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 5 QCOM_GPI_SPI>,
-+				       <&gpi_dma1 1 5 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -1996,10 +2215,29 @@
- 						     "qup-config",
- 						     "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
-+				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
-+
- 			};
- 		};
- 
-+		gpi_dma3: qcom,gpi-dma@b00000  {
-+			compatible = "qcom,sm6350-gpi-dma";
-+			reg = <0x0 0x00b00000 0x0 0x58000>;
-+			#dma-cells = <3>;
-+			interrupts = <GIC_SPI 368 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 369 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 527 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 528 IRQ_TYPE_LEVEL_HIGH>;
-+			iommus = <&apps_smmu 0x056 0x0>;
-+			dma-channels = <4>;
-+			dma-channel-mask = <0xf>;
-+			status = "disabled";
-+		};
-+
- 		qupv3_id_3: geniqup@bc0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0x0 0xbc0000 0x0 0x6000>;
-@@ -2030,6 +2268,10 @@
- 							 "qup-config",
- 							 "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma3 0 0 QCOM_GPI_I2C>,
-+				       <&gpi_dma3 1 0 QCOM_GPI_I2C>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
-@@ -2051,6 +2293,10 @@
- 							 "qup-config",
- 							 "qup-memory";
- 				power-domains = <&rpmhpd SA8775P_CX>;
-+				dmas = <&gpi_dma3 0 0 QCOM_GPI_SPI>,
-+				       <&gpi_dma3 1 0 QCOM_GPI_SPI>;
-+				dma-names = "tx",
-+					    "rx";
- 				status = "disabled";
- 			};
- 
+---
+Dmitry Baryshkov (9):
+      dt-bindings: clock: qcom,rpmhcc: Add SAR2130P compatible
+      dt-bindings: clock: qcom: document SAR2130P Global Clock Controller
+      dt-bindings: clock: qcom,sm8550-tcsr: Add SAR2130P compatible
+      dt-bindings: clock: qcom,sm8550-dispcc: Add SAR2130P compatible
+      clk: qcom: rcg2: add clk_rcg2_shared_floor_ops
+      clk: qcom: rpmh: add support for SAR2130P
+      clk: qcom: add support for GCC on SAR2130P
+      clk: qcom: tcsrcc-sm8550: add SAR2130P support
+      clk: qcom: dispcc-sm8550: enable support for SAR2130P
+
+Konrad Dybcio (2):
+      dt-bindings: clk: qcom,sm8450-gpucc: add SAR2130P compatibles
+      clk: qcom: add SAR2130P GPU Clock Controller support
+
+ .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
+ .../bindings/clock/qcom,sar2130p-gcc.yaml          |   65 +
+ .../bindings/clock/qcom,sm8450-gpucc.yaml          |    2 +
+ .../bindings/clock/qcom,sm8550-dispcc.yaml         |    1 +
+ .../bindings/clock/qcom,sm8550-tcsr.yaml           |    1 +
+ drivers/clk/qcom/Kconfig                           |   22 +-
+ drivers/clk/qcom/Makefile                          |    2 +
+ drivers/clk/qcom/clk-rcg.h                         |    1 +
+ drivers/clk/qcom/clk-rcg2.c                        |   48 +-
+ drivers/clk/qcom/clk-rpmh.c                        |   11 +
+ drivers/clk/qcom/dispcc-sm8550.c                   |   18 +-
+ drivers/clk/qcom/gcc-sar2130p.c                    | 2326 ++++++++++++++++++++
+ drivers/clk/qcom/gpucc-sar2130p.c                  |  507 +++++
+ drivers/clk/qcom/tcsrcc-sm8550.c                   |   18 +-
+ include/dt-bindings/clock/qcom,sar2130p-gcc.h      |  181 ++
+ include/dt-bindings/clock/qcom,sar2130p-gpucc.h    |   33 +
+ include/dt-bindings/reset/qcom,sar2130p-gpucc.h    |   14 +
+ 17 files changed, 3240 insertions(+), 11 deletions(-)
+---
+base-commit: 27e373c583871ca992837ab918709b67e27d1e3d
+change-id: 20241017-sar2130p-clocks-5fbdd9bf04ee
+
+Best regards,
 -- 
-2.17.1
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 
