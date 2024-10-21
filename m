@@ -1,123 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-35270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 553249A722D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 20:20:23 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2904E9A7235
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 20:22:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D4F781F25D7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 18:20:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C881FB23499
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 18:22:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 448971F6674;
-	Mon, 21 Oct 2024 18:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6C476194AF6;
+	Mon, 21 Oct 2024 18:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hRo1sqyS"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T64i2lxT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230781C3F04;
-	Mon, 21 Oct 2024 18:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AC31DACA1
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 18:22:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729534812; cv=none; b=cNZ4yqnOfpUD3Z59zCJ97J5yPPhBOc6HnQGKVEWK9TqXtiqrA91o5U+tAKRsnzdksAZo/6DdaqCVF3vKFenQ7m5gASjxUeeReX7RQAAQ2P2sSdfLsuIXgszoKj+X/IlTJWXNhBxthLEWzjwr8igi6K95irocYXwZGImnkW5+8DI=
+	t=1729534924; cv=none; b=AnOIBi+qpbBcGWdKfnCIevdbsW2uX8/PO0KBTQ7qDlPaClWSbn6DesXtmUTyBWb/IUgHIMrIZ93QxryULgt1JDh1GE+xxvYOlXddn7O4QtnrwFY0OtwSlqJjUD5a7uCLGVhopu7y2CzGBjMrERN2WiRJOwtKoaO/j9RBJrD5y9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729534812; c=relaxed/simple;
-	bh=GlPX+KtWJH8I2hdfrLtHvDpj0eL7bZVupSjgXXp60UQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tN60JtpKZjMyAyWN/F0Z8zlSytPZJjv806mapNRj87Myqm4mC5lJO0I9cjJTAjRByC/phswIOSPeV1xoqRj7rsWf4Kwa+S1BaQBP3Mu0Qfy4uvXm6NzbFPUz2PP5Miwc856ptS+ukNBrl8qFiSyoeyWDJDxZl7vD9oWt9D/+lD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hRo1sqyS; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LAlHxI012350;
-	Mon, 21 Oct 2024 18:19:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	SBA+LZg+3ZcEFM0R25WL7du5150FkxKzdf/CXN7CqTw=; b=hRo1sqySidl/ke6w
-	iyVKvIz0X/kv2WlSF6PhnbYa6s3PzZZp0iLrwpvN5JmcUuaMQjAxD9hA8X7IW9n8
-	NVUuTENN4q5t+TeyhR8CDazj4q6txde2xen6+IJivYPIhHbtWPgOKq6l0WvlpuMN
-	vqq7Ro5egzaUyyHIJMUUh82HdwwHPDgKhd9ji5VivL3vJbYGK9Ma5QHDb/hMCCD6
-	O7IeBGdCCeePxxQr4Wg3i2Mc0N0gVjpWWhBZbBnYHmGZcp3xJausw734lWL4+ZVa
-	SZRYyy491JDshNmnP+SKHj5ac7Hni0xG6s/OQn6DUQcjLXzSF/AuhpQ3rpjvA8ts
-	jfNXlA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6tsnm7j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 18:19:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49LIJZxQ012413
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 18:19:35 GMT
-Received: from [10.81.24.74] (10.49.16.6) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
- 2024 11:19:35 -0700
-Message-ID: <41db541a-4de1-409b-bfec-7b9456fc200f@quicinc.com>
-Date: Mon, 21 Oct 2024 11:19:34 -0700
+	s=arc-20240116; t=1729534924; c=relaxed/simple;
+	bh=9pZU9zAoGZt6NGrlu4fYgkLxteWoyzNrqWQutED9lPs=;
+	h=From:To:Cc:Subject:References:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=NrfWT7bXvy9DhqikWob+Lr/2LtFB3zXuo+JifS6n4BMJ1CgBrxJ292UhtiLBywxoUtf04f6xDroNml3fPxkMak/vC36SwiyF8C0VsWLCpqTYtMYpRhInga/MFPRDQrv2CmD0yjpsxub7SxPg760+OgDK3VbY+F76guXCwZmpTFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T64i2lxT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A27EC4CEC3;
+	Mon, 21 Oct 2024 18:22:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729534923;
+	bh=9pZU9zAoGZt6NGrlu4fYgkLxteWoyzNrqWQutED9lPs=;
+	h=From:To:List-Id:Cc:Subject:References:Date:In-Reply-To:From;
+	b=T64i2lxTqV5l+RWPHnJvW43X4ADrpOdvNHCitFLZDyBkVWrM3hgNOfdg5Dkl9FK8X
+	 ARs+1wzp2I1+5KfJf7WBaTInoUeiMXrzu2FRko/lPRd0dVwMkjUmiOnJIYzs1SlnyA
+	 Wc8GjPrsZMTEOoaKM/nAfB8vhbqiA2bS1DG6yUjxYKxkwyKX6Sdp06T/Zvl7uxrVP1
+	 6pWJLMtiZzMOEcktEY5ywWgt7XB0WzVra1PxkPhkpRrVES66ek674o8vpr5MiqX6xc
+	 MxHUKrPjaIQuYhf7lyb7Kpx74B4AnyrpLCuTVVEmd1tSSr735lvXRADkS3SRxBwLZU
+	 QEVWjZIKUMeOQ==
+From: Kalle Valo <kvalo@kernel.org>
+To: Jeff Johnson <quic_jjohnson@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,  Jeff Johnson
+ <jjohnson@kernel.org>,  Bjorn Andersson <andersson@kernel.org>,  Konrad
+ Dybcio <konradybcio@kernel.org>,  <linux-firmware@kernel.org>,
+  <ath11k@lists.infradead.org>,  <linux-arm-msm@vger.kernel.org>
+Subject: Re: [RFC PULL] ath11k: move WCN6750 firmware to the device-specific
+ subdir
+References: <20241011061606.1612918-1-dmitry.baryshkov@linaro.org>
+	<379780f5-bf30-4452-aa9e-f1b6915b6389@quicinc.com>
+Date: Mon, 21 Oct 2024 21:22:00 +0300
+In-Reply-To: <379780f5-bf30-4452-aa9e-f1b6915b6389@quicinc.com> (Jeff
+	Johnson's message of "Fri, 18 Oct 2024 15:16:02 -0700")
+Message-ID: <87plntnwon.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 4/8] mtd: nand: Add qpic_common API file
-To: Md Sadre Alam <quic_mdalam@quicinc.com>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241021115620.1616617-1-quic_mdalam@quicinc.com>
- <20241021115620.1616617-5-quic_mdalam@quicinc.com>
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
-Content-Language: en-US
-In-Reply-To: <20241021115620.1616617-5-quic_mdalam@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SD8HV_K6uhAb3197RF7-KumeTaXLtH8X
-X-Proofpoint-ORIG-GUID: SD8HV_K6uhAb3197RF7-KumeTaXLtH8X
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 spamscore=0 mlxlogscore=977 phishscore=0 adultscore=0
- mlxscore=0 clxscore=1011 bulkscore=0 malwarescore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410210132
+Content-Type: text/plain
 
-On 10/21/24 04:56, Md Sadre Alam wrote:
-...
-> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
-> new file mode 100644
-> index 000000000000..570ab59ca12b
-> --- /dev/null
-> +++ b/drivers/mtd/nand/qpic_common.c
-> @@ -0,0 +1,757 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+Jeff Johnson <quic_jjohnson@quicinc.com> writes:
 
-I'm surprised you aren't adding a 2024 Qualcomm Innovation Center copyright 
-...
-> +MODULE_LICENSE("GPL");
+> On 10/10/2024 11:16 PM, Dmitry Baryshkov wrote:
+>
+>> The firmware under ath11k/WCN6750 can not be utilized on other devices using
+>> WCN6750 to provide WiFi (e.g. on the Qualcomm RB3 gen2 board).  This is an
+>> attempt to propose a solution by moving the file into device-specifig subdir.
+>> Other platforms can place firmware files in other subdirs, depending on the
+>> SoC.
+>> 
+>> Note, while performing the move I also propose squashing the firmware
+>> file.
 
-Since commit 1fffe7a34c89 ("script: modpost: emit a warning when the
-description is missing"), a module without a MODULE_DESCRIPTION() will
-result in a warning when built with make W=1. Recently, multiple
-developers have been eradicating these warnings treewide, and very few
-(if any) are left, so please don't introduce a new one :)
+I assume you mean squashing the files to wpss.mbn?
 
-Please add the missing MODULE_DESCRIPTION()
+>> This is the practice recommended by the msm platform maintainers for the DSP
+>> firmware (not to mention that it also saves us from the extra symlinks). If
+>> Kalle, ath11k maintainer, objects, I will keep the firmware in the split form.
+>> 
+>> For now this is an RFC in order to gather opinion form respective platform and
+>> driver maintainers.
+>> 
+>> ----------------------------------------------------------------
+>> 
+>> The following changes since commit d55315295cccf8ce5dc288a74d75cf09b8063cfc:
+>> 
+>>   Merge branch 'superm1/qci-patches' into 'main' (2024-10-10 19:11:13 +0000)
+>> 
+>> are available in the Git repository at:
+>> 
+>>   https://gitlab.com/lumag/linux-firmware wcn6750-device-specific
+>> 
+>> for you to fetch changes up to abe8c109a2b4c422b627335d124473734c8790d8:
+>> 
+>>   ath11k: move WCN6750 firmware to the device-specific subdir (2024-10-10 22:26:20 +0300)
+>> 
+>> ----------------------------------------------------------------
+>> Dmitry Baryshkov (1):
+>>       ath11k: move WCN6750 firmware to the device-specific subdir
+>> 
+>>  WHENCE                                             |  12 ++----------
+>>  ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} | Bin 5819999 -> 7463728 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b00                      | Bin 340 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b01                      | Bin 6848 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b02                      | Bin 10300 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b03                      | Bin 4096 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b05                      | Bin 164332 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b06                      | Bin 266684 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b07                      | Bin 1176368 -> 0 bytes
+>>  ath11k/WCN6750/hw1.0/wpss.b08                      |   0
+>>  ath11k/WCN6750/hw1.0/wpss.mdt                      | Bin 7188 -> 0 bytes
+>>  11 files changed, 2 insertions(+), 10 deletions(-)
+>>  rename ath11k/WCN6750/hw1.0/{wpss.b04 => sc7280/wpss.mbn} (77%)
 
+So this follow basically the same directory hierarchy as you Dmitry
+implemented for ath10k in commit 5abf259772df ("wifi: ath10k: support
+board-specific firmware overrides"), right? Just making sure we are on
+the same page. I think ath10k/ath11k/ath12k drivers should follow the
+same design as much as possible.
+
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b00
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b01
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b02
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b03
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b05
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b06
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b07
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.b08
+>>  delete mode 100644 ath11k/WCN6750/hw1.0/wpss.mdt
+>
+> I'm waiting for Kalle to respond, but at a minimum I suspect our internal
+> firmware tooling would be impacted by this change.
+
+Yeah, most likely we need to update our tools. But we would have to do
+it anyway so I'm not concerned about that.
+
+> Kalle, do you have concerns or suggestions on how to handle this issue?
+
+Looks good to me.
+
+Dmitry, if you have the time please take a look at this:
+
+https://patchwork.kernel.org/project/linux-wireless/cover/20241001033053.2084360-1-quic_miaoqing@quicinc.com/
+
+Based on a quick look it seems to do things differently and not really a
+fan of that.
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
 
