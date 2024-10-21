@@ -1,76 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-35248-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1DD29A688C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:32:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9671A9A68A0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:36:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 78163287667
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:32:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 491AE2887D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:36:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2C591EF935;
-	Mon, 21 Oct 2024 12:32:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="X1x2io/Q"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B7CC1EF947;
+	Mon, 21 Oct 2024 12:36:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B128A1EF92C
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 12:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 768081E884E;
+	Mon, 21 Oct 2024 12:36:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729513966; cv=none; b=awJSntGY3Yv48bmTwwWBqbo3JEDb4J07owyxx0l6m8f57854UDZg4F80zKXZ7KW5/CJCfhogONRsFSx9+/Q+2RkQYwCwSlXRKwhtO+SdKVJOQ8rs84VEr904PSei5nd4h3ZBH9Uh6e6zO9MiEVP2CPGKO1YGm0QFq2Ivtmm0joI=
+	t=1729514198; cv=none; b=orc8H7HEPzMpxHeYacvdPALSjOmSBEStAsF2C86e+vV9egaP3+d+VbvYwdPaApcF60j1Sz94XhiJ92l4RPkKRYio5KVeDLul0xx7Ge/RUVuGxIUOR9+r9Lx7cqA8nAQ+ZcbvRzz7cnolDYbp3/pS+3BHQ3hOX5Nb5Y6Nidh9950=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729513966; c=relaxed/simple;
-	bh=4XJdHOeLB0HksEUioBvTCNJuvmjFzA4qDeHZmTgcxDo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ZszR7FnVM+JkaquP13jbzYB6LqKPI9hh8xpXH4Y72CcqtoVqMtGyP6XApAbWuQzgYc2W25QIn6q+wTD0d+IHJ6gOw8c7t91cc6UOIhzZlRkicNy/tUbnBJn+WM+dXxq0UxaX3UC2FHx0LFKEQBKvxF3bqPZkJ2aMd0VAInB0TCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=X1x2io/Q; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d447de11dso3525251f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 05:32:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729513963; x=1730118763; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xK977l4SMZlVVZ120SxoAqshGqpipjnvBMfJGymAJIY=;
-        b=X1x2io/QqWxUP6JOdsuunUNEE9UbQELC8Q/q0Ev6A597GwfGT7xI/m+JfPCdEYdl3S
-         dzFzlZ37bp+8QP7qCvKmCIUJxib4YLkx0MmpbA9Rdhrv1GLWBlPcK4l0H/gNStm8AX1V
-         VdcXL+iYI4jXHmb5XRrPtoy2incHiHxveBMGb52qwrPYVgC00J+hYdruKUEF/HjYw14y
-         LFxoA0tIiiTrNcKlbONsVDVOznmeAQ8Ynf32sHvVg0GknwZiMxBevZTomxBUXeXabn90
-         eh/xQgUeKuTGZidX63Bq8dbUHuw/KUuOfnhrAbRL5po1Y8kYDxrN9vWZCRHpF6EeLrHm
-         wncA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729513963; x=1730118763;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xK977l4SMZlVVZ120SxoAqshGqpipjnvBMfJGymAJIY=;
-        b=CLn9bixSQVXuKBWjXoQFj7QyZxXtkwVkL1Pb3a+01Qm6xFwdcGmP1MoQrv3LKKQDrt
-         Om9bOXeQJYlLD9FQKo1hg+SLKIsLzfBjBnB2LrAqRu+8zjuENM0HIKnxKTim3/3oOduI
-         VVXz+Qx73t1C83wkbmKsauCvawehgaF02yaUCIZnX/rq4iFppxYlXz0+apipse2wpTaN
-         UKEe/7PROwNsa1HTZSymJlBf5JcviImePZ6KLMNqZiV+mWtUGgp7DLCwp6g1q2Cwxsrl
-         CmWE2L3iszlCloejC2QU7TqRPxRecOESIIkJBNDXVCQoo0TZbtI9iGu+QR0RZtjzT4WV
-         GIHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWWM0uafL4UlvNlwnVZqlJmNhshV4b7PmoQ21trKCG8F11DvysD5U+iac7IvX0xTTdYGwDMnKrduEgXlwjI@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPAxJUlb2uyAg/dnpg1TJ6MHA5AEEW14M8VmUTA2NnemhIHPm6
-	ZzFJWUr0bLa34zzwiHfCzu4TZvjYUrH4MjLsgpluig6LvHygAAKmNBHX0rfC/Jk=
-X-Google-Smtp-Source: AGHT+IEF5fcgC6ODgI4jJBJx2i1qOREjjBxmOShJ8ylB9dd5vueXyrRW5QKR45FnVPpf8X+wIJuZhg==
-X-Received: by 2002:adf:ec8a:0:b0:37d:4ef1:1820 with SMTP id ffacd0b85a97d-37eb487c281mr7320360f8f.40.1729513962869;
-        Mon, 21 Oct 2024 05:32:42 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:3908:dea6:2ddd:be97? ([2a01:e0a:982:cbb0:3908:dea6:2ddd:be97])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0a587f4sm4249896f8f.52.2024.10.21.05.32.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Oct 2024 05:32:42 -0700 (PDT)
-Message-ID: <a2d20619-0724-4b16-a9a5-4a3680f21c99@linaro.org>
-Date: Mon, 21 Oct 2024 14:32:40 +0200
+	s=arc-20240116; t=1729514198; c=relaxed/simple;
+	bh=pGjxOAo38J7DvNsv0qsRBEiB1i0Qpqbdm/HFUd5B7ek=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=CBxDUehgsJGWZNUVBMkLMkbJC5/Xe7/dMvuA3kjYrf5YVxsx/N+79hbV/RLGQlVeQAvvUsG3QmgbeJx9CZolU+z3aszQ74fiqDjwpEaqQBjLcs7BZOEXPOGqaAQGy+qOMAIW/l1dBS3ByoPxWnAdZfW5O5bUysh3ROzxp0wlokQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 68768DA7;
+	Mon, 21 Oct 2024 05:37:04 -0700 (PDT)
+Received: from [10.57.64.219] (unknown [10.57.64.219])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 0A3513F528;
+	Mon, 21 Oct 2024 05:36:32 -0700 (PDT)
+Message-ID: <4ddc9078-1059-45a2-8f44-c904d62c854f@arm.com>
+Date: Mon, 21 Oct 2024 13:36:32 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -78,93 +42,189 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 0/6] drm/bridge: add ycbcr_420_allowed support
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- Alexander Stein <alexander.stein@ew.tq-group.com>
-References: <20241019-bridge-yuv420-v1-0-d74efac9e4e6@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20241019-bridge-yuv420-v1-0-d74efac9e4e6@linaro.org>
+Subject: Re: [PATCH v5 3/3] coresight: dummy: Add static trace id support for
+ dummy source
+Content-Language: en-GB
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20241018032217.39728-1-quic_jinlmao@quicinc.com>
+ <20241018032217.39728-4-quic_jinlmao@quicinc.com>
+ <b2f9aa93-a50a-4bfd-9df0-9e3a170404f8@arm.com>
+In-Reply-To: <b2f9aa93-a50a-4bfd-9df0-9e3a170404f8@arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi,
+On 21/10/2024 13:31, Suzuki K Poulose wrote:
+> On 18/10/2024 04:22, Mao Jinlong wrote:
+>> Some dummy source has static trace id configured in HW and it cannot
+>> be changed via software programming. Configure the trace id in device
+>> tree and reserve the id when device probe.
+>>
+>> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+>> ---
+>>   .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
+>>   drivers/hwtracing/coresight/coresight-dummy.c | 59 +++++++++++++++++--
+>>   2 files changed, 70 insertions(+), 4 deletions(-)
+>>   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight- 
+>> devices-dummy-source
+>>
+>> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices- 
+>> dummy-source b/Documentation/ABI/testing/sysfs-bus-coresight-devices- 
+>> dummy-source
+>> new file mode 100644
+>> index 000000000000..c7d975e75d85
+>> --- /dev/null
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+>> @@ -0,0 +1,15 @@
+>> +What:        /sys/bus/coresight/devices/dummy_source<N>/enable_source
+>> +Date:        Oct 2024
+>> +KernelVersion:    6.13
+>> +Contact:    Mao Jinlong <quic_jinlmao@quicinc.com>
+>> +Description:    (RW) Enable/disable tracing of dummy source. A sink 
+>> should be activated
+>> +        before enabling the source. The path of coresight components 
+>> linking
+>> +        the source to the sink is configured and managed 
+>> automatically by the
+>> +        coresight framework.
+>> +
+>> +What:        /sys/bus/coresight/devices/dummy_source<N>/traceid
+>> +Date:        Oct 2024
+>> +KernelVersion:    6.13
+>> +Contact:    Mao Jinlong <quic_jinlmao@quicinc.com>
+>> +Description:    (R) Show the trace ID that will appear in the trace 
+>> stream
+>> +        coming from this trace entity.
+>> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/ 
+>> hwtracing/coresight/coresight-dummy.c
+>> index bb85fa663ffc..602a7e89e311 100644
+>> --- a/drivers/hwtracing/coresight/coresight-dummy.c
+>> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
+>> @@ -11,10 +11,12 @@
+>>   #include <linux/pm_runtime.h>
+>>   #include "coresight-priv.h"
+>> +#include "coresight-trace-id.h"
+>>   struct dummy_drvdata {
+>>       struct device            *dev;
+>>       struct coresight_device        *csdev;
+>> +    u8                traceid;
+>>   };
+>>   DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
+>> @@ -72,6 +74,32 @@ static const struct coresight_ops dummy_sink_cs_ops 
+>> = {
+>>       .sink_ops = &dummy_sink_ops,
+>>   };
+>> +/* User can get the trace id of dummy source from this node. */
+>> +static ssize_t traceid_show(struct device *dev,
+>> +                struct device_attribute *attr, char *buf)
+>> +{
+>> +    unsigned long val;
+>> +    struct dummy_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    val = drvdata->traceid;
+>> +    return scnprintf(buf, PAGE_SIZE, "%#lx\n", val);
+>> +}
+>> +static DEVICE_ATTR_RO(traceid);
+>> +
+>> +static struct attribute *coresight_dummy_attrs[] = {
+>> +    &dev_attr_traceid.attr,
+>> +    NULL,
+>> +};
+>> +
+>> +static const struct attribute_group coresight_dummy_group = {
+>> +    .attrs = coresight_dummy_attrs,
+>> +};
+>> +
+>> +static const struct attribute_group *coresight_dummy_groups[] = {
+>> +    &coresight_dummy_group,
+>> +    NULL,
+>> +};
+>> +
+>>   static int dummy_probe(struct platform_device *pdev)
+>>   {
+>>       struct device *dev = &pdev->dev;
+>> @@ -79,6 +107,11 @@ static int dummy_probe(struct platform_device *pdev)
+>>       struct coresight_platform_data *pdata;
+>>       struct dummy_drvdata *drvdata;
+>>       struct coresight_desc desc = { 0 };
+>> +    int ret, trace_id;
+>> +
+>> +    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>> +    if (!drvdata)
+>> +        return -ENOMEM;
+>>       if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
+>> @@ -90,6 +123,25 @@ static int dummy_probe(struct platform_device *pdev)
+>>           desc.subtype.source_subtype =
+>>                       CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
+>>           desc.ops = &dummy_source_cs_ops;
+>> +        desc.groups = coresight_dummy_groups;
+>> +
+>> +        ret = coresight_get_static_trace_id(dev, &trace_id);
+>> +        if (!ret) {
+>> +            /* Get the static id if id is set in device tree. */
+>> +            ret = coresight_trace_id_get_static_system_id(trace_id);
 
-On 18/10/2024 23:49, Dmitry Baryshkov wrote:
-> One of the features that drm_bridge_connector can't handle currently is
-> setting of the ycbcr_420_allowed flag on the connector. Add the flag to
-> the drm_bridge struct and propagate it to the drm_connector as AND of
-> all flags in the bridge chain.
+This may be worth an error message, it is a rare one. Othewise, there is
+no clue on what caused the failure. Or have a specific error code as a
+result ?
+
+>> +            if (ret < 0)
+>> +                return ret;
+
+e.g., return -EBUSY ? /* Device or resource not available */
+
+>> +
+>> +        } else {
+>> +            /* Get next available id if id is not set in device tree. */
+>> +            trace_id = coresight_trace_id_get_system_id();
+>> +            if (trace_id < 0) {
+>> +                ret = trace_id;
+>> +                return ret;
+>> +            }
+>> +        }
+>> +        drvdata->traceid = (u8)trace_id;
+>> +
+>>       } else if (of_device_is_compatible(node, "arm,coresight-dummy- 
+>> sink")) {
+>>           desc.name = coresight_alloc_device_name(&sink_devs, dev);
+>>           if (!desc.name)
+>> @@ -108,10 +160,6 @@ static int dummy_probe(struct platform_device *pdev)
+>>           return PTR_ERR(pdata);
+>>       pdev->dev.platform_data = pdata;
+>> -    drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+>> -    if (!drvdata)
+>> -        return -ENOMEM;
+>> -
+>>       drvdata->dev = &pdev->dev;
+>>       platform_set_drvdata(pdev, drvdata);
+
+Additionally we should drop the system_id if registering the coresight 
+device fails.
+
+
+Suzuki
+
+>> @@ -131,7 +179,10 @@ static void dummy_remove(struct platform_device 
+>> *pdev)
+>>   {
+>>       struct dummy_drvdata *drvdata = platform_get_drvdata(pdev);
+>>       struct device *dev = &pdev->dev;
+>> +    struct device_node *node = dev->of_node;
 > 
-> As an example of the conversion, enable the flag on the DW HDMI bridge,
-> MSM DP bridge, display connector drivers (for DisplayPort and HDMI
-> outputs) and AUX bridges.
+> ^^ Why is this needed ? The rest looks fine to me
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Dmitry Baryshkov (6):
->        drm/display: bridge_connector: handle ycbcr_420_allowed
->        drm/atomic: add interlaced and ycbcr_420 flags to connector's state dump
->        drm/bridge: display-connector: allow YCbCr 420 for HDMI and DP
->        drm/bridge: aux: allow interlaced and YCbCr 420 output
->        drm/msm/dp: migrate the ycbcr_420_allowed to drm_bridge
-
-How do you plan to merge this serie ?
-
->        drm/bridge: dw-hdmi: set bridge's ycbcr_420_allowed flag
+>> +    if (IS_VALID_CS_TRACE_ID(drvdata->traceid))
+>> +        coresight_trace_id_put_system_id(drvdata->traceid);
+>>       pm_runtime_disable(dev);
+>>       coresight_unregister(drvdata->csdev);
+>>   }
 > 
->   drivers/gpu/drm/bridge/aux-bridge.c            |  4 ++++
->   drivers/gpu/drm/bridge/aux-hpd-bridge.c        |  4 ++++
->   drivers/gpu/drm/bridge/display-connector.c     |  4 ++++
->   drivers/gpu/drm/bridge/synopsys/dw-hdmi.c      |  3 +++
->   drivers/gpu/drm/display/drm_bridge_connector.c |  6 ++++--
->   drivers/gpu/drm/drm_atomic.c                   |  2 ++
->   drivers/gpu/drm/msm/dp/dp_display.c            |  4 ++--
->   drivers/gpu/drm/msm/dp/dp_drm.c                | 10 ++++------
->   drivers/gpu/drm/msm/dp/dp_drm.h                |  7 ++++---
->   include/drm/drm_bridge.h                       |  5 +++++
->   10 files changed, 36 insertions(+), 13 deletions(-)
-> ---
-> base-commit: 7f796de9da37b78e05edde94ebc7e3f9ee53b3b4
-> change-id: 20241018-bridge-yuv420-aab94d4575de
-> 
-> Best regards,
 
-Neil
 
