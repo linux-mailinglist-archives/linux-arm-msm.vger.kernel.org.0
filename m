@@ -1,74 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-35207-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6F3229A6343
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:33:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C88C39A634A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:33:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC0571F22639
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 10:33:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74CF62837A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 10:33:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 001391E570A;
-	Mon, 21 Oct 2024 10:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 523DF1E570D;
+	Mon, 21 Oct 2024 10:31:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hSOjKJb4"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KhK7GGy/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B751EABB5
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 10:31:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8EB1EABC2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 10:31:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729506666; cv=none; b=tHxeYhSDSwL5cBGahgIrD7ty35Tc01ykOo2qJuCiFBRHSnJHYJqQechTYl4hIwKYcpU5Z6nDIcMp31m9Y54+VyCmF5bqiP2CcW2UZXjlc3JKuVolZhm6/bNyDdUBRGgL8JZTL08vB4oOlDmodel60u6ic0DvOpdfdqhNEihO0Eg=
+	t=1729506669; cv=none; b=L3v3YHXtbV2sy4BL8VQVsiOwmzH5nCMsbZL5tRCUwvq4AoViswxQyiFPmD+NYZcCzovF/OCkrsZRdcUWRw6NHRoKA7UxADY36L7GMX36lgCBIggIB7JyBxBc6aDTbXDdVSaOJ3+q59qSgvEWoGmK4SxcfvviCgMMZTXWjg9j+5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729506666; c=relaxed/simple;
-	bh=J01aZfvomEsVQEi/Nl/mHvq41KMRorLHAPm15NwwtBA=;
+	s=arc-20240116; t=1729506669; c=relaxed/simple;
+	bh=FF4Jnab+Geqk+xkXhpJem2oUCgBLpD9njXEn5sRdMvU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=d7aPPtiMgDQcZcP9ObmUC3Rlth/uMf7w1NH4nyrKE47WmSQco6FrG7yXJX9+gDRlWkH3IjPnYyhkXSihbvWPCOMLe51nTvdVhKRH0oSP+2D9w0TwFUw0ZBlR18mR/Q8i62/PPfRAdyeO+oH4QVkJ+ipxJg2HOCgP1b/q5Yq3NIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hSOjKJb4; arc=none smtp.client-ip=209.85.208.177
+	 In-Reply-To:To:Cc; b=nnqSgqZc323h9Q5njZg3ZseDJ1WWNc2+ADTq2VMGCtUgyRBLnBTansPUzo7cnWoUFKe64EJvv9L4K+gSkLQ4Fzc2NsycrTM5u3rrx6eMKFHQ+3JNOuyT1zsK+hWLdd+D42mcffyxzzo/PLEBkwdm+yk9vJDx2/GG48m6H1+GwrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KhK7GGy/; arc=none smtp.client-ip=209.85.208.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-2fb51f39394so43135111fa.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 03:31:04 -0700 (PDT)
+Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2f75c56f16aso40433361fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 03:31:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729506663; x=1730111463; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729506665; x=1730111465; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=V6AxpS4d6FLuJHatjryaGw2iYlZcDdEsHoMG8xCl8x8=;
-        b=hSOjKJb4/YX+OFMTqKUfK/0uKMlo1cZUHHb2xfDmi/KQ9TnVYgGGjuS+gPm9YAzpxB
-         8hfgvsOMt2sx80Bc0Q93jESnmxlRornkMA7Nr7z/TClGuJaWbzwQsCQdraNrl8q7Kk9H
-         YkGT6PuZG9jxO2ospSn73NZKYH+8NFO3p9lGUtRTlsKc4P9BX1l2TG6OB2ura5Z0j7Ce
-         9Lztp2hTGl5P5l0lENpaqc652j1lUm4DvgsF+KHtO+YREKyF/p2xY4XrgR2nmysuROPC
-         +ft+1NxpBjtAhnm32Fqewks+Vga2sr92pnJH6uKljYuYJO7/Z4zZafUiX362nC/455Ay
-         PNIg==
+        bh=8pRe2ArQelLxHYJacQAyNZUXaVWQTwnH9cZRlckZ+24=;
+        b=KhK7GGy/fKNPAZOtyev6ikbvPocsg3UxkgDGx+IDwXVeNrI74WqHaYzLp+z8TgjjiQ
+         P83rG4InbjFMntcpDe8YJQ4lQOzf1ZcHcNIavHzqRyR9OD0YIR9zP18kjsYvrjxErOan
+         RvRx2Woo7k7eKw1Q8BooxsU94D9QPntVcBniccQnYLRvMeWLgIdC70yLeNhPnOPoPh2L
+         Hwcs6jOLg4JeOoo1Crbc1eA7XxFnOFMft/QPl6WfYJtf4oO1yhC8bbROxjNxfUupiiLc
+         pSM+gFPKLKiYtyobGsVuDehPtg7xRdW8RxWkVRFQWBz9KM5ibDQ4+fxW4bOEbE3kKrId
+         ic1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729506663; x=1730111463;
+        d=1e100.net; s=20230601; t=1729506665; x=1730111465;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V6AxpS4d6FLuJHatjryaGw2iYlZcDdEsHoMG8xCl8x8=;
-        b=J9xmnP15fSnuQ6uB+r65LERDCCOeuFPlnQ17t2lYct8NRG64HwnXzGrldE3ng1LIIx
-         r8GaDKvoh0GRIjrKRhCztyUxOpfBAxDGI+iWSKLb0/HJWvK7Xy2w7FWd9nDTMojXqmwq
-         96p6fw51aKOLshKmsrYb3NYLjxJiFn7TKvGCfckTqN01Vq+g1fjYM67oVxLhg0FJbIEo
-         VwwXB2qIE8UfzsPnuNTi0Wted1NFHIUw8j+aPRgT0G0UgsFpk3ytfcVPI5AwzAzstsNI
-         q5QWm9oYHnZfRZ56EDzwLozba0cFTWwJ1+zEHrbSC+vnGlYX9fgAz7X4EFh3iAWivSna
-         fMYQ==
-X-Gm-Message-State: AOJu0YxnBT6/K3P6CGGHdZhxU9WUfq9ob1ubz7jBnbzyQYqc4vLaVm3p
-	EGHPiGUSTE6A4+GHQtMLy29wAC70gLdmSHFOkAWgs65xysSUYYW5DbHwI3C//ag=
-X-Google-Smtp-Source: AGHT+IEqC/pLoypvo2ghbgcPuJ3wehaaSwQ1Z0DK1gHnkpzZvRomDcUg7oGMEOGVP1d2KdaCX0T6SA==
-X-Received: by 2002:a2e:b8d0:0:b0:2f9:cc40:6afe with SMTP id 38308e7fff4ca-2fb82ea23f4mr49433021fa.14.1729506662695;
-        Mon, 21 Oct 2024 03:31:02 -0700 (PDT)
+        bh=8pRe2ArQelLxHYJacQAyNZUXaVWQTwnH9cZRlckZ+24=;
+        b=cWtyfFzq2cSy0inJRDnExfjWxeXE+USSOf4Cb4v31/4IDsy6QBitd/jIql3nhIh+Zr
+         i8WbE9ZEdQKv28q5//zlQcZLd6LOyB/Su/CnS8pSu1o15enrg8c4h6IM0Go01Q1F7iWJ
+         ZqffgYzvrg3EVFOImiT6tzD73PTSRfIEHa/8uvCJFcIfJE/wxTbwqaWhwzLub8sxT/bt
+         uVQM8ohZda0DAr0n9OvPx22xbF5FVyrj/27bUAg/xrCPq2Brea8QBUt1IeoKzYw+71kI
+         kbjDyx6SazsEBINxtkinRBokNGcFhwtrPI7t96rkQcv/haZZaKqaZtCepUv/QkXwMU+J
+         VzlQ==
+X-Gm-Message-State: AOJu0YxjeK9BbBbQlLmE2oilsGA5T0/7XDk8aHXInpryDV4k/C4GxnR4
+	aRimbLp1wQZOeRGqz8Uke1BjuO6cbKqroNyC02AOiNzRySuQsYA+vD8kRzRgjyc=
+X-Google-Smtp-Source: AGHT+IH3xMXyIM391sIZY2QT3GCI+7LtS8Vf1Eb4LJd77mie7/a5eo1Qk+MxRkB9K5bHPIsrW0RKOg==
+X-Received: by 2002:a2e:a78a:0:b0:2fb:8de8:7f9e with SMTP id 38308e7fff4ca-2fb8de88107mr30699981fa.1.1729506665124;
+        Mon, 21 Oct 2024 03:31:05 -0700 (PDT)
 Received: from [127.0.1.1] (2001-14ba-a0c3-3a00-70b-e6fc-b322-6a1b.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:70b:e6fc:b322:6a1b])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae1217bsm4522711fa.112.2024.10.21.03.31.00
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-2fb9ae1217bsm4522711fa.112.2024.10.21.03.31.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 03:31:01 -0700 (PDT)
+        Mon, 21 Oct 2024 03:31:03 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 21 Oct 2024 13:30:37 +0300
-Subject: [PATCH v2 09/11] clk: qcom: tcsrcc-sm8550: add SAR2130P support
+Date: Mon, 21 Oct 2024 13:30:38 +0300
+Subject: [PATCH v2 10/11] clk: qcom: dispcc-sm8550: enable support for
+ SAR2130P
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -77,7 +78,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241021-sar2130p-clocks-v2-9-383e5eb123a2@linaro.org>
+Message-Id: <20241021-sar2130p-clocks-v2-10-383e5eb123a2@linaro.org>
 References: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
 In-Reply-To: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -90,87 +91,111 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2386;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3519;
  i=dmitry.baryshkov@linaro.org; h=from:subject:message-id;
- bh=J01aZfvomEsVQEi/Nl/mHvq41KMRorLHAPm15NwwtBA=;
- b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnFi1NVOD+s+oScaINMj2eEqJgluu2FZG58PC80
- Uv0GXOOSz2JAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxYtTQAKCRAU23LtvoBl
- uFd5D/4loh09WL3exFN26S6zift5LG3X5i9PUvGCULDFe/wiUKo4zERb0Uia4B4KpjFFHOTC39l
- qKpFeNBCLhdIDFWIATg9Fc3p8kLBjBzsRNp0TtLTRNyxVLG8jdyCCnSqEGuBA+m/Gd9a7QWBhsX
- kq9jxmPyNTGtxgWT1AAhgLsbg2CG1k/XABYHSMNGbV+Nrv2VFmGIt2ZVzonduRMqT1qQmLKT0kr
- X6VaMyZwCccwbXjt94AhGZYQOscpbQIc/VKinJ3C5pfxXTC9y0BtWg5qGDb7zmLvhPPrd+uPMgc
- asoNZsf7HN16z2kDr4dtrJx+hqE85OSR4df6mPDsIbW05F0LQ8SiDhq5jgmLlDJaGsWfalHJg9P
- PRuk94naEifiZRpOiW7MK3WO29mtorRpqNddtnIYsZAktSthhr3QtbbIRCOqgXsuE0CWnx0x5rI
- di8AyBEpzALcNuRZA3BSzusCMHRSVWkjBNd/J1KZhMM0gOJlW8Gt1J8aWW74bMgTk0wbsIBNboB
- ST25JxiIMbfk/kljob/A/Z1Y/tdguKIufE76LKp0N887ymnKLdmk3UH+y4kiJP1jGWvMjmy48l+
- 2k4NFIM8gfOWue6L+CwMjip+d1ehcTRUf9yHjDlrYGobRL1yaA3A48jyt/xvWYXES0/Lfxf9M6Y
- HNhDYXmAW5JCRsA==
+ bh=FF4Jnab+Geqk+xkXhpJem2oUCgBLpD9njXEn5sRdMvU=;
+ b=owEBbQKS/ZANAwAKARTbcu2+gGW4AcsmYgBnFi1N1kuu3X5Ep0OwZ/krmiLg/UN2UNP3fgiZp
+ JipeNACJYyJAjMEAAEKAB0WIQRdB85SOKWMgfgVe+4U23LtvoBluAUCZxYtTQAKCRAU23LtvoBl
+ uMVmD/0QKk6Utll3H3YxZMEfcXZTGfwICCB6wK5sgCccOS3lKmZAiD5ECB/XTObjN1hIiYr4COe
+ tjUrsGk+HybjJHtcVAfsxgdNGFp7VOjvyVBVYY8B/P0IaIkM+/P014uYlK8y0MpjrQUY2Dkf3lJ
+ MPzcbmAxX8hI00B3s1gTDKM9eAQ84RAXtS0g9bx9WusKTO8GXO5WWl8qYtJMmE1gXESWYFcQFud
+ iMMcH9k+Pe4YIDmHdKdvfNs3fyGC1xL8GnoYtent2vSq1UTlM1xG73wh0qrlZi3lxPGYOqO4uqJ
+ Dy03Nx4F8FgBNLNh/bCu4LTVgGmkP2V+O0RrcbvFhjM1FTFdzn9qnRFqpyKITEVefxps6rf68Pk
+ s4OJPMzZbY/OJe+zWUktFKTQn+pUPbt/DSTiPli8/x2GphuLEGJIO8MB1zENto//i1NOO+YdAYF
+ PwnxYXab7+RlrESm5DCYSadaWTq0LH3r6cw8hzyTiOK7iZu4gWjS8YaxdEDTLyJLpZ4Ed2lr7iY
+ R9yL2KLz962r1PDsxYCgkg5jRuEcuzFlDgsFfqtAXUHhkVdR6f7k4V2fjXWVnutKzuEEJFzPs0v
+ 4C+j4uI89k9DWeghyMBwdp0dwWhxdmIiOCQiHxxf19yd9M/VhlQbhjPlzf/lIATFNGgJAu5fMuU
+ vBAstEeEYIvkKNQ==
 X-Developer-Key: i=dmitry.baryshkov@linaro.org; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
 
-The SAR2130P platform has the same TCSR Clock Controller as the SM8550,
-except for the lack of the UFS clocks. Extend the SM8550 TCSRCC driver
-to support SAR2130P.
+The display clock controller on SAR2130P is very close to the clock
+controller on SM8550 (and SM8650). Reuse existing driver to add support
+for the controller on SAR2130P.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/clk/qcom/tcsrcc-sm8550.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/Kconfig         |  4 ++--
+ drivers/clk/qcom/dispcc-sm8550.c | 18 ++++++++++++++++--
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/tcsrcc-sm8550.c b/drivers/clk/qcom/tcsrcc-sm8550.c
-index e5e8f2e82b949dae592ec3dda585138bf89cab37..41d73f92a000ab924560a0c2c9d8e85a9aaeb1b0 100644
---- a/drivers/clk/qcom/tcsrcc-sm8550.c
-+++ b/drivers/clk/qcom/tcsrcc-sm8550.c
-@@ -129,6 +129,13 @@ static struct clk_branch tcsr_usb3_clkref_en = {
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 5f7bf9db76cfcef1ab18a6ba09fb4dc506695f9d..f314f26fe136c0fc1612edc0cca23c4deba5cd9f 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -968,10 +968,10 @@ config SM_DISPCC_8450
+ config SM_DISPCC_8550
+ 	tristate "SM8550 Display Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+-	depends on SM_GCC_8550 || SM_GCC_8650
++	depends on SM_GCC_8550 || SM_GCC_8650 || SAR_GCC_2130P
+ 	help
+ 	  Support for the display clock controller on Qualcomm Technologies, Inc
+-	  SM8550 or SM8650 devices.
++	  SAR2130P, SM8550 or SM8650 devices.
+ 	  Say Y if you want to support display devices and functionality such as
+ 	  splash screen.
+ 
+diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
+index 7f9021ca0ecb0ef743a40bed1bb3d2cbcfa23dc7..e41d4104d77021cae6438886bcb7015469d86a9f 100644
+--- a/drivers/clk/qcom/dispcc-sm8550.c
++++ b/drivers/clk/qcom/dispcc-sm8550.c
+@@ -75,7 +75,7 @@ static struct pll_vco lucid_ole_vco[] = {
+ 	{ 249600000, 2000000000, 0 },
+ };
+ 
+-static const struct alpha_pll_config disp_cc_pll0_config = {
++static struct alpha_pll_config disp_cc_pll0_config = {
+ 	.l = 0xd,
+ 	.alpha = 0x6492,
+ 	.config_ctl_val = 0x20485699,
+@@ -106,7 +106,7 @@ static struct clk_alpha_pll disp_cc_pll0 = {
  	},
  };
  
-+static struct clk_regmap *tcsr_cc_sar2130p_clocks[] = {
-+	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
-+	[TCSR_PCIE_1_CLKREF_EN] = &tcsr_pcie_1_clkref_en.clkr,
-+	[TCSR_USB2_CLKREF_EN] = &tcsr_usb2_clkref_en.clkr,
-+	[TCSR_USB3_CLKREF_EN] = &tcsr_usb3_clkref_en.clkr,
-+};
-+
- static struct clk_regmap *tcsr_cc_sm8550_clocks[] = {
- 	[TCSR_PCIE_0_CLKREF_EN] = &tcsr_pcie_0_clkref_en.clkr,
- 	[TCSR_PCIE_1_CLKREF_EN] = &tcsr_pcie_1_clkref_en.clkr,
-@@ -146,6 +153,12 @@ static const struct regmap_config tcsr_cc_sm8550_regmap_config = {
- 	.fast_io = true,
- };
- 
-+static const struct qcom_cc_desc tcsr_cc_sar2130p_desc = {
-+	.config = &tcsr_cc_sm8550_regmap_config,
-+	.clks = tcsr_cc_sar2130p_clocks,
-+	.num_clks = ARRAY_SIZE(tcsr_cc_sar2130p_clocks),
-+};
-+
- static const struct qcom_cc_desc tcsr_cc_sm8550_desc = {
- 	.config = &tcsr_cc_sm8550_regmap_config,
- 	.clks = tcsr_cc_sm8550_clocks,
-@@ -153,7 +166,8 @@ static const struct qcom_cc_desc tcsr_cc_sm8550_desc = {
- };
- 
- static const struct of_device_id tcsr_cc_sm8550_match_table[] = {
--	{ .compatible = "qcom,sm8550-tcsr" },
-+	{ .compatible = "qcom,sar2130p-tcsr", .data = &tcsr_cc_sar2130p_desc },
-+	{ .compatible = "qcom,sm8550-tcsr", .data = &tcsr_cc_sm8550_desc },
+-static const struct alpha_pll_config disp_cc_pll1_config = {
++static struct alpha_pll_config disp_cc_pll1_config = {
+ 	.l = 0x1f,
+ 	.alpha = 0x4000,
+ 	.config_ctl_val = 0x20485699,
+@@ -594,6 +594,13 @@ static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src[] = {
  	{ }
  };
- MODULE_DEVICE_TABLE(of, tcsr_cc_sm8550_match_table);
-@@ -162,7 +176,7 @@ static int tcsr_cc_sm8550_probe(struct platform_device *pdev)
- {
- 	struct regmap *regmap;
  
--	regmap = qcom_cc_map(pdev, &tcsr_cc_sm8550_desc);
-+	regmap = qcom_cc_map(pdev, of_device_get_match_data(&pdev->dev));
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
++static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src_sar2130p[] = {
++	F(200000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	F(325000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	F(514000000, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
++	{ }
++};
++
+ static const struct freq_tbl ftbl_disp_cc_mdss_mdp_clk_src_sm8650[] = {
+ 	F(19200000, P_BI_TCXO, 1, 0, 0),
+ 	F(85714286, P_DISP_CC_PLL0_OUT_MAIN, 3, 0, 0),
+@@ -1750,6 +1757,7 @@ static struct qcom_cc_desc disp_cc_sm8550_desc = {
+ };
  
+ static const struct of_device_id disp_cc_sm8550_match_table[] = {
++	{ .compatible = "qcom,sar2130p-dispcc" },
+ 	{ .compatible = "qcom,sm8550-dispcc" },
+ 	{ .compatible = "qcom,sm8650-dispcc" },
+ 	{ }
+@@ -1780,6 +1788,12 @@ static int disp_cc_sm8550_probe(struct platform_device *pdev)
+ 		disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sm8650;
+ 		disp_cc_mdss_dptx1_usb_router_link_intf_clk.clkr.hw.init->parent_hws[0] =
+ 			&disp_cc_mdss_dptx1_link_div_clk_src.clkr.hw;
++	} else if (of_device_is_compatible(pdev->dev.of_node, "qcom,sar2130p-dispcc")) {
++		disp_cc_pll0_config.l = 0x1f;
++		disp_cc_pll0_config.alpha = 0x4000;
++		disp_cc_pll0_config.user_ctl_val = 0x1;
++		disp_cc_pll1_config.user_ctl_val = 0x1;
++		disp_cc_mdss_mdp_clk_src.freq_tbl = ftbl_disp_cc_mdss_mdp_clk_src_sar2130p;
+ 	}
+ 
+ 	clk_lucid_ole_pll_configure(&disp_cc_pll0, regmap, &disp_cc_pll0_config);
 
 -- 
 2.39.5
