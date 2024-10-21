@@ -1,156 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-35251-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8FB99A68F5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:47:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B69DE9A6922
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:53:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 819CA1F21EEF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:47:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D76C11C20EDF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:52:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA1F1F5850;
-	Mon, 21 Oct 2024 12:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28BDD1F585A;
+	Mon, 21 Oct 2024 12:52:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tmeg9EGP"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KSLIpA55"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0280B1F81BF
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 12:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFDE31E285E
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 12:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729514797; cv=none; b=WMuZUgt9ItgrES0oHTdxqO2ndsG/vK2WoepEWOtK2QAwJWvIjHRxES/KV/D35WiYFugc3NBGtdc9su83zbooohx5uEIK5LDvnWWp4XX2ABmcL+7+wTra8jsEQCly1FSvtJDJNroEwJjAkmHlzg/t6xkVdaRG4WhdMW/YCFII+7U=
+	t=1729515168; cv=none; b=gxLd9zeZjBXugTyoSj4T+IX8T5AZArB61cg2N6FSBTWwjGI6TC+GafyEl6Nk/nzUNIIZtCAaWgbt+U/06ospEPyhTH22HtOlXKds5fm1duqhN/rrfubKqWbW4IikD8qj8wv/GfsEUjouPet6GutVvL58nq0AbqmeKqheLeYatXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729514797; c=relaxed/simple;
-	bh=y77wJFpZ3UjOC8+X1TAadIhkOYe0xdFWOmEEz46fJdI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=dLQv2IELjbb2bXNwtkx2EgEaRTyYS07akW+a46GiC16OasfPBKw3vaDnOLEkZyZAE+ThLM4VtoQh6qRklocdUQlQqnDDuYCYjp6FsSVWZ+Ot5WrZPG4nDzWpZTqn8Q+iV0QgYZCWE/c3IPJW1VxjJUGmVHuNQ0LWYJqJHjh/2OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tmeg9EGP; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1729515168; c=relaxed/simple;
+	bh=MY5fYwUCBRuniFqKqOjJ4DfVUGrL6/4V5OoAWNyQ7pM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=nyFo4XjKNOxhE3NjIZFs+X9+eoI2A/4i+vZrEGqcgjF4R6HoY1uATeG02yl86j4u5F+TaU+E+966tfXLgQ/SwUK8JJ5/6oDzZgf0wfL7/X6ah+bErGwUqG3QE+mb3d62WUFxDYdoRUkGRnZNQu3iiTo1ovw/7BmXR66bl8GsZT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KSLIpA55; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4315f24a6bbso36069205e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 05:46:34 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-37d462c91a9so3208777f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 05:52:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729514793; x=1730119593; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EMhK5URMSsZtw7ULiqbMgHL6EoB6FZYPqPuipW9HKjM=;
-        b=tmeg9EGPo137ECL1CquHxNrSQDTA4h1rdk0tiFQjCU470kjdG4ny/BiNKxb8AnPZ8S
-         gfo5giBBlc5FouoS+nFnktqSfsv6YV0YDVXQYTYumpsZuDImGSa4glP1o7KO5TnazhSz
-         VHNv8P2B5YVXG6LqXxx17Z8gbDZi9K5hY+VRyF2/7qvtpT0Ilco14gsGdvFaRtDDeAiw
-         2sLy2N/8lCqlPetbB/ZeXKv7r9laZnNBaM79ZuYToS9SKiehZyp7qY+77NDwe5XoFLbp
-         tCg0s3saOR5gRYbwsFYAyj++94vJFdRjVOvV1EtFyPVfe28n/FMQDdMYc+qW2n7PY4J0
-         QDuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729514793; x=1730119593;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1729515163; x=1730119963; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=EMhK5URMSsZtw7ULiqbMgHL6EoB6FZYPqPuipW9HKjM=;
-        b=Y0sV/hfA7cO/xC0BSbKUTrDePtzX1oJlhHLj8yQt0Zz7dKSOH93dgjvqVV7FyPpcX6
-         D8SH3vqQbzGeKvETMCiUpvaR8UZ8rXHQBPQnIQ3/u5CkecWPQe4ZH5LouEq2emb+GsOA
-         IIbhhIGYCMhg7ARSoTI6d3vMNOruCGRrv9t9vYEwOnTcc+2bN+u1QtPagXAWGbZD/gbI
-         PNa8ZmtBAwORIe+xcKJbcwSFRmmfmYsAFguw94SomHzt52UhjoEcLCF+1x9eOZROVxuY
-         rw3mYKb7H3CSADeEmWlukQFH0Z+RquwKboO+Vzj8v89VVS/GEEFeJSFAFSyNqYKeAZHN
-         lUWw==
-X-Forwarded-Encrypted: i=1; AJvYcCVugyay50N4onR4NwtlTt25qk6UukXJNUgHt76dMm/szajQ1txGQB5TVm4MmMSv9LkbkBC2octmALeL+Uqt@vger.kernel.org
-X-Gm-Message-State: AOJu0YyynYMgAvt1LAYqLYfg82D69l3OBFrcqvMW1OOhn1YNdz7sHAnT
-	2hUk0mM7yQXx5Joifd4JGH+xtika7lCCTQAwbwPeWxirYjeD4CiD+dc4pt2YGT4RSmufXX2tObP
-	X
-X-Google-Smtp-Source: AGHT+IH1sAjyo/WBTOjqBNER0j6loIWwhXiHBU4iLvjepISdYC0429yBvUc6Du/En+qHsgGmIjXDuw==
-X-Received: by 2002:a05:600c:1c0b:b0:431:52c4:1069 with SMTP id 5b1f17b1804b1-431616314c5mr83997275e9.8.1729514793206;
-        Mon, 21 Oct 2024 05:46:33 -0700 (PDT)
-Received: from [127.0.1.1] ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4316f570f89sm56459945e9.7.2024.10.21.05.46.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 05:46:32 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Mon, 21 Oct 2024 15:46:25 +0300
-Subject: [PATCH v2] clk: qcom: gcc-x1e80100: Fix USB MP SS1 PHY GDSC pwrsts
- flags
+        bh=mp6dlkVEus/qZOdPDwygEZpObCAkg06JLdsdxVS/NJU=;
+        b=KSLIpA55Cr0oG572UXk1EE2JlDHg95Cqdo8SNBsuvwob8YqG0cpA4WUjhBmJSqV0yt
+         oSp/yMFI4xJlFFquCBUKpla924KTFhg5SwyKaujH1aXEzGrEn8ptPjkWCeFJ9wfi5GJ1
+         fx0NXznWvGM8h+/RBvRALM74OePxhwAcPxPZvrMyMMkV4ys3iVWHd8BCZl8E5zRe55EZ
+         H4Wlb/mc9gb2uFW4aq9ItkTh/9Gs/ly+piYwq7q8LxQDSestKCuxAdHpiazFO+ik9EcR
+         rbTQzRO++zf951FxdmJzykiiXbXPYhnHbGK/Bw0e2NJQ8lXEr2XGbkrz+Jdte3fKu8XZ
+         8i/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729515163; x=1730119963;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mp6dlkVEus/qZOdPDwygEZpObCAkg06JLdsdxVS/NJU=;
+        b=UrZ4DEJZmJByEp/gnRD5QxeYvdMNQUigzPdLqGV0/aum2R+jNhUaD+4bpCStYKt7ja
+         fHGKdlKQv305noEkJGgQSIYwpXu202m+BXDjS5/4k9CdSnGYDlABJmvpQVklbBRKYRkL
+         nYwn/ZAVzhudJ65hO723d1/3GkBix+4vl8IliGuiE/4rUCjb9WcTOP2/I5aV9pCbxybi
+         aMJ9rMgxhxtt6k5x+6HBlBolwfkQlHSDCDEaHgtz3DGhguY+P251c0z6/+QDs7zp3JTc
+         JcRPEw2aoA2xtO31/ycbLPX9NiG7ykFz3p9wijNghbf4P3ArsdcfB8zS7UMelpX9elnU
+         J7Hg==
+X-Forwarded-Encrypted: i=1; AJvYcCUz9Zv5cA10vBLzkdRrQlxOD5Duhvw2HTe2dFpXuXB0w9fui7hLwYU40eV9pj6qpGn8kobPtFH7/u/zejuT@vger.kernel.org
+X-Gm-Message-State: AOJu0YyO+KNlad+Fy3tYjt/nGMuGynDuwik61QhXv65PZ97K/KMPumvi
+	yb4Fo96exvU8UMMEbwtaUTbLBgrPu0h/Gq93yRtBDgRh2PJyO7r0icIE76nXxdQ=
+X-Google-Smtp-Source: AGHT+IEadmofmR9Rq/iPCc5yC9ZMeiLblSahY9TR4jKE+cbxqu0jWuDxCJDdr/WnWZzH+50XpPSDww==
+X-Received: by 2002:adf:e441:0:b0:37d:387b:f080 with SMTP id ffacd0b85a97d-37eab4ee4a0mr6435301f8f.15.1729515163088;
+        Mon, 21 Oct 2024 05:52:43 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:3908:dea6:2ddd:be97? ([2a01:e0a:982:cbb0:3908:dea6:2ddd:be97])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4316f580069sm56388515e9.14.2024.10.21.05.52.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Oct 2024 05:52:42 -0700 (PDT)
+Message-ID: <50f17eab-314e-42cf-92cb-8ec31e30434e@linaro.org>
+Date: Mon, 21 Oct 2024 14:52:41 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC] usb: typec: ucsi: Set orientation as none when
+ connector is unplugged
+To: Abel Vesa <abel.vesa@linaro.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Johan Hovold <johan@kernel.org>, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241017-usb-typec-ucsi-glink-add-orientation-none-v1-1-0fdc7e49a7e7@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20241017-usb-typec-ucsi-glink-add-orientation-none-v1-1-0fdc7e49a7e7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241021-x1e80100-clk-gcc-fix-usb-mp-phy-gdsc-pwrsts-flags-v2-1-0bfd64556238@linaro.org>
-X-B4-Tracking: v=1; b=H4sIACBNFmcC/6WOQQ6CMBBFr0K6dkynIhJX3MOwKGUojUibDiKEc
- HcrV3D5fvL/+5tgio5Y3LNNRJodOz8mUKdMmF6PlsC1iYWSKkeJOSxIpUQpwQxPsMZA5xZ4cwO
- vAKFfwbZsIHwiTwzdoC3Dha7YNVoVWuci7YZIqXM4H3Xi3vHk43pcmPGX/mObERBSWxelkaqhW
- zW4UUd/9tGKet/3L+wKR0DzAAAA
-X-Change-ID: 20241014-x1e80100-clk-gcc-fix-usb-mp-phy-gdsc-pwrsts-flags-3e51fba26aa4
-To: Bjorn Andersson <andersson@kernel.org>, 
- Michael Turquette <mturquette@baylibre.com>, 
- Stephen Boyd <sboyd@kernel.org>, Rajendra Nayak <quic_rjendra@quicinc.com>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
- Sibi Sankar <quic_sibis@quicinc.com>, linux-arm-msm@vger.kernel.org, 
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Johan Hovold <johan+linaro@kernel.org>, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1634; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=y77wJFpZ3UjOC8+X1TAadIhkOYe0xdFWOmEEz46fJdI=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnFk0iL5wBinBQ3wCgTm3kdJrM8ETzHTztd0Jn8
- /7lElTLYr6JAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZxZNIgAKCRAbX0TJAJUV
- Vt7vEACtYOnPdfP2BDOdRNP5faNd/B4jjhK0A+fQO1ZG29f0nY8Z49b68npfRvVSPhWVcsvF0y/
- NGjHuMQ1wQV5eF4wH2Tfpqf2+XSHVKegToeMmHwOopn+Z3CoJMvrSS4hoB3drVpKoo/7oI8cptI
- JDnB0550opiqqRbk8erokFDtb4GPKV/C6zwUB0TC3dVjktnE7BlBcvmHJWoZP7fJO1aqjHsZzZA
- biDLowe0mN2/QSfIMVYuc+JegvHHD/zDRQLvsxcPOm7TgEJFWTrI4UU1CcgGP/t8hQvmMoPZDlg
- rr82wd94u6BxEuDEgSaxpSakQLNln3s7Px8RQ2UwUyRk7aDUBLlxMkyCs401Hsvja+30ohhah86
- oJDA7BSyaglJGZDQKo67t4qiqBbBDoLfo1tnSNlNdj7PGiOl1ma/4deesYBPIykWHKNUZfcmYo7
- zx6BBgoYacAmMr35j0CGwAnrLYWXw11b0/5juMdanJTKmyqgnLglT7qEzZgk1fYtYZRHN9ZlcH2
- LWcBMzO7JZ/LWwWzt5mCC7MI/3m8Ad82YzD6Cw0SXCBVUVlCuWbuVlcDfF+6qd3fDS99EUMnoXn
- T7gyhIZrL9rntjKr2RBeByV9EYRpGfJzVnkroXb4cpE3bzDO/nZyg3K+sPBBbQkSNwHqfr/iry2
- 8k/f+ukxMyuoJ+g==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Allowing these GDSCs to collapse makes the QMP combo PHYs lose their
-configuration on machine suspend. Currently, the QMP combo PHY driver
-doesn't reinitialise the HW on resume. Under such conditions, the USB
-SuperSpeed support is broken. To avoid this, mark the pwrsts flags with
-RET_ON. This has been already done for USB 0 and 1 SS PHY GDSCs,
-Do this also for the USB MP SS1 PHY GDSC config. The USB MP SS0 PHY GDSC
-already has it.
+On 17/10/2024 18:01, Abel Vesa wrote:
+> Currently, the ucsi glink client is only reporting orientation normal or
+> reversed, based on the level of the gpio. On unplug, it defaults to
+> orientation normal instead of none. This confuses some of the orientation
+> switches drivers as they might rely on orientation none in order to
+> configure the HW in some sort of safe mode. So propagate the orientation
+> none instead when the connector status flags says cable is disconnected.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   drivers/usb/typec/ucsi/ucsi_glink.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index 3e4d88ab338e50d4265df15fc960907c36675282..b3bc02e4b0427a894c5b5df470af47433145243e 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -185,6 +185,11 @@ static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+>   	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+>   	int orientation;
+>   
+> +	if (!(con->status.flags & UCSI_CONSTAT_CONNECTED)) {
+> +		typec_set_orientation(con->port, TYPEC_ORIENTATION_NONE);
+> +		return;
+> +	}
+> +
+>   	if (con->num >= PMIC_GLINK_MAX_PORTS ||
+>   	    !ucsi->port_orientation[con->num - 1])
+>   		return;
+> 
+> ---
+> base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
+> change-id: 20241017-usb-typec-ucsi-glink-add-orientation-none-73f1f2522999
+> 
+> Best regards,
 
-Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
-Changes in v2:
-- Fixed commit message according to Johan's suggestion
-- Link to v1: https://lore.kernel.org/r/20241014-x1e80100-clk-gcc-fix-usb-mp-phy-gdsc-pwrsts-flags-v1-1-241a68c02be7@linaro.org
----
- drivers/clk/qcom/gcc-x1e80100.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Looks safe with phy-qcom-qmp-combo/wcd939x-usbss/fsa4480/nb7vpq904m
 
-diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-index 0f578771071fadb0ea7f610f04c5510a85a8485a..33afad9c878d30f487f63b311bcea6296d0653fd 100644
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -6155,7 +6155,7 @@ static struct gdsc gcc_usb3_mp_ss1_phy_gdsc = {
- 	.pd = {
- 		.name = "gcc_usb3_mp_ss1_phy_gdsc",
- 	},
--	.pwrsts = PWRSTS_OFF_ON,
-+	.pwrsts = PWRSTS_RET_ON,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-
----
-base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
-change-id: 20241014-x1e80100-clk-gcc-fix-usb-mp-phy-gdsc-pwrsts-flags-3e51fba26aa4
-
-Best regards,
--- 
-Abel Vesa <abel.vesa@linaro.org>
-
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
 
