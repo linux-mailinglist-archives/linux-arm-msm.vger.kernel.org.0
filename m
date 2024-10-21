@@ -1,63 +1,40 @@
-Return-Path: <linux-arm-msm+bounces-35246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD9F49A6845
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:26:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A9219A6871
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:31:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CCA861C22687
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:26:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E38251F27EEC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:31:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5C51C1E8851;
-	Mon, 21 Oct 2024 12:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YcnYyxUl"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 024091EF08B;
+	Mon, 21 Oct 2024 12:31:52 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554741F4714;
-	Mon, 21 Oct 2024 12:22:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C442A1D7E52;
+	Mon, 21 Oct 2024 12:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729513361; cv=none; b=DnAkOc8UbCP5K6fWouhUeHrIBxhSR8FMui/6c1GXDmJAebF9966gajIZxNniTQ+g08gHbpXxCCszXzoWFnu3foKWdrBkV96gDRF3BCK2uXuvxaRtiGeYsZMzW2/yT9+gIs3yWT1GGsNXAg9SFMZuOa1/GaQzTkp+n8gNkWIRR3c=
+	t=1729513911; cv=none; b=fygaTn6A+f30DUdod27VvJqoU3ruIs2PffIKN+mnelwBkvikRZmaYgRGHVUuCKGIOQpXn3W7SiSTojbj9LRztu2kudxWGfQB00Hm32m4ANxkzr4ovZVvnJwOm8KoaO7CWcXDJ+/ySKTkYOmZyRkcMSVIq60v0rP6fgn5hxCyL44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729513361; c=relaxed/simple;
-	bh=LknK+bmwz1HcsCHFGbTuacYGi4dNazdLQR43QwJVFHM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=fJLQnEgLG/URZPR990t/k2U0qJOE2a15o13KZrlrh5J4btKa8rrda+ybitrWQRVdRrEuelq7GUc5XeTFMO/IL9NpGi+Rp3sjCe6zW9359+Xtiv8BlNU/gEX55YShiJnqsTrIwjDhbAZ0h9xHfm2sYy5Ujn4zS3IBv9jvadxQ3t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YcnYyxUl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LA97ZH012545;
-	Mon, 21 Oct 2024 12:22:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YGbUV117vz4ntpz8yuZW40y8LXipHeKy2mpnqNfZXQU=; b=YcnYyxUlmzb6auXI
-	BBHfeF3ekkVIaQiACdD7yVHuymE0HapdRVEtE1LIokt8ieGO+HisGA/YSj9K9xEA
-	6WVDBwVk6R5pt9dsLzDjZnicGbf0HyvyiPtd8d2xTAbEdgq24lQDTftv8HKyI5PW
-	o8j7rFJhh7jbHjHgdTca3ZZp7tDKD2L7Uo2xnmuy3Wie/SSWa0uWRZQ5eDoD1HJU
-	snTrRdXUC7zoy/m0MNMgAn34wKJvwzvVFEjkZSg5AW5HfpUWtYIhX//aCrHYo+QN
-	QHf3T1riGocog/q3FQmw/1SCNpbbwTIGW3RUp24R0Myw8N99E8vINd7FaoaFn/qj
-	7FCOGQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6rj4nhx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 12:22:27 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49LCMPlS016807
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 12:22:25 GMT
-Received: from [10.206.106.133] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
- 2024 05:22:17 -0700
-Message-ID: <e2531d90-dbcb-4ba5-b153-fb8ca2ba7734@quicinc.com>
-Date: Mon, 21 Oct 2024 17:52:14 +0530
+	s=arc-20240116; t=1729513911; c=relaxed/simple;
+	bh=MnWzGo7DwqyMcq42G1nBex5rtgvT6WVtHq5ZyeomlBc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=slgMavTZ75QnxR2qySDQkKEp8s1YJOXvnwQAbBRYg6JqjmQ37HG5wjCG6bE6XRw6b4OSak6vcqKYGchm+1vDis38PUUasC0ih4P7SMK1jJVVQAAnb9sMQlftYNJN6wOaxsicE5eUwkx8kz+/8Pk1grPc+55f2sZY5K8+1nzR+6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D9897DA7;
+	Mon, 21 Oct 2024 05:32:18 -0700 (PDT)
+Received: from [10.57.64.219] (unknown [10.57.64.219])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 3C6753F528;
+	Mon, 21 Oct 2024 05:31:47 -0700 (PDT)
+Message-ID: <b2f9aa93-a50a-4bfd-9df0-9e3a170404f8@arm.com>
+Date: Mon, 21 Oct 2024 13:31:46 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,218 +42,169 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] media: dt-bindings: media: camss: Add
- qcom,sc7280-camss binding
-To: Krzysztof Kozlowski <krzk@kernel.org>
-CC: <rfoss@kernel.org>, <todor.too@gmail.com>, <bryan.odonoghue@linaro.org>,
-        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <akapatra@quicinc.com>, <hariramp@quicinc.com>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <hverkuil-cisco@xs4all.nl>, <cros-qcom-dts-watchers@chromium.org>,
-        <catalin.marinas@arm.com>, <will@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <kernel@quicinc.com>
-References: <20241011140932.1744124-1-quic_vikramsa@quicinc.com>
- <20241011140932.1744124-2-quic_vikramsa@quicinc.com>
- <q63w23zeoteagtw3px4sk3il4567plydgdhckmvpiksm6qc5i2@3rcdrr5uribq>
-Content-Language: en-US
-From: Vikram Sharma <quic_vikramsa@quicinc.com>
-In-Reply-To: <q63w23zeoteagtw3px4sk3il4567plydgdhckmvpiksm6qc5i2@3rcdrr5uribq>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH v5 3/3] coresight: dummy: Add static trace id support for
+ dummy source
+Content-Language: en-GB
+To: Mao Jinlong <quic_jinlmao@quicinc.com>, Mike Leach
+ <mike.leach@linaro.org>, James Clark <james.clark@arm.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20241018032217.39728-1-quic_jinlmao@quicinc.com>
+ <20241018032217.39728-4-quic_jinlmao@quicinc.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <20241018032217.39728-4-quic_jinlmao@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qWAEw5uzhWxzsU_YX5UU8K6UwinM0zt6
-X-Proofpoint-ORIG-GUID: qWAEw5uzhWxzsU_YX5UU8K6UwinM0zt6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 malwarescore=0 mlxscore=0 spamscore=0
- impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1011
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410210088
 
-Hi Krzysztof,
+On 18/10/2024 04:22, Mao Jinlong wrote:
+> Some dummy source has static trace id configured in HW and it cannot
+> be changed via software programming. Configure the trace id in device
+> tree and reserve the id when device probe.
+> 
+> Signed-off-by: Mao Jinlong <quic_jinlmao@quicinc.com>
+> ---
+>   .../sysfs-bus-coresight-devices-dummy-source  | 15 +++++
+>   drivers/hwtracing/coresight/coresight-dummy.c | 59 +++++++++++++++++--
+>   2 files changed, 70 insertions(+), 4 deletions(-)
+>   create mode 100644 Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> 
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> new file mode 100644
+> index 000000000000..c7d975e75d85
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-dummy-source
+> @@ -0,0 +1,15 @@
+> +What:		/sys/bus/coresight/devices/dummy_source<N>/enable_source
+> +Date:		Oct 2024
+> +KernelVersion:	6.13
+> +Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
+> +Description:	(RW) Enable/disable tracing of dummy source. A sink should be activated
+> +		before enabling the source. The path of coresight components linking
+> +		the source to the sink is configured and managed automatically by the
+> +		coresight framework.
+> +
+> +What:		/sys/bus/coresight/devices/dummy_source<N>/traceid
+> +Date:		Oct 2024
+> +KernelVersion:	6.13
+> +Contact:	Mao Jinlong <quic_jinlmao@quicinc.com>
+> +Description:	(R) Show the trace ID that will appear in the trace stream
+> +		coming from this trace entity.
+> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
+> index bb85fa663ffc..602a7e89e311 100644
+> --- a/drivers/hwtracing/coresight/coresight-dummy.c
+> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
+> @@ -11,10 +11,12 @@
+>   #include <linux/pm_runtime.h>
+>   
+>   #include "coresight-priv.h"
+> +#include "coresight-trace-id.h"
+>   
+>   struct dummy_drvdata {
+>   	struct device			*dev;
+>   	struct coresight_device		*csdev;
+> +	u8				traceid;
+>   };
+>   
+>   DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
+> @@ -72,6 +74,32 @@ static const struct coresight_ops dummy_sink_cs_ops = {
+>   	.sink_ops = &dummy_sink_ops,
+>   };
+>   
+> +/* User can get the trace id of dummy source from this node. */
+> +static ssize_t traceid_show(struct device *dev,
+> +			    struct device_attribute *attr, char *buf)
+> +{
+> +	unsigned long val;
+> +	struct dummy_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	val = drvdata->traceid;
+> +	return scnprintf(buf, PAGE_SIZE, "%#lx\n", val);
+> +}
+> +static DEVICE_ATTR_RO(traceid);
+> +
+> +static struct attribute *coresight_dummy_attrs[] = {
+> +	&dev_attr_traceid.attr,
+> +	NULL,
+> +};
+> +
+> +static const struct attribute_group coresight_dummy_group = {
+> +	.attrs = coresight_dummy_attrs,
+> +};
+> +
+> +static const struct attribute_group *coresight_dummy_groups[] = {
+> +	&coresight_dummy_group,
+> +	NULL,
+> +};
+> +
+>   static int dummy_probe(struct platform_device *pdev)
+>   {
+>   	struct device *dev = &pdev->dev;
+> @@ -79,6 +107,11 @@ static int dummy_probe(struct platform_device *pdev)
+>   	struct coresight_platform_data *pdata;
+>   	struct dummy_drvdata *drvdata;
+>   	struct coresight_desc desc = { 0 };
+> +	int ret, trace_id;
+> +
+> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +	if (!drvdata)
+> +		return -ENOMEM;
+>   
+>   	if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
+>   
+> @@ -90,6 +123,25 @@ static int dummy_probe(struct platform_device *pdev)
+>   		desc.subtype.source_subtype =
+>   					CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
+>   		desc.ops = &dummy_source_cs_ops;
+> +		desc.groups = coresight_dummy_groups;
+> +
+> +		ret = coresight_get_static_trace_id(dev, &trace_id);
+> +		if (!ret) {
+> +			/* Get the static id if id is set in device tree. */
+> +			ret = coresight_trace_id_get_static_system_id(trace_id);
+> +			if (ret < 0)
+> +				return ret;
+> +
+> +		} else {
+> +			/* Get next available id if id is not set in device tree. */
+> +			trace_id = coresight_trace_id_get_system_id();
+> +			if (trace_id < 0) {
+> +				ret = trace_id;
+> +				return ret;
+> +			}
+> +		}
+> +		drvdata->traceid = (u8)trace_id;
+> +
+>   	} else if (of_device_is_compatible(node, "arm,coresight-dummy-sink")) {
+>   		desc.name = coresight_alloc_device_name(&sink_devs, dev);
+>   		if (!desc.name)
+> @@ -108,10 +160,6 @@ static int dummy_probe(struct platform_device *pdev)
+>   		return PTR_ERR(pdata);
+>   	pdev->dev.platform_data = pdata;
+>   
+> -	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> -	if (!drvdata)
+> -		return -ENOMEM;
+> -
+>   	drvdata->dev = &pdev->dev;
+>   	platform_set_drvdata(pdev, drvdata);
+>   
+> @@ -131,7 +179,10 @@ static void dummy_remove(struct platform_device *pdev)
+>   {
+>   	struct dummy_drvdata *drvdata = platform_get_drvdata(pdev);
+>   	struct device *dev = &pdev->dev;
+> +	struct device_node *node = dev->of_node;
 
-Thanks for your review. I will address the alignment issue as per DTS 
-coding style and will submit v4 for review.
+^^ Why is this needed ? The rest looks fine to me
 
-Thanks,
-Vikram
+>   
+> +	if (IS_VALID_CS_TRACE_ID(drvdata->traceid))
+> +		coresight_trace_id_put_system_id(drvdata->traceid);
+>   	pm_runtime_disable(dev);
+>   	coresight_unregister(drvdata->csdev);
+>   }
 
-On 10/11/2024 8:19 PM, Krzysztof Kozlowski wrote:
-> On Fri, Oct 11, 2024 at 07:39:25PM +0530, Vikram Sharma wrote:
->> @@ -0,0 +1,440 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +
-> Drop blank line (that's a new finding, I would not complain except that
-> I expect new version, see further).
->
->> +    soc {
->> +        #address-cells = <2>;
->> +        #size-cells = <2>;
->> +
->> +        camss: camss@acaf000 {
->> +            compatible = "qcom,sc7280-camss";
->> +
->> +            clocks = <&clock_camcc CAM_CC_CAMNOC_AXI_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_0_CSID_CLK>,
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                <&clock_camcc CAM_CC_IFE_1_CSID_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_2_CSID_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_LITE_0_CSID_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_LITE_1_CSID_CLK>,
->> +                <&clock_camcc CAM_CC_CSIPHY0_CLK>,
->> +                <&clock_camcc CAM_CC_CSI0PHYTIMER_CLK>,
->> +                <&clock_camcc CAM_CC_CSIPHY1_CLK>,
->> +                <&clock_camcc CAM_CC_CSI1PHYTIMER_CLK>,
->> +                <&clock_camcc CAM_CC_CSIPHY2_CLK>,
->> +                <&clock_camcc CAM_CC_CSI2PHYTIMER_CLK>,
->> +                <&clock_camcc CAM_CC_CSIPHY3_CLK>,
->> +                <&clock_camcc CAM_CC_CSI3PHYTIMER_CLK>,
->> +                <&clock_camcc CAM_CC_CSIPHY4_CLK>,
->> +                <&clock_camcc CAM_CC_CSI4PHYTIMER_CLK>,
->> +                <&gcc GCC_CAMERA_AHB_CLK>,
->> +                <&gcc GCC_CAMERA_HF_AXI_CLK>,
->> +                <&clock_camcc CAM_CC_CPAS_AHB_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_0_AXI_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_0_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_0_CPHY_RX_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_1_AXI_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_1_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_1_CPHY_RX_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_2_AXI_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_2_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_2_CPHY_RX_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_LITE_0_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_LITE_0_CPHY_RX_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_LITE_1_CLK>,
->> +                <&clock_camcc CAM_CC_IFE_LITE_1_CPHY_RX_CLK>;
->> +
->> +            clock-names = "camnoc_axi",
->> +                "csi0",
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                "csi1",
->> +                "csi2",
->> +                "csi3",
->> +                "csi4",
->> +                "csiphy0",
->> +                "csiphy0_timer",
->> +                "csiphy1",
->> +                "csiphy1_timer",
->> +                "csiphy2",
->> +                "csiphy2_timer",
->> +                "csiphy3",
->> +                "csiphy3_timer",
->> +                "csiphy4",
->> +                "csiphy4_timer",
->> +                "gcc_camera_ahb",
->> +                "gcc_camera_axi",
->> +                "soc_ahb",
->> +                "vfe0_axi",
->> +                "vfe0",
->> +                "vfe0_cphy_rx",
->> +                "vfe1_axi",
->> +                "vfe1",
->> +                "vfe1_cphy_rx",
->> +                "vfe2_axi",
->> +                "vfe2",
->> +                "vfe2_cphy_rx",
->> +                "vfe0_lite",
->> +                "vfe0_lite_cphy_rx",
->> +                "vfe1_lite",
->> +                "vfe1_lite_cphy_rx";
->> +
->> +            interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_CAMERA_CFG 0>,
->> +                <&mmss_noc MASTER_CAMNOC_HF 0 &mc_virt SLAVE_EBI1 0>;
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +
->> +            interconnect-names = "ahb", "hf_0";
->> +
->> +            interrupts = <GIC_SPI 464 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 466 IRQ_TYPE_EDGE_RISING>,
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                <GIC_SPI 640 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 122 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 641 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
->> +                <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>;
->> +
->> +            interrupt-names = "csid0",
->> +                "csid1",
->> +                "csid2",
->> +                "csid_lite0",
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                "csid_lite1",
->> +                "csiphy0",
->> +                "csiphy1",
->> +                "csiphy2",
->> +                "csiphy3",
->> +                "csiphy4",
->> +                "vfe0",
->> +                "vfe1",
->> +                "vfe2",
->> +                "vfe_lite0",
->> +                "vfe_lite1";
->> +
->> +            iommus = <&apps_smmu 0x800 0x4e0>;
->> +
->> +            power-domains = <&camcc CAM_CC_IFE_0_GDSC>,
->> +                <&camcc CAM_CC_IFE_1_GDSC>,
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                <&camcc CAM_CC_IFE_2_GDSC>,
->> +                <&camcc CAM_CC_TITAN_TOP_GDSC>;
->> +
->> +            power-domains-names = "ife0", "ife1", "ife2", "top";
->> +
->> +            reg = <0x0 0x0acb3000 0x0 0x1000>,
->> +                <0x0 0x0acba000 0x0 0x1000>,
->> +                <0x0 0x0acc1000 0x0 0x1000>,
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                <0x0 0x0acc8000 0x0 0x1000>,
->> +                <0x0 0x0accf000 0x0 0x1000>,
->> +                <0x0 0x0ace0000 0x0 0x2000>,
->> +                <0x0 0x0ace2000 0x0 0x2000>,
->> +                <0x0 0x0ace4000 0x0 0x2000>,
->> +                <0x0 0x0ace6000 0x0 0x2000>,
->> +                <0x0 0x0ace8000 0x0 0x2000>,
->> +                <0x0 0x0acaf000 0x0 0x4000>,
->> +                <0x0 0x0acb6000 0x0 0x4000>,
->> +                <0x0 0x0acbd000 0x0 0x4000>,
->> +                <0x0 0x0acc4000 0x0 0x4000>,
->> +                <0x0 0x0accb000 0x0 0x4000>;
->> +
->> +            reg-names = "csid0",
->> +                "csid1",
->> +                "csid2",
->> +                "csid_lite0",
-> Alignment did not improve. Please carefully read DTS coding style.
->
->> +                "csid_lite1",
->> +                "csiphy0",
->> +                "csiphy1",
->> +                "csiphy2",
-> Best regards,
-> Krzysztof
->
 
