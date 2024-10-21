@@ -1,117 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-35161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61E879A5C2B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 09:14:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D1F69A5C44
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 09:15:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 163EB281D75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 07:14:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF809282CE1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 07:15:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE8521D0F66;
-	Mon, 21 Oct 2024 07:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0E071D14E7;
+	Mon, 21 Oct 2024 07:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pHuDOKZU"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vKuWxwT+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168721940A2;
-	Mon, 21 Oct 2024 07:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E93C1D07A3;
+	Mon, 21 Oct 2024 07:15:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729494872; cv=none; b=E+yrUNxZLwDSpFB7KRW9eN4SLb4UV76txvy6NVWioHpsi04nDSUb3LhUD2Z/aUriI5+2Vc5FcMq1pPb6++NyS3Fh1860XgRsf9FPYz8SGOUY2dKvp8RMGo36z97rOsCKjImiBWOZF+uIoraenE7VEc3b0V7NIofBjW0nNAL0eSY=
+	t=1729494909; cv=none; b=KC4PtqQEfLzECQWnIIqowJuGOJ8d3l4AKs9WzJMwgaUjR8faQew2E/4p2zXNCzQpUZ15lm1Wf/DCuB+NpLMCk5PGKvt0PTG8Yr1T8+SMbwNKQOwO867cu3Cal8VnnRgTdN7W1hZxL/fHizKwsYfnmyt1i9bcNqfPZmpKjVCPwe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729494872; c=relaxed/simple;
-	bh=+MdlbUTKWEtQqviIJ/ksqh2lJGVuwINgG4Sytyx9wH4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=oH3d0rzTBATSC/ii+EWC5vHcu/s0xnhomSXTzMVjkz3pdE7Bs4xHJgcZGqOVGUqmqoG3sfPnoC9fdRrLfkzZdVgTw1vThmoqKUKEtbhxQgUbG/alvavMuyih50BHkNicOEh6fn5E3Me5pq6xCapVHuM9fXDHP3jD1eqn5eYWe9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pHuDOKZU; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49KNdnZD006185;
-	Mon, 21 Oct 2024 07:13:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hBRCfPgu1vyB4VjNQILG00Eqs1DLwICYXQAWTx5WmFE=; b=pHuDOKZUR0it44Q/
-	nHr7IGkZ4rHwX4zxV3HIaEc2MN7USMIBZ5VEAFvfoUTLvuyuPDy0Y5t6Hy0FyZ/j
-	JdJFzRcUz/69DlVb+cWKTx+e6xnlSCyHAnXEZlzKXK8HNJNiV1TMhC7Soloj8Eem
-	Pnw48cmP67eUaILBIyZJrhMQCO3K7mr99Pn3xwA6zpzCXNA0wRX8OYKWOyM9z7+a
-	RPfHX+Wp02yx/2wmUP4mqxvM0jcc1N4g/n14Q6s/KkpP7UJZ1DC/GMdx1CuCdkVl
-	piDeZs2Sn6173WlG9wxGrQrvS5yaplRnELYMx3KebW9/jnQGMvESU/9he1wQERD2
-	YRHIfA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6w1kftv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 07:13:52 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49L7DpjO027079
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 07:13:51 GMT
-Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
- 2024 00:13:45 -0700
-Message-ID: <78820059-a1fa-2402-1e7c-0a9445b4fe1f@quicinc.com>
-Date: Mon, 21 Oct 2024 12:43:24 +0530
+	s=arc-20240116; t=1729494909; c=relaxed/simple;
+	bh=nKPzNF057pxm0ao76emLKlBxzsL74QCEn259038azO0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xv0sGyDKr52g7kH15JsvyoFj444etcyPxqGDvMgniVVAa5HjJqhGhTBpDeVTwBd3KK+Hq6YhK35+Fb0xH9DKCNi4bWb7GPyYM9lLXyY8XW+IRjw/f1m3EC50ujGOMG9cUfLhJW53/LZacqO0kOTnpgpltfpzaK29OfkxdsHVpfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vKuWxwT+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54AF4C4CEC3;
+	Mon, 21 Oct 2024 07:15:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729494909;
+	bh=nKPzNF057pxm0ao76emLKlBxzsL74QCEn259038azO0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=vKuWxwT+PirXJWAVCFhlrq4PmDauVrCIPG9OhbpDA4vaW6SURV8ySGsvCCkT7NKHD
+	 PLYnw/oeETVXSAVGAN7IqgEZkDR7OGwRf90qnGbIMqrwAhnRKYf+PP/7zvzGK5sJvB
+	 802kYFeA036TvrdzXz14zMLYvHpKJI7fGdHKX4mSiHjLFS+tSIUgJzBJAfNloixmFd
+	 Wi9tbJ41XptxVqI7KK06g07bs4qhybsbQymNswWCbfOIFwTbPziGl/ElZ1M3SRgOFQ
+	 g6MykEe4VTzzW+8LFVR/qYZBG9jwxI2aaW1+fuIOg8pespcp5nDUmpHiBLpISw1QKz
+	 fJrOfbDn93kQw==
+Date: Mon, 21 Oct 2024 09:15:05 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Taniya Das <quic_tdas@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Abhishek Sahu <absahu@codeaurora.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Ajit Pandey <quic_ajipan@quicinc.com>, Imran Shaik <quic_imrashai@quicinc.com>, 
+	Jagadeesh Kona <quic_jkona@quicinc.com>, Stephen Boyd <sboyd@codeaurora.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 05/12] dt-bindings: clock: qcom: Add QCS615 GCC clocks
+Message-ID: <bqnqc3sxnh5afs6nb7hrc45scfk6amcj2d3hbeuyriydowmmam@jvma7o4mg65m>
+References: <20241019-qcs615-mm-clockcontroller-v1-0-9f1ca2048287@quicinc.com>
+ <20241019-qcs615-mm-clockcontroller-v1-5-9f1ca2048287@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v11 8/8] arm64: dts: qcom: ipq9574: Disable eMMC node
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <arnd@arndb.de>,
-        <esben@geanix.com>, <nikita.shubin@maquefel.me>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-mtd@lists.infradead.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241010070510.1504250-1-quic_mdalam@quicinc.com>
- <20241010070510.1504250-9-quic_mdalam@quicinc.com>
- <0bde12c0-0c36-4d7c-9538-25d1b55d2fa9@oss.qualcomm.com>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <0bde12c0-0c36-4d7c-9538-25d1b55d2fa9@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lfY6icX4uid13RR-7aJTQUo6jJtK_pud
-X-Proofpoint-ORIG-GUID: lfY6icX4uid13RR-7aJTQUo6jJtK_pud
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
- clxscore=1015 bulkscore=0 mlxlogscore=556 suspectscore=0 mlxscore=0
- phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410210050
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241019-qcs615-mm-clockcontroller-v1-5-9f1ca2048287@quicinc.com>
 
-
-
-On 10/19/2024 2:55 PM, Konrad Dybcio wrote:
-> On 10.10.2024 9:05 AM, Md Sadre Alam wrote:
->> Disable eMMC node for rdp433, since rdp433
->> default boot mode is norplusnand
->>
->> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
->> ---
+On Sat, Oct 19, 2024 at 12:42:35AM +0530, Taniya Das wrote:
+> Add device tree bindings for global clock controller on QCS615 SoCs.
 > 
-> If eMMC is absent on this board, remove the whole &sdhc_1{} section
-Ok, will remove in the next revision.
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+
+That's 5/12 but rest is missing. Are you sure you used sent it
+correctly?
+
+>  .../devicetree/bindings/clock/qcom,qcs615-gcc.yaml |  59 ++++++
+>  include/dt-bindings/clock/qcom,qcs615-gcc.h        | 211 +++++++++++++++++++++
+>  2 files changed, 270 insertions(+)
 > 
-> Konrad
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..fecc694cd71b8aeb3d420ccea5f5ffba04c8ff9c
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/clock/qcom,qcs615-gcc.yaml
+> @@ -0,0 +1,59 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/clock/qcom,qcs615-gcc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Global Clock & Reset Controller on QCS615
+> +
+> +maintainers:
+> +  - Taniya Das <quic_tdas@quicinc.com>
+> +
+> +description: |
+> +  Qualcomm global clock control module provides the clocks, resets and power
+> +  domains on QCS615.
+> +
+> +  See also:: include/dt-bindings/clock/qcom,qcs615-gcc.h
+
+s/::/:/
+
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,qcs615-gcc
+> +
+> +  clocks:
+> +    items:
+> +      - description: Board XO source
+> +      - description: Board active XO source
+> +      - description: Sleep clock source
+> +
+> +  clock-names:
+> +    items:
+> +      - const: bi_tcxo
+> +      - const: bi_tcxo_ao
+> +      - const: sleep_clk
+
+That's just "sleep".
+
+Why do you need clock-names in the first place?
+
+Best regards,
+Krzysztof
+
 
