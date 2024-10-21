@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-35172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ED399A5D94
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 09:51:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF3D49A5D9C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 09:52:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6C071C215A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 07:51:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A5BF1F216AC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 07:52:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBF871E0E05;
-	Mon, 21 Oct 2024 07:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 794651E0E0F;
+	Mon, 21 Oct 2024 07:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fEJHQM/u"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CmEhYPRO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8F11D1308;
-	Mon, 21 Oct 2024 07:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BDF1E0B9A;
+	Mon, 21 Oct 2024 07:52:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729497108; cv=none; b=F98Ofb3o2p8GfwYLMvg4BR5QNc7PysqDeFMOnxlRD0s7t7yUHanFfXH8vacIxPGbe6tEgWa40S+A1DhUaZDQnUAiugD7rdbbzN6cOCDABkl9U3wobDW0KMsAtFbAgRCir8NxTaRP0R2wsld/8xDssCLVr4Tg/LUV0fwjZhE8sXw=
+	t=1729497127; cv=none; b=kBPzQk57AGWLPUOdlfCLaqmUj7pmjVmfruJGM9SFPA+mxdaZ1Z8fek5bhXbfZfxaybmdkz5ROn36TycZQSvcwFz8+t3PVMQf9z4WW2ovdriR9ynUixzmIcrcwbW55mDwMEyaH1JfeJ8kVxSNsjo7HlgPdJo11+GxXwsqUI79HPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729497108; c=relaxed/simple;
-	bh=0QLxqnjn8QRtF8jlI6qVFrOxGUDCPam5Dm3ZOm4573g=;
+	s=arc-20240116; t=1729497127; c=relaxed/simple;
+	bh=RMWS11YDQYECFzhlbuqPLEsM90WqFjCKpsLWN9yzR8Y=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XEifoRQ9j3XXOzQ45DuOHEt3+9vkV2iK6riV27DR6OrYZqbP5NenlcnLrtByuBz1nW8BtzZZgZJ0oKDVEAo0sY6m9tWNgN8fTRui3j7I2eLGjXsjGuWITYbZaMDkMQUgHaydjKW9ll9UYJMi560FC6FZH7jNYQ13k9AkPBk6vNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fEJHQM/u; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC918C4CEC3;
-	Mon, 21 Oct 2024 07:51:47 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=jrcd5KR4zjB937v0dmRnIK7cEFeI9wa4m1CUjIP1cP39e5UA9woiLgVS7VSVwQfiGAUcuL14iTh3o3GeeSAhJ2UEA0kUyVdbmjjj6Kh6R8KMR4e1ShDRgKLo4E+YmLtzSdolWg0/yEbUWTYEGxMSxs2jPm1GQ0pPY0Qoy/i6VWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CmEhYPRO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC547C4CEC3;
+	Mon, 21 Oct 2024 07:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729497108;
-	bh=0QLxqnjn8QRtF8jlI6qVFrOxGUDCPam5Dm3ZOm4573g=;
+	s=k20201202; t=1729497127;
+	bh=RMWS11YDQYECFzhlbuqPLEsM90WqFjCKpsLWN9yzR8Y=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fEJHQM/u9C1Sv871kfBcgOtCtQthB6PqCj9hWq+bTjr4TmEBQEUDz7S2ea2X/+VZT
-	 A5c2z6haIbOsSUZOblq4wfDDPCzhZJ8ty5abzpQv2MVIgtjik1GlaGOMywPvNDwv7A
-	 tDBMqqow7OGgCc9YlnkJemwO2jEMtC4AxGhuvbPa3EUvO/aUUupP+DGwKfK3oqm7tg
-	 RAukYs8RGdaUfE/1A1STY6CyH4CkXWO7vIfWflyfFL5ScqlC5hVdddrvIq76HA4FnL
-	 McsbcGGlrw4oZfWZ7dHrAlopnj9qDv3gy5EPT5N8kxzoVSRLNL+SLYHO+qhlLEoUJD
-	 b5Y5d3kE0SDcQ==
-Date: Mon, 21 Oct 2024 09:51:45 +0200
+	b=CmEhYPROyJ6J/NhrQZBkScRYPUQ4RStvwJjxK/4+/5oLkCAL0XWz8sQKrVF+FR6+X
+	 HajDx/435Vg/H9QkssjP5TzKUDxondP8BEVKkBVNs8YmG7rHJhZTCJx+nV8m5Tn5eL
+	 1RO0RXygOobRyYwn2sRPEctLbTvbevh6681sN3v/u8yOwqhe3Y5etCIc35tvHwXHZH
+	 FRdP/ARa0pyHvGZWNg8S/rKILg09DPdQfu5PLMtPXTNGdx1pppiul9KNX/CIJETL8S
+	 ed3wyMWzLl+V+GMwu6vXRFY70geJ7aCQKbbL67gox08OOMHTHtnfrp2gipDdMGXtSl
+	 qDOg7asCmPV5Q==
+Date: Mon, 21 Oct 2024 09:52:02 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -51,11 +51,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, devicetree@vger.kernel.org, 
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 01/14] dt-bindings: clock: qcom,rpmhcc: Add SAR2130P
- compatible
-Message-ID: <tlr32nu5azfpcendtgk7d6awxycij7yczsg5q37c2mykrt2unf@676fcwgmmjxr>
+Subject: Re: [PATCH 04/14] dt-bindings: clock: qcom,sm8550-dispcc: Add
+ SAR2130P compatible
+Message-ID: <r2qosfitumryr7ztejn2rsjjqvzjaahy7ug4g2vfgfy2k7dodp@r354yz4n65mp>
 References: <20241017-sar2130p-clocks-v1-0-f75e740f0a8d@linaro.org>
- <20241017-sar2130p-clocks-v1-1-f75e740f0a8d@linaro.org>
+ <20241017-sar2130p-clocks-v1-4-f75e740f0a8d@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,14 +64,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241017-sar2130p-clocks-v1-1-f75e740f0a8d@linaro.org>
+In-Reply-To: <20241017-sar2130p-clocks-v1-4-f75e740f0a8d@linaro.org>
 
-On Thu, Oct 17, 2024 at 07:56:51PM +0300, Dmitry Baryshkov wrote:
-> Document compatible for RPMh clock controller on SAR2130P platform.
+On Thu, Oct 17, 2024 at 07:56:54PM +0300, Dmitry Baryshkov wrote:
+> Document compatible for the Display Clock Controller on SAR2130P
+> platform.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  Documentation/devicetree/bindings/clock/qcom,rpmhcc.yaml | 1 +
+>  Documentation/devicetree/bindings/clock/qcom,sm8550-dispcc.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
