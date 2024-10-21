@@ -1,74 +1,74 @@
-Return-Path: <linux-arm-msm+bounces-35275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35276-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E1429A72D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 21:03:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A72F9A902F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 21:50:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2889A1C214F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 19:03:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 06A2FB22752
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 19:50:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D7521FB3F8;
-	Mon, 21 Oct 2024 19:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 497DB1CB53B;
+	Mon, 21 Oct 2024 19:50:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+0liDSW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bVvH0JWb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B3F1FB3F6;
-	Mon, 21 Oct 2024 19:03:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1521C9DE5;
+	Mon, 21 Oct 2024 19:50:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729537387; cv=none; b=OzuS7q/lkYWj/J8UPcKMvdR/rDZhFUocn9N9TSoUVagNrfiTP8QX3/YeerztMcaAUn/pIyu2B6zT/xOKkQOQbCSg33upLb1ykk9TUcAii/CAlvMFKvpB5pvLsRAsEFQJyfZNVgu3z5BhFwRJcNklCYB3lJXQbCbri0dD08I6ys8=
+	t=1729540245; cv=none; b=TMAcYtAM/D8U0ZQNimpH43SXL0JoYx70eMqTuEF/KurlDH+xd0Qo68rpsHFSB5qHTlZtZ+Wo7HIZCmGhZb55c2cXTQVz5hsMU7gWZBjqMkmmImgV3FVdvrIvI64N5cZMff88DOaU9PBP279z68/UIYcjECi40gI7tIowdBt2314=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729537387; c=relaxed/simple;
-	bh=vHC3/UHe8JImpp2npCqoOg9PwX18eDeQiBuWYyIulso=;
+	s=arc-20240116; t=1729540245; c=relaxed/simple;
+	bh=ydGZrdfQa8ASusOpBeBgAhY22oTxyxpiS7caUm/boCI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c1hKQTFokdouk6juro2Oq6T7DcavWF6/CX+CiGv7a0Z0B09tnNp1agqJtHFF9OE/nPxK/xi/vhchTVyQFGla22lXmJBRHESLE5+ehmk87lpi+6JjztCf0pmcKOd9Al/+oj1Avn6x1Jus8Zs7sdHg6df2JKJOhGynA9giY4nj1rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P+0liDSW; arc=none smtp.client-ip=209.85.128.43
+	 In-Reply-To:Content-Type; b=Hn1+kjdjwtQbDxr1xsoo6huRssNNn8jmFTVNTHSnoluLw1HZmSiMpPKEsw9NXdr7sWns+UR1oOJEMUPXicTYrTKrfGE5NmtLOTOfg9o8hUf+CDAh2RyMx7RNG2CPcTIcmzy4IRfawBheEpkR2REfOxiqDvzopacBaQH4rVwQZbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bVvH0JWb; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43169902057so24102805e9.0;
-        Mon, 21 Oct 2024 12:03:04 -0700 (PDT)
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5c9634c9160so5367251a12.2;
+        Mon, 21 Oct 2024 12:50:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729537383; x=1730142183; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1729540241; x=1730145041; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5AYyZebDpWob+iueDyC8gkIB3IrofLZfNi1uSmxyuEo=;
-        b=P+0liDSW5IL7twFPv6SU6MPj98p8g5mLk14MfX70hA0fAYby6W6RRGB4wgOCBXHaqQ
-         cstb6XzX1onuiAWeOedtcbix71vpWJz9ksOAY58tnhpZI0NlGO76UkooYKWktdHwoAj3
-         qb+BqI2PCVy13zMY1/F4lT4nzpDnPylX8fFyofsV8EFlJdBpIC8qTX9kkerq7KuLnHPM
-         z1eBq5BSuD3u6KvLc2HL5/LxOd0wfehlAvyijx+TI1qJiJ3BhYA1kgLsUIkpluHIrsGa
-         irdAVGtVauezEjuHpDldP49eRheAwZuOzv44F9JLwAOzsMGKIZBLc4Q84jjKk/UqvE4t
-         Ibqg==
+        bh=Lysv7uhwVKHdI6mHRz0fS2jA5yM5eGnF2mqAXAmknTM=;
+        b=bVvH0JWbZ3bwO7sG6brPh6oflXVvLLC8JupViHBzPmSDWrUk7COI3RRpiyI1UuRXr7
+         r8ouLWiB0zm7luyuaFJ/eqdoLPivLoeNGSVXvq0xR/XtNgFFQ+V6/MbZpSJzp3RlZhhF
+         S8l8j+Os7yW3abrcHBpYzSKY230M3aXgOAUT89OqMeiJ0Fc822yI7XmUUODn+n/S64ls
+         mvceNJNUk7N5az9gVoB5CXmGCywzjxjtuocyhi06Pwh3eEI6/LQqAeISm4y4LWo96P9L
+         4gwTxDPRc3d7F+hRkuyTnpV4JzxaQwj0YXnCIQgyoXI2Va6ljSGnKo3LAvF7z85mUZZN
+         MBmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729537383; x=1730142183;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1729540241; x=1730145041;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5AYyZebDpWob+iueDyC8gkIB3IrofLZfNi1uSmxyuEo=;
-        b=kWcqiaAOob/a0dYkSQ0IjyUcdwSxHNCFggAMzvYQAQZMLijTsBFEdJ3S4M1LTVuoms
-         WayAuqocjp1qxU6GuLu7Jmhslc/ylLrzy+lsd0bX0HtJBsHMpZdzjXGqO15dJf2diPa5
-         L8Fxd5gf+j+pp395xo+5esPGq8XxZ5QAuk1mZXPfDaxDN7EKeocLIVFB5qOfJNjmT3eh
-         pvb/P2QQc8NV98hsWb6/fPLh1/uZm4sSALTvUr/7QWNWvZiNqBmKraLYrqiV7tqWwaVY
-         oEHc+BCKLU7NyTtk1/TTqsiPq+YUVVbBf5MC9T+DWxMTD3x5DsmfGr0EAjoZEX8a85+l
-         YmDw==
-X-Forwarded-Encrypted: i=1; AJvYcCW8+zgFg8ZvS1q4zKXLbpKSomRpIrTLrECeIWlLhdoLjFQtlxPYW4Z0NBgFi5WIhk7H7m1tRvUS@vger.kernel.org, AJvYcCWdyfkdn10X5WVpgHFgbNWYte3cQFsUbX1TqqvWoso3Bd5ZTjL1aqJGeJ7e895KnZ3m5iU0681ZwtY=@vger.kernel.org, AJvYcCXLih6C1TKFZ4CY7Hl1qlVTX+w9zOj1kRGl3cVBm0s0dTrqRHALzgg7xclZUobKFqnuzSL+GshJkXlXgqAf@vger.kernel.org
-X-Gm-Message-State: AOJu0YwI8yHWGsG//VNPiC8+5nztmSrFjY/FHrx1iMEba8yVno5mZmrr
-	dOj4GHH0lni7k9rnJ4L3uVVBtK/0TFYpMX6OFupHorJtBFKcADZj
-X-Google-Smtp-Source: AGHT+IE3/fafT4prxw4+ifxyAxu4ITdxOWe2+Dq5H3IEiDPYdexl4Xh54tOtnbEABx0gzDIqWoXDQQ==
-X-Received: by 2002:a05:600c:500d:b0:431:5f1c:8352 with SMTP id 5b1f17b1804b1-4317b8d6613mr9601815e9.5.1729537382804;
-        Mon, 21 Oct 2024 12:03:02 -0700 (PDT)
+        bh=Lysv7uhwVKHdI6mHRz0fS2jA5yM5eGnF2mqAXAmknTM=;
+        b=jY/VpzU0N+A52+iI37kCYzm6WiVKeFu4GyRdyKgpvn2q9hqJc0MT0DxAmjDdRtxvwl
+         t6STeMbiQM8PZjo8QpyTiKs/qslPA6ll3xAag2uWY4rjGNl+p/wfwFjPavg6e/DNE+Hl
+         hZyPOPmpPx/Me7NukR0oe/tFx9gFIPeW6t8WnuycKoiS1Q1yfYDLhohhSSWiDSlSBEw+
+         dAwTxxWEz4TZw/ZoPka77wDTEc3SYbDolt1lKYfLQgTZ/+7lIyNjq/BF2t9C0VajieH1
+         /dLGtktPknGDc4nHeJK9RbkvXoo+Fjrk8fGSx5VIY9+GHLw0L8ubXhQVyy8miqfuVRFT
+         c3eg==
+X-Forwarded-Encrypted: i=1; AJvYcCV9+TUxZojUn+7KCzlw68HLKK71tWwGkj1cotnGtlw9D9EHHIMfcfyxuLqZEu/TP4IxZ3xFOqBEILh5iHcG@vger.kernel.org, AJvYcCW64g4LUeSudRh4Hcsi4zA3lACSw2uohpO80eHMUZMeGghgyUJGazJrcgn0QrVUS55mDLjBcoIVhkDDwQKsaA==@vger.kernel.org, AJvYcCXpR0Fj2BHMdIzcrmOOPy3fma2dHoMMisvkhaZqjldHZNH+C4RMLKpbgZfh1PF+2iXJLKaQdrXeGzDF@vger.kernel.org, AJvYcCXxd2RQlE4lFKI/MJW3E/eTzs77TxfWuAcRH/0ky6dB6NdZ81ZsoSIWMcHF35ivoXwiBu9UZFveuC8Z@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz46uULBGPZaFaCOF0iHGEwtjF1TRHkMWhBMOKzAiV6rbzq0MH2
+	HS4CdlvXENxXTQrASk42lsBrmD1pPJX3FuIRp3n6+qQk9/S2Kz/wxb8EetZA
+X-Google-Smtp-Source: AGHT+IHZYQnoOcQ+3GxNp3d9r5mQyk3oFBPMvOCeTy6raelJ3cO8rMq8MZ0pBKSYEr8orpxPv72P6w==
+X-Received: by 2002:a05:6402:907:b0:5c7:2122:6ad with SMTP id 4fb4d7f45d1cf-5ca0ae7f7c3mr9387565a12.14.1729540241189;
+        Mon, 21 Oct 2024 12:50:41 -0700 (PDT)
 Received: from [192.168.20.170] (5D59A6C7.catv.pool.telekom.hu. [93.89.166.199])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4316f57fc17sm64788785e9.15.2024.10.21.12.03.01
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cb66a6a6efsm2316192a12.53.2024.10.21.12.50.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Oct 2024 12:03:02 -0700 (PDT)
-Message-ID: <f2a1dcc6-247b-44fd-97ae-977f8b3c4d41@gmail.com>
-Date: Mon, 21 Oct 2024 21:03:03 +0200
+        Mon, 21 Oct 2024 12:50:40 -0700 (PDT)
+Message-ID: <fc6d204a-93c6-412c-bdf2-9619415f5062@gmail.com>
+Date: Mon, 21 Oct 2024 21:50:37 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,50 +76,39 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: clk-alpha-pll: fix alpha mode configuration
-To: Stephen Boyd <sboyd@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20241021-fix-alpha-mode-config-v1-1-f32c254e02bc@gmail.com>
- <5f39a93197f02fa7ec0de897a7ce646d.sboyd@kernel.org>
+Subject: Re: [PATCH 01/11] clk: qcom: Update the support for alpha mode
+ configuration
 Content-Language: hu
+To: Taniya Das <quic_tdas@quicinc.com>, Bjorn Andersson
+ <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Abhishek Sahu <absahu@codeaurora.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, Stephen Boyd
+ <sboyd@codeaurora.org>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20241019-qcs615-mm-clockcontroller-v1-0-4cfb96d779ae@quicinc.com>
+ <20241019-qcs615-mm-clockcontroller-v1-1-4cfb96d779ae@quicinc.com>
 From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <5f39a93197f02fa7ec0de897a7ce646d.sboyd@kernel.org>
+In-Reply-To: <20241019-qcs615-mm-clockcontroller-v1-1-4cfb96d779ae@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-2024. 10. 21. 20:14 keltezéssel, Stephen Boyd írta:
-> Quoting Gabor Juhos (2024-10-21 10:32:48)
->> Commit c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
->> added support for configuring alpha mode, but it seems that the feature
->> was never working in practice.
->>
-> [...]
->>
->> Applying the 'alpha_en_mask' fixes the initial rate of the PLLs showed
->> in the table above. Since the 'alpha_mode_mask' is not used by any driver
->> currently, that part of the change causes no functional changes.
->>
->> Cc: stable@vger.kernel.org
->> Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
->> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
->> ---
->> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
->> index f9105443d7dbb104e3cb091e59f43df25999f8b3..03cc7aa092480bfdd9eaa986d44f0545944b3b89 100644
->> --- a/drivers/clk/qcom/clk-alpha-pll.c
->> +++ b/drivers/clk/qcom/clk-alpha-pll.c
->> @@ -421,6 +421,8 @@ void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->>         mask |= config->pre_div_mask;
->>         mask |= config->post_div_mask;
->>         mask |= config->vco_mask;
->> +       mask |= config->alpha_en_mask;
->> +       mask |= config->alpha_mode_mask;
->>  
+2024. 10. 18. 21:15 keltezéssel, Taniya Das írta:
+> The alpha_en_mask and alpha_mode_mask must be applied within the
+> clk_alpha_pll_configure() function to ensure proper configuration of
+> the alpha mode of the PLL.
 > 
-> This is https://lore.kernel.org/all/20241019-qcs615-mm-clockcontroller-v1-1-4cfb96d779ae@quicinc.com/
+> Fixes: c45ae598fc16 ("clk: qcom: support for alpha mode configuration")
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> ---
+>  drivers/clk/qcom/clk-alpha-pll.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Oops, indeed. Sorry, I should have noticed that.
-
--Gabor
+Tested-by: Gabor Juhos <j4g8y7@gmail.com>
 
