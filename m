@@ -1,64 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-35225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8E279A672E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 13:56:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F36C89A6717
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 13:55:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0F361B25166
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 11:56:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B5827281B81
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 11:55:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAFF91EABB1;
-	Mon, 21 Oct 2024 11:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89B871E573E;
+	Mon, 21 Oct 2024 11:55:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="GjQjqaTe"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="doJLA7GZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD2F1E8847;
-	Mon, 21 Oct 2024 11:55:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A54B1E1A3B;
+	Mon, 21 Oct 2024 11:55:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729511739; cv=none; b=nAD3rin2s60UJ7d1LuC4WeOmokStt/mqC7Esxx1zPnVkzv5mXGZWTl5va4WeUWICKVmafDltHrpLu2ILN+vP8paGydvjHWcRa2jID6oWO8fChJ0ZWhnSV5AjYyUdUn8dV3Y1vg9+ucE1zMFMicTlHka6lhrX0m9VljC503Uo43w=
+	t=1729511702; cv=none; b=sbhs3rcZqZrvKtOzZm2eGV6jGcDOZxpd6NP6bM+2ffBI6zKpUEhs+Dr8YTRcJh/dF8PpEdiGkMdhJQIbmZEvC9+BUII7JCW8Z4G3yfQpSelaL3VDzgXpwEGkYa7u6usR6nBA4RcCkqx2NgEfGRYx4ArrokgauSM6z1lSIyMyC1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729511739; c=relaxed/simple;
-	bh=K4uDSeAHPqOF4dC/WveDCmG62plfuwrsaEiIRm+b/HM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=hirE0uEL4zTEFiWCDZKNjSdHVwZONwY+V419EV5rMBBBYNoN7S5EnC++2nMNrSjYncAltHPJtk890un/305we9fbHBV3ejBx261iB5mWYn2920RYnUpVR8jFFBWXl8FlCHAvxsKGZHagKtxIFOXYCCWT8qpuASBSN0oeLzMvB/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=GjQjqaTe; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49L8VwhH014493;
-	Mon, 21 Oct 2024 11:55:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PDz3KYrnNjKa/ecyIrk93047MeD5GWsgjdUbxViQq2M=; b=GjQjqaTeXzN6bfkJ
-	I+HRfcTbmGM4+gym42aPkuPueJQ1hTCe9UcHJ1Ig3IQb8kjQ5HjEDDNMUhunCgs/
-	92tK1ROAkjlJ9+2HrprNN6sluNqgq/ZyuL8LzapJYJVNMPf5tMFflUcx5zxoToGE
-	zRFCxE3Ng6TqekGHmgbtNt1ZrOQnzXzvGtkytcpVXi/h/viZA1+f4fKIMxaorcOY
-	McBcJVEN8phwSE0dEBHrz6G0wOwAdYEifhDwM+wD5n7MligO/hJSelmgYd0qSryB
-	/Hc5LD4DIHCpF/j/OjC8ajyByE65jD/0RQmQ1jPd2wA2MNpm6YKLzVamUTbxyVkg
-	VtU7gA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42dkhd0rxc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 11:55:27 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49LBtQXw011529
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Oct 2024 11:55:26 GMT
-Received: from [10.213.111.143] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
- 2024 04:55:20 -0700
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Date: Mon, 21 Oct 2024 17:23:44 +0530
-Subject: [PATCH v2 3/3] arm64: dts: qcom: x1e80100: Add ACD levels for GPU
+	s=arc-20240116; t=1729511702; c=relaxed/simple;
+	bh=06LlHFojHrVTo+PSFbs24Q0soi3A8O9lOE7FpxnTxFM=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=GCLlmnXXqBTOHCeWm5XbB+clu0bLVlZqcVzH+NMZ+M8WyEmJNhVZ9AX58IYxWQgeKq/4Lu/UjqxCgUOfOUMJ8hOyIcQXfJEALtQbqh1pgqbvLyYnVFCRUdItZwy7BhknK0LbQfWAXVhOImG249hDJv7NkOHkfDzcPDVJEy7pzO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=doJLA7GZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5F8C4CEC3;
+	Mon, 21 Oct 2024 11:54:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729511701;
+	bh=06LlHFojHrVTo+PSFbs24Q0soi3A8O9lOE7FpxnTxFM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=doJLA7GZIHonBurIFWEkwbR5fBUk9TZvshq7sPUeMzVqoc1fJPk6c96EwzS7YPu+f
+	 CSuPPl8NVDn/cPhsMJPvEp7Auy68EqeSatHYSNQW/MEbxh9IGIAjwya5/vhwcZELE/
+	 I0ZMqf1KWxqow21UsbbUioqjG8xX6yyX/2Etnh9/wHKZ1vg+aHXJYNHFS8+jUuRMIy
+	 I1yQeJNFGLHA5ezzET9MEfTw4Em/drJhKY+OMmlUcQFRJq/+Q7rc3pAaBy92NuYMwj
+	 wV0oJhyeqe4kRcmS7YiWQUjTFaNWpUFqaKR3kNFbL9dFnLts8Npt8TI7t6/YAcGFqi
+	 vYz5Qb/oa/9iQ==
+From: Konrad Dybcio <konradybcio@kernel.org>
+Date: Mon, 21 Oct 2024 13:54:56 +0200
+Subject: [PATCH] soc: qcom: smem: Fix up kerneldoc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,136 +51,83 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-ID: <20241021-gpu-acd-v2-3-9c25a62803bc@quicinc.com>
-References: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
-In-Reply-To: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
-To: Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        "Konrad
- Dybcio" <konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon
-	<nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Bjorn Andersson
-	<andersson@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1729511702; l=2473;
- i=quic_akhilpo@quicinc.com; s=20240726; h=from:subject:message-id;
- bh=K4uDSeAHPqOF4dC/WveDCmG62plfuwrsaEiIRm+b/HM=;
- b=Tf6TshaeMcHaxPvEKYzkoSzM6VVlj92PY39DFNU6ywFxnG1ElvCn7hZucYqwdEC5uys4pJ2lB
- LxySXa7xU65BpI6tTFoA6I494oYHj1dOCbkimDsruky3wNZV/MH3xlg
-X-Developer-Key: i=quic_akhilpo@quicinc.com; a=ed25519;
- pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: SffZm4rIcDV7iLvG4r8Rl6vOxJvQf6Gh
-X-Proofpoint-GUID: SffZm4rIcDV7iLvG4r8Rl6vOxJvQf6Gh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 adultscore=0
- phishscore=0 spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0
- mlxscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=779
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410210085
+Message-Id: <20241021-topic-smem_kerneldoc-v1-1-4825904a7e25@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAA9BFmcC/x3M0QpAMBSA4VfRubbaTjK8iiTmjBM2bZKSd7dcf
+ hf//0CkwBShyR4IdHFk7xJUnoFZBjeT4CkZUGKhJCpx+oONiDvt/UrB0TZ5I4qh0qNGLK2uIaV
+ HIMv3v2279/0A1ecdLmYAAAA=
+X-Change-ID: 20241021-topic-smem_kerneldoc-4a87b7226f79
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1729511699; l=2037;
+ i=konrad.dybcio@oss.qualcomm.com; s=20230215; h=from:subject:message-id;
+ bh=cG0vZ4jI/onDMnu+l7tO5fvwatOEKwwfWQ9VJw+BN9U=;
+ b=YrQ1XQuR6Nt29ZUzpRSJ4/p31T0N4+PBGkNJCsslmWGfltFFi2VAqDg8PSI4RMyjqI2s5RE0k
+ jOclcx5NPdUBMZUV3rYNF98AjSOt+PX8rFvtbGIzPe5S6AFW5+drNFm
+X-Developer-Key: i=konrad.dybcio@oss.qualcomm.com; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 
-Update GPU node to include acd level values.
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Fix warnings like:
+
+smem.c:504: warning: No description found for return value of 'qcom_smem_alloc'
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/smem.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index a36076e3c56b..81ce8bccc7a5 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -3323,60 +3323,69 @@ zap-shader {
- 			};
- 
- 			gpu_opp_table: opp-table {
--				compatible = "operating-points-v2";
-+				compatible = "operating-points-v2-adreno", "operating-points-v2";
- 
- 				opp-1100000000 {
- 					opp-hz = /bits/ 64 <1100000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
- 					opp-peak-kBps = <16500000>;
-+					qcom,opp-acd-level = <0xa82a5ffd>;
- 				};
- 
- 				opp-1000000000 {
- 					opp-hz = /bits/ 64 <1000000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
- 					opp-peak-kBps = <14398438>;
-+					qcom,opp-acd-level = <0xa82b5ffd>;
- 				};
- 
- 				opp-925000000 {
- 					opp-hz = /bits/ 64 <925000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
- 					opp-peak-kBps = <14398438>;
-+					qcom,opp-acd-level = <0xa82b5ffd>;
- 				};
- 
- 				opp-800000000 {
- 					opp-hz = /bits/ 64 <800000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
- 					opp-peak-kBps = <12449219>;
-+					qcom,opp-acd-level = <0xa82c5ffd>;
- 				};
- 
- 				opp-744000000 {
- 					opp-hz = /bits/ 64 <744000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
- 					opp-peak-kBps = <10687500>;
-+					qcom,opp-acd-level = <0x882e5ffd>;
- 				};
- 
- 				opp-687000000 {
- 					opp-hz = /bits/ 64 <687000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
- 					opp-peak-kBps = <8171875>;
-+					qcom,opp-acd-level = <0x882e5ffd>;
- 				};
- 
- 				opp-550000000 {
- 					opp-hz = /bits/ 64 <550000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
- 					opp-peak-kBps = <6074219>;
-+					qcom,opp-acd-level = <0xc0285ffd>;
- 				};
- 
- 				opp-390000000 {
- 					opp-hz = /bits/ 64 <390000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
- 					opp-peak-kBps = <3000000>;
-+					qcom,opp-acd-level = <0xc0285ffd>;
- 				};
- 
- 				opp-300000000 {
- 					opp-hz = /bits/ 64 <300000000>;
- 					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
- 					opp-peak-kBps = <2136719>;
-+					qcom,opp-acd-level = <0xc02b5ffd>;
- 				};
- 			};
- 		};
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index e4411771f482f8126a24a8775ccd34b4d8f92d32..0d1ccf3ef1086ce20c497cbe78015d1a8a69038c 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -499,6 +499,8 @@ static int qcom_smem_alloc_global(struct qcom_smem *smem,
+  *
+  * Allocate space for a given smem item of size @size, given that the item is
+  * not yet allocated.
++ *
++ * Return: 0 on success, negative errno on failure.
+  */
+ int qcom_smem_alloc(unsigned host, unsigned item, size_t size)
+ {
+@@ -677,6 +679,8 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
+  *
+  * Looks up smem item and returns pointer to it. Size of smem
+  * item is returned in @size.
++ *
++ * Return: a pointer to an SMEM item on success, ERR_PTR() on failure.
+  */
+ void *qcom_smem_get(unsigned host, unsigned item, size_t *size)
+ {
+@@ -709,6 +713,8 @@ EXPORT_SYMBOL_GPL(qcom_smem_get);
+  *
+  * To be used by smem clients as a quick way to determine if any new
+  * allocations has been made.
++ *
++ * Return: number of available bytes on success, negative errno on failure.
+  */
+ int qcom_smem_get_free_space(unsigned host)
+ {
+@@ -758,7 +764,7 @@ static bool addr_in_range(void __iomem *base, size_t size, void *addr)
+  * with an smem item pointer (previously returned by qcom_smem_get()
+  * @p:	the virtual address to convert
+  *
+- * Returns 0 if the pointer provided is not within any smem region.
++ * Return: physical address of the SMEM item (if found), 0 otherwise
+  */
+ phys_addr_t qcom_smem_virt_to_phys(void *p)
+ {
 
+---
+base-commit: f2493655d2d3d5c6958ed996b043c821c23ae8d3
+change-id: 20241021-topic-smem_kerneldoc-4a87b7226f79
+
+Best regards,
 -- 
-2.45.2
+Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
 
