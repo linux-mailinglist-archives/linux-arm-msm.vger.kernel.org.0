@@ -1,86 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-35253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E59619A6924
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 14:54:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A06059A6965
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 15:01:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E704281C93
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 12:54:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 55AFC1F2228A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 13:01:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D9691F4FCF;
-	Mon, 21 Oct 2024 12:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E4261EBA1E;
+	Mon, 21 Oct 2024 13:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tZfQf9Sb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Mr7Mmsg9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBD11D1F5D
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 12:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B005A1E511;
+	Mon, 21 Oct 2024 13:01:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729515251; cv=none; b=Rq+MmRQLsxHV1YK/5ehkODYYZt2drQQOQTLIqGMwmdTD4N1+W8MZ5tntnBHshqVLtqNaqoNxMTKvTsNSnKNvgm46Ce/7TwKQoJjMey7Ah7u7z+rG8gjlFzkVXVo2iX3an1PMvlArnhBVASdAadSyAk9IXWhhuh0XglG0u84RaD4=
+	t=1729515673; cv=none; b=CIlGnn7yowjvBKxL/xUyYP3+0y/oKSTymVWlt5MEXd20S9ApTXY/P6Xxplzqreb9DKKJqEMQV9MRNEeT3CO8HNkcBme2bGWiuItaFBqrpijigWbLJnkkaPKFwk1mmaKL9Su/fAtbt9HImggrtDJFnI4phebKKdOqh14xHVL0Jo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729515251; c=relaxed/simple;
-	bh=DyWxLKiydqEOonS9mZeITo4s7rpB/FLXd8owqshBsQM=;
+	s=arc-20240116; t=1729515673; c=relaxed/simple;
+	bh=ej3qu3+gaDVBh2zajSPGQQs7YptzCBhIISJg5FqP5Ys=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sDUkYnan7QiXCyEpB+IraqMoRE/QUzMq5yc6MztKcarZRDXIb2ixHnZ+mE8aV/xvc6lOZIf9A2xiRNe6l9WQDlAg3HeyDj2dDbTZUn3s44X5mkO36w52LdkiUrl288j4jmMNBp/qqiDSLylH/UzFmcLBt+iYSA4UHSrPc9Mj2qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tZfQf9Sb; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-539e63c8678so5274261e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 05:54:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729515247; x=1730120047; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=I2s35/3heGmToRyOYXVolNum+L9YFMF7ccDrRpO5RZ0=;
-        b=tZfQf9Sb4iEvkWs6NrfaZAdVp90KSBkmjG1l8VVQUSfk7GatsBY2qih3+zRSzeG+LN
-         7J8yWxdP0IoFPLBt+KnhXDT5mWFmwFPsFYZcRIdCOWzODF+512cEI93+/4Kn2sAvkiPB
-         87PxOUU/utf+4U1p0iP+HlW4kC7RSr4E/Bdm75BreaSoNslnugwsrWVeLJYTqzYeSbOz
-         UEA3PmkmPNbtffcTqLhrX5FVLDHBBfk1b4bCNsS0FHyxaJOo9ZBkjGVpmcjge45nQChx
-         Qiwl6bVf371tmPuCcofcNq+vQ9+MvZgM26/q8x5lPVHn31p9PQuj9uD7OvvJw5lGpcvV
-         peqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729515247; x=1730120047;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I2s35/3heGmToRyOYXVolNum+L9YFMF7ccDrRpO5RZ0=;
-        b=KaJXxz9LyAmNwvo3v7mL0yp/0D/aZOvZcuPmJElC4+IFkCWJc85RZs2fx2QPrDaCga
-         lJjZwAot+w3KZe4W4G0yVQ96U6o5W+U6D4Il8Sp2dHVCRnjsyMuDpfBvJSSf2b3j+BxX
-         lGOtYsDEehaTu1Xto6gOz5BsVKxr5rwuFLE/o3LAhC/1FDwGiAyWsyPhDgmdbWZpUWhI
-         OLdyBKjsPRBr+AFKVviHyKjuAffDt7QAjX5/h8IpOXBKv9DJ+8SL2GbKEYyCFjRSj/7a
-         Vot955vdFOEd451wpGkaMoq9slS0xKpgtNl7ly0O12wpb8rQQj8hvQzE8tx3betO/Y3Y
-         N/JA==
-X-Gm-Message-State: AOJu0YyR9vAlj63QOADvW9V1mHTYKKMB4gpEU5NHwc5YDFdWqc5BPkRc
-	0cRM09Ag4kjTSS5YmjDMYTdf7deoiGjYlCZs3TfqFjdfc+R63CWOOHmqBSj+No0=
-X-Google-Smtp-Source: AGHT+IEz4ViWfBMtEMxwNV3/I552f0CNAjJ7YSgMEZYhkW6iNBJSB8GpfuJiztKEovvTD9JY1l14kw==
-X-Received: by 2002:a05:6512:3e1f:b0:539:8bc6:694a with SMTP id 2adb3069b0e04-53a154f8ec6mr4583475e87.43.1729515247279;
-        Mon, 21 Oct 2024 05:54:07 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef80:b7f5:199d:c177:8c47])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5cb66c6b12dsm1924908a12.77.2024.10.21.05.54.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Oct 2024 05:54:06 -0700 (PDT)
-Date: Mon, 21 Oct 2024 14:54:00 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Jonathan Marek <jonathan@marek.ca>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>,
-	open list <linux-kernel@vger.kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>, Johan Hovold <johan@kernel.org>
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: x1e80100-crd: enable otg on usb
- ports
-Message-ID: <ZxZO6Prrm2ITUZMQ@linaro.org>
-References: <20241011231624.30628-1-jonathan@marek.ca>
- <20241011231624.30628-2-jonathan@marek.ca>
+	 Content-Type:Content-Disposition:In-Reply-To; b=N5ZtuoIcg0SaY/bUg6AxnNeeVoE5gKwRXe1BGTnhmTvevYeIzGar/FL/MJUEaiHtlJAT1DdRLSzHQZ7IfDnJxuDeNC2nbc6R7tCivHUPqQg6vdfsZe2Ik1ccE40ofcyOmCzHJS6EveFi59rj7VrYcGJiv+onrpfXyUUtzcrQt14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Mr7Mmsg9; arc=none smtp.client-ip=198.175.65.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729515672; x=1761051672;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ej3qu3+gaDVBh2zajSPGQQs7YptzCBhIISJg5FqP5Ys=;
+  b=Mr7Mmsg9MXZzJkKHMP9+WvMb+mz93qt9QnjuND8Q8X+v3BMp+vP8gaeW
+   31hWq9jkBze2zicISOWWv4FMtofRLzG/E88AO+/fdicJ6Qr1YWlniLolq
+   eXG6tZwZuSMA90SLWzWZg0yfZCKeZdq9L2wOjbiJZvFZm7W87QfUvMfVo
+   Q4WdoBexXfHiOmUDIRZBvo1KkcWAhkNBF7gcRnreLRZA9tiovlFA0QQqs
+   i7XCOicWKd+5OQHTGPbk47YCTDOglUcLQ1av8dfKHIg/GZn4Xf6jBEK7u
+   6FH0r4nb9nlteIVMY6PwZVj58QwWcc8kubtAaEm9zeKV9qgcI/RVyyPRj
+   g==;
+X-CSE-ConnectionGUID: SSPZ41cCQn+dXCJq9kjd3A==
+X-CSE-MsgGUID: 3AT0bh6jSGy0U90EEV1wSQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29162840"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
+   d="scan'208";a="29162840"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Oct 2024 06:01:12 -0700
+X-CSE-ConnectionGUID: Ff3P9/pOT8ipqVHXPAl0nQ==
+X-CSE-MsgGUID: pm4T5JBTSeeKY95E78IYqQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,220,1725346800"; 
+   d="scan'208";a="79871502"
+Received: from kuha.fi.intel.com ([10.237.72.152])
+  by fmviesa010.fm.intel.com with SMTP; 21 Oct 2024 06:01:07 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 21 Oct 2024 16:01:06 +0300
+Date: Mon, 21 Oct 2024 16:01:06 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Guenter Roeck <linux@roeck-us.net>, linux-arm-msm@vger.kernel.org,
+	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] usb: typec: qcom-pmic-typec: use
+ fwnode_handle_put() to release fwnodes
+Message-ID: <ZxZQks8_rkYge-yf@kuha.fi.intel.com>
+References: <20241020-qcom_pmic_typec-fwnode_remove-v2-0-7054f3d2e215@gmail.com>
+ <20241020-qcom_pmic_typec-fwnode_remove-v2-1-7054f3d2e215@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,92 +82,54 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241011231624.30628-2-jonathan@marek.ca>
+In-Reply-To: <20241020-qcom_pmic_typec-fwnode_remove-v2-1-7054f3d2e215@gmail.com>
 
-+Cc Abel and Johan
-
-FYI, this landed in qcom for-next last week for CRD and T14s.
-
-On Fri, Oct 11, 2024 at 07:16:22PM -0400, Jonathan Marek wrote:
-> The 3 USB ports on x1e80100-crd are OTG-capable, remove the dr_mode
-> override to enable OTG.
+On Sun, Oct 20, 2024 at 02:56:34PM +0200, Javier Carrasco wrote:
+> The right function to release a fwnode acquired via
+> device_get_named_child_node() is fwnode_handle_put(), and not
+> fwnode_remove_software_node(), as no software node is being handled.
 > 
-> Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+> Replace the calls to fwnode_remove_software_node() with
+> fwnode_handle_put() in qcom_pmic_typec_probe() and
+> qcom_pmic_typec_remove().
+> 
+> Cc: stable@vger.kernel.org
+> Fixes: a4422ff22142 ("usb: typec: qcom: Add Qualcomm PMIC Type-C driver")
+> Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-This is a bit problematic, because dr_mode = "otg" seems to imply
-gadget/peripheral mode by default and we are currently unable to detect
-the role at runtime until the ADSP is started. Being in peripheral mode
-by default will break USB installers; they won't be able find the rootfs
-via USB. Unfortunately, they wouldn't be able to detect it once in the
-rootfs either, because usually you first need to copy the ADSP firmware
-from Windows (at least on the laptops).
-
-I think the best quick fix would be to set
-
-	role-switch-default-mode = "host";
-
-for now to restore the old behavior in initrd, while still allowing to
-switch to peripheral mode once detected by the ADSP later.
-
-It would be nice to have gadget mode in initrd as well, since e.g.
-postmarketOS needs that to set up the USB debug shell. But I'm not sure
-how we could support that:
-
- - We could designate some of the ports as "peripheral by default" and
-   some as "host by default". E.g. usb_1_ss0 is also used for EDL and
-   Fastboot on CRD, so it's more likely to be used in peripheral mode.
-   But there still would be users confused about why they cannot plug in
-   their USB installer into one of the ports...
-
- - Long term, I wonder if there is any way we could reuse the reduced
-   ADSP firmware from UEFI for USB detection until we start the full one
-   later? Perhaps it provides a similar interface?
-
-Thanks,
-Stephan
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 12 ------------
->  1 file changed, 12 deletions(-)
+>  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> index eb6b735c41453..bc66f4713b231 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-> @@ -1568,10 +1568,6 @@ &usb_1_ss0 {
->  	status = "okay";
->  };
+> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> index 2201eeae5a99..73a159e67ec2 100644
+> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
+> @@ -123,7 +123,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  port_unregister:
+>  	tcpm_unregister_port(tcpm->tcpm_port);
+>  fwnode_remove:
+> -	fwnode_remove_software_node(tcpm->tcpc.fwnode);
+> +	fwnode_handle_put(tcpm->tcpc.fwnode);
 >  
-> -&usb_1_ss0_dwc3 {
-> -	dr_mode = "host";
-> -};
-> -
->  &usb_1_ss0_dwc3_hs {
->  	remote-endpoint = <&pmic_glink_ss0_hs_in>;
->  };
-> @@ -1600,10 +1596,6 @@ &usb_1_ss1 {
->  	status = "okay";
->  };
+>  	return ret;
+>  }
+> @@ -135,7 +135,7 @@ static void qcom_pmic_typec_remove(struct platform_device *pdev)
+>  	tcpm->pdphy_stop(tcpm);
+>  	tcpm->port_stop(tcpm);
+>  	tcpm_unregister_port(tcpm->tcpm_port);
+> -	fwnode_remove_software_node(tcpm->tcpc.fwnode);
+> +	fwnode_handle_put(tcpm->tcpc.fwnode);
+>  }
 >  
-> -&usb_1_ss1_dwc3 {
-> -	dr_mode = "host";
-> -};
-> -
->  &usb_1_ss1_dwc3_hs {
->  	remote-endpoint = <&pmic_glink_ss1_hs_in>;
->  };
-> @@ -1632,10 +1624,6 @@ &usb_1_ss2 {
->  	status = "okay";
->  };
->  
-> -&usb_1_ss2_dwc3 {
-> -	dr_mode = "host";
-> -};
-> -
->  &usb_1_ss2_dwc3_hs {
->  	remote-endpoint = <&pmic_glink_ss2_hs_in>;
->  };
+>  static const struct pmic_typec_resources pm8150b_typec_res = {
+> 
 > -- 
-> 2.45.1
-> 
+> 2.43.0
+
+-- 
+heikki
 
