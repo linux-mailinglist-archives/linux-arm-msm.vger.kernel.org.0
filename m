@@ -1,157 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-35257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E2ACC9A69DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 15:17:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2BD19A69D3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 15:14:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BFAE0B213D9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 13:14:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 84356284173
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 13:14:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 921E31F427E;
-	Mon, 21 Oct 2024 13:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EE6C1F4FAE;
+	Mon, 21 Oct 2024 13:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wqZZN1J7"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="LGOxoxxa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8026C1E884B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 13:14:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AA983A19
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 13:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729516446; cv=none; b=fkRMIYV3EYFdsFJpK0BrtsuVYY5N8y+54bUAsfoFHPzEHMVDETIRdiXHMmFOxk99nJRMI+HbFduEVXMmc8fCoJX59T0UFh/hkXF4gkX3OkWStQF9buEear8xTB5DueQrJLcBnNNAS5D3LqcFXUDm4sJWxxqnQ1hgOZtzeqQmX48=
+	t=1729516477; cv=none; b=mtzQo/XvQBZItrh1hMa10IdOzZnP9SoT0EWKJQJO2uJuYBzUh3vFUOt5c93O47WD86uPpffnBKBYSjbYSYVtUtxtbFRwHyo0xqi7Mt7LPGyqpbAPZxGgYpkxTKjz3F+QCsbT3JxwAcICkLuIXU9E69N8/dH5S7BePtH4EVnBZMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729516446; c=relaxed/simple;
-	bh=x9yG3MBn1vkK+WDBnEoO/PPa0GRvaGfLCFIBWnUj9vI=;
+	s=arc-20240116; t=1729516477; c=relaxed/simple;
+	bh=ZNT6dErQm5dUkUtKaX2wR+uSRQ/CgST7uPEYAR7/AZ8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rEABdOr80QA6/rviFIbRAVqmP9qDvpKbtBBeMvoyDKzdUmIehhx1Z4NO1sHGD9xTi0U7x/66liEMMwSRuXTqPb5Qj+AdqBvXfdw//7vwYdiTV907qQhneJqs+X1qgjrJh9DV08LFGybpywRAiHljp1ngV9TCjz1yhThgfgnOqgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wqZZN1J7; arc=none smtp.client-ip=209.85.128.178
+	 To:Cc:Content-Type; b=KCRkaIca9Bg0mxOHE1ykXpB0V0cwKVSuhe6AVq53RW+Ib7fmGGdGFJcQmi5PNy5wbAhpyQkDBXZl/eEB/ABh8KuZlwfLJQLL8XmS/OJ0gTArZLQRvhm1aZ/YV9/+YEjRWocuzh4hVggklcyb3AJjzlDK9v5Y5OJQ154tSIcV0Ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=LGOxoxxa; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6e38ebcc0abso47462647b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 06:14:04 -0700 (PDT)
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6e5a5a59094so41606777b3.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 06:14:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729516443; x=1730121243; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729516474; x=1730121274; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q7erg8vrrwhLwTJ4vsjvKgNC1A86srGjOS44RXukUWE=;
-        b=wqZZN1J7T1PoLur+u6+vlGPjHezjIbCYdoRPChHqi4jjvv3yCQYaAAfL5rJj4b8p+f
-         kOoLjPUbUSjIWxUmOtbLihlqIeELC/8sjmMXazzQomxYrye0qGenutkRX2iwNkUQdDf/
-         dCOQFUajW9MVrM+JShWOQwCVl4LU6xfOxaHAFfC95JCGsM5HVkyf/2cCf1uxXXR0Nhr0
-         tB/Ca+21SXaLH1R3ohOU/wRokr7wS1Q+X05CIiO0HSMq8BgRMgW/8ZNJvurXFrRvfp9w
-         e8zRH12LJb+kUZVd9CeEQSXQ/jSG43y/htey3qfT7acMb03vLlDc1XW3yymS1ZQNPcWM
-         8x5g==
+        bh=Z+SABp5bMa8b+ka5LQY2m+GgmsBuAwrypkhPoy4YrVo=;
+        b=LGOxoxxaFzzKIn06jykezQME8nrYyqY0n0yC830hJDL4t9z9iM+tKuxi8eSLLI8mxZ
+         NydxU67nrR3DPCmMTPqwV5Xnhy94P0d0gEhk0wOheNqvGkQL6smAR0hQXPe+Bp6AuDk5
+         KOp03GN1Nu+TZl38uzkdO7ko+kyjdCQc28zlMcnaEePX1/LJE4KaUvXYvKj7mLG+NErE
+         wC30VzMnGGrKquEeK/KPPLCioZiUbb7llPX3yRwTdECF6gDi2EEH/8OH0YJ2pmoqyBrq
+         HAFX1n0aYcC5bj/LfRuDYa9Ac8rH/wzX5c7FCLkz2rkazK0cIn4JJadY8Kg7iqsVT36s
+         WxwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729516443; x=1730121243;
+        d=1e100.net; s=20230601; t=1729516474; x=1730121274;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Q7erg8vrrwhLwTJ4vsjvKgNC1A86srGjOS44RXukUWE=;
-        b=A06Ha6nqPs4swffFXhWUOeQCBkshWEdrFYMW0IdWd7+bQGMju+k6tC8Gw45/jVm0rN
-         z4FwRZ0Seh5GxJ4hfFgQSD+mPQ5J0yKnm3bDtFV3l2Jte486OP1xX4LaytcsX20S34ZI
-         cPOKRtujBLK28FxWZDdoNkixRLyA+NLNYFaluL3s5i03agx1rqFABgakcUx1k0uTssfK
-         +8fC7/WIW6wMYLtJU4ua5CnMUY/87CxPuscwq9Teddamj4FjxJ2PWxZalufxpMWC08C1
-         NlDPbObNHlGRQRt895YzQM71mrwc8M8m2xwYx1mTYCAT6BbHEuceH5kMMDw92avBISmN
-         f+Wg==
-X-Forwarded-Encrypted: i=1; AJvYcCWNjPex1NNQeUZnEpNAlaCK/LPXiRocuacbUBY1po2AFpHL6qk420WcHNcjhILqySpD+CoXQZuWKSGMry3B@vger.kernel.org
-X-Gm-Message-State: AOJu0YzaFkmTuZUX0zf9LtbW09G30BlJqbo3SE1WdyfMRGQQEW0gdk8u
-	NrIWhWy8UB7ikkXIQdI2hKtwbtgIhlzkrvFKNb5/8ztYHzc0bFKylElKUtQqMzXhdpMaIrAFIrs
-	/RNQgM5FCH8mWMSvGuAxbY7pBFSAy03i2sf/Zqw==
-X-Google-Smtp-Source: AGHT+IGJ9USpRoWSI7sBmA4N3tw//QAZfbQQ0ijGIXzkFPl+Q/rOF3E6ZVe4QumN0Z18GXDkKnNi8cp+VDSqifxCnH0=
-X-Received: by 2002:a05:690c:f8f:b0:6d3:f9a6:e29c with SMTP id
- 00721157ae682-6e5bf9a0846mr102792247b3.12.1729516443131; Mon, 21 Oct 2024
- 06:14:03 -0700 (PDT)
+        bh=Z+SABp5bMa8b+ka5LQY2m+GgmsBuAwrypkhPoy4YrVo=;
+        b=BL0XW66ImURXyoQSzeYtwg192WeDk+cKJCeC+YcApYlZdJUccVN4E8wfTSwew32k70
+         7Gb8C5m/dawnpqfGeYO1SA0EoBL05osw2o3Gl/sMuhKJCwE9Sxqv+ME9PzXOXXT/le3U
+         1unHEpZBBFWgnEKL9fe7QehI6Xk8sRzCcHHExkEKE7Cx09H+25ZRQnIk3sGjNlw2dBpy
+         zg037HP2mop0/wWgnhNxBl9OsZNr8YN5K8zdValt0NicifUz/xkESxkkgNzzvEKA346O
+         xoCQFkLv1JNnNn9CfflvgJPG9Itb9eWqkKpSRf83Z7Lv6Bz5jzHt7kzzFKiJm7KCZ5NP
+         s9vw==
+X-Forwarded-Encrypted: i=1; AJvYcCXPFDZ3x1tbTm9g9/DaAX8l9eChbejHmFAdCPotaVxmyigA2G2JqKWT+EKrMd+9S++QFqcqNM33XtpgGlc1@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrAmd6P/XtI2xLhFTFe3+cBKra4QVLVu3YHuK037aMmF3vLeAq
+	7ctCieR1uNRtP5XHzOWlCOkjx5AEArzrnvzU1lyTED9xlI28FH+GsrVfLVP51z5/RgUJ5ORE2/7
+	i0wKQTwX9jiLNzPXzEUrY+/S/QYsMq9fMoC/6Gg==
+X-Google-Smtp-Source: AGHT+IGS44A0LdF6F2vfatWoI0HEnmQZmlrki8Eve3Hnu3YdtW2VBHa3nNHJLmWNeIOMMpmk2ozUlE0zwWWxt/VJwcI=
+X-Received: by 2002:a05:690c:d81:b0:6e2:d2a:e998 with SMTP id
+ 00721157ae682-6e5bf73cc21mr98859307b3.2.1729516474442; Mon, 21 Oct 2024
+ 06:14:34 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241019-sar2130p-llcc-v1-0-4e09063d04f2@linaro.org>
- <20241019-sar2130p-llcc-v1-2-4e09063d04f2@linaro.org> <7fa066b6-a214-4866-9d0a-f75896531d84@oss.qualcomm.com>
-In-Reply-To: <7fa066b6-a214-4866-9d0a-f75896531d84@oss.qualcomm.com>
+References: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org> <c6a1eced-ea8e-4174-9f8b-dbf4131e0a2c@oss.qualcomm.com>
+In-Reply-To: <c6a1eced-ea8e-4174-9f8b-dbf4131e0a2c@oss.qualcomm.com>
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Mon, 21 Oct 2024 16:13:51 +0300
-Message-ID: <CAA8EJprvQTGABZ6LAq1qXRfPgOz7VzxPuKnRz_EO_4S6tveXgQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] soc: qcom: llcc: add support for SAR2130P and SAR1130P
+Date: Mon, 21 Oct 2024 16:14:23 +0300
+Message-ID: <CAA8EJprQ2538TKhA1NTzH5JVP5QH7qLNeFOWsbNoYz6QXd257A@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] clk: qcom: add support for clock controllers on
+ the SAR2130P platform
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Conor Dooley <conor@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Taniya Das <quic_tdas@quicinc.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Philipp Zabel <p.zabel@pengutronix.de>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Konrad Dybcio <konrad.dybcio@linaro.org>, 
+	Kalpak Kawadkar <quic_kkawadka@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, 21 Oct 2024 at 14:04, Konrad Dybcio
+On Mon, 21 Oct 2024 at 14:07, Konrad Dybcio
 <konrad.dybcio@oss.qualcomm.com> wrote:
 >
-> On 19.10.2024 6:26 PM, Dmitry Baryshkov wrote:
-> > Implement necessary support for the LLCC control on the SAR1130P and
-> > SAR2130P platforms. These two platforms use different ATTR1_MAX_CAP
-> > shift and also require manual override for num_banks.
+> On 21.10.2024 12:30 PM, Dmitry Baryshkov wrote:
+> > Add support for the RPMh, TCSR, Global, Display and GPU clock
+> > controllers as present on the Qualcomm SAR2130P platform.
 > >
 > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > > ---
-> >  drivers/soc/qcom/llcc-qcom.c       | 468 ++++++++++++++++++++++++++++++++++++-
-> >  include/linux/soc/qcom/llcc-qcom.h |  12 +
-> >  2 files changed, 474 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> > index a470285f54a875bf2262aac7b0f84ed8fd028ef1..ef84fe3b2af4e777126a8308bfd4ec47b28aeae2 100644
-> > --- a/drivers/soc/qcom/llcc-qcom.c
-> > +++ b/drivers/soc/qcom/llcc-qcom.c
-> > @@ -32,6 +32,7 @@
-> >  #define ATTR1_FIXED_SIZE_SHIFT        0x03
-> >  #define ATTR1_PRIORITY_SHIFT          0x04
-> >  #define ATTR1_MAX_CAP_SHIFT           0x10
-> > +#define ATTR1_MAX_CAP_SHIFT_sar       0x0e
-> >  #define ATTR0_RES_WAYS_MASK           GENMASK(15, 0)
-> >  #define ATTR0_BONUS_WAYS_MASK         GENMASK(31, 16)
-> >  #define ATTR0_BONUS_WAYS_SHIFT        0x10
-> > @@ -140,6 +141,11 @@ struct qcom_llcc_config {
-> >       bool need_llcc_cfg;
-> >       bool no_edac;
-> >       bool irq_configured;
-> > +     /*
-> > +      * special workarounds for SAR2130P and similar platforms which have
-> > +      * slightly different register mapping.
-> > +      */
-> > +     bool is_sar_chip;
+> > Changes in v2:
+> > - Dropped gcc_camera_hf_axi_clk, gcc_camera_sf_axi_clk,
+> >   gcc_qmip_camera_nrt_ahb_clk, gcc_qmip_camera_rt_ahb_clk,
+> >   gcc_iris_ss_hf_axi1_sreg, gcc_iris_ss_spd_axi1_sreg,
+> >   gcc_video_axi0_sreg and gcc_video_axi1_sreg clocks until corresponding
+> >   subsytems bringup (Taniya)
+> > - Program GDSC_SLEEP_ENA_VOTE directly from the probe function (Taniya)
+> > - Dropped sreg, BRANCH_HALT_POLL and collapse_sleep_mask patches
+> >   (Taniya)
+> > - Dropped gcc_parent_data_4, gcc_parent_map_4, gcc_parent_data_5,
+> >   gcc_parent_map_5 (LKP)
+> > - Link to v1: https://lore.kernel.org/r/20241017-sar2130p-clocks-v1-0-f75e740f0a8d@linaro.org
 >
-> This is not the only odd ball, please make max_cap_width variable
+> Please address the remaining comments from me too
 
-I'm not sure what you mean here. Moving max_cap_width to the drv_data
-/ configuration? Or do you mean something else?
+Oops. Excuse me.
 
->
-> [...]
->
-> > +     /*
-> > +      * For some reason register returns incorrect value here.
-> > +      * List compatibles instead of using .is_sar_chip since there might be
-> > +      * SAR-like chips which have other number of banks.
-> > +      */
-> > +     if (of_device_is_compatible(dev->of_node, "qcom,sar1130p-llcc") ||
-> > +         of_device_is_compatible(dev->of_node, "qcom,sar2130p-llcc")) {
-> > +             num_banks = 2;
-> > +     } else {
-> > +             ret = regmap_read(regmap, cfg->reg_offset[LLCC_COMMON_STATUS0], &num_banks);
-> > +             if (ret)
-> > +                     goto err;
-> > +
-> > +             num_banks &= LLCC_LB_CNT_MASK;
-> > +             num_banks >>= LLCC_LB_CNT_SHIFT;
-> > +     }
-> >
-> > -     num_banks &= LLCC_LB_CNT_MASK;
-> > -     num_banks >>= LLCC_LB_CNT_SHIFT;
-> >       drv_data->num_banks = num_banks;
->
-> This too
-
-This can probably go to qcom_llcc_config.
 
 
 -- 
