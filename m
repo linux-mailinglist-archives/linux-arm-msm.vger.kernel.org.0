@@ -1,104 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-35264-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35265-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC95E9A6F07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 18:04:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 20AE69A7063
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 19:01:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 69042B20F77
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 16:04:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C7145281835
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 21 Oct 2024 17:01:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B08F1E7C18;
-	Mon, 21 Oct 2024 16:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F7DA1EBFEF;
+	Mon, 21 Oct 2024 17:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="WnzhvlNU"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NlJXDB6B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BB31E47AD;
-	Mon, 21 Oct 2024 16:04:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A021EB9F3
+	for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 17:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729526667; cv=none; b=puGfucJNNcNDqWVA0yISee0uKeeXOgcvPil2Liz2RfuzZXppBo7AEAGLbEItUmNvq4CsrYpdw1G0dOGF/8FIZdjZMJcY2zttvDXkCkrAgDU3EAiGwHjUbGIBVZRvAD2Qjqjdt8WP8R+63e4HLdQqP/7f+GpVtt4EZwcYOZLhWS8=
+	t=1729530067; cv=none; b=H1saGJiRuMK4DD6zPG6eeu/oCN8t24R2gQLEex4YaqCdGMQZkkIV5DjcEfIkb3q5E/9uYqlCCc2XOSitbfTIPbYlAfJ8MpUd5MSc8U9NrYHLyhV6bWIH3zWuYRze1XpmI4LPNbjTdIjhYbEhiXWVG/ZbuVdXjYQLU67sErs85Ak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729526667; c=relaxed/simple;
-	bh=NL+4/LzqhG5DQhyBo4s8Tz4jSgHK8KIC8B9jAve3quc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IOq45cbL/7IZouneX3CvLLS1oej5kYXXTWjtck5kD33DlDu5po5s55tX3UMrGh6EdDcV2a3jJ+jUcS/A+2ofxLxDn+hehc6CnvOMnCZW0WvfatGVEvE54LpLdle0zZVYoO6w4QCn1NMZw5TjF4xUGgjgHvz9mAl0Z/lrtypNHbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=WnzhvlNU; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=f9aYH+x6gNVLLNdDAZPgbvN0mWCyYxKH2GG7iO1Wl7Y=; b=WnzhvlNUN6sZc9f1yvS/HqH8Yp
-	p/EFSUsHn8p2P1NpBFy6xghFT86CX9gMKiDmW585mguvwZMd95YWSdgO1xjGQVxkKSjRtd8o+wv0T
-	YIm+hoGfhVZvnHw4iPGUzCkdbqZ7CAX/UAJhkBullDrH25afPXu0xcT4Iz0Q+yl0Co50=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1t2utJ-00AkNI-TR; Mon, 21 Oct 2024 18:04:21 +0200
-Date: Mon, 21 Oct 2024 18:04:21 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: Jingyi Wang <quic_jingyw@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Richard Cochran <richardcochran@gmail.com>,
-	quic_tengfan@quicinc.com, linux-arm-msm@vger.kernel.org,
-	linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-	quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 0/2] pinctrl: qcom: Introduce Pinctrl for QCS8300
-Message-ID: <1e73d96c-6a60-4bd7-87bf-4af4956aea7e@lunn.ch>
-References: <20241018-qcs8300_tlmm-v3-0-8b8d3957cf1a@quicinc.com>
- <f9dace93-f6c7-40c2-a6d2-60ce8043aa72@lunn.ch>
- <5fa2080a-f59e-405e-ba52-69d7293e2739@quicinc.com>
- <145d9036-6cd8-4aeb-80d0-b3d86b84f2cf@quicinc.com>
+	s=arc-20240116; t=1729530067; c=relaxed/simple;
+	bh=r6o8rdIvn3XeSJKRPzNcpH/BfDqUi8A5FsCsX1zDXWY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=dkO69NMGHIKUzjDdlfbecxNHADSlLr/DbzM9kFBV4S2enEITPnx7X3JhlRll5H7jJmBOyZMPH4urUTCtAl0eQ5q8T0UGBOggQERd0F7qJW0osqexzvGQVn5PMrz2S6cmxurb+SHkDHsde/h0+Q2aXRL9SM5Z6LcxZ3eyeVPbYQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NlJXDB6B; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49L9fQGJ000739;
+	Mon, 21 Oct 2024 17:00:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	XAzviJ4nH0MdXJtAvjaBKYau9mxWMWnSPv7eFyma4jM=; b=NlJXDB6BjkCnedmQ
+	CCLlz8rDIXaL7Zqq12bmlFGzTOnclVFV4AwcQXHch/aLwpf5tGnmZCeFOxsMqzmO
+	H0+8e0RrjDAZPbRSEQdQSa/8JTeTJt9zXTfrQgmtn1rYzzyA3BBZeiB6vUKOBQ7p
+	pwxc8P7ZCR4JR6MaetEc5JenE6zeW1YG+eIYudMLp9919dFArPJEp6EXnNCO2Ajy
+	KtYEJHGa5SWcKwMaB5J+J86oF1uPBk+V7Fz0bsYES42a6uhZhy5Qi1U+JDVcAFlv
+	s8rsVkIysTi7hUqVEYcwOZsp8D4JtZZ/M+NaH6a+TEofMjhydYd49wQbPwBo36AI
+	cmYuJQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42dmj11e67-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Oct 2024 17:00:56 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49LH0tfm028207
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 21 Oct 2024 17:00:55 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
+ 2024 10:00:55 -0700
+Message-ID: <b329a928-45f0-496d-b4cb-b79164f54653@quicinc.com>
+Date: Mon, 21 Oct 2024 11:00:54 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <145d9036-6cd8-4aeb-80d0-b3d86b84f2cf@quicinc.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: Add crashdump to Sahara
+Content-Language: en-US
+To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+CC: <andersson@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+        <quic_carlv@quicinc.com>, <ogabbay@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>
+References: <20240918155254.3186031-1-quic_jhugo@quicinc.com>
+ <Zw2SjWn43zeFjBtR@hu-bjorande-lv.qualcomm.com>
+ <6a2fe39b-eb7a-4b6d-9ce3-20685663cffd@quicinc.com>
+ <Zw68qSk8n+Izrevg@hu-bjorande-lv.qualcomm.com>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <Zw68qSk8n+Izrevg@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: XDKYoB5yRp_NTteYzsumFwG-3x1nitW-
+X-Proofpoint-ORIG-GUID: XDKYoB5yRp_NTteYzsumFwG-3x1nitW-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=999 phishscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410210122
 
-On Mon, Oct 21, 2024 at 12:27:36PM +0800, Jingyi Wang wrote:
+On 10/15/2024 1:04 PM, Bjorn Andersson wrote:
+> On Tue, Oct 15, 2024 at 12:34:29PM -0600, Jeffrey Hugo wrote:
+>> On 10/14/2024 3:52 PM, Bjorn Andersson wrote:
+>>> On Wed, Sep 18, 2024 at 09:52:54AM -0600, Jeffrey Hugo wrote:
+>>>> +	dev_table_entry = (struct sahara_debug_table_entry64 *)(context->rx);
+>>>> +	for (i = 0; i < table_nents; ++i, ++image_out_table_entry, ++dev_table_entry) {
+>>>> +		image_out_table_entry->type = le64_to_cpu(dev_table_entry->type);
+>>>> +		image_out_table_entry->address = le64_to_cpu(dev_table_entry->address);
+>>>> +		image_out_table_entry->length = le64_to_cpu(dev_table_entry->length);
+>>>> +		strscpy(image_out_table_entry->description, dev_table_entry->description,
+>>>> +			SAHARA_TABLE_ENTRY_STR_LEN);
+>>>> +		strscpy(image_out_table_entry->filename,
+>>>> +			dev_table_entry->filename,
+>>>> +			SAHARA_TABLE_ENTRY_STR_LEN);
+>>>> +	}
+>>>> +
+>>>> +	context->mem_dump_freespace = image_out_table_entry;
+>>>> +
+>>>> +	/* Done parsing the table, switch to image dump mode */
+>>>> +	context->dump_table_length = 0;
+>>>> +
+>>>> +	/* Request the first chunk of the first image */
+>>>> +	context->dump_image = (struct sahara_dump_table_entry *)(context->mem_dump +
+>>>> +								sizeof(*dump_meta));
+>>>
+>>> I would have preferred to see this (and above) written such that it's
+>>> explicitly clear that you're filling out an array of entries and then
+>>> point this to the first entry in that array.
+>>
+>> I'm not sure I understand what you would like to see here.  Can you perhaps
+>> give an example?
+>>
+> 
+> Per your devcoredump definition at the top, image_out_table_entry is an
+> array of struct sahara_dump_table_entry, which you fill out by sliding a
+> pointer starting at mem_dump + sizeof(*dump_meta).
+> 
+> You then have context->dump_image to be a pointer to each element in
+> this array, except that it's not expressed as an array...
+> 
+> But it took me a minute to understand that this was what the code is
+> doing.
+> 
+> If you instead wrote it as:
+> 
+>    for (i = 0..table_nents) {
+>    	image_out_table[i].foo = bar;
+> 	...;
+>    }
+> 
+>    context->dump_image = &image_out_table[0];
+> 
+> (Or perhaps even make dump_image an index into image_out_table)
+> 
+> It would have been obvious to me when I looked at the code that you're
+> setting up an array and then looping over each entry in the array.
 > 
 > 
-> On 10/21/2024 10:32 AM, Jingyi Wang wrote:
-> > 
-> > 
-> > On 10/19/2024 2:08 AM, Andrew Lunn wrote:
-> >> On Fri, Oct 18, 2024 at 11:19:30AM +0800, Jingyi Wang wrote:
-> >>> Introduce Top Level Mode Multiplexer dt-binding and driver for Qualcomm
-> >>> QCS8300 SoC.
-> >>>
-> >>> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
-> >>
-> >> I'm curious why you are Cc: netdev for a pin controller patch?  Did
-> >> ./scripts/get_maintainer.pl say you should?
-> >>
-> > The cc list was generated by the b4 tools.
+> So, I don't see anything wrong with the logic, but it would have been
+> easier for me if the code manifested this array, as an array...
 > 
-> double checked with ./scripts/get_maintainer.pl, also get the list:
-> netdev@vger.kernel.org (open list:PTP HARDWARE CLOCK SUPPORT:Keyword:(?:\b|_)ptp(?:\b|_))
-> 
-> I think the list should be added for keyword match in the driver.
+> Perhaps I'm missing some detail which complicates things, as far as I
+> can tell the logic presented is reasonable.
 
-I assume this is a PTP pin probably a 1 pps output, not an actual PTP
-driver hidden within the pinctrl? If so, please edit the list and
-remove netdev and Richard. You might want to review the other emails
-and see if they all make sense.
+Ok, I see what you mean, and I believe its possible to transform the 
+logic to use array notation in the loop as you suggest.
 
-	Andrew
+-Jeff
 
