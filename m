@@ -1,107 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-35478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21A0E9AB7E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 22:47:00 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2874F9AB946
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 00:01:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CC3EB1F23B75
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 20:46:59 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AB993B215AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 22:01:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 930471CC16D;
-	Tue, 22 Oct 2024 20:46:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A0EA81CCB30;
+	Tue, 22 Oct 2024 22:01:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FoQvUNkg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ajZFuwUz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f169.google.com (mail-lj1-f169.google.com [209.85.208.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541B11C9ED6;
-	Tue, 22 Oct 2024 20:46:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79DA1CB51F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 22:01:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729630014; cv=none; b=od9VTBsWwN0+PufRYrSxtE9wCeL4wCYOsPQ+IU0DIqeiF69DDja6bBZqgivzluZOINciv1mXdKvLIE4zRYqrQHYQDXbBOjo/UB2HwKR7wucEugekg087PaITh9gq1+IfLqS2AOYCQSRAj+b6E9Ske7rM5KXgjOz/+3peGu6ydpg=
+	t=1729634498; cv=none; b=vDStIRE2/LknmOLiF9DNV0ATEcxLUH5XRT8jw8jCSyj8LjArvrpCSQzGE/6rCVDhzPRDwC7gFLXRQLumNk1xH0N6N6ZUVakcvw/d6zeWsOciTEzrvY1NE94dKs6uwS8Ow1IZcdeSYADuFvqDjGVVgOthxt5qAISQhS2RGV9xVFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729630014; c=relaxed/simple;
-	bh=Zn3g/rsmjAnDQhjuWlSialZd2N8hudka0aK2MD88RIg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kHLuVUN+PHAEG8t623G1tGnknG/CSFQ5WxmIJCrta3uwFh6T/IJdGuPNm3gckgt0TV0JiMV6tbV+TKkLKxWWRrVGQReuEz8WUT6nCgzdSt5WPrE38Knrc//vkKtgrAe8yGVrhXTX5G+xqC4Pew2yG/W0qgaNFhSd0pni5PJw/O0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FoQvUNkg; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7513C4CEC7;
-	Tue, 22 Oct 2024 20:46:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729630013;
-	bh=Zn3g/rsmjAnDQhjuWlSialZd2N8hudka0aK2MD88RIg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=FoQvUNkgYJcOW5aPFEgdSrDVeXvX5QcUiGgnKevOhRdl3cNmPrn8ubp46XbOvqgfY
-	 QjWYO88wvIF3OgeYOej7ecpGDpjy7WQYJ2lvkxRz6lQgCE59gcF/ge/hm8ljPYMfZG
-	 v7XqG8cT3Ls/cbgeBTHnVXQzkrflXBIBnNq0DG8CL3jgtuXx23Q9zz/ytvSjuGqoAQ
-	 IWa1fhVHoidaozPgTKOI+v+vP81b6lJ1CipGte11Ybl+WqSWYxAkJ8MTChZQj1+1bt
-	 Q+VWPk4QEYqc8/V6YFBoDfXQqtJ4+gy8KmNpU0ng224ha7fZuAmH7tywyI1s3BHxju
-	 kfx2+Fq2MT/ag==
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-539f0f9ee49so6646839e87.1;
-        Tue, 22 Oct 2024 13:46:53 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUbRuLP37VMhVERUiWt5oSroqsH64ocxcyNDz9Hpl1Qqgo0JE0CxT7KD4DdR/27ICdznPJFtu0oc5O/@vger.kernel.org, AJvYcCUwg63QGyNDHgdCVqDY1TO4S1BFGvjyRyngtsQEFCUAsmFjgYyYf9x5dJCsxfVa8EZaJUfXHBenBYgFM3I=@vger.kernel.org, AJvYcCV8X+sso+g7uFk3wt90y7kYJMgBBN3NkI5/QCULw2KjxK6nsrbUzYXV0gidjcwx1SSTzKzR/C61+kVrFHQUEA==@vger.kernel.org, AJvYcCVKArYRELoVRJOWeDItt9EPd/fONZcYkTXCh+sqLxBGzGXYQCf+xMYzEIDgBDRNP1HhUnRvkRKhlwC3@vger.kernel.org, AJvYcCWldbjeKtzMV8SIJg8micS/MAzVu/shDoooDC071SQpZoJ2PMUfMUQ6fJaCeor2yR6zCIc7GgMeDyjg@vger.kernel.org, AJvYcCXnH271UrCHmvQb/ce3LtSkUhFngm39QdrfL36iC8/X9Qm88h0PrlHqm4cLyRydRCliTMFd0Gn/yaeoARJj@vger.kernel.org, AJvYcCXtdn3jg+2K1jxPV2hFXSnQCctA76746pWJWfRpoU4xD/oLjAmO1OuSHuH96LWwz7/hShpVElvBqAvcEME9/OH3mII=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+LYsU/6cVRS+IZSoazOWJGsW0F50Ecm2MfLBOD7zdwCBHQrkK
-	RjbGxl1cDJ01uB6jPRbQTFwTPnTFvFQWh/kRMVvTyOltbdgkUsWbgdZ2LEYuzgLfFY/zauoBYGE
-	1wmZxJ0b93avkLyjVP2wa5baYWA==
-X-Google-Smtp-Source: AGHT+IEO+TmoJNpkBRko2njnTuoGDOOp8xk5cA0fj0xWt4Uui7DHRbRD3cGMhGi7Qb+vFtNs4gUNwWTLEMBa9HTb5QA=
-X-Received: by 2002:a05:6512:1109:b0:539:9524:92bc with SMTP id
- 2adb3069b0e04-53b1a37ce3fmr102061e87.55.1729630012208; Tue, 22 Oct 2024
- 13:46:52 -0700 (PDT)
+	s=arc-20240116; t=1729634498; c=relaxed/simple;
+	bh=n5fqThXXJENu009fRQP21i339L8tBhoZxtEg1OsM9T8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VxmgisfIR+ALFEBJUluSRWGVd5U8gNrAbdFZIeEQjAiTlqbow9y1WEis+VDQiYbiEfWNurB5k5jh5gXcpp+M+NPmX6Ez1ZwH/dZKgPETGegRu2ME7H/YuuMeJffHw3Au8cBFYQG8aNzHSeYq7YFl71KRHoPx+3aympae21dZc9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ajZFuwUz; arc=none smtp.client-ip=209.85.208.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2fb4af0b6beso95750421fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 15:01:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729634495; x=1730239295; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U2VtMMWcy7426eVZmr4BVetTtNhYNhFvcWhVUE67Vw4=;
+        b=ajZFuwUzVYPXEuXqlxIq5EF3+MR1j04NAKdkhZB8AXYMo8IIZ2obwPD2L/URS941Xg
+         pSmyt9itghvzF2HDxYTK4pbFY/4t8cjPrqA7wMBXN5hULe0N8yG2l4iSj0dRj9IMeTBV
+         kq6wplJLDOnO2bLoj9njm6QTtTGNUdZebpIlgZBtt1hMV+XdeQkcVeFEPNqE5B2Lw0bY
+         wH8zIZ5jps6csOa2VGCRamPniIAQJ9Ti7XKBLU9vPuzTrTPIYwl8tS70CQzcVxaCwX0p
+         mOIgZ+k9flsR5ij37yLFUZRf+3+51BIpMFjVtXIByO7gHfttEWzWfwcTAjWFXJRxnHd1
+         J00Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729634495; x=1730239295;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U2VtMMWcy7426eVZmr4BVetTtNhYNhFvcWhVUE67Vw4=;
+        b=fubzr52f/uHgaq5nNXWNiLsPzu4PsFtjlOt+5/48EizD2+8BRqwweQZoJGHx4NcKU+
+         L7dhMkUugQUHD/2pWvomdT96hczME/aalRy0DViQ/aSeBdEoOFCR72SzchqsP9yimFHm
+         DURheCyg4CxNnGWVf3sdm28iqV/WxWxDs34zxfGa6BExOduJgiL0FT9CHqqmwAf6scrJ
+         SeMgJDfc8HIJep6g9Wq99PK74IKMGTwXrdK0VkkKKYX8/tc9dlx8AF/kfy1shYle2g5X
+         BbaB5Gf5rj7PXJ+M1rn7Ms/BaPlzj6MCJkRVXVB65jcug1WUBpgL0U+2A19I2EmJadL0
+         kCBw==
+X-Forwarded-Encrypted: i=1; AJvYcCV6z1z1LQnmVz7+8cvhbsscuJPa0s9Rcn8QqI3qTruhCj2g1PfSVp+uLY1r2bM86gVPuQS2D2MnRDouNErk@vger.kernel.org
+X-Gm-Message-State: AOJu0YyW1TpVAC51R8A5DeaNIhh99CfT3n0Mo+rlL94SKFOWB+x++Bhw
+	4DzUmsxQGkLEDtacC2RxNifV9y/ujaFWHuj8uQRfm96LLMfv4EHJlgCRiO144/0=
+X-Google-Smtp-Source: AGHT+IHe+jPn+U0mKZMGjgXacHcxcDaAHcifzv4VrSOnLxj0lpXay4saqXfqbEzlsGB1tvD/50HFgw==
+X-Received: by 2002:a2e:b88a:0:b0:2fb:5bd:8ff2 with SMTP id 38308e7fff4ca-2fc9d31d25amr2945211fa.16.1729634494735;
+        Tue, 22 Oct 2024 15:01:34 -0700 (PDT)
+Received: from [192.168.0.40] ([176.61.106.227])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a91571f2bsm387981166b.163.2024.10.22.15.01.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Oct 2024 15:01:34 -0700 (PDT)
+Message-ID: <99bbb067-868c-4ec8-90a3-2c3bf6df3690@linaro.org>
+Date: Tue, 22 Oct 2024 23:01:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240925232409.2208515-1-robh@kernel.org> <172957518656.489113.4975806367588166309.b4-ty@kernel.org>
-In-Reply-To: <172957518656.489113.4975806367588166309.b4-ty@kernel.org>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 22 Oct 2024 15:46:39 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+=_9prwcGvM4-sKKNgq6QSsJ=bqfKcVqnbepj1i_2q4w@mail.gmail.com>
-Message-ID: <CAL_Jsq+=_9prwcGvM4-sKKNgq6QSsJ=bqfKcVqnbepj1i_2q4w@mail.gmail.com>
-Subject: Re: [PATCH] dt-bindings: Fix array property constraints
-To: Vinod Koul <vkoul@kernel.org>
-Cc: Conor Dooley <conor@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Marc Zyngier <maz@kernel.org>, 
-	Thomas Gleixner <tglx@linutronix.de>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	Paul Elder <paul.elder@ideasonboard.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, 
-	Alim Akhtar <alim.akhtar@samsung.com>, Jim Quinlan <jim2101024@gmail.com>, 
-	Nicolas Saenz Julienne <nsaenz@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>, 
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Andy Gross <agross@kernel.org>, 
-	Krzysztof Kozlowski <krzk@kernel.org>, Jim Quinlan <james.quinlan@broadcom.com>, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, dmaengine@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org, 
-	linux-samsung-soc@vger.kernel.org, linux-rpi-kernel@lists.infradead.org, 
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] usb: typec: ucsi: Set orientation as none when
+ connector is unplugged
+To: Abel Vesa <abel.vesa@linaro.org>,
+ Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Johan Hovold <johan@kernel.org>, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241017-usb-typec-ucsi-glink-add-orientation-none-v1-1-0fdc7e49a7e7@linaro.org>
+Content-Language: en-US
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20241017-usb-typec-ucsi-glink-add-orientation-none-v1-1-0fdc7e49a7e7@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 22, 2024 at 12:33=E2=80=AFAM Vinod Koul <vkoul@kernel.org> wrot=
-e:
->
->
-> On Wed, 25 Sep 2024 18:24:06 -0500, Rob Herring (Arm) wrote:
-> > Schemas for array properties should only have 1 level of array
-> > constraints (e.g. items, maxItems, minItems). Sometimes the old
-> > encoding of all properties into a matrix leaked into the schema, and
-> > didn't matter for validation. Now the inner constraints are just
-> > silently ignored as json-schema array keywords are ignored on scalar
-> > values.
-> >
-> > [...]
->
-> Applied, thanks!
->
-> [1/1] dt-bindings: Fix array property constraints
->       commit: 72c65390c61fc96cebfb91c300ca774925565383
+On 17/10/2024 17:01, Abel Vesa wrote:
+> Currently, the ucsi glink client is only reporting orientation normal or
+> reversed, based on the level of the gpio. On unplug, it defaults to
+> orientation normal instead of none. This confuses some of the orientation
+> switches drivers as they might rely on orientation none in order to
+> configure the HW in some sort of safe mode. So propagate the orientation
+> none instead when the connector status flags says cable is disconnected.
+> 
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>   drivers/usb/typec/ucsi/ucsi_glink.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
+> index 3e4d88ab338e50d4265df15fc960907c36675282..b3bc02e4b0427a894c5b5df470af47433145243e 100644
+> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
+> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
+> @@ -185,6 +185,11 @@ static void pmic_glink_ucsi_connector_status(struct ucsi_connector *con)
+>   	struct pmic_glink_ucsi *ucsi = ucsi_get_drvdata(con->ucsi);
+>   	int orientation;
+>   
+> +	if (!(con->status.flags & UCSI_CONSTAT_CONNECTED)) {
+> +		typec_set_orientation(con->port, TYPEC_ORIENTATION_NONE);
+> +		return;
+> +	}
+> +
+>   	if (con->num >= PMIC_GLINK_MAX_PORTS ||
+>   	    !ucsi->port_orientation[con->num - 1])
+>   		return;
+> 
+> ---
+> base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
+> change-id: 20241017-usb-typec-ucsi-glink-add-orientation-none-73f1f2522999
+> 
+> Best regards,
 
-Why? It is already in my tree and not just dma bindings.
+We discussed this on a meeting and the logic makes perfect sense i.e. 
+when the cable gets yanked the orientation shouldn't be assumed to be 
+anything => orientation is none.
 
-Rob
+Re Johan's comments needs a Fixes tag though, assuming that's applied.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
