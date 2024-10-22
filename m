@@ -1,226 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-35427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A55D89AB07D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 16:12:01 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F35F9AB09E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 16:17:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E40FB1F21C99
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 14:11:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EB7E128451B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 14:17:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBAC19F47E;
-	Tue, 22 Oct 2024 14:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DE5E5199EA2;
+	Tue, 22 Oct 2024 14:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="faZ/P8XJ"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="H+Emv4yE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE0C19E96A;
-	Tue, 22 Oct 2024 14:11:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D1319D88F;
+	Tue, 22 Oct 2024 14:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729606313; cv=none; b=sTFID2yP+1LBacYvpeUdZYTIn2kmVGr6Jvqdvf5E5OcxjFqq/+VYR0jo2MVu981uxh41VxjTnVudQXrRYR8d8k3APXmE73EwBGZXypWJ+D4oAQAMOFN9MtsVaDP+j6C/i4GLmYJACSNU2sVEHLxsMcM4iFc82k37Qfr7O7GaTXw=
+	t=1729606649; cv=none; b=thy6SDTIxoufl92lniL1DZD2+v0MXXdVPjw+62iicVr+v/3SdRpS9dN/Fq1oKiKAA8ddV3fzm2jI0mdwJwINhhpCLPLcGquRIcySqJV00HBjiN+qrGRJhpVSiwrB0oddxBflBnkVGroPUJeTQNNjtzkwXmKXnAzA6fMwnC7E/tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729606313; c=relaxed/simple;
-	bh=98iJScxQ5+xWTfcAyb0DIQja42BOHYt0I6p6JMozmpY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bXepJhRrClyiGuWlNpuczFStxWiDpXZVww7ON3OmomtrnPts8o/hdmONkmWt+HDFjEDrFHT9WeGZIRJVBtOtgP8VxPhxCnR8crh1u51CQilUZ378Gp5aIivJiXAQhBHahpMPE8KfnykpFPlmkm1/91AxxoNnk9KFKp9w85of7VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=faZ/P8XJ; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729606311; x=1761142311;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=98iJScxQ5+xWTfcAyb0DIQja42BOHYt0I6p6JMozmpY=;
-  b=faZ/P8XJdXXwnVi7jihDA5t4IlXPjzCIif2FpZrlUIxWGfGo7AxZtcCJ
-   Mc00Q9kCJBWnuU1i/Cb/IIKziGOZUsWcrWouLLaiZ0RCe2waICP7Yq4G0
-   dHwLlfOftT1RP0+0knfuCIElKrK+xgZ2TUXRN2WUDFAF5qidf/5ojIn3o
-   npaYAAz1OsyvKyOwFqm7Z+OjCUxcwlK4gA0dC2OcnFYBgFxb6IjCCJr5s
-   xxvs8AwTpAcr5ZUqYzra7+ITvDq+1ytHg7GYJyVD7kNFVYhyRVK0CUYm4
-   pw5nWEg8uiYy745A8pYHZ1xgPDyc3PDp8mVdjSzODQFiQyrzQBVQE9HqK
-   w==;
-X-CSE-ConnectionGUID: JoENZd9GSHWWaie42rLh0w==
-X-CSE-MsgGUID: RGxeN4xOQNKixWEFm+VDrA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11233"; a="39761579"
-X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; 
-   d="scan'208";a="39761579"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Oct 2024 07:11:50 -0700
-X-CSE-ConnectionGUID: La+zPVeBSeOmWFkXwGEz8Q==
-X-CSE-MsgGUID: EGreTNpuRkiixkh4YmEXrA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,223,1725346800"; 
-   d="scan'208";a="83862597"
-Received: from kuha.fi.intel.com ([10.237.72.152])
-  by fmviesa003.fm.intel.com with SMTP; 22 Oct 2024 07:11:46 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Tue, 22 Oct 2024 17:11:45 +0300
-Date: Tue, 22 Oct 2024 17:11:45 +0300
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <ZxeyoRYPZP3Feg6T@kuha.fi.intel.com>
-References: <20241022-x1e80100-ps8830-v3-0-68a95f351e99@linaro.org>
- <20241022-x1e80100-ps8830-v3-2-68a95f351e99@linaro.org>
+	s=arc-20240116; t=1729606649; c=relaxed/simple;
+	bh=ekA/emXkLZ5tc9Burp4oozETaIzuCtLOps/vxN+0/7s=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=UlE5Ki7p/63Olq252T4x38mwUa2j5VuN/Qg+mGiX6w7eeI6a2Sr3oTQi1xZFl2fL2VJTj8I7xBFHxwoFRWz8+giVIBa92BN0w5PmTQEwm1WjTsUHl22eNuiJUI1lXNz2RMKcYWrdCc7YQDOZBCTFQQH4ZYWQxGYH+aAJr34LYFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=H+Emv4yE; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MBpE6K029670;
+	Tue, 22 Oct 2024 14:17:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:message-id:mime-version:subject:to; s=
+	qcppdkim1; bh=LT/CYtCU7giMPvIvEl+vKtN0/5DN9R4S77AiJrAMNkA=; b=H+
+	Emv4yE7eRAj1xdA3VOEEhHrsgDwGwX4bKEVD5TOxRm2SCXx28UTTA2ncqU+FdRP+
+	EqR3aBvOGsIf//sxXjgE336T3iMLmDVglCKsCrG6QOVnWXJytryqpltc27j+zJTU
+	+srWMvtIQRm4tex8phQm23/rz9pDhQxlh8Wkx+PavTBvzdXs4TzTR7HQZgmLN4VZ
+	2TUaCDUADCz8msbIWdOTIm7jWx7cIcBEkRxH4WX7RferUA3TlVcOb12i7K3pfpZf
+	j6xmuinyRFFTGkwgP6qqQFqsdubwLb02PDcRm7KkuSkf8fVdpFN5sKzOMUk7BSI1
+	wm2olNceFt2Pc6gIwB7A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42ebhercvf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 14:17:20 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49MEHJpv004743
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 14:17:19 GMT
+Received: from hu-sachgupt-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 22 Oct 2024 07:17:15 -0700
+From: Sachin Gupta <quic_sachgupt@quicinc.com>
+To: Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson
+	<ulf.hansson@linaro.org>
+CC: <linux-mmc@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
+        <quic_nguyenb@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <quic_mapa@quicinc.com>, <quic_narepall@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_rampraka@quicinc.com>,
+        <quic_sachgupt@quicinc.com>, <quic_sartgarg@quicinc.com>
+Subject: [PATCH] mmc: sdhci-msm: Add sysfs attribute for error state in SDHCI MSM driver
+Date: Tue, 22 Oct 2024 19:46:59 +0530
+Message-ID: <20241022141659.18764-1-quic_sachgupt@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241022-x1e80100-ps8830-v3-2-68a95f351e99@linaro.org>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: LhSU-FRjPHf8gKyKUccTkfTVQ1mFhdQP
+X-Proofpoint-ORIG-GUID: LhSU-FRjPHf8gKyKUccTkfTVQ1mFhdQP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 mlxlogscore=999 bulkscore=0 mlxscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 clxscore=1011 spamscore=0 adultscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220091
 
-Hi,
+Introduce a new sysfs attribute err_state to the SDHCI MSM driver.
+The attribute allows users to query the error state of the SDHCI host controller.
 
-Couple of nitpicks.
+Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+---
+ drivers/mmc/host/sdhci-msm.c | 40 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-On Tue, Oct 22, 2024 at 01:26:55PM +0300, Abel Vesa wrote:
-> +static int ps8830_retimer_probe(struct i2c_client *client)
-> +{
-> +	struct device *dev = &client->dev;
-> +	struct typec_switch_desc sw_desc = { };
-> +	struct typec_retimer_desc rtmr_desc = { };
-> +	struct ps8830_retimer *retimer;
-> +	bool skip_reset = false;
-> +	int ret;
-> +
-> +	retimer = devm_kzalloc(dev, sizeof(*retimer), GFP_KERNEL);
-> +	if (!retimer)
-> +		return -ENOMEM;
-> +
-> +	retimer->client = client;
-> +
-> +	mutex_init(&retimer->lock);
-> +
-> +	if (of_property_read_bool(dev->of_node, "ps8830,boot-on"))
-> +		skip_reset = true;
-
-        skip_reset = device_property_present(dev, "ps8830,boot-on");
-
-> +	retimer->regmap = devm_regmap_init_i2c(client, &ps8830_retimer_regmap);
-> +	if (IS_ERR(retimer->regmap)) {
-> +		ret = PTR_ERR(retimer->regmap);
-> +		dev_err(dev, "failed to allocate register map: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ret = ps8830_get_vregs(retimer);
-> +	if (ret)
-> +		return ret;
-> +
-> +	retimer->xo_clk = devm_clk_get(dev, "xo");
-> +	if (IS_ERR(retimer->xo_clk))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
-> +				     "failed to get xo clock\n");
-> +
-> +	retimer->reset_gpio = devm_gpiod_get(dev, "reset",
-> +					     skip_reset ? GPIOD_OUT_LOW : GPIOD_OUT_HIGH);
-> +	if (IS_ERR(retimer->reset_gpio))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->reset_gpio),
-> +				     "failed to get reset gpio\n");
-> +
-> +	retimer->typec_switch = fwnode_typec_switch_get(dev->fwnode);
-
-	retimer->typec_switch = typec_switch_get(dev);
-
-> +	if (IS_ERR(retimer->typec_switch))
-> +		return dev_err_probe(dev, PTR_ERR(retimer->typec_switch),
-> +				     "failed to acquire orientation-switch\n");
-> +
-> +	retimer->typec_mux = fwnode_typec_mux_get(dev->fwnode);
-
-	retimer->typec_mux = typec_mux_get(dev);
-
-> +	if (IS_ERR(retimer->typec_mux)) {
-> +		ret = dev_err_probe(dev, PTR_ERR(retimer->typec_mux),
-> +				    "failed to acquire mode-mux\n");
-> +		goto err_switch_put;
-> +	}
-> +
-> +	sw_desc.drvdata = retimer;
-> +	sw_desc.fwnode = dev_fwnode(dev);
-> +	sw_desc.set = ps8830_sw_set;
-> +
-> +	ret = drm_aux_bridge_register(dev);
-> +	if (ret)
-> +		goto err_mux_put;
-> +
-> +	retimer->sw = typec_switch_register(dev, &sw_desc);
-> +	if (IS_ERR(retimer->sw)) {
-> +		ret = PTR_ERR(retimer->sw);
-> +		dev_err(dev, "failed to register typec switch: %d\n", ret);
-> +		goto err_aux_bridge_unregister;
-> +	}
-> +
-> +	rtmr_desc.drvdata = retimer;
-> +	rtmr_desc.fwnode = dev_fwnode(dev);
-> +	rtmr_desc.set = ps8830_retimer_set;
-> +
-> +	retimer->retimer = typec_retimer_register(dev, &rtmr_desc);
-> +	if (IS_ERR(retimer->retimer)) {
-> +		ret = PTR_ERR(retimer->retimer);
-> +		dev_err(dev, "failed to register typec retimer: %d\n", ret);
-> +		goto err_switch_unregister;
-> +	}
-> +
-> +	ret = clk_prepare_enable(retimer->xo_clk);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable XO: %d\n", ret);
-> +		goto err_retimer_unregister;
-> +	}
-> +
-> +	ret = ps8830_enable_vregs(retimer);
-> +	if (ret)
-> +		goto err_clk_disable;
-> +
-> +	/* delay needed as per datasheet */
-> +	usleep_range(4000, 14000);
-> +
-> +	if (!skip_reset)
-> +		gpiod_set_value(retimer->reset_gpio, 0);
-> +
-> +	return 0;
-> +
-> +err_clk_disable:
-> +	clk_disable_unprepare(retimer->xo_clk);
-> +err_retimer_unregister:
-> +	typec_retimer_unregister(retimer->retimer);
-> +err_switch_unregister:
-> +	typec_switch_unregister(retimer->sw);
-> +err_aux_bridge_unregister:
-> +	if (!skip_reset)
-> +		gpiod_set_value(retimer->reset_gpio, 1);
-> +
-> +	clk_disable_unprepare(retimer->xo_clk);
-> +err_mux_put:
-> +	typec_mux_put(retimer->typec_mux);
-> +err_switch_put:
-> +	typec_switch_put(retimer->typec_switch);
-> +
-> +	return ret;
-> +}
-
-thanks,
-
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e113b99a3eab..a256e3569a92 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -290,6 +290,7 @@ struct sdhci_msm_host {
+ 	u32 dll_config;
+ 	u32 ddr_config;
+ 	bool vqmmc_enabled;
++	bool err_occurred;
+ };
+ 
+ static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+@@ -2255,6 +2256,8 @@ static void sdhci_msm_dump_vendor_regs(struct sdhci_host *host)
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
+ 	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
+ 
++	msm_host->err_occurred = true;
++
+ 	SDHCI_MSM_DUMP("----------- VENDOR REGISTER DUMP -----------\n");
+ 
+ 	SDHCI_MSM_DUMP(
+@@ -2398,6 +2401,41 @@ static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+ 	return ret;
+ }
+ 
++static ssize_t err_state_show(struct device *dev,
++			struct device_attribute *attr, char *buf)
++{
++	struct sdhci_host *host = dev_get_drvdata(dev);
++	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
++	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++
++	if (!host || !host->mmc)
++		return -EINVAL;
++
++	return scnprintf(buf, PAGE_SIZE, "%d\n", !!msm_host->err_occurred);
++}
++
++static DEVICE_ATTR_RO(err_state);
++
++static struct attribute *sdhci_msm_sysfs_attrs[] = {
++	&dev_attr_err_state.attr,
++	NULL
++};
++
++static const struct attribute_group sdhci_msm_sysfs_group = {
++	.name = "qcom",
++	.attrs = sdhci_msm_sysfs_attrs,
++};
++
++static void sdhci_msm_init_sysfs(struct device *dev)
++{
++	int ret;
++
++	ret = sysfs_create_group(&dev->kobj, &sdhci_msm_sysfs_group);
++	if (ret)
++		dev_err(dev, "%s: Failed to create qcom sysfs group (err = %d)\n",
++				__func__, ret);
++}
++
+ static int sdhci_msm_probe(struct platform_device *pdev)
+ {
+ 	struct sdhci_host *host;
+@@ -2442,6 +2480,8 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+ 	sdhci_get_of_property(pdev);
+ 	sdhci_msm_get_of_property(pdev, host);
+ 
++	sdhci_msm_init_sysfs(&pdev->dev);
++
+ 	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
+ 
+ 	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
 -- 
-heikki
+2.17.1
+
 
