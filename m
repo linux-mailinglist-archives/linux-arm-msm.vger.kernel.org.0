@@ -1,146 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-35439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C10E9AB242
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 17:39:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE2E69AB278
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 17:47:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DF885B21415
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 15:39:15 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6155A1C221AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 15:47:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 61A0119D082;
-	Tue, 22 Oct 2024 15:39:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 96CBA1AFB35;
+	Tue, 22 Oct 2024 15:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IRSh7wcv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6pXHwsf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9BC2E406;
-	Tue, 22 Oct 2024 15:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFF71A726D;
+	Tue, 22 Oct 2024 15:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729611551; cv=none; b=NscB1p7c26eDeEjuJaQglW0783I3k4VPnxKwYihhyj/nGIJXG+uEQRFlRRWtrxjyrEhWDN3iiBrSYqLai7f6vJRih/CKqJBqJNbrXFLDsakX4i9sJoteOoJGzjoNt175XYrL8c3v8EBjRKx+2PP8ZpqXiMVPEMC0YGrrwbrkHOw=
+	t=1729612007; cv=none; b=TYksCsO0zL+IVf4gjLQU++V19ObXZRrNy0oZqrF2Cfrzki3NJMW7MTssYEcAQkekRIP1Erq3rbnUPTyrE8pR1AlaRiayC5IH0d9SzB4mmBD2AUegxmaAIZMWrHMW0/gL06QqiwRGkY464ScSwxXtPnM1AWep1FUz54dHsv9offg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729611551; c=relaxed/simple;
-	bh=HBAd+pH1suGBZHzKJW+16YwwQdaznnAtSA8k0AlCw/Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XFoQjMRX7sdT2i/KntK5xzagRAKvwEk+75Sb5+QpVWEp0sfrGQN4J16DvdKTfXwaGSbOU0cF36D6Whl9NLCzGDsy3tLvkHt9b1r6Ha7NV8DDjlSuMVOik+0fpDo1P9xw5MjPUp2+BMap7Y2WhBhYVwzOluU4UOhudmt0yrUf0NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IRSh7wcv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F6AC4CEC3;
-	Tue, 22 Oct 2024 15:39:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729611550;
-	bh=HBAd+pH1suGBZHzKJW+16YwwQdaznnAtSA8k0AlCw/Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IRSh7wcv1VAvmrR8bGUr+cmGKAsxlIyr93qsBirHrXE0NQTlCHrKa6jwh6BKM1U92
-	 1VzPCJOr6wTWFtc+TccGtAVu89N3Fso3SGT0FS+n0wPvwM+rxviMIaY7thYvxfuOEb
-	 Wz1qC2qs9E3SJtVSt33E+rw8ZSST8mDjW7cPfuB6UoN4Tl91BaIH5HDMNiv3r3aB1/
-	 kWKM5lpJxYxliuRtKhGHzhPJTnhC3XxthvDbSRaX0kONEHzVsr16/5/Wk2/4LhSjcS
-	 D7ewARlnNhmDkIsn19WF8luwc8JWSKyXMsxUU6p3iX0z8oA74Kim6fswJNpN5ckAmI
-	 ksfeW2H9yErKA==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t3Gyg-000000001MB-0xbc;
-	Tue, 22 Oct 2024 17:39:22 +0200
-Date: Tue, 22 Oct 2024 17:39:22 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Chris Lew <quic_clew@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] rpmsg: glink: Handle rejected intent request better
-Message-ID: <ZxfHKncYLeiIH3io@hovoldconsulting.com>
-References: <20241022-pmic-glink-ecancelled-v1-0-9e26fc74e0a3@oss.qualcomm.com>
- <20241022-pmic-glink-ecancelled-v1-1-9e26fc74e0a3@oss.qualcomm.com>
+	s=arc-20240116; t=1729612007; c=relaxed/simple;
+	bh=a8JILlK0rOgCUXdJdRQk58tiu5AIo4Ljw3l2ZVC7IPw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YYwyl0OEiXJOZskmizsiM2bJ3DB06w4+dMvkRv9Zp3jR3ovDVXGMtB17wleCi+ADjccdzitoetdQsRfZM6xLAJsbWzGU2G5lK+26Hkb0+Gs/1gKo+N/Y+DpeLzbyLpIno9A1rWsaTX+d7R5aF7T4+XM6ut/JprgvGIyoqyd9KX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6pXHwsf; arc=none smtp.client-ip=209.85.167.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-oi1-f180.google.com with SMTP id 5614622812f47-3e600add5dcso2095068b6e.2;
+        Tue, 22 Oct 2024 08:46:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729612005; x=1730216805; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=boEXQ06yBkY9Qp9iJ/X9uFRqoqU4NRYtavinbBKuAWQ=;
+        b=b6pXHwsf8BdxgX8ajJt9KrjD88YfV36/JYCNKzAHU7kSqAKwD4WOI6y0xOObdNTwcH
+         l0bIheMB9z0EjJaS6lbfHXqsX7SV4V5yYmP/JuuVBGuSCAksnptbyyVRGBiIDg4//MJ/
+         0KD7zTEFu4zKv1WD9uy5gXp8pU2ijn0gTY8Hu+obmoHzS8k3rDbQy1AjQPvHOo2L4LlY
+         KA6KEKE0LMYGZFck2BTX2OqRm+lHp/iYo8WAfiY0NLqwytATFroxlUJiMHoGsaAyzLsA
+         oTj7hjYFweon6EdeqEkiUHVVKkSCCpnIPAkASsroY/MnU1xZHvXPkjWqJboww21nwowo
+         7Zbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729612005; x=1730216805;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=boEXQ06yBkY9Qp9iJ/X9uFRqoqU4NRYtavinbBKuAWQ=;
+        b=G+oA2Ere5YcMPj4NxKV9JMPt4rE61mxCgEcbZG9UIB+LXPnoYqgdrPjnQVPxLat2ki
+         tYr+0mEFrC1qEn/y630Fuogi9ZszGJ1aJI6ljlUFl+mDvsz+Ip3IygcCqP07FbKD+SEq
+         W6pbJG2f/dcHzuCXZHPTd2BZibjkcTlTbWsnpBqrApTdOihHhhiXynfzn10ab3KA15+7
+         iHGn9TmzP/iU31+eTgsP7uOBpgzPUlG3VkzR5Uz4ocw13X8XWM/eRO3XSuy3KHv0r9x3
+         GDdgTxYqeoZEGu/XoPJTdwdwgCOIB9iame9TlhCKunP4+v24Mj/6IZJqfipacBC4iusf
+         0jsw==
+X-Forwarded-Encrypted: i=1; AJvYcCVB4eElqjNuDK6MQeEu3gOaDnQO3vB44jI0P3nWeADLcYIfXjEbq/A/MISOm03xOwLhi5S9BT/N929YIJNH@vger.kernel.org, AJvYcCWK6voFTSMKSN2lCsPqCro91by1eP0Jdo+N0dTi3pezfjgHOH202R9F2A6CJwcrRloKJmMgiJPFiCHZ4m+s@vger.kernel.org
+X-Gm-Message-State: AOJu0YyD3QDt1gWv3XCxy6AvEbbi692B2QYB0H4j1VKuSnr6bMe9gQ+s
+	9NMv7UzK5H8HRwZrPrT32Qk8OZjeoTCRDXhP5xRAHTkxiVBu9t2Z
+X-Google-Smtp-Source: AGHT+IFS78GXKm9ydPcOT0NuOksdZ95JgUyXNLofYNCJmFs3e78RXhsbhuhJsknF7ESBvWpcDq0O0g==
+X-Received: by 2002:a05:6808:1486:b0:3e5:f766:3e35 with SMTP id 5614622812f47-3e602c7cc8bmr10852493b6e.18.1729612004789;
+        Tue, 22 Oct 2024 08:46:44 -0700 (PDT)
+Received: from [192.168.1.22] (syn-070-114-247-242.res.spectrum.com. [70.114.247.242])
+        by smtp.googlemail.com with ESMTPSA id 5614622812f47-3e61034f63bsm1315178b6e.43.2024.10.22.08.46.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Oct 2024 08:46:44 -0700 (PDT)
+Message-ID: <041ff396-c5b9-40e2-8028-2b3325a3f0e3@gmail.com>
+Date: Tue, 22 Oct 2024 10:46:43 -0500
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241022-pmic-glink-ecancelled-v1-1-9e26fc74e0a3@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 00/10] QRTR Multi-endpoint support
+To: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: netdev@vger.kernel.org, "David S. Miller" <davem@davemloft.net>,
+ Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+ Paolo Abeni <pabeni@redhat.com>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20241018181842.1368394-1-denkenz@gmail.com>
+ <20241022153912.hoa2wbqtkvwjzuyo@thinkpad>
+Content-Language: en-US
+From: Denis Kenzior <denkenz@gmail.com>
+In-Reply-To: <20241022153912.hoa2wbqtkvwjzuyo@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Oct 22, 2024 at 04:17:11AM +0000, Bjorn Andersson wrote:
-> The initial implementation of request intent response handling dealt
-> with two outcomes; granted allocations, and all other cases being
-> considered -ECANCELLED (likely from "cancelling the operation as the
-> remote is going down").
+Hi Mani,
 
-For the benefit of casual reviewers and contributors, could you add
-introductory comment about what "intents" are?
-
-> But on some channels intent allocation is not supported, instead the
-> remote will pre-allocate and announce a fixed number of intents for the
-> sender to use. If for such channels an rpmsg_send() is being invoked
-> before any channels have been announced, an intent request will be
-> issued and as this comes back rejected the call is failed with
-> -ECANCELLED.
-
-It's actually the one L -ECANCELED
-
-s/is failed/fails/ ?
- 
-> Given that this is reported in the same way as the remote being shut
-> down, there's no way for the client to differentiate the two cases.
+On 10/22/24 10:39 AM, Manivannan Sadhasivam wrote:
+> On Fri, Oct 18, 2024 at 01:18:18PM -0500, Denis Kenzior wrote:
+>> The current implementation of QRTR assumes that each entity on the QRTR
+>> IPC bus is uniquely identifiable by its node/port combination, with
+>> node/port combinations being used to route messages between entities.
+>>
+>> However, this assumption of uniqueness is problematic in scenarios
+>> where multiple devices with the same node/port combinations are
+>> connected to the system.  A practical example is a typical consumer PC
+>> with multiple PCIe-based devices, such as WiFi cards or 5G modems, where
+>> each device could potentially have the same node identifier set.  In
+>> such cases, the current QRTR protocol implementation does not provide a
+>> mechanism to differentiate between these devices, making it impossible
+>> to support communication with multiple identical devices.
+>>
+>> This patch series addresses this limitation by introducing support for
+>> a concept of an 'endpoint.' Multiple devices with conflicting node/port
+>> combinations can be supported by assigning a unique endpoint identifier
+>> to each one.  Such endpoint identifiers can then be used to distinguish
+>> between devices while sending and receiving messages over QRTR sockets.
+>>
 > 
-> In line with the original GLINK design, change the return value to
-> -EAGAIN for the case where the remote rejects an intent allocation
-> request.
+> Thanks for your work on this! I'm yet to look into the details but wondering how
+> all the patches have Reviewed-by tags provided that this series is 'RFC v1'.
+> Also, it is quite surprising to see the review tag from Andy Gross who quit Qcom
+> quite a while ago and I haven't seen him reviewing any Qcom patches for so long.
 > 
-> It's tempting to handle this case in the GLINK core, as we expect
-> intents to show up in this case. But there's no way to distinguish
-> between this case and a rejection for a too big allocation, nor is it
-> possible to predict if a currently used (and seeminly suitable) intent
 
-seemingly
+I have very limited experience in kernel development, so the first few 
+iterations were shared privately with a few folks to make sure I wasn't 
+completely off base.  Andy was one of them :)
 
-> will be returned for reuse or not. As such, returning the error to the
-> client and allow it to react seems to be the only sensible solution.
+Regards,
+-Denis
 
-s/allow/allowing/ ?
-
-> In addition to this, commit 'c05dfce0b89e ("rpmsg: glink: Wait for
-> intent, not just request ack")' changed the logic such that the code
-> always wait for an intent request response and an intent. This works out
-> in most cases, but in the event that a intent request is rejected and no
-
-an intent
-
-> further intent arrives (e.g. client asks for a too big intent), the code
-> will stall for 10 seconds and then return -ETIMEDOUT; instead of a more
-> suitable error.
+> - Mani
 > 
-> This change also resulted in intent requests racing with the shutdown of
-> the remote would be exposed to this same problem, unless some intent
-> happens to arrive. A patch for this was developed and posted by Sarannya
-> S [1], and has been incorporated here.
+>> The patch series maintains backward compatibility with existing clients:
+>> the endpoint concept is added using auxiliary data that can be added to
+>> recvmsg and sendmsg system calls.  The QRTR socket interface is extended
+>> as follows:
+>>
+>> - Adds QRTR_ENDPOINT auxiliary data element that reports which endpoint
+>>    generated a particular message.  This auxiliary data is only reported
+>>    if the socket was explicitly opted in using setsockopt, enabling the
+>>    QRTR_REPORT_ENDPOINT socket option.  SOL_QRTR socket level was added
+>>    to facilitate this.  This requires QRTR clients to be updated to use
+>>    recvmsg instead of the more typical recvfrom() or recv() use.
+>>
+>> - Similarly, QRTR_ENDPOINT auxiliary data element can be included in
+>>    sendmsg() requests.  This will allow clients to route QRTR messages
+>>    to the desired endpoint, even in cases of node/port conflict between
+>>    multiple endpoints.
+>>
+>> - Finally, QRTR_BIND_ENDPOINT socket option is introduced.  This allows
+>>    clients to bind to a particular endpoint (such as a 5G PCIe modem) if
+>>    they're only interested in receiving or sending messages to this
+>>    device.
+>>
+>> NOTE: There is 32-bit unsafe use of radix_tree_insert in this patch set.
+>> This follows the existing usage inside net/qrtr/af_qrtr.c in
+>> qrtr_tx_wait(), qrtr_tx_resume() and qrtr_tx_flow_failed().  This was
+>> done deliberately in order to keep the changes as minimal as possible
+>> until it is known whether the approach outlined is generally acceptable.
+>>
+>> Denis Kenzior (10):
+>>    net: qrtr: ns: validate msglen before ctrl_pkt use
+>>    net: qrtr: allocate and track endpoint ids
+>>    net: qrtr: support identical node ids
+>>    net: qrtr: Report sender endpoint in aux data
+>>    net: qrtr: Report endpoint for locally generated messages
+>>    net: qrtr: Allow sendmsg to target an endpoint
+>>    net: qrtr: allow socket endpoint binding
+>>    net: qrtr: Drop remote {NEW|DEL}_LOOKUP messages
+>>    net: qrtr: ns: support multiple endpoints
+>>    net: qrtr: mhi: Report endpoint id in sysfs
+>>
+>>   include/linux/socket.h    |   1 +
+>>   include/uapi/linux/qrtr.h |   7 +
+>>   net/qrtr/af_qrtr.c        | 297 +++++++++++++++++++++++++++++++------
+>>   net/qrtr/mhi.c            |  14 ++
+>>   net/qrtr/ns.c             | 299 +++++++++++++++++++++++---------------
+>>   net/qrtr/qrtr.h           |   4 +
+>>   6 files changed, 459 insertions(+), 163 deletions(-)
+>>
+>> -- 
+>> 2.45.2
+>>
 > 
-> To summarize, the intent request can end in 4 ways:
-> - Timeout, no response arrived => return -ETIMEDOUT
-> - Abort TX, the edge is going away => return -ECANCELLED
-> - Intent request was rejected => return -EAGAIN
-> - Intent request was accepted, and an intent arrived => return 0
-> 
-> This patch was developed with input from Sarannya S, Deepak Kumar Singh,
-> and Chris Lew.
-> 
-> [1] https://lore.kernel.org/all/20240925072328.1163183-1-quic_deesin@quicinc.com/
-> 
-> Fixes: c05dfce0b89e ("rpmsg: glink: Wait for intent, not just request ack")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-Nit picks aside, this was all nice and clear.
-
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
 
