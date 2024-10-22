@@ -1,103 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-35418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C132D9AA255
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 14:43:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA9DE9AA261
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 14:45:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B6EC21C21A7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:43:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 76D361F2324C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:45:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8821D19D8A3;
-	Tue, 22 Oct 2024 12:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B64F19D89E;
+	Tue, 22 Oct 2024 12:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BHEBE9hE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ys1SotQF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9CB19D890
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 12:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77BDA14EC46
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 12:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729600979; cv=none; b=dRyfSiqk7LIHKpXu9WTL/8MHtE/tt7p8spYkd5J/CW9ScbCoD8p3rlsllXIofdLpyL5m+Pcc9CoCbf1UOoJxdb8cj079KT4unbjzci6aLx0GrTe/kG6RDSHeJ4Ax0ghU2l8OAjdAWfE78fI3V0ijeT5A4N3RKtDHiBSIhHF9Ix0=
+	t=1729601136; cv=none; b=kBr9HyuYabdsstrBVcUFgfKc7WOtn1od98lBPMm2k9geGMAYKeWm3akxRSVslA0kzyKEJvNQpCwZoyI6pu2UIRJvz5NbzyTN8jYNJdWTsbafZZAJgd81FETJJwXYBsBuLuaReJhgfHr3NnHvxuprqTXaWrZB3tucyeVw77PQYsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729600979; c=relaxed/simple;
-	bh=ARtJ6kvqIGcFruTXV6okIoHVDlTbGuGMZPlyUCFrYwk=;
+	s=arc-20240116; t=1729601136; c=relaxed/simple;
+	bh=WmPfsYC5XxLwxgy7QyhoKQvCTq1ZP7iOmD4cZtl9AQw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ITsxZIC5bfQkNuZMYFFLArM/mPDD05QNcoLznSOCyyl/bjxvK+5Qrw0A+pyQTmTfZOiRxvltaTMQNH7dz5DoUY6XzUdsrBqF3q0H7RQrTzZ0LL5RoaKuMvLQHTQ8eOXRjCgTnL2j97oZULyWL1KTCslT4xZmLTKb/FrPfOJVC24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BHEBE9hE; arc=none smtp.client-ip=209.85.167.45
+	 To:Cc:Content-Type; b=Uk9FKOz4goYCn81r7yUHvJSt234SVI7Mn3hQqXYmnmk6k2hMI9nGJro2R1XldA9KzVQ0oF5F0LrJz6aeSpGgLF87blJvsWyaAZmrA9tHBv1vhXmqcvMx8BrKmDPA5qHs5j2tn2sLVjRAsCGigPU6MC9sZiqzApGj0h7FF/bdJ44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ys1SotQF; arc=none smtp.client-ip=209.85.208.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-539fbe22ac0so6227135e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 05:42:57 -0700 (PDT)
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-2fb599aac99so55198861fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 05:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729600976; x=1730205776; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1729601132; x=1730205932; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ARtJ6kvqIGcFruTXV6okIoHVDlTbGuGMZPlyUCFrYwk=;
-        b=BHEBE9hEaqC6baMwuNBt5nYatLvADUvDXL9ZHcL3GcqprjCwLoe0MFvdQcYnOaIuf8
-         bfg6q4TtTS+CyqfLkgH48tpq2TIs/7MzjtrgbqH3rRpDWDKEmBU84+eBgEFJ/J4HZxoP
-         GolojXA9o5l91ZNCM3vBKGu0ktjcuJR/YZhFuypxwSfxzTn11jqmhmJffniOx6kxDQFt
-         wC5JSF7zpKfIBJC6REu9MoPfu6Z7br0oVn3MU4yaKitIUTVQXY/iaq1bpQg08t+oFqVP
-         pggl4lPEXz9hwyY4qgEQFinI6Bhf57bYwkGT8U8UcXJUO/oghEyMrbRphcd3xA0mjp/8
-         6/NQ==
+        bh=WmPfsYC5XxLwxgy7QyhoKQvCTq1ZP7iOmD4cZtl9AQw=;
+        b=ys1SotQFqgck++FDGN4LMK3T3+1PCjlyd0nRj/JpYXEWJdRbL+z+bsNt6j0DW/bnWu
+         tp0GsNZuMDiyb7k7dlvs+dltSNehbtT7Qu3K//8bgARPQYW7NO4iqp8YH647g2SmljwE
+         uETbDNhunRMH1/HjkIFbq2ZwAffMsUPHnQN5XgDuprVhQNek/L3HJW9GjitbMCvMBUW1
+         4PHcFSRijqw/8GkDwAZRKQJWEaUd6lheFIbIUsBr1iIQmrAASX4FssyvF1m5tZ8uXzl+
+         7WuplLOYVLKw6yweIKR9UhPi0XGMY4SrCEXAjpnE8vWVEsvaUV4NTcoaoFw2e4Qc4R1h
+         1H1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729600976; x=1730205776;
+        d=1e100.net; s=20230601; t=1729601132; x=1730205932;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ARtJ6kvqIGcFruTXV6okIoHVDlTbGuGMZPlyUCFrYwk=;
-        b=uYaDpP9QGRG3X6lP6FFfwv0c/vaafUe9BWCEq61KLOuSj6kWI+NdKQCwz70ClUlKk7
-         SB7Rb1LuzuZv8XGKTyRuifvQZJMtD+OVDbIaJUSB9JBXh9OL6ouCTR9OGRFyF9bfi/YA
-         q+DPZ8iINrGKKNsWqHR3UNoLA2bcD2YScWxOJL2TaXQpiQZuipUK+yfEzl9kx5fxsHkm
-         5aaWkXAM2zDri6uIkU+Xe4r/jyt5nQOyOgcd6gINGvuVtGM74+85SGPi02yU4eO8QnKe
-         iaiVZ4lfgFP9dFb++5gi6ppgsx2yWPhGD1ovBOegVd4AEPdVG5kJ2eU/DQRlylg2kar/
-         dszw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqAYTHDm3WBR4iFjXVgWFRrwsHMCK9/Gi3BstAgEKwE797L2HJOsac3sWRjuU5LoPERkPDtmkhqup5xEXE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+UayQhrN91P2d5473N4QDJ9Bj3TmbvQGsgjV2AOd6/xnkP4Pu
-	KxIkFk9mc4G6RJRyHtaaB2paqFsxzq9iEVahJs+pWswdzLX6GaB8C09ObOrJpYKCiMxxCFk3bf9
-	7BdICxNAUQDR/mu0Bm6CskO5sJ1V2bRMntvMEDQ==
-X-Google-Smtp-Source: AGHT+IEBcVfZ3JWaOM04XJNSL54UsLyONVoNwTnqh64hkWL8NFdGQD13XXBI25QnSA6vmIj5FcVBmPLEvaztSgYOWOI=
-X-Received: by 2002:a05:6512:2393:b0:539:f65b:401 with SMTP id
- 2adb3069b0e04-53a154a2413mr6984977e87.57.1729600975700; Tue, 22 Oct 2024
- 05:42:55 -0700 (PDT)
+        bh=WmPfsYC5XxLwxgy7QyhoKQvCTq1ZP7iOmD4cZtl9AQw=;
+        b=kng699ZhGeFmKjMOW0iLraiDOpL+gHplnf3YZ3/4VHvlcT9XjQWPURqPGbCBw2UN+t
+         ScVhV9IVp1qETUZxeoKB4mbqzE3SdBiBuZovzmO+j/IPpNoQTYRhOoCTX4ApKM80lLl+
+         SDpf3dHaG5iJwV+caig6FnuTesWUTf/kYNA4fQ83DkIejVgRyHZf9xxkQcDIs+ziyjqo
+         Zv/2a8nMkY/WdYmmmdSWiaHuoJ88Ekawh+FFFCCEbWTYKTFcn51JvcVSBsXZlEZrPj8L
+         LgzKfkKXkaWJ6mihYllDtJ6bDfVhBuL53IaeEywYs/vZsKqBtDAm0G5/dr5MutXRv8X1
+         ZbUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW45pj+PrS4jsBNyKOVVkpJNQSEvUqMGR7XILLDp/6ZgJwbcL6lYomjBGZErlpTYSHpb8LktgXdvDFDpeXA@vger.kernel.org
+X-Gm-Message-State: AOJu0YyURONkq5qfKEM29AsyAYwGjqoSYEa4aKW6JFUccufBFfud4LOU
+	N14KIi8+i6z8AhSclH4YBPI7DHHzFYqJMcewHwixhYrNTXtdTkcBtoD+N97ah/1iRQbfVDgnmV3
+	qafsiMPCifRhRmoP55eT83KIyni2c9EzeovYX8A==
+X-Google-Smtp-Source: AGHT+IGcIByKZtdq0adKPnNWneZwqEUqTIt73JdOZNS52T9t2MPtuTBH2U31H8pdlHUFENcf3DKQJdHVOhl8MRblnkY=
+X-Received: by 2002:a05:651c:211d:b0:2fa:cc12:67de with SMTP id
+ 38308e7fff4ca-2fb83208e04mr71395491fa.32.1729601132347; Tue, 22 Oct 2024
+ 05:45:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241018-qcs8300_tlmm-v3-0-8b8d3957cf1a@quicinc.com>
-In-Reply-To: <20241018-qcs8300_tlmm-v3-0-8b8d3957cf1a@quicinc.com>
+References: <20241018-sar2130p-tlmm-v2-0-11a1d09a6e5f@linaro.org>
+In-Reply-To: <20241018-sar2130p-tlmm-v2-0-11a1d09a6e5f@linaro.org>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 22 Oct 2024 14:42:43 +0200
-Message-ID: <CACRpkdYY=qLocvD_c-1TkJep3QMAOOWkmAYanvDzhyBgsC0RYQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] pinctrl: qcom: Introduce Pinctrl for QCS8300
-To: Jingyi Wang <quic_jingyw@quicinc.com>
+Date: Tue, 22 Oct 2024 14:45:21 +0200
+Message-ID: <CACRpkdbOf+VyUYXV-SM0ua1RpoTxuHhu9OCZMFKBOHmN1-YQfA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] pinctrl: qcom: add support for TLMM on SAR2130P
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Richard Cochran <richardcochran@gmail.com>, quic_tengfan@quicinc.com, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
 	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	netdev@vger.kernel.org, quic_tingweiz@quicinc.com, quic_aiquny@quicinc.com, 
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+	Mayank Grover <groverm@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 18, 2024 at 5:20=E2=80=AFAM Jingyi Wang <quic_jingyw@quicinc.co=
-m> wrote:
+On Fri, Oct 18, 2024 at 10:42=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 
-> Introduce Top Level Mode Multiplexer dt-binding and driver for Qualcomm
-> QCS8300 SoC.
+> Add driver for the pin controlling device as present on the Qualcomm
+> SAR2130P platform.
 >
-> Signed-off-by: Jingyi Wang <quic_jingyw@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-ACKs on bindings, up to v3 and no maintainer comments, driver
-looks fairly standard. Patches applied!
+Up to v2, bindings ACKed, no reason to delay this patch set so
+patches applied!
 
 Yours,
 Linus Walleij
