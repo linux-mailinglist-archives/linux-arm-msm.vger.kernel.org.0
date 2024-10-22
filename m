@@ -1,300 +1,348 @@
-Return-Path: <linux-arm-msm+bounces-35392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CCA6A9A9F8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:06:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FC279A9FDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:22:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E3BA41C22588
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:06:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BA7C1F23591
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:22:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D882198E91;
-	Tue, 22 Oct 2024 10:06:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ixlqDIyq"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B32B6199FA9;
+	Tue, 22 Oct 2024 10:22:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5C9145B24;
-	Tue, 22 Oct 2024 10:06:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7450B18E02D;
+	Tue, 22 Oct 2024 10:22:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729591604; cv=none; b=Qp69aQ/kDGo+qks7rNuHIKPGy16RJUWVfiU8wqS2qXBgGKpKH/YrUeRaAmyRcQoZ6tpMsYfSlVR0B+XIiZjV13GU5fDaVvhWzQF3SqKHhREaSJTLkDtYIC7+W8KEhgiITBArnDG3x60nOzocl4XstUhmYsqvnx5rr/zdJ8OW2aw=
+	t=1729592574; cv=none; b=o3xCZ5oanVFOeu/4CFIrc4JE1EKOIuWNXAjJMPgqfevVaVwBj3n9b1LMPYcdLeq5OmfUI+DIoIWJgXHbM4WO/9y69o6iE1Jm2vJcl/tBTaqaHp9uHg118ZEZJNHk+xAosMqGTO9Ox5LbUzDtHS8syijIvYRMoJQ7onZ+Dax92s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729591604; c=relaxed/simple;
-	bh=iYf+10kMeSBOR6aGGLTqZ8pe70W5rTjB8JNl2JJ22KA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GTJVznKahPYN7sxdiTJn8wuSKTmjOPxhT6//xM2oRvN/JHaODgaHOrclYGbbxp7JDGEiCP2W08NAVvLcMTy8UbFjpUawrhMFC7yJFwnNcq0tqYU4HaQYTMx3sBJakHE0jaPyB+sGP99j3P402e3HMknNwXT41pxXKNpf25g1zu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ixlqDIyq; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LMaVW1013484;
-	Tue, 22 Oct 2024 10:06:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	rCcLkvtvP8ut4/eKH4CzWfv1HSNFUWFFAHcqRVEvIDw=; b=ixlqDIyqUTp98y4t
-	fyjsbF2J52tbsphyZZBvY2spTctAWDrnGIgCSL35OLLvi3kkkLbGpLUXhBr58Qd2
-	PKyL5wHFNMY1VXIgZ9ZP58Kai6tUQpFRnZrCsS9DxqTmQ3JqyvtO4hsAVuF9hxPd
-	NB2uN5NS3gDrrzbuug425+3oGlJlh4X5C7hY8HctgkBuUUS4/wbVzRfUMVJI3QLo
-	ljG7NFzFYe5b1T1Sd0FeMew6gjZDOCPz/lO+A3LrwFxvwkkDAbgQvUQy0Au2BS6T
-	MFyH5GX/TYJCwWDdwcw8WsyLtmAACGzQfUPPL2usJb1hX02gyp1IzGVxM9YaZluu
-	mGZHgQ==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6rbfumh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 10:06:39 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49MA6cY4023898
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 10:06:38 GMT
-Received: from [10.218.29.219] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
- 2024 03:06:34 -0700
-Message-ID: <bc72b450-4cd8-4cd4-b160-36fb6031d035@quicinc.com>
-Date: Tue, 22 Oct 2024 15:36:14 +0530
+	s=arc-20240116; t=1729592574; c=relaxed/simple;
+	bh=z2Yhmilg+UYDHUsb/vztXERraNrcfmPCLPaxc8sntoY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CZVcDUtugiVMnCr9LUd1KbSn+95eayj+xBdwLo1kfEVKe1JG8F/ZfBM+Vj2J0obq7Y3Ia8HguA106+Yx48iezr1xRsWTI+Q+jtvrmBVjxmENLpYxIJ78td2nd8ZHvMnq73AGVwJxNz9oD4aMFFSXGz5rmerpymPhyHHnMC4Hu3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A4D77497;
+	Tue, 22 Oct 2024 03:23:21 -0700 (PDT)
+Received: from pluto (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B16EC3F71E;
+	Tue, 22 Oct 2024 03:22:49 -0700 (PDT)
+Date: Tue, 22 Oct 2024 11:22:47 +0100
+From: Cristian Marussi <cristian.marussi@arm.com>
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: sudeep.holla@arm.com, cristian.marussi@arm.com, andersson@kernel.org,
+	konrad.dybcio@linaro.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, quic_rgottimu@quicinc.com,
+	quic_kshivnan@quicinc.com, conor+dt@kernel.org,
+	arm-scmi@vger.kernel.org
+Subject: Re: [PATCH V4 2/5] firmware: arm_scmi: Add QCOM Generic Vendor
+ Protocol documentation
+Message-ID: <Zxd89zenQAzafGpS@pluto>
+References: <20241007061023.1978380-1-quic_sibis@quicinc.com>
+ <20241007061023.1978380-3-quic_sibis@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] arm64: dts: qcom: qcs6490-rb3gen2: enable Bluetooth
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <quic_mohamull@quicinc.com>,
-        <quic_hbandi@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20241010105107.30118-1-quic_janathot@quicinc.com>
- <jywgmxfhzwvoknpar7hr4ekfnajauzgk5q3bewgpdv2ghpemtw@4vvhit4jb3tm>
-Content-Language: en-US
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-In-Reply-To: <jywgmxfhzwvoknpar7hr4ekfnajauzgk5q3bewgpdv2ghpemtw@4vvhit4jb3tm>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FyBChjC-ursg6lTJ-vi57w85RpfO2jay
-X-Proofpoint-GUID: FyBChjC-ursg6lTJ-vi57w85RpfO2jay
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 malwarescore=0 mlxscore=0 suspectscore=0 spamscore=0
- impostorscore=0 phishscore=0 mlxlogscore=961 lowpriorityscore=0
- clxscore=1011 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410220064
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241007061023.1978380-3-quic_sibis@quicinc.com>
 
-
-
-On 10/10/2024 6:09 PM, Dmitry Baryshkov wrote:
-> On Thu, Oct 10, 2024 at 04:21:07PM GMT, Janaki Ramaiah Thota wrote:
->> Add Bluetooth and UART7 support for qcs6490-rb3gen2.
->>
->> Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 122 ++++++++++++++++++-
->>   1 file changed, 121 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> index 0d45662b8028..c0bc44be7dd4 100644
->> --- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
->> @@ -1,6 +1,6 @@
->>   // SPDX-License-Identifier: BSD-3-Clause
->>   /*
->> - * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->> + * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>   
->>   /dts-v1/;
->> @@ -32,6 +32,8 @@
->>   
->>   	aliases {
->>   		serial0 = &uart5;
->> +		bluetooth0 = &bluetooth;
->> +		serial1 = &uart7;
->>   	};
->>   
->>   	chosen {
->> @@ -688,6 +690,39 @@
->>   	status = "okay";
->>   };
->>   
-> 
-> Please review the file carefully and find the right spot for these
-> parts.
+On Mon, Oct 07, 2024 at 11:40:20AM +0530, Sibi Sankar wrote:
+> Add QCOM System Control Management Interface (SCMI) Generic Vendor
+> Extensions Protocol documentation.
 > 
 
-Thanks for the review, corrected in [PATCH v3].
+Hi Sibi,
 
->> +&qup_uart7_cts {
->> +	/*
->> +	 * Configure a bias-bus-hold on CTS to lower power
->> +	 * usage when Bluetooth is turned off. Bus hold will
->> +	 * maintain a low power state regardless of whether
->> +	 * the Bluetooth module drives the pin in either
->> +	 * direction or leaves the pin fully unpowered.
->> +	 */
->> +	bias-bus-hold;
->> +};
->> +
->> +&qup_uart7_rts {
->> +	/* We'll drive RTS, so no pull */
->> +	drive-strength = <2>;
->> +	bias-disable;
->> +};
->> +
->> +&qup_uart7_rx {
->> +	/*
->> +	 * Configure a pull-up on RX. This is needed to avoid
->> +	 * garbage data when the TX pin of the Bluetooth module is
->> +	 * in tri-state (module powered off or not driving the
->> +	 * signal yet).
->> +	 */
->> +	bias-pull-up;
->> +};
->> +
->> +&qup_uart7_tx {
->> +	/* We'll drive TX, so no pull */
->> +	drive-strength = <2>;
->> +	bias-disable;
->> +};
->> +
->>   &qupv3_id_0 {
->>   	status = "okay";
->>   };
->> @@ -719,12 +754,97 @@
->>   &tlmm {
->>   	gpio-reserved-ranges = <32 2>, /* ADSP */
->>   			       <48 4>; /* NFC */
->> +	bt_en: bt-en-state {
->> +		pins = "gpio85";
->> +		function = "gpio";
->> +		output-low;
->> +		bias-disable;
->> +	};
->> +
->> +	qup_uart7_sleep_cts: qup-uart7-sleep-cts-state {
->> +		pins = "gpio28";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure a bias-bus-hold on CTS to lower power
->> +		 * usage when Bluetooth is turned off. Bus hold will
->> +		 * maintain a low power state regardless of whether
->> +		 * the Bluetooth module drives the pin in either
->> +		 * direction or leaves the pin fully unpowered.
->> +		 */
->> +		bias-bus-hold;
->> +	};
->> +
->> +	qup_uart7_sleep_rts: qup-uart7-sleep-rts-state {
->> +		pins = "gpio29";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure pull-down on RTS. As RTS is active low
->> +		 * signal, pull it low to indicate the BT SoC that it
->> +		 * can wakeup the system anytime from suspend state by
->> +		 * pulling RX low (by sending wakeup bytes).
->> +		 */
->> +		bias-pull-down;
->> +	};
->> +
->> +	qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
->> +		pins = "gpio31";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure a pull-up on RX. This is needed to avoid
->> +		 * garbage data when the TX pin of the Bluetooth module
->> +		 * is floating which may cause spurious wakeups.
->> +		 */
->> +		bias-pull-up;
->> +	};
->> +
->> +	qup_uart7_sleep_tx: qup-uart7-sleep-tx-state {
->> +		pins = "gpio30";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure pull-up on TX when it isn't actively driven
->> +		 * to prevent BT SoC from receiving garbage during sleep.
->> +		 */
->> +		bias-pull-up;
->> +	};
->> +
->> +	sw_ctrl: sw-ctrl-state {
->> +		pins = "gpio86";
->> +		function = "gpio";
->> +		bias-pull-down;
->> +	};
->>   };
->>   
->>   &uart5 {
->>   	status = "okay";
->>   };
->>   
->> +&uart7 {
->> +	status = "okay";
->> +	/delete-property/interrupts;
->> +	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
->> +				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
+a few remarks down below.
+
+> Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+> ---
+>  .../arm_scmi/vendors/qcom/qcom_generic.rst    | 210 ++++++++++++++++++
+>  1 file changed, 210 insertions(+)
+>  create mode 100644 drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst
 > 
-> Why? Is it a UART interrupt? Or a BT-related interrupt?
-> 
+> diff --git a/drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst b/drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst
+> new file mode 100644
+> index 000000000000..1ee6dabaac23
+> --- /dev/null
+> +++ b/drivers/firmware/arm_scmi/vendors/qcom/qcom_generic.rst
+> @@ -0,0 +1,210 @@
+> +.. SPDX-License-Identifier: GPL-2.0
+> +.. include:: <isonum.txt>
+> +
+> +===============================================================================
+> +QCOM System Control and Management Interface(SCMI) Vendor Protocols Extension
+> +===============================================================================
+> +
+> +:Copyright: |copy| 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+> +
+> +:Author: Sibi Sankar <quic_sibis@quicinc.com>
+> +
+> +SCMI_GENERIC: System Control and Management Interface QCOM Generic Vendor Protocol
+> +==================================================================================
+> +
+> +This protocol is intended as a generic way of exposing a number of Qualcomm
+> +SoC specific features through a mixture of pre-determined algorithm string and
+> +param_id pairs hosted on the SCMI controller. It implements an interface compliant
+> +with the Arm SCMI Specification with additional vendor specific commands as
+> +detailed below.
+> +
+> +Commands:
+> +_________
+> +
+> +PROTOCOL_VERSION
+> +~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x0
+> +protocol_id: 0x80
+> +
+> ++---------------+--------------------------------------------------------------+
+> +|Return values                                                                 |
+> ++---------------+--------------------------------------------------------------+
+> +|Name           |Description                                                   |
+> ++---------------+--------------------------------------------------------------+
+> +|int32 status   |See ARM SCMI Specification for status code definitions.       |
+> ++---------------+--------------------------------------------------------------+
+> +|uint32 version |For this revision of the specification, this value must be    |
+> +|               |0x10000.                                                      |
+> ++---------------+--------------------------------------------------------------+
+> +
+> +PROTOCOL_ATTRIBUTES
+> +~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x1
+> +protocol_id: 0x80
+> +
+> ++---------------+--------------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |See ARM SCMI Specification for status code definitions.    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 attributes |Bits[8] Set to 1.                                          |
+> +|                  |Bits[0] Set to 1.                                          |
+> ++------------------+-----------------------------------------------------------+
 
-it is HS UART interrupt for BT.
+Mmmm, this does not explain so much what are those bits and what values
+they can indeed assume :P ...
 
->> +	pinctrl-names = "default", "sleep";
->> +	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>,
->> +			<&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
->> +
->> +	bluetooth: bluetooth {
->> +		compatible = "qcom,wcn6750-bt";
-> 
-> Please use pwrseq and define the PMU unit.
-> 
+> +
+> +PROTOCOL_MESSAGE_ATTRIBUTES
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x2
+> +protocol_id: 0x80
+> +
+> ++---------------+--------------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |See ARM SCMI Specification for status code definitions.    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 attributes |For all message id's the parameter has a value of 0.       |
+> ++------------------+-----------------------------------------------------------+
+> +
+> +QCOM_SCMI_SET_PARAM
+> +~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x10
+> +protocol_id: 0x80
+> +
+> ++------------------+-----------------------------------------------------------+
+> +|Parameters                                                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 ext_id     |Reserved, must be zero.                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_low   |Lower 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_high  |Upper 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 param_id   |Serves as the token message id for the algorithm string    |
+> +|                  |and is used to set various parameters supported by it.     |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 buf[]      |Serves as the payload for the specified param_id and       |
+> +|                  |algorithm string pair.                                     |
+> ++------------------+-----------------------------------------------------------+
 
-we are in process of migrating to pwrseq, mean while can we merge this 
-change ?
+And what abot the size of this payload ? .. so you are relying on the
+fact that the transport will add the total message length at that layer
+and so the server can determine where the valid payload ends...
 
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&bt_en>, <&sw_ctrl>;
->> +		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
->> +		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
->> +		vddaon-supply = <&vreg_s7b_0p972>;
->> +		vddbtcxmx-supply = <&vreg_s7b_0p972>;
->> +		vddrfacmn-supply = <&vreg_s7b_0p972>;
->> +		vddrfa0p8-supply = <&vreg_s7b_0p972>;
->> +		vddrfa1p7-supply = <&vreg_s1b_1p872>;
->> +		vddrfa1p2-supply = <&vreg_s8b_1p272>;
->> +		vddrfa2p2-supply = <&vreg_s1c_2p19>;
->> +		vddasd-supply = <&vreg_l11c_2p8>;
->> +		max-speed = <3200000>;
->> +	};
->> +};
->> +
->>   &usb_1 {
->>   	status = "okay";
->>   };
->> -- 
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> a Linux Foundation Collaborative Project
->>
-> 
+...it means the server will have some expectations about the payload length
+based on the param_id and will check against the received transport-advertised
+message-length, am I right ?
 
---
-Thanks
-Janakiram
+...BUT what if you end up with multiple versions of this protocol in the future,
+with varying payload lengths for the same param_id...REMEMEBER that the server
+cannot know which version of a protocol the client is running (while the client
+can see what the server runs) UNLESS you implement also NEGOTIATE_PROTOCOL_VERSION
+for this protocol...
 
+...so without an explicit length nor the NEGOTIATE_PROTOCOL_VERSION you wont be
+able in the future, server-side, to be sure if you are assumnig the right payload
+length for the right version that the client is speaking...so at the end you
+wont be able to support multiple versions of the protocol even if the Kernel
+can support all of those versions...do you see what I mean ?
+
+I think that would be advisable to implement NEGOTIATE_PROTOCOL_VERSION
+if you dont want to carry an explicit size in the message for this payload...
+
+...or am I missing something ?
+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |SUCCESS: if the param_id and buf[] is parsed successfully  |
+> +|                  |by the chosen algorithm string.                            |
+> +|                  |NOT_SUPPORTED: if the algorithm string does not have any   |
+> +|                  |matches.                                                   |
+> +|                  |INVALID_PARAMETERS: if the param_id and the buf[] passed   |
+> +|                  |is rejected by the algorithm string.                       |
+> ++------------------+-----------------------------------------------------------+
+> +
+> +QCOM_SCMI_GET_PARAM
+> +~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x11
+> +protocol_id: 0x80
+> +
+> ++------------------+-----------------------------------------------------------+
+> +|Parameters                                                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 ext_id     |Reserved, must be zero.                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_low   |Lower 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_high  |Upper 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 param_id   |Serves as the token message id for the algorithm string.   |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 buf[]      |Serves as the payload and store of value for the specified |
+> +|                  |param_id and algorithm string pair.                        |
+> ++------------------+-----------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |SUCCESS: if the param_id and buf[] is parsed successfully  |
+> +|                  |by the chosen algorithm string and the result is copied    |
+> +|                  |into buf[].                                                |
+> +|                  |NOT_SUPPORTED: if the algorithm string does not have any   |
+> +|                  |matches.                                                   |
+> +|                  |INVALID_PARAMETERS: if the param_id and the buf[] passed   |
+> +|                  |is rejected by the algorithm string.                       |
+> ++------------------+-----------------------------------------------------------+
+
+Similarly, no payload length means you will have to code some builtin
+check to verify the length of the message that you have received against
+the specific version that the server is running...this is NOT so
+problematic here as in the _SET above since the client/agent DOES know which
+protocol version the server is running...
+
+...it is a bit odd, but indeed similar to other variable sized SCMI messages in
+standard protocols that sports optional fields in the reply, for which, similarly
+you have to check the version of the protocol to desume the size of the message
+based on the presence or not of some fields...
+
+> +
+> +QCOM_SCMI_START_ACTIVITY
+> +~~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x12
+> +protocol_id: 0x80
+> +
+> ++------------------+-----------------------------------------------------------+
+> +|Parameters                                                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 ext_id     |Reserved, must be zero.                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_low   |Lower 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_high  |Upper 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 param_id   |Serves as the token message id for the algorithm string    |
+> +|                  |and is generally used to start the activity performed by   |
+> +|                  |the algorithm string.                                      |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 buf[]      |Serves as the payload for the specified param_id and       |
+> +|                  |algorithm string pair.                                     |
+> ++------------------+-----------------------------------------------------------+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |SUCCESS: if the activity performed by the algorithm string |
+> +|                  |starts successfully.                                       |
+> +|                  |NOT_SUPPORTED: if the algorithm string does not have any.  |
+> +|                  |matches or if the activity is already running.             |
+> ++------------------+-----------------------------------------------------------+
+> +
+
+Same consideration as above...being a SET-like operation with a variable
+sized field in the request AND no explicit payload length, you will have
+to derive the size from the message length BUT since you doint even have
+implemented NEGOTIATE_PROTOCOL_VERSION in the future any kind of check
+will become impossibe server side if you will have multiple protocols
+with varying sizes for buf depending on the protocol version
+
+> +QCOM_SCMI_STOP_ACTIVITY
+> +~~~~~~~~~~~~~~~~~~~~~~~
+> +
+> +message_id: 0x13
+> +protocol_id: 0x80
+> +
+> ++------------------+-----------------------------------------------------------+
+> +|Parameters                                                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 ext_id     |Reserved, must be zero.                                    |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_low   |Lower 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 algo_high  |Upper 32-bit value of the algorithm string.                |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 param_id   |Serves as the token message id for the algorithm string    |
+> +|                  |and is generally used to stop the activity performed by    |
+> +|                  |the algorithm string.                                      |
+> ++------------------+-----------------------------------------------------------+
+> +|uint32 buf[]      |Serves as the payload for the specified param_id and       |
+> +|                  |algorithm string pair.                                     |
+> ++------------------+-----------------------------------------------------------+
+
+Same.
+
+> +|Return values                                                                 |
+> ++------------------+-----------------------------------------------------------+
+> +|Name              |Description                                                |
+> ++------------------+-----------------------------------------------------------+
+> +|int32 status      |SUCCESS: if the activity performed by the algorithm string |
+> +|                  |stops successfully.                                        |
+> +|                  |NOT_SUPPORTED: if the algorithm string does not have any   |
+> +|                  |matches or if the activity isn't running.                  |
+> ++------------------+-----------------------------------------------------------+
+
+Thanks,
+Cristian
 
