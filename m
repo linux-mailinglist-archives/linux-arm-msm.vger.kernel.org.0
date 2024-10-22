@@ -1,112 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-35483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33DB99AB9E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 01:15:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1ADCD9ABA3B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 01:53:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 582BD1C22CEA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 23:15:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3C4A11C2278F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 23:53:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADD4F18593C;
-	Tue, 22 Oct 2024 23:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 201B51CEE8B;
+	Tue, 22 Oct 2024 23:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fshk/KL0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="G9WQl2l5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B04C130AF6;
-	Tue, 22 Oct 2024 23:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5644126C05;
+	Tue, 22 Oct 2024 23:53:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729638946; cv=none; b=aRHjgUEYRPOFtOK3o4fI10alzkSdvBW7DoDNpGalacd46R5hpBG9eW48cb+nqUvDDIFt2mkKgaj0qgCj7nx1piUa6QjLruyXMgu8zHnD9YSsFrB0yts7g5h74ETgHVDEPqXLvlAFYN3o9EjlXmFgCVKB8nMi+tXTwoOGlB3XA2k=
+	t=1729641219; cv=none; b=dF95NhJXRwl6rP9ssP9D1yv4rRV9oRqH1zF8J4wQ7JhKDnXip+drjGB7k+MA5SMg6fdME6+eXi+7QqtaA39IoxyU6CGZTtwmt2ZAJlFeaLuCczEi/chFik2r0t/k+NafdXr58kSzlNCNHyFRBIpJL4rY+8b6VdztYHy+AO5w/iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729638946; c=relaxed/simple;
-	bh=eIOJlPjE4CtOTt1MXDUhDT+O5xXsoiSWn8H7fZVwGxQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=HS+hO+SK/wNulJFWK2cg3AWVvGaE1PC/8UdrUDRWN8GeV5/0sAz41OkQqgAvFlz1tiPVSGQ6WA/wO3GMj7nAAtH//JQ4sWgCMdnpm46nWrvsRycqXjyIlvf6KpP4KUCUVfOVlFPVDgY3ha1O0zF/PVbcTBIBdZ/hBiL8Mwtmdpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fshk/KL0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77E2C4CEC3;
-	Tue, 22 Oct 2024 23:15:43 +0000 (UTC)
+	s=arc-20240116; t=1729641219; c=relaxed/simple;
+	bh=5NmULnTHpH0X6L9L++6GtR1NlwsTVtrh4tRSutdPLzE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XOAfPGfWapsAcv7eWom9iz6S3HX4VYk0ykJaC2AGZs28LK8ydyubaku5P6bcIRkTbEv6N1CgGCb9nCI7O80vFSbygoKgydO8gAwk7wN4J1KgrCSNZaZK6q+Al1RaM2k/9vfIIhXxVU7GLqnDxxdp/MTu/Akgz1g+AiQ5l0JsXPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=G9WQl2l5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 647E7C4CEC3;
+	Tue, 22 Oct 2024 23:53:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729638946;
-	bh=eIOJlPjE4CtOTt1MXDUhDT+O5xXsoiSWn8H7fZVwGxQ=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=Fshk/KL0wmHyB3KInp62gSM/+XziHiUxrBWxqQ8BgECtuedldbuc3PfLKA0JK+QB/
-	 5FN9F1ls+12KhWizTA448YzpgtOS9r9vUq/UAx67rKJpXZB1I3XSiaSqFNaBgdK59w
-	 v3VEXnmbmlZ8KtJXHzP6Tz35mE+JWM3uor31O3sck+sdjt47KfAs2htjPS47wmZdvf
-	 NAzasc+iDfoki5el1su+dR91indjxrgCb3rfZ/v8z0N9b5RIDek27p33bMkdAZ0uBa
-	 Wck+QTtUR+TfsMNRtdQccbqLkqOgoySG7ph4U2HlbN+Rog5OEOnhY+oyREf8gMRLGU
-	 4dZrSb4S8huVA==
-From: Mark Brown <broonie@kernel.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, 
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, 
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: stable@vger.kernel.org, Alexey Klimov <alexey.klimov@linaro.org>, 
- Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20241012101108.129476-1-krzysztof.kozlowski@linaro.org>
-References: <20241012101108.129476-1-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2] ASoC: qcom: sc7280: Fix missing Soundwire runtime
- stream alloc
-Message-Id: <172963894347.334190.2415888818283876880.b4-ty@kernel.org>
-Date: Wed, 23 Oct 2024 00:15:43 +0100
+	s=k20201202; t=1729641218;
+	bh=5NmULnTHpH0X6L9L++6GtR1NlwsTVtrh4tRSutdPLzE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=G9WQl2l5aOiIb3dXJn9MBJlzeeDlICfRumkyvWUVkCtBdk75JjqXgMEExozoxnNUF
+	 BkK3gmH8mh1jU6QDKFXpU3IN59ngjtXIZC84APmeFO3/LXUd27YbFebF7pW/EXzMVY
+	 EY+2lIG1J00bNs8q1+urzET7iUPD7cfjszjzYRa1ePzbkvn1OILULY+2ixT1h+AfqE
+	 uYvZp8UBWXo5UOqRw4AqUpn3M3YaW32aKG+qrMX0Ld3L0MtHwOnlrdu1mf++lIadTa
+	 cOxa6jpkpiKp8O0uvAZXIXJxq/eTMoLa0eZ3iifXA7YjmpITvzzBoGVr9QvjFtdSFW
+	 TVVtL/8Ru2zbA==
+Date: Tue, 22 Oct 2024 18:53:35 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
+Cc: krzk+dt@kernel.org, quic_krichai@quicinc.com, 
+	quic_vbadigan@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>, 
+	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Update iommu-map entry
+Message-ID: <g5hs2jq2ugsaxmncxvfa7635ntvjbvfri7mhtle6symp73vbua@3ku36vto6eo3>
+References: <20241008121755.1174730-1-quic_skananth@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.15-dev-9b746
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241008121755.1174730-1-quic_skananth@quicinc.com>
 
-On Sat, 12 Oct 2024 12:11:08 +0200, Krzysztof Kozlowski wrote:
-> Commit 15c7fab0e047 ("ASoC: qcom: Move Soundwire runtime stream alloc to
-> soundcards") moved the allocation of Soundwire stream runtime from the
-> Qualcomm Soundwire driver to each individual machine sound card driver,
-> except that it forgot to update SC7280 card.
+On Tue, Oct 08, 2024 at 05:47:54PM GMT, Subramanian Ananthanarayanan wrote:
+> SA8775P has only support for SMMU v2, due to this PCIe has limited
+> SID entries to enable dynamic IOMMU mapping in the driver, hence
+> we are updating static entries.
 > 
-> Just like for other Qualcomm sound cards using Soundwire, the card
-> driver should allocate and release the runtime.  Otherwise sound
-> playback will result in a NULL pointer dereference or other effect of
-> uninitialized memory accesses (which was confirmed on SDM845 having
-> similar issue).
+
+This might be a problem, but it's not the "problem description" referred
+to in https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
+
+> iommu-map entries are added to support more PCIe device like switch
+> attach, SRIOV capable devices. These entries are specific to this
+> board as topology of PCIe devices can vary based on the end usecase
+> connected via PCIe. For other board files, these entries may
+> not be directly applicable.
 > 
-> [...]
 
-Applied to
+Don't give vague arguments. Clearly state why this show go here and not
+in the base dtsi.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+In particular, it's impossible for anyone reading this to know that this
+is the only sa8775p board with this many devices and for all other
+devices defining these iommu-maps would be bad because...well, why would
+that be bad?
 
-Thanks!
+Regards,
+Bjorn
 
-[1/1] ASoC: qcom: sc7280: Fix missing Soundwire runtime stream alloc
-      commit: db7e59e6a39a4d3d54ca8197c796557e6d480b0d
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+> Signed-off-by: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
+> ---
+> Changes in V2:
+> 	- Updated commit message.
+> ---
+> ---
+>  arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 62 ++++++++++++++++++++++
+>  1 file changed, 62 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> index 0c1b21def4b6..05c9f572ae42 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
+> @@ -675,6 +675,37 @@ &pcie0 {
+>  	pinctrl-names = "default";
+>  	pinctrl-0 = <&pcie0_default_state>;
+>  
+> +	iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
+> +		    <0x100 &pcie_smmu 0x0001 0x1>,
+> +		    <0x101 &pcie_smmu 0x0002 0x1>,
+> +		    <0x208 &pcie_smmu 0x0003 0x1>,
+> +		    <0x210 &pcie_smmu 0x0004 0x1>,
+> +		    <0x218 &pcie_smmu 0x0005 0x1>,
+> +		    <0x280 &pcie_smmu 0x0006 0x1>,
+> +		    <0x281 &pcie_smmu 0x0007 0x1>,
+> +		    <0x282 &pcie_smmu 0x0008 0x1>,
+> +		    <0x283 &pcie_smmu 0x0009 0x1>,
+> +		    <0x284 &pcie_smmu 0x000a 0x1>,
+> +		    <0x285 &pcie_smmu 0x000b 0x1>,
+> +		    <0x286 &pcie_smmu 0x000c 0x1>,
+> +		    <0x287 &pcie_smmu 0x000d 0x1>,
+> +		    <0x288 &pcie_smmu 0x000e 0x1>,
+> +		    <0x289 &pcie_smmu 0x000f 0x1>,
+> +		    <0x28a &pcie_smmu 0x0010 0x1>,
+> +		    <0x28b &pcie_smmu 0x0011 0x1>,
+> +		    <0x28c &pcie_smmu 0x0012 0x1>,
+> +		    <0x28d &pcie_smmu 0x0013 0x1>,
+> +		    <0x28e &pcie_smmu 0x0014 0x1>,
+> +		    <0x28f &pcie_smmu 0x0015 0x1>,
+> +		    <0x290 &pcie_smmu 0x0016 0x1>,
+> +		    <0x291 &pcie_smmu 0x0017 0x1>,
+> +		    <0x292 &pcie_smmu 0x0018 0x1>,
+> +		    <0x293 &pcie_smmu 0x0019 0x1>,
+> +		    <0x300 &pcie_smmu 0x001a 0x1>,
+> +		    <0x400 &pcie_smmu 0x001b 0x1>,
+> +		    <0x500 &pcie_smmu 0x001c 0x1>,
+> +		    <0x501 &pcie_smmu 0x001d 0x1>;
+> +
+>  	status = "okay";
+>  };
+>  
+> @@ -685,6 +716,37 @@ &pcie1 {
+>  	pinctrl-names = "default";
+>  	pinctrl-0 = <&pcie1_default_state>;
+>  
+> +	iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
+> +		    <0x100 &pcie_smmu 0x0081 0x1>,
+> +		    <0x101 &pcie_smmu 0x0082 0x1>,
+> +		    <0x208 &pcie_smmu 0x0083 0x1>,
+> +		    <0x210 &pcie_smmu 0x0084 0x1>,
+> +		    <0x218 &pcie_smmu 0x0085 0x1>,
+> +		    <0x280 &pcie_smmu 0x0086 0x1>,
+> +		    <0x281 &pcie_smmu 0x0087 0x1>,
+> +		    <0x282 &pcie_smmu 0x0088 0x1>,
+> +		    <0x283 &pcie_smmu 0x0089 0x1>,
+> +		    <0x284 &pcie_smmu 0x008a 0x1>,
+> +		    <0x285 &pcie_smmu 0x008b 0x1>,
+> +		    <0x286 &pcie_smmu 0x008c 0x1>,
+> +		    <0x287 &pcie_smmu 0x008d 0x1>,
+> +		    <0x288 &pcie_smmu 0x008e 0x1>,
+> +		    <0x289 &pcie_smmu 0x008f 0x1>,
+> +		    <0x28a &pcie_smmu 0x0090 0x1>,
+> +		    <0x28b &pcie_smmu 0x0091 0x1>,
+> +		    <0x28c &pcie_smmu 0x0092 0x1>,
+> +		    <0x28d &pcie_smmu 0x0093 0x1>,
+> +		    <0x28e &pcie_smmu 0x0094 0x1>,
+> +		    <0x28f &pcie_smmu 0x0095 0x1>,
+> +		    <0x290 &pcie_smmu 0x0096 0x1>,
+> +		    <0x291 &pcie_smmu 0x0097 0x1>,
+> +		    <0x292 &pcie_smmu 0x0098 0x1>,
+> +		    <0x29d &pcie_smmu 0x0099 0x1>,
+> +		    <0x300 &pcie_smmu 0x009a 0x1>,
+> +		    <0x400 &pcie_smmu 0x009b 0x1>,
+> +		    <0x500 &pcie_smmu 0x009c 0x1>,
+> +		    <0x501 &pcie_smmu 0x009d 0x1>;
+> +
+>  	status = "okay";
+>  };
+>  
+> -- 
+> 2.34.1
+> 
 
