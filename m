@@ -1,243 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-35363-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AD389A9C96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:30:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D2839A9CBA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:34:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B6E9283B7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:30:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E3AC4B21362
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:34:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E6AF193092;
-	Tue, 22 Oct 2024 08:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12B2515539D;
+	Tue, 22 Oct 2024 08:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DjTlnATo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b0c4RS/x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31040191F8D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 08:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F9727735;
+	Tue, 22 Oct 2024 08:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729585777; cv=none; b=WhlrpUbGhgMAnTJt7ufPqnRoblkcRS7rSTnXcwWEqztvqLVSshbCYewvHtXj/NCAcRoU8gjKKVZwoc119hhrQGFZ7OJxmFxAuCFcNpWssJtOYBy6E2XjyFP8LpAWFRShIMXPQgy/f2cAolJD4DD786VF+RiXWClHIYw23mLF+oE=
+	t=1729586062; cv=none; b=GgD+x5EGB/tihKD6eQ0PCpc9f6KqXVhpZb5SEqYLxras3OsEmeJsfkXhRKZ2VZt511ofXup66vZBuQ9o4SRpfK2MlGpRfnf+oVfWKPrD5T/I+d9ujDEreafzd9gj0d2rdjJlMYPFqhPpgILODtfxd3+Rj2hdAPjMbu2OR7DvmcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729585777; c=relaxed/simple;
-	bh=bEKAEeDjsfkpr3NXf7w6RwcSc/+oBytWAMh+Aw1PHdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sU5VsZ9ppKg2yW5KxFlgsixK9sKAdHBfdgBaaKSLAeWq3EwsWrWpQZkwIe9gLMJ09uxd3V2AStLIaQ8dC1eTQyNpoD76X/dJNMVzegIfHLbwBxG9lMF9aWJtLMbftl73vnVrt7/DnHh6rZlIIKZAtxGUJkNYEEBYvA6W3ubpLzw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DjTlnATo; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43161e7bb25so40568195e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 01:29:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729585773; x=1730190573; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HjDsS+1q07DHK+ymYm6GkZX2xnCRVZpDlWCzY/btsRo=;
-        b=DjTlnATopK3LAp4B+C7Lk76+DAinha90NdCnVnQY/xXsMir7sYe5t56DdeiHZPFx2+
-         Yau/n7vbH1PERND7D294K7K4kCGXC9p9HFvrEsYIQgEgQwGcc9hU4QrF+n72wzeKxoB0
-         awVEp/AKsbyrmvUlw5IVfK67HVCNe+Zo2HP8ASKXaewTD0vBjJEj2gH9wxAe7FFsbbp/
-         okyCF9Wj9zPDc4n8ZagzYM/TTZmhvRx6V3Pn4XKs/g6zCkGOmvUGb0ktevi05/NFG4Ld
-         KxJcgV49nze9F0/pUSVmwwAYHiOvi2Sf3N7FQWpDhK8/2W+e+2ipT+aFKmPJhYPLiMDI
-         k03A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729585773; x=1730190573;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HjDsS+1q07DHK+ymYm6GkZX2xnCRVZpDlWCzY/btsRo=;
-        b=FU5S45tnNfXGzbe6Ri2kiGhtgOP6VpvFJ1Gy96CVLT7HwEr73h2pqWSC/Q08A6vO6L
-         LuGmgxR4ATsNxVcvngGAXSqHWaL1C8XBnlf7z2VPhnIPPQe/QhfTCZTZwLIb1Ylw5BWr
-         NN+IK0tM8tSa+T8+E/91xR0XgzxgIj6RgJzA+AZKzV08aM4SvDEAlEJhvJkCTjXEYkYA
-         KSAhjSjwdJaI8lRiaKfukr/eyQspMnZ8Jj+hnARLrclmw7s39KQ+QE5MSbUf7ftp/QKp
-         M27dW9NcHHEPBOQH5NAr8fAF4QMsWhiBtbhVrbgx4ip8i5OM6ajwLXPeJT4bKNDP2CAJ
-         mUiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUv1iPcxDxtH/jN+NCJyD/ZA/tKZrG/hSOJMWmbXjUMl+8ly2xLlI/nUKaHRjZ8NGQHKINpou/w1NB53VDg@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywg6q9r3+ZnCAcm6Clk5OWaDgEDfZUG5yc/Mvap4VDbQVpDQuti
-	1cIcwbRxchaEeWLFWzEVR3S7yTBFou+5tgVE963eb9TWRGP7f9CSlbt0ccKlPPo=
-X-Google-Smtp-Source: AGHT+IE+SNDjL4952t77e0RAt7JLi2MDieoW4JvDW20v/QUsIp9vmzVn/LMvIVc+mnRMKtbJnNHGnQ==
-X-Received: by 2002:a05:600c:3151:b0:431:588a:4498 with SMTP id 5b1f17b1804b1-4317b8dfcfcmr23701415e9.14.1729585773420;
-        Tue, 22 Oct 2024 01:29:33 -0700 (PDT)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4316f5c2cb8sm82100105e9.31.2024.10.22.01.29.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2024 01:29:32 -0700 (PDT)
-Date: Tue, 22 Oct 2024 11:29:30 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <ZxdialY3h9YW2NdL@linaro.org>
-References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
- <20241004-x1e80100-ps8830-v2-2-5cd8008c8c40@linaro.org>
- <133f0232-6e62-4532-bdeb-85b5927fddc8@wanadoo.fr>
+	s=arc-20240116; t=1729586062; c=relaxed/simple;
+	bh=Yfb1iWGUJXstlWNlobPLhmH6H2P371QRprH0i6HollY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=B0qDGyB19cTMtgp8xcvRR7u05o8im6VRnPHqtcXE11yqgYb6Dp874VYiiVf9r3Lt1KSTzUGL14PtcrLnP6y/jsvQQxT51M0ruShJvjdz80aD0u2mwm7GuBdBSgbbz8gBLK7Dx6EtxYxOJkFaQEZauk0N8mwXHCbl6Acrq7sB6iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b0c4RS/x; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LM0pX8027018;
+	Tue, 22 Oct 2024 08:34:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	54nng32DbGhXET0Bsu60daar/Um5vwD/G2DqIS75Lg8=; b=b0c4RS/xiCH96sYo
+	XbR6PNVn6YF3qwCIJHClKvxUDUrmUUDpwNvq5dmUv+WBmlFmqeWIC66VRHe7HLHO
+	CVwUgR5/IWHt9TeEfiVVR+rmJ5R/z29BZ62V6sy1qZscafrCrdqtxdACKysVRBDz
+	b8E+evdGDx1NcTd8hUHPlcYcYXVWTwgvToVa2yB6lSCWWzve4qND22Xy7uJ3QTlY
+	B5EUic1hGMljY10b+FGgPGp7Hofj8+mSwANpudci6Jucxy7apmQDJhOWqEBynEhM
+	+9afXUE5af7TDsQwJaUSaHGw5jxAfNaN+bFXqObw8tBo3u6kkADq8tc7ecSY1XSg
+	kzrxMQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6rj7h0g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 08:34:15 +0000 (GMT)
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M8YDHk008794
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 08:34:13 GMT
+Received: from [10.231.207.28] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
+ 2024 01:34:08 -0700
+Message-ID: <d56b4e1f-ef5d-4626-8211-0cf957c8423f@quicinc.com>
+Date: Tue, 22 Oct 2024 16:34:06 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <133f0232-6e62-4532-bdeb-85b5927fddc8@wanadoo.fr>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Adds SPMI bus, PMIC and
+ peripherals
+To: Krzysztof Kozlowski <krzk@kernel.org>, <quic_fenglinw@quicinc.com>,
+        <quic_tingweiz@quicinc.com>, <kernel@quicinc.com>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring
+	<robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+	<conor+dt@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241014-adds-spmi-pmic-peripherals-for-qcs615-v1-1-8a3c67d894d8@quicinc.com>
+ <354b544e-3799-4421-aeb3-8401dffb34d6@kernel.org>
+Content-Language: en-US
+From: Tingguo Cheng <quic_tingguoc@quicinc.com>
+In-Reply-To: <354b544e-3799-4421-aeb3-8401dffb34d6@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GidZGNKd9FlZJmXXbiT3bVdVLJUl-jzK
+X-Proofpoint-ORIG-GUID: GidZGNKd9FlZJmXXbiT3bVdVLJUl-jzK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 bulkscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410220054
 
-On 24-10-22 09:41:42, Christophe JAILLET wrote:
-> Le 04/10/2024 à 15:57, Abel Vesa a écrit :
-> > The Parade PS8830 is a Type-C muti-protocol retimer controlled over I2C.
-> > It provides both altmode and orientation handling.
-> > 
-> > Add a driver with support for the following modes:
-> >   - DP 4lanes
-> >   - DP 2lanes + USB3
-> >   - USB3
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
+
+
+On 10/14/2024 6:45 PM, Krzysztof Kozlowski wrote:
+> On 14/10/2024 12:08, Tingguo Cheng wrote:
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> index 4ef969a6af150933c72a7a83374a5a2657eebc1b..b79c22730920e3097425e1d1933e744205b3c18e 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>> @@ -6,6 +6,7 @@
+>>   
+>>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>>   #include "qcs615.dtsi"
+>> +#include "qcs615-pmic.dtsi"
+>>   / {
+>>   	model = "Qualcomm Technologies, Inc. QCS615 Ride";
+>>   	compatible = "qcom,qcs615-ride", "qcom,qcs615";
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> index ac4c4c751da1fbb28865877555ba317677bc6bd2..9793161db515a2ef1df6465c8d0a04a11e71ffc1 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>> @@ -517,6 +517,29 @@ sram@c3f0000 {
+>>   			reg = <0x0 0x0c3f0000 0x0 0x400>;
+>>   		};
+>>   
+>> +		spmi_bus: qcom,spmi@c440000 {
 > 
-> Hi,
+> Please do not send your downstream code... Don't just copy and paste
+> that stuff.
 > 
-> > +static int ps8830_retimer_probe(struct i2c_client *client)
-> > +{
-> > +	struct device *dev = &client->dev;
-> > +	struct typec_switch_desc sw_desc = { };
-> > +	struct typec_retimer_desc rtmr_desc = { };
-> > +	struct ps8830_retimer *retimer;
-> > +	int ret;
-> > +
-> > +	retimer = devm_kzalloc(dev, sizeof(*retimer), GFP_KERNEL);
-> > +	if (!retimer)
-> > +		return -ENOMEM;
-> > +
-> > +	retimer->client = client;
-> > +
-> > +	mutex_init(&retimer->lock);
-> > +
-> > +	retimer->regmap = devm_regmap_init_i2c(client, &ps8830_retimer_regmap);
-> > +	if (IS_ERR(retimer->regmap)) {
-> > +		dev_err(dev, "failed to allocate register map\n");
-> > +		return PTR_ERR(retimer->regmap);
-> > +	}
-> > +
-> > +	ret = ps8830_get_vregs(retimer);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	retimer->xo_clk = devm_clk_get(dev, "xo");
-> > +	if (IS_ERR(retimer->xo_clk))
-> > +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
-> > +				     "failed to get xo clock\n");
-> > +
-> > +	retimer->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-> > +	if (IS_ERR(retimer->reset_gpio))
-> > +		return dev_err_probe(dev, PTR_ERR(retimer->reset_gpio),
-> > +				     "failed to get reset gpio\n");
-> > +
-> > +	retimer->typec_switch = fwnode_typec_switch_get(dev->fwnode);
-> > +	if (IS_ERR(retimer->typec_switch)) {
-> > +		dev_err(dev, "failed to acquire orientation-switch\n");
-> > +		return PTR_ERR(retimer->typec_switch);
-> > +	}
-> > +
-> > +	retimer->typec_mux = fwnode_typec_mux_get(dev->fwnode);
-> > +	if (IS_ERR(retimer->typec_mux)) {
-> > +		dev_err(dev, "failed to acquire mode-mux\n");
-> > +		goto err_switch_put;
-> > +	}
-> > +
-> > +	sw_desc.drvdata = retimer;
-> > +	sw_desc.fwnode = dev_fwnode(dev);
-> > +	sw_desc.set = ps8830_sw_set;
-> > +
-> > +	ret = drm_aux_bridge_register(dev);
-> > +	if (ret)
-> > +		goto err_mux_put;
-> > +
-> > +	retimer->sw = typec_switch_register(dev, &sw_desc);
-> > +	if (IS_ERR(retimer->sw)) {
-> > +		dev_err(dev, "failed to register typec switch\n");
-> > +		goto err_aux_bridge_unregister;
-> > +	}
-> > +
-> > +	rtmr_desc.drvdata = retimer;
-> > +	rtmr_desc.fwnode = dev_fwnode(dev);
-> > +	rtmr_desc.set = ps8830_retimer_set;
-> > +
-> > +	retimer->retimer = typec_retimer_register(dev, &rtmr_desc);
-> > +	if (IS_ERR(retimer->retimer)) {
-> > +		dev_err(dev, "failed to register typec retimer\n");
-> > +		goto err_switch_unregister;
-> > +	}
-> > +
-> > +	ret = clk_prepare_enable(retimer->xo_clk);
-> > +	if (ret) {
-> > +		dev_err(dev, "failed to enable XO: %d\n", ret);
-> > +		goto err_retimer_unregister;
-> > +	}
-> > +
-> > +	ret = ps8830_enable_vregs(retimer);
-> > +	if (ret)
-> > +		goto err_clk_disable;
-> > +
-> > +	/* delay needed as per datasheet */
-> > +	usleep_range(4000, 14000);
-> > +
-> > +	gpiod_set_value(retimer->reset_gpio, 1);
-> > +
-> > +	return 0;
-> > +
-> > +err_clk_disable:
-> > +	clk_disable_unprepare(retimer->xo_clk);
-> > +
-> > +err_retimer_unregister:
-> > +	typec_retimer_unregister(retimer->retimer);
-> > +
-> > +err_switch_unregister:
-> > +	typec_switch_unregister(retimer->sw);
-> > +
-> > +err_aux_bridge_unregister:
-> > +	gpiod_set_value(retimer->reset_gpio, 0);
+> Rewrite it from scratch or use the upstream as template. I find it waste
+> of time to comment or fix the same issue over and over again. The
+> problem is the way you work - copying and sending downstream at us. This
+> must stop.
+We have realized the problem, and we will be more careful.For the 
+current patch, I'll upload a new one with fixing
 > 
-> Is this called useful here?
-> gpiod_set_value(, 1) has not been called yet.
-> 
-> It made sense to have something like that in v1, but it looks strange in v2.
+> Best regards,
+> Krzysztof
 > 
 
-The devm_gpiod_get() flag sets it to HIGH.
+-- 
+Thank you & BRs
+Tingguo
 
-Anyway, this will be reworked in v3 as the reset gpio is active low.
-
-> CJ
-> 
-> > +	clk_disable_unprepare(retimer->xo_clk);
-> > +
-> > +err_mux_put:
-> > +	typec_mux_put(retimer->typec_mux);
-> > +
-> > +err_switch_put:
-> > +	typec_switch_put(retimer->typec_switch);
-> > +
-> > +	return ret;
-> > +}
-> 
-> ...
 
