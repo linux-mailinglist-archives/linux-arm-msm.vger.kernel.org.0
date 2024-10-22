@@ -1,200 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-35434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9BBA19AB1AD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 17:07:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 265B49AB1BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 17:10:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA9F41C20ECA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 15:07:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96D551F213E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 15:10:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50FF41A0BEC;
-	Tue, 22 Oct 2024 15:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 409E31A00D6;
+	Tue, 22 Oct 2024 15:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aCqltAEj"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="AbuoS3Xi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7022193409;
-	Tue, 22 Oct 2024 15:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B4F71A0AF2
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 15:10:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729609650; cv=none; b=rQ7sykUT4BOnLr/+ucQaQyrlRupx5+7h6dArWbXNkrjzNS1LbNMRYk8lmrOfDRyJXnCClAqZB9KwUzU2W8dJ7aMUCpG+0hwmDURgFiRHnidUzllNyI/jQojGc3I66kXi2FHmkf21Qwo4gMS2q5Fr/dvoIiz4kBqnVlYAAbmr23E=
+	t=1729609823; cv=none; b=JsWFL1EJ0nq9ySh67uIBZ8o1NgI+qEodXaAHPhnEdtiGuSUJ29NDI3kl7oOMG3+Fq1iy6So2n4P4uYIqXxZjK1WjqStNdDG9aBAjYuQS2uTyeTklH+xEXt/DfPpjzrVasYt0ObPNitmLX3StdQNUKCUtg/+DD//dw5jEyybOQqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729609650; c=relaxed/simple;
-	bh=9kncNoCYnoZkS9pve++ljroQDhSRbJF/pxJtccQpvOY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b0EtHGZwYEbM2jcNuCHjVsnEcgO6UqvHB1sHTlp1TkDMaTw7/bPT0hiIjUuAWQeasaybYP8CKZW7NuTNUEMap1qwMKLMJu5jmm1AXuBfXhk56pNos2eXzix7q6vU4HIEfDwr8M6yKV8UAIjYVCnNJJqCPRsZ5X91M0HbuwMDpVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aCqltAEj; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-7181b86a749so1696198a34.3;
-        Tue, 22 Oct 2024 08:07:28 -0700 (PDT)
+	s=arc-20240116; t=1729609823; c=relaxed/simple;
+	bh=qTfIuTVAUUhrlUanxecmlRHah06WtvV7DSWHRs4WfLs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lAtIm74XNwrN9veaGNOuMtjpYCV1VD5XBU+NaCmNYVJJlsSGQm0Rg7icwhXEeSGav+XUB24IdOjiIT/lcl2C6NmpvzDWNnAPLnXkHtNt1IDogiWsTyp/WayyVblrxPHJVPgSfLfRkAnuf3AK4GFSBSzPlDHPgyUX24plMnULEjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=AbuoS3Xi; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-2e2ed59a35eso4711751a91.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 08:10:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729609648; x=1730214448; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=1vXDpIcbmYR82/ZYPEZaowKd47+J3jKlxJBdjk/u5Rs=;
-        b=aCqltAEjE8e3+qhoX5C8hltotk611Rq5lTnb4hYTOUPOCUJij8mmBshdXZROeVnQRi
-         vVhrQh1U1S8ELI8zpf++fy/Np5lUfrcaCzvzWNjaU/Ch3ITD9hC59iOuoNxDvI8yO0yC
-         NWrInm4CTz5thXReM4tNjwKjFynR1vUqVWEt+jqqI95HTqEXIepAfLM4A52XcsOQq4/6
-         R+aUua04Nf8vvEdN08s19wI9MjSkvADTKYu5HW6yZi0T803hXfaIy7We3iBw74CU58W6
-         cXKFneAA4VdYw6pn6mD3fTwcV25s4+JGGJClPVeBDhxYFo762FQG78/dnKT6CvIpPgGr
-         W8eA==
+        d=linaro.org; s=google; t=1729609821; x=1730214621; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=MzxEKUQWg3uIWQMJ7O52/X0erwQFBgLhhHBq8a3fZ8A=;
+        b=AbuoS3XiJ4NxLu40b5armtGFlr3JWXPTwAqxli6KbsyfJqLcMem/kUeMTjGT0zi5Y2
+         2/8BFwlASndr7ISHWZbgbSu/ewt8i8VVs7UU28LP4skjVoI9W7i/B9HVMSmJCwZGlDMS
+         Qfxq+ucLxOIrnBns4M3cED1nQeEKGSahYWoiACN61jw/xizADSxVASpQhMJOs97Wyn/W
+         PAN9by0DUwYuJaN7RZWlbrOJ7wa2D7whjF+/8kuGf5DovOuZ1UpSfxEE3wvC/yO5W11W
+         0vKOYzf3jLydF6+2/IyJvZph8UrUU2QS4IzLx3V9HcqbfsZiNqnpdpowsql46izKObA6
+         myTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729609648; x=1730214448;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1729609821; x=1730214621;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1vXDpIcbmYR82/ZYPEZaowKd47+J3jKlxJBdjk/u5Rs=;
-        b=mui52oVWDQP1JiZtnH8JDR/b+dfzHRtAKIswTkdkY9RBnQ00PdUX2+8DsWnN78uCjY
-         JAKXX4vjmHJOjhlEMK6/8NbgLZoaiMfmb03rtlEOPFlljePpUVzFM+MUp3Q9rjjWdKt9
-         hPr+/Tjz6dBJvo+pqN9oyTUJOPqXarYUgvXfauBO9DJkj9S/zpjMjNjCz62MzzXZvT9v
-         0XTpWQF5kwi1KVb3mEoX6igU/5FMLxzAbCHQq+V0nQ1qRwc8JAMjL2nR6qzrpie5rN6o
-         LQWAnabdnQ491kgSY6q0RREI27C+55XoGSXCHcfY5qlYh4QL/akHSpU0MKK6INeqNNUP
-         n5Sg==
-X-Forwarded-Encrypted: i=1; AJvYcCUlqYV1dq5PjIq1e2KKKFEfKLjisefgvWaFd7js00TraLZlOmEhUfrMOgLD21HkwefjcZM1jBi/@vger.kernel.org, AJvYcCVROH+e3Euqnc+L3Dpe+TMOoVm+9r0YimJ6NiFSkPFy0NnFvmFdThBemOd6IXXD2l/kuW563Njc9s4MtRYQ@vger.kernel.org, AJvYcCVj5bqw+M4e4CC+xWERneouB9FjFE69aex6qcgHr8bIhOtvQ9l3RrDXh27Q4IOswcKG2MeDpOJSbWK4M0JR@vger.kernel.org
-X-Gm-Message-State: AOJu0YxleKXPRCtODZDj26KvCblrpFlKC2Dl+aU/lFFft5WwOzrV/QS4
-	zCAbJFHqqwk445KnlwaFUCX/UZ7UJDWriLKUyPuZw6jE+cMDgzPwp+Xby3MX
-X-Google-Smtp-Source: AGHT+IGY644/swDDzE7wgLAigf2fcU39yfuvfVlwvsuHZ8BCg9yHMVVKwEoVj2dTjNFoKNEkMikAxg==
-X-Received: by 2002:a05:6808:654b:b0:3e6:14a6:4282 with SMTP id 5614622812f47-3e614a64545mr6109191b6e.2.1729609647846;
-        Tue, 22 Oct 2024 08:07:27 -0700 (PDT)
-Received: from [192.168.1.22] (syn-070-114-247-242.res.spectrum.com. [70.114.247.242])
-        by smtp.googlemail.com with ESMTPSA id 5614622812f47-3e61035fe39sm1312453b6e.56.2024.10.22.08.07.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Oct 2024 08:07:27 -0700 (PDT)
-Message-ID: <cbe1fd40-2d9f-4396-84a0-741db2c5c586@gmail.com>
-Date: Tue, 22 Oct 2024 10:07:25 -0500
+        bh=MzxEKUQWg3uIWQMJ7O52/X0erwQFBgLhhHBq8a3fZ8A=;
+        b=jDYSFF4Yx9PfRsNAIdYkp4p8LyBjV5P/sxy2pqNu41dR066y0qmek+FFOCqQtlc+IG
+         mHvgcKn/j8O366OtE4XlVYVNcd0gx+n+s92kxiMWJcgscDsKsMRq+I+3o22fLwOUd7TY
+         Blcs24glztSHJgSJcjas+zW6eFPQ3VZwe2Yy0+5/vlrFEn2xj7twmzXepzBSncKsNBZ6
+         rh4oAaKWiu60RvRtysYANnfUVZ7CKZo0Qo0Q8vgaHqiR/NKoOhM+X29UwCTj/H6OeV4K
+         hDq7wIXGvvb5HOHU2ZtLx9DQOOuOPQ7fBIKcUDq5AcBFwXlWcKA4uEY381bm8adUx50S
+         yLmg==
+X-Forwarded-Encrypted: i=1; AJvYcCWzE0TZScQtqFoS6ZReD8VM6AhTrIjEBK3yT/hK91J5Ieeje0rSFYo98cyTkx0DHjOYJ+ZgqowzAi5wDmp7@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrMFrpW8y2EPfymA0SDXpmkF4Hr0Z/qTe8vMqi/+Z3YKRXyomn
+	5xGJgEmwPeHPOX0iEk3lblhLTTCIlJrdwgfryfLwJrXQVecI/9LMayEn3nltBg==
+X-Google-Smtp-Source: AGHT+IEAUr9zghTEqbLPVOaKd1kA+KWHp2S31/G9XQzAAHxpn+gWkKxU4GM59uffiKAEQIim/PwS5A==
+X-Received: by 2002:a17:90a:ce8d:b0:2e2:cd65:de55 with SMTP id 98e67ed59e1d1-2e56175742emr18618394a91.20.1729609821009;
+        Tue, 22 Oct 2024 08:10:21 -0700 (PDT)
+Received: from thinkpad ([36.255.17.224])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2e5ad4ed277sm6378409a91.39.2024.10.22.08.10.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 08:10:20 -0700 (PDT)
+Date: Tue, 22 Oct 2024 20:40:05 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+	quic_nitegupt@quicinc.com, quic_skananth@quicinc.com,
+	quic_parass@quicinc.com
+Subject: Re: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Add PCIe nodes
+Message-ID: <20241022151005.g36xnr7lf46p32ha@thinkpad>
+References: <CAA8EJppfzc_dM9c9mHPVWheVxi-1gJxCmaWPvreELijEQDDSyA@mail.gmail.com>
+ <20241001101622.ys36slymgjbaz26q@thinkpad>
+ <8459161B-87B8-481F-AE71-3D5156B1CA56@linaro.org>
+ <20241001141948.g74rn6777ywvtcmx@thinkpad>
+ <CFF89D4D-8131-47C2-95B8-A0E130A16E46@linaro.org>
+ <9c24ba5d-431a-c45e-ce1c-3541eac7d017@quicinc.com>
+ <20241012124334.4gsspgtuud4uudop@thinkpad>
+ <7yzjgqitjvfwricftcpelktwjbgwkjuibwkpodjd6x4gwkjkw3@wkeqp6lqwfqv>
+ <bbc900f7-eb8f-2664-2144-50a9a6ad8453@quicinc.com>
+ <qevhitaa47fd77jrrs4viv6mctkhedoz5jy33ruqvv62qrb44y@owzfxnxrapvf>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 04/10] net: qrtr: Report sender endpoint in aux
- data
-To: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: agross@kernel.org, almasrymina@google.com, asml.silence@gmail.com,
- axboe@kernel.dk, davem@davemloft.net, edumazet@google.com, krisman@suse.de,
- kuba@kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org,
- marcel@holtmann.org, netdev@vger.kernel.org, pabeni@redhat.com
-References: <20241018181842.1368394-5-denkenz@gmail.com>
- <20241019002232.43313-1-kuniyu@amazon.com>
-Content-Language: en-US
-From: Denis Kenzior <denkenz@gmail.com>
-In-Reply-To: <20241019002232.43313-1-kuniyu@amazon.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <qevhitaa47fd77jrrs4viv6mctkhedoz5jy33ruqvv62qrb44y@owzfxnxrapvf>
 
-On 10/18/24 7:22 PM, Kuniyuki Iwashima wrote:
-> From: Denis Kenzior <denkenz@gmail.com>
-> Date: Fri, 18 Oct 2024 13:18:22 -0500
->> @@ -1234,6 +1247,78 @@ static int qrtr_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
->>   	return rc;
->>   }
->>   
->> +static int qrtr_setsockopt(struct socket *sock, int level, int optname,
->> +			   sockptr_t optval, unsigned int optlen)
->> +{
->> +	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
->> +	struct sock *sk = sock->sk;
->> +	unsigned int val = 0;
->> +	int rc = 0;
->> +
->> +	if (level != SOL_QRTR)
->> +		return -ENOPROTOOPT;
->> +
->> +	if (optlen >= sizeof(val) &&
->> +	    copy_from_sockptr(&val, optval, sizeof(val)))
->> +		return -EFAULT;
->> +
->> +	lock_sock(sk);
+On Thu, Oct 17, 2024 at 02:12:00PM +0300, Dmitry Baryshkov wrote:
+> On Wed, Oct 16, 2024 at 10:43:19AM +0530, Krishna Chaitanya Chundru wrote:
+> > 
+> > 
+> > On 10/14/2024 4:55 AM, Dmitry Baryshkov wrote:
+> > > On Sat, Oct 12, 2024 at 06:13:34PM +0530, Manivannan Sadhasivam wrote:
+> > > > On Fri, Oct 11, 2024 at 05:24:29PM +0530, Krishna Chaitanya Chundru wrote:
+> > > > 
+> > > > [...]
+> > > > 
+> > > > > > > The logic here is that the fixed endpoints in the switch will get an unique SID
+> > > > > > > and the devices getting attached to slots will share the same SID of the bus
+> > > > > > > (this is the usual case with all Qcom SoCs).
+> > > > > > > 
+> > > > > > > But I guess we would need 'iommu-map-mask' as well. Hope this addresses your
+> > > > > > > concern.
+> > > > > > 
+> > > > > > Yes, thank you!
+> > > > > > 
+> > > > > Hi dimitry & mani,
+> > > > > 
+> > > > > This particular board variant doesn't expose any open slots to connect
+> > > > > a different endpoints like another switch(which might have BDF unknown
+> > > > > to us) so static table should be fine for this board variant.
+> > > > > 
+> > > > > I tries to add iommu-map-mask property, the issue with that property is
+> > > > > that the driver is applying the mask to the bdf before searching for the
+> > > > > entry in the table. If I use a mask value which satisfies all the
+> > > > > entries in the table ( mask as 0x718) and if a new bdf is enumerated
+> > > > > lets say 0x600 due to mask 0x718 its value is again 0x600 only.
+> > > > > 
+> > > > > Can we skip iommu-map-mask property and use only static table for this
+> > > > > board as we know this board doesn't expose any open slots.
+> > > > > 
+> > > > 
+> > > > Hmm, I was not aware that it doesn't have open slots. Fine with me then.
+> > > 
+> > > It doesn't feature open slots, but it has two PCIe connections on HS2 /
+> > > HS3. Users might attach external PCIe devices.
+> > > 
+> > > Krishna, could you please clarify, how those two connections are routed?
+> > > 
+> > For this qps615 board to one of the downstream port (pcie to usb) usb
+> > hub is connected and to the other downstream port NVMe will be
+> > connected.
 > 
-> This seems unnecessary to me.
+> The board has two PCIe links routed to the HS2 and HS3 connectors. Are
+> they routed to the PCIe switch?
 > 
-> sk_setsockopt(), do_ip_setsockopt(), and do_ipv6_setsockopt() do not
-> hold lock_sock() for assign_bit().
+> Yes, they are not standard slots, but still the board is expandable and
+> it is possible to connect external PCIe devices. As such it is not
+> possible to have static SID mapping.
+> 
 
-Indeed, thanks for spotting that.  I'll fix this in the next version.  I'll also 
-drop lock_sock/release_sock in qrtr_sock_set_report_endpoint (patch 9).
+Sorry, I think the conversation got deviated. We have concluded that the
+endpoints fixed (soldered) in the board will get a fixed SID (because we know
+what they are) and all other devices going to get connected to HS/LS connectors
+will get shared SID (because we don't know what they are).
 
-> 
-> Also, QRTR_BIND_ENDPOINT in a later patch will not need lock_sock()
-> neither.  The value is u32, so you can use WRITE_ONCE() here and
-> READ_ONCE() in getsockopt().
-> 
+Any concern with that?
 
-Makes sense, I'll fix this as well.
+- Mani
 
-> 
->> +
->> +	switch (optname) {
->> +	case QRTR_REPORT_ENDPOINT:
->> +		assign_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags, val);
->> +		break;
->> +	default:
->> +		rc = -ENOPROTOOPT;
->> +	}
->> +
->> +	release_sock(sk);
->> +
->> +	return rc;
->> +}
->> +
->> +static int qrtr_getsockopt(struct socket *sock, int level, int optname,
->> +			   char __user *optval, int __user *optlen)
->> +{
->> +	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
->> +	struct sock *sk = sock->sk;
->> +	unsigned int val;
->> +	int len;
->> +	int rc = 0;
->> +
->> +	if (level != SOL_QRTR)
->> +		return -ENOPROTOOPT;
->> +
->> +	if (get_user(len, optlen))
->> +		return -EFAULT;
->> +
->> +	if (len < sizeof(val))
->> +		return -EINVAL;
->> +
->> +	lock_sock(sk);
-> 
-> Same remark.
-> 
-> 
->> +
->> +	switch (optname) {
->> +	case QRTR_REPORT_ENDPOINT:
->> +		val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
->> +		break;
->> +	default:
->> +		rc = -ENOPROTOOPT;
->> +	}
->> +
->> +	release_sock(sk);
->> +
->> +	if (rc)
->> +		return rc;
->> +
->> +	len = sizeof(int);
->> +
->> +	if (put_user(len, optlen) ||
->> +	    copy_to_user(optval, &val, len))
->> +		rc = -EFAULT;
->> +
->> +	return rc;
->> +}
->> +
->>   static int qrtr_release(struct socket *sock)
->>   {
->>   	struct sock *sk = sock->sk;
-
+-- 
+மணிவண்ணன் சதாசிவம்
 
