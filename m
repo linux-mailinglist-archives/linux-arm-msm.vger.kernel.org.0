@@ -1,138 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-35351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A6979A9AE9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:25:57 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FB269A9AE6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:25:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C51131C2101F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 07:25:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A556DB23329
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 07:25:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6769514F9CC;
-	Tue, 22 Oct 2024 07:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8549C14A4D1;
+	Tue, 22 Oct 2024 07:25:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TsVZ5mB3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W9ZaOq85"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D1514F124;
-	Tue, 22 Oct 2024 07:25:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 515E6149C41;
+	Tue, 22 Oct 2024 07:25:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729581938; cv=none; b=mFPfjSY9kNKOhmgJpjv3+yDT63brTzb6lIiwjEAR7pFY4c5pvdOgMQEh/DsqrOGM/j7M/x60xP9WwuW7sOBTuFlPfqgd0QXjUdbMHBBgkFzDtuR3gn0At9Uegrwn3GVGdpvtgaQhZopNOCp42UTwoPGljZ82D9olZbSIxGie8CQ=
+	t=1729581932; cv=none; b=fEdMhRY5G18Fqu6dT1UttQv7l/gTEnpYatNoxEjOLQrPaVD8xy6dq7wz7gflo8wI4+2MGcKoJFYZ1sYJqM4CyTkE/qmlt8WXgJXR2ZsK4+i1xUsDN8ZIq44dJn6HttSXBpIYv6f5juBVuhmcTFY/MvsnhPE7fAQmPaW+Wjq60Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729581938; c=relaxed/simple;
-	bh=E1Z73kP5PEOqDyoewzqb404XJZ5cALXJMtPwftv3YCw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=A/Bv8i/7jBwrw9YuLUwesieAJGGTlNohcdfYTAbWUdkiVyEogbYgZw4fxknPjrfa+NnVAKUsKnWxpQvjKdyxswuk19ZC8mQmkMtHzRMmPQk0b01EwDfYjGQeM0KJxcnrDxSeHo6793XEjllfZpB6b7ShJwXti3FH5wzP5kMMiQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TsVZ5mB3; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LKUNlm018231;
-	Tue, 22 Oct 2024 07:25:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Q7hOqvWKfwShsUb0xDCp83yRwWwvxEhCtulITtm1ICo=; b=TsVZ5mB3MFSLUaxy
-	TGYeJsGLQzE1aVuP3mg5nfkJXb5g2/V3QJ+a+4xWJUI2jrwL7+rIViZK/wUvIATs
-	7TdNIooMmVLCIuPwqVfTzeOcNpiDrhPi2K2KWz11DGeGCLe+K9sHgbbTWJ28uinr
-	byO81jH/Zd2dkeoxZBLogY+TyZs9xIO7A30CjIETvV1VnBHPAMYm9j/LfRtRLQyR
-	ZUVj3Tzsbz2ZCr5HcxFs5SaVRCmolKhE6YdUGerf0c1ZEICken2DZgjhvV2TZN3T
-	tds2CsL6TH5Czw+/1TWvWi+PjZG7dEmpxvYgPKYT4waFkOpnzW1CrFNYwZWtiuL0
-	i9LP9Q==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6tsq8t2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 07:25:28 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M7PRLh026995
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 07:25:27 GMT
-Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
- 2024 00:25:22 -0700
-Message-ID: <0b297305-0141-208a-e414-fb7dc98317b9@quicinc.com>
-Date: Tue, 22 Oct 2024 12:55:19 +0530
+	s=arc-20240116; t=1729581932; c=relaxed/simple;
+	bh=zowprF69nfhPdKQnL+MSI1acjh7ULk2gd17Lc+eGNh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YbaVkiXK1moXaHvP8j5NsA+7ytW7x3Gkrj0k0WkORvIuSdJyI9afV6qo0/sejujqrF4FTHP21aF+4pVsqkkWbRmfCjcHE+gM+71B60iOADAjVFiixV51bishZiOVBUBK73CxPFS/V5ZC7UGcsm8UWOtan0GfvEDBJACr9PJ+4fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W9ZaOq85; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB31AC4CEC3;
+	Tue, 22 Oct 2024 07:25:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729581931;
+	bh=zowprF69nfhPdKQnL+MSI1acjh7ULk2gd17Lc+eGNh0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=W9ZaOq85cFvQLJS78UE/g2249ffKe48oON7Bn+HY824PcMIv8+oU8leAYCGQrxYai
+	 a0vBSo2S3fdlG1OXbXwkdJ+R1J+uS+jDzQ/JOU/vS7dfn/PDKxmWTGKvC4j76+6FS8
+	 gkEupWB4c/v3CFL02dukhdo+izRDPUAoo+3fOMxIDGjaQWBvuDHpdvgHGNkUkTJQoT
+	 6BrQri5pfdx0/dr58zdvJ7DcLn+337XMg9IK5PY3ZqbMejOzk5rP9qrJ2iGgMW7kMQ
+	 4eR2dAdYSwwZAQHYVVXj26mCM4h3xitw2Xj3DWiF8zJ77BEQbk3hovleiTdtPKmXCg
+	 04eHHQmX11nDw==
+Received: from johan by xi.lan with local (Exim 4.97.1)
+	(envelope-from <johan@kernel.org>)
+	id 1t39Gw-000000004OJ-0nGl;
+	Tue, 22 Oct 2024 09:25:42 +0200
+Date: Tue, 22 Oct 2024 09:25:42 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] usb: typec: Add new driver for Parade PS8830
+ Type-C Retimer
+Message-ID: <ZxdTdqs2ReKwoFfb@hovoldconsulting.com>
+References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
+ <Zw5i9dcSMOG4n3PW@hovoldconsulting.com>
+ <Zw5oOUeN/v+tz+SY@linaro.org>
+ <ZxCoDHq871x_0Nbm@hovoldconsulting.com>
+ <ZxDJ8I6ZXOLv/KbR@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V4 1/5] dt-bindings: firmware: Document bindings for QCOM
- SCMI Generic Extension
-Content-Language: en-US
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_rgottimu@quicinc.com>,
-        <quic_kshivnan@quicinc.com>, <conor+dt@kernel.org>,
-        <arm-scmi@vger.kernel.org>
-References: <20241007061023.1978380-1-quic_sibis@quicinc.com>
- <20241007061023.1978380-2-quic_sibis@quicinc.com>
- <q2vuiru7sqetwqyitg7azgqg7kge622i2zgq52b55zivwtbev4@4qgzb54xjioq>
- <hxfg6ztpqy7qdsgzhvvapeyh2f55mj7hhuqqkz7si6g5i7nsng@xoyfwztk66aj>
- <3765cf3d-8477-45a7-af0e-b0c78f41eaad@kernel.org>
-From: Sibi Sankar <quic_sibis@quicinc.com>
-In-Reply-To: <3765cf3d-8477-45a7-af0e-b0c78f41eaad@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cl2EvZWMF51Qa-unApiv5whUawjYAyQY
-X-Proofpoint-ORIG-GUID: cl2EvZWMF51Qa-unApiv5whUawjYAyQY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 spamscore=0 mlxlogscore=995 phishscore=0 adultscore=0
- mlxscore=0 clxscore=1011 bulkscore=0 malwarescore=0 impostorscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410220047
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZxDJ8I6ZXOLv/KbR@linaro.org>
 
+On Thu, Oct 17, 2024 at 11:25:20AM +0300, Abel Vesa wrote:
+> On 24-10-17 08:00:44, Johan Hovold wrote:
 
-
-On 10/8/24 17:41, Krzysztof Kozlowski wrote:
-> On 08/10/2024 14:10, Dmitry Baryshkov wrote:
->> On Tue, Oct 08, 2024 at 08:49:27AM GMT, Krzysztof Kozlowski wrote:
->>> On Mon, Oct 07, 2024 at 11:40:19AM +0530, Sibi Sankar wrote:
->>>> +/*
->>>> + * QCOM_MEM_TYPE_DDR_QOS supports the following states.
->>>> + *
->>>> + * %QCOM_DDR_LEVEL_AUTO:	DDR operates with LPM enabled
->>>> + * %QCOM_DDR_LEVEL_PERF:	DDR operates with LPM disabled
->>>> + */
->>>> +#define QCOM_DDR_LEVEL_AUTO	0x0
->>>> +#define QCOM_DDR_LEVEL_PERF	0x1
->>>
->>> I could not find any driver using these. Can you point me to usage in
->>> the drivers?
->>
->> It's well hidden. These are the raw values used for DDR_QOS memory.
+> > I can confirm that marking the regulators as having been left on by the
+> > bootloader so that they are not disabled temporarily during boot indeed
+> > fixes the coldplug issue here.
+> > 
+> > That however makes me wonder whether something is missing in the driver
+> > so that it still relies on setup having been done by the boot firmware.
+> > 
+> > Have you tried actually asserting reset during probe to verify that
+> > driver can configure the retimers itself without relying on the boot
+> > firmware?
 > 
-> So not a binding? Then these should be dropped.
+> We do not want to reset the retimers on probe because we won't be able
+> to figure out the orientation config until next pmic glink notify comes.
+> The pmic glink notify only triggers on USB event, which never comes
+> until you replug the device. So in order to have coldplug orientation
+> configured correctly in the retimer, we need to make sure the retimer
+> holds state until unplug.
 
-I am not sure why the term "well hidden" was even considered :(
-The driver just reads them from dt and passes them along. If you
-want the dt to list magic numbers 0/1 instead I can do that as well.
+Ok, thanks for clarifying. As we've discussed off-list it should be
+possible to retrieve the orientation from the orientation gpios, but I'm
+sure there are bits missing in the kernel for propagating that
+information to the retimers currently.
 
--Sibi
+If I understood you correctly you did reset and reinitialise the
+retimers in v1, which is useful during development at least to make sure
+that the driver is complete.
 
-> 
-> Best regards,
-> Krzysztof
-> 
+Johan
 
