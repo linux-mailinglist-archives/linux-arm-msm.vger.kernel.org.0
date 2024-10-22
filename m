@@ -1,39 +1,39 @@
-Return-Path: <linux-arm-msm+bounces-35365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35362-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2868F9A9CED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:37:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C6869A9C82
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:27:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 876B8B2112A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:37:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ED0CC1F2306E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:27:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC8E7172767;
-	Tue, 22 Oct 2024 08:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D6DD16E860;
+	Tue, 22 Oct 2024 08:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
 	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Q7HyPlWf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2967C15B102;
-	Tue, 22 Oct 2024 08:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980DD1494B2;
+	Tue, 22 Oct 2024 08:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729586256; cv=none; b=cv1JiWqCnhOSg8R8bAa1j6HvSqj8SYMWbRZ9hTXsJMF4p5FIbIhhkSe8QAy2Xt3qXoCXAOuW4RACI1GeTR0Zr3oiMLKHNwGKxRtRFbC5J3Do2TamaFO9a7OsLYy2eGwfPYttufppLm95kyZLpNtbyZ8dR3eSgZtdwcY+M+x0YuY=
+	t=1729585664; cv=none; b=r6Lgx127iRR2MDcXtwb/AgC7rrGmT42CP7F9UTEgux1T+62T/uNobpyv/vM8Sqmq+IzRhYVKSJr+r9FYSbQwSGULxOi/yNyT51o7hrOohk01JPhtmAFrpXyp92oOBQRfgrV5B+iYXi0ZmKmkI2IoRLxadd8Z7gVr/N/QQc2qI6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729586256; c=relaxed/simple;
+	s=arc-20240116; t=1729585664; c=relaxed/simple;
 	bh=9LlaZKbq8Gbr4fbbJXoT7MlujlTvAW7xkNit1XKF3nw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Vz9qnbjMsCFZFR/8UDAnjthxb7ZafW+lGkfUNHRpvyc/CT81zjde2KNKG2tG76VE3oqwT6+1tUv8ncS+YBPkHCOWNUIm/rGX05sy8oI3nElHWv2yve6C6A1cBzjVSZMYYgOG+U1/RZ6cR046yMzhNk8tZR5f1Olnxntn6s0UShU=
+	 In-Reply-To:Content-Type; b=RW7Od2ZxTeOYPGT9MgzVUN7juMssh5BSFOqcmTLRXqQE8qSxT5yqoYtiwfQTVn8QOAXqdrR5qYXxCmJ2SUmv701dvoyrQii1omLxHbd220uK+X3n7CopHye6ATN1wM4shS9xoH60NkvdSxDLe0bySTq2PVqRf3bh47eexwGs7f8=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Q7HyPlWf; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LN3udi031865;
-	Tue, 22 Oct 2024 08:37:25 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LJBZlS001170;
+	Tue, 22 Oct 2024 08:27:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
@@ -44,14 +44,14 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	Q/MIlW0JTj5axmVji4HkI1jekVxTvP0ZNYMsidTY4QvK7dkjLr5rErmY9MHVJPsN
 	WyJb4fWTxGyRwPYJ3ReJvS0W4kui8TY+Pl9fx50wHalw4WAr9JH8sJBVYc4P9prz
 	w9WFTw==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6rj7h7r-1
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42dmj13gg1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 08:37:25 +0000 (GMT)
+	Tue, 22 Oct 2024 08:27:33 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M8bOgk007154
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M8OefI003821
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 08:37:24 GMT
+	Tue, 22 Oct 2024 08:24:40 GMT
 Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
@@ -87,16 +87,16 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 4RSGPyU9kP1evCId_m02MHL-bS72bLwJ
-X-Proofpoint-ORIG-GUID: 4RSGPyU9kP1evCId_m02MHL-bS72bLwJ
+X-Proofpoint-GUID: 1Gd7gmrT-280RZdSKxqSKWYFFJKK2Bl6
+X-Proofpoint-ORIG-GUID: 1Gd7gmrT-280RZdSKxqSKWYFFJKK2Bl6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 bulkscore=0 malwarescore=0 mlxscore=0 spamscore=0
- impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
- mlxlogscore=714 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410220055
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
+ suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
+ priorityscore=1501 clxscore=1015 mlxlogscore=714 phishscore=0 bulkscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220053
 
 
 
