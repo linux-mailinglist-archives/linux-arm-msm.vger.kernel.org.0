@@ -1,151 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-35416-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E1CF9AA215
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 14:28:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C69699AA23E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 14:38:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AD25B1C2198B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:28:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 80144283322
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:38:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6087119CCEC;
-	Tue, 22 Oct 2024 12:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B13D19D880;
+	Tue, 22 Oct 2024 12:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="m1TbBCqz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MOZWLu0z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD27019C576
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 12:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECECD19CC32;
+	Tue, 22 Oct 2024 12:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729600118; cv=none; b=nlC1d55h3aAPG8ugIeegnSHz8r1Ys50Yy2Jmc17rGwNH9GF+b/ypdLg5jj8Em6zI/TG0EQBJ4fVyODx7Vuq+Hhm1532bdKbVElqRnpDfZaRT48unEGIS1fe8WR3L5jmIU4uDP4aZKRPCpctbU3AYffFK8ge0OTBgj0js7RcmeCY=
+	t=1729600721; cv=none; b=fLyqKxYiimB0mpZXWvvQFRGiYb31sQRkao+UGR49ASg9OdDq+NAPP4Omfy3Gi1xKU6Dd8Q+Bq0AgsId2mh/93Gw3nBuLJspn0jOT79VR+Yb9Up6rhH/hpcZI2J76PCvaZkXkBkJLvcyoq508AYqY92iDxb/9QREEIk7jmpWYqBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729600118; c=relaxed/simple;
-	bh=qWIjXmIEmAmE3Cr1lHs1eWeZDZtAM7mr7Y3/sudwq7o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LAbzZh+JN2vkM6OLXlniD83reTpjvcaNTobZXTDK+7kYdhaB6Rq34U7eGnukQCo4tm6SFW5N0y9grBsW8ylkntQNvUbFiE4dOUg7JuM9CvERfSWIQ0SUr0aYp3GSJITRrNHQ22p78hMAB/oiwSqxmYB2d0EUhTHAR5c3G0S1n9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=m1TbBCqz; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e2e3179b224so440586276.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 05:28:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729600115; x=1730204915; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ioL3U7Maz0qLUYZXpZJBEClR0ZOLVSgH8k832uiTky8=;
-        b=m1TbBCqzC0VghJZKTo/K7l6rQj1R7B9EQlRnTIIadCq/DrQtvcsW+UCe7Xtm+7F44+
-         cKFMygPdQBsPotcnXRpRgS0/Mz7oCkX73T514ccBQlrxe1MggwTyR/RCDP+JXRxCw8OE
-         6iBbjil3JyAEtZ3bJXjMdri7E9cWbBoJqFtNZJyM7f82H3NOOKdD1AAhn9yaLeZYo+jo
-         6iBN91Znjc0lkvNlAbybZUP955HZPz9PMFX1KnUjWLXV3HDhvqaO9mhoPcq8Lvp+yssZ
-         RKZQUWWOL/QHAQoVnYUonOx6Emv0fNzlCgCfUimTDTfao1+aDq5izz92Rfa8BU83Axo4
-         nFjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729600115; x=1730204915;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ioL3U7Maz0qLUYZXpZJBEClR0ZOLVSgH8k832uiTky8=;
-        b=D51ufMLx0h/aUByFjtE+OqmWtA3CoURqswiQqqjEUuOrqJsEBb81y9ITBeIuz3OLrW
-         SFCIh8vthIVGmOYtyqOyvDpHpKRO3I55u5EdIY5Acoqkl+DEILSjEcq0pTvLu6OEA0+/
-         S7DglDG8JH3C7qQRxwh6fTgrFfjeQoMbjqtAyjq2Tocb3ipqV7dtD+XqImB9QGAK6kLB
-         16mNJmrDVE1B28ASZpMz5GsaYQvssuqjgzZ6IxxubQ8R+EqviK/znILW5meYLeFL4kex
-         c5JL/7GM0eeXrPHK7R1p0LJwfRBNzlNKC/HvnkxTLle55Wk5mbDx+yNMcgI4ZfDdcpQC
-         Nxzw==
-X-Forwarded-Encrypted: i=1; AJvYcCV0IANp23aqbCwNxHsM9Aoe+UNqAvjPYngNTvHonbmoIFMTOfJlo++Jyr7AcfEmcr06tHb9G1Ls5y2tg8S/@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQnrlr6mm7RAvz8U7aAzhuk6bZgieYMpwalTdCAZPSA6btOf4X
-	I9e990NZVwewwMCDC7mwUVAvrdRbprSJdMsM8QIG92+fEGXvDV6nzToCPC1ean/P4q/ELKXynIu
-	8ouzXIPRTXOq7VVeNGop6+tBuJuyt5kWVZDY9tQ==
-X-Google-Smtp-Source: AGHT+IEl5bYcUxKZc8mAfmMEAjtQp84RugZvAkgPtQDGOp24lN77bPuSBEw3ulBRwyVTZHLzGUlZyV8MTZyrDSygndg=
-X-Received: by 2002:a05:6902:1027:b0:e0b:5b37:d0c9 with SMTP id
- 3f1490d57ef6-e2e22eb8ca4mr3538840276.14.1729600115527; Tue, 22 Oct 2024
- 05:28:35 -0700 (PDT)
+	s=arc-20240116; t=1729600721; c=relaxed/simple;
+	bh=ATv2SPKcd4fh964chY+L+cl4Ml8G1NUG4M/QOY04ocE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KDZ1W5loI2ccEmJlBALEigiNvxA0TFJ6+qb8jHNwIezfK38BwYg0VJLvclEjPDGDuSycXybQwnhYbzGDD3U3aJsqUe50sxwbLA0+I4ItvjI27uv+mxJgzyK5nNRN/zqpuzhDasUoRRXp9bIl6tiltUpbb+xU1IoWMS4UXuwinWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MOZWLu0z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335ECC4CEC3;
+	Tue, 22 Oct 2024 12:38:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729600720;
+	bh=ATv2SPKcd4fh964chY+L+cl4Ml8G1NUG4M/QOY04ocE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=MOZWLu0zz+zSSVYLqJmjWyZfmExzA20J/ftuw3P2diHk+whFBkajuflu6AisPB78x
+	 MOZQgktonMbWZRUxnLaat8dWIGhqGJtputFHD/R4h14/qaXYRki69mDnLUkki9JWUn
+	 ueE6V/oZcubiUhJCbkHwvpxNa+SZaKoYIq6Rf22nr5pQ2bz37QHKIUMqjrVRJnPH5r
+	 oA3/hvHHsB/aEQel1LKG/LjFLjzMam/Dve2YkB7+kZTn13pY48fuYBLQu2TflvS6AF
+	 PkCv3/PVz3kyVih8v4TJcQFwaO6YO1helEPmu4+A/NdUUBeObRWWaIsIZN6dkJmXya
+	 UhyXuUXVqGbxQ==
+Message-ID: <a92e9d88-622a-4f08-b4d4-6f28d6a91598@kernel.org>
+Date: Tue, 22 Oct 2024 14:38:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241006135530.17363-1-quic_spuppala@quicinc.com>
- <20241006135530.17363-2-quic_spuppala@quicinc.com> <CAPDyKFpXh0vZrK6PU2V+y92Q_+y6Q2+VUEONXiBrqAp_qqp_jA@mail.gmail.com>
- <e63f8862-5e1b-45c4-9815-95deb70f72b4@quicinc.com>
-In-Reply-To: <e63f8862-5e1b-45c4-9815-95deb70f72b4@quicinc.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Tue, 22 Oct 2024 14:27:59 +0200
-Message-ID: <CAPDyKFqhUKuwUs9ySZnDvp8WZLNZq2K6q-S-0DjQvFU7vuvHoA@mail.gmail.com>
-Subject: Re: [PATCH RFC v3 1/2] mmc: core: Add vendor hook to control
- reprogram keys to Crypto Engine
-To: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>, linux-mmc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	quic_rampraka@quicinc.com, quic_nitirawa@quicinc.com, 
-	quic_sachgupt@quicinc.com, quic_bhaskarv@quicinc.com, 
-	quic_neersoni@quicinc.com, quic_gaurkash@quicinc.com, 
-	Eric Biggers <ebiggers@google.com>, Abel Vesa <abel.vesa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] clk: qcom: Add support for GPU Clock Controller on
+ QCS8300
+To: Imran Shaik <quic_imrashai@quicinc.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Ajit Pandey <quic_ajipan@quicinc.com>,
+ Taniya Das <quic_tdas@quicinc.com>, Jagadeesh Kona <quic_jkona@quicinc.com>,
+ Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+ linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20241018-qcs8300-mm-patches-v1-0-859095e0776c@quicinc.com>
+ <20241018-qcs8300-mm-patches-v1-2-859095e0776c@quicinc.com>
+ <puhpztfn6ga5rxv4mwu7wyvk63hqme2nzffcvzwv7t4oo5hlvc@4ugxncmu3wwk>
+ <o5v3fch5oxol4t7j4xlqswk6m6uo4tleck2cnfk6whpfqsrvjc@s2yrjumgvw6j>
+ <34216857-170c-45d4-8f6d-987573269215@kernel.org>
+ <36bfe493-8a85-4add-93e3-650b002636df@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <36bfe493-8a85-4add-93e3-650b002636df@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-+ Eric, Abel
+On 22/10/2024 08:34, Imran Shaik wrote:
+> 
+> 
+> On 10/21/2024 8:41 PM, Krzysztof Kozlowski wrote:
+>> On 21/10/2024 12:56, Dmitry Baryshkov wrote:
+>>>>>   	{ }
+>>>>>   };
+>>>>> @@ -596,6 +635,14 @@ static int gpu_cc_sa8775p_probe(struct platform_device *pdev)
+>>>>>   	if (IS_ERR(regmap))
+>>>>>   		return PTR_ERR(regmap);
+>>>>>   
+>>>>> +	if (of_device_is_compatible(pdev->dev.of_node, "qcom,qcs8300-gpucc")) {
+>>>>
+>>>> Why we cannot use match data? Seeing compatibles in the code is
+>>>> unexpected and does not scale.
+>>>
+>>> Because using match data doesn't scale in such cases. We have been using
+>>
+>> I don't understand how it could not scale. That's the entire point of
+>> match data - scaling.
+>>
+>>> compatibles to patch clock trees for the platforms for quite a while.
+>>> You can see that each of the "tunings" is slightly different. From my
+>>
+>>
+>> You have one driver, where are these tunings which are supposed to be
+>> different? You need here only enum or define, in the simplest choice.
+>>
+>>> point of view, this approach provides a nice balance between having a
+>>> completely duplicate driver and having a driver which self-patches the
+>>> tree.
+>>
+>> How duplicate driver got into this? I don't think we talk about the
+>> same. I meant ID table match data.
+>>>
+> 
+> I agree with Dmitry. If I understand correctly, to add match data 
+> support, we need to define the gpu_cc_qcs8300_clocks struct by 
+> duplicating the entries from gpu_cc_sa8775p_clocks and then adding the 
+> additional qcs8300 clocks. The compatible approach is simpler and used 
+> across most existing platforms.
+> 
 
-On Sat, 19 Oct 2024 at 06:55, Seshu Madhavi Puppala
-<quic_spuppala@quicinc.com> wrote:
->
->
->
-> On 10/8/2024 7:30 PM, Ulf Hansson wrote:
-> > On Sun, 6 Oct 2024 at 15:55, Seshu Madhavi Puppala
-> > <quic_spuppala@quicinc.com> wrote:
-> >>
-> >> Add mmc_host_ops hook avoid_reprogram_allkeys to control
-> >> reprogramming keys to Inline Crypto Engine by vendor as some
-> >> vendors might not require this feature.
-> >>
-> >> Signed-off-by: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
-> >> Co-developed-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-> >> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-> >> ---
-> >>   drivers/mmc/core/crypto.c | 8 +++++---
-> >>   drivers/mmc/host/sdhci.c  | 6 ++++++
-> >>   include/linux/mmc/host.h  | 7 +++++++
-> >>   3 files changed, 18 insertions(+), 3 deletions(-)
-> >>
-> >> diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
-> >> index fec4fbf16a5b..4168f7d135ff 100644
-> >> --- a/drivers/mmc/core/crypto.c
-> >> +++ b/drivers/mmc/core/crypto.c
-> >> @@ -14,9 +14,11 @@
-> >>
-> >>   void mmc_crypto_set_initial_state(struct mmc_host *host)
-> >>   {
-> >> -       /* Reset might clear all keys, so reprogram all the keys. */
-> >> -       if (host->caps2 & MMC_CAP2_CRYPTO)
-> >> -               blk_crypto_reprogram_all_keys(&host->crypto_profile);
-> >> +       if (host->ops->avoid_reprogram_allkeys && !host->ops->avoid_reprogram_allkeys()) {
-> >> +               /* Reset might clear all keys, so reprogram all the keys. */
-> >> +               if (host->caps2 & MMC_CAP2_CRYPTO)
-> >> +                       blk_crypto_reprogram_all_keys(&host->crypto_profile);
-> >
-> > Don't you even need to call this once, during the first initialization
-> > of the card?
->
-> The first card initialization is done during the boot up for qcom socs
-> and the kernel keyring contains no keys immediately after bootup.After
-> the initialization of the card, the block i/o operations to encrypted
-> folders will automatically trigger the corresponding program key calls
-> to the crypto engine since the kernel keyring does not contain the
-> required encryption key. So, it is not necessary to explicitly reprogram
-> all keys for qcom socs.
+You don't have to define any structs. You pass enum and retrieve it...
 
-Okay, I see. I have looped in Abel and Eric who worked on this
-feature, just to confirm that this makes sense for them too.
+Best regards,
+Krzysztof
 
-I assume the reason why you want to avoid the re-programming is that
-it adds latency when re-initializing the card, right? In that case, do
-you have some numbers of what we save by doing this?
-
-Kind regards
-Uffe
 
