@@ -1,63 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-35465-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35466-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 068C09AB42A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 18:38:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A77939AB42D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 18:38:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A77E1C2144F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 16:38:17 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 68DB4284FF2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 16:38:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2A5811BBBEA;
-	Tue, 22 Oct 2024 16:38:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 185D21BC06C;
+	Tue, 22 Oct 2024 16:38:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bPWbsKoJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SbRZXmKV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF362136345;
-	Tue, 22 Oct 2024 16:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8F41B654C;
+	Tue, 22 Oct 2024 16:38:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729615092; cv=none; b=UOlq+fPTtvMgbbZ6QOP0IUDt3sj1WPCGnUFPQyqD9Gsjd0ffjEkhL8iUli64og/ZEWHNRGxsgLslIo1jwOVKR2eokPnrA4Y6b0KZJRW7Pjb383j3dpeAMxlfvvowBr8myY6TfsXnyczbnGuzrlthCTryekbXOzxbgvM9O3pI3ug=
+	t=1729615110; cv=none; b=W1PmdDqtx4HdeKSoDef1XjEgyzCw9vXKgNGELXGoAXQ2hbq+rUzJ2srtqbUzgW2IfKxHdkHUpor0SBTjbiTH3qm7qZuRTlp3MpC8AGYRJcwwmMTvWazjNjoGHYYSL0jcixR5tChU0IV2eEelgCIVPuRyXvIh6FYcn+AtAUvFKmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729615092; c=relaxed/simple;
-	bh=x365vfZcwOL/Kx8CbJaN5XUaJiNoO7EftBuEebNOTpg=;
+	s=arc-20240116; t=1729615110; c=relaxed/simple;
+	bh=ulqYRIjW1aPwGzaGAX/uf+WdzbdIWEU2x21yuIdzgfw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lc7kYCDmJo67z7x/uO0reJBcjQHnVtCn7yjptmbBRIO1XTIWgX71IO47t4eaAq7BQM+7rCn7GaY0R9uM6JwNcGHoKlcSKMmlfuiNZYvr/VucPMNmT0TwErVJNJ0F5r6WO2PrX1CFaeqohMtfe9pY0j4/xPp68qWk10WSlKG7pUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bPWbsKoJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE30CC4CEC3;
-	Tue, 22 Oct 2024 16:38:08 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=ppJFg6FgUL8dxYXVRiW9EWBZpqKXRK9JiLxt5PSQULRa2ctST6JuQLGBiBGy7J+LGsKJkIt1/z1aOarWPEsTshHGC2cchhmgowaFYEvAONNXVbNzbNBAGdrsO22p5WnrN39sAKXRHDI6i74rK7Vr6Anhy+SedIcScWkt3ZEI17A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SbRZXmKV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D73BC4CEC3;
+	Tue, 22 Oct 2024 16:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729615091;
-	bh=x365vfZcwOL/Kx8CbJaN5XUaJiNoO7EftBuEebNOTpg=;
+	s=k20201202; t=1729615109;
+	bh=ulqYRIjW1aPwGzaGAX/uf+WdzbdIWEU2x21yuIdzgfw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bPWbsKoJv+eBfGCCmSRZP0amck6NKkyJ9B7bDAqCXLBSCNYQWSb5Gibnj7wkfYWS7
-	 G1XA5uKX7cqj8bGD9FOpIMHvJBZSc4jo+XLKXhvUv7L1DAjtFCmt3HrzsC8rw6RuJ8
-	 azis5p/Q75f7zgREgqDwJNHs2l9hXMKC0PvSi8JHpZChCbw0p2miKCMHY4RNTrSxs+
-	 dZfWCw/M3/AfJ812VM/7DE3UauXh1BzReBKheJ9z5/CySuZxy5IKvjmF2i5BAOosBo
-	 6Faw5oONF3jaNHpSNyllxbE3lJmGHP8kO0xcvp8yXjJb04p3xsoG+zd31pvkj/8RE5
-	 99nFxxVonb3Mg==
-Date: Tue, 22 Oct 2024 17:38:06 +0100
+	b=SbRZXmKV+wOJmGRIeR/WpL/0dAdikIRBfGLNfjmwucW7/tCFuFw/drz7RQhUBibKD
+	 Aau9hlgIHqhHJnY5c9ZcH8aVBOfsBurOFqGLkbDuY2CKtaLMAcT3NJefpvBea+8tPI
+	 bxMl+p6VQVEXXf4epIFlM/4MOLDCM8hI/oLSVftS3U8WIXqT6KviMLv7mnRkARJH2a
+	 yMZ1JvXmynA6p7uRnhb3f1BLOPzBwM6wgrr26iWn7XHeJWsjunXybDuX/jbhbtxUNg
+	 dIG94kuJHldS1HC/s7ho+a5vSMkFCouFDpovyaZZQaAG3b3nWsjjeYolIC8GnQqP1H
+	 C9ok0cq12mVzw==
+Date: Tue, 22 Oct 2024 17:38:24 +0100
 From: Conor Dooley <conor@kernel.org>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
 	Melody Olvera <quic_molvera@quicinc.com>,
-	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>
-Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,sm8650-lpass-lpi-pinctrl: Add
- SM8750
-Message-ID: <20241022-stoic-props-fb09384c4357@spud>
-References: <20241022064245.22983-1-krzysztof.kozlowski@linaro.org>
+	Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: Re: [PATCH] dt-bindings: mailbox: qcom-ipcc: Add SM8750
+Message-ID: <20241022-encode-headwear-2c598eb97db3@spud>
+References: <20241022064238.22941-1-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,35 +63,34 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="j8d5r80CqIdQPr5f"
+	protocol="application/pgp-signature"; boundary="Q2vCaW+jwCnGeI5p"
 Content-Disposition: inline
-In-Reply-To: <20241022064245.22983-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20241022064238.22941-1-krzysztof.kozlowski@linaro.org>
 
 
---j8d5r80CqIdQPr5f
+--Q2vCaW+jwCnGeI5p
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 22, 2024 at 08:42:45AM +0200, Krzysztof Kozlowski wrote:
-> Document compatible for Qualcomm SM8750 SoC LPASS TLMM pin controller,
-> fully compatible with previous SM8650 generation (same amount of pins
-> and functions).
+On Tue, Oct 22, 2024 at 08:42:38AM +0200, Krzysztof Kozlowski wrote:
+> Document compatible for Qualcomm SM8750 SoC IPCC, compatible with
+> existing generic fallback.
 >=20
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
---j8d5r80CqIdQPr5f
+--Q2vCaW+jwCnGeI5p
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZxfU7gAKCRB4tDGHoIJi
-0hRPAP91AW90yGsTA6HzxcerSeDrVaNzYAgKbfL3FmGSybZndQD+J8kMR3awoB/3
-vDzopa2+qrVMC0Guq+NPz/6ZiYW/ogE=
-=Gfn2
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZxfVAAAKCRB4tDGHoIJi
+0sm1AP9biigBJYB6eSVuEh02+fLG3dX5hm0FMzvDZkJOQiALRAD+IoTeAOic2OBs
+bGOnKH6vo8+eEFynaQodk7Lw8jA5Vwg=
+=5ZuV
 -----END PGP SIGNATURE-----
 
---j8d5r80CqIdQPr5f--
+--Q2vCaW+jwCnGeI5p--
 
