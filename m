@@ -1,132 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-35324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF31F9A97F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 06:40:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CD8A9A986F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 07:32:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 88AC71F23E88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 04:40:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E0FD5B23745
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 05:32:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A99978287D;
-	Tue, 22 Oct 2024 04:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D4A413C9C0;
+	Tue, 22 Oct 2024 05:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="OQQ4nnyB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mvhe8Sm1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA7B811EB;
-	Tue, 22 Oct 2024 04:40:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7072285283;
+	Tue, 22 Oct 2024 05:32:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729572003; cv=none; b=CpAd+cpYo4LOmYxmcVw3nCAzMG6osbfXhJOY/eKjeoHU7UT1vB92ajI+3ZnI9s0G/wTc3uFSBvzAY1nze0uP9iresTSslYdNsE9pYKZZEGHsTFPHTKIJBmdDwuHbwKZ7451DZYCPzCxQn+8I3XPRICMw4vwmVxsimyGuVlvceTc=
+	t=1729575123; cv=none; b=OPpUgl6Bgp3N2SztYzBxYO3NwQ5Yp54XwBACE+yadW9eu5KQPRMstj6r9EJs9TCpRChx/sUtcse48mX189mEtaMfHr8gaQpBJhj3lBnVCUboLxKezk9TO0BGmyQVb56LwLdShCENOMXsR2g9+rMPC89fCspZOQHV/dVJ9lVTkKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729572003; c=relaxed/simple;
-	bh=zZcSs9LEMsjftqsO8zJH6e/5d9NYY/akuamUM8cOyZ8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=pPVhOveRxgtsnrH5i9yGs7JahTqYgznt+YRvF/dEK1wmjGXLZegSm5QaKmF0s13yAyBgjZIe9j9Bj/Z9v7yzWQ32rKjTmhCKbBWfpenRBJcyQ9AnNFYhKkivGsd42ZUDsmWRhgLE1nCpsiqBR1ZWib2hmqaXsTQ5DmxRU8WmvpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=OQQ4nnyB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LF7vdw009626;
-	Tue, 22 Oct 2024 04:39:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	r6QzmzQaHek9p4OE1LFO1rZiLxLngWirJKOlqZoBv+Q=; b=OQQ4nnyB06FSfWL+
-	aEuLCZLrBx2FhPl8wlnYNl05ErIqZKaDyxmyoB0KjwFFMBXws7Avu458bfvRr3ww
-	Gco2i/PK+yfkjPQ5tf2pQCdG3uGpia3Njs12cb+sJK6VE96Q+Nc/wF7etchEHVJB
-	hvbiTFltOMSkn7Cs7yWoLkDnCHTPm4z9HyCoDt7htLwZFJpjnGQQzsxTmoFG4We4
-	gmFpXjqpEHCu41nlg4kmOzkUqh075h+2Ll1HMA+9ep/6GJtLooSirhhHkEw+P6Df
-	fcVF57QgO8bjhM0zo1qRZDrkF/cs06V90sczMa2dNrGIVYxrx6y1h9IQlerC7ST3
-	zWDa8A==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42dkbt35xx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 04:39:50 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M4dngR026627
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 04:39:49 GMT
-Received: from [10.151.37.94] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Mon, 21 Oct
- 2024 21:39:43 -0700
-Message-ID: <4c239c07-799c-b910-c6e0-ff717202ceb0@quicinc.com>
-Date: Tue, 22 Oct 2024 10:09:34 +0530
+	s=arc-20240116; t=1729575123; c=relaxed/simple;
+	bh=IiSrgMLg050BgnYcBYVcxxKUflvU52YA/fWuPFsF5aw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=dbEjW1/90Qnxd+De5LqyzyMNYCGrmM6o6C7WepX3pPS3LVfEsP4kLak8G7rgShDABfUo1QCFesXaiFp+N1Dwi/RY6mxMzghGy2xeCW1aTWRqsd7jeo+olxa2SlO35nDcolIUZ0W7Bzy7yF6Fx74yJrbnbihljXvTOtFLZLy81gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mvhe8Sm1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A45AC4CEC3;
+	Tue, 22 Oct 2024 05:31:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729575123;
+	bh=IiSrgMLg050BgnYcBYVcxxKUflvU52YA/fWuPFsF5aw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=mvhe8Sm1HCQ02npd4oZJRI+aELR57CBC9FBF3Mr+mm+YK+xcDetYz9lsN5tUq9Zzf
+	 5Q4p/jDoTYlPdtRLMCnOJL9yC5eghXaEQMEpZce4JjlguRqO5x8LSKcgAe9ntfsnBn
+	 JUsvOLEYanj/M6Mr8wQxivm0UUlrycWxQTTDfbbOU5s7urM0/jsz99130dxtEI1OVI
+	 adrAfp5P0wJrK11KiFp84FPGAkfrQjobspviJfM/7cnJrfzgipEJ1/phvhb0jNiWAH
+	 75ByfjZjMWc9QfmtcuWNLsvv6ED3IKLH9ilgI2J4u6qVSW0LTdl+SkfYuqwjdW11cN
+	 Bm827xOd+cyQw==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>, 
+ Abel Vesa <abel.vesa@linaro.org>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, kernel test robot <lkp@intel.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20241021-phy-qcom-qmp-pcie-fix-x1e80100-gen4x4-resets-v3-1-1918c46fc37c@linaro.org>
+References: <20241021-phy-qcom-qmp-pcie-fix-x1e80100-gen4x4-resets-v3-1-1918c46fc37c@linaro.org>
+Subject: Re: [PATCH v3] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Fix
+ X1E80100 resets entries
+Message-Id: <172957511945.488725.15179296618283554454.b4-ty@kernel.org>
+Date: Tue, 22 Oct 2024 11:01:59 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v12 4/8] mtd: nand: Add qpic_common API file
-To: Jeff Johnson <quic_jjohnson@quicinc.com>, <broonie@kernel.org>,
-        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <miquel.raynal@bootlin.com>, <richard@nod.at>, <vigneshr@ti.com>,
-        <manivannan.sadhasivam@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mtd@lists.infradead.org>
-CC: <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>
-References: <20241021115620.1616617-1-quic_mdalam@quicinc.com>
- <20241021115620.1616617-5-quic_mdalam@quicinc.com>
- <41db541a-4de1-409b-bfec-7b9456fc200f@quicinc.com>
-Content-Language: en-US
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-In-Reply-To: <41db541a-4de1-409b-bfec-7b9456fc200f@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: B7wAcqzBYy_1DaTih_1VAdrhkXLM0nYO
-X-Proofpoint-GUID: B7wAcqzBYy_1DaTih_1VAdrhkXLM0nYO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 malwarescore=0
- lowpriorityscore=0 mlxlogscore=999 clxscore=1015 suspectscore=0
- phishscore=0 spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2409260000 definitions=main-2410220029
+X-Mailer: b4 0.14.2
 
 
+On Mon, 21 Oct 2024 16:53:28 +0300, Abel Vesa wrote:
+> The PCIe 6a PHY is actually Gen4 4-lanes capable. So the gen4x4 compatible
+> describes it. But according to the schema, currently the gen4x4 compatible
+> doesn't require both PHY and PHY-nocsr resets, while the HW does. So fix
+> that by adding the gen4x4 compatible alongside the gen4x2 one for the
+> resets description.
+> 
+> 
+> [...]
 
-On 10/21/2024 11:49 PM, Jeff Johnson wrote:
-> On 10/21/24 04:56, Md Sadre Alam wrote:
-> ...
->> diff --git a/drivers/mtd/nand/qpic_common.c b/drivers/mtd/nand/qpic_common.c
->> new file mode 100644
->> index 000000000000..570ab59ca12b
->> --- /dev/null
->> +++ b/drivers/mtd/nand/qpic_common.c
->> @@ -0,0 +1,757 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +/*
->> + * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-> 
-> I'm surprised you aren't adding a 2024 Qualcomm Innovation Center copyright
-qpic_common.c file is derived from drivers/mtd/nand/raw/qcom_nandc.c file
-so I am retaining the Copyright from the drivers/mtd/nand/raw/qcom_nandc.c file
-> ...
->> +MODULE_LICENSE("GPL");
-> 
-> Since commit 1fffe7a34c89 ("script: modpost: emit a warning when the
-> description is missing"), a module without a MODULE_DESCRIPTION() will
-> result in a warning when built with make W=1. Recently, multiple
-> developers have been eradicating these warnings treewide, and very few
-> (if any) are left, so please don't introduce a new one :)
-> 
-> Please add the missing MODULE_DESCRIPTION()
-Sorry I missed it. Will add in next revision.
+Applied, thanks!
 
-> 
+[1/1] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Fix X1E80100 resets entries
+      commit: 16fde3e076775d3b51f48d44d050746fbc9d638e
+
+Best regards,
+-- 
+~Vinod
+
+
 
