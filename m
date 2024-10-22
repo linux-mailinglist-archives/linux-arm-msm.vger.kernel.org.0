@@ -1,213 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-35345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 360B79A9A68
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:02:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A08BC9A9A8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:11:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFB821F224A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 07:02:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5C0FC2823BA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 07:11:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BA291494D9;
-	Tue, 22 Oct 2024 07:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 434FD1487DC;
+	Tue, 22 Oct 2024 07:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UtB/SN+6"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MYDx15WK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593CE13C8F4
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 07:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A6813AD0;
+	Tue, 22 Oct 2024 07:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729580547; cv=none; b=EmvRMigaPFRZaJvnOjBg5Pc+2PjQDx/AesvvixZj80e3ic9lXm71jKghYrE1Ed87LLy6f2KudHNtGIb7eDFiO6vlfCwFGI5oLnchKyNNFr2b/oTBlDgxccY/jiNclEZy2qFbf6o1IiHkETMxTgKRH0Vqw7PmYbGX1NTLdLpovL8=
+	t=1729581072; cv=none; b=WCmQOhlY2ArxZjyk0jy0mIww4/02ZAkpqNkXruAzCfxDgpxp4nxBl96KNTXCXDa7EqVq8DACt/g14g+ywmO0KqRpEqzBGdPX+QgmJwk13dhch7uVK5A+iEDWBdKowOohaVoowL149sV0AuyNQd9FxZ4jXM4aqlUVx8hC3TE3Wus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729580547; c=relaxed/simple;
-	bh=4yE8s5Gg/D7Mg1mfXzs4xFsiwPIVCKqduCQJUZDhtGg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hx9BvpJgnaOGNbEKGqhngeQc/g95lXauudo5KFKdZFRpIvjoQUkQRgXA3WhX/DO2qPR2tn3oeOBc9qarftFoAO1XpdKjwDllWiBnrrFOw2fc+AEk8t70g3o0NAvbM0liPBJ4QS9pzRc5WyIhLlWGpRcb6m/O6xIg/aiHAiomY+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UtB/SN+6; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so61762365e9.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 00:02:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729580543; x=1730185343; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Zo0xOmZ3bF1XOgnsXVyn+rFyT/PuDvUbKaYAetJa4ms=;
-        b=UtB/SN+6Aqhrz6c63vBySYEAqogw7sBk/gBj9MhWxQofZXnmprhmpdzI0mUp1eJpk5
-         c1C22idsUoMAt++oxTy3kFXXuz9q3dmomzII2e3ad4FJ90boRX++XCRf8pd49uEc/mjR
-         8FycVbZY9OTtwe7FkD3sLAFbChmiz7mZOad8+53NRP/1CzOt7V9DpSV9+fdjHRYalu6c
-         q/9l55AoNBc67kgboiJv+kRjLaeWnccllyBQYfihWBc31rJ2j7OpTWwI4xV7ecgvpd4n
-         2UcdWBYZ3n+g3NOV9F8QfXhAT7s6O3OJLlL9Zfxg9y/DjN0/PUkY+RNFgCckgF5lAI3t
-         yFqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729580543; x=1730185343;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zo0xOmZ3bF1XOgnsXVyn+rFyT/PuDvUbKaYAetJa4ms=;
-        b=WRuOo4j5xZzA61wGwthCTTQQkdRcOxBPZSjRUCuuaJ0A66oLi79Tt6ZoXhi9yhov05
-         xOa6AxiWSrPJ3Q7WV22JWYix6USGDRoUiQFnTcxQabY8BZAt2B97DLjYIBSnQN7T6N5O
-         Gll5pXWEmI6i5iqrDXQ3dGAGhM+bsCPP0rvub7lN6vqZKdNRLe8sSQIKvRJ7OJcB0nsM
-         02eSVR0LG4JAVeejOQUHIuZ520d2l/5eu3Zx23+SCDVAm65U9lmddRAldMpMow+lvhCK
-         kqxRxNg9Aze/ZuCOuiaXCOBh91F9dpql2ab2KT2xdlBzlsEeBA9yssbPIqsn3l1bfARm
-         F/rQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUkuqaFzV1FiAdvcWr/znSOC/qZ9imIkNBcvPhsSWZXVCHu7hvRniCY2gaAoaEXkkKCqXQo0sEK2o9hQJc6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7Dp7pSiCtni5i3kYRpx3nT0kOT+aUdjU0FI19a9YiA3V0Zq83
-	yWnew5y9eJVB2ocYAvHirUgGcHFV98+igNGKUvdMy9R3zuuKoHTRCoI4EWB77fU=
-X-Google-Smtp-Source: AGHT+IEb/90ZLK03pt7rWCnU1U7KPmd5ONg5GXEb+jncfPIGAWGKj/2uCiifR3O1/uN1UB+cMvzzSA==
-X-Received: by 2002:a5d:4e0e:0:b0:37d:61aa:67de with SMTP id ffacd0b85a97d-37eab7555a4mr11958766f8f.42.1729580542648;
-        Tue, 22 Oct 2024 00:02:22 -0700 (PDT)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0b93f92sm5881454f8f.76.2024.10.22.00.02.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Oct 2024 00:02:22 -0700 (PDT)
-Date: Tue, 22 Oct 2024 10:02:20 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Johan Hovold <johan@kernel.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add Parade PS8830 Type-C
- retimer bindings
-Message-ID: <ZxdN/Kr5ej2YFv9T@linaro.org>
-References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
- <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
- <657a2qb727tm5ndz2wokxb5aiyqysppufm7evtwfbplu34yzmp@mlm4k775zm7a>
+	s=arc-20240116; t=1729581072; c=relaxed/simple;
+	bh=sPEuwBSR3z9y3MTbe3FDoGxkTkpW0+fBxiQSKk03EzI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=JIrU5bGa3pmswjlem+xJjx/ftx8RZq1rwODhW0prEUV9WDKQSPm0NIRJhWS5An61AbW/UUUifToO2IrfCV9+uwp+azF7Gm6WC2B/iBAsWp6vf/4UsObZa5hWRuiuYCtoV2scRwPE69OlmzRAEoNpz+Udt1oDW/vHgLA9jTndJzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MYDx15WK; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LK9ROB016636;
+	Tue, 22 Oct 2024 07:10:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	f0IQoKdBA/MRiSCfEKMiX51wDhemHJ0XLpoojL22auE=; b=MYDx15WKF/XqGUal
+	djfUY4kqzj+flN4lrqv05YuQV24D9uymttQIS1wuJaLlYvpV6ByAg10xwzTB1TZN
+	8ulaYraPnI/R0whHMbeDJYdj0I0719u+Or6kcaW5joc7PsPSB4SL8QgV+voYxppP
+	9jENBv4X6TGQbvQOK/GML38c5AQZ3qjFY9V1Bkn5zqoGB22M9R58JA+rK9SAxDAN
+	RirgTKDb8sFH6asuZKrk7/jfHBbM3fjMVy7WLDQspF3okGn/GShpXFIJQVRzRqA5
+	JbtaMUDQ5YgFTfvAybOwItbuyUQko/ssflKnVUJbooRkAXQvdOaYReupka+2ol7c
+	eY17SA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42dmdqb7k1-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 07:10:59 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M7AvfS002562
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 07:10:57 GMT
+Received: from [10.217.216.152] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
+ 2024 00:10:53 -0700
+Message-ID: <ec0f2cb4-1461-4eef-a441-d61cbe02804d@quicinc.com>
+Date: Tue, 22 Oct 2024 12:40:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <657a2qb727tm5ndz2wokxb5aiyqysppufm7evtwfbplu34yzmp@mlm4k775zm7a>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/11] clk: qcom: add support for GCC on SAR2130P
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson
+	<andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Stephen
+ Boyd" <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski
+	<krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong
+	<neil.armstrong@linaro.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>
+CC: <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Kalpak Kawadkar
+	<quic_kkawadka@quicinc.com>
+References: <20241021-sar2130p-clocks-v2-0-383e5eb123a2@linaro.org>
+ <20241021-sar2130p-clocks-v2-8-383e5eb123a2@linaro.org>
+Content-Language: en-US
+From: Taniya Das <quic_tdas@quicinc.com>
+In-Reply-To: <20241021-sar2130p-clocks-v2-8-383e5eb123a2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: Ne6XEp-d1zFEcTtnSyCMasdCf3VIvZeF
+X-Proofpoint-GUID: Ne6XEp-d1zFEcTtnSyCMasdCf3VIvZeF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 spamscore=0 mlxscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 impostorscore=0
+ adultscore=0 mlxlogscore=796 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2409260000 definitions=main-2410220045
 
-On 24-10-06 18:28:52, Dmitry Baryshkov wrote:
-> On Fri, Oct 04, 2024 at 04:57:37PM GMT, Abel Vesa wrote:
-> > Document bindings for the Parade PS8830 Type-C retimer. This retimer is
-> > currently found on all boards featuring Qualcomm Snapdragon X Elite SoCs
-> > and it is needed to provide altmode muxing between DP and USB, but also
-> > connector orientation handling between.
-> > 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  .../devicetree/bindings/usb/parade,ps8830.yaml     | 129 +++++++++++++++++++++
-> >  1 file changed, 129 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/usb/parade,ps8830.yaml b/Documentation/devicetree/bindings/usb/parade,ps8830.yaml
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..f6721d6eee26c6d4590a12c19791b3d47a8145f3
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/usb/parade,ps8830.yaml
-> > @@ -0,0 +1,129 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/usb/parade,ps8830.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Parade PS8830 USB and DisplayPort Retimer
-> > +
-> > +maintainers:
-> > +  - Abel Vesa <abel.vesa@linaro.org>
-> > +
-> > +properties:
-> > +  compatible:
-> > +    enum:
-> > +      - parade,ps8830
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    items:
-> > +      - description: XO Clock
-> > +
-> > +  clock-names:
-> > +    items:
-> > +      - const: xo
-> > +
-> > +  reset-gpios:
-> > +    maxItems: 1
-> > +
-> > +  vdd-supply:
-> > +    description: power supply (1.07V)
-> > +
-> > +  vdd33-supply:
-> > +    description: power supply (3.3V)
-> > +
-> > +  vdd33-cap-supply:
-> > +    description: power supply (3.3V)
-> > +
-> > +  vddar-supply:
-> > +    description: power supply (1.07V)
-> > +
-> > +  vddat-supply:
-> > +    description: power supply (1.07V)
-> 
-> Any additional details?
 
-Documentation doesn't say anything more than this.
 
+On 10/21/2024 4:00 PM, Dmitry Baryshkov wrote:
+> Add driver for the Global Clock Controller as present on the Qualcomm
+> SAR2130P platform. This is based on the msm-5.10 tree, tag
+> KERNEL.PLATFORM.1.0.r4-00400-NEO.0.
 > 
-> > +
-> > +  vddio-supply:
-> > +    description: power supply (1.2V or 1.8V)
-> > +
-> > +  orientation-switch: true
-> > +  retimer-switch: true
-> > +
-> > +  ports:
-> > +    $ref: /schemas/graph.yaml#/properties/ports
-> > +    properties:
-> > +      port@0:
-> > +        $ref: /schemas/graph.yaml#/properties/port
-> > +        description: Super Speed (SS) Output endpoint to the Type-C connector
-> > +
-> > +      port@1:
-> > +        $ref: /schemas/graph.yaml#/$defs/port-base
-> > +        description: Super Speed (SS) Input endpoint from the Super-Speed PHY
+> Co-developed-by: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
+> Signed-off-by: Kalpak Kawadkar <quic_kkawadka@quicinc.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/clk/qcom/Kconfig        |    9 +
+>   drivers/clk/qcom/Makefile       |    1 +
+>   drivers/clk/qcom/gcc-sar2130p.c | 2326 +++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 2336 insertions(+)
 > 
-> or from another SS signal source, which can be a mux, a switch or
-> anything else. I'd say, just 'Input Super Speed (SS)'
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index e5d7c89b0dab6b4fc7133d8e348ae61d38f91770..5f7bf9db76cfcef1ab18a6ba09fb4dc506695f9d 100644
+> --- a/drivers/clk/qcom/Kconfig
 
-Will use that.
+> +
+> +static struct gdsc pcie_0_gdsc = {
+> +	.gdscr = 0x7b004,
+> +	.collapse_ctrl = 0x62200,
+> +	.collapse_mask = BIT(0),
+> +	.pd = {
+> +		.name = "pcie_0_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct gdsc pcie_0_phy_gdsc = {
+> +	.gdscr = 0x7c000,
+> +	.collapse_ctrl = 0x62200,
+> +	.collapse_mask = BIT(3),
+> +	.pd = {
+> +		.name = "pcie_0_phy_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct gdsc pcie_1_gdsc = {
+> +	.gdscr = 0x9d004,
+> +	.collapse_ctrl = 0x62200,
+> +	.collapse_mask = BIT(1),
+> +	.pd = {
+> +		.name = "pcie_1_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct gdsc pcie_1_phy_gdsc = {
+> +	.gdscr = 0x9e000,
+> +	.collapse_ctrl = 0x62200,
+> +	.collapse_mask = BIT(4),
+> +	.pd = {
+> +		.name = "pcie_1_phy_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = VOTABLE | RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct gdsc usb30_prim_gdsc = {
+> +	.gdscr = 0x49004,
+> +	.pd = {
+> +		.name = "usb30_prim_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+> +};
+> +
+> +static struct gdsc usb3_phy_gdsc = {
+> +	.gdscr = 0x60018,
+> +	.pd = {
+> +		.name = "usb3_phy_gdsc",
+> +	},
+> +	.pwrsts = PWRSTS_OFF_ON,
+> +	.flags = RETAIN_FF_ENABLE,
+> +};
+> +
+Dimtry, could you also add,
+"hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc"
+static struct gdsc hlos1_vote_mm_snoc_mmu_tbu_hf0_gdsc = {
+         .gdscr = 0x8d204,
+         .pd = {
+                 .name = "hlos1_vote_mm_snoc_mmu_tbu_hf0_gdsc",
+         },
+         .pwrsts = PWRSTS_OFF_ON,
+         .flags = VOTABLE,
+};
 
-> 
-> > +        unevaluatedProperties: false
-> > +
-> > +      port@2:
-> > +        $ref: /schemas/graph.yaml#/properties/port
-> > +        description:
-> > +          Sideband Use (SBU) AUX lines endpoint to the Type-C connector for the purpose of
-> > +          handling altmode muxing and orientation switching.
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +
-> > +allOf:
-> > +  - $ref: usb-switch.yaml#
-> > +
-> > +additionalProperties: false
-> > +
-> 
-> -- 
-> With best wishes
-> Dmitry
+"hlos1_vote_mmnoc_mmu_tbu_sf0_gdsc"   --> 0x8d054
+"hlos1_vote_turing_mmu_tbu0_gdsc"   --> 0x8d05c	
+"hlos1_vote_turing_mmu_tbu1_gdsc"   --> 0x8d060	
+
+
+
+-- 
+Thanks & Regards,
+Taniya Das.
 
