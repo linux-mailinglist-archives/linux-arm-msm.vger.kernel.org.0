@@ -1,137 +1,163 @@
-Return-Path: <linux-arm-msm+bounces-35421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 592DE9AA2A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 15:02:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6836F9AA2BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 15:05:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 04EBB1F2345D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 13:02:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8BAED1C22177
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 13:05:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A673E19C543;
-	Tue, 22 Oct 2024 13:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97C8219DF52;
+	Tue, 22 Oct 2024 13:05:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KILpdxhx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E4agJvba"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CB81E495;
-	Tue, 22 Oct 2024 13:02:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E483A19C560;
+	Tue, 22 Oct 2024 13:05:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729602123; cv=none; b=CA3skcOkwK1j++I0x4epU/Vf0IzfdX7zlZ7uWFdM88ET737wswk6/N78tWRK6djSIVxBu1RoQGqZ7aw18zXyStRaBcNZ/I6n9hyd3X92E+VqUnH/HwNZaqMEG2wp1DzM16p7LVPoeLX7DqSbQl8RpPpVE+x3CQcCUeZt2TruwcE=
+	t=1729602334; cv=none; b=rzYhrqCz5FRM6YJy4uOjMqclsct8ZMw+Vn4kjh0/3YnwURiDw3iKablBURkvCDMk5E/rCkGrohIfu6bVUAjRxym9X4nJ5YudqgHeOrKM+So7uRV+WmqnAOyeiyhiGzfN8FMiq1UisYy5k2f7tCxOblLNJV+WP2WsbRcbnfs6NjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729602123; c=relaxed/simple;
-	bh=RM1Iagv7/+ihEj/00nA7D03DRcyAyMZcoLX4kHiEl0E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dRpudAsZkZvmqhH2X/wIv4iulcqR/JJzok3KCa/fJtF+6Rp+19bNAc4Ng0uWzHvgrDGa9Q0nvHiHlwD9LNN2MNxa9mzF3qyMnuI2iI4C6y/52+lQCaVTdZpWzx1pHij0xkYe9gkj+MPw8uC7Yhw4MEKxiKTJHv+JTTilL9j7cw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KILpdxhx; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1729602334; c=relaxed/simple;
+	bh=GYElO7fLQ9SXczKd6rFScTpF4TePCHkBpeClolvf+Xs=;
+	h=Message-ID:From:To:Cc:Subject:In-Reply-To:References:Date:
+	 MIME-Version:Content-Type; b=WfNUhnC1LX+osCr1uC0dCoYSIUyEMQb0SDPKlS9Ke23RP7GaeeGFhBcrL4Zq7VwmGdgAsMfz37BRgWa1Gx1Fr7pGm0WnSVq4ySXRYhYobVy3E5nwV9nE8SnDO+lgQ+pL+tMSeyRaXI6qxLCLF3W3eiXuXO0rNEgy/Fut901GhNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E4agJvba; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-a9a156513a1so776470866b.0;
-        Tue, 22 Oct 2024 06:02:01 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-37d4ac91d97so5399489f8f.2;
+        Tue, 22 Oct 2024 06:05:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729602120; x=1730206920; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6pWtU539HclzlpXbphjo1lka7lQnsT/2C0cPK3L1Ws4=;
-        b=KILpdxhxsaSGlkXpdXKKrMRGqhcdXAwkbs61CCVUPLx72zN7AQLg2RzRKh+adrEmCA
-         RnTDrLSp08qGEICbFiCa5/xAqN+NlDAlWgxAymYsaSfa5IxEP8Hse5PiDWRUR0DCLt1o
-         spQ37iHnfWUbeFcAcDgjlkJvxVwTvRGSnmw9+Y9uvnRYluVtGhETEFj2agcGbAcnozqe
-         GsBzpw0B0xx5hzY4sjlBKsoQ+og3wkksBhWULm/QHK7G6HIEHRox97CSm9ldk8UuGweg
-         0NA4ZpX/S7mjjoz8ZM+BhXTag/g3vzrdkbBZsiemkUL6W1L2Jp83UPC6oLEpX+6aLUfX
-         9u5A==
+        d=gmail.com; s=20230601; t=1729602331; x=1730207131; darn=vger.kernel.org;
+        h=mime-version:date:references:organization:in-reply-to:subject:cc:to
+         :from:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CTtGwP6N4/w3oaR99NStC9Ft9FOAVIQw0MsHn1koshE=;
+        b=E4agJvba8ZLSyyCPsWqiEnUCeRlGXYHLt9d3EiKGj0pOtzAehKxUdmZ8nkUApgtmry
+         kv32n+ZnrG4XTh51kKV/Vu26QfmZYcnypj/LsgoHWBJ9zWV2F2mwUP2p2VjmTUgf3H8Y
+         TzSoiGlRTaqKMMh1sseEXTqCwTnNdalR6T8YvGPYZfk2fHyFhqB8FUZP2OS/7sLQbg/9
+         e9uklbvsMBD7/1naAQr9KRDhEj1NBuFucakWrQBGeIm2XCpH/TlMqdVJmxuSOw5Qz7zX
+         UdSN6fu6m2/KYXd3zF9bLrrYir2Sxc1Gvo4D+zyfvIu+RCGRB73lS2oBW5aW6DGyKkdJ
+         T/ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729602120; x=1730206920;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6pWtU539HclzlpXbphjo1lka7lQnsT/2C0cPK3L1Ws4=;
-        b=r1tWHfjXRlz8S0phff7DS5qeYWULQaeax15FxsG+gkJ3U+Fa7my7LHrUZ2anRlTnYP
-         Al081TZe+NGBEVc7O1JxSHcfmyw+g4Veq98jCycf+x51F+i1kBZQIT470c8d3t9iJvXg
-         /Nl+j9WNXPOx4FosoOi9ksv2LZHxWVKezzupRUtB+Gwykkot8fVgYe60Afe9egs2OroY
-         YZ1uma4F40cggeM3yiiYXFpCaXCXdqkzIL8ZuBl9kM3oqu4kZAH2b9HkeD9MAZCk293/
-         LrbQUi3rGnyzfYFGDDIJISveeOu3Vn38JSVPt54zSXLcXXaUtS94tYL5zOZarXAqsvSM
-         deCg==
-X-Forwarded-Encrypted: i=1; AJvYcCUDLoHVVMSUzsVjF/tfOsJnrIDnJQmQ4CWewYss4Zez06PxdYBE1Rg7uVy1sCdltxLoTjIwPP2ma2CG@vger.kernel.org, AJvYcCWZhW73ogUCmQL6NHfgUWmSiy1UZK+oKJwcRrJOWNe/1r4HHk4n8gIOgZ8smRe5sY0qykbvKugb5ul9EgVZ@vger.kernel.org, AJvYcCX6uJ+HpqLlOsE1hbUzXrcBBSYooDVuOoPc9g6p0wNYoxx/Xskhb3gkvCpSOliozLR1AHV4X4XD@vger.kernel.org, AJvYcCXqmioUnkQTN32Qpk2yaNlR9x2D7OW3qMbf5nn/T8EHCzbJtPw+NVW6WqkUeSAJAGCNwonyc+nJmdPWL/9P@vger.kernel.org
-X-Gm-Message-State: AOJu0YxyK78g2wE3lbXdb/j8U2aM8isfoQl+mgV2IFH4POx5wjBqPHvn
-	vE8zRztBqLO2z+Qeocq49bkcjFB1gDXpBSijoX/XEdFPCvrEUiJX
-X-Google-Smtp-Source: AGHT+IHXUyC1ucZ/7ROlomRD6RpENKJHXAb9NYyC6eICFKGRYARGSJ2mzgvjwP3wzwn1DBoCLy827w==
-X-Received: by 2002:a17:907:1c24:b0:a9a:55dd:bc23 with SMTP id a640c23a62f3a-a9a6995d035mr1379304066b.8.1729602118125;
-        Tue, 22 Oct 2024 06:01:58 -0700 (PDT)
-Received: from [192.168.20.170] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a91370e6asm337429366b.126.2024.10.22.06.01.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Oct 2024 06:01:57 -0700 (PDT)
-Message-ID: <4c129bca-017c-4123-b9e8-547881b246c8@gmail.com>
-Date: Tue, 22 Oct 2024 15:01:56 +0200
+        d=1e100.net; s=20230601; t=1729602331; x=1730207131;
+        h=mime-version:date:references:organization:in-reply-to:subject:cc:to
+         :from:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CTtGwP6N4/w3oaR99NStC9Ft9FOAVIQw0MsHn1koshE=;
+        b=sg0jId0qjoE+4HvIxeb+r5YW7pDctNdes6I5Naodus0gTmX40yltNfWQzxoJEa9qkv
+         1GHPreUOqHC7LGTi4m6BmPJquShtN6HkbX6qPpIU+qfjbBVcdo+S3pxE0m94FnN6I4hH
+         BCGIB5Ezpg+H1cKFbZanKuYmvyB0V+CDALHsczSk/SgA18AIKN19bSR/5eLlFA2z3hnX
+         VtiU70qFyp+4LQFoHQ6WnEwIL0dvCYu9+pqQhAHerFSb6Ni+4KyBl8t7FJAS9xqAWsiR
+         ugl6TFly+kuAdCwj1HA6d5us+RL3TglFQAuPjN0iC/KKm7FlMQyRRnYE2pdXU5CHvjcQ
+         eMwA==
+X-Forwarded-Encrypted: i=1; AJvYcCUettmBnsD4lfCqMqi/C2Ahf7HI4dwaudqKRF5kGieaSRCv53S6m+0AU9twRrkCN3zYC8ye7Sw1jxH7CY45@vger.kernel.org, AJvYcCUpdIsRDRxVptaSKfmGGbrCozvZ8ytKVjFhKruzSI6bvJF+cadv4I3HHcyIUu1kMMYOAjxKr7Vj3CZ2XwAF@vger.kernel.org, AJvYcCWz4nv820ITgTEduyJ51u+8kketD/Rfnlb6udDVMGfWQ5IIR7vfRRiNmkErL/bviNblVt6GcwE3dJA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWIs9xvQNFoISC097F9UUHvYTK1ee/wWnYuRCoboY9maVC3bEO
+	0DTer+1noEoIRV6wlDMajslf8hGngj11214zlxuC1LzpR4NhTOT8w635Mg==
+X-Google-Smtp-Source: AGHT+IFMNt1FAG23KL5PRAg+Fcc9lV8eLt2m4nerG4ZP6nNLVnj86k2lC4zHLqPdcrU2IJB8Djtl6A==
+X-Received: by 2002:adf:ffc9:0:b0:37d:3e6d:6a00 with SMTP id ffacd0b85a97d-37eab75555emr13573649f8f.47.1729602330805;
+        Tue, 22 Oct 2024 06:05:30 -0700 (PDT)
+Received: from localhost ([37.72.3.43])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0b94346sm6624211f8f.86.2024.10.22.06.05.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 06:05:29 -0700 (PDT)
+Message-ID: <6717a319.df0a0220.9b810.4bc5@mx.google.com>
+X-Google-Original-Message-ID: <87ed48thif.fsf@>
+From: =?utf-8?Q?Miquel_Sabat=C3=A9_Sol=C3=A0?= <mikisabate@gmail.com>
+To: rafael@kernel.org
+Cc: daniel.lezcano@linaro.org,  linux-arm-msm@vger.kernel.org,
+  linux-pm@vger.kernel.org,  linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] cpuidle: Fix reference count on CPU node
+In-Reply-To: <66fc57ef.050a0220.27e956.af8d@mx.google.com> ("Miquel
+ =?utf-8?Q?Sabat=C3=A9=09Sol=C3=A0=22's?= message of "Tue, 01 Oct 2024
+ 22:13:33 +0200")
+Organization: Linux Private Site
+References: <20240917211325.639765-1-mikisabate@gmail.com>
+	<66fc57ef.050a0220.27e956.af8d@mx.google.com>
+Date: Tue, 22 Oct 2024 15:05:28 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] clk: qcom: gcc-qcs404: fix initial rate of GPLL3
-To: Bryan O'Donoghue <pure.logic@nexus-software.ie>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Taniya Das <quic_tdas@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-References: <20241022-fix-gcc-qcs404-gpll3-v1-1-c4d30d634d19@gmail.com>
- <8ec5512b-a8ea-432c-84aa-f920470c056d@nexus-software.ie>
-Content-Language: hu
-From: Gabor Juhos <j4g8y7@gmail.com>
-In-Reply-To: <8ec5512b-a8ea-432c-84aa-f920470c056d@nexus-software.ie>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
 
-Hi Bryan,
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-2024. 10. 22. 11:53 keltezéssel, Bryan O'Donoghue írta:
-> On 22/10/2024 10:45, Gabor Juhos wrote:
->> The comment before the config of the GPLL3 PLL says that the
->> PLL should run at 930 MHz. In contrary to this, calculating
->> the frequency from the current configuration values by using
->> 19.2 MHz as input frequency defined in 'qcs404.dtsi', it gives
->> 921.6 MHz:
->>
->>    $ xo=19200000; l=48; alpha=0x0; alpha_hi=0x0
->>    $ echo "$xo * ($((l)) + $(((alpha_hi << 32 | alpha) >> 8)) / 2^32)" | bc -l
->>    921600000.00000000000000000000
->>
->> Set 'alpha_hi' in the configuration to a value used in downstream
->> kernels [1][2] in order to get the correct output rate:
->>
->>    $ xo=19200000; l=48; alpha=0x0; alpha_hi=0x70
->>    $ echo "$xo * ($((l)) + $(((alpha_hi << 32 | alpha) >> 8)) / 2^32)" | bc -l
->>    930000000.00000000000000000000
->>
->> The change is based on static code analysis, compile tested only.
->>
->> [1] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/
->> kernel.lnx.5.4.r56-rel/drivers/clk/qcom/gcc-qcs404.c?ref_type=heads#L335
->> [2} https://git.codelinaro.org/clo/la/kernel/msm-5.15/-/blob/
->> kernel.lnx.5.15.r49-rel/drivers/clk/qcom/gcc-qcs404.c?ref_type=heads#L127
->>
->> Cc: stable@vger.kernel.org
->> Fixes: 652f1813c113 ("clk: qcom: gcc: Add global clock controller driver for
->> QCS404")
->> Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-> It should be possible to test / verify this change with debugcc on qcs404
-> 
-> https://github.com/linux-msm/debugcc/blob/master/qcs404.c
+On dt., d=E2=80=99oct. 01 2024, Miquel Sabat=C3=A9 Sol=C3=A0 wrote:
 
-Thank you for the suggestion. Unfortunately, I have no suitable hardware to test
-that.
+> On dt., de set. 17 2024, Miquel Sabat=C3=A9 Sol=C3=A0 wrote:
+>
+>> For the qcom-spm driver, an early return was not calling the proper
+>> of_node_put call for a previously acquired device node.
+>>
+>> Signed-off-by: Miquel Sabat=C3=A9 Sol=C3=A0 <mikisabate@gmail.com>
+>> ---
+>>  drivers/cpuidle/cpuidle-qcom-spm.c | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/cpuidle/cpuidle-qcom-spm.c b/drivers/cpuidle/cpuidl=
+e-qcom-spm.c
+>> index 1fc9968eae19..d3608f47d02b 100644
+>> --- a/drivers/cpuidle/cpuidle-qcom-spm.c
+>> +++ b/drivers/cpuidle/cpuidle-qcom-spm.c
+>> @@ -96,8 +96,10 @@ static int spm_cpuidle_register(struct device *cpuidl=
+e_dev, int cpu)
+>>  		return -ENODEV;
+>>=20=20
+>>  	saw_node =3D of_parse_phandle(cpu_node, "qcom,saw", 0);
+>> -	if (!saw_node)
+>> +	if (!saw_node) {
+>> +		of_node_put(cpu_node);
+>>  		return -ENODEV;
+>> +	}
+>>=20=20
+>>  	pdev =3D of_find_device_by_node(saw_node);
+>>  	of_node_put(saw_node);
+>
+> Gently ping for a fix in the same spirit as [1].
+>
+> Could you take a look whenever you have some time?
+>
+> Thanks!
+> Miquel
+>
+> [1] https://lore.kernel.org/all/20240917134246.584026-1-mikisabate@gmail.=
+com/
 
--Gabor
+Gently ping. Could someone take a look at this fix?
+
+Thanks,
+Miquel
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQJJBAEBCgAzFiEEG6U8esk9yirP39qXlr6Mb9idZWUFAmcXoxgVHG1pa2lzYWJh
+dGVAZ21haWwuY29tAAoJEJa+jG/YnWVl3B8QAKCIccWGVrbRZXgOT2VsW2G6ONcX
+6XUtziowTvDcQJUcdRjkgXBiQHa4UpcZpOTIu7HS5/cYHfSK9U6jylcTafDNVbYr
+Ry0bwgrzRzi7oLPo9cPE0Dp7YouK1dRZ70m9dOQlmaI3P7nIVOY/VxyxhKAn3q96
+cfIAPXJ6nxGHa/AiSHBoCsIumJk5GshJkF4fvfVUWtBLcbtFZIOtiwWKPE7o53e5
+SB4M1/RFd7U7BONpjx/a1sy54LT7tBwe+syb7qhSluNOpQDtd8JFHQu9wUv8aVgQ
+N7MyWbjgHsAm/754PmbG+Tzvjovd1b827NLZPuo9F4Me2noXWF2FsE6rgTbBKCbk
+cs8p1yy61m4JVJjakNC9UkobqXHHrakJ01agClVF8P/AIpGN2S+oueyeKvNa1NiF
+hKKioymcUwvOYl9XHGgM9vtwbkj1EazsANAg4/21hxwDwZ6LZ+mKptVW1NwVfRKb
+hm3dwiI1mStJJv7D92ZHLHZfs6SNZASnSSm4K4MSpeDyVAf5+9np4VDzSQzA79Fm
+vA3GI0yEahyUiD74YG6HCOrAf7uOffWvI7JDwgye6Hoqfi3S+gwOHGwniyr54BoB
+fDNRFi1alOuskUQ9m6F1z71G4IPiEVMOQY4WUFx+FHkyFi24MUiGbdDbrJWKB/Ye
+3h6gl6oKry7NOzNn
+=Vt1S
+-----END PGP SIGNATURE-----
+--=-=-=--
 
