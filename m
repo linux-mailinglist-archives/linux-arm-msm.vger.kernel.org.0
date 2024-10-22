@@ -1,103 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-35358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AFDC99A9BFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:06:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13F759A9C01
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:07:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DEF8A1C23794
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:06:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 987321F228B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:07:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AE4A156F5F;
-	Tue, 22 Oct 2024 08:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 691BE155CAC;
+	Tue, 22 Oct 2024 08:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t/b94/sc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LhxOZEGm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F864155333;
-	Tue, 22 Oct 2024 08:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD57B1547E7;
+	Tue, 22 Oct 2024 08:07:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729584370; cv=none; b=D0D6NaUOUPy+PrgSle3Ccmvu69+jN+856jiBUOAgBwWXDktHUCxqVhgvFFjHZCw06GVYVHfASbY3pyZNz6jWlNZaTqJwI6glZ9KrkKmA+5AnpntHsmi6JDi6EUtatEiuzgNGjuSAWqpwBwYLH/0sb8MkVpPLvRh2uuwrGfYo4Hc=
+	t=1729584425; cv=none; b=kRvok6Hc+OhHI4+NyWDtSdqGoV48Ol9bzHdqUFjGbMv2QMQkYqV+UsGSakhYh0LkuM4usnlGnCMf0PjOAM2+lTBtMDGESOutK1Iy408lxmGAfhagbiCRuamGuHNTjur/qdOOb7WmER2FTro3jeYMXZLp3lirt7cldg+m4o/Aa88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729584370; c=relaxed/simple;
-	bh=0K2o1IOhjv4ewnnvIvp7wRvElf7F+KPsC6Wx0FuqcZc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ej5AFQ73NKkj5Xrd3isNnirO2tqnNptZiwgLt3dc3xPTUsPxmonDGaZULXOgB93RhQWrS4ViwloyffweyXTmR0uVEaT8wS/m+zYwREpzxxFcmbbX0dVCGX5ZU0n77OSfC3JVGEf1qlMsp49WYGFoTGMH1qJE8sS1712HLzzF89I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t/b94/sc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED8DC4CEEB;
-	Tue, 22 Oct 2024 08:06:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729584369;
-	bh=0K2o1IOhjv4ewnnvIvp7wRvElf7F+KPsC6Wx0FuqcZc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/b94/sc091Fgf8bYUbzoiKlqwRVSlUMrcUpxi04+5nq3anH+2BCobMs5X17ouoi3
-	 GiS+YaNuekQfTJ3hN6/7e4kRCK6tDzNv3Yb8wdYM05yW10IUYGTqFTMTR1XQ05RW9O
-	 bnJx6u+2ma5yxoR29c4so+7VyZRdfoJKuWsOlQse7NWfwZVUw8lvSeBXcUaytHem+G
-	 jgReDSJSnGH0Vq4M9qGp7IziAmBnP+qOBfY0CH0BqiPvv29+GVHiHKXKVpTiKl/lzt
-	 3GbIyZCr0HzVp0MGnyaYmDMnboYbWlJNT07t0siTamWMvJ0VB2hvu637JbQDbkwYAu
-	 xf1CY/LkRGtiw==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan+linaro@kernel.org>)
-	id 1t39uG-0000000006z-1O7D;
-	Tue, 22 Oct 2024 10:06:20 +0200
-From: Johan Hovold <johan+linaro@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Vamsi Krishna Lanka <quic_vamslank@quicinc.com>,
-	Vivek Aknurwar <quic_viveka@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Jeevan Shriram <quic_jshriram@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 2/2] clk: qcom: clk-alpha-pll: fix lucid 5lpe pll enabled check
-Date: Tue, 22 Oct 2024 10:05:21 +0200
-Message-ID: <20241022080521.359-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241022080521.359-1-johan+linaro@kernel.org>
-References: <20241022080521.359-1-johan+linaro@kernel.org>
+	s=arc-20240116; t=1729584425; c=relaxed/simple;
+	bh=F7MLePvL1qCw6f4g3rS+6F1gSdyESvdPdiRG/LKhQhI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=h5z+nRNhjJ0nUia+tgB3UMY9Sm3vNkZYoWNXPohSlo3m4xWhz65OCko/uaUxMmL94WypnkcZaI9sZ6cp9A1o280G775EPGckJZhVPWzuOJuzqcwVCpEuDt0OgVmY+4dptkrt+So7XEBJLZjsYSE3u71uB+9MsB1Wl6hd/elPHX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LhxOZEGm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49LJbVUO015286;
+	Tue, 22 Oct 2024 08:06:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=uMMy1pnrV0xuPaULdnVUoy
+	t7vzFFnB9WKOXItomSSRo=; b=LhxOZEGmj0RS3ObSPoyKLxlL0mvg5IBap5c2vp
+	Wjnsuey37iRe4w4QDMSrNHYfN3GKVr0jfdPt7Yfa/QolkegBC+FqR6FRGwV3O7Qy
+	fTMT2Rko9OME4NzB4XjolMSC7VUOV1GH5r9xt8golpRMTDoJAomoBh9OBLoYPWg0
+	NCDGlnGXEZCzsstbg1ZwXAARUI8T2SPYXsIGCikM2K5q19DH1cfa2X3SXchJCffB
+	3zMGONTXDB824WmGqy2RVItn8OJu5br9pc0EN1nfEw2QpyfBi6eRxWHAroYnzmAc
+	TqZlQK56D9sRdyqMjahmAy+hws0ZjYsS6TVcuDyXyWVXpiug==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42c6vuyg5p-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 08:06:53 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49M86qNU011728
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 08:06:52 GMT
+Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.9; Tue, 22 Oct 2024 01:06:48 -0700
+From: Taniya Das <quic_tdas@quicinc.com>
+Date: Tue, 22 Oct 2024 13:36:38 +0530
+Subject: [PATCH] arm64: defconfig: Enable sa8775p clock controllers
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-ID: <20241022-defconfig_sa8775p_clock_controllers-v1-1-cb399b0342c8@quicinc.com>
+X-B4-Tracking: v=1; b=H4sIAA1dF2cC/y2OQW7DIBBFr2Kx7lSAwRCrqnqPKrLwMCQoxnbBt
+ SpFuXtp3OX7i//enRXKkQrrmzvLtMcSl7mCeGkYXt18IYi+MpNcKsGlBE8BlznEy1CcNUavA04
+ L3oY6bnmZJsoFWs45acV1x0dWn9ZMIf48LZ/ngzN9fVfZdoxsdIUAl5Ti1jddO7Yh8NafhCMbr
+ NGBrFEGjRVOSxGMRU/C/F0nKsU9K/vm7YgUAv7TICXYFWQqNHtY3YZXKrBr4KDcKQjjsbOt+6g
+ pGGd8rQHv7Px4/AKJ0/aJFgEAAA==
+X-Change-ID: 20241022-defconfig_sa8775p_clock_controllers-3000e540560b
+To: Bjorn Andersson <andersson@kernel.org>,
+        Catalin Marinas
+	<catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>
+CC: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik
+	<quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        <linux-arm-kernel@lists.infradead.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+X-Mailer: b4 0.15-dev-aa3f6
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jBjUGHgfJsercJBLofCR3wWw0z7yHuQ6
+X-Proofpoint-GUID: jBjUGHgfJsercJBLofCR3wWw0z7yHuQ6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ mlxlogscore=594 bulkscore=0 spamscore=0 mlxscore=0 clxscore=1015
+ suspectscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220051
 
-The lucid 5lpe PLL enable check only checks for an impossible negative
-return value and does not actually return as intended in case the PLL is
-already enabled (e.g. has been left enabled by boot firmware).
+Enable the SA8775P video, camera and display clock controllers to enable
+the video, camera and display functionalities on Qualcomm QCS9100.
 
-Fixes: f4c7e27aa4b6 ("clk: qcom: clk-alpha-pll: Add support for Lucid 5LPE PLL")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 ---
- drivers/clk/qcom/clk-alpha-pll.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/configs/defconfig | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-index 99d6962d25bb..bd1dbef04d9d 100644
---- a/drivers/clk/qcom/clk-alpha-pll.c
-+++ b/drivers/clk/qcom/clk-alpha-pll.c
-@@ -1903,9 +1903,8 @@ static int alpha_pll_lucid_5lpe_enable(struct clk_hw *hw)
- 	}
- 
- 	/* Check if PLL is already enabled, return if enabled */
--	ret = trion_pll_is_enabled(pll, pll->clkr.regmap);
--	if (ret < 0)
--		return ret;
-+	if (trion_pll_is_enabled(pll, pll->clkr.regmap))
-+		return 0;
- 
- 	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll), PLL_RESET_N, PLL_RESET_N);
- 	if (ret)
+diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
+index 36b33b9f17042128f5bef96f58667b5807b712c2..6197934b38e08b7294ec897e451af6e96fd63cda 100644
+--- a/arch/arm64/configs/defconfig
++++ b/arch/arm64/configs/defconfig
+@@ -1324,10 +1324,12 @@ CONFIG_QCM_GCC_2290=y
+ CONFIG_QCM_DISPCC_2290=m
+ CONFIG_QCS_GCC_404=y
+ CONFIG_SC_CAMCC_7280=m
++CONFIG_SA_CAMCC_8775P=m
+ CONFIG_QDU_GCC_1000=y
+ CONFIG_SC_CAMCC_8280XP=m
+ CONFIG_SC_DISPCC_7280=m
+ CONFIG_SC_DISPCC_8280XP=m
++CONFIG_SA_DISPCC_8775P=m
+ CONFIG_SA_GCC_8775P=y
+ CONFIG_SA_GPUCC_8775P=m
+ CONFIG_SC_GCC_7180=y
+@@ -1366,6 +1368,7 @@ CONFIG_SM_GPUCC_8550=m
+ CONFIG_SM_GPUCC_8650=m
+ CONFIG_SM_TCSRCC_8550=y
+ CONFIG_SM_TCSRCC_8650=y
++CONFIG_SA_VIDEOCC_8775P=m
+ CONFIG_SM_VIDEOCC_8250=y
+ CONFIG_QCOM_HFPLL=y
+ CONFIG_CLK_GFM_LPASS_SM8250=m
+
+---
+base-commit: 63b3ff03d91ae8f875fe8747c781a521f78cde17
+change-id: 20241022-defconfig_sa8775p_clock_controllers-3000e540560b
+prerequisite-message-id: <20241011-sa8775p-mm-v4-resend-patches-v5-0-4a9f17dc683a@quicinc.com>
+prerequisite-patch-id: c405247d3558175ea16e723e36ccba87b51da3e6
+prerequisite-patch-id: 2f421e48713add52f17b6e0a95a1e4cb410322e0
+prerequisite-patch-id: 037cc7f8c1c9f690bea1976550616e661f48c53a
+prerequisite-patch-id: 930db8201718c0a66286d85418c7bac1719a76d1
+prerequisite-patch-id: 79dc8594844768685144c302eaf404b0d6cb7ebd
+prerequisite-patch-id: 836d46d2d006bdaae12b8a8aaed2eb786fd636ce
+prerequisite-patch-id: 096e89f063b35a70bbd8f92c4eb5a32c850bd927
+prerequisite-patch-id: 5a49926d1dfada78038f963d5de23a558d9dd19b
+
+Best regards,
 -- 
-2.45.2
+Taniya Das <quic_tdas@quicinc.com>
 
 
