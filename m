@@ -1,155 +1,213 @@
-Return-Path: <linux-arm-msm+bounces-35344-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C2759A9A51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 08:57:33 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 360B79A9A68
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:02:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 56144B20FCC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 06:57:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AFB821F224A3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 07:02:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C712146A71;
-	Tue, 22 Oct 2024 06:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BA291494D9;
+	Tue, 22 Oct 2024 07:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Neb/fi2y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UtB/SN+6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE221465B1
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 06:57:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 593CE13C8F4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 07:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729580245; cv=none; b=EI4XdSPVXBTxG7IXWl3XdnV8F/Q4SYcEqp9vP/jl0t6719j0sI7wiq4yI3OMEnQ7B1yTkIKhlSuBiKVzEp1S25b2451JlY5UzWvdePBhvEIKM1lk+bvQcEekKuBlv/zmD+ixK+vtpxUX8lBY4PlyV/89oHJbxlqWsIlpTfSMwyQ=
+	t=1729580547; cv=none; b=EmvRMigaPFRZaJvnOjBg5Pc+2PjQDx/AesvvixZj80e3ic9lXm71jKghYrE1Ed87LLy6f2KudHNtGIb7eDFiO6vlfCwFGI5oLnchKyNNFr2b/oTBlDgxccY/jiNclEZy2qFbf6o1IiHkETMxTgKRH0Vqw7PmYbGX1NTLdLpovL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729580245; c=relaxed/simple;
-	bh=cxGSevfjqIssyM5bsmKvrGQ9UdYKa3i8NiO5ITLhZ40=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R95Vwvwi46EByqKHX2bEPxt5n9Nks5g9jQbPjLPH/3Hoijy8bPf6YP/lAlrOYMH8Bz6Q+j8mc923RwjahylGkWF2UtrEgTddvxlgGfa/tuqsrH5E8CT06rTexI5MM1BCI95pBbkhAkKrLa2VxEzX3y6yrmnWNSaWdoEQNuiLDS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Neb/fi2y; arc=none smtp.client-ip=209.85.128.181
+	s=arc-20240116; t=1729580547; c=relaxed/simple;
+	bh=4yE8s5Gg/D7Mg1mfXzs4xFsiwPIVCKqduCQJUZDhtGg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hx9BvpJgnaOGNbEKGqhngeQc/g95lXauudo5KFKdZFRpIvjoQUkQRgXA3WhX/DO2qPR2tn3oeOBc9qarftFoAO1XpdKjwDllWiBnrrFOw2fc+AEk8t70g3o0NAvbM0liPBJ4QS9pzRc5WyIhLlWGpRcb6m/O6xIg/aiHAiomY+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UtB/SN+6; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6e2e4237da4so48184357b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 21 Oct 2024 23:57:23 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-4315eeb2601so61762365e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 00:02:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729580243; x=1730185043; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MRrFt/KPQCPYuot/0PuPd+VWwguSgMsl8ZS8aWe8ttg=;
-        b=Neb/fi2yqncU6qijKcXqw8tAqnolKQypIAMHRAmYYl/4pSKXTPGSs0QJt3PLldEQuk
-         PUE+hhsc1udCWop4kLSZMPFpgzpex/969pegPVV5wDWL3jRqDR11UDz1sLrbLbIuPCrF
-         cAUh9GDzv8X5zcMGvSl8tEGZv++QxivVpaFAiDKN9RR5OA3dN/ufIF0XF20sTy1c9Gp/
-         68juSldxuSiYUfb+YYV2WWUY4bWacm5fr9qG3rVnTdmu6dBIXgRl89oi6hkaYpSHlwq7
-         mfu4/5NztwjeBSfCXOR9faj3ywjADXwmIkuydOn+UXa2C0nOqYxiZHu1aW9Ymh1Nc2N8
-         VEEQ==
+        d=linaro.org; s=google; t=1729580543; x=1730185343; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zo0xOmZ3bF1XOgnsXVyn+rFyT/PuDvUbKaYAetJa4ms=;
+        b=UtB/SN+6Aqhrz6c63vBySYEAqogw7sBk/gBj9MhWxQofZXnmprhmpdzI0mUp1eJpk5
+         c1C22idsUoMAt++oxTy3kFXXuz9q3dmomzII2e3ad4FJ90boRX++XCRf8pd49uEc/mjR
+         8FycVbZY9OTtwe7FkD3sLAFbChmiz7mZOad8+53NRP/1CzOt7V9DpSV9+fdjHRYalu6c
+         q/9l55AoNBc67kgboiJv+kRjLaeWnccllyBQYfihWBc31rJ2j7OpTWwI4xV7ecgvpd4n
+         2UcdWBYZ3n+g3NOV9F8QfXhAT7s6O3OJLlL9Zfxg9y/DjN0/PUkY+RNFgCckgF5lAI3t
+         yFqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729580243; x=1730185043;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=MRrFt/KPQCPYuot/0PuPd+VWwguSgMsl8ZS8aWe8ttg=;
-        b=eJHfR1NluCk1Th8BQegjKgcmNu/sx154INwH9/pTBGYJTuCnPOTNI4vH5RutX/iSw7
-         zxIvOUf/jLXBZoASCIt+/6EBeKEdf4IVA/H63lDClEvTup+ktl1cYhnne6sODNLYcXXf
-         aeLTxPdqELbarNeSFUyAScDkPpM+hFRHZ4URG4Q4Xd51GCh/xvMMp2pSKSEQhrIfPk6t
-         04IDzIDQbFiVs6Mi+sisrHDQVJ5b1uweuDBBujMnYyyYCffyXZU5eXGPi9XMz/+O008a
-         hNDu/t8msbfE7kV8qXDa+/SLE15qO2OghUgrxZVlMqT5yhPuH2Od5U8Keu2giefcObju
-         i48g==
-X-Forwarded-Encrypted: i=1; AJvYcCXR6whpeRgYeccwQuiVj4VgHe2/hAm3AUttk9zOLHeTHXwNbX7ZuC1urm8PPTCBl9j3zfrYC5Jr+fstADKw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyp3FvnuWJq8lyNu5mQfSje+0kv8uLQpX1m/eW3Apm9fi8LYg/G
-	6SayfnfnzTX1Kxf1uyJYceNZwhK0mrLgRrnqmiSj9gICf7ljJvZ3gnztQwAYfWZ2h50clZrQ9FW
-	v0lzGsWfgCi2QjXlZ/AcmwJ7t6o94P18Dj9xLNg==
-X-Google-Smtp-Source: AGHT+IGumwlow4+q+ipOXyKpmyqgzRnQiLYo1bfjvDXtBX1Ew+kvKaqJy3bMjv7NqYbIbgNW4CB+3q43o8HgvvAp2K4=
-X-Received: by 2002:a05:690c:490b:b0:6e3:d5ac:7d59 with SMTP id
- 00721157ae682-6e7d3c17f36mr22941727b3.45.1729580242899; Mon, 21 Oct 2024
- 23:57:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1729580543; x=1730185343;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Zo0xOmZ3bF1XOgnsXVyn+rFyT/PuDvUbKaYAetJa4ms=;
+        b=WRuOo4j5xZzA61wGwthCTTQQkdRcOxBPZSjRUCuuaJ0A66oLi79Tt6ZoXhi9yhov05
+         xOa6AxiWSrPJ3Q7WV22JWYix6USGDRoUiQFnTcxQabY8BZAt2B97DLjYIBSnQN7T6N5O
+         Gll5pXWEmI6i5iqrDXQ3dGAGhM+bsCPP0rvub7lN6vqZKdNRLe8sSQIKvRJ7OJcB0nsM
+         02eSVR0LG4JAVeejOQUHIuZ520d2l/5eu3Zx23+SCDVAm65U9lmddRAldMpMow+lvhCK
+         kqxRxNg9Aze/ZuCOuiaXCOBh91F9dpql2ab2KT2xdlBzlsEeBA9yssbPIqsn3l1bfARm
+         F/rQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUkuqaFzV1FiAdvcWr/znSOC/qZ9imIkNBcvPhsSWZXVCHu7hvRniCY2gaAoaEXkkKCqXQo0sEK2o9hQJc6@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7Dp7pSiCtni5i3kYRpx3nT0kOT+aUdjU0FI19a9YiA3V0Zq83
+	yWnew5y9eJVB2ocYAvHirUgGcHFV98+igNGKUvdMy9R3zuuKoHTRCoI4EWB77fU=
+X-Google-Smtp-Source: AGHT+IEb/90ZLK03pt7rWCnU1U7KPmd5ONg5GXEb+jncfPIGAWGKj/2uCiifR3O1/uN1UB+cMvzzSA==
+X-Received: by 2002:a5d:4e0e:0:b0:37d:61aa:67de with SMTP id ffacd0b85a97d-37eab7555a4mr11958766f8f.42.1729580542648;
+        Tue, 22 Oct 2024 00:02:22 -0700 (PDT)
+Received: from linaro.org ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0b93f92sm5881454f8f.76.2024.10.22.00.02.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 00:02:22 -0700 (PDT)
+Date: Tue, 22 Oct 2024 10:02:20 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rajendra Nayak <quic_rjendra@quicinc.com>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Johan Hovold <johan@kernel.org>,
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
+	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] dt-bindings: usb: Add Parade PS8830 Type-C
+ retimer bindings
+Message-ID: <ZxdN/Kr5ej2YFv9T@linaro.org>
+References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
+ <20241004-x1e80100-ps8830-v2-1-5cd8008c8c40@linaro.org>
+ <657a2qb727tm5ndz2wokxb5aiyqysppufm7evtwfbplu34yzmp@mlm4k775zm7a>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20241014111527.2272428-1-quic_kuldsing@quicinc.com>
- <20241014111527.2272428-3-quic_kuldsing@quicinc.com> <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
- <f46a9180-ca71-458e-9693-ed9badc85e72@quicinc.com> <21630547-552b-43e0-906f-840610327876@quicinc.com>
-In-Reply-To: <21630547-552b-43e0-906f-840610327876@quicinc.com>
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Date: Tue, 22 Oct 2024 08:57:12 +0200
-Message-ID: <CACMJSeuM=xmtvJr_DOZNdsj6FpF50xgXx1VED4OW6cv=s2qW5w@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] firmware: qcom: qcom_tzmem: Implement sanity checks
-To: Kuldeep Singh <quic_kuldsing@quicinc.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <657a2qb727tm5ndz2wokxb5aiyqysppufm7evtwfbplu34yzmp@mlm4k775zm7a>
 
-On Tue, 22 Oct 2024 at 07:43, Kuldeep Singh <quic_kuldsing@quicinc.com> wro=
-te:
->
->
->
-> On 10/16/2024 2:31 PM, Kuldeep Singh wrote:
-> >
-> > On 10/14/2024 6:38 PM, Bartosz Golaszewski wrote:
-> >> On Mon, Oct 14, 2024 at 1:19=E2=80=AFPM Kuldeep Singh <quic_kuldsing@q=
-uicinc.com> wrote:
-> >>>
-> >>> The qcom_tzmem driver currently has exposed APIs that lack validation=
-s
-> >>> on required input parameters. This oversight can lead to unexpected n=
-ull
-> >>> pointer dereference crashes.
-> >>>
-> >>
-> >> The commit message is not true. None of the things you changed below
-> >> can lead to a NULL-pointer dereference.>
-> >>> To address this issue, add sanity for required input parameters.
-> >>>
-> >>> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
-> >>> ---
-> >>>  drivers/firmware/qcom/qcom_tzmem.c | 6 ++++++
-> >>>  1 file changed, 6 insertions(+)
-> >>>
-> >>> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/qc=
-om/qcom_tzmem.c
-> >>> index 92b365178235..977e48fec32f 100644
-> >>> --- a/drivers/firmware/qcom/qcom_tzmem.c
-> >>> +++ b/drivers/firmware/qcom/qcom_tzmem.c
-> >>> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_pool_=
-config *config)
-> >>>
-> >>>         might_sleep();
-> >>>
-> >>> +       if (!config->policy)
-> >>> +               return ERR_PTR(-EINVAL);
-> >>
-> >> This is already handled by the default case of the switch.
-> >
-> > Ack. Need to drop.
-> > https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom=
-/qcom_tzmem.c#L218
-> >
-> > While examining qcom_tzmem_pool_free under the same principle, it
-> > appears the following check is unnecessary.
-> > https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom=
-/qcom_tzmem.c#L268
-> >
->
-> Bartosz,
-> I am thinking to remove below check in next rev like mentioned above.
-> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/q=
-com_tzmem.c#L268
->
-> Do you have any other opinion here?
-> Please let me know.
->
+On 24-10-06 18:28:52, Dmitry Baryshkov wrote:
+> On Fri, Oct 04, 2024 at 04:57:37PM GMT, Abel Vesa wrote:
+> > Document bindings for the Parade PS8830 Type-C retimer. This retimer is
+> > currently found on all boards featuring Qualcomm Snapdragon X Elite SoCs
+> > and it is needed to provide altmode muxing between DP and USB, but also
+> > connector orientation handling between.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  .../devicetree/bindings/usb/parade,ps8830.yaml     | 129 +++++++++++++++++++++
+> >  1 file changed, 129 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/usb/parade,ps8830.yaml b/Documentation/devicetree/bindings/usb/parade,ps8830.yaml
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..f6721d6eee26c6d4590a12c19791b3d47a8145f3
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/usb/parade,ps8830.yaml
+> > @@ -0,0 +1,129 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/usb/parade,ps8830.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Parade PS8830 USB and DisplayPort Retimer
+> > +
+> > +maintainers:
+> > +  - Abel Vesa <abel.vesa@linaro.org>
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - parade,ps8830
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  clocks:
+> > +    items:
+> > +      - description: XO Clock
+> > +
+> > +  clock-names:
+> > +    items:
+> > +      - const: xo
+> > +
+> > +  reset-gpios:
+> > +    maxItems: 1
+> > +
+> > +  vdd-supply:
+> > +    description: power supply (1.07V)
+> > +
+> > +  vdd33-supply:
+> > +    description: power supply (3.3V)
+> > +
+> > +  vdd33-cap-supply:
+> > +    description: power supply (3.3V)
+> > +
+> > +  vddar-supply:
+> > +    description: power supply (1.07V)
+> > +
+> > +  vddat-supply:
+> > +    description: power supply (1.07V)
+> 
+> Any additional details?
 
-No, let's keep the NULL-pointer check and add it to qcom_tzmem_free(),
-I'm not against it. I was just saying that in the latter case it will
-already be handled by the radix tree lookup.
+Documentation doesn't say anything more than this.
 
-Bart
+> 
+> > +
+> > +  vddio-supply:
+> > +    description: power supply (1.2V or 1.8V)
+> > +
+> > +  orientation-switch: true
+> > +  retimer-switch: true
+> > +
+> > +  ports:
+> > +    $ref: /schemas/graph.yaml#/properties/ports
+> > +    properties:
+> > +      port@0:
+> > +        $ref: /schemas/graph.yaml#/properties/port
+> > +        description: Super Speed (SS) Output endpoint to the Type-C connector
+> > +
+> > +      port@1:
+> > +        $ref: /schemas/graph.yaml#/$defs/port-base
+> > +        description: Super Speed (SS) Input endpoint from the Super-Speed PHY
+> 
+> or from another SS signal source, which can be a mux, a switch or
+> anything else. I'd say, just 'Input Super Speed (SS)'
+
+Will use that.
+
+> 
+> > +        unevaluatedProperties: false
+> > +
+> > +      port@2:
+> > +        $ref: /schemas/graph.yaml#/properties/port
+> > +        description:
+> > +          Sideband Use (SBU) AUX lines endpoint to the Type-C connector for the purpose of
+> > +          handling altmode muxing and orientation switching.
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +
+> > +allOf:
+> > +  - $ref: usb-switch.yaml#
+> > +
+> > +additionalProperties: false
+> > +
+> 
+> -- 
+> With best wishes
+> Dmitry
 
