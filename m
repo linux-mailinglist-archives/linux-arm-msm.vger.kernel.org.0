@@ -1,206 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-35376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E16CA9A9DEF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 11:08:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 568C09A9EB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 11:38:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3ED6D28574A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:08:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 79F3D1C2434A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 09:38:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3DE1194C8F;
-	Tue, 22 Oct 2024 09:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 836E41990AE;
+	Tue, 22 Oct 2024 09:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="O5KBmYDS"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DECCXxuD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF8B193427
-	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 09:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06161990A7
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 09:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729588081; cv=none; b=Ndr3KKF2lC9eQ1dzBwFLkXE3H3sv8STOxSMm5dUE0sa7sqePdHoLj8xWG80hFsBDSu6vk+Zxp8vxHOrmN3ZxNXM9T0Mmq9Bo0+0eFHOR5rnSwr/kipRkuEEGsnJQVm02Y/sx2PECs20jlQvOsDzqePdYpKSGC6n1xewoGBHIkIc=
+	t=1729589921; cv=none; b=mgUMLcTxy99+Hk8sgzQTg5FC+FvQg912xadNNfu8yOxLFZGh/299g/6D0PLn8hyUmZrol2Irj82z/k3ZorXFGeMhptTzWTn9/WGqZzf91lZR7LmgjGLKt/tbgXunK0x5dJUT9YpAALoQEU5kqqiYvUaWnl/KK/X8SPeb6YvbMes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729588081; c=relaxed/simple;
-	bh=pysn6nWm7VH7Da+e1O+B858W3dG1ImyoY2oZIhE1dqU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=b7Ugk9o7aWvf1rzb1r8fI86AplftEaxYp3GFTvA1eLdDqsCl9B4pUh0kNIwnPJbylOLMlpwqg4rxQCYUXOfdv1su+KSxPoe1lNE+IZBdGj3GKwFdOuefKBsRQXlN85tSaqliqH3blN66CEcnmC5GS9KHMlSCKMd2eLbyzJBX7zQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=O5KBmYDS; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1729589921; c=relaxed/simple;
+	bh=jtL+q1k/uNxoSxNFpXI2oLIDpt4U4O6GXFFLuZ2PuzY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P2qPsUucSlDBQkGtUpLraRcz287l4E28zW8IiLU+MTjFZA/xLFFOGAmeQLUZZd7d1YsbyQZF6B58jtIrB61QbVRf9l2CP0+oVbMvUgipU6FMuT3W6o6+TFCz4HglNTiuOXuMZzz4NzPerhV/lcue76nCY0ZCleFLCef6HlNmGVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DECCXxuD; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-a9a26a5d6bfso779504966b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 02:07:59 -0700 (PDT)
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6e5fadb5e23so20401247b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 02:38:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729588078; x=1730192878; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sqANacwu59WVDubToPeLNd0ZLGqiBFI013WHEtWvuoY=;
-        b=O5KBmYDS0Stfg84yUL2nST6Zvalu4l4l6bLQT5TA216sumVAH4lu22MqfhgU1h5Pon
-         gUDvOIvhfo3JOL+R2sIjQrqMz2rgudqBbzBx6CDtiZeFLR1ECXtpm1jBnrRIt0ZfFR+u
-         Z5DeBN1NVNVYls5QRcO0TLNBX2+tZ2Dq+n7gJZM5zU4bNjfA/5GVUewDb94tVP68c1tS
-         A3wGWpuYJ38l/9sh8k0oRu5iEddG8gCM1wvUdv7VvLENkmi/svsN97cTG60IY5osdhP6
-         BOQnSLQqKD+lzlnWKvTdjVEs5td5dVG1rie6/hx3WZe7j11gwCZbFEluguyVx6ALhkks
-         qk2Q==
+        d=linaro.org; s=google; t=1729589918; x=1730194718; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=N/5Dg47fBjY/YhFPEspJexC0cvl06u9WdqmPSroLAzY=;
+        b=DECCXxuDCv12XfhmXec7uJZKwdDohA7QlODHM3tW+ShwMFJRkERBxzTn1h1PgGi/JZ
+         4VFxq0toK/NQozgUlEM2Az87dvvIomBmoPMGs/EiE/K1787934h+/5kuINBm+1fFRDbV
+         iasRCDHL8i9aVEKror6MxSgKyN/j+NTdG2bZjHXaF6EvvD+rdjik0yKCjmBFmZBhcokd
+         38TFHqkHdPuUNPflC7KE2j4oAk5Z9so8+JfjTwQDDhH7N06CANOKtulAA6zyd6vU8io5
+         6JLYc4ac7Uv29sK22xodCwQTJoZd8TDbOYYSSOjyH2rSe37kczejuDN4on10Ox/0yEfm
+         gGVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729588078; x=1730192878;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sqANacwu59WVDubToPeLNd0ZLGqiBFI013WHEtWvuoY=;
-        b=eYuWbYo62Ytx4t5QlKBWb6qz8Z1Q4LfBhpcyw9IDgG7oqH7MmAHMCLe7kIoss7+wg7
-         QTQ+9RdqWVTN6iQsm109+7OEdn2IPX/4jxCHXW9rxLrAAonZR1eaeluI3mjwfG2XOC+X
-         e6ET9eDOguI5AUroHF9Se7UGHwrmCXsFMmt7EMt7du8F/0wzb841q7UzvPvTbsqwvL4b
-         aJe/6hlh617OKJiMUNG2ItFAT7+W3uI4+jNfFcjB8C3Ow0LUhJ3k6fg9YYZmEb6soEVY
-         1vY69W7WBTvYd+Nq2GzX0lTQWIk5MrfkQLj3QaQl6mbDbV5CjE6OilcsG+GUFjZz/YI/
-         ZjrQ==
-X-Gm-Message-State: AOJu0YxsEaVFobvMGUkFO0FCV9z3mU7XkN9Obhs1xEqcbg5bbum5k6Uu
-	Eskot3TMUMtyKsHbrmgRRguP5zPXPqcz8rFXlWsi4w2inw2I//aiqMKmbe5S9cU=
-X-Google-Smtp-Source: AGHT+IGoE+jrhGDPxvzS+WZimT/uQDCBFmA0e0z1M8EFELzXgykeI+0Jev6cLL5gP+5Bp6fGDKWWLg==
-X-Received: by 2002:a17:907:3e12:b0:a9a:4fd3:c35f with SMTP id a640c23a62f3a-a9a69a63db8mr1206244266b.9.1729588077786;
-        Tue, 22 Oct 2024 02:07:57 -0700 (PDT)
-Received: from [192.168.0.40] ([176.61.106.227])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a9a912d6267sm311979566b.32.2024.10.22.02.07.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Oct 2024 02:07:57 -0700 (PDT)
-Message-ID: <3ee7a1c9-2d6d-4fd5-982e-d86151e45662@linaro.org>
-Date: Tue, 22 Oct 2024 10:07:55 +0100
+        d=1e100.net; s=20230601; t=1729589918; x=1730194718;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N/5Dg47fBjY/YhFPEspJexC0cvl06u9WdqmPSroLAzY=;
+        b=lUPXlJUhZsqsVJVGTf35Ib5C/LFLAEUu0FG5CVkI3Cx5vDOStjtulBr3TWh0N17YN9
+         MUgV2tuK2m6QmIFxvG/ZPsIvZIV/E1wIcR4QvLIgBbpYADUhTCvRki+kp7HuyVPYvaGR
+         tZoHwKNDVRjjXpe3kr3KfH0bQOi7uDuhoHLr8eI3zMmGrPi4zzmUDXwAHrXnHutg2bZp
+         FBzqlGZ/xvdTiGi5MGnV9X5clcnO+eD3s8sw3wsQyAMG0zaNZ7dbpBzD60FKWyqcWTMp
+         uxG2oCXtcJm19TH1ffl29Rt8JEoOmI/TM+UYsW53DZWb9CnTuYUWrsN5TWjHaQakNDaA
+         S6xg==
+X-Forwarded-Encrypted: i=1; AJvYcCXd6sumVQs8U7nfW57gD3t0ktcUfTkImxfPPK/sDPREdYsH3WLtVzJNPS4nVK2nFlYTav/k7yZGKYCzS3gB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0xMTqF6djwI7jWafRRK3xzGiasKgr+NjVhmggdRLxuWN2p25n
+	eS+DWG20+wsAA9Jw2qUu1Gq3lQlkkStFof35psIokeADAt9F2eEAVWPI2LBoIZym0yxZADSabeK
+	k5ga7p4veB0Jqmu+Fx6bif3W6H0pGcn1DbhhRpw==
+X-Google-Smtp-Source: AGHT+IFOJm8RAn0EsBkDxk6LqZTnRur9nRUufhWOLHK1CxgpCVThwipByBxtIeBw59Z59ke0ZItxJl9xZjd0Aa6JrTs=
+X-Received: by 2002:a05:690c:ecd:b0:6e2:1467:17c0 with SMTP id
+ 00721157ae682-6e5bf632349mr128695137b3.8.1729589918568; Tue, 22 Oct 2024
+ 02:38:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] drm/msm/adreno: Add support for ACD
-To: Akhil P Oommen <quic_akhilpo@quicinc.com>, Rob Clark
- <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- linux-pm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20241021-gpu-acd-v2-0-9c25a62803bc@quicinc.com>
- <20241021-gpu-acd-v2-1-9c25a62803bc@quicinc.com>
-Content-Language: en-US
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20241021-gpu-acd-v2-1-9c25a62803bc@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20241014-adds-spmi-pmic-peripherals-for-qcs615-v1-1-8a3c67d894d8@quicinc.com>
+ <p7fw7jjfawbnk2vb7zdtr2dp3ni4g2uuiwvt6o4qva53zyrpvd@kokibgaidfzb> <5c23a6bd-e233-4b02-86cf-902d2c57c382@quicinc.com>
+In-Reply-To: <5c23a6bd-e233-4b02-86cf-902d2c57c382@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date: Tue, 22 Oct 2024 12:38:27 +0300
+Message-ID: <CAA8EJppdQsGe-R5JKRJ9LJs9xGTdhkCGYc5NyzVSLA1bWvvUwQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Adds SPMI bus, PMIC and peripherals
+To: Tingguo Cheng <quic_tingguoc@quicinc.com>
+Cc: quic_fenglinw@quicinc.com, quic_tingweiz@quicinc.com, kernel@quicinc.com, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On 21/10/2024 12:53, Akhil P Oommen wrote:
-> ACD a.k.a Adaptive Clock Distribution is a feature which helps to reduce
-> the power consumption. In some chipsets, it is also a requirement to
-> support higher GPU frequencies. This patch adds support for GPU ACD by
-> sending necessary data to GMU and AOSS. The feature support for the
-> chipset is detected based on devicetree data.
-> 
-> Signed-off-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 81 ++++++++++++++++++++++++++++-------
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  1 +
->   drivers/gpu/drm/msm/adreno/a6xx_hfi.c | 36 ++++++++++++++++
->   drivers/gpu/drm/msm/adreno/a6xx_hfi.h | 21 +++++++++
->   4 files changed, 124 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> index 37927bdd6fbe..09fb3f397dbb 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-> @@ -1021,14 +1021,6 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
->   
->   	gmu->hung = false;
->   
-> -	/* Notify AOSS about the ACD state (unimplemented for now => disable it) */
-> -	if (!IS_ERR(gmu->qmp)) {
-> -		ret = qmp_send(gmu->qmp, "{class: gpu, res: acd, val: %d}",
-> -			       0 /* Hardcode ACD to be disabled for now */);
-> -		if (ret)
-> -			dev_err(gmu->dev, "failed to send GPU ACD state\n");
-> -	}
-> -
->   	/* Turn on the resources */
->   	pm_runtime_get_sync(gmu->dev);
->   
-> @@ -1476,6 +1468,64 @@ static int a6xx_gmu_pwrlevels_probe(struct a6xx_gmu *gmu)
->   	return a6xx_gmu_rpmh_votes_init(gmu);
->   }
->   
-> +static int a6xx_gmu_acd_probe(struct a6xx_gmu *gmu)
-> +{
-> +	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-> +	struct a6xx_hfi_acd_table *cmd = &gmu->acd_table;
-> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-> +	struct msm_gpu *gpu = &adreno_gpu->base;
-> +	int ret, i, cmd_idx = 0;
-> +
-> +	cmd->version = 1;
-> +	cmd->stride = 1;
-> +	cmd->enable_by_level = 0;
-> +
-> +	/* Skip freq = 0 and parse acd-level for rest of the OPPs */
-> +	for (i = 1; i < gmu->nr_gpu_freqs; i++) {
-> +		struct dev_pm_opp *opp;
-> +		struct device_node *np;
-> +		unsigned long freq;
-> +		u32 val;
-> +
-> +		freq = gmu->gpu_freqs[i];
-> +		opp = dev_pm_opp_find_freq_exact(&gpu->pdev->dev, freq, true);
-> +		np = dev_pm_opp_get_of_node(opp);
-> +
-> +		ret = of_property_read_u32(np, "qcom,opp-acd-level", &val);
-> +		of_node_put(np);
-> +		dev_pm_opp_put(opp);
-> +		if (ret == -EINVAL)
-> +			continue;
-> +		else if (ret) {
-> +			DRM_DEV_ERROR(gmu->dev, "Unable to read acd level for freq %lu\n", freq);
-> +			return ret;
-> +		}
-> +
-> +		cmd->enable_by_level |= BIT(i);
-> +		cmd->data[cmd_idx++] = val;
+On Tue, 22 Oct 2024 at 11:26, Tingguo Cheng <quic_tingguoc@quicinc.com> wrote:
+>
+>
+>
+> On 10/14/2024 6:53 PM, Dmitry Baryshkov wrote:
+> > On Mon, Oct 14, 2024 at 06:08:17PM +0800, Tingguo Cheng wrote:
+> >> Create a new file qcs615-pmic.dtsi to add on-board PMIC and peripher-
+> >> als in the PMIC that controlled by SPMI bus. The peripherals include
+> >> GPIO, RTC, PON, power key and resin-key for QCS615 platform. The power
+> >> key and volume down key are controlled by PMIC PON hardware on QCS615.
+> >
+> > Why do you need a separate file? Unless there is a good reason such
+> > configuration should be split between the pmic.dtsi and the board file.
+> >
+> One reason is that I use upstream as
+> template(x1ee80100,sc8180x,sa8775p...), they all have
+> platform-pmics.dtsi alongside.
+>
+> On the other hand, qcs615-pmic.dtsi contains only the PMIC's
+> peripherals, creating a new file can eliminate duplicate code if there
+> are any other new boards with pmm6155au as their PMIC(similar to
+> x1e80100-lenovo-xxx/x1e80100-microsoft-xxxx, where "x1e80100-pmics.dtsi"
+> has been included).
 
-How do you know that cmd_idx is always < sizeof(cmd->data); ?
+And this is pretty unique  to those platforms and it exists mostly to
+facilitate the case when a platform has several instances of the same
+PMIC. In all other cases (mobile, IoT) usually there is just one
+instance of the particular PMIC. In such a case pmic definitions go to
+"pmABCDEF.dtsi" to be reused by the platform and then board DT can
+include that file and wire it up according to the platform needs.
 
-> +	}
-> +
-> +	cmd->num_levels = cmd_idx;
-> +
-> +	/* We are done here if ACD is not required for any of the OPPs */
-> +	if (!cmd->enable_by_level)
-> +		return 0;
-> +
-> +	/* Initialize qmp node to talk to AOSS */
-> +	gmu->qmp = qmp_get(gmu->dev);
-> +	if (IS_ERR(gmu->qmp)) {
-> +		cmd->enable_by_level = 0;
-> +		return dev_err_probe(gmu->dev, PTR_ERR(gmu->qmp), "Failed to initialize qmp\n");
-> +	}
-> +
-> +	/* Notify AOSS about the ACD state */
-> +	ret = qmp_send(gmu->qmp, "{class: gpu, res: acd, val: %d}", 1);
-> +	if (ret)
-> +		DRM_DEV_ERROR(gmu->dev, "failed to send GPU ACD state\n");
-> +
-> +	return 0;
+> > BTW, what is the PMIC id for pmm6155au? Is it a real PMIC or a version
+> > of some other PMIC?
+> >
+> pmm6155au is the PMIC id(Silk scree). It's a real PMIC for qcs615.Maybe
+> I should use the name qcs615-pmics.dtsi instead of qcs6150-pmic.dtsi to
+> align with other platforms.
 
-Shouldn't the ret from gmp_send() get propogated in the return of this 
-function ?
+Is it the same thing as PM6150? Or is it a combo of PM6150 and PM6150L?
 
-i.e. how can your probe be successful if the notification failed ?
+> >> Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
 
----
-bod
+-- 
+With best wishes
+Dmitry
 
