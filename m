@@ -1,175 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-35485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FF0B9ABA42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 01:54:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 818209ABA47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 01:58:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 19A162817FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 23:54:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F329F1F222D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 23:58:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2378E1CEE8F;
-	Tue, 22 Oct 2024 23:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2B391CEE9D;
+	Tue, 22 Oct 2024 23:58:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OcP08QOd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="O8uqpfVq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7291CDFC8;
-	Tue, 22 Oct 2024 23:54:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208661BD50D;
+	Tue, 22 Oct 2024 23:58:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729641279; cv=none; b=m0mhCk4B+5VGymUUL4fhJslfZ6x0JDzhTPNRZ0r8vCHXqQ1xuUx6JijSlMQChIAVwv+IU06AeW0OBKr1bWvrUrQPkNzE4JOnxANoojnAvXUQMwLUtIPK6n7GdaG5Gt8xFi1QrdRWdNvot18sB+xdLB3ZGMoveuGbO3qyf7X5j08=
+	t=1729641504; cv=none; b=YutaM1DLRHb0/BjlFxoNWzm8alowMwLrO75hSGviaW7fNlnjju+QYMGxzgLpe0vljTLJp7XIShMwHeIMTxg211dW1ejppKqa8a8qUa7e9CJk48+CdZAm3eBWbmanNK7h994CDnX6aUQ0yuh2MMmFCS0iAudfga2uBfhqpGr/huA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729641279; c=relaxed/simple;
-	bh=oaIE2+YTrWvXAsSPmtB6UaYr/m5HRh9uVimWLPJIWbY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JgMt8m6EQRMfVOKFvz/nluoVxyv+47TNlXLL2lk7OjLHDoyCM1Pzjf0s1Q5ARc0g0SqithFQOMcxr8RQXo+DhUqaGb7MTmSpgmCK52r56FceZEQuOcSIG6806MMgY/eDJ8DRksmoCbRJDT+2S6eutgEFAeH6XOBdS13NjsDsOQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OcP08QOd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE47C4CEC3;
-	Tue, 22 Oct 2024 23:54:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729641278;
-	bh=oaIE2+YTrWvXAsSPmtB6UaYr/m5HRh9uVimWLPJIWbY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OcP08QOd87Jy4tqgzPcNQocfXaI6m5TKxJNdb5sUJEs2hBqci6oE7PC37bJtiGHBf
-	 4lny/crMdrWIc4rqRi6Il59V9bleDxhAguDXyxBWPdzW6gCgTPocjKxeTVpTUkeUjA
-	 /sTNYStvRk5Zz0f2BAUmvyxNml+Y5gmSJQyb6Pqccfz3eitEPDmJaiSA5con76HtKe
-	 lDzmWouRZit3+xkszrnRVC6nBK+Oyy0vnEfJblWq7UiGzp5A5fcyFQiPoIxHaao4ZW
-	 Kd6X2dVd6TxxWGtGpyq0dbA0fH2ifRkzu4QEcrPfaa2w0+0hyWNtBoRA9MtwTfPlia
-	 zr02eR09wWRWQ==
-Date: Tue, 22 Oct 2024 18:54:35 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
-Cc: krzk+dt@kernel.org, quic_krichai@quicinc.com, 
-	quic_vbadigan@quicinc.com, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	"open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>, 
-	"open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" <devicetree@vger.kernel.org>, open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sa8775p: Update iommu-map entry
-Message-ID: <ndu3y3dk2zvezqqhczry24arai5gk6rqlghznxru3zcxevnmrc@jjrff25gzjq3>
-References: <20241008121755.1174730-1-quic_skananth@quicinc.com>
- <70c2e4c0-aa5a-4d61-9b12-ee7cc5106ead@quicinc.com>
+	s=arc-20240116; t=1729641504; c=relaxed/simple;
+	bh=hSGNsERuXpOnj5mD1JvsJFKgJ7F+L+49oiKUk4AO4fg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bwD46IQ1n5uKyXaw0H/aH7+MIQMhPOkauBOG8IDK9NamkE7zGf+Sk2JW5PnQEm4j0XaZW1lGzuB97MAEXZiSzf3TMnO3xD/MMDeYrOt/pFu+WsXc2+Jz6qjyI4qo0/1nh0nLM4Yt4nJaiiyJM30lxOI6JNL2xZGOxUmSwUGt/1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=O8uqpfVq; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLa3s6025442;
+	Tue, 22 Oct 2024 23:58:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8BhHv7AKGfqd/X1TNPoDzozZI272RDnDgnhCY3+4Qbg=; b=O8uqpfVqW19+2KBi
+	ZOMG1/bBKHGewzK+7wlCt5k+Y64imnErPqIU1CgW2FbV2VpdOpexvIzeXUWVK4mI
+	P0fyfI7069pZNLg/BaELCnI/OKKhFWGFWAqfPIvdf01v+SRulhMKFH9DAoT/2+Kg
+	k6SjwfNW550b9OLEZiLcg2QEwLpWcVVKJ+tssWg0CZPLGQq43Bq0yptjPcZ93NPC
+	oIyqFWNCRHmDV7JdnUxoEcLEL0ZgKxLnbBU5hJOMeYB31C1MkEVmCfE5zNen0vxY
+	gHk/V5qhr1/+N7A4QSWD+ErXURLBSGJWkgPo1WSPP7QQfy77PaxGbLp3tG6RVhac
+	6iCEnA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em4088xy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 23:58:09 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49MNw9Qe025711
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 22 Oct 2024 23:58:09 GMT
+Received: from [10.110.103.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
+ 2024 16:58:08 -0700
+Message-ID: <e4fe74c7-6c37-4bab-96bf-a62727dcd468@quicinc.com>
+Date: Tue, 22 Oct 2024 16:58:08 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <70c2e4c0-aa5a-4d61-9b12-ee7cc5106ead@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 06/10] net: qrtr: Allow sendmsg to target an
+ endpoint
+To: Denis Kenzior <denkenz@gmail.com>, <netdev@vger.kernel.org>
+CC: Marcel Holtmann <marcel@holtmann.org>, Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241018181842.1368394-1-denkenz@gmail.com>
+ <20241018181842.1368394-7-denkenz@gmail.com>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20241018181842.1368394-7-denkenz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bJVsf1lranxjBNZVbI16qRrXMuOEVjWP
+X-Proofpoint-GUID: bJVsf1lranxjBNZVbI16qRrXMuOEVjWP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410220155
 
-On Tue, Oct 08, 2024 at 05:55:27PM GMT, Subramanian Ananthanarayanan wrote:
-> 
-> On 10/8/2024 5:47 PM, Subramanian Ananthanarayanan wrote:
-> > SA8775P has only support for SMMU v2, due to this PCIe has limited
-> > SID entries to enable dynamic IOMMU mapping in the driver, hence
-> > we are updating static entries.
-> > 
-> > iommu-map entries are added to support more PCIe device like switch
-> > attach, SRIOV capable devices. These entries are specific to this
-> > board as topology of PCIe devices can vary based on the end usecase
-> > connected via PCIe. For other board files, these entries may
-> > not be directly applicable.
-> > 
-> > Signed-off-by: Subramanian Ananthanarayanan <quic_skananth@quicinc.com>
-> > ---
-> > Changes in V2:
-> > 	- Updated commit message.
-> 
-> forgot to add link to v1 : https://lore.kernel.org/lkml/20241001114601.1097618-1-quic_skananth@quicinc.com/
-> 
 
-Please use b4, as described on go/upstream, and you can not forget.
 
-Regards,
-Bjorn
-
-> -Subramanian
+On 10/18/2024 11:18 AM, Denis Kenzior wrote:
+> Allow QIPCRTR family sockets to include QRTR_ENDPOINT auxiliary data
+> as part of the sendmsg system call.  By including this parameter, the
+> client can ask the kernel to route the message to a given endpoint, in
+> situations where multiple endpoints with conflicting node identifier
+> sets exist in the system.
 > 
-> > ---
-> > ---
-> >   arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi | 62 ++++++++++++++++++++++
-> >   1 file changed, 62 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> > index 0c1b21def4b6..05c9f572ae42 100644
-> > --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dtsi
-> > @@ -675,6 +675,37 @@ &pcie0 {
-> >   	pinctrl-names = "default";
-> >   	pinctrl-0 = <&pcie0_default_state>;
-> > +	iommu-map = <0x0 &pcie_smmu 0x0000 0x1>,
-> > +		    <0x100 &pcie_smmu 0x0001 0x1>,
-> > +		    <0x101 &pcie_smmu 0x0002 0x1>,
-> > +		    <0x208 &pcie_smmu 0x0003 0x1>,
-> > +		    <0x210 &pcie_smmu 0x0004 0x1>,
-> > +		    <0x218 &pcie_smmu 0x0005 0x1>,
-> > +		    <0x280 &pcie_smmu 0x0006 0x1>,
-> > +		    <0x281 &pcie_smmu 0x0007 0x1>,
-> > +		    <0x282 &pcie_smmu 0x0008 0x1>,
-> > +		    <0x283 &pcie_smmu 0x0009 0x1>,
-> > +		    <0x284 &pcie_smmu 0x000a 0x1>,
-> > +		    <0x285 &pcie_smmu 0x000b 0x1>,
-> > +		    <0x286 &pcie_smmu 0x000c 0x1>,
-> > +		    <0x287 &pcie_smmu 0x000d 0x1>,
-> > +		    <0x288 &pcie_smmu 0x000e 0x1>,
-> > +		    <0x289 &pcie_smmu 0x000f 0x1>,
-> > +		    <0x28a &pcie_smmu 0x0010 0x1>,
-> > +		    <0x28b &pcie_smmu 0x0011 0x1>,
-> > +		    <0x28c &pcie_smmu 0x0012 0x1>,
-> > +		    <0x28d &pcie_smmu 0x0013 0x1>,
-> > +		    <0x28e &pcie_smmu 0x0014 0x1>,
-> > +		    <0x28f &pcie_smmu 0x0015 0x1>,
-> > +		    <0x290 &pcie_smmu 0x0016 0x1>,
-> > +		    <0x291 &pcie_smmu 0x0017 0x1>,
-> > +		    <0x292 &pcie_smmu 0x0018 0x1>,
-> > +		    <0x293 &pcie_smmu 0x0019 0x1>,
-> > +		    <0x300 &pcie_smmu 0x001a 0x1>,
-> > +		    <0x400 &pcie_smmu 0x001b 0x1>,
-> > +		    <0x500 &pcie_smmu 0x001c 0x1>,
-> > +		    <0x501 &pcie_smmu 0x001d 0x1>;
-> > +
-> >   	status = "okay";
-> >   };
-> > @@ -685,6 +716,37 @@ &pcie1 {
-> >   	pinctrl-names = "default";
-> >   	pinctrl-0 = <&pcie1_default_state>;
-> > +	iommu-map = <0x0 &pcie_smmu 0x0080 0x1>,
-> > +		    <0x100 &pcie_smmu 0x0081 0x1>,
-> > +		    <0x101 &pcie_smmu 0x0082 0x1>,
-> > +		    <0x208 &pcie_smmu 0x0083 0x1>,
-> > +		    <0x210 &pcie_smmu 0x0084 0x1>,
-> > +		    <0x218 &pcie_smmu 0x0085 0x1>,
-> > +		    <0x280 &pcie_smmu 0x0086 0x1>,
-> > +		    <0x281 &pcie_smmu 0x0087 0x1>,
-> > +		    <0x282 &pcie_smmu 0x0088 0x1>,
-> > +		    <0x283 &pcie_smmu 0x0089 0x1>,
-> > +		    <0x284 &pcie_smmu 0x008a 0x1>,
-> > +		    <0x285 &pcie_smmu 0x008b 0x1>,
-> > +		    <0x286 &pcie_smmu 0x008c 0x1>,
-> > +		    <0x287 &pcie_smmu 0x008d 0x1>,
-> > +		    <0x288 &pcie_smmu 0x008e 0x1>,
-> > +		    <0x289 &pcie_smmu 0x008f 0x1>,
-> > +		    <0x28a &pcie_smmu 0x0090 0x1>,
-> > +		    <0x28b &pcie_smmu 0x0091 0x1>,
-> > +		    <0x28c &pcie_smmu 0x0092 0x1>,
-> > +		    <0x28d &pcie_smmu 0x0093 0x1>,
-> > +		    <0x28e &pcie_smmu 0x0094 0x1>,
-> > +		    <0x28f &pcie_smmu 0x0095 0x1>,
-> > +		    <0x290 &pcie_smmu 0x0096 0x1>,
-> > +		    <0x291 &pcie_smmu 0x0097 0x1>,
-> > +		    <0x292 &pcie_smmu 0x0098 0x1>,
-> > +		    <0x29d &pcie_smmu 0x0099 0x1>,
-> > +		    <0x300 &pcie_smmu 0x009a 0x1>,
-> > +		    <0x400 &pcie_smmu 0x009b 0x1>,
-> > +		    <0x500 &pcie_smmu 0x009c 0x1>,
-> > +		    <0x501 &pcie_smmu 0x009d 0x1>;
-> > +
-> >   	status = "okay";
-> >   };
+> For legacy clients, or clients that do not include QRTR_ENDPOINT data,
+> the endpoint is looked up, as before, by only using the node identifier
+> of the destination qrtr socket address.
+> 
+> Signed-off-by: Denis Kenzior <denkenz@gmail.com>
+> Reviewed-by: Marcel Holtmann <marcel@holtmann.org>
+> Reviewed-by: Andy Gross <agross@kernel.org>
+> ---
+>   net/qrtr/af_qrtr.c | 80 +++++++++++++++++++++++++++++++++-------------
+>   net/qrtr/qrtr.h    |  2 ++
+>   2 files changed, 60 insertions(+), 22 deletions(-)
+> 
+> diff --git a/net/qrtr/af_qrtr.c b/net/qrtr/af_qrtr.c
+> index 568ccb1d8574..23749a0b0c15 100644
+> --- a/net/qrtr/af_qrtr.c
+> +++ b/net/qrtr/af_qrtr.c
+> @@ -106,6 +106,36 @@ static inline struct qrtr_sock *qrtr_sk(struct sock *sk)
+>   	return container_of(sk, struct qrtr_sock, sk);
+>   }
+>   
+> +int qrtr_msg_get_endpoint(struct msghdr *msg, u32 *out_endpoint_id)
+> +{
+> +	struct cmsghdr *cmsg;
+> +	u32 endpoint_id = 0;
+> +
+> +	for_each_cmsghdr(cmsg, msg) {
+> +		if (!CMSG_OK(msg, cmsg))
+> +			return -EINVAL;
+> +
+> +		if (cmsg->cmsg_level != SOL_QRTR)
+> +			continue;
+> +
+> +		if (cmsg->cmsg_type != QRTR_ENDPOINT)
+> +			return -EINVAL;
+> +
+> +		if (cmsg->cmsg_len < CMSG_LEN(sizeof(u32)))
+> +			return -EINVAL;
+> +
+> +		/* Endpoint ids start at 1 */
+> +		endpoint_id = *(u32 *)CMSG_DATA(cmsg);
+> +		if (!endpoint_id)
+> +			return -EINVAL;
+> +	}
+> +
+> +	if (out_endpoint_id)
+> +		*out_endpoint_id = endpoint_id;
+
+In the case when there is no cmsg attached to the msg. Would it be safer 
+to assign out_endpoint_id to 0 before returning?
+
+I see that in qrtr_sendmsg() there is a risk of using msg_endpoint_id 
+without it being initialized or assigned a value in this function.
+
+> +
+> +	return 0;
+> +}
+> +
+>   static unsigned int qrtr_local_nid = 1;
+>   
+>   /* for node ids */
+> @@ -404,14 +434,16 @@ static int qrtr_node_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+>    *
+>    * callers must release with qrtr_node_release()
+>    */
+> -static struct qrtr_node *qrtr_node_lookup(unsigned int nid)
+> +static struct qrtr_node *qrtr_node_lookup(unsigned int endpoint_id,
+> +					  unsigned int nid)
+>   {
+>   	struct qrtr_node *node;
+>   	unsigned long flags;
+> +	unsigned long key = (unsigned long)endpoint_id << 32 | nid;
+>   
+>   	mutex_lock(&qrtr_node_lock);
+>   	spin_lock_irqsave(&qrtr_nodes_lock, flags);
+> -	node = radix_tree_lookup(&qrtr_nodes, nid);
+> +	node = radix_tree_lookup(&qrtr_nodes, key);
+>   	node = qrtr_node_acquire(node);
+>   	spin_unlock_irqrestore(&qrtr_nodes_lock, flags);
+>   	mutex_unlock(&qrtr_node_lock);
+> @@ -953,6 +985,7 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+>   	struct qrtr_sock *ipc = qrtr_sk(sock->sk);
+>   	struct sock *sk = sock->sk;
+>   	struct qrtr_node *node;
+> +	u32 msg_endpoint_id;
+>   	u32 endpoint_id = qrtr_local_nid;
+>   	struct sk_buff *skb;
+>   	size_t plen;
+> @@ -965,46 +998,48 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+>   	if (len > 65535)
+>   		return -EMSGSIZE;
+>   
+> +	rc = qrtr_msg_get_endpoint(msg, &msg_endpoint_id);
+> +	if (rc < 0)
+> +		return rc;
+> +
+>   	lock_sock(sk);
+>   
+>   	if (addr) {
+> -		if (msg->msg_namelen < sizeof(*addr)) {
+> -			release_sock(sk);
+> -			return -EINVAL;
+> -		}
+> +		rc = -EINVAL;
+>   
+> -		if (addr->sq_family != AF_QIPCRTR) {
+> -			release_sock(sk);
+> -			return -EINVAL;
+> -		}
+> +		if (msg->msg_namelen < sizeof(*addr))
+> +			goto release_sock;
+> +
+> +		if (addr->sq_family != AF_QIPCRTR)
+> +			goto release_sock;
+>   
+>   		rc = qrtr_autobind(sock);
+> -		if (rc) {
+> -			release_sock(sk);
+> -			return rc;
+> -		}
+> +		if (rc)
+> +			goto release_sock;
+>   	} else if (sk->sk_state == TCP_ESTABLISHED) {
+>   		addr = &ipc->peer;
+>   	} else {
+> -		release_sock(sk);
+> -		return -ENOTCONN;
+> +		rc = -ENOTCONN;
+> +		goto release_sock;
+>   	}
+>   
+>   	node = NULL;
+>   	if (addr->sq_node == QRTR_NODE_BCAST) {
+>   		if (addr->sq_port != QRTR_PORT_CTRL &&
+>   		    qrtr_local_nid != QRTR_NODE_BCAST) {
+> -			release_sock(sk);
+> -			return -ENOTCONN;
+> +			rc = -ENOTCONN;
+> +			goto release_sock;
+>   		}
+>   		enqueue_fn = qrtr_bcast_enqueue;
+>   	} else if (addr->sq_node == ipc->us.sq_node) {
+>   		enqueue_fn = qrtr_local_enqueue;
+>   	} else {
+> -		node = qrtr_node_lookup(addr->sq_node);
+> +		endpoint_id = msg_endpoint_id;
+> +
+> +		node = qrtr_node_lookup(endpoint_id, addr->sq_node);
+>   		if (!node) {
+> -			release_sock(sk);
+> -			return -ECONNRESET;
+> +			rc = endpoint_id ? -ENXIO : -ECONNRESET;
+> +			goto release_sock;
+>   		}
+>   		enqueue_fn = qrtr_node_enqueue;
+>   	}
+> @@ -1043,6 +1078,7 @@ static int qrtr_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+>   
+>   out_node:
+>   	qrtr_node_release(node);
+> +release_sock:
+>   	release_sock(sk);
+>   
+>   	return rc;
+> @@ -1057,7 +1093,7 @@ static int qrtr_send_resume_tx(struct qrtr_cb *cb)
+>   	struct sk_buff *skb;
+>   	int ret;
+>   
+> -	node = qrtr_node_lookup(remote.sq_node);
+> +	node = qrtr_node_lookup(cb->endpoint_id, remote.sq_node);
+>   	if (!node)
+>   		return -EINVAL;
+>   
+> diff --git a/net/qrtr/qrtr.h b/net/qrtr/qrtr.h
+> index 11b897af05e6..22fcecbf8de2 100644
+> --- a/net/qrtr/qrtr.h
+> +++ b/net/qrtr/qrtr.h
+> @@ -34,4 +34,6 @@ int qrtr_ns_init(void);
+>   
+>   void qrtr_ns_remove(void);
+>   
+> +int qrtr_msg_get_endpoint(struct msghdr *msg, u32 *out_endpoint_id);
+> +
+>   #endif
 
