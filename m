@@ -1,264 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-35400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37AB69AA043
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:46:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 824D09AA042
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 12:46:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 583141C21EA1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:46:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 35E1C1F214E0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 22 Oct 2024 10:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E2A019ABD5;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 37585199EA2;
 	Tue, 22 Oct 2024 10:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="K0u+pZZr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="QOLmngRv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5348189905;
-	Tue, 22 Oct 2024 10:46:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556DC1494AB
+	for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 10:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729593986; cv=none; b=lKTF51mEd8/73x0T8dhMEncDnLxa1kPts/UEFFGI/4RGbyhqaT03IhB6OR1RdeI7IiLq8KX7WZUcPNY1JqrbFn9J96vdiukG6dKW0dJ+uj1G9zM8ZXtWSDu42gLxZmMXoM4yw4UoH8XIYN24FRiDR2N/g0DEVxkIWQ1lm2/XMTo=
+	t=1729593986; cv=none; b=q+E9udCh6TYsMFa3NP4Ktmep/IqBFCiPJXehVh4UUC9ZNgMHaLTMy4jaewg/FnSFabPRwyGRz1zLN7Mp5N48KD0xBoMD+wfJ+QUMuR0hs+CuexXaeIFe5SzugnrzoED1yYnRD+lPZT/rHs1HalERd3HS92q/aFtcaHFhEny6nRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729593986; c=relaxed/simple;
-	bh=FeKqeBYMuqfzU4UZ4HSQLfjOsSJFx0JmfQYbN/04ZAQ=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ILSsdxx2goE1M0sfAh4Uwm6XscS3ogv4hE0r9PLMh3p5adwakzWqHUUKCsJp0eOdbFr1E0VIGVE0c6j1Z952xNqyt2jYYgIH/7G+p5S8uCmeCfAkssNKspCs58tvWTDUFMLlFfapHnBe7BzWr+h4YFBf9GJNDkPw4mHuYqJJf6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=K0u+pZZr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49M8bx4k001170;
-	Tue, 22 Oct 2024 10:46:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:message-id:mime-version:subject:to; s=
-	qcppdkim1; bh=lRjRs+EADtb1GPc1BWqSXUVu62ODJc/GUnoWwgVJnKM=; b=K0
-	u+pZZrogwFa6nE8tGnjRGf517blQMty++3/ciaOIo8gcFPmimkaff3neD3Ds+P5V
-	B1+enVTl95lt6zuwMdpnNmjRyUWY12fDkNPcMWUdOq8fyR4Jj6ioiJkcypAtzVxT
-	/5rk8v721AityDHEZ02IeH23kQOvINCmh8jytIb9wbjG/4Kb98rD1qSg8haYtJiS
-	Nf9T+zU1FRCFocogH8S0J+WDYo42EaKxUAEQVe8+qa7+Ha1rM0GUgcelUbSleJNn
-	qIF9wEcXqd9rioPDnmCgGNXXHjTtnSfOj69cihXRNJGdaBVdjDPdI7R3Ay1IFG66
-	i0psaxcJchGnM5E2HbKQ==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42dmj13wny-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 10:46:21 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49MAkJEU009323
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 22 Oct 2024 10:46:19 GMT
-Received: from hu-janathot-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 22 Oct 2024 03:46:16 -0700
-From: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC: <quic_mohamull@quicinc.com>, <quic_hbandi@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v3] arm64: dts: qcom: qcs6490-rb3gen2: enable Bluetooth
-Date: Tue, 22 Oct 2024 16:16:00 +0530
-Message-ID: <20241022104600.3228-1-quic_janathot@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+	bh=7g7vQ5yuKO/HSCfrYWlV8Si3LPKtIuub+pj7PRO8uSE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FJ+LNpvWcfJZ0tsMRrXckBfHqXOGYzbx3bHCULC3jkZITuX2nFzS2l9UOBBqFNW4WCoz9J8tjsyNj9jKl/wqkVHGwd3nBIIjETkr7I46yJ4bL5+yv61I6nlIeHE0PTN9LiIdqZaP9Xk2HJVf9iUOSvYSzgoV1hLlycGfh46OgS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=QOLmngRv; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-37d462c91a9so3941677f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 22 Oct 2024 03:46:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729593983; x=1730198783; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=k0bUlmHe8yPfkbR2fBTcBcntzjqMjAxdwOYNlsKz7L0=;
+        b=QOLmngRv6FEzdWdfPUh0x6wM4257WDLvfzh3DGKDUqxfAVDIsTUYGBCsa1WdWUV+QY
+         qPZuhacjfRIAcrjyynyxCLjzvWq5M4bIA2ItQaV2BePUTyHhAXjx3VW512EvN/WeWmRT
+         N9sa2ahg/tVM8CyQfWChkhZpErmEjxjpuB/k8Jh7x2fPAG2pm0UnMSp0jNxIElf6e4Xx
+         EeFXhBCsuR/k4iOs2k5Q2DLMi2eHcMKoSWM9iMGdxw6WmJqZTYCetsflIy91Hub7kBzJ
+         eUSmYS1iPw56KfctkMKPTvXEAMG3WvqotfmFi41JsU1CCEDY7VB+qe4GdZhW/cTeeCD/
+         g1qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729593983; x=1730198783;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k0bUlmHe8yPfkbR2fBTcBcntzjqMjAxdwOYNlsKz7L0=;
+        b=AHUEFY7mlh+vHN2XqQ1yvFRjm73597Uex79RHpGR42AgtOUvKHkM12nbXg2ofYlrPQ
+         bEOwk0ZNwhh7Af8dM6sZ1C6VwEMY3yUsmmrqO9G3ue0RRy+NeuuyHLGN8Kvbe6Ztr4YN
+         qcPwo4TzJre5uSjVSiYeOc8V38RgIEH6Ufj3pDfUKLljsGxPs4wde/g6ESrx6vKexReO
+         ENSOsAs9fKr5daPjwdyoOspXeciCl4Xl6jgH5EqDEkWWZo86oEY8Dg6Ls9fIlt1XPyt+
+         N1eanMG64Uw5S22zgrJFoLf6FnilVyN9WyunWPDWZnar7YyAVBfJ7LNH79gmdGSJp3/h
+         /thw==
+X-Forwarded-Encrypted: i=1; AJvYcCVbmD08O1TzuD7ZYjmEHwCTFMcGMav4ovC2wlnl1dFBGAFVNKZjrjbF0TkgjY6tosQLNmac/bTtO6ur69a0@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4Ja90Kgb/AUTFWufUiEqnQJCF2dRRJQKYWwZ10U0/P6k4gop1
+	FB++aRa/Yrbi/LbCsC3az7NJicoCVl0GeZGQPnzEh1aBtxLPipsrJ0XeZE5vCgw=
+X-Google-Smtp-Source: AGHT+IHjkP7OfXudHtgygrbzeXxTqnMEgTwZ8qpiEgnwdIBqvFqKickEP/R/t/AUk9YOzmsGIskreA==
+X-Received: by 2002:adf:f8cc:0:b0:37d:3939:ad98 with SMTP id ffacd0b85a97d-37ef0b61e68mr1781901f8f.3.1729593982722;
+        Tue, 22 Oct 2024 03:46:22 -0700 (PDT)
+Received: from [127.0.1.1] ([82.76.168.176])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0a37e1asm6351943f8f.20.2024.10.22.03.46.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Oct 2024 03:46:22 -0700 (PDT)
+From: Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH v3 0/3] arm64: dts: qcom: x1e80100: Describe SDCs and
+ enable support on QCP
+Date: Tue, 22 Oct 2024 13:46:07 +0300
+Message-Id: <20241022-x1e80100-qcp-sdhc-v3-0-46c401e32cbf@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: cMcZbftrZFg5q3eofOkgjERr2L8H3RTJ
-X-Proofpoint-ORIG-GUID: cMcZbftrZFg5q3eofOkgjERr2L8H3RTJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- suspectscore=0 spamscore=0 lowpriorityscore=0 malwarescore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=998 phishscore=0 bulkscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410220069
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG+CF2cC/23NwQqDMAyA4VeRnteR1Kp1p73H2KG0UQvDunYUh
+ /juq8JgA2/5A/mysEjBUWSXYmGBkovOjznKU8HMoMeeuLO5mQAhEaDhM5KCPPGnmXi0g+FYmQZ
+ rq20ra5bvpkCdm3fzds89uPjy4b2/SLhtv5o60BJy4LajTppWaCrx+nCjDv7sQ882LokfAuURI
+ TKhakUNaCUqgj9iXdcPot7dx/YAAAA=
+X-Change-ID: 20241007-x1e80100-qcp-sdhc-15c716dad946
+To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Johan Hovold <johan@kernel.org>, 
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, linux-mmc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
+X-Mailer: b4 0.15-dev-dedf8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1594; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=7g7vQ5yuKO/HSCfrYWlV8Si3LPKtIuub+pj7PRO8uSE=;
+ b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBnF4J1i0qmBmvrG1iJVbTDyDMZ1/SA5/1XP1Mt7
+ C/A5DcDHIeJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCZxeCdQAKCRAbX0TJAJUV
+ VuOOD/9PPJgG8sKRS74RVrlkrUmpPGm6aQU8gprzYfkYD0aBMiR+O33MmxZAI2OE0mXmIO+X+8l
+ Rj3UpejB4hRCRPm9oIW6YbC6dLFN5u81iD6Au1R1lMwz69Z11u/vxQ7M6dYsU0Hc271D77iav49
+ 1i/wT6DR8Zv1HMBQAY1L7J1t5K6UErW22+MX6l62Llg7qxQKYNEyg4wV6/ckc64GiD4CQdXjBGY
+ IacuXidIkC8nUOrdVCDePN2lJ+udfuHQ3DImo9CGwgG7j6f/5eaLN6K+hQ4jgWwwYDwKY26uGve
+ iTCtWEMgu0NUpOFItPeD07A8dY30jT4UzwijQ8Sadls/5Gw2bl2bcJDgIVPkixKKXoA1QfNkffV
+ 0DOlhJReLP5NMk9U0lgCYyiFZ+EEvA2kmNKhffuyHBgpmWxSJHpVKiCIAYkzvC2XYk1uvUW+o7c
+ kbw+vdKFDC3TuvjXTrVkE2WAxYDOcuLaO0NqF6yZjDIi8HCeGFpjhHtYPUIhnSW3+caS/uG4dpd
+ 24BssnnYETWycP4scLLfi+UVFmMzMEijRsaVfjcDH2F1KuZlyyZT68JP8Ngt/uEixZTDCBbsxc/
+ pJN/RJ/TnNW2KeV45cXTkv6r5xnitPhrTGaeO7pn0spXPFXJ9Xi1oFrQcjs+GyfwyI4bXVPOteJ
+ QHDvPLfwc3lIBxg==
+X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
+ fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-Add Bluetooth and UART7 support for qcs6490-rb3gen2.
+The X1E80100 has two SDHC controllers (called SDC2 and SDC4).
+Describe both of them and enable the SDC2 on QCP. This brings
+SD card support for the microSD port on QCP.
 
-Signed-off-by: Janaki Ramaiah Thota <quic_janathot@quicinc.com>
+The SDC4 is described but there is no device outthere yet that makes
+use of it, AFAIK.
+
+Didn't include the SDC4 pins yet because there are some bindings
+errors that need to be addressed, and since there is no HW that
+actually uses it, we can describe them at a later stage.
+
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 122 ++++++++++++++++++-
- 1 file changed, 121 insertions(+), 1 deletion(-)
+Changes in v3:
+- Reordered the default and sleep pinconfs. Also the bias and
+  drive-strength properties. As per Konrad's suggestion.
+- Link to v2: https://lore.kernel.org/r/20241014-x1e80100-qcp-sdhc-v2-0-868e70a825e0@linaro.org
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 0d45662b8028..b774d89172ea 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: BSD-3-Clause
- /*
-- * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- /dts-v1/;
-@@ -31,7 +31,9 @@
- 	chassis-type = "embedded";
- 
- 	aliases {
-+		bluetooth0 = &bluetooth;
- 		serial0 = &uart5;
-+		serial1 = &uart7;
- 	};
- 
- 	chosen {
-@@ -688,6 +690,39 @@
- 	status = "okay";
- };
- 
-+&qup_uart7_cts {
-+	/*
-+	 * Configure a bias-bus-hold on CTS to lower power
-+	 * usage when Bluetooth is turned off. Bus hold will
-+	 * maintain a low power state regardless of whether
-+	 * the Bluetooth module drives the pin in either
-+	 * direction or leaves the pin fully unpowered.
-+	 */
-+	bias-bus-hold;
-+};
-+
-+&qup_uart7_rts {
-+	/* We'll drive RTS, so no pull */
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
-+&qup_uart7_rx {
-+	/*
-+	 * Configure a pull-up on RX. This is needed to avoid
-+	 * garbage data when the TX pin of the Bluetooth module is
-+	 * in tri-state (module powered off or not driving the
-+	 * signal yet).
-+	 */
-+	bias-pull-up;
-+};
-+
-+&qup_uart7_tx {
-+	/* We'll drive TX, so no pull */
-+	drive-strength = <2>;
-+	bias-disable;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -719,12 +754,97 @@
- &tlmm {
- 	gpio-reserved-ranges = <32 2>, /* ADSP */
- 			       <48 4>; /* NFC */
-+	bt_en: bt-en-state {
-+		pins = "gpio85";
-+		function = "gpio";
-+		output-low;
-+		bias-disable;
-+	};
-+
-+	qup_uart7_sleep_cts: qup-uart7-sleep-cts-state {
-+		pins = "gpio28";
-+		function = "gpio";
-+		/*
-+		 * Configure a bias-bus-hold on CTS to lower power
-+		 * usage when Bluetooth is turned off. Bus hold will
-+		 * maintain a low power state regardless of whether
-+		 * the Bluetooth module drives the pin in either
-+		 * direction or leaves the pin fully unpowered.
-+		 */
-+		bias-bus-hold;
-+	};
-+
-+	qup_uart7_sleep_rts: qup-uart7-sleep-rts-state {
-+		pins = "gpio29";
-+		function = "gpio";
-+		/*
-+		 * Configure pull-down on RTS. As RTS is active low
-+		 * signal, pull it low to indicate the BT SoC that it
-+		 * can wakeup the system anytime from suspend state by
-+		 * pulling RX low (by sending wakeup bytes).
-+		 */
-+		bias-pull-down;
-+	};
-+
-+	qup_uart7_sleep_rx: qup-uart7-sleep-rx-state {
-+		pins = "gpio31";
-+		function = "gpio";
-+		/*
-+		 * Configure a pull-up on RX. This is needed to avoid
-+		 * garbage data when the TX pin of the Bluetooth module
-+		 * is floating which may cause spurious wakeups.
-+		 */
-+		bias-pull-up;
-+	};
-+
-+	qup_uart7_sleep_tx: qup-uart7-sleep-tx-state {
-+		pins = "gpio30";
-+		function = "gpio";
-+		/*
-+		 * Configure pull-up on TX when it isn't actively driven
-+		 * to prevent BT SoC from receiving garbage during sleep.
-+		 */
-+		bias-pull-up;
-+	};
-+
-+	sw_ctrl: sw-ctrl-state {
-+		pins = "gpio86";
-+		function = "gpio";
-+		bias-pull-down;
-+	};
- };
- 
- &uart5 {
- 	status = "okay";
- };
- 
-+&uart7 {
-+	status = "okay";
-+	/delete-property/interrupts;
-+	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
-+				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>,
-+			<&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
-+
-+	bluetooth: bluetooth {
-+		compatible = "qcom,wcn6750-bt";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_en>, <&sw_ctrl>;
-+		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
-+		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-+		vddaon-supply = <&vreg_s7b_0p972>;
-+		vddbtcxmx-supply = <&vreg_s7b_0p972>;
-+		vddrfacmn-supply = <&vreg_s7b_0p972>;
-+		vddrfa0p8-supply = <&vreg_s7b_0p972>;
-+		vddrfa1p7-supply = <&vreg_s1b_1p872>;
-+		vddrfa1p2-supply = <&vreg_s8b_1p272>;
-+		vddrfa2p2-supply = <&vreg_s1c_2p19>;
-+		vddasd-supply = <&vreg_l11c_2p8>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
- &usb_1 {
- 	status = "okay";
- };
+Changes in v2:
+- rebased on next-20241011
+- dropped the bindings schema update patch
+- dropped the sdhci-caps-mask properties from both
+  controllers as SDR104/SDR50 are actually supported
+- Link to v1: https://lore.kernel.org/r/20241008-x1e80100-qcp-sdhc-v1-0-dfef4c92ae31@linaro.org
+
+---
+Abel Vesa (3):
+      arm64: dts: qcom: x1e80100: Describe the SDHC controllers
+      arm64: dts: qcom: x1e80100: Describe TLMM pins for SDC2
+      arm64: dts: qcom: x1e80100-qcp: Enable SD card support
+
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |  20 +++++
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi    | 142 ++++++++++++++++++++++++++++++
+ 2 files changed, 162 insertions(+)
+---
+base-commit: d61a00525464bfc5fe92c6ad713350988e492b88
+change-id: 20241007-x1e80100-qcp-sdhc-15c716dad946
+
+Best regards,
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Abel Vesa <abel.vesa@linaro.org>
 
 
