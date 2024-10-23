@@ -1,193 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-35540-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E91359ABEB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 08:25:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7B67C9ABEE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 08:35:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9CC1E28457D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:25:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2631A1F246D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:35:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B6CBF14EC4B;
-	Wed, 23 Oct 2024 06:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1E7A14A092;
+	Wed, 23 Oct 2024 06:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MJWEX4N9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+Z/yfVX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D48014A605;
-	Wed, 23 Oct 2024 06:24:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F0C142623;
+	Wed, 23 Oct 2024 06:35:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729664689; cv=none; b=ey3pLiLyrqpsdCWgu6QHUx2jkbu5nhGJzYgQi0wyjPYoyPL18zzvih18lJpr8BvfR1N4plwRLPmCJ5YL4kLJ10p0m4CZeOtLHra0BUOwqIaP8MxoP6SEn/amZw7Iv4VmNikUWWP9tUqvRUer0SWmyJ1GGW5DJbTdnAmPwMnfcco=
+	t=1729665330; cv=none; b=dnJKxc8ZhD3gbgg1OOQ/5ErLJkcSc3PgPVlQxzLYOE5IJkwtTUgCCio011F/e1PVohPnVAPoYIYN9ufRUkCB3zKp2LEvuMd26LYZeGNiXksFhoUGJNVpDZXXBOrWm6KCuvA+6e2T6FKvevc7Q849r+Q9yd9Q6mpPUF5KWPDhYEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729664689; c=relaxed/simple;
-	bh=APOzSU+KlMGLUuYjnSvUiO03YykwfjLbCynGKCVGp+4=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rQW74qpezUvOJIzOvgiBKJ4sQnQyAoe8t6dCXc8Wc0ZmdzxZsCrjv5QZGbZxDlnxZ2Xhjve8Tp3R/zX5XWXb1mzDTqPkbKOMsM/7iGJQNNblWfIt61Tk1BfH4Rxj2TU3SWiMpgSC1zSxzhRr16Fa3jLHRUhYbq83DAB97HC0Qhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MJWEX4N9; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLa1a7032122;
-	Wed, 23 Oct 2024 06:24:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jcQW5RcyqeDeHXJvfyXe0YmvyZ+DgVH1hq0fW/JPfT4=; b=MJWEX4N9iTBtxd16
-	OV7HLSEaT8PxtSQ7LHZaSOBgVsD9PkSVmuvQGGKKO76KDur47Zqrqy8NP49DbXyR
-	unTKnrzBz9ko97g3gljZ7frbHONebKYejvFbsNupJYJgXyE5YyuxnbYWmAx+jCd1
-	te1prxjeP+yUnGKvenhOXhs+o0sMwrW/hYssLKWT/T2197Tu/swnmMV/+3FE8rpM
-	lwPsu74epGzqlz8aZvXpCHtV/+Z9MZ2fJKo2gROZDk0GLuQNvLVeQyJwT+VxhPYz
-	V1TIXpp0D3jl5kpD5w6aN63rGvDlqKKPPgvqeYRK5kCWga/pLcg4bZkbtXdS+zJW
-	tzW5tQ==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3vs3xr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 06:24:35 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49N6OXcG002057
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 06:24:33 GMT
-Received: from hu-mohs-hyd.qualcomm.com (10.80.80.8) by
- nasanex01c.na.qualcomm.com (10.45.79.139) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Tue, 22 Oct 2024 23:24:26 -0700
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Liam Girdwood
-	<lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Bard Liao
-	<yung-chuan.liao@linux.intel.com>,
-        Jaroslav Kysela <perex@perex.cz>, "Takashi
- Iwai" <tiwai@suse.com>
-CC: Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>,
-        Sanyog Kale
-	<sanyog.r.kale@intel.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_rohkumar@quicinc.com>, <kernel@quicinc.com>,
-        Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Subject: [RESEND v2 4/4] ASoC: qcom: sdw: Add get and set channel maps support from codec to cpu dais
-Date: Wed, 23 Oct 2024 11:53:31 +0530
-Message-ID: <20241023062331.3872883-5-quic_mohs@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241023062331.3872883-1-quic_mohs@quicinc.com>
-References: <20241023062331.3872883-1-quic_mohs@quicinc.com>
+	s=arc-20240116; t=1729665330; c=relaxed/simple;
+	bh=BQfP7i6Lx9bwFL8ZcsmpT4lmJtnZUA6PN/5RMl7Qox0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jP1G9gM8QnAKdMolMXdS8hN2y3UTuhCANr9rbQ7WZn808rI9PKWOXMQ5dHe+R3TpOD1iIW7hnLk18u6BbIn+n9SZ1Sb0kGCbeRkb+KKwEa0jOX0Hh0EpisSJTK+ZdzFaIlrlslKsp6HW9n66g69B3kT6BnKOVbqYxoArvwZhoTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+Z/yfVX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB54C4CEC6;
+	Wed, 23 Oct 2024 06:35:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729665330;
+	bh=BQfP7i6Lx9bwFL8ZcsmpT4lmJtnZUA6PN/5RMl7Qox0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=R+Z/yfVXauNOCpwAeIZUDb1A3OjoMHuqPjqz3fsy3X4pD6aLfWk5HdHi836hNyABs
+	 pZFHw+rs+Oz/C43Na9SomEAviyFPOuzzBbo802nhjUVYQ38SkukBQb1baY20ItyQKp
+	 dBTMo+sLxZ6dC8+wGoRPwBttl5pl99SRWl92UAwsBL2qcQsRgZZErWH9wlkM2V5h7I
+	 ZHy4vUooxrVyxoXfOKmiDx0bTKzjrBFpIp57IGjmkN/ZPapDStWHzUYMILNYpEAIt5
+	 DZgrcyNkObQG8Uqwh3mT4of0yCaxqgiHUz+GQOEjyTpceF4NxjQMygLDnk98/c4L7V
+	 JoDxPsgCad96g==
+Message-ID: <87db3d68-ab1a-4cc4-9857-416de39cea0f@kernel.org>
+Date: Wed, 23 Oct 2024 08:35:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8LN5gND3JbeD5GkAX2orujlRywK_ZtDE
-X-Proofpoint-ORIG-GUID: 8LN5gND3JbeD5GkAX2orujlRywK_ZtDE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- malwarescore=0 spamscore=0 clxscore=1015 lowpriorityscore=0
- mlxlogscore=999 priorityscore=1501 mlxscore=0 suspectscore=0 phishscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230037
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/6] dt-bindings: net: wireless: update required
+ properties for ath12k PCI module
+To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org
+Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241023060352.605019-1-quic_rajkbhag@quicinc.com>
+ <20241023060352.605019-2-quic_rajkbhag@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <20241023060352.605019-2-quic_rajkbhag@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Add get and set channel maps support from codec to cpu dais.
+On 23/10/2024 08:03, Raj Kumar Bhagat wrote:
+> The current device-tree bindings for the Ath12K module list many
+> WCN7850-specific properties as required. However, these properties are
+> not applicable to other Ath12K devices.
+> 
+> Hence, remove WCN7850-specific properties from the required section,
+> retaining only generic properties valid across all Ath12K devices.
+> WCN7850-specific properties will remain required based on the device's
+> compatible enum.
 
-Implemented logic to get the channel map in case of only sdw stream and
-set channel map only for specific cpu dais.
+Just not true. These apply to all devices described in this binding.
 
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
----
- drivers/soundwire/qcom.c |  5 ++---
- sound/soc/qcom/sdw.c     | 34 +++++++++++++++++++++++++++++++---
- 2 files changed, 33 insertions(+), 6 deletions(-)
+NAK.
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 007183c6c047..6c3cff1194aa 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1276,11 +1276,10 @@ static void *qcom_swrm_get_sdw_stream(struct snd_soc_dai *dai, int direction)
- }
- 
- static int qcom_swrm_set_channel_map(struct snd_soc_dai *dai,
--				     unsigned int tx_num, unsigned int *tx_slot,
--				     unsigned int rx_num, unsigned int *rx_slot)
-+				     unsigned int tx_num, const unsigned int *tx_slot,
-+				     unsigned int rx_num, const unsigned int *rx_slot)
- {
- 	struct qcom_swrm_ctrl *ctrl = dev_get_drvdata(dai->dev);
--	struct sdw_stream_runtime *sruntime = ctrl->sruntime[dai->id];
- 	int i;
- 
- 	if (tx_slot) {
-diff --git a/sound/soc/qcom/sdw.c b/sound/soc/qcom/sdw.c
-index f2eda2ff46c0..d4d8ed46e6ff 100644
---- a/sound/soc/qcom/sdw.c
-+++ b/sound/soc/qcom/sdw.c
-@@ -25,7 +25,9 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
- 	struct sdw_stream_runtime *sruntime;
- 	struct snd_soc_dai *codec_dai;
--	int ret, i;
-+	int ret, i, j;
-+	u32 rx_ch[SDW_MAX_PORTS], tx_ch[SDW_MAX_PORTS];
-+	u32 rx_ch_cnt = 0, tx_ch_cnt = 0;
- 
- 	sruntime = sdw_alloc_stream(cpu_dai->name);
- 	if (!sruntime)
-@@ -35,9 +37,35 @@ int qcom_snd_sdw_startup(struct snd_pcm_substream *substream)
- 		ret = snd_soc_dai_set_stream(codec_dai, sruntime,
- 					     substream->stream);
- 		if (ret < 0 && ret != -ENOTSUPP) {
--			dev_err(rtd->dev, "Failed to set sdw stream on %s\n",
--				codec_dai->name);
-+			dev_err(rtd->dev, "Failed to set sdw stream on %s\n", codec_dai->name);
- 			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+
-+		ret = snd_soc_dai_get_channel_map(codec_dai, &tx_ch_cnt, tx_ch,
-+						  &rx_ch_cnt, rx_ch);
-+		if (ret != 0 && ret != -ENOTSUPP) {
-+			dev_err(rtd->dev, "Failed to get codec chan map %s\n", codec_dai->name);
-+			goto err_set_stream;
-+		} else if (ret == -ENOTSUPP) {
-+			/* Ignore unsupported */
-+			continue;
-+		}
-+	}
-+
-+	switch (cpu_dai->id) {
-+	case RX_CODEC_DMA_RX_0:
-+	case TX_CODEC_DMA_TX_3:
-+		if (tx_ch_cnt || rx_ch_cnt) {
-+			for_each_rtd_codec_dais(rtd, j, codec_dai) {
-+				ret = snd_soc_dai_set_channel_map(codec_dai,
-+								  tx_ch_cnt, tx_ch,
-+								  rx_ch_cnt, rx_ch);
-+				if (ret != 0 && ret != -ENOTSUPP)
-+					goto err_set_stream;
-+			}
- 		}
- 	}
- 
--- 
-2.25.1
+Don't send patches for your downstream stuff.
+
+
+Best regards,
+Krzysztof
 
 
