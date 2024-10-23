@@ -1,74 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-35617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 506C99AD2E0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 19:28:07 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71B5B9AD365
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 19:57:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10F132847A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:28:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1D5C11F212BD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59FEB1D015E;
-	Wed, 23 Oct 2024 17:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E6E4E1CFEB1;
+	Wed, 23 Oct 2024 17:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvDO/zTb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T5/tPdYw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF46C1D0148;
-	Wed, 23 Oct 2024 17:26:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF70715EFA0;
+	Wed, 23 Oct 2024 17:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729704362; cv=none; b=D2nue9Ltlhwfps9IlIZFYuIhkDW9rxtQb4pNUvUkyXaqVg/OMc48cxdV8IPul5lbYt3ROtdHrhU0wU9xwvRHCPmjzWlYSOVQ+ahnlr38dRAvUvgArqZJ/9Mduo48FBM0QVAlbLvMihysZqvDHHUYjjE0TYibvbolb8IyQ6nVfeY=
+	t=1729706270; cv=none; b=rbNm2Cw++Rr4q0dIyMf32z1GnJZdV85TZRVunF2w3CSashiE1uqj9WRV1BCnG/vwaA77pS2FwqFKM+YdSSPPNMEOfUyMHNzDCbML55/mwbJsxz1aA6hluDjmYcSmqQOLLqx5NCg2iYoEsuWN7MOUYv/rATwMG7akbvefSDL/118=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729704362; c=relaxed/simple;
-	bh=ExKSSArRGdy7bRdVoF8OmsrxTfnz4ONUWKTYnBGexz8=;
+	s=arc-20240116; t=1729706270; c=relaxed/simple;
+	bh=Ow7dsLqq7Zsk5PZkn0UMRVaiewoe1yrdqAyhv9jztmQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A3ljGjN3TOhreoKeUho795sfch0ENimqZwDwUIxzVajS7XhKWdOwhSnELH/1o28DXxckaT52EP7aKr1PcDJfeATFVhdAjM4qAC9dnvqL+RGsbgRd0KFuezZ96a19d5IKqBRJ6pj97zv3pJGpfRwJ4lZmQMPop4wfoI/pIZlsmro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvDO/zTb; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43163667f0eso239935e9.0;
-        Wed, 23 Oct 2024 10:26:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729704358; x=1730309158; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kb9i9zUsNMVUYPzfr+JSRlA9YASTj0l4XU9VARfF+lg=;
-        b=JvDO/zTbvhM//Q7lss6FbwkjzjS5DJsgi+86XUOuqsBTMVeKKdicCtU9J5YIT1k42U
-         AIJxvvei8W12O8CyezWz21bEdIaQ9/H49VOWaTWSxaJ8WVY0mBCvDnSsU1vikqZNR3RG
-         gNgXnds6gWN4OjDVjDABWe+N6+3fv9ykJF43lJDkD4GAkcyZFgSwAR9JowsLxrBzILXR
-         gY4Op9HckUwMIej8O1XzvG9fDDduY3D8omisOvwwh5BHNFdg68CXG3PFfunBd9aLMfVO
-         9zJfAhsPHWXNbF7N92KsR7NDLKvlydinyWb2p2f+1ia+k6qcRNWz99PyLSn+eJzE700y
-         wgzQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729704358; x=1730309158;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kb9i9zUsNMVUYPzfr+JSRlA9YASTj0l4XU9VARfF+lg=;
-        b=KO2yxjbc/Vofsvugv6dxEIuWeYNkf8aUHvZTV4Tn5kEzWhCKskAdOJrn2+pdv/PQJ3
-         uc8IWPeHR0AjwEhOkscEsXw8eAEOcXnXRV7iJ8u1d8gia4eB7Qikt600Eeu5SQkDg012
-         zteotSq6LJcSNSqOsX8717x0zbbQ/WX2pEVG7fb5fsRfzy+9qDdDnBiHxv8dxFQhJIaE
-         WPO7K0dYRSK3KgOgpGuIvARL2eIiNJ+UyCZBP9WOvc4G18ERiLXrmmJzU1LM+baFiZrr
-         W47ZWd1BiIMz6ygZOZ+pfCx24Z/epDQ3epSPmjLoLir4DdkDH4iocL5DqhA3LOrFuclc
-         CuOg==
-X-Forwarded-Encrypted: i=1; AJvYcCUFkxz5/C/REyFkaJdcyJjwM/k2subj6+NWoIdutEa34yzbQszO+6L7iFh+WTkbiwWo9fNRYgE+m/XQ7lqOeoNaHUp/ww==@vger.kernel.org, AJvYcCUhSLJ448pt2Mcf+EurLrkNTTw6fvj7s57tAF4miCWx6IvkwZRdo4mheZMu0jyNJ5fgya7XJAyDv0v1loks@vger.kernel.org, AJvYcCWZ90wTKpHVQWlwn6hLHOex3c5HympYCW/CJs9IQZsl9SSs198t7dAU414PKx8nRcaYPD0Df3/t/F4F@vger.kernel.org, AJvYcCX0QSM0vQQfssFFvKeDM3Zdqvu6Gy6Vx09W06QPL7Tfp6lTQgQWk1ebjcqCNjG8zx4/G4IqEJON9clCQ+UG/A==@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoDteE3+2627KIxg3AtaClMiZGgBx525j/iPkb2wlR5n04H7oE
-	PwPbh4aUUkUDDqFpcYvOhcw6bwie7iKM/fnPYaBiewM3nWxPp0qE
-X-Google-Smtp-Source: AGHT+IEbJlcbMDXNmFlVO5YLPk7N+x59kLpszwlxBi60Qf5wpQvKuK0j3CdPszBmP5ozz2mfUuD2Og==
-X-Received: by 2002:a05:600c:34d4:b0:431:5533:8f0b with SMTP id 5b1f17b1804b1-43184246647mr34064505e9.32.1729704358419;
-        Wed, 23 Oct 2024 10:25:58 -0700 (PDT)
-Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43186be509dsm21671835e9.16.2024.10.23.10.25.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Oct 2024 10:25:57 -0700 (PDT)
-Message-ID: <ad9fa9f2-7f97-401a-8e8f-ae633ab1932b@gmail.com>
-Date: Wed, 23 Oct 2024 19:25:56 +0200
+	 In-Reply-To:Content-Type; b=iYZiUs+O/RbR5YpalaTvV/K6jtsA1RKg3FY/h+FZ0m/JQvbWWa23VJB8r6VLFnytx6zElcNntM6+52/UMpD1WwJr8mAgPRUUVvxC+SFkiTMcI1cOoHpaYfwQ0GcadjJ3Zq5oPO9FLSs82Ok0495kg5dhN5MrDkhT7Ijtfh2aR/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T5/tPdYw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA50C4CEC6;
+	Wed, 23 Oct 2024 17:57:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729706270;
+	bh=Ow7dsLqq7Zsk5PZkn0UMRVaiewoe1yrdqAyhv9jztmQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=T5/tPdYwrOGLJFAlrnQpxlUUjgHlvKSE4JDpYVD447G0bBzAumXcdGCZEF1sGcm3m
+	 ZIbXyDm6Do41Ly8ZSTHvnH38EFVaM7RnzEXEY902DQOR9NBrQ2Z/Oy9kvcDIqzPmvI
+	 8NGaosi4FbuHIHfJPuSFo9PTkEVImPU9+VtPYvl0lw7N6PhG2A9H8mRY8grhM1g0Dg
+	 Lcv9452NQJP6GgKddJunhTvU5j1iicr8AJl05tE4LzEgdkVk9Py3LnCeVOhxOo9jRw
+	 DUoWNjRz5HShkSBw6ZEPxY7lpLilQxIBigWQJuSxwJPr+PH9D9UaP8Cbhz8oqvvsoo
+	 w91eBn+yuj/lQ==
+Message-ID: <808cfb83-a80f-431c-be69-ee3da964482a@kernel.org>
+Date: Wed, 23 Oct 2024 19:57:43 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,44 +50,128 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] platform/surface: aggregator_registry: Add Surface
- Pro 9 5G
-To: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Hans de Goede <hdegoede@redhat.com>
-Cc: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
+Subject: Re: [RFC PATCH 2/6] dt-bindings: net: wireless: ath12k: describe WSI
+ property for QCN9274
+To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org
+Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
  Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org
-References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
- <20240908223505.21011-4-jerome.debretagne@gmail.com>
- <f9cbd1c3-eb05-4262-bdc6-6d37e83179e5@gmail.com>
- <CA+kEDGEdd_s+DGKsVNY6Jy870B72eHuaj2EgEnwP8J46ZGbxpQ@mail.gmail.com>
- <8370d062-b3d2-46f5-9e7b-8e16edde8480@redhat.com>
- <555f8a3a-ae5e-57e7-f176-96c52e1a5d45@linux.intel.com>
+ Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241023060352.605019-1-quic_rajkbhag@quicinc.com>
+ <20241023060352.605019-3-quic_rajkbhag@quicinc.com>
+ <b42da7f0-2034-467b-ab17-fb13ef7800c4@kernel.org>
+ <9c06fdac-df4f-449c-8d58-b57c375c1751@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Maximilian Luz <luzmaximilian@gmail.com>
-In-Reply-To: <555f8a3a-ae5e-57e7-f176-96c52e1a5d45@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJgPO8PBQkUX63hAAoJEBuTQ307
+ QWKbBn8P+QFxwl7pDsAKR1InemMAmuykCHl+XgC0LDqrsWhAH5TYeTVXGSyDsuZjHvj+FRP+
+ gZaEIYSw2Yf0e91U9HXo3RYhEwSmxUQ4Fjhc9qAwGKVPQf6YuQ5yy6pzI8brcKmHHOGrB3tP
+ /MODPt81M1zpograAC2WTDzkICfHKj8LpXp45PylD99J9q0Y+gb04CG5/wXs+1hJy/dz0tYy
+ iua4nCuSRbxnSHKBS5vvjosWWjWQXsRKd+zzXp6kfRHHpzJkhRwF6ArXi4XnQ+REnoTfM5Fk
+ VmVmSQ3yFKKePEzoIriT1b2sXO0g5QXOAvFqB65LZjXG9jGJoVG6ZJrUV1MVK8vamKoVbUEe
+ 0NlLl/tX96HLowHHoKhxEsbFzGzKiFLh7hyboTpy2whdonkDxpnv/H8wE9M3VW/fPgnL2nPe
+ xaBLqyHxy9hA9JrZvxg3IQ61x7rtBWBUQPmEaK0azW+l3ysiNpBhISkZrsW3ZUdknWu87nh6
+ eTB7mR7xBcVxnomxWwJI4B0wuMwCPdgbV6YDUKCuSgRMUEiVry10xd9KLypR9Vfyn1AhROrq
+ AubRPVeJBf9zR5UW1trJNfwVt3XmbHX50HCcHdEdCKiT9O+FiEcahIaWh9lihvO0ci0TtVGZ
+ MCEtaCE80Q3Ma9RdHYB3uVF930jwquplFLNF+IBCn5JRzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmA872oFCRRflLYACgkQG5NDfTtBYpvScw/9GrqBrVLuJoJ52qBBKUBDo4E+5fU1bjt0
+ Gv0nh/hNJuecuRY6aemU6HOPNc2t8QHMSvwbSF+Vp9ZkOvrM36yUOufctoqON+wXrliEY0J4
+ ksR89ZILRRAold9Mh0YDqEJc1HmuxYLJ7lnbLYH1oui8bLbMBM8S2Uo9RKqV2GROLi44enVt
+ vdrDvo+CxKj2K+d4cleCNiz5qbTxPUW/cgkwG0lJc4I4sso7l4XMDKn95c7JtNsuzqKvhEVS
+ oic5by3fbUnuI0cemeizF4QdtX2uQxrP7RwHFBd+YUia7zCcz0//rv6FZmAxWZGy5arNl6Vm
+ lQqNo7/Poh8WWfRS+xegBxc6hBXahpyUKphAKYkah+m+I0QToCfnGKnPqyYIMDEHCS/RfqA5
+ t8F+O56+oyLBAeWX7XcmyM6TGeVfb+OZVMJnZzK0s2VYAuI0Rl87FBFYgULdgqKV7R7WHzwD
+ uZwJCLykjad45hsWcOGk3OcaAGQS6NDlfhM6O9aYNwGL6tGt/6BkRikNOs7VDEa4/HlbaSJo
+ 7FgndGw1kWmkeL6oQh7wBvYll2buKod4qYntmNKEicoHGU+x91Gcan8mCoqhJkbqrL7+nXG2
+ 5Q/GS5M9RFWS+nYyJh+c3OcfKqVcZQNANItt7+ULzdNJuhvTRRdC3g9hmCEuNSr+CLMdnRBY fv0=
+In-Reply-To: <9c06fdac-df4f-449c-8d58-b57c375c1751@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 10/22/24 10:56 AM, Ilpo Järvinen wrote:
-
-[...]
-
-> Hi all,
+On 23/10/2024 14:22, Raj Kumar Bhagat wrote:
 > 
-> I've now applied patch 3 to review-ilpo branch in pdx86 repo.
+> The above three blocks represent the QCN9274 WiFi devices connected to their
+> respective PCI slots. The dotted line represents the WSI connection that connects
+> these three devices together. Hence, the WSI interface is part of the QCN9274 device.
 > 
-> I'd appreciate if somebody confirms I got those comment edits right.
+> To describe this WSI hardware connection in the device tree, we are adding three
+> properties inside the WSI object:
 > 
+> 1. qcom,wsi-group-id:
+>    In the above diagram, we have one WSI connection connecting all three devices.
+>    Hence, “qcom,wsi-group-id” for all three devices can be 0.
+> 
+>    This cannot be implied by the compatible property, as explained below:
+>    Let’s take the case of a platform that can have four QCN9274 WiFi devices. Below
+>    is one possibility of a WSI connection:
+> 
+>          +-------+       +-------+          +-------+      +-------+
+>          | pcie2 |       | pcie3 |          | pcie1 |      | pcie0 |
+>          |       |       |       |          |       |      |       |
+>    +---->|  wsi  |------>|  wsi  |--+   +-->|  wsi  |----->|  wsi  |----+
+>    |     | idx 0 |       | idx 1 |  |   |   | idx 0 |      | idx 1 |    |
+>    |     +-------+       +-------+  |   |   +-------+      +-------+    |
+>    +--------------------------------+   +-------------------------------+
+> 
+>    In this case, QCN9274 devices connected in PCIe2 and PCIe3 will have the same
+>    “qcom,wsi-group-id”. This group-id will be different from the “qcom,wsi-group-id”
+>    of QCN9274 devices connected at PCIe1 and PCIe0.
 
-Hi Ilpo,
+Thanks, this explains why group-id cannot be same...
 
-looks good to me. Thanks for fixing this up!
+> 
+> 2. qcom,wsi-index:
+>    This is a unique identifier of the device within the same group. The value of
+>    wsi-idx is represented in both the above cases (RDP433 and the 4 WiFi device
+>    platform) in the diagram itself.
+
+But still any device-indexing is in general not accepted (and was
+mentioned during reviews multiple times).
+
+This looks like circular list, so phandle will be enough. You only need
+to mark devices being part of the same chain.
+
+Actually graph with endpoints would be more suitable, assuming above
+diagram represents connections.
+
+Please include that diagram in binding description.
+
+> 
+> 3. qcom,wsi-num-devices:
+>    Represents the number of devices connected through WSI within the same WSI group to
+>    which the device belongs.
+>    
+>    In the case of RDP433, all devices will have this number as 3.
+>    For the second example with four WiFi devices but with two WSI connections, the
+>    value of “qcom,wsi-num-devices” for each device will be 2.
+
+Not needed, just iterate over the graph children.
 
 Best regards,
-Max
+Krzysztof
+
 
