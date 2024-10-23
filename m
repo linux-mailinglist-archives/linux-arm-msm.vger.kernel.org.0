@@ -1,280 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-35607-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35608-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BEA99ACAB5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 15:05:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DB159ACF77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:53:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C36BB236DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 13:05:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3ABA61C21EE0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 15:53:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41AC1AC444;
-	Wed, 23 Oct 2024 13:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3C131C876D;
+	Wed, 23 Oct 2024 15:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="A1Kg3w74"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="csyVFXl+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6FB3156C72;
-	Wed, 23 Oct 2024 13:05:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E98814658D;
+	Wed, 23 Oct 2024 15:52:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729688736; cv=none; b=jkLaf4/RVaM0m8s/kU4aNEmBh60c7TowlU2jhPYsKPi5xDaZGo5dmM6c31J2L1G3mYDTTDMyJl0tbEkhEhSRRx6tOEVeCDChgG3RlZj7O0YLityc8GL0akprFnMwF0pGPhZVWuvSsSNlOq8rUq/H4x+Ldm1F/42d6NvbZpZ2Adg=
+	t=1729698730; cv=none; b=foCF6IiNznVQmwAFjENDf27SDpQpGTgBcUawT05AhZp1d1SxV1L0Ndo4XwjxtH9ph87UW6nrR0v4kW+1srmXCusmSGuiXzEQ6sLXtkgI9vDX421gSYUgaQy2FJyV75D4+/TYArfcDuYuPqo61QvmHcGspMf4HlLd1lq6KHJmAvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729688736; c=relaxed/simple;
-	bh=UBCLs1CT6lS89hLMeBBrgYkW5FO4QlEYT3JDYAYWdPE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=iHgG2gcqTRt/Skttxl7RpP8Nq23ZSrxuXnoHJeFsrftQQumU/fARK9DaFNJqJrK089LPiNymcIt14Cplz4vVO5TR3QiMfMPwyiA4Htj+VfMtVD4aounFF39+02vLdJ7c8YMb4iWiSGinMqrCB6gLcGZ9C4upi0bgzAqiygJMBnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=A1Kg3w74; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9uKAa020008;
-	Wed, 23 Oct 2024 13:05:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4403SM6nc/S9kArf7Hq5R7eFffWVXEua9Stbp6iDzSo=; b=A1Kg3w74+xsRbx0L
-	Dek8a/wPSE7yAezN3U4vxBhqh7ke86c10Utm9PqaBW228uO+BNyCfnJyb+MHbI1M
-	iyDSo8/hl0xs7EZx3rHO4yYni4UP4gFxJHqSYRz/Dr34GPps4gPDYaW7tey2aDOG
-	pKprSCBBqhBhys56Vb4C0+rE4ZlLA1vhbE0pwFCxl+J/MFoKtpMrlN0z/U5OaTun
-	GkTl36AnNXq51Ao5oziOvdTivxaYFdQ6N0zYA/fTIUYJccEwiD4xsaFvUqmmjkaf
-	rEXqtpJsuxd7knsS18nfoM8QI62tW2br9yLXMWe6Qx/xqwKnXSomQYQg/18PVnG3
-	XtzzCg==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em66a8vx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 13:05:17 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49ND5GIx005127
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 13:05:16 GMT
-Received: from [10.253.39.49] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 23 Oct
- 2024 06:05:11 -0700
-Message-ID: <a2448df9-9b8b-4b7e-ada5-6f26d7e7da97@quicinc.com>
-Date: Wed, 23 Oct 2024 21:05:09 +0800
+	s=arc-20240116; t=1729698730; c=relaxed/simple;
+	bh=AV5H6hlJaONoA8nAGCTvlAiXR3Rc2bBojnFNOvSUClY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BHlS1H60lJ2C0fDT1GrY0VHUhkZKHbtRwIxkEprIXCRi4EhigoGtYInIx3eKVWeDmwRg077xIEHXmiref9JbNhIHwspVLJvlD1bsLCRfkzRjS+M74GRThvG2ThAKLS9GD+BQxt3NM8L0d2TcsqCJY7J35MYMP7JCnNvVDEITRb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=csyVFXl+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E83EC4CEE5;
+	Wed, 23 Oct 2024 15:52:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729698730;
+	bh=AV5H6hlJaONoA8nAGCTvlAiXR3Rc2bBojnFNOvSUClY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=csyVFXl+a9ST4pNz1CLX5BAdgkHbbkNAKXLPqWHSKWThEiQetm0UloKxGR15tXnoE
+	 EHw6zTRxoAuprAeOUZHsjjn6+RlmjDHJyLeYT+AHXnbDJcoRS9vMAvW6Kpwqq2Cvih
+	 IStNGPnHVAmmKi87DgWmo2uvCjIM51xNf1+hGhBVvPsHlKbGgkwAMVQItDU6fuwpj4
+	 TwPafKb8i6mnK/xeRCUPGfsYTu3Hzd3TkmDJuDami0+L6N64nIQnkDUKqzIOlHGiGx
+	 cZAIbgwYmuezJ0G1cZDENWIl0dJoLpbkfnqPo6JnaKexHQU3eDiSfARth9BPZa7qwT
+	 a1LIKFNZWIOKQ==
+Date: Wed, 23 Oct 2024 10:52:07 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+Cc: sboyd@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	quic_varada@quicinc.com, quic_srichara@quicinc.com
+Subject: Re: [PATCH V7 5/5] firmware: qcom_scm: ipq5332: add support to pass
+ metadata size
+Message-ID: <pdyy4zflklvi5syhwt3oklidq3mwizthds2td4qzglhhdulel5@337xsbehgdp3>
+References: <20240820055618.267554-1-quic_gokulsri@quicinc.com>
+ <20240820055618.267554-6-quic_gokulsri@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: Add CMN PLL node for IPQ9574 SoC
-To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring
-	<robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
-	<conor+dt@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon
-	<will@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <quic_kkumarcs@quicinc.com>,
-        <quic_suruchia@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_linchen@quicinc.com>, <quic_leiwei@quicinc.com>,
-        <bartosz.golaszewski@linaro.org>, <srinivas.kandagatla@linaro.org>
-References: <20241015-qcom_ipq_cmnpll-v4-0-27817fbe3505@quicinc.com>
- <20241015-qcom_ipq_cmnpll-v4-4-27817fbe3505@quicinc.com>
- <abro3enahzbugcwokcyyhwybbokestbigvzhywxhnfrdjihni3@7ej2hkgbgtf6>
- <b336724c-1fea-4e1e-9477-66f53d746f09@quicinc.com>
- <CAA8EJprVNOLO-CoorNhvKrrSD1bNKdFrzth5BL0GHXffPv62jw@mail.gmail.com>
- <32dbf7ee-1190-401c-b6b1-bc8c70a5158c@quicinc.com>
- <cqgkc3qpupbv47rqxiyhe2m466zxcxepyfcgyaieo2sggffprx@mstqi4pqoiqc>
-Content-Language: en-US
-From: Jie Luo <quic_luoj@quicinc.com>
-In-Reply-To: <cqgkc3qpupbv47rqxiyhe2m466zxcxepyfcgyaieo2sggffprx@mstqi4pqoiqc>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1CO6k--mz-lrf1Qh_Mly3NrWvlL3yEAP
-X-Proofpoint-GUID: 1CO6k--mz-lrf1Qh_Mly3NrWvlL3yEAP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- adultscore=0 phishscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
- suspectscore=0 clxscore=1011 mlxscore=0 bulkscore=0 priorityscore=1501
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230078
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240820055618.267554-6-quic_gokulsri@quicinc.com>
 
-
-
-On 10/18/2024 11:38 PM, Dmitry Baryshkov wrote:
-> On Fri, Oct 18, 2024 at 10:03:08PM +0800, Jie Luo wrote:
->>
->>
->> On 10/18/2024 4:11 PM, Dmitry Baryshkov wrote:
->>> On Fri, 18 Oct 2024 at 09:55, Jie Luo <quic_luoj@quicinc.com> wrote:
->>>>
->>>>
->>>>
->>>> On 10/18/2024 6:32 AM, Dmitry Baryshkov wrote:
->>>>> On Tue, Oct 15, 2024 at 10:16:54PM +0800, Luo Jie wrote:
->>>>>> The CMN PLL clock controller allows selection of an input
->>>>>> clock rate from a defined set of input clock rates. It in-turn
->>>>>> supplies fixed rate output clocks to the hardware blocks that
->>>>>> provide ethernet functions such as PPE (Packet Process Engine)
->>>>>> and connected switch or PHY, and to GCC.
->>>>>>
->>>>>> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
->>>>>> ---
->>>>>>     arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi |  6 +++++-
->>>>>>     arch/arm64/boot/dts/qcom/ipq9574.dtsi            | 20 +++++++++++++++++++-
->>>>>>     2 files changed, 24 insertions(+), 2 deletions(-)
->>>>>>
->>>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
->>>>>> index 91e104b0f865..77e1e42083f3 100644
->>>>>> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
->>>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp-common.dtsi
->>>>>> @@ -3,7 +3,7 @@
->>>>>>      * IPQ9574 RDP board common device tree source
->>>>>>      *
->>>>>>      * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
->>>>>> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>>>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->>>>>>      */
->>>>>>
->>>>>>     /dts-v1/;
->>>>>> @@ -164,6 +164,10 @@ &usb3 {
->>>>>>        status = "okay";
->>>>>>     };
->>>>>>
->>>>>> +&cmn_pll_ref_clk {
->>>>>> +    clock-frequency = <48000000>;
->>>>>> +};
->>>>>> +
->>>>>>     &xo_board_clk {
->>>>>>        clock-frequency = <24000000>;
->>>>>>     };
->>>>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>>>>> index 14c7b3a78442..93f66bb83c5a 100644
->>>>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>>>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
->>>>>> @@ -3,10 +3,11 @@
->>>>>>      * IPQ9574 SoC device tree source
->>>>>>      *
->>>>>>      * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
->>>>>> - * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>>>>> + * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
->>>>>>      */
->>>>>>
->>>>>>     #include <dt-bindings/clock/qcom,apss-ipq.h>
->>>>>> +#include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
->>>>>>     #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
->>>>>>     #include <dt-bindings/interconnect/qcom,ipq9574.h>
->>>>>>     #include <dt-bindings/interrupt-controller/arm-gic.h>
->>>>>> @@ -19,6 +20,11 @@ / {
->>>>>>        #size-cells = <2>;
->>>>>>
->>>>>>        clocks {
->>>>>> +            cmn_pll_ref_clk: cmn-pll-ref-clk {
->>>>>> +                    compatible = "fixed-clock";
->>>>>> +                    #clock-cells = <0>;
->>>>>> +            };
->>>>>
->>>>> Which block provides this clock? If it is provided by the external XO
->>>>> then it should not be a part of the SoC dtsi.
->>>>
->>>> The on-chip WiFi block supplies this reference clock. So keeping it in
->>>> the SoC DTSI is perhaps appropriate.
->>>
->>> Then maybe it should be provided by the WiFi device node? At least you
->>> should document your design decisions in the commit message.
->>
->> This CMN PLL reference clock is fixed rate and is automatically
->> generated by the SoC's internal Wi-Fi hardware block with no software
->> configuration required from the Wi-Fi side.
->>
->> Sure, I will enhance the commit message to add the information on the
->> fixed reference clock from Wi-Fi block. Hope this is ok.
+On Tue, Aug 20, 2024 at 11:26:18AM GMT, Gokul Sriram Palanisamy wrote:
+> From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 > 
-> We have other fixed clocks which are provided by hardware blocks.
-> Without additional details it is impossible to answer whether it is fine
-> or not.
+> IPQ5332 security software running under trustzone
+> requires metadata size. With V2 cmd, pass metadata
+> size as well.
 
-There is an XO on the board which supplies reference clock (48Mhz or
-96Mhz) to the Wi-Fi block on the SoC. There is a multiplier/divider in
-the Wi-Fi block, which ensures the output reference clock of 48Mhz is
-supplied to CMN PLL block.
+Documentation says commit messages should be wrapped at 75 characters,
+not 50...
 
-In summary, below is the path to receive the reference clock at CMN PLL:
-The clock path is .XO (48 MHZ/96 MHZ) --> WiFi (multiplier/divider) 
--->(48 MHZ) --> CMN PLL.
+Please improve the second sentence here, "v2 cmd" is coming out of
+nowhere. Say that there is a new command with a size parameter added.
 
-There is no software configuration required for the entire path, as it
-is fully controlled by bootstrap pins on the board. There are bootstrap
-pins for selecting the selecting the XO frequency (48Mhz or 96Mhz) and
-based on this, the divider is automatically selected by HW (1 for 48Mhz,
-2 for 96Mhz), to ensure output clock to CMN PLL is 48Mhz.
+Is this operation available on all targets, or is it IPQ-specific?
+
+
+I don't see the relationship between this patch and the cover letter
+subject "remove unnecessary q6 clocks". Should this have been send on
+its own?
 
 > 
->>
->>>
->>> Also, I don't think this node passes DT schema validation. Did you check it?
->>
->> Yes, the DT is validated against the schema, I have shared the logs
->> below. Could you please let me know If anything needs rectification?
+> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> ---
+> Changes in v7:
+> 	- No changes.
+> 	- Rebased on top of linux-next.
 > 
-> I see, you are setting the cmn_pll_ref_clk frequency in the
-> ipq9574-rdp-common.dtsi file. If the PLL is internal to the SoC, why is
-> the frequency set outside of it? Is it generated by multiplying the XO
-> clk? Should you be using fixed-factor clock instead?
+> Changes in v6:
+> 	- Rebased on linux-next
 > 
+> Changes in v5:
+> 	- Rebased on linux-next
+> 
+> Changes in v4:
+> 	- Rebased on linux-next
+> 
+>  drivers/firmware/qcom/qcom_scm.c | 8 ++++++++
+>  drivers/firmware/qcom/qcom_scm.h | 1 +
+>  2 files changed, 9 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index e60bef68401c..aa559fd01932 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -607,6 +607,14 @@ int qcom_scm_pas_init_image(u32 peripheral, const void *metadata, size_t size,
+>  
+>  	desc.args[1] = mdata_phys;
+>  
+> +	if (__qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_PIL,
+> +					 QCOM_SCM_PAS_INIT_IMAGE_V2)) {
+> +		desc.cmd = QCOM_SCM_PAS_INIT_IMAGE_V2;
+> +		desc.arginfo =
+> +			QCOM_SCM_ARGS(3, QCOM_SCM_VAL, QCOM_SCM_RW, QCOM_SCM_VAL);
+> +		desc.args[2] = size;
+> +	}
+> +
 
-Since the reference clock is controlled by bootstrap pins on the board,
-it may be appropriate to define the frequency for this reference clock
-in the board DTS. Given the clock tree described above, I will update
-the cmn_pll_ref_clk to define it as a fixed-factor clock as per your
-suggestion, with its frequency and factors configured in board DTSI.
-These values defined in rdp-common.dtsi will be default values that can
-be overridden if necessary by different boards. Hope this approach is
-fine.
+Please avoid default initialization and then conditionally overwrite
+parts of the values. Make a clear:
 
-In ipq9574.dtsi:
-cmn_pll_ref_clk: cmn-pll-ref-clk { 
-  
-  
-
-         compatible = "fixed-factor-clock"; 
-  
-  
-
-         clocks = <&xo_clk>; 
-  
-  
-  
-  
-  
-
-	#clock-cells = <0>;
-};
-
-xo_clk: xo {
-	compatible = "fixed-clock";
-	#clock-cells = <0>;
-};
-
-In ipq9574-rdp-common.dtsi.
-&cmn_pll_ref_clk {
-	clock-div = <1>;
-	clock-mult = <1>;
-};
-
-&xo_clk {
-	clock-frequency = <48000000>;
+if (v2 availble) {
+	prepare v2 request;
+} else {
+	prepare v1 request;
 }
+
+Regards,
+Bjorn
+
+>  	ret = qcom_scm_call(__scm->dev, &desc, &res);
+>  	qcom_scm_bw_disable();
+>  
+> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
+> index 685b8f59e7a6..008b59cbad36 100644
+> --- a/drivers/firmware/qcom/qcom_scm.h
+> +++ b/drivers/firmware/qcom/qcom_scm.h
+> @@ -96,6 +96,7 @@ struct qcom_tzmem_pool *qcom_scm_get_tzmem_pool(void);
+>  
+>  #define QCOM_SCM_SVC_PIL		0x02
+>  #define QCOM_SCM_PIL_PAS_INIT_IMAGE	0x01
+> +#define QCOM_SCM_PAS_INIT_IMAGE_V2	0x1a
+>  #define QCOM_SCM_PIL_PAS_MEM_SETUP	0x02
+>  #define QCOM_SCM_PIL_PAS_AUTH_AND_RESET	0x05
+>  #define QCOM_SCM_PIL_PAS_SHUTDOWN	0x06
+> -- 
+> 2.34.1
+> 
 
