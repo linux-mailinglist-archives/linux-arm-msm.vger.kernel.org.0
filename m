@@ -1,61 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-35509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66A469ABCC3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:18:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42DAA9ABCC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:18:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 957121C22B1E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:18:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 718C21C228E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:18:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9CF14EC77;
-	Wed, 23 Oct 2024 04:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23D391531E2;
+	Wed, 23 Oct 2024 04:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCPgPHE9"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/9AMxLQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B405414D6EB;
-	Wed, 23 Oct 2024 04:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95681531D5;
+	Wed, 23 Oct 2024 04:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729656980; cv=none; b=ent9zCacGpZImS3FD00j/zlYH+VtXVqjVfL9dQlG208RoXm4dlX9iQBmSBE/7/qi1wg0yzU/Cp22iYlMDB/5nfaYkkmW0ClRJQ560tnM2vGy1PgYwgFaU0nW0iCgkYCrKU6dr2J1ZG5lExyJWrPgiQRa1ihNGHlnfeU2B0tmau0=
+	t=1729656982; cv=none; b=Iq5Nuc7M+po3LlnEs6QBpJkyljq+jD9F2Xg1CHiTnBDsCIH7uNf/HeCEv2NmyHlenhBewTt70QKskxBGJSw5yD9XfNsKWHRvP5HJ08QYT6nbc0wFBF3TuR/F/+ReMi7AIIs5R1n7jomEyd6gbvsSpqLQMk5lMVyborVmDCM8R0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729656980; c=relaxed/simple;
-	bh=N14KHiijB3PmI7LnNC3AS2DmGJh6+HTTE8Srpn+ssjk=;
+	s=arc-20240116; t=1729656982; c=relaxed/simple;
+	bh=K2Km0MA/CydEwXnO08OoydV2jYx7vunjjMa5JkF9eUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nHzv8GRNmPz6R90NrAMzgyCX7LCqxlE5VyYTdXQ7HgpEpfCJinE8ElVMg+YEqNIKWfWPsQbI3/uyJpkcfcSBm/QdQWQxAxT9vCfuMmdcqBXDPrd2EoGi0IrTOESjy2qNYpsNSjtiK+TarP8l4uLt9xJOXQt7Nc6w71EF1KP7e08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCPgPHE9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93DCC4CEC6;
-	Wed, 23 Oct 2024 04:16:19 +0000 (UTC)
+	 MIME-Version:Content-Type; b=FcaDoyrFBAK+Aa5jOcNHGoLOPQqVhvq4DVejZSPIu/aP0HyGKDzwAQ6rKTHu6JQYB3Dgaw3s+3ZaK6gOn5SQbPkyiOYG8HvMcW0wqYaDiqdu4AT0WqlAlpohxc+3CFj6LN0OfoVuKHdn0czXh1QTCs+zPNvAimuyRsBhazxQQdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/9AMxLQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03CCC4CEE7;
+	Wed, 23 Oct 2024 04:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729656980;
-	bh=N14KHiijB3PmI7LnNC3AS2DmGJh6+HTTE8Srpn+ssjk=;
+	s=k20201202; t=1729656981;
+	bh=K2Km0MA/CydEwXnO08OoydV2jYx7vunjjMa5JkF9eUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DCPgPHE9Zqe3vSC9W6fWlVSzPMAbvFeiSIklcnUp5i2eHjrP1unFl4X/nyaU+NgGs
-	 Zd4SrvojYfMoM8RjFBNzO8xwIcvijXKJDIhtWQvphpm9H6gFRplRz8wxDTKemt85VN
-	 mWdoouXBHUL0/nwJSFyd4MPQ10ihZDwgeu7DM/gF1HvWCRbkN+tczZUwDbe5dspGkM
-	 p/q2g23A8why8dyquEhn4iC0FsVHe5XV3a39wyGZ29TpfBAaQL3sPxjQhlq0BY3yNY
-	 JwLrihzfvyWFoT6KB4yrgQqCB6Y/+z1W5u0sQIjritRdgXdHV6BzNvGyb8dZ9Vkd3y
-	 rpo5N+kOV1ioQ==
+	b=i/9AMxLQMD/ii018Bz/pU2ecVtX2E5y6odmm9GnSqbeqzeLMQxKLnbDT6yvzBCJJt
+	 6QIAWl6z9kYCRYAxNPuwY0f8PH9mGpu/geQosFrJFUu71RLnRyCgQb5pjyakDklnPX
+	 CJmpEebBftRFCr6b9kfuNG8p8EPRkkElk4+0af2sgq0+RzTBuuZ1cmRmusE9q5WyWL
+	 UoAd4mVFoJsZK5Uej4X9MXfmcl+TPgQ6Gypta7y5x3Oggr4ddRyacDA6I2ASVf1XU8
+	 +9/KDYHcwmea0mBMW487J0hzlcqqizw9haEb2Aq1vo1KE1H/5gmS6umWAH0a/IQ9pZ
+	 b1ByMN1ejLjtQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
 	Rob Herring <robh@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Maya Matuszczyk <maccraft123mc@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-crd Rename "Twitter" to "Tweeter"
-Date: Tue, 22 Oct 2024 23:15:57 -0500
-Message-ID: <172965696397.224417.6555387602908598104.b4-ty@kernel.org>
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH v4 00/12] PCI: qcom: Enumerate endpoints based on Link up event in 'global_irq' interrupt
+Date: Tue, 22 Oct 2024 23:15:58 -0500
+Message-ID: <172965696407.224417.4025107228766337178.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241019190214.3337-2-maccraft123mc@gmail.com>
-References: <20241019190214.3337-2-maccraft123mc@gmail.com>
+In-Reply-To: <20240828-pci-qcom-hotplug-v4-0-263a385fbbcb@linaro.org>
+References: <20240828-pci-qcom-hotplug-v4-0-263a385fbbcb@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +71,25 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 19 Oct 2024 21:02:15 +0200, Maya Matuszczyk wrote:
-> This makes the name consistent with both other x1e80100 devices and the
-> dictionary. A UCM fix was merged already and is required in order for
-> sound to work after this commit.
+On Wed, 28 Aug 2024 21:16:10 +0530, Manivannan Sadhasivam wrote:
+> This series adds support to enumerate the PCIe endpoint devices using the Qcom
+> specific 'Link up' event in 'global' IRQ. Historically, Qcom PCIe RC controllers
+> lacked standard hotplug support. So when an endpoint is attached to the SoC,
+> users have to rescan the bus manually to enumerate the device. But this can be
+> avoided by rescanning the bus upon receiving 'Link up' event.
 > 
+> Qcom PCIe RC controllers are capable of generating the 'global' SPI interrupt
+> to the host CPUs. The device driver can use this interrupt to identify events
+> such as PCIe link specific events, safety events etc...
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100-crd Rename "Twitter" to "Tweeter"
-      commit: 787ade24cc3af4a8ec9498c9cd8a6d47a4d86485
+[09/12] arm64: dts: qcom: sa8775p: Add 'linux,pci-domain' to PCIe EP controller nodes
+        commit: 9e8f38da6e240a71b860c4a895ea583f63964c45
+[12/12] arm64: dts: qcom: sm8450: Add 'global' interrupt to the PCIe RC node
+        commit: 7dc36be39c96f00d0d7c577cc91ff6b108b1d444
 
 Best regards,
 -- 
