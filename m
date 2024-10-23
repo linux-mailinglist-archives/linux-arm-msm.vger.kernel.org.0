@@ -1,259 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-35603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 835EA9AC99E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 14:03:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 524329AC9AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 14:08:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A37431C20FCD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 12:03:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72CC61C209BE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 12:08:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FF3A1AB6E9;
-	Wed, 23 Oct 2024 12:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 893D11AB6FA;
+	Wed, 23 Oct 2024 12:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XVjgGrXj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EvKMFIP3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75501136331;
-	Wed, 23 Oct 2024 12:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D2814D2AC;
+	Wed, 23 Oct 2024 12:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729685006; cv=none; b=fg1GIqxb+Uy+eMhPHzVI3vHGdraz0GANz6HAx0aSr3mJluPrQhj0zhMlmixO1Y5UpRfXWjXG++V9oZ21bI9NslusLuxduP5XdmvOuB0F0WlWgHHdJtXM/ePLCdtzT/yBCMfwTJ5APSgfLw087O1FkHupcd27nww8bsCko2gagss=
+	t=1729685325; cv=none; b=A/oC0xz6yfeJlsv4LEpc+xnsZt6WSMmPb93AzYNKDc9tMtZ+up6Cwdo4kCnrGY6fVBMOF3QPY9iHa4SFEFJLKSFUPhIr2LDMz9b4wBRrCdvaUxwRNJuWzWMFsc1sFp4BkgvyeH80hyDi3PpT2tmPMmH9jwWW+O3AoImYtHUXxBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729685006; c=relaxed/simple;
-	bh=eele/57XKY9bv00R4K4r1mo5QL7zPd3G0vCQcvof9yA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=tG53RwyC84avHKARoNWBPlmhCVir47XH/6n0puZ9XkwWnG7LeIfiMejuSyUkhE8vaM0kxHrxJyVQ+SABQTqW0CiZ37qKAwMc7ReAWhDRRsxQH+RwgJ2qkv/LiVJKY1oGbwKTahVZO+mFwuE91NrSkHDHb/vm+4sWrw/HLlnCf4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XVjgGrXj; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9c5Oj025865;
-	Wed, 23 Oct 2024 12:03:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FhpdeXtFYgey3o8AnFXZDdGucTpvXx8nGhlJuK27hOk=; b=XVjgGrXja1T4CxQa
-	J4HB5UI2crA6CXxIPrtD/Xg5ZD5/Hp+8l0BRdSlo7cNw2kVeNusqPXHszTsWzw1+
-	nQHCM7WT7W+xnS6wnY2zg3meSZl6mrO3ZdCTMItpZHElu50IwrwapNwgr8flpjfy
-	6sXuzf5QEw0tmdFzP+DECTZS/2klNj0cnRq1C9eGePgd/vBbn0wXOQy9Zku5q5ZG
-	N9d4HZSM4q5ApGwHCtItB7vAWkhNCXKbQLo+tnNzswFCp3F1u4Zd6Z1qpiGpwvR/
-	9sVPki/ZZ78PfMl10VkzmywvJh65z9R+igl06PtHVKJ0EwcbPAlnpelpldYvhZqQ
-	rXOHPw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3wj1y0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 12:03:14 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49NC3D8G027985
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 12:03:13 GMT
-Received: from [10.216.48.230] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 23 Oct
- 2024 05:03:09 -0700
-Message-ID: <c14da815-b033-1de7-f56d-86cf92103eb9@quicinc.com>
-Date: Wed, 23 Oct 2024 17:33:06 +0530
+	s=arc-20240116; t=1729685325; c=relaxed/simple;
+	bh=F3oVWNgIClwObbZ786CTcXhGTYxKdHNsWla3wR2/wGg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Thb1EtCFrH6i74nsopKW/K4wW7VVdEbTfQCHZD9di1RbCeMHQeyC5eh0EYUxdoI/XcPP/U+kYASneAQVT+ykpwzgocX5u1iIXz6/tUA9cr28++KuLxSToHF5sd2zHyvjPST90RRZf5il8OZZlEHbkY0u+0upoasjm23kzx0igoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EvKMFIP3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84640C4CEC6;
+	Wed, 23 Oct 2024 12:08:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729685324;
+	bh=F3oVWNgIClwObbZ786CTcXhGTYxKdHNsWla3wR2/wGg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=EvKMFIP3M8vkM4ZW58KdPKtmIehEQyM8FHsKpCHfIOhW8RWY8Ua8XKlFEGpadMddX
+	 /TgAaKC6fI+xVlh/BQ1jFl4gt54EYbOEk3MvICqac0SDZHaDFp/xrhu3TabdkdZyxd
+	 HU0gQLh6p0EsNkKauvBXcT4/ZLUf6paGuFDKfSWsSOsx3Y/aOkZsVfDxzvPnOLQ91u
+	 bqUptE3GqcWTDaSLh9jWFB3yBXBUOtW1e66k6YvKrgj+XTXCJ/mBWuI2A+Qwb97FYh
+	 glRNPdw2kohcyhARw2Eg3ArJM7YgBXEhNCbuBfVKCuojfDut12ef2j6poKlQhowhxi
+	 HhJuMRxRQA+Sg==
+Message-ID: <50c0f184-030b-4a19-bf8a-077505170f03@kernel.org>
+Date: Wed, 23 Oct 2024 14:08:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 13/28] media: iris: implement subscribe_event and
- unsubscribe_event ioctls
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 1/6] dt-bindings: net: wireless: update required
+ properties for ath12k PCI module
+To: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>, ath12k@lists.infradead.org
+Cc: linux-wireless@vger.kernel.org, Kalle Valo <kvalo@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jeff Johnson <jjohnson@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20241023060352.605019-1-quic_rajkbhag@quicinc.com>
+ <20241023060352.605019-2-quic_rajkbhag@quicinc.com>
+ <87db3d68-ab1a-4cc4-9857-416de39cea0f@kernel.org>
+ <e2c1ce1a-89af-4feb-a21a-9ca2578430e7@quicinc.com>
+ <b97b8350-3925-40b0-8f87-f89df429a52a@kernel.org>
+ <e7b27f57-efb2-45ea-bbe0-e5aeb90cbff9@quicinc.com>
+ <606083d8-4332-45e4-be41-08ca5425cc03@kernel.org>
+ <94defe49-c87a-44f6-8768-03f3d6687ac3@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-To: Hans Verkuil <hverkuil@xs4all.nl>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-CC: Sebastian Fricke <sebastian.fricke@collabora.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-media@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Vedang Nagar
-	<quic_vnagar@quicinc.com>
-References: <20241014-qcom-video-iris-v4-v4-0-c5eaa4e9ab9e@quicinc.com>
- <20241014-qcom-video-iris-v4-v4-13-c5eaa4e9ab9e@quicinc.com>
- <990813bb-05b8-48e7-af00-e07de6836a17@xs4all.nl>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <990813bb-05b8-48e7-af00-e07de6836a17@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: jWHqx0papxzt4RdZru4VR-VsrNMcUe4f
-X-Proofpoint-ORIG-GUID: jWHqx0papxzt4RdZru4VR-VsrNMcUe4f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 phishscore=0
- mlxlogscore=999 lowpriorityscore=0 malwarescore=0 suspectscore=0
- spamscore=0 mlxscore=0 impostorscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230071
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 fv0=
+In-Reply-To: <94defe49-c87a-44f6-8768-03f3d6687ac3@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+On 23/10/2024 12:28, Raj Kumar Bhagat wrote:
+> On 10/23/2024 12:29 PM, Krzysztof Kozlowski wrote:
+>> On 23/10/2024 08:53, Raj Kumar Bhagat wrote:
+>>> On 10/23/2024 12:17 PM, Krzysztof Kozlowski wrote:
+>>>> On 23/10/2024 08:45, Raj Kumar Bhagat wrote:
+>>>>> On 10/23/2024 12:05 PM, Krzysztof Kozlowski wrote:
+>>>>>> On 23/10/2024 08:03, Raj Kumar Bhagat wrote:
+>>>>>>> The current device-tree bindings for the Ath12K module list many
+>>>>>>> WCN7850-specific properties as required. However, these properties are
+>>>>>>> not applicable to other Ath12K devices.
+>>>>>>>
+>>>>>>> Hence, remove WCN7850-specific properties from the required section,
+>>>>>>> retaining only generic properties valid across all Ath12K devices.
+>>>>>>> WCN7850-specific properties will remain required based on the device's
+>>>>>>> compatible enum.
+>>>>>> Just not true. These apply to all devices described in this binding.
+>>>>>>
+>>>>>> NAK.
+>>>>>>
+>>>>>> Don't send patches for your downstream stuff.
+>>>>> This is not for downstream. This series is the per-requisite for ath12k
+>>>>> MLO support in upstream.
+>>>>>
+>>>>> In the subsequent patch [2/6] we are adding new device (QCN9274) in this
+>>>>> binding that do not require the WCN7850 specific properties.
+>>>>>
+>>>>> This is a refactoring patch for the next patch [2/6].
+>>>> It's just wrong. Not true. At this point of patch there are no other
+>>>> devices. Don't refactor uselessly introducing incorrect hardware
+>>> Ok then, If we squash this patch with the next patch [2/6], that actually adding
+>>> the new device, then this patch changes are valid right?
+>> Yes, except I asked to have separate binding for devices with different
+>> interface (WSI). You add unrelated devices to same binding, growing it
+>> into something tricky to manage. Your second patch misses if:then
+>> disallwing all this WSI stuff for existing device... and then you should
+>> notice there is absolutely *nothing* in common.
+>>
+> 
+> I understand your point about having separate bindings if there are no common
+> properties. However, the title and description of this binding indicate that it
+> is intended for Qualcomm ath12k wireless devices with a PCI bus. Given this, the
+> QCN9274 seems to fit within the same binding.
+
+Feel free to fix it. Or add common schema used by multiple bindings.
+
+> 
+> Additionally, there will likely be more properties added in the future that could
+> be common. For example, the “qcom,ath12k-calibration-variant” property (which the
+
+You are supposed to add them now, not later. See writing bindings. They
+are supposed to be complete.
+
+> ath12k host currently doesn’t support reading and using, hence we are not adding it
+> now) could be a common property.
+
+What is "host"? Either the device has this property or not. Whether host
+supports something does not really matter, right? You have hardware
+property or you have it *not*.
+
+> 
+> If you still recommend creating a separate binding for the QCN9274, we are open to
+> working on that.
 
 
+Best regards,
+Krzysztof
 
-On 10/23/2024 4:23 PM, Hans Verkuil wrote:
-> On 14/10/2024 11:07, Dikshita Agarwal wrote:
->> From: Vedang Nagar <quic_vnagar@quicinc.com>
->>
->> Implement subscribe_event and unsubscribe_event iocts
->> with necessary hooks.
->>
->> Signed-off-by: Vedang Nagar <quic_vnagar@quicinc.com>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> ---
->>  drivers/media/platform/qcom/iris/iris_instance.h |  2 ++
->>  drivers/media/platform/qcom/iris/iris_vdec.c     | 26 ++++++++++++++++++++++++
->>  drivers/media/platform/qcom/iris/iris_vdec.h     |  1 +
->>  drivers/media/platform/qcom/iris/iris_vidc.c     | 17 ++++++++++++++++
->>  4 files changed, 46 insertions(+)
->>
->> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
->> index bb43119af352..d28b8fd7ec2f 100644
->> --- a/drivers/media/platform/qcom/iris/iris_instance.h
->> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
->> @@ -30,6 +30,7 @@
->>   * @once_per_session_set: boolean to set once per session property
->>   * @m2m_dev:	a reference to m2m device structure
->>   * @m2m_ctx:	a reference to m2m context structure
->> + * @subscriptions: variable to hold current events subscriptions
->>   */
->>  
->>  struct iris_inst {
->> @@ -48,6 +49,7 @@ struct iris_inst {
->>  	bool				once_per_session_set;
->>  	struct v4l2_m2m_dev		*m2m_dev;
->>  	struct v4l2_m2m_ctx		*m2m_ctx;
->> +	unsigned int			subscriptions;
->>  };
->>  
->>  #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
->> index fd0f1ebc33e8..c4eeba5ed6da 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
->> @@ -3,6 +3,7 @@
->>   * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
->>   */
->>  
->> +#include <media/v4l2-event.h>
->>  #include <media/v4l2-mem2mem.h>
->>  
->>  #include "iris_buffer.h"
->> @@ -13,6 +14,7 @@
->>  #define DEFAULT_WIDTH 320
->>  #define DEFAULT_HEIGHT 240
->>  #define DEFAULT_CODEC_ALIGNMENT 16
->> +#define MAX_EVENTS 30
->>  
->>  void iris_vdec_inst_init(struct iris_inst *inst)
->>  {
->> @@ -208,3 +210,27 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
->>  
->>  	return 0;
->>  }
->> +
->> +int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub)
->> +{
->> +	int ret = 0;
->> +
->> +	switch (sub->type) {
->> +	case V4L2_EVENT_EOS:
->> +		ret = v4l2_event_subscribe(&inst->fh, sub, MAX_EVENTS, NULL);
-> 
-> Why 30 events? EOS needs has to store just 1 event. I'd just drop MAX_EVENTS and
-> fill in 0 or 1 here.
-> 
-Okay, will update it with 0.
->> +		inst->subscriptions |= V4L2_EVENT_EOS;
->> +		break;
->> +	case V4L2_EVENT_SOURCE_CHANGE:
->> +		ret = v4l2_src_change_event_subscribe(&inst->fh, sub);
->> +		inst->subscriptions |= V4L2_EVENT_SOURCE_CHANGE;
->> +		break;
->> +	case V4L2_EVENT_CTRL:
->> +		ret = v4l2_ctrl_subscribe_event(&inst->fh, sub);
->> +		inst->subscriptions |= V4L2_EVENT_CTRL;
->> +		break;
->> +	default:
->> +		return -EINVAL;
->> +	}
->> +
->> +	return ret;
->> +}
->> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.h b/drivers/media/platform/qcom/iris/iris_vdec.h
->> index eb8a1121ae92..707fff34bf4d 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vdec.h
->> +++ b/drivers/media/platform/qcom/iris/iris_vdec.h
->> @@ -13,5 +13,6 @@ void iris_vdec_inst_deinit(struct iris_inst *inst);
->>  int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f);
->>  int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f);
->>  int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
->> +int iris_vdec_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub);
->>  
->>  #endif
->> diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
->> index 1d6c5e8fafb4..8068c06c1f11 100644
->> --- a/drivers/media/platform/qcom/iris/iris_vidc.c
->> +++ b/drivers/media/platform/qcom/iris/iris_vidc.c
->> @@ -4,6 +4,7 @@
->>   */
->>  
->>  #include <linux/pm_runtime.h>
->> +#include <media/v4l2-event.h>
->>  #include <media/v4l2-ioctl.h>
->>  #include <media/v4l2-mem2mem.h>
->>  
->> @@ -320,6 +321,20 @@ static int iris_g_selection(struct file *filp, void *fh, struct v4l2_selection *
->>  	return 0;
->>  }
->>  
->> +static int iris_subscribe_event(struct v4l2_fh *fh, const struct v4l2_event_subscription *sub)
->> +{
->> +	struct iris_inst *inst = container_of(fh, struct iris_inst, fh);
->> +
->> +	return iris_vdec_subscribe_event(inst, sub);
->> +}
->> +
->> +static int iris_unsubscribe_event(struct v4l2_fh *fh, const struct v4l2_event_subscription *sub)
->> +{
->> +	struct iris_inst *inst = container_of(fh, struct iris_inst, fh);
->> +
->> +	return v4l2_event_unsubscribe(&inst->fh, sub);
->> +}
->> +
->>  static struct v4l2_file_operations iris_v4l2_file_ops = {
->>  	.owner                          = THIS_MODULE,
->>  	.open                           = iris_open,
->> @@ -345,6 +360,8 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops = {
->>  	.vidioc_enum_framesizes         = iris_enum_framesizes,
->>  	.vidioc_reqbufs                 = v4l2_m2m_ioctl_reqbufs,
->>  	.vidioc_g_selection             = iris_g_selection,
->> +	.vidioc_subscribe_event         = iris_subscribe_event,
->> +	.vidioc_unsubscribe_event       = iris_unsubscribe_event,
-> 
-> Just set this op to v4l2_event_unsubscribe directly. You should not need a
-> driver specific override function.
-> 
-Ah, you're right, will update.
->>  };
->>  
->>  void iris_init_ops(struct iris_core *core)
->>
-> 
 
