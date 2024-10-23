@@ -1,179 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-35572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35575-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 023309AC273
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 10:59:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 449239AC66D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 11:28:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AC6911F2626F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 08:59:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E45B91F228E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 09:28:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 740A31607B7;
-	Wed, 23 Oct 2024 08:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D56219CC28;
+	Wed, 23 Oct 2024 09:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="JoY7Ghmu"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hfRsGYbm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DC8155A4E;
-	Wed, 23 Oct 2024 08:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4695C155393;
+	Wed, 23 Oct 2024 09:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729673952; cv=none; b=J8bO/0bEaaXeVHdX9Rm9HL5iNPHbJESzlxLnniQCov64gVs3os1hjRVzCQpzZIK9TkErCCqMqNc48mmqRbVspbFlsv7z7l0zDB2BtOpoqqH3NbIisH73MzJwduBZnreFTvzMn19YqkWLzt2YK6qFm6EZpb6cI/J+vy5Ph4ro4xY=
+	t=1729675692; cv=none; b=KB0L9oM9qOxafurleuVq3MWe2e6OYEUcu6BUWlg+sWSz7xc8ANUspG1p8cosoXDPXQE5PAMdYdXT4d4I7ShOLZD4P/Xki9CaooZLSv5Q/DUoRPw2I5ZcbA5eil8+UgU4shRjcQS353gIBYveCKVMsKmCsRC80qNrIEVfEA85Gko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729673952; c=relaxed/simple;
-	bh=3Z7u4wZm/iuLqCCuaeor5uPPDgpyABJSSkp9X+2Lfyg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C61CidQ8u25g3vx1h1OXy2amUoQ5pcjgiKF1X3hhe3fRe5dfBtXeXCKAJa4dumVy1FknSscx7cSmif8ZrdJqjBGhKwydW+1kYEieZfZkXLDG92H2A5f49NztG7XZsCb7nJetRkuaUcaNTi/iq81IQOV7+w4mXZy9L1eQRXK59UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=JoY7Ghmu; arc=none smtp.client-ip=192.198.163.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1729673951; x=1761209951;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=3Z7u4wZm/iuLqCCuaeor5uPPDgpyABJSSkp9X+2Lfyg=;
-  b=JoY7GhmumQ9k63v9d4Uu43SRkDrs62+tahV8W+7cFtJHDNeqJLNZ8Yqj
-   OTdF8mkrNjH6qtv/yhVGhBxnvZPsBGXp6Px+hU/3sOinMIDVKApVSEyB9
-   S3H0l6PRT0Pdt7rbtBlVEIU7MHnUDL7Vp1c48udv4aPQA1qtweg0U/E2U
-   PDC9udkp0PxsPvQ6VP5jdwqiYDbIRTSRwueZH4SHce74W5oatYXOPrTZH
-   Quk4Sb6QQEn9pNlwMH+B6SYzXkC6b6xLvJmZyPV3avH9sVYNQuuCea5Ui
-   PdVE/lURe18M6WejwdgbqsAuGNXcfkWGMKx4VjMSLeNjQS5AHypXQDGH9
-   A==;
-X-CSE-ConnectionGUID: fuDkEGrGRHGkd9eGz02dHw==
-X-CSE-MsgGUID: NpplyEdEQGewISAe4CSaAA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11233"; a="29360978"
-X-IronPort-AV: E=Sophos;i="6.11,225,1725346800"; 
-   d="scan'208";a="29360978"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2024 01:59:10 -0700
-X-CSE-ConnectionGUID: 1HHVKIziSdGBTI6/bdW74w==
-X-CSE-MsgGUID: 3d3neFQNSFWQwkjXzm5tAA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,225,1725346800"; 
-   d="scan'208";a="103414582"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.245.115.59])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Oct 2024 01:59:06 -0700
-Message-ID: <1cb08708-fca2-48a9-9cf9-c0c1ac004587@intel.com>
-Date: Wed, 23 Oct 2024 11:59:01 +0300
+	s=arc-20240116; t=1729675692; c=relaxed/simple;
+	bh=VY5NdMaZIvLA7s0Cdx20aTCw4d+xsTj4YBfSP6qLQao=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=U2BWL8C8lYmxyU1s4CVARBHqwjyBrFGA+cKPvjzKlDCpI5KrGRp3844K3QedRccYDMZZANCwluHRTOhxYnNSDPVwpQzuODlkFYbqS5XzZjDKSUCsHqpHrhaboplUpvFG7clgoWzSWneTElibhIorKd0H6xb1bEhK99aDikyqv6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hfRsGYbm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLa4x1025445;
+	Wed, 23 Oct 2024 09:28:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=AlpIcVGnnvJ+HBshW88ZibZDP4K+4ikzz1p
+	uxILa3wI=; b=hfRsGYbmUIjcGc4sWIrXNpELUYZI+BshfMvu8iaFxVct9+BrR55
+	iUVXpBmCNBHUuRI9G085XicPH2ug/rstJDK/ha9aOehoeISJ+pRd5Lbw9Ac97rPK
+	2vHKf7wkXa584QNIfJIyBrfjhzGeJzDOJ1Gy91VS5xsbUV5llvtCT83rDbFm0LU2
+	XrmNqE05UIq76XbOLO+OMkLQXX3k6RJR8uqZc5Iie2Zb0CNaVIuDLgbNd2lBJiAo
+	jg6MTZAAR1V3rhKcMb8bSkdoa49bTxSStaFrRdJh6o0fYk1L1Tjs6cDposVaylTj
+	ANv/K43wBUnxfyJ6xj1ZqDm6Ld/YAtVeVZA==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em409nwx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 09:28:05 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9S3tF016260;
+	Wed, 23 Oct 2024 09:28:03 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 42cpckqq25-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 09:28:03 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 49N9S3Bb016238;
+	Wed, 23 Oct 2024 09:28:03 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 49N9S2Cx016230
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 09:28:03 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4571896)
+	id 7A7E6137B; Wed, 23 Oct 2024 17:28:01 +0800 (CST)
+From: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+To: ulf.hansson@linaro.org, robh@kernel.org, krzk+dt@kernel.org,
+        conor+dt@kernel.org, bhupesh.sharma@linaro.org, andersson@kernel.org,
+        konradybcio@kernel.org
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_tingweiz@quicinc.com, Yuanjie Yang <quic_yuanjiey@quicinc.com>
+Subject: [PATCH v1 0/3] Enable emmc and SD on QCS615
+Date: Wed, 23 Oct 2024 17:27:05 +0800
+Message-Id: <20241023092708.604195-1-quic_yuanjiey@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v3 1/2] mmc: core: Add vendor hook to control
- reprogram keys to Crypto Engine
-To: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>
-Cc: linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, quic_rampraka@quicinc.com,
- quic_nitirawa@quicinc.com, quic_sachgupt@quicinc.com,
- quic_bhaskarv@quicinc.com, quic_neersoni@quicinc.com,
- quic_gaurkash@quicinc.com, Eric Biggers <ebiggers@google.com>,
- Abel Vesa <abel.vesa@linaro.org>
-References: <20241006135530.17363-1-quic_spuppala@quicinc.com>
- <20241006135530.17363-2-quic_spuppala@quicinc.com>
-Content-Language: en-US
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20241006135530.17363-2-quic_spuppala@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: T-tugc3eDUQJyZEF7YWgYe-RzSegNURI
+X-Proofpoint-GUID: T-tugc3eDUQJyZEF7YWgYe-RzSegNURI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=991
+ lowpriorityscore=0 clxscore=1011 malwarescore=0 bulkscore=0 suspectscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410230058
 
-On 6/10/24 16:55, Seshu Madhavi Puppala wrote:
-> Add mmc_host_ops hook avoid_reprogram_allkeys to control
-> reprogramming keys to Inline Crypto Engine by vendor as some
-> vendors might not require this feature.
-> 
-> Signed-off-by: Seshu Madhavi Puppala <quic_spuppala@quicinc.com>
-> Co-developed-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-> ---
->  drivers/mmc/core/crypto.c | 8 +++++---
->  drivers/mmc/host/sdhci.c  | 6 ++++++
->  include/linux/mmc/host.h  | 7 +++++++
->  3 files changed, 18 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/mmc/core/crypto.c b/drivers/mmc/core/crypto.c
-> index fec4fbf16a5b..4168f7d135ff 100644
-> --- a/drivers/mmc/core/crypto.c
-> +++ b/drivers/mmc/core/crypto.c
-> @@ -14,9 +14,11 @@
->  
->  void mmc_crypto_set_initial_state(struct mmc_host *host)
->  {
-> -	/* Reset might clear all keys, so reprogram all the keys. */
-> -	if (host->caps2 & MMC_CAP2_CRYPTO)
-> -		blk_crypto_reprogram_all_keys(&host->crypto_profile);
-> +	if (host->ops->avoid_reprogram_allkeys && !host->ops->avoid_reprogram_allkeys()) {
-> +		/* Reset might clear all keys, so reprogram all the keys. */
-> +		if (host->caps2 & MMC_CAP2_CRYPTO)
-> +			blk_crypto_reprogram_all_keys(&host->crypto_profile);
-> +	}
+Add SD and emmc support to the QCS615 Ride platform. The SD controller
+and emmc controller of QCS615 are derived from SM6115. Include the
+relevant binding documents accordingly. Additionally, configure emmc-related
+and SD-related opp, power, and interconnect settings in the device tree.
 
-Probably nicer to put MMC_CAP2_CRYPTO check first, but also the logic
-needs a tweak:
+Signed-off-by: Yuanjie Yang <quic_yuanjiey@quicinc.com>
+---
+This patch series depends on below patch series:
+https://lore.kernel.org/all/20240926-add_initial_support_for_qcs615-v3-0-e37617e91c62@quicinc.com/
+https://lore.kernel.org/all/20241011063112.19087-1-quic_qqzhou@quicinc.com/
 
-	/* Reset might clear all keys, so reprogram all the keys. */
-	if (host->caps2 & MMC_CAP2_CRYPTO &&
-	    (!host->ops->avoid_reprogram_allkeys ||
-	     !host->ops->avoid_reprogram_allkeys()))
-		blk_crypto_reprogram_all_keys(&host->crypto_profile);
+Yuanjie Yang (3):
+  dt-bindings: mmc: Add sdhci compatible for QCS615
+  arm64: dts: qcom: qcs615: add SD and emmc node
+  arm64: dts: qcom: qcs615-ride: Enable SD and emmc node
 
->  }
->  
->  void mmc_crypto_setup_queue(struct request_queue *q, struct mmc_host *host)
-> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-> index fbf7a91bed35..cd663899c025 100644
-> --- a/drivers/mmc/host/sdhci.c
-> +++ b/drivers/mmc/host/sdhci.c
-> @@ -2704,6 +2704,11 @@ int sdhci_start_signal_voltage_switch(struct mmc_host *mmc,
->  }
->  EXPORT_SYMBOL_GPL(sdhci_start_signal_voltage_switch);
->  
-> +static bool sdhci_avoid_reprogram_allkeys(void)
-> +{
-> +	return false;
-> +}
-> +
->  static int sdhci_card_busy(struct mmc_host *mmc)
->  {
->  	struct sdhci_host *host = mmc_priv(mmc);
-> @@ -3066,6 +3071,7 @@ static const struct mmc_host_ops sdhci_ops = {
->  	.execute_tuning			= sdhci_execute_tuning,
->  	.card_event			= sdhci_card_event,
->  	.card_busy	= sdhci_card_busy,
-> +	.avoid_reprogram_allkeys	= sdhci_avoid_reprogram_allkeys,
+ .../devicetree/bindings/mmc/sdhci-msm.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts      |  31 +++
+ arch/arm64/boot/dts/qcom/qcs615.dtsi          | 198 ++++++++++++++++++
+ 3 files changed, 230 insertions(+)
 
-There isn't any need for this
+-- 
+2.34.1
 
->  };
->  
->  /*****************************************************************************\
-> diff --git a/include/linux/mmc/host.h b/include/linux/mmc/host.h
-> index 88c6a76042ee..c4109d17f177 100644
-> --- a/include/linux/mmc/host.h
-> +++ b/include/linux/mmc/host.h
-> @@ -218,6 +218,13 @@ struct mmc_host_ops {
->  
->  	/* Initialize an SD express card, mandatory for MMC_CAP2_SD_EXP. */
->  	int	(*init_sd_express)(struct mmc_host *host, struct mmc_ios *ios);
-> +
-> +	/*
-> +	 * Optional callback to support controllers that dont require to
-> +	 * reprogram all crypto keys on card suspend/resume.
-> +	 */
-> +	bool	(*avoid_reprogram_allkeys)(void);
-> +
->  };
->  
->  struct mmc_cqe_ops {
-
+Thanks,
+Yuanjie
 
