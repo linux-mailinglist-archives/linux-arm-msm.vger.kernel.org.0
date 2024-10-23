@@ -1,66 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-35515-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 365789ABCD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:19:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5FB59ABCD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:19:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E941A282A32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:19:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 76A9C2808CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:19:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA8E515696E;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F76E15666A;
 	Wed, 23 Oct 2024 04:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kGa9Z2sa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dQcBXN8E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF54E15687C;
-	Wed, 23 Oct 2024 04:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CFA156646;
+	Wed, 23 Oct 2024 04:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729656987; cv=none; b=VCSpex5DZW9RiHhiMp+oipfZ6rbdcsq+eS2d+tS8sLBP9eSfpj6JF+6cNsFTFTBUbsuE0d0XxVlh3+4gipX+YFFP7kG01HDYJ5tWAjHtHi67HlnlSk4h62u2Wq44SJgdjH9I3PFky/WtgHEZ0aCVv0JstEGxwiSl18WxTKsLNLw=
+	t=1729656987; cv=none; b=qyjnzcUjU/fANilq/pDoEYypznIq6ets/1YlDAqXrL0L/wq59Zu8W61pcS30vxEkUxij2yI/O6Fr9jjQIubFoHWzTZGttFQAbE1hk+U9uBsCrYDVur68YT70erWPqV3ibptr8gdcEVT2Hxz33oPfAxok17X16rREZIOpBo+pPRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729656987; c=relaxed/simple;
-	bh=QvJhyhGAH48Vsp5JZ+z8SGfd37iEk/ar0t90u0rj0bE=;
+	bh=bec6KiO+m8hW8ozeZJcuyh4/Q0ZTvqAXQGBByAauqSE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N/ZJ+NQiprXDQHxCbJHuAX3sCc6tBP8nHWK1AiQqVqDugrZ1ZXRaGXs+SzLI4ajjvl5qLA2BN3HPhugu5Jk5aqrEVOg6tH0B22npeK+qQmCEVTKxbH2hFU3Ki8eX3JyXieNScZANT8ePT/nicuUfXSKqTwuPQcy5Ry+bTO2d4lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kGa9Z2sa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446EEC4CEEC;
-	Wed, 23 Oct 2024 04:16:25 +0000 (UTC)
+	 MIME-Version:Content-Type; b=mynY2GHxLQmkDYuX15LvIcQOd4OisaOARN37S1ADY75v9AdFs3gjGPe8eNYxS7rcoUhzVUsEoc3eJ0/wq11U/f+CYOGLL7+swk9ga4s0LN0PSJ4cwC4DomeWhzHQY6pQxQURJmAy1ostKUNwbOV13VEwfWCRS+E2joUFaVPSvHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dQcBXN8E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F04C4CEE6;
+	Wed, 23 Oct 2024 04:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729656986;
-	bh=QvJhyhGAH48Vsp5JZ+z8SGfd37iEk/ar0t90u0rj0bE=;
+	s=k20201202; t=1729656987;
+	bh=bec6KiO+m8hW8ozeZJcuyh4/Q0ZTvqAXQGBByAauqSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGa9Z2sa1F9ww860SLMVAvRZyxIDSvz8D+dpOjQ+Szl7G3O25jDg2quCbHIWKt6AD
-	 567Szo5hkm3rQkzKyHxDu1XB+vg/yghA4ilNR/cpvfem1dUyhNTB7U9JVhIcIYx8vs
-	 hIs0CwIb/sjJ1VWX+7veFB49a6FxDM0L+QAh88C+rjfGm23Is9moj7QeNAzSJfJf1G
-	 bU5DzvPbgHltgjOQ+E1LbhPoliXrN6Gps/eTDayasVXryh5wpw5tps3XRnE+tkCKr9
-	 YzEksIWNQAjli5ckKzNH9mXY4xwNRutKNbGFiUCSdg4inwe0CQcfw5v4SxBlwqj9qG
-	 bMaFw1zQtdjAg==
+	b=dQcBXN8Ezxrg4GRkhOdSv9J7cLWE3PBjVgkOOBm16GR8in5IPzsPeb4B3l4slWbCg
+	 a+9iGEP4hJpnJnwBwVSAA7Lqi6ksCM5wXpFz2DnBHOocqIpDoQlPplPOuksmLF+0Or
+	 KhI+1cuF7wyr5KxxEu6hrXePz1QLC2gf4yHrQQRPPzNm571EdL1uDBgK+fiG17451z
+	 bFDGXGRjxk0/E+VJVsckxXc6azWlmerlg4l9RE7dpEQ1baniqLsMrszFIA7z2cf4ag
+	 qjW7QET/T9mBnBglms4GlTB/BrKOzjLToIfhckyn6x9NCmG75kC8znEi4zn33XvkX9
+	 dU3ykvoaxpYUA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	agross@kernel.org,
-	Miaoqing Pan <quic_miaoqing@quicinc.com>
-Cc: linux-kernel@vger.kernel.org,
-	mchehab@kernel.org,
-	quic_vgarodia@quicinc.com,
-	stanimir.k.varbanov@gmail.com,
-	kvalo@kernel.org,
-	quic_jjohnson@quicinc.com,
-	ath11k@lists.infradead.org,
-	dmitry.baryshkov@linaro.org,
-	Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v7] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-Date: Tue, 22 Oct 2024 23:16:02 -0500
-Message-ID: <172965696403.224417.11055570024633295493.b4-ty@kernel.org>
+To: conor+dt@kernel.org,
+	krzk+dt@kernel.org,
+	robh@kernel.org,
+	konradybcio@kernel.org,
+	lee@kernel.org,
+	Mukesh Ojha <quic_mojha@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Elliot Berman <quic_eberman@quicinc.com>
+Subject: Re: (subset) [PATCH v2 1/2] dt-bindings: mfd: qcom,tcsr: Add compatible for sa8775p
+Date: Tue, 22 Oct 2024 23:16:03 -0500
+Message-ID: <172965696405.224417.14379916194468164981.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241011041939.2916179-1-quic_miaoqing@quicinc.com>
-References: <20241011041939.2916179-1-quic_miaoqing@quicinc.com>
+In-Reply-To: <20240830133908.2246139-1-quic_mojha@quicinc.com>
+References: <20240830133908.2246139-1-quic_mojha@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,16 +68,15 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 11 Oct 2024 12:19:39 +0800, Miaoqing Pan wrote:
-> Add a node for the PMU module of the WCN6855 present on the sa8775p-ride
-> board. Assign its LDO power outputs to the existing WiFi/Bluetooth module.
+On Fri, 30 Aug 2024 19:09:07 +0530, Mukesh Ojha wrote:
+> Document the compatible for sa8775p SoC.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sa8775p-ride: add WiFi/BT nodes
-      commit: 7b3e9ac60da7db51394889f8bf92d26b57845f4e
+[2/2] arm64: dts: qcom: sa8775p: Add TCSR halt register space
+      commit: 1a82fbfc87fd7627ce9499590fb381069db99e8f
 
 Best regards,
 -- 
