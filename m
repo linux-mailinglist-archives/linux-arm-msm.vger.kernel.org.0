@@ -1,282 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-35519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8236A9ABCEE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:30:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA3C49ABD9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:07:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F6251F22993
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:30:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E05A11C21291
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 05:07:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1269025761;
-	Wed, 23 Oct 2024 04:30:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6057713B7A1;
+	Wed, 23 Oct 2024 05:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uV6982Ka"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KLYqmYHL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D558ED2FA;
-	Wed, 23 Oct 2024 04:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D97139ACC;
+	Wed, 23 Oct 2024 05:07:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729657844; cv=none; b=Q9jn7YESdEIaRwoBtefbv36ixEfexJuKFRsCRpBQxdEBsxkmGwKVvHmeMNoH3fg0wYe4mRQFucwcl0VLoJ+VtbovGzm76gwtLu8ehLfXWS51YFRKvGz6GyhnKFLcEB801HrmT3r6sswWd5SSLmJHnAue+ZtCl7IyhrsW+AGI6tQ=
+	t=1729660037; cv=none; b=ZQf2fCDTW2/6mBI2/0dmNCENTgmKhBKx/DRpQcmqpStM+jkELsZoubS+TvQ3RVM1Dr25a99JDO69kPWSH2d5/YljnaeVn1tLtXNz2FJ0LK4lM3Yrkflr27jaJ7ds3/jSVn2zbOAgWJoUfklasAUmwCaBZFotdo/+UR7cfUOEcXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729657844; c=relaxed/simple;
-	bh=IAs+B5gnkWxJ6/qxlcLEROEmCc0Z3KLB6bpK0pN3vN0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HJmA0yhLnqW505ejT5eDbx2MQ+t9IFG5EOVHgifUma+uGsTURvOWtLfa+1x7/2kpE/Ws/8NbToel3HY/x4neq49UBUW+VBB2xPLnkbkOEGsVJsoT5Uq2SZhmOs1SlWn8plP+XDHlSlH+VhnqIDuD4VO45S6356dYHaLmGR7S3Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uV6982Ka; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BC5C4CEC6;
-	Wed, 23 Oct 2024 04:30:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729657843;
-	bh=IAs+B5gnkWxJ6/qxlcLEROEmCc0Z3KLB6bpK0pN3vN0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uV6982Ka1TXgX5zC4dMVqP2uQx2yocVpapHMts4ruBrUODpL5HO/aeQBoss5GenhE
-	 pilTnwWNsvuTJftN6L1OA6ScM0TmRic00BJWQ3NRIcwAHiQUSMr/xvUHoa9M6XhFjO
-	 bNu3alKfQ30RNTjySmv29xIbD4tJA6XWjJX1CN1GXN77v84XOVALUJ+qbJr5yL2b9e
-	 31AAa4oDtI7r3AS1S43TWVdR8J2ElWd/nnAFCBomg7cA1+AsE77eGoXEEp80jL9kxZ
-	 4Au8cxXp0jkgoYCF1UXkaqcvMhutw1bbN5T2wxfcrWMshU+pnYANk9Z+EJW3iTySZ1
-	 DMb9mbnhMruXw==
-Date: Tue, 22 Oct 2024 23:30:40 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, kernel@quicinc.com
-Subject: Re: [PATCH] soc: qcom: llcc: Add per slice counter and common llcc
- slice descriptor
-Message-ID: <lewsbn6t5ysemyk2gt632hdgl2wuhr2qxpblmkiuu3aiivsu5g@phgwetzycwyx>
-References: <20241008194636.3075093-1-quic_uchalich@quicinc.com>
+	s=arc-20240116; t=1729660037; c=relaxed/simple;
+	bh=N6MxOPXvN52A4SK9gugDg/T6rNauUkgKclmm9CuZaDA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=R8G51sq393nk4iNd+sGZrdVBEd5LFPXfdj+YZOA0IJbDPx1d93XJIwzPUDTz6oM05GDIkqWD8YxJiQb9jvLf0PzolbwZzrTciNG42T/JuUqj7fNIQNLchivke2+V3EVhZjlyMkpo18L1srms00CXUW9Y1oSBq+UeaGht0ZSny5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KLYqmYHL; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLf5Cd019749;
+	Wed, 23 Oct 2024 05:06:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	s2d81+GccxoEkMZskmmKrL4R7qnewBTmtKDHTfqxm1I=; b=KLYqmYHL1MbiPlh1
+	djAAuki0kNLH3ARDnUMXsNbR1wMZ42oHoXIRkKqW0TfdzVAONFCOJYo3T9O+fgvn
+	tfCjkGuLk3b504qJ7gyjA+QpileKrw3K2NJsLw8qifmOnjn17EDSji8i67bILqX2
+	YW+KaGFM7HVFwcKkBLahlwZ5lBfbuWTjVfyJ8sNfNquZmZA/7JNgQ0iBXTLf3M1S
+	+KQW1pZ3myO9ACkbPUsHnd8o1Nv+TKmXvFBsP5RL36MeeHKQIkiS5JG6FrL9LEHE
+	A2qECuism6jYVKyDcIWa4nW//E6pQfDk8sSQu16LBrkfV25ptZ58JyhqVoAwLV9Z
+	Ag3KHg==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em668vr9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 05:06:57 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49N56u24025278
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 05:06:56 GMT
+Received: from [10.110.103.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
+ 2024 22:06:55 -0700
+Message-ID: <64cc6a55-fa3f-42c3-b6b2-cd0da18cdeeb@quicinc.com>
+Date: Tue, 22 Oct 2024 22:06:55 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241008194636.3075093-1-quic_uchalich@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v1 07/10] net: qrtr: allow socket endpoint binding
+To: Denis Kenzior <denkenz@gmail.com>, <netdev@vger.kernel.org>
+CC: Marcel Holtmann <marcel@holtmann.org>, Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        "David S. Miller"
+	<davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+	<kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20241018181842.1368394-1-denkenz@gmail.com>
+ <20241018181842.1368394-8-denkenz@gmail.com>
+Content-Language: en-US
+From: Chris Lew <quic_clew@quicinc.com>
+In-Reply-To: <20241018181842.1368394-8-denkenz@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: QWirRFbA7YNojLn2Bx1r280c1iUmF81T
+X-Proofpoint-GUID: QWirRFbA7YNojLn2Bx1r280c1iUmF81T
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ adultscore=0 phishscore=0 impostorscore=0 malwarescore=0 mlxlogscore=999
+ suspectscore=0 clxscore=1015 mlxscore=0 bulkscore=0 priorityscore=1501
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410230028
 
-On Tue, Oct 08, 2024 at 12:46:36PM GMT, Unnathi Chalicheemala wrote:
-> Introduce atomic per-slice counter to keep track of the
 
-Why an atomic? If it's always managed under a lock, an integer should do
-just fine (and if not...it's probably broken ;))
 
-> activate/deactivate count per slice and a common llcc slice
-> descriptor to maintain accurate count.
+On 10/18/2024 11:18 AM, Denis Kenzior wrote:
+> Introduce the ability to bind a QIPCRTR family socket to a specific
+> endpoint.  When a socket is bound, only messages from the bound
+> endpoint can be received, and any messages sent from the socket are
+> by default directed to the bound endpoint.  Clients can bind a socket
+> by using the setsockopt system call with the QRTR_BIND_ENDPOINT option
+> set to the desired endpoint binding.
 > 
-> In case a client driver calls llcc_slice_getd more than once,
-> it will get the same descriptor for given use case. And if two
-> client drivers are voting for same slice, this count variable
-> will help track enable/disable of slice accurately.
+> A previously set binding can be reset by setting QRTR_BIND_ENDPOINT
+> option to zero.  This behavior matches that of SO_BINDTOIFINDEX.
 > 
-
-Please flip the commit message around, to match the style described in 
-https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-
-Also, please add some () to your function names in the description.
-
-> Signed-off-by: Unnathi Chalicheemala <quic_uchalich@quicinc.com>
+> This functionality is useful for clients that need to communicate
+> with a specific device (i.e. endpoint), such as a PCIe-based 5G modem,
+> and are not interested in messages from other endpoints / nodes.
+> 
+> Signed-off-by: Denis Kenzior <denkenz@gmail.com>
+> Reviewed-by: Marcel Holtmann <marcel@holtmann.org>
+> Reviewed-by: Andy Gross <agross@kernel.org>
 > ---
->  drivers/soc/qcom/llcc-qcom.c       | 50 +++++++++++++++++++++---------
->  include/linux/soc/qcom/llcc-qcom.h |  4 +++
->  2 files changed, 40 insertions(+), 14 deletions(-)
+>   include/uapi/linux/qrtr.h |  1 +
+>   net/qrtr/af_qrtr.c        | 54 ++++++++++++++++++++++++++++-----------
+>   2 files changed, 40 insertions(+), 15 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-> index 8fa4ffd3a9b5..0cb4fd18fd2c 100644
-> --- a/drivers/soc/qcom/llcc-qcom.c
-> +++ b/drivers/soc/qcom/llcc-qcom.c
-> @@ -813,7 +813,6 @@ static struct llcc_drv_data *drv_data = (void *) -EPROBE_DEFER;
->  struct llcc_slice_desc *llcc_slice_getd(u32 uid)
->  {
->  	const struct llcc_slice_config *cfg;
-> -	struct llcc_slice_desc *desc;
->  	u32 sz, count;
->  
->  	if (IS_ERR(drv_data))
-> @@ -826,17 +825,10 @@ struct llcc_slice_desc *llcc_slice_getd(u32 uid)
->  		if (cfg->usecase_id == uid)
->  			break;
->  
-> -	if (count == sz || !cfg)
+...
+> @@ -1313,6 +1331,9 @@ static int qrtr_setsockopt(struct socket *sock, int level, int optname,
+>   	case QRTR_REPORT_ENDPOINT:
+>   		assign_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags, val);
+>   		break;
+> +	case QRTR_BIND_ENDPOINT:
+> +		ipc->bound_endpoint = val;
+> +		break;
+>   	default:
+>   		rc = -ENOPROTOOPT;
+>   	}
+> @@ -1346,6 +1367,9 @@ static int qrtr_getsockopt(struct socket *sock, int level, int optname,
+>   	case QRTR_REPORT_ENDPOINT:
+>   		val = test_bit(QRTR_F_REPORT_ENDPOINT, &ipc->flags);
+>   		break;
+> +	case QRTR_BIND_ENDPOINT:
+> +		val = ipc->bound_endpoint;
+> +		break;
 
-cfg starts out as a pointer the first element in an array of
-struct llcc_slice_config, for each iteration in the loop it moves
-forward once sizeof(struct llcc_slice_config)... how can it become NULL?
+In the case where an endpoint goes away and a client has bound their 
+socket to an endpoint, would there be any notification to unbind the socket?
 
-Perhaps I'm reading the code wrong?
+Is the expectation that the client would get notified through ECONNRESET 
+on the next sendmsg() or receive the BYE/DEL_CLIENT/DEL_SERVER control 
+message.
 
-> +	if (count == sz || !cfg || IS_ERR_OR_NULL(drv_data->desc))
->  		return ERR_PTR(-ENODEV);
->  
-> -	desc = kzalloc(sizeof(*desc), GFP_KERNEL);
-> -	if (!desc)
-> -		return ERR_PTR(-ENOMEM);
-> -
-> -	desc->slice_id = cfg->slice_id;
-> -	desc->slice_size = cfg->max_cap;
-> -
-> -	return desc;
-> +	return &drv_data->desc[count];
->  }
->  EXPORT_SYMBOL_GPL(llcc_slice_getd);
->  
-> @@ -847,7 +839,8 @@ EXPORT_SYMBOL_GPL(llcc_slice_getd);
->  void llcc_slice_putd(struct llcc_slice_desc *desc)
->  {
->  	if (!IS_ERR_OR_NULL(desc))
-> -		kfree(desc);
-> +		WARN(atomic_read(&desc->refcount), " Slice %d is still active\n",
-> +					desc->slice_id);
->  }
->  EXPORT_SYMBOL_GPL(llcc_slice_putd);
->  
-> @@ -923,6 +916,12 @@ int llcc_slice_activate(struct llcc_slice_desc *desc)
->  		return -EINVAL;
->  
->  	mutex_lock(&drv_data->lock);
-> +	if ((atomic_read(&desc->refcount)) >= 1) {
-> +		atomic_inc_return(&desc->refcount);
+On that cleanup, I guess the client would either re-bind the socket back 
+to 0 or wait for the mhi sysfs to come back and get the new endpoint id?
 
-Two separate atomic operations are no longer atomic... But as I stated
-above, it doesn't matter if mutual exclusion is provided by the mutex.
-
-> +		mutex_unlock(&drv_data->lock);
-> +		return 0;
-> +	}
-> +
->  	if (test_bit(desc->slice_id, drv_data->bitmap)) {
->  		mutex_unlock(&drv_data->lock);
->  		return 0;
-> @@ -937,6 +936,7 @@ int llcc_slice_activate(struct llcc_slice_desc *desc)
->  		return ret;
->  	}
->  
-> +	atomic_inc_return(&desc->refcount);
-
-The difference between atomic_inc() and atomic_inc_return() is the
-return type... which you ignore... 
-
->  	__set_bit(desc->slice_id, drv_data->bitmap);
-
-Do you need both the bitmap and the refcount?
-
->  	mutex_unlock(&drv_data->lock);
->  
-> @@ -963,6 +963,12 @@ int llcc_slice_deactivate(struct llcc_slice_desc *desc)
->  		return -EINVAL;
->  
->  	mutex_lock(&drv_data->lock);
-> +	if ((atomic_read(&desc->refcount)) > 1) {
-> +		atomic_dec_return(&desc->refcount);
-> +		mutex_unlock(&drv_data->lock);
-> +		return 0;
-> +	}
-> +
->  	if (!test_bit(desc->slice_id, drv_data->bitmap)) {
->  		mutex_unlock(&drv_data->lock);
->  		return 0;
-> @@ -976,6 +982,7 @@ int llcc_slice_deactivate(struct llcc_slice_desc *desc)
->  		return ret;
->  	}
->  
-> +	atomic_dec_return(&desc->refcount);
->  	__clear_bit(desc->slice_id, drv_data->bitmap);
->  	mutex_unlock(&drv_data->lock);
->  
-> @@ -1020,7 +1027,7 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
->  	u32 attr1_val;
->  	u32 attr0_val;
->  	u32 max_cap_cacheline;
-> -	struct llcc_slice_desc desc;
-> +	struct llcc_slice_desc *desc;
->  
->  	attr1_val = config->cache_mode;
->  	attr1_val |= config->probe_target_ways << ATTR1_PROBE_TARGET_WAYS_SHIFT;
-> @@ -1165,8 +1172,11 @@ static int _qcom_llcc_cfg_program(const struct llcc_slice_config *config,
->  	}
->  
->  	if (config->activate_on_init) {
-> -		desc.slice_id = config->slice_id;
-> -		ret = llcc_slice_activate(&desc);
-> +		desc = llcc_slice_getd(config->usecase_id);
-> +		if (PTR_ERR_OR_ZERO(desc))
-> +			return -EINVAL;
-> +
-> +		ret = llcc_slice_activate(desc);
->  	}
->  
->  	return ret;
-> @@ -1183,6 +1193,12 @@ static int qcom_llcc_cfg_program(struct platform_device *pdev,
->  	sz = drv_data->cfg_size;
->  	llcc_table = drv_data->cfg;
->  
-> +	for (i = 0; i < sz; i++) {
-> +		drv_data->desc[i].slice_id = llcc_table[i].slice_id;
-> +		drv_data->desc[i].slice_size = llcc_table[i].max_cap;
-> +		atomic_set(&drv_data->desc[i].refcount, 0);
-> +	}
-> +
->  	for (i = 0; i < sz; i++) {
->  		ret = _qcom_llcc_cfg_program(&llcc_table[i], cfg);
->  		if (ret)
-> @@ -1331,6 +1347,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
->  	llcc_cfg = cfg->sct_data;
->  	sz = cfg->size;
->  
-> +	drv_data->desc = devm_kzalloc(dev, sizeof(struct llcc_slice_desc) * sz, GFP_KERNEL);
-
-That's a devm_kcalloc()
-
-Regards,
-Bjorn
-
-> +	if (IS_ERR_OR_NULL(drv_data->desc)) {
-> +		ret = -ENOMEM;
-> +		goto err;
-> +	}
-> +
->  	for (i = 0; i < sz; i++)
->  		if (llcc_cfg[i].slice_id > drv_data->max_slices)
->  			drv_data->max_slices = llcc_cfg[i].slice_id;
-> diff --git a/include/linux/soc/qcom/llcc-qcom.h b/include/linux/soc/qcom/llcc-qcom.h
-> index 9e9f528b1370..5eca861e2837 100644
-> --- a/include/linux/soc/qcom/llcc-qcom.h
-> +++ b/include/linux/soc/qcom/llcc-qcom.h
-> @@ -60,10 +60,12 @@
->   * struct llcc_slice_desc - Cache slice descriptor
->   * @slice_id: llcc slice id
->   * @slice_size: Size allocated for the llcc slice
-> + * @refcount: Counter to track activate/deactivate slice count
->   */
->  struct llcc_slice_desc {
->  	u32 slice_id;
->  	size_t slice_size;
-> +	atomic_t refcount;
->  };
->  
->  /**
-> @@ -126,6 +128,7 @@ struct llcc_edac_reg_offset {
->   * @bitmap: Bit map to track the active slice ids
->   * @ecc_irq: interrupt for llcc cache error detection and reporting
->   * @version: Indicates the LLCC version
-> + * @desc: Array pointer of llcc_slice_desc
->   */
->  struct llcc_drv_data {
->  	struct regmap **regmaps;
-> @@ -140,6 +143,7 @@ struct llcc_drv_data {
->  	unsigned long *bitmap;
->  	int ecc_irq;
->  	u32 version;
-> +	struct llcc_slice_desc *desc;
->  };
->  
->  #if IS_ENABLED(CONFIG_QCOM_LLCC)
-> -- 
-> 2.34.1
-> 
+>   	default:
+>   		rc = -ENOPROTOOPT;
+>   	}
 
