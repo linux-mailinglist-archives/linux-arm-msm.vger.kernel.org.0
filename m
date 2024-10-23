@@ -1,185 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-35554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35556-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D0789AC04A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 09:32:45 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E1279AC099
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 09:47:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 27436285352
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:32:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0F2D11F250FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:47:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E338156678;
-	Wed, 23 Oct 2024 07:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF69515533B;
+	Wed, 23 Oct 2024 07:47:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="rnzPosid"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HonOUKVH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29163155725
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 07:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384FB15443C;
+	Wed, 23 Oct 2024 07:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729668736; cv=none; b=q1R6q1zJA3NROj/tTI6vcadLVKXpSrhbwacNJt3SKAOYwvwiCoO4E+nIn438m/QSLp4s3AaW9IDP6lzqzRsnCkPaS4bcxv3f2StvbQ8Q6KB838+zhAR+ie8CsuFY7RTWYgBkghUl7zd/Mnwlt2Qff3DTKHBtrWFdnCxjAH2QXr4=
+	t=1729669630; cv=none; b=feB2CY6IqV2tSI4YbAn4A9HHY71NVsD9Xttv+3b46glU9cUTVdYGMCw5WS+ZgCBm57AS7C98IcoCItHM7dwodAh/sq8Lj/Dx+XV9Eno7XuF/0sqsn6CcMM2WpTYyvo/7JgmWoUMELYIxH3yrALa+sGLsIrLiAkQ/LuMKzXYVTnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729668736; c=relaxed/simple;
-	bh=UG6ihVAcJ5pYreWh3xW3jBvz7qOrrWyU52nZm6ikEK0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fmq1R4CKmWNCirshG3EfgW/hp5ma70ruhL5rxwaHel4EbRjlxNRfUFljLvSCN9FrvUNR59qWXeYbmdLOIM8YMpzi+69aglPYSUm2euQKL3d7IR35RplbZU9fjvWa6+HdZuIDYzyvYMsrJDxhuT3t0FW39qpRA53yb5qev36S7KY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=rnzPosid; arc=none smtp.client-ip=209.85.221.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-37d4b0943c7so4641991f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 00:32:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1729668732; x=1730273532; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0ByOuflTVuw6FqNFCU6UPV6W286vup+uWGJ9ZYP4mkM=;
-        b=rnzPosidsZfkKP9K0Lvs+r9sC6NLuAmZf0Bz99r3WvVrlT3tJt1Um0S/JhhOL2DBmi
-         UfpsTzFMXricAvlVtD95Ra5TetnGrGG9nuQqO70H4idTM3rTtqe8LN8gvYex/qa5b36M
-         6zuOEWgrzeYOWvLDJmeBp4O9mfK8dl9JebGzIj+cbg4jQ7zwjoRVF7hd6bEL0dlex+mp
-         +CAGNr5eDHPuJBRwnV1Y9lFuFImrgXK07ZJiEGw/AOyKUp4mAN1k6FAehreau6PQG24K
-         jbpe12thcixDm9hTbxLc4DgQqJdZ7iEUciDfabUXTPZURSGhZWS7JELA8pOZyagWMRNC
-         eQrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729668732; x=1730273532;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0ByOuflTVuw6FqNFCU6UPV6W286vup+uWGJ9ZYP4mkM=;
-        b=LzEFR15FVC9FDeHbMByd4Gnhk4hRSX5Pi3Y0K1bRl6AnKu1hizy4PuIPuHYDqiLW15
-         mbblHVrA9VFO9y6m+be5hPz3WAIWiBWdK6z5OIECDtf8frMXt1zK4DnIfU6C7n/uXso6
-         QEaYWMU0drD+ab9Y47PjPf6QYlhdP9rxtlFtkwfioDuYADXrYVHtPizbfMC1P0ZrRIrA
-         UigOJho+ZdRMzsuVOthuz2X+P4LtisbHk74TPJrOeAdwLjMvk5lMmXDY0n558Z1YjD8D
-         eJ3S/QSUncMDjv9VC/8hXoe3W68XeHHBtBbLs3J3Av2UBe/9zzUe4GnKEYsawkcqgBV/
-         Rudg==
-X-Forwarded-Encrypted: i=1; AJvYcCVHZxndQhdAx7yex3kHxT3cGZzYGeeF3qJb80OJ/Kwwmn0TVW3QXwd+EkMQihwSPfN2bY6fkpniMnHUH1fB@vger.kernel.org
-X-Gm-Message-State: AOJu0YykB+jNYcKXdE+8ZpPBr4BiBkV1jzbFjcHkF69Uh6FmKXCc+fAW
-	CBgG0Tnc/e6iEXt5FZbAM/Mj4vZjmJFmDF4+sJUOvSm8v2icssKfDvOIh6Lo6j8=
-X-Google-Smtp-Source: AGHT+IHjIA8gmyjHXms77rT5Sn14lEAq7Alni4DB4J5+vDcwterfp4ljbKgcAnTOfUwgEtKEJq9FJA==
-X-Received: by 2002:adf:ea46:0:b0:37d:529f:ac1e with SMTP id ffacd0b85a97d-37efcf9c1a9mr938910f8f.53.1729668732225;
-        Wed, 23 Oct 2024 00:32:12 -0700 (PDT)
-Received: from linaro.org ([82.76.168.176])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-37ee0a4ac2esm8276357f8f.44.2024.10.23.00.32.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 00:32:11 -0700 (PDT)
-Date: Wed, 23 Oct 2024 10:32:09 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Johan Hovold <johan@kernel.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <ZximeTNi7huc95te@linaro.org>
-References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
- <20241004-x1e80100-ps8830-v2-2-5cd8008c8c40@linaro.org>
- <Zw5oEyMj6cPGFDEI@hovoldconsulting.com>
- <Zxdp2vHzREJAFkwj@linaro.org>
- <Zxif6vmh8BE_C-_n@hovoldconsulting.com>
+	s=arc-20240116; t=1729669630; c=relaxed/simple;
+	bh=WxrpTfo0Ro5O/W4tKdv9AC9eL3/cEUxiZpLNJuhbvxg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=VaxbYPai244wKxjLn5f4w9L+iNKjq0nKMgOJLpPsV1voqrZ4hHPLlQWT3mVWuNtAzx5tLyNRbiD6kvcelNf7VjV+vgiGRsf1IRa7l4QejJxIt5JuKOWVrWREr2xRTa9EcqIzrMzpJMd+GQRqT9nnp0pxpMTvCWpBcHQSQejJBPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HonOUKVH; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLaO2i028304;
+	Wed, 23 Oct 2024 07:46:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Reaotx7xKtV+T2RZPrLWeCnG+P8PEHmuEC+TJ6peMeI=; b=HonOUKVHf1ueTGUj
+	wc5lsgYBlorSzVqO09XmgIclsjS6ImcLzTjqYH9OecDn0LVkBjsq6G7U0upJkAlB
+	J+2630ktTy7lVBe9d9UHeUpm55ez9cnOOj8R03cYlzEnyqSw1HU8M2KsTkbh2CUT
+	KUeg4yeayVvx4m0S7cLEVlyED1eArY590gTFti46nV6pgj9c0VFmGRw3+Q3Q5S6c
+	0J/tq8CymcU77Jsj9ymYbQC4KnslqyDw8289TrbfJSmKc5ImYBH8nS4muA25cRpo
+	fbm6kZuswRpgXkNvFwkPf9YZZPBXUBygeXimXbGQdw4mx+K3m6Fn6AzTbEWIgV8X
+	5Kvgsg==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em41s9k2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 07:46:55 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49N7ksa6015287
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 23 Oct 2024 07:46:54 GMT
+Received: from [10.131.33.37] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 23 Oct
+ 2024 00:46:50 -0700
+Message-ID: <ae5eaef9-301f-7d3f-c973-faa22ae780ee@quicinc.com>
+Date: Wed, 23 Oct 2024 13:16:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zxif6vmh8BE_C-_n@hovoldconsulting.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V3 0/4] firmware: arm_scmi: Misc Fixes
+Content-Language: en-US
+To: Johan Hovold <johan@kernel.org>
+CC: <sudeep.holla@arm.com>, <cristian.marussi@arm.com>,
+        <ulf.hansson@linaro.org>, <jassisinghbrar@gmail.com>,
+        <linux-kernel@vger.kernel.org>, <arm-scmi@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <konradybcio@kernel.org>,
+        <linux-pm@vger.kernel.org>, <tstrudel@google.com>, <rafael@kernel.org>
+References: <20241007060642.1978049-1-quic_sibis@quicinc.com>
+ <ZwfsmqInJlqkQD_3@hovoldconsulting.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
+In-Reply-To: <ZwfsmqInJlqkQD_3@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3esxjgNMWNCmetCmF1sPlsELCZAde0PN
+X-Proofpoint-ORIG-GUID: 3esxjgNMWNCmetCmF1sPlsELCZAde0PN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
+ adultscore=0 bulkscore=0 malwarescore=0 mlxlogscore=862 mlxscore=0
+ spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410230047
 
-On 24-10-23 09:04:10, Johan Hovold wrote:
-> On Tue, Oct 22, 2024 at 12:01:14PM +0300, Abel Vesa wrote:
-> > On 24-10-15 15:03:15, Johan Hovold wrote:
-> > > On Fri, Oct 04, 2024 at 04:57:38PM +0300, Abel Vesa wrote:
+
+
+On 10/10/24 20:32, Johan Hovold wrote:
+> On Mon, Oct 07, 2024 at 11:36:38AM +0530, Sibi Sankar wrote:
+>> The series addresses the kernel warnings reported by Johan at [1] and are
+>> are required to X1E cpufreq device tree changes [2] to land.
+>>
+>> [1] - https://lore.kernel.org/lkml/ZoQjAWse2YxwyRJv@hovoldconsulting.com/
+>> [2] - https://lore.kernel.org/lkml/20240612124056.39230-1-quic_sibis@quicinc.com/
+>>
+>> The following warnings remain unadressed:
+>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
+>> arm-scmi arm-scmi.0.auto: Failed to add opps_by_lvl at 3417600 for NCC - ret:-16
 > 
-> > > > +	ret = ps8830_get_vregs(retimer);
-> > > > +	if (ret)
-> > > > +		return ret;
-> > > > +
-> > > > +	retimer->xo_clk = devm_clk_get(dev, "xo");
-> > > > +	if (IS_ERR(retimer->xo_clk))
-> > > > +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
-> > > > +				     "failed to get xo clock\n");
-> > > > +
-> > > > +	retimer->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-> > > 
-> > > The reset line is active low and should be described as such in DT. So
-> > > here you want to request it as logically low if you want to deassert
-> > > reset.
-> > 
-> > This is being reworked in v3 as we need to support cases where the
-> > retimer has been left enabled and initialized by bootloader and we want
-> > to keep that state until unplug event for the cold-plug orientation
-> > to work properly.
-> > 
-> > On top of that, we don't want to deassert the reset here. We do that
-> > via gpiod_set_value() call below, after the clocks and regulators have
-> > been enabled.
-> 
-> Ok, but you should generally not drive an input high before powering on
-> the device as that can damage the IC (more below).
+> Are there any plans for how to address these?
 
-This is just not true, generally. Think of top level XTALs which feed in
-clocks (and can't be disabled) before ICs are enabled.
+Hey Johan,
+Sorry missed replying to this. The error implies that duplicate
+opps are reported by the SCP firmware and appear once during probe.
+This particular error can be fixed only by a firmware update and you
+should be able to test it out soon on the CRD first.
 
-> 
-> That is, in this case, you should not deassert reset before making sure
-> the supplies are enabled.
+"FWIW the warnings that we are addressing in this series will also get
+fixed by a firmware update but they still have to land for devices
+already out in the wild."
 
-Wrong. Even the data sheet of this retimer shows in the timigs plot the
-reset as being asserted before the supplies are enabled.
 
-And generally speaking, the reset needs to be asserted before the
-supplies are up, so that the IC doesn't start doing any work until
-the SW decides it needs to.
-
-> 
-> > > > +	ret = clk_prepare_enable(retimer->xo_clk);
-> > > > +	if (ret) {
-> > > > +		dev_err(dev, "failed to enable XO: %d\n", ret);
-> > > > +		goto err_retimer_unregister;
-> > > > +	}
-> > > 
-> > > Should you really enable the clock before the regulators?
-> > 
-> > So maybe in this case it might not really matter. But in principle,
-> > the HW might be affected by clock glitches and such when IP block
-> > is powered up but unclocked. Even more so if the clock enabling
-> > (prepare, to be more exact) involves switching to a new PLL.
-> > 
-> > So clock first, then power up. At least that's my understanding of HW
-> > in general.
-> 
-> I think you got that backwards as inputs are typically rated for some
-> maximum voltage based on the supply voltage. 
-
-Yes, but that's done at board design stage.
-
-> That applies also to the
-> reset line as I also mentioned above.
-> 
-> What does the datasheet say?
-
-As mentioned above, datasheet shows reset asserted before the supplies
-are being enabled.
-
-> 
-> > > > +
-> > > > +	ret = ps8830_enable_vregs(retimer);
-> > > > +	if (ret)
-> > > > +		goto err_clk_disable;
 > 
 > Johan
 
