@@ -1,142 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-35552-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35553-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90C8A9ABFAE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 09:04:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 47B719AC043
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 09:32:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BFACB1C210DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:04:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF13D1F2426E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:32:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B31D14AD3F;
-	Wed, 23 Oct 2024 07:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C83A1155342;
+	Wed, 23 Oct 2024 07:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uFSgJbX0"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="lJQRYlII"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4860713A3F3;
-	Wed, 23 Oct 2024 07:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007D1155300
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 07:32:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729667039; cv=none; b=n/Vx4svFOMZxeH2CSqM0PpISYPEmyO4SyXnYjA6nMxxYfL45iEH6895x6yuHqTIjXrMHTiQ52ITV3nl0V7Q0QgAQ3kkTTggLd7kGoQaS14Qqhl0DAKm7RYK3Oq0gIqo9apmjjah3aWqMxH6NTIlUMdfsjwxutbjRT5smL/Mfmww=
+	t=1729668724; cv=none; b=UM9JBxfElshoo0r9pglndTiemOjQORHcWcYQtpzWq2RmgeQrAZt7uPvrfocxw0nfCARW2Gq8ZS6psvmfGc0NaOQhD5FNc5J+DOS1VzkYVZOudVrd0VVaCl98E2NLurZkM5HAG1M0L7+DEdqBhHqJTJpbKfyohZZ/3eMJ78L5gnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729667039; c=relaxed/simple;
-	bh=6DVKQTLwDZ80k1XcNjngRcu4GZNFUuwGnFM8c9RnzkA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q7xyGqy8XfTlFGotKOlpLe2W31xjayu/KYzWta6e13zL1kXmTWPyParIu7Q6erh7QwKUC8kvj2dr4axADvbXx6OU5ZX7wWryS0kByK6VkFi+YvDi3JslhtstOdjZVm2Gd5JXyYjciuxtYQ9dIPgrnnoUMG+01kYB/V+w/hgTOEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uFSgJbX0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE82EC4CEC6;
-	Wed, 23 Oct 2024 07:03:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729667038;
-	bh=6DVKQTLwDZ80k1XcNjngRcu4GZNFUuwGnFM8c9RnzkA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uFSgJbX0TOXKZqTgHQeTetPCujY6ARh7Kwo0rEgfyO8Oki0pjsoQE7X9qFVBBVOXm
-	 VFBZtwgsPBZuPRRl6DHVDaAv9uUkt2m1553NXprb9iVlQakmUX38lxlpJhb7XgXBdy
-	 mVzRL9opR28oW1y/+G38LRUJ1lRDiToBffmYeqNw0fhdBD+2rrnh4AtxzX/m4ybcUZ
-	 58N4ttKznHX11xI7JNYrfaP0ZhVguJRGIRbhjcNw9s8+3VH3Uv5YUQXAZSV0A5CRwl
-	 jlw8KbnDrj79K9+feR048Q8SAGyt13jrX+f1n1b2ntWbr3yMRpI3BwxVZtA0jXv7Qz
-	 hFqpJjtVn63RQ==
-Received: from johan by xi.lan with local (Exim 4.97.1)
-	(envelope-from <johan@kernel.org>)
-	id 1t3VPe-000000001go-2ooC;
-	Wed, 23 Oct 2024 09:04:10 +0200
-Date: Wed, 23 Oct 2024 09:04:10 +0200
-From: Johan Hovold <johan@kernel.org>
-To: Abel Vesa <abel.vesa@linaro.org>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] usb: typec: Add support for Parade PS8830 Type-C
- Retimer
-Message-ID: <Zxif6vmh8BE_C-_n@hovoldconsulting.com>
-References: <20241004-x1e80100-ps8830-v2-0-5cd8008c8c40@linaro.org>
- <20241004-x1e80100-ps8830-v2-2-5cd8008c8c40@linaro.org>
- <Zw5oEyMj6cPGFDEI@hovoldconsulting.com>
- <Zxdp2vHzREJAFkwj@linaro.org>
+	s=arc-20240116; t=1729668724; c=relaxed/simple;
+	bh=VXV9mLECZwGynUC8Cv6LVE6f5sDys723w3AAwBrxcGk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kSIXxhI/Z4L+zDu06R5I28dZslwGI7Hs2tgzIi8PdsUUOahfbSxMZ2zmaKPWT7hEicCwMb1Vf293gENZNpgxKKVBGcBm6SdV+jA7kFEthseQdsAuqxR/PfoyTnq8ZCXGfVkpHoEbwVheV2IdprRShvknhY5FlvnmSWuiJOi2J4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=lJQRYlII; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-539f72c8fc1so7400877e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 00:32:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1729668721; x=1730273521; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MDnS1sToRRe/vNiGWXop1N5e3vBYmlYJp+TdvdJ7lzs=;
+        b=lJQRYlIIGxPIHPakVcST0zxPyKC1yoRX4QGftN6Y7DTW1JDoQbrbOU9G/J5VyKHAOv
+         rc1R1lMbCutIGxCYFVShHJ6zNx9yXkFV0FtvSmN5Aum48kIWrqHsIZ/ofI5IrwJipFlF
+         wJDJ4iKghXVlHTOqDeAIZR10f/XyI8D/+pACFGe5MN6Vu3/sOQhVkHleFbAr+VTc2B91
+         CTQ1I8s49wMdYW2cY1W3X46Sdie87t1tqb0xCfBS8hwOroEQ1NXomav4E6j/RWE1d6tI
+         ok0y3Beotzrk7BVF2WDgcyK8AUOsSm4B6W5wWkXEwOOa5/TEF38xfDRl9J/qk48TRJTz
+         eVrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729668721; x=1730273521;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MDnS1sToRRe/vNiGWXop1N5e3vBYmlYJp+TdvdJ7lzs=;
+        b=xFB/Kly9UCbXsTTGwOeakF5cbcXSnMEU4qv1e3YQNAF/dErWUmfGaibkbe3XmEARFv
+         kKd11z6Phrv9YsLNZ3tdbyxSlxLcZCiFWLjpNYtQo0lPQ1XYIvjljZKH/o7rC+p40HSr
+         snwv8Ku1qbp7sa7Q4cLtzgWs/t16L9micelimeRNuO45FabMB0CVVW9CfjNhfTzCKzes
+         pOnhbSD7fMpXoOkFOIdOy6R6GzZ3Ajue+SZJF5q2vefRR7rEUAaa3dtsysNyoRiQzd24
+         TDckb0YCSvXz1adinwThI5Evn7HDd2FAKF40tmXzfZ4614/ZMdoUTHP4AScivR/yPkk4
+         28SA==
+X-Forwarded-Encrypted: i=1; AJvYcCWx+uiLCWJGALMTre7CG41TKA1Wi7a5pgj6IGfaOYCAcUilAi1FH26iwEi18CJnFacUQUrL70mz8IAdYAfh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5ieTTS3TozQwsZ/Q6t+eHlYhi2ROtsWhd8hskpT1ENy1cGM0s
+	wg3zLm2Yo9xvFsmvHO4EwjJGRO3CMigLxEtFVsc+MUqMP7t0CqWv6bjkB56AymXmH3ikDxck2yX
+	aCzkef3vD+9hXjH8wWnYjgwc7AHNDFC3odHcgyA==
+X-Google-Smtp-Source: AGHT+IGD9F0GaVekQ4gDOlaKW2LfSzuAYKH+S+5MGgpd62TAdHFoFw62xcsZs+SqIdbQ+vdLLC3ioV66VL7fi8iGpdI=
+X-Received: by 2002:a05:6512:2245:b0:539:fdee:fe04 with SMTP id
+ 2adb3069b0e04-53b1a2fe3dfmr708253e87.11.1729668720876; Wed, 23 Oct 2024
+ 00:32:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Zxdp2vHzREJAFkwj@linaro.org>
+References: <20241014111527.2272428-1-quic_kuldsing@quicinc.com>
+ <20241014111527.2272428-3-quic_kuldsing@quicinc.com> <CAMRc=MfR8rK3EnZx3_9rxkwgv6f8jA4X0u0cGBkpJ89d5i1MKw@mail.gmail.com>
+ <f46a9180-ca71-458e-9693-ed9badc85e72@quicinc.com> <21630547-552b-43e0-906f-840610327876@quicinc.com>
+ <CACMJSeuM=xmtvJr_DOZNdsj6FpF50xgXx1VED4OW6cv=s2qW5w@mail.gmail.com> <5e52d6c5-6e42-4244-bf66-a2d1343ad868@quicinc.com>
+In-Reply-To: <5e52d6c5-6e42-4244-bf66-a2d1343ad868@quicinc.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 23 Oct 2024 09:31:49 +0200
+Message-ID: <CAMRc=MfUzvxmOYsuDKnp3HGvNYYdYFK0Le0aFkFVeHoqoL3Kog@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] firmware: qcom: qcom_tzmem: Implement sanity checks
+To: Kuldeep Singh <quic_kuldsing@quicinc.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Oct 22, 2024 at 12:01:14PM +0300, Abel Vesa wrote:
-> On 24-10-15 15:03:15, Johan Hovold wrote:
-> > On Fri, Oct 04, 2024 at 04:57:38PM +0300, Abel Vesa wrote:
+On Tue, Oct 22, 2024 at 8:34=E2=80=AFPM Kuldeep Singh <quic_kuldsing@quicin=
+c.com> wrote:
+>
+>
+>
+> On 10/22/2024 12:27 PM, Bartosz Golaszewski wrote:
+> > On Tue, 22 Oct 2024 at 07:43, Kuldeep Singh <quic_kuldsing@quicinc.com>=
+ wrote:
+> >>
+> >>
+> >>
+> >> On 10/16/2024 2:31 PM, Kuldeep Singh wrote:
+> >>>
+> >>> On 10/14/2024 6:38 PM, Bartosz Golaszewski wrote:
+> >>>> On Mon, Oct 14, 2024 at 1:19=E2=80=AFPM Kuldeep Singh <quic_kuldsing=
+@quicinc.com> wrote:
+> >>>>>
+> >>>>> The qcom_tzmem driver currently has exposed APIs that lack validati=
+ons
+> >>>>> on required input parameters. This oversight can lead to unexpected=
+ null
+> >>>>> pointer dereference crashes.
+> >>>>>
+> >>>>
+> >>>> The commit message is not true. None of the things you changed below
+> >>>> can lead to a NULL-pointer dereference.>
+> >>>>> To address this issue, add sanity for required input parameters.
+> >>>>>
+> >>>>> Signed-off-by: Kuldeep Singh <quic_kuldsing@quicinc.com>
+> >>>>> ---
+> >>>>>  drivers/firmware/qcom/qcom_tzmem.c | 6 ++++++
+> >>>>>  1 file changed, 6 insertions(+)
+> >>>>>
+> >>>>> diff --git a/drivers/firmware/qcom/qcom_tzmem.c b/drivers/firmware/=
+qcom/qcom_tzmem.c
+> >>>>> index 92b365178235..977e48fec32f 100644
+> >>>>> --- a/drivers/firmware/qcom/qcom_tzmem.c
+> >>>>> +++ b/drivers/firmware/qcom/qcom_tzmem.c
+> >>>>> @@ -203,6 +203,9 @@ qcom_tzmem_pool_new(const struct qcom_tzmem_poo=
+l_config *config)
+> >>>>>
+> >>>>>         might_sleep();
+> >>>>>
+> >>>>> +       if (!config->policy)
+> >>>>> +               return ERR_PTR(-EINVAL);
+> >>>>
+> >>>> This is already handled by the default case of the switch.
+> >>>
+> >>> Ack. Need to drop.
+> >>> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qc=
+om/qcom_tzmem.c#L218
+> >>>
+> >>> While examining qcom_tzmem_pool_free under the same principle, it
+> >>> appears the following check is unnecessary.
+> >>> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qc=
+om/qcom_tzmem.c#L268
+> >>>
+> >>
+> >> Bartosz,
+> >> I am thinking to remove below check in next rev like mentioned above.
+> >> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qco=
+m/qcom_tzmem.c#L268
+> >>
+> >> Do you have any other opinion here?
+> >> Please let me know.
+> >>
+> >
+> > No, let's keep the NULL-pointer check and add it to qcom_tzmem_free(),
+> > I'm not against it. I was just saying that in the latter case it will
+> > already be handled by the radix tree lookup.
+>
+> Hey, I think you misread my comment. Let me explain more.
+> As agreed, Will drop (!config->policy) check from qcom_tzmem_pool_new
+> because it's already present.
+> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/q=
+com_tzmem.c#L218
+>
+> Keep (!vaddr) check in qcom_tzmem_free as discussed above.
+> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/q=
+com_tzmem.c#L411
+>
+> And last thing, like we don't check (!pool) in qcom_tzmem_alloc as it
+> cannot be null, same way I believe (!pool) is unnecessary in
+> qcom_tzmem_pool_free as qcom_tzmem_pool_new should return valid pool and
+> if not, should be handled by calling driver.
+> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/q=
+com_tzmem.c#L369
+> https://elixir.bootlin.com/linux/v6.12-rc3/source/drivers/firmware/qcom/q=
+com_tzmem.c#L268
+>
 
-> > > +	ret = ps8830_get_vregs(retimer);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	retimer->xo_clk = devm_clk_get(dev, "xo");
-> > > +	if (IS_ERR(retimer->xo_clk))
-> > > +		return dev_err_probe(dev, PTR_ERR(retimer->xo_clk),
-> > > +				     "failed to get xo clock\n");
-> > > +
-> > > +	retimer->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-> > 
-> > The reset line is active low and should be described as such in DT. So
-> > here you want to request it as logically low if you want to deassert
-> > reset.
-> 
-> This is being reworked in v3 as we need to support cases where the
-> retimer has been left enabled and initialized by bootloader and we want
-> to keep that state until unplug event for the cold-plug orientation
-> to work properly.
-> 
-> On top of that, we don't want to deassert the reset here. We do that
-> via gpiod_set_value() call below, after the clocks and regulators have
-> been enabled.
+Well I would say this is just churn if it's already there but yeah it
+cannot be NULL so I won't object.
 
-Ok, but you should generally not drive an input high before powering on
-the device as that can damage the IC (more below).
-
-That is, in this case, you should not deassert reset before making sure
-the supplies are enabled.
-
-> > > +	ret = clk_prepare_enable(retimer->xo_clk);
-> > > +	if (ret) {
-> > > +		dev_err(dev, "failed to enable XO: %d\n", ret);
-> > > +		goto err_retimer_unregister;
-> > > +	}
-> > 
-> > Should you really enable the clock before the regulators?
-> 
-> So maybe in this case it might not really matter. But in principle,
-> the HW might be affected by clock glitches and such when IP block
-> is powered up but unclocked. Even more so if the clock enabling
-> (prepare, to be more exact) involves switching to a new PLL.
-> 
-> So clock first, then power up. At least that's my understanding of HW
-> in general.
-
-I think you got that backwards as inputs are typically rated for some
-maximum voltage based on the supply voltage. That applies also to the
-reset line as I also mentioned above.
-
-What does the datasheet say?
-
-> > > +
-> > > +	ret = ps8830_enable_vregs(retimer);
-> > > +	if (ret)
-> > > +		goto err_clk_disable;
-
-Johan
+Bart
 
