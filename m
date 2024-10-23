@@ -1,291 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-35605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id F19789AC9F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 14:22:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3025D9ACA4F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 14:42:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 73DFC1F22171
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 12:22:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B56FB1F229E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 12:42:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 210151AB6FB;
-	Wed, 23 Oct 2024 12:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C96D41ABEA1;
+	Wed, 23 Oct 2024 12:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="KjVNMZmx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DETkIdaO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB411AA79E;
-	Wed, 23 Oct 2024 12:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3951AB51E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 12:41:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729686147; cv=none; b=W0Rtili+i7rDPNE8PMQJNo81RanPA+idWL+VuXTVgZ801ovzHoKcFT30rgeEKeUOlIRwL7v77XcEXoP4Fo6Ug+Jwvf+On0ukmB4D5AJa7IIh/hPtKCt4DT2Ghl6XFuyLZ0cvHn1Ou9DwHeLu5XmdJOVCNDN9uk+6yElCQu+7KJk=
+	t=1729687319; cv=none; b=cIpGR9gaFOC11+WfNMWOw4OA69AGfe6enaUiHO7w0NBt80OP77xpEb6bEG/EdRJqsZMLC26az+9xJL4P79AExbeFPrJaFac6NPqjvr2Xp34HvHb9Bg3JDWHj+21m5AuxgxqsQ/VhhQDnLQMXjmq4Y1MzGb52N+0ZBjTKkEUBZm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729686147; c=relaxed/simple;
-	bh=adF3VxoVJ9AU8QpZj/30erZAdABXuvA93uhqk5/vMpg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=EHrSOP6XxGLwAaw4shXdUtu6nQf2sY/U9aj2RtwufWCs58bs/LAZkJNUI+DxttPFRyaO8Ho27ICgpFrHXmihX4NijxMmGiKj+b7S7o2abVWJpMRPWj03+765GPIgzT6cGuH0GKL7aeMj0jc+epXQkw07ZAEzS8IVv7Mh9A1lJds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=KjVNMZmx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9ijY1030354;
-	Wed, 23 Oct 2024 12:22:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	iTht4jf6MVYNx9CnrbRM5YEqmjgvAAa/perOIHWuwqI=; b=KjVNMZmx5W6T/hx9
-	qFM5Ssj5c7Ibw53lWnXBtjvQE7kikPtZJN3J/0cNQ7uf1P+iu1OSASbEfV6SLS9b
-	jAexoHHg46KkFBQ3TU6qrIAAfVsYlMAl8oHGvEgFVqFZTzzP4PAEU6RM5TlRkEU+
-	dygswS8TFpWOAjgZ8mhyblYGzeEdo1URz1AOY09sIvAlJIj1xKHLuoYCa9fmsWb/
-	cUlBa9im7A+D1SEPn4hrRHvDwRTIMG3WhdCBR3yOlaDxHW6NopjV1v5qXIZqT7bR
-	MkpHAKCSua1eJ//QXZSONhIJ4w8yAJzizWugPgBfTJtX6ADenFoixi8HVvN+Hdm9
-	8v2i5Q==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3w25y7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 12:22:17 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49NCMH7Q014294
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 12:22:17 GMT
-Received: from [10.152.207.135] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 23 Oct
- 2024 05:22:12 -0700
-Message-ID: <9c06fdac-df4f-449c-8d58-b57c375c1751@quicinc.com>
-Date: Wed, 23 Oct 2024 17:52:07 +0530
+	s=arc-20240116; t=1729687319; c=relaxed/simple;
+	bh=r4xQBSHSzqBbjSO15B6LqQBSJLlq/rBG7/qkg8UtW2c=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=roc/cIGEZFnHD//pJSF1pYX/kyN5DBYPKGAuVEBw3bAOaqXn2rhkQO6xUKxoDFAcpWmzJdbGKAkjfvK3o50ENt5LWLpmt9jlMmDyvKKXK1jsAnRahS4OwrvkKfuTFtL+RIWZwewuqH/TQKGmYtcsE82lb788yjRxhmvOpag2J18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DETkIdaO; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43158124a54so9286445e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 05:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729687316; x=1730292116; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OC1GUo6u6ogIaP+998OmJFrdwx6E7b3ebTutyLvUJYE=;
+        b=DETkIdaOHdOPQEuktXy6mDkM4t6rPm96scJ0FnLLCYiqmZeuDG3qeGPhm8TPL5FVvk
+         XjzMvN+DlHX0VxbvxAYojxbgPmurKPdI8G7xz2M7QtujsqsAWFz9DHsNzBlBB89Urt3r
+         ueZMuVp3ouN9X9zPaxsfeMeNxpj1oWWuMzJQgiLbkW1ym841/1ncgwm+8Yy1xMAiE9wT
+         hLF1EPgXbvdImxdjOzU7m6eKMUlVuLmphMFKlBr27Z9T3O6hFGgB37BmDF2tchFCtzJq
+         qfsqtJYrtgRp5ti4r2K8LQyKyycfYoJG/T57FK02ONWL7jaKpNL/Bvh/NAdNZ6/b6Uw8
+         RRZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729687316; x=1730292116;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OC1GUo6u6ogIaP+998OmJFrdwx6E7b3ebTutyLvUJYE=;
+        b=dphuBuUMagp7Xjr4pOL4jAW9cjTisKmCPF5y/qPn6opgq7m7YEM6knsZoIkn1gzpyA
+         eyMHNdMag7MJxRsDSGqiamZxyNclF4A6g1ofx7NnHMFwpfav5ft85eKgh7CO4Ow+N64q
+         uVDwrcgWg4SyoTTnpUaOZL1M4gdQ+Dra1r9k/oEftdJ1PjGCYi4EtOUxtyJDdV3P13m9
+         xWIu2X9NXLQDBKNm5sRch/W8jL7PWiddbSkQIJ8zXLJWmD1rUz5wQZxDdBIK/51RZ4gt
+         cH6ClLIqdIQL6x2Ua4yk9Pf4H2g+WJKz9BM4O3ZMe5abhnHwVCub4rZunbLyYXhgtz0g
+         AzKQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW1U9mIIwpqO/IMLy2s+PlepzztmmA7io/So10Q9FAsUxSDtw8keu0934fnMEf4zbrG64g2BNQTvHEiNWPf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwvDy4WHhFg+aAaq0ghyUWDLPVTxJFRD0qy2sZhpNsChsnHI7AC
+	QhGCHwYwiubWA1WkdVcxYb1PODVoqayvtM0rSHbHBKhARD8d9Fx5BHjyVmPRABXZe7zPq1Lnzn0
+	W
+X-Google-Smtp-Source: AGHT+IGOOLD010FpGoIXn//GRg/EMY8PWXk1Rdw1ltM3+wHFz9aINxy6HV8Thsw/0R78Sp9Fi09moA==
+X-Received: by 2002:a05:600c:1d06:b0:42c:bfd6:9d2f with SMTP id 5b1f17b1804b1-43184133ef0mr9814505e9.1.1729687316420;
+        Wed, 23 Oct 2024 05:41:56 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.211.167])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43186befc90sm15101675e9.26.2024.10.23.05.41.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 05:41:55 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] ASoC: qcom: x1e80100: Support boards with two speakers
+Date: Wed, 23 Oct 2024 14:41:52 +0200
+Message-ID: <20241023124152.130706-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/6] dt-bindings: net: wireless: ath12k: describe WSI
- property for QCN9274
-To: Krzysztof Kozlowski <krzk@kernel.org>, <ath12k@lists.infradead.org>
-CC: <linux-wireless@vger.kernel.org>, Kalle Valo <kvalo@kernel.org>,
-        Rob
- Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor
- Dooley <conor+dt@kernel.org>,
-        Jeff Johnson <jjohnson@kernel.org>,
-        Bjorn
- Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20241023060352.605019-1-quic_rajkbhag@quicinc.com>
- <20241023060352.605019-3-quic_rajkbhag@quicinc.com>
- <b42da7f0-2034-467b-ab17-fb13ef7800c4@kernel.org>
-Content-Language: en-US
-From: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
-In-Reply-To: <b42da7f0-2034-467b-ab17-fb13ef7800c4@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: s3FSzHXtIQ2CGqrun3lATKRRWpRaFwCS
-X-Proofpoint-GUID: s3FSzHXtIQ2CGqrun3lATKRRWpRaFwCS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 impostorscore=0 bulkscore=0 lowpriorityscore=0
- clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230073
 
-On 10/23/2024 12:08 PM, Krzysztof Kozlowski wrote:
-> On 23/10/2024 08:03, Raj Kumar Bhagat wrote:
->> QCN9274 device has WSI support. WSI stands for WLAN Serial Interface.
->> It is used for the exchange of specific control information across
->> radios based on the doorbell mechanism. This WSI connection is
->> essential to exchange control information among these devices
->>
->> Hence, describe WSI interface supported in QCN9274 with the following
->> properties:
->>
->>  - qcom,wsi-group-id: It represents the identifier assigned to the WSI
->>    connection. All the ath12k devices connected to same WSI connection
->>    have the same wsi-group-id.
->>
->>  - qcom,wsi-index: It represents the identifier assigned to ath12k
->>    device in the order of the WSI connection.
->>
->>  - qcom,wsi-num-devices: Number of devices connected through WSI in
->>    the same group ID.
-> 
-> You should have separate binding.
-> 
+Some Qualcomm X1E laptops have only two speakers.  Regardless whether
+this sound card driver is suitable for them (we could re-use one for
+some older SoC), we should set reasonable channel map depending on the
+number of channels, not always 4-speaker setup.
 
-Based on the discussion in previous patch [1/6]. If required we will have
-separate binding.
+This change is necessary for bringing audio support on Lenovo Thinkpad
+T14s with Qualcomm X1E78100 and only two speakers.
 
->>
->> Signed-off-by: Raj Kumar Bhagat <quic_rajkbhag@quicinc.com>
->> ---
->>  .../bindings/net/wireless/qcom,ath12k.yaml    | 61 +++++++++++++++++++
->>  1 file changed, 61 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->> index ecf38af747f7..6c8f97865075 100644
->> --- a/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->> +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath12k.yaml
->> @@ -19,6 +19,7 @@ properties:
->>    compatible:
->>      enum:
->>        - pci17cb,1107  # WCN7850
->> +      - pci17cb,1109  # QCN9274
->>  
->>    reg:
->>      maxItems: 1
->> @@ -50,6 +51,41 @@ properties:
->>    vddpcie1p8-supply:
->>      description: VDD_PCIE_1P8 supply regulator handle
->>  
->> +  wsi:
->> +    type: object
->> +    description:
->> +      The ath12k devices (QCN9274) feature WSI support. WSI stands for
->> +      WLAN Serial Interface. It is used for the exchange of specific
->> +      control information across radios based on the doorbell mechanism.
->> +      This WSI connection is essential to exchange control information
->> +      among these devices.
->> +
->> +    properties:
->> +      qcom,wsi-group-id:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description:
->> +          It represents the identifier assigned to the WSI connection. All
->> +          the ath12k devices connected to same WSI connection have the
->> +          same wsi-group-id.
-> 
-> Why it cannot be implied by compatible?
-> 
->> +
->> +      qcom,wsi-index:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description:
->> +          It represents the identifier assigned to ath12k device in the
->> +          order of the WSI connection.
-> 
-> No, we do not have indices in DTS.
-> 
->> +
->> +      qcom,wsi-num-devices:
->> +        $ref: /schemas/types.yaml#/definitions/uint32
->> +        description:
->> +          Number of devices connected through WSI in the same group ID.
-> 
-> Wait, why? Number of devices is visible from DTS. You are missing some
-> diagram showing this but it looks like you stuff multiple nodes into one
-> node.
-> 
-> 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ sound/soc/qcom/x1e80100.c | 40 ++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 35 insertions(+), 5 deletions(-)
 
-To discuss the above comments, let me provide a diagram that is part of the
-commit log of DTS patch [6/6].
-
-The WSI connection in RDP433 is represented below:
-
-          +-------+        +-------+        +-------+
-          | pcie2 |        | pcie3 |        | pcie1 |
-          |       |        |       |        |       |
-   +----->|  wsi  |------->|  wsi  |------->|  wsi  |-----+
-   |      | idx 0 |        | idx 1 |        | idx 2 |     |
-   |      +-------+        +-------+        +-------+     |
-   +------------------------------------------------------+
-
-The above three blocks represent the QCN9274 WiFi devices connected to their
-respective PCI slots. The dotted line represents the WSI connection that connects
-these three devices together. Hence, the WSI interface is part of the QCN9274 device.
-
-To describe this WSI hardware connection in the device tree, we are adding three
-properties inside the WSI object:
-
-1. qcom,wsi-group-id:
-   In the above diagram, we have one WSI connection connecting all three devices.
-   Hence, “qcom,wsi-group-id” for all three devices can be 0.
-
-   This cannot be implied by the compatible property, as explained below:
-   Let’s take the case of a platform that can have four QCN9274 WiFi devices. Below
-   is one possibility of a WSI connection:
-
-         +-------+       +-------+          +-------+      +-------+
-         | pcie2 |       | pcie3 |          | pcie1 |      | pcie0 |
-         |       |       |       |          |       |      |       |
-   +---->|  wsi  |------>|  wsi  |--+   +-->|  wsi  |----->|  wsi  |----+
-   |     | idx 0 |       | idx 1 |  |   |   | idx 0 |      | idx 1 |    |
-   |     +-------+       +-------+  |   |   +-------+      +-------+    |
-   +--------------------------------+   +-------------------------------+
-
-   In this case, QCN9274 devices connected in PCIe2 and PCIe3 will have the same
-   “qcom,wsi-group-id”. This group-id will be different from the “qcom,wsi-group-id”
-   of QCN9274 devices connected at PCIe1 and PCIe0.
-
-2. qcom,wsi-index:
-   This is a unique identifier of the device within the same group. The value of
-   wsi-idx is represented in both the above cases (RDP433 and the 4 WiFi device
-   platform) in the diagram itself.
-
-3. qcom,wsi-num-devices:
-   Represents the number of devices connected through WSI within the same WSI group to
-   which the device belongs.
-   
-   In the case of RDP433, all devices will have this number as 3.
-   For the second example with four WiFi devices but with two WSI connections, the
-   value of “qcom,wsi-num-devices” for each device will be 2.
-
-> 
->> +
->> +    required:
->> +      - qcom,wsi-group-id
->> +      - qcom,wsi-index
->> +      - qcom,wsi-num-devices
->> +
->> +    additionalProperties: false
->> +
->>  required:
->>    - compatible
->>    - reg
->> @@ -108,3 +144,28 @@ examples:
->>              };
->>          };
->>      };
->> +
->> +  - |
->> +    pcie {
->> +        #address-cells = <3>;
->> +        #size-cells = <2>;
->> +
->> +        pcie@0 {
->> +            device_type = "pci";
->> +            reg = <0x0 0x0 0x0 0x0 0x0>;
->> +            #address-cells = <3>;
->> +            #size-cells = <2>;
->> +            ranges;
->> +
->> +            wifi@0 {
->> +                compatible = "pci17cb,1109";
->> +                reg = <0x0 0x0 0x0 0x0 0x0>;
->> +
->> +                wsi {
->> +                    qcom,wsi-group-id = <0>;
->> +                    qcom,wsi-index = <0>;
->> +                    qcom,wsi-num-devices = <3>;
-> 
-> So what are the other 2 devices? Where are they documented?
-> 
-
-In the example, we have represented only one WiFi node. Although it indicates
-that there are a total of three devices in the same WSI connection with group-id
-0, we can add all three WiFi nodes in the next version if required.
+diff --git a/sound/soc/qcom/x1e80100.c b/sound/soc/qcom/x1e80100.c
+index 898b5c26bf1e..8eb57fc12f0d 100644
+--- a/sound/soc/qcom/x1e80100.c
++++ b/sound/soc/qcom/x1e80100.c
+@@ -95,23 +95,53 @@ static int x1e80100_snd_hw_params(struct snd_pcm_substream *substream,
+ 	return qcom_snd_sdw_hw_params(substream, params, &data->sruntime[cpu_dai->id]);
+ }
+ 
++static int x1e80100_snd_hw_map_channels(unsigned int *ch_map, int num)
++{
++	switch (num) {
++	case 1:
++		ch_map[0] = PCM_CHANNEL_FC;
++		break;
++	case 2:
++		ch_map[0] = PCM_CHANNEL_FL;
++		ch_map[1] = PCM_CHANNEL_FR;
++		break;
++	case 3:
++		ch_map[0] = PCM_CHANNEL_FL;
++		ch_map[1] = PCM_CHANNEL_FR;
++		ch_map[2] = PCM_CHANNEL_FC;
++		break;
++	case 4:
++		ch_map[0] = PCM_CHANNEL_FL;
++		ch_map[1] = PCM_CHANNEL_LB;
++		ch_map[2] = PCM_CHANNEL_FR;
++		ch_map[3] = PCM_CHANNEL_RB;
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	return 0;
++}
++
+ static int x1e80100_snd_prepare(struct snd_pcm_substream *substream)
+ {
+ 	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+ 	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+ 	struct x1e80100_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
+ 	struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
+-	const unsigned int rx_slot[4] = { PCM_CHANNEL_FL,
+-					  PCM_CHANNEL_LB,
+-					  PCM_CHANNEL_FR,
+-					  PCM_CHANNEL_RB };
++	unsigned int channels = substream->runtime->channels;
++	unsigned int rx_slot[4];
+ 	int ret;
+ 
+ 	switch (cpu_dai->id) {
+ 	case WSA_CODEC_DMA_RX_0:
+ 	case WSA_CODEC_DMA_RX_1:
++		ret = x1e80100_snd_hw_map_channels(rx_slot, channels);
++		if (ret)
++			return ret;
++
+ 		ret = snd_soc_dai_set_channel_map(cpu_dai, 0, NULL,
+-						  ARRAY_SIZE(rx_slot), rx_slot);
++						  channels, rx_slot);
+ 		if (ret)
+ 			return ret;
+ 		break;
+-- 
+2.43.0
 
 
