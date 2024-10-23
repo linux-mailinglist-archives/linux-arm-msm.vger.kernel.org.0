@@ -1,212 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-35616-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5038D9AD2D7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 19:27:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 506C99AD2E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 19:28:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA5741F20F4B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:27:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 10F132847A1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:28:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 375F21D9A50;
-	Wed, 23 Oct 2024 17:24:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 59FEB1D015E;
+	Wed, 23 Oct 2024 17:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BfGzXaI8"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JvDO/zTb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F971D3195
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF46C1D0148;
+	Wed, 23 Oct 2024 17:26:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729704295; cv=none; b=uoMNBlUJVjPZwxYO+Mg/JaXa9PjFs7T4wQSoAXjgmj1cp11IzGJm0nzqSIU/SqBp1eDF+Y/a5Iot2BHQKkVoTyeX20BQcXosZJQnctxH1u30uA4RRs5Xj4c+rwFsThsO+kMZq/ATy4CbIl2RjUhwlE84Sge8JA0qB/yZBnQ7iAo=
+	t=1729704362; cv=none; b=D2nue9Ltlhwfps9IlIZFYuIhkDW9rxtQb4pNUvUkyXaqVg/OMc48cxdV8IPul5lbYt3ROtdHrhU0wU9xwvRHCPmjzWlYSOVQ+ahnlr38dRAvUvgArqZJ/9Mduo48FBM0QVAlbLvMihysZqvDHHUYjjE0TYibvbolb8IyQ6nVfeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729704295; c=relaxed/simple;
-	bh=xOCRfMZplEN4lL5EAl7eiotn/mi8rdebzdBN70EmVDo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=To0sfOA7RLKeYBlI8iQBuglrCK7FNXfCfs3NLbgDO6V9jVc0UAkXBTHnpVc8AdHV5rUN/GokUJLMb1flD9fXP7uD+koFic4njI3Uv9U7hpcB99tiiCx95UphzjVB2ELq5JS2gcYped234Lgg3y7uCgn7yTh3XEezzDcA2KHp3l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BfGzXaI8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9h1iB025464
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6MyjRgUVKCgKeUMK1+TqDeLCghlcb2cp+pwcGYb/W+k=; b=BfGzXaI89pwyfRea
-	lJlgyJikLPd6gGr0LNRLHQhmU0VZRMbn0Omceq5v1C5wgM4sE5M7BN+feepwDLbB
-	1fI7siJAux4pWCuSGUZeE34JE3bcp9swqfbIUluzdX3v0cFMxS654hvf4XwrMMT5
-	YgbVTaL7Vykdl7B61X/BmjyUjSRznOhkqAciINW2M6bqxyyEnf/a4uVry5qnXm30
-	rv9kPntj9yHlVCCyM4eNTvSSv156Asrw9hkE2FwWshU5pzslDu18SH4Myhk3RhkX
-	x5UzI6uHVNIpESWIOQD69GK3CaljJ1aSQfIFJru5Rj7M190oCbXGDuRexZClvkWc
-	g36BHw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em41ty7s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:52 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-206b912491eso9709815ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 10:24:51 -0700 (PDT)
+	s=arc-20240116; t=1729704362; c=relaxed/simple;
+	bh=ExKSSArRGdy7bRdVoF8OmsrxTfnz4ONUWKTYnBGexz8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=A3ljGjN3TOhreoKeUho795sfch0ENimqZwDwUIxzVajS7XhKWdOwhSnELH/1o28DXxckaT52EP7aKr1PcDJfeATFVhdAjM4qAC9dnvqL+RGsbgRd0KFuezZ96a19d5IKqBRJ6pj97zv3pJGpfRwJ4lZmQMPop4wfoI/pIZlsmro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JvDO/zTb; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43163667f0eso239935e9.0;
+        Wed, 23 Oct 2024 10:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729704358; x=1730309158; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kb9i9zUsNMVUYPzfr+JSRlA9YASTj0l4XU9VARfF+lg=;
+        b=JvDO/zTbvhM//Q7lss6FbwkjzjS5DJsgi+86XUOuqsBTMVeKKdicCtU9J5YIT1k42U
+         AIJxvvei8W12O8CyezWz21bEdIaQ9/H49VOWaTWSxaJ8WVY0mBCvDnSsU1vikqZNR3RG
+         gNgXnds6gWN4OjDVjDABWe+N6+3fv9ykJF43lJDkD4GAkcyZFgSwAR9JowsLxrBzILXR
+         gY4Op9HckUwMIej8O1XzvG9fDDduY3D8omisOvwwh5BHNFdg68CXG3PFfunBd9aLMfVO
+         9zJfAhsPHWXNbF7N92KsR7NDLKvlydinyWb2p2f+1ia+k6qcRNWz99PyLSn+eJzE700y
+         wgzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729704291; x=1730309091;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6MyjRgUVKCgKeUMK1+TqDeLCghlcb2cp+pwcGYb/W+k=;
-        b=LwWlTimTZ8/w07EyuWrJRTN8eEtZvARv3vUMm7bp5vldW6dM0RnGfcJzuuJnfZQKpd
-         IOL+fBO4ClwIGUP5sJdSNAEBYiJapkLj43Jbk4wD1T7HRoGTTI5I8wnyNVCnOINSyAsp
-         RjYKUF8B1Uy6O28gftos6hkAoyXDTXnJ7tay6qQdCrjN+gBRhcsNYkRL7dPE2S5Y47hW
-         5a2oxxW1VCXscpSciZOI4I36T/UD9KCD6haWhJNnVDMNAbsHRf6Ug86DwSeDy10AbhF/
-         8aWN3hO+/vEtr8NqrHUSa7Uhn+JPLQyPpy3WsAkjeaVHfi6ShtAYRXBZzRRfZ6CJU/8/
-         kzKg==
-X-Gm-Message-State: AOJu0YzpKfgimtMBuKukSHFqivQ02tTFx1rNJH/QSMZo75FNe9ys/kdv
-	+CGajVpXsmHWHPJRz2ii3q5CKvQiXhPMs80ehePYZFTmGbDI4Nqj7uNOSXuvlx9G3qqXbadqaBq
-	coXvBjnxN71AiOiOGxArD8oVwEvmAijEKZuzjec2hVqiaTB3KahITS5MFokHVLlj0
-X-Received: by 2002:a17:902:ce8d:b0:205:5d71:561e with SMTP id d9443c01a7336-20fab359d7emr55523615ad.26.1729704290927;
-        Wed, 23 Oct 2024 10:24:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYJiQWMKPGKTinfN1ycfn0iszn1oRJ2Vq+Fv5kLbeQDb34PUfw7b82Mw9fdm3PNpgEndnlLg==
-X-Received: by 2002:a17:902:ce8d:b0:205:5d71:561e with SMTP id d9443c01a7336-20fab359d7emr55523205ad.26.1729704290456;
-        Wed, 23 Oct 2024 10:24:50 -0700 (PDT)
-Received: from ip-172-31-25-79.us-west-2.compute.internal (ec2-35-81-238-112.us-west-2.compute.amazonaws.com. [35.81.238.112])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20e7f0f20aesm59525435ad.246.2024.10.23.10.24.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 10:24:50 -0700 (PDT)
-From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Date: Wed, 23 Oct 2024 17:24:33 +0000
-Subject: [PATCH v2 2/2] soc: qcom: pmic_glink: Handle GLINK intent
- allocation rejections
+        d=1e100.net; s=20230601; t=1729704358; x=1730309158;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kb9i9zUsNMVUYPzfr+JSRlA9YASTj0l4XU9VARfF+lg=;
+        b=KO2yxjbc/Vofsvugv6dxEIuWeYNkf8aUHvZTV4Tn5kEzWhCKskAdOJrn2+pdv/PQJ3
+         uc8IWPeHR0AjwEhOkscEsXw8eAEOcXnXRV7iJ8u1d8gia4eB7Qikt600Eeu5SQkDg012
+         zteotSq6LJcSNSqOsX8717x0zbbQ/WX2pEVG7fb5fsRfzy+9qDdDnBiHxv8dxFQhJIaE
+         WPO7K0dYRSK3KgOgpGuIvARL2eIiNJ+UyCZBP9WOvc4G18ERiLXrmmJzU1LM+baFiZrr
+         W47ZWd1BiIMz6ygZOZ+pfCx24Z/epDQ3epSPmjLoLir4DdkDH4iocL5DqhA3LOrFuclc
+         CuOg==
+X-Forwarded-Encrypted: i=1; AJvYcCUFkxz5/C/REyFkaJdcyJjwM/k2subj6+NWoIdutEa34yzbQszO+6L7iFh+WTkbiwWo9fNRYgE+m/XQ7lqOeoNaHUp/ww==@vger.kernel.org, AJvYcCUhSLJ448pt2Mcf+EurLrkNTTw6fvj7s57tAF4miCWx6IvkwZRdo4mheZMu0jyNJ5fgya7XJAyDv0v1loks@vger.kernel.org, AJvYcCWZ90wTKpHVQWlwn6hLHOex3c5HympYCW/CJs9IQZsl9SSs198t7dAU414PKx8nRcaYPD0Df3/t/F4F@vger.kernel.org, AJvYcCX0QSM0vQQfssFFvKeDM3Zdqvu6Gy6Vx09W06QPL7Tfp6lTQgQWk1ebjcqCNjG8zx4/G4IqEJON9clCQ+UG/A==@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoDteE3+2627KIxg3AtaClMiZGgBx525j/iPkb2wlR5n04H7oE
+	PwPbh4aUUkUDDqFpcYvOhcw6bwie7iKM/fnPYaBiewM3nWxPp0qE
+X-Google-Smtp-Source: AGHT+IEbJlcbMDXNmFlVO5YLPk7N+x59kLpszwlxBi60Qf5wpQvKuK0j3CdPszBmP5ozz2mfUuD2Og==
+X-Received: by 2002:a05:600c:34d4:b0:431:5533:8f0b with SMTP id 5b1f17b1804b1-43184246647mr34064505e9.32.1729704358419;
+        Wed, 23 Oct 2024 10:25:58 -0700 (PDT)
+Received: from ?IPV6:2a02:8071:b783:140:927c:82ba:d32d:99c1? ([2a02:8071:b783:140:927c:82ba:d32d:99c1])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43186be509dsm21671835e9.16.2024.10.23.10.25.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 23 Oct 2024 10:25:57 -0700 (PDT)
+Message-ID: <ad9fa9f2-7f97-401a-8e8f-ae633ab1932b@gmail.com>
+Date: Wed, 23 Oct 2024 19:25:56 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20241023-pmic-glink-ecancelled-v2-2-ebc268129407@oss.qualcomm.com>
-References: <20241023-pmic-glink-ecancelled-v2-0-ebc268129407@oss.qualcomm.com>
-In-Reply-To: <20241023-pmic-glink-ecancelled-v2-0-ebc268129407@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Chris Lew <quic_clew@quicinc.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Johan Hovold <johan@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>,
-        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
-        stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1729704288; l=3195;
- i=bjorn.andersson@oss.qualcomm.com; s=20241022; h=from:subject:message-id;
- bh=xOCRfMZplEN4lL5EAl7eiotn/mi8rdebzdBN70EmVDo=;
- b=sMW0URP9GdXIzZSR/llq7GbeNK9/gY6MxGuh9PYwDfyjno2R424IjxAMkJMAqd8L6zHcCQj27
- xco0w84zEOJC59147iMlnToYWgD4nlSYpS5/fNlDF9AampbM4pKa1wO
-X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=ed25519;
- pk=SAhIzN2NcG7kdNPq3QMED+Agjgc2IyfGAldevLwbJnU=
-X-Proofpoint-GUID: T0wWirIvO09IcyV9xbnrgyr2QzzRn2-B
-X-Proofpoint-ORIG-GUID: T0wWirIvO09IcyV9xbnrgyr2QzzRn2-B
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 clxscore=1015 mlxscore=0 suspectscore=0 phishscore=0
- mlxlogscore=999 bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230109
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] platform/surface: aggregator_registry: Add Surface
+ Pro 9 5G
+To: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Hans de Goede <hdegoede@redhat.com>
+Cc: =?UTF-8?Q?J=C3=A9r=C3=B4me_de_Bretagne?= <jerome.debretagne@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Johan Hovold <johan+linaro@kernel.org>,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org
+References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
+ <20240908223505.21011-4-jerome.debretagne@gmail.com>
+ <f9cbd1c3-eb05-4262-bdc6-6d37e83179e5@gmail.com>
+ <CA+kEDGEdd_s+DGKsVNY6Jy870B72eHuaj2EgEnwP8J46ZGbxpQ@mail.gmail.com>
+ <8370d062-b3d2-46f5-9e7b-8e16edde8480@redhat.com>
+ <555f8a3a-ae5e-57e7-f176-96c52e1a5d45@linux.intel.com>
+Content-Language: en-US
+From: Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <555f8a3a-ae5e-57e7-f176-96c52e1a5d45@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Some versions of the pmic_glink firmware does not allow dynamic GLINK
-intent allocations, attempting to send a message before the firmware has
-allocated its receive buffers and announced these intent allocations
-will fail. When this happens something like this showns up in the log:
+On 10/22/24 10:56 AM, Ilpo Järvinen wrote:
 
-    pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to send altmode request: 0x10 (-125)
-    pmic_glink_altmode.pmic_glink_altmode pmic_glink.altmode.0: failed to request altmode notifications: -125
-    ucsi_glink.pmic_glink_ucsi pmic_glink.ucsi.0: failed to send UCSI read request: -125
-    qcom_battmgr.pmic_glink_power_supply pmic_glink.power-supply.0: failed to request power notifications
+[...]
 
-GLINK has been updated to distinguish between the cases where the remote
-is going down (-ECANCELED) and the intent allocation being rejected
-(-EAGAIN).
+> Hi all,
+> 
+> I've now applied patch 3 to review-ilpo branch in pdx86 repo.
+> 
+> I'd appreciate if somebody confirms I got those comment edits right.
+> 
 
-Retry the send until intent buffers becomes available, or an actual
-error occur.
+Hi Ilpo,
 
-To avoid infinitely waiting for the firmware in the event that this
-misbehaves and no intents arrive, an arbitrary 5 second timeout is
-used.
+looks good to me. Thanks for fixing this up!
 
-This patch was developed with input from Chris Lew.
-
-Reported-by: Johan Hovold <johan@kernel.org>
-Closes: https://lore.kernel.org/all/Zqet8iInnDhnxkT9@hovoldconsulting.com/#t
-Cc: stable@vger.kernel.org # rpmsg: glink: Handle rejected intent request better
-Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK driver")
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
----
- drivers/soc/qcom/pmic_glink.c | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index 9606222993fd78e80d776ea299cad024a0197e91..baa4ac6704a901661d1055c5caeaab61dc315795 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2022, Linaro Ltd
-  */
- #include <linux/auxiliary_bus.h>
-+#include <linux/delay.h>
- #include <linux/module.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
-@@ -13,6 +14,8 @@
- #include <linux/soc/qcom/pmic_glink.h>
- #include <linux/spinlock.h>
- 
-+#define PMIC_GLINK_SEND_TIMEOUT (5 * HZ)
-+
- enum {
- 	PMIC_GLINK_CLIENT_BATT = 0,
- 	PMIC_GLINK_CLIENT_ALTMODE,
-@@ -112,13 +115,29 @@ EXPORT_SYMBOL_GPL(pmic_glink_client_register);
- int pmic_glink_send(struct pmic_glink_client *client, void *data, size_t len)
- {
- 	struct pmic_glink *pg = client->pg;
-+	bool timeout_reached = false;
-+	unsigned long start;
- 	int ret;
- 
- 	mutex_lock(&pg->state_lock);
--	if (!pg->ept)
-+	if (!pg->ept) {
- 		ret = -ECONNRESET;
--	else
--		ret = rpmsg_send(pg->ept, data, len);
-+	} else {
-+		start = jiffies;
-+		for (;;) {
-+			ret = rpmsg_send(pg->ept, data, len);
-+			if (ret != -EAGAIN)
-+				break;
-+
-+			if (timeout_reached) {
-+				ret = -ETIMEDOUT;
-+				break;
-+			}
-+
-+			usleep_range(1000, 5000);
-+			timeout_reached = time_after(jiffies, start + PMIC_GLINK_SEND_TIMEOUT);
-+		}
-+	}
- 	mutex_unlock(&pg->state_lock);
- 
- 	return ret;
-
--- 
-2.43.0
-
+Best regards,
+Max
 
