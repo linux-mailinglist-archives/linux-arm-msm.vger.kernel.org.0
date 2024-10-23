@@ -1,156 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-35488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FC879ABA82
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 02:26:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id CCFA69ABA87
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 02:30:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97FD61C220EE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 00:26:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 500141F23EB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 00:30:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4874A1798C;
-	Wed, 23 Oct 2024 00:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E91141798F;
+	Wed, 23 Oct 2024 00:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Mfum9IjA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U0mz5ZVx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938A3322B;
-	Wed, 23 Oct 2024 00:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF784182BD;
+	Wed, 23 Oct 2024 00:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729643160; cv=none; b=mhogbbtXeyFZD6Y95VXjEDFc3cXYt0bHSTgc240HVtlCuSTECQVW5v3iV3CHMUCgGXRB3Yt7IvU/Mb+Sw3dmN+tDzzxvo6LiY21Cvm1gQkxZbgISnWft8nOgQSCe+kCZtL8xLT+NZjmaJz+nMtwq1njNziSLg6Qv8KA+6OdO8Pk=
+	t=1729643398; cv=none; b=UHRZNFUeNm8jcVsPMDg4zAwG3YM3NM6YrQx+zQv8qwTMhuNp3VFqgiRks3yK8eCz8hgpI7Qg32LNI9WWpXVesILDeGt8xgHohN1lWjezql2s8OUEW/2U1JbTjAelSzIes/n2M1UCYlaiEpmwT9UjNX6s3xMrQGNiv8zdoIgaIIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729643160; c=relaxed/simple;
-	bh=h6JzDILR1DPuxl8LZb987FWLyuj/Z8EX9qPsVg+20EQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=gQJWdF9CDbfwFYGLUItU8j/6NXULZe7HaNM3VdI62TgfqwBngx9yqga8vJhZs4OO5hFPNkZ3Ymnb/zLdK7YlvXhUVD5zFk8fDkOPDmdJim7mOkmhs2s3x0YbblGjcRspzWBfYtLXpnDYiAoUSDd3XIP8YBccLalO9frmoYgRTVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Mfum9IjA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLafDg009312;
-	Wed, 23 Oct 2024 00:25:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Ie/qF0lq9AKN6Q3By+zupjvz/24wiHybHMb3RzJH0yU=; b=Mfum9IjAe0AQ9MmS
-	su56FfM6nHHf59PPJ7szwg6x+1zr8pHjubyRjHmMOOomWc1uyvKbmxsRtVgVDs2o
-	ejECzPxdBbUWlITAnMO6xBfF/zp7bMIvneef8beC0+VjlXeQvYMitu7jOZnzSVDM
-	RQRktiuCDmaZEC4AC+3KdzV/4pxSB7M78T9UM1ijx974Z+mk9qJ//dMdOB+h0xQ9
-	9TpvxPRaa3fXTfZDwtQ/9SqH0zeMcrjWvO2Wzay51xNUQu0CDOsd9gZHqEVSnjPd
-	3xljz6xLximb/EiMffIQrGe+YAoE2xkhoJ0A+E8ierOAXkqwGNkcs0p8wpfNOHhM
-	zx0pCQ==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em438a2m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 00:25:46 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49N0PjFA026529
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 00:25:45 GMT
-Received: from [10.110.103.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
- 2024 17:25:44 -0700
-Message-ID: <479ef16f-1711-4b16-8cad-c06fc5b42da0@quicinc.com>
-Date: Tue, 22 Oct 2024 17:25:44 -0700
+	s=arc-20240116; t=1729643398; c=relaxed/simple;
+	bh=+XwK/JT1w1SNstyTOM386QsOa/SKvwRLAusAM6iF2C0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o7ViN/rwkcQvAXJ3nmhJZDxzIs/+K2WEj6vXxykcGPYn1+tIzhDlxFPe4WK83dFNEtPQQDsOOT2u0H35UDIBwx4PWjenWZcvFC87qeuIBDP5gpxmQUn8m5/qf5aQUwmjKayvC+57Ed07fYEg9xZQ/8atXboDNnNVPQZT4QTQsEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U0mz5ZVx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A1CC4CEC3;
+	Wed, 23 Oct 2024 00:29:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1729643398;
+	bh=+XwK/JT1w1SNstyTOM386QsOa/SKvwRLAusAM6iF2C0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U0mz5ZVxIqzRhWH9B5XTNFAe038PPbVFNZmVEUpZhzyaOAEaAvDsN5k8Kem/KrazV
+	 1Or32rxWIUCa63ln9FSKavYR4f3G02ZJJrXzMOM7PJZAHm1HzEgDzMk7ZkvI4+znVv
+	 Qn+wUphRHXMxXbfM+i9wKwrCEK3Bm1tl7mWzlzpJuTbLLArLjSWuuFhZkbCGTIZkoL
+	 vetMI+3mok9/4HYvNmmVqT0759oa3HkVQiLHusdPL/12OuALBNXt8qg3g8Ods4gngZ
+	 ZJVTXAiIEPnoTeRSf3WWipwDjbhVmLjn2JF8CzKwHwzwr4pfYxFnbhpGQmog2+fiCo
+	 oQm3kxSp0U78Q==
+Date: Tue, 22 Oct 2024 19:29:55 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rajendra Nayak <quic_rjendra@quicinc.com>, Sibi Sankar <quic_sibis@quicinc.com>, 
+	Johan Hovold <johan@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Trilok Soni <quic_tsoni@quicinc.com>, linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: usb: Add Parade PS8830 Type-C
+ retimer bindings
+Message-ID: <2qhd2caujzgvcrqwgwkzuyep67ru5l7acwfqdc4w3e5ikclbhi@uok7y66cgzhw>
+References: <20241022-x1e80100-ps8830-v3-0-68a95f351e99@linaro.org>
+ <20241022-x1e80100-ps8830-v3-1-68a95f351e99@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 10/10] net: qrtr: mhi: Report endpoint id in sysfs
-To: Denis Kenzior <denkenz@gmail.com>, <netdev@vger.kernel.org>
-CC: Marcel Holtmann <marcel@holtmann.org>, Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "David S. Miller"
-	<davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub Kicinski
-	<kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241018181842.1368394-1-denkenz@gmail.com>
- <20241018181842.1368394-11-denkenz@gmail.com>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20241018181842.1368394-11-denkenz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: TN39BrabjIVmcQFNMt0uVikhkpYF0sOo
-X-Proofpoint-ORIG-GUID: TN39BrabjIVmcQFNMt0uVikhkpYF0sOo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 lowpriorityscore=0
- adultscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 impostorscore=0
- phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
- definitions=main-2410230000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241022-x1e80100-ps8830-v3-1-68a95f351e99@linaro.org>
 
+On Tue, Oct 22, 2024 at 01:26:54PM GMT, Abel Vesa wrote:
+> Document bindings for the Parade PS8830 Type-C retimer. This retimer is
+> currently found on all boards featuring Qualcomm Snapdragon X Elite SoCs
+> and it is needed to provide altmode muxing between DP and USB, but also
+> connector orientation handling between.
 
+This sentence ends a bit weird to me, please polish it (although
+preferably, rewrite it according to "describe your changes")
 
-On 10/18/2024 11:18 AM, Denis Kenzior wrote:
-> Add a read-only 'endpoint' sysfs entry that contains the qrtr endpoint
-> identifier assigned to this mhi device.  Can be used to direct / receive
-> qrtr traffic only from a particular MHI device.
 > 
-> Signed-off-by: Denis Kenzior <denkenz@gmail.com>
-> Reviewed-by: Marcel Holtmann <marcel@holtmann.org>
-> Reviewed-by: Andy Gross <agross@kernel.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->   net/qrtr/mhi.c | 14 ++++++++++++++
->   1 file changed, 14 insertions(+)
+>  .../devicetree/bindings/usb/parade,ps8830.yaml     | 129 +++++++++++++++++++++
+>  1 file changed, 129 insertions(+)
 > 
-> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
-> index 69f53625a049..a4696ed31fb1 100644
-> --- a/net/qrtr/mhi.c
-> +++ b/net/qrtr/mhi.c
-> @@ -72,6 +72,16 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
->   	return rc;
->   }
->   
-> +static ssize_t endpoint_show(struct device *dev,
-> +			     struct device_attribute *attr, char *buf)
-> +{
-> +	struct qrtr_mhi_dev *qdev = dev_get_drvdata(dev);
+> diff --git a/Documentation/devicetree/bindings/usb/parade,ps8830.yaml b/Documentation/devicetree/bindings/usb/parade,ps8830.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..ee4c69eca6066e4da0373fad6c25d6e9fff83366
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/usb/parade,ps8830.yaml
+> @@ -0,0 +1,129 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/usb/parade,ps8830.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +	return sprintf(buf, "%d\n", qdev->ep.id);
+> +title: Parade PS8830 USB and DisplayPort Retimer
+> +
+> +maintainers:
+> +  - Abel Vesa <abel.vesa@linaro.org>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - parade,ps8830
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO Clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
 
-%u might be more appropriate because the endpoint id is stored as a u32
+Don't know if the guidelines has changed on this, but for a single clock
+we used to omit clock-names, as it doesn't add any/much value.
 
-> +}
+Regards,
+Bjorn
+
 > +
-> +static DEVICE_ATTR_RO(endpoint);
+> +  ps8830,boot-on:
+> +    description: Left enabled at boot, so skip resetting
+> +    type: boolean
 > +
->   static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->   			       const struct mhi_device_id *id)
->   {
-> @@ -91,6 +101,9 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
->   	if (rc)
->   		return rc;
->   
-> +	if (device_create_file(&mhi_dev->dev, &dev_attr_endpoint) < 0)
-> +		dev_err(qdev->dev, "Failed to create endpoint attribute\n");
+> +  reset-gpios:
+> +    maxItems: 1
 > +
->   	/* start channels */
->   	rc = mhi_prepare_for_transfer_autoqueue(mhi_dev);
->   	if (rc) {
-> @@ -107,6 +120,7 @@ static void qcom_mhi_qrtr_remove(struct mhi_device *mhi_dev)
->   {
->   	struct qrtr_mhi_dev *qdev = dev_get_drvdata(&mhi_dev->dev);
->   
-> +	device_remove_file(&mhi_dev->dev, &dev_attr_endpoint);
->   	qrtr_endpoint_unregister(&qdev->ep);
->   	mhi_unprepare_from_transfer(mhi_dev);
->   	dev_set_drvdata(&mhi_dev->dev, NULL);
+> +  vdd-supply:
+> +    description: power supply (1.07V)
+> +
+> +  vdd33-supply:
+> +    description: power supply (3.3V)
+> +
+> +  vdd33-cap-supply:
+> +    description: power supply (3.3V)
+> +
+> +  vddar-supply:
+> +    description: power supply (1.07V)
+> +
+> +  vddat-supply:
+> +    description: power supply (1.07V)
+> +
+> +  vddio-supply:
+> +    description: power supply (1.2V or 1.8V)
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - clocks
+> +  - clock-names
+> +  - reset-gpios
+> +  - vdd-supply
+> +  - vdd33-supply
+> +  - vdd33-cap-supply
+> +  - vddat-supply
+> +  - vddio-supply
+> +  - orientation-switch
+> +  - retimer-switch
+> +
+> +allOf:
+> +  - $ref: usb-switch.yaml#
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/gpio/gpio.h>
+> +
+> +    i2c {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        typec-mux@8 {
+> +            compatible = "parade,ps8830";
+> +            reg = <0x8>;
+> +
+> +            clocks = <&clk_rtmr_xo>;
+> +            clock-names = "xo";
+> +
+> +            vdd-supply = <&vreg_rtmr_1p15>;
+> +            vdd33-supply = <&vreg_rtmr_3p3>;
+> +            vdd33-cap-supply = <&vreg_rtmr_3p3>;
+> +            vddar-supply = <&vreg_rtmr_1p15>;
+> +            vddat-supply = <&vreg_rtmr_1p15>;
+> +            vddio-supply = <&vreg_rtmr_1p8>;
+> +
+> +            reset-gpios = <&tlmm 10 GPIO_ACTIVE_LOW>;
+> +
+> +            retimer-switch;
+> +            orientation-switch;
+> +
+> +            ports {
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
+> +
+> +                port@0 {
+> +                    reg = <0>;
+> +
+> +                    endpoint {
+> +                        remote-endpoint = <&typec_con_ss>;
+> +                    };
+> +                };
+> +
+> +                port@1 {
+> +                    reg = <1>;
+> +
+> +                    endpoint {
+> +                        remote-endpoint = <&usb_phy_ss>;
+> +                    };
+> +                };
+> +
+> +                port@2 {
+> +                    reg = <2>;
+> +
+> +                    endpoint {
+> +                        remote-endpoint = <&typec_dp_aux>;
+> +                    };
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+> 
+> -- 
+> 2.34.1
+> 
 
