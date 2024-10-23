@@ -1,159 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-35627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C0739AD4F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 21:42:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FA809AD5BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 22:46:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8281A1C2147C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 19:42:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 458711F22827
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 20:46:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B7981D172F;
-	Wed, 23 Oct 2024 19:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B96D21A7259;
+	Wed, 23 Oct 2024 20:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="QlsNIYXv"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyqb1hC7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80EE913BC11;
-	Wed, 23 Oct 2024 19:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C5C13B59E;
+	Wed, 23 Oct 2024 20:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729712549; cv=none; b=OvID/0pOne7Ovr8RQE16bv2yUQi/RXABNZwbxMOhQq0cfV7mW5A2LSOBIeUzWLEiAeV02AtJrlnvx+59mqK6We9ASNTS7FmyYFwXKz5tm/qV4mYfBIcW8UjUxRtBHGKxKqzYo+Tt+eRWhob3H0RsA1eW4DwGoKECEY6Z4+GhTgg=
+	t=1729716389; cv=none; b=ZFT4LhMfvIDuLZTe47tRspopwHeRYcZzz9DL8VVmF2fy8yJweeb49KJcyg2lHuuGrUNZqNf+Kd6uNXSm6fZ8phyv4/A7VwjudyUWsX0iiGifCqfD05mI4uvcAmikiOBGrsLcyaPGoKHznWU7yQEhlGzCfioSTaz4e0/7qgf8fGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729712549; c=relaxed/simple;
-	bh=LVaFhLQapIc0ZkK/OTjneHOGSsk4mj8AVWq4oRfYt7w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SLGjHu7ZOVTl34mq2iS7mIrorpkNYUxCE2AtwTxvOYqhaVtvaYP3plznu5mfuduBCrmNQBJ1iR/WUUhskStIQ+H3DwVnDwvSUlgHKx8yfDUkhbOnQ9WjvGIgBjgVTVH3zPwuv/AKtVm+yw231hkZgelT4fktexvhBS4LzrkC4lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=QlsNIYXv; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9ZecR003624;
-	Wed, 23 Oct 2024 19:42:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4hOkkEPHh5v2lDBXE+5MmF++twajN54H112yfkX4INc=; b=QlsNIYXvEGf/qWjT
-	i9Df2SVU+omZm3kZMNBhslWjSJLt3vgDHaDOHMiXaQt1nXNNhcrULtYny8Z1Dr4v
-	kpZPhQQsCh+Mcws5STFv7C+O6mj+wFbM49IClba9ACaGiYHSmw+uXuB0ZXIqAMik
-	7/kIll72y235eH3OwDEu4dRrQuqF3wbNAdesosVKZShfWC4XuxarPwbSIFQ59Izq
-	sFC+3s9LmdlbP70Pj/zXzgZUDSY6oIyIX7qUa8LPQLnen+Rqrwg0N9nXgwXs5UBw
-	LWWakHaFGdAXix9WMf4D96PdwaFpWS2AwvfvihpgzOAyPAe6IONfHdqYoKQ3KY/W
-	Gj0CYw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em683anq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 19:42:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49NJgBJB015174
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 19:42:11 GMT
-Received: from [10.216.22.63] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Wed, 23 Oct
- 2024 12:42:05 -0700
-Message-ID: <8219c6e7-18fe-4878-9cae-093898a7d129@quicinc.com>
-Date: Thu, 24 Oct 2024 01:12:02 +0530
+	s=arc-20240116; t=1729716389; c=relaxed/simple;
+	bh=VE5faDGuulpA16bqytPHh+8rqbJzyZavDCJhycCNVO0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MOqcrri0jkiEKX0vhqcp51V3oLB7ZgLILUHr4ExM/AnU5OcxlmWM5ST9lTkDdBE30Oq6ETDZ0ttzxw1A2xx3IZa4BQApIOUtwqcrXpYZFaB+JBw8KgorVNKbRVjXTavacXl7YsoJGKfAGds8fWDFys1sVjbZpHL1+VdRkAReKOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eyqb1hC7; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-8323b555a6aso7846839f.3;
+        Wed, 23 Oct 2024 13:46:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1729716387; x=1730321187; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4Q9Fmtv1jhqmPQxhPj7GzThFbrtRvvOEog4jX1mozHs=;
+        b=eyqb1hC72NFyfzMwHYUNq8DdyinYXmcxlRxwGnmynvprDG6Qf2QMtGAmac/7PlR467
+         ExQc5DXbcTS9d63kbrt0641s9KgdWBSDuPEXQXRqohJExHb6nMQ5hIsI+y38vQL4C/Wz
+         P7jsvoOJlH9D/HhE/jnWvlKxjnU7kt9TwvyMbSUvwO1TWVJ20kv93y3NEbjy3IdJsHTl
+         SfqTf4l93CTYItlz+oCKcDGmk5g+zGzgcXYaW8f6qwkyRleQHgTD6ZvbAxW+5O6TODf5
+         xpbKPOSiRJ9iHRlR661kND/EUvs78Gfto2L/alBQs1MnorFx17KYf8Pk/ieExfizJZiA
+         2U1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729716387; x=1730321187;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4Q9Fmtv1jhqmPQxhPj7GzThFbrtRvvOEog4jX1mozHs=;
+        b=PMT5stGCpQalMbEsfFG03JW5C4sNzxoHFZF4X6q1AL9dNr8S8rcuFEEYYMJIF7z3Mf
+         qac4tQ81D2t1lblOHbDf5bAl8Ykl93CgsRPr5qELRu4G3MkGukqxTav8nDUu/RFCtjPU
+         HaH9fENVNIRKWj3lt9UrUuj5XG3+Vi9F4uCwOUxbGgnBX9gY8CEY1MbGuMdN4YvBPQv6
+         mXi1fb8Ovs7B682F8jdVCguaTHFYgGD2rIvT4qEbAsdLAsZEct8RKC9Tjn3QSZXPksmY
+         YYoktMMPnfYm1zXkhKI3VIDUnAAna+fhcziQZ6gFIb7AmhKiy2YS31T6Q8AH129yCnn/
+         iGEw==
+X-Forwarded-Encrypted: i=1; AJvYcCWhwUpE9+DeHWduz6w0y6CpXlfGM26NeLbWjd2eHISs+6hURBtYuLeBDim5G+vKhslpRQ90+mPZ35zC9kIf@vger.kernel.org, AJvYcCWzRe0+GVMFMYiXxNmuFK+yiEyXAnVIjp15obAa579VwxbdAxM4xpzDxAXSWXl3As7uJz+br2J+E9uXWBwikg==@vger.kernel.org, AJvYcCXD204IZOl6qjv30H+P826HqFVNJ0jJxojme+PFGwAXQWoVawRkJ8I6qbdauvavHenSLPo51mAE+xMn@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/Tc5eBfnOfita/tGP3V78E/jOJ9En/+Cj3y6JX0nR7NkaEg9R
+	nDQo0uFiKjCdoOw0DZR1ijO2DnkLTlsIe68YkFhZoh+pj6kb32oofjCzfat8vFojNLZYUwo2mTv
+	M+M4W4CBAIAP6mb7EVKGhMw+C1II=
+X-Google-Smtp-Source: AGHT+IHoQOEizYcj7tAixtp4PTHw4bzgJdfZ39CRrv3g6b0UEB4bcHATl1XYABgvefhFHa8Sg1I3z+Hc0eB/FkZBbQU=
+X-Received: by 2002:a92:ca0a:0:b0:3a3:40f0:cb8c with SMTP id
+ e9e14a558f8ab-3a4d59bbc12mr49771975ab.17.1729716387128; Wed, 23 Oct 2024
+ 13:46:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] drm: a6xx: avoid excessive stack usage
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@linaro.org>
-CC: Arnd Bergmann <arnd@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        "Abhinav
- Kumar" <quic_abhinavk@quicinc.com>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        Nathan Chancellor <nathan@kernel.org>,
-        "Arnd
- Bergmann" <arnd@arndb.de>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        Bill Wendling <morbo@google.com>,
-        Justin Stitt <justinstitt@google.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <freedreno@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>
-References: <20241018151143.3543939-1-arnd@kernel.org>
- <20241019093146.kdp25pir5onjmg4g@hu-akhilpo-hyd.qualcomm.com>
- <k42wmgziqia6balqsrfualbg73giesjxxtyaldkxsrdxkro2li@6neybqsu27me>
- <20241021092509.tm4w3ufdgcd7of37@hu-akhilpo-hyd.qualcomm.com>
- <c80309ad-52de-4998-ab0e-05db7cc5068b@oss.qualcomm.com>
-Content-Language: en-US
-From: Akhil P Oommen <quic_akhilpo@quicinc.com>
-In-Reply-To: <c80309ad-52de-4998-ab0e-05db7cc5068b@oss.qualcomm.com>
+References: <20240911073337.90577-1-quic_sibis@quicinc.com> <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+In-Reply-To: <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
+From: Rob Clark <robdclark@gmail.com>
+Date: Wed, 23 Oct 2024 13:46:15 -0700
+Message-ID: <CAF6AEGvgnW5VTZYFzwiMChB4-2cShmBvMcfgQVbcCiOgH6e3Yg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] X1E001DE Snapdragon Devkit for Windows
+To: Sibi Sankar <quic_sibis@quicinc.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
+	robh+dt@kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	conor+dt@kernel.org, abel.vesa@linaro.org, srinivas.kandagatla@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g2d5s-lP0vOEyDNwN54rHo14jvchke3f
-X-Proofpoint-GUID: g2d5s-lP0vOEyDNwN54rHo14jvchke3f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- priorityscore=1501 adultscore=0 bulkscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 mlxlogscore=999 impostorscore=0 suspectscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230127
+Content-Transfer-Encoding: quoted-printable
 
-On 10/21/2024 3:01 PM, Konrad Dybcio wrote:
-> On 21.10.2024 11:25 AM, Akhil P Oommen wrote:
->> On Sat, Oct 19, 2024 at 04:14:13PM +0300, Dmitry Baryshkov wrote:
->>> On Sat, Oct 19, 2024 at 03:01:46PM +0530, Akhil P Oommen wrote:
->>>> On Fri, Oct 18, 2024 at 03:11:38PM +0000, Arnd Bergmann wrote:
->>>>> From: Arnd Bergmann <arnd@arndb.de>
->>>>>
->>>>> Clang-19 and above sometimes end up with multiple copies of the large
->>>>> a6xx_hfi_msg_bw_table structure on the stack. The problem is that
->>>>> a6xx_hfi_send_bw_table() calls a number of device specific functions to
->>>>> fill the structure, but these create another copy of the structure on
->>>>> the stack which gets copied to the first.
->>>>>
->>>>> If the functions get inlined, that busts the warning limit:
->>>>>
->>>>> drivers/gpu/drm/msm/adreno/a6xx_hfi.c:631:12: error: stack frame size (1032) exceeds limit (1024) in 'a6xx_hfi_send_bw_table' [-Werror,-Wframe-larger-than]
->>>>
->>>> Why does this warning says that the limit is 1024? 1024 bytes is too small, isn't it?
->>>
->>> Kernel stacks are expected to be space limited, so 1024 is a logical
->>> limit for a single function.
->>
->> Thanks for the clarification. I think it is better to move this table to
->> struct a6xx_gmu which is required anyway when we implement dynamic generation
->> of bw table. Also, we can skip initializing it in subsequent gpu wake ups.
->>
->> Arnd, do you think that would be sufficient? I can send that patch if you
->> want help.
-> 
-> FWIW I implemented this at one point.. ended up only rebasing it for months
-> as I kept delaying GMU voting until we get an in-tree dram frequency LUT
-> retrieving driver..
-> 
-> https://github.com/SoMainline/linux/commits/konrad/longbois-next/drivers/gpu/drm/msm/adreno
-> 
-> worth noting that this used to be my R&D branch so this is very much err..
-> "provided as-is".. but it did work on 8250!
-> 
+On Wed, Oct 23, 2024 at 4:07=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.com=
+> wrote:
+>
+>
+>
+> On 9/11/24 13:03, Sibi Sankar wrote:
+> > Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001D=
+E
+> > is the speed binned variant of X1E80100 that supports turbo boost up to
+> > 4.3 Ghz. The initial support includes the following:
+> >
+> > -DSPs
+> > -Ethernet (RTL8125BG) over the pcie 5 instance.
+> > -NVme
+> > -Wifi
+> > -USB-C ports
+> >
+>
+> Hi All,
+>
+> With the X1E Devkit cancelled and with no firmware updates promised for
+> it perpetually, please chime in and let me know if you still want to get
+> this series and rest (external-dp, usb-A ports, sd card slot and 3.5 mm
+> Jack) merged and have it supported upstream for the folks who already
+> received it!
 
-Thanks, Konrad. "IB vote via GMU" support is there in my bucket list. I can help
-out if you want to clean this up and send out.
+(a) would the firmware update situation have been _that_ much better
+if it wasn't cancelled?  And (b) we do have dts upstream for other
+canceled boards.
 
--Akhil
- 
-> Konrad
+My $0.02 is that it is still useful
 
+BR,
+-R
+
+> -Sibi
+>
+> > Link: https://www.qualcomm.com/news/releases/2024/05/qualcomm-accelerat=
+es-development-for-copilot--pcs-with-snapdrago
+> >
+> > Sibi Sankar (2):
+> >    dt-bindings: arm: qcom: Add Snapdragon Devkit for Windows
+> >    arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows
+> >
+> >   .../devicetree/bindings/arm/qcom.yaml         |   6 +
+> >   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+> >   arch/arm64/boot/dts/qcom/x1e001de-devkit.dts  | 813 +++++++++++++++++=
++
+> >   3 files changed, 820 insertions(+)
+> >   create mode 100644 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+> >
+>
 
