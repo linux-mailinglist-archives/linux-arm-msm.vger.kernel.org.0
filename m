@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-35521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 830579ABDA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:08:06 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A49529ABE21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 07:49:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E03282835E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 05:08:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 587A2283A6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 05:49:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98E6B13CFA1;
-	Wed, 23 Oct 2024 05:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8CF41448C1;
+	Wed, 23 Oct 2024 05:49:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="TH3SB30E"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="I8sXDIXe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E01AD39ACC;
-	Wed, 23 Oct 2024 05:08:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B058825;
+	Wed, 23 Oct 2024 05:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729660083; cv=none; b=nu+1apWeHri496FV0R+JcfnrCPyF0VzdVtO3wu7rmpLofRTaGrIfEp1V2I5/CRedPYXidKG8OT+X+JsJlbap6uszPjgBCGelhW0Dm2iXu/NdlacpeR8hwPKPuumSdfHRYEJCGXtmYCIkl5YuT7kB77O/AlC8lXvJRaTGxqKOyA4=
+	t=1729662552; cv=none; b=VZ3PHaYN9riueDCx9MAe0DC56LHl9yu1k/Te3bdbxn7UJtf8/eXHluVquo3SO6z+agjgxgT+phVcukT3hKdOmUAE71lbaC1wUmdP/wUplLRqe3xHcYbG7pdRybb59Bc+mafKS0n552J0rYfdNt2WE6icRB+6BoOnwjGiH/SDqXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729660083; c=relaxed/simple;
-	bh=ht2IcqUIibZPtSYBwMnMl0wko1zLpajabqDsNjShT9E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=aauWoD91hHwvItDatplpNqaA3EXRMkLKILtqB41HU2BmWjOS3mUUpPUISwLjGo8Iq3fpuSlMB2wCfe0JH4kurqqelmgGFIf1wxf4GodP+2bARMK8Ui0SNVQwwnWwxrCHipIzm9WxaN+5wYrHWTGqZ1ZA5LIqCIKB04iQOGrTNdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=TH3SB30E; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1729662552; c=relaxed/simple;
+	bh=IrOkKdwgwnuzrdwFl2ugTT/CJ3Mgqiqx6mFH09fEqhA=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=l9vddRAeFs0mx/kzkutwom/0r3fOF7NeY1mWoGbeAmtsEwR1Jvdm2PEIAQMewboA1yz3pM+TTvNq3GzDmguo30gNMvmIC0IoWRw1xYqT14nmSI8jWfMXFTzXEe79bSCebZewrv1+oP+8v/ySCQVJCjX+S+DKpPkSDvFkEZ2NFGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=I8sXDIXe; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLaBlp025161;
-	Wed, 23 Oct 2024 05:07:41 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49MLa1qX029637;
+	Wed, 23 Oct 2024 05:49:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	kqEsxGFiFNaU+Lg3MVVwP9PI42H4MdV/UcLW2KSfP5Q=; b=TH3SB30ELR1jbbIH
-	udlZ9d58mrtgmBuHrnDrPBgCrePOF57RH2X1cDHIjHJK1az9NcvV1uE9rWRCpqLx
-	lLEdXfH5EbD/sGF/n77Y8w1wuRNgEVnB0jaClu9yBbMGfOI4rsIeuHwaSYi+h4gz
-	wfFhd55tWTxSF6C46ayVxw8xmB1D4upkRlwwmK7FkO1UQae6tYbVSDHUVZOl4xmr
-	9ReB+OMufpUmSC3gIShJJKdLfVSsGY7WfrPj+JeYb7+5jcHkzh6iU/BSO4yNKBS/
-	vYioH6MDfHLPRdXb5Vk/Ea77llhOMNN2k4k2OaAai5ApNgLatnuRtfCnlmVe/Wni
-	4qJj+A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em41rvvp-1
+	9+1DNfDvn2TGnEibmwLTDyqIQvMTt/LxPVTNCzem/0I=; b=I8sXDIXejreScEDE
+	nQ+qyyrHzUfUS4mtlz2TFDjYAOUmQrDJpbPrA+dKCXxpZ7pdEy65s6MHkQ+ERaT0
+	UU1YSjAJYBBCu6dJXMGmFFo+KeRP75MR8vZxv5YYLGvGASfKOLe4Y0XyWJWiSvzk
+	iv/s0lgfn2Eb9tTc3U/+emqwFv62bAVSiKJLYF5xuhcxJBnhXPIyjiZFU3il1k55
+	fbx8y8h25x+ardLexTlgbtxvIZBZh6CZOtwFKJn41lCcLP733/gK80Qm7N07RtJ2
+	uyPhGIJue7YT9RNIcw8lgwmBf6rvmDXxHY/+YzjHrfsy8D3Elt3eOIUaybyO9zwd
+	5BV9gQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3w10e1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 05:07:41 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49N57eOm011484
+	Wed, 23 Oct 2024 05:49:01 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49N5n1Tn029613
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 05:07:40 GMT
-Received: from [10.110.103.186] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+	Wed, 23 Oct 2024 05:49:01 GMT
+Received: from [10.239.132.41] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 22 Oct
- 2024 22:07:39 -0700
-Message-ID: <0275bd96-ce6a-454a-a407-b2d8fc60e156@quicinc.com>
-Date: Tue, 22 Oct 2024 22:07:38 -0700
+ 2024 22:48:57 -0700
+Message-ID: <bc1ab306-903a-4111-a428-8f28d8324207@quicinc.com>
+Date: Wed, 23 Oct 2024 13:48:54 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,117 +65,90 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1 00/10] QRTR Multi-endpoint support
-To: Denis Kenzior <denkenz@gmail.com>, <netdev@vger.kernel.org>
-CC: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        "David S.
- Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>, Jakub
- Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20241018181842.1368394-1-denkenz@gmail.com>
-Content-Language: en-US
-From: Chris Lew <quic_clew@quicinc.com>
-In-Reply-To: <20241018181842.1368394-1-denkenz@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qcs615: add the APPS SMMU node
+From: Qingqing Zhou <quic_qqzhou@quicinc.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <robimarko@gmail.com>, <will@kernel.org>,
+        <robin.murphy@arm.com>, <joro@8bytes.org>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <iommu@lists.linux.dev>
+References: <20241015081603.30643-1-quic_qqzhou@quicinc.com>
+ <20241015081603.30643-5-quic_qqzhou@quicinc.com>
+ <ac5081ce-e2e4-4201-bd7c-eb4ec2cf7e2d@oss.qualcomm.com>
+ <ed4209a8-fb37-4354-a717-60dc1b5c29ab@quicinc.com>
+In-Reply-To: <ed4209a8-fb37-4354-a717-60dc1b5c29ab@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: hQxSGMe9pQh4lA7EJBEnGyC0a3KrDg4g
-X-Proofpoint-ORIG-GUID: hQxSGMe9pQh4lA7EJBEnGyC0a3KrDg4g
+X-Proofpoint-ORIG-GUID: 8L0WjqWcJitDB143WEK8KmruSMXCMzX8
+X-Proofpoint-GUID: 8L0WjqWcJitDB143WEK8KmruSMXCMzX8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- malwarescore=0 clxscore=1015 mlxscore=0 suspectscore=0 phishscore=0
- mlxlogscore=924 bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230028
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
+ priorityscore=1501 impostorscore=0 bulkscore=0 lowpriorityscore=0
+ clxscore=1015 suspectscore=0 spamscore=0 malwarescore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2409260000 definitions=main-2410230033
 
 
 
-On 10/18/2024 11:18 AM, Denis Kenzior wrote:
-> The current implementation of QRTR assumes that each entity on the QRTR
-> IPC bus is uniquely identifiable by its node/port combination, with
-> node/port combinations being used to route messages between entities.
+在 10/18/2024 2:20 PM, Qingqing Zhou 写道:
 > 
-> However, this assumption of uniqueness is problematic in scenarios
-> where multiple devices with the same node/port combinations are
-> connected to the system.  A practical example is a typical consumer PC
-> with multiple PCIe-based devices, such as WiFi cards or 5G modems, where
-> each device could potentially have the same node identifier set.  In
-> such cases, the current QRTR protocol implementation does not provide a
-> mechanism to differentiate between these devices, making it impossible
-> to support communication with multiple identical devices.
 > 
-> This patch series addresses this limitation by introducing support for
-> a concept of an 'endpoint.' Multiple devices with conflicting node/port
-> combinations can be supported by assigning a unique endpoint identifier
-> to each one.  Such endpoint identifiers can then be used to distinguish
-> between devices while sending and receiving messages over QRTR sockets.
+> 在 10/18/2024 4:05 AM, Konrad Dybcio 写道:
+>> On 15.10.2024 10:16 AM, Qingqing Zhou wrote:
+>>> Add the APPS SMMU node for QCS615 platform. Add the dma-ranges
+>>> to limit DMA address range to 36bit width to align with system
+>>> architecture.
+>>>
+>>> Signed-off-by: Qingqing Zhou <quic_qqzhou@quicinc.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/qcs615.dtsi | 74 ++++++++++++++++++++++++++++
+>>>  1 file changed, 74 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615.dtsi b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>>> index 027c5125f36b..fcba83fca7cf 100644
+>>> --- a/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/qcs615.dtsi
+>>> @@ -379,6 +379,7 @@
+>>>  	soc: soc@0 {
+>>>  		compatible = "simple-bus";
+>>>  		ranges = <0 0 0 0 0x10 0>;
+>>> +		dma-ranges = <0 0 0 0 0x10 0>;
+>>>  		#address-cells = <2>;
+>>>  		#size-cells = <2>;
+>>>  
+>>> @@ -524,6 +525,79 @@
+>>>  			reg = <0x0 0x0c3f0000 0x0 0x400>;
+>>>  		};
+>>>  
+>>> +		apps_smmu: iommu@15000000 {
+>>> +			compatible = "qcom,qcs615-smmu-500", "qcom,smmu-500", "arm,mmu-500";
+>>> +			reg = <0x0 0x15000000 0x0 0x80000>;
+>>> +			#iommu-cells = <2>;
+>>> +			#global-interrupts = <1>;
+>>> +
+>>> +			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
+>>> +					<GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>,
+>>> +					<GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>,
+>>
+>> The list seems perfectly sorted, which is suspicious.. if we set
+>> i = n - #global-interrupts, interrupt[i] signifies an error in the i-th
+>> context bank. If the order is wrong, we'll get bogus reports
+> Thanks for the review, the list refers to Qualcomm Interrupts design spec, checking this platform again, the list is right, first line is global interrupt and the others are context interrupts with right order.
+Hi Konrad,
+Hope above comments explain your question. If no more questions from you, I will post the next version. Thanks.
+>>
+>> Also, this is not aligned properly ('<' under '<')
+> Got it, will update and align the spaces in next version.
+>>
+>> Konrad
 > 
-> The patch series maintains backward compatibility with existing clients:
-> the endpoint concept is added using auxiliary data that can be added to
-> recvmsg and sendmsg system calls.  The QRTR socket interface is extended
-> as follows:
-> 
-> - Adds QRTR_ENDPOINT auxiliary data element that reports which endpoint
->    generated a particular message.  This auxiliary data is only reported
->    if the socket was explicitly opted in using setsockopt, enabling the
->    QRTR_REPORT_ENDPOINT socket option.  SOL_QRTR socket level was added
->    to facilitate this.  This requires QRTR clients to be updated to use
->    recvmsg instead of the more typical recvfrom() or recv() use.
-> 
-> - Similarly, QRTR_ENDPOINT auxiliary data element can be included in
->    sendmsg() requests.  This will allow clients to route QRTR messages
->    to the desired endpoint, even in cases of node/port conflict between
->    multiple endpoints.
-> 
-> - Finally, QRTR_BIND_ENDPOINT socket option is introduced.  This allows
->    clients to bind to a particular endpoint (such as a 5G PCIe modem) if
->    they're only interested in receiving or sending messages to this
->    device.
-> 
-> NOTE: There is 32-bit unsafe use of radix_tree_insert in this patch set.
-> This follows the existing usage inside net/qrtr/af_qrtr.c in
-> qrtr_tx_wait(), qrtr_tx_resume() and qrtr_tx_flow_failed().  This was
-> done deliberately in order to keep the changes as minimal as possible
-> until it is known whether the approach outlined is generally acceptable.
 > 
 
-Hi Denis,
-
-Thank you for taking a stab at this long standing problem. We've been 
-going back and forth on how to solve this but haven't had anyone 
-dedicated to working out a solution. From a first pass I think this 
-looks very reasonable and I only have a few nitpicks here and there. 
-Hopefully Bjorn and Mani will provide more feedback.
-
-Thanks!
-Chris
-
-
-> Denis Kenzior (10):
->    net: qrtr: ns: validate msglen before ctrl_pkt use
->    net: qrtr: allocate and track endpoint ids
->    net: qrtr: support identical node ids
->    net: qrtr: Report sender endpoint in aux data
->    net: qrtr: Report endpoint for locally generated messages
->    net: qrtr: Allow sendmsg to target an endpoint
->    net: qrtr: allow socket endpoint binding
->    net: qrtr: Drop remote {NEW|DEL}_LOOKUP messages
->    net: qrtr: ns: support multiple endpoints
->    net: qrtr: mhi: Report endpoint id in sysfs
-> 
->   include/linux/socket.h    |   1 +
->   include/uapi/linux/qrtr.h |   7 +
->   net/qrtr/af_qrtr.c        | 297 +++++++++++++++++++++++++++++++------
->   net/qrtr/mhi.c            |  14 ++
->   net/qrtr/ns.c             | 299 +++++++++++++++++++++++---------------
->   net/qrtr/qrtr.h           |   4 +
->   6 files changed, 459 insertions(+), 163 deletions(-)
-> 
 
