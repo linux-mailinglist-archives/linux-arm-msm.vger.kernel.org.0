@@ -1,259 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-35612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8AD559AD101
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 18:31:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96A869AD115
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 18:35:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id ACEC11C21F2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 16:31:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B81BA1C21FD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 16:35:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E87B41C9ED6;
-	Wed, 23 Oct 2024 16:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46F161CC150;
+	Wed, 23 Oct 2024 16:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VByJhhXc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="qW1Va/Up"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A341CB536;
-	Wed, 23 Oct 2024 16:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FD51CB301
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 16:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729701051; cv=none; b=dtmb6faxfS7vs07qoI+7TfdYcQr5Cqek/Xrrb5pgPXHSMIuITLFjMl2bWfIkCZ4GyHsrGcEYZvxQ7EOV1yB2NpO2VMjDZUHPUiscA7enTl9X0piH14ukwPZQe8EiCORVvZKBMyLI/RytdoHuOYq26N9YjTB+rycVlnXyWUtN4+g=
+	t=1729701302; cv=none; b=OUD8aTxPDbTjU9ercsJ58R4p00TkAVSB0soRHGlh9Dr51OMgGRRKcJnEeFia+CTxPe0BozBShc4q4o/0LbEyxtiUzbIUlwrz2IjGtUU+cBeecrVPhn7MPs+eMCWejH7IWE1Km6j9NqLFAnsT64Y2KzJPvPzlOuqL9QMJDt3/Hoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729701051; c=relaxed/simple;
-	bh=7Qz6f8NzFdutI7Icr0e57OHrZ5+XkkpJ1/tyME4Z5Ao=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bifJY4sR+4WyhkWiaDCArFDf4kUUi23bO+F+HITlJBLNumE5SLUNKxUqBF+L+giNpkz6I3VJBHtSJpxxxuXS4vl/70vdRw3TBPKa09gz9GNs09f6r+plEHcl4MBPQWTk1liUXNcaiLISpXKc1lrX0TkCkizZD1WIDARJ6GfeDYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VByJhhXc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9HSdU026325;
-	Wed, 23 Oct 2024 16:30:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=FclauO0bzswyc+MAq1B6mcZj
-	gSqLwXz40OeffNV4QSo=; b=VByJhhXcpOkf9T39w00mf0miuEAKw/JHHqer7c1L
-	2N5Jk/WOpsUODU618CYflAq4w00gsqbykXoaRga1sXnGsvbmWCeqT1HUcsNXiDfX
-	QI55AM539K+sDmGX62BCXEUjyndoAh7SkD0wqQyiXZYMQXNZsvs182pt7Tn0SwN2
-	F/7S90tXqtyIab5aY7gsj38fCl/GjUjJGtIgcNzXwAbQEdR415YuI3UPcjR5Et+I
-	way3sS2qxUOUTFz0hO2dj+O5MSI4GF2hqiT2p/dsW+3DB1YPZPvA9zv1z9Rd8U+w
-	U8crKjgM7pjv+75xNAPwwsLM7xw7VVdwlX+yEcIMp0SLeg==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em40aut2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 16:30:23 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 49NGUNw8012804
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 23 Oct 2024 16:30:23 GMT
-Received: from hu-eberman-lv.qualcomm.com (10.49.16.6) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.9; Wed, 23 Oct 2024 09:30:22 -0700
-Date: Wed, 23 Oct 2024 09:30:21 -0700
-From: Elliot Berman <quic_eberman@quicinc.com>
-To: Stephen Boyd <swboyd@chromium.org>
-CC: Andy Yan <andy.yan@rock-chips.com>, Arnd Bergmann <arnd@arndb.de>,
-        "Bartosz Golaszewski" <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>,
-        Lorenzo Pieralisi
-	<lpieralisi@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>, Olof Johansson
-	<olof@lixom.net>,
-        Rob Herring <robh@kernel.org>, Sebastian Reichel
-	<sre@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>, Will Deacon
-	<will@kernel.org>,
-        <cros-qcom-dts-watchers@chromium.org>,
-        "Satya Durga
- Srinivasu Prabhala" <quic_satyap@quicinc.com>,
-        Melody Olvera
-	<quic_molvera@quicinc.com>,
-        Shivendra Pratap <quic_spratap@quicinc.com>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        Florian Fainelli
-	<florian.fainelli@broadcom.com>,
-        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v6 3/5] firmware: psci: Read and use vendor reset types
-Message-ID: <20241023092251529-0700.eberman@hu-eberman-lv.qualcomm.com>
-References: <20241018-arm-psci-system_reset2-vendor-reboots-v6-0-50cbe88b0a24@quicinc.com>
- <20241018-arm-psci-system_reset2-vendor-reboots-v6-3-50cbe88b0a24@quicinc.com>
- <CAE-0n515sUkmTWptgY8pOaMDBPfDp5pZBy9Nby+4cMdMAnAZfA@mail.gmail.com>
+	s=arc-20240116; t=1729701302; c=relaxed/simple;
+	bh=XTw9uHyp78RHTyu0gUyLmCgArzYpbhsNyfwgWvettNU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eXjhavK7DM1Z+Q0WXCQXzJVzLWc49DecODMIHZw5j+T47T1CRwKJ2s16xg56kUFOVQcpelfssklqFE0mGwzKgAudhjkl+i1keWUs3XuOrmXqnVzUsbKPZIqdy9ZcsWu9VZ9PSpeHjnQ9yppyCpmi4T61b9VutAM9qQRRJ+0afr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=qW1Va/Up; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-539f6e1f756so8218992e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 09:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1729701297; x=1730306097; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=GIlUDXdAKX1CHecIqtZk/0fdttpDeFu8l+DaQfJV4bc=;
+        b=qW1Va/Upxar0dClhaYkTpgnEVmPyxQ2dG4MMyJK4AxlsNJu5EXGIgI74G4Zui4GdFB
+         Xhq17L/uymWlIUzaWstCTpDBHlcTqeWUttUlZ43vvWykvQUj6euFisJMPhgCKXK3Il9J
+         tROzfgWknxbpgiYylsoop7jI7Rhxfa3zsVMFqcy+DXj+ODyeY/PKdT7Om6Kzmy0fjMwN
+         HP7gsbDmBM/8nWlcSnwt+PBvkvjs3Pu8uGuiSQi/felwBuqs3cKidgpUZGZUS1QUZKIP
+         cOJh6i8R59YJA330rRwnFFtiN/8IJKMMR6SqV018Hxw/M6aqdwMk7vxPK7nfTdKu9Yy0
+         QAEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1729701297; x=1730306097;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GIlUDXdAKX1CHecIqtZk/0fdttpDeFu8l+DaQfJV4bc=;
+        b=XpNcydhZVOA4mLR4GJO/rTAKV10fvxjqlLoXyQeVjAa13E+Q+nGv1zY4TTRKqRPHrr
+         UYM+e/La+nAJ7O4tAtJEODkSIFwIquPg2CgaUmvsnniCimi5WsYWq2zThQ8b2YgepLoh
+         XmooWAV6L3ZTeXnnpi3pSRNRMsAa1A18S9wghRfOgaM4y1NEQZ/3P66PT5a+mfXpazbD
+         ejfHE4u//8P0x6POQsWEuO28FIOXD8YBwPaCqLKIazv1DW2eb7ds3mD5bWMfJqxNahrn
+         di7E7CY298rlTL9LHa04BoCFIDm/8rN24ZDamxtpV/ZNqhaaZ18rNqW/ItSquyI3x4mp
+         wDDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX7SZrs2B9OZoGzoVN7L4qklZZyqqRrlA32AEjlknIFvPTzGgGxDGFhC/OWaOV2X2kFHgFTjB2Hr5+UBL2C@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuPmTegkFmqYWKm8K5Qb3BFcBFekWPGLvsrAltQ1IjSJGdZKRF
+	z8+UA+J9qb//pP9Wgh5DttVbCeUr7G4OUTgwrUK1s2symIcIPvKdsbvRTS83yI4=
+X-Google-Smtp-Source: AGHT+IHCtZVloL02eSDFnoZ/6ygP0dHMAE0674BRC+dYkqpA6GY3yq1KJxmIEB1Drju4efa3nY8wHg==
+X-Received: by 2002:a05:6512:108e:b0:539:949a:a793 with SMTP id 2adb3069b0e04-53b1a321d26mr1886084e87.36.1729701297281;
+        Wed, 23 Oct 2024 09:34:57 -0700 (PDT)
+Received: from eriador.lumag.spb.ru (2001-14ba-a0c3-3a00--7a1.rev.dnainternet.fi. [2001:14ba:a0c3:3a00::7a1])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-53a22420133sm1097096e87.170.2024.10.23.09.34.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Oct 2024 09:34:56 -0700 (PDT)
+Date: Wed, 23 Oct 2024 19:34:55 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To: Tingguo Cheng <quic_tingguoc@quicinc.com>
+Cc: quic_fenglinw@quicinc.com, quic_tingweiz@quicinc.com, 
+	kernel@quicinc.com, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: qcs615: Adds SPMI bus, PMIC and
+ peripherals
+Message-ID: <e7ntpu6gqrxwueqvyesr4voofpdjz4hrjypyxrstukd4mdln4w@dpyaaw5afn3v>
+References: <20241014-adds-spmi-pmic-peripherals-for-qcs615-v1-1-8a3c67d894d8@quicinc.com>
+ <p7fw7jjfawbnk2vb7zdtr2dp3ni4g2uuiwvt6o4qva53zyrpvd@kokibgaidfzb>
+ <5c23a6bd-e233-4b02-86cf-902d2c57c382@quicinc.com>
+ <CAA8EJppdQsGe-R5JKRJ9LJs9xGTdhkCGYc5NyzVSLA1bWvvUwQ@mail.gmail.com>
+ <6a73c0d3-879a-412b-9345-e4d5ccb52e78@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAE-0n515sUkmTWptgY8pOaMDBPfDp5pZBy9Nby+4cMdMAnAZfA@mail.gmail.com>
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: RVMuLpnaxcrO0emm38nvEuLCDeeWvOiG
-X-Proofpoint-GUID: RVMuLpnaxcrO0emm38nvEuLCDeeWvOiG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- impostorscore=0 spamscore=0 phishscore=0 mlxlogscore=999
- lowpriorityscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230102
+In-Reply-To: <6a73c0d3-879a-412b-9345-e4d5ccb52e78@quicinc.com>
 
-On Fri, Oct 18, 2024 at 10:42:46PM -0700, Stephen Boyd wrote:
-> Quoting Elliot Berman (2024-10-18 12:39:48)
-> > diff --git a/drivers/firmware/psci/psci.c b/drivers/firmware/psci/psci.c
-> > index 2328ca58bba6..60bc285622ce 100644
-> > --- a/drivers/firmware/psci/psci.c
-> > +++ b/drivers/firmware/psci/psci.c
-> > @@ -29,6 +29,8 @@
-> >  #include <asm/smp_plat.h>
-> >  #include <asm/suspend.h>
-> >
-> > +#define REBOOT_PREFIX "mode-"
+On Wed, Oct 23, 2024 at 06:25:33PM +0800, Tingguo Cheng wrote:
 > 
-> Maybe move this near the function that uses it.
 > 
-> > +
-> >  /*
-> >   * While a 64-bit OS can make calls with SMC32 calling conventions, for some
-> >   * calls it is necessary to use SMC64 to pass or return 64-bit values.
-> > @@ -305,9 +315,29 @@ static int get_set_conduit_method(const struct device_node *np)
-> >         return 0;
-> >  }
-> >
-> > +static void psci_vendor_sys_reset2(unsigned long action, void *data)
-> > +{
-> > +       const char *cmd = data;
-> > +       unsigned long ret;
-> > +       size_t i;
-> > +
-> > +       for (i = 0; i < num_psci_reset_params; i++) {
-> > +               if (!strcmp(psci_reset_params[i].mode, cmd)) {
-> > +                       ret = invoke_psci_fn(PSCI_FN_NATIVE(1_1, SYSTEM_RESET2),
-> > +                                            psci_reset_params[i].reset_type,
-> > +                                            psci_reset_params[i].cookie, 0);
-> > +                       pr_err("failed to perform reset \"%s\": %ld\n",
-> > +                               cmd, (long)ret);
-> 
-> Do this intentionally return? Should it be some other function that's
-> __noreturn instead and a while (1) if the firmware returns back to the
-> kernel?
-> 
+> On 10/22/2024 5:38 PM, Dmitry Baryshkov wrote:
+> > On Tue, 22 Oct 2024 at 11:26, Tingguo Cheng <quic_tingguoc@quicinc.com> wrote:
+> > > 
+> > > 
+> > > 
+> > > On 10/14/2024 6:53 PM, Dmitry Baryshkov wrote:
+> > > > On Mon, Oct 14, 2024 at 06:08:17PM +0800, Tingguo Cheng wrote:
+> > > > > Create a new file qcs615-pmic.dtsi to add on-board PMIC and peripher-
+> > > > > als in the PMIC that controlled by SPMI bus. The peripherals include
+> > > > > GPIO, RTC, PON, power key and resin-key for QCS615 platform. The power
+> > > > > key and volume down key are controlled by PMIC PON hardware on QCS615.
+> > > > 
+> > > > Why do you need a separate file? Unless there is a good reason such
+> > > > configuration should be split between the pmic.dtsi and the board file.
+> > > > 
+> > > One reason is that I use upstream as
+> > > template(x1ee80100,sc8180x,sa8775p...), they all have
+> > > platform-pmics.dtsi alongside.
+> > > 
+> > > On the other hand, qcs615-pmic.dtsi contains only the PMIC's
+> > > peripherals, creating a new file can eliminate duplicate code if there
+> > > are any other new boards with pmm6155au as their PMIC(similar to
+> > > x1e80100-lenovo-xxx/x1e80100-microsoft-xxxx, where "x1e80100-pmics.dtsi"
+> > > has been included).
+> > 
+> > And this is pretty unique  to those platforms and it exists mostly to
+> > facilitate the case when a platform has several instances of the same
+> > PMIC. In all other cases (mobile, IoT) usually there is just one
+> > instance of the particular PMIC. In such a case pmic definitions go to
+> > "pmABCDEF.dtsi" to be reused by the platform and then board DT can
+> > include that file and wire it up according to the platform needs.
+> > 
+> Yes, in this case, there is only one PMIC. So making a new file does not
+> make sense except the PMIC is totally a new design.
+> > > > BTW, what is the PMIC id for pmm6155au? Is it a real PMIC or a version
+> > > > of some other PMIC?
+> > > > 
+> > > pmm6155au is the PMIC id(Silk scree). It's a real PMIC for qcs615.Maybe
+> > > I should use the name qcs615-pmics.dtsi instead of qcs6150-pmic.dtsi to
+> > > align with other platforms.
+> > 
+> > Is it the same thing as PM6150? Or is it a combo of PM6150 and PM6150L?
+> > 
+> I got your point, I did some more research, it's a variant of pm8150. In
+> this case, I will upload a new version that makes DT to be changed after it
+> includes pm8150.dtsi.
 
-Yes, I think it's best to make sure we fall back to the architectural
-reset (whether it's the SYSTEM_RESET or architectural SYSTEM_RESET2)
-since device would reboot then.
+That sounds good, thank you.
 
-> > +               }
-> > +       }
-> > +}
-> > +
-> >  static int psci_sys_reset(struct notifier_block *nb, unsigned long action,
-> >                           void *data)
-> >  {
-> > +       if (data && num_psci_reset_params)
-> > +               psci_vendor_sys_reset2(action, data);
-> > +
-> >         if ((reboot_mode == REBOOT_WARM || reboot_mode == REBOOT_SOFT) &&
-> >             psci_system_reset2_supported) {
-> >                 /*
-> > @@ -750,6 +780,68 @@ static const struct of_device_id psci_of_match[] __initconst = {
-> >         {},
-> >  };
-> >
-> > +static int __init psci_init_system_reset2_modes(void)
-> > +{
-> > +       const size_t len = strlen(REBOOT_PREFIX);
-> > +       struct psci_reset_param *param;
-> > +       struct device_node *psci_np __free(device_node) = NULL;
-> > +       struct device_node *np __free(device_node) = NULL;
-> > +       struct property *prop;
-> > +       size_t count = 0;
-> > +       u32 magic[2];
-> > +       int num;
-> > +
-> > +       if (!psci_system_reset2_supported)
-> > +               return 0;
-> > +
-> > +       psci_np = of_find_matching_node(NULL, psci_of_match);
-> > +       if (!psci_np)
-> > +               return 0;
-> > +
-> > +       np = of_find_node_by_name(psci_np, "reset-types");
-> > +       if (!np)
-> > +               return 0;
-> > +
-> > +       for_each_property_of_node(np, prop) {
-> > +               if (strncmp(prop->name, REBOOT_PREFIX, len))
-> > +                       continue;
-> > +               num = of_property_count_elems_of_size(np, prop->name, sizeof(magic[0]));
+> > > > > Signed-off-by: Tingguo Cheng <quic_tingguoc@quicinc.com>
+> > 
 > 
-> Use of_property_count_u32_elems()?
-> 
-> > +               if (num != 1 && num != 2)
-> > +                       continue;
-> > +
-> > +               count++;
-> > +       }
-> > +
-> > +       param = psci_reset_params = kcalloc(count, sizeof(*psci_reset_params), GFP_KERNEL);
-> > +       if (!psci_reset_params)
-> > +               return -ENOMEM;
-> > +
-> > +       for_each_property_of_node(np, prop) {
-> > +               if (strncmp(prop->name, REBOOT_PREFIX, len))
-> > +                       continue;
-> > +
-> > +               param->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
-> > +               if (!param->mode)
-> > +                       continue;
-> > +
-> > +               num = of_property_read_variable_u32_array(np, prop->name, magic, 1, 2);
-> 
-> ARRAY_SIZE(magic)?
-> 
-> > +               if (num < 0) {
-> 
-> Should this be less than 1?
+> -- 
+> Thank you & BRs
+> Tingguo
 > 
 
-of_property_read_variable_u32_array should return -EOVERFLOW (or maybe
--ENODATA) if the array is empty. I don't see it's possible for
-of_property_read_variable_u32_array() to return a non-negative value
-that's not 1 or 2.
-
-> > +                       pr_warn("Failed to parse vendor reboot mode %s\n", param->mode);
-> > +                       kfree_const(param->mode);
-> > +                       continue;
-> > +               }
-> > +
-> > +               /* Force reset type to be in vendor space */
-> > +               param->reset_type = PSCI_1_1_RESET_TYPE_VENDOR_START | magic[0];
-> > +               param->cookie = num == 2 ? magic[1] : 0;
-> 
-> ARRAY_SIZE(magic)?
-> 
-> > +               param++;
-> > +               num_psci_reset_params++;
-> > +       }
-> > +
-> > +       return 0;
+-- 
+With best wishes
+Dmitry
 
