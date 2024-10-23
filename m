@@ -1,140 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-35628-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9FA809AD5BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 22:46:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB4CE9AD661
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 23:11:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 458711F22827
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 20:46:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73E1F28304E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 21:11:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B96D21A7259;
-	Wed, 23 Oct 2024 20:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7374E1E6DFE;
+	Wed, 23 Oct 2024 21:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyqb1hC7"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOrnarJa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C5C13B59E;
-	Wed, 23 Oct 2024 20:46:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7261A155757;
+	Wed, 23 Oct 2024 21:11:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729716389; cv=none; b=ZFT4LhMfvIDuLZTe47tRspopwHeRYcZzz9DL8VVmF2fy8yJweeb49KJcyg2lHuuGrUNZqNf+Kd6uNXSm6fZ8phyv4/A7VwjudyUWsX0iiGifCqfD05mI4uvcAmikiOBGrsLcyaPGoKHznWU7yQEhlGzCfioSTaz4e0/7qgf8fGI=
+	t=1729717881; cv=none; b=dIZFfYqYLjHgaQ5tOvHnZSz9QaX9DknUFZZ4YOEeq5HAoAh71wue3nFVgrQVRs5sCbaM8KZKmNgSXhgMg5iundngqPgglL/EYyHr8QYhOpZyoOXQi8MD73AUA8YYMsJae97jR7hjfJ3D8ZNVrrSKrvtpTcw3szFBarAxRt2KwC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729716389; c=relaxed/simple;
-	bh=VE5faDGuulpA16bqytPHh+8rqbJzyZavDCJhycCNVO0=;
+	s=arc-20240116; t=1729717881; c=relaxed/simple;
+	bh=jKAyw/EopyQhKfZWtFJ71aOI/ZTyS19O39wXWbS1TjI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MOqcrri0jkiEKX0vhqcp51V3oLB7ZgLILUHr4ExM/AnU5OcxlmWM5ST9lTkDdBE30Oq6ETDZ0ttzxw1A2xx3IZa4BQApIOUtwqcrXpYZFaB+JBw8KgorVNKbRVjXTavacXl7YsoJGKfAGds8fWDFys1sVjbZpHL1+VdRkAReKOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eyqb1hC7; arc=none smtp.client-ip=209.85.166.45
+	 To:Cc:Content-Type; b=ky5YGDkQEZIwCSldpA3I+5LKadSfDg7KvnIyPCwBgKRRuDehupRd3LzshsfNBQ7J9iFsKWv4Nexpak97EemufTuZ+x287EUN81dWmz5Z5u5iW94NFmk91BjQqnY/MRy35uKqmoqQWHNgDqr5joG6QGmi1A3iViRgz+1GlwOpQVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOrnarJa; arc=none smtp.client-ip=209.85.208.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-8323b555a6aso7846839f.3;
-        Wed, 23 Oct 2024 13:46:27 -0700 (PDT)
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5c96936065dso208824a12.3;
+        Wed, 23 Oct 2024 14:11:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1729716387; x=1730321187; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1729717877; x=1730322677; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4Q9Fmtv1jhqmPQxhPj7GzThFbrtRvvOEog4jX1mozHs=;
-        b=eyqb1hC72NFyfzMwHYUNq8DdyinYXmcxlRxwGnmynvprDG6Qf2QMtGAmac/7PlR467
-         ExQc5DXbcTS9d63kbrt0641s9KgdWBSDuPEXQXRqohJExHb6nMQ5hIsI+y38vQL4C/Wz
-         P7jsvoOJlH9D/HhE/jnWvlKxjnU7kt9TwvyMbSUvwO1TWVJ20kv93y3NEbjy3IdJsHTl
-         SfqTf4l93CTYItlz+oCKcDGmk5g+zGzgcXYaW8f6qwkyRleQHgTD6ZvbAxW+5O6TODf5
-         xpbKPOSiRJ9iHRlR661kND/EUvs78Gfto2L/alBQs1MnorFx17KYf8Pk/ieExfizJZiA
-         2U1g==
+        bh=jKAyw/EopyQhKfZWtFJ71aOI/ZTyS19O39wXWbS1TjI=;
+        b=TOrnarJatshEFKHqo6VKxiSctB452ndjbbdUwzwdqMeBItQpnd62cjZ3MWvc0seIXX
+         6gj0F7MMOC6tb6DMb5XDQ3TAG0Luhrjn9Eq+0AH73EdTswN1ejRHpLIUUOZHtcIEO3TC
+         kW/nIedJUXtkKHhi9c1e1urm170RC5q1yebMSsR49txllHdqzrG4tlDdgp5C2HTc+aaW
+         uHNLnjyTM1gzYiuwetvz3cNw59/KcgoFowcZxD+5RcUg1TcDSDIY1a4q+j4AltgEq7SH
+         Nl8sP4pbNvlzJDnldtQAYkRKzsioj34FB61WfuPiUoi363i7K7lXjiD95U3GmM5h/iw+
+         q5Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729716387; x=1730321187;
+        d=1e100.net; s=20230601; t=1729717877; x=1730322677;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4Q9Fmtv1jhqmPQxhPj7GzThFbrtRvvOEog4jX1mozHs=;
-        b=PMT5stGCpQalMbEsfFG03JW5C4sNzxoHFZF4X6q1AL9dNr8S8rcuFEEYYMJIF7z3Mf
-         qac4tQ81D2t1lblOHbDf5bAl8Ykl93CgsRPr5qELRu4G3MkGukqxTav8nDUu/RFCtjPU
-         HaH9fENVNIRKWj3lt9UrUuj5XG3+Vi9F4uCwOUxbGgnBX9gY8CEY1MbGuMdN4YvBPQv6
-         mXi1fb8Ovs7B682F8jdVCguaTHFYgGD2rIvT4qEbAsdLAsZEct8RKC9Tjn3QSZXPksmY
-         YYoktMMPnfYm1zXkhKI3VIDUnAAna+fhcziQZ6gFIb7AmhKiy2YS31T6Q8AH129yCnn/
-         iGEw==
-X-Forwarded-Encrypted: i=1; AJvYcCWhwUpE9+DeHWduz6w0y6CpXlfGM26NeLbWjd2eHISs+6hURBtYuLeBDim5G+vKhslpRQ90+mPZ35zC9kIf@vger.kernel.org, AJvYcCWzRe0+GVMFMYiXxNmuFK+yiEyXAnVIjp15obAa579VwxbdAxM4xpzDxAXSWXl3As7uJz+br2J+E9uXWBwikg==@vger.kernel.org, AJvYcCXD204IZOl6qjv30H+P826HqFVNJ0jJxojme+PFGwAXQWoVawRkJ8I6qbdauvavHenSLPo51mAE+xMn@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/Tc5eBfnOfita/tGP3V78E/jOJ9En/+Cj3y6JX0nR7NkaEg9R
-	nDQo0uFiKjCdoOw0DZR1ijO2DnkLTlsIe68YkFhZoh+pj6kb32oofjCzfat8vFojNLZYUwo2mTv
-	M+M4W4CBAIAP6mb7EVKGhMw+C1II=
-X-Google-Smtp-Source: AGHT+IHoQOEizYcj7tAixtp4PTHw4bzgJdfZ39CRrv3g6b0UEB4bcHATl1XYABgvefhFHa8Sg1I3z+Hc0eB/FkZBbQU=
-X-Received: by 2002:a92:ca0a:0:b0:3a3:40f0:cb8c with SMTP id
- e9e14a558f8ab-3a4d59bbc12mr49771975ab.17.1729716387128; Wed, 23 Oct 2024
- 13:46:27 -0700 (PDT)
+        bh=jKAyw/EopyQhKfZWtFJ71aOI/ZTyS19O39wXWbS1TjI=;
+        b=EI9ekZFnQ6OuUR0jtKEbxoX3FwdnnLbWHp7huoRBQmTFoti04oVpdhQ7e9SstDM0I7
+         BhuMhr3srRfm2OKe+AmIQWuVqpeZwD/oe6qcOpiIvNVwTzkJwzZFFbzaQY7eXMP+IXer
+         C2zfps12rgGbRkLXgA5MlKNhAPQ5bo35ljNzLFCybIAfgswdcrwsYNZzJ7boPyLhv1L2
+         n4K67SbqdPHKGCkQRPdTes0czagpDG0E6jx7GoKk6vYUPvQ8dT5ekQz4ZNTgdPg1kdQU
+         VyWXkGVtJBt8Ta3qJbJg77Ua54T/A73aq81ob3qFGty0G3eO+JCRb3ncsXgWbNzDSpg2
+         x6lA==
+X-Forwarded-Encrypted: i=1; AJvYcCUMwtCYDF88gJ5EQj7duhOlF9tvHzMcJQkT2CPn/RjpWfac6E7A9D7Oi/0gr7qjB8wmLWZL4MT/8CgwZYzsqw==@vger.kernel.org, AJvYcCUT6IHJOYBym4N6kh3ny74w8J7AU3YfZr8WHRrzA/9nYf+1T+qHOUil4uGmfuJpGWaZRS8csvh84x7v@vger.kernel.org, AJvYcCXC0R8ju2bNolFXcZ8fpqwvKa462s9u8ehQXp+l1QogL5os9o0bJB2PRjibZOXt8f3k0o0RACaDHzZprO3r@vger.kernel.org, AJvYcCXNwaeVRV5/CPNnf1UvQ0XMQrYpTi71VSM2VZzyYu9EpfVyiyhdfIYSBp0/VAGq7z29SLucOH7BlLauSjMapP2P/voGIw==@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw30mHhfizor9xPxNoYioQlOmIu9qWWyrbbtf0hcoZCsbwEqb6v
+	R549cqsgK+ZjoZS+L4+g1elQyt9dOniFvcOWYe/1USq169LAPzHkqblnW0HLZPT3YWm5Ntjs8eh
+	6XEVa0baF8gljgZyx1IsCVw8QcQ==
+X-Google-Smtp-Source: AGHT+IGjp5BWHI7BjiYEHOH7h326K2upWWA5FR/BygFMnRkS/IYWnITIfOZ2A1SOsXlzq+/uRMmOdvSxYlQdyW9kq1c=
+X-Received: by 2002:a17:906:c10f:b0:a99:f0f4:463d with SMTP id
+ a640c23a62f3a-a9abf875c8amr385483366b.26.1729717876612; Wed, 23 Oct 2024
+ 14:11:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240911073337.90577-1-quic_sibis@quicinc.com> <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
-In-Reply-To: <f67d0fcd-4940-a57a-0e11-b98ed29cd09d@quicinc.com>
-From: Rob Clark <robdclark@gmail.com>
-Date: Wed, 23 Oct 2024 13:46:15 -0700
-Message-ID: <CAF6AEGvgnW5VTZYFzwiMChB4-2cShmBvMcfgQVbcCiOgH6e3Yg@mail.gmail.com>
-Subject: Re: [PATCH 0/2] X1E001DE Snapdragon Devkit for Windows
-To: Sibi Sankar <quic_sibis@quicinc.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, krzk+dt@kernel.org, 
-	robh+dt@kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	conor+dt@kernel.org, abel.vesa@linaro.org, srinivas.kandagatla@linaro.org
+References: <20240908223505.21011-1-jerome.debretagne@gmail.com>
+ <20240908223505.21011-4-jerome.debretagne@gmail.com> <f9cbd1c3-eb05-4262-bdc6-6d37e83179e5@gmail.com>
+ <CA+kEDGEdd_s+DGKsVNY6Jy870B72eHuaj2EgEnwP8J46ZGbxpQ@mail.gmail.com>
+ <8370d062-b3d2-46f5-9e7b-8e16edde8480@redhat.com> <555f8a3a-ae5e-57e7-f176-96c52e1a5d45@linux.intel.com>
+ <ad9fa9f2-7f97-401a-8e8f-ae633ab1932b@gmail.com>
+In-Reply-To: <ad9fa9f2-7f97-401a-8e8f-ae633ab1932b@gmail.com>
+From: =?UTF-8?B?SsOpcsO0bWUgZGUgQnJldGFnbmU=?= <jerome.debretagne@gmail.com>
+Date: Wed, 23 Oct 2024 23:10:40 +0200
+Message-ID: <CA+kEDGE+fv3FJYGi=xR-agFiM-rGhDKAqhgL8dJN8GeJkw415w@mail.gmail.com>
+Subject: Re: [PATCH v2 3/5] platform/surface: aggregator_registry: Add Surface
+ Pro 9 5G
+To: Maximilian Luz <luzmaximilian@gmail.com>
+Cc: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+	Hans de Goede <hdegoede@redhat.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Johan Hovold <johan+linaro@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
+	platform-driver-x86@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 23, 2024 at 4:07=E2=80=AFAM Sibi Sankar <quic_sibis@quicinc.com=
-> wrote:
+On 10/23/24 7:25 PM, Maximilian Luz wrote:
 >
+> On 10/22/24 10:56 AM, Ilpo J=C3=A4rvinen wrote:
 >
+> [...]
 >
-> On 9/11/24 13:03, Sibi Sankar wrote:
-> > Add initial support for X1E001DE Snapdragon Devkit for Windows. X1E001D=
-E
-> > is the speed binned variant of X1E80100 that supports turbo boost up to
-> > 4.3 Ghz. The initial support includes the following:
+> > Hi all,
 > >
-> > -DSPs
-> > -Ethernet (RTL8125BG) over the pcie 5 instance.
-> > -NVme
-> > -Wifi
-> > -USB-C ports
+> > I've now applied patch 3 to review-ilpo branch in pdx86 repo.
+> >
+> > I'd appreciate if somebody confirms I got those comment edits right.
 > >
 >
-> Hi All,
+> Hi Ilpo,
 >
-> With the X1E Devkit cancelled and with no firmware updates promised for
-> it perpetually, please chime in and let me know if you still want to get
-> this series and rest (external-dp, usb-A ports, sd card slot and 3.5 mm
-> Jack) merged and have it supported upstream for the folks who already
-> received it!
+> looks good to me. Thanks for fixing this up!
+>
+> Best regards,
+> Max
 
-(a) would the firmware update situation have been _that_ much better
-if it wasn't cancelled?  And (b) we do have dts upstream for other
-canceled boards.
+Hi Ilpo, hi Max,
 
-My $0.02 is that it is still useful
+It looks good to me too.
 
-BR,
--R
-
-> -Sibi
->
-> > Link: https://www.qualcomm.com/news/releases/2024/05/qualcomm-accelerat=
-es-development-for-copilot--pcs-with-snapdrago
-> >
-> > Sibi Sankar (2):
-> >    dt-bindings: arm: qcom: Add Snapdragon Devkit for Windows
-> >    arm64: dts: qcom: Add X1E001DE Snapdragon Devkit for Windows
-> >
-> >   .../devicetree/bindings/arm/qcom.yaml         |   6 +
-> >   arch/arm64/boot/dts/qcom/Makefile             |   1 +
-> >   arch/arm64/boot/dts/qcom/x1e001de-devkit.dts  | 813 +++++++++++++++++=
-+
-> >   3 files changed, 820 insertions(+)
-> >   create mode 100644 arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
-> >
->
+Thank you both,
+J=C3=A9r=C3=B4me
 
