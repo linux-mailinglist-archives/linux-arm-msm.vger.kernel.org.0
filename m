@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-35614-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EE089AD2D3
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DDE199AD2D4
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 19:27:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F1CED1F21978
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:27:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0A8831C21991
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 17:27:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 968641D47CB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 974D91D5AA4;
 	Wed, 23 Oct 2024 17:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mBveir08"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CNIuwKA1"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B52681CF7D9
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24BF1D278A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729704294; cv=none; b=uzrnnnz6+NAkYZlcji2JIjGcmPdcZUleQI8a7U/bA2hFxv1Fpb/I+Tb+QsxjpXDnqiQrn5Qp1e9OytkPseg0eYaV58u4mVY9MAyYD/irDzz5FWcdFr8slN4Npu7G+gSZm65BvlmSfLiNAhuDmEA0Q8/YUiFOvgPx3TZgkpGDnOo=
+	t=1729704294; cv=none; b=JgkWZOOqU9gmSGNS8Mc5to3VxTCEXos9ZV9DYTNRuxsz96nSbx4smLD3MTqTOfuwzEXIVgE0hOV0OeV3P8ir5aTyur5E8a5wCflXjUB8bAN+otmqz4GqYK3/SDFrVcbg96AMRJL7V2Nxuo8HFiNnvskgSmA9T4PG9Wg2pbKDtCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729704294; c=relaxed/simple;
-	bh=U4v5Y/G7x8rAFbNJdXFka7Vj359od3X3yavnuk1vbiw=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=sFNxc5UF1aNDGVgLtEtFj6X28Bx4ANKXZpKqv9K1/nyJkcceeIxaHxoDZ0V0o1dglMEcN0457I2CGZ+3i1v5itPpNAdBfXs75F18yhuKs3MRS3NGJa1RxHfbiPpi1maiVKMgsq/qnQF7gweI0xLGFt2xgce42gzqZH+DAEer4hQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mBveir08; arc=none smtp.client-ip=205.220.180.131
+	bh=J4eLe0vdqprPu0DSDCMS++nYOGIjfvxAIlO6B9wv6/8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=qMik6PQ2+vTo9L70tAqOT2usXmalJcPA1mh2OLCE/zAjpU28uPcZrq9+4MYctJrYbFIo//E8G2J/iqqeP6f0M1iTEuZapYEZWJPgxnDV4vmB3ty/wqdYN2oav66OEC5I335p6HMuOhW7vkNHZ+UjGcEIRdrzUS0Ux/r9TfQk2bA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=fail smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CNIuwKA1; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9hTVg027437
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:50 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 49N9H3jx018287
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=mno9KrzQKJKTjIihjuqQ9Y
-	ntwHWD60qm3mU9BGPN5nQ=; b=mBveir08nW2gZclb/wkWGvXsrtgfwsWGtlli2D
-	LOBxp58qE3gnZU7GdJf7u/DTONPGemhxp+itYUqNLhid+ynNAYe1i3sYKagZlOrp
-	7n5/7LyS1tmeP6EE6SF35n/MpseD2+z6xqxfs7OeVKnvSuO7XWshJpTp9L4MnfCZ
-	lU7ya0nuNI6fHV8dgh1PPk11n9GZ/JozF3O9O5wF+DjP+2yYI3CcR6lTnH6T60c/
-	PT+cKvEhTVm+SjNQw04Izm3d12LnNUEomv3Lt0tvgp5L0jCEzKpLg2JUHJ2lTZjN
-	Mn2SCPnPCpE5x4R3EjIA3OV5EFidm6FECrrirFhzbG/pQghw==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em41txky-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	DkCP8eSRQSPej2Q5XXyp8TUa5YWXFZpFuh8TfS+xzik=; b=CNIuwKA1jqTD0M6/
+	RYqOzxcxWgH66QjVlID5CLMHUhZDJQLpiUHvhdfpgcuGx8xes30D0XR/v5Ie7+5j
+	gqoH9pqUZuSCZUuk6WCA74nuvdDeZ3gCxrWiuE8Ipz/rCdrjuR7X9rjlRRdO6cTJ
+	h01zQzOxq3J3ihkxzsP4IQh5KPuiFCrFDpL8OGjuLNz6U0AzY0YpPiec9bC4b6Cw
+	wzTTIa7mBgXhu54Fja9klMnnFS7dqp3fyhN9QVGBt29oAympiJxcVvGAY2xiBy3W
+	GqW33Weq2gdtFY/LNkiheaw8n2xSCtIa4uG5bpsMvWDyD8+4e94Y0dN+W7nLwCGq
+	trTEBg==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 42em3waymq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:50 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-20e5ab8e022so64432465ad.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 10:24:50 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 17:24:51 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-20ca0a58524so73258645ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 23 Oct 2024 10:24:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1729704289; x=1730309089;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mno9KrzQKJKTjIihjuqQ9YntwHWD60qm3mU9BGPN5nQ=;
-        b=rXJrDlc/sKeiJs9DVwRTditOEZMFrvkoHBd4X3fUbJM2SrMwTzAU1X2wvnvffIWlQ8
-         5Vlf0+9is8JVDWrRb+13AakEHkGx460Pr8nFyaveuUEAvLv3ypdWiLmpPgwZqXJCD8c6
-         BmRLxxzzGJ7T+2tc2xH90ITnPj5HRcKHYWGcrEofoyac5UMJF9syCksCF0koju22XvMZ
-         RPUZIWg1uY5S3d40ETLQioxFgyTLdtBArK5TrCnRDB+5z3ksJOM8djfXGqGuDg141jv8
-         qZcKmSoP7GaUWJMoMpJ1lFElM6x64hyeML/8BsuwomKAaf77p6eW5KpujbuzsA9UVOeU
-         1ZjQ==
-X-Gm-Message-State: AOJu0YwmOp4gme7itjSKZJTWgGqPDaRf3ogTD5Go44zhMXMcboiFcRKy
-	rYMxP9HX/Kn7t1LpWWeJTZmMsFgGmn+NvPxIh3j+oh7q2G8d0YWd2w2XEh2OQIlimodbMt8HhDl
-	WU+NC1/7DXintt96sTGSG7AHx528r+NNZaETfSFODLPWohsnP/yO5s8xts1rS0Dv9
-X-Received: by 2002:a17:902:ebc6:b0:20c:bf43:938e with SMTP id d9443c01a7336-20fa9e48c13mr44517015ad.15.1729704289358;
-        Wed, 23 Oct 2024 10:24:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOb7RH4mVCzd3hO5LGTdD/S5DYEO8ShwtyV7Pt4jYRt2MyKdq+jWfXwYzzIyvy187RIklQgw==
-X-Received: by 2002:a17:902:ebc6:b0:20c:bf43:938e with SMTP id d9443c01a7336-20fa9e48c13mr44516785ad.15.1729704289051;
+        d=1e100.net; s=20230601; t=1729704290; x=1730309090;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DkCP8eSRQSPej2Q5XXyp8TUa5YWXFZpFuh8TfS+xzik=;
+        b=GW98MoxeW1uB5oisUlpFTrBu0v8tglsUhTg7dudF6Gvrrpuo5ZXkczPkul7LegUszo
+         U8tkqQYgb/1KpJYrwtdFEbHbB9osZoC9Xzk8BUTRFMeDqwOBILaaw2PGNAkYm1d0CguK
+         fnk5I6W6lvc3v3jZO55UJpStw+YSWgRNCV83BcZIJEwnOaJhxlZLdfg+7HtRBk0PppKQ
+         2RFlQizPPvE8Ve3QLFYklpi1BETtjyiQlq9LLV/1bCbo63TH9beb3pgemnXsmoXPnTA4
+         NweBrEac7XPQVCQeCMVC1uyPrFGrJQndGG38JZXLdlbsFANUo+0LsHDyCZZEpVGfWI4S
+         P+PQ==
+X-Gm-Message-State: AOJu0YwuDqNzC7VyRx/8cFU4uaNaaD6bymHvSrDhDXIw8/WVVsfAqhdo
+	mBO9+5GfCLH7biwl3KPTKlwkV362bI44jjO8ygKDGhRqKeBFMPmS2yZb990FQbzm7J0pYTzily5
+	1xbH5xPaZ7XxEaCrDKvuMu46WPbsdnd3pz7kg7MnbOpru2DCOFYPeAM9Hnuu26jqDkt6u/5Of
+X-Received: by 2002:a17:903:1c3:b0:20c:d8e4:8798 with SMTP id d9443c01a7336-20fa9eb548cmr41774795ad.49.1729704290126;
+        Wed, 23 Oct 2024 10:24:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFvKXi1nBrPodNbSIhUp/iYe0ti2gl+9cfryTqmaiBOo50APhliCHn4Nw7dp3ZSYrmBZDVopQ==
+X-Received: by 2002:a17:903:1c3:b0:20c:d8e4:8798 with SMTP id d9443c01a7336-20fa9eb548cmr41774515ad.49.1729704289756;
         Wed, 23 Oct 2024 10:24:49 -0700 (PDT)
 Received: from ip-172-31-25-79.us-west-2.compute.internal (ec2-35-81-238-112.us-west-2.compute.amazonaws.com. [35.81.238.112])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20e7f0f20aesm59525435ad.246.2024.10.23.10.24.48
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-20e7f0f20aesm59525435ad.246.2024.10.23.10.24.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Oct 2024 10:24:48 -0700 (PDT)
+        Wed, 23 Oct 2024 10:24:49 -0700 (PDT)
 From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Subject: [PATCH v2 0/2] soc: qcom: pmic_glink: Resolve failures to bring up
- pmic_glink
-Date: Wed, 23 Oct 2024 17:24:31 +0000
-Message-Id: <20241023-pmic-glink-ecancelled-v2-0-ebc268129407@oss.qualcomm.com>
+Date: Wed, 23 Oct 2024 17:24:32 +0000
+Subject: [PATCH v2 1/2] rpmsg: glink: Handle rejected intent request better
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,11 +85,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE8xGWcC/4WNQQ6CMBBFr0JmbUkpqNSV9zAsmmGAiaXFVomG9
- O5WLuDmJ+8n//0NIgWmCJdig0ArR/YugzoUgJNxIwnuM4OSqqmkUmKZGcVo2d0FoXFI1lIv+lZ
- ro9HI+thC3i6BBn7v3luXeeL49OGz36zVr/1nXCshhSZ1GvDckDT11cdYPl7Gop/nMgd0KaUvx
- zArfMEAAAA=
-X-Change-ID: 20241022-pmic-glink-ecancelled-d899a9ca0358
+Message-Id: <20241023-pmic-glink-ecancelled-v2-1-ebc268129407@oss.qualcomm.com>
+References: <20241023-pmic-glink-ecancelled-v2-0-ebc268129407@oss.qualcomm.com>
+In-Reply-To: <20241023-pmic-glink-ecancelled-v2-0-ebc268129407@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         Chris Lew <quic_clew@quicinc.com>,
@@ -100,58 +98,114 @@ Cc: linux-arm-msm@vger.kernel.org, Bjorn Andersson <quic_bjorande@quicinc.com>,
         Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
         stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1729704288; l=1360;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1729704288; l=4096;
  i=bjorn.andersson@oss.qualcomm.com; s=20241022; h=from:subject:message-id;
- bh=U4v5Y/G7x8rAFbNJdXFka7Vj359od3X3yavnuk1vbiw=;
- b=GJDBjnlTINnOBoJT/HKq4YIR9JqusN4gChA8GeKG19LwHO2qPvjwTGdF670QW+HnZEBwge2DJ
- TJ+VDZ9ls94Asggf33Mr3OcvNXkSm4o7mVU3wMk9vzU4hR2l4b6NRJ9
+ bh=J4eLe0vdqprPu0DSDCMS++nYOGIjfvxAIlO6B9wv6/8=;
+ b=MZ/+ZBjJlhOtFqt150vi/FblgOHbTxD2m9Ml5Zc+SwSVJFEpQXeQIEH23C2n/nP0CLVBHrHi4
+ NEZlLdNqDMfByq/SyWNMkpGv3XKAj/sSvrKFaCr7wPcrJIArUW/BDH/
 X-Developer-Key: i=bjorn.andersson@oss.qualcomm.com; a=ed25519;
  pk=SAhIzN2NcG7kdNPq3QMED+Agjgc2IyfGAldevLwbJnU=
-X-Proofpoint-GUID: QQ-HLomy-yQtYPuLwnMZNkUBiP-pbrqw
-X-Proofpoint-ORIG-GUID: QQ-HLomy-yQtYPuLwnMZNkUBiP-pbrqw
+X-Proofpoint-GUID: UvgrIYPqoQxeJUKLrWvOD3FjMb6XcAnM
+X-Proofpoint-ORIG-GUID: UvgrIYPqoQxeJUKLrWvOD3FjMb6XcAnM
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 impostorscore=0
- adultscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 mlxscore=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2409260000 definitions=main-2410230109
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ mlxscore=0 lowpriorityscore=0 phishscore=0 impostorscore=0 clxscore=1015
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 bulkscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2409260000
+ definitions=main-2410230109
 
-With the transition of pd-mapper into the kernel, the timing was altered
-such that on some targets the initial rpmsg_send() requests from
-pmic_glink clients would be attempted before the firmware had announced
-intents, and the firmware reject intent requests.
+GLINK operates using pre-allocated buffers, aka intents, where incoming
+messages are aggregated before being passed up the stack. In the case
+that no suitable intents have been announced by the receiver, the sender
+can request an intent to be allocated.
 
-Fix this
+The initial implementation of the response to such request dealt
+with two outcomes; granted allocations, and all other cases being
+considered -ECANCELLED (likely from "cancelling the operation as the
+remote is going down").
 
+But on some channels intent allocation is not supported, instead the
+remote will pre-allocate and announce a fixed number of intents for the
+sender to use. If for such channels an rpmsg_send() is being invoked
+before any channels have been announced, an intent request will be
+issued and as this comes back rejected the call fails with -ECANCELED.
+
+Given that this is reported in the same way as the remote being shut
+down, there's no way for the client to differentiate the two cases.
+
+In line with the original GLINK design, change the return value to
+-EAGAIN for the case where the remote rejects an intent allocation
+request.
+
+It's tempting to handle this case in the GLINK core, as we expect
+intents to show up in this case. But there's no way to distinguish
+between this case and a rejection for a too big allocation, nor is it
+possible to predict if a currently used (and seemingly suitable) intent
+will be returned for reuse or not. As such, returning the error to the
+client and allow it to react seems to be the only sensible solution.
+
+In addition to this, commit 'c05dfce0b89e ("rpmsg: glink: Wait for
+intent, not just request ack")' changed the logic such that the code
+always wait for an intent request response and an intent. This works out
+in most cases, but in the event that an intent request is rejected and no
+further intent arrives (e.g. client asks for a too big intent), the code
+will stall for 10 seconds and then return -ETIMEDOUT; instead of a more
+suitable error.
+
+This change also resulted in intent requests racing with the shutdown of
+the remote would be exposed to this same problem, unless some intent
+happens to arrive. A patch for this was developed and posted by Sarannya
+S [1], and has been incorporated here.
+
+To summarize, the intent request can end in 4 ways:
+- Timeout, no response arrived => return -ETIMEDOUT
+- Abort TX, the edge is going away => return -ECANCELLED
+- Intent request was rejected => return -EAGAIN
+- Intent request was accepted, and an intent arrived => return 0
+
+This patch was developed with input from Sarannya S, Deepak Kumar Singh,
+and Chris Lew.
+
+[1] https://lore.kernel.org/all/20240925072328.1163183-1-quic_deesin@quicinc.com/
+
+Fixes: c05dfce0b89e ("rpmsg: glink: Wait for intent, not just request ack")
+Cc: stable@vger.kernel.org
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 ---
-Changes in v2:
-- Introduced "intents" and fixed a few spelling mistakes in the commit
-  message of patch 1
-- Cleaned up log snippet in commit message of patch 2, added battery
-  manager log
-- Changed the arbitrary 10 second timeout to 5... Ought to be enough for
-  anybody.
-- Added a small sleep in the send-loop in patch 2, and by that
-  refactored the loop completely.
-- Link to v1: https://lore.kernel.org/r/20241022-pmic-glink-ecancelled-v1-0-9e26fc74e0a3@oss.qualcomm.com
-
----
-Bjorn Andersson (2):
-      rpmsg: glink: Handle rejected intent request better
-      soc: qcom: pmic_glink: Handle GLINK intent allocation rejections
-
  drivers/rpmsg/qcom_glink_native.c | 10 +++++++---
- drivers/soc/qcom/pmic_glink.c     | 25 ++++++++++++++++++++++---
- 2 files changed, 29 insertions(+), 6 deletions(-)
----
-base-commit: 42f7652d3eb527d03665b09edac47f85fb600924
-change-id: 20241022-pmic-glink-ecancelled-d899a9ca0358
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-Best regards,
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 0b2f290069080638581a13b3a580054d31e176c2..d3af1dfa3c7d71b95dda911dfc7ad844679359d6 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1440,14 +1440,18 @@ static int qcom_glink_request_intent(struct qcom_glink *glink,
+ 		goto unlock;
+ 
+ 	ret = wait_event_timeout(channel->intent_req_wq,
+-				 READ_ONCE(channel->intent_req_result) >= 0 &&
+-				 READ_ONCE(channel->intent_received),
++				 READ_ONCE(channel->intent_req_result) == 0 ||
++				 (READ_ONCE(channel->intent_req_result) > 0 &&
++				  READ_ONCE(channel->intent_received)) ||
++				 glink->abort_tx,
+ 				 10 * HZ);
+ 	if (!ret) {
+ 		dev_err(glink->dev, "intent request timed out\n");
+ 		ret = -ETIMEDOUT;
++	} else if (glink->abort_tx) {
++		ret = -ECANCELED;
+ 	} else {
+-		ret = READ_ONCE(channel->intent_req_result) ? 0 : -ECANCELED;
++		ret = READ_ONCE(channel->intent_req_result) ? 0 : -EAGAIN;
+ 	}
+ 
+ unlock:
+
 -- 
-Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+2.43.0
 
 
