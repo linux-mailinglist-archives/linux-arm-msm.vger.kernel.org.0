@@ -1,64 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-35508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35509-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4D0029ABCC2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:18:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66A469ABCC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 06:18:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D9D4284A73
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:18:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 957121C22B1E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 23 Oct 2024 04:18:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E952614E2ED;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9CF14EC77;
 	Wed, 23 Oct 2024 04:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XAzx7D4K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DCPgPHE9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDB714D444;
-	Wed, 23 Oct 2024 04:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B405414D6EB;
+	Wed, 23 Oct 2024 04:16:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729656980; cv=none; b=KmMJEs9jALaS4MBqTt08093oPKx6vH4ME1Q4EX4PaG7gwQ48+0lQh0JeRdCk5POQ0mWTcYRokzwjmGJ9A55gQdX5eLwKUej4Ev3cYUdot7dDsBdRmZr4L11Cxnh7FpuafJGjtb8oRH5AEKAh7g9T3Xqvjm/BfmeRdSEpRoCS2WI=
+	t=1729656980; cv=none; b=ent9zCacGpZImS3FD00j/zlYH+VtXVqjVfL9dQlG208RoXm4dlX9iQBmSBE/7/qi1wg0yzU/Cp22iYlMDB/5nfaYkkmW0ClRJQ560tnM2vGy1PgYwgFaU0nW0iCgkYCrKU6dr2J1ZG5lExyJWrPgiQRa1ihNGHlnfeU2B0tmau0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1729656980; c=relaxed/simple;
-	bh=JC0/56Incz1HvfzGKSsGBujk6MPwDutoxxSzwrXI2Yo=;
+	bh=N14KHiijB3PmI7LnNC3AS2DmGJh6+HTTE8Srpn+ssjk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i44XZToCllX7Rf7hlDCujhsSd6FpUCkW2TmRKb3r8hMXinL+KyvGbJ0Lz/pblU8OjHC7TULZGgebhKGyBKH4wq1rjzutxvxoV5F20CFfvSrUiT/ne96/72BjY7JBBtLD/jUQko5xG23aUzG5K8daHbHs3RzQ2yQQkSxHDWzIEvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XAzx7D4K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDCDC4AF0E;
-	Wed, 23 Oct 2024 04:16:18 +0000 (UTC)
+	 MIME-Version:Content-Type; b=nHzv8GRNmPz6R90NrAMzgyCX7LCqxlE5VyYTdXQ7HgpEpfCJinE8ElVMg+YEqNIKWfWPsQbI3/uyJpkcfcSBm/QdQWQxAxT9vCfuMmdcqBXDPrd2EoGi0IrTOESjy2qNYpsNSjtiK+TarP8l4uLt9xJOXQt7Nc6w71EF1KP7e08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DCPgPHE9; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93DCC4CEC6;
+	Wed, 23 Oct 2024 04:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1729656979;
-	bh=JC0/56Incz1HvfzGKSsGBujk6MPwDutoxxSzwrXI2Yo=;
+	s=k20201202; t=1729656980;
+	bh=N14KHiijB3PmI7LnNC3AS2DmGJh6+HTTE8Srpn+ssjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAzx7D4K5BUEMJtgpIXDQnVEKjWFxR6myJyYuRm3DSDiACPbf0frK3l+TSU6B4Ipb
-	 iIgshYfbz7zYopoMd21xtKTV6WBqifbpd0bbEklp718Bw0z9tJlclJuv95UUCC0Q0e
-	 4/DdJfR91ctYhcCNoelvWbpElBmqFhlhRdSxXBg+NVzhUmVGa1J+Yu6ylaAPx9z+oW
-	 mr/2JFMfUT9VVhE4+zY4hAYcGKCHRouwda/N8ckyB/YWB0VdTKh3KuZinwVGQnnojw
-	 aciTguUA46gJOvoNksuRD4Ki4oryb53ZuWydLxyKvVFoZpn0qAyDMyzaw61PoN/jgK
-	 KP+6nIePLWJMA==
+	b=DCPgPHE9Zqe3vSC9W6fWlVSzPMAbvFeiSIklcnUp5i2eHjrP1unFl4X/nyaU+NgGs
+	 Zd4SrvojYfMoM8RjFBNzO8xwIcvijXKJDIhtWQvphpm9H6gFRplRz8wxDTKemt85VN
+	 mWdoouXBHUL0/nwJSFyd4MPQ10ihZDwgeu7DM/gF1HvWCRbkN+tczZUwDbe5dspGkM
+	 p/q2g23A8why8dyquEhn4iC0FsVHe5XV3a39wyGZ29TpfBAaQL3sPxjQhlq0BY3yNY
+	 JwLrihzfvyWFoT6KB4yrgQqCB6Y/+z1W5u0sQIjritRdgXdHV6BzNvGyb8dZ9Vkd3y
+	 rpo5N+kOV1ioQ==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+	Maya Matuszczyk <maccraft123mc@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Steev Klimaszewski <steev@kali.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: (subset) [PATCH v3 00/18] arm64: dts: qcom: change labels to lower-case
-Date: Tue, 22 Oct 2024 23:15:56 -0500
-Message-ID: <172965696409.224417.15541336565393927964.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-crd Rename "Twitter" to "Tweeter"
+Date: Tue, 22 Oct 2024 23:15:57 -0500
+Message-ID: <172965696397.224417.6555387602908598104.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241022-dts-qcom-label-v3-0-0505bc7d2c56@linaro.org>
-References: <20241022-dts-qcom-label-v3-0-0505bc7d2c56@linaro.org>
+In-Reply-To: <20241019190214.3337-2-maccraft123mc@gmail.com>
+References: <20241019190214.3337-2-maccraft123mc@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,28 +66,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 22 Oct 2024 17:47:25 +0200, Krzysztof Kozlowski wrote:
-> Changes in v3:
-> - New patch #18
-> - Update also sc8280xp-microsoft-arcata.dts
-> - Tags
-> - Link to v2: https://lore.kernel.org/r/20240829-dts-qcom-label-v2-0-5deaada3e6b2@linaro.org
+On Sat, 19 Oct 2024 21:02:15 +0200, Maya Matuszczyk wrote:
+> This makes the name consistent with both other x1e80100 devices and the
+> dictionary. A UCM fix was merged already and is required in order for
+> sound to work after this commit.
 > 
-> Changes in v2:
-> - New patch #3
-> - Several fixes as pointed out by Konrad - not entire part of labels was
->   converted in v1 (e.g. LITTLE_CPU_SLEEP_0 -> little_cpu_SLEEP_0).
-> - Few more labels found for clusters/cpu sleep states and clk40m.
-> - So in total re-doing pattern matching. b4 is your friend for the
->   changelog :)
-> - Link to v1: https://lore.kernel.org/r/20240828-dts-qcom-label-v1-0-b27b72130247@linaro.org
 > 
-> [...]
 
 Applied, thanks!
 
-[18/18] ARM: dts: qcom: change labels to lower-case
-        commit: 7b49c9cf4b77a69f03297f515c89e94f21c9b1c0
+[1/1] arm64: dts: qcom: x1e80100-crd Rename "Twitter" to "Tweeter"
+      commit: 787ade24cc3af4a8ec9498c9cd8a6d47a4d86485
 
 Best regards,
 -- 
