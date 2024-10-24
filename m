@@ -1,40 +1,65 @@
-Return-Path: <linux-arm-msm+bounces-35674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-35675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28CBE9AE2B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 12:36:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D40F9AE374
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 13:08:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (wormhole.subspace.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BD57EB2191E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 10:36:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CCB831F22E9B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 24 Oct 2024 11:08:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71EEB1C4A04;
-	Thu, 24 Oct 2024 10:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFA661CACD3;
+	Thu, 24 Oct 2024 11:08:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MoPH5A/U"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 134861C0DE2;
-	Thu, 24 Oct 2024 10:36:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C667B1C4A31;
+	Thu, 24 Oct 2024 11:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729766208; cv=none; b=SVw90aAHhCYagHlrRBu1u+2CdP+Dz+9kd7fq3ZgQqI8OlLucFx7yT0/TiSqV85GPFIoTPJKmpfaLBouXtlQKUaH+ISGNun3ar2vauF0QL0abrhz57NHGE2lzsjeYYN4zlCeFlrCEBvASiF1WT9GSEmUQyFcTXiH7HV0N4C2yke8=
+	t=1729768125; cv=none; b=cAxauuR4tXA5p0PR37+ct/56f5ZJ7NUu7+Wqd0QoOQe7fYdAyefRdnYnmbJeTCDyPmHpsDZYjT0LEMbIC+HGszlqIBq0+2ywV5Q3opJGtai+PQ5kvwq9N30TQcWIW24HVubve1V+wlRdD3McjHSDx5tQZ+pnUYsjsrRiLNSdYIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729766208; c=relaxed/simple;
-	bh=fz9WS1oSTVFviyz8oLmApeo/s4GncgulQLwErmfKEg8=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PJ9/L8yc3JLbXEU/5DC/3w1Qb+rcrLHsr/L5v3f9Ie1ASsCGdMj2ke9WqIUtPjBZtQdv5Tssh7OUx6we07cHvJQwJRRioxGds8kHavD2+EV8+a/l0+3wsCMoaCtAHN/gT0F/4Xs7V3g0N3/G86M4EN6GP4QsX+15CHzEEDJfRBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4142B339;
-	Thu, 24 Oct 2024 03:37:15 -0700 (PDT)
-Received: from [10.1.197.1] (ewhatever.cambridge.arm.com [10.1.197.1])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DCABD3F71E;
-	Thu, 24 Oct 2024 03:36:43 -0700 (PDT)
-Message-ID: <30301f0b-5b04-4150-8159-5b8721486d6c@arm.com>
-Date: Thu, 24 Oct 2024 11:36:42 +0100
+	s=arc-20240116; t=1729768125; c=relaxed/simple;
+	bh=NlHgJjsgC1z/zRldu09szX5ASYItuI9tGKsARmS4Taw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LsMp3ozJzv0XUJvVWBBLxX53rB6c49QNkrn+Ik4gWzTKAFmpB+nSNaqAlIzSbUeG4j0fk+79KuOq2xUqnehT7PEWw0PcYtEenZmuKE9YBD3JeNVqKpPod6qxSD5WFD05ouv2MtxcCO81HYNRQq2qxqrZ11YyiHSYt2MMJM9bfBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MoPH5A/U; arc=none smtp.client-ip=198.175.65.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1729768123; x=1761304123;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=NlHgJjsgC1z/zRldu09szX5ASYItuI9tGKsARmS4Taw=;
+  b=MoPH5A/UOKhsCh0rJL271OK4YNX5bFivq6OQHyMvf2ygzqtysfAl9Q4Z
+   oAc0wgI8PHybMXPlRntzPIV6Nou/qYRpo66xb6YBQ++UsbqzpbNr21Yqw
+   oclzq9VFzYFqdIMxdQmbnh0c1QtBkSqhoFfPrSyPPPa6/Q8uEibhzWAkg
+   Z2TsZzty6glPCKrX5v2TE1zHB1tunLJHLUq9SVceckkHS4TKXiHYFH8hI
+   397k9rCKrQlMwHSSVrZrMN7UAAxkRTOOB+I7luF65bQM94AjyfecxYNAj
+   moxzSOKiP0SN4+Zl6F841NN77ejhLdh/YO6DZIMTJOf3VY+/HLIZ7pQ/r
+   Q==;
+X-CSE-ConnectionGUID: dV7smuK9TwOSL9ndCukPgQ==
+X-CSE-MsgGUID: 9BUrYGyPTcyEjGxhNEjNPQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11222"; a="29321734"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; 
+   d="scan'208";a="29321734"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2024 04:08:43 -0700
+X-CSE-ConnectionGUID: ZVCYKNMnTZ+Eaxt9D+h6yA==
+X-CSE-MsgGUID: ZfyAt+jjRF24KG1sA+eLeg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,229,1725346800"; 
+   d="scan'208";a="81378669"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.246.16.81])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2024 04:08:38 -0700
+Message-ID: <3e2f8132-af87-40c0-9c31-c0103078fe39@intel.com>
+Date: Thu, 24 Oct 2024 14:08:33 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,102 +67,73 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/4] dt-bindings: arm:
- qcom,coresight-static-replicator: Add property for source filtering
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
-To: Tao Zhang <quic_taozha@quicinc.com>, Mike Leach <mike.leach@linaro.org>,
- James Clark <james.clark@arm.com>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>,
- Leo Yan <leo.yan@linux.dev>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20241024065306.14647-1-quic_taozha@quicinc.com>
- <20241024065306.14647-2-quic_taozha@quicinc.com>
- <b848ae69-aca4-43d1-aa38-2f424045ee6f@arm.com>
+Subject: Re: [PATCH] mmc: sdhci-msm: Slot indexing for distinguishing multiple
+ SDCC instances
+To: Sachin Gupta <quic_sachgupt@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+ linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
+ quic_nguyenb@quicinc.com, quic_bhaskarv@quicinc.com, quic_mapa@quicinc.com,
+ quic_narepall@quicinc.com, quic_nitirawa@quicinc.com,
+ quic_rampraka@quicinc.com, quic_sartgarg@quicinc.com
+References: <20241022141828.618-1-quic_sachgupt@quicinc.com>
 Content-Language: en-US
-In-Reply-To: <b848ae69-aca4-43d1-aa38-2f424045ee6f@arm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20241022141828.618-1-quic_sachgupt@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 24/10/2024 10:14, Suzuki K Poulose wrote:
-> On 24/10/2024 07:53, Tao Zhang wrote:
->> The is some "magic" hard coded filtering in the replicators,
->> which only passes through trace from a particular "source". Add
->> a new property "filter-src" to label a phandle to the coresight
->> trace source device matching the hard coded filtering for the port.
+On 22/10/24 17:18, Sachin Gupta wrote:
+> This update addresses the requirement for accurate slot indexing
+> in the sdhci-msm driver to differentiate between multiple SDCC
+> (Secure Digital Card Controller) instances, such as eMMC, SD card,
+> and SDIO.
 > 
-> As mentioned in here in v3 review :
-> 
-> https://lkml.org/lkml/2024/8/21/597
-> 
-> Please do not use "src", expand it to "source"
+> Additionally, it revises the slot indexing logic to comply with
+> the new device tree (DT) specifications.
 
-Just to confirm, this is only for the "bindings" string, not for the 
-variables used in the patches.
-
-Suzuki
-
+This patch seems incomplete because all it does is assign a global
+variable which is never used again.
 
 > 
-> Rest looks fine.
+> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+> Signed-off-by: Maramaina Naresh <quic_mnaresh@quicinc.com>
+> Signed-off-by: Ziqi Chen <quic_ziqichen@quicinc.com>
+> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> Suzuki
-> 
->>
->> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->> ---
->>   .../arm/arm,coresight-static-replicator.yaml  | 19 ++++++++++++++++++-
->>   1 file changed, 18 insertions(+), 1 deletion(-)
->>
->> diff --git 
->> a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
->> index 1892a091ac35..0d258c79eb94 100644
->> --- 
->> a/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
->> +++ 
->> b/Documentation/devicetree/bindings/arm/arm,coresight-static-replicator.yaml
->> @@ -45,7 +45,22 @@ properties:
->>       patternProperties:
->>         '^port@[01]$':
->>           description: Output connections to CoreSight Trace bus
->> -        $ref: /schemas/graph.yaml#/properties/port
->> +        $ref: /schemas/graph.yaml#/$defs/port-base
->> +        unevaluatedProperties: false
->> +
->> +        properties:
->> +          endpoint:
->> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
->> +            unevaluatedProperties: false
->> +
->> +            properties:
->> +              filter-src:
->> +                $ref: /schemas/types.yaml#/definitions/phandle
->> +                description:
->> +                  phandle to the coresight trace source device 
->> matching the
->> +                  hard coded filtering for this port
->> +
->> +              remote-endpoint: true
->>   required:
->>     - compatible
->> @@ -72,6 +87,7 @@ examples:
->>                   reg = <0>;
->>                   replicator_out_port0: endpoint {
->>                       remote-endpoint = <&etb_in_port>;
->> +                    filter-src = <&tpdm_video>;
->>                   };
->>               };
->> @@ -79,6 +95,7 @@ examples:
->>                   reg = <1>;
->>                   replicator_out_port1: endpoint {
->>                       remote-endpoint = <&tpiu_in_port>;
->> +                    filter-src = <&tpdm_mdss>;
->>                   };
->>               };
->>           };
-> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index e113b99a3eab..3cb79117916f 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -292,6 +292,8 @@ struct sdhci_msm_host {
+>  	bool vqmmc_enabled;
+>  };
+>  
+> +static struct sdhci_msm_host *sdhci_slot[3];
+> +
+>  static const struct sdhci_msm_offset *sdhci_priv_msm_offset(struct sdhci_host *host)
+>  {
+>  	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+> @@ -2426,6 +2428,14 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto pltfm_free;
+>  
+> +	if (node) {
+> +		ret = of_alias_get_id(pdev->dev.of_node, "mmc");
+> +		if (ret < 0)
+> +			dev_err(&pdev->dev, "get slot index failed %d\n", ret);
+> +		else
+> +			sdhci_slot[ret] = msm_host;
+> +	}
+> +
+>  	/*
+>  	 * Based on the compatible string, load the required msm host info from
+>  	 * the data associated with the version info.
 
 
